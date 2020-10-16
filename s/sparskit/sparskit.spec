@@ -3,7 +3,7 @@
 
 Name: sparskit
 Version: 2.0.20190610
-Release: alt1
+Release: alt2
 Summary: A basic tool-kit for sparse matrix computations (Version 2)
 License: LGPL
 Group: Sciences/Mathematics
@@ -95,6 +95,9 @@ install -p -m644 DOC/* %buildroot%_docdir/lib%name-devel
 
 
 %changelog
+* Fri Oct 16 2020 Vladislav Zavjalov <slazav@altlinux.org> 2.0.20190610-alt2
+- 0001-makefile.patch: fix dependencies for parallel build
+
 * Sun Sep 20 2020 Vladislav Zavjalov <slazav@altlinux.org> 2.0.20190610-alt1
 - Updated (2019.06.10), use version 2.0.20190610
 - Do not pack sources in -doc package
