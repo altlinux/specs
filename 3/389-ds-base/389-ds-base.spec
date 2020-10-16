@@ -12,7 +12,7 @@
 
 Name: 389-ds-base
 Version: 1.4.1.18
-Release: alt3
+Release: alt4
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -156,8 +156,18 @@ configuring the 389 Directory Server.
 Summary: Cockpit UI Plugin for configuring and administering the 389 Directory Server
 BuildArch: noarch
 Group: System/Base
-Requires: cockpit
+
+Requires: cockpit-bridge
+Requires: cockpit-dashboard
+Requires: cockpit-shell
+Requires: cockpit-systemd
+Requires: cockpit-ws
 %py3_requires lib389
+
+Obsoletes: 389-console
+Obsoletes: 389-adminutil
+Obsoletes: 389-ds-console
+Obsoletes: 389-dsgw
 
 %description -n cockpit-389-ds
 A cockpit UI Plugin for configuring and administering the 389 Directory Server
@@ -596,6 +606,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 1.4.1.18-alt4
+- Obsoleted previous 389-ds Web services.
+
 * Fri Oct 09 2020 Stanislav Levin <slev@altlinux.org> 1.4.1.18-alt3
 - Dropped dependency on decommissioned 389-ds admin Web services.
 
