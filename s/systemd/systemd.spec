@@ -79,7 +79,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.6
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1976,6 +1976,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Oct 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt3
+- dhcp-server: offer router address as next-server (sbolshakov@)
+
 * Sat Oct 03 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt2
 - kernelinstalldir path /usr/lib/kernel/install.d -> /lib/kernel/install.d
 - install kernel-install script to /sbin
