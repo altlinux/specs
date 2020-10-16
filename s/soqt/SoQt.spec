@@ -1,6 +1,6 @@
 Name: soqt
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: Qt GUI component toolkit library for Coin
 License: BSD-3-Clause
 Group: Development/Tools
@@ -92,6 +92,7 @@ tar xf %SOURCE3
 %ninja_install -C BUILD
 mv %buildroot%_includedir/Inventor %buildroot%_includedir/Coin4/
 rm -rf %buildroot%_infodir
+rm -rf %buildroot%_man3dir/misc.3*
 
 %files
 
@@ -112,6 +113,9 @@ rm -rf %buildroot%_infodir
 %doc %_defaultdocdir/SoQt
 
 %changelog
+* Fri Oct 16 2020 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt2
+- Remove /usr/share/man/man3/misc.3.xz conflicting with xinetd-devel.
+
 * Fri Sep 18 2020 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version.
 - Fix License tag, project URL and maintainer.
