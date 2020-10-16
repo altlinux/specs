@@ -1,5 +1,5 @@
 Name: udisks2-qt5
-Version: 5.0.4
+Version: 5.0.5
 Release: alt1
 Summary: Qt5 binding for udisks2
 License: LGPL-3.0+
@@ -34,8 +34,8 @@ Header files and libraries for %name.
 
 %build
 %qmake_qt5 \
-    "CONFIG += debug nostrip" \
-    PREFIX=%prefix
+    CONFIG+=nostrip \
+    PREFIX=%_prefix
 %make_build
 
 %install
@@ -51,5 +51,8 @@ Header files and libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Oct 16 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.5-alt1
+- New version (5.0.5) with rpmgs script.
+
 * Mon Aug 17 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.4-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
