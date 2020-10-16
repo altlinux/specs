@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.3.1
-Release: alt4
+Release: alt5
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -21,12 +21,12 @@ Source2: manual-ru.html.in
 Patch1: gimagereader-cmake-3.17.patch
 Patch2: 6209e25dab20b233e399ff36fabe4252db0f9e44.patch
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 
 BuildRequires: cmake intltool gcc-c++
-BuildRequires: libgomp-devel libjson-glib-devel libsane-devel libxml++2-devel libleptonica-devel libpcre-devel libexpat-devel libdrm-devel libpodofo-devel libdjvu-devel libzip-devel libuuid-devel tesseract-devel
+BuildRequires: libgomp-devel libjson-glib-devel libsane-devel libxml++3-devel libleptonica-devel libpcre-devel libexpat-devel libdrm-devel libpodofo-devel libdjvu-devel libzip-devel libuuid-devel tesseract-devel
 
-BuildRequires: python3 python3-module-pygobject3
+BuildRequires: python3 python3-module-pygobject3 libgtk+3-gir gobject-introspection-devel
 
 # something wrong
 # Package 'xrandr', required by 'GDK', not found
@@ -140,6 +140,8 @@ Comment=Scan pages and optical text recognize
 Comment[ru]=Сканирование страниц и распознавание текста
 EOF
 
+subst "s|/usr/bin/python$|%__python3|" gtk/data/uigen.py
+
 %build
 %cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
 %cmake_build
@@ -207,6 +209,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Oct 17 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt5
+- fix build: use python3 for uigen.py, update BR
+
 * Sat Sep 05 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt4
 - fix build with Qt 5.14+
 
