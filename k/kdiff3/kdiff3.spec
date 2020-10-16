@@ -1,34 +1,37 @@
 %define _unpackaged_files_terminate_build 1
 
-Name:           kdiff3
-Version:        1.8.1
-Release:        alt1.git.c45ce8c
-Summary:        Compare + merge 2 or 3 files or directories
+Name: kdiff3
+Version: 1.8.4
+Release: alt1
+Summary: Compare + merge 2 or 3 files or directories
  
-License:        GPLv2
-Group:          Text tools
-URL:            https://github.com/KDE/kdiff3
+License: GPLv2
+Group: Text tools
+URL: https://invent.kde.org/sdk/kdiff3
 
-Source0:        %name-%version.tar
+# https://invent.kde.org/sdk/kdiff3.git
+Source: %name-%version.tar
+
+Patch1: %name-1.8.3-gentoo-hidpi.patch
 
 BuildRequires(pre): rpm-build-kf5 
-BuildRequires:  cmake
-BuildRequires:  gcc-c++
-BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
-BuildRequires:  kf5-kio-devel 
-BuildRequires:  kf5-kwidgetsaddons-devel
-BuildRequires:  kf5-kparts-devel
-BuildRequires:  kf5-kiconthemes-devel
-BuildRequires:  kf5-kdoctools-devel
-BuildRequires:  kf5-kcrash-devel
-BuildRequires:  kf5-kcoreaddons-devel
-BuildRequires:  kf5-ki18n-devel
-BuildRequires:  kf5-kbookmarks-devel
-BuildRequires:  rpm-macros-cmake 
-BuildRequires:  cmake-modules
-BuildRequires:  extra-cmake-modules
-BuildRequires:  kf5-ktextwidgets-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: desktop-file-utils
+BuildRequires: gettext
+BuildRequires: kf5-kio-devel 
+BuildRequires: kf5-kwidgetsaddons-devel
+BuildRequires: kf5-kparts-devel
+BuildRequires: kf5-kiconthemes-devel
+BuildRequires: kf5-kdoctools-devel
+BuildRequires: kf5-kcrash-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-ki18n-devel
+BuildRequires: kf5-kbookmarks-devel
+BuildRequires: rpm-macros-cmake 
+BuildRequires: cmake-modules
+BuildRequires: extra-cmake-modules
+BuildRequires: kf5-ktextwidgets-devel
 
 %description
 KDiff3 is a program that
@@ -41,6 +44,7 @@ KDiff3 is a program that
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %K5build
@@ -66,6 +70,9 @@ KDiff3 is a program that
 %_K5xmlgui/kdiff3part
 
 %changelog
+* Fri Oct 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.4-alt1
+- Updated to upstream version 1.8.4.
+
 * Wed Nov 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1.git.c45ce8c
 - Updated to upstream snapshot c45ce8c
 
