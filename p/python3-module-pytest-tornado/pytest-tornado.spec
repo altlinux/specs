@@ -1,12 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-tornado
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.8.0
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/pytest-tornado/
@@ -15,9 +17,12 @@ Url: https://pypi.org/project/pytest-tornado/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(tornado)
 BuildRequires: python3(tox)
+%endif
 
 %py3_provides %oname
 
@@ -43,8 +48,8 @@ commands =
     {envpython} -m pytest {posargs:-vra}
 EOF
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
 
 %files
 %doc README.rst
@@ -53,6 +58,9 @@ tox.py3 --sitepackages -p auto -o -v
 
 
 %changelog
+* Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1.
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.8.0-alt2
 - python2 disabled
 

@@ -3,9 +3,11 @@
 %define shortname winrm
 %define origname py%shortname
 
+%def_with check
+
 Name:       python3-module-%shortname
 Version:    0.3.0
-Release:    alt4
+Release:    alt5
 
 Summary:    Python library for Windows Remote Management
 License:    MIT
@@ -18,11 +20,12 @@ Source0:    %name-%version.tar
 Source1:    winexe_py3winrm
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-xmltodict
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-pep8
-BuildRequires: python3-module-mock
 
+%if_with check
+BuildRequires: python3-module-xmltodict
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 %origname is a Python client for the Windows Remote Management (WinRM)
@@ -50,8 +53,11 @@ r = s.run_cmd('ipconfig', ['/all'])
 mkdir -p %buildroot%_bindir
 install -m755 %SOURCE1 -t %buildroot%_bindir
 
+# don't package tests(useless)
+rm -r %buildroot%python3_sitelibdir/%shortname/tests/
+
 %check
-py.test3 -v --pep8 --cov=winrm --cov-report=term-missing winrm/tests/
+py.test3 -v winrm/tests/
 
 %files
 %python3_sitelibdir/%shortname
@@ -60,6 +66,9 @@ py.test3 -v --pep8 --cov=winrm --cov-report=term-missing winrm/tests/
 
 
 %changelog
+* Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 0.3.0-alt5
+- Fixed FTBFS(Pytest 6).
+
 * Fri Jan 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.0-alt4
 - Porting on Python3.
 
@@ -67,9 +76,9 @@ py.test3 -v --pep8 --cov=winrm --cov-report=term-missing winrm/tests/
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Fri Jan 26 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1%ubt
+* Fri Jan 26 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1%%ubt
 - 0.2.0 -> 0.3.0
 
 * Fri Jul 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt3.git

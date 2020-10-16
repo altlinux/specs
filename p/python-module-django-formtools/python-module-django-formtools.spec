@@ -2,7 +2,7 @@
 
 Name: python-module-%modname
 Version: 2.1
-Release: alt1
+Release: alt2
 Summary: A set of high-level abstractions for Django forms
 Group: Development/Python
 
@@ -15,9 +15,6 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-django >= 1.7
-# Required for testing
-BuildRequires: python-module-flake8
-BuildRequires: python-module-coverage
 
 Requires: python-module-django >= 1.7
 
@@ -45,9 +42,6 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
 BuildPreReq: python3-module-sphinx
 BuildPreReq: python3-module-django >= 1.7
-# Required for testing
-BuildPreReq: python3-module-flake8
-BuildPreReq: python3-module-coverage
 
 Requires: python3-module-django >= 1.7
 
@@ -112,6 +106,9 @@ make -C docs man
 
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 2.1-alt2
+- Dropped dependency on tests packages.
+
 * Sat Apr 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.1-alt1
 - Updated version to 2.1
 

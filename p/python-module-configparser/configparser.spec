@@ -1,11 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define mname configparser
 
-%def_with check
-
 Name: python-module-%mname
 Version: 3.7.4
-Release: alt2
+Release: alt3
 Summary: This library brings the updated configparser from Python 3.5 to Python 2.6-3.5
 
 Group: Development/Python
@@ -19,12 +17,6 @@ BuildRequires(pre): rpm-build-python
 
 BuildRequires: python-module-setuptools
 
-%if_with check
-BuildRequires: python-test
-BuildRequires: python2.7(pytest_flake8)
-BuildRequires: python3(tox)
-%endif
-
 %py_requires backports
 
 %description
@@ -34,8 +26,6 @@ can be used directly in Python 2.6 - 3.5.
 
 %prep
 %setup
-# skip PEP-518 for now
-rm -f pyproject.toml
 
 %build
 %python_build_debug
@@ -51,19 +41,6 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 rm %buildroot%python_sitelibdir/backports/__init__.py*
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp %_bindir\/py.test \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
-
-# we don't want to check docs
-sed -i "/pytest-checkdocs/d" setup.cfg
-
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
-tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %python_sitelibdir/backports/configparser/
@@ -72,6 +49,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python_sitelibdir/configparser.py[co]
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 3.7.4-alt3
+- Disabled testing.
+
 * Sun Mar 24 2019 Stanislav Levin <slev@altlinux.org> 3.7.4-alt2
 - Fixed intersections with backports (closes: #36365).
 

@@ -13,7 +13,7 @@
 
 Name: pki-core
 Version: 10.9.4
-Release: alt1
+Release: alt2
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -741,6 +741,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 10.9.4-alt2
+- Fixed FTBFS (new flake8 and pylint).
+
 * Mon Sep 14 2020 Stanislav Levin <slev@altlinux.org> 10.9.4-alt1
 - 10.7.4 -> 10.9.4.
 

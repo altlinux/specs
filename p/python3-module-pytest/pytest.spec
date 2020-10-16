@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.4.3
+Version: 6.1.1
 Release: alt1
 
 Summary: Python test framework
@@ -29,9 +29,9 @@ BuildRequires: python3(attr)
 BuildRequires: python3(decorator)
 BuildRequires: python3(funcsigs)
 BuildRequires: python3(hypothesis)
+BuildRequires: python3(iniconfig)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(mock)
-BuildRequires: python3(more_itertools)
 BuildRequires: python3(nose)
 BuildRequires: python3(numpy)
 BuildRequires: python3(py)
@@ -40,7 +40,7 @@ BuildRequires: python3(pathlib2)
 BuildRequires: python3(pexpect)
 BuildRequires: python3(pluggy)
 BuildRequires: python3(requests)
-BuildRequires: python3(wcwidth)
+BuildRequires: python3(toml)
 BuildRequires: python3(xmlschema)
 BuildRequires: python3-module-Pygments > 2.4.2
 %endif
@@ -48,7 +48,8 @@ BuildRequires: python3-module-Pygments > 2.4.2
 BuildArch: noarch
 
 %py3_requires py
-%py3_requires wcwidth
+%py3_requires toml
+%py3_requires packaging
 
 %description
 The pytest framework makes it easy to write small tests, yet
@@ -106,7 +107,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+tox.py3 --sitepackages -vvr
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -121,6 +122,12 @@ tox.py3 --sitepackages -v
 %_bindir/pytest-3
 
 %changelog
+* Mon Oct 12 2020 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
+- 6.0.1 -> 6.1.1.
+
+* Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
+- 5.4.3 -> 6.0.1.
+
 * Wed Jun 03 2020 Stanislav Levin <slev@altlinux.org> 5.4.3-alt1
 - 5.4.1 -> 5.4.3.
 

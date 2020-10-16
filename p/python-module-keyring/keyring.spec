@@ -1,8 +1,10 @@
 %define oname keyring
 
+%def_without check
+
 Name: python-module-%oname
 Version: 12.0.0
-Release: alt3
+Release: alt4
 Summary: Keyring provides an easy way to access the system keyring service
 
 License: MIT
@@ -14,15 +16,16 @@ Source: %oname-%version.tar
 Patch0: fix_deps.patch
 
 BuildRequires: python-module-setuptools python-devel
-BuildRequires: python-module-pytest
-BuildRequires: python-module-pytest-sugar
 BuildRequires: python-module-setuptools_scm
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools python3-devel
-BuildPreReq: python-module-pytest
-BuildPreReq: python-module-pytest-sugar
 BuildPreReq: python-module-setuptools_scm
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-sugar
+%endif
 
 %py_requires ctypes entrypoints json logging pluggy secretstorage
 
@@ -112,6 +115,9 @@ popd
 
 
 %changelog
+* Thu Oct 15 2020 Stanislav Levin <slev@altlinux.org> 12.0.0-alt4
+- Made dependency on Pytest and its plugins optional.
+
 * Thu Dec 13 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt3
 - Updated deps for Python2.7
 

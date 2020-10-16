@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt2
+Release: alt3
 Summary: Backport of new features in Python's os module
 Group: Development/Python
 License: Python
@@ -14,8 +14,6 @@ URL: https://pypi.org/project/backports.os/
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(future) python2.7(hypothesis)
 
 %py_requires backports future.utils.surrogateescape
 %py_provides backports.os
@@ -46,13 +44,15 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 rm -f %buildroot%python_sitelibdir/backports/__init__.py*
 
 %check
-PYTHONPATH=$(pwd)/src py.test
 
 %files
 %doc README.rst
 %python_sitelibdir/*
 
 %changelog
+* Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 0.1.1-alt3
+- Dropped dependency on tests packages.
+
 * Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2
 - Updated runtime dependencies.
 

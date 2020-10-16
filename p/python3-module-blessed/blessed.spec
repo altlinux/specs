@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.17.5
+Version: 1.17.10
 Release: alt1
 
 Summary: A feature-filled fork of Erik Rose's blessings project
@@ -23,7 +23,9 @@ BuildRequires: /dev/pts
 BuildRequires: python3(curses)
 BuildRequires: python3(mock)
 BuildRequires: python3(pytest)
+BuildRequires: python3(six)
 BuildRequires: python3(tox)
+BuildRequires: python3(wcwidth)
 BuildRequires: terminfo-extra
 %endif
 
@@ -60,6 +62,9 @@ tox.py3 --sitepackages -vv -r
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 1.17.10-alt1
+- 1.17.5 -> 1.17.10.
+
 * Thu May 07 2020 Stanislav Levin <slev@altlinux.org> 1.17.5-alt1
 - 1.14.2 -> 1.17.5.
 - Enabled testing.

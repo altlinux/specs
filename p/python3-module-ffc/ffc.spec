@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 2019.1.0
-Release: alt1
+Release: alt2
 Summary: Compiler for finite element variational forms
 Group: Development/Tools
 License: LGPLv3+
@@ -17,6 +17,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 # http://www.fenics.org/pub/documents/ffc/ffc-user-manual/ffc-user-manual.pdf
 Source1: ffc-user-manual.pdf
+Patch0: 0001-Add-compatibility-against-Pytest-6.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -63,6 +64,7 @@ This package contains user manual for UFL (Unified Form Language).
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -90,6 +92,9 @@ python3 -m pytest -v test/ --ignore=test/unit/ufc/finite_element/test_evaluate.p
 %doc demo
 
 %changelog
+* Wed Aug 05 2020 Stanislav Levin <slev@altlinux.org> 1:2019.1.0-alt2
+- Fixed FTBFS(new Pytest 6).
+
 * Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2019.1.0-alt1
 - Updated to upstream version 2019.1.0.
 - Switched to python-3.

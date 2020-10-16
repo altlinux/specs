@@ -2,32 +2,41 @@
 
 %define oname hypothesis
 
-%ifnarch %ix86 x86_64
-%def_disable check
-%endif
+%def_with check
 
 Name: python3-module-%oname
-Version: 5.7.0
+Version: 5.37.3
 Release: alt1
 
 Summary: A library for property based testing
 
-License: MPLv2
+License: MPL-2.0-no-copyleft-exception
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/hypothesis
+Url: https://pypi.org/project/hypothesis/
 
 BuildArch: noarch
 
 # Source-url: %__pypi_url hypothesis
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-numpy python3-module-flaky python3-module-pytz python3-module-django
-BuildRequires: python3-module-django-tests python3-module-fake-factory python3-modules-sqlite3
-BuildRequires: python3(mock) python3(coverage) python3(pandas) python3(dateutil)
 
-%py3_requires coverage
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: python3(attr)
+BuildRequires: python3(black)
+BuildRequires: python3(dateutil)
+BuildRequires: python3(fakeredis)
+BuildRequires: python3(numpy)
+BuildRequires: python3(pandas)
+BuildRequires: python3(pytz)
+BuildRequires: python3(pexpect)
+BuildRequires: python3(redis)
+BuildRequires: python3(sortedcontainers)
+BuildRequires: python3(pytest_xdist)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Hypothesis is an advanced testing library for Python. It lets you write tests
@@ -37,6 +46,7 @@ in your code with less work.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -45,14 +55,33 @@ in your code with less work.
 %python3_install
 
 %check
-rm -rf tests/py2 tests/django/toystore
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3
+cat > tox.ini <<EOF
+[testenv]
+usedevelop=True
+whitelist_externals =
+    /bin/cp
+    /bin/sed
+commands_pre =
+    /bin/cp %_bindir/py.test3 {envbindir}/py.test
+    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
+commands =
+    {envbindir}/py.test {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -- --numprocesses auto tests
 
 %files
 %doc LICENSE.txt README.rst
-%python3_sitelibdir/*
+%_bindir/%oname
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Oct 15 2020 Stanislav Levin <slev@altlinux.org> 5.37.3-alt1
+- 5.7.0 -> 5.37.3.
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.7.0-alt1
 - new version 5.7.0 (with rpmrb script)
 - separated build python3 module

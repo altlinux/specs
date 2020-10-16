@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: A python svg graph plotting library
 License: LGPLv3
 Group: Development/Python3
@@ -61,6 +61,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 2.4.0-alt2
+- Fixed FTBFS(Pytest 6).
+
 * Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
 - 1.6.1 -> 2.4.0.
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt2
+Release: alt3
 Summary: Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+
 License: ASLv2.0
 Group: Development/Python
@@ -17,8 +17,6 @@ Source0: https://pypi.python.org/packages/94/4a/db842e7a0545de1cdb0439bb80e6e42d
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-unittest2 python-module-coverage
-BuildPreReq: python-module-flake8 python-module-wheel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -69,8 +67,6 @@ popd
 %endif
 
 %check
-python setup.py test
-python2-flake8 --exit-zero funcsigs tests
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -89,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 1.0.2-alt3
+- Disabled Python2 testing.
+
 * Wed Jan 30 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.2-alt2
 - Fix build with flake8
 

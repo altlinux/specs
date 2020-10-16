@@ -1,13 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname requests-unixsocket
+
+%def_with check
 
 Name: python3-module-%oname
 Version: 0.1.5
-Release: alt3
+Release: alt4.git5d83b0f
 
 Summary: Use requests to talk HTTP via a UNIX domain socket
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/requests-unixsocket/
+Url: https://pypi.org/project/requests-unixsocket/
 
 BuildArch: noarch
 
@@ -17,23 +21,15 @@ Source: %name-%version.tar
 BuildRequires: git-core
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-waitress
-BuildRequires: python3-tools-pep8
+
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-requests
-BuildRequires: python3-module-pytest-pep8
+BuildRequires: python3-module-waitress
+%endif
 
 %description
 Use requests to talk HTTP via a UNIX domain socket.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Use requests to talk HTTP via a UNIX domain socket.
-
-This package contains tests for %oname.
 
 %prep
 %setup
@@ -53,22 +49,24 @@ find ./ -type f -name '*.py' -exec \
 
 %install
 %python3_install
-touch %buildroot%python3_sitelibdir/requests_unixsocket/tests/__init__.py
+
+# don't package tests
+rm -r %buildroot%python3_sitelibdir/requests_unixsocket/testutils.py
+rm %buildroot%python3_sitelibdir/requests_unixsocket/__pycache__/testutils.*
+rm -r %buildroot%python3_sitelibdir/requests_unixsocket/tests/
 
 %check
 PYTHONPATH=$(pwd) py.test3
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-
-%files tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/requests_unixsocket/
+%python3_sitelibdir/requests_unixsocket-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 0.1.5-alt4.git5d83b0f
+- Applied upstream fixes.
+
 * Thu Apr 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt3
 - Build for python2 disabled.
 

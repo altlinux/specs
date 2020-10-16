@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.1
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: A simple program which checks Python source files for errors
 License: MIT
@@ -16,6 +16,7 @@ BuildArch: noarch
 # https://github.com/PyCQA/pyflakes.git
 Source: %name-%version.tar
 Source1: pyflakes.1
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -36,6 +37,7 @@ check on style.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -51,15 +53,9 @@ mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 rm -r %buildroot%python3_sitelibdir/pyflakes/test
 
 %check
-# we don't want flake8, because pyflakes is its dep
-sed -i \
--e "/deps = flake8/d" \
--e "/flake8 pyflakes setup.py/d" \
-tox.ini
-
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
 
 %files
 %doc AUTHORS LICENSE README.rst
@@ -70,6 +66,9 @@ tox.py3 --sitepackages -p auto -o -v
 
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.1 -> 2.2.0.
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.1-alt2
 - Build for python2 disabled.
 

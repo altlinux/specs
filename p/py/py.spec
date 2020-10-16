@@ -3,8 +3,8 @@
 %def_without check
 
 Name: py
-Version: 1.8.0
-Release: alt6
+Version: 1.9.0
+Release: alt1
 
 Summary: Testing and distributed programming library
 License: MIT
@@ -142,6 +142,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/py-*.egg-info/
 
 %changelog
+* Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
+- 1.8.0 -> 1.9.0.
+
 * Thu Jun 04 2020 Stanislav Levin <slev@altlinux.org> 1.8.0-alt6
 - Disabled testing.
 
