@@ -4,7 +4,7 @@
 
 Name:     rteval
 Version:  2.14.0.28
-Release:  alt6
+Release:  alt7
 
 Summary:  Evaluate the performance of a realtime Linux kernel
 License:  GPL-2.0-or-later
@@ -15,8 +15,6 @@ Vcs:      https://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rteval.git
 # Also:   https://git.kernel.org/pub/scm/linux/kernel/git/jkacur/rteval.git
 
 Source:   %name-%version.tar
-# armh: No linux-rt-tests due to no cyclictest due to no libnuma.
-ExcludeArch: armh
 BuildRequires: python-module-ethtool
 BuildRequires: python-module-libxml2
 BuildRequires: python-module-lxml
@@ -75,6 +73,9 @@ egrep -lr '^#!/usr/bin/python\b' %buildroot | xargs sed -i '1s,python,python2,'
 %_man8dir/*
 
 %changelog
+* Sun Oct 18 2020 Vitaly Chikunov <vt@altlinux.org> 2.14.0.28-alt7
+- Build for armh.
+
 * Sat Oct 17 2020 Vitaly Chikunov <vt@altlinux.org> 2.14.0.28-alt6
 - Update to latest John Kacur patches.
 - spec: Fix Beekeeper rebuild and minor spec changes.
