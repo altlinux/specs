@@ -1,5 +1,5 @@
-Version: 3.2.2
-Release: alt3.1
+Version: 3.2.3
+Release: alt1
 
 %setup_python_module tpg
 
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Sat Oct 17 2020 Fr. Br. George <george@altlinux.ru> 3.2.3-alt1
+- Autobuild version bump to 3.2.3
+
 * Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt3.1
 - NMU: fixed BR: for texlive 2017
 
