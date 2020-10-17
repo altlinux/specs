@@ -1,5 +1,5 @@
 Name: tintin++
-Version: 2.02.03
+Version: 2.02.04
 Release: alt1
 Summary: Console MUD client
 License: GPLv2
@@ -10,7 +10,6 @@ Packager: %packager
 Source: %name-%version.tar
 
 Patch0: alt-tintin++-pcre.patch
-Patch1: alt-tintin++-noadv.patch
 
 # Automatically added by buildreq on Tue Jun 07 2011
 BuildRequires: libpcre-devel zlib-devel
@@ -32,7 +31,6 @@ TinTin++ или tt++ - это свободный клиент для игр MUD
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 cd src
@@ -61,6 +59,9 @@ install -pm644 TODO %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Sat Oct 17 2020 Andrey Bergman <vkni@altlinux.org> 2.02.04-alt1
+- Update to a new version.
+
 * Sun Jun 07 2020 Andrey Bergman <vkni@altlinux.org> 2.02.03-alt1
 - Update to a new version.
 
