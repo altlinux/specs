@@ -1,15 +1,27 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name:     rteval
-Version:  2.14.0.27.g5ed68ae
-Release:  alt5
+Version:  2.14.0.28
+Release:  alt6
 
 Summary:  Evaluate the performance of a realtime Linux kernel
 License:  GPL-2.0-or-later
 Group:    System/Kernel and hardware
-# https://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rteval.git/
 Url:      https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/rteval
+# OldUrl: https://rt.wiki.kernel.org/index.php/Rteval
+Vcs:      https://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rteval.git
+# Also:   https://git.kernel.org/pub/scm/linux/kernel/git/jkacur/rteval.git
 
-BuildRequires: python-module-setuptools python-module-ethtool python-module-lxml python-module-libxml2
-BuildRequires: python-dmidecode
+Source:   %name-%version.tar
+# armh: No linux-rt-tests due to no cyclictest due to no libnuma.
+ExcludeArch: armh
+BuildRequires: python-module-ethtool
+BuildRequires: python-module-libxml2
+BuildRequires: python-module-lxml
+BuildRequires: python-modules-dmidecode
+BuildRequires: python-module-setuptools
 
 # hackbench and cyclictest
 Requires: linux-rt-tests
@@ -21,12 +33,9 @@ Requires: kernel-source-4.9
 Requires: gcc gcc-c++ make binutils util-linux e2fsprogs bc perl flex
 Requires: lzma-utils libelf-devel
 #
-Requires: python-dmidecode
+Requires: python-modules-dmidecode
 # sos contains python module for --sysreport
 Requires: sos
-
-Source:   %name-%version.tar
-BuildArch: noarch
 
 %description
 Rteval is a python program written to evaluate the performance of a
@@ -43,11 +52,13 @@ collected during the run and the statistical analysis of the run.
 
 %prep
 %setup
+sed -i 's/\bpython\b/python2/g' Makefile
 
 %build
+%python_build
 
 %install
-make DESTDIR=%buildroot install_rteval
+%python_install --install-lib=%python_sitelibdir
 # relocate rteval as it's for root only
 mv %buildroot%_bindir %buildroot%_sbindir
 egrep -lr '^#!/usr/bin/python\b' %buildroot | xargs sed -i '1s,python,python2,'
@@ -59,12 +70,15 @@ egrep -lr '^#!/usr/bin/python\b' %buildroot | xargs sed -i '1s,python,python2,'
 %doc COPYING README doc/rteval.txt
 %_sysconfdir/rteval.conf
 %_sbindir/rteval
-%python_sitelibdir_noarch/%name-*
-%python_sitelibdir_noarch/%name
-%_datadir/%name
+%python_sitelibdir/rteval*
+%_datadir/rteval
 %_man8dir/*
 
 %changelog
+* Sat Oct 17 2020 Vitaly Chikunov <vt@altlinux.org> 2.14.0.28-alt6
+- Update to latest John Kacur patches.
+- spec: Fix Beekeeper rebuild and minor spec changes.
+
 * Thu Dec 05 2019 Vitaly Chikunov <vt@altlinux.org> 2.14.0.27.g5ed68ae-alt5
 - Remove --numa mode leaving only --smp for cyclictest.
 
