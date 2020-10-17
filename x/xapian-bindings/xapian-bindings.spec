@@ -5,7 +5,7 @@
 
 Name: xapian-bindings
 Version: 1.4.15
-Release: alt1
+Release: alt2
 
 Summary: Xapian search engine bindings
 
@@ -20,11 +20,14 @@ Patch1: %name-%version-alt-no-docs.patch
 
 %setup_python_module %name
 
-# Automatically added by buildreq on Thu Dec 05 2013
-# optimized out: elfutils gnu-config libncurses-devel libstdc++-devel libtinfo-devel pam0_userpass python-base python-modules python-modules-compiler ruby ruby-stdlibs xz
-BuildRequires: gcc-c++ libruby-devel libxapian-devel python-devel
+BuildRequires: gcc-c++ libruby-devel libxapian-devel
+
 %if_with doc
 BuildRequires: python-module-sphinx-devel python-module-sphinx
+%endif
+%if_with ruby
+BuildRequires(pre): rpm-macros-ruby
+BuildRequires: rpm-build-ruby
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -138,6 +141,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Sat Oct 17 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.15-alt2
+- fix build
+
 * Mon Mar 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.15-alt1
 - new version 1.4.15 (with rpmrb script)
 
