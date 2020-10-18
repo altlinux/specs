@@ -8,7 +8,7 @@
 %def_with openssl
 
 Name: sssd
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -790,6 +790,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Thu Oct 15 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.4.0-alt1
+- Update to 2.4.0
+
 * Sat Aug 01 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.3.1-alt1
 - Update to 2.3.1
 - Remove derecated libwbclient-sssd
