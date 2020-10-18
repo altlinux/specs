@@ -1,6 +1,6 @@
 Name: gnu-efi
 Version: 3.0.9
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Building EFI applications using the GNU toolchain
 # Intel and HP's BSD-like license, except setjmp code coming from GRUB
@@ -11,7 +11,7 @@ Url: http://gnu-efi.sourceforge.net/
 # git https://git.code.sf.net/p/gnu-efi/code
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-ExclusiveArch: %ix86 x86_64 aarch64
+ExclusiveArch: %ix86 x86_64 armh aarch64
 Conflicts: gnu-efi-3.0r gnu-efi-3.0u gnu-efi-3.0.5
 %define efidir altlinux
 
@@ -51,6 +51,9 @@ setarch linux32 -B make PREFIX=%prefix LIBDIR=%_prefix/lib INSTALLROOT=%buildroo
 %_includedir/efi
 
 %changelog
+* Sat Oct 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.0.9-alt2
+- rebuilt for armh
+
 * Thu Oct 18 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.9-alt1
 - up to 3.0.9 with fixes from git
 
