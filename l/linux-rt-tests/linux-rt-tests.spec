@@ -5,7 +5,7 @@
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
 Version:  1.9
-Release:  alt1
+Release:  alt2
 
 Summary:  Programs that test various rt-linux features
 License:  GPL-2.0-or-later
@@ -14,8 +14,6 @@ Url:      https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/rt
 Vcs:      git://git.kernel.org/pub/scm/utils/rt-tests/rt-tests.git
 
 Source: %name-%version.tar
-# No libnuma, no cyclictest.
-ExcludeArch: armh
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnuma-devel
 
@@ -25,7 +23,7 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 
 %prep
 %setup
-%ifarch aarch64
+%ifarch aarch64 armh
   # src/oslat/oslat.c:72:4: error: #error Need frc() for this platform.
   sed -i '/oslat\.[c8]/d' Makefile
 %endif
@@ -44,6 +42,9 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 %_man8dir/*.8*
 
 %changelog
+* Sun Oct 18 2020 Vitaly Chikunov <vt@altlinux.org> 1.9-alt2
+- Build for armh.
+
 * Wed Sep 23 2020 Vitaly Chikunov <vt@altlinux.org> 1.9-alt1
 - Update to v1.9 (2020-09-18).
 
