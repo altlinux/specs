@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.10.2
+Version: 2.10.3
 Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -18,11 +18,9 @@ Source2: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%versio
 Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.tar.xz
 Source3: ftconfig.h
 
-Patch3: freetype-2.4.10-alt-fttrigon.patch
 Patch6: ft2demos-2.6.2-alt-snprintf.patch
 Patch11: freetype-2.10.0-enable-subpixel-rendering.patch
 Patch12: freetype-2.10.0-enable-valid.patch
-Patch13: ft2demos-2.4.10-rh-more-demos.patch
 Patch14: freetype-2.10.0-alt-e2k.patch
 
 BuildRequires(pre): rpm-build-ubt
@@ -81,12 +79,9 @@ This package contains collection of FreeType demonstration programs.
 %setup -n freetype-%version -a1 -b2
 ln -s ft2demos-%version ft2demos
 
-%patch3 -p1
 %patch6 -p1
-
 %patch11 -p1
 %patch12 -p1
-%patch13 -p0
 
 %ifarch %e2k
 # lcc 1.23.12 lacks vector_shuffle gcc extension
@@ -157,6 +152,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Sun Oct 18 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.3-alt1
+- 2.10.3
+
 * Fri May 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.2-alt1
 - 2.10.2
 
