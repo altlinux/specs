@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:		burp
-Version:	2.3.34
+Version:	2.3.36
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
@@ -12,7 +12,7 @@ Group:		Archiving/Backup
 Url:		https://burp.grke.org/
 Vcs:		https://github.com/grke/burp.git
 
-Source:		%{name}-%{version}.tar
+Source:		%name-%version.tar
 
 BuildRequires:  libtool
 BuildRequires:  librsync-devel
@@ -48,9 +48,9 @@ amount of space that is used by each backup.
 
 %install
 %makeinstall_std install-all
-install -D -p -m 0755 .gear/burp.init %{buildroot}%{_initrddir}/burp-server
-install -D -p -m 0644 .gear/burp.service %{buildroot}%{_unitdir}/burp-server.service
-%__subst "s,password,#password,g" %{buildroot}%_sysconfdir/burp/clientconfdir/testclient
+install -D -p -m 0755 .gear/burp.init %buildroot%_initrddir/burp-server
+install -D -p -m 0644 .gear/burp.service %buildroot%_unitdir/burp-server.service
+%__subst "s,password,#password,g" %buildroot%_sysconfdir/burp/clientconfdir/testclient
 
 %check
 %make_build check
@@ -58,8 +58,8 @@ install -D -p -m 0644 .gear/burp.service %{buildroot}%{_unitdir}/burp-server.ser
 
 %files
 %doc %_docdir/%name/
-%{_initrddir}/burp-server
-%{_unitdir}/burp-*.*
+%_initrddir/burp-server
+%_unitdir/burp-*.*
 %dir %_datadir/%name/
 %_datadir/%name/scripts/
 %_bindir/vss_strip
@@ -85,6 +85,9 @@ install -D -p -m 0644 .gear/burp.service %{buildroot}%{_unitdir}/burp-server.ser
 %preun_service burp-server
 
 %changelog
+* Sun Oct 18 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.36-alt1
+- Update to 2.3.36 (2020-09-29).
+
 * Wed Sep 02 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.34-alt1
 - Update to 2.3.34 (2020-09-01).
 
