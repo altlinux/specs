@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.19.5
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -223,6 +223,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Mon Oct 19 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt3
+- show apps from all desktops on tasks panel by default (closes: 39092)
+
 * Fri Sep 25 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt2
 - fix defalut multimedia players chooser
 
