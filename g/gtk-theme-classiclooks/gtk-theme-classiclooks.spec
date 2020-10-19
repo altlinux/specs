@@ -1,7 +1,7 @@
 %define theme_name "ClassicLooks"
 
 Name: gtk-theme-classiclooks
-Version: 1.4.4
+Version: 1.5.0
 Release: alt1
 Epoch: 1
 Summary: ClassicLooks is a Gtk2 & Gtk3 themes
@@ -98,6 +98,9 @@ done
 %_datadir/themes/*/xfwm4/
 
 %changelog
+* Mon Oct 19 2020 Mikhail Efremov <sem@altlinux.org> 1:1.5.0-alt1
+- Updated to 1.5.0.
+
 * Tue Mar 03 2020 Mikhail Efremov <sem@altlinux.org> 1:1.4.4-alt1
 - Updated to 1.4.4.
 
