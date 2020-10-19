@@ -4,7 +4,7 @@
 %define soname 3
 
 Name: embree
-Version: 3.12.0
+Version: 3.12.1
 Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
@@ -90,6 +90,9 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %_libdir/cmake/%name-%version/
 
 %changelog
+* Fri Oct 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12.1-alt1
+- Updated to upstream version 3.12.1.
+
 * Wed Oct 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12.0-alt1
 - Updated to upstream version 3.12.0.
 
