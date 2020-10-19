@@ -1,15 +1,16 @@
+%set_verify_elf_method unresolved=relaxed
+
 Name: libluv
-Version: 1.30.1
+Version: 1.36.0
 Release: alt1
 
 Summary: libuv bindings for luajit
 
 Group: Development/Tools
-License: Apache License 2.0
+License: Apache-2.0
 Url: https://github.com/luvit/luv
 
 Source: %name-%version.tar
-Patch: %name-1.30.1-alt-build-quickfix.patch
 
 BuildRequires(pre): rpm-macros-cmake cmake
 
@@ -30,7 +31,6 @@ libluv header and build tools.
 
 %prep
 %setup
-%patch -p2
 
 %build
 %cmake \
@@ -38,7 +38,7 @@ libluv header and build tools.
     -DLUA_BUILD_TYPE=System \
     -DBUILD_MODULE=OFF \
     -DBUILD_SHARED_LIBS=ON \
-    -DINSTALL_LIB_DIR=%_libdir
+    -DSHAREDLIBS_INSTALL_LIB_DIR=%_libdir
 
 %cmake_build VERBOSE=1
 
@@ -55,5 +55,8 @@ libluv header and build tools.
 
 
 %changelog
+* Mon Oct 19 2020 Vladimir Didenko <cow@altlinux.ru> 1.36.0-alt1
+- new version
+
 * Wed Sep 18 2019 Vladimir Didenko <cow@altlinux.ru> 1.30.1-alt1
 - initial build for Sisyphus
