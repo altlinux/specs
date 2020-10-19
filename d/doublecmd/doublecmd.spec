@@ -3,7 +3,7 @@
 Name: doublecmd
 Summary: Twin-panel (commander-style) file manager
 Version: 0.9.9
-Release: alt1
+Release: alt2
 Epoch:   1
 Url: https://doublecmd.sourceforge.io
 
@@ -31,7 +31,7 @@ Patch0: doublecmd-use-default-terminal.patch
 Patch1: doublecmd-not-install-zdli.patch
 Patch2: doublecmd-alt-build-in-one-thread.patch
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: x86_64 aarch64
 
 %description
 Double Commander is a cross platform open source file manager with two panels
@@ -89,8 +89,12 @@ lcl=gtk2 ./build.sh beta
 %endif
 
 %install
+%ifarch aarch64
+export CPU_TARGET=x86_64
+%endif
 install/linux/install.sh --install-prefix=%buildroot
-install ./%name-qt %buildroot%_libdir/%name/%name-qt
+install -d %buildroot%_bindir
+install -Dpm0755 ./%name-qt %buildroot%_libdir/%name/%name-qt
 ln -s ../%_lib/%name/%name-qt %buildroot%_bindir/%name-qt
 # Adapt polkit rule for doublecmd-qt
 cp %buildroot%_datadir/polkit-1/actions/org.doublecmd{,-qt}.root.policy
@@ -101,7 +105,7 @@ rm -f %buildroot%_libdir/%name/%name \
       %buildroot%_desktopdir/%name.desktop \
       %buildroot%_datadir/polkit-1/actions/org.doublecmd.root.policy
 %endif
-install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
+install -Dpm0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 
 # icons
 %__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
@@ -141,6 +145,9 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Oct 16 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.9.9-alt2
+- Build on aarch64, do not build on i586.
+
 * Mon Oct 05 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.9.9-alt1
 - Downgrade to last stable version.
 - Build with gtk backend (ALT #38835).
