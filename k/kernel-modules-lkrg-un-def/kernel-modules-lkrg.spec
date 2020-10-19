@@ -2,10 +2,10 @@
 %define module_version	0.8.1+git20201016.c7d427d
 %define module_release	alt1
 
-%define flavour		std-pae
-%define karch		%ix86
+%define flavour		un-def
+%define karch		%ix86 x86_64 aarch64 armh
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-pae
+BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
