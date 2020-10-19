@@ -1,17 +1,23 @@
 %global appid org.gajim.Gajim
 Name: gajim
-Version: 1.1.3
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
-License: GPLv3
+License: GPL-3.0-only
 Group: Networking/Instant messaging
 Url: http://gajim.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: %url/downloads/%name-%version.tar.bz2
-Patch0001: 0001-Prefer-X11-to-Wayland-GDK-backend.patch
-Patch0002: 0002-setup.cfg-bump-nbxmpp-version.patch
+Source: https://gajim.org/downloads/%version/gajim-%version.tar.gz
+Patch1: gajim-1.2.2-alt-fix-egg-requires.patch
+
+# minimal python version for gajim = 1.2.2
+Requires: python3 >= 3.7
+
+# typelib(Avahi)
+%filter_from_requires /^typelib(Avahi)/d
+Requires: libavahi-gobject
 
 Requires: libgtk+3-gir
 %py3_requires cssutils
@@ -24,7 +30,7 @@ Requires: libgtk+3-gir
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools
-BuildRequires: python3-module-nbxmpp >= 0.6.10
+BuildRequires: python3-module-nbxmpp >= 1.0.2
 BuildArch: noarch
 
 %description
@@ -35,8 +41,7 @@ it nicely.
 
 %prep
 %setup -n %name-%version
-%patch0001 -p1
-%patch0002 -p1
+%patch1 -p1
 
 %build
 %python3_build
@@ -52,10 +57,8 @@ it nicely.
 %_bindir/%name-remote
 %_bindir/%name-history-manager
 %_man1dir/*
-#_datadir/%name
 %_datadir/applications/%appid.desktop
 %_datadir/metainfo/%appid.appdata.xml
-%_datadir/icons/hicolor/*x*/apps/%appid.png
 %_datadir/icons/hicolor/scalable/apps/%appid.svg
 %_datadir/icons/hicolor/symbolic/apps/%appid-symbolic.svg
 %python3_sitelibdir/%name
@@ -68,6 +71,10 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Oct 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2.2-alt1
+- 1.2.2
+- spec: fix license field
+
 * Sat Aug 31 2019 Alexey Shabalin <shaba@altlinux.org> 1.1.3-alt2
 - update Requires
 
