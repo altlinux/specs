@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: Python module to generate QR Codes
 
@@ -75,7 +75,7 @@ popd
 %python_sitelibdir/%oname/
 # pure.py requires pymaging module that is not ready for release
 %exclude %python_sitelibdir/%oname/image/pure.py
-%exclude %python_sitelibdir/*.egg-info
+%python_sitelibdir/*.egg-info
 %_man1dir/*
 %exclude %_bindir/*
 
@@ -84,10 +84,13 @@ popd
 %python3_sitelibdir/%oname/
 # pure.py requires pymaging module that is not ready for release
 %exclude %python3_sitelibdir/%oname/image/pure.py
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-*
 %endif
 
 %changelog
+* Mon Oct 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.1.0-alt2
+- NMU: Do not exclude egg files: side modules rely on them.
+
 * Wed Apr 10 2019 Vladimir Didenko <cow@altlinux.org> 6.1.0-alt1
 - new version
 
