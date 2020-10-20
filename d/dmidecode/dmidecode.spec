@@ -1,6 +1,6 @@
 Name: dmidecode
-Version: 3.2
-Release: alt2
+Version: 3.3
+Release: alt1
 
 Summary: Dmidecode is a tool for dumping a computer's DMI table
 License: GPLv2+
@@ -9,7 +9,6 @@ Group: System/Kernel and hardware
 URL: http://www.nongnu.org/dmidecode/
 Source0: http://download.savannah.gnu.org/releases/dmidecode/dmidecode-%version.tar
 Source1: %name.watch
-Patch0: dmidecode-3.2-upstream-nvdimm.patch
 
 %description
 dmidecode reports information about x86 hardware as described in the system BIOS
@@ -24,7 +23,6 @@ parallel, USB).
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 subst 's/-O./%optflags/' Makefile
@@ -38,6 +36,9 @@ subst 's/-O./%optflags/' Makefile
 %_man8dir/*
 
 %changelog
+* Tue Oct 20 2020 Anton Farygin <rider@altlinux.ru> 3.3-alt1
+- 3.3
+
 * Wed Jan 16 2019 Anton Farygin <rider@altlinux.ru> 3.2-alt2
 - added upstream patch for fix the problem with out-of-spec for nvdimm.
 
