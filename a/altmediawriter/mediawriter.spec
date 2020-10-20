@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        0.4.8
+Version:        0.5.0
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,12 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Tue Oct 20 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.5.0-alt1
+- Remove artifacts from all yml strings
+- Remove blank rectangle that obscured top of images list
+- Put workstation and server releases on the front page
+- Reduce row heights and max line counts
+
 * Wed Oct 07 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.8-alt1
 - Improve image summary display
 - Improve windows build
