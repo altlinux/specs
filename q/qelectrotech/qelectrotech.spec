@@ -1,16 +1,16 @@
 Name: qelectrotech
-Version: 0.61
-Release: alt3
-Epoch: 1
+Version: 0.7.0
+Release: alt1
+Epoch: 2
 
 Summary: An electric diagrams editor
 # Prog is GPLv2 - Symbols/Elements are Creative Commons Attribution
-License: GPLv2+
+License: GPL-2.0+
 Group: Engineering
 
 Url: http://qelectrotech.org/
-Source0: qelectrotech-%version-src.tar.gz
-Source1: %name.watch
+# Download from https://git.tuxfamily.org/qet/qet.git/
+Source0: qet-%version.tar.gz
 Patch: %name-fix-build-with-qt5.11.patch
 
 BuildRequires: desktop-file-utils
@@ -23,6 +23,8 @@ BuildRequires: libqt5-svg
 BuildRequires: libqt5-network
 BuildRequires: libqt5-widgets
 BuildRequires: libqt5-printsupport
+BuildRequires: kf5-kwidgetsaddons-devel
+BuildRequires: kf5-kcoreaddons-devel
 
 Requires: qelectrotech-symbols = %EVR
 Requires: qt5-translations
@@ -41,47 +43,47 @@ Summary(pt): Um editor de esquemas eléctricos
 Summary(ru): Редактор электрических схем
 
 %description
-QElectroTech is a Qt4 application to design electric diagrams. It uses XML
+QElectroTech is a Qt application to design electric diagrams. It uses XML
 files for elements and diagrams, and includes both a diagram editor and an
 element editor.
 
 %description -l cs
-QElectroTech je aplikací Qt4 určenou pro návrh nákresů elektrických obvodů.
+QElectroTech je aplikací Qt určenou pro návrh nákresů elektrických obvodů.
 Pro prvky a nákresy používá soubory XML, a zahrnuje v sobě jak editor nákresů,
 tak editor prvků.
 
 %description -l el
-Το QElectroTech είναι μια εφαρμογή Qt4 για σχεδίαση ηλεκτρικών διαγραμμάτων.
+Το QElectroTech είναι μια εφαρμογή Qt για σχεδίαση ηλεκτρικών διαγραμμάτων.
 Χρησιμοποιεί αρχεία XML για στοιχεία και διαγράμματα, και περιλαμβάνει
 επεξεργαστή διαγραμμάτων καθώς και επεξεργαστή στοιχείων.
 
 %description -l es
-QElectroTech es una aplicación Qt4 para diseñar esquemas eléctricos.
+QElectroTech es una aplicación Qt para diseñar esquemas eléctricos.
 Utiliza archivos XML para los elementos y esquemas, e incluye un editor
 de esquemas y un editor de elemento.
 
 %description -l fr
-QElectroTech est une application Qt4 pour réaliser des schémas électriques.
+QElectroTech est une application Qt pour réaliser des schémas électriques.
 QET utilise le format XML pour ses éléments et ses schémas et inclut un
 éditeur de schémas ainsi qu'un éditeur d'élément.
 
 %description -l it
-QElectroTech è una applicazione fatta in Qt4 per disegnare schemi elettrici.
+QElectroTech è una applicazione fatta in Qt per disegnare schemi elettrici.
 QET usa il formato XML per i suoi elementi e schemi, includendo anche un
 editor per gli stessi.
 
 %description -l pl
-QElectroTech to aplikacja napisana w Qt4, przeznaczona do tworzenia schematów
+QElectroTech to aplikacja napisana w Qt, przeznaczona do tworzenia schematów
 elektrycznych. Wykorzystuje XML do zapisywania plików elementów i projektów.
 Posiada edytor schematów i elementów.
 
 %description -l pt
-QElectroTech é uma aplicação baseada em Qt4 para desenhar esquemas eléctricos.
+QElectroTech é uma aplicação baseada em Qt para desenhar esquemas eléctricos.
 QET utiliza ficheiros XML para os elementos e para os esquemas e inclui um
 editor de esquemas e um editor de elementos.
 
 %description -l ru
-QElectroTech - приложение, написанное на Qt4 и предназначенное для разработки
+QElectroTech - приложение, написанное на Qt и предназначенное для разработки
 электрических схем. Оно использует XML-файлы для элементов и схем и включает
 как редактор схем, так и редактор элементов.
 
@@ -128,7 +130,7 @@ Colecção de elementos para QElectroTech.
 Коллекция элементов для QElectroTech.
 
 %prep
-%setup -n %name-%version-src
+%setup -n qet-%version
 %patch -p2
 
 sed -e s,/usr/local/,%prefix/, \
@@ -142,10 +144,11 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
+%build
 lrelease-qt5 %name.pro
 qmake-qt5 %name.pro
-
-%build
+# Fix path to development KF5 libraries
+subst 's|libKF5|kf5/devel/libKF5|g' Makefile*
 %make_build
 
 %install
@@ -186,6 +189,9 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Tue Oct 20 2020 Andrey Cherepanov <cas@altlinux.org> 2:0.7.0-alt1
+- New version.
+
 * Mon Jun 01 2020 Anton Midyukov <antohami@altlinux.org> 1:0.61-alt3
 - Add missing main categorie (Graphics) for desktop entry file
 
