@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20200827.6f700b5
+%define module_version 0.8.1+git20201016.c7d427d
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -42,6 +42,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Oct 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201016.c7d427d-alt1
+- Updated to c7d427de476920f0585532ad57ee4280f083bf7f.
+
 * Tue Sep 01 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20200827.6f700b5-alt1
 - Updated to 6f700b5b08b5a0fbc5fa41e1ba1908923a29eca9.
 
