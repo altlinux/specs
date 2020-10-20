@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Crypto provider installer
@@ -47,6 +47,11 @@ done
 %sdir/
 
 %changelog
+* Tue Oct 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
+- add user's Download dir checking for a tarball
+- fix install order cprocsp-rdr-pcsc
+- install_cryptopro.sh: remove all lock files from /var/opt/cprocsp/tmp/ before install
+
 * Fri Oct 09 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt1
 - improve README.md
 - fix direct script call
