@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt46
+Release: alt47
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -143,9 +143,6 @@ cat <<EOF > %buildroot%_sysconfdir/sysconfig/%name
 EVMS_RECONFIG=no
 EOF
 
-%check
-tests/dm_mangling_test
-
 %files
 %doc doc/linuxrc ChangeLog INSTALL* README PLUGIN.IDS TERMINOLOGY
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -186,6 +183,10 @@ tests/dm_mangling_test
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Oct 20 2020 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt47
+- Revert "Fix LVM2 logical volume deactivation"
+  Fix not ready yet and was sent by mistake
+
 * Tue Sep 29 2020 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt46
 - Fix LVM2 logical volume deactivation (closes: #38796)
 - Remove broken dependency on
