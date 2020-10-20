@@ -37,8 +37,8 @@
 %define sover 4.5
 Name: lib%bname
 Epoch: 1
-Version: 4.5.0
-Release: alt2
+Version: 4.5.1
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -360,6 +360,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/quality
 
 %changelog
+* Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.1-alt1
+- Updated to upstream version 4.5.1.
+
 * Tue Dec 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.0-alt2
 - Fixed build.
 
