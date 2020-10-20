@@ -8,8 +8,10 @@
 
 Name: python3-module-%oname
 Version: 6.0.2
-Release: alt1
+Release: alt2
+
 Summary: Converting Jupyter Notebooks
+
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/nbconvert
@@ -28,8 +30,10 @@ Source2: lab-2.1.2-theme-light.css
 Source3: lab-2.1.2-theme-dark.css
 Source4: classic-5.4.0-style.css
 
-BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-jinja2-tests python3-module-traitlets-tests
 %if_with doc
 BuildRequires: python3-module-html5lib python3(pandocfilters)
@@ -53,8 +57,24 @@ BuildRequires: python3(nest_asyncio)
 %endif
 
 %py3_provides %oname
-%py3_requires mistune jinja2 pygments traitlets jupyter_core nbformat
-%py3_requires tornado jupyter_client
+
+# from setup.py
+%py3_use mistune >= 0.8.1
+%py3_use mistune < 2
+%py3_use jinja2 >= 2.4
+# TODO: py3_use pygments >= 2.4.1
+%py3_use Pygments >= 2.4.1
+%py3_use jupyterlab_pygments
+%py3_use traitlets >= 4.2
+%py3_use jupyter_core
+%py3_use nbformat >= 4.4
+%py3_use entrypoints >= 0.2.2
+%py3_use bleach
+%py3_use pandocfilters >= 1.4.1
+%py3_use testpath
+%py3_use defusedxml
+%py3_use nbclient >= 0.5.0
+%py3_use nbclient < 0.6.0
 
 %description
 Jupyter nbconvert converts notebooks to various other formats via Jinja
@@ -167,6 +187,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %endif
 
 %changelog
+* Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt2
+- improve requires
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2-alt1
 - Updated to upstream version 6.0.2.
 - Disabled build for python-2.
