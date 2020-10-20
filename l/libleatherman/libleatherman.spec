@@ -1,5 +1,5 @@
 Name:    libleatherman
-Version: 1.12.1
+Version: 1.12.2
 Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
@@ -12,6 +12,7 @@ Source: leatherman-%version.tar
 Patch1: fedora-shared_nowide.patch
  
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
@@ -45,11 +46,13 @@ sed -r -i.orig 's,reinterpret_cast<char\*\*\*>,(char***),g' ruby/src/api.cc
 %endif
 
 %build
-%cmake -DLEATHERMAN_SHARED=TRUE -DENABLE_CXX_WERROR=OFF
-%cmake_build
+%cmake -GNinja \
+       -DLEATHERMAN_SHARED=TRUE \
+       -DENABLE_CXX_WERROR=OFF
+%ninja_build -C BUILD
 
 %install
-%cmakeinstall_std
+%ninja_install -C BUILD
 
 %files
 %doc *.md
@@ -62,6 +65,10 @@ sed -r -i.orig 's,reinterpret_cast<char\*\*\*>,(char***),g' ruby/src/api.cc
 %_libdir/cmake/leatherman
 
 %changelog
+* Tue Oct 20 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.2-alt1
+- New version.
+- Build using ninja.
+
 * Tue Jul 14 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.1-alt1
 - New version.
 
