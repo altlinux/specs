@@ -1,5 +1,5 @@
 Name: eget
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary: wget wrapper with wildcard support
@@ -30,6 +30,9 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Mon Oct 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- eget: fix ? in sed
+
 * Mon Jun 18 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2-alt1
 - eget: fix href case accept
 
