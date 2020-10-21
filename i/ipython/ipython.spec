@@ -2,11 +2,11 @@
 
 %define oname ipython
 
-%def_with doc
+%def_without doc
 
 Name: ipython
 Version: 5.5.0
-Release: alt5
+Release: alt6
 
 %setup_python_module IPython
 
@@ -29,8 +29,7 @@ BuildRequires: python-module-zmq
 BuildRequires: python-module-tornado python-modules-sqlite3
 BuildRequires: python-module-jsonschema python-module-traitlets
 BuildRequires: python-module-pexpect python-module-pickleshare
-BuildRequires: python-module-simplegeneric python-module-ipykernel
-BuildRequires: python-module-ipyparallel
+BuildRequires: python-module-simplegeneric 
 BuildRequires: python2.7(pathlib2)
 BuildRequires: python2.7(prompt_toolkit)
 BuildRequires: python2.7(nose.tools)
@@ -87,9 +86,12 @@ Summary: An enhanced interactive Python shell
 Group: Development/Python
 
 %add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
-%py_requires jsonschema traitlets pexpect simplegeneric ipykernel
-%py_requires ipyparallel
+%py_requires jsonschema traitlets pexpect simplegeneric
 %py_requires pathlib2
+# fake due exaile
+%py_provides IPython
+# fake due BALL
+%py_provides ipykernel
 
 %description -n python-module-%oname
 IPython provides a replacement for the interactive Python interpreter with
@@ -117,11 +119,12 @@ ln -s ../objects.inv docs/source/
 %endif
 
 %build
-%python_build
+#python_build
 
 %install
-%python_install
-rm %buildroot%_bindir/iptest
+mkdir -p %buildroot
+#python_install
+#rm %buildroot%_bindir/iptest
 
 %if_with doc
 install -d %buildroot%_docdir/%name
@@ -133,22 +136,22 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %files
-%doc COPYING.rst
-%doc README.rst
-%_bindir/*
-%_man1dir/*
+#%doc COPYING.rst
+#%doc README.rst
+#%_bindir/*
+#%_man1dir/*
 %if_with doc
 %dir %_docdir/%name
 %_docdir/%name/*.txt
 %endif
 
 %files -n python-module-%oname
-%python_sitelibdir/IPython/
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/IPython/*/tests
+#%python_sitelibdir/IPython/
+#%python_sitelibdir/*.egg-info
+#%exclude %python_sitelibdir/IPython/*/tests
 
-%files -n python-module-%oname-tests
-%python_sitelibdir/IPython/*/tests
+#%files -n python-module-%oname-tests
+#%python_sitelibdir/IPython/*/tests
 
 %if_with doc
 %files doc
@@ -163,6 +166,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt6
+- last (fake) build before remove (wait for rebuild BALL and exaile)
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.0-alt5
 - Rebuilt without python-3.
 - Moved python modules into separate packages.
