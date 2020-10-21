@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
-%add_findreq_skiplist /lib/kernel/install.d/*
+%add_findreq_skiplist %_prefix/lib/kernel/install.d/*
 %add_findreq_skiplist %_unitdir/local.service
 %add_findreq_skiplist %_unitdir/rc-local.service
 %add_findreq_skiplist %_unitdir/quotaon.service
@@ -36,7 +36,7 @@
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolve
-%ifarch %{ix86} x86_64 aarch64
+%ifarch %{ix86} x86_64 aarch64 %arm
 %def_enable gnuefi
 %endif
 %def_disable p11kit
@@ -79,7 +79,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.6
-Release: alt3
+Release: alt4
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -834,7 +834,7 @@ mkdir -p %buildroot/lib/systemd/system-preset
 mkdir -p %buildroot%_sysconfdir/systemd/system-preset
 mkdir -p %buildroot/lib/systemd/user-preset
 mkdir -p %buildroot%_sysconfdir/systemd/user-preset
-mkdir -p %buildroot/usr/lib/systemd/user-preset
+mkdir -p %buildroot%_prefix/lib/systemd/user-preset
 install -m 0644 %SOURCE34 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE35 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE36 %buildroot/lib/systemd/system-preset/
@@ -883,10 +883,10 @@ vm.mmap_min_addr = %mmap_min_addr
 EOF
 
 # define default PATH for system and user
-mkdir -p %buildroot/usr/lib/systemd/user.conf.d
-install -m 0644 %SOURCE11 %buildroot/usr/lib/systemd/user.conf.d/env-path.conf
-#mkdir -p %buildroot/lib/systemd/system.conf.d
-#install -m 0644 %SOURCE12 %buildroot/lib/systemd/system.conf.d/env-path.conf
+mkdir -p %buildroot%_prefix/lib/systemd/user.conf.d
+install -m 0644 %SOURCE11 %buildroot%_prefix/lib/systemd/user.conf.d/env-path.conf
+#mkdir -p %buildroot%_prefix/systemd/system.conf.d
+#install -m 0644 %SOURCE12 %buildroot%_prefix/systemd/system.conf.d/env-path.conf
 
 #######
 # UDEV
@@ -1443,10 +1443,13 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %exclude %_datadir/factory
 %exclude %_tmpfilesdir/etc.conf
 
-/usr/lib/systemd
+%_prefix/lib/systemd
 /lib/systemd/system-generators
 %if_enabled efi
 %exclude /lib/systemd/system-generators/systemd-bless-boot-generator
+%if_enabled gnuefi
+%exclude %_prefix/lib/systemd/boot
+%endif
 %endif
 
 %dir /lib/systemd/system-preset
@@ -1490,10 +1493,10 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_man8dir/kernel-install.*
 %dir %_sysconfdir/kernel
 %dir %_sysconfdir/kernel/install.d
-%dir /lib/kernel
-%dir /lib/kernel/install.d
-/lib/kernel/install.d/*
-%exclude /lib/kernel/install.d/50-depmod.install
+%dir %_prefix/lib/kernel
+%dir %_prefix/lib/kernel/install.d
+%_prefix/lib/kernel/install.d/*
+%exclude %_prefix/lib/kernel/install.d/50-depmod.install
 
 %files -n libsystemd
 /%_lib/libsystemd.so.*
@@ -1976,6 +1979,10 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Oct 19 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt4
+- revert kernelinstalldir path /usr/lib/kernel/install.d -> /lib/kernel/install.d
+- build systemd-boot for arm
+
 * Fri Oct 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt3
 - dhcp-server: offer router address as next-server (sbolshakov@)
 
