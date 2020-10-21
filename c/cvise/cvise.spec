@@ -1,5 +1,5 @@
 Name: cvise
-Version: 1.5.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Super-parallel Python port of the C-Reduce
@@ -88,6 +88,9 @@ pytest3 -v .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Tue Jul 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 
