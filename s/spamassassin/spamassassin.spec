@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.4.4
-Release: alt1
+Release: alt2
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -261,8 +261,11 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Wed Oct 21 2020 Sergey Y. Afonin <asy@altlinux.org> 3.4.4-alt2
+- fixed typo in %%changelog
+
 * Wed Oct 21 2020 Sergey Y. Afonin <asy@altlinux.org> 3.4.4-alt1
-- 3.4.3 (fixes: CVE-2020-1931, CVE-2020-1930)
+- 3.4.4 (fixes: CVE-2020-1931, CVE-2020-1930)
 - applied repocop's patch for specfile-useradd-n
 
 * Fri Jan 03 2020 Sergey Y. Afonin <asy@altlinux.org> 3.4.3-alt1
