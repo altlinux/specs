@@ -1,58 +1,43 @@
 %define oname notebook
 
-%def_with python3
-#def_disable check
-%def_with bootstrap
+#%def_disable check
+%def_without bootstrap
 
 %def_without doc
 
-Name: python-module-%oname
-Version: 5.2.2
-Release: alt4
+Name: python3-module-%oname
+Version: 6.1.4
+Release: alt1
 
 Summary: Jupyter Interactive Notebook
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 
 Url: https://pypi.python.org/pypi/notebook/
+
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
 
 BuildArch: noarch
 
-BuildRequires: python-module-pathlib
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-zmq python-module-jinja2
-BuildRequires: python-module-tornado
-%if_with bootstrap
-BuildRequires: python-module-ipython_genutils-tests
-%endif
-BuildRequires: python-module-traitlets-tests python-module-jupyter_core
-BuildRequires: python-module-jupyter_client python-module-nbformat
-%if_with bootstrap
-BuildRequires: python-module-ipykernel python-module-nbconvert
-%endif
-BuildRequires: python-module-mock python-module-terminado
-BuildRequires: python-module-nose python-module-requests
-BuildRequires: python-module-coverage
-%{?!_without_check:%{?!_disable_check:BuildRequires: python2.7(pandocfilters) python2.7(nose_warnings_filters)}}
+BuildRequires(pre): rpm-build-intro
+BuildRequires(pre): rpm-build-python3
+
 %if_with doc
 BuildRequires: pandoc
 %endif
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-zmq python3-module-jinja2
-BuildRequires: python3-module-tornado
+
+BuildRequires: python3-devel >= 3.5
+BuildRequires: python3-module-setuptools
 %if_with bootstrap
 BuildRequires: python3-module-ipython_genutils-tests
 %endif
-BuildRequires: python3-module-traitlets-tests python3-module-jupyter_core
-BuildRequires: python3-module-jupyter_client python3-module-nbformat
+BuildRequires: python3-module-traitlets-tests
 %if_with bootstrap
-BuildRequires: python3-module-ipykernel python3-module-nbconvert
+%py3_use nbconvert
+%py3_use ipykernel
 %endif
-BuildRequires: python3-module-mock python3-module-terminado
+BuildRequires: python3-module-mock
 BuildRequires: python3-module-nose python3-module-requests
 BuildRequires: python3-module-coverage
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3(pandocfilters) python3(nose_warnings_filters)}}
@@ -60,11 +45,19 @@ BuildRequires: python3-module-coverage
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3(nbsphinx) python3-module-sphinx_rtd_theme
 %endif
-%endif
 
-%py_provides %oname
-%py_requires zmq jinja2 tornado ipython_genutils traitlets jupyter_core
-%py_requires jupyter_client nbformat nbconvert ipykernel
+%py3_use zmq >= 17
+%py3_use argon2-cffi
+%py3_use jinja2
+%py3_use tornado >= 5.0
+%py3_use ipython_genutils
+%py3_use traitlets >= 4.2.1
+%py3_use jupyter_core >= 4.6.1
+%py3_use jupyter_client >= 5.3.4
+%py3_use terminado >= 0.8.3
+%py3_use nbformat
+
+Conflicts: python-module-%oname
 
 %description
 The Jupyter HTML notebook is a web-based notebook environment for
@@ -72,7 +65,7 @@ interactive computing.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -81,75 +74,40 @@ interactive computing.
 
 This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Jupyter Interactive Notebook
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires zmq jinja2 tornado ipython_genutils traitlets jupyter_core
-%py3_requires jupyter_client nbformat nbconvert ipykernel
-
-%description -n python3-module-%oname
-The Jupyter HTML notebook is a web-based notebook environment for
-interactive computing.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-The Jupyter HTML notebook is a web-based notebook environment for
-interactive computing.
-
-This package contains tests for %oname.
-
-%package -n python3-module-%oname-pickles
+%package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
 
-%description -n python3-module-%oname-pickles
+%description pickles
 The Jupyter HTML notebook is a web-based notebook environment for
 interactive computing.
 
 This package contains pickles for %oname.
 
-%package -n python3-module-%oname-docs
+%package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n python3-module-%oname-docs
+%description docs
 The Jupyter HTML notebook is a web-based notebook environment for
 interactive computing.
 
 This package contains documentation for %oname.
-%endif
+
 
 %prep
 %setup
-%patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
 %if_with doc
 %prepare_sphinx3 docs
 ln -s ../objects.inv ../python3/docs/source/
 %endif
-%endif
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
 
 %if_with doc
@@ -159,71 +117,45 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
-
 %if_with bootstrap
 %check
-export LC_ALL=en_US.UTF-8
-nosetests -vv --with-coverage --cover-package=%oname %oname
-
-%if_with python3
-pushd ../python3
 nosetests3 -vv --with-coverage --cover-package=%oname %oname
-popd
-%endif
 %endif
 
 %files
 %doc *.md
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/*/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/tests
-%python_sitelibdir/*/*/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
-%_bindir/*.py3
-%python3_sitelibdir/*
+%_bindir/jupyter-bundlerextension
+%_bindir/jupyter-nbextension
+%_bindir/jupyter-notebook
+%_bindir/jupyter-serverextension
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-*.egg-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 %if_with doc
-%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/%oname/pickle
 %endif
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/tests
 %python3_sitelibdir/*/*/*/tests
 
 %if_with doc
-%files -n python3-module-%oname-pickles
-%python3_sitelibdir/*/pickle
+%files pickles
+%python3_sitelibdir/%oname/pickle/
 
-%files -n python3-module-%oname-docs
+%files docs
 %doc ../python3/docs/build/html/*
-%endif
 %endif
 
 %changelog
+* Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 6.1.4-alt1
+- separate build python3 module, cleanup spec
+- new version 6.1.4 (with rpmrb script)
+- switch to build from tarball
+
 * Thu Jan 31 2019 Stanislav Levin <slev@altlinux.org> 5.2.2-alt4
 - Applied upstream patches for Tornado5 support (closes: #35982, #35983).
 
