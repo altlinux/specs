@@ -4,7 +4,7 @@
 
 Name:    lazarus
 Version: 2.0.10
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -247,7 +247,10 @@ pushd lcl/interfaces/qt5/cbindings/
 popd
 rm -rf %buildroot$LAZARUSDIR/lcl/interfaces/qt5/cbindings
 rm -rf %buildroot$LAZARUSDIR/lazarus.app
+
+# Make executable symlink to selected program
 rm -f %buildroot$LAZARUSDIR/lazarus
+ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 
 %files
 %_libdir/%name
@@ -284,6 +287,9 @@ rm -f %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Thu Oct 22 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.0.10-alt3
+- Fix run startlazarus.
+
 * Thu Oct 15 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.0.10-alt2
 - Packages lcl packages lazarus-qt5 and lazarus-gtk.
 
