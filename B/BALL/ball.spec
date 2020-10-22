@@ -1,6 +1,6 @@
 Name:       BALL
 Version:    1.4.3_beta1.793.git37fc53c
-Release:    alt3
+Release:    alt3.1
 
 Summary:    Biochemical Algorithms Library
 License:    LGPL, GPL
@@ -14,6 +14,7 @@ Patch1: BALL-alt-link-glew.patch
 
 Packager:   Grigory Ustinov <grenka@altlinux.org>
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-asio-devel cmake doxygen eigen3 flex ghostscript-utils
 BuildRequires: glibc-devel-static graphviz libGLEW-devel liblpsolve-devel
 BuildRequires: libsvm-devel python-module-sip-devel python3-dev qt5-tools-devel
@@ -22,6 +23,9 @@ BuildRequires: qt5-webengine-devel tbb-devel
 ExclusiveArch: %ix86 x86_64
 
 %add_python_req_skip BALL BALLCore VIEW
+
+BuildRequires: python-tools-2to3
+%add_python3_lib_path %_datadir/BALL/python/pyball_kernel
 
 %description
 BALL (Biochemical Algorithms Library) is an application framework
@@ -45,6 +49,9 @@ Header files for %name
 %prep
 %setup
 %patch1 -p1
+
+find data/python/pyball_kernel -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%__subst "s|python|python3|" data/python/pyball_kernel/kernel.json
 
 %build
 %cmake
@@ -80,6 +87,9 @@ cp -vf %SOURCE1 %buildroot%_datadir/applications/
 %_libdir/cmake/BALL/*.cmake
 
 %changelog
+* Thu Oct 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.3_beta1.793.git37fc53c-alt3.1
+- NMU: mark python/pyball_kernel files as python3
+
 * Mon Nov 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.3_beta1.793.git37fc53c-alt3
 - Fixed linking error.
 
