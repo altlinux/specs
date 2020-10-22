@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.56.0
+Version:	3.58.0
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -226,6 +226,18 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Thu Oct 22 2020 Alexey Gladkov <legion@altlinux.ru> 3.58.0-alt1
+- New version (3.58).
+- Security fixes:
+  + CVE-2020-25648: Tighten CCS handling for middlebox compatibility mode
+- Certificate Authority Changes:
+  + Add CN=Trustwave Global Certification Authority
+  + Add CN=Trustwave Global ECC P256 Certification Authority
+  + Add CN=Trustwave Global ECC P384 Certification Authority
+  + Remove CN=EE Certification Centre Root CA
+  + Remove O=Government Root Certification Authority; C=TW
+  + Modify CN=OISTE WISeKey Global Root GA CA
+
 * Tue Sep 08 2020 Alexey Gladkov <legion@altlinux.ru> 3.56.0-alt1
 - New version (3.56).
 
