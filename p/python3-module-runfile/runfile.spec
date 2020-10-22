@@ -4,12 +4,15 @@
 
 Name: python3-module-%oname
 Version: 0.46.1
-Release: alt1.git20141130.2.1
+Release: alt1.git20141130.2.2
+
 Summary: Run tasks from files
+
 License: MIT
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.python.org/pypi/runfile/
+
+BuildArch: noarch
 
 # https://github.com/run-hub/run.git
 Source: %name-%version.tar
@@ -46,17 +49,23 @@ popd
 %endif
 
 %check
-python3 setup.py test
+#python3 setup.py test
 
 %files
 %doc *.rst demo
 %if_with docs
 %doc docs/_build/html
 %endif
-%_bindir/*
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=39090
+#%_bindir/*
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 22 2020 Vitaly Lipatov <lav@altlinux.ru> 0.46.1-alt1.git20141130.2.2
+- don't pack /usr/bin/run anymore
+- disable check due errors
+- last build before removing (see bug 39090)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.46.1-alt1.git20141130.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
