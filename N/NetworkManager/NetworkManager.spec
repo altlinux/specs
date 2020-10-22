@@ -1,5 +1,5 @@
-%define git_hash .g2d8c6343e
-#define git_hash %nil
+#define git_hash .g2d8c6343e
+%define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -55,8 +55,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.26.3
-Release: alt2%git_hash
+Version: 1.27.91
+Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -320,7 +320,7 @@ export LDFLAGS=-pie
 	--with-config-dhcp-default=internal \
 	--with-dnsmasq=/usr/sbin/dnsmasq \
 	--enable-gtk-doc=yes \
-	--with-config-dns-rc-manager-default=resolvconf \
+	--with-config-dns-rc-manager-default=auto \
 	--with-resolvconf=/sbin/resolvconf \
 	--enable-concheck \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
@@ -620,6 +620,18 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Oct 22 2020 Mikhail Efremov <sem@altlinux.org> 1.27.91-alt1
+- etcnet-alt: Normalize connection.
+- Set default DNS manager to auto.
+- Updated to 1.27.91 (1.28-rc2).
+
+* Tue Oct 20 2020 Mikhail Efremov <sem@altlinux.org> 1.27.90-alt1
+- shared: Don't use NM_CONST_MAX in VLA declaration on e2k.
+- etcnet-alt: Reformat code with new clang-format style.
+- Updated "_nmconnect group" patch.
+- Fixed build on e2k.
+- Updated to 1.27.90 (1.28-rc1).
+
 * Thu Sep 24 2020 Mikhail Efremov <sem@altlinux.org> 1.26.3-alt2.g2d8c6343e
 - etcnet-alt: Move 'load connection' message to debug level.
 - etcnet-alt: Fix identation.
