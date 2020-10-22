@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 8.2
-Release: alt2
+Release: alt3
 
 License: GPL
 Group: System/Configuration/Other
@@ -31,6 +31,7 @@ Group: System/Configuration/Other
 
 Requires: %name-common = %EVR
 Requires(pre): alterator-setup
+Requires: installer-integ-stage2
 
 %description rootfs
 Cliff Installer for alterator-setup.
@@ -49,6 +50,7 @@ Requires: alterator-vm
 Requires: alterator-notes
 Requires: %name-common = %EVR
 Requires: x-cursor-theme-jimmac
+Requires: installer-integ-stage2
 
 %description stage2
 Cliff Installer stage2.
@@ -68,6 +70,7 @@ Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
+Requires: installer-integ-stage3
 %ifnarch armh e2k
 Requires: alterator-grub
 %endif
@@ -106,9 +109,17 @@ fi
 %files stage3
 
 %changelog
+* Thu Oct 22 2020 Anton Midyukov <antohami@altlinux.org> 8.2-alt3
+- Merge with p9
+- Require installer-integ-stage2 packages in rootfs.
+
 * Tue Oct 20 2020 Anton Midyukov <antohami@altlinux.org> 8.2-alt2
 - Moved installer steps to installer-distro-cliff-common subpackage
 - Added officer step for alterator-setup
+
+* Mon Sep 14 2020 Paul Wolneykien <manowar@altlinux.org> 8.2-alt0.M90P.1
+- Build version 8.2-alt1 for the p9 branch.
+- Require installer-integ packages in stage2 and stage3.
 
 * Mon Sep 14 2020 Paul Wolneykien <manowar@altlinux.org> 8.2-alt1
 - Moved postinstall.d/90-integrity-init.sh to the settings-s package.
