@@ -2,8 +2,8 @@
 %define oname pycodestyle
 
 Name: python3-module-%oname
-Version: 2.5.0
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: Python style guide checker
 License: Expat
@@ -13,6 +13,7 @@ BuildArch: noarch
 
 # https://github.com/PyCQA/pycodestyle.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(tox)
@@ -24,6 +25,7 @@ conventions in PEP 8.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -39,7 +41,7 @@ done
 %check
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+tox.py3 --sitepackages -vvr
 
 %files
 %doc README.rst LICENSE CONTRIBUTING.rst CHANGES.txt
@@ -50,6 +52,9 @@ tox.py3 --sitepackages -p auto -o -v
 
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.5.0 -> 2.6.0.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.5.0-alt2
 - Build for python2 disabled.
 

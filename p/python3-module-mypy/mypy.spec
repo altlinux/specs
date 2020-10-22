@@ -12,7 +12,7 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.782
+Version: 0.790
 Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
@@ -31,6 +31,7 @@ BuildRequires: python3-module-typeshed
 
 %if_with check
 # TODO: unbundle googletest
+BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: python3(lxml)
 BuildRequires: python3(mypy_extensions)
@@ -146,6 +147,9 @@ tox.py3 --sitepackages -vvr -- -vv $TESTS
 %endif
 
 %changelog
+* Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 0.790-alt1
+- 0.782 -> 0.790.
+
 * Tue Sep 15 2020 Stanislav Levin <slev@altlinux.org> 0.782-alt1
 - 0.701 -> 0.782.
 

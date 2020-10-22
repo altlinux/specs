@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
-Release: alt3
+Version: 3.4.1
+Release: alt1
 
 Summary: Pytest plugin to randomly order tests and control random.seed
-License: BSD 3-Clause
+License: BSD-3-Clause
 Group: Development/Python
 # Source-git: https://github.com/pytest-dev/pytest-randomly
 Url: https://pypi.org/project/pytest-randomly/
@@ -19,10 +19,13 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: python3(appdirs)
 BuildRequires: python3(entrypoints)
 BuildRequires: python3(factory)
+BuildRequires: python3(faker)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(tox)
 %endif
 
@@ -79,6 +82,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/pytest_randomly-*.egg-info/
 
 %changelog
+* Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.1.0 -> 3.4.1.
+
 * Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 3.1.0-alt3
 - Fixed FTBFS.
 

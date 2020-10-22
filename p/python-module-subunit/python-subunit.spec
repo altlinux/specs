@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
@@ -13,10 +13,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-mimeparse
-BuildRequires: python-module-testscenarios
-BuildRequires: python2.7(hypothesis) python2.7(fixtures)
-BuildRequires: python-module-testtools
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -122,8 +118,6 @@ popd
 
 
 %check
-python setup.py test
-
 pushd ../python3
 python3 setup.py test
 popd
@@ -149,6 +143,9 @@ popd
 
 
 %changelog
+* Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
+- Dropped dependency on tests packages(Python2).
+
 * Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

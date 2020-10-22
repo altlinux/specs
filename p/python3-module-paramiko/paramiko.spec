@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.7.2
-Release: alt1
+Release: alt2
 
 Summary: SSH2 protocol for python
 License: LGPL-2.1
@@ -27,7 +27,6 @@ BuildRequires: python3(pyasn1)
 BuildRequires: python3(k5test)
 BuildRequires: python3(mock)
 BuildRequires: python3(nacl)
-BuildRequires: python3(pytest-relaxed)
 BuildRequires: python3(tox)
 %endif
 
@@ -64,6 +63,9 @@ tox.py3 --sitepackages -vv -r -- -v -ra
 %python3_sitelibdir/paramiko-*.egg-info/
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 2.7.2-alt2
+- Fixed FTBFS(Pytest 6).
+
 * Thu Sep 10 2020 Stanislav Levin <slev@altlinux.org> 2.7.2-alt1
 - 2.7.1 -> 2.7.2.
 

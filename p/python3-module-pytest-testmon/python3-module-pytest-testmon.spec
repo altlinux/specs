@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %global pypi_name pytest-testmon
 
 Name: python3-module-%pypi_name
-Version: 0.9.18
+Version: 1.0.3
 Release: alt1
 Summary: A py.test plug-in which executes only tests affected by recent changes
 Group: Development/Python
@@ -12,12 +13,7 @@ Patch0: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pytest
-BuildRequires: python3-modules-sqlite3
+
 %py3_provides pytest_testmon
 
 %description
@@ -35,7 +31,7 @@ executes only tests affected by recent changes.
 %python3_install
 
 %check
-PYTHONPATH=$PWD py.test3
+# upstream no longer provides the test suite
 
 %files -n python3-module-%pypi_name
 %doc README.rst LICENSE
@@ -43,6 +39,9 @@ PYTHONPATH=$PWD py.test3
 %python3_sitelibdir/pytest_testmon-%version-py?.?.egg-info
 
 %changelog
+* Thu Oct 15 2020 Stanislav Levin <slev@altlinux.org> 1.0.3-alt1
+- 0.9.18 -> 1.0.3.
+
 * Fri Oct 04 2019 Anton Farygin <rider@altlinux.ru> 0.9.18-alt1
 - first build for ALT
 

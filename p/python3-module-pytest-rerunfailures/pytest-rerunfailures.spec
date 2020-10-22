@@ -1,29 +1,37 @@
+%define _unpackaged_files_terminate_build 1
+
 %define  modulename pytest-rerunfailures
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 7.0
+Version: 9.1.1
 Release: alt1
 
 Summary: a pytest plugin that re-runs failed tests up to -n times to eliminate flakey failures
 
-License: MPLv2
+License: MPL-2.0
 Group:   Development/Python3
 URL:     https://github.com/pytest-dev/pytest-rerunfailures
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
+%py3_provides %modulename
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -31,11 +39,32 @@ Source:  %modulename-%version.tar
 %install
 %python3_install
 
+%check
+sed -i -e '/^\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py3: _PYTEST_BIN=%_bindir\/py.test3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
+    -e '/minversion = 3\.17\.1/d' \
+    tox.ini
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
+
 %files
-%python3_sitelibdir/pytest_rerunfailures.py
-%python3_sitelibdir/*.egg-info
 %doc *.rst
+%python3_sitelibdir/pytest_rerunfailures.py
+%python3_sitelibdir/__pycache__/pytest_rerunfailures.*
+%python3_sitelibdir/pytest_rerunfailures-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 12 2020 Stanislav Levin <slev@altlinux.org> 9.1.1-alt1
+- 7.0 -> 9.1.1.
+- Enabled testing.
+
 * Tue Oct 22 2019 Grigory Ustinov <grenka@altlinux.org> 7.0-alt1
 - Initial build for Sisyphus.

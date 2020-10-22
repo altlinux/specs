@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.3
+Version: 2.6.0
 Release: alt1
 
 Summary: Python code static checker
@@ -22,7 +22,6 @@ BuildRequires: python3-module-pytest-runner
 %if_with check
 BuildRequires: python3(lazy-object-proxy)
 BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_benchmark)
 BuildRequires: python3(astroid)
 BuildRequires: python3(mccabe)
 BuildRequires: python3(isort)
@@ -35,6 +34,7 @@ BuildRequires: hunspell-en
 BuildArch: noarch
 Provides: pylint-py3 = %EVR
 Obsoletes: pylint-py3 < %EVR
+%py3_requires isort
 %py3_requires mccabe
 
 %description
@@ -72,7 +72,7 @@ done
 %check
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr -- -v
+tox.py3 --sitepackages -vvr -- -v --ignore tests/benchmark/test_baseline_benchmarks.py
 
 %files
 %doc ChangeLog README.rst doc/
@@ -84,6 +84,9 @@ tox.py3 --sitepackages -vvr -- -v
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.5.3 -> 2.6.0.
+
 * Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 2.5.3-alt1
 - 2.4.4 -> 2.5.3.
 

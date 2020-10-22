@@ -3,7 +3,7 @@
 %define oname h2
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt4
+Release: alt5
 
 Summary: HTTP/2 State-Machine based protocol implementation
 
@@ -17,11 +17,11 @@ Patch0: h2-3.0.1-Update-dependencies.patch
 BuildArch: noarch
 
 BuildRequires: python-dev python-module-setuptools
-BuildRequires: python-module-hypothesis python-module-hyperframe python-module-hpack
+BuildRequires: python-module-hyperframe python-module-hpack
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-hypothesis python3-module-hyperframe python3-module-hpack
+BuildRequires: python3-module-hyperframe python3-module-hpack
 %endif
 
 %description
@@ -66,13 +66,6 @@ popd
 %endif
 
 %check
-PYTHONPATH=$(pwd) py.test
-
-%if_with python3
-pushd ../python3
-PYTHONPATH=$(pwd) py.test3
-popd
-%endif
 
 %files
 %python_sitelibdir/*
@@ -84,6 +77,9 @@ popd
 
 
 %changelog
+* Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 3.0.1-alt5
+- Dropped dependency on tests packages.
+
 * Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt4
 - build python2 module only
 

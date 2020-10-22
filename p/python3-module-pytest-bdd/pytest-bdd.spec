@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.1
+Version: 4.0.1
 Release: alt1
 
 Summary: BDD library for the py.test runner
@@ -14,7 +14,8 @@ Url: https://pypi.org/project/pytest-bdd/
 # https://github.com/pytest-dev/pytest-bdd.git
 BuildArch: noarch
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -45,44 +46,20 @@ without maintaining any context object containing the side effects of
 the Gherkin imperative declarations.
 
 %prep
-%setup -q -n %oname-%version
-# python mock is actually not used
-grep -qs 'import mock' tests/feature/test_wrong.py || exit 1
-sed -i '/import mock/d' tests/feature/test_wrong.py
-
-sed -i 's|for l1, l2|# &|' \
-    $(find ./ -name 'test_gherkin_terminal_reporter.py')
-sed -i 's|assert l1 == l2|# &|' \
-    $(find ./ -name 'test_gherkin_terminal_reporter.py')
+%setup
+%autopatch -p1
 
 %build
 %python3_build
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
 
 %install
 %python3_install
 
 %check
-# no used deps
-sed -i -e '/mock/d' \
--e '/pycodestyle/d' \
--e '/coverage/d' \
--e '/pytest-cache/d' requirements-testing.txt
-
-sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
-
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -vr
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
 
 %files
 %doc CHANGES.rst README.rst
@@ -92,6 +69,9 @@ tox.py3 --sitepackages -p auto -o -vr
 
 
 %changelog
+* Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
+- 3.2.1 -> 4.0.1.
+
 * Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.2.1-alt1
 - Version updated to 3.2.1
 

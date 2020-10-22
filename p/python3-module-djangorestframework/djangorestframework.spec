@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.11.0
+Version: 3.12.1
 Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
@@ -28,7 +28,6 @@ BuildRequires: python3(livereload)
 
 %if_with check
 BuildRequires: python3(tox)
-BuildRequires: python3(pytest_cov)
 BuildRequires: python3(pytest_django)
 BuildRequires: python3-module-django2.2
 BuildRequires: python3-module-django2.2-tests
@@ -58,17 +57,6 @@ This package contains documentation for %oname.
 %setup
 %autopatch -p1
 
-sed -i \
--e '/requirements\/requirements-optionals\.txt/d' \
-tox.ini
-
-# don't pin pytest at max version
-grep -qs 'pytest>=5\..*,<[0-9]\+\.[0-9]\+' \
-requirements/requirements-testing.txt || exit 1
-sed -i \
--e 's/\(pytest>=5\..*\),<[0-9]\+\.[0-9]\+/\1/g' \
-requirements/requirements-testing.txt
-
 %build
 %python3_build_debug
 
@@ -95,6 +83,9 @@ tox.py3 --sitepackages -v
 
 
 %changelog
+* Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 3.12.1-alt1
+- 3.11.0 -> 3.12.1.
+
 * Thu Jun 04 2020 Stanislav Levin <slev@altlinux.org> 3.11.0-alt1
 - 3.10.2 -> 3.11.0.
 

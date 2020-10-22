@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Hamcrest framework for matcher objects
 License: BSD
@@ -61,6 +61,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 2.0.2-alt2
+- Fixed FTBFS(Pytest 6).
+
 * Tue Oct 06 2020 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
 - 2.0.0 -> 2.0.2.
 - Stopped Python2 package build.

@@ -1,8 +1,10 @@
 %define  modulename pytest-checkdocs
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 1.2.3
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Summary: A pytest plugin that checks the long description of the project to ensure it renders properly.
 License: MIT
@@ -10,9 +12,15 @@ Group:   Development/Python3
 URL:     https://github.com/jaraco/pytest-checkdocs
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools_scm
-BuildRequires: python3-module-tox python3-module-docutils
-BuildRequires: python3-module-pytest-flake8 python3-module-pytest-cov
+BuildRequires: python3-module-setuptools_scm
+
+%if_with check
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-more-itertools
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tox
+%endif
+
 BuildArch: noarch
 Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -45,6 +53,9 @@ tox.py3 --sitepackages -vv -r
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
+- 1.2.3 -> 2.1.1.
+
 * Fri May 01 2020 Stanislav Levin <slev@altlinux.org> 1.2.3-alt2
 - Fixed FTBFS.
 
