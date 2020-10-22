@@ -2,7 +2,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.8
-Release: alt2
+Release: alt3
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -13,8 +13,6 @@ Source: %name-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # Install FindEigen3.cmake
-# Adapted from Debian eigen3 package
-Patch0:         01_install_FindEigen3.patch
 # Fix pkg-config file
 Patch1:         eigen_pkgconfig.patch
 # Fix the include paths in the new Eigen3Config.cmake file
@@ -24,11 +22,12 @@ Patch3:		eigen3-3.3.7-alt-e2k.patch
 # https://gitlab.com/libeigen/eigen/-/issues/2011
 Patch4: eigen3-3.3.8-upstream-build.patch
 
+BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 %ifnarch %e2k
 BuildRequires: libsuitesparse-devel libscotch-devel libgoogle-sparsehash
 %endif
-BuildRequires: gcc-c++ cmake doxygen
+BuildRequires: gcc-c++ doxygen
 %if_enabled qt4
 BuildRequires: libqt4-devel
 %endif
@@ -73,7 +72,6 @@ This package contains examples for Eigen.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 %patch2 -p0 -b .fixcmake
 %ifarch %e2k
@@ -82,30 +80,30 @@ This package contains examples for Eigen.
 %patch4 -p1
 
 %build
-%add_optflags -I%_includedir/metis
 export PATH=$PATH:%_libdir/pastix/bin
 
 %cmake -GNinja \
-	-DINCLUDE_INSTALL_DIR:PATH=include/%name \
-	-DPKGCONFIG_INSTALL_DIR:PATH=%_lib/pkgconfig \
-	-DCMAKEPACKAGE_INSTALL_DIR=share/cmake/Modules/%name \
+	-Wno-dev \
+	-DINCLUDE_INSTALL_DIR=include/%name \
+	-DPKGCONFIG_INSTALL_DIR=%_lib/pkgconfig \
+	-DCMAKEPACKAGE_INSTALL_DIR=%_lib/cmake/%name \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %ifarch %e2k
-	-DEIGEN_TEST_AVX512:BOOL=OFF \
-	-DEIGEN_TEST_AVX:BOOL=OFF \
-	-DEIGEN_TEST_SSE4_2:BOOL=OFF \
+	-DEIGEN_TEST_AVX512=OFF \
+	-DEIGEN_TEST_AVX=OFF \
+	-DEIGEN_TEST_SSE4_2=OFF \
 %else
-	-DCHOLMOD_INCLUDES:PATH=%_includedir/suitesparse \
-	-DUMFPACK_INCLUDES:PATH=%_includedir/suitesparse \
+	-DCHOLMOD_INCLUDES=%_includedir/suitesparse \
+	-DUMFPACK_INCLUDES=%_includedir/suitesparse \
 %endif
 %if_disabled qt4
 	-DEIGEN_TEST_NOQT=ON \
 %endif
-	-DSUPERLU_LIBRARIES:STRING=-lsuperlu_4.0 \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DGOOGLEHASH_INCLUDES:PATH="%_includedir/google" \
-	-DGOOGLEHASH_COMPILE:STRING="g++ %optflags" \
-	..
+	-DSUPERLU_LIBRARIES=-lsuperlu_4.0 \
+	-DCMAKE_STRIP="/bin/echo" \
+	-DGOOGLEHASH_INCLUDES="%_includedir/google" \
+	-DGOOGLEHASH_COMPILE="g++ %optflags" \
+	-DMETIS_INCLUDE_DIRS=%_includedir/metis
 
 %ninja_build -C BUILD
 %ifnarch %e2k
@@ -125,7 +123,7 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %files
 %_includedir/*
 %_pkgconfigdir/*
-%_datadir/cmake/Modules/*
+%_libdir/cmake/%name
 
 %ifnarch %e2k
 %files examples
@@ -137,6 +135,10 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %endif
 
 %changelog
+* Thu Oct 22 2020 Andrey Cherepanov <cas@altlinux.org> 3.3.8-alt3
+- Move cmake files to %_libdir/cmake/eigen3 (ALT #39109).
+- Spec cleanup.
+
 * Fri Oct 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.8-alt2
 - Applied upstream fix for eigen.
 
