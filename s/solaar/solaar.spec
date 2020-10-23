@@ -1,7 +1,7 @@
 %def_with bootstrap
 
 Name:           solaar
-Version:        1.0.3
+Version:        1.0.4
 Release:        alt1
 
 Group:          System/Configuration/Hardware
@@ -71,6 +71,9 @@ install -Dm0644 rules.d/42-logitech-unify-permissions.rules %buildroot%_sysconfd
 %doc docs
 
 %changelog
+* Fri Oct 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
+- New version.
+
 * Thu Aug 06 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
 - New version.
 - Package udev rules.
