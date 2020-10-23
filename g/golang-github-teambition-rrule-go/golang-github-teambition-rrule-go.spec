@@ -3,7 +3,7 @@
 %global goipath github.com/teambition/rrule-go
 
 Name: golang-github-teambition-rrule-go
-Version: 1.5.0
+Version: 1.6.1
 Release: alt1
 Summary: Go library for working with recurrence rules for calendar dates
 Group: Graphical desktop/Other
@@ -67,6 +67,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/example
 
 %changelog
+* Fri Oct 23 2020 Leontiy Volodin <lvol@altlinux.org> 1.6.1-alt1
+- New version.
+
 * Tue Jun 09 2020 Leontiy Volodin <lvol@altlinux.org> 1.5.0-alt1
 - Initial build for ALT Sisyphus.
 
