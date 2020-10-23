@@ -1,6 +1,6 @@
 Name: ntfs-3g
 Version: 2017.3.23
-Release: alt2
+Release: alt3
 Epoch: 2
 Summary: third generation Linux NTFS driver
 URL: http://www.ntfs-3g.org/
@@ -13,6 +13,8 @@ Provides: ntfsprogs = %epoch:%version-%release fuse-ntfs = %epoch:%version-%rele
 Obsoletes: ntfsprogs fuse-ntfs
 
 Source0: %{name}_ntfsprogs-%version.tgz
+
+Patch0: ntfs-3g-CVE-2019-9755.patch
 
 BuildRequires: libattr-devel libfuse-devel libgcrypt-devel libgnutls-devel libuuid-devel
 
@@ -57,6 +59,7 @@ This package contains header files for %name
 
 %prep
 %setup -q -n %{name}_ntfsprogs-%version
+%patch0 -p1
 
 %build
 %autoreconf
@@ -98,6 +101,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 23 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:2017.3.23-alt3
+- add upstream fix for CVE-2019-9755
+
 * Mon Mar 23 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:2017.3.23-alt2
 - enable extras (closes: #33889)
 
