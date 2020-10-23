@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Python lib/cli for JSON/YAML schema validation
 License: MIT
@@ -17,17 +17,6 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-docopt python3-module-yaml
-#BuildPreReq: python3-module-testfixtures python3-module-tox
-#BuildPreReq: python3-module-coveralls
-BuildRequires: python3-module-html5lib
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-pbr
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-unittest2
-BuildRequires: python3-module-z4r-coveralls
-BuildRequires: python3-module-zope.component
 
 %py3_provides %oname
 #%py3_requires json docopt yaml
@@ -63,6 +52,9 @@ py.test-%_python3_version -vv
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1:1.7.0-alt2
+- Dropped dependency on coveralls.
+
 * Wed Jan 15 2020 Nikolai Kostrigin <nickel@altlinux.org> 1:1.7.0-alt1
 - NMU: 1.6.1 -> 1.7.0
 - Remove python2 module build

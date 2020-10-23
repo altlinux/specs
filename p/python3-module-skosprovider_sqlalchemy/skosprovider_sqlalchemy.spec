@@ -1,10 +1,10 @@
 %define oname skosprovider_sqlalchemy
 
-%def_disable check
+%def_without check
 
 Name: python3-module-%oname
 Version: 0.4.1
-Release: alt2
+Release: alt3
 
 Summary: A SQLAlchemy implementation of the skosprovider interface
 License: MIT
@@ -16,8 +16,11 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-pytest-cov
-BuildRequires: python3-module-z4r-coveralls
+
+%if_with check
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-pytest-cov
+%endif
 
 %py3_provides %oname
 %py3_requires skosprovider sqlalchemy
@@ -48,6 +51,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 0.4.1-alt3
+- Dropped dependency on coveralls.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt2
 - python2 disabled
 

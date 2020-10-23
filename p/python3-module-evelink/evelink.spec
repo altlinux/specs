@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname evelink
 
-# %def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 0.7.5
-Release: alt2
+Release: alt3
 Summary: Python Bindings for the EVE Online API
 License: MIT
 Group: Development/Python3
@@ -17,13 +17,13 @@ Patch0: evelink-async-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 
-#%if_with check
+%if_with check
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-z4r-coveralls python3-module-mock
+BuildRequires: python3-module-mock
 BuildRequires: python3-module-nose
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-html5lib
-#%endif
+%endif
 
 %py3_provides %oname
 
@@ -58,6 +58,9 @@ nosetests3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 0.7.5-alt3
+- Dropped dependency on coveralls.
+
 * Thu Sep 24 2020 Pavel Vasenkov <pav@altlinux.org> 0.7.5-alt2
 - Drop python2 support.
 
