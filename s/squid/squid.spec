@@ -9,7 +9,7 @@
 %def_with systemd
 
 Name: squid
-Version: 4.11
+Version: 4.13
 Release: alt1
 %define langpack_ver 20170901 
 Summary: The Squid proxy caching server
@@ -297,13 +297,19 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Sat Oct 24 2020 Alexey Shabalin <shaba@altlinux.org> 4.13-alt1
+- 4.13 (Fixes: CVE-2020-15811, CVE-2020-15810, CVE-2020-24606)
+
+* Sat Oct 24 2020 Alexey Shabalin <shaba@altlinux.org> 4.12-alt1
+- 4.12 (Fixes: CVE-2020-14059, CVE-2020-14058, CVE-2020-15049)
+
 * Fri May 01 2020 Alexey Shabalin <shaba@altlinux.org> 4.11-alt1
-- 4.11
+- 4.11 (Fixes: CVE-2019-12519, CVE-2019-12521, CVE-2020-11945)
 - build with systemd sd_notify support
 
 * Sat Mar 14 2020 Alexey Shabalin <shaba@altlinux.org> 4.10-alt1
 - Updated to 4.10.
-- Fixed:
+- Fixes:
   + CVE-2019-12526 Heap Overflow issue in URN processing.
   + CVE-2019-12523 Multiple issues in URI processing.
   + CVE-2019-18676 Multiple issues in URI processing.
