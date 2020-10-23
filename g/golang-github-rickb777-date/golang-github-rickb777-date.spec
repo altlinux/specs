@@ -3,7 +3,7 @@
 %global goipath github.com/rickb777/date
 
 Name: golang-github-rickb777-date
-Version: 1.12.5
+Version: 1.14.2
 Release: alt1
 Summary: Functionality for working with dates
 Group: Development/Other
@@ -63,5 +63,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Fri Oct 23 2020 Leontiy Volodin <lvol@altlinux.org> 1.14.2-alt1
+- New version.
+
 * Thu Jun 04 2020 Leontiy Volodin <lvol@altlinux.org> 1.12.5-alt1
 - Initial build for ALT Sisyphus.
