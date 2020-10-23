@@ -2,7 +2,7 @@
 
 Name: libfreetype
 Version: 2.10.4
-Release: alt1
+Release: alt2
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -21,7 +21,6 @@ Source3: ftconfig.h
 Patch6: ft2demos-2.6.2-alt-snprintf.patch
 Patch11: freetype-2.10.0-enable-subpixel-rendering.patch
 Patch12: freetype-2.10.0-enable-valid.patch
-Patch14: freetype-2.10.0-alt-e2k.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel libpcre-devel libbrotli-devel
@@ -82,11 +81,6 @@ ln -s ft2demos-%version ft2demos
 %patch6 -p1
 %patch11 -p1
 %patch12 -p1
-
-%ifarch %e2k
-# lcc 1.23.12 lacks vector_shuffle gcc extension
-%patch14 -p1 -b .alt-e2k
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
@@ -152,6 +146,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Fri Oct 23 2020 Michael Shigorin <mike@altlinux.org> 2.10.4-alt2
+- E2K: patch unneeded with lcc 1.25
+
 * Tue Oct 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.4-alt1
 - 2.10.4 (fix CVE-2020-15999)
 
