@@ -1,5 +1,5 @@
 Name: eget
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: wget wrapper with wildcard support
@@ -30,6 +30,11 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Fri Oct 23 2020 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
+- eget: add --latest support
+- eget: add support for https://github.com/owner/project urls
+- tools_eget: don't strict mask with begin of the line
+
 * Mon Oct 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
 - eget: fix ? in sed
 
