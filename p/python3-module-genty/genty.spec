@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname genty
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 1.3.2
-Release: alt2
+Release: alt3
 Summary: Allows you to run a test with multiple data sets
 License: Apache-2.0
 Group: Development/Python3
@@ -15,7 +17,11 @@ Source0: https://pypi.python.org/packages/c9/bc/eee096fe9ecf1041944f1327cf6a2030
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: pylint-py3 python3-module-mock python3-module-setuptools python3-module-tox python3-module-z4r-coveralls python3-tools-pep8 rpm-build-python3
+
+%if_with check
+BuildRequires: python3(mock)
+BuildRequires: python3(six)
+%endif
 
 %py3_provides %oname
 %py3_requires six
@@ -42,6 +48,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.3.2-alt3
+- Dropped dependency on coveralls.
+
 * Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt2
 - Drop python2 support.
 - Fix license.

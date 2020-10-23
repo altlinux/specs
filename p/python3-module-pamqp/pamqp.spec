@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.6.1
-Release: alt2
+Release: alt3
 Summary: RabbitMQ Focused AMQP low-level library
 License: BSD
 Group: Development/Python3
@@ -17,11 +17,12 @@ Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-nose python3-module-pbr python3-module-unittest2
-BuildRequires: pylint-py3 python3-tools-pep8
-BuildRequires: python3-module-z4r-coveralls
-BuildRequires: python3-module-html5lib
+
+%if_with check
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-unittest2
+%endif
+
 BuildRequires: python3-module-sphinx
 
 %py3_provides %oname
@@ -87,6 +88,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.6.1-alt3
+- Dropped dependency on coveralls.
+
 * Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt2
 - Drop python2 support.
 

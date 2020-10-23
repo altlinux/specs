@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 License: BSD
 Group: Development/Python
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel ipython3
 BuildRequires: python3-module-affine python3-module-cligj
-BuildRequires: python3(enum) python3-module-coveralls
+BuildRequires: python3(enum)
 BuildRequires: python3-module-wheel python3-module-click-tests
 BuildRequires: python3-module-snuggs python3-module-click-plugins
 BuildRequires: python3-module-pytest-cov
@@ -66,5 +66,8 @@ xvfb-run py.test3 ||:
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.1.2-alt2
+- Dropped dependency on coveralls.
+
 * Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - separate build python3 module

@@ -14,11 +14,17 @@ a minimal and fast API targetting the following uses: \
 %def_without check
 %else
 %def_with check
+%if "3"=="3"
+# test relies on fact that if there is /usr/bin/python2 than all stdlib modules
+# are installed. Unfortunately, this is wrong for ALT.
+# Disable or remove on removal Python2 from base build environment
+%def_with py3_check_python2
+%endif
 %endif
 
 Name: %fname-docs
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 %if "-docs"==""
 Summary: Rapid multi-Python deployment
@@ -68,6 +74,9 @@ BuildRequires: python-module-apipkg
 %if_with check
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-pytest-timeout
+%if_with py3_check_python2
+BuildRequires: python-modules-encodings
+%endif
 %endif
 
 %if "-docs"!=""
@@ -151,6 +160,9 @@ TOXENV=py%{python_version_nodots python} tox --sitepackages -rv
 %endif
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
+- Fixed FTBFS.
+
 * Wed Aug 21 2019 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.1 -> 1.7.0.
 
