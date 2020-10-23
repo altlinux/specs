@@ -4,7 +4,7 @@
 
 Name: python3-module-%modname
 Version: 2.8.3
-Release: alt1
+Release: alt2
 
 Summary: Pyhon3 interface for Sane
 Group: Development/Python3
@@ -22,7 +22,7 @@ Requires: python3-module-Pillow python3-module-numpy
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: libsane-devel python3-module-Pillow-devel
+BuildRequires: libsane-devel python3-module-Pillow
 BuildRequires: python3-module-numpy
 
 %description
@@ -45,6 +45,9 @@ Python3 interface for Sane
 
 
 %changelog
+* Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt2
+- NUM: fix build (drop BR: python3-module-Pillow-devel)
+
 * Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt1
 - first build for Sisyphus (v2.8.3-46-gab32928)
 
