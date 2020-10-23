@@ -1,6 +1,6 @@
 Name: shim
 Version: 15
-Release: alt3
+Release: alt4
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 Source1: altlinux-ca.cer
 
 Patch1: shim-15-fix-gcc9-address-of-packed-members.patch
+Patch2: shim-15-upstream-fix-a-typo.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -42,6 +43,7 @@ Includes both ia32 and x64 EFI binaries.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 MAKEFLAGS=""
@@ -85,6 +87,10 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Tue Sep 15 2020 Nikolai Kostrigin <nickel@altlinux.org> 15-alt4
+- fix FTBFS against gnu-efi 3.0.10+ due to fixed typo
+  + add upstream-fix-a-typo patch
+
 * Tue Mar 31 2020 Nikolai Kostrigin <nickel@altlinux.org> 15-alt3
 - fix FTBFS with gcc9
   + add fix-gcc9-address-of-packed-members patch
