@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 4.4.3
-Release: alt1
+Release: alt2
 Summary: Jupyter Qt console
 License: BSD
 Group: Development/Python3
@@ -24,6 +24,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-ipython_genutils-tests python3-module-notebook
+BuildRequires: python3(IPython)
 BuildRequires: python3-module-pbr python3-module-traitlets-tests python3-module-unittest2
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: xvfb-run
@@ -73,6 +74,9 @@ xvfb-run nosetests3 -vv
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Oct 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.3-alt2
+- Updated build dependencies.
+
 * Tue Apr 09 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.3-alt1
 - Updated to latest upstream release.
 - Disabled build for python-2.
