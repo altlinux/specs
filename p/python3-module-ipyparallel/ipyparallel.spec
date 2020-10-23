@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 6.3.0
-Release: alt1
+Release: alt2
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
 Group: Development/Python3
@@ -30,6 +30,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-alabaster python3-module-html5lib python3-module-zope
 BuildRequires: python3-module-nose python3-module-notebook python3-module-objects.inv
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3(IPython)
 %else
 %add_python3_req_skip IPython
 %add_python3_req_skip IPython.core
@@ -148,6 +149,9 @@ iptest3 --coverage xml ipyparallel.tests
 %endif
 
 %changelog
+* Fri Oct 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0-alt2
+- Updated build dependencies.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0-alt1
 - Updated to upstream version 6.3.0.
 - Dropped python-2 support.
