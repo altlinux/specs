@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.15.0
-Release: alt3
+Version: 3.20.1
+Release: alt1
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -55,10 +55,6 @@ can use for:
 %setup
 %patch -p1
 
-# unpin deps
-grep -qsF 'psutil >= 5.6.1' setup.cfg || exit 1
-sed -i 's/psutil >= 5.6.1, < 6;/psutil;/g' setup.cfg
-
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
 # its used as the primary source for the version number in which
@@ -102,6 +98,9 @@ commands_pre =\
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 3.20.1-alt1
+- 3.15.0 -> 3.20.1.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 3.15.0-alt3
 - Stopped Python2 package build.
 
