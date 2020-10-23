@@ -1,5 +1,5 @@
 Name: deepin-editor
-Version: 5.6.37
+Version: 5.9.0.6
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -41,6 +41,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Oct 23 2020 Leontiy Volodin <lvol@altlinux.org> 5.9.0.6-alt1
+- New version (5.9.0.6) with rpmgs script.
+
 * Thu Oct 22 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.37-alt1
 - New version (5.6.37) with rpmgs script.
 
