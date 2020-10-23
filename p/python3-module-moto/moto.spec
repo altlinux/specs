@@ -3,7 +3,7 @@
 %define oname moto
 
 Name: python3-module-%oname
-Version: 1.3.15
+Version: 1.3.16
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -31,7 +31,6 @@ BuildRequires: python3-module-unittest2 python3-module-urllib3
 BuildRequires: python3-module-yaml python3-module-yieldfrom.urllib3
 BuildRequires: python3(werkzeug) python3(flask) python3(zipp) python3(responses)
 BuildRequires: python3(xmltodict) python3(docker) python3(parameterized) python3(freezegun)
-BuildRequires: /usr/bin/flake8
 BuildRequires: python3(jose) python3(aws_xray_sdk)
 
 %description
@@ -51,7 +50,6 @@ sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
 
 %check
 %__python3 setup.py test
-flake8 moto
 nosetests3 -v ||:
 
 %files
@@ -62,6 +60,9 @@ nosetests3 -v ||:
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.3.16-alt1
+- 1.3.15 -> 1.3.16.
+
 * Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.15-alt1
 - Updated to upstream version 1.3.15.
 
