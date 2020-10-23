@@ -1,5 +1,5 @@
 Name:     acr
-Version:  1.9.3
+Version:  1.9.4
 Release:  alt1
 
 Summary:  Auto Conf Replacement
@@ -40,6 +40,9 @@ This means that ACR is faster, smaller and easy to use.
 %_datadir/doc/%name-%version
 
 %changelog
+* Fri Oct 23 2020 Nikita Ermakov <arei@altlinux.org> 1.9.4-alt1
+- Update to 1.9.4
+
 * Fri Jul 24 2020 Nikita Ermakov <arei@altlinux.org> 1.9.3-alt1
 - Update to 1.9.3
 
