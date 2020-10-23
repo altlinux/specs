@@ -15,7 +15,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -47,7 +47,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
 BuildRequires: swig
 BuildRequires: python-module-Cython
-BuildRequires: python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-notebook python-module-numpydoc python-module-objects.inv
+BuildRequires: python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-numpydoc python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -938,6 +938,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.15.4-alt7
+- drop BR:python-module-notebook
+
 * Mon Aug 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.15.4-alt6
 - Rebuilt without python-3.
 
