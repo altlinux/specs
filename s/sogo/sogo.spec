@@ -4,7 +4,7 @@
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -98,7 +98,7 @@ Requires: sope-cards
 Requires: %name-apache2
 Requires: apache2-base
 Requires: apache2-mod_ngobjweb
-Requires: apache2-mod_wsgi
+Requires: apache2-mod_wsgi-py3
 Requires: memcached 
 Requires: sope-gdl1-postgresql
 Requires: postgresql-server
@@ -437,6 +437,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2
+- task-sogo: Dropped dependency on Python2.
+
 * Sun Oct 11 2020 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
 - New version.
 
