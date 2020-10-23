@@ -39,7 +39,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Summary: Linux Containers
@@ -245,6 +245,7 @@ groupadd -r -f vmusers ||:
 %config(noreplace) %_sysconfdir/lxc/*
 %config(noreplace) %_sysconfdir/sysconfig/lxc*
 
+%dir %_datadir/bash-completion
 %dir %_datadir/bash-completion/completions
 %_datadir/bash-completion/completions/lxc
 
@@ -321,6 +322,10 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Fri Oct 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.5-alt1
+- Updated to lxc-4.0.5.
+- lxc-core: %%dir'ed %%_datadir/bash-completion.
+
 * Sun Aug 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4-alt1
 - Updated to lxc-4.0.4.
 - lxc-core: Packed missing directories.
