@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt1
+- rpmgs: remove all exclude vendor dir for composer
+- change myhsh -b to myhsh -p
+- myhsh: add -b BINARYREPO support
+- remove obsoleted mkpatch
+- loginhsh: enable network by default
+- gitask: add ls --all for all tasks
+- gitask: add support for tasks with # in the begin
+
 * Sun Oct 11 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - gita: delsub allows list of subtask or packages (mixed)
 - set Apache license, add LICENSE file
