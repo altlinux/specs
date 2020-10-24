@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-CPAN-Perl-Releases
-Version: 5.20200920
+Version: 5.20201020
 Release: alt1
 
 Summary: Mapping Perl releases on CPAN to the location of the tarballs
@@ -30,6 +30,9 @@ BuildRequires: perl-devel
 %doc Changes README
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 5.20201020-alt1
+- new version
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 5.20200920-alt1
 - new version
 
