@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Spreadsheet-ReadSXC
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: Extract OpenOffice 1.x spreadsheet data
@@ -58,6 +58,9 @@ of hashes instead.
 %doc Changes README
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
