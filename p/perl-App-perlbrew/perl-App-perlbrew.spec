@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define oname App-perlbrew
 Name: perl-App-perlbrew
-Version: 0.88
+Version: 0.89
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -30,7 +30,7 @@ export SHELL
 %perl_vendor_install
 
 %files
-%doc README README.md Changes doc CONTRIBUTING.md
+%doc README README.md Changes CONTRIBUTING.md
 %_bindir/perlbrew
 %_man1dir/*
 %perl_vendor_privlib/App/perlbrew*
@@ -38,6 +38,9 @@ export SHELL
 %doc Changes README
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.89-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.88-alt1
 - automated CPAN update
 
