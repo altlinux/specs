@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-Writer
 Name: perl-%dist
-Version: 0.625
+Version: 0.900
 Release: alt1
 
 Summary: Simple Perl module for writing XML documents
@@ -8,7 +9,7 @@ License: distributable
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JO/JOSEPHW/XML-Writer-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JO/JOSEPHW/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ end tags match, that there is exactly one document element, and that
 there are not duplicate attribute names.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +34,13 @@ there are not duplicate attribute names.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %perl_vendor_privlib/XML
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.900-alt1
+- automated CPAN update
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.625-alt1
 - automated CPAN update
 
