@@ -1,12 +1,17 @@
 # TODO: pyyaml3, urllib3
+# TODO: use cmake?
+
+%def_disable cloud
+%def_with prometeus
+%def_without nfacct
 
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit d4ff1ea72c44f11a7debeb157ab09be882373900
+%define release_commit 1a09f7fb810b0afd55c1659f3c135f9a122c960f
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.25.0
-Release: alt2
+Version: 1.26.0
+Release: alt1
 
 Summary: Real-time performance monitoring, done right!
 
@@ -28,10 +33,14 @@ BuildRequires: libjudy-devel libcap-devel
 BuildRequires: liblz4-devel zlib-devel libssl-devel
 BuildRequires: libjson-c-devel
 
-BuildRequires: libcups-devel >= 1.7
+%if_with prometeus
+# Prometheus remote write dependencies
+BuildRequires: libsnappy-devel
+BuildRequires: libprotobuf-devel
+%endif
 
-# TODO: ebpf.plugin (see configure.ac)
-BuildRequires: libelf-devel
+
+BuildRequires: libcups-devel >= 1.7
 
 Requires: bash4
 
@@ -41,6 +50,11 @@ BuildRequires: rpm-build-intro >= 2.1.1
 %if_with nfacct
 BuildRequires: libmnl-devel
 BuildRequires: libnetfilter_acct-devel
+%endif
+
+%if_enabled cloud
+BuildRequires: libwebsockets-devel >= 3.2.2
+BuildRequires: libmosquitto-devel >= 1.6.8
 %endif
 
 Requires: %name-web = %EVR
@@ -104,10 +118,21 @@ This is the Common Unix Printing System plugin for the netdata daemon.
 
 Use this plugin to enable metrics collection from cupsd, the daemon running when CUPS is enabled on the system
 
-
-
 %prep
 %setup
+
+%if_enabled cloud
+# strange upstream wants static libs
+# checking if libmosquitto static lib is present (and builds)... no
+# checking if libwebsockets static lib is present... no
+
+subst 's|test -f "externaldeps|test -n "externaldeps|' configure.ac
+find -type f | xargs subst "s|externaldeps/mosquitto/libmosquitto.a|-lmosquitto|"
+find -type f | xargs subst "s|externaldeps/mosquitto/mosquitto.h|mosquitto.h|"
+
+find -type f | xargs subst "s|externaldeps/libwebsockets/libwebsockets.a|-lwebsockets|"
+find -type f | xargs subst "s|externaldeps/libwebsockets/include|%_includedir|"
+%endif
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=32663
 %if %_vendor == "alt"
@@ -125,6 +150,7 @@ done
 	--with-zlib \
 	--with-math \
 	--enable-jsonc \
+	%{subst_enable cloud} \
 	%{?with_nfacct:--enable-plugin-nfacct} \
 	--with-user=netdata
 
@@ -243,6 +269,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.26.0-alt1
+- new version 1.26.0 (with rpmrb script)
+
 * Mon Oct 12 2020 Vitaly Lipatov <lav@altlinux.ru> 1.25.0-alt2
 - use python3 only
 - move cups plugin to separate package
