@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.222
+Version: 7.0.236
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -18,6 +18,7 @@ ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: libxml2-devel libe2fs-devel libuuid-devel libssl-devel libjson-c-devel
+BuildRequires: libdevmapper-devel
 
 %description
 This package contains tools to work with ploop devices and images.
@@ -107,6 +108,9 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Sat Oct 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.236-alt1
+- 7.0.236
+
 * Fri Oct 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.222-alt1
 - 7.0.222
 
