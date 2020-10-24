@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libsecret
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -101,6 +101,7 @@ GObject introspection devel data for %name.
 
 %build
 %meson \
+%{?_disable_introspection:-Dintrospection=false} \
 %{?_disable_vala:-Dvapi=false} \
 %{?_disable_gtk_doc:-Dgtk_doc=false} \
 %{?_disable_man:-Dmanpage=false}
@@ -146,6 +147,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Fri Oct 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
+- 0.20.4
+
 * Wed Apr 15 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
 - 0.20.3
 

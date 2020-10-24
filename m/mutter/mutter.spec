@@ -15,7 +15,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -218,6 +218,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.38.1-alt1
+- 3.38.1
+
 * Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.38.0-alt1
 - 3.38.0
 
