@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Math-FFT
-Version: 1.34
-Release: alt1.2
+Version: 1.36
+Release: alt1
 
 Summary: Perl extension for Fast Fourier Transforms
 Group: Development/Perl
@@ -29,6 +30,9 @@ BuildRequires: perl-devel
 %doc Changes README
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1.2
 - rebuild with new perl 5.28.1
 
