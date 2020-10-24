@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name metacity
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %def_disable static
 %def_enable vulkan
 
 Name: %_name%api_ver
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Metacity window manager
 License: %gpl2plus
@@ -19,8 +19,6 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
-
-Patch10: %_name-3.37.1-up-Drop-use-of-VK_PHYSICAL_DEVICE_TYPE_RANGE_SIZE.patch
 
 # From configure.ac
 %define gtk_ver 3.22.0
@@ -51,7 +49,8 @@ BuildRequires: libXfixes-devel libXrender-devel libXdamage-devel libXtst-devel
 BuildRequires: libXrender-devel
 BuildRequires: libXcursor-devel libXt-devel libXinerama-devel libXext-devel
 BuildRequires: yelp-tools itstool zenity libcanberra-gtk3-devel
-BuildRequires: libXrandr-devel libX11-devel libSM-devel libICE-devel perl-XML-Parser libgtop-devel
+BuildRequires: libXrandr-devel libX11-devel libXres-devel libSM-devel
+BuildRequires: libICE-devel libXpresent-devel perl-XML-Parser libgtop-devel
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 
 %description
@@ -89,7 +88,6 @@ This package contains the lib%name static library.
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1
 
 %build
 %autoreconf
@@ -110,17 +108,15 @@ This package contains the lib%name static library.
 %_bindir/%_name
 %_bindir/%_name-message
 %_bindir/%_name-theme-viewer
-%_bindir/%_name-window-demo
-%_datadir/%_name/
 %_desktopdir/%_name.desktop
 %_datadir/gnome-control-center/keybindings/50-%{_name}*.xml
 %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%_name.keybindings.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%_name.theme.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%_name.enums.xml
 %_man1dir/%_name.1.*
 %_man1dir/%_name-message.1.*
 %_man1dir/%_name-theme-viewer.1.*
-%_man1dir/%_name-window-demo.1.*
 %doc README AUTHORS NEWS
 
 %files -n lib%name
@@ -130,7 +126,7 @@ This package contains the lib%name static library.
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
-%doc doc/*.txt doc/*.dtd HACKING
+%doc doc/*.txt HACKING
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -138,6 +134,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Jun 28 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt2
 - fixed build against newest Vulkan
 

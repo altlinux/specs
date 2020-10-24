@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.37
+%define ver_major 3.38
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
@@ -11,7 +11,7 @@
 %def_disable tracker
 
 Name: gnome-applets
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -31,7 +31,7 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 # From configure.ac
 %define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.36.1
+%define gnome_panel_ver 3.38.0
 %define libgtop_ver 2.12.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -198,6 +198,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.37.2-alt1
 - updated to 3.37.2-12-g28254e22d
 - removed all subpackages
