@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.8
+%define kernel_base_version 5.9
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -193,6 +194,9 @@ sed -i '/apt-get/ {
 	}
 	/yum.install/d
 	s/audit-libs-python/python3-module-audit/' perf/scripts/python/Perf-Trace-Util/lib/Perf/Trace/Util.py
+
+# Transient powerpc `make bpf` fix
+sed -i '/#include/a typedef struct { __u32 u[4]; } __vector128;' include/uapi/linux/types.h
 
 %build
 cd %kernel_source/tools
@@ -535,6 +539,9 @@ fi
 %_man8dir/bpftool*
 
 %changelog
+* Mon Oct 12 2020 Vitaly Chikunov <vt@altlinux.org> 5.9-alt1
+- Update to v5.9 (2020-10-11).
+
 * Thu Aug 06 2020 Vitaly Chikunov <vt@altlinux.org> 5.8-alt1
 - Update to v5.8.
 - spec: Switch to python3.
