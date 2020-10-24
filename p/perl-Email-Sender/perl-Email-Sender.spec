@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Email-Sender
-Version:        1.300034
+Version:        1.300035
 Release:        alt1
 Summary:        A library for sending email
 License:        GPL+ or Artistic
@@ -88,6 +88,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Email*
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.300035-alt1
+- automated CPAN update
+
 * Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.300034-alt1
 - automated CPAN update
 
