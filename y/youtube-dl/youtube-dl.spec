@@ -2,7 +2,7 @@
 
 Name: youtube-dl
 Version: 2020.09.20
-Release: alt1
+Release: alt2
 
 Summary: Download videos from YouTube
 License: Public domain
@@ -82,6 +82,9 @@ cd -
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Sat Oct 24 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 2020.09.20-alt2
+- Updated the watch file and the set of upstream signing keys.
+
 * Mon Sep 28 2020 Cronbuild Service <cronbuild@altlinux.org> 2020.09.20-alt1
 - Updated to 2020.09.20.
 
