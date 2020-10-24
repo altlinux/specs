@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Remove
 Name: perl-%dist
-Version: 1.58
+Version: 1.60
 Release: alt1
 
 Summary: Remove files and directories
@@ -40,6 +40,9 @@ hashref.
 %perl_vendor_privlib/File
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
+- automated CPAN update
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
 - automated CPAN update
 
