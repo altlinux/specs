@@ -1,6 +1,6 @@
 Name: drbd9
 Version: 9.0.25
-Release: alt1
+Release: alt2
 %define githash 1053e9f98123e8293e9f2897af654b40cde0d24c
 
 Summary: The Linux kernel code for DRBD9.
@@ -48,7 +48,7 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 
 %check
 # sed -i s/SUBDIRS=/M=/g Makefile
-# make -C drbd KDIR=/lib/modules/*/build
+# make -C drbd KDIR=/lib/modules/*/build -k
 
 %files -n kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
@@ -57,6 +57,9 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 %doc README.md COPYING
 
 %changelog
+* Sat Oct 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.25-alt2
+- Build for kernel 5.9.
+
 * Tue Oct 13 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.25-alt1
 - 9.0.25
 
