@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -10,14 +11,14 @@ BuildRequires: perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.08
+Release:    alt1
 
 Summary:    Recursively copy Perl datatypes
 License:    Artistic/GPL
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}/
-Source0:    ftp://ftp.perl.org/pub/CPAN/modules/by-module/Clone/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/N/NE/NEILB/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Benchmark.pm)
 BuildRequires: perl(Carp.pm)
@@ -37,7 +38,7 @@ nested hash, array, scalar and reference types, including tied
 variables and objects.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -50,10 +51,13 @@ variables and objects.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README
+%doc Changes META.json META.yml README
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_1
 - update by mgaimport
 
