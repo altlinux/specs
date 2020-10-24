@@ -7,14 +7,14 @@ BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(IO/All.pm) perl(List/Util.
 %define upstream_version 0.0131
 
 Name:       perl-%{upstream_name}
-Version:    0.0131
+Version:    0.0132
 Release:    alt1
 
 Summary:    Command line front-end for Test-Run
 License:    MIT
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/Test-Run-CmdLine-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{upstream_name}-%{version}.tar.gz
 
 # These Requirs are not detected automatically, so we need to add them manually.
 Requires:   perl(MooseX/Getopt/Basic.pm)
@@ -38,7 +38,7 @@ created to replace the use of the 'runprove' executable which is not always
 installed or available in the path.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -52,12 +52,15 @@ installed or available in the path.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README examples
+%doc Changes META.json META.yml README examples docs
 %{_mandir}/man1/*
 %perl_vendor_privlib/*
 /usr/bin/runprove
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.0132-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.0131-alt1
 - automated CPAN update
 
