@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Params-Util
 Name: perl-%dist
-Version: 1.07
-Release: alt2.2
+Version: 1.101
+Release: alt1
 
 Summary: Simple standalone param-checking functions
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-ExtUtils-CBuilder
@@ -18,7 +19,7 @@ Params::Util provides a basic set of importable functions that makes
 checking parameters a hell of a lot easier.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -27,11 +28,14 @@ checking parameters a hell of a lot easier.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes GPL-1 README.md
 %perl_vendor_archlib/Params
 %perl_vendor_autolib/Params
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.101-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.07-alt2.2
 - rebuild with new perl 5.28.1
 
