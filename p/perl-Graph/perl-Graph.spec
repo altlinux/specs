@@ -2,7 +2,7 @@
 %define module Graph
 
 Name: perl-Graph
-Version: 0.9704
+Version: 0.9706
 Release: alt1
 
 Summary: Graph - Perl module for dealing with graphs
@@ -10,21 +10,21 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/J/JH/JHI/Graph-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETJ/%{module}-%{version}.tar.gz
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Aug 09 2010
-BuildRequires: perl-Storable perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Storable perl-Test-Pod perl-Test-Pod-Coverage perl(Heap/Fibonacci.pm)
 BuildRequires: perl-Math-Complex
 
 %description
 Perl module for dealing with graphs, the abstract data structures.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,14 @@ Perl module for dealing with graphs, the abstract data structures.
 %perl_vendor_install
 
 %files
+%doc Changes TODO README
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.9706-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.9704-alt1
 - automated CPAN update
 
