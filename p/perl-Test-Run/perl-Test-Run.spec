@@ -7,14 +7,14 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) perl(Exporter.pm
 %define upstream_version 0.0304
 
 Name:       perl-%{upstream_name}
-Version:    0.0304
+Version:    0.0305
 Release:    alt1
 
 Summary:    Named sprintf according to the
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/Test-Run-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Spec.pm)
@@ -43,7 +43,7 @@ has no effect unless 'CONDITION' is true. In this case the effect is the
 same as of
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -57,10 +57,13 @@ same as of
 %makeinstall_std
 
 %files
-%doc Changes DONE META.json META.yml  NOTES TODO examples
+%doc Changes DONE META.json META.yml NOTES examples README
 %perl_vendor_privlib/*
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.0305-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.0304-alt1
 - automated CPAN update
 
