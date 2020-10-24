@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Tie-RefHash
 Name: perl-%dist
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: Use references as hash keys
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FL/FLORA/Tie-RefHash-1.39.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +24,7 @@ as keys in hashes-of-hashes, use Tie::RefHash::Nestable, included as
 part of Tie::RefHash.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,10 +33,13 @@ part of Tie::RefHash.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes CONTRIBUTING README
 %perl_vendor_privlib/Tie*
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.39-alt1
 - automated CPAN update
 
