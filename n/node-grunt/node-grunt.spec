@@ -1,7 +1,7 @@
 %define pname grunt
 
 Name: node-grunt
-Version: 1.0.4
+Version: 1.1.0
 Release: alt1
 
 Summary: Grunt is a JavaScript library used for automation and running tasks
@@ -58,5 +58,8 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/node_modules/resolve/test/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Tue Mar 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
 - initial build for ALT Sisyphus
