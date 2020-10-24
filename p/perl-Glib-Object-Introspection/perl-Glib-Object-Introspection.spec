@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
-Version: 0.048
-Release: alt2
+Version: 0.049
+Release: alt1
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
@@ -45,6 +45,9 @@ export LANG=ru_RU.UTF-8
 %_bindir/perli11ndoc
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1
+- new version
+
 * Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2
 - fixed warning: scripts should be .noarch
 
