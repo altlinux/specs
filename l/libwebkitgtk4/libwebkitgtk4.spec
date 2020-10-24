@@ -11,7 +11,7 @@
 %define _name webkitgtk
 %define bwrap_bin %_bindir/bwrap
 
-# wpebackend-fdo-1.4
+# wpebackend-fdo >= 1.4
 #Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp:
 #wpe_loader_init("libWPEBackend-fdo-1.0.so");
 %define wpebackend_fdo_sover 1
@@ -33,7 +33,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Web browser engine
@@ -363,6 +363,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Oct 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.2-alt1
+- 2.30.2
+
 * Mon Sep 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.1-alt1
 - 2.30.1
 
