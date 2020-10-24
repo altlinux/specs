@@ -1,6 +1,6 @@
 Name: libvariant
-Version: 1.1.6
-Release: alt3
+Version: 1.2.0
+Release: alt1
 
 Summary: C++11/C++14 Variant
 
@@ -48,6 +48,9 @@ cp -a include/mapbox %buildroot%_includedir/
 %_includedir/mapbox/
 
 %changelog
+* Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt3
 - move headers to /usr/include/mapbox
 
