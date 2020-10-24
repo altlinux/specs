@@ -1,6 +1,6 @@
 Name: unison
-Version: 2.51.2
-Release: alt3
+Version: 2.51.3
+Release: alt1
 
 Summary: File-synchronization tool
 
@@ -11,7 +11,7 @@ Url: http://www.cis.upenn.edu/~bcpierce/unison
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: ocaml >= 4.04 ocaml-lablgtk-devel desktop-file-utils
+BuildRequires: ocaml >= 4.10
 BuildRequires: texlive-collection-latexrecommended texlive-collection-basic ghostscript-utils
 
 %description
@@ -36,51 +36,29 @@ other.
 %patch0 -p1
 
 %build
-make -C src UISTYLE=text
-mv src/unison src/unison-cli
-make -C src UISTYLE=gtk2
-make docs
+%make_build
 
 %install
-install -pDm0755 src/unison-cli %buildroot%_bindir/unison
-install -pDm0755 src/unison %buildroot/%_bindir/unison-gui
-install -pDm0644 icons/U.svg %buildroot/%_iconsdir/hicolor/scalable/apps/unison.svg
+install -Dp -m 0755 src/%name %buildroot/%_bindir/%name
 
-
-cat > unison.desktop <<EOF
-[Desktop Entry]
-Type=Application
-Exec=unison-gui
-Name=Unison File Synchronizer
-Name[ru]=Синхронизация файлов Unison
-GenericName=File Synchronizer
-GenericName[ru]=Синхронизатор файлов
-Comment=Multi-master File synchronization tool
-Comment[ru]=Утилита синхронизации файлов с поддержкой нескольких полноправных источников
-Terminal=false
-Icon=unison
-Encoding=UTF-8
-StartupNotify=true
-EOF
-
-desktop-file-install  \
-    --add-category Application \
-    --add-category Utility \
-    --dir %buildroot%_desktopdir \
-    unison.desktop
+%check
+make test
 
 
 %files
-%doc src/COPYING src/RECENTNEWS src/README
-%doc doc/unison-manual.pdf
+%doc src/COPYING src/NEWS src/README
 %_bindir/unison
 
-%files gui
-%_bindir/unison-gui
-%_iconsdir/hicolor/scalable/apps/unison.svg
-%_desktopdir/*.desktop
-
 %changelog
+* Sat Oct 24 2020 Anton Farygin <rider@altlinux.ru> 2.51.3-alt1
+- 2.51.3
+
+* Sat Aug 29 2020 Anton Farygin <rider@altlinux.ru> 2.51.2-alt5
+- add patches from upstream git
+
+* Tue Jun 30 2020 Anton Farygin <rider@altlinux.ru> 2.51.2-alt4
+- build 2.51.3
+
 * Thu Aug 08 2019 Anton Farygin <rider@altlinux.ru> 2.51.2-alt3
 - rebuild with ocaml-4.08
 
