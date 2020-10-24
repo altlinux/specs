@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-CheckOS
-Version:        1.84
+Version:        1.85
 Release:        alt1
 Summary:        Check what OS we're running on
 License:        GPLv2 or Artistic
@@ -66,6 +66,9 @@ make test
 %{_mandir}/man1/use-devel-assertos.1*
 
 %changelog
+* Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.85-alt1
+- automated CPAN update
+
 * Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 1.84-alt1
 - automated CPAN update
 
