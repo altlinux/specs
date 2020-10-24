@@ -28,7 +28,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        86.0.4240.75
+Version:        86.0.4240.111
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -337,6 +337,12 @@ gn_arg is_clang=false
 gn_arg icu_use_data_file=false
 %endif
 
+%ifnarch %{ix86} x86_64
+gn_arg enable_vulkan=false
+%else
+gn_arg enable_vulkan=true
+%endif
+
 %if_enabled google_api_keys
 gn_arg google_api_key=\"%api_key\"
 gn_arg google_default_client_id=\"%default_client_id\"
@@ -490,6 +496,16 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Sat Oct 24 2020 Alexey Gladkov <legion@altlinux.ru> 86.0.4240.111-alt1
+- New version (86.0.4240.111).
+- Enable vulkan support on x86/x86_64 platforms (thx Konstantin A. Lepikhov).
+- Security fixes:
+  - CVE-2020-15999: Heap buffer overflow in Freetype.
+  - CVE-2020-16000: Inappropriate implementation in Blink.
+  - CVE-2020-16001: Use after free in media.
+  - CVE-2020-16002: Use after free in PDFium.
+  - CVE-2020-16003: Use after free in printing.
+
 * Sat Oct 10 2020 Alexey Gladkov <legion@altlinux.ru> 86.0.4240.75-alt1
 - New version (86.0.4240.75).
 - Security fixes:
