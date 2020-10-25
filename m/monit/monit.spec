@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.27.0
+Version: 5.27.1
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -183,6 +183,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Sun Oct 25 2020 Michael Shigorin <mike@altlinux.org> 5.27.1-alt1
+- new version (watch file uupdate)
+
 * Mon Jun 29 2020 Michael Shigorin <mike@altlinux.org> 5.27.0-alt1
 - new version (watch file uupdate)
 - skip autoreconf (triggers ftbfs): bootstrap is there already
