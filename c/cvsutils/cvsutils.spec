@@ -1,15 +1,14 @@
 Name: cvsutils
-Version: 0.2.5
-Release: alt1.1
+Version: 0.2.6
+Release: alt1
 
 Summary: CVS Utilities
-License: GPLv3+
+License: GPLv2+
 Group: Development/Other
-Url: http://www.red-bean.com/cvsutils/
-
+Url: https://www.red-bean.com/cvsutils/
 BuildArch: noarch
 
-# http://www.red-bean.com/%name/%name-%version.tar.gz
+# https://www.red-bean.com/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-0.2.5-alt-timestamp.patch
 
@@ -39,6 +38,9 @@ done
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun Oct 25 2020 Dmitry V. Levin <ldv@altlinux.org> 0.2.6-alt1
+- 0.2.5 -> 0.2.6.
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1.1
 - NMU: added URL
 
