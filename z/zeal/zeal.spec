@@ -1,6 +1,6 @@
 Name: zeal
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: Offline documentation browser for software developers
 License: GPLv3+
 Group: Text tools
@@ -18,6 +18,8 @@ click the Download button.
 
 %prep
 %setup
+# XXX quick hack
+sed -i '/#include <QToolTip>/a#include <QPainterPath>' src/libs/ui/searchitemdelegate.cpp
 
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=OFF
@@ -34,6 +36,9 @@ click the Download button.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Oct 25 2020 Fr. Br. George <george@altlinux.ru> 0.6.1-alt2
+- Fix build
+
 * Wed Oct 30 2019 Fr. Br. George <george@altlinux.ru> 0.6.1-alt1
 - Autobuild version bump to 0.6.1
 
