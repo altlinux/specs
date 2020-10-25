@@ -1,24 +1,27 @@
-BuildRequires: libuuid-devel libXext-devel libedit-devel libdb6-devel
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%define _disable_ld_no_undefined 1
-%global __requires_exclude swipl.sh
+%def_with test
 
-Summary:	Prolog interpreter and compiler
-Name:		swi-prolog
-Version:	7.4.2
-Release:	alt2_5
-License:	LGPLv2+
-Group:		Development/Other
-Requires:	%{name}-nox
-Requires:	%{name}-xpce
+Summary: Prolog interpreter and compiler
+Name: swi-prolog
+Version: 8.2.1
+Release: alt1
+License: LGPLv2+
+Group: Development/Other
+Requires: %name-nox
+Requires: %name-xpce
 Source44: import.info
 # pl is not perl
 AutoReq: yes,noperl
 AutoProv: yes,noperl
 Url: http://www.swi-prolog.org
+Source0: http://www.swi-prolog.org/download/stable/src/swipl-%version.tar.gz
 
-#Recommends:	%{name}-doc
+# Automatically added by buildreq on Sun Oct 04 2020
+# optimized out: ca-trust cmake-modules fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 java java-headless javazi libICE-devel libSM-devel libX11-devel libXau-devel libXrender-devel libcrypt-devel libfreetype-devel libsasl2-3 libstdc++-devel libtinfo-devel libunixODBC-devel-compat libxcb-devel pkg-config python2-base sh4 xorg-proto-devel
+BuildRequires: cmake flex gcc-c++ git-core java-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel
+
+%if_with test
+BuildRequires: ctest
+%endif
 
 %description
 Edinburgh-style Prolog compiler including modules, autoload, libraries,
@@ -26,155 +29,150 @@ Garbage-collector, stack-expandor, C-interface, GNU-readline and GNU-Emacs
 interface, very fast compiler.
 
 %package nox
-Group:		Development/Other
-Summary:	SWI-Prolog without GUI components
-BuildRequires:	pkgconfig(libarchive)
-BuildRequires:	pkgconfig(ncurses)
-BuildRequires:	libreadline-devel
-BuildRequires:	pkgconfig(libjpeg)
-BuildRequires:	pkgconfig(xpm)
-BuildRequires:	pkgconfig(x11)
-BuildRequires:	pkgconfig(xft)
-BuildRequires:	pkgconfig(xinerama)
-BuildRequires:	pkgconfig(xpm)
-BuildRequires:	pkgconfig(xt)
-BuildRequires:	pkgconfig(openssl)
-BuildRequires:	pkgconfig(zlib)
-BuildRequires:	pkgconfig(ncursesw)
-BuildRequires:	libgmp-devel
-#Recommends:	%{name}-doc
-URL:		http://www.swi-prolog.org/
-Source0:	http://www.swi-prolog.org/download/stable/src/swipl-%{version}.tar.gz
+Group: Development/Other
+Summary: SWI-Prolog without GUI components
 # pl is not perl
 AutoReq: yes,noperl
 AutoProv: yes,noperl
-
 
 %description nox
 This package provide SWI-Prolog and several libraries, but without
 GUI components.
 
 %package x
-Group:          Development/Other
-Summary:        %{name} native GUI library
-Requires:       %{name}-nox = %{version}-%{release}
-Provides:	%{name}-xpce
+Group: Development/Other
+Summary: %name native GUI library
+Requires: %name-nox = %version-%release
+Provides: %name-xpce
 # pl is not perl
 AutoReq: yes,noperl
 AutoProv: yes,noperl
-
 
 %description x
 XPCE is a toolkit for developing graphical applications in Prolog and
 other interactive and dynamically typed languages.
 
 %package java
-Group:		Development/Java
-Summary:	Java interface for %{name}
-BuildRequires:	java-devel-default /proc
-Requires:	%{name}-nox = %{version}-%{release}
-Provides:	%{name}-jpl
+Group: Development/Java
+Summary: Java interface for %name
+Requires: %name-nox = %version-%release
+Provides: %name-jpl
 # pl is not perl
 AutoReq: yes,noperl
 AutoProv: yes,noperl
 
-
 %description java
-JPL is a dynamic, bi-directional interface between %{name} and Java
+JPL is a dynamic, bi-directional interface between %name and Java
 runtimes. It offers two APIs: Java API (Java-calls-Prolog) and Prolog
 API (Prolog-calls-Java).
 
 %package odbc
-Group:		Development/Databases
-Summary:	ODBC interface for %{name}
-BuildRequires:	libunixODBC-devel libunixODBC-devel-compat libunixODBC2
-Requires:	%{name}-nox = %{version}-%{release}
+Group: Development/Databases
+Summary: ODBC interface for %name
+Requires: %name-nox = %version-%release
 # pl is not perl
 AutoReq: yes,noperl
 AutoProv: yes,noperl
-
 
 %description odbc
 ODBC interface for SWI-Prolog to interact with database systems.
 
 %package doc
-Group:		Documentation
-Summary:	Documentation for %{name}
-Requires:	%{name}-nox = %{version}-%{release}
+Group: Documentation
+Summary: Documentation for %name
+Requires: %name-nox = %version-%release
 AutoReqProv: no
 
 %description doc
 Documentation for SWI-Prolog.
 
+%package cmake
+Group: Development/Other
+Summary: CMake files for SWI Prolog
+
+%description cmake
+CMake files for SWI Prolog
+
 %prep
-%setup -n swipl-%{version} -q
+%setup -n swipl-%version
+sed -i '/set(SWIPL_INSTALL_PREFIX[ 	]*lib/s/ lib/ %_lib/' CMakeLists.txt
 
 %build
-export CFLAGS="%{optflags} -fPIC"
-%configure
-%make
+%cmake -DSWIPL_VERSIONED_DIR=yes -DSWIPL_INSTALL_IN_SHARE=yes
+%make_build -C BUILD libswipl V=1 VERBOSE=1
+LD_LIBRARY_PATH=`pwd`/BUILD/src %make_build -C BUILD V=1 VERBOSE=1
 
-pushd packages
-%configure
-%make
-popd
+# XXX this gone while switching to cmake
+cc -g -pthread packages/xpce/src/unx/client.c -o BUILD/xpce-client
 
 %install
-%add_optflags %optflags_shared
-make install DESTDIR=%buildroot
+# TODO verify against swipl.so
+%add_verify_elf_skiplist %_libdir/swipl-%version/*
+%makeinstall_std -C BUILD
+# XXX
+install -D BUILD/xpce-client %buildroot%_bindir/xpce-client
+install -D packages/xpce/man/xpce-client.1 %buildroot%_man1dir/xpce-client.1
+test %_lib != lib && mv %buildroot%_prefix/lib/cmake %buildroot%_libdir/
+ln -rs %buildroot%_libdir/swipl-%version/lib/*/lib* %buildroot%_libdir/
 
-pushd packages
-# %%makeinstall_std overrides INSTALL
-make install DESTDIR=%{?buildroot}
-%make html-install PLBASE=%{buildroot}%{_libdir}/swipl-%{version}
-popd
+%if_with test
+%check
+cd BUILD
+LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
+%endif
 
 %files
 
+%files cmake
+%_libdir/cmake/swipl
+
 %files nox
 %doc README.md LICENSE VERSION
-%{_bindir}/swipl*
-%{_libdir}/swipl-%{version}
-%{_libdir}/pkgconfig/swipl.pc
-%exclude %{_libdir}/swipl-%{version}/doc
-%exclude %{_libdir}/swipl-%{version}/lib/*/libjpl.so
-%exclude %{_libdir}/swipl-%{version}/lib/jpl.jar
-%exclude %{_libdir}/swipl-%{version}/library/jpl.pl
-%exclude %{_libdir}/swipl-%{version}/xpce/*
-%exclude %{_libdir}/swipl-%{version}/lib/*/odbc4pl.so
-%exclude %{_libdir}/swipl-%{version}/library/odbc.pl
+%_bindir/swipl*
+%_libdir/swipl-%version
+%_libdir/lib*.so*
+%_datadir/pkgconfig/swipl.pc
+%exclude %_datadir/swipl-%version/doc
+%exclude %_libdir/swipl-%version/lib/*/libjpl.so
+%exclude %_libdir/swipl-%version/lib/jpl.jar
+%exclude %_libdir/swipl-%version/library/jpl.pl
+%exclude %_libdir/swipl-%version/xpce/*
+%exclude %_libdir/swipl-%version/lib/*/odbc4pl.so
+%exclude %_libdir/swipl-%version/library/odbc.pl
 
 %files x
-%{_mandir}/*/xpce*
-%doc %{_libdir}/swipl-%{version}/doc/Manual/*xpce.html
-%{_bindir}/xpce*
-%{_libdir}/swipl-%{version}/xpce/*
+%_mandir/*/xpce*
+%doc %_datadir/swipl-%version/doc/Manual/*xpce.html
+%_bindir/xpce*
+%_libdir/swipl-%version/xpce/*
 
 %files java
-%doc packages/jpl/README.html
-%doc %{_libdir}/swipl-%{version}/doc/packages/examples/jpl
-%doc %{_libdir}/swipl-%{version}/doc/packages/jpl
-%{_libdir}/swipl-%{version}/lib/*/libjpl.so
-%{_libdir}/swipl-%{version}/lib/jpl.jar
-%{_libdir}/swipl-%{version}/library/jpl.pl
+%doc packages/jpl/*.md packages/jpl/*.doc packages/jpl/docs
+%doc %_datadir/swipl-%version/doc/packages/examples/jpl
+%doc %_datadir/swipl-%version/doc/packages/jpl.html
+%_libdir/swipl-%version/lib/*/libjpl.so
+%_libdir/swipl-%version/lib/jpl.jar
+%_libdir/swipl-%version/library/jpl.pl
 
 %files odbc
-%doc %{_libdir}/swipl-%{version}/doc/packages/odbc.html
-%{_libdir}/swipl-%{version}/lib/*/odbc4pl.so
-%{_libdir}/swipl-%{version}/library/odbc.pl
+%doc %_datadir/swipl-%version/doc/packages/odbc.html
+%_libdir/swipl-%version/lib/*/odbc4pl.so
+%_libdir/swipl-%version/library/odbc.pl
 
 %files doc
-%{_mandir}/*/swipl*
-%dir %{_libdir}/swipl-%{version}/doc
-%doc %{_libdir}/swipl-%{version}/doc/Manual
-%exclude %{_libdir}/swipl-%{version}/doc/Manual/*xpce.html
-%doc %{_libdir}/swipl-%{version}/doc/packages
-%exclude %{_libdir}/swipl-%{version}/doc/packages/examples/jpl
-%exclude %{_libdir}/swipl-%{version}/doc/packages/jpl
-%exclude %{_libdir}/swipl-%{version}/doc/packages/odbc.html
-
+%_mandir/*/swipl*
+%dir %_datadir/swipl-%version/doc
+%doc %_datadir/swipl-%version/doc/Manual
+%exclude %_datadir/swipl-%version/doc/Manual/*xpce.html
+%doc %_datadir/swipl-%version/doc/packages
+%exclude %_datadir/swipl-%version/doc/packages/examples/jpl
+%exclude %_datadir/swipl-%version/doc/packages/jpl.html
+%exclude %_datadir/swipl-%version/doc/packages/odbc.html
 
 %changelog
+* Sun Oct 25 2020 Fr. Br. George <george@altlinux.ru> 8.2.1-alt1
+- Major version up
+
 * Mon Feb 17 2020 Igor Vlasenko <viy@altlinux.ru> 7.4.2-alt2_5
 - update by mgaimport
 
@@ -202,7 +200,7 @@ popd
 * Sun Jul 02 2006 Alexey Tourbin <at@altlinux.ru> 5.6.15-alt1
 - 5.0.10 -> 5.6.15
 - configured --enable-shared
-- installed swi-prolog libraries under %plbase
+- installed swi-prolog libraries under %%plbase
 - built and packaged manual.pdf
 
 * Fri Dec 30 2005 ALT QA Team Robot <qa-robot@altlinux.org> 5.0.10-alt1.1
