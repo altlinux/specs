@@ -3,7 +3,7 @@
 %def_without kde3kdesktop
 %def_without ivman
 Name: icewm-startup
-Version: 0.21
+Version: 0.211
 Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
@@ -51,6 +51,21 @@ apt-indicator plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 apt-indicator
 запуск apt-indicator при старте IceWM
 (Требует менеджер автозапуска программ IceWM).
+
+%package at-spi-dbus-bus
+Group: Graphical desktop/Icewm
+Summary: at-spi autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск at-spi при старте IceWM
+Requires: %name at-spi2-core
+AutoReq: no
+
+%description at-spi-dbus-bus
+Launch at-spi bus at IceWM start.
+at-spi bus is required for accessibility services.
+%description -l ru_RU.UTF-8 at-spi-dbus-bus
+запуск сервиса вспомогатальных технологий поддержки доступности
+компьютерного интерфейса для людей с ограниченными возможностями
+при старте IceWM (Требует менеджер автозапуска программ IceWM).
 
 %package delay
 Group: Graphical desktop/Icewm
@@ -328,9 +343,9 @@ cat > README.ru_RU.UTF-8 <<EOF
 for file in %icewmconfdir/startup.d/*; do
   userfile=~/.icewm/startup.d/`echo $file | sed -e 's,%icewmconfdir/startup.d/,,'`
   # root can disable autostart removing 'execute' bits
-  if [ -x $file ]; then 
+  if [ -x $file ]; then
     # User-supplied programs disable system-wide programs.
-    # So user can disable system-wide program 
+    # So user can disable system-wide program
     # by touching file in ~/.icewm/startup.d/ with the same name
     # or even replace it with his own script.
 
@@ -341,7 +356,7 @@ done
 
 # starting user-supplied icewm autostart programs
 for file in ~/.icewm/startup.d/*; do
-  # running user files 
+  # running user files
   # user can disable autostart removing 'execute' bits
   [ -x $file ] && . $file
 done
@@ -363,9 +378,9 @@ cat <<'EOF' > %buildroot/%icewmconfdir/startup
 for file in %icewmconfdir/startup.d/*; do
   userfile=~/.icewm/startup.d/`echo $file | sed -e 's,%icewmconfdir/startup.d/,,'`
   # root can disable autostart removing 'execute' bits
-  if [ -x $file ]; then 
+  if [ -x $file ]; then
     # User-supplied programs disable system-wide programs.
-    # So user can disable system-wide program 
+    # So user can disable system-wide program
     # by touching file in ~/.icewm/startup.d/ with the same name
     # or even replace it with his own script.
 
@@ -376,7 +391,7 @@ done
 
 # starting user-supplied icewm autostart programs
 for file in ~/.icewm/startup.d/*; do
-  # running user files 
+  # running user files
   # user can disable autostart removing 'execute' bits
   [ -x $file ] && . $file
 done
@@ -392,9 +407,9 @@ cat <<'EOF' > %buildroot/%icewmconfdir/shutdown
 for file in %icewmconfdir/shutdown.d/*; do
   userfile=~/.icewm/shutdown.d/`echo $file | sed -e 's,%icewmconfdir/shutdown.d/,,'`
   # root can disable autostart removing 'execute' bits
-  if [ -x $file ]; then 
+  if [ -x $file ]; then
     # User-supplied programs disable system-wide programs.
-    # So user can disable system-wide program 
+    # So user can disable system-wide program
     # by touching file in ~/.icewm/shutdown.d/ with the same name
     # or even replace it with his own script.
 
@@ -405,10 +420,16 @@ done
 
 # starting user-supplied icewm autostart programs in shutdown time
 for file in ~/.icewm/shutdown.d/*; do
-  # running user files 
+  # running user files
   # user can disable autostart removing 'execute' bits
   [ -x $file ] && . $file
 done
+EOF
+
+cat <<'EOF' > %buildroot/%icewmconfdir/startup.d/020-at-spi-dbus-bus
+#!/bin/sh
+# AT-SPI D-Bus Bus
+/usr/libexec/at-spi-bus-launcher --launch-immediately&
 EOF
 
 cat <<'EOF' > %buildroot/%icewmconfdir/startup.d/010-delay
@@ -574,6 +595,9 @@ fi
 %files apt-indicator
 %config %icewmconfdir/startup.d/apt-indicator
 
+%files at-spi-dbus-bus
+%config %icewmconfdir/startup.d/020-at-spi-dbus-bus
+
 %files delay
 %config %icewmconfdir/startup.d/010-delay
 
@@ -638,6 +662,10 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Sun Oct 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.211-alt1
+- added launcher for AT-SPI D-Bus
+- extended versions to 3 digits due to frequent updates
+
 * Sat Sep 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - bugfix: launch nm-applet properly w/o polkit-gnome
 
