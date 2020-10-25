@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200929
+Version: 20201023
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,19 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Oct 25 2020 Cronbuild Service <cronbuild@altlinux.org> 20201023-alt1
+- upstream changes (GIT dae4b4c):
+  + cypress: add Cypress firmware and clm_blob files (thx Chi-Hsien Lin)
+  + rtl_bt: Update RTL8821C BT FW to 0xAA6C_A99E (thx Max Chou)
+  + ath10k: add SDIO firmware for QCA9377 WiFi (thx Christian Hewitt)
+  + ice: update package file to 1.3.16.0 (thx Tony Nguyen)
+  + mediatek: separate venc service thread (thx Irui Wang)
+  + QCA : Updated firmware file for WCN3991 (thx Asit Shah)
+  + iwlwifi: update and add new FWs from core56-54 release (thx Luca Coelho)
+  + iwlwifi: update 3168, 7265D, 8000C and 8265 firmwares (thx Luca Coelho)
+  + i915: Add DG1 DMC v2.02 (thx Anusha Srivatsa)
+  + qcom : updated venus firmware files for v5.4 (thx Asit Shah)
+
 * Sun Oct 11 2020 Cronbuild Service <cronbuild@altlinux.org> 20200929-alt1
 - upstream changes (GIT 58d41d0):
   + ice: Add comms package file for Intel E800 series driver (thx Tony Nguyen)
