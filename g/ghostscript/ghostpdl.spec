@@ -1,6 +1,6 @@
 Name: ghostscript
-Version: 9.28
-Release: alt0.rc1.2
+Version: 9.53.3
+Release: alt1
 
 %define ijsver	0.35
 %global origver %version
@@ -9,8 +9,7 @@ Release: alt0.rc1.2
 
 Url: http://www.ghostscript.com
 
-# Included CMap data is Redistributable, no modification permitted,
-License: GPLv3+ and Redistributable, no modification permitted
+License: GPLv3+
 
 Summary: PostScript interpreter and renderer, most printer drivers
 Group: Publishing
@@ -21,41 +20,27 @@ Source2: ghostscript.unused
 Source3: README.patches
 
 ## FC patches
-Patch1: FC-cve-2019-6116.patch
-Patch2: FC-subclassing-devices-fix-put_image-method.patch
-Patch3: FC-cve-2019-3835.patch
-Patch4: FC-cve-2019-3838.patch
-Patch5: FC-cve-2019-10216.patch
-Patch6: FC-9.23-100-run-dvipdf-securely.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-020190410~06c9207.patch
-Patch102: Ubuntu-020190802~5b85ddd.patch
-Patch103: Ubuntu-2001_docdir_fix_for_debian.patch
-Patch104: Ubuntu-2002_gs_man_fix_debian.patch
-Patch105: Ubuntu-2003_support_multiarch.patch
-Patch106: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
-Patch107: Ubuntu-2005_fix_Debian_paths_in_docs.patch
-Patch108: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
-Patch109: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
-Patch110: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
-Patch111: Ubuntu-2009_use_system_javascript.patch
-Patch112: Ubuntu-2010_add_build_timestamp_setting.patch
-Patch113: Ubuntu-2011_avoid_remote_font.patch
-Patch114: Ubuntu-2012_avoid_googletagmanager.patch
-Patch115: Ubuntu-020190822~863d77f_cups_pwgraster_output_device_produce_more_debug_output.patch
-Patch116: Ubuntu-020190823~2d6bb6e_cups_pwgraster_output_device_reduced_page_size_comparison_tolerances.patch
-Patch117: Ubuntu-020190824~3e09ced_cups_pwgraster_output_device_improved_page_size_matching_with_ppd.patch
-Patch118: Ubuntu-020190825~3283e6d_cups_pwgraster_output_device_small_fix_on_size_matching_improvements.patch
-Patch119: Ubuntu-020190825~30575d5_cups_pwgraster_output_device_prefer_the_page_size_requested_by_user.patch
-Patch120: Ubuntu-020190825~4e220de_cups_pwgraster_output_device_do_not_output_luts_with_cups_debug_set.patch
+Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch102: Ubuntu-2002_gs_man_fix_debian.patch
+Patch103: Ubuntu-2003_support_multiarch.patch
+Patch104: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
+Patch105: Ubuntu-2005_fix_Debian_paths_in_docs.patch
+Patch106: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
+Patch107: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
+Patch108: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch109: Ubuntu-2009_use_system_javascript.patch
+Patch110: Ubuntu-2010_add_build_timestamp_setting.patch
+Patch111: Ubuntu-2011_avoid_remote_font.patch
+Patch112: Ubuntu-2012_avoid_googletagmanager.patch
+Patch113: Ubuntu-CVE-2020-15900.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
 Patch501: alt-urw-fonts-naming.patch
-Patch600: CVE-2019-14811_2_3.patch
-Patch601: CVE-2019-14817.patch
-Patch602: upstream-fix-CVE-2019-14869.patch
+Patch502: ghostscript-9.23-100-run-dvipdf-securely.patch
+
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -192,41 +177,28 @@ Common files for the %name
 rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/libs
 
 ## FC apply patches
-#patch1 -p1
-##patch2 -p1
-#patch3 -p1
-#patch4 -p1
-#patch5 -p1
-%patch6 -p1
 
 ## Ubuntu apply patches
-#patch101 -p1
+%patch101 -p1
 #patch102 -p1
-%patch103 -p1
-#patch104 -p1
+#patch103 -p1
+%patch104 -p1
 #patch105 -p1
-%patch106 -p1
+#patch106 -p1
 #patch107 -p1
 #patch108 -p1
-#patch109 -p1
-#patch110 -p1
+%patch109 -p1
+%patch110 -p1
 %patch111 -p1
-##patch112 -p1
-%patch113 -p1
-%patch114 -p1
-%patch115 -p1
-%patch116 -p1
-%patch117 -p1
-%patch118 -p1
-%patch119 -p1
-%patch120 -p1
+#patch112 -p1
+#patch113 -p1
 
 ## ALT apply patches
 %patch500 -p1
 %patch501 -p1
-%patch600 -p1
-%patch601 -p1
-%patch602 -p1
+%patch502 -p1
+
+sed -i 's/FT_CALLBACK_DEF(\(.*\))/static \1/g' base/fapi_ft.c
 
 %build
 export CFLAGS=-DA4
@@ -252,7 +224,7 @@ cd ijs; %configure --enable-shared --disable-static; cd -
 # XXX no libgpd.so in 9.27
 %if "%version" == "9.27"
 %make_build so || :
-sed 's#-o ./bin/gpdl#-shared -Wl,-soname=libgpdl.so.9 -o ./sobin/libgpdl.so.%{version}#
+sed 's#-o ./bin/gpdl#-shared -Wl,-soname=libgpdl.so.9 -o ./sobin/libgpdl.so.%version#
 s#./[^/]*obj/realmain.o ##' < obj/gpdlldt.tr > soobj/gpdlldt.tr
 sh soobj/gpdlldt.tr
 %endif
@@ -355,6 +327,10 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Fri Oct 23 2020 Fr. Br. George <george@altlinux.ru> 9.53.3-alt1
+- Autobuild version bump to 9.53.3
+- CMap data license was freed long ago in 2015
+
 * Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.28-alt0.rc1.2
 - Applied security fixes from upstream (Fixes: CVE-2019-14869).
 
