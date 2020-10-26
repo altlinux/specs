@@ -2,7 +2,7 @@
 
 Name: alterator-ports-access
 Version: 0.3
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Source:%name-%version.tar
 Summary: alterator module to control ports access
@@ -50,6 +50,9 @@ Command line part of alterator module to control serial/USB ports access
 %config(noreplace) %_sysconfdir/alterator-ports-access.conf
 
 %changelog
+* Mon Oct 26 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.3-alt2
+- -x removed from alterator-ports-access script
+
 * Mon Oct 26 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.3-alt1
 - divided to subpackages to allow use without alterator
 - packed configuration file
