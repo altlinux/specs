@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qmapshack
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 Summary: GPS mapping and management tool
 Group: Sciences/Geosciences
@@ -12,6 +12,7 @@ Url: https://bitbucket.org/maproom/qmapshack/wiki/Home
 Source: qmapshack-%version.tar
 Patch0: FindPROJ4.patch
 Patch1: qmapshack-1.14.1-alt-fix-HTML_INSTALL_DIR.patch
+Patch2: qmapshack-1.15.0-fix-build-with-qt5.15.patch
 
 #Recommends: routino
 #Recommends: qmaptool
@@ -49,6 +50,7 @@ QMapShack.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake \
@@ -80,5 +82,9 @@ QMapShack.
 %_mandir/man1/qmt_*.*
 
 %changelog
+* Mon Oct 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.15.0-alt1
+- Updated to 1.15.0.
+- Fixed ftbfs with qt 5.15.
+
 * Mon Apr 13 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.14.1-alt1
 - Initial build.
