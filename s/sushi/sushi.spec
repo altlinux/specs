@@ -1,10 +1,12 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.38
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
 %def_enable introspection
+%def_enable wayland
+%def_enable x11
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
@@ -79,7 +81,9 @@ GObject introspection devel data for the Sushi library.
 %setup
 
 %build
-%meson
+%meson \
+%{?_disable_wayland:-Dwayland=disabled} \
+%{?_disable_x11:-DX11=disabled}
 %meson_build
 
 %install
@@ -99,6 +103,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
