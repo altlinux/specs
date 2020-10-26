@@ -1,8 +1,8 @@
 Name: eget
-Version: 3.4
+Version: 4.0
 Release: alt1
 
-Summary: wget wrapper with wildcard support
+Summary: wget like downloader wrapper with wildcard support
 
 License: AGPLv3
 Group: Networking/WWW
@@ -15,10 +15,13 @@ Source: ftp://updates.etersoft.ru/pub/Korinf/sources/tarball/%name-%version.tar
 
 BuildArchitectures: noarch
 
-Requires: wget
+#Requires: wget
+#Requires: curl
 
 %description
-eget is a wget wrapper. It supports download urls with wildcard.
+eget is a wget like downloader wrapper. It supports download urls with wildcard.
+
+It supports wget or curl as backend.
 
 %prep
 %setup
@@ -30,6 +33,9 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Mon Oct 26 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt1
+- full rewrite to support curl (and detect curl or wget is available)
+
 * Fri Oct 23 2020 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
 - eget: add --latest support
 - eget: add support for https://github.com/owner/project urls
