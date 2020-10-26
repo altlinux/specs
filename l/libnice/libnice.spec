@@ -3,14 +3,13 @@
 %define api_ver %ver_major
 %define gst_api_ver 1.0
 
-%def_disable static
 %def_enable gupnp
 %def_with gstreamer
 %def_enable gtk_doc
 %def_disable check
 
 Name: libnice
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
@@ -24,6 +23,7 @@ Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 %define gi_ver 1.30
 %define tls_ver 2.12.0
 
+BuildRequires(pre): meson
 BuildRequires: glib2-devel >= %glib_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_gupnp:BuildRequires: libgupnp-igd-devel}
@@ -115,22 +115,22 @@ for Gstreamer (1.0 API version)
 %setup
 
 %build
-%configure \
-	%{subst_enable static} \
-	%{subst_enable gupnp} \
-	%{subst_enable gstreamer} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-%make_build
+%meson \
+	%{?_disable_gupnp:-Dgupnp=disabled} \
+	%{?_disable_gstreamer:-Dgstreamer=disabled} \
+	%{?_enable_gtk_doc:-Dgtk_doc=enabled}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS NEWS README
 
 %files devel
 %_includedir/*
@@ -156,7 +156,6 @@ for Gstreamer (1.0 API version)
 %if_with gstreamer
 %files -n gst-plugins-nice%gst_api_ver
 %_libdir/gstreamer-%gst_api_ver/libgstnice.so
-%exclude %_libdir/gstreamer-*/*.la
 %endif
 
 # don't package tools
@@ -164,6 +163,9 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.18-alt1
+- 0.1.18 (ported to Meson build system)
+
 * Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.17-alt1
 - 0.1.17
 
