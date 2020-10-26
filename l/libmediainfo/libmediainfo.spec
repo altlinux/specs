@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 20.08
+Version: 20.09
 Release: alt1
 
 Group: System/Libraries
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 20.09-alt1
+- 20.09
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 20.08-alt1
 - 20.08
 
