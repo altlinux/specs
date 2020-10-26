@@ -2,11 +2,11 @@
 %def_disable python2
 
 Name: lib%_name
-Version: 1.4.2
+Version: 1.4.4
 Release: alt1
 
 Summary: A library for password generation and password quality checking
-License: BSD or GPL+
+License: BSD or GPL-2.0
 Group: System/Libraries
 Url: https://github.com/%name/%name/
 
@@ -130,6 +130,9 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- 1.4.4
+
 * Fri Nov 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 - disabled python2 module
