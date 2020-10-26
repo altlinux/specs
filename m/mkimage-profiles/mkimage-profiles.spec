@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Oct 26 2020 Anton Midyukov <antohami@altlinux.org> 1.4.4-alt1
+- apply server-v 9.1 release patches (thanks shaba@)
+- apply e2k patches (mike@)
+- mipsel-bfk3: Fix /etc/fstab generation (thanks iv@)
+- Rename all RPMs to canonical names before genbasedir (thanks boyars@)
+- gnustep: Fix build
+- oem: Add use/oem/no-cleanup
+- deflogin: Now you can add a user with specific uid, gid and so on
+
 * Fri Sep 25 2020 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt1
 - education: added commits skipped when rebase was done
 - wireless: added rtl8812au driver
