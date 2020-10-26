@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: deepin-movie
-Version: 5.7.6.51
+Version: 5.7.6.61
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
@@ -11,8 +13,11 @@ Source: %url/archive/%version/%name-reborn-%version.tar.gz
 
 ExcludeArch: armh
 
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake qt5-base-devel qt5-x11extras-devel qt5-tools-devel dtk5-widget-devel libmpv-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel xorg-xcbproto-devel libavformat-devel libavutil-devel libavcodec-devel libffmpegthumbnailer-devel libpulseaudio-devel libdvdnav-devel gsettings-qt-devel libswresample-devel
+BuildRequires: cmake qt5-base-devel qt5-x11extras-devel qt5-tools-devel dtk5-widget-devel libmpv-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel xorg-xcbproto-devel libavformat-devel libavutil-devel libavcodec-devel libffmpegthumbnailer-devel libpulseaudio-devel libdvdnav-devel gsettings-qt-devel libswresample-devel
 Requires: libdmr libdvdnav libgsettings-qt
 
 %description
@@ -37,6 +42,12 @@ This package provides development files for libdmr.
 sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
 
 %build
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+%endif
+
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=Release
@@ -64,6 +75,9 @@ sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbut
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Mon Oct 26 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.61-alt1
+- New version (5.7.6.61) with rpmgs script.
+
 * Mon Oct 19 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.51-alt1
 - New version (5.7.6.51) with rpmgs script.
 
