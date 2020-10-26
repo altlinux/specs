@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %def_without jemalloc
 %def_without java
@@ -12,14 +14,17 @@
 
 Name: rocksdb
 Version: 6.1.2
-Release: alt2
+Release: alt3
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
-License: BSD
-Url: https://github.com/facebook/rocksdb.git
+# License is changed from "BSD-plus-Patents" (BSD-3-Clause) to GPL-2.0 AND Apache-2.0 in 2017.
+License: GPL-2.0-only AND Apache-2.0
+Url: https://rocksdb.org/
+Vcs: https://github.com/facebook/rocksdb.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
 BuildRequires: libgtest-devel  cmake
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
@@ -39,6 +44,17 @@ Log-Structured-Merge-Database (LSM) design with flexible trade offs between
 Write-Amplification-Factor (WAF), Read-Amplification-Factor (RAF) and
 Space-Amplification-Factor (SAF). It has multithreaded compaction, making it
 specially suitable for storing multiple terabytes of data in a single database.
+
+%package -n %name-tools
+Summary: A Persistent Key-Value Store for Flash and RAM Storage (tools)
+Group: System/Libraries
+
+%description -n %name-tools
+Administration and Data Access Tools
+
+- The ldb command line tool offers multiple data access and database admin
+  commands.
+- sst_dump tool can be used to gain insights about a specific SST file.
 
 %package -n lib%name
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
@@ -99,6 +115,12 @@ rm build_tools/gnu_parallel
 %install
 %cmakeinstall_std
 #%%makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
+install -D -p -m755 BUILD/tools/ldb      %buildroot/%_bindir/ldb
+install -D -p -m755 BUILD/tools/sst_dump %buildroot/%_bindir/sst_dump
+
+%files -n %name-tools
+%_bindir/ldb
+%_bindir/sst_dump
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -106,11 +128,17 @@ rm build_tools/gnu_parallel
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
+%_libdir/cmake/%name
 
 %files -n lib%name-devel-static
 %_libdir/*.a
 
 %changelog
+* Mon Oct 26 2020 Vitaly Chikunov <vt@altlinux.org> 6.1.2-alt3
+- spec: Fix License, Url, add Vcs tags.
+- Package cmake rules into librocksdb-devel.
+- Package rocksdb-tools (administration and data access tools).
+
 * Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.1.2-alt2
 - fixed build with gcc-9
 
