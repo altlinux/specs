@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: strawberry
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -18,12 +18,9 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/jonaski/strawberry/archive/%version/%name-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ninja
-%if_enabled clang
-BuildRequires: clang10.0-devel
-%endif
-BuildRequires: boost-program_options-devel ccache gcc-c++ gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
-BuildRequires: cmake rpm-macros-cmake extra-cmake-modules desktop-file-utils libappstream-glib qt5-tools-devel protobuf-compiler libusb-devel
+BuildRequires(pre): desktop-file-utils rpm-build-ninja
+BuildRequires: boost-program_options-devel ccache gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
+BuildRequires: cmake libappstream-glib qt5-tools-devel protobuf-compiler libusb-devel
 %ifnarch s390 s390x
 BuildRequires: libgpod-devel
 %endif
@@ -105,6 +102,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Oct 26 2020 Leontiy Volodin <lvol@altlinux.org> 0.8.3-alt1
+- New version (0.8.3) with rpmgs script.
+
 * Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 0.8.2-alt1
 - New version (0.8.2) with rpmgs script.
 
