@@ -1,23 +1,25 @@
-Name: log4cplus
-Version: 2.0.0
-Release: alt3.rc2.1
+%define _unpackaged_files_terminate_build 1
 
+Name: log4cplus
+Version: 2.0.5
+Release: alt1
 Summary: Logging library to C++
-License: Apache License
+License: Apache-2.0 or BSD-2-Clause
 Group: Development/C++
 Url: http://log4cplus.sourceforge.net/
 
 # https://github.com/log4cplus/log4cplus.git
 Source: %name-%version.tar
-# https://github.com/log4cplus/ThreadPool.git
-Source1: threadpool.tar
-# https://github.com/catchorg/Catch2.git
-Source2: catch.tar
+
+# submodules
+Source1: %name-%version-catch.tar
+Source2: %name-%version-threadpool.tar
+
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ doxygen graphviz swig
 BuildRequires: python3-devel
-
 
 %description
 log4cplus is a simple to use C++ logging API providing thread-safe,
@@ -38,7 +40,7 @@ This package contains shared libraries of log4cplus.
 %package -n lib%name-devel
 Summary: Development files of logging library to C++
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 log4cplus is a simple to use C++ logging API providing thread-safe,
@@ -63,7 +65,7 @@ log4cplus.
 %package -n python3-module-%name
 Summary: Python bindings of logging library to C++
 Group: Development/Python3
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 %py3_provides %name
 
 %description -n python3-module-%name
@@ -74,10 +76,8 @@ configuration.  It is modeled after the Java log4j API.
 This package contains Python bindings of log4cplus.
 
 %prep
-%setup
-
-tar -xf %SOURCE1
-tar -xf %SOURCE2
+%setup -a1 -a2
+%patch1 -p1
 
 %build
 export PYTHON=python3
@@ -96,7 +96,7 @@ popd
 
 %install
 %makeinstall_std
-%if "%_libexecdir" != "%_libdir"
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 mv %buildroot%python3_sitelibdir_noarch/%name/* \
 	%buildroot%python3_sitelibdir/%name/
 %endif
@@ -108,6 +108,7 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %make check
 
 %files -n lib%name
+%doc LICENSE
 %doc AUTHORS ChangeLog NEWS README* TODO
 %_libdir/*.so.*
 
@@ -123,8 +124,10 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
-
 %changelog
+* Mon Oct 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt1
+- Updated to upstream version 2.0.5.
+
 * Thu Mar 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt3.rc2.1
 - Build fot python2 disabled.
 
