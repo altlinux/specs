@@ -1,5 +1,7 @@
+%def_disable coverage
+
 Name: apt-repo-tools
-Version: 0.6.0.22
+Version: 0.7.0
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -12,6 +14,9 @@ Provides: apt-utils = 0.5.15lorg4
 Obsoletes: apt-utils <= 0.5.15lorg4
 
 BuildRequires: gcc-c++ libapt-devel librpm-devel
+%if_enabled coverage
+BuildRequires: lcov
+%endif
 
 %description
 This package contains the utility programs that can prepare a repository
@@ -22,13 +27,26 @@ generating the indices): genbasedir, genpkglist, gensrclist.
 %setup
 
 %build
+# To avoid some errors on API change:
+%add_optflags -Werror=overloaded-virtual
+# A style enforcement: always use the keyword, which helps to avoid API misuse
+%add_optflags -Werror=suggest-override
+%add_optflags -Werror=return-type
 %autoreconf
-%configure
+%configure \
+	%{?_enable_coverage:--enable-code-coverage} \
+	%nil
 %make_build
 
 %install
 %makeinstall_std
 mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
+
+%check
+make check
+%if_enabled coverage
+make code-coverage-capture
+%endif
 
 %files
 /usr/bin/genpkglist
@@ -40,6 +58,21 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Mon Oct 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.0-alt1
+- Added new options to patch package index.
+- Added --basedir option to specify base directory name.
+- genbasedir: added support for zstd-compressed package lists.
+- genpkglist, gensrclist:
+  + removed --append option;
+  + removed --meta option.
+- genpkglist: fixed --cachedir description in usage (ALT#38293).
+- imz@:
+  + (.spec) Just added some compiler flags (which don't change anything) to be
+  sure that APT API has not been used wrongly and will not be.  (Namely, to be
+  sure that if a method override was intended, it would actually be overriding
+  and not hiding a virtual method and that it would be marked "override" for
+  future.).
+
 * Mon Jan 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.0.22-alt1
 - genpkglist: added DistTag.
 - genbasedir (by glebfm@):
