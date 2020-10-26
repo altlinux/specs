@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.5.4
-Release: alt1
+Release: alt2
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -57,6 +57,8 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(poppler)
 BuildRequires: pkgconfig(poppler-cpp)
 BuildRequires: pkgconfig(sdl)
+
+Requires: onboard
 
 %description
 Interactive whiteboard for schools and universities.
@@ -159,6 +161,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Mon Oct 26 2020 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt2
+- Requires onboard (Closes: 39119)
+
 * Sat Mar 28 2020 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt1
 - new version 1.5.4
 
