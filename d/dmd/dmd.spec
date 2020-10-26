@@ -10,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name: dmd
 Version: 2.094.0
-Release: alt2
+Release: alt3
 Summary: The D Programming Language
 Group: Development/Other
 License: BSL-1.0
@@ -144,6 +144,9 @@ pushd ../tools
 %make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out' install INSTALL_DIR=%buildroot%_prefix
 popd
 
+# catdoc conflicts with file from package 'catdoc'; rename it
+mv %buildroot%_bindir/catdoc %buildroot%_bindir/dmd-catdoc
+
 cp -r docs/man/man1/* %buildroot%_man1dir/
 cp -r docs/man/man5/* %buildroot%_man5dir/
 
@@ -172,6 +175,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Mon Oct 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.094.0-alt3
+- Renamed catdoc to dmd-catdoc due to file conflicts (ALT #39060).
+
 * Thu Oct 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.094.0-alt2
 - Reworked %%install phase. More tools should be installed now (ALT #39060).
 
