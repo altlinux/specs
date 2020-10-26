@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -138,14 +138,16 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 #%_xdgconfigdir/autostart/%name-screensaver.desktop
 %_userunitdir/%name.service
 %_userunitdir/%name.target
-%_userunitdir/gnome-session-x11@%name-compiz.target
-%_userunitdir/gnome-session-x11@%name-metacity.target
+%_userunitdir/gnome-session@gnome-flashback-metacity.target.d/session.conf
+
 
 %doc AUTHORS NEWS README
 
 %if_with compiz
 %files session-compiz
 %_libexecdir/%name-compiz
+%_userunitdir/gnome-session@gnome-flashback-compiz.target.d/session.conf
+
 %_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/xsessions/%name-compiz.desktop
 %_sysconfdir/compizconfig/%name.conf
@@ -154,6 +156,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 
