@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 8.2
-Release: alt3
+Release: alt4
 
 License: GPL
 Group: System/Configuration/Other
@@ -109,6 +109,9 @@ fi
 %files stage3
 
 %changelog
+* Thu Oct 22 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt4
+- officer step skip in network installation
+
 * Thu Oct 22 2020 Anton Midyukov <antohami@altlinux.org> 8.2-alt3
 - Merge with p9
 - Require installer-integ-stage2 packages in rootfs.
