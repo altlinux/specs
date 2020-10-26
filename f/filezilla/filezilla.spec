@@ -3,7 +3,7 @@
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.50.0
+Version: 3.51.0
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
@@ -13,6 +13,8 @@ Url: https://filezilla-project.org/
 # Repacked https://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.bz2
 Source: %oname-%version.tar
 
+Patch1: %name-%version-alt-system-pugixml.patch
+
 BuildRequires: gcc-c++ libdbus-devel libfilezilla-devel libgtk+3-devel libnettle-devel libpugixml-devel libsqlite3-devel libwxGTK3.0-devel xdg-utils
 
 %description
@@ -21,9 +23,15 @@ of useful features and an intuitive interface
 
 %prep
 %setup -n %oname-%version
+%patch1 -p2
 
 %build
-%configure --disable-autoupdatecheck
+%autoreconf
+%configure \
+	--disable-autoupdatecheck \
+	--with-pugixml=system \
+	%nil
+
 %make_build
 
 %install
@@ -35,6 +43,7 @@ of useful features and an intuitive interface
 %doc COPYING
 %doc AUTHORS ChangeLog NEWS README
 %_bindir/*
+%_libdir/*.so
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_datadir/appdata/filezilla.appdata.xml
@@ -45,6 +54,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Mon Oct 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.51.0-alt1
+- Updated to upstream version 3.51.0.
+
 * Mon Aug 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.50.0-alt1
 - Updated to upstream version 3.50.0.
 
