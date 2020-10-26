@@ -11,7 +11,7 @@
 
 Name: gdb
 Version: 8.3
-Release: alt2
+Release: alt3
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -29,6 +29,7 @@ Patch1: gdb-alt-testsuite-version.patch
 Patch2: gdb-alt-readline.patch
 Patch3: gdb-alt-bfd.patch
 Patch4: gdb-alt-fix-build-on-mips.patch
+Patch5: gdb-alt-fix-CVE-2019-1010180.patch
 
 ### Fedora patches
 # Match the Fedora's version info.
@@ -689,6 +690,7 @@ mv readline/doc readline-doc
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 
 # We want to use these as system libraries.
 rm -r readline zlib
@@ -831,6 +833,9 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Mon Oct 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3-alt3
+- Applied upstream patch (ALT#39135) (fixes CVE-2019-1010180).
+
 * Wed Mar 11 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.3-alt2
 - fix packaging on armh arch
 
