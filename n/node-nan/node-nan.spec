@@ -2,7 +2,7 @@
 
 Name: node-nan
 Version: 2.14.2
-Release: alt1
+Release: alt2
 
 Summary: Native Abstractions for Node.js
 
@@ -45,14 +45,14 @@ that make addon development a bit more pleasant.
 %build
 %npm_build
 cd test && node-gyp rebuild && cd - >/dev/null
-npm test
-npm prune --production
 
-#%check
-#npm test
+%check
+npm test
 
 %install
 %npm_install
+cd %buildroot/%nodejs_sitelib/%pname/
+npm prune --production
 rm -rf %buildroot/%nodejs_sitelib/%pname/{test,tools,doc,examples}/
 
 %files
@@ -60,6 +60,9 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/{test,tools,doc,examples}/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt2
+- do test in check section
+
 * Wed Oct 14 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt1
 - new version 2.14.2 (with rpmrb script)
 
