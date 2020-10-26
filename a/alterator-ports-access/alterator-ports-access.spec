@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.2
+Version: 0.3
 Release: alt1
 BuildArch: noarch
 Source:%name-%version.tar
@@ -10,6 +10,7 @@ License: %gpl2plus
 Group: System/Configuration/Other
 Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4 gettext
 Requires: alterator-l10n >= 2.7-alt10
+Requires: %name-cmdline
 BuildPreReq: rpm-build-licenses
 BuildPreReq: rpm-macros-alterator
 BuildRequires: alterator
@@ -17,6 +18,13 @@ BuildArch: noarch
 
 %description
 Alterator module to control serial/USB ports access
+
+%package cmdline
+Summary: alterator ports access control module command line part
+Group: System/Configuration/Other
+
+%description cmdline
+Command line part of alterator module to control serial/USB ports access
 
 %prep
 %setup -q
@@ -34,11 +42,18 @@ Alterator module to control serial/USB ports access
 %_altdata_dir/ui/*/*
 %_alterator_backend3dir/*
 %_altdata_dir/help/*/*
+
+%files cmdline
 %_sysconfdir/rc.d/rc.serial
 %_bindir/%name
 /lib/udev/alterator-ports-access
+%config(noreplace) %_sysconfdir/alterator-ports-access.conf
 
 %changelog
+* Mon Oct 26 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.3-alt1
+- divided to subpackages to allow use without alterator
+- packed configuration file
+
 * Sun Feb 26 2017 Denis Medvedev <nbr@altlinux.org> 0.2-alt1
 - Emits alarm to system log via systemd.
 
