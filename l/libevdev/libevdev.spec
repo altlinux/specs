@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libevdev
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -13,7 +13,7 @@ Url: http://www.freedesktop.org/wiki/Software/libevdev
 
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
-BuildRequires: glibc-kernheaders libcheck-devel python-modules python-module-setuptools
+BuildRequires: glibc-kernheaders libcheck-devel python3-module-setuptools
 %{?_enabled_doc:BuildRequires: doxygen}
 
 %description
@@ -34,8 +34,8 @@ that are needed to write applications that use %name.
 %build
 %autoreconf
 %configure --disable-static \
-	--disable-gcov
-
+	--disable-gcov \
+	PYTHON=%__python3
 %make_build
 
 %install
@@ -49,6 +49,8 @@ that are needed to write applications that use %name.
 %_bindir/touchpad-edge-detector
 %_bindir/libevdev-tweak-device
 %_libdir/libevdev.so.*
+%_man1dir/libevdev-tweak-device.1.*
+%_man1dir/touchpad-edge-detector.1.*
 %doc COPYING
 
 %files devel
@@ -58,6 +60,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Thu Jul 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
