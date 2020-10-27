@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.11.0.36
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -43,6 +43,7 @@ install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
 %__subst '/${DESTDIR}\/usr\/lib\/deepin-daemon\/service-trigger/s|${DESTDIR}%_libexecdir/deepin-daemon/service-trigger|${DESTDIR}/usr/libexec/deepin-daemon/service-trigger|g' Makefile
 %__subst '/${DESTDIR}${PREFIX}\/lib\/deepin-daemon/s|${DESTDIR}${PREFIX}/lib/deepin-daemon|${DESTDIR}${PREFIX}/usr/libexec/deepin-daemon|g' Makefile
 %__subst 's|lib/NetworkManager|libexec|' network/utils_test.go
+%__subst 's#/usr/share/backgrounds/default_background.jpg#/usr/share/backgrounds/deepin/desktop.jpg#' accounts/user.go
 
 for file in $(grep "%_libexecdir/deepin-daemon" * -nR |awk -F: '{print $1}')
 do
@@ -82,6 +83,7 @@ EOF
 %build
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
+export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
 # make -C network/nm_generator gen-nm-code
 %make_build
 
@@ -141,6 +143,9 @@ install -Dm644 %SOURCE1 \
 %_datadir/deepin-default-settings/fontconfig.json
 
 %changelog
+* Tue Oct 27 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt3
+- Fixed wallpaper settings.
+
 * Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt2
 - Returned to stable version.
 
