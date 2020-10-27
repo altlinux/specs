@@ -2,7 +2,7 @@
 %define mversion 3.5
 
 Name: musescore
-Version: 3.5
+Version: %mversion.2
 Release: alt1
 
 Summary: Music notation and composition software
@@ -46,7 +46,7 @@ Music notation and composition software
 sed -i 's/ -lporttime//' mscore/CMakeLists.txt
 
 %build
-export PATH=$PATH:%%_qt5dir/bin
+export PATH=$PATH:%_qt5_bindir
 echo $PATH
 mkdir build.debug && cd build.debug
 cmake \
@@ -101,6 +101,9 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/scalable
 
 %changelog
+* Tue Oct 27 2020 Grigory Ustinov <grenka@altlinux.org> 3.5.2-alt1
+- Automatically updated to 3.5.2.
+
 * Wed Aug 26 2020 Grigory Ustinov <grenka@altlinux.org> 3.5-alt1
 - Automatically updated to 3.5.
 
