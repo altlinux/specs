@@ -1,4 +1,3 @@
-%def_disable nacl
 %def_enable  clang
 %def_disable shared_libraries
 %def_enable  widevine
@@ -29,8 +28,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        83.0.4103.61
-Release:        alt4
+Version:        86.0.4240.111
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -66,30 +65,23 @@ Patch006: 0006-DEBIAN-disable-third-party-cookies-by-default.patch
 Patch007: 0007-DEBIAN-add-ps-printing-capability-gtk2.patch
 Patch008: 0008-ALT-fix-shrank-by-one-character.patch
 Patch009: 0009-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch010: 0010-FEDORA-path-max.patch
-Patch011: 0011-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
-Patch012: 0012-ALT-Fix-last-commit-position-issue.patch
-Patch013: 0013-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch014: 0014-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch015: 0015-FEDORA-Fix-gcc-round.patch
-Patch016: 0016-FEDORA-Fix-memcpy.patch
-Patch017: 0017-ALT-openh264-always-pic-on-x86.patch
-Patch018: 0018-ALT-allow-to-override-clang-through-env-variables.patch
-Patch019: 0019-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch020: 0020-ALT-Add-missing-header-on-aarch64.patch
-Patch021: 0021-GENTOO-Clang-allows-detection-of-these-builtins.patch
-Patch022: 0022-FEDORA-vtable-symbol-undefined.patch
-Patch023: 0023-FEDORA-remove-noexcept.patch
-Patch024: 0024-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch025: 0025-Add-missing-algorithm-header-in-crx_install_error.cc.patch
-Patch026: 0026-libstdc-fix-incomplete-type-in-AXTree-for-NodeSetSiz.patch
-Patch027: 0027-IWYU-std-numeric_limits-is-defined-in-limits.patch
-Patch028: 0028-Make-some-of-blink-custom-iterators-STL-compatible.patch
-Patch029: 0029-Include-memory-header-to-get-the-definition-of-std-u.patch
-Patch030: 0030-ServiceWorker-Avoid-double-destruction-of-ServiceWor.patch
+Patch010: 0010-ALT-Fix-last-commit-position-issue.patch
+Patch011: 0011-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch012: 0012-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch013: 0013-FEDORA-Fix-gcc-round.patch
+Patch014: 0014-ALT-openh264-always-pic-on-x86.patch
+Patch015: 0015-ALT-allow-to-override-clang-through-env-variables.patch
+Patch016: 0016-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch017: 0017-ALT-Add-missing-header-on-aarch64.patch
+Patch018: 0018-FEDORA-vtable-symbol-undefined.patch
+Patch019: 0019-FEDORA-remove-noexcept.patch
+Patch020: 0020-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch021: 0021-ALT-Disable-unknown-ld-flags.patch
+Patch022: 0022-ALT-Fix-memcpy.patch
 ### End Patches
 
 BuildRequires: /proc
+BuildRequires: /dev/shm
 
 BuildRequires:  bison
 BuildRequires:  bzlib-devel
@@ -153,6 +145,7 @@ BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xt)
+BuildRequires:  pkgconfig(xcb-proto)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(gbm)
 BuildRequires:  python
@@ -235,14 +228,6 @@ tar -xf %SOURCE1
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
-%patch023 -p1
-%patch024 -p1
-%patch025 -p1
-%patch026 -p1
-%patch027 -p1
-%patch028 -p1
-%patch029 -p1
-%patch030 -p1
 ### Finish apply patches
 
 sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/boringssl.patch | patch -p1
@@ -288,10 +273,14 @@ sed -i '1i#define PROCESSOR_TYPE -1\
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
 %else
 export CC="gcc"
 export CXX="g++"
 export AR="ar"
+export NM="nm"
+export READELF="readelf"
 %endif
 
 bits=$(getconf LONG_BIT)
@@ -303,8 +292,8 @@ export CHROMIUM_RPATH="%_libdir/%name"
 CHROMIUM_GN_DEFINES=
 gn_arg() { CHROMIUM_GN_DEFINES="$CHROMIUM_GN_DEFINES $*"; }
 
-#gn_arg custom_toolchain=\"//build/toolchain/linux/unbundle:default\"
-#gn_arg host_toolchain=\"//build/toolchain/linux/unbundle:default\"
+gn_arg custom_toolchain=\"//build/toolchain/linux/unbundle:default\"
+gn_arg host_toolchain=\"//build/toolchain/linux/unbundle:default\"
 gn_arg is_official_build=true
 gn_arg is_desktop_linux=true
 gn_arg use_custom_libcxx=false
@@ -322,23 +311,23 @@ gn_arg optimize_webui=false
 gn_arg use_system_freetype=false
 gn_arg use_system_harfbuzz=false
 gn_arg link_pulseaudio=true
-gn_arg ffmpeg_branding=\"ChromeOS\"
+gn_arg ffmpeg_branding=\"Chrome\"
 gn_arg proprietary_codecs=true
 gn_arg enable_hangout_services_extension=true
 gn_arg fieldtrial_testing_like_official_build=true
-gn_arg linux_use_bundled_binutils=false
 gn_arg treat_warnings_as_errors=false
 gn_arg fatal_linker_warnings=false
 gn_arg system_libdir=\"%_lib\"
 gn_arg use_allocator=\"none\"
 gn_arg use_icf=false
 gn_arg closure_compile=false
+gn_arg enable_js_type_check=false
 
 # Remove debug
 gn_arg is_debug=false
 gn_arg symbol_level=0
 
-gn_arg enable_nacl=%{is_enabled nacl}
+gn_arg enable_nacl=false
 gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
 gn_arg is_component_build=%{is_enabled shared_libraries}
 gn_arg enable_widevine=%{is_enabled widevine}
@@ -361,6 +350,12 @@ gn_arg is_clang=false
 
 %ifnarch %{ix86} x86_64
 gn_arg icu_use_data_file=false
+%endif
+
+%ifnarch %{ix86} x86_64
+gn_arg enable_vulkan=false
+%else
+gn_arg enable_vulkan=true
 %endif
 
 %if_enabled google_api_keys
@@ -444,13 +439,6 @@ done
 # Remove garbage
 find -name '*.TOC' -delete
 
-# NaCl
-%if_enabled nacl
-cp -at %buildroot%_libdir/%name -- \
- nacl_helper \
- nacl_helper_bootstrap \
- nacl_irt_*.nexe
-%endif
 popd
 
 # Icons
@@ -532,11 +520,114 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Oct 27 2020 Fr. Br. George <george@altlinux.ru> 86.0.4240.111-alt1
+- Buiild GOST version
+
+* Sat Oct 24 2020 Alexey Gladkov <legion@altlinux.ru> 86.0.4240.111-alt0
+- New version (86.0.4240.111).
+- Enable vulkan support on x86/x86_64 platforms (thx Konstantin A. Lepikhov).
+- Security fixes:
+  - CVE-2020-15999: Heap buffer overflow in Freetype.
+  - CVE-2020-16000: Inappropriate implementation in Blink.
+  - CVE-2020-16001: Use after free in media.
+  - CVE-2020-16002: Use after free in PDFium.
+  - CVE-2020-16003: Use after free in printing.
+
+* Sat Oct 10 2020 Alexey Gladkov <legion@altlinux.ru> 86.0.4240.75-alt1
+- New version (86.0.4240.75).
+- Security fixes:
+  - CVE-2020-15967: Use after free in payments.
+  - CVE-2020-15968: Use after free in Blink.
+  - CVE-2020-15969: Use after free in WebRTC.
+  - CVE-2020-15970: Use after free in NFC.
+  - CVE-2020-15971: Use after free in printing.
+  - CVE-2020-15972: Use after free in audio.
+  - CVE-2020-15973: Insufficient policy enforcement in extensions.
+  - CVE-2020-15974: Integer overflow in Blink.
+  - CVE-2020-15975: Integer overflow in SwiftShader.
+  - CVE-2020-15976: Use after free in WebXR.
+  - CVE-2020-15977: Insufficient data validation in dialogs.
+  - CVE-2020-15978: Insufficient data validation in navigation.
+  - CVE-2020-15979: Inappropriate implementation in V8.
+  - CVE-2020-15980: Insufficient policy enforcement in Intents.
+  - CVE-2020-15981: Out of bounds read in audio.
+  - CVE-2020-15982: Side-channel information leakage in cache.
+  - CVE-2020-15983: Insufficient data validation in webUI.
+  - CVE-2020-15984: Insufficient policy enforcement in Omnibox.
+  - CVE-2020-15985: Inappropriate implementation in Blink.
+  - CVE-2020-15986: Integer overflow in media.
+  - CVE-2020-15987: Use after free in WebRTC.
+  - CVE-2020-15988: Insufficient policy enforcement in downloads.
+  - CVE-2020-15989: Uninitialized Use in PDFium.
+  - CVE-2020-15990: Use after free in autofill.
+  - CVE-2020-15991: Use after free in password manager.
+  - CVE-2020-15992: Insufficient policy enforcement in networking.
+  - CVE-2020-6557: Inappropriate implementation in networking.
+
+* Mon Sep 07 2020 Alexey Gladkov <legion@altlinux.ru> 85.0.4183.83-alt2
+- Drop third party VAAPI patch.
+
+* Mon Aug 31 2020 Alexey Gladkov <legion@altlinux.ru> 85.0.4183.83-alt1
+- New version (85.0.4183.83).
+- Security fixes:
+  - CVE-2020-6558: Insufficient policy enforcement in iOS.
+  - CVE-2020-6559: Use after free in presentation API.
+  - CVE-2020-6560: Insufficient policy enforcement in autofill.
+  - CVE-2020-6561: Inappropriate implementation in Content Security Policy.
+  - CVE-2020-6562: Insufficient policy enforcement in Blink.
+  - CVE-2020-6563: Insufficient policy enforcement in intent handling.
+  - CVE-2020-6564: Incorrect security UI in permissions.
+  - CVE-2020-6565: Incorrect security UI in Omnibox.
+  - CVE-2020-6566: Insufficient policy enforcement in media.
+  - CVE-2020-6567: Insufficient validation of untrusted input in command line handling.
+  - CVE-2020-6568: Insufficient policy enforcement in intent handling.
+  - CVE-2020-6569: Integer overflow in WebUSB.
+  - CVE-2020-6570: Side-channel information leakage in WebRTC.
+  - CVE-2020-6571: Incorrect security UI in Omnibox.
+
+* Tue Jul 28 2020 Alexey Gladkov <legion@altlinux.ru> 84.0.4147.105-alt1
+- New version (84.0.4147.105).
+- Security fixes:
+  - CVE-2020-6532: Use after free in SCTP.
+  - CVE-2020-6537: Type Confusion in V8.
+  - CVE-2020-6538: Inappropriate implementation in WebView.
+  - CVE-2020-6539: Use after free in CSS.
+  - CVE-2020-6540: Heap buffer overflow in Skia.
+  - CVE-2020-6541: Use after free in WebUSB.
+
 * Wed Jul 22 2020 Fr. Br. George <george@altlinux.ru> 83.0.4103.61-alt4
 - Fix typo in start script
 
-* Tue Jul 14 2020 Fr. Br. George <george@altlinux.ru> 83.0.4103.61-alt3
-- Build GOST version
+* Wed Jul 15 2020 Alexey Gladkov <legion@altlinux.ru> 84.0.4147.89-alt1
+- New version (84.0.4147.89).
+- Fix compilation with system ffmpeg 4.3 (ALT#38716)
+- Security fixes:
+  - CVE-2020-6510: Heap buffer overflow in background fetch.
+  - CVE-2020-6511: Side-channel information leakage in content security policy.
+  - CVE-2020-6512: Type Confusion in V8.
+  - CVE-2020-6513: Heap buffer overflow in PDFium.
+  - CVE-2020-6514: Inappropriate implementation in WebRTC.
+  - CVE-2020-6515: Use after free in tab strip.
+  - CVE-2020-6516: Policy bypass in CORS.
+  - CVE-2020-6517: Heap buffer overflow in history.
+  - CVE-2020-6518: Use after free in developer tools.
+  - CVE-2020-6519: Policy bypass in CSP.
+  - CVE-2020-6520: Heap buffer overflow in Skia.
+  - CVE-2020-6521: Side-channel information leakage in autofill.
+  - CVE-2020-6522: Inappropriate implementation in external protocol handlers.
+  - CVE-2020-6523: Out of bounds write in Skia.
+  - CVE-2020-6524: Heap buffer overflow in WebAudio.
+  - CVE-2020-6525: Heap buffer overflow in Skia.
+  - CVE-2020-6526: Inappropriate implementation in iframe sandbox.
+  - CVE-2020-6527: Insufficient policy enforcement in CSP.
+  - CVE-2020-6528: Incorrect security UI in basic auth.
+  - CVE-2020-6529: Inappropriate implementation in WebRTC.
+  - CVE-2020-6530: Out of bounds memory access in developer tools.
+  - CVE-2020-6531: Side-channel information leakage in scroll to text.
+  - CVE-2020-6533: Type Confusion in V8.
+  - CVE-2020-6534: Heap buffer overflow in WebRTC.
+  - CVE-2020-6535: Insufficient data validation in WebUI.
+  - CVE-2020-6536: Incorrect security UI in PWAs.
 
 * Mon Jun 29 2020 Andrey Cherepanov <cas@altlinux.org> 83.0.4103.61-alt2
 - Prevent ignored null byte warning in Flash plugin version detection.
@@ -587,8 +678,37 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
   - CVE-2020-6460: Insufficient data validation in URL formatting.
   - CVE-2020-6463: Use after free in ANGLE.
 
-* Thu Apr 23 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt3
-- Fix startup script
+* Thu Apr 16 2020 Alexey Gladkov <legion@altlinux.ru> 81.0.4044.113-alt1
+- New version (81.0.4044.113).
+- Security fixes:
+  - CVE-2020-6457: Use after free in speech recognizer.
+
+* Wed Apr 08 2020 Alexey Gladkov <legion@altlinux.ru> 81.0.4044.92-alt1
+- New version (81.0.4044.92).
+- Security fixes:
+  - CVE-2020-6423: Use after free in audio.
+  - CVE-2020-6430: Type Confusion in V8.
+  - CVE-2020-6431: Insufficient policy enforcement in full screen.
+  - CVE-2020-6432: Insufficient policy enforcement in navigations.
+  - CVE-2020-6433: Insufficient policy enforcement in extensions.
+  - CVE-2020-6434: Use after free in devtools.
+  - CVE-2020-6435: Insufficient policy enforcement in extensions.
+  - CVE-2020-6436: Use after free in window management.
+  - CVE-2020-6437: Inappropriate implementation in WebView.
+  - CVE-2020-6438: Insufficient policy enforcement in extensions.
+  - CVE-2020-6439: Insufficient policy enforcement in navigations.
+  - CVE-2020-6440: Inappropriate implementation in extensions.
+  - CVE-2020-6441: Insufficient policy enforcement in omnibox.
+  - CVE-2020-6442: Inappropriate implementation in cache.
+  - CVE-2020-6443: Insufficient data validation in developer tools.
+  - CVE-2020-6444: Uninitialized Use in WebRTC.
+  - CVE-2020-6445: Insufficient policy enforcement in trusted types.
+  - CVE-2020-6446: Insufficient policy enforcement in trusted types.
+  - CVE-2020-6447: Inappropriate implementation in developer tools.
+  - CVE-2020-6448: Use after free in V8.
+  - CVE-2020-6454: Use after free in extensions.
+  - CVE-2020-6455: Out of bounds read in WebSQL.
+  - CVE-2020-6456: Insufficient validation of untrusted input in clipboard.
 
 * Fri Mar 06 2020 Alexey Gladkov <legion@altlinux.ru> 80.0.3987.132-alt1
 - New version (80.0.3987.132).
