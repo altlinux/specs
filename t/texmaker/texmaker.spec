@@ -1,5 +1,5 @@
 Name: texmaker
-Version: 5.0.2
+Version: 5.0.4
 Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
@@ -10,9 +10,16 @@ Url: http://www.xm1math.net/texmaker/index.html
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source: %name-%version.tar.bz2
+# setup the .pro file to unbundle qtsingleapplication and hunspell
+# also fixes a single header file to use system singleapp
+Patch0:		%{name}-5.x-unbundle-qtsingleapp.patch
+# fix header files to use system hunspell
+Patch1:		%{name}-5.x-unbundle-hunspell.patch
+# use system pdf viewers instead of hardcoded evince
+Patch2:		%{name}-5.x-viewfiles.patch
 
 # Automatically added by buildreq on Thu Apr 24 2008
-BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel
+BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel libhunspell-devel libqtsingleapplication-qt5-devel
 
 %description
 Texmaker is a LaTeX editor that integrates many tools
@@ -20,6 +27,16 @@ needed to develop documents with LaTeX.
 
 %prep
 %setup
+%patch0
+%patch1
+%patch2
+
+# get rid of zero-length space
+sed -i 's/\xe2\x80\x8b//g' utilities/%{name}.appdata.xml
+
+# remove bundled stuff (hunspell and qtsingleapplication)
+rm -fr hunspell singleapp
+
 
 %build
 /usr/share/qt5/bin/qmake -unix PREFIX=%prefix %name.pro
@@ -37,6 +54,9 @@ needed to develop documents with LaTeX.
 
 
 %changelog
+* Tue Oct 27 2020 Ilya Mashkin <oddity@altlinux.ru> 5.0.4-alt1
+- 5.0.4
+
 * Mon Aug 21 2017 Ilya Mashkin <oddity@altlinux.ru> 5.0.2-alt1
 - 5.0.2
 
