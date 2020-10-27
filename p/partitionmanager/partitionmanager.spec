@@ -1,8 +1,8 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 4.1.0
-Release: alt2
+Version: 4.2.0
+Release: alt1
 
 Summary: KDE Partition Manager
 License: GPLv3
@@ -17,7 +17,7 @@ Source: https://download.kde.org/stable/partitionmanager/%version/src/%name-%ver
 Requires: qca-qt5-ossl lvm2 cryptsetup
 
 %define qt_ver 5.7.0
-%define kpmcore_ver 4.1.0
+%define kpmcore_ver 4.2.0
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel >= %qt_ver
@@ -54,9 +54,12 @@ file systems.
 %_K5cfg/%name.kcfg
 %_K5xmlgui/%name/
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc README* TODO
+%doc README*
 
 %changelog
+* Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt2
 - qca-qt5-ossl required (ALT #38105)
 
