@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper for hiredis
 
@@ -55,6 +55,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Tue Oct 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt2
+- Rebuilt with new hiredis.
+
 * Tue Oct 20 2020 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.1 -> 1.1.0.
 - Stopped Python2 package build.

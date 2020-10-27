@@ -7,7 +7,7 @@
 
 Name:		coturn
 Version:	4.5.1.1
-Release:	alt2
+Release:	alt3
 Summary:	Coturn TURN Server
 
 License:	BSD
@@ -25,7 +25,6 @@ Requires:	libpq5
 BuildRequires:	libmariadb-devel
 Requires: 	libmariadb3
 BuildRequires:	libhiredis-devel
-Requires:	libhiredis0.13
 BuildRequires:	perl-DBI, perl-libwww-perl
 
 
@@ -301,6 +300,9 @@ mkdir -p %{buildroot}/run/%name
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Tue Oct 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.1.1-alt3
+- Don't explicitly depend on libhiredis0.13, let correct dependency be autodetected.
+
 * Sun Apr 05 2020 Arseny Maslennikov <arseny@altlinux.org> 4.5.1.1-alt2
 - Applied upstream fixes for CVE-2020-6062/TALOS-2020-0985.
 - Applied upstream fixes for CVE-2020-6061/TALOS-2020-0984.
