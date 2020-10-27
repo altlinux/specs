@@ -1,6 +1,6 @@
 Name: 	 c-icap
-Version: 0.5.6
-Release: alt2
+Version: 0.5.7
+Release: alt1
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -132,6 +132,9 @@ chmod -x %buildroot/%_sysconfdir/%name.magic*
 %_libdir/libicapapi.so
 
 %changelog
+* Tue Oct 27 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.5.7-alt1
+- New version.
+
 * Wed Feb 19 2020 Sergey Y. Afonin <asy@altlinux.org> 1:0.5.6-alt2
 - updated License tag to SPDX syntax, changed to LGPL-2.1-or-later
 - fixed packaging the logging directory
