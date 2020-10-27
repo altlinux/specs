@@ -1,11 +1,11 @@
+%define libsover 24
 
 %define rname OpenEXR
-%define libsover 25
-Name: openexr
-Version: 2.5.3
-Release: alt1
+Name: openexr24
+Version: 2.3.0
+Release: alt3
 
-%define common %name%libsover-common
+%define common %name-common
 %define libilmimf libilmimf%libsover
 %define libilmimfutil libilmimfutil%libsover
 
@@ -17,13 +17,17 @@ URL: http://www.openexr.org/
 Requires: %libilmimf = %version-%release
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
-Provides: %name-utils = %version-%release
-Obsoletes: %name-utils < %version-%release
 
-Source: %name-%version.tar
+Source: openexr-%version.tar
+# FC
+Patch1: openexr-2.3.0-bigendian.patch
+Patch2: openexr-2.3.0-tests.patch
 
-BuildRequires: gcc-c++ glibc-devel ilmbase-devel zlib-devel
-BuildRequires: cmake
+# Automatically added by buildreq on Thu Apr 21 2011 (-bi)
+# optimized out: elfutils libstdc++-devel pkg-config
+#BuildRequires: gcc-c++ glibc-devel-static ilmbase-devel zlib-devel
+BuildRequires: gcc-c++ glibc-devel ilmbase24-devel zlib-devel
+BuildRequires: cmake kde-common-devel
 
 %description
 OpenEXR is an image file format and library developed by Industrial Light
@@ -58,25 +62,29 @@ libIlmImfUtil %rname library
 Summary: Headers for developing programs that will use %rname
 Group: Development/Other
 Requires: %common = %version-%release
-Requires: ilmbase-devel
+Conflicts: openexr-devel
 #
 %description devel
 This package contains the static libraries and header files needed for
 developing applications with %rname
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n openexr-%version
+%patch1 -p2
+%patch2 -p2
 %ifarch %e2k
 # e2k has MMX/SSE but 2.2.0+'s asm needs to be ported
 %add_optflags -U__SSE2__ -U__SSE4_1__
 %endif
 
 %build
-%cmake
-%cmake_build
+%configure \
+    --disable-static \
+    #
+%make_build
 
 %install
-make -C BUILD install DESTDIR=%buildroot
+%makeinstall_std
 
 
 %files -n %common
@@ -85,11 +93,11 @@ make -C BUILD install DESTDIR=%buildroot
 %_bindir/*
 
 %files -n %libilmimf
-%doc PATENTS README*
+%doc AUTHORS ChangeLog PATENTS LICENSE README*
 %_libdir/libIlmImf-*.so.%libsover
 %_libdir/libIlmImf-*.so.%libsover.*
 %files -n %libilmimfutil
-%doc PATENTS README*
+%doc AUTHORS ChangeLog PATENTS LICENSE README*
 %_libdir/libIlmImfUtil-*.so.%libsover
 %_libdir/libIlmImfUtil-*.so.%libsover.*
 
@@ -98,13 +106,12 @@ make -C BUILD install DESTDIR=%buildroot
 %_includedir/%rname
 %_libdir/lib*.so
 %_libdir/pkgconfig/*
-%_libdir/cmake/OpenEXR/
 #%_datadir/aclocal/%name.m4
 
 
 %changelog
-* Mon Oct 26 2020 Sergey V Turchin <zerg@altlinux.org> 2.5.3-alt1
-- new version
+* Tue Oct 27 2020 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt3
+- create compatibility package
 
 * Sat Sep 21 2019 Michael Shigorin <mike@altlinux.org> 2.3.0-alt2
 - E2K: avoid SIMD for now (SSE asm needs to be ported)

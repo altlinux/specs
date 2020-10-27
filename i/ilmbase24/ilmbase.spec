@@ -1,11 +1,11 @@
-
+%define libsover 24
 %define rname IlmBase
-%define libsover 25
-Name: ilmbase
-Version: 2.5.3
-Release: alt1
 
-%define common %name%libsover-common
+Name: ilmbase24
+Version: 2.3.0
+Release: alt2
+
+%define common %name-common
 %define libhalf libhalf%libsover
 %define libiex libiex%libsover
 %define libilmthread libilmthread%libsover
@@ -14,7 +14,7 @@ Release: alt1
 
 Group: System/Libraries
 Summary: A high-dynamic-range image file library
-License: BSD-3-Clause
+License: Modified BSD
 URL: http://www.openexr.org/
 
 Requires: %libhalf
@@ -25,13 +25,16 @@ Requires: %libiexmath
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 
-Source: %name-%version.tar
+Source: ilmbase-%version.tar
 # FC
 Patch1: ilmbase-2.2.0-glibc_iszero.patch
+Patch2: ilmbase-2.2.0-no_undefined.patch
 # ALT
-Patch10: alt-pkgconfig.patch
+Patch10: ilmbase-2.1.0-alt-pkgconfig.patch
 
-BuildRequires: cmake
+# Automatically added by buildreq on Wed Apr 20 2011 (-bi)
+# optimized out: elfutils libGL-devel libstdc++-devel pkg-config
+#BuildRequires: gcc-c++ glibc-devel libGLU-devel libstdc++-devel
 BuildRequires: gcc-c++ glibc-devel libGLU-devel zlib-devel
 
 %description
@@ -100,40 +103,49 @@ Summary: Headers for developing programs that will use %name
 Group: Development/Other
 Requires: %common = %version-%release
 Conflicts: openexr-devel < 1.6
+Conflicts: ilmbase-devel
 %description devel
 This package contains the static libraries and header files needed for
 developing applications with %name
 
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n ilmbase-%version
 %patch1 -p1
+%patch2 -p1
 %patch10 -p1
 
+sed -i -E 's|[[:space:]]+DESTINATION[[:space:]]+lib$| DESTINATION %_lib|' */CMakeLists.txt
+
 %build
-%cmake
-#    -DILMBASE_LIB_SUFFIX=""
-%cmake_build
+%configure \
+     --disable-static \
+     #
+%make_build \
+    PTHREAD_LIBS="-pthread -lpthread" \
+    LIBS="-pthread -lpthread" \
+    #
 
 %install
-make -C BUILD install DESTDIR=%buildroot
+%makeinstall_std
+# DESTDIR=%buildroot
 
 # create compatibility symlinks
-#for f in %buildroot/%_libdir/lib*.so ; do
-#    fname=`basename $f`
-#    newname=`echo $fname | sed 's|-.*|.so|'`
-#    [ "$fname" == "$newname" ] \
-#	|| ln -s $fname %buildroot/%_libdir/$newname
-#done
+for f in %buildroot/%_libdir/lib*.so ; do
+    fname=`basename $f`
+    newname=`echo $fname | sed 's|-.*|.so|'`
+    [ "$fname" == "$newname" ] \
+	|| ln -s $fname %buildroot/%_libdir/$newname
+done
 
 %files -n %common
 
 %files
-%doc README*
+%doc AUTHORS ChangeLog LICENSE NEWS README*
 
 %files -n %libhalf
-%_libdir/libHalf-*.so.%libsover
-%_libdir/libHalf-*.so.%libsover.*
+%_libdir/libHalf.so.%libsover
+%_libdir/libHalf.so.%libsover.*
 
 %files -n %libiex
 %_libdir/libIex-*.so.%libsover
@@ -152,18 +164,15 @@ make -C BUILD install DESTDIR=%buildroot
 %_libdir/libIexMath-*.so.%libsover.*
 
 %files devel
-%doc README*
+%doc AUTHORS ChangeLog LICENSE NEWS README*
 %_includedir/OpenEXR
 %_libdir/*.so
 %_libdir/pkgconfig/*
-%_libdir/cmake/IlmBase/
+
 
 %changelog
-* Mon Oct 26 2020 Sergey V Turchin <zerg@altlinux.org> 2.5.3-alt1
-- new version
-
-* Fri Oct 23 2020 Sergey V Turchin <zerg@altlinux.org> 2.5.2-alt1
-- new version
+* Mon Oct 26 2020 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt2
+- create compatibility package
 
 * Fri Sep 20 2019 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt1
 - new version
