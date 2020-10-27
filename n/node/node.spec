@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.14
+%define major 14.15
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -380,6 +380,12 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Tue Oct 27 2020 Vitaly Lipatov <lav@altlinux.ru> 14.15.0-alt1
+- new version 14.15.0 (with rpmrb script)
+- 2020-10-27, Version 14.15.0 'Fermium' (LTS), @richardlau
+  This release marks the transition of Node.js 14.x into Long Term Support (LTS)
+
+
 * Fri Oct 16 2020 Vitaly Lipatov <lav@altlinux.ru> 14.14.0-alt1
 - new version 14.14.0 (with rpmrb script)
 
