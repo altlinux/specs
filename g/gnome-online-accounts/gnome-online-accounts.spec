@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -191,6 +191,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
