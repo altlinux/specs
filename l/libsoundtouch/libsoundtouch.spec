@@ -1,21 +1,21 @@
-%def_enable snapshot
-%define oname soundtouch
+%def_disable snapshot
+%define _name soundtouch
 %def_enable check
 
 Name: libsoundtouch
-Version: 2.1.2
+Version: 2.2
 Release: alt1
 
 Summary: SoundTouch audio processing library
 Group: System/Libraries
 License: LGPLv2.1
 Url: http://www.surina.net/soundtouch/
+Vcs: https://gitlab.com/soundtouch/soundtouch
 
 %if_disabled snapshot
-Source: http://www.surina.net/%oname/%{oname}-%version.tar.gz
+Source: https://gitlab.com/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
 %else
-# VCS: https://gitlab.com/soundtouch/soundtouch
-Source: %{oname}-%version.tar
+Source: %_name-%version.tar
 %endif
 
 BuildRequires: gcc-c++ libstdc++-devel
@@ -37,7 +37,7 @@ Requires: %name = %version-%release
 Libraries/include files for development with %name.
 
 %prep
-%setup -n %oname-%version
+%setup -n %_name-%version
 
 %build
 #touch NEWS README AUTHORS ChangeLog
@@ -59,12 +59,15 @@ rm -rf %buildroot/%_prefix/doc
 %doc README.html
 
 %files devel
-%_includedir/%oname/
+%_includedir/%_name/
 %_libdir/libSoundTouch.so
-%_aclocaldir/%oname.m4
-%_pkgconfigdir/%oname.pc
+%_aclocaldir/%_name.m4
+%_pkgconfigdir/%_name.pc
 
 %changelog
+* Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
+- 2.2
+
 * Wed Dec 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - updated to 2.1.2-2-g2b2585b
 
