@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Library for managing partitions
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ extra-cmake-modules %_bindir/appstreamcli
 BuildRequires: libdbus-devel libatasmart-devel libblkid-devel >= %blkid_ver libparted-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel libqca-qt5-devel
+BuildRequires: libpolkitqt5-qt5-devel
 
 %description
 %_name is a Library for managing partitions. Common code for KDE
@@ -51,13 +52,11 @@ using %_name.
 %K5install
 
 %files
-%_libexecdir/kauth/kpmcore_externalcommand
-%_datadir/dbus-1/system.d/%xdg_name.applicationinterface.conf
+%_libexecdir/kpmcore_externalcommand
+%_datadir/dbus-1/system-services/%xdg_name.helperinterface.service
 %_datadir/dbus-1/system.d/%xdg_name.helperinterface.conf
-%_datadir/dbus-1/system.d/%xdg_name.externalcommand.conf
 %_K5lib/*.so.*
 %_K5plug/*.so
-%_K5dbus_sys_srv/%xdg_name.externalcommand.service
 %_datadir/polkit-1/actions/%xdg_name.externalcommand.policy
 
 %files devel
@@ -67,6 +66,9 @@ using %_name.
 
 
 %changelog
+* Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Mon Feb 10 2020 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
