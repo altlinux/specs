@@ -7,13 +7,12 @@
 
 %define pkgdocdir %_docdir/lib%name-%version
 
-%def_disable python2
 %def_enable fts
 %def_enable docs
 
 Name: zeitgeist
-Version: %major.2
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: Framework providing Desktop activity awareness
 Group: Office
@@ -27,7 +26,6 @@ Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar.
 # VCS: git://anongit.freedesktop.org/zeitgeist/zeitgeist
 Source: %name-%version.tar
 %endif
-Patch1: %name-0.9.12-alt-python3_syntax.patch
 
 Requires: lib%name%api_ver = %version-%release
 
@@ -45,7 +43,6 @@ BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
 BuildRequires: pkgconfig(systemd)
-%{?_enable_python2:BuildRequires: python-devel python-module-rdflib}
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
 # for autoreconf
 BuildRequires: gettext-tools
@@ -108,19 +105,6 @@ relevant information available to other applications.
 
 This package provides GObject introspection devel data for the Zeitgeist library.
 
-%package -n python-module-%name%api_ver
-Summary: Python bindings for the Zeitgeist library
-Group: Development/Python
-BuildArch: noarch
-Requires: lib%name%api_ver = %version-%release
-
-%description -n python-module-%name%api_ver
-Zeitgeist is a service which logs the users's activities and events (files
-opened, websites visites, conversations hold with other people, etc.) and makes
-relevant information available to other applications.
-
-This package provides Python2 bindings for the Zeitgeist library.
-
 %package -n python3-module-%name%api_ver
 Summary: Python3 bindings for the Zeitgeist library
 Group: Development/Python3
@@ -146,10 +130,7 @@ This package contains development documentation for the Zeitgeist library.
 
 %prep
 %setup
-%setup -D -c
-%patch1
-subst 's/_have/have/' {*/,}data/completions/%name-daemon
-%{?_enable_python2:mv %name-%version py2build}
+subst 's/_have/have/' data/completions/%name-daemon
 
 %build
 %define opts --disable-static %{subst_enable fts}
@@ -159,22 +140,8 @@ subst 's/_have/have/' {*/,}data/completions/%name-daemon
 	PYTHON=%__python3
 %make_build
 
-%if_enabled python2
-pushd py2build
-%autoreconf
-%configure %opts \
-    PYTHON=%__python
-%make_build
-popd
-%endif
-
 %install
 %makeinstall_std
-
-%if_enabled python2
-pushd py2build
-%makeinstall_std
-%endif
 
 %if_enabled docs
 install -d -m755 %buildroot%pkgdocdir
@@ -199,11 +166,6 @@ cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %dir %_libexecdir/%name
 %_libexecdir/%name/%name-fts
 %_prefix/lib/systemd/user/%name-fts.service
-%endif
-
-%if_enabled python2
-%files -n python-module-%name%api_ver
-%python_sitelibdir_noarch/zeitgeist/
 %endif
 
 %files -n python3-module-%name%api_ver
@@ -232,6 +194,9 @@ cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %endif
 
 %changelog
+* Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3 (dropped Python 2 support)
+
 * Tue Jan 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
 - updated to v1.0.2-1-gb5c00e80 (fixed build with gettext >= 0.20)
 - disabled python2 support
