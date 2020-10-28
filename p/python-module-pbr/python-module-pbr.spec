@@ -13,7 +13,7 @@ re-usable library.
 
 Name:       python-module-%pypi_name
 Version:    5.5.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Python Build Reasonableness
 
@@ -43,22 +43,6 @@ Requires:   python3-module-pip
 
 %description -n python3-module-%pypi_name
 %descr
-
-%package -n python3-module-%pypi_name-tests
-Summary: Tests for PBR library (Python 3)
-Group: Development/Python3
-Requires: python3-module-%pypi_name = %version-%release
-
-%description -n python3-module-%pypi_name-tests
-Tests for PBR library (Python 3)
-
-%package tests
-Summary: Tests for PBR library
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-Tests for PBR library
 
 %prep
 %setup
@@ -121,10 +105,6 @@ popd
 %python_sitelibdir/%pypi_name
 %exclude %python_sitelibdir/%pypi_name/tests
 
-%files tests
-%python_sitelibdir/%pypi_name/tests
-
-
 %if_with python3
 %files -n python3-module-%pypi_name
 %doc README.rst LICENSE
@@ -132,13 +112,12 @@ popd
 %python3_sitelibdir/%pypi_name-%version-py*.egg-info
 %python3_sitelibdir/%pypi_name
 %exclude %python3_sitelibdir/%pypi_name/tests
-
-%files -n python3-module-%pypi_name-tests
-%python3_sitelibdir/%pypi_name/tests
-
 %endif
 
 %changelog
+* Tue Oct 27 2020 Stanislav Levin <slev@altlinux.org> 5.5.0-alt2
+- Stopped packaging of tests.
+
 * Thu Sep 03 2020 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
 - Automatically updated to 5.5.0.
 
