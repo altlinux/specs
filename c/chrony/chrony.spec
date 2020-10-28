@@ -1,7 +1,7 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 3.5.1
+Version: 4.0
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -15,8 +15,10 @@ Patch0: %name-%version-alt.patch
 Source2: chronyd.init
 Source3: chrony.sh
 
-BuildRequires: libcap-devel libncurses-devel libreadline-devel
+BuildRequires: libcap-devel libncurses-devel libedit-devel
 BuildRequires: libnss-devel asciidoctor lynx libseccomp-devel
+BuildRequires: libgnutls-devel
+BuildRequires: libnettle-devel
 BuildRequires: makeinfo control
 # for tests
 BuildRequires: /proc gcc-c++
@@ -80,7 +82,8 @@ make -C doc txt
 install -pD -m755 %SOURCE2 %buildroot%_initrddir/chronyd
 install -pD -m644 chrony.conf %buildroot%_sysconfdir/chrony.conf
 install -pD -m644 chrony.keys %buildroot%_sysconfdir/chrony.keys
-install -pD -m755 examples/chrony.nm-dispatcher %buildroot%_sysconfdir/NetworkManager/dispatcher.d/20-chrony
+install -pD -m755 examples/chrony.nm-dispatcher.dhcp %buildroot%_sysconfdir/NetworkManager/dispatcher.d/20-chrony-dhcp
+install -pD -m755 examples/chrony.nm-dispatcher.onoffline %buildroot%_sysconfdir/NetworkManager/dispatcher.d/21-chrony-onoffline
 install -pD -m644 examples/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/chrony
 install -pD -m644 chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
 install -pD -m644 examples/chronyd.service %buildroot%_unitdir/chronyd.service
@@ -120,7 +123,8 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %config(noreplace) %verify(not md5 size mtime) %attr(640,root,_chrony) %_sysconfdir/chrony.keys
 %config(noreplace) %_sysconfdir/logrotate.d/chrony
 %config(noreplace) %_sysconfdir/control.d/facilities/chrony
-%_sysconfdir/NetworkManager/dispatcher.d/20-chrony
+%_sysconfdir/NetworkManager/dispatcher.d/20-chrony-dhcp
+%_sysconfdir/NetworkManager/dispatcher.d/21-chrony-onoffline
 %_bindir/*
 %_sbindir/*
 %dir %attr(-,_chrony,_chrony) %_localstatedir/lib/%name
@@ -132,6 +136,11 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Wed Oct 28 2020 Anton Farygin <rider@altlinux.ru> 4.0-alt1
+- 4.0
+- built with gnutls and nettle to enable NTS support
+- built with libedit instead of libreadline
+
 * Wed Aug 26 2020 Anton Farygin <rider@altlinux.ru> 3.5.1-alt1
 - 3.5.1 (fixes: CVE-2020-14367)
 
