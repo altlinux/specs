@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
 Group: Development/Python
@@ -37,6 +37,8 @@ a more 'Pythonic' way.
 Summary: Development files for pycairo
 Group: Development/Python
 Requires: %name = %EVR
+Obsoletes: python-module-pycairo-common-devel
+Provides: python-module-pycairo-common-devel = %EVR
 
 %description devel
 Development files for pycairo.
@@ -72,6 +74,9 @@ subst 's|\"lib\"|"%_lib"|' setup.py
 
 
 %changelog
+* Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt3
+- devel: obsoletes/provides common-devel
+
 * Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt2
 - removed python3 support (the last version supporting Python 2.7 is 1.18.x)
 - removed common-devel subpackage
