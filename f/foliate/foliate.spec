@@ -1,10 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 2.4
+%define ver_major 2.5
 %define rdn_name com.github.johnfactotum.Foliate
 
+%define handy_api_ver 1
+%define tracker_api_ver 2.0
+
 Name: foliate
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -32,10 +35,10 @@ Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Gspell)
 Requires: typelib(Gtk)
-Requires: typelib(Handy)
+Requires: typelib(Handy) = %handy_api_ver
 Requires: typelib(Pango)
 Requires: typelib(Soup)
-Requires: typelib(Tracker)
+Requires: typelib(Tracker) = %tracker_api_ver
 Requires: typelib(WebKit2)
 
 %add_python3_path %_datadir/%rdn_name
@@ -81,6 +84,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
