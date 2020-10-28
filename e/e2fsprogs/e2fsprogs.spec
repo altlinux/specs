@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.44.6
+Version: 1.45.6.0.24.af1a
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -14,6 +14,7 @@ Source: %name-%version-%release.tar
 %def_disable libblkid
 %def_disable libuuid
 %def_disable fsck
+%filter_from_requires /^lvm/d
 
 Requires: libcom_err = %version-%release
 Requires: libe2fs = %version-%release
@@ -293,6 +294,10 @@ mv tests/m_no_opt/expect.1{,.tmpfs}
 mv tests/m_no_opt/expect.1{.ext2,}
 %make_build -k check V=1
 
+%set_verify_elf_method strict,lfs=relaxed
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/*.conf
 /sbin/*
@@ -388,6 +393,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Wed Oct 28 2020 Dmitry V. Levin <ldv@altlinux.org> 1.45.6.0.24.af1a-alt1
+- v1.44.6 -> v1.45.6-24-gaf1a882f (fixes: CVE-2019-5094, CVE-2019-5188).
+
 * Tue Mar 05 2019 Dmitry V. Levin <ldv@altlinux.org> 1.44.6-alt1
 - v1.44.5 -> v1.44.6.
 
@@ -627,7 +635,7 @@ mv tests/m_no_opt/expect.1{.ext2,}
 * Thu Feb 28 2002 Konstantin Volckov <goldhead@altlinux.ru> 1.26-alt1
 - 1.26
 
-* Tue Nov 28 2001 Konstantin Volckov <goldhead@altlinux.ru> 1.25-alt1
+* Wed Nov 28 2001 Konstantin Volckov <goldhead@altlinux.ru> 1.25-alt1
 - 1.25
 - Added some RH and MDK patches.
 - Fixed %description's
