@@ -6,7 +6,7 @@
 Name: python3-module-%mname
 Epoch: 1
 Version: 46.1.3
-Release: alt1
+Release: alt2
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -128,6 +128,9 @@ tox.py3 --sitepackages -vv -r -- --ignore pavement.py
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Wed Oct 28 2020 Stanislav Levin <slev@altlinux.org> 1:46.1.3-alt2
+- Fixed FTBFS(virtualenv 20.1.0).
+
 * Tue Apr 21 2020 Stanislav Levin <slev@altlinux.org> 1:46.1.3-alt1
 - 41.4.0 -> 46.1.3.
 

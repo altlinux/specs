@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%modulename
-Version: 16.7.9
-Release: alt2
+Name: python3-module-%modulename
+Version: 20.1.0
+Release: alt1
 
 Summary: Virtual Python Environment builder
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # git://github.com/pypa/virtualenv.git
 Url: http://pypi.python.org/pypi/virtualenv
 
@@ -17,19 +17,25 @@ Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
 
 %if_with check
-BuildRequires: python3(nose)
-BuildRequires: python3(pip)
+BuildRequires: python3(appdirs)
+BuildRequires: python3(coverage)
+BuildRequires: python3(distlib)
+BuildRequires: python3(filelock)
+BuildRequires: python3(flaky)
+BuildRequires: python3(packaging)
+BuildRequires: python3(pytest_freezegun)
+BuildRequires: python3(pytest_mock)
+BuildRequires: python3(pytest_randomly)
 BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(pytest-xdist)
+BuildRequires: python3(pytest_xdist)
+BuildRequires: python3(six)
 BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
-# json is not direct dep, but it is required to
-# use bundled 'pip' whl package, otherwise installation fails
-Requires: python-modules-json
 
 %description
 Tool to create isolated Python environments.
@@ -54,75 +60,42 @@ in newly created environment by invoking /your/dir/bin/python
 виртуальное окружение). Чтобы выполнить ваши скрипты в вновь созданном окружение
 запускайте их при помощи /your/dir/bin/python
 
-%package -n python3-module-%modulename
-Summary: Virtual Python 3 Environment builder
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-Tool to create isolated Python environments.
-
-With virtualenv it is became possible to keep separate set of python libraries
-for each of your project.
-
-Just exec "virtualenv /your/dir" and whole python enviroment (including
-setuptools and easy_install) will be installed there. You could exec scripts
-in newly created environment by invoking /your/dir/bin/python
-
 %prep
 %setup
 %patch -p1
 
-# to reflect virtualenv_embedded/ updates on virtualenv.py
-# if any file was changed under this directory then it's
-# hash is updated in virtualenv.py and returns 1 otherwise 0
-python3 tasks/update_embedded.py || python3 tasks/update_embedded.py
-
-rm -rf ../python3
-cp -a . ../python3
+# don't package win module
+rm -f src/virtualenv/util/subprocess/_win_subprocess.py
 
 %build
-%python_build
-
-pushd ../python3
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
-popd
 
 %install
-pushd ../python3
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 mv %buildroot%_bindir/{virtualenv,virtualenv3}
-popd
-
-%python_install
 
 %check
-# we have packaged pytest 4 and 5
-grep -qsF 'pytest >= 4.0.0, <5' setup.cfg || exit 1
-sed -i 's/pytest >= 4.0.0, <5/pytest/g' setup.cfg
-
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
-export PIP_FIND_LINKS=`pwd`/build/lib/virtualenv_support
-export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS'
-export TOXENV=py%{python_version_nodots python3}
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_FIND_LINKS=%buildroot%python3_sitelibdir/virtualenv/seed/wheels/embed
+export NO_INTERNET=yes
+export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
+export TOXENV=py3
 tox.py3 --sitepackages -vvr
 
 %files
-%doc docs/* *.txt *.rst
-%_bindir/virtualenv
-%exclude %_bindir/virtualenv3
-%python_sitelibdir/virtualenv.py*
-%python_sitelibdir/virtualenv-*.egg-info/
-%python_sitelibdir/virtualenv_support/
-
-%files -n python3-module-%modulename
-%doc docs/* *.txt *.rst
+%doc README.md
 %_bindir/virtualenv3
-%python3_sitelibdir/virtualenv.py
-%python3_sitelibdir/virtualenv-*.egg-info/
-%python3_sitelibdir/virtualenv_support/
-%python3_sitelibdir/__pycache__/virtualenv.*
+%python3_sitelibdir/virtualenv/
+%python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 26 2020 Stanislav Levin <slev@altlinux.org> 20.1.0-alt1
+- 16.7.9 -> 20.1.0.
+
 * Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 16.7.9-alt2
 - Disabled testing against Python2.
 
