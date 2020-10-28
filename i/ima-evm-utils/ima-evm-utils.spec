@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: ima-evm-utils
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -71,22 +72,24 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 %prep
 %setup
 
-sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-stylesheets/manpages/docbook.xsl"|' \
-	-i m4/manpage-docbook-xsl.m4
-
 %build
 %autoreconf
-%configure \
-	--disable-static \
-	--with-xml-catalog=/usr/share/xml/docbook/catalog
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std doc_DATA=
 
 %check
-# ext4 is required to run tests becasue of xattrs
-vm-run --overlay=ext4 make check
+LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/evmctl --version
+
+# armh does not support kvm properly, thus, if run w/o kvm:
+#   name           aarch64   armh  i586  ppc64le  x86_64
+#   ima-evm-utils     3:37  14:50  1:24     1:47    1:25
+if [ -w /dev/kvm ]; then
+  # ext4 is required to run tests becasue of xattrs
+  vm-run --overlay=ext4 make check
+fi
 
 %files
 %doc NEWS README AUTHORS COPYING examples/*.sh
@@ -101,6 +104,9 @@ vm-run --overlay=ext4 make check
 %_libdir/libimaevm.so
 
 %changelog
+* Wed Oct 28 2020 Vitaly Chikunov <vt@altlinux.org> 1.3.2-alt1
+- Update to v1.3.2 (2020-10-28).
+
 * Wed Aug 19 2020 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
 - Update to v1.3.1 (2020-08-04).
 
