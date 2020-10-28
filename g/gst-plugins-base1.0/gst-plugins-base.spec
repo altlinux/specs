@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -53,12 +53,11 @@ BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-de
 BuildRequires: libgraphene-devel libjpeg-devel libpng-devel
 BuildRequires: libXext-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
 BuildRequires: libcdparanoia-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
-#BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
 BuildRequires: gobject-introspection-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
 %{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
-%{?_enable_check:BuildRequires: /proc gstreamer%api_ver}
+%{?_enable_check:BuildRequires: /proc gstreamer%api_ver %_bindir/gst-tester-%api_ver}
 
 %description
 GStreamer Base Plug-ins is a well-groomed and well-maintained
@@ -205,6 +204,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
