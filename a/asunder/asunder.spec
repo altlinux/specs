@@ -1,5 +1,5 @@
 Name: asunder
-Version: 2.9.6
+Version: 2.9.7
 Release: alt1
 
 Summary: Audio CD ripper and encoder for Linux
@@ -62,6 +62,9 @@ cp %buildroot%_pixmapsdir/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt1
+- 2.9.7
+
 * Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.6-alt1
 - 2.9.6
 
