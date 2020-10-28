@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: buildbot
-Version: 2.7.0
+Version: 2.8.4
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -222,6 +222,9 @@ trial.py3 -e buildbot_worker.test
 %python3_sitelibdir/buildbot-*.egg-info
 
 %changelog
+* Wed Oct 28 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.8.4-alt1
+- new version 2.8.4
+
 * Fri Mar 27 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.0-alt1
 - new version 2.7.0
 
