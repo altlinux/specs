@@ -1,9 +1,9 @@
-%add_typelib_req_skiplist typelib(Gnome)
 %def_enable snapshot
-%define ver_major 1.9
+%add_typelib_req_skiplist typelib(Gnome)
+%define ver_major 2.0
 
 Name: terminator
-Version: %{ver_major}2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
@@ -14,6 +14,7 @@ Url: https://github.com/gnome-terminator/terminator
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
+Vcs: https://github.com/gnome-terminator/terminator.git
 Source: %name-%version.tar
 %endif
 
@@ -24,8 +25,10 @@ BuildArch: noarch
 
 %add_python3_req_skip gi.repository.GLib
 
+Requires: typelib(Gtk) = 3.0
+
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel intltool
+BuildRequires: python3-devel python3-module-setuptools python3-module-pytest-runner intltool
 
 %description
 Multiple GNOME terminals in one window. This is a project to produce an
@@ -48,7 +51,6 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/%name.wrapper
 %_bindir/remotinator
 %python3_sitelibdir_noarch/terminatorlib/
 %_datadir/%name/
@@ -56,7 +58,7 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %_iconsdir/hicolor/*/*/*.*
 %_iconsdir/HighContrast/*/*/*.*
 %_datadir/pixmaps/%name.png
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.metainfo.xml
 %_man1dir/%name.*
 %_man5dir/%{name}_config.*
 %doc README* CHANGELOG*
@@ -64,6 +66,9 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %exclude %python3_sitelibdir_noarch/%name-%version-py*.egg-info
 
 %changelog
+* Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- updated to v2.0.1-43-gacba6fa3
+
 * Mon Apr 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.92-alt1
 - updated to v1.92-7-gde432f73 (new Url, ported to Python3)
 
