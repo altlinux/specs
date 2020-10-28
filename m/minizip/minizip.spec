@@ -2,7 +2,7 @@
 %define sover 2.5
 
 Name: minizip
-Version: 2.9.3
+Version: 2.10.2
 Release: alt1
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
@@ -18,7 +18,9 @@ Source: %name-%version.tar
 BuildRequires: bzlib-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libbsd-devel
+BuildRequires: liblzma-devel
+BuildRequires: libssl-devel
+BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
 
 %description
@@ -102,7 +104,8 @@ cmake .. \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DCMAKE_BUILD_TYPE:STRING="Release" \
-    -DBUILD_SHARED_LIBS:BOOL=TRUE
+    -DBUILD_SHARED_LIBS:BOOL=TRUE \
+    -DMZ_OPENSSL:BOOL=TRUE
 
 popd
 
@@ -123,6 +126,9 @@ popd
 %_libdir/lib%name.so
 
 %changelog
+* Wed Oct 28 2020 Nazarov Denis <nenderus@altlinux.org> 2.10.2-alt1
+- Version 2.10.2
+
 * Mon Oct 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.9.3-alt1
 - Initial build for ALT Linux
 
