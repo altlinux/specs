@@ -1,6 +1,6 @@
 Name: efivar
 Version: 37
-Release: alt3
+Release: alt4
 Summary: Tools to manage UEFI variables
 License: LGPLv2.1
 Group: System/Kernel and hardware
@@ -57,6 +57,10 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto" LDFLAGS="$RPM
 %_libdir/*.so.*
 
 %changelog
+* Wed Aug 12 2020 Nikolai Kostrigin <nickel@altlinux.org> 37-alt4
+- fix bug rendering "efibootmgr -v" to fail to parse boot entries
+  by applying upstream patches
+
 * Tue May 12 2020 Nikolai Kostrigin <nickel@altlinux.org> 37-alt3
 - remove ExclusiveArch tag to enable build on ppc64le
   + this enables pesign-111+ build
