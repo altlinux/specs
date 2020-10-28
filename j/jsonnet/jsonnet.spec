@@ -1,5 +1,5 @@
 Name:     jsonnet
-Version:  0.15.0
+Version:  0.16.0
 Release:  alt1
 
 Summary:  Jsonnet - The data templating language
@@ -26,11 +26,17 @@ BuildRequires: gcc-c++
 install -Dpm 755 %name %buildroot/%_bindir/%name
 install -Dpm 755 %{name}fmt %buildroot/%_bindir/%{name}fmt
 
+%check
+make test
+
 %files
 %_bindir/*
 %doc *.md examples
 
 %changelog
+* Wed Oct 28 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.16.0-alt1
+- new version 0.16.0
+
 * Tue Mar 31 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.15.0-alt1
 - new version 0.15.0
 
