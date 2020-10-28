@@ -1,7 +1,9 @@
 %define repo dde-file-manager
 
+%def_disable clang
+
 Name: deepin-file-manager
-Version: 5.2.0.61
+Version: 5.2.0.69
 Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
@@ -10,14 +12,19 @@ Url: https://github.com/linuxdeepin/dde-file-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-file-manager_5.2.0.33_archlinux_qt5.15.patch
+Patch: deepin-file-manager_5.2.0.69_alt_fix-build.patch
 
 ExcludeArch: armh
 
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%else
 %set_gcc_version 7
+BuildRequires(pre): gcc7-c++
+%endif
+
 BuildRequires(pre): rpm-build-kf5
-# BuildRequires(pre): clang10.0-devel
-BuildRequires: gcc7-c++ git-core desktop-file-utils deepin-gettext-tools deepin-dock-devel libmagic-devel libjemalloc-devel kf5-kcodecs-devel libatk-devel dtk5-widget-devel dtk5-gui-devel deepin-qt-dbus-factory-devel libgtk+2-devel gsettings-qt-devel libsecret-devel libpoppler-cpp-devel libpolkit-devel libpolkitqt5-qt5-devel qt5-base-devel qt5-svg-devel qt5-multimedia-devel qt5-x11extras-devel libtag-devel libuchardet-devel libxcbutil-devel libxcbutil-icccm-devel qt5-linguist udisks2-qt5-devel disomaster-devel qt5-tools libgio-qt-devel libssl-devel libqtxdg-devel libmediainfo-devel libpcre-devel libffmpegthumbnailer-devel libdmr-devel deepin-anything-devel liblucene++-devel libxml2-devel libhtmlcxx-devel libgsf-devel libmimetic-devel
+BuildRequires: git-core desktop-file-utils deepin-gettext-tools deepin-dock-devel libmagic-devel libjemalloc-devel kf5-kcodecs-devel libatk-devel dtk5-widget-devel dtk5-gui-devel deepin-qt-dbus-factory-devel libgtk+2-devel gsettings-qt-devel libsecret-devel libpoppler-cpp-devel libpolkit-devel libpolkitqt5-qt5-devel qt5-base-devel qt5-svg-devel qt5-multimedia-devel qt5-x11extras-devel libtag-devel libuchardet-devel libxcbutil-devel libxcbutil-icccm-devel qt5-linguist udisks2-qt5-devel disomaster-devel qt5-tools libgio-qt-devel libssl-devel libqtxdg-devel libmediainfo-devel libpcre-devel libffmpegthumbnailer-devel libdmr-devel deepin-anything-devel liblucene++-devel libxml2-devel libhtmlcxx-devel libgsf-devel libmimetic-devel
 
 # run command by QProcess
 # Requires: deepin-shortcut-viewer deepin-terminal deepin-desktop file-roller gvfs samba xdg-user-dirs gst-plugins-good1.0-qt5
@@ -44,35 +51,43 @@ Deepin desktop environment - desktop module.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+# %%patch -p2
 
-%__subst 's|lrelease|lrelease-qt5|' dde-desktop/translate_generation.sh
-%__subst 's|lrelease|lrelease-qt5|' dde-file-manager-lib/generate_translations.sh
-%__subst 's|lrelease|lrelease-qt5|' dde-file-manager/generate_translations.sh
-%__subst 's|lrelease|lrelease-qt5|' dde-file-manager-plugins/generate_translations.sh
-%__subst 's|lupdate|lupdate-qt5|' dde-file-manager-lib/update_translations.sh
-%__subst 's|lupdate|lupdate-qt5|' dde-file-manager-plugins/update_translations.sh
+sed -i 's|lrelease|lrelease-qt5|' dde-desktop/translate_generation.sh
+sed -i 's|lrelease|lrelease-qt5|' dde-file-manager-lib/generate_translations.sh
+sed -i 's|lrelease|lrelease-qt5|' dde-file-manager/generate_translations.sh
+sed -i 's|lrelease|lrelease-qt5|' dde-file-manager-plugins/generate_translations.sh
+sed -i 's|lupdate|lupdate-qt5|' dde-file-manager-lib/update_translations.sh
+sed -i 's|lupdate|lupdate-qt5|' dde-file-manager-plugins/update_translations.sh
 
-#__subst 's|"groups":|"groups"\ :|' dde-file-manager-lib/configure/global-setting-template*.js
+# sed -i 's|"groups":|"groups"\ :|' dde-file-manager-lib/configure/global-setting-template*.js
 
 # fix file permissions
 find -type f -perm 775 -exec chmod 644 {} \;
-%__subst '/target.path/s|lib|%_lib|' dde-dock-plugins/disk-mount/disk-mount.pro
-%__subst '/deepin-daemon/s|lib|libexec|' dde-zone/mainwindow.h
-%__subst 's|lib/gvfs|libexec/gvfs|' %repo-lib/gvfs/networkmanager.cpp
+sed -i '/deepin-daemon/s|lib|libexec|' dde-zone/mainwindow.h
+sed -i 's|lib/gvfs|libexec/gvfs|' %repo-lib/gvfs/networkmanager.cpp
+sed -i 's|/lib/dde-dock/plugins|/lib64/dde-dock/plugins|' dde-dock-plugins/disk-mount/disk-mount.pro
 
-%__subst 's|systembusconf.path = /etc/dbus-1/system.d|systembusconf.path = /usr/share/dbus-1/system.d|' dde-file-manager-daemon/dde-file-manager-daemon.pro
-%__subst 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-manager-daemon.pro
+#sed -i 's|systembusconf.path = /etc/dbus-1/system.d|systembusconf.path = /usr/share/dbus-1/system.d|' dde-file-manager-daemon/dde-file-manager-daemon.pro
+sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-manager-daemon.pro
+
+sed -i 's|-lKF5Codecs|%_K5link/libKF5Codecs.so|' dde-file-manager/dde-file-manager.pro dde-file-manager-lib/dde-file-manager-lib.pro dde-file-manager-daemon/dde-file-manager-daemon.pro
 
 %build
+# %%add_optflags -L%%_K5link -lKF5Codecs
+
 %qmake_qt5 \
-           CONFIG+="release|debug nostrip" \
+           CONFIG+=nostrip \
+           unix:LIBS+="-L%_K5link -lKF5Codecs" \
            QT.KCodecs.libs=%_K5link \
            PREFIX=%prefix \
            DTK_VERSION=%version \
            LIB_INSTALL_DIR=%_libdir \
+%if_enabled clang
+           QMAKE_STRIP= -spec linux-clang \
+%endif
            filemanager.pro
-#            QMAKE_STRIP= -spec linux-clang \
+
 %make_build
 
 %install
@@ -104,7 +119,7 @@ find -type f -perm 775 -exec chmod 644 {} \;
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager.service
 %_datadir/dbus-1/system-services/com.deepin.filemanager.daemon.service
-%_datadir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
+%config(noreplace) %_sysconfdir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
 %_unitdir/dde-filemanager-daemon.service
 %dir %_datadir/deepin/
 %_datadir/deepin/%repo/
@@ -116,10 +131,12 @@ find -type f -perm 775 -exec chmod 644 {} \;
 %dir %_libdir/deepin-anything-server-lib/plugins/handlers/
 %_libdir/deepin-anything-server-lib/plugins/handlers/libdde-anythingmonitor.so
 %endif
+%ifnarch i586
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %dir %_libdir/dde-dock/plugins/system-trays/
 %_libdir/dde-dock/plugins/system-trays/libdde-disk-mount-plugin.so
+%endif
 %dir %_libdir/%repo/plugins/
 %dir %_libdir/%repo/plugins/previews/
 %_libdir/%repo/plugins/previews/*.so
@@ -144,6 +161,9 @@ find -type f -perm 775 -exec chmod 644 {} \;
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Nov 02 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.69-alt1
+- New version (5.2.0.69) with rpmgs script.
+
 * Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.61-alt1
 - New version (5.2.0.61) with rpmgs script.
 - Removed requires.
