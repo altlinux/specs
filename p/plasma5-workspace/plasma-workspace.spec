@@ -17,6 +17,10 @@
 %define libcolorcorrect libcolorcorrect%colorcorrect_sover
 %define notificationmanager_sover 1
 %define libnotificationmanager libnotificationmanager%notificationmanager_sover
+%define kfontinst_sover 5
+%define libkfontinst libkfontinst%kfontinst_sover
+%define kfontinstui_sover 5
+%define libkfontinstui libkfontinstui%kfontinstui_sover
 
 %def_disable qalculate
 %_K5if_ver_gteq %ubt_id M90
@@ -26,7 +30,7 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -44,7 +48,7 @@ Requires: xmessage
 Requires: qt5-dbus qt5-tools qt5-quickcontrols qt5-virtualkeyboard dbus-tools-gui
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
-Requires: kf5-kquickcharts
+Requires: kf5-kquickcharts kf5-kirigami
 Requires: plasma5-polkit-kde-agent plasma5-kwin plasma5-kactivitymanagerd
 
 Source: %rname-%version.tar
@@ -73,7 +77,7 @@ Patch119: alt-freespace-thread-timer.patch
 Patch120: alt-desktop-plasmashell.patch
 Patch121: alt-freememorynotifier.patch
 Patch122: alt-systemmonitor-ignoreconfig.patch
-Patch123: alt-desktop-krunner.patch
+Patch123: alt-def-font.patch
 Patch124: alt-filtering-widget-settings-upon-first-launch.patch
 Patch125: alt-translate-keyboard-layouts.patch
 Patch126: alt-add-using-the-altappstarter.patch
@@ -86,7 +90,7 @@ Patch129: alt-def-krunners.patch
 #BuildRequires: extra-cmake-modules gcc-c++ iceauth kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdesu-devel kf5-kdewebkit-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-libksysguard-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libdbusmenu-qt5-devel libgps-devel libpam-devel libqalculate-devel libwayland-client-devel libwayland-server-devel libxapian-devel mkfontdir prison-devel python-module-google qt5-phonon-devel qt5-script-devel qt5-x11extras-devel rpm-build-ruby xmessage xprop xrdb xset xsetroot zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: qt5-phonon-devel qt5-script-devel qt5-x11extras-devel
+BuildRequires: qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel qt5-wayland-devel
 BuildRequires: libgps-devel libpam0-devel zlib-devel
 %if_enabled qalculate
 libqalculate-devel
@@ -94,15 +98,17 @@ libqalculate-devel
 %if_enabled appstream
 BuildRequires: appstream-qt-devel
 %endif
-BuildRequires: libwayland-client-devel libwayland-server-devel
+BuildRequires: libwayland-client-devel libwayland-server-devel libdrm-devel
+BuildRequires: pipewire-libs-devel
 BuildRequires: libxapian-devel prison-devel libnm-devel
 BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
-BuildRequires: kde5-kholidays-devel
+BuildRequires: kde5-kholidays-devel kde5-plasma-wayland-protocols
 BuildRequires: plasma5-kscreenlocker-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
-BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel
+BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel
+BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdesu-devel kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kidletime-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
@@ -126,6 +132,7 @@ Group: System/Configuration/Other
 Requires: kf5-filesystem
 Provides: kf5-plasma-workspace-common = %EVR
 Obsoletes: kf5-plasma-workspace-common < %EVR
+Conflicts: plasma5-desktop-common < 5.20
 %description common
 %name common package
 
@@ -156,10 +163,19 @@ Buildarch: noarch
 %description -n sddm-theme-breeze
 SDDM breeze theme
 
+%package -n polkit-kde-plasma-workspace
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: %name-common
+Provides: polkit-kde-kfontinst
+%description -n polkit-kde-plasma-workspace
+Common polkit files for %name
+
 %package -n %libkworkspace5
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 Provides: libkworkspace5 = %version-%release
 Obsoletes: libkworkspace5 < %version-%release
 %description -n %libkworkspace5
@@ -168,7 +184,7 @@ Obsoletes: libkworkspace5 < %version-%release
 %package -n %libplasma_geolocation_interface
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 Provides: libplasma_geolocation_interface = %version-%release
 Obsoletes: libplasma_geolocation_interface < %version-%release
 %description -n %libplasma_geolocation_interface
@@ -177,7 +193,7 @@ Obsoletes: libplasma_geolocation_interface < %version-%release
 %package -n %libtaskmanager
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 Provides: libtaskmanager = %version-%release
 Obsoletes: libtaskmanager < %version-%release
 %description -n %libtaskmanager
@@ -186,7 +202,7 @@ Obsoletes: libtaskmanager < %version-%release
 %package -n %libweather_ion
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 Provides: libweather_ion = %version-%release
 Obsoletes: libweather_ion < %version-%release
 %description -n %libweather_ion
@@ -195,15 +211,29 @@ Obsoletes: libweather_ion < %version-%release
 %package -n %libcolorcorrect
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libcolorcorrect
 %name library
 
 %package -n %libnotificationmanager
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libnotificationmanager
+%name library
+
+%package -n %libkfontinst
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libkfontinst
+%name library
+
+%package -n %libkfontinstui
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libkfontinstui
 %name library
 
 
@@ -257,9 +287,9 @@ rm -f po/ru/libkicker.po.tmp
 
 %install
 %K5install
-
 %K5install_move data ksplash kstyle solid kdevappwizard kpackage kglobalaccel
 %K5install_move data desktop-directories doc kconf_update kio_desktop knsrcfiles
+%K5install_move data kcontrol kdisplay kfontinst krunner konqsidebartng
 
 # fix dbus service
 sed -i 's|^Exec=.*|Exec=%_K5bin/krunner|' %buildroot/%_K5dbus_srv/org.kde.krunner.service
@@ -307,6 +337,7 @@ done
 
 %find_lang %name --with-kde --all-name
 
+
 %files common -f %name.lang
 %doc COPYING*
 %dir %_K5xdgconf/plasma-workspace/
@@ -317,6 +348,8 @@ done
 %dir %_K5qml/org/kde/plasma/wallpapers/
 %config(noreplace) %_K5xdgconf/*rc
 %_datadir/qlogging-categories5/*.*categories
+%_K5icon/hicolor/*/mimetypes/*.*
+%_K5icon/hicolor/*/apps/*.*
 
 %files
 %config(noreplace) %x11confdir/wmsession.d/*PLASMA*
@@ -327,6 +360,7 @@ done
 %_bindir/*
 %_K5bin/*
 %_K5exec/*
+%_K5libexecdir/kauth/*
 %_K5conf_bin/*
 %_K5lib/libkdeinit5_*.so
 %_K5plug/plasma/*/*.so
@@ -336,6 +370,7 @@ done
 %_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/*.so
+%_K5plug/kf5/krunner/krunner_*.so
 %_K5plug/plasmacalendarplugins/
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
@@ -345,13 +380,19 @@ done
 %_K5qml/org/kde/holidayeventshelperplugin/
 %_K5qml/org/kde/colorcorrect/
 %_K5qml/org/kde/notificationmanager/
+%_K5cf_upd/*
 %_K5data/knsrcfiles/*.knsrc
 %_K5data/plasma/
 %_K5data/kglobalaccel/*.desktop
 %_K5data/kio_desktop/
-%_K5data/kpackage/kcms/kcm_translations/
+%_K5data/kpackage/kcms/*/
+%_K5data/kcontrol/
+%_K5data/krunner/
 %_K5data/ksplash/
 %_K5data/kstyle/
+%_K5data/kdisplay/
+%_K5data/kfontinst/
+%_K5data/konqsidebartng/
 %_K5data/desktop-directories/*
 %_K5data/solid/actions/*.desktop
 %_K5xdgapp/*.desktop
@@ -362,12 +403,20 @@ done
 %_K5srv/*.protocol
 %_K5srvtyp/*.desktop
 %_K5dbus_srv/*.service
+%_K5dbus/system.d/*.conf
 %_K5conf_up/*.upd
 #%_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
 %_K5if_ver_gteq %ubt_id M90
 %_datadir/wayland-sessions/plasmawayland.desktop
 %endif
+%_K5srv/ServiceMenus/*.desktop
+%_K5xmlgui/*/
+%_K5dbus_srv/*.service
+%_K5dbus_sys_srv/*.service
+
+%files -n polkit-kde-plasma-workspace
+%_datadir/polkit-1/actions/*fontinst*.policy
 
 %files -n %name-qml
 %_K5qml/org/kde/plasma/workspace/*/
@@ -402,9 +451,18 @@ done
 %files -n %libnotificationmanager
 %_K5lib/libnotificationmanager.so.*
 %_K5lib/libnotificationmanager.so.%notificationmanager_sover
+%files -n %libkfontinst
+%_K5lib/libkfontinst.so.*
+%_K5lib/libkfontinst.so.%kfontinst_sover
+%files -n %libkfontinstui
+%_K5lib/libkfontinstui.so.*
+%_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %def_disable dialer
 
 Name: plasma5-phone-components
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 %K5init altplace
 
@@ -78,17 +78,19 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %doc COPYING* README.md
 %_K5bin/kwinwrapper
 %_K5plug/plasma/applets/*.so
-%_K5qml/QtQuick/VirtualKeyboard/Styles/Plasma/
+%_K5qml/org/kde/plasma/private/mobileshell/
 %_K5srv/*.desktop
 %_K5data/plasma/look-and-feel/org.kde.plasma.phone/
 %_K5data/plasma/plasmoids/*/
 %_K5data//kwin/scripts/org.kde.phone.multitasking/
 %_K5data/plasma/shells/org.kde.plasma.phone/
 %_K5snd/sitter/
-%_K5wall/org.kde.plasma.phone.lockers/
 %_datadir/wayland-sessions/plasma-mobile.desktop
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt1
 - new version
 

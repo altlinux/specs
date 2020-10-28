@@ -1,14 +1,9 @@
 %define rname plasma-desktop
 
-%define kfontinst_sover 5
-%define libkfontinst libkfontinst%kfontinst_sover
-%define kfontinstui_sover 5
-%define libkfontinstui libkfontinstui%kfontinstui_sover
-
 
 Name: plasma5-desktop
-Version: 5.19.5
-Release: alt3
+Version: 5.20.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -21,8 +16,10 @@ Requires: polkit-kde-plasma-desktop
 # for ibus-ui-emojier-plasma
 Requires: ibus-dicts
 
+Provides: plasma5-user-manager = %EVR
+Obsoletes: plasma5-user-manager < %EVR
+
 Source: %rname-%version.tar
-Patch1: alt-def-font.patch
 Patch2: alt-menu-icon.patch
 Patch3: alt-def-apps-menu.patch
 Patch4: alt-def-kicker.patch
@@ -34,7 +31,7 @@ Patch10: alt-def-session.patch
 Patch11: alt-def-key-numlock.patch
 Patch12: alt-def-layout-indicator.patch
 Patch13: alt-def-taskman.patch
-#
+Patch14: alt-def-desktop-icons.patch
 Patch15: alt-menu-add-tooltip.patch
 #
 Patch17: alt-def-krunners.patch
@@ -51,9 +48,11 @@ BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-
 BuildRequires: libxcbutil-devel libxcbutil-image-devel libxkbcommon-devel
 BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel xorg-drv-libinput-devel
 BuildRequires: iceauth mkfontdir xset
+BuildRequires: accounts-qt5-devel kde5-kaccounts-integration-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
-BuildRequires: kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
+BuildRequires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel
+BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
@@ -83,6 +82,7 @@ Obsoletes: kf5-plasma-desktop-common < %EVR
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common
 Provides: kf5-plasma-desktop-devel = %EVR
 Obsoletes: kf5-plasma-desktop-devel < %EVR
 %description devel
@@ -93,30 +93,15 @@ developing applications that use %name.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name-common = %version-%release
-Provides: polkit-kde-kfontinst
+Requires: %name-common
+Requires: polkit-kde-plasma-workspace
 Provides: polkit-kde-kcmclock
 %description -n polkit-kde-plasma-desktop
 Common polkit files for %name
 
-%package -n %libkfontinst
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libkfontinst
-KF5 library
-
-%package -n %libkfontinstui
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libkfontinstui
-KF5 library
-
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 ###%patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -128,7 +113,7 @@ KF5 library
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-#
+%patch14 -p1
 %patch15 -p1
 #
 %patch17 -p1
@@ -149,10 +134,11 @@ KF5 library
 
 %K5install_move data color-schemes doc kcmmouse knsrcfiles kglobalaccel
 %K5install_move data kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
-%K5install_move data kconf_update kcontrol kdisplay kfontinst konqsidebartng ksmserver solid kpackage
+%K5install_move data kcontrol ksmserver kconf_update solid kpackage
 %K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad
 
 %find_lang %name --with-kde --all-name
+
 
 %files common -f %name.lang
 %doc COPYING*
@@ -166,11 +152,11 @@ KF5 library
 %_K5bin/*
 %_K5exec/*
 %_K5libexecdir/kauth/*
-%_K5cf_bin/*
 %_K5lib/libkdeinit5_*.so
 %_K5plug/*.so
 %_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
+%_K5plug/kf5/krunner/*.so
 %_K5plug/plasma/dataengine/*.so
 %_K5qml/org/kde/plasma/private/*/
 %_K5qml/org/kde/private/*/
@@ -179,17 +165,14 @@ KF5 library
 %_K5xdgapp/*
 %_K5start/*.desktop
 %_K5cfg/*
-%_K5srv/ServiceMenus/*.desktop
+%_K5conf_up/*
 %_K5srv/kded/*.desktop
 %_K5srv/*.desktop
-%_K5srv/*.protocol
 %_K5srvtyp/*.desktop
-%_K5xmlgui/*
 %_K5notif/*
 %_K5data/solid/devices/solid-*.desktop
 #%_K5data/color-schemes/*
 %_K5data/kcm*/
-%_K5cf_upd/*
 %_K5data/kactivitymanagerd/
 %_K5data/kpackage/kcms/*
 %_K5data/plasma/plasmoids/*
@@ -198,31 +181,23 @@ KF5 library
 %_K5data/plasma/shells/*/
 %_K5data/plasma/services/*
 %_K5data/plasma/desktoptheme/default/icons/*
-%_K5data/kcontrol/
-%_K5data/kdisplay/
 %_K5data/kglobalaccel/*.desktop
-%_K5data/kfontinst/
-%_K5data/konqsidebartng/
 %_K5data/knsrcfiles/*.knsrc
-%_K5dbus_srv/*.service
 %_K5dbus_sys_srv/*.service
+#%_datadir/accounts/providers/kde/*.provider
+#%_datadir/accounts/services/kde/*.service
 
 %files -n polkit-kde-plasma-desktop
-%_datadir/polkit-1/actions/*fontinst*.policy
 %_datadir/polkit-1/actions/*kcmclock*.policy
 
 %files devel
-%_K5link/lib*.so
+#%_K5link/lib*.so
 %_K5dbus_iface/*.xml
 
-%files -n %libkfontinst
-%_K5lib/libkfontinst.so.*
-%_K5lib/libkfontinst.so.%kfontinst_sover
-%files -n %libkfontinstui
-%_K5lib/libkfontinstui.so.*
-%_K5lib/libkfontinstui.so.%kfontinstui_sover
-
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.2-alt1
+- new version
+
 * Mon Oct 19 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt3
 - show apps from all desktops on tasks panel by default (closes: 39092)
 

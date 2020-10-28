@@ -1,7 +1,7 @@
 %define rname kde-gtk-config
 
 Name: plasma5-%rname
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -10,6 +10,10 @@ Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 GNOME/GTK Application Style
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Requires: xsettingsd
+Provides: kf5-kde-gtk-config = %EVR
+Obsoletes: kf5-kde-gtk-config < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-defaults.patch
@@ -20,7 +24,9 @@ Patch2: alt-def-font.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libgtk+2-devel libgtk+3-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-svg-devel
+BuildRequires: /usr/bin/sass
 BuildRequires: libgtk+2-devel libgtk+3-devel libXcursor-devel
+BuildRequires: plasma5-kdecoration-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
@@ -28,9 +34,6 @@ BuildRequires: kf5-knewstuff-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5
 BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 # workaround against pango includes
 BuildRequires: libharfbuzz-devel
-
-Provides: kf5-kde-gtk-config = %EVR
-Obsoletes: kf5-kde-gtk-config < %EVR
 
 %description
 Widget Style of GNOME/GTK Applications.
@@ -82,15 +85,18 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 %find_lang %name --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5exec/*gtk*
 %_K5conf_bin/*gtk*
 %_K5plug/kf5/kded/*gtk*.so
 %_libdir/gtk-*/modules/*.so
 %_K5conf_up/*gtk*.upd
-%_K5data/kcm-gtk-module/
+%_datadir/themes/Breeze/window_decorations.css
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
 - new version
 
