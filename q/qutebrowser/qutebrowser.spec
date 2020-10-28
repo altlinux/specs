@@ -1,7 +1,7 @@
 %global srcname qutebrowser
 
 Name: %srcname
-Version: 1.6.3
+Version: 1.14.0
 Release: alt1
 Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
 License: GPLv3
@@ -52,7 +52,7 @@ desktop-file-install \
 	--add-category="Network" \
 	--delete-original \
 	--dir=%buildroot%_datadir/applications \
-	misc/%srcname.desktop
+	misc/org.%srcname.%srcname.desktop
 
 # Install man page
 install -Dm644 doc/%srcname.1 -t %buildroot%_mandir/man1
@@ -78,7 +78,7 @@ find %buildroot -size 0 -delete
 %python3_sitelibdir/%srcname-%version-py?.?.egg-info
 %python3_sitelibdir/%srcname
 %_bindir/%srcname
-%_datadir/applications/%srcname.desktop
+%_datadir/applications/org.%srcname.%srcname.desktop
 %_mandir/man1/%srcname.1*
 %_datadir/icons/hicolor/scalable/apps/%srcname.svg
 %_datadir/icons/hicolor/16x16/apps/%srcname.png
@@ -91,6 +91,9 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Thu Oct 29 2020 Ilya Mashkin <oddity@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
 * Fri Jul 12 2019 Ilya Mashkin <oddity@altlinux.ru> 1.6.3-alt1
 - 1.6.3
 
