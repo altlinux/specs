@@ -2,9 +2,12 @@
 # turn on by:
 # gear --commit -v --hasher -- hsh --build-args "--with glibc_debuginfo" -v ~/hasher 2>&1 | tee log
 
+# TODO: fix tests
+%def_without check
+
 Name: ltrace
 Version: 0.7.91.0.198.git82c6640
-Release: alt3
+Release: alt4
 
 Summary: Tracks runtime library calls from dynamically linked executables
 License: GPLv2+
@@ -15,16 +18,41 @@ Url: http://ltrace.alioth.debian.org/
 # https://github.com/dkogan/ltrace
 Source: %name-%version.tar
 
-Patch0: ltrace-0.7.91.0.198.git82c6640-fix_readdir_r_deprecated.patch
-Patch1: ltrace-0.7.91.0.198.git82c6640-fix_attach_process.patch
-Patch2: ltrace-0.7.91.0.198.git82c6640-fix_attach_process_dlopen.patch
-Patch3: ltrace-0.7.91.0.198.git82c6640-disable_long_double_test_wchar.patch
-# patch3 due Ltrace doesn't support long
+# ===== RH Patches go here vvv =====
+# RH Patches1-25 are included in git repo https://github.com/dkogan/ltrace
+
+# GCC now warns (errors) on "tautological compares", and readdir_r is deprecated
+Patch26: ltrace-0.7.91-tautology.patch
+
+# ARM code has unreachable code after switch statement, move initialization
+Patch27: ltrace-rh1423913.patch
+
+# Patch28 makes braces unbalanced
+
+# GCC-9 fix. Avoid passing NULL as argument to %%s
+Patch29: ltrace-0.7.91-null.patch
+
+# Patch30 is strange and obscure to me
+
+# Patch31 is included in git repo
+
+# Testsuite: AARCH64 ifuncs not supported yet yet
+Patch32: ltrace-rh1225568.patch
+
+# Patches33-34 are included in git repo
+
+# GCC erroneously warns about uninitialized values
+Patch35: ltrace-0.7.91-rh1799619.patch
+
+# ===== ALT Patches goes here vvv =====
+Patch1001: ltrace-0.7.91.0.198.git82c6640-fix_attach_process.patch
+Patch1002: ltrace-0.7.91.0.198.git82c6640-fix_attach_process_dlopen.patch
+# Patch1003 due Ltrace doesn't support long
 # see: etc/libc.so-types.conf:# XXX ltrace misses long double and long long support
-Patch4: ltrace-0.7.91.0.198.git82c6640-fix_errors_in_tests.patch
+Patch1003: ltrace-0.7.91.0.198.git82c6640-disable_long_double_test_wchar.patch
+Patch1004: ltrace-0.7.91.0.198.git82c6640-fix_errors_in_tests.patch
 %{?_without_glibc_debuginfo:
-Patch5: ltrace-0.7.91.0.198.git82c6640-disable_glibc_core_debuginfo_tests.patch}
-Patch6: ltrace-0.7.91.0.198.git82c6640-make_gcc_happy_with_null.patch
+Patch1005: ltrace-0.7.91.0.198.git82c6640-disable_glibc_core_debuginfo_tests.patch}
 
 BuildRequires: libelf-devel elfutils-devel gcc-c++
 %{?!_without_check:%{?!_disable_check:
@@ -61,16 +89,22 @@ Ltrace перехватывает и выводит все выполняемы�
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+
+%patch26 -p1
+%patch27 -p1
+%patch29 -p1
+%patch32 -p1
+%patch35 -p1
+
+%patch1001 -p1
+%patch1002 -p1
+%patch1003 -p1
+%patch1004 -p1
 %{?_without_glibc_debuginfo:
-%patch5 -p1}
-%patch6 -p1
+%patch1005 -p1}
 
 %build
+export CFLAGS="%optflags -Werror"
 %autoreconf
 %configure
 %make_build
@@ -79,9 +113,8 @@ Ltrace перехватывает и выводит все выполняемы�
 %makeinstall_std
 
 %check
-# TODO: fix tests
-#[ -w /dev/ptmx -a -f /proc/self/maps ] || exit
-#LC_ALL=en_US.UTF-8 make check RUNTESTFLAGS="--tool_exec=%buildroot/usr/bin/ltrace CFLAGS_FOR_TARGET=" </dev/ptmx
+[ -w /dev/ptmx -a -f /proc/self/maps ] || exit
+LC_ALL=en_US.UTF-8 make check RUNTESTFLAGS="--tool_exec=%buildroot/%_bindir/ltrace CFLAGS_FOR_TARGET=" </dev/ptmx
 
 %files
 %_bindir/*
@@ -91,6 +124,9 @@ Ltrace перехватывает и выводит все выполняемы�
 %exclude %_docdir/%name
 
 %changelog
+* Tue Oct 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt4
+- Make lav@ happy. (Closes: #39102)
+
 * Sat Dec 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt3
 - Fixed FTBFS for gcc9.
 
@@ -98,8 +134,7 @@ Ltrace перехватывает и выводит все выполняемы�
 - Temporary disabled tests, because of new gcc.
 
 * Fri Nov 24 2017 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt1
-- Build new version.
-   (Closes: #33470)
+- Build new version. (Closes: #33470)
 
 * Wed Aug 24 2011 Dmitry V. Levin <ldv@altlinux.org> 0.6.0-alt1
 - Updated to 0.6.0-10-g43d1de9.
