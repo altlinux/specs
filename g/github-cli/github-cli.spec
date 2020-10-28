@@ -1,6 +1,6 @@
 %global import_path github.com/cli/cli
 Name:     github-cli
-Version:  1.0.0
+Version:  1.2.0
 Release:  alt1
 
 Summary:  GitHub's official command line tool
@@ -47,5 +47,8 @@ cp -r share/man -T %buildroot/%_mandir
 %doc *.md
 
 %changelog
+* Wed Oct 28 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt1
+- update to 1.2.0
+
 * Fri Sep 18 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
