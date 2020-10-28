@@ -2,7 +2,7 @@
 
 Name: clean
 Version: 3.0
-Release: alt1.5
+Release: alt1.6
 Summary: The Clean programming language compiler and environment
 Summary(ru_RU.UTF-8): Компилятор и системная библиотека для языка Clean
 License: BSD license
@@ -26,6 +26,7 @@ BuildRequires: prelink-tools
 Packager: %packager
 
 Source: clean-%version.tar
+Patch0: %name-3.0-alt-remove-doc-build.patch
 
 %description
 This package contains a Clean language compiler and standard
@@ -33,6 +34,7 @@ library. This is a bootstrap package for 64-bit intel architecture.
 
 %prep
 %setup -q -n %srcName-%version
+%patch0 -p2
 
 %build
 
@@ -102,6 +104,9 @@ touch "/usr/lib64/clean/StdEnv/Clean System Files"/*.o
 %docdir/*
 
 %changelog
+* Wed Oct 28 2020 Andrey Bergman <vkni@altlinux.org> 3.0-alt1.6
+- Update to recent unstable version.
+
 * Wed Sep 30 2020 Andrey Bergman <vkni@altlinux.org> 3.0-alt1.5
 - Update to recent unstable version.
 
