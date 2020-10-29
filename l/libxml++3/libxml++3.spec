@@ -2,10 +2,11 @@
 %define ver_major 3.2
 %define api_ver 3.0
 
+%def_enable docs
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -15,9 +16,11 @@ Url: https://libxmlplusplus.sourceforge.net/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: mm-common
+BuildRequires(pre): meson
+BuildRequires: mm-common gcc-c++ 
+BuildRequires: libglibmm-devel >= 2.32.0
 BuildRequires: libxml2-devel >= 2.7.7
-BuildRequires: doxygen gcc-c++ libglibmm-devel >= 2.32.0
+%{?_enable_docs:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
 
 %description
 libxml++ is a C++ wrapper for the libxml2 XML parser library.
@@ -27,7 +30,7 @@ the DOM specification. Its API is simpler than the underlying libxml2 C API.
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the headers and libraries for libxml++ development.
@@ -45,14 +48,19 @@ This package contains the development documentation for libxml++ library.
 %setup -n %_name-%version
 
 %build
-%configure --disable-static
-%make_build
+%{?_enable_snapshot:mm-common-prepare --force --copy}
+%meson \
+    %{?_enable_snapshot:-Denable-maintainer-mode=true} \
+    %{?_enable_docs:-Dbuild-documentation=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/%_name-%api_ver.so.*
@@ -64,11 +72,16 @@ This package contains the development documentation for libxml++ library.
 %_libdir/%_name-%api_ver/
 %_pkgconfigdir/%_name-%api_ver.pc
 
+%if_enabled docs
 %files devel-doc
 %_datadir/devhelp/books/%_name-%api_ver/*.devhelp2
 %_docdir/%_name-%api_ver/*
+%endif
 
 %changelog
+* Fri Oct 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
+- 3.2.2 (ported to Meson build system)
+
 * Sun Jan 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 - enabled %%check
