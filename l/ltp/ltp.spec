@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20200515
-Release: alt2
+Version: 20200930
+Release: alt1
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -25,7 +25,10 @@ BuildRequires: libselinux-devel
 BuildRequires: libssl-devel
 BuildRequires: libxfs-devel
 
-# No reqs at all, becasue there is tons of garbage.
+# No Reqs at all, because there is tons of them.
+# Idea is - all tests are optional, so we should not provide ready-to-go
+# ability to run any tests. Install required dependencies manually just
+# for the tests you want to run.
 AutoReq: off
 %add_verify_elf_skiplist /usr/lib/ltp/testcases/*
 
@@ -43,7 +46,9 @@ Testing Linux, one syscall at a time.
 %prep
 %setup
 
+# From LTP's travis.
 %add_optflags -Werror=implicit-function-declaration -fno-common
+# Just reduce amount of warnings for too old code.
 %add_optflags -Wno-unused-parameter -Wno-unused-result -Wno-old-style-declaration
 %build
 %autoreconf
@@ -56,6 +61,8 @@ Testing Linux, one syscall at a time.
 %install
 %makeinstall_std -j%__nprocs --output-sync=none
 find %buildroot/usr/lib/ltp -perm /g+w | xargs chmod g-w
+# Create output dirs (will have tmp-like permissions).
+mkdir %buildroot/usr/lib/ltp/{output,results}
 
 # EZ-Lanucher.
 mkdir -p %buildroot/%_bindir
@@ -72,6 +79,11 @@ uname02
 uname03
 uname04
 
+%post
+if [ -d /.host -a -d /.in -a -d /.out ]; then
+	chmod 1777 /usr/lib/ltp/{output,results}
+fi
+
 %files
 %doc COPYING README.*
 /usr/lib/ltp
@@ -81,6 +93,10 @@ uname04
 %_man3dir/*.3.*
 
 %changelog
+* Thu Oct 29 2020 Vitaly Chikunov <vt@altlinux.org> 20200930-alt1
+- Update to 20200930.
+- spec: Pre-create output directories.
+
 * Mon Aug 31 2020 Vitaly Chikunov <vt@altlinux.org> 20200515-alt2
 - Enable Open Posix Testsuite, Realtime Testsuite, and more LTP tests.
 
