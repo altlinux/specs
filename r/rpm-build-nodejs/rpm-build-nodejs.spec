@@ -1,7 +1,7 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.20.4
-Release: alt2
+Version: 0.20.5
+Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
 
@@ -87,6 +87,12 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Wed Oct 28 2020 Vitaly Lipatov <lav@altlinux.ru> 0.20.5-alt1
+- macros.nodejs: add node_test, node_prune
+- hide missed build/Release error
+- support both pname and node_module
+- npm_build: more verbose
+
 * Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.20.4-alt2
 - don't need rpm-build-python3 for node-gyp
 - require rpm-macros-nodejs from rpm-build-nodejs

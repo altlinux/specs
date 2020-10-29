@@ -2,7 +2,7 @@
 
 Name: node-nan
 Version: 2.14.2
-Release: alt2
+Release: alt3
 
 Summary: Native Abstractions for Node.js
 
@@ -20,10 +20,9 @@ Source1: %name-development-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 1.9.18
+BuildRequires(pre): rpm-macros-nodejs >= 0.20.5
 
-BuildRequires: rpm-build-nodejs node
-BuildRequires(pre): rpm-macros-nodejs
-BuildRequires: node-gyp
+BuildRequires: rpm-build-nodejs
 
 #AutoReq: no
 #AutoProv: no
@@ -44,22 +43,24 @@ that make addon development a bit more pleasant.
 
 %build
 %npm_build
-cd test && node-gyp rebuild && cd - >/dev/null
+node-gyp rebuild -C test
 
 %check
-npm test
+%npm_test
 
 %install
 %npm_install
-cd %buildroot/%nodejs_sitelib/%pname/
-npm prune --production
-rm -rf %buildroot/%nodejs_sitelib/%pname/{test,tools,doc,examples}/
+%npm_prune
+rm -rf %buildroot/%nodejs_sitelib/%pname/tools/
 
 %files
 %doc LICENSE.md README.md
 %nodejs_sitelib/%pname/
 
 %changelog
+* Wed Oct 28 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt3
+- use npm_test and npm_prune macros (with rpm-macros-nodejs 0.25.5)
+
 * Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt2
 - do test in check section
 
