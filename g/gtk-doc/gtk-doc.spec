@@ -1,10 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
+%define ver_major 1.33
+
 %def_with mkpdf
 %def_enable check
 
 Name: gtk-doc
-Version: 1.32.1
-Release: alt0.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -26,7 +28,7 @@ Requires: openjade >= 1.3.1
 Requires: docbook-style-dsssl
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -137,6 +139,7 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/README*
 %pkgdocdir/TODO
 %pkgdocdir/*.txt
+%pkgdocdir/*.dot
 %pkgdocdir/examples
 
 %if_with mkpdf
@@ -149,6 +152,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Thu Oct 01 2020 Yuri N. Sedunov <aris@altlinux.org> 1.33.0-alt1
+- 1.33.0
+
 * Thu Aug 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt0.1
 - updated to GTK_DOC_1_32-52-gb209222
 
