@@ -1,7 +1,7 @@
 %define modname gphoto2
 
 Name: python3-module-%modname
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
@@ -40,6 +40,9 @@ functions, but sometimes in a rather un-Pythonic manner.
 
 
 %changelog
+* Thu Oct 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.3-alt1
+- 2.2.3
+
 * Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
 - 2.2.2 (python3 only)
 
