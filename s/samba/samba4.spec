@@ -60,7 +60,7 @@
 %endif
 
 Name:    samba
-Version: 4.12.8
+Version: 4.12.9
 Release: alt1
 
 Group:   System/Servers
@@ -1810,6 +1810,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Oct 29 2020 Evgeny Sinelikov <sin@altlinux.org> 4.12.9-alt1
+- Update to latest stable security release of the Samba 4.12
+- Security fixes:
+  + CVE-2020-14318: Missing handle permissions check in SMB1/2/3 ChangeNotify
+  + CVE-2020-14323: Unprivileged user can crash winbind
+  + CVE-2020-14383: An authenticated user can crash the DCE/RPC DNS with easily crafted records
+
 * Thu Oct 08 2020 Evgeny Sinelikov <sin@altlinux.org> 4.12.8-alt1
 - Update to newest release of Samba 4.12
 
