@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.58.0
-Release:	alt1
+Release:	alt2
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -13,6 +13,7 @@ Source2:	nss-config.in
 Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
+Patch0: 	nss-3.58-Bug-1672703-always-tolerate-the-first-CCS-in-TLS-1.3.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -95,6 +96,7 @@ Netscape Network Security Services Utilities
 
 %prep
 %setup -q
+%patch0 -p1 -d nss
 
 %build
 mkdir -p bin
@@ -226,6 +228,9 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Thu Oct 29 2020 Stanislav Levin <slev@altlinux.org> 3.58.0-alt2
+- Backported fix for MBZ#1672703.
+
 * Thu Oct 22 2020 Alexey Gladkov <legion@altlinux.ru> 3.58.0-alt1
 - New version (3.58).
 - Security fixes:
