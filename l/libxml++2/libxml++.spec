@@ -1,13 +1,15 @@
-%def_enable snapshot
-%def_enable doc
+%def_disable snapshot
 
-%define ver_major 2.40
-%define xml_ver 2.6
 %define _name libxml++
+%define ver_major 2.42
+%define api_ver 2.6
+
+%def_enable doc
+%def_enable check
 
 Name: %{_name}2
-Version: %ver_major.1
-Release: alt4
+Version: %ver_major.0
+Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
@@ -19,10 +21,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
-Patch: libxml++-0f5aa54.patch
 
-BuildPreReq: mm-common gcc-c++
-BuildRequires: libxml2-devel >= 2.6.1 libglibmm-devel >= 2.46.0
+BuildRequires(pre): meson
+BuildRequires: mm-common gcc-c++
+BuildRequires: libxml2-devel >= 2.7.7 libglibmm-devel >= 2.32.0
 %{?_enable_doc:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
 
 %description
@@ -33,7 +35,7 @@ the DOM specification. Its API is simpler than the underlying libxml2 C API.
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the headers and libraries for libxml++ development.
@@ -49,41 +51,45 @@ This package contains the development documentation for libxml++ library.
 
 %prep
 %setup -n %_name-%version
-%patch -p1 -R -b .0f5aa54
+
+%build
 %ifarch %e2k
 %add_optflags -std=gnu++11
 %endif
-#sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
-
-%build
-mm-common-prepare --force --copy
-%autoreconf
-%configure --disable-static \
-    %{?_enable_snapshot:--enable-maintainer-mode} \
-    %{?_disable_doc:--disable-documentation}
-%make_build
+%{?_enable_snapshot:mm-common-prepare --force --copy}
+%meson \
+    %{?_enable_snapshot:-Denable-maintainer-mode=true} \
+    %{?_enable_doc:-Dbuild-documentation=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
-
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/%_name-%xml_ver
+%_libdir/%_name-%api_ver
 %_pkgconfigdir/*
 
 %if_enabled doc
 %files devel-doc
-%_datadir/devhelp/books/%_name-%xml_ver/*.devhelp2
-%_docdir/%_name-%xml_ver/*
+%_datadir/devhelp/books/%_name-%api_ver/*.devhelp2
+%_docdir/%_name-%api_ver/*
 %endif
 
 %changelog
+* Fri Oct 02 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0 (ported to Meson build system)
+
 * Sat May 25 2019 Michael Shigorin <mike@altlinux.org> 2.40.1-alt4
 - fix doc knob (and rename it from docs for consistency)
 - E2K: explicit -std=gnu++11
