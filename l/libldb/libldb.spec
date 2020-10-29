@@ -9,7 +9,7 @@
 
 Name: libldb
 Version: 2.1.4
-Release: alt1
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -88,6 +88,8 @@ Development files for the Python3 bindings for the LDB library
 %patch2 -p1
 %ifarch ppc64le
 %patch3 -p2
+%endif
+%ifarch ppc64le %mips
 %patch4 -p2
 %endif
 
@@ -178,6 +180,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Thu Oct 29 2020 Ivan A. Melnikov <iv@altlinux.org> 2.1.4-alt2
+- Fix build on mipsel
+
 * Fri Aug 28 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.1.4-alt1
 - Update to the 2.1.4 for latest samba-4.12.6 release
 
