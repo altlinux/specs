@@ -1,5 +1,5 @@
 Name: git
-Version: 2.25.4
+Version: 2.29.2
 Release: alt1
 
 Summary: Git core and tools
@@ -138,6 +138,7 @@ This package contains Git tools for sending email.
 %package svn
 Summary: Git tools for importing Subversion repositories
 Group: Development/Other
+BuildArch: noarch
 Requires: %name-core = %EVR, perl-Git = %EVR, subversion
 
 %description svn
@@ -522,6 +523,9 @@ popd
 %endif #doc
 
 %changelog
+* Thu Oct 29 2020 Dmitry V. Levin <ldv@altlinux.org> 2.29.2-alt1
+- 2.25.4 -> 2.29.2.
+
 * Sun Apr 19 2020 Dmitry V. Levin <ldv@altlinux.org> 2.25.4-alt1
 - 2.25.3 -> 2.25.4 (fixes: CVE-2020-11008).
 
