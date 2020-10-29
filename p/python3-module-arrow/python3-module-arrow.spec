@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Better dates & times for Python
@@ -48,13 +48,16 @@ mkdir man
 cp -fR docs/_build/html/* man/
 
 %check
-tox.py3
+tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 
 %files
 %python3_sitelibdir/*
 %doc *.rst LICENSE man/
 
 %changelog
+* Thu Oct 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.17.0-alt1
+- 0.17.0
+
 * Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
