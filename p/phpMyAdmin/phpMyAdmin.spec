@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -94,6 +94,7 @@ Requires: php7-mysqlnd-mysqli
 Requires: php7-mcrypt
 Requires: php7-mbstring
 Requires: php7-gd2
+Requires: php7-zip
 Conflicts: %name-apache2
 
 %description apache2-php7
@@ -177,6 +178,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Thu Oct 29 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.4-alt1
+- new version 5.0.4 (with rpmrb script)
+
 * Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.3-alt1
 - new version 5.0.3 (with rpmrb script)
 - several important security fixes:
