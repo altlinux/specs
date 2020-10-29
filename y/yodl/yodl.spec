@@ -3,7 +3,7 @@
 Name: yodl
 Epoch: 1
 Version: 4.03.00
-Release: alt1
+Release: alt2
 Summary: Yet oneOther Document Language
 License: GPL
 Group: Text tools
@@ -17,6 +17,7 @@ Patch1: yodl-alt-build.patch
 # Automatically added by buildreq on Sun Apr 13 2008
 BuildRequires: flex groff-base netpbm python-modules
 BuildRequires: gcc-c++
+BuildRequires: boost-filesystem-devel
 
 BuildPreReq: icmake texlive-collection-latexrecommended tex(epsf.sty) ghostscript-utils
 
@@ -73,6 +74,9 @@ done
 %_docdir/yodl-doc
 
 %changelog
+* Thu Oct 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.03.00-alt2
+- Use boost::filesystem instead of std::filesystem for P9 compatibility.
+
 * Wed Oct 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.03.00-alt1
 - Updated to upstream version 4.03.00 (Fixes: CVE-2016-10375).
 
