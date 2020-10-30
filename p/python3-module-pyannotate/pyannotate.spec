@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Auto-generate PEP-484 annotations
 
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
 # epm restore --dry-run
@@ -41,6 +41,7 @@ call arguments and return types observed at runtime.
 
 %install
 %python3_install
+%python3_prune
 
 %check
 %if_with check
@@ -55,5 +56,8 @@ call arguments and return types observed at runtime.
 %python3_sitelibdir/pyannotate_runtime/
 
 %changelog
+* Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
+- use python3_prune macro to remove tests subdir
+
 * Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - initial build for ALT Sisyphus
