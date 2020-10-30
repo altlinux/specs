@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name gxml
-%define ver_major 0.18
-%define api_ver 0.18
+%define ver_major 0.20
+%define api_ver 0.20
 %def_enable introspection
 %def_enable docs
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
@@ -121,6 +121,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Oct 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 0.18.2-alt1
 - 0.18.2
 
