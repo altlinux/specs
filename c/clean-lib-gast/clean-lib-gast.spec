@@ -2,7 +2,7 @@
 
 Name: clean-lib-gast
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: GAST: A Generic Automatic Software Test-system for Clean
 Summary(ru_RU.UTF-8): Библиотека автоматического тестирования для языка Clean
 License: BSD license
@@ -33,10 +33,12 @@ CLEANLIB=/usr/lib64/clean/exe/ clm -PO -I /usr/lib64/clean/Platform/ Gast
 mkdir -p %libdir
 install -pm644 Libraries/Gast.icl %libdir
 install -pm644 Libraries/Gast.dcl %libdir
-install -pm644 Libraries/Gast/*.icl %libdir
-install -pm644 Libraries/Gast/*.dcl %libdir
 cp -R Libraries/"Clean System Files/" %libdir
-cp -R Libraries/Gast/"Clean System Files/" %libdir
+
+mkdir -p %libdir/Gast
+install -pm644 Libraries/Gast/*.icl %libdir/Gast/
+install -pm644 Libraries/Gast/*.dcl %libdir/Gast/
+cp -R Libraries/Gast/"Clean System Files/" %libdir/Gast/
 
 %find_lang %name
 
@@ -50,5 +52,8 @@ find /usr/lib64/clean/Gast -name "*.o" -exec touch {} \;
 %_libdir/*
 
 %changelog
+* Fri Oct 30 2020 Andrey Bergman <vkni@altlinux.org> 1.0.0-alt2
+- Correct location of internal files.
+
 * Thu Oct 29 2020 Andrey Bergman <vkni@altlinux.org> 1.0.0-alt1
 - Initial release for Sisyphus.
