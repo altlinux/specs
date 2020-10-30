@@ -1,8 +1,17 @@
 %define rname extra-cmake-modules
 
 %def_enable doc
+%def_disable clang
+
 %ifarch %e2k
-%add_python_req_skip clang
+%def_disable clang
+%else
+%def_disable clang
+%endif
+
+%if_disabled clang
+%add_python3_req_skip clang
+%add_python3_req_skip clang.cindex
 %endif
 
 AutoReq: yes, nopython
@@ -11,7 +20,7 @@ AutoProv: yes, nopython nopython3
 
 Name: extra-cmake-modules
 Version: 5.75.0
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -22,7 +31,9 @@ Url: http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
 BuildArch: noarch
 
 Requires: cmake
+%if_enabled clang
 Requires: clang-devel
+%endif
 
 Source: %name-%version.tar
 Patch1: alt-find-qcollectiongenerator.patch
@@ -76,6 +87,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 30 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt2
+- disable clang requires (closes: 39168)
+
 * Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
 - new version
 
