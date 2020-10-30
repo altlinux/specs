@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.32.0
-Release: alt1
+Release: alt2
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python3
 License: Apache-2.0
@@ -97,10 +97,12 @@ py.test-%_python3_version
 %exclude %python3_sitelibdir/%oname/pickle
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/example
+%exclude %python3_sitelibdir/%oname/example2
 
 %files tests
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/example
+%python3_sitelibdir/%oname/example2
 
 %files pickles
 %python3_sitelibdir/%oname/pickle
@@ -109,6 +111,9 @@ py.test-%_python3_version
 %doc doc/build/html/*
 
 %changelog
+* Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.32.0-alt2
+- NMU: move example2 to tests subpackage (fix tests subpackage requires)
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.32.0-alt1
 - Automatically updated to 1.32.0.
 - Renamed spec file.
