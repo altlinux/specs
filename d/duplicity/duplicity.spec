@@ -1,25 +1,27 @@
 Name: duplicity
-Version: 0.7.19
+Version: 0.8.15
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
 
 Group: Archiving/Backup
-Url: https://launchpad.net/duplicity
+Url: https://gitlab.com/duplicity/duplicity
 License: GPL
 
-Source: https://launchpad.net/duplicity/0.7-series/%version/+download/duplicity-%version.tar
+# Source-url: https://gitlab.com/duplicity/duplicity/-/archive/rel.%version/duplicity-rel.%version.tar.bz2
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Sat Nov 03 2007
-BuildRequires: librsync-devel python-devel python-modules-compiler python-module-setuptools
-BuildPreReq: rpm-build-compat >= 1.2
+AutoProv:no
 
-Requires: python-module-fasteners
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(setuptools_scm)
+BuildRequires: librsync-devel
 
 # No required by default
-%add_python_req_skip dropbox
+%add_python3_req_skip dropbox
 # No required by default (OpenStack)
-%add_python_req_skip pyrax
+%add_python3_req_skip pyrax
 
 %description
 Duplicity incrementally backs up files and directory by encrypting
@@ -36,10 +38,10 @@ hard links.
 %setup
 
 %build
-%python_build
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %find_lang %name
 
@@ -48,10 +50,14 @@ hard links.
 %_bindir/rdiffdir
 %_bindir/duplicity
 %_man1dir/*
-%python_sitelibdir/%name/
-%python_sitelibdir/duplicity-*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.15-alt1
+- new version 0.8.15 (with rpmrb script)
+- switch to python3, cleanup spec, update upstream URL
+
 * Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 0.7.19-alt1
 - new version 0.7.19 (with rpmrb script)
 
