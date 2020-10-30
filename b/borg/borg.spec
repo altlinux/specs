@@ -1,6 +1,6 @@
 Name: borg
 Version: 1.1.13
-Release: alt1
+Release: alt2
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -47,14 +47,19 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
+rm -rfv %buildroot%python3_sitelibdir/borg/testsuite/
 
 %files
 %doc LICENSE AUTHORS CHANGES.rst README.rst
 %_bindir/borg
 %_bindir/borgfs
-%python3_sitelibdir/*
+%python3_sitelibdir/borg/
+%python3_sitelibdir/borgbackup-*.egg-info/
 
 %changelog
+* Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.13-alt2
+- NMU: don't pack testsuite
+
 * Thu Jun 11 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.13-alt1
 - 1.1.13 release
 
