@@ -10,7 +10,7 @@ BuildRequires: %_bindir/gcov %_bindir/gprof %_bindir/lcov %_bindir/rrdtool libev
 
 Name: opendkim
 Version: 2.11.0
-Release: alt1
+Release: alt2
 
 Summary: A DomainKeys Identified Mail (DKIM) milter to sign and/or verify mail
 
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 # https://sourceforge.net/p/opendkim/patches/35/
 # https://sourceforge.net/p/opendkim/patches/37/
 # Patches rediffed and combined (both modify configure)
-Patch0: %{name}.ticket35+37.patch
+Patch: %{name}.ticket35+37.patch
 
 Requires: lib%name = %EVR
 
@@ -428,13 +428,18 @@ exit 0
 %config(noreplace) %attr(0640,%name,%name) %_sysconfdir/%name/KeyTable
 %config(noreplace) %attr(0640,%name,%name) %_sysconfdir/%name/TrustedHosts
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%_sbindir/*
+%_sbindir/opendkim
+%_sbindir/opendkim-default-keygen
+%_sbindir/opendkim-genkey
+%_sbindir/opendkim-genzone
+%_sbindir/opendkim-reportstats
+%_sbindir/opendkim-testkey
+%_sbindir/opendkim-testmsg
 %_mandir/*/*
 %dir %attr(-,%name,%name) %_var/spool/%name
 %dir %attr(0775,%name,%name) %_var/run/%name
 %dir %attr(-,root,%name) %_sysconfdir/%name
 %dir %attr(0750,%name,%name) %_sysconfdir/%name/keys
-%attr(0755,root,root) %_sbindir/%name-default-keygen
 
 %attr(0644,root,root) %_unitdir/%name.service
 
@@ -451,6 +456,9 @@ exit 0
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt2
+- fix twice packaged opendkim-default-keygen
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
 - new version 2.11.0 (with rpmrb script)
 
