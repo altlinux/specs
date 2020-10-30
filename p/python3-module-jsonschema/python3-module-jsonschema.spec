@@ -2,7 +2,7 @@
 
 Name:		python3-module-%oname
 Version:	3.2.0
-Release:	alt1
+Release:	alt2
 Summary:	An implementation of JSON Schema validation for Python
 
 License:	MIT
@@ -45,6 +45,7 @@ This package contains tests for %oname.
 
 %install
 %python3_install
+rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
 
 %check
 nosetests3 -v
@@ -59,6 +60,9 @@ nosetests3 -v
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt2
+- NMU: drop benchmarks packing
+
 * Fri Jul 03 2020 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - Updated to upstream release 3.2.0
 - Build python3 version as separate package
