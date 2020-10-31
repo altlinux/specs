@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: Media Sharing Server
@@ -30,11 +30,13 @@ License: MIT
 Url: https://pipewire.org/
 
 %if_disabled snapshot
-Source: http://freedesktop.org/software/%name/releases/%name-%version.tar.gz
+#Source: http://freedesktop.org/software/%name/releases/%name-%version.tar.gz
+Source: https://github.com/PipeWire/pipewire/archive/%version/%name-%version.tar.gz
 %else
 Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
+Patch: %name-0.3.14-alt-rpath.patch
 
 Requires: %name-libs = %version-%release
 Requires: rtkit
@@ -101,6 +103,7 @@ This package contains command line utilities for the PipeWire media server.
 
 %prep
 %setup
+%patch
 
 %build
 %meson \
@@ -185,7 +188,7 @@ This package contains command line utilities for the PipeWire media server.
 %_bindir/pw-play
 %_bindir/pw-profiler
 %_bindir/pw-record
-%_bindir/pw-reserve
+%{?_enable_examples:%_bindir/pw-reserve}
 %_bindir/spa-inspect
 %_bindir/spa-monitor
 %_bindir/spa-resample
@@ -202,6 +205,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Sat Oct 31 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
+- 0.3.14
+
 * Mon Sep 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
 - updated to 0.3.13-1-g81ca70af
 
