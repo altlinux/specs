@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 7.0
+Version: 7.0.1
 Release: alt1
 
 Summary: VMware vSphere API Python Bindings
@@ -73,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Sat Oct 31 2020 Andrey Cherepanov <cas@altlinux.org> 7.0.1-alt1
+- New version.
+
 * Wed Apr 15 2020 Andrey Cherepanov <cas@altlinux.org> 7.0-alt1
 - New version.
 
