@@ -3,15 +3,20 @@
 
 Name: python3-module-%oname
 Version: 1.0
-Release: alt1
+Release: alt2
+
 Summary: Simple diff function implemented in Python
+
 License: zlib
 Group: Development/Python3
 Url: https://github.com/paulgb/simplediff/tree/master/python
+
 Source: %name-%version.tar
+
 Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 
@@ -28,12 +33,17 @@ Python interface.
 
 %install
 %python3_install
-install -m 0644 test.py %buildroot%python3_sitelibdir
+
+%check
+python3 test.py
 
 %files
 %python3_sitelibdir/*
 %doc LICENSE README.*
 
 %changelog
+* Sat Oct 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
+- NMU: fix run test.py, drop test provides, cleanup spec
+
 * Mon Sep 23 2019 Alexander Makeenkov <amakeenk@altlinux.org> 1.0-alt1
 - Initial build for ALT
