@@ -3,13 +3,14 @@
 %define gst_api_ver 1.0
 # [ lastfm', 'audioplayer', 'cdrom', 'ipod' ]
 %define plugins [ 'audioplayer', 'cdrom', 'ipod' ]
+%define handy_api_ver 1
 
 Name: noise
 %define _name music
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: The official elementary music player
 Group: Sound
@@ -39,6 +40,7 @@ BuildRequires: libappstream-glib-devel
 BuildRequires: vala-tools libsqlite3-devel libgee0.8-devel
 BuildRequires: libxml2-devel libgtk+3-devel libpeas-devel
 BuildRequires: libgranite-devel gst-plugins%gst_api_ver-devel
+BuildRequires: pkgconfig(libhandy-%handy_api_ver)
 BuildRequires: libsoup-devel libjson-glib-devel libpixman-devel libtag-devel
 BuildRequires: libnotify-devel libgranite-vala libharfbuzz-devel
 BuildRequires: libzeitgeist2.0-devel libgpod-devel libusbmuxd-devel
@@ -122,6 +124,9 @@ This package contains the development files.
 %_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Sat Oct 31 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.5-alt2
+- updated to 5.0.5-63-g6a112438
+
 * Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.5-alt1
 - updated to 5.0.5-7-gc2e1c535
 
