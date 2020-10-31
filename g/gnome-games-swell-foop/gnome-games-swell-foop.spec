@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -7,14 +8,20 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The "Same Game" puzzle
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Swell-Foop
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Vcs: https://gitlab.gnome.org/GNOME/swell-foop.git
+Source: %_name-%version.tar
+%endif
+Patch: %_name-3.34.1-vala.patch
 
 Provides:  %_name = %version-%release
 
@@ -33,6 +40,7 @@ area in as few moves as possible.
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 %meson
@@ -53,6 +61,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Oct 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt2
+- updated to 3.34.1-16-g5b2acfb
+
 * Tue Oct 15 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
