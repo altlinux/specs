@@ -2,8 +2,8 @@
 %define realname icewm
 
 Name: %realname
-Version: 1.8.3
-Release: alt2
+Version: 1.9.0
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -123,6 +123,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Sat Oct 31 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.9.0-alt1
+- 1.9.0
+
 * Sat Sep 19 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.8.3-alt2
 - fixed build on armh, thanks to sbolshakov@
 
