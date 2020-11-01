@@ -1,66 +1,29 @@
 %define module_name pygraphviz
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 1.5
-Release: alt3
+Release: alt5
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pygraphviz.github.io/
+
 Packager: Denis Klimov <zver@altlinux.org>
 
 # https://github.com/pygraphviz/pygraphviz.git
 Source: %module_name-%version.tar
 
 BuildRequires: libgraphviz-devel
-%if_with python3
+
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
-%endif
-
-%setup_python_module %module_name
-%add_python_req_skip tests
 
 %description
 Python wrapper for the Graphviz Agraph data structure.
 It can be used to create and draw networks and graphs with Graphviz.
-
-%package tests
-Summary: Tests for %module_name
-Group: Development/Python
-Requires: %name = %version-%release
-%add_python3_req_skip tests
-
-%description tests
-Python wrapper for the Graphviz Agraph data structure.
-It can be used to create and draw networks and graphs with Graphviz.
-
-This package contains tests for %module_name.
-
-%if_with python3
-%package -n python3-module-%module_name
-Summary: Python 3 wrapper for the Graphviz Agraph data structure
-Group: Development/Python3
-
-%description -n python3-module-%module_name
-Python wrapper for the Graphviz Agraph data structure.
-It can be used to create and draw networks and graphs with Graphviz.
-
-%package -n python3-module-%module_name-tests
-Summary: Tests for %module_name (Python 3)
-Group: Development/Python3
-Requires: python3-module-%module_name = %version-%release
-
-%description -n python3-module-%module_name-tests
-Python wrapper for the Graphviz Agraph data structure.
-It can be used to create and draw networks and graphs with Graphviz.
-
-This package contains tests for %module_name.
-%endif
 
 %prep
 %setup -n %module_name-%version
@@ -68,37 +31,22 @@ This package contains tests for %module_name.
 %build
 %add_optflags -I%_includedir/graphviz
 
-%python_build_debug -b build2
-%if_with python3
-%python3_build_debug -b build3
-%endif
+%python3_build_debug
 
 %install
-ln -snf build2 build
-%python_install
-%if_with python3
-ln -snf build3 build
-%python3_build_install
-%endif
+%python3_install
+%python3_prune
+%__subst "s|from pygraphviz.tests.test import run as test||" %buildroot%python3_sitelibdir/pygraphviz/__init__.py
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%if_with python3
-%files -n python3-module-%module_name
-%python3_sitelibdir/*
 %doc %_docdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%module_name-tests
-%python3_sitelibdir/*/tests
-%endif
+%python3_sitelibdir/pygraphviz/
+%python3_sitelibdir/pygraphviz-*.egg-info
 
 %changelog
+* Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt5
+- build python3 module (don't pack tests, fix tests depends)
+
 * Thu Jul 11 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.5-alt3
 - Fix ln options to change symlink
 
