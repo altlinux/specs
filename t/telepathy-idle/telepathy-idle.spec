@@ -1,32 +1,40 @@
+%def_disable check
+
 Name: telepathy-idle
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A full-featured IRC connection manager
-License: LGPL
+License: LGPL-2.1
 Group: Networking/Instant messaging
 Url: http://telepathy.freedesktop.org/
 
 Source: http://telepathy.freedesktop.org/releases/telepathy-idle/%name-%version.tar.gz
 
-# Automatically added by buildreq on Wed Aug 26 2009
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libgio-devel >= 2.32.0
 BuildRequires: libtelepathy-glib-devel >= 0.22.0
 BuildRequires: libdbus-glib-devel libssl-devel
-BuildRequires: python-module-twisted-words python-module-xmpp xsltproc
+BuildRequires: xsltproc
+%{?_enable_check:
+BuildRequires: dbus-tools python3-module-dbus python3-module-twisted-words
+BuildRequires: python3-module-xmpp python3-module-cryptography}
 
 %description
 A full-featured IRC connection manager for telepathy.
 
 %prep
-%setup -q
+%setup
 
 %build
-%configure
+%configure PYTHON=%__python3
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
+
+%check
+%make check
 
 %files
 %_libexecdir/%name
@@ -36,6 +44,9 @@ A full-featured IRC connection manager for telepathy.
 %doc AUTHORS NEWS
 
 %changelog
+* Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Thu Oct 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
