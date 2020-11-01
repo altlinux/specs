@@ -7,7 +7,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.3.1
+Version: 2.4.5
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -86,7 +86,7 @@ BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
 BuildRequires: libowt-tg-devel
-BuildRequires: libvpx-devel
+#BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
 #BuildRequires: libopenh264-devel
 # obsoleted in the repo
@@ -102,7 +102,8 @@ BuildRequires: libqrcodegen-cpp-devel
 
 # C++ sugar
 BuildRequires: libmicrosoft-gsl-devel >= 1:3.0.1
-BuildRequires: libvariant-devel
+# https://github.com/telegramdesktop/tdesktop/issues/8471
+#BuildRequires: libvariant-devel
 BuildRequires: libexpected-devel
 BuildRequires: librange-v3-devel >= 0.11.0
 
@@ -176,12 +177,10 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %cmake_insource -DDESKTOP_APP_USE_PACKAGED=ON \
     -DTDESKTOP_API_ID=182015 \
     -DTDESKTOP_API_HASH=bb6c3f8fffd8fe6804fc5131a08e1c44 \
-    -DVARIANT_INCLUDE_DIRS=%_includedir/libvariant \
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
     -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
-    -DDESKTOP_APP_WEBRTC_LOCATION=/usr/src/libowt-tg \
     -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
@@ -223,6 +222,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Oct 31 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
+- new version 2.4.5 (with rpmrb script)
+- drop BR: libvariant-devel
+
 * Sun Aug 23 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
 - new version 2.3.1 (with rpmrb script)
 - enable WebRTC integration (libtgvoip is legacy now)
