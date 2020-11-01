@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Classic Chinese Tile Game
@@ -36,7 +36,9 @@ version of the classic Eastern tile game, Mahjongg.
 %setup -n %__name-%version
 
 %build
-%meson
+%meson \
+-Dcompile-schemas=disabled \
+-Dupdate-icon-cache=disabled
 %meson_build
 
 %install
@@ -53,6 +55,9 @@ version of the classic Eastern tile game, Mahjongg.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
+- 3.38.3
+
 * Sat Oct 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
