@@ -11,7 +11,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.1.4
+Version: 3.2.2
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -30,7 +30,9 @@ Patch2: 0002-ALT-netcat-proxy_pass.patch
 Patch3: 0003-ALT-netcat-usage.patch
 Patch4: 0004-ALT-openssl-manpage.patch
 Patch5: 0005-ALT-OPENSSLDIR.patch
-Patch6: 0006-SUSE-ALT-extra-symver.patch
+Patch6: 0006-SUSE-des-fcrypt.patch
+Patch7: 0007-SUSE-extra-symver.patch
+Patch8: 0008-ALT-netcat-fix-linkage-with-libcrypto.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in\
@@ -268,6 +270,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Sun Nov 01 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2.2-alt1
+- Updated to 3.2.2.
+
 * Fri Aug 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.4-alt1
 - Updated to 3.1.4.
 
