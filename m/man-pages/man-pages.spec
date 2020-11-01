@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 5.8
+Version: 5.9
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -58,7 +58,7 @@ Documentation Project (LDP). Материалы сгруппированы по 
 	4:  Устройства (например, hd, sd)
 	5:  Форматы файлов и протоколов (например, wtmp, /etc/passwd, nfs)
 	6:  Игры (только введение)
-	7:  Соглагшения, макропакеты, и т.д.
+	7:  Соглашения, макропакеты, и т.д.
 	8:  Системное администрирование (только введение)
 
 %package utils
@@ -94,6 +94,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Sun Nov 01 2020 Dmitry V. Levin <ldv@altlinux.org> 5.9-alt1
+- 5.8 -> 5.9.
+
 * Thu Aug 13 2020 Dmitry V. Levin <ldv@altlinux.org> 5.8-alt1
 - 5.7 -> 5.8.
 
