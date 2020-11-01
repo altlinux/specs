@@ -2,7 +2,7 @@
 %define dist JSON-XS
 
 Name: perl-%dist
-Version: 4.02
+Version: 4.03
 Release: alt1
 Epoch: 20200311
 
@@ -37,6 +37,9 @@ primary goal is to be *correct* and its secondary goal is to be
 %perl_vendor_autolib/JSON
 
 %changelog
+* Sun Nov 01 2020 Igor Vlasenko <viy@altlinux.ru> 20200311:4.03-alt1
+- automated CPAN update
+
 * Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 20200311:4.02-alt1
 - automated CPAN update
 
