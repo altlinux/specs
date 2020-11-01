@@ -1,6 +1,6 @@
 Name: borg
-Version: 1.1.13
-Release: alt2
+Version: 1.1.14
+Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -57,6 +57,9 @@ rm -rfv %buildroot%python3_sitelibdir/borg/testsuite/
 %python3_sitelibdir/borgbackup-*.egg-info/
 
 %changelog
+* Sun Nov 01 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.14-alt1
+- 1.1.14 release
+
 * Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.13-alt2
 - NMU: don't pack testsuite
 
