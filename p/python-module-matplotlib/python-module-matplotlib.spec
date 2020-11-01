@@ -12,7 +12,7 @@
 
 Name: python-module-%oname
 Version: %major.3
-Release: alt6
+Release: alt7
 
 Summary: Matlab(TM) style python plotting package
 
@@ -372,8 +372,8 @@ done
 %files cairo
 %python_sitelibdir/matplotlib/backends/backend_cairo*
 
-%files nbagg
-%python_sitelibdir/matplotlib/backends/backend_nbagg*
+#files nbagg
+#python_sitelibdir/matplotlib/backends/backend_nbagg*
 
 %files gtk3
 %python_sitelibdir/matplotlib/backends/backend_gtk3*
@@ -495,6 +495,9 @@ done
 %endif
 
 %changelog
+* Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt7
+- disable python-module-matplotlib-nbagg subpackage (required ipython)
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.3-alt6
 - Fixed build with numpy.
 
