@@ -1,19 +1,22 @@
 %define oname patch-ng
 
 Name: python3-module-%oname
-Summary: Library to parse and apply unified diffs
-Version: 1.17.1
+Version: 1.17.4
 Release: alt1
 
-Group: Development/Python3
-License: MIT
-Url: https://github.com/conan-io/python-patch-ng
-BuildArch: noarch
+Summary: Library to parse and apply unified diffs
 
+License: MIT
+Group: Development/Python3
+Url: https://github.com/conan-io/python-patch-ng
+
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+BuildRequires(pre): rpm-build-python3
 
 %description
 Library to parse and apply unified diffs.
@@ -31,12 +34,16 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 %files
-%doc LICENSE README.md doc/ example/
+%doc README.md
 %python3_sitelibdir/patch_ng*
 %python3_sitelibdir/__pycache__/*
 
 
 %changelog
+* Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.17.4-alt1
+- new version 1.17.4 (with rpmrb script)
+- build from tarball
+
 * Thu Nov 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.17.1-alt1
 - Initial build
 
