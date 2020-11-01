@@ -2,7 +2,7 @@
 %define module Graph
 
 Name: perl-Graph
-Version: 0.9706
+Version: 0.9707
 Release: alt1
 
 Summary: Graph - Perl module for dealing with graphs
@@ -33,11 +33,14 @@ Perl module for dealing with graphs, the abstract data structures.
 %perl_vendor_install
 
 %files
-%doc Changes TODO README
+%doc Changes README
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sun Nov 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.9707-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.9706-alt1
 - automated CPAN update
 
