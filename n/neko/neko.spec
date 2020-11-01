@@ -1,6 +1,6 @@
 Name: neko
-Version: 2.2.0
-Release: alt4.gitb68336c
+Version: 2.3.0
+Release: alt1
 
 # commit: b68336cbc250937fda2741dedc7866b4d5f14d27
 
@@ -63,7 +63,7 @@ This package provides development files for %name.
 
 %build
 %cmake_insource -DCMAKE_INSTALL_LIBDIR=%_libdir
-%make_build
+%make_build || %__make
 
 %install
 %makeinstall_std
@@ -90,6 +90,9 @@ mv %buildroot%_libdir/cmake/Neko %buildroot/usr/share/cmake/Modules/
 
 
 %changelog
+* Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0 (with rpmrb script)
+
 * Mon Dec 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt4.gitb68336c
 - fix build warning (hide Apache2 symbols)
 
