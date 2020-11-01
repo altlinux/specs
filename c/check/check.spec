@@ -2,7 +2,7 @@
 %define EVR %{?epoch:%epoch:}%version-%release
 
 Name: check
-Version: 0.13.0
+Version: 0.15.2
 Release: alt1
 Epoch: 20180202
 
@@ -88,6 +88,7 @@ This package contains a static development library.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
+%_infodir/check*
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -95,6 +96,9 @@ This package contains a static development library.
 %endif
 
 %changelog
+* Sun Nov 01 2020 Fr. Br. George <george@altlinux.ru> 20180202:0.15.2-alt1
+- Build new version 0.15.2
+
 * Thu Oct 24 2019 Grigory Ustinov <grenka@altlinux.org> 20180202:0.13.0-alt1
 - Build new version 0.13.0.
 
