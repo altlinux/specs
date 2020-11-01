@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist List-MoreUtils
 Name: perl-%dist
-Version: 0.428
+Version: 0.430
 Release: alt1
 
 Summary: Provide the stuff missing in List::Util
@@ -34,6 +34,9 @@ on lists which is not going to go into List::Util.
 #%perl_vendor_autolib/List
 
 %changelog
+* Sun Nov 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.430-alt1
+- automated CPAN update
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.428-alt1
 - automated CPAN update
 
