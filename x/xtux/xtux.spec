@@ -1,6 +1,6 @@
 Name: xtux
 Version: 20030306
-Release: alt5.qa1
+Release: alt5.qa2
 
 Summary: X11 client server network game featuring opensource mascots
 License: GPL
@@ -52,7 +52,8 @@ This package contains data files needed to play XTux.
 %patch2 -p1
 
 %build
-%make_build DATADIR=%_gamesdatadir/%name OPTFLAGS="%optflags"
+# non SMP build
+%__make DATADIR=%_gamesdatadir/%name OPTFLAGS="%optflags"
 
 %install
 mkdir -p %buildroot{%_gamesdatadir,%_gamesbindir,%_menudir}
@@ -77,6 +78,9 @@ install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.png
 
 
 %changelog
+* Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 20030306-alt5.qa2
+- fix build: disable SMP build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20030306-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
