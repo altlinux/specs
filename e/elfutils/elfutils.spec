@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.181
+Version: 0.182
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -22,7 +22,7 @@ BuildRequires: flex
 BuildRequires: gcc-c++
 
 # compression support
-BuildRequires: bzlib-devel liblzma-devel zlib-devel
+BuildRequires: bzlib-devel liblzma-devel libzstd-devel zlib-devel
 
 %{?_enable_check:BuildRequires: /proc}
 
@@ -270,6 +270,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Oct 31 2020 Dmitry V. Levin <ldv@altlinux.org> 0.182-alt1
+- elfutils-0.181 -> elfutils-0.182.
+
 * Tue Sep 08 2020 Dmitry V. Levin <ldv@altlinux.org> 0.181-alt1
 - elfutils-0.180-22-g15495182 -> elfutils-0.181.
 
