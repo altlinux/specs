@@ -1,7 +1,7 @@
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
 Name: DSR
 Version: 232
-Release: alt1
+Release: alt2
 BuildArch: noarch
 URL: https://www.xs3.uni-freiburg.de/research/dsr
 License: Beerware
@@ -11,7 +11,7 @@ Source1: changelog.txt
 
 %add_python_compile_include %_datadir/%name
 
-PreReq: xclip %py_requires networkx
+PreReq: xclip 
 
 %description
 This program consists of a text database with fragments of molecules and
@@ -43,6 +43,7 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/%name/manuals
 mkdir -p %buildroot%_datadir/%name/example
+mkdir -p %buildroot%_datadir/%name/networkx
 mkdir -p %buildroot%_datadir/%name/fit
 
 install -m 755 %name.sh %buildroot%_bindir/dsr
@@ -50,6 +51,7 @@ install -m 644 *.py %buildroot%_datadir/%name
 install -m 644 dsr_db.txt %buildroot%_datadir/%name
 install -m 644 manuals/DSR-manual.pdf %buildroot%_datadir/%name/manuals
 install -m 644 example/* %buildroot%_datadir/%name/example
+cp -R networkx %buildroot%_datadir/%name
 cp -R fit %buildroot%_datadir/%name
 
 %files
@@ -58,6 +60,9 @@ cp -R fit %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Mon Nov 02 2020 Denis G. Samsonenko <ogion@altlinux.org> 232-alt2
+- back to use of internal networkx
+
 * Thu Apr 02 2020 Denis G. Samsonenko <ogion@altlinux.org> 232-alt1
 - new version
 
