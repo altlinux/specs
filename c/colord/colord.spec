@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable daemon
 %def_enable session_helper
@@ -22,8 +22,8 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.4
-Release: alt2
+Version: 1.4.5
+Release: alt1
 
 Summary: Color daemon
 License: GPLv2+
@@ -313,6 +313,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Nov 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
+- 1.4.5
+
 * Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt2
 - updated to 1.4.4-6-gfd92df2
   mike@: made BR: valgrind-tool-devel conditional
