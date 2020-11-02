@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: dtkwidget
-Version: 5.2.2.15
+Version: 5.3.0
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+
@@ -9,7 +11,10 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ qt5-linguist qt5-base-devel qt5-multimedia-devel qt5-svg-devel qt5-x11extras-devel dtk5-core-devel dtk5-gui-devel gsettings-qt-devel deepin-qt-dbus-factory-devel libudev-devel librsvg-devel libstartup-notification-devel libXi-devel libX11-devel libXext-devel libxcbutil-devel libxkbcommon-devel libXrender-devel libcups-devel
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%endif
+BuildRequires: qt5-linguist qt5-base-devel qt5-svg-devel qt5-x11extras-devel dtk5-core-devel dtk5-gui-devel gsettings-qt-devel deepin-qt-dbus-factory-devel libudev-devel librsvg-devel libstartup-notification-devel libXi-devel libX11-devel libXext-devel libxcbutil-devel libxkbcommon-devel libXrender-devel libcups-devel
 # libQt5Gui.so.5(Qt_5_PRIVATE_API)(64bit) needed by dtkwidget
 BuildRequires: libqt5-gui
 
@@ -33,12 +38,19 @@ Header files and libraries for %name.
 
 %prep
 %setup
-sed -i '/#include <QPainter>/a #include <QPainterPath>' src/util/dwidgetutil.cpp
 
 %build
+%if_enabled clang
+%qmake_qt5 \
+    CONFIG+=nostrip \
+    PREFIX=%_prefix \
+    QMAKE_STRIP= -spec linux-clang
+%else
 %qmake_qt5 \
     CONFIG+=nostrip \
     PREFIX=%_prefix
+%endif
+
 %make_build
 
 %install
@@ -59,6 +71,9 @@ sed -i '/#include <QPainter>/a #include <QPainterPath>' src/util/dwidgetutil.cpp
 %_libdir/lib%name.so
 
 %changelog
+* Wed Oct 28 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0-alt1
+- New version (5.3.0) with rpmgs script.
+
 * Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.15-alt1
 - New version (5.2.2.15) with rpmgs script.
 

@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: dtkgui
-Version: 5.2.2.15
+Version: 5.2.2.18
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0 and GPL-3.0+
@@ -9,7 +11,10 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ dtk5-core-devel librsvg-devel
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%endif
+BuildRequires: dtk5-core-devel librsvg-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -33,11 +38,21 @@ Header files and libraries for %name.
 %setup
 
 %build
+%if_enabled clang
+%qmake_qt5 \
+    CONFIG+=nostrip \
+    PREFIX=%_prefix \
+    LIB_INSTALL_DIR=%_libdir \
+    DTK_VERSION=%version \
+    QMAKE_STRIP= -spec linux-clang
+%else
 %qmake_qt5 \
     CONFIG+=nostrip \
     PREFIX=%_prefix \
     LIB_INSTALL_DIR=%_libdir \
     DTK_VERSION=%version
+%endif
+
 %make_build
 
 %install
@@ -60,6 +75,9 @@ Header files and libraries for %name.
 %_libdir/libdtkgui.so
 
 %changelog
+* Wed Oct 28 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.18-alt1
+- New version (5.2.2.18) with rpmgs script.
+
 * Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.15-alt1
 - New version (5.2.2.15) with rpmgs script.
 
