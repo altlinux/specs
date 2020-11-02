@@ -1,31 +1,27 @@
-%define modname beaker
+%define oname Beaker
 
-Name: python-module-%modname
-Version: 1.10.1
+Name: python3-module-beaker
+Version: 1.11.0
 Release: alt1
 
 Summary: A Session and Caching library with WSGI Middleware
 
 License: BSD-3-Clause
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/bbangert/beaker
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildRequires: fdupes
-
-Requires: python-module-pylibmc
-Requires: python-module-memcached >= 1.58
-Requires: python-module-funcsigs
-
+BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools
+
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
-%add_python_req_skip jarray javax
+%add_python3_req_skip jarray javax
+%add_python3_req_skip javax.crypto javax.crypto.spec
 
 %description
 Beaker is a web session and general caching library that includes WSGI
@@ -34,48 +30,31 @@ handle storing for various times any Python object that can be pickled with
 optional back-ends on a fine-grained basis. Beaker was built largely on the code
 from MyghtyUtils, then refactored and extended with database support.
 
-%package -n python3-module-%modname
-Summary: A Session and Caching library with WSGI Middleware
-Group: Development/Python3
-%add_python3_req_skip jarray javax
-%add_python3_req_skip javax.crypto javax.crypto.spec
-
-%description -n python3-module-%modname
-Beaker is a web session and general caching library that includes WSGI
-middleware for use in web applications. As a general caching library, Beaker
-can handle storing for various times any Python object that can be pickled with
-optional back-ends on a fine-grained basis. Beaker was built largely on the code
-from MyghtyUtils, then refactored and extended with database support.
-
 %prep
 %setup
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
+
+# need servers running
+#check
+#python3_test
 
 %files
 %doc README.rst
-%python_sitelibdir/*
-
-%files -n python3-module-%modname
-%doc README.rst
-%python3_sitelibdir/*
-
+%python3_sitelibdir/beaker/
+%python3_sitelibdir/Beaker-*.egg-info
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
+- new version 1.11.0 (with rpmrb script)
+
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt2
+- build python3 module separately
+
 * Wed May 15 2019 Grigory Ustinov <grenka@altlinux.org> 1.10.1-alt1
 - Build new version.
 - Cleanup spec.
