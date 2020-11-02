@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 4.15.2
+Version: 4.15.3
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -18,7 +18,7 @@ Patch: %_name-%version-%release.patch
 BuildRequires: rpm-build-xfce4  xfce4-dev-tools >= 4.15 libxfce4util-devel
 BuildRequires: libgtk+3-devel libxfce4ui-gtk3-devel
 BuildRequires: libICE-devel glib2-devel >= 2.27
-BuildRequires: gtk-doc intltool perl-URI time
+BuildRequires: gtk-doc intltool time
 
 Requires: %name-common = %version-%release
 # There is no longer python bindings for exo.
@@ -109,7 +109,7 @@ export NPROCS=1
 make check
 
 %files common -f %_name-2.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %_iconsdir/hicolor/*/*/*
 %_pixmapsdir/%_name/
 
@@ -129,6 +129,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Mon Nov 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
+- Dropped perl-URI from BR.
+- Updated to 4.15.3.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.2-alt1
 - Dropped exo-csource subpackage.
 - Dropped GTK+2 support.
