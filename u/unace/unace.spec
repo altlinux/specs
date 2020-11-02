@@ -2,7 +2,7 @@
 
 Name: unace
 Version: 1.2b
-Release: alt4
+Release: alt5
 Summary: ACE unarchiver
 License: Freely distributable
 Group: Archiving/Compression
@@ -18,6 +18,9 @@ Patch4: 004_64_bit_clean.patch
 Patch5: 005_format-security.patch
 Patch6: 006_security-afl.patch
 Patch7: 007_cross-compiling.patch
+
+# ALT patches
+Patch20: alt-fix-for-issue-in-CVE-2015-2063-fix.patch
 
 Summary(ru_RU.UTF-8): Распаковщик архивов ACE 1.x
 
@@ -41,22 +44,26 @@ developed by "ACE Compression Software".
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch20 -p2
 
 %build
-make clean
-make dep
-make
+%make_build -f unix/makefile CFLAGS="%optflags"
 
 %install
 install -pDm755 %name %buildroot%_bindir/%name
 
 %files
-%doc readme.txt file_id.diz
+%doc readme file_id.diz
 %_bindir/*
 
 # 2.5 is closed source and known insecure (#24907)
 
 %changelog
+* Mon Nov 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2b-alt5
+- Cleaned up sources by importing sources from Debian.
+- Forced using system build flags.
+- Updated fix for CVE-2015-2063.
+
 * Thu Oct 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2b-alt4
 - Applied patches from Debian (Fixes: CVE-2015-2063).
 - Updated changelog to conform to vulnerability policy.
