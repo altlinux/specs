@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.2
-Release: alt3
+Release: alt4
 
 Summary: Ultimate Python colorized logger
 License: BSD
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-logutils
-BuildRequires: python3-module-nose-cov python3-module-pytest
+BuildRequires: python3-module-pytest
 
 %py3_provides %oname
 
@@ -61,6 +61,9 @@ nosetests3 -v
 
 
 %changelog
+* Mon Nov 02 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt4
+- NMU: drop unneeded nose-cov buildrequires
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.2.2-alt3
 - disable python2
 
