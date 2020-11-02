@@ -1,5 +1,7 @@
+# wait for GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST
+%def_without test
 Name: libabseil-cpp
-Version: 20200225.2
+Version: 20200923.2
 Release: alt1
 
 Summary: C++ Common Libraries
@@ -16,7 +18,7 @@ Source: %name-%version.tar
 BuildRequires: cmake
 BuildRequires: gcc-c++
 
-#BuildRequires: libgtest-devel ctest
+BuildRequires: libgtest-devel libgmock-devel ctest
 
 %description
 Abseil is an open-source collection of C++ library code designed to augment
@@ -45,15 +47,20 @@ Development headers for %name
 %setup
 
 %build
-%cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo
-# -DABSL_RUN_TESTS=ON
+%cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%if_with test
+    -DABSL_RUN_TESTS=ON -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
+%endif
+    -DABSL_ENABLE_INSTALL=ON
 %make_build
 
 %install
 %makeinstall_std
 
-#check
-#ctest
+%if_with test
+%check
+ctest
+%endif
 
 %files devel
 %doc LICENSE
@@ -64,6 +71,13 @@ Development headers for %name
 %_libdir/cmake/absl/
 
 %changelog
+* Mon Nov 02 2020 Vitaly Lipatov <lav@altlinux.ru> 20200923.2-alt1
+- new version 20200923.2 (with rpmrb script)
+- temp. disable test (wait for new libgtest)
+
+* Sun Aug 23 2020 Vitaly Lipatov <lav@altlinux.ru> 20200225.2-alt2
+- enable tests
+
 * Sun Aug 23 2020 Vitaly Lipatov <lav@altlinux.ru> 20200225.2-alt1
 - initial build for ALT Sisyphus
 
