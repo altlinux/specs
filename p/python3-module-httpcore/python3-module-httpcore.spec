@@ -1,7 +1,7 @@
 %define  modulename httpcore
 
 Name:    python3-module-%modulename
-Version: 0.9.1
+Version: 0.12.0
 Release: alt1
 
 Summary: A minimal HTTP client
@@ -48,10 +48,18 @@ Some things HTTP Core does do:
 %install
 %python3_install
 
+# asyncio alternatives, optional
+%add_python3_req_skip anyio.abc
+%add_python3_req_skip anyio.streams.tls
+%add_python3_req_skip curio.io
+
 %files
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Nov 02 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Thu May 28 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - initial build for Sisyphus
