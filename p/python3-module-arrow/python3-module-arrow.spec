@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: Better dates & times for Python
 License: Apache-2.0
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-dateutil python3-module-nose
-BuildPreReq: python3-module-nose-cov python3-module-chai
+BuildPreReq: python3-module-chai
 BuildPreReq: python3-module-sphinx
 BuildPreReq: python3-module-simplejson
 BuildRequires: python3-module-mock python3-module-dateparser >= 0.7.2
@@ -55,6 +55,9 @@ tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 %doc *.rst LICENSE man/
 
 %changelog
+* Mon Nov 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.17.0-alt2
+- NMU: drop unneeded nose-cov buildrequires
+
 * Thu Oct 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.17.0-alt1
 - 0.17.0
 
