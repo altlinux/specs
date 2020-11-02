@@ -1,23 +1,23 @@
-%define git_ver 10811
-%define git_commit a86a3d2fee6b0bd6f3a5e872aedea9188ea94f61
+%define git_ver 11151
+%define git_commit 09a9d08466583df18925c59c8fec74f956ff0b1a
 
 %define glslang_commit 3ee5f2f1d3316e228916788b300d786bb574d337
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
 %define hidapi_commit 9220f5e77c27b8b3717b277ec8d3121deeb50242
-%define libusb_version 1.0.23
+%define libusb_commit c33990a300674e24f47ff0f172f7efb10b63b88a
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
-%define xx_hash_version 0.6.5
-%define llvm_commit f5679565d34863e2f5917f6bb6d3867760862a1e
+%define xx_hash_version 0.8.0
+%define llvm_commit 8c02f52a12550c2044fef262c9864ca2e3cc193e
 %define cereal_commit 60c69df968d1c72c998cd5f23ba34e2e3718a84b
 %define faudio_commit 9c7d2d1430c9dbe4e67c871dfe003b331f165412
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
-%define wolfssl_commit d0749c65498672462b88fc8be5ea066cf65067f1
+%define wolfssl_commit 39b5448601271b8d1deabde8a0d33dc64d2a94bd
 
 Name: rpcs3
-Version: 0.0.12
+Version: 0.0.13
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -39,8 +39,8 @@ Source2: asmjit-%asmjit_commit.tar
 Source3: pugixml-%pugixml_commit.tar
 # https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
 Source4: hidapi-%hidapi_commit.tar
-# https://github.com/libusb/libusb/archive/v%libusb_version/libusb-%libusb_version.tar.gz
-Source5: libusb-%libusb_version.tar
+# https://github.com/libusb/libusb/archive/$libusb_commit/libusb-%libusb_commit.tar.gz
+Source5: libusb-%libusb_commit.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
 Source6: yaml-cpp-%yaml_cpp_commit.tar
 # https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
@@ -103,7 +103,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
 %__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi
-%__mv -Tf ../libusb-%libusb_version 3rdparty/libusb
+%__mv -Tf ../libusb-%libusb_commit 3rdparty/libusb
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
 %__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
@@ -160,6 +160,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.13-alt1
+- Version 0.0.13
+
 * Tue Sep 01 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.12-alt1
 - Version 0.0.12
 
