@@ -1,6 +1,6 @@
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -109,6 +109,10 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Tue Oct 06 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.6-alt1
+- 2.6 release
+- logrotate post-rotate script systemd/sysvinit detection
+
 * Wed Apr 22 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.5-alt1
 - 2.5 release
 
