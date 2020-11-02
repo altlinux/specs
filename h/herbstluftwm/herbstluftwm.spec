@@ -1,5 +1,5 @@
 Name: herbstluftwm
-Version: 0.8.3
+Version: 0.9.0
 Release: alt1
 
 Summary: A manual tiling window manager
@@ -61,6 +61,7 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %dir %_datadir/doc/%name/
 %dir %_datadir/doc/%name/examples/
 %_datadir/doc/%name/herbstclient.html
+%_datadir/doc/%name/hlwm-doc.json
 %_datadir/doc/%name/%name-tutorial.html
 %_datadir/doc/%name/%name.html
 %_datadir/doc/%name/examples/dmenu.sh
@@ -98,6 +99,9 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %_datadir/doc/%name/examples
 
 %changelog
+* Mon Nov 02 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.0-alt1
+- Updated to 0.9.0.
+
 * Mon Jun 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.3-alt1
 - Updated to 0.8.3.
 
