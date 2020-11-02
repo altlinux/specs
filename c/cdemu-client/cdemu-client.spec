@@ -1,5 +1,5 @@
 Name: cdemu-client
-Version: 3.2.1
+Version: 3.2.4
 Release: alt1
 
 Summary: A simple command-line client to control CDEmu daemon
@@ -56,6 +56,9 @@ popd
 %_sysconfdir/bash_completion.d/cdemu
 
 %changelog
+* Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1
+- Version 3.2.4
+
 * Mon Jun 17 2019 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
