@@ -1,7 +1,7 @@
 %define oname SQLAlchemy
 
 Name: python-module-%oname
-Version: 1.3.19
+Version: 1.3.20
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
@@ -115,6 +115,9 @@ popd
 %python3_sitelibdir/*/testing
 
 %changelog
+* Mon Nov 02 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.20-alt1
+- 1.3.20
+
 * Mon Sep 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.19-alt1
 - 1.3.19
 
