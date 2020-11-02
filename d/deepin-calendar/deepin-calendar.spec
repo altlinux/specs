@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.7.0.13
+Version: 5.7.0.15
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -22,16 +22,16 @@ Calendar for Deepin Desktop Environment.
 %setup -n %repo-%version
 sed -i 's|lrelease|lrelease-qt5|g' assets/translate_generation.sh
 
-sed -i '/<QQueue>/a #include <QMouseEvent>' src/daymonthview.cpp
-sed -i '/<QStylePainter>/a #include <QMouseEvent>' src/schcedulesearchview.cpp
-sed -i '/include <QJsonObject>/a #include <QMouseEvent>' src/draginfographicsview.cpp
-sed -i '/include <QPainter>/a #include <QMouseEvent>' schedule-plugin/src/widget/itemwidget.h schedule-plugin/src/widget/modifyscheduleitem.h
+sed -i '/<QQueue>/a #include <QMouseEvent>' src/widget/dayWidget/daymonthview.cpp
+sed -i '/<QStylePainter>/a #include <QMouseEvent>' src/widget/schcedulesearchview.cpp
+sed -i '/include <QJsonObject>/a #include <QMouseEvent>' src/view/draginfographicsview.cpp
+sed -i '/include <QPainter>/a #include <QMouseEvent>' schedule-plugin/src/widget/itemwidget.h
 sed -i '1i#include <QPainterPath>' schedule-plugin/src/widget/itemwidget.cpp
 sed -i 's|/usr/lib|%_libdir|' schedule-plugin/CMakeLists.txt
 
 # Not included in https://github.com/linuxdeepin/dde-calendar/pull/30 yet
-sed -i '/include <QPainter>/a #include <QPainterPath>' src/schcedulesearchview.cpp src/daymonthview.cpp src/weekheadview.cpp src/customframe.cpp src/yearview.cpp
-sed -i '/include <QMessageBox>/a #include <QWheelEvent>' src/yearwindow.cpp
+sed -i '/include <QPainter>/a #include <QPainterPath>' src/widget/schcedulesearchview.cpp src/widget/dayWidget/daymonthview.cpp src/widget/weekWidget/weekheadview.cpp src/customWidget/customframe.cpp src/widget/yearWidget/yearview.cpp
+sed -i '/include <QMessageBox>/a #include <QWheelEvent>' src/widget/yearWidget/yearwindow.cpp
 
 %build
 %cmake_insource \
@@ -59,6 +59,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_libdir/deepin-aiassistant/serivce-plugins/libschedulex-plugin.so
 
 %changelog
+* Mon Nov 02 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.0.15-alt1
+- New version (5.7.0.15) with rpmgs script.
+
 * Fri Oct 09 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.0.13-alt1
 - New version (5.7.0.13) with rpmgs script.
 
