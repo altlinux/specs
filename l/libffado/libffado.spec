@@ -2,7 +2,7 @@
 
 Name: libffado
 Version: 2.4.1
-Release: alt3
+Release: alt4
 
 Summary: Free firewire audio driver library
 License: GPLv2+
@@ -119,10 +119,13 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %_datadir/dbus-1/services/org.ffado.Control.service
 /lib/udev/rules.d/*ffado*.rules
 
-%files -n python3-module-ffado
-%python3_sitelibdir_noarch/ffado
+#files -n python3-module-ffado
+#python3_sitelibdir_noarch/ffado
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt4
+- NMU: disable python3-module-ffado packing (until 2.4.4)
+
 * Sat May 09 2020 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt3
 - rebuild with python3
 
