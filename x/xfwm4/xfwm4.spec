@@ -1,8 +1,9 @@
 Name: xfwm4
-Version: 4.15.1
+Version: 4.15.3
 Release: alt1
 
 %def_enable epoxy
+%def_enable xi2
 
 Summary: Window manager for Xfce
 Summary (ru_RU.UTF8): Менеджер окон для окружения рабочего стола Xfce
@@ -25,6 +26,7 @@ BuildRequires: libXinerama-devel libXpresent-devel libXres-devel
 # For svg support in the glib-compile-resources
 BuildRequires: librsvg
 %{?_enable_epoxy:BuildRequires: libepoxy-devel}
+%{?_enable_xi2:BuildRequires: libXi-devel}
 
 Requires: xfce4-common
 
@@ -56,6 +58,7 @@ Xfce.
 	--enable-xpresent \
 	--enable-compositor \
 	%{subst_enable epoxy} \
+	%{subst_enable xi2} \
 	--disable-silent-rules \
 	--enable-debug=minimum
 
@@ -66,7 +69,7 @@ Xfce.
 %find_lang %name
 
 %files -f %name.lang
-%doc README TODO AUTHORS
+%doc README.md TODO AUTHORS
 %_bindir/*
 %_datadir/%name
 %_desktopdir/*
@@ -77,6 +80,10 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Mon Nov 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
+- Explicitly enabled support of X Input 2 extension.
+- Updated to 4.15.3.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.1-alt1
 - Updated to 4.15.1.
 
