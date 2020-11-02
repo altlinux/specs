@@ -1,7 +1,7 @@
 %define oname sqlsoup
 Name: python3-module-%oname
 Version: 0.9.1
-Release: alt2
+Release: alt3
 
 Summary: A one step database access tool, built on the SQLAlchemy ORM.
 
@@ -14,10 +14,12 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 
 %py3_use SQLAlchemy
-%py3_use nose
+
+%py3_buildrequires nose >= 0.11
 
 %description
 SQLSoup provides a convenient way to map Python objects to relational
@@ -33,6 +35,7 @@ minimalistic interface to an existing database.
 
 %install
 %python3_install
+%python3_prune
 
 %check
 %python3_test
@@ -41,6 +44,9 @@ minimalistic interface to an existing database.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt3
+- fix requires
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt2
 - cleanup spec
 
