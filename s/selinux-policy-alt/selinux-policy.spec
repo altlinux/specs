@@ -1,11 +1,11 @@
 %define policy_name alt
-%define date 20200904
+%define date 20201102
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
-Version: 0.0.51
+Version: 0.0.52
 Release: alt1
 License: Distributable
 Group: System/Base
@@ -269,6 +269,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/allow_smb.pp
 
 %changelog
+* Mon Nov 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.52-alt1
+- Merged changes by Denis Medvedev (nbr@).
+
 * Fri Sep 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.51-alt1
 - Update policy for current Sisyphus
 
