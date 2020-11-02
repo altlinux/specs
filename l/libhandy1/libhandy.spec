@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name libhandy
 %define ver_major 1.0
 %define api_ver 1
@@ -6,12 +6,11 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-#incompatible with glade-3.38.0
-%def_disable glade_catalog
+%def_enable glade_catalog
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library with GTK+3 widgets for mobile devices (API version 1)
@@ -24,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 #Source: %url/-/archive/%version/%name-%version.tar.bz2
 %else
 #VCS: https://gitlab.gnome.org/GNOME/libhandy.git
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 %define gtk_ver 3.24.1
@@ -124,6 +123,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Mon Nov 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- updated to 1.0.1-1-ga7cfd93
+
 * Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
