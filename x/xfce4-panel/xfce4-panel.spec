@@ -3,7 +3,7 @@
 %def_enable vala
 
 Name: xfce4-panel
-Version: 4.15.4
+Version: 4.15.5
 Release: alt1
 
 Summary: Panel for Xfce
@@ -124,12 +124,12 @@ Vala bindings for libxfce4panel-gtk3.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %config(noreplace) %_sysconfdir/xdg/xfce4/*
 %_bindir/*
 %_libdir/xfce4/panel/
 %exclude %_libdir/xfce4/panel/%wrapper_name_gtk3
-%_iconsdir/hicolor/*/*/*
+%_iconsdir/hicolor/*/apps/*
 %_datadir/xfce4/panel/
 %_desktopdir/*.desktop
 %exclude %_libdir/xfce4/panel/plugins/*.la
@@ -160,6 +160,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Tue Nov 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.5-alt1
+- Updated to 4.15.5.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.4-alt1
 - Dropped GTK+2 support.
 - Updated Vcs tag.
