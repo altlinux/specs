@@ -1,6 +1,6 @@
 Name: sg3_utils
 Version: 1.45
-Release: alt1
+Release: alt2
 
 Summary: Utilities for devices that use SCSI command sets
 License: GPL-2.0-or-later and BSD-2-Clause
@@ -63,6 +63,12 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 
 %install
 %makeinstall_std
+# https://bugzilla.altlinux.org/39183
+ln -s libsgutils.so %buildroot%_libdir/libsgutils2.so
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files
 %_bindir/*
@@ -78,6 +84,9 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 %_libdir/*.so
 
 %changelog
+* Tue Nov 03 2020 Dmitry V. Levin <ldv@altlinux.org> 1.45-alt2
+- libsgutils-devel: added libsgutils2.so for compatibility (closes: #39183).
+
 * Mon Apr 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.45-alt1
 - 1.44 -> 1.45.
 
