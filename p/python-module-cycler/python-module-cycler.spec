@@ -1,10 +1,10 @@
 %define oname cycler
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt1.1
+Release: alt1.2
 Summary: Composable style cycles
 License: BSD
 Group: Development/Python
@@ -15,9 +15,9 @@ Packager: Python Development Team <python@packages.altlinux.org>
 Source: https://pypi.python.org/packages/c2/4b/137dea450d6e1e3d474e1d873cd1d4f7d3beed7e0dc973b06e8e10d32488/%oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-six python-module-nose
-BuildPreReq: python-module-coverage python-module-pytest-cov
+BuildPreReq: python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -74,7 +74,7 @@ popd
 %endif
 
 %check
-python setup.py test -v
+%__python setup.py test -v
 #python run_tests.py -v
 %if_with python3
 pushd ../python3
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1.2
+- NMU: fix build (drop pytest-cov buildrequires)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
