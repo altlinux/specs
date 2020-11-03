@@ -2,7 +2,7 @@
 %def_enable vala
 
 Name: libxfce4ui
-Version: 4.15.3
+Version: 4.15.4
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -21,6 +21,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gtk-doc intltool libSM-devel libstartup-notification-devel libxfce4util-devel libxfconf-devel xorg-cf-files
 BuildRequires: libgtk+3-devel
 BuildRequires: libgladeui2.0-devel
+BuildRequires: libgtop-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 
@@ -50,6 +51,7 @@ This package contains development documentation for %name.
 Summary: Common files for %name
 Group: Graphical desktop/XFce
 BuildArch: noarch
+Requires: xfce4-common
 
 %description common
 This package contains the common files for %name.
@@ -122,8 +124,10 @@ This package contains the 'About Xfce' dialog.
 	--enable-gtk-doc \
 	--enable-startup-notification \
 	--enable-gladeui2 \
+	--enable-glibtop \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
+	--enable-tests \
 	--enable-debug=minimum
 %make_build
 
@@ -131,12 +135,15 @@ This package contains the 'About Xfce' dialog.
 %makeinstall_std
 %find_lang %name
 
+%check
+make check
+
 %files devel-doc
 %doc %_datadir/gtk-doc/html/%name
 
 %files common -f %name.lang
-%doc README NEWS AUTHORS
-%_liconsdir/*
+%doc README.md NEWS AUTHORS
+%_iconsdir/hicolor/*/apps/*
 %config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/*.xml
 
 %files gtk3
@@ -174,6 +181,12 @@ This package contains the 'About Xfce' dialog.
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Tue Nov 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.4-alt1
+- Enabled libgtop support.
+- Enabled tests.
+- common: Require xfce4-common.
+- Updated to 4.15.4.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
 - Fixed gtk3-gir requires.
 - Enabled libgladeui2.0 support.
