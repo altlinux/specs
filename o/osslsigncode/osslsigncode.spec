@@ -1,6 +1,6 @@
 Summary: Tool for Authenticode signing of EXE/CAB files
 Name: osslsigncode
-Version: 2.0
+Version: 2.1
 Release: alt1
 License: GPLv2+
 Group: File tools
@@ -32,6 +32,9 @@ make install DESTDIR=%buildroot
 %_bindir/osslsigncode
 
 %changelog
+* Tue Nov 03 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.1-alt1
+- new version
+
 * Tue Dec 25 2018 Nikolai Kostrigin <nickel@altlinux.org> 2.0-alt1
 - new version
   + switch to Michal Trojnara's fork
