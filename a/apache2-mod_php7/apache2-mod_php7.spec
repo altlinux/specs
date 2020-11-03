@@ -88,13 +88,13 @@ cat > %buildroot/%apache2_mods_start/mod_php7.conf << EOF
 mod_php7=yes
 EOF
 
-cat > %buildroot/%_rpmlibdir/%name.filetrigger << EOF
+cat > %buildroot/%_rpmlibdir/90-php-%name.filetrigger << EOF
 #!/bin/sh
-%apache2_sbindir/a2chkconfig >/dev/null
-%php7_sapi_postin
+LC_ALL=C sed 's|^%php7_sysconfdir/%php7_sapi/control.d||' |
+        egrep -qs '^%php7_sysconfdir/%php7_sapi|^%php7_extdir' || exit 0
 %post_apache2conf
 EOF
-chmod 755 %buildroot/%_rpmlibdir/%name.filetrigger
+chmod 755 %buildroot/%_rpmlibdir/90-php-%name.filetrigger
 
 install -m 644 %SOURCE1 %buildroot/%php7_sysconfdir/%php7_sapi/php.ini
 install -m 644 %SOURCE2 %buildroot/%php7_sysconfdir/%php7_sapi/browscap.ini
@@ -117,7 +117,6 @@ done
 
 %postun
 if [ $1 = 0 ]; then
-	%apache2_sbindir/a2chkconfig >/dev/null
 	%post_apache2conf
 fi
 
@@ -129,7 +128,7 @@ fi
 %config(noreplace) %php7_sysconfdir/%php7_sapi/php.ini
 %config(noreplace) %php7_sysconfdir/%php7_sapi/browscap.ini
 %apache2_moduledir/%so_file
-%_rpmlibdir/%name.filetrigger
+%_rpmlibdir/90-php-%name.filetrigger
 %doc CREDITS
 
 

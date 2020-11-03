@@ -114,14 +114,13 @@ done
 
 install -pD -m755 %SOURCE3 %buildroot%_initdir/php7-fpm
 mkdir -p %buildroot%_rpmlibdir
-cat > %buildroot%_rpmlibdir/%name.filetrigger << EOF
+cat > %buildroot%_rpmlibdir/91-php-%name.filetrigger << EOF
 #!/bin/sh
 LC_ALL=C sed 's|^%php7_sysconfdir/%php7_sapi/control.d||' |
         egrep -qs '^%php7_sysconfdir/%php7_sapi|^%php7_extdir' || exit 0
-%php7_sapi_postin
 /sbin/service php7-fpm condrestart||:
 EOF
-chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
+chmod 0755 %buildroot%_rpmlibdir/91-php-%name.filetrigger
 
 
 # Make alternatives support.
@@ -174,7 +173,7 @@ install -pD -m755 %SOURCE6 %buildroot/usr/libexec/service/legacy-actions/php7-fp
 %config(noreplace) %_sysconfdir/tmpfiles.d/php7-fpm.conf
 %php7_servicedir/%php7_sapi
 %config %_unitdir/php7-fpm.service
-%_rpmlibdir/%name.filetrigger
+%_rpmlibdir/91-php-%name.filetrigger
 %_man8dir/*
 /usr/libexec/service/legacy-actions/php7-fpm
 
