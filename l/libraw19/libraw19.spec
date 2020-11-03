@@ -1,25 +1,25 @@
 %def_disable snapshot
 %define _name LibRaw
+%define soname 19
 # demosaic pack version
 %define dmp_ver 0.18.8
 
-Name: libraw
-Version: 0.20.2
-Release: alt1
+Name: libraw%soname
+Version: 0.19.5
+Release: alt2
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
-License: LGPLv2.1 and CDDL-1.0
+License: LGPLv2.1 or CDDL-1.0
 Url: http://www.libraw.org
 
 %if_disabled snapshot
 #Source: %url/data/%_name-%version.tar.gz
 Source: https://github.com/LibRaw/LibRaw/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/LibRaw/LibRaw.git
+# VCS: https://github.com/LibRaw/LibRaw.git
 Source: %_name-%version.tar
 %endif
-# GPLv2, GPLv3
 Source1: %url/data/%_name-demosaic-pack-GPL2-%dmp_ver.tar.gz
 Source2: %url/data/%_name-demosaic-pack-GPL3-%dmp_ver.tar.gz
 
@@ -31,42 +31,6 @@ LibRaw is a library for reading RAW files from digital photo cameras
 are supported). It pays special attention to correct retrieval of data
 required for subsequent RAW conversion.
 This package contains shared library.
-
-%package samples
-Group: Graphics
-Summary: sample tools based on the libraw
-Requires: %name = %version-%release
-
-%description samples
-LibRaw is a library for reading RAW files from digital photo cameras
-(CRW/CR2, NEF, RAF, DNG, MOS, KDC, DCR, etc.; virtually all RAW formats
-are supported). It pays special attention to correct retrieval of data
-required for subsequent RAW conversion.
-This package contains samples binaries.
-
-%package devel
-Group: Development/C
-Summary: library for reading RAW files
-Requires: %name = %version-%release
-
-%description devel
-LibRaw is a library for reading RAW files from digital photo cameras
-(CRW/CR2, NEF, RAF, DNG, MOS, KDC, DCR, etc.; virtually all RAW formats
-are supported). It pays special attention to correct retrieval of data
-required for subsequent RAW conversion.
-This package contains library headers.
-
-%package devel-static
-Group: Development/C
-Summary: static library for reading RAW files
-Requires: %name-devel = %version-%release
-
-%description devel-static
-LibRaw is a library for reading RAW files from digital photo cameras
-(CRW/CR2, NEF, RAF, DNG, MOS, KDC, DCR, etc.; virtually all RAW formats
-are supported). It pays special attention to correct retrieval of data
-required for subsequent RAW conversion.
-This package contains static library.
 
 %prep
 %setup -n %_name-%version -a1 -a2
@@ -94,28 +58,10 @@ export LIBS+="-lpthread -lomp"
 %files
 %_libdir/libraw.so.*
 %_libdir/libraw_r.so.*
-%_datadir/doc/libraw-%version
-
-%files samples
-%_bindir/*
-
-%files devel
-%_includedir/libraw
-%_libdir/libraw.so
-%_libdir/libraw_r.so
-%_pkgconfigdir/libraw.pc
-%_pkgconfigdir/libraw_r.pc
-
-%files devel-static
-%_libdir/libraw.a
-%_libdir/libraw_r.a
 
 %changelog
-* Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1
-- 0.20.2
-
-* Mon Sep 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
-- 0.20.0
+* Mon Nov 02 2020 Yuri N. Sedunov <aris@altlinux.org> 0.19.5-alt2
+- compat library
 
 * Mon Oct 07 2019 Michael Shigorin <mike@altlinux.org> 0.19.5-alt1.1
 - E2K: work around lack of explicit linking against libomp

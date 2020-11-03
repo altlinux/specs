@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.18.0
-Release: alt4
+Release: alt6
 
 Summary: Multi-format image decoder library
 Group: System/Libraries
@@ -17,6 +17,7 @@ Patch1: FreeImage_doxygen.patch
 # Fix incorrect variable names in BIGENDIAN blocks
 Patch2: FreeImage_bigendian.patch
 Patch3: FreeImage-3.18.0-alt-return-type.patch
+Patch4: FreeImage-3.18-deb-libraw-0.20.patch
 
 BuildRequires: gcc-c++ libgomp-devel libmng-devel libpng-devel openexr-devel unzip
 BuildPreReq: rpm-macros-make libraw-devel zlib-devel libwebp-devel
@@ -65,6 +66,7 @@ find ./ -type f -print0| xargs -r0 dos2unix --
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p1
 
 # remove bundled libraries
 rm -r Source/Lib* Source/ZLib Source/OpenEXR
@@ -105,6 +107,12 @@ sh ./genfipsrclist.sh
 %_libdir/%nameplus.so
 
 %changelog
+* Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt6
+- fixed build against libraw-0.20 (deb patch)
+
+* Tue Sep 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt5
+- rebuilt against libraw.so.20
+
 * Fri May 31 2019 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt4
 - added libfreeimageplus{,-devel} subpackages (thx Dmitry Pugachev)
 
