@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.34.2
-Release: alt1
+Release: alt2
 Summary: A built-package format for Python
 License: MIT
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Python Development Team <python@packages.altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-keyring python-module-pytest-cov python-module-pyxdg python-module-setuptools
+BuildRequires: python-module-keyring python-module-pyxdg python-module-setuptools
 %py_provides %oname
 
 %description
@@ -40,7 +40,7 @@ done
 popd
 
 %check
-python setup.py test
+%__python setup.py test
 
 %files
 %doc *.txt
@@ -48,6 +48,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.34.2-alt2
+- NMU: drop unneeded pytest-cov buildrequires
+
 * Sat Apr 11 2020 Alexey Shabalin <shaba@altlinux.org> 0.34.2-alt1
 - 0.34.2
 - build python2 module only
