@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,10 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Nov 03 2020 Alexey Appolonov <alexey@altlinux.org> 0.12.0-alt1
+- Ability to store many 'pages' of text in memory while using an object of
+  the 'Printer' class.
+
 * Thu Sep 17 2020 Alexey Appolonov <alexey@altlinux.org> 0.11.0-alt1
 - Modified 'CompareLVersions' function that provides a more sophisticated way
   of comparing versions that have symbolic part at the right.
