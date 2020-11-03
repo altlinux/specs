@@ -1,4 +1,4 @@
-%define ver_major 1.5
+%define ver_major 1.6
 %def_disable docs
 
 Name: libwacom
@@ -93,6 +93,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Nov 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6
+
 * Mon Aug 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
 - 1.5
 
