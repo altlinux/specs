@@ -5,7 +5,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Style checker for sphinx (or other) rst documentation.
 
@@ -33,6 +33,8 @@ BuildRequires: python3-module-sphinx_rtd_theme
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-nose
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-testtools
 %endif
 
 %description
@@ -79,6 +81,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt2
+- NMU: fix build (add missed mock)
+
 * Mon Jun 29 2020 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
 - Build new version.
 - Add docs.
