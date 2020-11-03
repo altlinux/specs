@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_disable graph
+
 Name: cjdns
-Version: 20.5
+Version: 21
 Release: alt1
 
 Summary: Encrypted networking for regular people
@@ -41,7 +43,6 @@ sessionStats       show current crypto sessions
 %package python
 Summary: Python tools for cjdns
 Group: Networking/Other
-Requires: python
 Requires: %name = %EVR
 BuildArch: noarch
 
@@ -52,7 +53,7 @@ Python tools for cjdns.
 Summary: Python tools for cjdns
 Group: Networking/Other
 Requires: %name-python = %EVR
-Requires: python-module-networkx
+%add_python_req_skip cjdnsadmin
 BuildArch: noarch
 
 %description graph
@@ -120,10 +121,14 @@ for t in pingAll.py trashroutes \
   ln -sf $(relative %_exec_prefix/libexec/cjdns/python/$t %_bindir/$t) %buildroot%_bindir/$t
 done
 
+%if_enabled graph
 # symlink python tools that pull in networkx for graphing
 for t in drawgraph dumpgraph graphStats; do
   ln -sf $(relative %_exec_prefix/libexec/cjdns/python/$t %_bindir/$t) %buildroot%_bindir/$t
 done
+%else
+rm -f %buildroot%_exec_prefix/libexec/cjdns/python/{drawgraph,dumpgraph,graphStats}
+%endif
 
 %pre
 /usr/sbin/groupadd -r -f cjdns ||:
@@ -213,6 +218,7 @@ done
 %_bindir/searches
 %_bindir/findnodes
 
+%if_enabled graph
 %files graph
 %_exec_prefix/libexec/cjdns/python/drawgraph
 %_exec_prefix/libexec/cjdns/python/dumpgraph
@@ -220,8 +226,13 @@ done
 %_bindir/drawgraph
 %_bindir/dumpgraph
 %_bindir/graphStats
+%endif
 
 %changelog
+* Tue Nov 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 21-alt1
+- Updated to upstream version 21.
+- Disabled graph subpackage (ALT #39170).
+
 * Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.5-alt1
 - Updated to upstream version 20.5.
 

@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.38.0
+Version: 0.39.0
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -63,6 +63,9 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Tue Nov 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.39.0-alt1
+- Fixed processing script files reported as 'python2 script text executable'.
+
 * Thu Nov 14 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.38.0-alt1
 - Set __python macro to python2.7.
 - Fixed python.req.py and test.sh (use python2-base instead of python-base).
