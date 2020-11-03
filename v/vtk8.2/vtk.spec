@@ -7,7 +7,7 @@
 %define ver 8.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt6
+Release: alt7
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -22,6 +22,7 @@ Patch1: %oname-%version-alt-build.patch
 Patch2: %oname-%version-alt-python3.8.patch
 Patch3: %oname-%version-alt-armh.patch
 Patch4: %oname-%version-alt-qt-5.15-compat.patch
+Patch5: %oname-%version-freetype-2.10.3.patch
 
 Requires: lib%name = %EVR
 
@@ -262,6 +263,7 @@ You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 %patch3 -p1
 %endif
 %patch4 -p1
+%patch5 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
 
@@ -470,6 +472,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 8.2.0-alt7
+- NMU: fix build with freetype 2.10.3
+
 * Fri Aug 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 8.2.0-alt6
 - Fixed build with new qt version and architectures.
 
