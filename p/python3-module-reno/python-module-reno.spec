@@ -2,20 +2,26 @@
 %def_without doc
 
 Name: python3-module-%pypi_name
-Version: 2.11.3
+Version: 3.2.0
 Release: alt1
+
 Summary: Release Notes manager
-Group: Development/Python3
 
 License: ASL 2.0
+Group: Development/Python3
 Url: http://www.openstack.org/
-Source: %pypi_name-%version.tar.gz
+
+# Source-url: %__pypi_url %pypi_name
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 Requires: git-core
 BuildRequires: git-core
 
+BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.4
@@ -26,7 +32,7 @@ BuildRequires: python3-module-nose
 
 %description
 Reno is a release notes manager for storing
-release notes in a gitnrepository and then building documentation from them.
+release notes in a git repository and then building documentation from them.
 
 Managing release notes for a complex project over a long period
 of time with many releases can be time consuming and error prone. Reno
@@ -48,7 +54,7 @@ Requires: %name = %EVR
 This package contains tests for %pypi_name.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
 
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
@@ -86,6 +92,9 @@ rm -fr doc/build/html/.buildinfo
 %endif
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- NMU: new version 3.2.0 (with rpmrb script)
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 2.11.3-alt1
 - Automatically updated to 2.11.3.
 - Build without python2.
