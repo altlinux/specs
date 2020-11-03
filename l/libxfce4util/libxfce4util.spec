@@ -2,7 +2,7 @@
 %def_enable vala
 
 Name: libxfce4util
-Version: 4.15.3
+Version: 4.15.4
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
@@ -90,7 +90,7 @@ Vala bindings for %name.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS README README.Kiosk NEWS TODO
+%doc AUTHORS README.md README.Kiosk NEWS TODO
 %_libdir/*.so.*
 %_sbindir/*
 
@@ -115,6 +115,9 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Tue Nov 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.4-alt1
+- Updated to 4.15.4.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
 - Added Vcs tag.
 - Don't use rpm-build-licenses.
