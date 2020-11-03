@@ -9,8 +9,8 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.12.1
-Release: alt4
+Version: 4.14.0
+Release: alt1
 Group: Emulators
 License: GPLv2 LGPLv2 BSD
 URL: http://www.xenproject.org/
@@ -43,10 +43,8 @@ Source49: tmpfiles.d.xen.conf
 
 Patch0: %name-%version-upstream.patch
 Patch1: %name-%version-alt.patch
-Patch2: gcc-4.9-ocaml-4.10-compilation-fix-upstream.patch
 
 # Fedora
-Patch5: %name-net-disable-iptables-on-bridge.patch
 Patch6: %name.ocaml.4.10.patch
 
 Patch10: pygrubfix.patch
@@ -58,8 +56,7 @@ Patch19: %name.pygrubtitlefix.patch
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
 Patch51: %name-python2.patch
 Patch55: qemu-traditional-lost-parenthesis.patch
-Patch56: qemu-xen-non-static-memfd_create.patch
-
+Patch56: %name-4.14.0-keycodemapui.patch
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -92,7 +89,7 @@ Requires: chkconfig
 BuildRequires(pre): rpm-macros-uefi
 
 BuildRequires: glibc-devel zlib-devel libncurses-devel libaio-devel
-BuildRequires: python-dev ghostscript texi2html transfig
+BuildRequires: python-devel python3-dev ghostscript texi2html transfig
 BuildRequires: pkgconfig(glib-2.0) >= 2.12
 # for the docs
 BuildRequires: perl(Pod/Man.pm) perl(Pod/Text.pm) texinfo graphviz
@@ -344,9 +341,7 @@ ln -s ../../qemu-ui-keycodemapdb qemu-xen-%version/ui/keycodemapdb
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch5 -p1
-%patch6 -p1
+#patch6 -p1
 %patch10 -p1
 %patch15 -p1
 %patch17 -p1
@@ -358,9 +353,7 @@ pushd tools/qemu-xen-traditional
 %patch55 -p1
 popd
 
-pushd tools/qemu-xen
 %patch56 -p1
-popd
 
 sed -i '/^[[:blank:]]*\. \/etc\/rc\.status[[:blank:]]*$/s/\. /: # &/' tools/hotplug/Linux/xendomains.in
 
@@ -398,7 +391,7 @@ export EXTRA_CFLAGS_QEMU_XEN="%optflags"
 %{?_enable_xenapi:export XML=$(which xml2-config)}
 export WGET=$(which true)
 export GIT=$(which true)
-export PYTHON=/usr/bin/python2
+export PYTHON=/usr/bin/python3
 ./configure \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
@@ -445,7 +438,7 @@ export EXTRA_CFLAGS_QEMU_XEN="%optflags"
 %{?_enable_xenapi:export XML=$(which xml2-config)}
 export WGET=$(which true)
 export GIT=$(which true)
-export PYTHON=/usr/bin/python2
+export PYTHON=/usr/bin/python3
 %{?_enable_ocamltools:install -d -m 0755 %buildroot%_libdir/ocaml/stublibs}
 %{?_with_efi:install -d -m 0755 %buildroot/boot/efi/efi/altlinux}
 %make_install DESTDIR=%buildroot %{?_with_efi:LD_EFI=x86_64-pc-mingw32-ld}
@@ -593,6 +586,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_libexecdir/%name/bin/xenctx
 %_libexecdir/%name/bin/xenpvnetboot
 
+%_bindir/vchan-socket-proxy
 %_bindir/xenalyze
 %_bindir/xencov_split
 %_bindir/xenstore
@@ -615,10 +609,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/flask-setenforce
 %_sbindir/xen-diag
 %_sbindir/xen-livepatch
-%_sbindir/xen-tmem-list-parse
 %_sbindir/xenbaked
 %_sbindir/xenconsoled
 %_sbindir/xencov
+%_sbindir/xenhypfs
 %_sbindir/xenlockprof
 %_sbindir/xenmon
 %_sbindir/xenperf
@@ -632,7 +626,12 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/xenwatchdogd
 %_sbindir/xl
 
+%ifarch %ix86 x86_64
+%_sbindir/xen-ucode
+%endif
+
 # man pages
+%_man1dir/xenhypfs.*
 %_man1dir/xenstore*
 %_man1dir/xentop.*
 %_man1dir/xentrace_format.*
@@ -678,7 +677,8 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %files -n lib%name
 %_libdir/*.so.*
 %_libdir/xenfsimage
-%_libdir/python2.7/site-packages/xenfsimage.so
+
+%python3_sitelibdir/xenfsimage.*.so
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -687,8 +687,8 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_includedir/%name
 %_includedir/%{name}store-compat
 
-%_datadir/pkgconfig/xen*.pc
-%_datadir/pkgconfig/xlutil.pc
+%_pkgconfigdir/xen*.pc
+%_pkgconfigdir/xlutil.pc
 
 
 %post runtime
@@ -715,20 +715,21 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_libexecdir/%name/bin/depriv-fd-checker
 %_libexecdir/%name/bin/ivshmem-client
 %_libexecdir/%name/bin/ivshmem-server
+%_libexecdir/%name/bin/qemu-edid
 %_libexecdir/%name/bin/qemu-img
 %_libexecdir/%name/bin/qemu-io
 %_libexecdir/%name/bin/qemu-nbd
 %_libexecdir/%name/bin/qemu-pr-helper
+%_libexecdir/%name/bin/qemu-storage-daemon
 %_libexecdir/%name/bin/qemu-system-i386
-%_libexecdir/%name/bin/virtfs-proxy-helper
 
 %dir %_libexecdir/%name/libexec
 %_libexecdir/%name/libexec/qemu-bridge-helper
 
-%python_sitelibdir/%name
-%python_sitelibdir/xen-*.egg-info
-%python_sitelibdir/grub
-%python_sitelibdir/pygrub-*.egg-info
+%python3_sitelibdir/%name
+%python3_sitelibdir/xen-*.egg-info
+%python3_sitelibdir/grub
+%python3_sitelibdir/pygrub-*.egg-info
 
 %ifarch %ix86 x86_64
 %dir %_libexecdir/%name/boot
@@ -767,7 +768,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %files doc
-%doc %dir %_docdir/%name-%version
+%dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/misc
 %doc %_docdir/%name-%version/html
 %doc %_docdir/%name-%version/README
@@ -815,12 +816,19 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %{?_enable_vtpm:%_libexecdir/%name/boot/vtpm*.gz}
 
+%dir %_docdir/%name-%version
 %dir %_docdir/%name-%version/licenses
 %doc %_docdir/%name-%version/licenses/stubdom
 %endif
 
 
 %changelog
+* Tue Nov 03 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.14.0-alt1
+- 4.14.0 release
+
+* Wed Mar 25 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.12.1-alt5
+- python-dev excluded from BuildRequires
+
 * Tue Mar 17 2020 Anton Farygin <rider@altlinux.ru> 4.12.1-alt4
 - fixed build with ocaml-4.10.0
 
