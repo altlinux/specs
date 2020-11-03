@@ -1,7 +1,7 @@
 %define oname smpplib
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: SMPP library for Python
 
@@ -14,12 +14,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
-
-%py3_use six
-%py3_use pytest
-%py3_use mock
-%py3_use tox
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 
 %description
 SMPP library for Python.
@@ -32,14 +28,15 @@ SMPP library for Python.
 
 %install
 %python3_install
-
-%check
-%python3_test
+%python3_prune
 
 %files
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt3
+- fix requires
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
 - cleanup spec
 
