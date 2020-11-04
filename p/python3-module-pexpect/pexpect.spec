@@ -2,42 +2,39 @@
 %define oname pexpect
 
 %def_with check
+%def_without doc
 
-Name: python-module-%oname
-Version: 4.7.0
+Name: python3-module-%oname
+Version: 4.8.0
 Release: alt1
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
+
 License: ISC
-Group: Development/Python
-# Source-git: https://github.com/pexpect/pexpect.git
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pexpect
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-# python3 only
-Patch1: Transform-some-Python2-specifics-to-Python3.patch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-objects.inv
-BuildRequires: python-module-ptyprocess
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-ptyprocess
+
+%if_with doc
+BuildRequires: python3-module-sphinx
+%endif
 
 %if_with check
 BuildRequires: /dev/pts
 BuildRequires: man-db
 BuildRequires: openssl
-BuildRequires: python-module-pytest
-BuildRequires: python-module-pyte
 BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
 Obsoletes: %oname < 0.999-alt6
-Provides: %oname
-
-%add_findreq_skiplist %python_sitelibdir/%oname/_async.py
 
 %description
 Pexpect is a pure Python module for spawning child applications; controlling
@@ -52,31 +49,11 @@ Group: Development/Documentation
 %description docs
 This package contains documentation for %oname.
 
-%package -n python3-module-%oname
-Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Pexpect is a pure Python module for spawning child applications; controlling
-them; and responding to expected patterns in their output. Pexpect works like
-Don Libes' Expect. Pexpect allows your script to spawn a child application and
-control it as if a human were typing commands.
-
-%package pickles
-Summary: Pickles for Pexpect
-Group: Development/Python
-
-%description pickles
-Pexpect is a pure Python module for spawning child applications; controlling
-them; and responding to expected patterns in their output. Pexpect works like
-Don Libes' Expect. Pexpect allows your script to spawn a child application and
-control it as if a human were typing commands.
-
-This package contains pickles for Pexpect.
-
 %prep
 %setup
-%patch0 -p1
+# fix some incompatibility
+%__subst 's|"time"|"time -p true"|' tests/test_async.py
+%__subst 's|"python"|"python3"|' pexpect/replwrap.py
 
 fix_env_python () {
     # change shebang /usr/bin/env python -> /usr/bin/$PYTHON
@@ -98,66 +75,49 @@ fix_env_python () {
         tests/fakessh/ssh
 }
 
-cp -a . ../python3
-
-pushd ../python3
-%patch1 -p1
 fix_env_python python3
 
-popd
-fix_env_python python2
-
-%prepare_sphinx .
+%if_with doc
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
+%endif
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc pickle
-%make -C doc html
-
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+%if_with doc
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make -C doc html SPHINXBUILD=sphinx-build-3
+%endif
 
 %check
+%if_with check
 export LC_ALL="en_US.UTF-8"
-
-py.test -v
-
-pushd ../python3
 py.test3 -v
-popd
+%endif
 
 %files
-%doc LICENSE *.rst
-%python_sitelibdir/pexpect/
-%python_sitelibdir/pexpect-*.egg-info/
-%exclude %python_sitelibdir/*/pickle
-
-%files docs
-%doc doc/_build/html
-%doc examples
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files -n python3-module-%oname
 %doc LICENSE *.rst
 %python3_sitelibdir/pexpect/
 %python3_sitelibdir/pexpect-*.egg-info/
 
+%if_with doc
+%files docs
+%doc doc/_build/html
+%doc examples
+%endif
+
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt1
+- new version 4.8.0 (with rpmrb script)
+- temp. disable doc subpackage build (wait for fixes for sphinx)
+- remove pexpect provides
+
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 4.7.0-alt2
+- build python3 separately
+
 * Sat Nov 23 2019 Stanislav Levin <slev@altlinux.org> 4.7.0-alt1
 - 4.6 -> 4.7.0.
 
