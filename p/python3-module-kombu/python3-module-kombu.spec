@@ -9,8 +9,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.4.0
-Release: alt2
+Version: 4.6.11
+Release: alt1
 
 Group: Development/Python3
 License: BSD License
@@ -93,7 +93,7 @@ python3 setup.py test
 %endif
 
 %files
-%doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
+%doc AUTHORS FAQ LICENSE README.rst THANKS TODO
 %python3_sitelibdir/kombu*
 
 %if_with doc
@@ -102,6 +102,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:4.6.11-alt1
+- new version 4.6.11 (with rpmrb script)
+
 * Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.0-alt2
 - build standalone python3 module
 - temp. disable doc
