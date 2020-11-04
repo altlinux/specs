@@ -1,6 +1,6 @@
 Name: gedit-source-code-browser
 Version: 3.0.3
-Release: alt1.git.8.g2eae5cd
+Release: alt2.git.11.g56d9ae0
 Summary: source code class and function browser plugin for Gedit 3
 License: BSD
 Group: Editors
@@ -44,6 +44,9 @@ install -m644 sourcecodebrowser/data/*.gschema.xml \
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Wed Nov 04 2020 Ildar Mulyukov <ildar@altlinux.ru> 3.0.3-alt2.git.11.g56d9ae0
+- fix "Breaks with gedit 3.36.1"
+
 * Mon Jan 09 2017 Ildar Mulyukov <ildar@altlinux.ru> 3.0.3-alt1.git.8.g2eae5cd
 - initial build for ALT Linux Sisyphus
 
