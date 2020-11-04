@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.30
-Release: alt2
+Release: alt3
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -73,7 +73,7 @@ BuildPreReq: binutils >= 1:2.20
 # Due to enablekernel.
 BuildPreReq: glibc-kernheaders >= %enablekernel
 
-BuildPreReq: rpm-build >= 4.0.4-alt61
+BuildPreReq: rpm-build >= 4.0.4-alt112
 
 # This is required for building auxiliary programs.
 %{?!_disable_memusagestat:BuildPreReq: libgd2-devel}
@@ -119,7 +119,7 @@ Provides: rtld(GNU_IFUNC)
 Summary: The GNU libc pthread libraries
 Group: System/Libraries
 PreReq: %name-core = %EVR
-%{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
+%define lib_suffix %{?_is_libsuff:()(%{_libsuff}bit)}
 # due to pthread_cancel_init() which calls __libc_dlopen ("libgcc_s.so.1")
 Requires: libgcc_s.so.1%lib_suffix
 
@@ -778,6 +778,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Nov 04 2020 Dmitry V. Levin <ldv@altlinux.org> 6:2.30-alt3
+- Updated to glibc-2.30-81-g61e8ae9b66 from 2.30 branch
+  (fixes: CVE-2020-6096).
+
 * Tue May 26 2020 Dmitry V. Levin <ldv@altlinux.org> 6:2.30-alt2
 - Updated to glibc-2.30-69-g1ba9ebfce3 from 2.30 branch
   (fixes: CVE-2020-1751, CVE-2020-1752, CVE-2020-10029)
