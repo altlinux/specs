@@ -1,8 +1,9 @@
 Name: python3-module-click
 Version: 7.1.2
-Release: alt1
+Release: alt2
 
 Summary: A simple wrapper around optparse for powerful command line utilities
+
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/click/
@@ -13,27 +14,15 @@ Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: rpm-build-python3 python3-module-setuptools
 
-%package tests
-Summary: Tests for click
-Group: Development/Python
-Requires: %name = %EVR
-
-%define desc Click is a Python package for creating beautiful command line interfaces\
-in a composable way with as little code as necessary.  It's the "Command\
-Line Interface Creation Kit".  It's highly configurable but comes with\
-sensible defaults out of the box.\
-\
-It aims to make the process of writing command line tools quick and fun\
-while also preventing any frustration caused by the inability to\
-implement an intended CLI API.
-
 %description
-%desc
+Click is a Python package for creating beautiful command line interfaces
+in a composable way with as little code as necessary.  It's the "Command
+Line Interface Creation Kit".  It's highly configurable but comes with
+sensible defaults out of the box.
 
-%description tests
-%desc
-
-This package contains tests for Click.
+It aims to make the process of writing command line tools quick and fun
+while also preventing any frustration caused by the inability to
+implement an intended CLI API.
 
 %prep
 %setup
@@ -44,6 +33,7 @@ rm -vf src/click/_winconsole.py
 
 %install
 %python3_install
+rm -rfv %buildroot%python3_sitelibdir/click/tests/
 
 %check
 python3 setup.py test
@@ -51,14 +41,11 @@ python3 setup.py test
 %files
 %doc README.* LICENSE.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-
-%files tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 7.1.2-alt2
+- NMU: don't pack tests, but pack click.testing
+
 * Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.1.2-alt1
 - 7.1.2 released
 
