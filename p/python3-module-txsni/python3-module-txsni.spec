@@ -1,7 +1,7 @@
 %define modulename txsni
 
 Name: python3-module-txsni
-Version: 0.1.9
+Version: 0.2.0
 Release: alt1
 
 Summary: easy-to-use SNI endpoint for twisted
@@ -31,7 +31,6 @@ Simple support for running a TLS server with Twisted.
 
 %install
 %python3_install
-rm -rfv %buildroot%python3_sitelibdir/%modulename/tests/
 
 %files
 %python3_sitelibdir/%modulename/
@@ -39,5 +38,8 @@ rm -rfv %buildroot%python3_sitelibdir/%modulename/tests/
 %python3_sitelibdir/twisted/plugins/*
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
+- new version 0.2.0 (with rpmrb script)
+
 * Tue Oct 15 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.9-alt1
 - initial build for ALT Sisyphus
