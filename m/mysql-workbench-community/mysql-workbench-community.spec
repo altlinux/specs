@@ -1,13 +1,15 @@
 Name: mysql-workbench-community
 Version: 8.0.20
-Release: alt2
+Release: alt3
 
 Summary: A MySQL visual database modeling tool
 
 License: GPL-2.0-or-later and LGPL-2.0-or-later and CC-BY-3.0 and MIT and Scintilla and Public-Domain
 Group: Development/Databases
 Url: http://wb.mysql.com
-Source0: %name-%version.tar.gz
+
+# Source-url: https://cdn.mysql.com/Downloads/MySQLGUITools/mysql-workbench-community-%version-src.tar.gz
+Source0: %name-%version.tar
 Source1: antlr-4.7.1-complete.jar
 Source2: antlr4-cpp-runtime-4.7.1-source.zip
 
@@ -48,11 +50,12 @@ Obsoletes: mysql-query-browser < %version-%release
 
 %add_findreq_skiplist */mysql-workbench/libraries/grt_python_debugger.py
 
-Requires: python-module-paramiko python-module-pexpect
+Requires: python-module-paramiko
 Requires: mysql-client gnome-keyring
 Requires: %name-data = %version
 
-# https://bugzilla.altlinux.org/35600
+# due /usr/lib64/libSegFault.so
+# see https://bugzilla.altlinux.org/35600
 Requires: glibc-devel
 
 BuildRequires(pre): unzip
@@ -75,7 +78,8 @@ BuildRequires: libctemplate-devel
 BuildRequires: libiodbc-devel
 
 # 6.3.4
-BuildRequires(pre): rpm-macros-cmake cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 #BuildRequires: mysql-connector-c++-devel
 BuildRequires: libXdmcp-devel libXdamage-devel libXxf86vm-devel
 BuildRequires: swig libgdal-devel libpcrecpp-devel libpixman-devel libexpat-devel libvsqlite++-devel
@@ -225,6 +229,9 @@ popd
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 8.0.20-alt3
+- cleanup spec, drop pexpect requires
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.20-alt2
 - Rebuilt with boost-1.73.0.
 
