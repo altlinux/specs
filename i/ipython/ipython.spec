@@ -6,7 +6,7 @@
 
 Name: ipython
 Version: 5.5.0
-Release: alt6
+Release: alt7
 
 %setup_python_module IPython
 
@@ -86,8 +86,8 @@ Summary: An enhanced interactive Python shell
 Group: Development/Python
 
 %add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
-%py_requires jsonschema traitlets pexpect simplegeneric
-%py_requires pathlib2
+#py_requires jsonschema traitlets pexpect simplegeneric
+#py_requires pathlib2
 # fake due exaile
 %py_provides IPython
 # fake due BALL
@@ -166,6 +166,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt7
+- disable requires
+
 * Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt6
 - last (fake) build before remove (wait for rebuild BALL and exaile)
 
