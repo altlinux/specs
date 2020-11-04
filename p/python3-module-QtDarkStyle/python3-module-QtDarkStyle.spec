@@ -1,5 +1,5 @@
 Name: python3-module-QtDarkStyle
-Version: 2.8
+Version: 2.8.1
 Release: alt1
 
 License: MIT
@@ -34,5 +34,8 @@ The most complete dark stylesheet for Qt application (Qt4, Qt5, PySide, PySide2,
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
+- new version 2.8.1 (with rpmrb script)
+
 * Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8-alt1
 - initial build for ALT Sisyphus
