@@ -2,8 +2,8 @@
 %define oname rasterio
 
 Name: python3-module-%oname
-Version: 1.1.2
-Release: alt2
+Version: 1.1.8
+Release: alt1
 
 License: BSD
 Group: Development/Python
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 
 #BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-python3 rpm-build-intro >= 2.2.4
 
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel ipython3
@@ -52,6 +52,7 @@ more fun.
 
 %install
 %python3_install
+%python3_prune
 
 %if_with test
 %check
@@ -66,6 +67,9 @@ xvfb-run py.test3 ||:
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
+- new version 1.1.8 (with rpmrb script)
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.1.2-alt2
 - Dropped dependency on coveralls.
 
