@@ -1,7 +1,7 @@
 %define oname humanize
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Python humanize utilities
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm python3-module-setuptools
 BuildRequires: python3-module-pytest python3-module-freezegun
@@ -34,15 +35,19 @@ or into a human readable size or throughput.
 
 %install
 %python3_install
+%python3_prune
 
 %check
-python3 setup.py test
+%python3_test
 
 %files
 %doc README.md
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
+- new version 2.6.0 (with rpmrb script)
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version 2.1.0 (with rpmrb script)
 - build python3 separated
