@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.2.4
+Version: 2.2.5
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -131,8 +131,11 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.5-alt1
+- macros.intro: python3_prune: add test dirs removing too
+
 * Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.4-alt1
-- just a hotfix: inctroduce python3_prune macro
+- just a hotfix: introduce python3_prune macro
 
 * Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt1
 - introduce py3_buildrequires
