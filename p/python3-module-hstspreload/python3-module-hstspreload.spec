@@ -1,7 +1,7 @@
 %define  modulename hstspreload
 
 Name:    python3-module-%modulename
-Version: 2020.5.27
+Version: 2020.10.20
 Release: alt1
 
 Summary: Chromium HSTS Preload list as a Python package and updated daily
@@ -16,7 +16,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source:  %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
@@ -39,5 +39,8 @@ See https://hstspreload.org for more information regarding the list itself.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2020.10.20-alt1
+- new version 2020.10.20 (with rpmrb script)
+
 * Thu May 28 2020 Vitaly Lipatov <lav@altlinux.ru> 2020.5.27-alt1
 - initial build for Sisyphus
