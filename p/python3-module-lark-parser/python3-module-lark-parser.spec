@@ -1,7 +1,7 @@
 %define oname lark-parser
 
 Name: python3-module-%oname
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: A modern parsing library for Python, implementing Earley & LALR(1) and an easy interface
@@ -15,6 +15,7 @@ BuildArch: noarch
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 #BuildRequires: python3-module-setuptools
 #BuildRequires: python3-module-numpy python3-module-flaky python3-module-pytz python3-module-django
@@ -51,6 +52,8 @@ Generate a stand-alone parser (for LALR(1) grammars)
 
 %install
 %python3_install
+%python3_prune
+rm -rfv %buildroot%python3_sitelibdir/lark/__pyinstaller
 
 %check
 #PYTHONPATH=%buildroot%python3_sitelibdir py.test3
@@ -60,5 +63,8 @@ Generate a stand-alone parser (for LALR(1) grammars)
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
+- new version 0.9.0 (with rpmrb script)
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
 - initial build for ALT Sisyphus
