@@ -1,18 +1,17 @@
 Name: crtools
-Version: 3.14
-Release: alt2
+Version: 3.15
+Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
 Group: System/Configuration/Other
 Url: http://criu.org
 
-# repacked http://download.openvz.org/criu/criu-%version.tar.bz2
+VCS: git://github.com/checkpoint-restore/criu.git
 Source: criu-%version.tar
 Source1: criu.watch
 Patch1: 0001-FEDORA-aio-fix.patch
 Patch2: 0002-ALT-build-against-python3.patch
-Patch3: 0003-ALT-fix-security_context_t-deprecated.patch
 
 Provides: criu = %EVR
 ExclusiveArch: x86_64 aarch64 armh ppc64le
@@ -75,7 +74,7 @@ Python library library of checkpoint/restore.
 
 %prep
 %setup -n criu-%version
-%autopatch -p2
+%autopatch -p1
 
 %build
 export CFLAGS="%optflags"
@@ -127,6 +126,9 @@ find %buildroot -name 'lib*.a' -delete
 %_pkgconfigdir/criu.pc
 
 %changelog
+* Wed Nov 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.15-alt1
+- Updated to 3.15.
+
 * Mon Aug 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.14-alt2
 - Fixed FTBFS: fixed uses of deprecated security_context_t.
 
