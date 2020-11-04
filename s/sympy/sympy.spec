@@ -1,12 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with doc
+%def_without doc
 
 Name: sympy
-Epoch: 1
 Version: 1.6.1
-Release: alt1
+Release: alt3
+Epoch: 1
+
 Summary: A Python library for symbolic mathematics
+
 License: BSD-3-Clause
 Group: Sciences/Mathematics
 Url: https://sympy.org/
@@ -17,6 +19,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch1: %name-%version-alt-build.patch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-py
@@ -43,8 +46,6 @@ simple as possible in order to be comprehensible and easily extensible.
 %package -n python3-module-%name
 Summary: A Python 3 module for symbolic mathematics
 Group: Development/Python3
-Requires: python3-module-%name-tests = %EVR
-%add_python3_req_skip primetest pytest runtests
 
 %description -n python3-module-%name
 SymPy is a Python library for symbolic mathematics. It aims to become a
@@ -52,19 +53,6 @@ full-featured computer algebra system (CAS) while keeping the code as
 simple as possible in order to be comprehensible and easily extensible.
 
 This package contains python module of SymPy.
-
-%package -n python3-module-%name-tests
-Summary: Tests for SymPy (Python 3)
-Group: Development/Python3
-Requires: python3-module-%name = %EVR
-%add_python3_req_skip sympy.integrals.rubi.rubi pydy.system
-
-%description -n python3-module-%name-tests
-SymPy is a Python library for symbolic mathematics. It aims to become a
-full-featured computer algebra system (CAS) while keeping the code as
-simple as possible in order to be comprehensible and easily extensible.
-
-This package contains tests for SymPy.
 
 %package -n python3-module-%name-examples
 Summary: Examples for SymPy
@@ -139,6 +127,14 @@ cp -fR doc/_build/doctrees ./
 cp -fR pickle %buildroot%python3_sitelibdir/%name/
 %endif
 
+# remove tests files
+%python3_prune
+# by some reason sympy.testing is wide used in the project modules
+#rm -rfv %buildroot%python3_sitelibdir/%name/testing/
+rm -rfv %buildroot%python3_sitelibdir/%name/conftest.py
+rm -rfv %buildroot%python3_sitelibdir/%name/utilities/{*test.py,_compilation/}
+rm -rfv %buildroot%python3_sitelibdir/%name/parsing/autolev/test-examples/
+
 %check
 #python3 setup.py test -v
 #python3 bin/test -v
@@ -153,19 +149,6 @@ python3 bin/doctest -v ||:
 
 %files -n python3-module-%name
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*test*
-%exclude %python3_sitelibdir/*/*/*test*
-%exclude %python3_sitelibdir/*/*/*/*test*
-%exclude %python3_sitelibdir/*/*/*/*/*test*
-%if_with doc
-%exclude %python3_sitelibdir/%name/pickle
-%endif
-
-%files -n python3-module-%name-tests
-%python3_sitelibdir/*/*test*
-%python3_sitelibdir/*/*/*test*
-%python3_sitelibdir/*/*/*/*test*
-%python3_sitelibdir/*/*/*/*/*test*
 %if_with doc
 %exclude %python3_sitelibdir/%name/pickle
 %endif
@@ -182,6 +165,13 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.1-alt3
+- NMU: drop tests subpackage
+
+* Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.1-alt2
+- NMU: drop require tests submodule
+- NMU: more strict masks for tests and remove duplicated pickle exclude
+
 * Wed Jul 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.6.1-alt1
 - Updated to upstream version 1.6.1.
 - Disabled build for python-2.
