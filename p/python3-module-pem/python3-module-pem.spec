@@ -1,7 +1,7 @@
 %define modulename pem
 
 Name: python3-module-pem
-Version: 19.2.0
+Version: 20.1.0
 Release: alt1
 
 Summary: Easy PEM file parsing in Python
@@ -15,8 +15,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
@@ -32,11 +33,15 @@ i.e. Base64 encoded DER keys and certificates.
 
 %install
 %python3_install
+%python3_prune
 
 %files
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 20.1.0-alt1
+- new version 20.1.0 (with rpmrb script)
+
 * Tue Oct 15 2019 Vitaly Lipatov <lav@altlinux.ru> 19.2.0-alt1
 - initial build for ALT Sisyphus
