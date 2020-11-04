@@ -12,8 +12,8 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 4.3.0
-Release: alt5
+Version: 4.4.7
+Release: alt1
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 
@@ -49,8 +49,9 @@ BuildRequires: python3(sphinx_celery)
 BuildRequires: python3-module-sphinx
 %endif
 
-%py3_use kombu = 4.4.0
-%py3_use billiard >= 3.6.0
+%py3_use kombu >= 4.6.10
+%py3_use billiard >= 3.6.3
+%py3_use vine = 1.3.0
 
 %if_enabled check
 # /proc is required for some tests
@@ -105,7 +106,7 @@ This package contains documentation for %oname.
 %prep
 %setup
 #patch1 -p1
-%patch10 -p1
+#patch10 -p1
 %patch11 -p1
 %patch12 -p1
 
@@ -135,7 +136,7 @@ rm -f t/unit/contrib/test_sphinx.py
 %python3_test
 
 %files
-%doc Changelog *.txt *.rst TODO
+%doc Changelog.rst *.txt *.rst TODO
 %_bindir/*
 %python3_sitelibdir/celery*
 
@@ -145,6 +146,9 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt1
+- new version (4.4.7) with rpmgs script
+
 * Wed Oct 28 2020 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt5
 - add Obsoletes: python-module-celery (due /usr/bin/celery command)
 
