@@ -2,7 +2,7 @@
 
 Name: gnustep-RSSkit
 Version: 0.4.0
-Release: alt5
+Release: alt6
 Summary: Simple library for reading the different types of RSS file formats
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: doxygen gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -112,6 +112,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt6
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt5
 - Build without libgnustep-objc2-devel.
 

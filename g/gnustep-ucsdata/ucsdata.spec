@@ -2,7 +2,7 @@
 
 Name: gnustep-ucsdata
 Version: r31318
-Release: alt9
+Release: alt10
 Summary: The GNUstep Unicode Character Set Data Library
 License: LGPLv2+
 Group: Development/Tools
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Source1: ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
 Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel
 BuildPreReq: /proc
 
 Requires: gnustep-back
@@ -84,6 +84,9 @@ install -p -m644 %SOURCE1 %buildroot%_libdir/GNUstep/Unicode/
 %_libdir/*.so
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> r31318-alt10
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r31318-alt9
 - Build without libgnustep-objc2-devel.
 

@@ -1,6 +1,6 @@
 Name: gnustep-buildtool
 Version: r36614
-Release: alt4
+Release: alt5
 Summary: The GNUstep buildtool
 License: GPLv2+
 Group: Development/Tools
@@ -10,7 +10,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # http://svn.gna.org/svn/gnustep/tools/buildtool/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-xcode-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -42,6 +42,9 @@ GNUstep buildtool.
 %_bindir/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> r36614-alt5
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r36614-alt4
 - Build without libgnustep-objc2-devel.
 

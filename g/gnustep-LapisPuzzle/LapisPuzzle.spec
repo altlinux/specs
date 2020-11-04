@@ -2,7 +2,7 @@
 
 Name: gnustep-LapisPuzzle
 Version: 1.2
-Release: alt6
+Release: alt7
 Summary: Tetris-like game where each player is effected by the others game play
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.2-alt7
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.2-alt6
 - Build without libgnustep-objc2-devel.
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-easydiff
 Version: 0.4.1
-Release: alt7
+Release: alt8
 Summary: GNUstep's implementation of the OPENSTEP FileMerge application
 License: GPLv2+ and GPLv3
 Group: File tools
@@ -13,7 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel
 BuildPreReq: gnustep-gui-devel /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -52,6 +52,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt8
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt7
 - Build without libgnustep-objc2-devel.
 

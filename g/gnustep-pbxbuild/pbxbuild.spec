@@ -2,7 +2,7 @@
 
 Name: gnustep-pbxbuild
 Version: 0.1
-Release: alt4
+Release: alt5
 Summary: This tool converts XCode(tm) projects into GNUmakefiles and builds them
 License: GPLv2+ and GPLv3
 Group: File tools
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # https://github.com/gnustep/gnustep-pbxbuild.git
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel
 BuildPreReq: /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -45,6 +45,9 @@ Currently OSX Version 3.9 and 4.2 project files are supported.
 %_bindir/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt5
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt4
 - Build without libgnustep-objc2-devel.
 

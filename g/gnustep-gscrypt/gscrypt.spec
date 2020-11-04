@@ -2,7 +2,7 @@
 
 Name: gnustep-gscrypt
 Version: r31301
-Release: alt3
+Release: alt4
 Summary: GNUstep GSCrypt Library
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -71,6 +71,9 @@ cp *.h gscrypt/
 %_libdir/*.so
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> r31301-alt4
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r31301-alt3
 - Build without libgnustep-objc2-devel.
 

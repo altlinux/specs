@@ -2,7 +2,7 @@
 
 Name: gnustep-ShengGuang
 Version: 2006
-Release: alt7
+Release: alt8
 Summary: Library used by MusicBox for audio control
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libogg-devel libvorbis-devel libsmpeg-devel libflac-devel
 BuildPreReq: libspeex-devel libSDL-devel libSDL_sound-devel
@@ -110,6 +110,9 @@ ln -s %_libdir/GNUstep/Headers/ShengGuang \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 2006-alt8
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 2006-alt7
 - Build without libgnustep-objc2-devel.
 

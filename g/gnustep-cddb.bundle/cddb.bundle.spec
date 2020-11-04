@@ -2,7 +2,7 @@
 
 Name: gnustep-cddb.bundle
 Version: 0.2
-Release: alt7
+Release: alt8
 Summary: GNUstep bundle for cddb access
 License: GPLv2+ and LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-base-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -65,6 +65,9 @@ ln -s %_libdir/GNUstep/Headers/Cddb \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.2-alt8
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.2-alt7
 - Build without libgnustep-objc2-devel.
 

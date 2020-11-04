@@ -2,7 +2,7 @@
 
 Name: gnustep-WizardKit
 Version: 0.1
-Release: alt4
+Release: alt5
 Summary: Framework needed by Project Manager
 License: MIT and GFDL-1.2-or-later
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel doxygen
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -108,6 +108,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt5
+- Remove redundant clang-devel for build
+
 * Thu Oct 08 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt4
 - Build without libgnustep-objc2-devel.
 - Fix License tag according to SPDX.
