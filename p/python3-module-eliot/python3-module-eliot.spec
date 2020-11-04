@@ -1,7 +1,7 @@
 %define modulename eliot
 
 Name: python3-module-eliot
-Version: 1.10.0
+Version: 1.12.0
 Release: alt1
 
 Summary: Logging library that tells you why it happened
@@ -10,13 +10,14 @@ Url: https://github.com/itamarst/eliot/
 License: MIT
 Group: Development/Python3
 
-# Source-url: https://pypi.io/packages/source/e/%modulename/%modulename-%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://pypi.io/packages/source/e/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
@@ -53,8 +54,7 @@ to aggregate and store logs if you are using multiple processes across multiple 
 
 %install
 %python3_install
-rm -rfv %buildroot%python3_sitelibdir/%modulename/dask.py*
-rm -rfv %buildroot%python3_sitelibdir/%modulename/tests/
+%python3_prune
 
 %files
 %_bindir/eliot-prettyprint
@@ -62,5 +62,8 @@ rm -rfv %buildroot%python3_sitelibdir/%modulename/tests/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
+- new version 1.12.0 (with rpmrb script)
+
 * Tue Oct 15 2019 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
 - initial build for ALT Sisyphus
