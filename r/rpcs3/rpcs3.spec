@@ -18,7 +18,7 @@
 
 Name: rpcs3
 Version: 0.0.13
-Release: alt1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -78,10 +78,12 @@ BuildRequires: libpng-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libswscale-devel
 BuildRequires: libudev-devel
+BuildRequires: libusb-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libxml2-devel
+BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-dev
 BuildRequires: python3-module-yaml
@@ -142,6 +144,7 @@ cmake .. \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
 	-DUSE_SYSTEM_CURL:BOOL=TRUE \
+	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
 popd
 
@@ -160,6 +163,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Nov 04 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.13-alt2
+- Update build and build requires
+
 * Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.13-alt1
 - Version 0.0.13
 
