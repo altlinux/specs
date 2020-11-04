@@ -1,7 +1,7 @@
 %global import_path github.com/42wim/matterbridge
 
 Name: matterbridge
-Version: 1.18.3
+Version: 1.19.0
 Release: alt1
 
 Summary: A simple chat bridge
@@ -40,6 +40,7 @@ Natively supported:
 * Matrix
 * Mattermost
 * Microsoft Teams
+* Mumble
 * Nextcloud Talk
 * Rocket.chat
 * Slack
@@ -100,6 +101,9 @@ popd
 %_unitdir/matterbridge.service
 
 %changelog
+* Wed Nov 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1
+- Updated to 1.19.0.
+
 * Sun Sep 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.3-alt1
 - Updated to 1.18.3.
 
