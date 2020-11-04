@@ -2,17 +2,17 @@
 
 Name: gnustep-themes-Nesedah
 Version: r9537
-Release: alt3.svn20131105
+Release: alt4.svn20131105
 Summary: GNUstep's Nesedah theme
 License: Free
 Group: Graphical desktop/GNUstep
 Url: http://etoileos.com/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/etoile/trunk/Etoile/Themes/Nesedah.theme/
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 
 Requires: gnustep-back
@@ -41,6 +41,9 @@ Nesedah theme for GNUstep.
 %_libdir/GNUstep
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> r9537-alt4.svn20131105
+- Build without clang.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9537-alt3.svn20131105
 - Built with clang
 
