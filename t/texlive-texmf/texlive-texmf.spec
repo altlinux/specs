@@ -96,7 +96,7 @@ Packager: Igor Vlasenko <viy@altlinux.org>
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt2_7
+Release:	alt3_7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -134,7 +134,7 @@ Requires(post): tex-common
 Source44: import.info
 Patch33: texlive-texmf-2017-alt-texmf-first.patch
 BuildRequires: rpm-build-tex >= 0.4
-AutoReq: yes,notex
+AutoReq: yes,notex,nopython
 Source8000: texlive-20190410-texmf-dist-scripts-perl-526.patch
 Source8003: texlive-fix-info-dir-sections.patch
 
@@ -210,7 +210,7 @@ Obsoletes: texmf-latex-tipa <= 1.3-alt4
 Obsoletes: texmf-latex-xcolor <= 2.06-alt3
 Obsoletes: texmf-pgf <= 2.10-alt0.1
 Obsoletes: ctanify <= 1.1-alt1.1
-AutoReq: yes,notex
+AutoReq: yes,notex,nopython
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-fontsrecommended = %{tl_version}
 Provides: texlive-collection-fontutils = %{tl_version}
@@ -375,7 +375,7 @@ Obsoletes: texmf-latex-xcolor < 2.12
 Obsoletes: texmf-pgf < 3.0.1a
 Obsoletes: texmf-standalone <= 1.2-alt1
 Obsoletes: tetex-bibtex8 <= 3.71-alt1.qa1
-AutoReq: yes,notex
+AutoReq: yes,notex,nopython
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-langafrican = %{tl_version}
 Provides: texlive-collection-langarabic = %{tl_version}
@@ -629,7 +629,7 @@ Summary:	Tex Live ConTeXt Package
 Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
 Conflicts: tetex-context < 2.01
-AutoReq: yes,notex
+AutoReq: yes,notex,nopython
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-context = %{tl_version}
 
@@ -665,7 +665,7 @@ if you rely on context for building tex documents.
 Summary:	Tex Live documentation
 Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
-AutoReq: yes,notex
+AutoReq: yes,notex,nopython
 Provides: texlive-doc-base = %{tl_version}
 Conflicts: texlive-doc-base < 2009
 Obsoletes: texlive-doc-base < 2009
@@ -761,7 +761,7 @@ Requires:	texlive-texmf = %{version}
 Requires(post):	texlive-dist = %{version}-%{release}
 Requires(postun):	texlive >= %{tl_version}
 Obsoletes: texmf-fonts-cm-lgc <= 0.5-alt2_20
-AutoReq: yes,notex
+AutoReq: yes,notex,nopython
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-fontsextra = %{tl_version}
 
@@ -1048,6 +1048,9 @@ find . %buildroot -type f -print0 |
 
 
 %changelog
+* Wed Nov 04 2020 Igor Vlasenko <viy@altlinux.ru> 2019-alt3_7
+- added nopython to AutoReq: not to block py2 deprecation
+
 * Wed Apr 08 2020 Dmitry V. Levin <ldv@altlinux.org> 2019-alt2_7
 - NMU.
 - Fixed python shebangs.
