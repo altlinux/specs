@@ -1,10 +1,10 @@
-%define git 1dff6f2
+%define git %nil
 %def_enable tests
 %def_enable systemd
 
 Name: libratbag
-Version: 0.13
-Release: alt0.16.g%{git}
+Version: 0.15
+Release: alt0.1
 Summary: Programmable input device library
 Group: System/Libraries
 License: MIT
@@ -125,6 +125,9 @@ Libratbag mice configuration data.
 %_datadir/libratbag
 
 %changelog
+* Wed Nov 04 2020 L.A. Kostis <lakostis@altlinux.ru> 0.15-alt0.1
+- v0.15.
+
 * Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 0.13-alt0.16.g1dff6f2
 - v0.13-16-g1dff6f2.
 
