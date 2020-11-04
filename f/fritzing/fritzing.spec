@@ -1,6 +1,6 @@
 Name: fritzing
 Version: 0.9.4
-Release: alt1
+Release: alt2
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv3, CC-BY-SA-3.0
@@ -19,6 +19,8 @@ Patch: fritzing-desktop-file-translation.patch
 
 # Translations
 Patch1: 430dc369b4418f783aa6e367ea5e2dcfdf38a2cf.patch
+# Fix building with libgit2 >= 1.0
+Patch2: 472951243d70eeb40a53b1f7e16e6eab0588d079.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -60,6 +62,7 @@ sed -i 's/LIBGIT_STATIC = true/LIBGIT_STATIC = false/' phoenix.pro
 
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 
 # make sure that russian translation will be removed
 rm translations/fritzing_ru.qm
@@ -97,6 +100,9 @@ install -m0644 %SOURCE2 "%buildroot/%_datadir/%name/%name-parts/parts.db"
 %_datadir/%name
 
 %changelog
+* Tue Nov 03 2020 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt2
+- Fix building with libgit2 >= 1.0.
+
 * Thu Dec 26 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt1
 - Fix version.
 - Cleanup changelog.
