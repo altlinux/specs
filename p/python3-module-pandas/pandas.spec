@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt2
+Release: alt3
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -111,6 +111,7 @@ xvfb-run python3 setup.py test
 %python3_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/testing.py
+%exclude %python3_sitelibdir/*/_testing.py
 %exclude %python3_sitelibdir/*/conftest.py
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/_test*
@@ -121,6 +122,7 @@ xvfb-run python3 setup.py test
 %files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/testing.py
+%python3_sitelibdir/*/_testing.py
 %python3_sitelibdir/*/conftest.py
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/_test*
@@ -134,6 +136,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt3
+- NMU: fix require tests subpackage from the main package
+
 * Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt2
 - Updated runtime dependencies.
 
