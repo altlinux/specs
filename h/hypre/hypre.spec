@@ -5,19 +5,19 @@
 %define sover %somver.2.15
 Name: hypre
 Version: 2.15.1
-Release: alt2
+Release: alt3
 Summary: Scalable algorithms for solving linear systems of equations
-License: LGPL v2.1
+License: LGPLv2.1
 Group: Sciences/Mathematics
 Url: http://www.llnl.gov/casc/hypre/
 
-# https://github.com/LLNL/hypre.git
+# Source-git: https://github.com/hypre-space/hypre.git
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
 Requires: lib%name-devel = %version-%release
 
-BuildRequires(pre): rpm-build-python rpm-build-java /proc
+BuildRequires(pre): rpm-build-python rpm-build-java rpm-macros-cmake /proc
 BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel emacs-nox
 BuildRequires: liblapack-devel netpbm
 BuildRequires: libsuperlu-devel babel cmake texlive-base-bin
@@ -54,8 +54,6 @@ Summary: Development files of Hypre
 Group: Development/Other
 Requires: libbabel-devel libltdl7-devel libsuperlu-devel
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 The goal of the Scalable Linear Solvers project is to develop scalable
@@ -146,6 +144,10 @@ popd
 %_docdir/lib%name-devel-doc
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.15.1-alt3
+- NMU: update github repo url and add upstream/remotes
+- NMU: fix license name, fix the package obsoletes itself error
+
 * Mon Apr 27 2020 Anton Midyukov <antohami@altlinux.org> 2.15.1-alt2
 - clean buidrequires doc++
 
