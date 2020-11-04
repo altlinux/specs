@@ -3,8 +3,8 @@
 %define oname h2
 
 Name: python3-module-h2
-Version: 3.0.1
-Release: alt4
+Version: 3.2.0
+Release: alt1
 
 Summary: HTTP/2 State-Machine based protocol implementation
 
@@ -17,8 +17,9 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-hyperframe >= 5.0
 BuildRequires: python3-module-hpack >= 2.3
 
@@ -39,6 +40,7 @@ programming paradigm.
 
 %install
 %python3_install
+%python3_prune
 
 %check
 PYTHONPATH=$(pwd) py.test3
@@ -48,6 +50,9 @@ PYTHONPATH=$(pwd) py.test3
 %python3_sitelibdir/h2*.egg-info/
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version 3.2.0 (with rpmrb script)
+
 * Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt4
 - standalone build python3 module
 
