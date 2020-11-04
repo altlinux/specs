@@ -1,29 +1,28 @@
 %define oname numexpr
 
-%def_with python3
-
-Name:           python-module-%oname
+Name:           python3-module-%oname
 Version:        2.6.2
-Release:        alt4
-Epoch: 1
+Release:        alt5
+Epoch:          1
+
 Summary:        Fast numerical array expression evaluator for Python and NumPy
-Group:          Development/Python
+
+Group:          Development/Python3
 License:        MIT
 URL:            https://github.com/pydata/numexpr
-# https://github.com/pydata/numexpr.git
-Source:         %oname-%version.tar.gz
-Source1: site.cfg
-Patch1: %oname-%version-alt-config.patch
 
-BuildRequires: gcc-c++ time libnumpy-devel liblapack-devel python-module-html5lib python-module-numpy-testing python-module-setuptools
-%if_with python3
+# Source-url: %__pypi_url %oname
+Source:         %name-%version.tar
+Source1:        site.cfg
+Patch1:         %oname-%version-alt-config.patch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-setuptools
-%endif
 
-Requires: %name-tests = %epoch:%version-%release /proc
-%py_requires numpy
+BuildRequires: gcc-c++ libnumpy-devel liblapack-devel
 
+Requires: /proc
 
 %description
 The numexpr package evaluates multiple-operator array expressions many
@@ -39,135 +38,42 @@ speed-ups when computing transcendental functions (like trigonometrical,
 exponentials...) on top of Intel-compatible platforms. This support also
 allows to use multiple cores in your computations.
 
-%package -n python3-module-%oname
-Summary: Fast numerical array expression evaluator for Python and NumPy
-Group: Development/Python3
-Requires: python3-module-%oname-tests = %epoch:%version-%release /proc
-%py3_requires numpy
-
-%description -n python3-module-%oname
-The numexpr package evaluates multiple-operator array expressions many
-times faster than NumPy can. It accepts the expression as a string,
-analyzes it, rewrites it more efficiently, and compiles it to faster
-Python code on the fly. It's the next best thing to writing the
-expression in C and compiling it with a specialized just-in-time (JIT)
-compiler, i.e. it does not require a compiler at runtime.
-
-Also, numexpr has support for the Intel VML (Vector Math Library) --
-integrated in Intel MKL (Math Kernel Library) --, allowing nice
-speed-ups when computing transcendental functions (like trigonometrical,
-exponentials...) on top of Intel-compatible platforms. This support also
-allows to use multiple cores in your computations.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for numexpr
-Group: Development/Python3
-Requires: python3-module-%oname = %epoch:%version-%release
-
-%description -n python3-module-%oname-tests
-The numexpr package evaluates multiple-operator array expressions many
-times faster than NumPy can. It accepts the expression as a string,
-analyzes it, rewrites it more efficiently, and compiles it to faster
-Python code on the fly. It's the next best thing to writing the
-expression in C and compiling it with a specialized just-in-time (JIT)
-compiler, i.e. it does not require a compiler at runtime.
-
-Also, numexpr has support for the Intel VML (Vector Math Library) --
-integrated in Intel MKL (Math Kernel Library) --, allowing nice
-speed-ups when computing transcendental functions (like trigonometrical,
-exponentials...) on top of Intel-compatible platforms. This support also
-allows to use multiple cores in your computations.
-
-This package contains tests for numexpr.
-
-%package tests
-Summary: Tests for numexpr
-Group: Development/Python
-Requires: %name = %epoch:%version-%release
-
-%description tests
-The numexpr package evaluates multiple-operator array expressions many
-times faster than NumPy can. It accepts the expression as a string,
-analyzes it, rewrites it more efficiently, and compiles it to faster
-Python code on the fly. It's the next best thing to writing the
-expression in C and compiling it with a specialized just-in-time (JIT)
-compiler, i.e. it does not require a compiler at runtime.
-
-Also, numexpr has support for the Intel VML (Vector Math Library) --
-integrated in Intel MKL (Math Kernel Library) --, allowing nice
-speed-ups when computing transcendental functions (like trigonometrical,
-exponentials...) on top of Intel-compatible platforms. This support also
-allows to use multiple cores in your computations.
-
-This package contains tests for numexpr.
-
 %prep
 %setup
 %patch1 -p1
+# don't require tests from the main module
+%__subst "s|from numexpr.tests.*||" numexpr/__init__.py
+
 install -p -m644 %SOURCE1 ./
 sed -i 's|@LIBDIR@|%_libdir|' site.cfg
 %ifnarch %ix86 x86_64 armh aarch64 ppc64le
 sed -i 's@ openblas,@ blas,@' site.cfg
 %endif
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
-	../python3/site.cfg
-%endif
-
-sed -i 's|@PYVER@|%_python_version|' site.cfg
+	site.cfg
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+%python3_prune
 
 %check
 pushd build/lib.linux*
-python -c 'import numexpr; numexpr.test()'
+PYTHONPATH=$(pwd) python3 -c 'import numexpr.tests; numexpr.tests.test()'
 popd
-%if_with python3
-pushd ../python3
-pushd build/lib.linux*
-PYTHONPATH=%buildroot%python3_sitelibdir python3 -c 'import numexpr; numexpr.test()'
-popd
-popd
-%endif
 
 %files
 %doc *.txt *.rst LICENSES
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-
-%files tests
-%python_sitelibdir/%oname/tests
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt *.rst LICENSES
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%oname/tests
-%endif
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.2-alt5
+- build python3 separately, without tests subpackage
+
 * Wed Feb 20 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.2-alt4
 - exclude armh from crippled arches
 
