@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.2
-Release: alt2
+Release: alt3
 
 Summary: JSON-RPC 2.0 client library for Python 3
 License: LGPL
@@ -13,11 +13,11 @@ Url: https://pypi.python.org/pypi/jsonrpcclient/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest python3-module-mock
 BuildRequires: python3-module-jsonschema python3(future)
 BuildRequires: python3-module-requests
 BuildRequires: python3(zmq) python3(tornado)
-BuildRequires: python3-module-responses python3(testfixtures) 
+BuildRequires: python3-module-responses python3(testfixtures)
 
 %description
 JSON-RPC 2.0 client library for Python 3.
@@ -41,6 +41,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt3
+- fix build (add missed mock buildrequires)
+
 * Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.5.2-alt2
 - Build for python2 removed.
 
