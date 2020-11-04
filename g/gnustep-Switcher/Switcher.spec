@@ -2,7 +2,7 @@
 
 Name: gnustep-Switcher
 Version: 20140127
-Release: alt4
+Release: alt5
 Summary: Allow applications to appear when the icon is clicked on from another workspace
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/gap co gap/bundles/Switcher
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -45,6 +45,9 @@ clicked on from another workspace.
 %_libdir/GNUstep
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 20140127-alt5
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 20140127-alt4
 - Build without libgnustep-objc2-devel.
 

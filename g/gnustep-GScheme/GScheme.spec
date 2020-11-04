@@ -2,7 +2,7 @@
 
 Name: gnustep-GScheme
 Version: 0.6.1
-Release: alt5
+Release: alt6
 Summary: GNUstep-aware scheme interpreter
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel flex
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -53,6 +53,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt6
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt5
 - Build without libgnustep-objc2-devel.
 

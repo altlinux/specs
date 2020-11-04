@@ -2,7 +2,7 @@
 
 Name: gnustep-corebase
 Version: 0.2
-Release: alt3
+Release: alt4
 Summary: Open implementation of CoreFoundation
 License: LGPLv2+, GPLv3+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # https://github.com/gnustep/gnustep-corebase.git
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel
 BuildPreReq: libicu-devel /proc
 BuildPreReq: doxygen graphviz
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
@@ -94,6 +94,9 @@ This package contains development files of the GNUstep CoreBase Library.
 %_libdir/*.so
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.2-alt4
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.2-alt3
 - Build without libgnustep-objc2-devel.
 

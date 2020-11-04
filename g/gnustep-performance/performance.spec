@@ -1,6 +1,6 @@
 Name: gnustep-performance
 Version: 0.4.0
-Release: alt3
+Release: alt4
 Summary: The GNUstep Performance library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel
 BuildPreReq: /proc
 
 %description
@@ -78,6 +78,9 @@ Performance library.
 %_docdir/GNUstep
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt4
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt3
 - Build without libgnustep-objc2-devel.
 

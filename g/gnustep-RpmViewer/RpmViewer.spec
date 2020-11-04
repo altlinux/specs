@@ -2,7 +2,7 @@
 
 Name: gnustep-RpmViewer
 Version: 2001
-Release: alt5
+Release: alt6
 Summary: Contents Inspector to see the contents of rpm packages
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -44,6 +44,9 @@ RpmViewer is a contents Inspector to see the contents of rpm packages.
 %_libdir/GNUstep
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 2001-alt6
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 2001-alt5
 - Build without libgnustep-objc2-devel.
 

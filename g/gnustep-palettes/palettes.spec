@@ -2,7 +2,7 @@
 
 Name: gnustep-palettes
 Version: r20982
-Release: alt4
+Release: alt5
 Summary: GNUstep palettes
 License: Free
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/palettes/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -46,6 +46,9 @@ GNUstep palettes.
 %_libdir/GNUstep
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> r20982-alt5
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r20982-alt4
 - Build without libgnustep-objc2-devel.
 

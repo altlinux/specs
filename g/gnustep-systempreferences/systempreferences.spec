@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Source1: %name.menu
 Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel
 BuildPreReq: gnustep-gui-devel /proc
 
 Requires: lib%name = %version-%release
@@ -106,6 +106,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt3
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt2
 - Build without libgnustep-objc2-devel.
 

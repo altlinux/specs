@@ -1,7 +1,7 @@
 Name:           gnustep-examples
 
 Version:        1.3.0
-Release:        alt6
+Release:        alt7
 
 Summary:        The GNUstep examples 
 License:        GPLv2+ and GPLv3+
@@ -10,7 +10,7 @@ Group:          Graphical desktop/GNUstep
 URL:            http://www.gnustep.org
 Source:         %name-%version.tar
 
-BuildRequires:  clang-devel gnustep-make-devel
+BuildRequires:  gnustep-make-devel
 BuildRequires:  gnustep-base-devel gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -48,6 +48,9 @@ cp gui/ExampleTheme/Rhea/COPYING .
 %doc README ChangeLog COPYING
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt7
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt6
 - Build without libgnustep-objc2-devel.
 

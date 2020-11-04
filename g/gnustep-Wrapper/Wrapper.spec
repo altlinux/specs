@@ -2,7 +2,7 @@
 
 Name: gnustep-Wrapper
 Version: 0.1.0
-Release: alt6
+Release: alt7
 Summary: Create GNUstep app-wrappers of non-GNUstep applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -59,6 +59,9 @@ rm -f %buildroot%_libdir/*.so
 make_services
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt7
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt6
 - Build without libgnustep-objc2-devel.
 

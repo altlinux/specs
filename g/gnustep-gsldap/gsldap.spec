@@ -2,7 +2,7 @@
 
 Name: gnustep-gsldap
 Version: r31303
-Release: alt4
+Release: alt5
 Summary: Library which provides an Objective-C interface to access LDAP Servers
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-base-devel libldap-devel
 
 %description
@@ -75,6 +75,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> r31303-alt5
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r31303-alt4
 - Build without libgnustep-objc2-devel.
 

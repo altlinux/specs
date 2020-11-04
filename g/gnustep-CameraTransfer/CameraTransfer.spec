@@ -2,7 +2,7 @@
 
 Name: gnustep-CameraTransfer
 Version: 0.3
-Release: alt9
+Release: alt10
 Summary: Get pictures from a digital camera
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Source1: BCell.m
 Source2: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -53,6 +53,9 @@ install -p -D -m644 %SOURCE2 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.3-alt10
+- Remove redundant clang-devel for build
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.3-alt9
 - Build without libgnustep-objc2-devel.
 
