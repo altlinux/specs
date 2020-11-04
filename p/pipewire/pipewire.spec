@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1
 
 Summary: Media Sharing Server
@@ -205,6 +205,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Wed Nov 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1
+- updated to 0.3.15-2-g7a437696
+
 * Sat Oct 31 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
 - 0.3.14
 
