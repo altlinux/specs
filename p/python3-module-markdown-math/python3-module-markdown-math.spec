@@ -1,7 +1,7 @@
 %define  modulename python-markdown-math
 
 Name:    python3-module-markdown-math
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Math extension for Python-Markdown
@@ -37,6 +37,9 @@ This extension adds math formulas support to Python-Markdown.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.8-alt1
+- New version.
+
 * Wed Jun 10 2020 Andrey Cherepanov <cas@altlinux.org> 0.7-alt1
 - New version.
 
