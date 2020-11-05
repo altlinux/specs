@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-movie
-Version: 5.7.6.61
+Version: 5.7.6.74
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
@@ -10,13 +10,14 @@ Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar.gz
+# Patch: deepin-movie_5.7.6.69_alt_fix-build.patch
 
 ExcludeArch: armh
 
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %endif
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): gcc-c++ rpm-build-ninja
 BuildRequires: cmake qt5-base-devel qt5-x11extras-devel qt5-tools-devel dtk5-widget-devel libmpv-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel xorg-xcbproto-devel libavformat-devel libavutil-devel libavcodec-devel libffmpegthumbnailer-devel libpulseaudio-devel libdvdnav-devel gsettings-qt-devel libswresample-devel
 Requires: libdmr libdvdnav libgsettings-qt
 
@@ -39,6 +40,10 @@ This package provides development files for libdmr.
 
 %prep
 %setup -n %name-reborn-%version
+# %%if_disabled clang
+# %%patch -p2
+# %%endif
+
 sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
 
 %build
@@ -75,6 +80,9 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu Nov 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.74-alt1
+- New version (5.7.6.74) with rpmgs script.
+
 * Mon Oct 26 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.61-alt1
 - New version (5.7.6.61) with rpmgs script.
 
