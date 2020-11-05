@@ -4,13 +4,12 @@
 
 Name: python3-module-%oname
 Version: 3.0.4
-Release: alt1
+Release: alt2
 Summary: This repository provides python3 bindings for the LXC container API.
 
 License: GPL
 Group: Development/Python3
-Url: http://www.cairographics.org/pycairo
-# git://git.cairographics.org/git/pycairo
+Url: https://github.com/lxc/python3-lxc
 
 Source: lxc-%version.tar.gz
 BuildRequires:  python3-devel python3-module-setuptools lxc-devel pkgconfig
@@ -38,5 +37,8 @@ package contains the Python3 binding for LXC.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 05 2020 Alexandr Antonov <aas@altlinux.org> 3.0.4-alt2
+- fix url for *.spec
+
 * Tue Nov 03 2020 Alexandr Antonov <aas@altlinux.org> 3.0.4-alt1
 - initial build for ALT
