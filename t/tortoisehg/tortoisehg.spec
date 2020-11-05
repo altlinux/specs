@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 5.5.1
+Version: 5.5.2
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -95,6 +95,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Thu Nov 05 2020 Grigory Ustinov <grenka@altlinux.org> 5.5.2-alt1
+- Build new version.
+
 * Thu Oct 01 2020 Grigory Ustinov <grenka@altlinux.org> 5.5.1-alt1
 - Add watch file.
 - Transfer on python3.
