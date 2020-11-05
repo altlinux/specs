@@ -1,7 +1,7 @@
 Summary: Library for reading Jcat files
 Name: libjcat
-Version: 0.1.3
-Release: alt2
+Version: 0.1.4
+Release: alt1
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
 Source0: %name-%version.tar
@@ -87,6 +87,9 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Thu Nov 05 2020 Anton Farygin <rider@altlinux.ru> 0.1.4-alt1
+- 0.1.4
+
 * Mon Jul 06 2020 Anton Farygin <rider@altlinux.ru> 0.1.3-alt2
 - added patch from upstream to solve problem with lfvs signature,
   upstream issue #2223 (closes: 38672)
