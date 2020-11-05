@@ -1,5 +1,5 @@
 Name: deepin-picker
-Version: 5.0.6
+Version: 5.0.8
 Release: alt1
 Summary: Color picker tool for deepin
 License: GPL-3.0+
@@ -24,7 +24,9 @@ Simplest color picker.
 %__subst 's|Picker;||' %name.desktop
 
 %build
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt5 \
+    CONFIG+=nostrip \
+    PREFIX=%_prefix
 %make_build
 
 %install
@@ -43,6 +45,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dbus-1/services/com.deepin.Picker.service
 
 %changelog
+* Thu Nov 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.8-alt1
+- New version (5.0.8) with rpmgs script.
+- Enabled debuginfo.
+
 * Mon Aug 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.6-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
