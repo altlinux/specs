@@ -1,12 +1,12 @@
 Name: man-pages-posix
-Version: 2013a
+Version: 2017a
 Release: alt1
 
 Summary: Manual pages about using POSIX system
 License: Distributable
 Group: Documentation
 
-Url: http://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/
+Url: https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/
 BuildArch: noarch
 
 # https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/man-pages-posix-2013-a.tar.xz
@@ -44,13 +44,16 @@ find -type f -print0 |
 %makeinstall_std
 
 %files
-%_mandir/man1p
-%doc POSIX-COPYRIGHT *.Announce *.lsm
+%_mandir/man1p/
+%doc POSIX-COPYRIGHT *.Announce
 
 %files devel
-%_mandir/man[37]p
+%_mandir/man[37]p/
 
 %changelog
+* Thu Nov 05 2020 Dmitry V. Levin <ldv@altlinux.org> 2017a-alt1
+- 2013-a -> 2017-a.
+
 * Thu Jan 23 2014 Michael Shigorin <mike@altlinux.org> 2013a-alt1
 - 2013-a
 - trimmed P:/O: (upgrade should have occured long ago)
