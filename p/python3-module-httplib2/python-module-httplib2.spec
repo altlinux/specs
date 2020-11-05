@@ -1,78 +1,48 @@
-%define packagename python-module-httplib2
-%define origname httplib2
+%define oname httplib2
 
-%def_without python3
+Name: python3-module-httplib2
+Version: 0.18.1
+Release: alt1
 
 Summary: A comprehensive HTTP client library in Python
-Name: %packagename
-Version: 0.18.0
-Release: alt1.3
-Source0: %origname-%version.tar.gz
+
 License: MIT
 Group: Development/Python
-URL: http://code.google.com/p/httplib2/
+URL: https://github.com/httplib2/httplib2
+
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-# Automatically added by buildreq on Sat Apr 05 2008
-BuildRequires: python-devel
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
 
 %description
 A comprehensive HTTP client library that supports many features left out
 of other HTTP libraries.
 
-%if_with python3
-%package -n python3-module-%origname
-Summary: A comprehensive HTTP client library in Python 3
-Group: Development/Python3
-
-%description -n python3-module-%origname
-A comprehensive HTTP client library that supports many features left out
-of other HTTP libraries.
-%endif
-
 %prep
-%setup  -n %origname-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
+%python3_prune
 
 %files
 #doc CHANGELOG *.html *.md doc/html
-%python_sitelibdir/%origname/
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%origname
-#doc CHANGELOG *.html *.md doc/html
-%python3_sitelibdir/*
-%endif
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.egg-info
 
 %changelog
-* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.18.0-alt1.3
-- build python2 package only
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.18.1-alt1
+- new version 0.18.1 (with rpmrb script)
+
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt2
+- build python3 package
 
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.1-alt1.2
 - (NMU) rebuild with python3.6
