@@ -1,20 +1,28 @@
 Name: pywinery
-Version: 0.3.2
-Release: alt2
+Version: 0.3.3
+Release: alt1
 
 Summary: PyWinery is a graphical, easy and simple wine-prefix manager
+
 License: GPLv3
 Group: Emulators
-Url: https://github.com/ergoithz/pywinery.git
+Url: https://github.com/ergoithz/pywinery
+
 Packager: Konstantin Artyushkin <akv@altlinux.org>
+
+# Source-url: https://github.com/ergoithz/pywinery/archive/%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch:noarch
 
-Source: %name-%version.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pygobject3-devel
+# FIXME: AttributeError: 'gi.repository.Gtk' object has no attribute 'Container'
+# typelib(gtk) provided both libgtk+3-gir and libgtk+4-gir
+BuildRequires: libgtk+3-gir
+BuildRequires: python3-module-pygobject3
 
+# TODO: gi.require_version("Gtk", "3.0")
+Conflicts: libgtk+4-gir
 
 %description
 PyWinery is a graphical, easy and simple wine-prefix manager which allows
@@ -23,19 +31,15 @@ graphically and faster than setting variables on linux shell.
 
 %prep
 %setup
-
+mv branches/0.3/* .
 sed -i 's|python|&3|' $(find ./ -name '%name' -type f)
 sed -i 's|#!.*python.*|#!/usr/bin/env python3|' $(find ./ -name '*.py')
 
 %build
-pushd branches/0.3
 %python3_build
-popd
 
 %install
-pushd branches/0.3
 %python3_install
-popd
 
 %files
 %_bindir/%name
@@ -46,6 +50,10 @@ popd
 
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.3-alt1
+- NMU: new version (0.3.3) with rpmgs script
+- NMU: switch to tarball from github, cleanup spec
+
 * Tue Mar 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.2-alt2
 - Porting to python3.
 
