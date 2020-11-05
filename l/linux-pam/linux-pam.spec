@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.4.0.0.52.6502
+Version: 1.5.0
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -164,13 +164,6 @@ cp -p alt/pam_listfile.c modules/pam_listfile/
 
 find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
 
-# Unlink unwanted modules.
-for d in tty_audit unix; do
-	sed -i "s,modules/pam_$d/Makefile,," configure.ac
-	sed -i "s/\\<pam_$d\\>//" modules/Makefile.am
-	sed -i "s/tst-pam_$d[0-9]* //" xtests/Makefile.am
-done
-
 %build
 ./autogen.sh
 %configure \
@@ -178,9 +171,9 @@ done
 	--sbindir=/sbin \
 	--includedir=%_includedir/security \
 	--docdir=%docdir \
+	--disable-prelude \
+	--disable-unix \
 	--enable-Werror \
-	--enable-tally \
-	--enable-tally2 \
 	%{subst_enable selinux} \
 	%{subst_enable audit} \
 	%{subst_enable nls} \
@@ -190,9 +183,6 @@ done
 
 %install
 %makeinstall_std sepermitlockdir=%_lockdir/sepermit servicedir=%_unitdir
-
-mkdir -p %buildroot%_logdir
-touch %buildroot%_logdir/tallylog
 
 # Relocate development libraries from /%_lib/ to %_libdir/.
 mkdir -p %buildroot%_libdir
@@ -312,8 +302,6 @@ done
 
 %files -n pam -f Linux-PAM.lang
 %helperdir/faillock
-%helperdir/pam_tally
-%helperdir/pam_tally2
 %helperdir/mkhomedir_helper
 %helperdir/pam_namespace_helper
 %attr(700,root,root) %helperdir/pwhistory_helper
@@ -340,7 +328,6 @@ done
 %exclude %_pam_modules_dir/pam_timestamp.so
 %_mandir/man[58]/*.*
 %exclude %_mandir/man[58]/pam_timestamp*
-%ghost %attr(600,root,root) %verify(not md5 mtime size) %_logdir/tallylog
 
 %files -n %{make_pam_name timestamp}
 %attr(700,root,root) %helperdir/pam_timestamp_check
@@ -353,6 +340,11 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Nov 05 2020 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt1
+- v1.4.0-52-g650273e7 -> v1.5.0.
+  Note that pam_tally and pam_tally2 were removed in favour of pam_faillock.
+- Packaged pam_tty_audit module.
+
 * Thu Aug 06 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.0.0.52.6502-alt1
 - v1.4.0 -> v1.4.0-52-g650273e7.
 
