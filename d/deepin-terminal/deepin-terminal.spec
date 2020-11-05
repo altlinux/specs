@@ -1,5 +1,5 @@
 Name: deepin-terminal
-Version: 5.2.37
+Version: 5.3.0.1
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -99,6 +99,9 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %_includedir/terminalwidget5/
 
 %changelog
+* Thu Nov 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.1-alt1
+- New version (5.3.0.1) with rpmgs script.
+
 * Mon Nov 02 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.37-alt1
 - New version (5.2.37) with rpmgs script.
 
