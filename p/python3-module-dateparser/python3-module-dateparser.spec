@@ -1,10 +1,10 @@
 %define modname dateparser
-# /etc/localtime required
+#module 'logging' has no attribute 'config'
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.7.6
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Python parser for human readable dates 
 License: BSD-3-Clause
@@ -23,9 +23,12 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-mock
 BuildRequires: python3-module-parameterized python3-module-wheel
 BuildRequires: python3-module-dateutil python3-module-tzlocal python3-module-regex
-BuildRequires: python3-module-sphinx-devel
-%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-coverage python3-module-parameterized
-BuildRequires: python3-module-orderedset python3-module-convertdate python3-module-ruamel-yaml python3-module-umalqurra}
+BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
+%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-pytest
+BuildRequires: python3-module-pytest-cov python3-module-parameterized
+BuildRequires: python3-module-orderedset python3-module-convertdate
+BuildRequires: python3-module-ruamel-yaml python3-module-umalqurra
+BuildRequires: python3-module-hijri-converter}
 
 %description
 Date parsing library designed to parse dates from HTML pages.
@@ -82,6 +85,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%modname/
 
 
 %changelog
+* Thu Nov 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt2
 - fixed BRs
 
