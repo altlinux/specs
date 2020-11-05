@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 18.5.2
-Release: alt5
+Release: alt6
 
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 # https://github.com/crossbario/autobahn-python/commit/9b6fb57e5c87a5e29cd880f752a30b9409d480c6
 Patch: ensure-python37-compat.patch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 
@@ -25,19 +26,6 @@ Autobahn WebSockets for Python provides an implementation of the
 WebSockets protocol which can be used to build WebSockets clients and
 servers.
 
-%package tests
-Summary: Tests for Autobahn
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-Requires: python3-module-twisted-core-test
-
-%description -n python3-module-%oname-tests
-Autobahn WebSockets for Python provides an implementation of the
-WebSockets protocol which can be used to build WebSockets clients and
-servers.
-
-This package contains tests for Autobahn.
-
 %prep
 %setup
 %patch -p1
@@ -47,6 +35,7 @@ This package contains tests for Autobahn.
 
 %install
 %python3_install
+%python3_prune
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -55,12 +44,11 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %files
 %doc *.md *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/test
-
-%files tests
-%python3_sitelibdir/*/*/test
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 18.5.2-alt6
+- NMU: drop tests subpackage and unitest2 requires
+
 * Fri Apr 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 18.5.2-alt5
 - Build for python3 only.
 
