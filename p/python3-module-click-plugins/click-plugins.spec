@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Summary: Register CLI commands via setuptools entry-points
 License: BSD
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch0: click-plugins-1.0.2-Click-7-changes-how-command-names-are-generated.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-click-tests
+BuildRequires: python3-module-click
 BuildRequires: python3-module-pytest-cov
 
 %description
@@ -56,6 +56,9 @@ py.test3 -vv tests --cov click_plugins --cov-report term-missing
 %doc example/*
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt4
+- replace BR python3-module-click-tests with python3-module-click
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt3
 - Build for python2 disabled.
 
