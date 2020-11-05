@@ -1,17 +1,20 @@
 %define modname mako
 
 Name: python3-module-%modname
-Version: 1.0.9
-Release: alt2
+Version: 1.1.2
+Release: alt1
 Summary: template library written in Python
 
 Group: Development/Python3
 License: MIT
 Url: http://www.makotemplates.org
+
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-# http://pypi.io/packages/source/M/Mako/Mako-%version.tar.gz
+# Source-url: http://pypi.io/packages/source/M/Mako/Mako-%version.tar.gz
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 # Fix #23203
 Requires: python3-module-beaker
@@ -19,9 +22,9 @@ Requires: python3-module-beaker
 Conflicts: python-module-mako < %EVR
 Obsoletes: python-module-mako < %EVR
 
-BuildArch: noarch
-
-BuildRequires:  python3-module-setuptools rpm-build-python3 time
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
 Mako is a template library written in Python. It provides a familiar,
@@ -42,14 +45,19 @@ and scoping semantics.
 
 %install
 %python3_install
+%python3_prune
 
 %files
 %doc CHANGES LICENSE README*
 %_bindir/mako-render
-%python3_sitelibdir/mako
-%python3_sitelibdir/Mako-%version-*
+%python3_sitelibdir/mako/
+%python3_sitelibdir/Mako-%version-*.egg-info
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- NMU: new version 1.1.2 (with rpmrb script)
+- NMU: cleanup spec, drop test files packing
+
 * Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt2
 - Transfer on python3.
 
