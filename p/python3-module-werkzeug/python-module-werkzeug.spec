@@ -3,23 +3,24 @@
 %def_with python3
 %def_disable check
 
-Summary: Werkzeug is one of the most advanced WSGI utility modules
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.16.1
-Release: alt1
+Release: alt2
+
+Summary: Werkzeug is one of the most advanced WSGI utility modules
+
 License: BSD-3-Clause
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 URL: http://werkzeug.pocoo.org/
 
-# http://github.com/mitsuhiko/werkzeug.git
+BuildArch: noarch
+
+# https://github.com/pallets/werkzeug.git
 Source: %oname-%version.tar
 
-BuildRequires: python-module-pytest
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
-%endif
 
 %description
 Werkzeug started as a simple collection of various utilities for WSGI
@@ -33,69 +34,27 @@ It does Unicode and doesn't enforce a specific template engine, database
 adapter or anything else. It doesn't even enforce a specific way of
 handling requests and leaves all that up to the developer.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Werkzeug is one of the most advanced WSGI utility modules
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Werkzeug started as a simple collection of various utilities for WSGI
-applications and has become one of the most advanced WSGI utility
-modules. It includes a powerful debugger, fully featured request and
-response objects, HTTP utilities to handle entity tags, cache control
-headers, HTTP dates, cookie handling, file uploads, a powerful URL
-routing system and a bunch of community contributed addon modules.
-
-It does Unicode and doesn't enforce a specific template engine, database
-adapter or anything else. It doesn't even enforce a specific way of
-handling requests and leaves all that up to the developer.
-%endif
-
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+%python3_prune
 
 %check
-python ./setup.py test
-
-%if_with python3
-pushd ../python3
 python3 ./setup.py test
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.16.1-alt2
+- build only python3 package
+
 * Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 0.16.1-alt1
 - New version.
 - Fix License tag according SPDX.

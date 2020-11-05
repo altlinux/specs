@@ -1,21 +1,22 @@
-
 %define oname tinyrpc
 
-Name: python-module-%oname
-Version: 0.9.3
+Name: python3-module-%oname
+Version: 1.0.4
 Release: alt1
+
 Summary: Modular RPC library
-Group: Development/Python
+
 License: MIT
+Group: Development/Python
 Url: http://github.com/mbr/tinyrpc
-Source: %oname-%version.tar.gz
+
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 Patch1: tinyrpc-0.9.3-python3.patch
+
 BuildArch: noarch
 
-
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
@@ -29,53 +30,32 @@ to make it easy to add support for further protocols.
 A feature is support of multiple transports (or none at all)
 and providing clever syntactic sugar for writing dispatchers.
 
-%package -n python3-module-%oname
-Summary: Modular RPC library
-Group: Development/Python3
-
-%description -n python3-module-%oname
-tinyrpc is a library for making and handling RPC calls in python.
-Its initial scope is handling jsonrpc,
-although it aims to be very well-documented and modular
-to make it easy to add support for further protocols.
-
-A feature is support of multiple transports (or none at all)
-and providing clever syntactic sugar for writing dispatchers.
-
 %prep
-%setup -n %oname-%version
-%patch1 -p1
+%setup
+#patch1 -p1
 find tinyrpc -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 # Remove bundled egg-info
-rm -rf %oname.egg-info
-
-rm -rf ../python3
-cp -a . ../python3
+rm -rfv %oname.egg-info
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
+%python3_prune
 
 %files
-%doc README.rst
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt2
+- build python3 package separately
+
 * Thu Jan 10 2019 Alexey Shabalin <shaba@altlinux.org> 0.9.3-alt1
 - 0.9.3
 - build python3 package
