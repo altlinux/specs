@@ -1,32 +1,34 @@
-%define oname babel
+%define oname Babel
 
 %def_with doc
-#def_disable check
+%def_without check
 
-Name:    python-module-%oname
-Version: 2.6.0
-Release: alt2
+Name:    python3-module-babel
+Version: 2.8.0
+Release: alt1
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 
 Url: http://babel.pocoo.org/
 
-# https://github.com/mitsuhiko/babel.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Source1: CLDR.tar
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools python-module-sphinx-devel
-BuildRequires: python-module-freezegun
-%{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
-%setup_python_module babel
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-pytz >= 2015.7
+BuildRequires: cldr-common = 36
 
-BuildRequires(pre): rpm-macros-sphinx
-%py_requires pytz
+#BuildRequires: python3-module-pytest-cov python3-module-freezegun
+#py3_requires pytz
 
 %description
 Babel is an integrated collection of utilities that assist in
@@ -40,39 +42,45 @@ localization (L10N) can be separated into two different aspects:
     and date formatting, etc.
 
 %prep
-%setup -a1
+%setup
 
 %if_with doc
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-python scripts/import_cldr.py CLDR/common
-%python_build
+%__python3 scripts/import_cldr.py /usr/share/unicode/cldr/common
+%python3_build
 
 %install
-%python_install
-mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel.py2
+%python3_install
+%python3_prune
 
 %if_with doc
-%make -C docs html
+%make -C docs html SPHINXBUILD=sphinx-build-3
 %endif
 
+%if_with check
 %check
-#python setup.py test
+%python3_test
+%endif
 
 %files
-%_bindir/pybabel.py2
-%python_sitelibdir/*
 %doc AUTHORS CHANGES README.rst
 %if_with doc
 %doc docs/_build/html
 %endif
+%_bindir/pybabel
+%python3_sitelibdir/*
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:2.8.0-alt1
+- new version 2.8.0 (with rpmrb script)
+- require CLDR = 36
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.0-alt2
-- build only python2 module
+- build python3 package separately
 
 * Thu Oct 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.0-alt1.1
 - NMU: disable python2 check (due missed python-module-pytest-cov)
