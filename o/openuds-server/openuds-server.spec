@@ -5,7 +5,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt0.1.git.d7e30d14
+Release: alt1
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD3
 Group: Networking/Remote access
@@ -81,6 +81,9 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" %_sysco
 %config(noreplace) %_logrotatedir/openuds-server
 
 %changelog
+* Thu Nov 05 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
+- 3.0.0 Release
+
 * Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt0.1.git.d7e30d14
 - Initial build for ALT
 
