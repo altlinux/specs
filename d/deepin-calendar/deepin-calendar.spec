@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.7.0.15
+Version: 5.7.0.16
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -59,6 +59,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_libdir/deepin-aiassistant/serivce-plugins/libschedulex-plugin.so
 
 %changelog
+* Thu Nov 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.0.16-alt1
+- New version (5.7.0.16) with rpmgs script.
+
 * Mon Nov 02 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.0.15-alt1
 - New version (5.7.0.15) with rpmgs script.
 
