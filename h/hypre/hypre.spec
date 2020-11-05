@@ -2,27 +2,32 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define somver 0
-%define sover %somver.2.15
+%define sover %somver.2.20
+
+# TODO: improve me
+%def_without docs
+
 Name: hypre
-Version: 2.15.1
-Release: alt3
+Version: 2.20.0
+Release: alt1
+
 Summary: Scalable algorithms for solving linear systems of equations
+
 License: LGPLv2.1
 Group: Sciences/Mathematics
 Url: http://www.llnl.gov/casc/hypre/
 
-# Source-git: https://github.com/hypre-space/hypre.git
+# Source-url: https://github.com/hypre-space/hypre/archive/v%version.tar.gz
 Source: %name-%version.tar
-Patch1: %name-%version-alt.patch
+Patch: hypre-2.20.0-shared.patch
 
-Requires: lib%name-devel = %version-%release
-
-BuildRequires(pre): rpm-build-python rpm-build-java rpm-macros-cmake /proc
+BuildRequires(pre): rpm-build-java rpm-macros-cmake /proc
 BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel emacs-nox
 BuildRequires: liblapack-devel netpbm
 BuildRequires: libsuperlu-devel babel cmake texlive-base-bin
-BuildRequires: java-devel-default python-devel
-BuildRequires: libnumpy-devel libxml2-devel python-module-libxml2
+BuildRequires: java-devel-default
+BuildRequires: libnumpy-devel libxml2-devel
+# python-module-libxml2
 BuildRequires: libltdl-devel ghostscript-classic
 
 %description
@@ -54,6 +59,8 @@ Summary: Development files of Hypre
 Group: Development/Other
 Requires: libbabel-devel libltdl7-devel libsuperlu-devel
 Requires: lib%name = %version-%release
+Provides: %name = %version-%release
+Obsoletes: %name
 
 %description -n lib%name-devel
 The goal of the Scalable Linear Solvers project is to develop scalable
@@ -80,14 +87,14 @@ structured and unstructured grid problems. The problems of interest arise in the
 simulation codes being developed at LLNL and elsewhere to study physical
 phenomena in the defense, environmental, energy, and biological sciences.
 
-This package contains development documentation for Hepre.
+This package contains development documentation for Hypre.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p2
 
 %build
-mpi-selector --set %mpiimpl
+mpi-selector --set %mpiimpl --yes
 source /etc/profile.d/mpi-selector.sh
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
@@ -99,15 +106,15 @@ cd src
 
 %add_optflags %optflags %optflags_shared -I%_includedir/numpy
 
+# TODO: CMakeFiles was rewritten and broken since 2.20
 %cmake \
-	-DHYPRE_SHARED:BOOL=ON \
+	-DHYPRE_ENABLE_SHARED=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DHYPRE_INSTALL_PREFIX:PATH=%buildroot%prefix \
 	-DMPIDIR=%mpidir \
 	-DSOMVER=%somver \
 	-DSOVER=%sover \
-	-DHYPRE_SHARED:BOOL=ON \
 	-DHYPRE_USING_HYPRE_BLAS:BOOL=OFF \
 	-DHYPRE_USING_HYPRE_LAPACK:BOOL=OFF \
 	..
@@ -118,32 +125,39 @@ cd src
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-pushd src/BUILD
-
-%make install
+%makeinstall_std -C src/BUILD
 
 install -d %buildroot%_includedir/%name
 mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
+%if_with docs
 install -d %buildroot%_docdir/lib%name-devel-doc
 cp -fR ../../docs/* %buildroot%_docdir/lib%name-devel-doc/
-rm -f %buildroot%_libdir/libsidl*
-popd
+%endif
 
-%files
-%doc CHANGELOG COPYING.LESSER COPYRIGHT
+rm -f %buildroot%_libdir/libsidl*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/lib*.so.0
+%_libdir/lib*.so.%sover
 
 %files -n lib%name-devel
-%_libdir/*.so
-%_includedir/*
+%doc README.md SUPPORT.md CHANGELOG NOTICE LICENSE* COPYRIGHT
+%_libdir/lib*.so
+%_includedir/%name/
+%_libdir/cmake/HYPRE/
 
+%if_with docs
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel-doc
+%endif
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt1
+- new version (2.20.0) with rpmgs script
+- cleanup spec, build from tarball, don't pack empty hypre package
+- temp. disable docs packing (needs checking)
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.15.1-alt3
 - NMU: update github repo url and add upstream/remotes
 - NMU: fix license name, fix the package obsoletes itself error
