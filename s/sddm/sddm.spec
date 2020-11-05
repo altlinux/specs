@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.18.1
-Release: alt9
+Release: alt10
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -29,6 +29,8 @@ Source12: sddm-greeter.pam
 Source20: Xsetup
 Source21: Xstop
 # upstream
+Patch1: CVE-2020-28049.patch
+Patch2: nvidia-after-vt-switching.patch
 # SuSE
 Patch10: create_pid_file.patch
 # github issues
@@ -76,6 +78,9 @@ ability to create smooth, animated user interfaces.
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
+%patch2 -p1
+#
 %patch10 -p1
 #
 %patch100 -p1 -b .defaults
@@ -179,6 +184,10 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Thu Nov 05 2020 Sergey V Turchin <zerg@altlinux.org> 0.18.1-alt10
+- fix X not having access control on startup (fixes: CVE-2020-28049)
+- add fix against graphical glitches on nvidia after VT switching
+
 * Wed Sep 30 2020 Sergey V Turchin <zerg@altlinux.org> 0.18.1-alt9
 - set config dir to /etc/sddm.conf.d/
 - set system config dir to /usr/share/sddm/conf.d/
