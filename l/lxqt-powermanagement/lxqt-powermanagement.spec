@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-powermanagement
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Powermanagement module for LXQt
@@ -16,6 +16,7 @@ BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel qt5-svg-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-solid-devel kf5-kidletime-devel
 BuildRequires: rpm-build-xdg libqtxdg-devel
+BuildRequires: lxqt-globalkeys-devel
 
 Requires: upower
 
@@ -47,6 +48,9 @@ Obsoletes: razorqt-power < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
+- new version 0.16.0
+
 * Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 0.15.0-alt1
 - new version 0.15.0
 

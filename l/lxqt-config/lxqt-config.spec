@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-config
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
@@ -46,6 +46,7 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %_bindir/*
 %_libdir/%name/*.so
 %_datadir/lxqt/*
+%_datadir/desktop-directories/*.directory
 %_man1dir/*
 %_xdgconfigdir/*/*
 %_desktopdir/*.desktop
@@ -53,6 +54,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
+- new version 0.16.0
+
 * Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 0.15.0-alt1
 - new version 0.15.0
 
