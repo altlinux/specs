@@ -1,27 +1,32 @@
-%define _unpackaged_files_terminate_build 1
 %define oname argcomplete
 
-%def_with check
+%def_without check
 
-Name: python-module-%oname
-Version: 1.9.4
-Release: alt2
+Name: python3-module-argcomplete
+Version: 1.12.1
+Release: alt1
+
 Summary: Bash tab completion for argparse
+
 License: Apache-2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/argcomplete/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/kislyuk/argcomplete.git
-Source: %oname-%version.tar
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
 BuildArch: noarch
 
+Obsoletes: python-module-argcomplete
+Provides: python-module-argcomplete
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-sphinx
 
 %if_with check
-BuildRequires: python-module-pexpect
 BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-tox
 BuildRequires: /dev/pts
@@ -37,75 +42,42 @@ It makes two assumptions:
 * You're using bash or zsh as your shell
 * You're using argparse to manage your command line arguments/options
 
-%package -n python3-module-%oname
-Summary: Bash tab completion for argparse
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Argcomplete provides easy, extensible command line tab completion of
-arguments for your Python script.
-
-It makes two assumptions:
-
-* You're using bash or zsh as your shell
-* You're using argparse to manage your command line arguments/options
-
 %prep
-%setup -n %oname-%version
-
-rm -rf ../python3
-cp -fR . ../python3
+%setup
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
-
-export PYTHONPATH=$PWD
-%make -C docs html
-mkdir man
-cp -fR docs/*/html/* man/
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
+%python3_prune
 
-%python_install
-
+%if_with check
 %check
 export LC_ALL=C.UTF-8
 export TOX_TESTENV_PASSENV='LC_ALL'
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
+%endif
 
 %files
-%doc *.rst man/ docs/examples
+%doc *.rst
 %_bindir/activate-global-python-argcomplete
 %_bindir/python-argcomplete-check-easy-install-script
 %_bindir/python-argcomplete-tcsh
 %_bindir/register-python-argcomplete
-%python_sitelibdir/argcomplete/
-%python_sitelibdir/argcomplete-*.egg-info/
-
-%files -n python3-module-%oname
-%doc *.rst man/ docs/examples
-%_bindir/activate-global-python-argcomplete.py3
-%_bindir/python-argcomplete-check-easy-install-script.py3
-%_bindir/python-argcomplete-tcsh.py3
-%_bindir/register-python-argcomplete.py3
 %python3_sitelibdir/argcomplete/
 %python3_sitelibdir/argcomplete-*.egg-info/
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.12.1-alt1
+- new version 1.12.1 (with rpmrb script)
+
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt3
+- build python3 package separately, drop tests packing
+- disable tests (need rewrite)
+
 * Fri Jan 25 2019 Stanislav Levin <slev@altlinux.org> 1.9.4-alt2
 - Dropped BR on python argparse.
 - Enabled testing.
