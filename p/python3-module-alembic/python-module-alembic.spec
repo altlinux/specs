@@ -1,53 +1,40 @@
+%define oname alembic
 
-%global modname alembic
-
-%def_without python2
-%def_with python3
 %def_without test
 
-Name: python-module-alembic
-Version: 1.4.0
+Name: python3-module-alembic
+Version: 1.4.2
 Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/alembic
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://pypi.python.org/packages/source/a/%modname/%modname-%version.tar.gz
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
+Conflicts: python-module-alembic
+Provides: python-module-alembic = %EVR
+
 BuildRequires: help2man
 
-%if_with python2
-%py_provides alembic.migration alembic.environment
-
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-mako
-BuildRequires: python-module-SQLAlchemy >= 0.9.0
-BuildRequires: python-module-editor >= 0.3
-BuildRequires: python-module-dateutil
-
-BuildRequires: python-module-nose
-BuildRequires: python-module-mock
-BuildRequires: python-module-SQLAlchemy-tests
-BuildRequires: python-module-pytest
-%endif
-
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-mako python3-module-nose
+BuildRequires: python3-devel python3-module-mako
 BuildRequires: python3-module-SQLAlchemy python3-module-setuptools
 BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-pytest
+%if_with test
+BuildRequires: python3-module-pytest python3-module-nose
 %endif
+
+# some autoprov problem?
+%py3_provides alembic.migration alembic.environment
 
 %description
 Alembic is a new database migrations tool, written by the author of
@@ -64,127 +51,36 @@ similarly, doing the same steps in reverse.
 
 Documentation and status of Alembic is at http://readthedocs.org/docs/alembic/
 
-%package tests
-Summary: Tests for %modname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %modname.
-
-%package -n python3-module-%modname
-Summary: Database migration tool for SQLAlchemy
-Group: Development/Python3
-%py3_provides alembic.migration alembic.environment
-
-%description -n python3-module-%modname
-Alembic is a new database migrations tool, written by the author of
-SQLAlchemy <http://www.sqlalchemy.org>.  A migrations tool offers the
-following functionality:
-
-* Can emit ALTER statements to a database in order to change the structure
-of tables and other constructs.
-* Provides a system whereby "migration scripts" may be constructed; each script
-indicates a particular series of steps that can "upgrade" a target database to
-a new version, and optionally a series of steps that can "downgrade"
-similarly, doing the same steps in reverse.
-* Allows the scripts to execute in some sequential manner.
-
-Documentation and status of Alembic is at http://readthedocs.org/docs/alembic/
-
-%package -n python3-module-%modname-tests
-Summary: Tests for %modname
-Group: Development/Python3
-Requires: python3-module-%modname = %EVR
-
-%description -n python3-module-%modname-tests
-This package contains tests for %modname.
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build
-#mkdir bin
-#echo 'python -c "import alembic.config; alembic.config.main()" $*' > bin/alembic
-#chmod 0755 bin/alembic
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_build
-#mkdir bin
-#echo 'python3 -c "import alembic.config; alembic.config.main()" $*' > bin/alembic
-#chmod 0755 bin/alembic
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%if_with python2
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-%endif
-
-%if_with python2
-%python_install
-%endif
+%python3_prune
+rm -rfv %buildroot%python3_sitelibdir/alembic/testing/
 
 #mkdir -p %buildroot%_man1dir/
 #help2man --version-string %{version} --no-info -s 1 bin/alembic > %buildroot%_man1dir/alembic.1
 
 %if_with test
 %check
-%if_with python2
-%python_test
-%endif
-%if_with python3
-pushd ../python3
 %python3_test
 %endif
-%endif
 
-%if_with python2
 %files
 %doc README.rst LICENSE CHANGES docs
-%_bindir/%modname
-#_man1dir/alembic.1*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/testing
-
-%files tests
-%python_sitelibdir/*/testing
-%endif
-
-%if_with python3
-%files -n python3-module-%modname
-%doc README.rst LICENSE CHANGES docs
-%if_with python2
-%_bindir/%modname.py3
-%else
-%_bindir/%modname
-%endif
+%_bindir/%oname
 #_man1dir/alembic.1*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/testing
-
-%files -n python3-module-%modname-tests
-%python3_sitelibdir/*/testing
-%endif
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- build python3 separately, don't pack tests
+- new version (1.4.2) with rpmgs script
+
 * Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 - disable python2 module
