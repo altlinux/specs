@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-pycparser
-Version: 2.19
-Release: alt2
+Version: 2.20
+Release: alt1
 
 Summary: C parser in Python
 
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.20-alt1
+- new version 2.20 (with rpmrb script)
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.19-alt2
 - drop mwlib buildrequire
 
