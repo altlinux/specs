@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libqtxdg
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 
 Summary: Qt implementation of freedesktop.org xdg specs
@@ -70,6 +70,9 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %_bindir/qtxdg-mat
 
 %changelog
+* Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt1
+- new version 3.6.0
+
 * Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 3.5.0-alt1
 - new version 3.5.0
 

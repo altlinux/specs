@@ -1,5 +1,5 @@
 Name:     lxqt-sudo
-Version:  0.15.0
+Version:  0.16.0
 Release:  alt1
 
 Summary:  GUI frontend for sudo/su
@@ -39,5 +39,8 @@ BuildRequires: kf5-kwindowsystem-devel
 %_man1dir/*
 
 %changelog
+* Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
+- new version 0.16.0
+
 * Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 0.15.0-alt1
 - Initial build for Sisyphus

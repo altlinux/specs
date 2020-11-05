@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-globalkeys
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
@@ -64,6 +64,9 @@ sed -i '/find_dependency(lxqt-globalkeys 0.14.2)/d' \
 %_datadir/cmake/*/
 
 %changelog
+* Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
+- new version 0.16.0
+
 * Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 0.15.0-alt1
 - new version 0.15.0
 
