@@ -1,6 +1,6 @@
 Name: john-jumbo
 Version: 1.9.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: http://www.openwall.com/john/
@@ -18,6 +18,8 @@ Patch: john-1.9.0-alt-bash_completion.patch
 #                    Depends: perl(Digest/SHA3.pm) but it is not installable
 #                    Depends: perl(Digest/Tiger.pm) but it is not installable
 %add_python_req_skip pysap
+
+%add_python_req_skip dpkt
 
 # TODO: No packages
 %add_findreq_skiplist /usr/libexec/jonh-jumbo/7z2john.pl
@@ -217,5 +219,8 @@ rm %buildroot%jdata/john.conf && \
 %exclude %jlibexec/zip2john
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt2
+- NMU: make dpkt optional
+
 * Thu Jun 11 2020 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
 - Initial build for ALT
