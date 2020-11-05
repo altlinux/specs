@@ -6,7 +6,7 @@
 
 Name: ipython
 Version: 5.5.0
-Release: alt7
+Release: alt8
 
 %setup_python_module IPython
 
@@ -25,15 +25,6 @@ Patch1: %name-%version-alt-docs.patch
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-zmq
-BuildRequires: python-module-tornado python-modules-sqlite3
-BuildRequires: python-module-jsonschema python-module-traitlets
-BuildRequires: python-module-pexpect python-module-pickleshare
-BuildRequires: python-module-simplegeneric 
-BuildRequires: python2.7(pathlib2)
-BuildRequires: python2.7(prompt_toolkit)
-BuildRequires: python2.7(nose.tools)
-BuildRequires: python-module-testpath
 %if_with doc
 BuildRequires: python-module-sphinx-devel python-module-matplotlib-sphinxext python-module-numpydoc
 BuildRequires: python2.7(sphinx_rtd_theme) graphviz
@@ -135,16 +126,6 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
-%files
-#%doc COPYING.rst
-#%doc README.rst
-#%_bindir/*
-#%_man1dir/*
-%if_with doc
-%dir %_docdir/%name
-%_docdir/%name/*.txt
-%endif
-
 %files -n python-module-%oname
 #%python_sitelibdir/IPython/
 #%python_sitelibdir/*.egg-info
@@ -166,6 +147,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt8
+- drop ipython package, drop buildrequires from the package
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt7
 - disable requires
 
