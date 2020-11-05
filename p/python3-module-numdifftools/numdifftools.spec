@@ -3,25 +3,30 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.9.12
-Release: alt2.git20150828.1
+Version: 0.9.39
+Release: alt1
 
 Summary: Solves automatic numerical differentiation problems in one or more variables
+
 License: BSD
 Group: Development/Python3
-Url: http://code.google.com/p/numdifftools/
+Url: https://github.com/pbrod/numdifftools
 
-# https://github.com/pbrod/numdifftools.git
-Source: Numdifftools-%version.tar
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-scipy git xvfb-run
+BuildPreReq: python3-devel python3-module-scipy
 BuildPreReq: python3-module-numpy-addons python3-module-matplotlib
 BuildPreReq: python3-module-coverage python3-module-setuptools
 BuildPreReq: python3-module-setuptools_scm python3-module-six
-BuildPreReq: python3-module-algopy python3-module-nose
-BuildPreReq: python3-module-pytest-runner
+BuildPreReq: python3-module-algopy
+BuildRequires: python3-module-pytest-runner
+%if_enabled check
+BuildPreReq: python3-module-nose xvfb-run
 BuildPreReq: python3-module-pytest-cov
+%endif
 BuildPreReq: texlive-latex-recommended
 
 %py3_provides %oname
@@ -32,56 +37,40 @@ Numdifftools is a suite of tools to solve automatic numerical
 differentiation problems in one or more variables. All of these methods
 also produce error estimates on the result.
 
-%package test
-Summary: Test suite for Numdifftools
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description test
-Numdifftools is a suite of tools to solve automatic numerical
-differentiation problems in one or more variables. All of these methods
-also produce error estimates on the result.
-
-This package contains test suite for Numdifftools.
-
 %prep
 %setup
-
-git config --global user.email "real at atlinux.org"
-git config --global user.name "REAL"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag -m "%version" %version
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build_debug
 
 %install
 %python3_install
+%python3_prune
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
+%if_enabled check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd ~
-xvfb-run python3 -c "import numdifftools as nd; nd.test(coverage=True)"
+xvfb-run python3 -c "import numdifftools as nd; nd.test(coverage=True)" || :
 popd
 xvfb-run py.test-%_python3_version -vv -rsxXf
+%endif
 
 %files
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/test*
-
-%files test
-%python3_sitelibdir/%oname/test*
-%python3_sitelibdir/%oname/*/test*
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.39-alt1
+- new version 0.9.39 (with rpmrb script)
+- disable check (need rewrite)
+
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.12-alt2.git20150828.2
+- cleanup spec, update URL, switch to build from tarball, drop tests packing
+
 * Thu Apr 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.12-alt2.git20150828.1
 - Build for python2 disabled.
 
