@@ -2,7 +2,7 @@
 
 Name: python3-module-flask-migrate
 Version: 2.5.3
-Release: alt2
+Release: alt3
 
 Summary: SQLAlchemy database migrations for Flask applications using Alembic
 
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-intro >= 2.2.5
 
 %py3_use flask
 %py3_use alembic
-%py3_use flask_sqlalchemy
+%py3_use flask-sqlalchemy
 %py3_use flask-script
 
 %description
@@ -45,6 +45,9 @@ under the flask db command.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt3
+- use flask-sqlalchemy normalized name
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt2
 - cleanup spec
 

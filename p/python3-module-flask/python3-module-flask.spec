@@ -1,31 +1,30 @@
-%define modname flask
-%def_disable check
+%define oname Flask
 
-Name: python-module-%modname
-Version: 1.1.1
+Name: python3-module-flask
+Version: 1.1.2
 Release: alt1
 
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 
 URL: http://flask.pocoo.org/
 BuildArch: noarch
 
-Source: Flask-%version.tar.gz
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-werkzeug
-BuildRequires: python-module-simplejson
-BuildRequires: python-module-jinja2
-
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-simplejson
 BuildRequires: python3-module-jinja2
 
-%py_requires click.testing
+# /usr/bin/flask
+Obsoletes: python-module-flask
+Provides: python-module-flask
+
+%py3_requires click.testing
 
 %description
 Flask is called a "micro-framework" because the idea to keep the core
@@ -37,56 +36,32 @@ Flask itself. There are currently extensions for object relational
 mappers, form validation, upload handling, various open authentication
 technologies and more.
 
-%package -n python3-module-%modname
-Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
-Group: Development/Python3
-
-%py3_requires click.testing
-
-%description -n python3-module-%modname
-Flask is called a "micro-framework" because the idea to keep the core
-simple but extensible. There is no database abstraction layer, no form
-validation or anything else where different libraries already exist that
-can handle that.  However Flask knows the concept of extensions that can
-add this functionality into your application as if it was implemented in
-Flask itself. There are currently extensions for object relational
-mappers, form validation, upload handling, various open authentication
-technologies and more.
-
 %prep
-%setup -n Flask-%version
-
-cp -fR . ../python3
+%setup
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-pushd %buildroot%_bindir
-mv %modname %modname.py2
-popd
-
-pushd ../python3
 %python3_install
-popd
+%python3_prune
 
+%check
+#pytest3
 
 %files
-%doc AUTHORS README.rst LICENSE
-%_bindir/%modname.py2
-%python_sitelibdir/*
-
-%files -n python3-module-%modname
-%doc AUTHORS README.rst LICENSE
-%python3_sitelibdir/*
-%_bindir/%modname
+%doc README.rst LICENSE.rst
+%_bindir/flask
+%python3_sitelibdir/flask/
+%python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt2
+- build python3 package separately
+
 * Fri Aug 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.1-alt1
 - Version updated to 1.1.1
 
