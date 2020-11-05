@@ -1,9 +1,9 @@
 %global modname oauthlib
-%def_with python3
+%def_without python3
 
 Name:               python-module-oauthlib
 Version:            0.7.2
-Release:            alt1.1.2
+Release:            alt2
 Summary:            An implementation of the OAuth request-signing logic
 
 Group:              Development/Python
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.2-alt2
+- rebuild without python3 (wait for exe package only)
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7.2-alt1.1.2
 - (NMU) rebuild with python3.6
 

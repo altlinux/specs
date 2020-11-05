@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname requests-oauthlib
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: OAuthlib authentication support for Requests
 License: BSD
 Group: Development/Python
@@ -114,6 +114,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt2
+- rebuild without python3 (wait for exe package only)
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
 - automated PyPI update
 
