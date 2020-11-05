@@ -3,11 +3,11 @@
 %define oname scikit-image
 
 %def_disable docs
-%def_enable check
+%def_disable check
 
 Name: python3-module-%oname
 Version: 0.17.2
-Release: alt2
+Release: alt3
 
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
@@ -22,6 +22,7 @@ Patch2: %oname-upstream-fix-1.patch
 # TODO: try removing this test skip on next update
 Patch3: %oname-alt-numpy-test-skip.patch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -61,18 +62,6 @@ BuildRequires: python3-module-seaborn
 Image processing algorithms for SciPy, including IO, morphology,
 filtering, warping, color manipulation, object detection, etc.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-%add_python3_req_skip astropy.io
-
-%description tests
-Image processing algorithms for SciPy, including IO, morphology,
-filtering, warping, color manipulation, object detection, etc.
-
-This package contains tests for %oname.
-
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
@@ -100,8 +89,10 @@ This package contains documentation for %oname.
 %patch2 -p1
 %patch3 -p1
 
+%if_enabled docs
 %prepare_sphinx3 doc
 ln -s ../objects.inv doc/source/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -109,6 +100,7 @@ ln -s ../objects.inv doc/source/
 
 %install
 %python3_install
+%python3_prune
 
 %if_enabled docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -124,19 +116,16 @@ mkdir -p matplotlib
 touch matplotlib/matplotlibrc
 export XDG_CONFIG_HOME=$(pwd)
 
-pushd %buildroot%python3_sitelibdir &>/dev/null
-
+cd build/lib.linux*
 # one test fails and there seems no way to disable it. Just remove it
-rm -f %buildroot%python3_sitelibdir/skimage/io/tests/test_io.py
-rm -f %buildroot%python3_sitelibdir/skimage/io/tests/__pycache__/test_io.*
+#rm -f %buildroot%python3_sitelibdir/skimage/io/tests/test_io.py
+#rm -f %buildroot%python3_sitelibdir/skimage/io/tests/__pycache__/test_io.*
 
 # TODO: remove NUMPY_TOO_FRESH export when patch3 is removed
 export NUMPY_TOO_FRESH=1
 export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
 pytest-3 -v skimage
-
-popd &>/dev/null
 
 %files
 %doc LICENSE.txt
@@ -148,14 +137,6 @@ popd &>/dev/null
 %if_enabled docs
 %exclude %python3_sitelibdir/skimage/pickle
 %endif
-%exclude %python3_sitelibdir/skimage/*/test*
-%exclude %python3_sitelibdir/skimage/*/*/test*
-%exclude %python3_sitelibdir/skimage/*/*/*/test*
-
-%files tests
-%python3_sitelibdir/skimage/*/test*
-%python3_sitelibdir/skimage/*/*/test*
-%python3_sitelibdir/skimage/*/*/*/test*
 
 %if_enabled docs
 %files pickles
@@ -169,6 +150,10 @@ popd &>/dev/null
 %endif
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.17.2-alt3
+- NMU: add if_enabled docs for sphinx using
+- NMU: drop tests packing, disable tests (need review)
+
 * Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.2-alt2
 - Fixed build with new numpy.
 
