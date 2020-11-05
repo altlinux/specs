@@ -1,10 +1,13 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:     lxqt-sudo
 Version:  0.16.0
-Release:  alt1
+Release:  alt1.1
 
 Summary:  GUI frontend for sudo/su
 License:  LGPL-2.1
-Group:    Other
+Group:    Graphical desktop/Other
 Url:      https://github.com/lxqt/lxqt-sudo
 
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -39,6 +42,10 @@ BuildRequires: kf5-kwindowsystem-devel
 %_man1dir/*
 
 %changelog
+* Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1.1
+- Fix Group tag
+- Unpackaged files in buildroot should terminate build enable
+
 * Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
 - new version 0.16.0
 
