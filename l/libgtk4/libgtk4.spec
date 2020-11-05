@@ -9,7 +9,7 @@
 
 %def_enable x11
 %def_disable static
-%def_disable man
+%def_enable man
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable colord
@@ -21,13 +21,14 @@
 %def_enable cloudproviders
 %def_enable tracker3
 %def_enable vulkan
+%def_disable sysprof
 %def_enable tests
 # File box-packing.ltr.nodes does not exist
 %def_disable install_tests
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -45,11 +46,11 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define glib_ver 2.65.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.45.0
+%define pango_ver 1.47.0
 %define atk_ver 2.15.1
 %define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
-%define gtk_doc_ver 1.20
+%define gtk_doc_ver 1.32.1
 %define colord_ver 0.1.9
 %define cups_ver 1.6
 %define wayland_ver 1.15.0
@@ -88,7 +89,8 @@ BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-deve
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
 %endif
-%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver pandoc}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver pandoc xsltproc}
+%{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
@@ -98,6 +100,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
+%{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_tests:BuildRequires: librsvg-devel >= %rsvg_ver}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
 # since 3.94.0 for media backend
@@ -205,6 +208,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_man:-Dman-pages=true} \
     %{?_enable_colord:-Dcolord=enabled} \
+    %{?_enable_sysprof:-Dsysprof=enabled} \
     %{?_disable_tests:-Dbuild-tests=false} \
     %{?_enable_install_tests:-Dinstall-tests=true} \
     %{?_disable_vulkan:-Dvulkan=disabled}
@@ -245,6 +249,8 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %dir %fulllibpath/media
 %fulllibpath/printbackends/libprintbackend-*.so
 %fulllibpath/media/libmedia-gstreamer.so
+%dir %_datadir/gtk-%api_ver/
+%_datadir/gtk-%api_ver/emoji/
 %dir %_sysconfdir/gtk-%api_ver
 %if_enabled man
 %{?_enable_broadway:%_man1dir/gtk4-broadwayd.1.*}
@@ -265,14 +271,11 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %files devel
 %_bindir/gtk4-builder-tool
 %_includedir/gtk-%api_ver/
-%_libdir/libgtk-4.so
+%_libdir/libgtk-%api_ver_major.so
 %_pkgconfigdir/gtk%api_ver_major.pc
 %_pkgconfigdir/gtk%api_ver_major-x11.pc
 %_pkgconfigdir/gtk%api_ver_major-unix-print.pc
-#%_pkgconfigdir/gail-%api_ver.pc
-%dir %_datadir/gtk-%api_ver
 %_datadir/gtk-%api_ver/gtk%{api_ver_major}builder.rng
-#%_datadir/aclocal/gtk-%api_ver.m4
 %_datadir/gettext/its/gtk%{api_ver_major}builder.its
 %_datadir/gettext/its/gtk%{api_ver_major}builder.loc
 %_datadir/gtk-%api_ver/valgrind/
@@ -350,6 +353,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Thu Nov 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.4-alt1
+- 3.99.4
+
 * Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.1-alt1
 - 3.99.1
 
