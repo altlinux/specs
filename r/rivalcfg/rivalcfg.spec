@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    3.7.0
+Version:    4.1.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -34,7 +34,7 @@ CFLAGS="%optflags" %__python3 setup.py build
 %__python3 setup.py install --root %buildroot --record=INSTALLED_FILES
 
 mkdir -p %buildroot%_udevrulesdir
-install -m644 rivalcfg/data/99-steelseries-rival.rules %buildroot%_udevrulesdir/
+touch %buildroot%_udevrulesdir/99-steelseries-rival.rules
 
 cat << EOF > %buildroot%_bindir/%name
 #!/usr/bin/env python3
@@ -49,10 +49,14 @@ EOF
 %python3_sitelibdir_noarch/%name/__pycache__/
 %python3_sitelibdir_noarch/%name/*/__pycache__/
 %exclude %python3_sitelibdir_noarch/%name-%{version}*
-%_udevrulesdir/*.rules
+%ghost %_udevrulesdir/*.rules
 
 
 %changelog
+* Thu Nov 05 2020 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt1
+- 4.1.0.
+- Record udev rules as ghost file.
+
 * Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt1
 - 3.7.0.
 - Fix License tag.
