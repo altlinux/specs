@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.5
+Version: 1.10.6
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Nov 06 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.6-alt1
+- don't remove drm modules when virtio presents
+
 * Thu Oct 22 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.5-alt1
 - fixed .disk/info copying during network install
 
