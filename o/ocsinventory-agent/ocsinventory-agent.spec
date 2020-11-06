@@ -1,5 +1,5 @@
 Name: ocsinventory-agent
-Version: 2.6.1
+Version: 2.8.0
 Release: alt1
 Epoch: 1
 
@@ -14,7 +14,6 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: README.ALT
-Patch: alt-fix-typo.patch
 
 Requires: smartmontools nmap pciutils perl-XML-Simple perl-libwww perl-Net-IP perl-Net-SSLeay
 
@@ -43,7 +42,6 @@ This package contains the 'Agent' part.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -101,6 +99,9 @@ rm -f %buildroot%perl_vendorlib/Ocsinventory/postinst.pl
 %_var/lib/%name
 
 %changelog
+* Fri Nov 06 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.8.0-alt1
+- New version.
+
 * Tue Feb 25 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.6.1-alt1
 - New version.
 
