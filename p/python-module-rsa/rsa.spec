@@ -1,9 +1,9 @@
 %define oname rsa
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
-Version: 4.0
+Version: 4.1
 Release: alt1
 Summary: Pure-Python RSA implementation
 License: ASLv2
@@ -87,7 +87,7 @@ popd
 
 %files
 %doc LICENSE README.md
-%_bindir/*
+#_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
 %endif
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
+- build python2 only, drop CLI tools packing
+
 * Wed Jan 09 2019 Grigory Ustinov <grenka@altlinux.org> 4.0-alt1
 - Build new version.
 
