@@ -1,30 +1,37 @@
 %define oname DistroDbMaker
 
-%def_without python3
+%def_with python3
 
-Name: python-module-%oname
-Version: 0.025
+Name: %oname
+Version: 0.027
 Release: alt1
 Summary: DistroDb Maker tools
-License: LGPL2+
+License: LGPLv2+
 Group: Development/Python
 Url: https://www.altlinux.org/Packaging_Automation/DistroDb
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
+Requires: python3-module-rpm
+%else
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel
+Requires: python-module-rpm python-module-backports.lzma
 %endif
 
 Conflicts: distrodb-utils < 0.21
-Requires: python-module-rpm python-module-backports.lzma
-#py_provides %oname
+Conflicts: python-module-DistroDbMaker < 0.027
+Obsoletes: python-module-DistroDbMaker < 0.027
 
 %description
 %summary
+
+%if_without python3
+%endif
 
 %if_with python3
 %package -n python3-module-%oname
@@ -34,43 +41,54 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 %summary
+%else
+%package -n python-module-%oname
+Summary: DistroDb Maker tools
+Group: Development/Python
+#py_provides %oname
+Conflicts: distrodb-utils < 0.21
+
+%description -n python-module-%oname
+%summary
 %endif
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
 %if_with python3
-pushd ../python3
+sed -i 1s,/usr/bin/python,/usr/bin/python3, *.py
 %python3_build_debug
-popd
+%else
+sed -i 1s,/usr/bin/python,/usr/bin/python2, *.py
+%python_build_debug
 %endif
 
 %install
-%python_install
-
 %if_with python3
-pushd ../python3
 %python3_install
-popd
+%else
+%python_install
 %endif
 
 %files
 %_bindir/*
-%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
+%else
+%files -n python-module-%oname
+%python_sitelibdir/*
 %endif
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1
+- switched to python3
+
+* Fri Nov 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
+- python3 support
+
 * Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.025-alt1
 - new version
 
