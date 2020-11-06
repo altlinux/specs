@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt3
+Release: alt4
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -40,8 +40,8 @@ BuildRequires: python3(numpydoc) python3(matplotlib.sphinxext) python3(matplotli
 %add_python3_req_skip feather
 %add_python3_req_skip pyarrow
 %py3_requires pytz dateutil numpy sqlalchemy numexpr
-%py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt httplib2
-%py3_requires oauth2client apiclient gflags tables statsmodels
+%py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt
+%py3_requires tables statsmodels
 
 %description
 pandas is an open source, BSD-licensed library providing
@@ -136,6 +136,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Fri Nov 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt4
+- Updated runtime dependencies.
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt3
 - NMU: fix require tests subpackage from the main package
 
