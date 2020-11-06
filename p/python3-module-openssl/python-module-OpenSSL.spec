@@ -3,8 +3,8 @@
 %def_without doc_package
 
 Name: python3-module-openssl
-Version: 19.0.0
-Release: alt2
+Version: 19.1.0
+Release: alt1
 
 Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 19.1.0-alt1
+- new version 19.1.0 (with rpmrb script)
+
 * Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 19.0.0-alt2
 - build python3 module separately, cleanup spec
 
