@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: A pure-Python, bring-your-own-I/O implementation of HTTP/1.1
 
@@ -40,9 +40,13 @@ or your own implementation of RFC 6214 -- h11 won't judge you.
 
 %files
 %python3_sitelibdir/%modulename/
+%exclude %python3_sitelibdir/%modulename/tests
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Fri Nov 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.0-alt2
+- exclude tests from package due to excessive reqs
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
 - new version 0.10.0 (with rpmrb script)
 
