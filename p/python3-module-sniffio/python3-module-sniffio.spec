@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Sniff out which async library your code is running under
 License: MIT or Apache 2.0
@@ -33,9 +33,13 @@ library (like Trio, and asyncio, and ...) your code is running under.
 
 %files
 %python3_sitelibdir/%modulename/
+%exclude %python3_sitelibdir/%modulename/_tests
 %python3_sitelibdir/*.egg-info
 %doc *.md *.rst
 
 %changelog
+* Fri Nov 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt2
+- exclude tests from package due to excessive reqs
+
 * Tue Jan 15 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
