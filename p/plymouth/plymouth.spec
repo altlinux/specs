@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define _allowed_nonstrict_interdeps plymouth-system-theme,plymouth-theme-fade-in
 
 %define plymouthdaemon_execdir /sbin
@@ -8,7 +9,7 @@
 
 Name: plymouth
 Version: 0.9.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -305,9 +306,6 @@ mkdir -p %buildroot%_initdir
 install init %buildroot%_initdir/plymouth
 ln -s plymouth-quit.service %buildroot%_unitdir/plymouth.service
 
-mkdir -p %buildroot%_pixmapsdir
-touch %buildroot%_pixmapsdir/system-logo.png
-
 %find_lang %name
 
 %post
@@ -412,8 +410,8 @@ fi \
 %files scripts
 %_sbindir/plymouth-set-default-theme
 %_libexecdir/plymouth/plymouth-update-initrd
-# %_libexecdir/plymouth/plymouth-generate-initrd
-# %_libexecdir/plymouth/plymouth-populate-initrd
+%_libexecdir/plymouth/plymouth-generate-initrd
+%_libexecdir/plymouth/plymouth-populate-initrd
 
 %files plugin-label
 %_libdir/plymouth/label.so
@@ -457,6 +455,9 @@ fi \
 %files system-theme
 
 %changelog
+* Mon Nov 02 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt2
+- Adapt for dracut
+
 * Tue Sep 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt1
 - 0.9.5
 - cleanup plymouth-start.service.
