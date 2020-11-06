@@ -1,0 +1,81 @@
+%define oname rsa
+
+Name: python3-module-rsa
+Version: 4.1
+Release: alt2
+
+Summary: Pure-Python RSA implementation
+
+License: ASLv2
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/rsa/
+
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+
+BuildRequires: python3-module-setuptools python3-module-pyasn1
+
+BuildRequires: python3-module-unittest2
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-mock
+
+Conflicts: python-module-rsa < 4.1-alt2
+#Obsoletes: python-module-rsa
+#Provides: python-module-rsa = %EVR
+
+%description
+Python-RSA is a pure-Python RSA implementation. It supports encryption
+and decryption, signing and verifying signatures, and key generation
+according to PKCS#1 version 1.5. It can be used as a Python library as
+well as on the commandline. The code was mostly written by Sybren A.
+Stuvel.
+
+%prep
+%setup
+
+%build
+%python3_build_debug
+
+%install
+%python3_install
+%python3_prune
+
+%check
+%python3_test
+
+%files
+%doc LICENSE README.md
+%_bindir/*
+%python3_sitelibdir/*
+
+%changelog
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt2
+- build python3 package separately, cleanup spec
+
+* Wed Jan 09 2019 Grigory Ustinov <grenka@altlinux.org> 4.0-alt1
+- Build new version.
+
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
+* Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt1
+- Updated to upstream releases 3.4.2.
+
+* Mon Nov 14 2016 Lenar Shakirov <snejok@altlinux.ru> 3.3-alt1
+- Version 3.3
+
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt1
+- Version 3.2
+
+* Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt1
+- Initial build for Sisyphus
+
