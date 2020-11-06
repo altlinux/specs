@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.182
-Release: alt1
+Release: alt2
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -13,6 +13,8 @@ Requires: libelf = %EVR
 
 %def_enable static
 %def_enable check
+%def_enable libdebuginfod
+%def_enable debuginfod
 
 BuildRequires: gettext
 BuildRequires: bison
@@ -23,6 +25,16 @@ BuildRequires: gcc-c++
 
 # compression support
 BuildRequires: bzlib-devel liblzma-devel libzstd-devel zlib-devel
+
+%if_enabled libdebuginfod
+BuildRequires: libcurl-devel
+%endif
+
+%if_enabled debuginfod
+BuildRequires: libarchive-devel
+BuildRequires: libmicrohttpd-devel
+BuildRequires: libsqlite3-devel
+%endif
 
 %{?_enable_check:BuildRequires: /proc}
 
@@ -160,6 +172,31 @@ Requires: libelf-devel = %EVR
 %description -n libelf-devel-static
 This package contains static libelf library.
 
+%package -n libdebuginfod
+Summary: Shared library to access debuginfod
+License: GPLv2+ or LGPLv3+
+Group: System/Libraries
+
+%description -n libdebuginfod
+This package provides libdebuginfod shared library.
+
+%package -n libdebuginfod-devel
+Summary: Development libdebuginfod library and header files
+License: GPLv2+ or LGPLv3+
+Group: Development/C
+Requires: libdebuginfod = %EVR
+
+%description -n libdebuginfod-devel
+This package contains the library and header files for libdebuginfod.
+
+%package -n debuginfod
+Summary: Debuginfo-related http file-server daemon
+License: GPLv3+ or LGPLv3+
+Group: System/Servers
+
+%description -n debuginfod
+This package contains debuginfod daemon.
+
 %prep
 %setup -n %name-%version-%release
 
@@ -174,8 +211,8 @@ cd %buildtarget
 	--enable-dependency-tracking \
 	--enable-maintainer-mode \
 	--program-prefix=eu- \
-	--disable-libdebuginfod \
-	--disable-debuginfod
+	%{subst_enable libdebuginfod} \
+	%{subst_enable debuginfod}
 %make_build
 
 %install
@@ -183,6 +220,11 @@ cd %buildtarget
 %find_lang %name
 %set_verify_elf_method strict,rpath=normal
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+# Explicitly remove debuginfod profile.d's as we don't have
+# default value for DEBUGINFOD_URLS anyway.
+rm %buildroot/%_sysconfdir/profile.d/debuginfod.*
 
 %check
 export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
@@ -207,6 +249,10 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-strip
 %_bindir/eu-unstrip
 %_man1dir/eu-*
+%if_enabled libdebuginfod
+%_bindir/debuginfod-find
+%_man1dir/debuginfod-find.*
+%endif
 
 %files devel
 
@@ -269,7 +315,29 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libelf.a
 %endif
 
+%if_enabled libdebuginfod
+%files -n libdebuginfod
+%_libdir/libdebuginfod-*.so
+%_libdir/libdebuginfod.so.*
+
+%files -n libdebuginfod-devel
+%dir %_includedir/elfutils/
+%_includedir/elfutils/debuginfod.h
+%_libdir/libdebuginfod.so
+%_pkgconfigdir/libdebuginfod.pc
+%_man3dir/debuginfod*.3*
+%endif
+
+%if_enabled debuginfod
+%files -n debuginfod
+%_bindir/debuginfod
+%_man8dir/debuginfod.*
+%endif
+
 %changelog
+* Tue Nov 03 2020 Vitaly Chikunov <vt@altlinux.org> 0.182-alt2
+- spec: Enable libdebuginfod and debuginfod.
+
 * Sat Oct 31 2020 Dmitry V. Levin <ldv@altlinux.org> 0.182-alt1
 - elfutils-0.181 -> elfutils-0.182.
 
