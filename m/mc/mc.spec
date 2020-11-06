@@ -4,7 +4,7 @@
 
 Name: mc
 Version: 4.8.25
-Release: alt1
+Release: alt2
 
 # '-gitYYYYMMDD' or ''
 %define ver_date ''
@@ -100,6 +100,7 @@ needed for working additional components (some vfs for example).
 %patch102 -p1
 %patch103 -p1
 
+%build
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
 #define MC_CURRENT_VERSION "@@VERSION@@"
@@ -111,7 +112,6 @@ sed 's|@@VERSION@@|%version-%release%ver_date|' -i version.h
 #%%autoreconf
 ./autogen.sh
 
-%build
 %configure %{?_with_smb:--enable-vfs-smb --with-smb-configdir=%_sysconfdir/samba} \
 	--enable-extcharset \
 	--enable-vfs-undelfs
@@ -204,6 +204,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Fri Nov 06 2020 Michael Shigorin <mike@altlinux.org> 4.8.25-alt2
+- srpm_cleanup related ftbfs fixup
+
 * Tue Jul 28 2020 Sergey Y. Afonin <asy@altlinux.org> 4.8.25-alt1
 - 4.8.25 (ALT #38737, ALT #38454)
 - updated License tag to SPDX syntax
