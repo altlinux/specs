@@ -3,7 +3,7 @@
 %define soname 1.7
 
 Name: alembic
-Version: 1.7.15
+Version: 1.7.16
 Release: alt1
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
@@ -107,6 +107,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Fri Nov 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.16-alt1
+- Updated to upstream version 1.7.16.
+
 * Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.15-alt1
 - Updated to upstream version 1.7.15.
 
