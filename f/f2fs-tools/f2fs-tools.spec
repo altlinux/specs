@@ -4,7 +4,7 @@
 %define fsname f2fs
 Name: %fsname-tools
 Version: 1.14.0
-Release: alt1
+Release: alt2
 Summary: Tools for Flash-Friendly File System (F2FS)
 License: GPLv2
 Group: System/Kernel and hardware
@@ -12,6 +12,10 @@ URL: http://sourceforge.net/projects/f2fs-tools
 # https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+# ALT RedMine 21570
+Patch1: 75b789c674eaf1f5056e9cd270c8dedb054c88c7.patch
+
 Provides: %fsname-utils = %version-%release
 Provides: mkfs.%fsname = %version-%release
 Provides: fsck.%fsname = %version-%release
@@ -56,6 +60,8 @@ that use %name
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
+
 sed -i 's/AC_PROG_LIBTOOL/LT_INIT/' configure.ac
 
 
@@ -94,8 +100,10 @@ install -m 644 mkfs/f2fs_format_utils.h %buildroot%_includedir
 %_libdir/*.so
 %endif
 
-
 %changelog
+* Fri Nov 06 2020 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt2
+- Fix regression.
+
 * Thu Aug 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
 - Build new version.
 
