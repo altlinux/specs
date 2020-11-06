@@ -1,10 +1,10 @@
 %define oname ecdsa
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.13
-Release: alt1.2
+Release: alt2
 Summary: ECDSA cryptographic signature library (pure python)
 License: MIT
 Group: Development/Python
@@ -146,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.13-alt2
+- build python2 only
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.13-alt1.2
 - (NMU) rebuild with python3.6
 
