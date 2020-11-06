@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.236
+Version: 7.0.237
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -108,6 +108,10 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.237-alt1
+- 7.0.237
+- fix print() spacing style
+
 * Sat Oct 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.236-alt1
 - 7.0.236
 
