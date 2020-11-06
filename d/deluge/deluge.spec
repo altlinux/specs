@@ -2,7 +2,7 @@
 
 Name: deluge
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: full-featured BitTorrent client
 License: GPL-3.0-or-later with OpenSSL exception
@@ -54,6 +54,8 @@ Group: Networking/File transfer
 Summary: full-featured BitTorrent client (common files)
 Requires: python3-module-simplejson python3-module-pyxdg python3-module-libtorrent-rasterbar python3-module-twisted-web
 Requires: python3-module-service-identity python3-module-Pillow python3-module-chardet python3-module-setproctitle
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39192
+Requires: GConf
 
 %description -n python3-module-deluge
 This package contains data files commons to both the deluge daemon and
@@ -163,6 +165,9 @@ cp -a %name-web.service %buildroot%_unitdir
 %python3_sitelibdir/%name/ui/web
 
 %changelog
+* Fri Nov 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.3-alt2
+- python3-module-deluge: Added dependency on GConf (closes: #39192).
+
 * Sat Mar 07 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.3-alt1
 - Updated to 2.0.3.
 - Switched to Python 3 by upstream.
