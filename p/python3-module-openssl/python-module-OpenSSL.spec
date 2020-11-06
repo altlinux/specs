@@ -1,43 +1,29 @@
-%define _unpackaged_files_terminate_build 1
-# -*- coding: utf-8 -*-
-%define version    19.0.0
-%define release    alt1
-
-%define source_version %version
-%define source_name pyOpenSSL
-%setup_python_module OpenSSL
+%define oname pyOpenSSL
 
 %def_without doc_package
-%def_without python3
+
+Name: python3-module-openssl
+Version: 19.0.0
+Release: alt2
 
 Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
-Name: %packagename
-Version: 19.0.0
-Release: alt2
-Source0: %{source_name}-%{version}.tar.gz
+
 License: LGPL
-Group: Development/Python
-Url: http://pyopenssl.sourceforge.net/
-Packager: Alexey Morozov <morozov@altlinux.org>
-#BuildPreReq: rpm-build-python > 0.12-alt3
+Group: Development/Python3
+Url: https://github.com/pyca/pyopenssl
+
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+Provides: python3-module-OpenSSL = %EVR
+Obsoletes: python3-module-OpenSSL
 
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-%endif
-
-Provides: %__python_module_prefix-pyOpenSSL
-Obsoletes: %__python_module_prefix-pyOpenSSL
-%if_without doc_package
-Provides: %__python_module_prefix-pyOpenSSL-doc
-Obsoletes: %__python_module_prefix-pyOpenSSL-doc
-%endif
+BuildRequires: python3-module-setuptools
 
 %description
 High-level wrapper around a subset of the OpenSSL library, includes
@@ -59,54 +45,30 @@ High-level wrapper around a subset of the OpenSSL library, includes
 	... И это еще не все ;)
 
 
-%if_with python3
-%package -n python3-module-%modulename
-Summary: Python 3 wrapper module around the OpenSSL library
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-High-level wrapper around a subset of the OpenSSL library, includes
-	* SSL.Connection objects, wrapping the methods of Python's
-	  portable sockets
-	* Callbacks written in Python
-	* Extensive error-handling mechanism, mirroring OpenSSL's
-	  error codes
-	...  and much more ;)
-%endif
-
 %if_with doc_package
 %package doc
-Summary: %modulename documentation and example programs
-Summary(ru_RU.UTF-8): Документация по API и примеры программ для %modulename
+Summary: %oname documentation and example programs
+Summary(ru_RU.UTF-8): Документация по API и примеры программ для %oname
 Group: Development/Python
 BuildArch: noarch
 
 %description doc
 %modulename is a high-level wrapper around a subset of the OpenSSL
 library. Install python-pyOpenSSL-doc if you need the API
-documentation and example programs for %modulename.
+documentation and example programs for %oname.
 
 %description doc -l ru_RU.UTF-8
-%modulename - Высокоуровневая обвязка для подмножества библиотеки
-OpenSSL. Установите python-%modulename-doc, если Вам требуется
+%oname - Высокоуровневая обвязка для подмножества библиотеки
+OpenSSL. Установите python-%oname-doc, если Вам требуется
 документация по API и примеры программирования с использованием
 данного модуля.
 %endif
 
 %prep
-%setup -q -n pyOpenSSL-%{version}
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %if_with doc_package
 pushd doc
@@ -115,19 +77,13 @@ popd
 %endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
+%python3_prune
 
 %files
 %doc CHANGELOG.rst CONTRIBUTING.rst INSTALL.rst README.rst
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/OpenSSL/
+%python3_sitelibdir/%oname-*.egg-info
 
 %if_with doc_package
 %files doc
@@ -135,15 +91,9 @@ popd
 %doc doc/html/*
 %endif
 
-%if_with python3
-%files -n python3-module-%modulename
-%doc CHANGELOG.rst CONTRIBUTING.rst INSTALL.rst README.rst
-%python3_sitelibdir/*
-%endif
-
 %changelog
 * Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 19.0.0-alt2
-- NMU: build python2 only
+- build python3 module separately, cleanup spec
 
 * Sun Oct 06 2019 Anton Farygin <rider@altlinux.ru> 19.0.0-alt1
 - 19.0.0
