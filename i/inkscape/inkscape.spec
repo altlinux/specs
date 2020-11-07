@@ -5,10 +5,12 @@
 %def_without dbus
 %def_disable check
 %def_disable test
+# some reasons to prefer GraphicsMagick over ImageMagick: http://www.graphicsmagick.org/
+%def_with graphicsmagick
 
 Name: inkscape
 Version: %major.1
-Release: alt4
+Release: alt5
 
 Summary: A Vector Drawing Application
 
@@ -41,9 +43,14 @@ BuildRequires: libgtkmm3-devel >= 3.22 libgdl3-devel >= 3.4
 %{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
 %{?_with_dbus: BuildRequires: libdbus-devel}
 BuildRequires: libwpg-devel librevenge-devel libcdr-devel libvisio-devel
-BuildRequires: libpng-devel libexif-devel libjpeg-devel libImageMagick-devel
+BuildRequires: libpng-devel libexif-devel libjpeg-devel
 BuildRequires: libpoppler-devel libpoppler-glib-devel
 BuildRequires: libpotrace-devel liblcms2-devel
+%if_with graphicsmagick
+BuildRequires: libGraphicsMagick-devel
+%else
+BuildRequires: libImageMagick-devel
+%endif
 %ifnarch %e2k
 # lcc has -lomp, not -lgomp
 BuildRequires: libgomp-devel
@@ -115,7 +122,16 @@ Run checkinstall tests for %name.
 %patch6 -p1
 
 %build
-%cmake_insource -DBUILD_SHARED_LIBS=off
+%cmake_insource \
+    -DBUILD_SHARED_LIBS=OFF \
+%if_with graphicsmagick
+    -DWITH_IMAGE_MAGICK=OFF \
+    -DWITH_GRAPHICS_MAGICK=ON \
+%else
+    -DWITH_IMAGE_MAGICK=ON \
+    -DWITH_GRAPHICS_MAGICK=OFF \
+%endif
+    %nil
 # FIXME: ppc64le (make -j132):
 # No rule to make target 'po/bn.gmo', needed by 'share/templates/default_templates.timestamp
 %make_build || %make_build -j2
@@ -165,6 +181,9 @@ true
 %files checkinstall
 
 %changelog
+* Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt5
+- build with GraphicsMagick instead of ImageMagick (all reasons of fork in 2002)
+
 * Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt4
 - pack tutorial in separate noach package
 
