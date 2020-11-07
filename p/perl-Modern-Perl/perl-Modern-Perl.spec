@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
 Version:        1.20200211
-Release:        alt1
+Release:        alt2
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Modern-Perl
@@ -30,8 +30,11 @@ BuildRequires:  perl(warnings.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
-Provides: perl(Modern/Perl.pm) = 2019.0
-# Runtime
+# there are two versions: 1.YYYYMMDD and YYYY
+Provides: perl(Modern/Perl.pm) = %(echo %version | sed 's,^[0-9]*\.\(....\)....,\1,')
+# kill the second version to help apt and rpm
+%filter_from_provides /^perl.Modern.Perl.pm....1.20/d
+
 
 %description
 Modern Perl often relies on the presence of several core and CPAN pragmas
@@ -58,6 +61,9 @@ make test
 %{perl_vendor_privlib}/odern/
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.20200211-alt2
+- consolidated perl(Modern/Perl.pm) versions (closes: #39211)
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.20200211-alt1
 - automated CPAN update
 
