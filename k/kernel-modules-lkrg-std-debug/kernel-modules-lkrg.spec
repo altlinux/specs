@@ -1,6 +1,6 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20200827.6f700b5
-%define module_release	alt2
+%define module_version	0.8.1+git20201016.c7d427d
+%define module_release	alt1
 
 %define flavour		std-debug
 %define karch		%ix86 x86_64
@@ -69,6 +69,10 @@ install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Mon Oct 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201016.c7d427d-alt1
+- Updated to c7d427de476920f0585532ad57ee4280f083bf7f (fixed build with kernel
+  5.9).
 
 * Wed Sep 09 2020 Vitaly Chikunov <vt@altlinux.org>  0.8.1+git20200827.6f700b5-alt2
 - Add aarch64, armh arches to build.
