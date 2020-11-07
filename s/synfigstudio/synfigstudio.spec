@@ -2,7 +2,7 @@
 
 Name:    synfigstudio
 Version: 1.3.16
-Release: alt1
+Release: alt2
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -69,6 +69,9 @@ BuildRequires: openjade
 Requires: lib%name = %version-%release
 
 %add_python3_compile_include %_datadir/synfig/plugins
+
+# internal dependency
+%add_python3_req_skip common
 
 %description
 Synfig Animation Studio is a powerful, industrial-strength vector-based
@@ -211,6 +214,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.16-alt2
+- NMU: skip internal python dependency 'common'
+
 * Sat Aug 08 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.16-alt1
 - New version.
 
