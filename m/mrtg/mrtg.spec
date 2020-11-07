@@ -1,6 +1,6 @@
 Name: mrtg
 Version: 2.17.7
-Release: alt1
+Release: alt2
 
 Summary: Multi Router Traffic Grapher
 Group: Monitoring
@@ -38,7 +38,9 @@ Scripts in contrib/ directory of MRTG source distribution
 %define _contentdir /var/www/html/%name
 %define _libmrtg /usr/lib/%{name}2
 
-%define _perl_lib_path %_libmrtg
+%define _perl_lib_path %perl_vendor_privlib:%_libmrtg
+%filter_from_provides /^perl(/d
+%filter_from_requires /^perl(\(BER\|MRTG_lib\|Net_SNMP_util\|SNMP_Session\|SNMP_util\|locales_mrtg\)\.pm)/d
 %add_findprov_skiplist */contrib/*
 %add_findprov_skiplist */helpers/*
 
@@ -130,6 +132,11 @@ fi
 %_libmrtg/contrib/*
 
 %changelog
+* Sun Nov 08 2020 Dmitry V. Levin <ldv@altlinux.org> 2.17.7-alt2
+- NMU.
+- Filtered out all perl Provides and the corresponding Requires as
+  all /usr/lib/mrtg2/*.pm files are for internal mrtg use only (closes: #39210).
+
 * Fri Jul 24 2020 Andrey Cherepanov <cas@altlinux.org> 2.17.7-alt1
 - NMU: 2.17.7 (ALT #38128)
 - Fix changelog dates and remove descriptions in KOI8.
