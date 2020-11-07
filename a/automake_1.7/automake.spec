@@ -1,60 +1,66 @@
 %define realname automake
-%define dialect _1.6
-%define dialect_regex _1\.6
-%define suff -1.6
+%define dialect _1.7
+%define dialect_regex _1\\.7
+%define suff -1.7
+%define apiname %realname%suff
 
 Name: %realname%dialect
-Version: 1.6.3
-Release: alt10
+Version: 1.7.9
+Release: alt5
 Epoch: 1
 
-%add_findreq_skiplist %_datadir/%realname%suff/config.guess
+%define mydatadir %_datadir/%apiname
+%define docdir %_docdir/%realname-%version
 %set_compress_method xz
-%define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
+%define _perl_lib_path %perl_vendor_privlib:%mydatadir
+%{?filter_from_requires:%filter_from_requires /^perl(Automake/d}
+%{?filter_from_provides:%filter_from_provides /^perl(/d}
 
 Summary: A GNU tool for automatically creating Makefiles
-License: GPL
+License: GPLv2+ and GFDLv1.3+
 Group: Development/Other
-Url: http://www.gnu.org/software/automake/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: https://www.gnu.org/software/automake/
 BuildArch: noarch
 
 %define srcname %realname-%version
 
-Source: ftp://ftp.gnu.org/gnu/%realname/%srcname.tar.bz2
+# ftp://ftp.gnu.org/gnu/%realname/%srcname.tar.bz2
+# git://git.altlinux.org/gears/a/%name.git
+Source: %srcname.tar
 
-Patch1: automake-1.6.1-alt-texinfo.patch
-Patch2: automake-1.6.3-alt-aclocal_libtool.patch
-Patch3: automake-1.6-cvs-pythondir.patch
+Patch1: automake-1.7.6-alt-aclocal_libtool.patch
 
-PreReq: automake-common
-
-BuildRequires: makeinfo
+Requires: automake-common
+BuildPreReq: autoconf >= 2.54, makeinfo
 
 %description
-Automake is a tool for automatically generating Makefiles compliant with the
-GNU Coding Standards.
-
-You should install Automake if you are developing software and would like to
-use its capabilities of automatically generating GNU standard Makefiles.  If
-you install Automake, you will also need to install GNU Autoconf package.
+Automake is a tool for automatically generating `Makefile.in'
+files compliant with the GNU Coding Standards.
 
 %prep
-%setup -q -n %srcname
+%setup -n %srcname
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-xz -k9 ChangeLog NEWS TODO
+
+# patch texinfo file
+sed -i \
+	-e '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].-]\+\)\(:[[:space:]]\+\)(%realname)/\1\2(%apiname)/' \
+	-e '/^@\(setfilename\|settitle\)[[:space:]]\+%realname/ s//&%suff/' \
+	automake.texi
 
 %build
-%set_autoconf_version 2.5
 %configure
 %make_build MAKEINFOFLAGS=--no-split
 
 %install
-%makeinstall MAKEINFOFLAGS=--no-split
+%makeinstall_std MAKEINFOFLAGS=--no-split
 
-install -p -m644 %realname%suff.info %buildroot%_infodir/
+mv %buildroot%_infodir/%realname.info %buildroot%_infodir/%apiname.info
+
+# replace config.* copies with symlinks to original files
+for f in %_datadir/gnu-config/config.*; do
+	[ -f "$f" ] || continue
+	ln -frs %buildroot"$f" %buildroot%mydatadir/"${f##*/}"
+done
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat <<EOF >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
@@ -64,49 +70,79 @@ EOF
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
+mkdir -p %buildroot%docdir
+install -pm644 AUTHORS README THANKS NEWS %buildroot%docdir/
+
+%check
+%make_build -k check ||:
+
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/*
 %_bindir/*%suff
 %_datadir/aclocal%suff
-%_datadir/%realname%suff
+%mydatadir/
 %_infodir/*.info*
-%doc AUTHORS README THANKS ChangeLog.* NEWS.* TODO.*
+%docdir/
 
 %changelog
-* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt10
-- Dropped alternatives in favour of automake-defaults setup.
-- Changed the compression method applied to documentation files
-  from bzip2 to xz.
+* Sat Nov 07 2020 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.9-alt5
+- spec: synced with 1.9.6-alt5.
 
-* Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.6.3-alt9
-- Added BR: makeinfo.
+* Wed Aug 08 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.9-alt4
+- Dropped alternatives in favour of automake-defaults setup.
+
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.7.9-alt3.1
+- NMU: removed tetex from BR:
+
+* Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.7.9-alt3
+- Changed BR: texinfo -> makeinfo.
 - Switched to compress_method xz.
 
-* Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt8
+* Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.9-alt2
 - Removed obsolete %%install_info/%%uninstall_info calls.
+- Moved "make check" to %%check section.
 - Switched to alternatives-0.4.
 
-* Tue Jan 15 2008 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt7
-- Merged fixes from 1.10-alt2.
+* Sun Nov 16 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.9-alt1
+- Updated to 1.7.9.
 
-* Wed Aug 20 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt6
+* Tue Sep 23 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.7-alt1
+- Updated to 1.7.7.
+
+* Wed Aug 20 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.6-alt3
 - aclocal: enhanced $LIBTOOL_VERSION support.
 
-* Tue Aug 19 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt5
+* Tue Aug 19 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.6-alt2
 - aclocal: added $LIBTOOL_VERSION support.
 
-* Sat May 03 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt4
+* Mon Jul 21 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.6-alt1
+- Updated to 1.7.6, regenerated texinfo patch.
+
+* Sat May 03 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.4-alt2
 - Deal with info dir entries such that the menu looks pretty.
 
-* Wed Apr 09 2003 Stanislav Ievlev <inger@altlinux.ru> 1:1.6.3-alt3.2
-- new alternatives format
+* Thu May 01 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.4-alt1
+- Updated to 1.7.4
 
-* Thu Mar 20 2003 Stanislav Ievlev <inger@altlinux.ru> 1:1.6.3-alt3.1
-- move to new altenatives scheme
+* Wed Apr 09 2003 Stanislav Ievlev <inger@altlinux.ru> 1:1.7.3-alt1.2
+- Migrated to new alternatives config format.
 
-* Mon Dec 09 2002 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt3
+* Thu Mar 20 2003 Stanislav Ievlev <inger@altlinux.ru> 1:1.7.3-alt1.1
+- Migrated to new altenatives scheme.
+- fixed strings spacing during install-info.
+
+* Fri Mar 14 2003 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.3-alt1
+- Updated to 1.7.3
+
+* Sat Dec 14 2002 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.2-alt1
+- Updated to 1.7.2
+
+* Mon Dec 09 2002 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.1-alt2
 - Corrected provides.
+
+* Sun Nov 17 2002 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.1-alt1
+- Updated to 1.7.1.
 
 * Sun Oct 27 2002 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.3-alt2
 - Added automake-common support.
