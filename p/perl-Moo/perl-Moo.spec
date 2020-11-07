@@ -1,7 +1,9 @@
+%filter_from_requires /^perl.MRO.Compat.pm./d
+
 %define _unpackaged_files_terminate_build 1
 Name: perl-Moo
 Version: 2.004000
-Release: alt1
+Release: alt2
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
 Group: Development/Perl
@@ -12,7 +14,7 @@ Url: %CPAN Moo
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-Import-Into perl-Dist-CheckConflicts perl-MRO-Compat perl-devel perl-Class-Method-Modifiers perl-strictures perl-Test-Fatal perl-Text-Balanced perl-Filter-Simple perl-Module-Runtime perl-Role-Tiny perl-Devel-GlobalDestruction perl(Sub/Quote.pm)
+BuildRequires: perl-Import-Into perl-Dist-CheckConflicts perl-devel perl-Class-Method-Modifiers perl-strictures perl-Test-Fatal perl-Text-Balanced perl-Filter-Simple perl-Module-Runtime perl-Role-Tiny perl-Devel-GlobalDestruction perl(Sub/Quote.pm)
 BuildArch: noarch
 
 %description
@@ -37,6 +39,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 2.004000-alt2
+- build w/o perl-MRO-Compat
+
 * Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 2.004000-alt1
 - new version
 
