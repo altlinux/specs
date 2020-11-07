@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
-Version: 1.7.0
-Release: alt3
+Version: 1.7.1
+Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -9,7 +9,7 @@ License: GPLv2+
 Url: https://docs.xfce.org/xfce/xfce4-power-manager/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://git.xfce.org/xfce/xfce4-power-manager
+Vcs: https://gitlab.xfce.org/xfce/xfce4-power-manager.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -21,7 +21,6 @@ BuildRequires: libnotify-devel >= 0.4.1
 BuildRequires: libglade-devel > 2.0.0
 BuildRequires: libupower-devel
 BuildRequires: gettext intltool desktop-file-utils
-BuildPreReq: exo-csource
 
 Requires: polkit
 Requires: upower
@@ -58,7 +57,7 @@ scaling.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %_bindir/*
 %_sbindir/xfpm-power-backlight-helper
@@ -74,6 +73,11 @@ scaling.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Nov 07 2020 Mikhail Efremov <sem@altlinux.org> 1.7.1-alt1
+- Dropped exo-csource from BR.
+- Updated Vcs tag.
+- Updated to 1.7.1.
+
 * Mon Mar 30 2020 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt3
 - Added conflict for broken xfce4-screensaver.
 - Dropped workaround for xfce4-screensaver.
