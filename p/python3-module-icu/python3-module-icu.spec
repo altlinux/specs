@@ -1,84 +1,51 @@
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
-
 %define modulename icu
+%define srcname PyICU
+%define icu_ver 6.7.1
 
-%def_with python2
-
-Name: python-module-%modulename
+Name: python3-module-%modulename
 # python3 setup.py -V|tail -1
-Version: 2.5.0
+Version: 2.6
 Release: alt1
 
-%{?_with_python2:%setup_python_module %modulename}
-
-Summary: Python extension wrapping the ICU C++ API
-License: MIT
-Group: Development/Python
-
-Url: http://pyicu.osafoundation.org/
-
-%define srcname PyICU-%version
-# http://pypi.python.org/packages/source/P/PyICU/%srcname.tar.gz
-# VCS: https://github.com/ovalhub/pyicu.git
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ libicu-devel
-BuildRequires: python3-devel python3-module-setuptools
-
-%if_with python2
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-%endif
-
-%description
-PyICU - Python extension wrapping the ICU C++ API.
-
-%package -n python3-module-%modulename
 Summary: Python extension wrapping the ICU C++ API
 Group: Development/Python3
+License: MIT
+Url: https://pyicu.osafoundation.org/
 
-%description -n python3-module-%modulename
-PyICU - Python extension wrapping the ICU C++ API.
+%if_disabled snapshot
+Source: https://pypi.python.org/packages/source/P/PyICU/%srcname-%version.tar.gz
+%else
+Vcs: https://github.com/ovalhub/pyicu.git
+Source: %srcname-%version.tar
+%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ libicu-devel >= %icu_ver
+BuildRequires: python3-devel python3-module-setuptools
+
+%description
+PyICU - Python 3 extension wrapping the ICU C++ API.
 
 %prep
-%setup
-%if_with python2
-cp -fR . ../python2
-%endif
+%setup -n %srcname-%version
 
 %build
 %python3_build
 
-%if_with python2
-pushd ../python2
-%python_build
-popd
-%endif
-
 %install
 %python3_install
 
-%if_with python2
-pushd ../python2
-%python_install
-popd
-%endif
-
-%if_with python2
 %files
-%python_sitelibdir/*
-#%exclude %python_sitelibdir/*.egg-info
-%doc CREDITS README* CHANGES samples/
-%endif
-
-%files -n python3-module-%modulename
 %python3_sitelibdir/*
-#%exclude %python3_sitelibdir/*.egg-info
 %doc CREDITS README* CHANGES samples/
 
 
 %changelog
+* Sat Nov 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6-alt1
+- 2.6 (Python 3 only)
+
 * Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
