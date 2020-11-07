@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Amon2
 Version: 6.14
-Release: alt1
+Release: alt2
 Summary: Amon2 - lightweight web application framework
 
 Group: Development/Perl
@@ -10,13 +10,16 @@ Url: %CPAN Amon2
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl-Test-Requires perl-Plack perl-Data-OptList perl-MRO-Compat perl-Text-Xslate perl-JSON perl-Module-Find perl-Mouse perl-Router-Simple perl-Router-Simple-Sinatraish perl-Class-Accessor perl-Text-Xslate-Bridge-TT2Like perl-Data-Section-Simple perl-Plack-Middleware-ReverseProxy perl-HTTP-Session perl-HTML-FillInForm-Lite perl-CGI perl-Encode-JP perl-Plack-Middleware-Session perl-AnyEvent perl-Protocol-WebSocket
+Patch: perl-Amon2-6.14-no-mro-compat.patch
+
+BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl-Test-Requires perl-Plack perl-Data-OptList perl-Text-Xslate perl-JSON perl-Module-Find perl-Mouse perl-Router-Simple perl-Router-Simple-Sinatraish perl-Class-Accessor perl-Text-Xslate-Bridge-TT2Like perl-Data-Section-Simple perl-Plack-Middleware-ReverseProxy perl-HTTP-Session perl-HTML-FillInForm-Lite perl-CGI perl-Encode-JP perl-Plack-Middleware-Session perl-AnyEvent perl-Protocol-WebSocket
 
 %description
 %summary
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -33,6 +36,10 @@ BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl
 %doc Changes
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 6.14-alt2
+- dropped MRO::Compat dep
+- upstream: https://github.com/tokuhirom/Amon/issues/128
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 6.14-alt1
 - new version
 
