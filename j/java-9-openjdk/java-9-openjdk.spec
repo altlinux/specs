@@ -87,9 +87,9 @@ BuildRequires: /proc rpm-build-java
 %global rev_build_loop  %{build_loop2} %{build_loop1}
 
 %ifarch %{jit_arches}
-%global bootstrap_build 1
+%global bootstrap_build 0
 %else
-%global bootstrap_build 1
+%global bootstrap_build 0
 %endif
 
 %if %{bootstrap_build}
@@ -264,7 +264,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{majorver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt3_6jpp8
+Release: alt4_6jpp9
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -385,7 +385,8 @@ BuildRequires: libXtst-devel
 BuildRequires: libnss-devel libnss-devel-static
 BuildRequires: xorg-proto-devel
 BuildRequires: zip
-BuildRequires: java-1.8.0-openjdk-devel
+#BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-9-openjdk-devel
 # Zero-assembler build requirement.
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
@@ -439,6 +440,7 @@ Provides: %{_jvmdir}/%{sdkdir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1
 %endif
 Patch33: java-9-openjdk-alt-link-fontmanager.patch
 Patch34: java-9-openjdk-alt-no-objcopy.patch
+Patch35: java-9-openjdk-alt-JDK-8237879.patch
 
 
 %description
@@ -834,6 +836,7 @@ done
 done
 %patch33 -p0
 %patch34 -p0
+%patch35 -p0
 
 # Setup nss.cfg
 #sed -e s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g %{SOURCE11} > nss.cfg
@@ -893,7 +896,7 @@ bash ../configure \
     --with-version-build=%{buildver} \
     --with-version-pre="" \
     --with-version-opt="" \
-    --with-boot-jdk=/usr/lib/jvm/java-1.8.0-openjdk \
+    --with-boot-jdk=/usr/lib/jvm/java-9-openjdk \
     --with-debug-level=$debugbuild \
     --with-native-debug-symbols=internal \
     --enable-unlimited-crypto \
@@ -1657,6 +1660,12 @@ fi
 
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 0:9.0.4.11-alt4_6jpp9
+- non-bootstrap build with java9
+
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0:9.0.4.11-alt4_6jpp8
+- fixed build
+
 * Tue Jul 09 2019 Igor Vlasenko <viy@altlinux.ru> 0:9.0.4.11-alt3_6jpp8
 - updated alternatives layout again
 
