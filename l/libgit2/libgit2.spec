@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: libgit2
-Version: 0.28.5
+Version: 1.1.0
 Release: alt1
 
 Summary: linkable library for Git
@@ -15,6 +15,7 @@ Source: %url/%name/archive/v%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake python-modules zlib-devel libssl-devel libssh2-devel
+BuildRequires: libpcre-devel libkrb5-devel libhttp-parser-devel
 
 %description
 libgit2 is a portable, pure C implementation of the Git core methods
@@ -38,11 +39,13 @@ This package contains development files.
 %setup
 rm -rf deps/{regex,zlib}
 sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
-sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 
 %build
 %cmake -DTHREADSAFE:BOOL=ON \
-       -DUSE_SHA1DC:BOOL=ON
+       -DUSE_SHA1DC:BOOL=ON \
+       -DPCRE_INCLUDE_DIR=%_includedir/pcre \
+       -DENABLE_REPRODUCIBLE_BUILD=ON
+%nil
 %cmake_build
 
 %install
@@ -58,13 +61,15 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %files devel
 %_includedir/git2
 # exclude headers for windows
-%exclude %_includedir/git2/inttypes.h
 %exclude %_includedir/git2/stdint.h
 %_includedir/git2.h
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Oct 30 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 0.28.5-alt1
 - 0.28.5
 
