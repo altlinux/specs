@@ -5,7 +5,7 @@ BuildRequires: perl(B/Concise.pm) perl(Bit/Vector.pm) perl(Class/Singleton.pm) p
 # END SourceDeps(oneline)
 Name:           perl-Math-NumSeq
 Version:        74
-Release:        alt1
+Release:        alt2
 Summary:        Number sequences
 License:        GPLv3+
 Group:          Development/Perl
@@ -49,7 +49,7 @@ BuildRequires:  perl(Test.pm)
 BuildRequires:  perl(Test/ConsistentVersion.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Synopsis.pm)
-BuildRequires:  perl(Test/YAML/Meta.pm)
+#BuildRequires:  perl(Test/YAML/Meta.pm)
 BuildRequires:  perl(YAML.pm)
 BuildRequires:  perl(YAML/Syck.pm)
 BuildRequires:  perl(YAML/Tiny.pm)
@@ -101,6 +101,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 74-alt2
+- build w/o perl-Test-YAML-Meta
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 74-alt1
 - automated CPAN update
 
