@@ -1,20 +1,28 @@
 Name: offlineimap
-Version: 7.2.4
-Release: alt2
+Version: 7.3.3
+Release: alt1
 
 Summary: Powerful IMAP/Maildir synchronization and reader support
+
 License: GPLv2+
 Group: Networking/Mail
 Url: http://offlineimap.org/
-# https://github.com/OfflineIMAP/offlineimap.git
+
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/04/f5/e768b9b650bc204afd72b0a6508d28bb0c030920eaa0b94d150c5e717664/%{name}-%{version}.tar.gz
+# https://github.com/OfflineIMAP/offlineimap.git
+# Source-url: %__pypi_url %name
+Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: docbook-utils asciidoc-a2x
 BuildRequires: python3-module-sphinx-devel python3-modules-sqlite3
 
+%py3_use rfc6555
+
+# it is not a python module
+AutoProv:no
 
 %description
 OfflineIMAP is a tool to simplify your e-mail reading. With OfflineIMAP,
@@ -41,8 +49,9 @@ sed -i 's|#!/usr/bin/python.*|#!/usr/bin/python3|' \
 
 %install
 %python3_install --prefix=%prefix
+%python3_prune
 
-%make -C docs man api
+%make -C docs man api SPHINXBUILD=sphinx-build-3
 mkdir -p %buildroot/%_man1dir
 install -p docs/%name.1 %buildroot/%_man1dir/
 
@@ -55,6 +64,13 @@ install -p docs/%name.1 %buildroot/%_man1dir/
 
 
 %changelog
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 7.3.3-alt1
+- new version 7.3.3 (with rpmrb script)
+- disable AutoProv (it is not a python module), drop tests
+
+* Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 7.2.4-alt3
+- fix build with sphinx-build-3, cleanup spec, set download url
+
 * Mon Nov 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 7.2.4-alt2
 - python2 -> python3
 
