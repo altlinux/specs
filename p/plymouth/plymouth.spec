@@ -9,7 +9,7 @@
 
 Name: plymouth
 Version: 0.9.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -455,6 +455,9 @@ fi \
 %files system-theme
 
 %changelog
+* Sat Nov 07 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt3
+- plymouth-update-initrd: Adapt for make-initrd and dracut
+
 * Mon Nov 02 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt2
 - Adapt for dracut
 

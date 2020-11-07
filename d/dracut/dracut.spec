@@ -12,7 +12,7 @@
 
 Name: dracut
 Version: 050
-Release: alt2.git.831e31
+Release: alt3.git.831e31
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -51,7 +51,6 @@ Requires: gzip
 Requires: pigz
 
 Requires: util-linux >= 2.21
-Requires: systemd >= 219 systemd-sysvinit
 Requires: udev >= 219
 Requires: hardlink
 Requires: kpartx
@@ -197,6 +196,10 @@ echo "DRACUT_VERSION=%version" > dracut-version.sh
 
 echo "DRACUT_VERSION=%version-%release" > %buildroot%dracutlibdir/dracut-version.sh
 
+# compatibility symlinks
+mkdir -p %buildroot/sbin
+ln -r -s %buildroot%_sbindir/mkinitrd %buildroot/sbin/mkinitrd
+
 # Cleanup
 rm -fr -- %buildroot%dracutlibdir/modules.d/01fips
 
@@ -256,10 +259,11 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %doc README.md HACKING TODO AUTHORS NEWS dracut.html dracut.png dracut.svg
 %endif
 %doc COPYING
-%_bindir/dracut
+%_sbindir/dracut
 %_datadir/bash-completion/completions/dracut
 %_datadir/bash-completion/completions/lsinitrd
-%_bindir/mkinitrd
+%_sbindir/mkinitrd
+/sbin/mkinitrd
 %_bindir/lsinitrd
 %dir %dracutlibdir
 %dir %dracutlibdir/modules.d
@@ -413,7 +417,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %doc %_man8dir/dracut-catimages.8*
 %endif
 
-%_bindir/dracut-catimages
+%_sbindir/dracut-catimages
 %dir /boot/dracut
 %dir %_var/lib/dracut
 %dir %_var/lib/dracut/overlay
@@ -439,6 +443,10 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Sat Nov 07 2020 Alexey Shabalin <shaba@altlinux.org> 050-alt3.git.831e31
+- Install dracut, dracut-catimages, mkinitrd to sbindir
+- Delete requires to systemd
+
 * Sat Nov 07 2020 Alexey Shabalin <shaba@altlinux.org> 050-alt2.git.831e31
 - Update to upstream master snapshot
 - Update spec
