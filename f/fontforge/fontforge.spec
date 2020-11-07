@@ -1,8 +1,8 @@
 %def_enable docs
 
 Name: fontforge
-Version: 20200314
-Release: alt2
+Version: 20201107
+Release: alt1
 
 Summary: FontForge -- font editor
 License: BSD
@@ -12,9 +12,9 @@ Url: http://fontforge.sourceforge.net/
 # Source-url: https://github.com/fontforge/fontforge/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: cmake rpm-macros-cmake gcc-c++
-BuildRequires: libgtk+3-devel libgio-devel 
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake 
+BuildRequires: cmake gcc-c++
+BuildRequires: libgtk+3-devel libgio-devel
 BuildRequires: python3-dev
 
 BuildRequires: libreadline-devel libspiro-devel libuninameslist-devel
@@ -121,6 +121,9 @@ sed -i "s|-Werror=int-conversion||" CMakeLists.txt
 
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 20201107-alt1
+- new version 20201107 (with rpmrb script)
+
 * Tue Aug 04 2020 Michael Shigorin <mike@altlinux.org> 20200314-alt2
 - E2K: avoid lcc-unsupported option
 
