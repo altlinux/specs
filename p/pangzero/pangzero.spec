@@ -1,20 +1,23 @@
+# test requires homedir and sound environment
+%define _without_test 1
+
 Name: pangzero
-Version: 1.3
-Release: alt1.1
+Version: 1.4.1
+Release: alt1
 
 Summary: Clone of Super Pang, a fast-paced action game
 License: GPLv2
 Group: Games/Arcade
 Url: http://apocalypse.rulez.org/pangzero
 
-Source0: %name-%version.tar.gz
-
-Packager: Igor Zubkov <icesik@altlinux.org>
+Source0: %name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Jan 25 2008
-BuildRequires: perl-SDL_Perl
+BuildRequires: perl-SDL perl-Module-Build
+# due to conflict perl-SDL <-> perl-SDL_Perl
+%filter_from_requires /^perl(SDL/d
+Requires:       perl-SDL
 
 %description
 Pang Zero is a clone of Super Pang, a fast-paced action game that involves
@@ -29,19 +32,22 @@ http://apocalypse.rulez.org/pangzero
 %setup -q
 
 %build
-%configure
-%make_build
+%perl_vendor_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%perl_vendor_install
 
 %files
 %doc AUTHORS ChangeLog NEWS README TODO
 %_bindir/*
-%dir %_datadir/pangzero/
-%_datadir/pangzero/
+%perl_vendor_privlib/Games*
+%perl_vendor_privlib/auto/share/dist/*
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1
+- new version
+- picked up from orphaned
+
 * Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1.1
 - NMU: perl-SDL -> perl-SDL_Perl
 
