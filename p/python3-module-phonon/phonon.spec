@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Provides easy, fault tolerant, distributed references with redis as a backend
 
@@ -52,16 +52,19 @@ The main goals of the Phonon project are
 
 %install
 %python3_install
+%python3_prune
 
 %check
 %python3_test
-%python3_prune
 
 %files
 %doc PKG-INFO
 %python3_sitelibdir/*
 
 %changelog
+* Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt2
+- fix test removing (ALT bug 39206)
+
 * Sat Oct 31 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
 - new version 3.1 (with rpmrb script)
 - don't pack test* (ALT bug 33947)
