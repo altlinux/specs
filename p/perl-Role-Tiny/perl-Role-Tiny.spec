@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Role-Tiny
 Version: 2.001004
-Release: alt1
+Release: alt2
 
 Summary: Role::Tiny - minimalist role composition tool
 Group: Development/Perl
@@ -12,7 +12,7 @@ Url: %CPAN Role-Tiny
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-MRO-Compat perl-devel perl-Class-Method-Modifiers perl-Test-Fatal
+BuildRequires: perl-devel perl-Class-Method-Modifiers perl-Test-Fatal
 BuildArch: noarch
 
 %description
@@ -21,6 +21,7 @@ BuildArch: noarch
 %prep
 %setup -q
 %patch -p1
+sed -i /MRO::Compat/d Makefile.PL
 
 %build
 %perl_vendor_build
@@ -33,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/Role/Tiny*
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 2.001004-alt2
+- build w/o MRO::Compat
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 2.001004-alt1
 - new version
 
