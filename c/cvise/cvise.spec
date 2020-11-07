@@ -1,6 +1,6 @@
 Name: cvise
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -48,6 +48,8 @@ Requires: indent
 Requires: llvm
 Requires: unifdef
 
+AutoProv: no
+
 %description
 C-Vise is a super-parallel Python port of the C-Reduce. The port is fully
 compatible to the C-Reduce and uses the same efficient
@@ -74,6 +76,8 @@ pytest3 -v .
 
 %install
 %cmakeinstall_std
+rm -rfv %buildroot%_datadir/cvise/tests/
+
 
 %files
 %doc COPYING
@@ -88,6 +92,9 @@ pytest3 -v .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt2
+- disable python modules provide, drop tests files from the package
+
 * Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0 (with rpmrb script)
 
