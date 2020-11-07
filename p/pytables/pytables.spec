@@ -21,7 +21,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.6.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -44,11 +44,13 @@ BuildRequires: libblosc-devel
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/nctoh5.py
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/make_hdf.py
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
 BuildRequires: python3-module-distribute python3-module-Cython
-BuildRequires: python3-module-numexpr-tests
+BuildRequires: python3-module-numexpr
 BuildRequires: python3-module-mock
+BuildRequires: python3-module-numpy-testing
 
 %description
 %descr
@@ -109,28 +111,23 @@ export NPY_NUM_BUILD_JOBS=%__nprocs
 
 %install
 %python3_install --hdf5=%hdf5dir --root=%buildroot
-
-cp -fR examples %buildroot%python3_sitelibdir/%oname/
-cp -fR bench contrib %buildroot%python3_sitelibdir/%oname/
+%python3_prune
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make_build SPHINXBUILD="sphinx-build-3" -C doc pickle
 %make_build SPHINXBUILD="sphinx-build-3" -C doc html
+
+cp -fR doc/build/html %buildroot%_docdir/%name/
+cp -fR examples %buildroot%_docdir/%name/
+cp -fR bench contrib %buildroot%_docdir/%name/
+
 %endif
 
 install -d %buildroot%_docdir/%name/pdf
 install -p -m644 LICENSE.txt README.rst RELEASE_NOTES.txt THANKS \
     %buildroot%_docdir/%name
 cp -fR LICENSES %buildroot%_docdir/%name
-
-%if_with docs
-cp -fR doc/build/html %buildroot%_docdir/%name/
-%endif
-
-cp -fR examples %buildroot%python3_sitelibdir/%oname/
-
-cp -fR bench contrib %buildroot%python3_sitelibdir/%oname/
 
 %check
 %make check PYTHON=python3
@@ -140,20 +137,16 @@ cp -fR bench contrib %buildroot%python3_sitelibdir/%oname/
 
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/examples
-%exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/tests
-%exclude %python3_sitelibdir/%oname/bench
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%oname/examples
-%python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/*/tests
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.1-alt3
+- NMU: s/numexpr-tests/numexpr/
+- NMU: don't package tests
+- NMU: pack examples, bench and contrib if doc build
+
 * Mon Aug 31 2020 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt2
 - Remove mistaken obsoletes tag.
 
