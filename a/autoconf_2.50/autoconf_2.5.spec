@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.59
-Release: alt12
+Release: alt13
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -101,6 +101,8 @@ for f in %buildroot%_bindir/*%suff; do
 done
 
 %define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
+%{?filter_from_requires:%filter_from_requires /^perl(Autom4te/d}
+%{?filter_from_provides:%filter_from_provides /^perl(/d}
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -111,6 +113,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sat Nov 07 2020 Dmitry V. Levin <ldv@altlinux.org> 2:2.59-alt13
+- Filtered out perl(Autom4te/*) provides.
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2:2.59-alt12
 - Dropped alternatives in favour of autoconf-defaults setup.
 
