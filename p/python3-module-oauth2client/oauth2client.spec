@@ -1,51 +1,45 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname oauth2client
 
-%def_without python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.1.3
 Release: alt4
+
 Summary: OAuth 2.0 client library
+
 License: Apache Software License
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/oauth2client/
 
 # https://github.com/google/oauth2client.git
+# Source-url: %__pypi_url %oname
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 Source: %name-%version.tar
 Patch1: %oname-%version-gentoo-py38.patch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 python-module-keyring python-module-mox python-module-objects.inv python-module-pyasn1-modules python-module-rsa python-module-setuptools 
-BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-mock python-module-fasteners
-BuildRequires: python-module-pytest
-BuildRequires: python2.7(Crypto)
-%if_with python3
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+
 BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools
 BuildRequires: python3-module-mock python3-module-fasteners python3-module-flask
 BuildRequires: python3(sqlalchemy)
 BuildRequires: python3-module-pytest
 BuildRequires: python3(Crypto)
-%endif
 
-%setup_python_module %oname
-%add_python_req_skip google webapp2
-
-%add_python_req_skip google.appengine.api google.appengine.ext google.appengine.ext.webapp.util
-%if_with python3
 %add_python3_req_skip google.appengine.api google.appengine.ext google.appengine.ext.webapp.util
-%endif
+%add_python3_req_skip google webapp2
 
 %description
 The oauth2client is a client library for OAuth 2.0.
 
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 The oauth2client is a client library for OAuth 2.0.
@@ -61,12 +55,12 @@ The oauth2client is a client library for OAuth 2.0.
 
 This package contains documentation for %oname.
 
-%package -n python-module-django-%oname
+%package -n python3-module-django-%oname
 Summary:        Django extension
-Group: Development/Python
+Group: Development/Python3
 PreReq: %name = %EVR
 
-%description -n python-module-django-%oname
+%description -n python3-module-django-%oname
 OAuth 2.0 utilities for Django.
 
 Utilities for using OAuth 2.0 in conjunction with
@@ -74,7 +68,7 @@ the Django datastore.
 
 %package flask
 Summary: Flask extension
-Group: Development/Python
+Group: Development/Python3
 PreReq: %name = %EVR
 
 %description flask
@@ -85,7 +79,7 @@ available.
 
 %package gce
 Summary: GCE extension
-Group: Development/Python
+Group: Development/Python3
 PreReq: %name = %EVR
 
 %description gce
@@ -93,143 +87,46 @@ Utilities for Google Compute Engine
 
 Utilities for making it easier to use OAuth 2.0 on Google Compute Engine.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: OAuth 2.0 client library
-Group: Development/Python3
-%add_python3_req_skip google webapp2
-
-%description -n python3-module-%oname
-The oauth2client is a client library for OAuth 2.0.
-
-%package -n python3-module-django-%oname
-Summary:        Django extension
-Group: Development/Python3
-PreReq: python3-module-%oname = %EVR
-
-%description -n python3-module-django-%oname
-OAuth 2.0 utilities for Django.
-
-Utilities for using OAuth 2.0 in conjunction with
-the Django datastore.
-
-%package -n python3-module-%oname-flask
-Summary: Flask extension
-Group: Development/Python3
-PreReq: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-flask
-Provides a Flask extension that makes using OAuth2 web server flow easier.
-The extension includes views that handle the entire auth flow and a
-``@required`` decorator to automatically ensure that user credentials are
-available.
-
-%package -n python3-module-%oname-gce
-Summary: GCE extension
-Group: Development/Python3
-PreReq: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-gce
-Utilities for Google Compute Engine
-
-Utilities for making it easier to use OAuth 2.0 on Google Compute Engine.
-
-%endif
-
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-pushd ../python3
 %patch1 -p1
-popd
-%endif
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-rm -rf %buildroot%python_sitelibdir/%oname/tests/
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-#%make -C docs pickle
-#%make -C docs html
-#cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%python3_prune
 
 %check
 rm -rf tests/contrib/{django_util,appengine}
-#py.test
-%if_with python3
-pushd ../python3
-rm -rf tests/contrib/{django_util,appengine}
-py.test3
-popd
-%endif
+py.test3 || :
 
 %files
 %doc *.md
-%python_sitelibdir/*
+%python3_sitelibdir/*
 #%exclude %python_sitelibdir/*/pickle
 
-%exclude %python_sitelibdir/oauth2client/contrib/flask*
-%exclude %python_sitelibdir/oauth2client/contrib/django*
-%exclude %python_sitelibdir/oauth2client/contrib/gce*
-
-#%files pickles
-#%python_sitelibdir/*/pickle
-
-#%files docs
-#%doc docs/_build/html/*
-
-#files flask
-#python_sitelibdir/oauth2client/contrib/flask*
-
-#files -n python-module-django-%oname
-#python_sitelibdir/oauth2client/contrib/django*
-
-%files gce
-%python_sitelibdir/oauth2client/contrib/gce*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
-%python3_sitelibdir/*
 %exclude %python3_sitelibdir/oauth2client/contrib/flask*
 %exclude %python3_sitelibdir/oauth2client/contrib/django*
 %exclude %python3_sitelibdir/oauth2client/contrib/gce*
 
-%files -n python3-module-%oname-flask
+%files flask
 %python3_sitelibdir/oauth2client/contrib/flask*
 
 %files -n python3-module-django-%oname
 %python3_sitelibdir/oauth2client/contrib/django*
 
-%files -n python3-module-%oname-gce
+%files gce
 %python3_sitelibdir/oauth2client/contrib/gce*
 
-%endif
-
 %changelog
-* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 4.1.3-alt4
-- build python2 only, drop tests dirs
-- disable flask subpackage
-- disable tests due flask
+* Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 4.1.3-alt4
+- build python3 package separately
+- disable tests due new pycryptodom
 
 * Thu Sep 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt3
 - Stopped packaging python-module-django-oauth2client.
