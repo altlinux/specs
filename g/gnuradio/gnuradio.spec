@@ -8,7 +8,7 @@
 
 Name: gnuradio
 Version: 3.8.1.0
-Release: alt2
+Release: alt3
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -41,7 +41,7 @@ BuildRequires: pkgconfig(fftw3f)
 BuildRequires: pkgconfig(gsl)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(portaudio-2.0)
-BuildRequires: pkgconfig(thrift)
+#BuildRequires: pkgconfig(thrift)
 BuildRequires: pkgconfig(uhd)
 BuildRequires: libSDL-devel
 BuildRequires: libvolk-devel
@@ -173,6 +173,9 @@ rm %buildroot%_datadir/%name/examples/uhd/tags_demo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Nov 07 2020 Anton Midyukov <antohami@altlinux.org> 3.8.1.0-alt3
+- Rebuilt without pkgconfig(thrift)
+
 * Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.1.0-alt2
 - Rebuilt with boost-1.73.0.
 
