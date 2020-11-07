@@ -4,7 +4,7 @@ Epoch: 1
 
 Name: perl-%module
 Version: 1.21
-Release: alt1
+Release: alt2
 
 Summary: %module module for perl
 License: distributable
@@ -20,8 +20,6 @@ BuildRequires: perl-devel
 # perl-podlators is required for pod2man conversion.
 BuildRequires: perl-podlators
 BuildArch: noarch
-# for compatibility with some broken packages
-Provides: perl(Parse/Yapp.pm) = 1.050
 
 %description
 %module module for perl
@@ -44,6 +42,9 @@ find . -type f -name '*.pm'|xargs chmod 644
 %_man1dir/*
 
 %changelog
+* Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.21-alt2
+- removed deprecated compat provides (closes: #39212)
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.21-alt1
 - automated CPAN update
 
