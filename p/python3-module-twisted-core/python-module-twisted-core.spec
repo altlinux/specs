@@ -3,18 +3,15 @@
 
 %define origname TwistedCore
 %define major 18.9
-
-%def_without python3
-
-%define prefx python-module-twisted
 %define prefx3 python3-module-twisted
-Name: %prefx-core
+
+Name: python3-module-twisted-core
 Version: %major.0
 Release: alt2
-%setup_python_module twisted-core
+
 Summary: An asynchronous networking framework written in Python
 
-Group: Development/Python
+Group: Development/Python3
 License: MIT
 Url: http://twistedmatrix.com/trac/wiki/TwistedCore
 
@@ -22,35 +19,23 @@ Url: http://twistedmatrix.com/trac/wiki/TwistedCore
 Source: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
 
-BuildRequires: python-devel python-modules-compiler python-module-setuptools
-BuildPreReq: python-module-zope.interface python-module-incremental
-BuildRequires: python-module-pydoctor
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-zope.interface python3-module-incremental
-%endif
 
-Requires: %prefx-logger = %EVR
-Obsoletes: %prefx-lore <= %EVR
-Provides: %prefx-lore = %EVR
-%py_provides lore
-Requires: python-module-OpenSSL
+Requires: %prefx3-logger = %EVR
+Obsoletes: %prefx3-lore <= %EVR
+Provides: %prefx3-lore = %EVR
+#py3_provides lore
+Requires: python3-module-OpenSSL
 
-Conflicts: %name-core < %version-%release
-
-%add_python_req_skip AppKit Carbon Foundation GDK PAM cfsupport
-%add_python_req_skip kqsyscall msvcrt pythoncom pywintypes win32api
-%add_python_req_skip win32com win32event win32file win32gui win32pipe
-%add_python_req_skip win32process win32security win32con CFNetwork
-%add_python_req_skip CoreFoundation distutils
-%if_with python3
 %add_python3_req_skip AppKit Carbon Foundation GDK PAM cfsupport
 %add_python3_req_skip kqsyscall msvcrt pythoncom pywintypes win32api
 %add_python3_req_skip win32com win32event win32file win32gui win32pipe
 %add_python3_req_skip win32process win32security win32con CFNetwork
 %add_python3_req_skip CoreFoundation
-%endif
+%add_python3_req_skip win32com.shell
 
 %description
 An extensible framework for Python programming, with special focus
@@ -60,247 +45,6 @@ It is expected that one day the project will expanded to the point
 that the framework will seamlessly integrate with mail, web, DNS,
 netnews, IRC, RDBMSs, desktop environments, and your toaster.
 
-%package gui
-Summary: GUI for Twisted Core
-Group: Development/Python
-Requires: python-module-twisted-core = %version-%release
-Provides: python-module-twisted-core-gui-gnome = %version-%release
-####add_python_req_skip pyui wx wxPython gtk Tkinter gnome tkFileDialog tkMessageBox tkSimpleDialog
-%add_python_req_skip pyui
-
-%description gui
-GUI for Twisted Core
-
-%package gui-wx
-Summary: GUI for Twisted Core (wxWidgets)
-Group: Development/Python
-Requires: python-module-twisted-core-gui = %version-%release
-
-%description gui-wx
-GUI for Twisted Core (wxWidgets)
-
-%package gui-tk
-Summary: GUI for Twisted Core (TK)
-Group: Development/Python
-Requires: python-module-twisted-core-gui = %version-%release
-
-%description gui-tk
-GUI for Twisted Core (TK)
-
-%package gui-gnome
-Summary: GUI for Twisted Core (Gnome)
-Group: Development/Python
-Requires: python-module-twisted-core-gui = %version-%release
-
-%description gui-gnome
-GUI for Twisted Core (Gnome)
-
-%package doc
-Summary: Documentation for Twisted Core
-Group: Documentation
-BuildArch: noarch
-Requires: python-module-twisted-core = %version-%release
-
-%description doc
-Documentation for Twisted Core.
-
-%package zsh
-Summary: Tab completion for Zsh and Twisted Core
-Group: Shells
-Requires: python-module-twisted-core = %version-%release
-Requires: zsh
-
-%description zsh
-Tab completions for Zsh and Twisted Core.
-
-%package test
-Summary: Unit tests for Twisted Core
-Group: Development/Python
-Requires: python-module-twisted-core = %version-%release
-AutoReqProv: nopython
-Obsoletes: %prefx-news-tests
-Obsoletes: %prefx-lore-tests
-Obsoletes: %prefx-runner-tests
-Obsoletes: %prefx-mail-tests
-Obsoletes: %prefx-web-tests
-Obsoletes: %prefx-conch-tests
-Obsoletes: %prefx-names-tests
-Obsoletes: %prefx-words-tests
-
-%description test
-Unit tests for Twisted Core.
-
-%package -n %prefx-news
-Summary: Twisted News is an NNTP server and programming library
-Group: Development/Python
-Requires: %name
-Requires: %prefx-mail
-
-%description -n %prefx-news
-Twisted is an event-based framework for internet applications.
-
-Twisted News is an NNTP protocol (Usenet) programming library. The
-library contains server and client protocol implementations. A simple
-NNTP server is also provided.
-
-%package -n %prefx-lore
-Summary: Twisted documentation system
-Group: Development/Python
-Requires: %name
-Requires: %prefx-web
-
-%description -n %prefx-lore
-Twisted is an event-based framework for internet applications.
-
-Lore is a complete documentation system based on XHTML and can generate
-documentation into other formats such as PDF, HTML.
-
-%package -n %prefx-runner
-Summary: Twisted Runner process management library and inetd replacement
-Group: Development/Python
-Requires: %name
-
-%description -n %prefx-runner
-Twisted is an event-based framework for internet applications.
-
-Twisted Runner contains code useful for persistent process management
-with Python and Twisted, and has an almost full replacement for inetd.
-
-%package -n %prefx-mail
-Summary: A Twisted Mail library, server and client
-Group: Development/Python
-Requires: %name
-Requires: %prefx-names
-
-%description -n %prefx-mail
-Twisted is an event-based framework for internet applications.
-
-Twisted Mail contains high-level, efficient protocol implementations
-for both clients and servers of SMTP, POP3, and IMAP4. Additionally,
-it contains an "out of the box" combination SMTP/POP3 virtual-hosting
-mail server. Also included is a read/write Maildir implementation and
-a basic Mail Exchange calculator.
-
-%package -n %prefx-web
-Summary: Twisted web server, programmable in Python
-Group: Development/Python
-%add_python_req_skip Tkinter
-
-%description -n %prefx-web
-Twisted is an event-based framework for internet applications.
-
-Twisted Web is a complete web server, aimed at hosting web
-applications using Twisted and Python, but fully able to serve static
-pages, also.
-
-%package -n %prefx-conch
-Summary: Twisted SSHv2 implementation
-Group: Development/Python
-Requires: %name
-Requires: python-module-Crypto
-
-%description -n %prefx-conch
-Twisted is an event-based framework for internet applications.
-
-Conch is an SSHv2 implementation written in Python. SSH is a protocol designed
-to allow remote access to shells and commands, but it is generic enough to
-allow everything from TCP forwarding to generic filesystem access. Since conch
-is written in Python, it interfaces well with other Python projects, such as
-Imagination. Conch also includes a implementations of the telnet and vt102
-protocols, as well as support for rudamentary line editing behaviors. A new
-implementation of Twisted's Manhole application is also included, featuring
-server-side input history and interactive syntax coloring.
-
-%package -n %prefx-conch-gui
-Summary: GUI for Twisted Conch
-Group: Development/Python
-Requires: %prefx-conch = %version-%release
-
-%description -n %prefx-conch-gui
-GUI for Twisted Conch
-
-%package -n %prefx-names
-Summary: A Twisted DNS implementation
-Group: Development/Python
-Requires: %name
-
-%description -n %prefx-names
-Twisted is an event-based framework for internet applications.
-
-Twisted Names is both a domain name server as well as a client
-resolver library. Twisted Names comes with an "out of the box"
-nameserver which can read most BIND-syntax zone files as well as a
-simple Python-based configuration format. Twisted Names can act as an
-authoritative server, perform zone transfers from a master to act as a
-secondary, act as a caching nameserver, or any combination of
-these. Twisted Names' client resolver library provides functions to
-query for all commonly used record types as well as a replacement for
-the blocking gethostbyname() function provided by the Python stdlib
-socket module.
-
-%package -n %prefx-words
-Summary: Twisted Words contains Instant Messaging implementations
-Group: Development/Python
-Requires: %name
-%add_python_req_skip java javax
-
-%description -n %prefx-words
-Twisted is an event-based framework for internet applications.
-
-Twisted Words contains implementations of many Instant Messaging
-protocols, including IRC, Jabber, MSN, OSCAR (AIM & ICQ), TOC (AOL),
-and some functionality for creating bots, inter-protocol gateways, and
-a client application for many of the protocols.
-
-In support of Jabber, Twisted Words also contains X-ish, a library for
-processing XML with Twisted and Python, with support for a Pythonic DOM and
-an XPath-like toolkit.
-
-%package -n %prefx-pair
-Summary: Low-level networking transports and utilities
-Group: Development/Python
-Requires: %name
-
-%description -n %prefx-pair
-Twisted is an event-based framework for internet applications.
-
-Twisted Pair: The framework of your ethernet.
-Low-level networking transports and utilities.
-
-%package -n %prefx-positioning
-Summary: The Twisted positioning framework.
-Group: Development/Python
-Requires: %name
-
-%description -n %prefx-positioning
-Twisted is an event-based framework for internet applications.
-
-The Twisted positioning framework.
-
-%package -n %prefx-logger
-Summary: Classes and functions to do granular logging
-Group: Development/Python
-Requires: %name
-
-%description -n %prefx-logger
-Twisted is an event-based framework for internet applications.
-
-This package contains classes and functions to do granular logging.
-
-%if_with python3
-%package -n %prefx3-core
-Summary: An asynchronous networking framework written in Python 3
-Group: Development/Python3
-Requires: python3-module-OpenSSL
-%add_python3_req_skip win32com.shell
-
-%description -n %prefx3-core
-An extensible framework for Python programming, with special focus
-on event-based network programming and multiprotocol integration.
-
-It is expected that one day the project will expanded to the point
-that the framework will seamlessly integrate with mail, web, DNS,
-netnews, IRC, RDBMSs, desktop environments, and your toaster.
 
 %package -n %prefx3-core-gui
 Summary: GUI for Twisted Core (Python 3)
@@ -353,24 +97,6 @@ Requires: zsh
 
 %description -n %prefx3-core-zsh
 Tab completions for Zsh and Twisted Core.
-
-%package -n %prefx3-core-test
-Summary: Unit tests for Twisted Core (Python 3)
-Group: Development/Python3
-Requires: python3-module-twisted-core = %version-%release
-%add_python3_req_skip idonotexist
-AutoReqProv: nopython
-Obsoletes: %prefx3-news-tests
-Obsoletes: %prefx3-lore-tests
-Obsoletes: %prefx3-runner-tests
-Obsoletes: %prefx3-mail-tests
-Obsoletes: %prefx3-web-tests
-Obsoletes: %prefx3-conch-tests
-Obsoletes: %prefx3-names-tests
-Obsoletes: %prefx3-words-tests
-
-%description -n %prefx3-core-test
-Unit tests for Twisted Core.
 
 %package -n %prefx3-news
 Summary: Twisted News is an NNTP server and programming library (Python 3)
@@ -529,47 +255,34 @@ Requires: %prefx3-core
 Twisted is an event-based framework for internet applications.
 
 This package contains classes and functions to do granular logging.
-%endif
+
+%package -n %prefx3-core-tests
+Summary: Unit tests for Twisted Core (Python 3)
+Group: Development/Python3
+Requires: python3-module-twisted-core = %EVR
+Provides: python3-module-twisted-core-test = %EVR
+%add_python3_req_skip idonotexist
+
+%description -n %prefx3-core-tests
+Unit tests for Twisted Core.
+
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 # README.ALT
 cp %SOURCE1 README.ALT-ru_RU.UTF-8
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i ${i}.py3
-done
-popd
-%endif
-
-%python_install
 
 # cfsupport is support for MacOSX Core Foundations, so we can delete it
-rm -rf %buildroot%python_sitelibdir/twisted/internet/cfsupport
 rm -rf %buildroot%python3_sitelibdir/twisted/internet/cfsupport
 
 # iocpreactor is a win32 reactor, so we can delete it
-rm -rf %buildroot%python_sitelibdir/twisted/internet/iocpreactor
 rm -rf %buildroot%python3_sitelibdir/twisted/internet/iocpreactor
 
 # Man pages
@@ -577,21 +290,9 @@ mkdir -p %buildroot%_man1dir/
 cp -a docs/core/man/*.1 docs/mail/man/*.1 \
 	docs/conch/man/*.1 \
 	%buildroot%_man1dir/
-%if_with python3
-pushd %buildroot%_man1dir
-for i in *.1 ; do
-	cp $i ${i%%.1}.py3.1
-done
-popd
-%endif
 
 rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 	docs/words/man
-
-touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
-%if_with python3
-touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
-%endif
 
 %check
 
@@ -602,204 +303,13 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %_bindir/twist
 %_bindir/twistd
 %_bindir/pyhtmlizer
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
 
-%_man1dir/*
+%_man1dir/*.1.*
 %exclude %_man1dir/cftp.1*
 %exclude %_man1dir/ckeygen.1*
 %exclude %_man1dir/conch.1*
 %exclude %_man1dir/tkconch.1*
 %exclude %_man1dir/mailmail.1*
-%if_with python3
-%exclude  %_man1dir/*.py3.1*
-%endif
-
-%python_sitelibdir/Twisted*.egg-info
-%dir %python_sitelibdir/twisted/
-%python_sitelibdir/twisted/*.py*
-%python_sitelibdir/twisted/python/_pydoctortemplates/
-
-%python_sitelibdir/twisted/application/
-%exclude %python_sitelibdir/twisted/application/test
-%python_sitelibdir/twisted/cred/
-%python_sitelibdir/twisted/_threads/
-%exclude %python_sitelibdir/twisted/_threads/test/
-%python_sitelibdir/twisted/enterprise/
-%python_sitelibdir/twisted/internet/
-%exclude %python_sitelibdir/twisted/internet/test
-%exclude %python_sitelibdir/twisted/internet/pyuisupport.py*
-%exclude %python_sitelibdir/twisted/internet/wxreactor.py*
-%exclude %python_sitelibdir/twisted/internet/wxsupport.py*
-%exclude %python_sitelibdir/twisted/internet/gtk2reactor.py*
-%exclude %python_sitelibdir/twisted/internet/glib2reactor.py*
-%exclude %python_sitelibdir/twisted/internet/tksupport.py*
-
-%python_sitelibdir/twisted/persisted/
-%exclude %python_sitelibdir/twisted/persisted/test
-
-%dir %python_sitelibdir/twisted/plugins/
-%python_sitelibdir/twisted/plugins/*.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_trial.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_news.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_runner.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_mail.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_conch.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_words.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_web.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_names.py*
-
-%dir %python_sitelibdir/twisted/protocols/
-%python_sitelibdir/twisted/protocols/*.py*
-
-%python_sitelibdir/twisted/protocols/mice/
-%python_sitelibdir/twisted/protocols/haproxy/
-%exclude %python_sitelibdir/twisted/protocols/haproxy/test/
-
-%dir %python_sitelibdir/twisted/python/
-%python_sitelibdir/twisted/python/*.py*
-%python_sitelibdir/twisted/python/*.so
-
-
-%python_sitelibdir/twisted/scripts/
-%exclude %python_sitelibdir/twisted/scripts/test
-%exclude %python_sitelibdir/twisted/scripts/trial.py*
-
-%dir %python_sitelibdir/twisted/spread/
-%python_sitelibdir/twisted/spread/*.py*
-
-%python_sitelibdir/twisted/tap/
-
-
-%files doc
-%doc docs/core
-
-%files gui
-%python_sitelibdir/twisted/internet/pyuisupport.py*
-%python_sitelibdir/twisted/internet/gtk2reactor.py*
-%python_sitelibdir/twisted/internet/glib2reactor.py*
-
-%files gui-wx
-%python_sitelibdir/twisted/internet/wxreactor.py*
-%python_sitelibdir/twisted/internet/wxsupport.py*
-
-%files gui-tk
-%python_sitelibdir/twisted/internet/tksupport.py*
-
-%files zsh
-%python_sitelibdir/twisted/python/twisted-completion.zsh
-
-%files test
-%_bindir/trial
-%python_sitelibdir/twisted/test
-%python_sitelibdir/twisted/python/test
-%python_sitelibdir/twisted/scripts/test
-%python_sitelibdir/twisted/internet/test
-%python_sitelibdir/twisted/protocols/test
-%python_sitelibdir/twisted/protocols/haproxy/test
-%python_sitelibdir/twisted/trial
-%python_sitelibdir/twisted/plugins/twisted_trial.py*
-%python_sitelibdir/twisted/scripts/trial.py*
-%python_sitelibdir/twisted/application/test
-%python_sitelibdir/twisted/news/test
-%python_sitelibdir/twisted/runner/test
-%python_sitelibdir/twisted/mail/test
-%python_sitelibdir/twisted/web/test
-%python_sitelibdir/twisted/conch/test
-%python_sitelibdir/twisted/names/test
-%python_sitelibdir/twisted/pair/test
-%python_sitelibdir/twisted/_threads/test
-%python_sitelibdir/twisted/persisted/test
-%python_sitelibdir/twisted/positioning/test
-%python_sitelibdir/twisted/spread/test
-%python_sitelibdir/twisted/logger/test
-
-%files -n %prefx-news
-%python_sitelibdir/twisted/news/
-%exclude %python_sitelibdir/twisted/news/test
-%python_sitelibdir/twisted/plugins/twisted_news.py*
-
-%files -n %prefx-runner
-%python_sitelibdir/twisted/runner/
-%exclude %python_sitelibdir/twisted/runner/test
-%python_sitelibdir/twisted/plugins/twisted_runner.py*
-
-%files -n %prefx-mail
-%doc docs/mail/*
-%_bindir/mailmail
-%python_sitelibdir/twisted/mail/
-%exclude %python_sitelibdir/twisted/mail/test
-%python_sitelibdir/twisted/plugins/twisted_mail.py*
-%_man1dir/mailmail.1*
-
-%files -n %prefx-web
-%doc docs/web/*
-%python_sitelibdir/twisted/web
-%python_sitelibdir/twisted/plugins/twisted_web.py*
-# There are no SOAPpy in ALT Linux Sisyphus - remove it support
-%exclude %python_sitelibdir/twisted/web/soap.py*
-%exclude %python_sitelibdir/twisted/web/test
-
-%files -n %prefx-conch
-%doc docs/conch/*
-%_bindir/cftp
-%_bindir/ckeygen
-%_bindir/conch
-%_bindir/tkconch
-%_man1dir/cftp.1*
-%_man1dir/ckeygen.1*
-%_man1dir/conch.1*
-%_man1dir/tkconch.1*
-%python_sitelibdir/twisted/conch/
-%python_sitelibdir/twisted/plugins/twisted_conch.py*
-%exclude %python_sitelibdir/twisted/conch/ui
-%exclude %python_sitelibdir/twisted/conch/scripts/tkconch.py
-%exclude %python_sitelibdir/twisted/conch/test
-
-%files -n %prefx-conch-gui
-%python_sitelibdir/twisted/conch/ui
-%python_sitelibdir/twisted/conch/scripts/tkconch.py
-
-%files -n %prefx-names
-%doc docs/names/*
-%python_sitelibdir/twisted/names/
-%exclude %python_sitelibdir/twisted/names/test
-%python_sitelibdir/twisted/plugins/twisted_names.py*
-
-%files -n %prefx-words
-%doc docs/words/*
-%python_sitelibdir/twisted/words/
-%exclude %python_sitelibdir/twisted/words/test
-%python_sitelibdir/twisted/plugins/twisted_words.py*
-
-%files -n %prefx-pair
-%doc docs/pair/*
-%python_sitelibdir/twisted/pair/
-%exclude %python_sitelibdir/twisted/pair/test
-
-%files -n %prefx-positioning
-%python_sitelibdir/twisted/positioning/
-%exclude %python_sitelibdir/twisted/positioning/test
-
-%files -n %prefx-logger
-%python_sitelibdir/twisted/logger/
-%exclude %python_sitelibdir/twisted/logger/test
-
-%if_with python3
-%files -n %prefx3-core
-%doc LICENSE NEWS.rst README.rst
-%doc README.ALT-ru_RU.UTF-8
-%_bindir/twist.py3
-%_bindir/twistd.py3
-%_bindir/pyhtmlizer.py3
-
-%_man1dir/*.py3.1.*
-%exclude %_man1dir/cftp.py3.1*
-%exclude %_man1dir/ckeygen.py3.1*
-%exclude %_man1dir/conch.py3.1*
-%exclude %_man1dir/tkconch.py3.1*
-%exclude %_man1dir/mailmail.py3.1*
 
 %python3_sitelibdir/Twisted*.egg-info
 %dir %python3_sitelibdir/twisted/
@@ -843,6 +353,7 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %dir %python3_sitelibdir/twisted/python/
 %python3_sitelibdir/twisted/python/*.py*
 %python3_sitelibdir/twisted/python/__pycache__/
+%exclude %python3_sitelibdir/twisted/python/_setup.py
 
 
 %python3_sitelibdir/twisted/scripts/
@@ -855,6 +366,7 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %python3_sitelibdir/twisted/spread/__pycache__/
 
 %python3_sitelibdir/twisted/tap/
+
 
 %files -n %prefx3-core-doc
 %doc docs/core
@@ -876,30 +388,6 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %files -n %prefx3-core-zsh
 %python3_sitelibdir/twisted/python/twisted-completion.zsh
 
-%files -n %prefx3-core-test
-%_bindir/trial.py3
-%python3_sitelibdir/twisted/test
-%python3_sitelibdir/twisted/python/test
-%python3_sitelibdir/twisted/scripts/test
-%python3_sitelibdir/twisted/internet/test
-%python3_sitelibdir/twisted/protocols/test
-%python3_sitelibdir/twisted/protocols/haproxy/test
-%python3_sitelibdir/twisted/trial
-%python3_sitelibdir/twisted/plugins/twisted_trial.py
-%python3_sitelibdir/twisted/plugins/__pycache__/twisted_trial.*
-%python3_sitelibdir/twisted/scripts/trial.py
-%python3_sitelibdir/twisted/scripts/__pycache__/trial.*
-%python3_sitelibdir/twisted/application/test
-%python3_sitelibdir/twisted/runner/test
-%python3_sitelibdir/twisted/web/test
-%python3_sitelibdir/twisted/conch/test
-%python3_sitelibdir/twisted/names/test
-%python3_sitelibdir/twisted/pair/test
-%python3_sitelibdir/twisted/_threads/test
-%python3_sitelibdir/twisted/persisted/test
-%python3_sitelibdir/twisted/positioning/test
-%python3_sitelibdir/twisted/spread/test
-%python3_sitelibdir/twisted/logger/test
 
 %files -n %prefx3-news
 #python3_sitelibdir/twisted/news/
@@ -912,6 +400,7 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 
 %files -n %prefx3-mail
 %doc docs/mail/*
+%_bindir/mailmail
 %python3_sitelibdir/twisted/mail/
 %exclude %python3_sitelibdir/twisted/mail/test
 
@@ -924,14 +413,14 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 
 %files -n %prefx3-conch
 %doc docs/conch/*
-%_bindir/cftp.py3
-%_bindir/ckeygen.py3
-%_bindir/conch.py3
-%_bindir/tkconch.py3
-%_man1dir/cftp.py3.1*
-%_man1dir/ckeygen.py3.1*
-%_man1dir/conch.py3.1*
-%_man1dir/tkconch.py3.1*
+%_bindir/cftp
+%_bindir/ckeygen
+%_bindir/conch
+%_bindir/tkconch
+%_man1dir/cftp.1*
+%_man1dir/ckeygen.1*
+%_man1dir/conch.1*
+%_man1dir/tkconch.1*
 %python3_sitelibdir/twisted/conch/
 %python3_sitelibdir/twisted/plugins/twisted_conch.py
 %python3_sitelibdir/twisted/plugins/__pycache__/twisted_conch.*
@@ -968,11 +457,38 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %files -n %prefx3-logger
 %python3_sitelibdir/twisted/logger/
 %exclude %python3_sitelibdir/twisted/logger/test
-%endif
+
+%files -n %prefx3-core-tests
+%_bindir/trial
+%python3_sitelibdir/twisted/trial/
+%python3_sitelibdir/twisted/test
+%python3_sitelibdir/twisted/python/test
+%python3_sitelibdir/twisted/scripts/test
+%python3_sitelibdir/twisted/internet/test
+%python3_sitelibdir/twisted/protocols/test
+%python3_sitelibdir/twisted/protocols/haproxy/test
+%python3_sitelibdir/twisted/plugins/twisted_trial.py
+%python3_sitelibdir/twisted/plugins/__pycache__/twisted_trial.*
+%python3_sitelibdir/twisted/scripts/trial.py
+%python3_sitelibdir/twisted/scripts/__pycache__/trial.*
+%python3_sitelibdir/twisted/application/test
+%python3_sitelibdir/twisted/runner/test
+%python3_sitelibdir/twisted/web/test
+%python3_sitelibdir/twisted/conch/test
+%python3_sitelibdir/twisted/names/test
+%python3_sitelibdir/twisted/pair/test
+%python3_sitelibdir/twisted/_threads/test
+%python3_sitelibdir/twisted/persisted/test
+%python3_sitelibdir/twisted/positioning/test
+%python3_sitelibdir/twisted/spread/test
+%python3_sitelibdir/twisted/logger/test
+%python3_sitelibdir/twisted/python/_setup.py
+
+
 
 %changelog
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 18.9.0-alt2
-- build python2 only
+- build python3 package separately
 
 * Mon Apr 08 2019 Grigory Ustinov <grenka@altlinux.org> 18.9.0-alt1
 - Build new version for python3.7.
