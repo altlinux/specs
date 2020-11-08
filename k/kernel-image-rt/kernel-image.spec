@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.148
-%define kernel_rt_release	rt64
+%define kernel_sublevel		.152
+%define kernel_rt_release	rt65
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -134,6 +134,7 @@ Summary: Header files for the Linux kernel
 Group: Development/Kernel
 Requires: kernel-headers-common >= 1.1.5
 Provides: kernel-headers = %version
+AutoReqProv: nocpp
 #Provides: kernel-headers-%base_flavour = %version-%release
 
 %description -n kernel-headers-%flavour
@@ -156,6 +157,7 @@ Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
 Requires: libelf-devel
+AutoReqProv: nocpp
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -441,6 +443,9 @@ vm-run cat /sys/kernel/realtime
 %endif
 
 %changelog
+* Sun Nov 08 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.152-alt1.rt65
+- Update to v4.19.152-rt65 (30 Oct 2020).
+
 * Sun Oct 04 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.148-alt1.rt64
 - Update to v4.19.148-rt64 (02 Oct 2020).
 - config: Enable some options.
