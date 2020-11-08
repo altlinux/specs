@@ -2,7 +2,7 @@
 
 Name: python3-module-flask
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
 License: BSD
@@ -22,7 +22,7 @@ BuildRequires: python3-module-jinja2
 
 # /usr/bin/flask
 Obsoletes: python-module-flask
-Provides: python-module-flask
+Conflicts: python-module-flask
 
 %py3_requires click.testing
 
@@ -56,6 +56,9 @@ technologies and more.
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt2
+- set Conflicts to python2 module instead of Provides
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - new version 1.1.2 (with rpmrb script)
 
