@@ -1,6 +1,6 @@
 Name: opusfile
 Version: 0.12.0.3.4174
-Release: alt1
+Release: alt2
 
 Summary: A high-level API for decoding and seeking within .opus files
 License: BSD-3-Clause
@@ -21,6 +21,8 @@ decoding and seeking within .opus files on disk or over http(s).
 Summary: Runtime decoder library for .opus streams
 License: BSD-3-Clause
 Group: System/Libraries
+Provides: lib%name = %version
+Obsoletes: lib%name < %version
 
 %description -n lib%{name}0
 This package contains %name shared library for .opus streams.
@@ -124,6 +126,10 @@ EOF
 %endif
 
 %changelog
+* Sun Nov 08 2020 Dmitry V. Levin <ldv@altlinux.org> 0.12.0.3.4174-alt2
+- Made libopusfile0 Provide+Obsolete libopusfile to facilitate replacement
+  of the removed libopusfile package with libopusfile0 (closes: #39223).
+
 * Tue Oct 13 2020 Dmitry V. Levin <ldv@altlinux.org> 0.12.0.3.4174-alt1
 - v0.11-5-gd2577d7 -> v0.12-3-g4174c26.
 - Renamed subpackages:
