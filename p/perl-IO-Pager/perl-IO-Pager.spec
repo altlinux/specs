@@ -1,3 +1,4 @@
+BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
 #
 #   - IO::Pager -
@@ -15,7 +16,7 @@
 %define _enable_test 1
 
 Name: perl-IO-Pager
-Version: 1.03
+Version: 2.10
 Release: alt1
 
 Summary: Select a pager, optionally pipe it output if destination is a TTY
@@ -30,7 +31,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/J/JP/JPIERCE/%{module}-%{version}.tgz
 
 #BuildRequires: perl(Term/Pager.pm)
-BuildRequires: less perl-devel perl(bignum.pm) perl(Term/ReadKey.pm) perl(Term/Cap.pm)
+BuildRequires: less perl-devel perl(bignum.pm) perl(Term/ReadKey.pm) perl(Term/Cap.pm) perl(Pod/Man.pm)
 
 %description
 IO::Pager is lightweight and can be used to locate an available pager
@@ -41,6 +42,16 @@ IO::Pager subclasses are designed to programmatically decide whether
 or not to pipe a filehandle's output to a program specified in $ENV{PAGER}.
 Subclasses are only required to support filehandle output methods and close,
 namely
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description scripts
+scripts for %name
+
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -56,7 +67,15 @@ sed -i 's,!/bin/env perl,!/usr/bin/perl,' lib/IO/Pager/tp
 %doc README CHANGES
 %perl_vendor_privlib/IO/
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
+- automated CPAN update
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
