@@ -1,7 +1,7 @@
 %define oname Flask-Versioned
 Name: python3-module-flask-versioned
 Version: 0.9.4.git
-Release: alt1
+Release: alt2
 
 Summary: Flask plugin to rewrite file paths to add version info.
 
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
-%py3_use setuptools
+#py3_use setuptools
 %py3_use flask
 
 %description
@@ -43,6 +43,9 @@ static content.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.4.git-alt2
+- drop setuptools requires
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.4.git-alt1
 - cleanup spec
 
