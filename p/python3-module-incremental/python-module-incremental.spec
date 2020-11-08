@@ -1,94 +1,53 @@
+%define oname incremental
 %def_without check
-%def_without python3
 %def_with bootstrap
 
-%define modulename incremental
-Name: python-module-incremental
+Name: python3-module-incremental
 Version: 17.5.0
 Release: alt4
 
 Summary: Incremental is a small library that versions your Python project
 
-Url: https://pypi.python.org/pypi/incremental
 License: ASL 2.0
-Group: Development/Python
-
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/incremental
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/twisted/incremental/archive/incremental-%version.tar.gz
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-
-BuildRequires: python-devel python-module-setuptools
 
 BuildArch: noarch
 
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+#BuildPreReq: python3-devel python3-module-setuptools
 
 %if_with bootstrap
-%add_python_req_skip twisted
-%if_with python3
 %add_python3_req_skip twisted.python.compat twisted.python.filepath twisted.trial.unittest
 %endif
-%endif
-
-#setup_python_module %modulename
 
 %description
 Incremental is a small library that versions your Python projects.
 
-%if_with python3
-%package -n python3-module-incremental
-Summary: Incremental is a small library that versions your Python project
-Group: Development/Python3
-
-%description -n python3-module-incremental
-Incremental is a small library that versions your Python projects.
-%endif
-
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+%python3_prune
 
 %files
 %doc README.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-incremental
-%doc README.rst
 %python3_sitelibdir/*
-%endif
 
 
 %changelog
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 17.5.0-alt4
-- build python2 only
+- build python3 package separately
 
 * Mon Apr 08 2019 Grigory Ustinov <grenka@altlinux.org> 17.5.0-alt3
 - Bootstrap for python3.7.
