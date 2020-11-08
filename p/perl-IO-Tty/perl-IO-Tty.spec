@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Tty
 Name: perl-%dist
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: interface to pseudo tty's
@@ -39,6 +39,9 @@ IO::Tty and IO::Pty provide an interface to pseudo tty's
 %perl_vendor_autolib/IO
 
 %changelog
+* Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
