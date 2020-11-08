@@ -15,7 +15,7 @@
 
 Name: glusterfs8
 Version: %major
-Release: alt2
+Release: alt3
 
 Summary: Cluster File System
 
@@ -37,6 +37,7 @@ Source8: glustereventsd.init
 # Said all is ok: https://bugzilla.redhat.com/show_bug.cgi?id=1473968
 #ExcludeArch: %ix86
 
+AutoProv: no
 %add_python3_path %_libexecdir/glusterfs/python
 
 # fixme:
@@ -160,6 +161,7 @@ Provides: glusterfs-georeplication = %EVR
 Conflicts: glusterfs3-geo-replication
 Conflicts: glusterfs6-geo-replication
 Conflicts: glusterfs7-geo-replication
+AutoProv: no
 
 %description georeplication
 GlusterFS is a clustered file-system capable of scaling to several
@@ -293,6 +295,7 @@ Provides: glusterfs-gfevents = %EVR
 Conflicts: glusterfs3-events
 Conflicts: glusterfs6-events
 Conflicts: glusterfs7-events
+AutoProv: no
 
 %description gfevents
 GlusterFS Events
@@ -732,6 +735,9 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 #files checkinstall
 
 %changelog
+* Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 8.2-alt3
+- disable python module provides from non module packages
+
 * Wed Oct 14 2020 Vitaly Lipatov <lav@altlinux.ru> 8.2-alt2
 - fix upgrade instruction: use epm prescription
 - add missed conflicts to glusterfs8-cli

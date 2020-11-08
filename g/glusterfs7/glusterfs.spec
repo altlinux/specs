@@ -15,7 +15,7 @@
 
 Name: glusterfs7
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -37,6 +37,7 @@ Source8: glustereventsd.init
 # Said all is ok: https://bugzilla.redhat.com/show_bug.cgi?id=1473968
 #ExcludeArch: %ix86
 
+AutoProv: no
 %add_python3_path %_libexecdir/glusterfs/python
 
 # fixme:
@@ -140,6 +141,7 @@ Requires: rsync >= 3.0.0
 Provides: glusterfs-georeplication = %EVR
 Conflicts: glusterfs3-geo-replication
 Conflicts: glusterfs6-geo-replication
+AutoProv: no
 
 %description georeplication
 GlusterFS is a clustered file-system capable of scaling to several
@@ -253,6 +255,7 @@ Provides: %name-events = %EVR
 Provides: glusterfs-gfevents = %EVR
 Conflicts: glusterfs3-events
 Conflicts: glusterfs6-events
+AutoProv: no
 
 %description gfevents
 GlusterFS Events
@@ -655,8 +658,10 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %_libdir/libglusterfs.so.%somajor
 %_libdir/libglusterfs.so.%somajor.*
 
+%if 0
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
+%endif
 
 %if_with ocf
 %files resource-agents
@@ -666,6 +671,10 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %endif
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt2
+- disable python module provides from non module packages
+- don't pack python3-module-glusterfs7 (in favor glusterfs8's one)
+
 * Sun Oct 04 2020 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt1
 - new version 7.8 (with rpmrb script)
 
