@@ -1,9 +1,9 @@
-%def_with python3
+%def_without python3
 
 %define modulename Automat
 Name: python-module-automat
 Version: 20.2.0
-Release: alt1
+Release: alt2
 
 Summary: Self-service finite-state machines for the programmer on the go
 
@@ -62,7 +62,7 @@ popd
 
 %install
 %python_install
-rm -f %buildroot%python_sitelibdir/automat/_test/test_visualize.*
+rm -rf %buildroot%python_sitelibdir/automat/_test/
 rm -f %buildroot%python_sitelibdir/automat/_visualize.*
 
 %if_with python3
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 20.2.0-alt2
+- build python2 only, don't pack tests
+
 * Thu Mar 26 2020 Mikhail Gordeev <obirvalger@altlinux.org> 20.2.0-alt1
 - new version (20.2.0) with rpmgs script
 
