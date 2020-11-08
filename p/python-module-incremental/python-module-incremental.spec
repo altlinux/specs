@@ -5,7 +5,7 @@
 %define modulename incremental
 Name: python-module-incremental
 Version: 17.5.0
-Release: alt4
+Release: alt5
 
 Summary: Incremental is a small library that versions your Python project
 
@@ -27,6 +27,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+# extra requires (see setup.py)
+%add_python_req_skip click
 
 %if_with bootstrap
 %add_python_req_skip twisted
@@ -87,6 +90,9 @@ popd
 
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 17.5.0-alt5
+- make click require optional
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 17.5.0-alt4
 - build python2 only
 
