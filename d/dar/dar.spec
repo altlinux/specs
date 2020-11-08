@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.6.10
+Version: 2.6.12
 Release: alt1
 
 Summary: DAR - Disk ARchive tool
@@ -98,6 +98,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.12-alt1
+- new version 2.6.12 (with rpmrb script)
+
 * Wed Aug 26 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.10-alt1
 - new version 2.6.10 (with rpmrb script)
 
