@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.3
-Release: alt2
+Release: alt3
 
 Summary: Python/Twisted client for Redis key-value store
 License: BSD
@@ -12,10 +12,9 @@ BuildArch: noarch
 
 Source0: %oname-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-tools-2to3
-
-%py3_requires twisted.trial
 
 
 %description
@@ -36,6 +35,8 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 mkdir -p %buildroot/%_sysconfdir/bash_completion.d
 
 %python3_install
+%python3_prune
+rm -fv %buildroot%python3_sitelibdir/txredis/testing.py
 
 %files
 %doc *.txt *.rst
@@ -43,6 +44,9 @@ mkdir -p %buildroot/%_sysconfdir/bash_completion.d
 
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt3
+- NMU: don't pack tests
+
 * Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3-alt2
 - disable python2
 
