@@ -12,7 +12,7 @@
 
 Name: dracut
 Version: 050
-Release: alt3.git.831e31
+Release: alt4.git.831e31
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -443,6 +443,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Sun Nov 08 2020 Alexey Shabalin <shaba@altlinux.org> 050-alt4.git.831e31
+- Fixed path /usr/lib/udev -> /lib/udev
+
 * Sat Nov 07 2020 Alexey Shabalin <shaba@altlinux.org> 050-alt3.git.831e31
 - Install dracut, dracut-catimages, mkinitrd to sbindir
 - Delete requires to systemd
