@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 19.6.0
-Release: alt2
+Release: alt3
 
 Summary: werkzeug + twisted.web
 License: MIT
@@ -11,6 +11,7 @@ URL:     https://github.com/twisted/klein
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools python3-module-incremental
 
@@ -36,6 +37,7 @@ components like Werkzeug and Twisted.
 
 %install
 %python3_install
+%python3_prune
 
 %files
 %python3_sitelibdir/%modulename/
@@ -43,6 +45,9 @@ components like Werkzeug and Twisted.
 %doc README.rst
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 19.6.0-alt3
+- NMU: don't pack tests
+
 * Thu Mar 26 2020 Mikhail Gordeev <obirvalger@altlinux.org> 19.6.0-alt2
 - Fix requires to typing in setup.py
 
