@@ -1,7 +1,7 @@
 %define  modulename treq
 Name:    python-module-%modulename
 Version: 18.6.0
-Release: alt3
+Release: alt4
 
 Summary: Python requests like API built on top of Twisted's HTTP client.
 License: MIT
@@ -45,12 +45,16 @@ Twisted.
 %python3_install
 # cleanup tests
 rm -rf %buildroot%python3_sitelibdir/%modulename/test
+rm -rf %buildroot%python3_sitelibdir/%modulename/testing.py
 
 %files -n python3-module-%modulename
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 18.6.0-alt4
+- NMU: drop testing.py in additional to removed tests
+
 * Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 18.6.0-alt3
 - removed python2 support
 - removed tests from python3-module-treq package
