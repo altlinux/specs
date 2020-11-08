@@ -1,8 +1,10 @@
 %define oname mock
 
+%def_with check
+
 Name: python3-module-mock
-Version: 2.0.0
-Release: alt2
+Version: 4.0.2
+Release: alt1
 
 Summary: A Python Mocking and Patching Library for Testing
 
@@ -19,12 +21,20 @@ BuildRequires(pre):  rpm-build-intro >= 2.2.5
 BuildRequires(pre):  rpm-build-python3
 BuildRequires: python3-module-pbr python3-module-setuptools
 
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
+
 %description
-Mock is a Python module that provides a core mock class. It removes the need
-to create a host of stubs throughout your test suite. After performing an
-action, you can make assertions about which methods / attributes were used and
-arguments they were called with. You can also specify return values and set
-needed attributes in the normal way.
+mock is a library for testing in Python.
+It allows you to replace parts of your system under test with mock objects
+and make assertions about how they have been used.
+
+mock is now part of the Python standard library,
+available as unittest.mock in Python 3.3 onwards.
+
+This package contains a rolling backport of the standard library mock code
+compatible with Python 3.6 and up.
 
 %prep
 %setup
@@ -36,11 +46,18 @@ needed attributes in the normal way.
 %python3_install
 %python3_prune
 
+%check
+export PYTHONPATH=$(pwd)
+py.test3 -vv
+
 %files
-%doc docs/index.txt README.rst LICENSE.txt NEWS
+%doc README.rst LICENSE.txt
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
+- new version 4.0.2 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2
 - build python3 package separately, cleanup spec
 
