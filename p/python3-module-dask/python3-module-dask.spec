@@ -3,7 +3,7 @@
 
 Name: python3-module-dask
 Version: 2.30.0
-Release: alt1
+Release: alt2
 
 License: BSD
 Group: Development/Python
@@ -18,7 +18,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+BuildRequires(pre): rpm-build-python3
 
 # TODO
 %add_python3_req_skip distributed.client distributed.utils_test
@@ -36,6 +37,7 @@ Dask is a flexible parallel computing library for analytics.
 
 %install
 %python3_install
+%python3_prune
 
 %if_with test
 %check
@@ -46,6 +48,9 @@ Dask is a flexible parallel computing library for analytics.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.30.0-alt2
+- don't pack tests
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.30.0-alt1
 - new version 2.30.0 (with rpmrb script)
 
