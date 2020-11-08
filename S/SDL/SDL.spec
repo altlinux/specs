@@ -1,6 +1,6 @@
 Name: SDL
 Version: 1.2.14
-Release: alt8
+Release: alt9
 
 Summary: Simple DirectMedia Layer
 License: LGPL
@@ -51,9 +51,8 @@ to develop %name applications.
 %setup
 %patch -p1
 
-cat acinclude/* > aclocal.m4
-
 %build
+cat acinclude/* > aclocal.m4
 autoconf
 %configure \
 	--disable-nas \
@@ -85,6 +84,9 @@ autoconf
 # TODO: 1.2.15+
 
 %changelog
+* Sun Nov 08 2020 Michael Shigorin <mike@altlinux.org> 1.2.14-alt9
+- srpm_cleanup related ftbfs fixup
+
 * Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1.2.14-alt8
 - fixed upstream bug #894 with upstream rev#4aa31b9207f2
 
