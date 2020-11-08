@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-LibMagic
 Name: perl-File-LibMagic
-Version: 1.16
-Release: alt1.1
+Version: 1.23
+Release: alt1
 
 Summary: Perl wrapper for libmagic
 License: GPL or Artistic
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libmagic-devel perl-devel zlib-devel perl(ExtUtils/CBuilder.pm) perl(Test/Fatal.pm)
+BuildRequires: libmagic-devel perl-devel zlib-devel perl(ExtUtils/CBuilder.pm) perl(Test/Fatal.pm) perl(Config/AutoConf.pm)
 
 %description
 The "File::LibMagic" is a simple perl interface to libmagic from
@@ -22,7 +22,7 @@ the file-4.x package from Christos Zoulas (ftp://ftp.astron.com/pub/file/).
 %setup -q -n %{dist}-%{version}
 
 #if [ %version == 1.16 ];then
-sed -i -e s,us-ascii,7bit, t/oo-api.t
+sed -i -e s,us-ascii,7bit, t/oo-api.t t/constructor-params.t
 #fi
 
 %build
@@ -37,6 +37,9 @@ sed -i -e s,us-ascii,7bit, t/oo-api.t
 %perl_vendor_autolib/File
 
 %changelog
+* Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.1
 - rebuild with new perl 5.28.1
 
