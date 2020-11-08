@@ -1,27 +1,27 @@
-%define oname libmagic
+%define oname python-magic
 %define sover 1
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-magic
 Version: 0.4.13
-Release: alt2
+Release: alt3
+
 Summary: File type identification using libmagic
+
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/python-magic/
 
-# https://github.com/ahupp/python-magic.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools 
-%endif
+BuildRequires: python3-module-setuptools
 
-%py_provides magic
-Conflicts: python-module-magic
+%py3_provides %oname
+Provides: python3-module-libmagic = %EVR
+Obsoletes: python3-module-libmagic
+
 Requires: %_libdir/libmagic.so.%sover
 
 %description
@@ -29,48 +29,17 @@ This module uses ctypes to access the libmagic file type identification
 library. It makes use of the local magic database and supports both
 textual and MIME-type output.
 
-%package -n python3-module-%oname
-Summary: File type identification using libmagic
-Group: Development/Python3
-%py3_provides magic
-Conflicts: python3-module-magic
-Requires: %_libdir/libmagic.so.%sover
-
-%description -n python3-module-%oname
-This module uses ctypes to access the libmagic file type identification
-library. It makes use of the local magic database and supports both
-textual and MIME-type output.
-
 %prep
 %setup
-
-%if "%_lib" == "lib64"
-LIB_SUFF=64
-%endif
-sed -i "s|@64@|$LIB_SUFF|" magic.py
+sed -i "s|@64@|%_libsuff|" magic.py
 sed -i "s|@SOVER@|%sover|" magic.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+%python3_prune
 
 %if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -78,24 +47,16 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test ||:
-%if_with python3
-pushd ../python3
-python3 setup.py test ||:
-popd
-%endif
+python3 setup.py test || :
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.13-alt3
+- build python3 package separately, under more correct name
+
 * Mon Feb 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.13-alt2
 - fixed build on aarch64
 
