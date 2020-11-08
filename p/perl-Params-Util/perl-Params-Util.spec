@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Params-Util
 Name: perl-%dist
-Version: 1.101
+Version: 1.102
 Release: alt1
 
 Summary: Simple standalone param-checking functions
@@ -33,6 +33,9 @@ checking parameters a hell of a lot easier.
 %perl_vendor_autolib/Params
 
 %changelog
+* Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.102-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.101-alt1
 - automated CPAN update
 
