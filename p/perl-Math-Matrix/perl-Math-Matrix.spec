@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Math/Complex.pm) perl(Module/Signature.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(overload.pm) perl-podlators
@@ -10,13 +11,13 @@ BuildRequires: perl(Math/Complex.pm) perl(Module/Signature.pm) perl(Scalar/Util.
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    0.92
+Release:    alt1
 
 Summary:    Matrix data type (transpose, multiply etc)
 License:    GPL or Artistic
 Group:      Development/Perl
-Source0:    https://cpan.metacpan.org/modules/by-module/Math/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/P/PJ/PJACKLAM/%{upstream_name}-%{version}.tar.gz
 Url:        https://metacpan.org/release/%{upstream_name}
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -29,7 +30,7 @@ Source44: import.info
 The following methods are available: concat, transpose, etc.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -42,10 +43,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README SIGNATURE
+%doc Changes META.json META.yml README SIGNATURE README.md
 %perl_vendor_privlib/*
 
 %changelog
+* Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1
+- automated CPAN update
+
 * Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_1
 - update by mgaimport
 
