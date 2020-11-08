@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt3
+Release: alt4
 
 Summary: SQLAlchemy dialect for MonetDB
 
@@ -13,6 +13,7 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/sqlalchemy_monetdb/
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -47,6 +48,9 @@ MonetDB dialect for SQLAlchemy.
 %python3_install
 %python3_prune
 
+# there: from sqlalchemy.testing.requirements
+rm -f %buildroot%python3_sitelibdir/%oname/requirements.py
+
 %if_enabled check
 %check
 %python3_test
@@ -55,9 +59,13 @@ python3 run_tests.py
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt4
+- fix requires to tests
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - rebuild with improved python3_prune
 
