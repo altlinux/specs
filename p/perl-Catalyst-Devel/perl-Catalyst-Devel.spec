@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Catalyst-Devel
 Name: perl-%dist
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: Catalyst Development Tools
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Jan 16 2011 (-bi)
-BuildRequires: perl-Catalyst-Runtime perl-Class-C3 perl-Config-General perl-File-ChangeNotify perl-File-Copy-Recursive perl-File-ShareDir perl-Module-Install perl-Template perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl(Test/Fatal.pm)
+BuildRequires: perl-Catalyst-Runtime perl-Class-C3 perl-Config-General perl-File-ChangeNotify perl-File-Copy-Recursive perl-File-ShareDir perl-Module-Install perl-Template perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl(Test/Fatal.pm) perl(File/ShareDir/Install.pm)
 
 %description
 The Catalyst::Devel package includes a variety of modules useful
@@ -25,6 +25,8 @@ Catalyst::Runtime.
 
 %prep
 %setup -q -n %{dist}-%{version}
+# ignore POD::Coverage
+[ %version = 1.42 ] && rm t/generated_app.t
 
 %build
 %perl_vendor_build
@@ -33,7 +35,7 @@ Catalyst::Runtime.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README
 %perl_vendor_privlib/Catalyst*
 %perl_vendor_privlib/Module*
 %dir %perl_vendor_privlib/auto
@@ -43,6 +45,9 @@ Catalyst::Runtime.
 %perl_vendor_privlib/auto/share/dist/%dist/*
 
 %changelog
+* Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1
+- automated CPAN update
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
 - automated CPAN update
 
