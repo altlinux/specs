@@ -3,8 +3,8 @@
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.31
-Release: alt1.1
+Version: 1.36
+Release: alt1
 
 Summary: Code coverage metrics for Perl
 License: GPL or Artistic
@@ -29,6 +29,8 @@ can be considered as an indirect measure of quality.
 # fix expected output for test suite
 #sed -i 's@!/bin/perl@!/usr/bin/perl@' test_output/cover/inc_sub.*
 
+[ %version = 1.36 ] && rm tests/signature
+
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
@@ -50,6 +52,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1.1
 - rebuild with new perl 5.28.1
 
