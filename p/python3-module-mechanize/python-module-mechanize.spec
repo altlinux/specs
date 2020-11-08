@@ -1,90 +1,49 @@
 %define oname mechanize
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 0.4.3
+Name: python3-module-%oname
+Version: 0.4.5
 Release: alt1
 
 Summary: Stateful programmatic web browsing
 
-License: BSD / ZPL
-Group: Development/Other
-Url: http://wwwsearch.sourceforge.net/mechanize/
+License: BSD ZPL
+Group: Development/Python3
+Url: https://github.com/python-mechanize/mechanize
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-%setup_python_module %oname
-
-# Source-url: https://pypi.io/packages/source/m/%oname/%oname-%version.tar.gz
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-#BuildPreReq: rpm-build-compat >= 1.2
-
-# manually removed: all
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
-
-#BuildRequires: python-module-setuptools
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
-%endif
 
 %description
-Stateful programmatic web browsing in Python,
-after Andy Lester's Perl module WWW::Mechanize.
-
-%package -n python3-module-%oname
-Summary: Stateful programmatic web browsing
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Stateful programmatic web browsing in Python,
 after Andy Lester's Perl module WWW::Mechanize.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-pushd ../python3
-popd
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
-#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc examples/
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.5-alt1
+- new version 0.4.5 (with rpmrb script)
+
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.3-alt2
+- build python3 package separately
+
 * Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 0.4.3-alt1
 - new version 0.4.3 (with rpmrb script)
 
