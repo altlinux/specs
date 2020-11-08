@@ -2,18 +2,23 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.46
+%define ver_major 1.48
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
 %def_enable docs
 %def_enable introspection
-%def_enable installed_tests
+%def_disable installed_tests
+%def_enable xft
 %def_enable fontconfig
+%def_enable freetype
+%def_enable cairo
+%def_enable libthai
+%def_disable sysprof
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -41,6 +46,7 @@ Obsoletes: %_name < %version
 Obsoletes: gscript
 
 # From meson.build
+%define meson_ver 0.54
 %define glib_ver 2.60
 %define cairo_ver 1.12.10
 %define gtk_doc_ver 1.0
@@ -52,19 +58,20 @@ Obsoletes: gscript
 %define thai_ver 0.1.9
 %define fribidi_ver 0.19.7
 
-BuildRequires(pre): meson rpm-build-gnome
+BuildRequires(pre): meson >= %meson_ver rpm-build-gnome
 BuildRequires: gcc-c++
-BuildRequires: libfreetype-devel >= %freetype_ver
-BuildRequires: libXft-devel >= %xft_ver
-BuildRequires: libcairo-devel >= %cairo_ver libcairo-gobject-devel
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libharfbuzz-devel >= %hb_ver
 BuildRequires: libfribidi-devel >= %fribidi_ver
-BuildRequires: libthai-devel >= %thai_ver}
 BuildRequires: help2man /proc
+%{?_enable_xft:BuildRequires: libXft-devel >= %xft_ver}
 %{?_enable_fontconfig:BuildRequires: fontconfig-devel >= %fontconfig_ver}
+%{?_enable_freetype:BuildRequires: libfreetype-devel >= %freetype_ver}
+%{?_enable_cairo:BuildRequires: libcairo-devel >= %cairo_ver libcairo-gobject-devel}
+%{?_enable_libthai:BuildRequires: libthai-devel >= %thai_ver}
 %{?_enable_docs:BuildRequires: gtk-doc >= %gtk_doc_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
+%{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell fonts-otf-adobe-source-sans-pro
 BuildRequires: fonts-ttf-google-droid-sans fonts-ttf-thai-scalable-waree}
 
@@ -138,10 +145,16 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 %build
 %meson \
-    %{?_enable_fontconfig:-Duse_fontconfig=enabled} \
-    %{?_enable_introspection:-Dintrospection=true} \
+    %{?_disable_xft:-Dxft=disabled} \
+    %{?_disable_fontconfig:-Dfontconfig=disabled} \
+    %{?_disable_freetype:-Dfreetype=disabled} \
+    %{?_disable_cairo:-Dcairo=disabled} \
+    %{?_disable_libthai:-Dlibthai=disabled} \
+    %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_enable_docs:-Dgtk_doc=true} \
-    %{?_enable_installed_tests:-Dinstall-tests=true}
+    %{?_enable_installed_tests:-Dinstall-tests=true} \
+    %{?_enable_sysprof:-Dsysprof=enabled}
+%nil
 %meson_build
 
 %install
@@ -198,6 +211,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Nov 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt1
+- 1.48.0
+
+* Wed Sep 30 2020 Yuri N. Sedunov <aris@altlinux.org> 1.47.0-alt1
+- 1.47.0
+
 * Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 1.46.2-alt1
 - 1.46.2
 
