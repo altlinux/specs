@@ -79,7 +79,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.6
-Release: alt4
+Release: alt5
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -421,7 +421,7 @@ This package contains dbus services and utils from systemd:
 
 %package networkd
 Group: System/Base
-Summary: System service that manages networks
+Summary: System daemon that manages network configurations
 Conflicts: %name < 1:214-alt13
 Requires: %name = %EVR
 Requires: iproute2
@@ -1737,7 +1737,6 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_unitdir/systemd-network-generator.service
 %_unitdir/*resolv*
 %_unitdir/*/*resolv*
-/lib/systemd/network/80-container-host0.network
 /lib/systemd/network/80-wifi-adhoc.network
 /lib/systemd/network/80-wifi-ap.network.example
 /lib/systemd/network/80-wifi-station.network.example
@@ -1779,6 +1778,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/systemd/systemd-import-fs
 /lib/systemd/systemd-importd
 /lib/systemd/systemd-pull
+/lib/systemd/network/80-container-host0.network
 /lib/systemd/network/80-container-ve.network
 /lib/systemd/network/80-container-vz.network
 /lib/systemd/network/80-vm-vt.network
@@ -1979,6 +1979,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Sun Nov 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt5
+- add cloud@altlinux.org key to import-pubring.gpg
+
 * Mon Oct 19 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt4
 - revert kernelinstalldir path /usr/lib/kernel/install.d -> /lib/kernel/install.d
 - build systemd-boot for arm
