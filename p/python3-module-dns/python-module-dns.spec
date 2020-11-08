@@ -1,25 +1,31 @@
-%define modulename dns
+%define oname dnspython
 
 # Testing requires network access
 %def_without check
 
-Name: python3-module-%modulename
-Version: 1.16.0
+Name: python3-module-dns
+Version: 2.0.0
 Release: alt1
 
-Summary: DNS toolkit (Python 3)
+Summary: DNS toolkit
 
 License: BSD-like
 Group: Development/Python
 Url: http://www.dnspython.org
 
-BuildArch: noarch
-
-# git://github.com/rthalley/dnspython.git
-# Source-url: http://www.dnspython.org/kits/%version/dnspython-%version.tar.gz
+# Source-url: %__pypi_url %oname
+# Source-url: https://pypi.org/packages/source/d/dnspython/dnspython-%version.zip
 Source: %name-%version.tar
 
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+
+# optional
+%add_python3_req_skip curio curio.socket
 
 %description
 dnspython is a DNS toolkit for Python. It supports almost all
@@ -40,19 +46,19 @@ rm -f examples/._*
 
 %install
 %python3_install
+%python3_prune
 
-%if_with check
 %check
-pushd tests
-%make PYTHONPATH="../:$PYTHONPATH" check
-popd
-%endif
+%make PYTHONPATH="../:$PYTHONPATH" check -C tests
 
 %files
 %doc README.md examples/ LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0 (with rpmrb script)
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.16.0-alt1
 - new version 1.16.0 (with rpmrb script)
 - build from tarball
