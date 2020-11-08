@@ -1,77 +1,43 @@
 %def_without bootstrap
 
-%define modulename lxml
+%define oname lxml
 
-%def_without python3
-
-Name: python-module-lxml
+Name: python3-module-lxml
 Version: 4.5.0
 Release: alt3
 
-Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
-
-# Source-git: https://github.com/lxml/lxml.git
-Source: %name-%version.tar
+Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
 
 License: BSD-3-Clause AND GPL-2.0-or-later
-Group: Development/Python
+Group: Development/Python3
 URL: http://codespeak.net/lxml
 
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
 BuildPreReq: libxslt-devel zlib-devel
-# see doc/build.txt
-BuildPreReq: python-module-Cython >= 0.18
-BuildPreReq: python-modules-wsgiref
-%if_without bootstrap
-# Used for tests only, but depends on lxml itself,
-# which is not yet built in a bootstrap environment.
-BuildPreReq: python-module-cssselect
-%endif
 
-%setup_python_module lxml
-%py_requires cssselect
-
-BuildPreReq: python-devel
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-# see doc/build.txt
-BuildPreReq: python3-module-Cython >= 0.18
-BuildPreReq: python3-devel
 %if_without bootstrap
 # Used for tests only, but depends on lxml itself,
 # which is not yet built in a bootstrap environment.
 BuildPreReq: python3-module-cssselect
 %endif
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+# see doc/build.txt
+BuildRequires: python3-module-Cython >= 0.18
+BuildRequires: python3-devel
+
 %add_python3_req_skip etree
-%endif
+#py3_requires cssselect
 
 %description
-lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.  It
-provides safe and convenient access to these libraries using the ElementTree
-API.
+lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.
+It provides safe and convenient access to these libraries using the ElementTree API.
 
 It extends the ElementTree API significantly to offer support for XPath,
 RelaxNG, XML Schema, XSLT, C14N and much more.
-
-%if_with python3
-%package -n python3-module-%modulename
-Summary: XML processing library combining libxml2/libxslt with the ElementTree API (Python 3)
-Group: Development/Python3
-%py3_requires cssselect
-# Prepare for the future default method (to test the result earlier):
-%python3_req_hier
-
-%description -n python3-module-%modulename
-lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.  It
-provides safe and convenient access to these libraries using the ElementTree
-API.
-
-It extends the ElementTree API significantly to offer support for XPath,
-RelaxNG, XML Schema, XSLT, C14N and much more.
-
-This is module for use with Python 3.
-%endif
 
 
 %package doc
@@ -91,32 +57,18 @@ This package contains documentation for lxml.
 
 %prep
 %setup
-%if_with python3
-cp -a . ../python3
-%endif
 
 %build
 export LC_ALL=en_US.UTF-8
 # see Makefile
-%python_build_debug --with-cython
-%if_with python3
-pushd ../python3
 sed -i 's|/usr/bin/env python.*|/usr/bin/env python3|' \
 	update-error-constants.py test.py
 sed -i 's|/usr/bin/python|/usr/bin/python3|' \
 	doc/rest2latex.py doc/rest2html.py
 %python3_build --with-cython
-popd
-%endif
 
 %install
-export LC_ALL=en_US.UTF-8
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
 export LC_ALL=en_US.UTF-8
@@ -126,32 +78,19 @@ CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
 FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ;
 cp -l build/lib.linux-*/lxml/*.so src/lxml/
-python2 test.py -p -v
-PYTHONPATH=src python2 src/lxml/tests/selftest.py
-PYTHONPATH=src python2 src/lxml/tests/selftest2.py
-%if_with python3
-pushd ../python3
-cp -l build/lib.linux-*/lxml/*.so src/lxml/
 python3 test.py -p -v
 PYTHONPATH=src python3 src/lxml/tests/selftest.py
 PYTHONPATH=src python3 src/lxml/tests/selftest2.py
-popd
-%endif
 
 %files
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%modulename
 %python3_sitelibdir/*
-%endif
 
 %files doc
 %doc doc samples
 
 %changelog
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 4.5.0-alt3
-- build python2 only
+- build python3 package separately, cleanup spec
 
 * Wed Apr 29 2020 Stanislav Levin <slev@altlinux.org> 4.5.0-alt2
 - Fixed FTBFS.
