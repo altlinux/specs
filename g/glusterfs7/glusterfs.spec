@@ -15,7 +15,7 @@
 
 Name: glusterfs7
 Version: %major
-Release: alt2
+Release: alt3
 
 Summary: Cluster File System
 
@@ -138,6 +138,8 @@ Summary: GlusterFS Geo-replication
 Group: System/Base
 Requires: %name = %EVR
 Requires: rsync >= 3.0.0
+%add_python3_req_skip gluster gluster.cliutils
+Requires: python3-module-%name = %EVR
 Provides: glusterfs-georeplication = %EVR
 Conflicts: glusterfs3-geo-replication
 Conflicts: glusterfs6-geo-replication
@@ -251,6 +253,8 @@ Summary: GlusterFS Events
 Group: System/Servers
 BuildArch: noarch
 Requires: %name-server = %EVR
+%add_python3_req_skip gluster
+Requires: python3-module-%name = %EVR
 Provides: %name-events = %EVR
 Provides: glusterfs-gfevents = %EVR
 Conflicts: glusterfs3-events
@@ -308,6 +312,7 @@ BuildArch: noarch
 Provides: python3-module-glusterfs = %EVR
 Conflicts: python3-module-glusterfs3
 Conflicts: python3-module-glusterfs6
+AutoProv: no
 
 %description -n python3-module-%name
 This package provides Python API for %name
@@ -658,10 +663,8 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %_libdir/libglusterfs.so.%somajor
 %_libdir/libglusterfs.so.%somajor.*
 
-%if 0
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
-%endif
 
 %if_with ocf
 %files resource-agents
@@ -671,6 +674,9 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %endif
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt3
+- pack python3-module-glusterfs7 again, but disable provides
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt2
 - disable python module provides from non module packages
 - don't pack python3-module-glusterfs7 (in favor glusterfs8's one)
