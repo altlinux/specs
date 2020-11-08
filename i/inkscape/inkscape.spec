@@ -1,6 +1,7 @@
 %define major 1.0
 %define pre beta1
 
+%def_with shared
 %def_without gnome_vfs
 %def_without dbus
 %def_disable check
@@ -10,7 +11,7 @@
 
 Name: inkscape
 Version: %major.1
-Release: alt5
+Release: alt6
 
 Summary: A Vector Drawing Application
 
@@ -25,6 +26,7 @@ Source: %name-%version.tar
 
 Patch: %name-dia.patch
 Patch6: fix_atomic_rel_error.patch
+Patch7: 0001-CMakeLists.txt-move-GNUInstallDirs-after-project-NAM.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -70,6 +72,7 @@ Requires: gnome-icon-theme
 # TODO
 #Requires: inkscape-data = %EVR
 Requires: inkscape-tutorial
+Requires: lib%name = %EVR
 
 %description
 Inkscape is a SVG based generic vector-drawing program for Linux/Unix
@@ -85,6 +88,7 @@ Inkscape -- это программа векторного рисования о
 %package viewer
 Summary: Viewer for Inkscape files
 Group: Graphics
+Requires: lib%name = %EVR
 
 %description viewer
 inkview is standalone viewer for Inkscape files (SVG).
@@ -97,6 +101,13 @@ BuildArch: noarch
 
 %description data
 Inkview tutorial.
+
+%package -n lib%name
+Summary: Inkscape shared library
+Group: System/Libraries
+
+%description -n lib%name
+Inkscape shared library.
 
 
 %package tutorial
@@ -120,10 +131,17 @@ Run checkinstall tests for %name.
 %prep
 %setup
 %patch6 -p1
+%patch7 -p1
 
 %build
 %cmake_insource \
+%if_with shared
+    -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_SKIP_RPATH=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH=OFF \
+%else
     -DBUILD_SHARED_LIBS=OFF \
+%endif
 %if_with graphicsmagick
     -DWITH_IMAGE_MAGICK=OFF \
     -DWITH_GRAPHICS_MAGICK=ON \
@@ -170,10 +188,16 @@ true
 %_man1dir/inkscape*
 #_mandir/??/man1/inkscape.??.1.*
 %_datadir/metainfo/org.inkscape.Inkscape.appdata.xml
+/usr/share/bash-completion/completions/inkscape
 
 %files viewer
 %_bindir/inkview
 %_man1dir/inkview*
+
+%if_with shared
+%files -n lib%name
+%_libdir/inkscape/libinkscape_base.so
+%endif
 
 %files tutorial
 %_datadir/inkscape/tutorials/
@@ -181,6 +205,11 @@ true
 %files checkinstall
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt6
+- build libinkscape to share code between inkscape and inkview
+- enable build shared lib
+- pack bash-completion file
+
 * Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt5
 - build with GraphicsMagick instead of ImageMagick (all reasons of fork in 2002)
 
