@@ -1,25 +1,30 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname pyparsing
 
 %def_without check
 
-Name: python-module-%oname
+Name: python3-module-pyparsing
 Version: 2.4.2
 Release: alt2
 
 Summary: Python parsing module
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 URL: https://pypi.org/project/pyparsing
+
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+
 %if_with check
-BuildRequires: python2.7(coverage)
+BuildRequires: python3(coverage)
+BuildRequires: python3(tox)
 %endif
 
-Source: %name-%version.tar
 
 %description
 The parsing module is an alternative approach to creating and executing
@@ -29,27 +34,36 @@ that client code uses to construct the grammar directly in Python code.
 
 %prep
 %setup
-# don't pin deps and remove extra
-sed -i \
--e 's/==/>=/g' \
--e '/tox/d' \
-requirements-dev.txt
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
+%python3_prune
+
+%check
+sed -i '/^\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
+commands_pre =\
+    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc CHANGES README.rst
-%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
-%python_sitelibdir/%oname.py
-%python_sitelibdir/%oname.py[oc]
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__/%oname.cpython-*.py*
 
 %changelog
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt2
-- build python2 only
+- build python3 package separately, cleanup spec
 
 * Wed Aug 14 2019 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
 - 2.2.0 -> 2.4.2.
