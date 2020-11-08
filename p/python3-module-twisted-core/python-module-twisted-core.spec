@@ -2,12 +2,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %define origname TwistedCore
-%define major 18.9
+%define major 20.3
 %define prefx3 python3-module-twisted
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt2
+Release: alt1
 
 Summary: An asynchronous networking framework written in Python
 
@@ -18,6 +18,8 @@ Url: http://twistedmatrix.com/trac/wiki/TwistedCore
 # Source-url: https://twistedmatrix.com/Releases/Twisted/%major/Twisted-%version.tar.bz2
 Source: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
+
+Conflicts: python-module-twisted-core
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
@@ -49,7 +51,7 @@ netnews, IRC, RDBMSs, desktop environments, and your toaster.
 %package -n %prefx3-core-gui
 Summary: GUI for Twisted Core (Python 3)
 Group: Development/Python3
-Requires: python3-module-twisted-core = %version-%release
+Requires: %name = %EVR
 ####add_python_req_skip pyui wx wxPython gtk Tkinter gnome tkFileDialog tkMessageBox tkSimpleDialog
 %add_python3_req_skip pyui gtk
 
@@ -59,7 +61,7 @@ GUI for Twisted Core
 %package -n %prefx3-core-gui-wx
 Summary: GUI for Twisted Core (wxWidgets) (Python 3)
 Group: Development/Python3
-Requires: python3-module-twisted-core-gui = %version-%release
+Requires: %name = %EVR
 
 %description -n %prefx3-core-gui-wx
 GUI for Twisted Core (wxWidgets)
@@ -67,7 +69,8 @@ GUI for Twisted Core (wxWidgets)
 %package -n %prefx3-core-gui-tk
 Summary: GUI for Twisted Core (TK) (Python 3)
 Group: Development/Python3
-Requires: python3-module-twisted-core-gui = %version-%release
+Requires: python3-module-twisted-core-gui = %EVR
+Requires: %name = %EVR
 
 %description -n %prefx3-core-gui-tk
 GUI for Twisted Core (TK)
@@ -75,7 +78,7 @@ GUI for Twisted Core (TK)
 %package -n %prefx3-core-gui-gnome
 Summary: GUI for Twisted Core (Gnome) (Python 3)
 Group: Development/Python3
-Requires: python3-module-twisted-core-gui = %version-%release
+Requires: python3-module-twisted-core-gui = %EVR
 
 %description -n %prefx3-core-gui-gnome
 GUI for Twisted Core (Gnome)
@@ -101,8 +104,8 @@ Tab completions for Zsh and Twisted Core.
 %package -n %prefx3-news
 Summary: Twisted News is an NNTP server and programming library (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
-Requires: %prefx3-mail
+Requires: %prefx3-core = %EVR
+Requires: %prefx3-mail = %EVR
 
 %description -n %prefx3-news
 Twisted is an event-based framework for internet applications.
@@ -114,8 +117,8 @@ NNTP server is also provided.
 %package -n %prefx3-lore
 Summary: Twisted documentation system (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
-Requires: %prefx3-web
+Requires: %prefx3-core = %EVR
+Requires: %prefx3-web = %EVR
 
 %description -n %prefx3-lore
 Twisted is an event-based framework for internet applications.
@@ -126,7 +129,7 @@ documentation into other formats such as PDF, HTML.
 %package -n %prefx3-runner
 Summary: Twisted Runner process management library and inetd replacement (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
+Requires: %prefx3-core = %EVR
 
 %description -n %prefx3-runner
 Twisted is an event-based framework for internet applications.
@@ -137,8 +140,9 @@ with Python and Twisted, and has an almost full replacement for inetd.
 %package -n %prefx3-mail
 Summary: A Twisted Mail library, server and client (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
-Requires: %prefx3-names
+Requires: %prefx3-core = %EVR
+Requires: %prefx3-names = %EVR
+Conflicts: python-module-twisted-core-mail
 
 %description -n %prefx3-mail
 Twisted is an event-based framework for internet applications.
@@ -165,7 +169,7 @@ pages, also.
 Summary: Twisted SSHv2 implementation (Python 3)
 Group: Development/Python3
 Requires: %prefx3-core
-Requires: python3-module-Crypto
+Conflicts: python-module-twisted-core-conch
 
 %description -n %prefx3-conch
 Twisted is an event-based framework for internet applications.
@@ -190,7 +194,7 @@ GUI for Twisted Conch
 %package -n %prefx3-names
 Summary: A Twisted DNS implementation (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
+Requires: %prefx3-core = %EVR
 
 %description -n %prefx3-names
 Twisted is an event-based framework for internet applications.
@@ -209,7 +213,7 @@ socket module.
 %package -n %prefx3-words
 Summary: Twisted Words contains Instant Messaging implementations (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
+Requires: %prefx3-core = %EVR
 %add_python3_req_skip java javax
 
 %description -n %prefx3-words
@@ -239,7 +243,7 @@ Low-level networking transports and utilities.
 %package -n %prefx3-positioning
 Summary: The Twisted positioning framework (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
+Requires: %prefx3-core = %EVR
 
 %description -n %prefx3-positioning
 Twisted is an event-based framework for internet applications.
@@ -249,7 +253,7 @@ The Twisted positioning framework.
 %package -n %prefx3-logger
 Summary: Classes and functions to do granular logging (Python 3)
 Group: Development/Python3
-Requires: %prefx3-core
+Requires: %prefx3-core = %EVR
 
 %description -n %prefx3-logger
 Twisted is an event-based framework for internet applications.
@@ -261,6 +265,8 @@ Summary: Unit tests for Twisted Core (Python 3)
 Group: Development/Python3
 Requires: python3-module-twisted-core = %EVR
 Provides: python3-module-twisted-core-test = %EVR
+Obsoletes: python3-module-twisted-core-test
+Conflicts: python-module-twisted-core-test
 %add_python3_req_skip idonotexist
 
 %description -n %prefx3-core-tests
@@ -487,6 +493,9 @@ rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 20.3.0-alt1
+- new version 20.3.0 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 18.9.0-alt2
 - build python3 package separately
 
