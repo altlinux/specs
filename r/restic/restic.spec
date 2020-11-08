@@ -2,7 +2,7 @@
 
 %global import_path github.com/restic/restic
 Name:     restic
-Version:  0.9.6
+Version:  0.11.0
 Release:  alt1
 
 Summary:  Fast, secure, efficient backup program
@@ -38,6 +38,10 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
+for f in doc/man/*.?; do
+    install -Dp "$f" "%buildroot/%_man1dir/$(basename "$f")"
+done
+
 %check
 PATH=%buildroot%_bindir:$PATH
 restic version
@@ -55,9 +59,13 @@ diff -qr %name-%version x
 
 %files
 %_bindir/*
+%_man1dir/*.1*
 %doc *.md
 
 %changelog
+* Sun Nov 08 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.11.0-alt1
+- Update to v0.11.0.
+
 * Sun Mar 15 2020 Vitaly Chikunov <vt@altlinux.org> 0.9.6-alt1
 - Update to v0.9.6.
 - Add some tests into %%check.
