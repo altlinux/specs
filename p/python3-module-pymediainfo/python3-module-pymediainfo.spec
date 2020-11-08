@@ -1,10 +1,10 @@
 %define modname pymediainfo
 
 Name: python3-module-%modname
-Version: 4.2.1
+Version: 4.3
 Release: alt1
 
-Summary: A Python wrapper for the mediainfo library
+Summary: A Python 3 wrapper for the mediainfo library
 Group: Development/Python3
 License: MIT
 Url: https://pypi.python.org/pypi/%modname
@@ -36,6 +36,9 @@ This Python3 module provides a wrapper around the MediaInfo library.
 
 
 %changelog
+* Sun Nov 08 2020 Yuri N. Sedunov <aris@altlinux.org> 4.3-alt1
+- 4.3
+
 * Thu Apr 30 2020 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
