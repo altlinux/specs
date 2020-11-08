@@ -1,23 +1,31 @@
 %define oname SQLAlchemy
 
-Name: python-module-%oname
+Name: python3-module-sqlalchemy
 Version: 1.3.20
 Release: alt2
 
 Summary: Python SQL toolkit and Object Relational Mapper
+
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.sqlalchemy.org/
 
+# Source-url: %__pypi_url %oname
 Source: SQLAlchemy-%version.tar
-%py_provides SQLAlchemy
+
+Provides: python3-module-SQLAlchemy = %EVR
+Obsoletes: python3-module-SQLAlchemy
+
+%py3_provides SQLAlchemy
+
+BuildRequires(pre): rpm-build-intro
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
 # in various tests, like in the tests for sphinx).
-Requires: python-modules-sqlite3
-
-BuildPreReq: python-devel python-module-setuptools
+Requires: python3-modules-sqlite3
 
 %description
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
@@ -28,9 +36,9 @@ designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
 %package tests
-Summary: Tests for SQLAlchemy
-Group: Development/Python
-Requires: %name = %version-%release
+Summary: Tests for SQLAlchemy (Python 3)
+Group: Development/Python3
+Requires: %name = %EVR
 
 %description tests
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
@@ -47,21 +55,21 @@ This package contains tests for SQLAlchemy.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/testing
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/testing
 
 %files tests
-%python_sitelibdir/*/testing
+%python3_sitelibdir/*/testing
 
 %changelog
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.20-alt2
-- python2 build
+- build python3 package separately
 
 * Mon Nov 02 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.20-alt1
 - 1.3.20
