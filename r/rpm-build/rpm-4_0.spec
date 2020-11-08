@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt151
+Release: alt152
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -408,6 +408,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Nov 04 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt152
+- debuginfo: Allow kbuilds with the output directory.
+- debugedit: Fix 'canonicalization unexpectedly shrank by one character'
+  (closes: #39184).
+- brp-sign-kmodules: Sign kernel modules after kernel build.
+
 * Fri Aug 28 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt151
 - debuginfo: Do not try to use eu-elfcompress if it does not exist.
 - debuginfo: Fix adding non-existent files into debuginfo package.
