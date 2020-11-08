@@ -1,23 +1,23 @@
-%global pypi_name mock
-%def_without python3
+%define oname mock
 
-Name: python-module-%{pypi_name}
+Name: python3-module-mock
 Version: 2.0.0
 Release: alt2
+
 Summary: A Python Mocking and Patching Library for Testing
 
-Group: Development/Python
 License: BSD
-Url: https://pypi.python.org/pypi/%{pypi_name}
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/mock
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pbr
-
-%py_requires funcsigs
+BuildRequires(pre):  rpm-build-intro >= 2.2.5
+BuildRequires(pre):  rpm-build-python3
+BuildRequires: python3-module-pbr python3-module-setuptools
 
 %description
 Mock is a Python module that provides a core mock class. It removes the need
@@ -26,62 +26,23 @@ action, you can make assertions about which methods / attributes were used and
 arguments they were called with. You can also specify return values and set
 needed attributes in the normal way.
 
-%if_with python3
-%package -n python3-module-%{pypi_name}
-Summary:        A Python Mocking and Patching Library for Testing
-Group:		Development/Python
-BuildArch:      noarch
-BuildRequires(pre):  rpm-build-python3
-BuildRequires: python3-module-pbr python3-module-setuptools
-
-%description -n python3-module-%{pypi_name}
-Mock is a Python module that provides a core mock class. It removes the need
-to create a host of stubs throughout your test suite. After performing an
-action, you can make assertions about which methods / attributes were used and
-arguments they were called with. You can also specify return values and set
-needed attributes in the normal way.
-
-%endif
-
 %prep
 %setup
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%python_install
+%python3_prune
 
 %files
 %doc docs/index.txt README.rst LICENSE.txt NEWS
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-mock
-%doc docs/index.txt README.rst LICENSE.txt NEWS
 %python3_sitelibdir/*
-%endif
 
 %changelog
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2
-- build python2 only
+- build python3 package separately, cleanup spec
 
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
 - 2.0.0
