@@ -1,5 +1,5 @@
 Name: libdbus-glib
-Version: 0.106
+Version: 0.110
 Release: alt1
 Epoch: 1
 Summary: GLib bindings for D-BUS
@@ -52,7 +52,7 @@ gtkdocize
 %install
 %make DESTDIR=%buildroot install
 
-%files 
+%files
 %doc AUTHORS HACKING NEWS README
 %_sysconfdir/bash_completion.d/*.sh
 %_libdir/lib*.so.*
@@ -69,6 +69,9 @@ gtkdocize
 %_datadir/gtk-doc/html/dbus-glib
 
 %changelog
+* Sun Nov 08 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:0.110-alt1
+- 0.110 (closes: #39224)
+
 * Fri Feb 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:0.106-alt1
 - 0.106
 
