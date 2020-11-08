@@ -6,12 +6,16 @@
 %ifarch aarch64
 %def_disable seccomp
 %else
+%ifarch armh
+%def_disable seccomp
+%else
 %def_enable seccomp
+%endif
 %endif
 
 Name: clsync
-Version: 0.4.4
-Release: alt2
+Version: 0.4.5
+Release: alt1
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -98,7 +102,6 @@ This package provides doxygen API documentation for clsync.
 
 %prep
 %setup
-patch -p1 < alt/libclsync-pthreads.patch
 
 %build
 %autoreconf
@@ -113,6 +116,7 @@ patch -p1 < alt/libclsync-pthreads.patch
 	--disable-cluster \
 	--enable-socket \
 	--enable-highload-locks \
+	--enable-lto \
 	--enable-unshare \
 	%{subst_enable seccomp} \
 	--with-libcgroup \
@@ -170,6 +174,11 @@ mv doc/doxygen/html %buildroot%_docdir/%name/
 %_docdir/%name/html
 
 %changelog
+* Sun Nov 08 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt1
+- Version bump
+- Enable LTO support
+- Disable seccomp on armh (porting is required)
+
 * Wed May 06 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.4-alt2
 - Disable mhash support since it is actually used only with cluster
   or kqueue code and both are disabled in Alt.
