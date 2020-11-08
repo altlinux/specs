@@ -1,8 +1,8 @@
 %define oname pytest-expect
 
 Name: python3-module-%oname
-Version: 0.9.1
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: A py.test plugin that stores test expectations by saving the set of failing tests
 License: MIT
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-umsgpack
 
 %py3_provides pytest_expect
 %py3_requires pytest
@@ -48,6 +49,9 @@ ASCII characters in identifiers.
 
 
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- NMU: new version 1.1.0 (with rpmrb script)
+
 * Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.1-alt2
 - python2 disabled
 
