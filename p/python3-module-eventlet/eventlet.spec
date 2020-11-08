@@ -1,44 +1,29 @@
-%define _unpackaged_files_terminate_build 1
 %define oname eventlet
 
 %def_without check
-%def_with docs
+%def_without docs
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.25.1
-Release: alt2
+Release: alt3
+
 Summary: Highly concurrent networking library
 License: MIT
-Group: Development/Python
+Group: Development/Python3
+
 Url: https://pypi.org/project/eventlet/
 
-# https://github.com/eventlet/eventlet.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python2.7(dns)
-BuildRequires: python2.7(greenlet)
-BuildRequires: python2.7(monotonic)
-BuildRequires: python2.7(sphinx)
-BuildRequires: python2.7(zmq)
-%endif
-
 BuildRequires: python3(six)
+
 %if_with check
-BuildRequires: python2.7(dns)
-BuildRequires: python2.7(enum34)
-BuildRequires: python2.7(greenlet)
-BuildRequires: python2.7(nose)
-BuildRequires: python2.7(json)
-BuildRequires: python2.7(monotonic)
-BuildRequires: python2.7(zmq)
-BuildRequires: python2.7(six)
-BuildRequires: python2.7(subprocess32)
 BuildRequires: python3(dns)
 BuildRequires: python3(greenlet)
 BuildRequires: python3(nose)
@@ -47,30 +32,10 @@ BuildRequires: python3(zmq)
 BuildRequires: python3(tox)
 %endif
 
-%py_requires dns
-%py_requires enum34
-
-%add_python_req_skip stackless
-
-%description
-Eventlet is a concurrent networking library for Python that allows you
-to change how you run your code, not how you write it.
-
-It uses epoll or libevent for highly scalable non-blocking I/O.
-Coroutines ensure that the developer uses a blocking style of
-programming that is similar to threading, but provide the benefits of
-non-blocking I/O. The event dispatch is implicit, which means you can
-easily use Eventlet from the Python interpreter, or as a small part of a
-larger application.
-
-%package -n python3-module-%oname
-Summary: Highly concurrent networking library
-Group: Development/Python3
-
 %py3_requires dns
 %add_python3_req_skip stackless
 
-%description -n python3-module-%oname
+%description
 Eventlet is a concurrent networking library for Python that allows you
 to change how you run your code, not how you write it.
 
@@ -120,12 +85,8 @@ This package contains documentation for Eventlet.
 
 %prep
 %setup
-%patch -p1
-
 # requires thrift, python 2.7 only
 rm -rf eventlet/zipkin
-
-cp -fR . ../python3
 
 %if_with docs
 %prepare_sphinx .
@@ -133,11 +94,7 @@ ln -s ../objects.inv doc/
 %endif
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %if_with docs
 %make -C doc pickle
@@ -145,11 +102,7 @@ popd
 %endif
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %if_with docs
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
@@ -185,8 +138,8 @@ tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %doc AUTHORS NEWS README.rst
-%python_sitelibdir/eventlet-%version-py%_python_version.egg-info/
-%python_sitelibdir/eventlet/
+%python3_sitelibdir/eventlet-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/eventlet/
 %if_with docs
 %exclude %python_sitelibdir/*/pickle
 
@@ -197,12 +150,10 @@ tox.py3 --sitepackages -p auto -o -vr
 %python_sitelibdir/*/pickle
 %endif
 
-%files -n python3-module-%oname
-%doc AUTHORS NEWS README.rst
-%python3_sitelibdir/eventlet-%version-py%_python3_version.egg-info/
-%python3_sitelibdir/eventlet/
-
 %changelog
+* Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.25.1-alt3
+- build python3 package separately, cleanup spec
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.25.1-alt2
 - NMU: removed deprecated python2 zipkin due to thrift dependency
 
