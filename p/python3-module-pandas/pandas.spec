@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt4
+Release: alt5
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -17,6 +17,7 @@ Url: https://pandas.pydata.org
 # https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
 Patch1: %oname-alt-docs.patch
+Patch2: %oname-alt-remove-tests-dependency.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -78,6 +79,7 @@ This package contains documentation for pandas.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # fix version info
 sed -i \
@@ -136,6 +138,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Mon Nov 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt5
+- Removed dependency from python3-module-pandas to python3-module-pandas-tests (Closes: #39222).
+
 * Fri Nov 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt4
 - Updated runtime dependencies.
 
