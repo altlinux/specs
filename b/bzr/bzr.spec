@@ -9,7 +9,7 @@
 
 Name: bzr
 Version: 2.7.0
-Release: %branch_release alt5
+Release: %branch_release alt6
 
 Summary: Bazaar is a decentralized revision control system
 License: %gpl2plus
@@ -98,6 +98,7 @@ mv %buildroot%_datadir/share/locale %buildroot%_datadir
 %exclude %python_sitelibdir/bzrlib/tests
 %exclude %python_sitelibdir/bzrlib/plugins/*/tests
 %exclude %python_sitelibdir/bzrlib/util/tests
+%exclude %python_sitelibdir/bzrlib/plugins/launchpad/test_lp_api_lite.py
 %bzr_docdir
 %exclude %bzr_docdir/doc
 %exclude %bzr_docdir/contrib
@@ -128,6 +129,9 @@ mv %buildroot%_datadir/share/locale %buildroot%_datadir
 %bzr_docdir/contrib
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt6
+- NMU: drop testtools requires
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt5
 - NMU: don't pack tests subpackage
 
