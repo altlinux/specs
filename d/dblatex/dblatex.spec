@@ -1,6 +1,6 @@
 Name: dblatex
 Version: 0.3.11
-Release: alt1
+Release: alt2
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
 License: GPL-2.0-or-later and MIT and W3C
@@ -10,7 +10,9 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 Source: %name-%version.tar
 
-Requires: ImageMagick-tools xsltproc docbook-dtds
+# ImageMagick-tools or GraphicsMagick-ImageMagick-compat
+Requires: /usr/bin/convert
+Requires: xsltproc docbook-dtds
 
 BuildRequires(pre): rpm-build-python3 rpm-build-tex
 BuildRequires: python3-devel texlive-latex-extra xsltproc
@@ -96,6 +98,9 @@ sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%_bindir/%name
 
 
 %changelog
+* Mon Nov 09 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.11-alt2
+- NMU: require /usr/bin/convert instead of ImageMagick-tools
+
 * Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
 - 0.3.11 (Python3 version: https://downloads.sf.net/dblatex/dblatex-0.3.11py3.tar.bz2)
 - fixed License tag
