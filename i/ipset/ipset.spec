@@ -4,26 +4,26 @@
 %define soname 13
 Name: ipset
 Version: 7.6
-Release: alt1
+Release: alt2
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://ipset.netfilter.org/
 
-Source0: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 BuildRequires: libmnl-devel
 
 %description
-IP sets are a framework inside the Linux kernel, which can be administered by 
-the ipset utility. Depending on the type, currently an IP set may store IP addresses,
-(TCP/UDP) port numbers or IP addresses with MAC addresses in a way,
+IP sets are a framework inside the Linux kernel, which can be administered
+by the ipset utility. Depending on the type, currently an IP set may store IP
+addresses, (TCP/UDP) port numbers or IP addresses with MAC addresses in a way,
 which ensures lightning speed when matching an entry against a set.
 
 ipset may be the proper tool for you, if you want to
- * store multiple IP addresses or port numbers and match against the
-   collection by iptables at one swoop;
+ * store multiple IP addresses or port numbers and match against
+   the collection by iptables at one swoop;
  * dynamically update iptables rules against IP addresses or ports
    without performance penalty;
  * express complex IP address and ports based rulesets with one single
@@ -35,7 +35,7 @@ License: LGPLv2+
 Group: Development/C
 
 %description -n lib%{name}%{soname}
-The lib%{name}%{soname} package contains the dynamic libraries needed for 
+The lib%{name}%{soname} package contains the dynamic libraries needed for
 applications to use the %name framework.
 
 %package -n lib%{name}-devel
@@ -60,20 +60,20 @@ BuildPreReq: rpm-build-kernel
 Kernel source modules ipset.
 
 %prep
-%setup -q
-%patch0 -p1
-autoreconf -fisv
+%setup
+%patch -p1
 
 %build
+%autoreconf
 %configure --with-kmod=no 
 %make_build LIBDIR=/%_lib/ BINDIR=/sbin/
 %install
 %makeinstall_std exec_prefix=/ sbindir=/sbin libdir=/%_lib pkgconfigdir=/%_pkgconfigdir
-mkdir -p $RPM_BUILD_ROOT/%_libdir
+mkdir -p %buildroot%_libdir
 
-pushd $RPM_BUILD_ROOT/%_libdir
-LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libipset.so.%{soname}.*.*\``
-ln -s ../../%{_lib}/$LIBNAME libipset.so
+pushd %buildroot%_libdir
+LIBNAME="$(basename $(ls %buildroot/%_lib/libipset.so.%{soname}.*.*))"
+ln -s ../../%_lib/$LIBNAME libipset.so
 popd
 
 
@@ -89,7 +89,7 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %_man8dir/*
 
 %files -n lib%{name}%{soname}
-%attr(755,root,root) /%{_lib}/libipset.so.%{soname}*
+%attr(755,root,root) /%_lib/libipset.so.%{soname}*
 
 %files -n lib%{name}-devel
 %_includedir/lib%name/*.h
@@ -101,6 +101,10 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Sun Nov 08 2020 Michael Shigorin <mike@altlinux.org> 7.6-alt2
+- srpm_cleanup related ftbfs fixup
+- minor spec cleanup
+
 * Thu Mar 05 2020 Anton Farygin <rider@altlinux.ru> 7.6-alt1
 - 7.6
 
