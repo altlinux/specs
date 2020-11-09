@@ -1,5 +1,5 @@
 Name: crtools-ovz
-Version: 3.12.5.50
+Version: 3.12.5.52
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -75,6 +75,12 @@ rm -f %buildroot%_pkgconfigdir/criu.pc
 %_man8dir/crtools.8*
 
 %changelog
+* Mon Nov 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 3.12.5.52-alt1
+- 3.12.5.52
+- cherry-picked commit 86a386a0171eb553d5d3bcb5db92ff13b1f60ad4
+  from criu real upstream: "Update test_bit() and test_and_set_bit()
+  implementation with recent version from the Linux kernel to fix the warning."
+
 * Fri Oct 30 2020 Andrew A. Vasilyev <andy@altlinux.org> 3.12.5.50-alt1
 - 3.12.5.50
 
