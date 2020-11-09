@@ -2,7 +2,7 @@
 
 Name: xpdf
 Version: 4.02
-Release: alt1
+Release: alt2
 
 Summary: The PDF viewer and tools
 License: GPLv2 GPLv3 BSD
@@ -36,7 +36,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 BuildRequires: libcups-devel qt5-base-devel libpaper-devel libpng-devel
 BuildRequires: libfreetype-devel fontconfig-devel zlib-devel
-BuildRequires: desktop-file-utils inkscape >= 1.0
+BuildRequires: desktop-file-utils librsvg-utils
 
 # xpdf is a virtual package with is a full setup of xpdf
 Requires: %name-viewer = %EVR %name-utils = %EVR
@@ -156,7 +156,7 @@ sizes="16 22 24 32 36 48 64 72 96 128 192 256 384 512 1024"
 cd xpdf-qt
 mkdir $sizes
 for i in $sizes; do
-    inkscape xpdf-icon.svg -w $i -h $i -o $i/xpdf.png
+    rsvg-convert xpdf-icon.svg -w $i -h $i -o $i/xpdf.png
 done
 
 %install
@@ -222,6 +222,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Nov 09 2020 Andrew Savchenko <bircoph@altlinux.org> 4.02-alt2
+- Switch from inkscape to rsvg-convert for svg->png generation.
+
 * Sun Mar 08 2020 Andrey Savchenko <bircoph@altlinux.org> 4.02-alt1
 - Major version bump and repackaging.
 
