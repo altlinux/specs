@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 6.14.1
-Release: alt1
+Release: alt2
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
@@ -15,8 +15,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-distribute
 BuildRequires: python3-module-twisted-logger
 BuildRequires: python3-module-twisted-core-test
@@ -60,6 +60,7 @@ ln -s ../objects.inv docs/
 
 %install
 %python3_install
+%python3_prune
 
 %if_with docs
 PYTHONPATH=$(pwd) %make -C docs html SPHINXBUILD=sphinx-build-3
@@ -81,6 +82,9 @@ PYTHONPATH=$(pwd) py.test3 testfixtures/tests
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Nov 09 2020 Vitaly Lipatov <lav@altlinux.ru> 6.14.1-alt2
+- NMU: don't pack tests
+
 * Wed Sep 02 2020 Grigory Ustinov <grenka@altlinux.org> 6.14.1-alt1
 - Automatically updated to 6.14.1.
 
