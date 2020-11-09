@@ -6,6 +6,10 @@
 %def_enable uefi
 %endif
 
+%ifarch x86_64 %ix86
+%def_enable msr
+%endif
+
 # libsmbios is only available on x86, and fwupdate is available on just x86_64
 %ifarch x86_64
 %def_enable dell
@@ -13,7 +17,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.4.6
+Version: 1.5.1
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -122,6 +126,11 @@ Data files for installed tests.
     -Dman=false \
     -Dlvfs=true \
     -Dplugin_flashrom=false \
+%if_enabled msr
+    -Dplugin_msr=true \
+%else
+    -Dplugin_msr=false \
+%endif
 %if_enabled tests
     -Dtests=true \
 %else
@@ -177,6 +186,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_bindir/fwupdtool
 %_bindir/fwupdagent
 %_libexecdir/fwupd/fwupdoffline
+%ifarch x86_64 %ix86
+%_libexecdir/fwupd/fwupd-detect-cet
+%endif
 %_bindir/fwupdtpmevlog
 %_datadir/bash-completion/completions/*
 %_datadir/fish/vendor_completions.d/fwupdmgr.fish
@@ -257,6 +269,24 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_steelseries.so
 %_libdir/fwupd-plugins-3/libfu_plugin_jabra.so
 %_libdir/fwupd-plugins-3/libfu_plugin_logind.so
+%_libdir/fwupd-plugins-3/libfu_plugin_acpi_dmar.so
+%_libdir/fwupd-plugins-3/libfu_plugin_acpi_facp.so
+%_libdir/fwupd-plugins-3/libfu_plugin_bcm57xx.so
+%_libdir/fwupd-plugins-3/libfu_plugin_bios.so
+%_libdir/fwupd-plugins-3/libfu_plugin_cros_ec.so
+%_libdir/fwupd-plugins-3/libfu_plugin_elantp.so
+%_libdir/fwupd-plugins-3/libfu_plugin_goodixmoc.so
+%_libdir/fwupd-plugins-3/libfu_plugin_iommu.so
+%_libdir/fwupd-plugins-3/libfu_plugin_linux_lockdown.so
+%_libdir/fwupd-plugins-3/libfu_plugin_linux_sleep.so
+%_libdir/fwupd-plugins-3/libfu_plugin_linux_swap.so
+%_libdir/fwupd-plugins-3/libfu_plugin_linux_tainted.so
+%if_enabled msr
+%_libdir/fwupd-plugins-3/libfu_plugin_msr.so
+%endif
+%_libdir/fwupd-plugins-3/libfu_plugin_pci_bcr.so
+%_libdir/fwupd-plugins-3/libfu_plugin_pci_mei.so
+%_libdir/fwupd-plugins-3/libfu_plugin_platform_integrity.so
 %_libdir/fwupd-plugins-3/libfu_plugin_optionrom.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_rmi.so
 %_libdir/fwupd-plugins-3/libfu_plugin_vli.so
@@ -311,6 +341,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Mon Nov 09 2020 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Tue Sep 15 2020 Anton Farygin <rider@altlinux.ru> 1.4.6-alt1
 - 1.4.6
 
