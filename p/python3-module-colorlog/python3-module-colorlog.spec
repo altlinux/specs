@@ -1,7 +1,7 @@
 %define modname colorlog
 
 Name: python3-module-%modname
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 
 Summary: Python 3 module for log formatting with colors
@@ -35,6 +35,9 @@ module that outputs records using terminal colors.
 
 
 %changelog
+* Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
+- 4.5.0
+
 * Thu Oct 29 2020 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - 4.4.0
 
