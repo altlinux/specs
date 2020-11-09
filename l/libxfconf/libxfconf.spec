@@ -5,7 +5,7 @@
 %def_disable gsettings
 
 Name: lib%_name
-Version: 4.15.0
+Version: 4.15.1
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -119,6 +119,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %makeinstall_std
 %find_lang %_name
 
+# Tests can't work without dbus and X11 $DISPLAY
+#check
+#make check
+
 %files -f %_name.lang
 %doc AUTHORS NEWS
 %_sysconfdir/xdg/xfce4/xfconf
@@ -155,6 +159,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Mon Nov 09 2020 Mikhail Efremov <sem@altlinux.org> 4.15.1-alt1
+- Updated to 4.15.1.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
 - Completely drop perl support from spec.
 - Updated to 4.15.0.
