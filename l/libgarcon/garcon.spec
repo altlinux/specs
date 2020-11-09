@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -213,6 +213,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Mon Nov 09 2020 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
+- Updated to 0.7.2.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
 - Enabled GObject introspection support.
 - Updated Vcs tag.
