@@ -1,29 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname superlu
-%define over 4.0
-%define somver 4
-%define sover %somver.2.0
-Name: %oname%over
-Version: 4.3
-Release: alt9
+%define sover 5
 
+Name: superlu
+Version: 5.2.2
+Release: alt1
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
 Group: Sciences/Mathematics
+Url: https://github.com/xiaoyeli/superlu
 
-Url: http://acts.nersc.gov/superlu/
-Source: %{oname}_%version.tar
-Source1: http://www.netlib.org/clapack/what/testing/matgen/clatm1.c
-Source2: http://www.netlib.org/clapack/what/testing/matgen/zlatm1.c
-Source3: http://www.netlib.org/clapack/CLAPACK-3.1.1/TESTING/MATGEN/blaswrap.h
+# https://github.com/xiaoyeli/superlu.git
+Source: %name-%version.tar
 
-Provides: %oname = %version-%release
-Requires: lib%name = %version-%release
+# Patch from Gentoo
+Patch1: superlu-5.2.2-no-internal-blas.patch
 
+# ALT Patch
+Patch10: superlu-5.2.2-respect-flags.patch
+
+Provides: %name = %EVR
+Requires: lib%name%sover = %EVR
+
+BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: gcc-fortran gcc-c++ liblapack-devel
 BuildRequires: csh doxygen graphviz ghostscript-utils
-#BuildRequires: texlive-latex-recommended texlive-extra-utils
 
 %description
 SuperLU contains a set of subroutines to solve a sparse linear system
@@ -33,12 +35,11 @@ preordering for sparsity is completely separate from the factorization.
 SuperLU provides functionality for both real and complex matrices, in both
 single and double precision.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Shared libraries of SuperLU
 Group: System/Libraries
-Provides: lib%oname = %version-%release
 
-%description -n lib%name
+%description -n lib%name%sover
 SuperLU contains a set of subroutines to solve a sparse linear system
 A*X=B. It uses Gaussian elimination with partial pivoting (GEPP).
 The columns of A may be preordered before factorization; the
@@ -48,12 +49,12 @@ single and double precision.
 
 This package contains shared libraries of SuperLU.
 
-%package -n lib%oname-devel
+%package -n lib%name-devel
 Summary: Development files of SuperLU
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%sover = %EVR
 
-%description -n lib%oname-devel
+%description -n lib%name-devel
 SuperLU contains a set of subroutines to solve a sparse linear system
 A*X=B. It uses Gaussian elimination with partial pivoting (GEPP).
 The columns of A may be preordered before factorization; the
@@ -63,12 +64,12 @@ single and double precision.
 
 This package contains development files of SuperLU.
 
-%package -n lib%oname-devel-doc
+%package -n lib%name-devel-doc
 Summary: Documentation for SuperLU
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n lib%oname-devel-doc
+%description -n lib%name-devel-doc
 SuperLU contains a set of subroutines to solve a sparse linear system
 A*X=B. It uses Gaussian elimination with partial pivoting (GEPP).
 The columns of A may be preordered before factorization; the
@@ -80,105 +81,47 @@ This package contains documentation for SuperLU.
 
 %prep
 %setup
-install -m644 %SOURCE1 %SOURCE2 %SOURCE3 TESTING/MATGEN
-mkdir lib
+%patch1 -p1
+%patch10 -p1
 
 %build
-sed -i "s|(HOME)|$PWD|" make.inc
-sed -i "s|(LIBDIR)|%_libdir|" make.inc
-%ifarch %e2k riscv64
-sed -i "s|-lopenblas|-lblas|" make.inc
-%define blas -lblas
-%else
-%define blas -lopenblas
-%endif
-%ifarch %e2k
-sed -i "s|-lgfortran||" make.inc
-%define gfortran %nil
-%else
-%define gfortran -lgfortran
-%endif
-%make install
-%make lib
-%make testing
+%cmake \
+	-DCMAKE_INSTALL_INCLUDEDIR="include/superlu" \
+	-DBUILD_SHARED_LIBS=ON \
+	-Denable_internal_blaslib=OFF \
+	-Denable_tests=ON \
+	%nil
 
-pushd EXAMPLE
-%make_build
-popd
-
-#pushd DOC/latex
-#make_build
-#popd
-
-pushd TESTING
-%make_build
-popd
+%cmake_build
 
 %install
-install -d %buildroot%_bindir
-install -d %buildroot%_datadir/%name/examples
-install -d %buildroot%_libdir
-install -d %buildroot%_includedir
-install -d %buildroot%_docdir/%name/html
-install -d %buildroot%_docdir/%name/pdf
-install -m644 SRC/*.h %buildroot%_includedir
-install -m644 lib/*.a TESTING/MATGEN/libtmglib.a %buildroot%_libdir
-install -m644 DOC/*.pdf %buildroot%_docdir/%name/pdf
-install -m644 DOC/html/* %buildroot%_docdir/%name/html
+%cmakeinstall_std
 
-install -m755 TESTING/?test TESTING/?test.csh %buildroot%_bindir
-pushd EXAMPLE
-rm -f *.o Makefile
-chmod -x cg20.cua
-mv README cg20.cua *.c %buildroot%_datadir/%name/examples/
-install -m755 * %buildroot%_bindir
-popd
+%check
+cd BUILD
+ctest
 
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i %name.$i
-done
-popd
-
-# shared libraries
-pushd %buildroot%_libdir
-for i in libsuperlu_%over libtmglib; do
-	if [ "$i" = "libtmglib" ]; then
-		ADDLIB="-L. -lsuperlu_%over"
-	fi
-	ar x $i.a
-	g++ -shared *.o $ADDLIB -llapack %blas %gfortran -lm \
-		-Wl,-soname,$i.so.%somver -o $i.so.%sover
-	ln -s $i.so.%sover $i.so.%somver
-	ln -s $i.so.%somver $i.so
-	rm -f *.o
-done
-ln -s libsuperlu_%over.so libsuperlu.so
-popd
-
-# remove unpackaged files
-rm -f %buildroot%_libdir/*.a
-
-%files
+%files -n lib%name%sover
+%doc License.txt
 %doc README
-%_bindir/*
-%_datadir/%name
+%_libdir/*.so.%{sover}
+%_libdir/*.so.%{sover}.*
 
-%files -n lib%name
-%_libdir/*.so.*
-
-%files -n lib%oname-devel
+%files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*.pc
+%_libdir/cmake/*
 
-%files -n lib%oname-devel-doc
-%_docdir/%name
-
-# TODO:
-# - redo doc subpackage with tex?
-# - install -p
+%files -n lib%name-devel-doc
+%doc DOC/html
+%doc EXAMPLE
+%doc FORTRAN
 
 %changelog
+* Mon Nov 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.2-alt1
+- Updated to upstream version 5.2.2 (Closes: #39217).
+
 * Thu Jul 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3-alt9
 - Added devel symlink libsuperlu.so -> libsuperlu_%%over.so.
 
