@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt14
+Release: alt15
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -50,15 +50,6 @@ Requires: libmagic-devel = %version-%release
 This package contains static library to build statically linked
 applications that handle magic files.
 
-%package -n python-module-magic
-Summary: Python bindings for libmagic
-Group: Development/Python
-Requires: libmagic = %version-%release
-%setup_python_module magic
-
-%description -n python-module-magic
-This package contains Python bindings for libmagic.
-
 %prep
 %setup
 %patch -p1
@@ -71,9 +62,6 @@ grep -FZl sparc magic/Magdir/* |
 	xargs -r0 sed -i 's/sparc/SPARC/g' --
 # SMP-incompatible build.
 make
-
-cd python
-%python_build
 
 %install
 %makeinstall_std
@@ -90,9 +78,6 @@ grep -v ' text' test.out && exit 1
 # Provide %_datadir/magic/ for compatibility.
 mkdir -p %buildroot%_datadir/magic
 ln -s ../file/magic %buildroot%_datadir/magic/
-
-cd python
-%python_install
 
 %check
 make -k check
@@ -119,10 +104,10 @@ make -k check
 %_libdir/*.a
 %endif
 
-%files -n python-module-magic
-%python_sitelibdir/*
-
 %changelog
+* Sun Nov 08 2020 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt15
+- Dropped python-module-magic subpackage (closes: #39228).
+
 * Fri Aug 28 2020 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt14
 - Removed (by Vitaly Chikunov) weak magic for:
   - Sun disk label (to fix generation of debuginfo for kernel modules);
