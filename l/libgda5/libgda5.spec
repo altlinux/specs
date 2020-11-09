@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name libgda
@@ -36,7 +36,7 @@
 
 Name: %{_name}5
 Version: %ver_major.10
-Release: alt0.1
+Release: alt1
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -55,11 +55,11 @@ Patch: libgda-5.2.4-mysql8-transition.patch
 Obsoletes: libgda2 < %version
 Provides: libgda2 = %version-%release
 
-%define mysql_ver 5.0.50
+%define mysql_ver 8.0
 %define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
-%define vala_ver 0.48
+%define vala_ver 0.50
 %define sqlite_ver 3.10.2
 
 BuildRequires(pre): rpm-build-gir rpm-build-vala rpm-build-python3
@@ -423,8 +423,8 @@ sed -e 's/^[[:blank:]]//' libgda/libgda.symbols |grep '^_' > libgda/private.sym
 %endif
 
 # itstool breaks on cs help
-rm -rf tools/browser/help/cs
-sed -i 's/ cs / /' tools/browser/help/Makefile.am
+#rm -rf tools/browser/help/cs
+#sed -i 's/ cs / /' tools/browser/help/Makefile.am
 
 %build
 #NOCONFIGURE=1 ./autogen.sh
@@ -654,6 +654,9 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt1
+- 5.2.10 release
+
 * Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt0.1
 - updated to LIBGDA_5_2_9-17-g08342b7f8
 - built glade catalog for gdaui
