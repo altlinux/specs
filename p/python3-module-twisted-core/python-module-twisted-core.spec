@@ -7,7 +7,7 @@
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: An asynchronous networking framework written in Python
 
@@ -19,8 +19,6 @@ Url: http://twistedmatrix.com/trac/wiki/TwistedCore
 Source: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
 
-Conflicts: python-module-twisted-core
-
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -31,6 +29,7 @@ Obsoletes: %prefx3-lore <= %EVR
 Provides: %prefx3-lore = %EVR
 #py3_provides lore
 Requires: python3-module-OpenSSL
+#Requires: python3-module-autobahn
 
 %add_python3_req_skip AppKit Carbon Foundation GDK PAM cfsupport
 %add_python3_req_skip kqsyscall msvcrt pythoncom pywintypes win32api
@@ -46,6 +45,15 @@ on event-based network programming and multiprotocol integration.
 It is expected that one day the project will expanded to the point
 that the framework will seamlessly integrate with mail, web, DNS,
 netnews, IRC, RDBMSs, desktop environments, and your toaster.
+
+%package -n twisted-core-tools
+Summary: Tools for Twisted Core (Python 3)
+Group: Development/Python3
+Requires: %name = %EVR
+Conflicts: python-module-twisted-core
+
+%description -n twisted-core-tools
+Tools for Twisted Core.
 
 
 %package -n %prefx3-core-gui
@@ -297,26 +305,21 @@ cp -a docs/core/man/*.1 docs/mail/man/*.1 \
 	docs/conch/man/*.1 \
 	%buildroot%_man1dir/
 
-rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
+rm -rfv docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 	docs/words/man
 
 %check
 
+%files -n twisted-core-tools
+%_bindir/twist
+%_bindir/twistd
+%_bindir/pyhtmlizer
+%_man1dir/pyhtmlizer.1*
+%_man1dir/twistd.1*
 
 %files
 %doc LICENSE NEWS.rst README.rst
 %doc README.ALT-ru_RU.UTF-8
-%_bindir/twist
-%_bindir/twistd
-%_bindir/pyhtmlizer
-
-%_man1dir/*.1.*
-%exclude %_man1dir/cftp.1*
-%exclude %_man1dir/ckeygen.1*
-%exclude %_man1dir/conch.1*
-%exclude %_man1dir/tkconch.1*
-%exclude %_man1dir/mailmail.1*
-
 %python3_sitelibdir/Twisted*.egg-info
 %dir %python3_sitelibdir/twisted/
 %python3_sitelibdir/twisted/*.py
@@ -324,12 +327,16 @@ rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 %python3_sitelibdir/twisted/python/_pydoctortemplates/
 
 %python3_sitelibdir/twisted/application/
-%exclude %python3_sitelibdir/twisted/application/test
+%exclude %python3_sitelibdir/twisted/application/test/
+%exclude %python3_sitelibdir/twisted/application/twist/test/
+%exclude %python3_sitelibdir/twisted/application/runner/test/
 %python3_sitelibdir/twisted/cred/
+%exclude %python3_sitelibdir/twisted/cred/test/
 %python3_sitelibdir/twisted/_threads/
 %exclude %python3_sitelibdir/twisted/_threads/test/
 %python3_sitelibdir/twisted/enterprise/
 %python3_sitelibdir/twisted/internet/
+%exclude %python3_sitelibdir/twisted/internet/testing.py
 %exclude %python3_sitelibdir/twisted/internet/test
 %exclude %python3_sitelibdir/twisted/internet/wxreactor.py
 %exclude %python3_sitelibdir/twisted/internet/__pycache__/wxreactor.*
@@ -407,6 +414,7 @@ rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 %files -n %prefx3-mail
 %doc docs/mail/*
 %_bindir/mailmail
+%_man1dir/mailmail.1*
 %python3_sitelibdir/twisted/mail/
 %exclude %python3_sitelibdir/twisted/mail/test
 
@@ -466,10 +474,12 @@ rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 
 %files -n %prefx3-core-tests
 %_bindir/trial
+%_man1dir/trial.1*
 %python3_sitelibdir/twisted/trial/
 %python3_sitelibdir/twisted/test
 %python3_sitelibdir/twisted/python/test
 %python3_sitelibdir/twisted/scripts/test
+%python3_sitelibdir/twisted/internet/testing.py
 %python3_sitelibdir/twisted/internet/test
 %python3_sitelibdir/twisted/protocols/test
 %python3_sitelibdir/twisted/protocols/haproxy/test
@@ -478,11 +488,14 @@ rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 %python3_sitelibdir/twisted/scripts/trial.py
 %python3_sitelibdir/twisted/scripts/__pycache__/trial.*
 %python3_sitelibdir/twisted/application/test
+%python3_sitelibdir/twisted/application/runner/test/
+%python3_sitelibdir/twisted/application/twist/test
 %python3_sitelibdir/twisted/runner/test
 %python3_sitelibdir/twisted/web/test
 %python3_sitelibdir/twisted/conch/test
 %python3_sitelibdir/twisted/names/test
 %python3_sitelibdir/twisted/pair/test
+%python3_sitelibdir/twisted/cred/test
 %python3_sitelibdir/twisted/_threads/test
 %python3_sitelibdir/twisted/persisted/test
 %python3_sitelibdir/twisted/positioning/test
@@ -490,9 +503,11 @@ rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 %python3_sitelibdir/twisted/logger/test
 %python3_sitelibdir/twisted/python/_setup.py
 
-
-
 %changelog
+* Mon Nov 09 2020 Vitaly Lipatov <lav@altlinux.ru> 20.3.0-alt2
+- pack tools to twisted-core-tools (ALT bug 39226)
+- fix tests packing (no more tests package requires from the packages)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 20.3.0-alt1
 - new version 20.3.0 (with rpmrb script)
 
