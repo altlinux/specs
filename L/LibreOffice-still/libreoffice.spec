@@ -14,14 +14,13 @@
 
 %ifarch mipsel
 %def_without java
-%def_disable qt5
 %else
 %def_with java
+%endif
 %if_enabled kde5
 %def_enable qt5
 %else
 %def_disable qt5
-%endif
 %endif
 %def_disable mergelibs
 
@@ -34,7 +33,7 @@ Version: %hversion.%urelease
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
 
-Release: alt2
+Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -80,20 +79,26 @@ Patch402: alt-002-tmpdir.patch
 Patch404: alt-004-shortint.patch
 Patch410: alt-006-unversioned-desktop-files.patch
 Patch411: alt-007-libqrcodegen-include-path.patch
+Patch412: alt-008-mkdir-for-external-project.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 %add_findprov_skiplist %_libdir/liblibreofficekitgtk.so
 
-BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
 BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libssl-devel
+BuildRequires: xsltproc
 
 # 4.4
 BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
 BuildRequires: libe-book-devel
 # 5.1
+%if_with java
 BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
+BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh
+BuildRequires: pentaho-reporting-flow-engine
+%endif
 # 5.1.2
 BuildRequires: libgtk+3-gir-devel
 # 5.2.0
@@ -306,6 +311,7 @@ echo Direct build
 %patch404 -p1
 %patch410 -p1
 %patch411 -p1
+%patch412 -p1
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -630,6 +636,10 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Nov 09 2020 Ivan A. Melnikov <iv@altlinux.org> 6.4.7.2-alt3
+- Get rid of java-related BRs in non-java builds.
+- Fix build on mipsel.
+
 * Sun Nov 08 2020 Andrey Cherepanov <cas@altlinux.org> 6.4.7.2-alt2
 - Do not provide liblibreofficekitgtk.so (ALT #39219).
 
