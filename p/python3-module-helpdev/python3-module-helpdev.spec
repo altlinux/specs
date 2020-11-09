@@ -1,8 +1,8 @@
 %def_with check
 
 Name: python3-module-helpdev
-Version: 0.6.10
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 License: MIT
 Group: Development/Python
@@ -66,6 +66,9 @@ tox.py3 --sitepackages -vv -r
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 09 2020 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
+- 0.6.10 -> 0.7.1.
+
 * Sun May 03 2020 Stanislav Levin <slev@altlinux.org> 0.6.10-alt2
 - Dropped dependency on importlib_metadata.
 
