@@ -8,7 +8,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 %K5init altplace
 
@@ -18,6 +18,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: upower
+Requires(pre): /sbin/setcap
 
 Source: %rname-%version.tar
 
@@ -110,8 +111,13 @@ done
 %K5install_move exec org_kde_powerdevil
 %find_lang %name --with-kde --all-name
 
+%post
+/sbin/setcap CAP_WAKE_ALARM=+ep %_K5exec/org_kde_powerdevil ||:
+
+
 %files common -f %name.lang
 %doc COPYING*
+%_datadir/qlogging-categories5/*.*categories
 
 %files
 #%config %_K5conf_dbus_sysd/*.conf
@@ -146,6 +152,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt1
 - new version
 

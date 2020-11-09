@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: plasma5-nm
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -38,7 +38,8 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-tools-devel
 BuildRequires: mobile-broadband-provider-info libqca-qt5-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
-BuildRequires: kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
+BuildRequires: kf5-kdeclarative-devel kf5-kdesignerplugin-devel
+#kf5-kdelibs4support kf5-kdelibs4support-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
 BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
@@ -283,6 +284,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
 - new version
 

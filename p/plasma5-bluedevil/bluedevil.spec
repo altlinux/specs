@@ -1,7 +1,7 @@
 %define rname bluedevil
 
 Name: plasma5-%rname
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -25,7 +25,7 @@ BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompl
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel
-BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
+BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-kdeclarative-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-kded kf5-kded-devel kf5-plasma-framework-devel kf5-kpackage-devel
 
@@ -75,7 +75,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data bluedevilwizard remoteview
+%K5install_move data bluedevilwizard remoteview kpackage
 
 mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevil-mime.xml
 
@@ -85,9 +85,11 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 #%doc COPYING.LIB README.md
 %_K5bin/*
 %_K5plug/*.so
+%_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
 #%_K5exec/*
 %_K5qml/org/kde/plasma/private/bluetooth/
+%_K5data/kpackage/kcms/kcm_bluetooth/
 %_K5data/plasma/plasmoids/org.kde.plasma.bluetooth/
 %_K5data/bluedevilwizard/
 %_K5data/remoteview/bluetooth-network.desktop
@@ -99,6 +101,9 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5xdgmime/*.xml
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
 - new version
 

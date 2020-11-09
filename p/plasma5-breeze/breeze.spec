@@ -4,8 +4,8 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma5-%rname
-Version: 5.19.5
-Release: alt2
+Version: 5.20.2
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -81,7 +81,7 @@ KF5 library
 %find_lang %name --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_bindir/*5
 %_K5bin/*
 %_K5cf_bin/*
@@ -105,6 +105,9 @@ KF5 library
 %_K5lib/libbreezecommon5.so.*
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
+- new version
+
 * Thu Oct 08 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt2
 - move cursors to standard place
 

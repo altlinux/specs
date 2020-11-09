@@ -6,7 +6,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: plasma5-%rname
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 Epoch: 2
 %K5init altplace
@@ -22,6 +22,7 @@ Patch1: alt-def-screenlocker.patch
 Patch2: alt-greeter-path.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires: glibc-devel
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel qt5-x11extras-devel
 BuildRequires: libpam-devel libwayland-client-devel libwayland-server-devel
 %if_enabled seccomp
@@ -30,7 +31,8 @@ BuildRequires: libseccomp-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesignerplugin-devel
-BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdoctools kf5-kdoctools-devel-static
+#BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
 BuildRequires: kf5-kidletime-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel
@@ -86,7 +88,7 @@ KF5 library
 %install
 %K5install
 %K5install_move exec all
-%K5install_move data kconf_update ksmserver
+%K5install_move data kconf_update ksmserver kpackage
 %find_lang %name --all-name
 
 # Install kde pam configuration files
@@ -100,9 +102,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %config(noreplace) %_sysconfdir/pam.d/kf5-screenlocker
 %_K5exec/*
 %attr(2711,root,chkpwd) %_K5exec/kcheckpass
-%_K5plug/screenlocker_kcm.so
+%_K5plug/kcms/kcm_screenlocker.so
 %_K5data/ksmserver/screenlocker/
-#%_K5data/plasma/kcms/screenlocker_kcm/
+%_K5data/kpackage/kcms/kcm_screenlocker/
 %_K5conf_up/k*reenlock*
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
@@ -121,6 +123,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 2:5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 2:5.19.5-alt1
 - new version
 

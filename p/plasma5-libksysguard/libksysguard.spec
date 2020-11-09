@@ -11,7 +11,7 @@
 %define libksysguardsensors libksysguardsensors%sover2
 
 Name: plasma5-%rname
-Version: 5.19.5
+Version: 5.20.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -29,7 +29,7 @@ Patch: alt-killbtn.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel python-module-google qt5-script-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-gir rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ zlib-devel
-BuildRequires: qt5-script-devel qt5-x11extras-devel
+BuildRequires: qt5-script-devel qt5-x11extras-devel qt5-tools-devel
 BuildRequires: qt5-webengine-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel
@@ -195,6 +195,9 @@ KF5 library
 
 
 %changelog
+* Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
 - new version
 
