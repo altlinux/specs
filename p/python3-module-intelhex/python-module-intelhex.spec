@@ -1,8 +1,8 @@
 %define oname intelhex
 
 Name: python3-module-%oname
-Version: 2.2.1
-Release: alt3
+Version: 2.3.0
+Release: alt1
 
 Summary: Python module for manipulating Intel HEX files
 License: BSD
@@ -34,6 +34,9 @@ Obsoletes: python-module-%oname <= %EVR
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Build new version.
+
 * Tue Oct 06 2020 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt3
 - Fix port on python3 (Closes: #39039).
 
