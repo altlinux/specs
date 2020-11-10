@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 0.10.2
-Release: alt1
+Release: alt2
 Summary: Image IO for fable
 License: MIT
 Group: Development/Python3
@@ -20,9 +20,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libnumpy-py3-devel python3-module-Cython
 BuildRequires: python3(lxml)
-
-# circumvent build failures due to relying on headers from libnumpy-devel
-BuildRequires: libnumpy-devel
 
 %add_python3_req_skip UserDict
 %py3_requires argparse gzip six
@@ -71,6 +68,9 @@ python3 setup.py test
 %python3_sitelibdir/%oname/test
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.2-alt2
+- drop BR: libnumpy-devel (it was python2 only package)
+
 * Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
 - Automatically updated to 0.10.2.
 
