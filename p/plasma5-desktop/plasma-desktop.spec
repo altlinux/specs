@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.20.2
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -33,7 +33,7 @@ Patch12: alt-def-layout-indicator.patch
 Patch13: alt-def-taskman.patch
 Patch14: alt-def-desktop-icons.patch
 Patch15: alt-menu-add-tooltip.patch
-#
+Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-def-krunners.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
@@ -115,7 +115,7 @@ Common polkit files for %name
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-#
+%patch16 -p1
 %patch17 -p1
 
 #Fix translate in Input Method Panel (kimpanel) widget.
@@ -195,6 +195,9 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue Nov 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.2-alt2
+- don't increase kicker button size when custom icon selected
+
 * Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.2-alt1
 - new version
 
