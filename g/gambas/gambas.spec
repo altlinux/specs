@@ -1,7 +1,7 @@
 %define appdir  %_datadir/gambas3
 %def_enable     opengl
 # jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
-%def_with   	jit
+%def_with jit
 %def_without sqlite2
 %define prov3() \
 Provides:  gambas3-%{*} = %EVR \
@@ -10,7 +10,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:		gambas
 Version:	3.15.2
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -76,7 +76,9 @@ BuildRequires:	libXft-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libxslt-devel
 BuildRequires:	libXtst-devel
-BuildRequires:	llvm-devel
+%if_with jit
+#BuildRequires:	llvm-devel
+%endif
 BuildRequires:	pkg-config
 BuildRequires:	postgresql-devel
 #BuildRequires:	qt4-devel
@@ -270,6 +272,7 @@ Requires:	%name-gb-form-dialog = %version-%release
 Requires:       %name-gb-form-editor = %version-%release
 Requires:	%name-gb-form-mdi = %version-%release
 Requires:	%name-gb-form-stock = %version-%release
+Requires:	%name-gb-form-terminal = %version-%release
 Requires:	%name-gb-gtk = %version-%release
 Requires:	%name-gb-gui = %version-%release
 Requires:	%name-gb-image = %version-%release
@@ -278,12 +281,14 @@ Requires:	%name-gb-markdown = %version-%release
 Requires:	%name-gb-qt5 = %version-%release
 Requires:	%name-gb-qt5-webkit = %version-%release
 Requires:	%name-gb-settings = %version-%release
+Requires:	%name-gb-signal = %version-%release
 Requires:       %name-gb-util = %version-%release
 Requires:	%name-gb-net = %version-%release
 Requires:	%name-gb-net-curl = %version-%release
 %if_with jit
 Requires:	%name-gb-jit = %version-%release
 %endif
+Requires:       %name-gb-term = %version-%release
 Requires:       %name-gb-test = %version-%release
 Requires:	%name-gb-form-print = %version-%release
 
@@ -1207,6 +1212,11 @@ mkdir -p %buildroot%_datadir/mime/packages/
 install -m 0644 -p app/mime/application-x-gambasscript.xml %buildroot%_xdgmimedir/packages/
 install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/packages/
 
+%if_without jit
+rm -rf %buildroot%_libdir/gambas3/gb.jit.*
+rm -rf %buildroot%appdir/info/gb.jit.*
+%endif
+
 %files
 
 %files runtime
@@ -1694,6 +1704,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.form.print.*
 
 %changelog
+* Mon Nov 09 2020 Andrey Cherepanov <cas@altlinux.org> 3.15.2-alt2
+- Build gambas-gb-jit without LLVM.
+- Fix requirements for gambas-ide.
+
 * Thu Sep 17 2020 Andrey Cherepanov <cas@altlinux.org> 3.15.2-alt1
 - New version.
 
