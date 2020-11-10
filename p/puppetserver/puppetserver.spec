@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.13.0
-Release:    alt1
+Release:    alt2
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -32,7 +32,7 @@ Requires: gem-locale
 Requires: gem-fast-gettext
 Requires: gem-gettext
 Requires: gem-semantic-puppet
-Requires: gem-concurrent-ruby >= 1.1.6-alt2
+Requires: gem-concurrent-ruby >= 1.1.6-alt1.1
 Conflicts: gem-oj
 
 %description
@@ -152,6 +152,9 @@ chmod 0700 /var/lib/puppetserver/jars
 %_sysconfdir/default/%name
 
 %changelog
+* Tue Nov 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.13.0-alt2
+- Updated dependencies for p9 compatibility.
+
 * Fri Nov 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.13.0-alt1
 - Updated to upstream version 6.13.0 (Fixes: CVE-2020-7943).
 
