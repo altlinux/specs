@@ -1,10 +1,10 @@
 %define module_name suds
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%module_name
 Version: 0.4
-Release: alt2.2
+Release: alt3
 
 Summary: Lightweight SOAP python client for consuming Web Services
 License: LGPLv3+
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt3
+- build python2 only
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.4-alt2.2
 - (NMU) rebuild with python3.6
 
