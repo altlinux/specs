@@ -3,7 +3,7 @@
 %define clib gnu
 
 Name: firecracker
-Version: 0.21.0
+Version: 0.23.0
 Release: alt1
 Summary: Virtual Machine Monitor for creating microVMs
 License: Apache-2.0
@@ -66,5 +66,8 @@ cargo test \
 %_bindir/jailer
 
 %changelog
+* Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 0.23.0-alt1
+- 0.23.0
+
 * Fri May 15 2020 Alexey Shabalin <shaba@altlinux.org> 0.21.0-alt1
 - Initial build.
