@@ -1,7 +1,7 @@
 %define modulename genshi
 
 Name: python3-module-%modulename
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: A toolkit for stream-based generation of output for the web
@@ -13,6 +13,7 @@ Source: %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools rpm-build-python3 time
+BuildRequires: python3-module-six
 
 %add_python3_req_skip compiler
 %add_python3_req_skip compiler.ast
@@ -91,6 +92,9 @@ This package contains examples for Genshi.
 %doc examples
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.4-alt1
+- Build new version.
+
 * Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.3-alt1
 - Build new version.
 - Drop python2 support.
