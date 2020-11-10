@@ -1,7 +1,7 @@
 %define  modulename pyperclip
 
 Name:    python3-module-%modulename
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Python module for cross-platform clipboard functions.
@@ -55,6 +55,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
+- Build new version.
+
 * Sun Jun 21 2020 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
 - Build new version.
 
