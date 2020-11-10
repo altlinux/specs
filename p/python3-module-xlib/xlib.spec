@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: Python X Library
@@ -69,6 +69,9 @@ py.test3 -vv
 %doc examples doc/html/*.html
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.28-alt1
+- Automatically updated to 0.28.
+
 * Tue Sep 15 2020 Grigory Ustinov <grenka@altlinux.org> 0.27-alt1
 - Automatically updated to 0.27.
 - Drop python2 support.
