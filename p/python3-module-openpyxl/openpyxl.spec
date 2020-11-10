@@ -3,7 +3,7 @@
 
 Name:    python3-module-%oname
 Version: 2.6.2
-Release: alt2
+Release: alt3
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
 Group:   Development/Python3
@@ -25,7 +25,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-memory_profiler
 BuildRequires: python3-module-et_xmlfile
 BuildRequires: python3-module-numpy
-BuildRequires: python3-module-pandas
+BuildRequires: python3-module-pandas-tests
 BuildRequires: python3-module-Pillow
 
 %description
@@ -51,6 +51,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt3
+- Fixed FTBFS.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt2
 - Drop python2 support.
 
