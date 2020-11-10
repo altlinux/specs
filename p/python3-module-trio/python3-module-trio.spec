@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache 2.0
@@ -11,6 +11,7 @@ URL:     https://github.com/python-trio/trio
 
 Packager: Evgeny Sinelnikov <sin@altlinux.org>
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 
@@ -32,6 +33,7 @@ same time with parallelized I/O.
 
 %install
 %python3_install
+%python3_prune
 
 %files
 %python3_sitelibdir/%modulename/
@@ -39,5 +41,8 @@ same time with parallelized I/O.
 %doc *.md *.rst
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt2
+- don't pack tests (ALT bug 39239)
+
 * Mon Jan 14 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.10.0-alt1
 - Initial build for Sisyphus
