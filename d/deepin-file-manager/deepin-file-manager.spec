@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.2.0.69
+Version: 5.2.0.76
 Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
@@ -14,7 +14,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-file-manager_5.2.0.69_alt_fix-build.patch
 
-ExcludeArch: armh
+ExcludeArch: armh ppc64le
 
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
@@ -64,18 +64,18 @@ sed -i 's|lupdate|lupdate-qt5|' dde-file-manager-plugins/update_translations.sh
 
 # fix file permissions
 find -type f -perm 775 -exec chmod 644 {} \;
-sed -i '/deepin-daemon/s|lib|libexec|' dde-zone/mainwindow.h
+sed -i '/deepin-daemon/s|lib|libexec|' dde-zone/mainwindow.h dde-file-manager-lib/shutil/fileutils.cpp
 sed -i 's|lib/gvfs|libexec/gvfs|' %repo-lib/gvfs/networkmanager.cpp
 sed -i 's|/lib/dde-dock/plugins|/lib64/dde-dock/plugins|' dde-dock-plugins/disk-mount/disk-mount.pro
 
-#sed -i 's|systembusconf.path = /etc/dbus-1/system.d|systembusconf.path = /usr/share/dbus-1/system.d|' dde-file-manager-daemon/dde-file-manager-daemon.pro
-sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-manager-daemon.pro
+sed -i 's|systembusconf.path = /etc/dbus-1/system.d|systembusconf.path = /usr/share/dbus-1/system.d|' dde-file-manager-daemon/dde-file-manager-daemon.pro
+sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-manager-daemon.pro dde-file-manager-daemon/test-dde-file-manager-daemon.pro
+sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/ut_dfilestatisticsjob.cpp
+sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
 
-sed -i 's|-lKF5Codecs|%_K5link/libKF5Codecs.so|' dde-file-manager/dde-file-manager.pro dde-file-manager-lib/dde-file-manager-lib.pro dde-file-manager-daemon/dde-file-manager-daemon.pro
+# sed -i 's|-lKF5Codecs|%_K5link/libKF5Codecs.so|' dde-file-manager/dde-file-manager.pro dde-file-manager-lib/dde-file-manager-lib.pro dde-file-manager-daemon/dde-file-manager-daemon.pro
 
 %build
-# %%add_optflags -L%%_K5link -lKF5Codecs
-
 %qmake_qt5 \
            CONFIG+=nostrip \
            unix:LIBS+="-L%_K5link -lKF5Codecs" \
@@ -119,13 +119,13 @@ sed -i 's|-lKF5Codecs|%_K5link/libKF5Codecs.so|' dde-file-manager/dde-file-manag
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager.service
 %_datadir/dbus-1/system-services/com.deepin.filemanager.daemon.service
-%config(noreplace) %_sysconfdir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
+%_datadir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
 %_unitdir/dde-filemanager-daemon.service
 %dir %_datadir/deepin/
 %_datadir/deepin/%repo/
 %_datadir/polkit-1/actions/com.deepin.filemanager.daemon.policy
 %_datadir/polkit-1/actions/com.deepin.pkexec.dde-file-manager.policy
-%ifnarch aarch64 ppc64le
+%ifnarch aarch64
 %dir %_libdir/deepin-anything-server-lib/
 %dir %_libdir/deepin-anything-server-lib/plugins/
 %dir %_libdir/deepin-anything-server-lib/plugins/handlers/
@@ -161,6 +161,9 @@ sed -i 's|-lKF5Codecs|%_K5link/libKF5Codecs.so|' dde-file-manager/dde-file-manag
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Tue Nov 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.76-alt1
+- New version (5.2.0.76) with rpmgs script.
+
 * Mon Nov 02 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.69-alt1
 - New version (5.2.0.69) with rpmgs script.
 
