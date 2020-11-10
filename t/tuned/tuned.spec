@@ -6,7 +6,7 @@
 
 Name: tuned
 Version: 2.14.0
-Release: alt1
+Release: alt2
 
 Summary: A dynamic adaptive system tuning daemon
 
@@ -18,6 +18,7 @@ Vcs: https://github.com/redhat-performance/tuned
 # Source-url: https://github.com/redhat-performance/tuned/archive/v%version.tar.gz
 Source: %name-%version.tar
 Source1: tuned.init
+Source2: recommend.conf
 
 BuildArch: noarch
 
@@ -204,6 +205,10 @@ sed -i '/^GRUB2_DEFAULT_ENV_FILE =/s/default\/grub/sysconfig\/grub2/' tuned/cons
 
 # Ezport tuned_params variable for submenu(s).
 echo 'echo "export tuned_params"' >> 00_tuned
+
+# For recommend.
+sed -i '/^SYSTEM_RELEASE_FILE/s/system-release-cpe/system-release/' tuned/consts.py
+cp %SOURCE2 recommend.conf
 
 %build
 make html PYTHON=%__python3
@@ -441,6 +446,9 @@ fi
 %_man7dir/tuned-profiles-compat.7*
 
 %changelog
+* Tue Nov 10 2020 Vitaly Chikunov <vt@altlinux.org> 2.14.0-alt2
+- ALT specific profile recommend.
+
 * Sun Oct 04 2020 Vitaly Chikunov <vt@altlinux.org> 2.14.0-alt1
 - Update to 2.14.0.
 - Enable realtime profiles.
