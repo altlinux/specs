@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 5.5.2
+Version: 5.6
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -136,9 +136,12 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 5.6-alt1
+- 5.6.
+
 * Thu Oct 29 2020 Grigory Ustinov <grenka@altlinux.org> 5.5.2-alt1
 - 5.5.2. (Closes: #39138)
-- Use bundled libstd (details in revert commit).
+- Use bundled libzstd (details in revert commit).
 
 * Thu Oct 01 2020 Grigory Ustinov <grenka@altlinux.org> 5.5.1-alt1
 - 5.5.1.
