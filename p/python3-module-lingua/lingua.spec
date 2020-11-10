@@ -1,8 +1,8 @@
 %define oname lingua
 
 Name: python3-module-%oname
-Version: 4.13
-Release: alt3
+Version: 4.14
+Release: alt1
 Summary: Translation toolset
 License: BSD
 Group: Development/Python3
@@ -11,7 +11,6 @@ Url: https://pypi.python.org/pypi/lingua/
 # https://github.com/wichert/lingua.git
 Source: %name-%version.tar
 BuildArch: noarch
-Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -31,9 +30,6 @@ xgettext command from gettext, or pybabel from Babel.
 
 %prep
 %setup
-%patch1 -p1
-grep -qsF '[pytest]' setup.cfg || exit 1
-sed -i 's/\[pytest\]/[tool:pytest]/g' setup.cfg
 
 %build
 %python3_build_debug
@@ -50,6 +46,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 4.14-alt1
+- Automatically updated to 4.14.
+
 * Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 4.13-alt3
 - Transfer on python3.
 
