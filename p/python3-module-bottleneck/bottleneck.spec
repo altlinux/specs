@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.1
-Release: alt3
+Release: alt4
 
 Summary: Fast NumPy array functions written in Cython
 License: BSD
@@ -16,7 +16,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 
 BuildRequires: python3-devel
-BuildRequires: libnumpy-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-numpy-testing
@@ -59,6 +58,9 @@ ln -s ../objects.inv doc/source/
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt4
+- drop BR: libnumpy-devel
+
 * Sat Oct 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt3
 - NMU: build python3 module separately
 - NMU: disable tests packaging
