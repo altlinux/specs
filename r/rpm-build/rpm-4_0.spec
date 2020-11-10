@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt152
+Release: alt153
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -91,6 +91,7 @@ BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
 
 # For debugedit.
 BuildPreReq: elfutils-devel
+BuildRequires: librpm-devel
 
 # Automatically added by buildreq on Thu Apr 23 2009 and edited manually.
 BuildRequires: libdb4.7-devel libelf-devel liblzma-devel libpopt-devel python-devel zlib-devel
@@ -271,6 +272,7 @@ make apidocs
 
 # check
 lib/test-set
+make check
 
 %install
 %make_install DESTDIR='%buildroot' install
@@ -408,6 +410,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Nov 10 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt153
+- debugedit: Copy debugedit with its tests from upstream.
+
 * Wed Nov 04 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt152
 - debuginfo: Allow kbuilds with the output directory.
 - debugedit: Fix 'canonicalization unexpectedly shrank by one character'
