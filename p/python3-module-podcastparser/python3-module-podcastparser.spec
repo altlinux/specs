@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: Simple, fast and efficient podcast parser written in Python.
@@ -17,7 +17,7 @@ Source: https://github.com/gpodder/%modname/archive/%version/%modname-%version.t
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel rpm-build-python3 python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-test python3-module-nose}
+%{?_enable_check:BuildRequires: python3-module-pytest python3-module-pytest-cov python3-module-coverage}
 
 %description
 The podcast parser project is a library from the gPodder project to provide an
@@ -33,7 +33,7 @@ easy and reliable way of parsing RSS- and Atom-based podcast feeds in Python.
 %python3_install
 
 %check
-nosetests3
+py.test3
 
 %files
 %python3_sitelibdir_noarch/%{modname}*
@@ -42,6 +42,9 @@ nosetests3
 
 
 %changelog
+* Tue Nov 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.6-alt1
+- 0.6.6
+
 * Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt1
 - 0.6.5 (python3 only)
 - fixed License tag
