@@ -11,7 +11,7 @@
 
 Name: inkscape
 Version: %major.1
-Release: alt6
+Release: alt7
 
 Summary: A Vector Drawing Application
 
@@ -59,6 +59,7 @@ BuildRequires: libgomp-devel
 %endif
 BuildRequires: libdouble-conversion-devel
 BuildRequires: perl-podlators
+
 Requires: icc-profiles
 
 # For extensions
@@ -73,6 +74,9 @@ Requires: gnome-icon-theme
 #Requires: inkscape-data = %EVR
 Requires: inkscape-tutorial
 Requires: lib%name = %EVR
+
+# due $ORIGIN using
+Requires: /proc
 
 %description
 Inkscape is a SVG based generic vector-drawing program for Linux/Unix
@@ -205,6 +209,9 @@ true
 %files checkinstall
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt7
+- add Requires: /proc (ALT bug 39230)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt6
 - build libinkscape to share code between inkscape and inkview
 - enable build shared lib
