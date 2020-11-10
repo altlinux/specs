@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        82.0.1
+Version:        82.0.3
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -512,6 +512,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Nov 10 2020 Alexey Gladkov <legion@altlinux.ru> 82.0.3-alt1
+- New release (82.0.3).
+- Security fixes:
+  + CVE-2020-26950: Write side effects in MCallGetProperty opcode not accounted for
+
 * Wed Oct 28 2020 Alexey Gladkov <legion@altlinux.ru> 82.0.1-alt1
 - New release (82.0.1).
 
