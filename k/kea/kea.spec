@@ -9,8 +9,8 @@
 %define _localstatedir /var
 
 Name: kea
-Version: 1.6.2
-Release: alt3
+Version: 1.8.1
+Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPLv2.0 and Boost
@@ -228,6 +228,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Sat Mar 28 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt3
 - fix kea-shell package
 - move docs to doc package
