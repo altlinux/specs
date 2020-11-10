@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.8
-Release: alt2
+Release: alt3
 
 License: BSD
 Group: Development/Python
@@ -29,7 +29,7 @@ BuildRequires: python3-module-snuggs python3-module-click-plugins
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-boto3 python3-module-packaging
 
-BuildRequires: libgdal-devel libproj-nad libproj-devel gcc-c++ libnumpy-devel
+BuildRequires: libgdal-devel libproj-nad libproj-devel gcc-c++ libnumpy-py3-devel
 BuildRequires: xvfb-run
 
 %py3_provides %oname
@@ -67,6 +67,9 @@ xvfb-run py.test3 ||:
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt3
+- s/libnumpy-devel/libnumpy-py3-devel
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt2
 - s/click-tests/click
 
