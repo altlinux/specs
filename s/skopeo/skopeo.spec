@@ -1,18 +1,16 @@
 %global import_path github.com/containers/skopeo
-%global commit 67abbb3cefbdc876447583d5ea45e76bf441eba7
+%global commit 2b4097bc13e7ba1d16a5225e2292a5cf88072f63
 
 %global _unpackaged_files_terminate_build 1
 
 Name: skopeo
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
 License: Apache-2.0
 Group: Other
 Url: https://github.com/containers/skopeo
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -33,8 +31,6 @@ Source13: containers.conf
 Source14: containers.conf.5.md
 Source15: containers-auth.json.5.md
 Source16: containers-registries.conf.d.5.md
-
-Patch100: 0001--buildmodepie-is-not-supported-for-some-arch.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -66,7 +62,6 @@ Summary: Configuration files for working with image signatures
 
 %prep
 %setup
-%patch100 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -79,7 +74,7 @@ export GIT_COMMIT=%commit
 
 pushd .gopath/src/%import_path
 #%%golang_build cmd/%name
-%make_build binary-local
+%make_build bin/skopeo
 
 for doc in $(find docs -name '*.1.md'); do
     go-md2man -in "$doc" -out "docs/$(basename "${doc%%.md}")"
@@ -129,6 +124,9 @@ install -m0644 %SOURCE13 %buildroot%_datadir/containers/containers.conf
 %doc *.md
 
 %changelog
+* Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Wed Sep 09 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
 - new version 1.1.1
 
