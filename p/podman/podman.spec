@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/containers/podman
-%global commit 27362ba1ad8879ea71610fa68a651a1651e0180f
+%global commit 9f6d6ba0b314d86521b66183c9ce48eaa2da1de2
 
 Name:     podman
-Version:  2.0.6
+Version:  2.1.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -31,6 +31,7 @@ Requires: crun
 Requires: runc
 Requires: slirp4netns
 Requires: cni cni-plugins >= 0.8.6
+Requires: xz
 
 %description
 %summary.
@@ -124,6 +125,9 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt1
+- new version 2.1.1
+
 * Wed Sep 09 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.6-alt1
 - new version 2.0.6
 
