@@ -1,8 +1,8 @@
 %define oname plumbum
 
 Name: python3-module-%oname
-Version: 1.6.3
-Release: alt2
+Version: 1.6.9
+Release: alt1
 Summary: Plumbum: shell combinators library
 License: MIT
 Group: Development/Python3
@@ -10,7 +10,6 @@ Url: https://pypi.python.org/pypi/plumbum/
 
 # https://github.com/tomerfiliba/plumbum.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
@@ -82,7 +81,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
@@ -121,6 +119,9 @@ python3 setup.py test ||:
 %doc docs/_build/html/*
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 1.6.9-alt1
+- Automatically updated to 1.6.9.
+
 * Thu Sep 03 2020 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt2
 - Drop python2 support.
 
