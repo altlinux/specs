@@ -3,7 +3,7 @@
 
 Name: 	 odoo
 Version: 12.0
-Release: alt2.%snapshot
+Release: alt3.%snapshot
 
 Summary: Odoo is a suite of web based open source business apps
 
@@ -40,7 +40,7 @@ Obsoletes: openerp-httpd-fonts-access < %version-%release
 
 %filter_from_requires /python3(xmlrpclib)/d
 %py3_requires feedparser gevent mako mock ofxparse PIL psutil pydot ldap pyparsing serial usb qrcode vatnumber vobject xlsxwriter xlwt num2words phonenumbers
-Requires: python3-module-suds-jurko
+Requires: python3-module-suds
 Requires: wkhtmltopdf
 Requires: lessjs >= 3.0.0
 
@@ -137,6 +137,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 12.0-alt3.20190424
+- NMU: requires: s/suds-jurko/suds/
+
 * Tue Apr 30 2019 Andrey Cherepanov <cas@altlinux.org> 12.0-alt2.20190424
 - Fix license.
 
