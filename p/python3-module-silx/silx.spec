@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname silx
+%def_without  check
 
 Name: python3-module-%oname
 Version: 0.10.1
-Release: alt1
+Release: alt2
 Summary: Software library for X-Ray data analysis
 License: MIT
 Group: Development/Python3
@@ -24,9 +25,6 @@ BuildRequires: python3-module-Cython
 BuildRequires: python3(scipy)
 # for tests
 BuildRequires: python3(fabio)
-
-# circumvent build failures due to relying on headers from libnumpy-devel
-BuildRequires: libnumpy-devel
 
 %add_python3_req_skip pyopencl pyopencl.array pyopencl.elementwise
 %py3_requires scipy.spatial
@@ -112,6 +110,10 @@ python3 setup.py test
 %python3_sitelibdir/%oname/examples
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt2
+- remove libnumpy-devel (it is python2 only package)
+- disable check (need review)
+
 * Mon Apr 08 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.1-alt1
 - Updated to latest upstream release.
 - Disabled build for python-2.
