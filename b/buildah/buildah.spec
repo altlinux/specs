@@ -5,7 +5,7 @@
 # https://github.com/containers/buildah
 %global provider_prefix %provider.%provider_tld/%project/%repo
 %global import_path     %provider_prefix
-%global commit          0e6d94679ebddd0f2461078cfaee6ea564672684
+%global commit          abe48f0adf92c270d4366a6e53d3d024ba77bf93
 %global shortcommit    %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -17,8 +17,8 @@
 
 Name: buildah
 # Bump version in buildah.go too
-Version: 1.16.1
-Release: alt2
+Version: 1.16.5
+Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
@@ -89,6 +89,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.5-alt1
+- 1.16.5
+
 * Sat Sep 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt2
 - add tzdata to Requires
 
