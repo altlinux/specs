@@ -2,8 +2,8 @@
 %define oname ipdb
 
 Name: python3-module-%oname
-Version: 0.10.3
-Release: alt2
+Version: 0.13.4
+Release: alt1
 Summary: IPython-enabled pdb
 License: GPL
 Group: Development/Python3
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: ipython3
 BuildRequires: python3-module-pathlib2
+BuildRequires: python3-module-mock
 
 %description
 ipdb exports functions to access the IPython debugger, which features
@@ -41,6 +42,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.13.4-alt1
+- Automatically updated to 0.13.4.
+
 * Thu Sep 03 2020 Grigory Ustinov <grenka@altlinux.org> 0.10.3-alt2
 - Drop python2 support.
 
