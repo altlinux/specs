@@ -24,7 +24,7 @@ presented using a dictionary metaphor, indexed by name.
 
 Name:       h5py
 Version:    2.10.0
-Release:    alt2
+Release:    alt3
 
 Summary:    Python interface to the Hierarchical Data Format library, version 5
 License:    MIT
@@ -41,6 +41,7 @@ BuildRequires: libsz2-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-mpi4py-devel
 BuildRequires: python3-module-pkgconfig
 BuildRequires: python3-module-six
 BuildRequires: python3-module-sphinx-devel
@@ -49,14 +50,13 @@ BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-unittest2
 %endif
 
-
 %description
 %descr
 
 %package -n python3-module-%name
 Summary: Python interface to the Hierarchical Data Format library, version 5
 Group: Development/Python3
-%py3_requires h5py.tests
+#py3_requires h5py.tests
 %add_python3_req_skip Tkinter
 
 %description -n python3-module-%name
@@ -158,6 +158,9 @@ touch %buildroot%python3_sitelibdir/%name/examples/__init__.py
 
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt3
+- fix build, fix tests packing
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.0-alt2
 - Fixed build with numpy.
 
