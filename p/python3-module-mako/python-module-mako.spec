@@ -1,7 +1,7 @@
 %define modname mako
 
 Name: python3-module-%modname
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: template library written in Python
 
@@ -54,6 +54,9 @@ and scoping semantics.
 %python3_sitelibdir/Mako-%version-*.egg-info
 
 %changelog
+* Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt1
+- Build new version.
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - NMU: new version 1.1.2 (with rpmrb script)
 - NMU: cleanup spec, drop test files packing
