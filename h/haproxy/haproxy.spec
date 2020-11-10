@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 2.0.14
+Version: 2.0.19
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -107,6 +107,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.19-alt1
+- 2.0.19
+
 * Sat Apr 18 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.14-alt1
 - 2.0.14
 - build with prometheus-exporter
