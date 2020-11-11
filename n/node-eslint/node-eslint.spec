@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-eslint
-Version: 7.1.0
+Version: 7.11.0
 Release: alt1
 
 Summary: Find and fix problems in your JavaScript code
@@ -65,5 +65,8 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/{docs,tests}/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Wed Nov 11 2020 Vitaly Lipatov <lav@altlinux.ru> 7.11.0-alt1
+- new version 7.11.0 (with rpmrb script)
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt1
 - initial build for ALT Sisyphus
