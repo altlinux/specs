@@ -1,6 +1,6 @@
 Name: cvise
-Version: 1.8.0
-Release: alt2
+Version: 1.9.0
+Release: alt1
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -17,7 +17,7 @@ BuildRequires: astyle
 BuildRequires: clang-devel >= 10
 # FIXME
 BuildRequires: clang-devel-static >= 10
-BuildRequires: cmake
+BuildRequires: cmake ctest
 BuildRequires: flex
 BuildRequires: gcc-c++
 BuildRequires: indent
@@ -30,8 +30,10 @@ BuildRequires: libncurses-devel
 BuildRequires: python3-module-pebble
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-shutil python3-module-pytest-xdist python3-module-pytest-cov
 BuildRequires: unifdef
-BuildRequires: pytest3
+#BuildRequires: pytest3
+
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.1.5
@@ -71,8 +73,8 @@ and report bugs in compilers and other tools that process C/C++ or OpenCL code.
 %cmake_build
 
 %check
-cd BUILD
-pytest3 -v .
+# run ctest -> python3 -m pytest
+make -C BUILD test
 
 %install
 %cmakeinstall_std
@@ -92,6 +94,9 @@ rm -rfv %buildroot%_datadir/cvise/tests/
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
+- new version 1.9.0 (with rpmrb script)
+
 * Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt2
 - disable python modules provide, drop tests files from the package
 
