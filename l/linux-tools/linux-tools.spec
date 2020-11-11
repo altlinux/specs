@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -202,7 +202,10 @@ sed -i '/#include/a typedef struct { __u32 u[4]; } __vector128;' include/uapi/li
 cd %kernel_source/tools
 
 # Use rst2man from python3-module-docutils
-rst2man() { rst2man.py "$@"; }; export -f rst2man
+# Sisyphus have rst2man.py, p9 have rst2man.py3.
+rst2man() {
+	type rst2man.py3 >/dev/null 2>&1 && rst2man.py3 "$@" || rst2man.py "$@"
+}; export -f rst2man
 
 # Noiseless git stub
 git() { exit 1; }; export -f git
@@ -539,6 +542,9 @@ fi
 %_man8dir/bpftool*
 
 %changelog
+* Wed Nov 11 2020 Vitaly Chikunov <vt@altlinux.org> 5.9-alt2
+- spec: Fix 'rst2man.py: command not found' in p9.
+
 * Mon Oct 12 2020 Vitaly Chikunov <vt@altlinux.org> 5.9-alt1
 - Update to v5.9 (2020-10-11).
 
