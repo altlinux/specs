@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 5.20.1.19
-Release: alt6
+Release: alt7
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -541,7 +541,7 @@ find . -type f -iname '*.cs' -print0 | xargs -0 \
 # modifications for Mono 4
 %__subst "s#mono/2.0#mono/4.5#g" data/mono-nunit.pc.in
 
-%__subst "s|python|python3|" mono/mini/Makefile*
+%__subst "s|python|python3|" mono/mini/Makefile* scripts/submodules/versions.mk
 
 %if_enabled bootstrap
 export PATH=$PATH:mcs/class/lib/monolite-linux/
@@ -625,6 +625,10 @@ ln -s mcs %buildroot%_bindir/gmcs
 
 %find_lang mcs
 
+# drop python2-base requires
+for i in %_bindir/mono-gdb.py %_bindir/mono-sgen-gdb.py ; do
+    sed -i "1i#!/usr/bin/python3" %buildroot$i
+done
 
 %files core -f mcs.lang
 %qIF_ver_lt %ubt_id S1
@@ -639,7 +643,6 @@ ln -s mcs %buildroot%_bindir/gmcs
 %dir %_monodir/4.5
 %dir %_monodir/4.0
 %_bindir/mono
-%_bindir/mono-test-install
 %_bindir/mono-gdb.py
 %ifnarch aarch64
 %_bindir/mono-boehm
@@ -794,6 +797,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 
 %files devel
 %_sysconfdir/pki/mono/
+%_bindir/mono-test-install
 %mono_bin mono-api-info
 %mono_bin illinkanalyzer
 %_bindir/mono-package-runtime
@@ -1127,6 +1131,10 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Wed Nov 11 2020 Vitaly Lipatov <lav@altlinux.ru> 5.20.1.19-alt7
+- move mono-test-install to mono-devel package (it uses pkg-config file from it)
+- use python3 during build, don't require python2-base in mono-core
+
 * Fri Aug 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.20.1.19-alt6
 - Fixed build with new cmake.
 
