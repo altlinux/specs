@@ -1,32 +1,32 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%def_disable check
+%def_enable check
 
 Name: telepathy-haze
-Version: 0.8.0.1
-Release: alt0.8
+Version: 0.8.1
+Release: alt1
 
 Summary: a connection manager built around libpurple
 License: GPLv2+
 Group: Networking/Instant messaging
-Url: http://developer.pidgin.im/wiki/TelepathyHaze
+Url: https://developer.pidgin.im/wiki/TelepathyHaze
 
 %if_disabled snapshot
-Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+Source: https://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
 %else
-# VCS: git://anongit.freedesktop.org/telepathy/telepathy-haze
+Vcs: https://anongit.freedesktop.org/telepathy/telepathy-haze
 Source: %name-%version.tar
 %endif
-Patch: %name-0.8.0-alt-purple_2.0.12.patch
-Patch1: %name-0.8.0-alt-unused_const_variable.patch
 
-BuildPreReq: glib2-devel >= 2.22 libgio-devel libdbus-glib-devel >= 0.73
+BuildRequires(pre): rpm-build-python3
+BuildRequires: glib2-devel >= 2.22 libgio-devel libdbus-glib-devel >= 0.73
 BuildRequires: libpurple-devel >= 2.0.12 libtelepathy-glib-devel >= 0.13.9
-BuildRequires: xsltproc python-modules-xml
+BuildRequires: xsltproc
 %if_enabled check
-BuildRequires: python-module-twisted-words python-module-twisted-core-gui
-BuildRequires: python-module-cffi python-module-service-identity
-BuildRequires: /proc dbus-tools-gui python-module-dbus
+BuildRequires: python3-module-twisted-words python3-module-twisted-core-gui
+BuildRequires: python3-module-cffi python3-module-service-identity
+BuildRequires: python3-module-pygobject3-pygtkcompat
+BuildRequires: /proc dbus-tools-gui python3-module-dbus
 %endif
 
 %description
@@ -38,14 +38,10 @@ work acceptably, and others will probably work too.
 
 %prep
 %setup
-%patch -b .purple
-%patch1 -b .gcc6
 
 %build
-# for gcc7 & gcc8
-%add_optflags -Wno-error=implicit-fallthrough -Wno-error=cast-function-type
 %autoreconf
-%configure --disable-Werror PYTHON=python2
+%configure --disable-Werror PYTHON=%__python3
 %make_build
 
 %install
@@ -61,6 +57,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Wed Nov 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1 (ported tests to Python3)
+
 * Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.8
 - built without -Werror
 
