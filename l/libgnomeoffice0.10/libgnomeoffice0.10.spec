@@ -10,7 +10,7 @@
 
 Name: libgnomeoffice%api_ver
 Version: %ver_major.48
-Release: alt1
+Release: alt1.1
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
@@ -43,8 +43,6 @@ programs.
 Summary: Development libraries and header files for %name
 Group: Development/C
 Requires: %name = %version-%release
-Obsoletes: libgnomeoffice%api_ver-devel
-Provides: libgnomeoffice%api_ver-devel = %version-%release
 
 %description devel
 This package contains the header files and libraries needed to write and
@@ -89,7 +87,7 @@ GObject introspection devel data for the Goffice library.
 	--with-config-backend=gsettings \
 	%{subst_with lasem} \
 	%{?_enable_introspection:--enable-introspection=yes}
-
+%nil
 %make_build
 
 %install
@@ -140,6 +138,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Wed Nov 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.48-alt1.1
+- removed useless Obsoletes/Provides
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.48-alt1
 - 0.10.48
 
