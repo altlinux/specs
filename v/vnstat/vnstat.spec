@@ -2,7 +2,7 @@
 
 Name:    vnstat
 Version: 2.6
-Release: alt1
+Release: alt2
 
 Summary: console-based network traffic monitor
 Summary(ru_RU.UTF-8): консольная утилита для подсчёта трафика
@@ -61,7 +61,6 @@ Summary: optional server for vnstat network traffic monitor
 #Summary(ru_RU.UTF-8): 
 Group:   Monitoring
 Requires: %name = %version-%release
-Provides: %name-server = %version-%release
 
 %description server
 vnStat  is a console-based network  traffic monitor that keeps a log
@@ -74,7 +73,6 @@ traffice monitor.
 Summary: optional png image output support for vnstat
 Group:   Monitoring
 Requires: %name = %version-%release
-Provides: %name-vnstati = %version-%release
 
 %description vnstati
 vnStat  is a console-based network  traffic monitor that keeps a log
@@ -164,6 +162,9 @@ mkdir -p %buildroot%data_dir
 %_man1dir/%{name}i*
 
 %changelog
+* Wed Nov 11 2020 Nikolay A. Fetisov <naf@altlinux.org> 2.6-alt2
+- Remove duplicate self-provides
+
 * Tue Mar 31 2020 Nikolay A. Fetisov <naf@altlinux.org> 2.6-alt1
 - New version
 
