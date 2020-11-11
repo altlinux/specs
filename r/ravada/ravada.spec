@@ -2,11 +2,12 @@
 
 Name: ravada
 Summary: Remote Virtual Desktops Manager
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 License: AGPL-3.0
 Group: Development/Perl
 Url: https://ravada.upc.edu/
+Vcs: https://github.com/UPC/ravada.git
 Packager: Andrew A. Vasilyev <andy@altlinux.ru>
 
 Source: %name-%version.tar
@@ -118,6 +119,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Wed Nov 11 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Thu Oct 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
