@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.20.6
+Version: 0.20.7
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -87,6 +87,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Wed Nov 11 2020 Vitaly Lipatov <lav@altlinux.ru> 0.20.7-alt1
+- macros.nodejs: node_prune: remove test dirs recursively
+
 * Thu Oct 29 2020 Vitaly Lipatov <lav@altlinux.ru> 0.20.6-alt1
 - npm_install: add more excludes
 
