@@ -7,7 +7,7 @@
 %def_disable documentation
 
 Name: knot
-Version: 3.0.0
+Version: 3.0.2
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -179,8 +179,6 @@ find %buildroot -type f -name "*.la" -delete -print
 %_man8dir/kxdpgun.*
 %endif
 %_man1dir/*
-%_bindir/kzonecheck
-%_bindir/kzonesign
 %exclude %_bindir/kzone*
 %exclude %_man1dir/kzone*
 
@@ -204,6 +202,9 @@ find %buildroot -type f -name "*.la" -delete -print
 %endif
 
 %changelog
+* Thu Nov 12 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.2-alt1
+- new version 3.0.2
+
 * Thu Sep 10 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
 
