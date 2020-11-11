@@ -1,4 +1,4 @@
-%ifarch %ix86 x86_64 armh aarch64 mipsel mips64el %e2k
+%ifarch %ix86 x86_64 armh aarch64 mipsel mips64el ppc64el %e2k
 %def_enable rutokenecp
 %else
 %def_disable rutokenecp
@@ -18,7 +18,7 @@
 
 Name: pkcs11-profiles
 Version: 0.1.10
-Release: alt1
+Release: alt2
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -170,6 +170,9 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Wed Nov 11 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1.10-alt2
+- Enable rutokenecp on ppc64el supported by 2.0.9.0 release.
+
 * Mon Aug 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.1.10-alt1
 - Use "ask_pin_later" instead of "ask_pin" (requires pam_pkcs11 >= 0.6.11).
 
