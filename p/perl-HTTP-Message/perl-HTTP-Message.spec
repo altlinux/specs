@@ -2,7 +2,7 @@
 %define dist HTTP-Message
 Name: perl-%dist
 Version: 6.26
-Release: alt1
+Release: alt2
 
 Summary: HTTP style messages
 License: GPL or Artistic
@@ -12,7 +12,6 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
-Provides: perl(HTTP/Request/Common.pm) = 6.060
 
 BuildArch: noarch
 
@@ -37,6 +36,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Nov 11 2020 Igor Vlasenko <viy@altlinux.ru> 6.26-alt2
+- cleaned up deprecated provides (closes:#39248)
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 6.26-alt1
 - automated CPAN update
 
