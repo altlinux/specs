@@ -1,6 +1,6 @@
 Name: kodi
 Version: 19.0
-Release: alt0.20201005
+Release: alt0.20201031
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -80,6 +80,8 @@ BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(udfread)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(vdpau)
+BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(wayland-client++)
 BuildRequires: pkgconfig(xau)
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xdamage)
@@ -89,6 +91,11 @@ BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xxf86vm)
 BuildRequires: pkgconfig(zlib)
+
+%package x11
+Summary: Kodi X11-specific part
+Group: Video
+Requires: kodi = %version-%release
 
 %package data
 Summary: Kodi architecture-independent data
@@ -104,6 +111,10 @@ Requires: kodi = %version-%release
 %description
 Kodi is an media-player and entertainment hub for all your digital media.
 
+%description x11
+Kodi is an media-player and entertainment hub for all your digital media.
+This package contains X11-specific part of Kodi.
+
 %description data
 Kodi is an media-player and entertainment hub for all your digital media.
 This package contains all architecture-independent data requried for Kodi.
@@ -114,11 +125,11 @@ This package contains development part of Kodi.
 
 %define __nprocs 8
 %define docdir %_defaultdocdir/%name
-%define cdefs -DGIT_VERSION=%release
+%define cdefs -DGIT_VERSION=%release -DCORE_PLATFORM_NAME="x11 wayland gbm"
 %ifarch armh aarch64
-%define platdefs -DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles
+%define platdefs -DAPP_RENDER_SYSTEM=gles
 %else
-%define platdefs -DX11_RENDER_SYSTEM=gl
+%define platdefs -DAPP_RENDER_SYSTEM=gl
 %endif
 
 %prep
@@ -142,11 +153,6 @@ mkdir %buildroot%_libdir/kodi/addons
 %files
 %docdir
 
-%ifnarch armh aarch64
-%config(noreplace) %_sysconfdir/X11/wmsession.d/20KODI
-%_datadir/xsessions/kodi.desktop
-%endif
-
 %_bindir/kodi
 %_bindir/kodi-standalone
 
@@ -156,7 +162,12 @@ mkdir %buildroot%_libdir/kodi/addons
 %dir %_libdir/kodi
 %_libdir/kodi/addons
 %_libdir/kodi/system
-%_libdir/kodi/kodi-*
+%_libdir/kodi/kodi.bin
+
+%files x11
+%config(noreplace) %_sysconfdir/X11/wmsession.d/20KODI
+%_datadir/xsessions/kodi.desktop
+%_libdir/kodi/kodi-xrandr
 
 %files data
 %dir %_datadir/kodi
@@ -171,6 +182,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Tue Nov 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt0.20201031
+- 19.0a3 Matrix
+
 * Thu Oct 08 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt0.20201005
 - 19.0a2 Matrix
 
