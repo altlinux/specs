@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt153
+Release: alt154
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -410,6 +410,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Nov 11 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt154
+- addReqProv: issue a warning and ignore self-provides,
+  providePackageNVR already does the right thing.
+
 * Tue Nov 10 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt153
 - debugedit: Copy debugedit with its tests from upstream.
 
