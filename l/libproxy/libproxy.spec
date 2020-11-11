@@ -15,7 +15,7 @@ BuildRequires: pkgconfig(libpcre)
 
 Name: libproxy
 Version: 0.4.15
-Release: alt3.1
+Release: alt4
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
@@ -260,6 +260,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Wed Nov 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.15-alt4
+- Applied security fixes from upstream (Fixes: CVE-2020-25219, CVE-2020-26154)
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.15-alt3.1
 - NMU: applied logoved fixes
 
