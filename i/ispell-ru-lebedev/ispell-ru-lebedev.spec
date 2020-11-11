@@ -6,9 +6,7 @@
 
 Name: ispell-ru-lebedev
 Version: 0.99g5
-Release: alt14
-
-Packager: Sergey Kurakin <kurakin@altlinux.org>
+Release: alt15
 
 Summary: Russian ispell dictionary, KOI8-R, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, KOI8-R, разрешена замена "ё" на "е"
@@ -38,12 +36,15 @@ Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru
 # Automatically added by buildreq on Sun Nov 28 2010
 BuildRequires: i2myspell vim-console
 
-BuildPreReq: ispell >= %ispell_version
-BuildPreReq: aspell >= %aspell_version
-BuildPreReq: vim-devel >= 4:7.0
+BuildRequires: ispell >= %ispell_version
+BuildRequires: aspell >= %aspell_version
+BuildRequires: vim-devel >= 4:7.0
 
 # The real ispell is required - not the aspell-provided emulation.
 BuildConflicts:	aspell-ispell
+
+# no need for provides like /usr/lib64/aspell/ru.multi = 40 (alt#39256)
+AutoProv: yes,noalternatives
 
 %package common
 Summary: Russian ispell/aspell/hunspell/vim dictionaries common files
@@ -783,6 +784,9 @@ done
 
 
 %changelog
+* Wed Nov 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.99g5-alt15
+- AutoProv: yes,noalternatives against multiple auto provides (closes: #39256)
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.99g5-alt14
 - added alternatives for %_datadir/aspell/ru.dat(+_phonetic)
 - (closes: #36827)
