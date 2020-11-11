@@ -13,7 +13,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -56,7 +56,7 @@ Facebook, etc.) to create meta-contacts.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -65,8 +65,7 @@ developing applications that use %name.
 %package gir
 Summary: GObject introspection data for the %_name library
 Group: System/Libraries
-Requires: %name = %version-%release
-Provides: typelib(Folks) = %ver_major
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %_name library
@@ -75,7 +74,8 @@ GObject introspection data for the %_name library
 Summary: GObject introspection devel data for the %_name library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %_name library
@@ -84,7 +84,7 @@ GObject introspection devel data for the %_name library
 Summary: vala language bindings for %_name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description vala
 This package provides vala language bindings for %_name library
@@ -92,7 +92,7 @@ This package provides vala language bindings for %_name library
 %package tests
 Summary: Tests for the Folks
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -170,6 +170,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Wed Nov 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1.2
+- removed unnecessary "Provides" from -gir subpackage.
+
 * Sat Aug 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1.1
 - rebuilt against libedataserver-1.2.so.25 (e-d-s-3.37.*)
 
