@@ -3,7 +3,7 @@
 
 Name: gnuplot
 Version: 5.4.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -32,6 +32,12 @@ Patch4: gnuplot-5.2.2-doc.patch
 Patch5: gnuplot-5.4.0-libgd.patch
 # ALT 34350
 Patch6: gnuplot-5.4.0-fix-help.patch
+
+# Remove with update (fixes for CVEs)
+Patch10: 052cbd17c3cbbc602ee080b2617d32a8417d7563.patch
+Patch11: 1f36c4fbb3e8e0beb213b4a29ab463e43db9ef42.patch
+Patch12: 963c7df3e0c5266efff260d0dff757dfe03d3632.patch
+Patch13: a31c3b70d8d4f887f906afe35accbc9a59ebcd37.patch
 
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
@@ -147,6 +153,11 @@ plotting tool
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
@@ -274,6 +285,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Wed Nov 11 2020 Grigory Ustinov <grenka@altlinux.org> 1:5.4.0-alt2
+- Quickfix (Fixes: CVE-2020-25559, CVE-2020-25412) (Closes: #39253).
+
 * Mon Jul 20 2020 Grigory Ustinov <grenka@altlinux.org> 1:5.4.0-alt1
 - Automatically updated to 5.4.0.
 
