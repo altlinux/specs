@@ -1,6 +1,6 @@
 
 Name: yarn
-Version: 1.22.4
+Version: 1.22.10
 Release: alt1
 Summary: Fast, reliable, and secure dependency management
 Group: Development/Tools
@@ -32,6 +32,9 @@ ln -s %nodejs_sitelib/%name/bin/%name.js %buildroot%_bindir/yarnpkg
 %nodejs_sitelib/%name
 
 %changelog
+* Wed Nov 11 2020 Alexey Shabalin <shaba@altlinux.org> 1.22.10-alt1
+- 1.22.10
+
 * Sat Apr 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.22.4-alt1
 - 1.22.4
 
@@ -51,7 +54,7 @@ ln -s %nodejs_sitelib/%name/bin/%name.js %buildroot%_bindir/yarnpkg
 * Fri May 11 2018 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1.S1
 - 1.6.0
 
-* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 0.27.5-alt1%ubt
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 0.27.5-alt1
 - rebuild with Universal Branch Tag
 
 * Wed Jul 26 2017 Alexey Shabalin <shaba@altlinux.ru> 0.27.5-alt1
