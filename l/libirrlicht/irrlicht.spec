@@ -1,43 +1,42 @@
 %def_disable static
 %define realname irrlicht
 %define major 1
-%define libname %{name}%{major}
+%define libname %name%major
 
 Name: libirrlicht
 Version: 1.8.4
-Release: alt2
+Release: alt3
 
 Summary: Fast Open-source 3D engine
 License: BSD-style
 Group: System/Libraries
-Url: http://irrlicht.sourceforge.net/
 
+Url: http://irrlicht.sourceforge.net/
 Source: %realname-%version.tar
 
 # TODO: remake for 1.8 and uncomment doc and examples
 Patch0: irrlicht-1.7.1-alt-autotools.patch
 
 # Patch1-4 from mageia irrlicht
-Patch1:		irrlicht-1.8-library-makefile.patch
+Patch1: irrlicht-1.8-library-makefile.patch
 # corrected: see irrlicht-1.8-use-system-libs.patch.diff
-Patch2:		irrlicht-1.8-use-system-libs.patch
-Patch3:		irrlicht-1.8.1-mga-system-glext.patch
-Patch4:		irrlicht-1.8.1-fdr-mesa10.patch
+Patch2: irrlicht-1.8-use-system-libs.patch
+Patch3: irrlicht-1.8.1-mga-system-glext.patch
+Patch4: irrlicht-1.8.1-fdr-mesa10.patch
 
-BuildRequires:  pkg-config unzip gcc-c++ zlib-devel
-BuildRequires:	ImageMagick
-BuildRequires:	zlib-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel
-BuildRequires:	libGLU-devel
-BuildRequires:	pkgconfig(x11)
-BuildRequires:	libXext-devel
-BuildRequires:	libXxf86vm-devel
-BuildRequires:	libXft-devel
-BuildRequires:	bzlib-devel
-BuildRequires:	fontconfig-devel
-BuildRequires:	libXcursor-devel
-
+BuildRequires: pkg-config unzip gcc-c++ zlib-devel
+BuildRequires: ImageMagick
+BuildRequires: zlib-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel
+BuildRequires: libGLU-devel
+BuildRequires: pkgconfig(x11)
+BuildRequires: libXext-devel
+BuildRequires: libXxf86vm-devel
+BuildRequires: libXft-devel
+BuildRequires: bzlib-devel
+BuildRequires: fontconfig-devel
+BuildRequires: libXcursor-devel
 
 %description
 The Irrlicht Engine is a cross-platform high performance realtime 3D
@@ -57,19 +56,16 @@ Requires: %name = %version-%release
 %description devel
 Headers for building software that uses %name
 
-%package -n %{libname}
-Summary:	Shared libraries for Irrlicht 3D engine
-Group:		System/Libraries
+%package -n %libname
+Summary: Shared libraries for Irrlicht 3D engine
+Group: System/Libraries
 
 Provides: liblibirrlicht1 = %EVR
 Obsoletes: liblibirrlicht1 < %EVR
-Conflicts: liblibirrlicht1 < %EVR
-Provides: libirrlicht = %version
-Provides: libirrlicht = %version-%release
-Obsoletes: libirrlicht < 1.8
-Conflicts: libirrlicht < 1.8
+Provides: libirrlicht = %EVR
+Obsoletes: libirrlicht < %EVR
 
-%description -n %{libname}
+%description -n %libname
 Shared libraries for Irrlicht 3D engine.
 
 The Irrlicht Engine is a cross-platform high performance realtime 3D
@@ -80,7 +76,6 @@ state-of-the-art features for visual representation like dynamic
 shadows, particle systems, character animation, indoor and outdoor
 technology, and collision detection. All this is accessible through
 a well designed C++ interface, which is extremely easy to use.
-
 
 %package examples
 Summary: Examples for %name
@@ -101,7 +96,7 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %prep
-%setup -q -n %realname-%version
+%setup -n %realname-%version
 #patch0 -p2
 %patch1 -p1
 %patch2 -p1
@@ -128,14 +123,14 @@ sed -i -e '/_IRR_MATERIAL_MAX_TEXTURES_/s/4/8/' include/IrrCompileConfig.h
 
 %install
 #makeinstall
-mkdir -p %{buildroot}%{_libdir}
-make -C source/Irrlicht INSTALL_DIR=%{buildroot}%{_libdir} install
-ln -s libIrrlicht.so.%{version} %{buildroot}%{_libdir}/libIrrlicht.so.%{major}
+mkdir -p %buildroot%_libdir
+make -C source/Irrlicht INSTALL_DIR=%buildroot%_libdir install
+ln -s libIrrlicht.so.%version %buildroot%_libdir/libIrrlicht.so.%major
 
-mkdir -p %{buildroot}%{_includedir}/%{realname}
-cp -a include/*.h %{buildroot}%{_includedir}/%{realname}/
+mkdir -p %buildroot%_includedir/%realname
+cp -a include/*.h %buildroot%_includedir/%realname/
 
-%files -n %{libname}
+%files -n %libname
 %_libdir/libIrrlicht.so.%{major}*
 
 %files devel
@@ -155,6 +150,9 @@ cp -a include/*.h %{buildroot}%{_includedir}/%{realname}/
 %endif
 
 %changelog
+* Wed Nov 11 2020 Michael Shigorin <mike@altlinux.org> 1.8.4-alt3
+- minor deps/spec cleanup (thx ldv@)
+
 * Tue Jun 11 2019 Michael Shigorin <mike@altlinux.org> 1.8.4-alt2
 - Added P: libirrlicht = %%version-%%release for -devel
 
