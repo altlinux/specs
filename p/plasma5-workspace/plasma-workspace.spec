@@ -31,7 +31,7 @@
 
 Name: plasma5-workspace
 Version: 5.20.2
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -460,6 +460,9 @@ done
 
 
 %changelog
+* Wed Nov 11 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt2
+- update deafult digital clock custom date format
+
 * Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
 - new version
 
