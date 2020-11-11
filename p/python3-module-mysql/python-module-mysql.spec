@@ -1,103 +1,77 @@
-%def_with python3
 %define oname mysql-connector-python
-%def_with bootstrap
+#def_with bootstrap
 
-Name: python-module-mysql
-Version: 2.1.7
+Name: python3-module-mysql
+Version: 8.0.22
 Release: alt1
 
-Summary: MySQL Connector for Python
+Summary: MySQL Connector for Python 3
 
 License: GPLv2 with exceptions
-Group: Development/Python
+Group: Development/Python3
 Url: http://dev.mysql.com/doc/connector-python/en/index.html
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Upstream has a mirror redirector for downloads, so the URL is hard to
-# represent statically.  You can get the tarball by following a link from
-# http://dev.mysql.com/downloads/connector/python/
-# Source-url: http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-%version.zip
+# Source-url: %__pypi_url %oname
 Source: %oname-%version.tar
 
-BuildArch: noarch
+#BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-Provides: %{oname} = %version
 
-# manually removed: python-module-cmd2 python-module-google python-module-mwlib python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python3-base
-BuildRequires: python-devel
-%add_python3_req_skip django
+Provides: %{oname}3 = %version
 
-# we miss The _mysql_connector C Extension Module
-%add_python_req_skip _mysql_connector
+# TODO: we miss The _mysql_connector C Extension Module
 %add_python3_req_skip _mysql_connector
 
 %description
-MySQL Connector/Python is implementing the MySQL Client/Server protocol
-completely in Python. No MySQL libraries are needed, and no compilation
-is necessary to run this Python DB API v2.0 compliant driver.
+MySQL driver written in Python which does not depend on MySQL C client
+libraries and implements the DB API v2.0 specification (PEP-249).
 
-Documentation: http://dev.mysql.com/doc/connector-python/en/index.html
+%package django
+Summary: Django MySQL Connector for Python 3
+Group: Development/Python3
+Requires: %name = %EVR
 
-%package -n python3-module-mysql
-Summary: MySQL Connector for Python 3
-Group: Development/Python
-Provides: %{oname}3 = %version
 %if_with bootstrap
+%add_python3_req_skip django
 %add_python3_req_skip django.db.backends.creation django.db.backends.schema
 %endif
 
-%description -n python3-module-mysql
-MySQL Connector/Python is implementing the MySQL Client/Server protocol
-completely in Python. No MySQL libraries are needed, and no compilation
-is necessary to run this Python DB API v2.0 compliant driver.
-
-Documentation: http://dev.mysql.com/doc/connector-python/en/index.html
+%description django
+DJango connector for %name.
 
 %prep
 %setup -n %oname-%version
 
-mkdir -p ../BUILD3
-cp -fR . ../BUILD3
-
 %build
-%python_build_debug
-# HACK: created something like lib.linux-x86_64-2.7, but install from build/lib
-cd build ; ln -s lib.linux* lib ; cd ..
-
-%if_with python3
-pushd ../BUILD3
 %python3_build_debug
 cd build ; ln -s lib.linux* lib ; cd ..
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../BUILD3
 %python3_install
-popd
-%endif
+%python3_prune
 
 %files
-%doc CHANGES.txt LICENSE.txt README* docs/README_DOCS.txt
-%doc examples
-%python_sitelibdir/mysql/
-%python_sitelibdir/mysql_connector_python-%version-py2.7.egg-info
-
-%if_with python3
-%files -n python3-module-mysql
-%doc CHANGES.txt LICENSE.txt README* docs/README_DOCS.txt
+%doc CHANGES.txt LICENSE.txt README.rst
 %doc examples
 %python3_sitelibdir/mysql/
+%python3_sitelibdir/mysqlx/
+%exclude %python3_sitelibdir/mysql/connector/django
 %python3_sitelibdir/mysql_connector_python-%version-py3*.egg-info
-%endif
+
+%files django
+%python3_sitelibdir/mysql/connector/django/
 
 %changelog
+* Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 8.0.22-alt1
+- new version 8.0.22 (with rpmrb script) (ALT bug 39255)
+
+* Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.7-alt2
+- build python3 package separately
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.7-alt1
 - new version 2.1.7 (with rpmrb script)
 
