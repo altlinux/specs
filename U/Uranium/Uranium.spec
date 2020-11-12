@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 4.7.1
-Release: alt1
+Release: alt2
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -31,6 +31,7 @@ BuildRequires:  python3-module-PyQt5
 BuildRequires:  python3-module-pytest
 BuildRequires:  python3-module-pip
 BuildRequires:  python3-module-shapely
+BuildRequires:  python3-module-twisted-web
 %endif
 
 BuildArch: noarch
@@ -77,9 +78,7 @@ popd
 pip3 freeze
 # skipping failing tests, see:
 # * https://github.com/Ultimaker/Uranium/issues/594
-# * https://github.com/Ultimaker/Uranium/issues/603
 python3 -m pytest -v -k "not TestHttpRequestManager"
-#-k "not (TestSettingFunction and test_init_bad) and not TestHttpRequestManager"
 %endif
 
 %files -f uranium.lang
@@ -93,6 +92,9 @@ python3 -m pytest -v -k "not TestHttpRequestManager"
 %doc html LICENSE
 
 %changelog
+* Thu Nov 12 2020 Anton Midyukov <antohami@altlinux.org> 4.7.1-alt2
+- Fix buildrequires
+
 * Thu Sep 17 2020 Anton Midyukov <antohami@altlinux.org> 4.7.1-alt1
 - New version 4.7.1
 
