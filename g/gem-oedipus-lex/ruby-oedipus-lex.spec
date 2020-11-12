@@ -1,23 +1,24 @@
 %define        pkgname oedipus-lex
 %define        gemname oedipus_lex
 
-Name:          ruby-%pkgname
-Version:       2.5.1
+Name:          gem-%pkgname
+Version:       2.5.2
 Release:       alt1
 Summary:       This is not your father's lexer
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/seattlerb/oedipus_lex
-%vcs           https://github.com/seattlerb/oedipus_lex.git
+Vcs:           https://github.com/seattlerb/oedipus_lex.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(hoe) >= 3.17
+BuildRequires: gem(hoe) >= 3.22
 BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7.0
 
-Provides: ruby-%pkgname = %EVR
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 Oedipus Lex is a lexer generator in the same family as Rexical and Rex.
@@ -63,9 +64,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Nov 12 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.2-alt1
+- ^ 2.5.1 -> 2.5.2
+- ! fake provides
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
-- Bump to 2.5.1
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 2.5.0 -> 2.5.1
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1.1
 - Rebuild with new Ruby autorequirements.
