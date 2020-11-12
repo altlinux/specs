@@ -2,24 +2,30 @@
 
 Name:		python3-module-%oname
 Version:	3.2.0
-Release:	alt2
+Release:	alt3
+
 Summary:	An implementation of JSON Schema validation for Python
 
 License:	MIT
 Group:		Development/Python3
 URL:		http://pypi.python.org/pypi/jsonschema/
-Source0:	%name-%version.tar.gz
+
+
+# Source-url: %__pypi_url %oname
+Source0:	%name-%version.tar
+
 BuildArch:	noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-nose python3-module-mock
-BuildPreReq: python3-module-vcversioner
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-nose python3-module-mock
+BuildRequires: python3-module-vcversioner
 BuildRequires: python3-module-setuptools_scm
 # BuildRequires for tests
 BuildRequires: python3-module-attrs
 BuildRequires: python3-module-pyrsistent
-BuildRequires: python3-module-twisted-core
+BuildRequires: python3-module-twisted-core-tests
 BuildRequires: python3-module-pyperf
 
 %description
@@ -45,6 +51,7 @@ This package contains tests for %oname.
 
 %install
 %python3_install
+%python3_prune
 rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
 
 %check
@@ -54,12 +61,19 @@ nosetests3 -v
 %doc *.rst COPYING
 %_bindir/*
 %python3_sitelibdir/*
+%if 0
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
+%endif
 
 %changelog
+* Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt3
+- use python3-module-twisted-core-tests for tests
+- cleanup spec: add URL for tarball, don't pack sources to gz
+- disable tests packing
+
 * Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt2
 - NMU: drop benchmarks packing
 
