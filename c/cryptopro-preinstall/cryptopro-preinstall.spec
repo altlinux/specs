@@ -1,6 +1,6 @@
 Name:     cryptopro-preinstall
 Version:  4.0.0
-Release:  alt8
+Release:  alt9
 
 Summary:  Environment for official CryptoPro CSP packages (with Rutoken S and ECP support)
 License:  GPL
@@ -38,10 +38,6 @@ Requires: newt52
 # for curl
 Requires: libidn
 Requires: libssh2
-%ifarch %e2k
-# rtmpdump dropped from sisyphus/x86 on 20181219
-Requires: librtmp
-%endif
 
 # for Rutoken S and ECP support
 Requires: opensc
@@ -81,14 +77,10 @@ install -pDm755 %SOURCE0 %buildroot%_sysconfdir/bashrc.d/cryptopro-paths.sh
 %files base
 %_sysconfdir/bashrc.d/cryptopro-paths.sh
 
-%ifarch %e2k
-%post base
-cd /usr/lib64 && if [ -s librtmp.so.0 -a ! -s librtmp.so.1 ]; then
-	ln -s librtmp.so.0 librtmp.so.1
-fi ||:
-%endif
-
 %changelog
+* Thu Nov 12 2020 Michael Shigorin <mike@altlinux.org> 4.0.0-alt9
+- E2K: drop librtmp (obsolete and deleted from repos)
+
 * Thu Apr 04 2019 Ivan A. Melnikov <iv@altlinux.org> 4.0.0-alt8
 - Build on mipsel.
 
