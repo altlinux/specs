@@ -49,8 +49,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.4.14
-Release: alt1.1
+Version: 10.4.17
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -117,7 +117,7 @@ Patch33: mariadb-covscan-signexpr.patch
 #Patch34: mariadb-covscan-stroverflow.patch
 
 Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
-Patch102: mariadb-10.4.7-alt-link-with-latomic-if-needed.patch
+Patch102: mariadb-10.4.16-alt-link-with-latomic-if-needed.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -1015,6 +1015,16 @@ fi
 %endif
 
 %changelog
+* Thu Nov 12 2020 Alexey Shabalin <shaba@altlinux.org> 10.4.17-alt1
+- 10.4.17
+- backport fix for MDEV-24096, MDEV-24121, MDEV-24134
+- Fixes for the following security vulnerabilities:
+  + CVE-2020-14812
+  + CVE-2020-14765
+  + CVE-2020-14776
+  + CVE-2020-14789
+  + CVE-2020-15180
+
 * Sat Sep 12 2020 Michael Shigorin <mike@altlinux.org> 10.4.14-alt1.1
 - E2K: install pkgconfig file properly (lib64)
 
