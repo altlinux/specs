@@ -2,7 +2,7 @@
 
 Name: node-nodeunit
 Version: 0.11.3
-Release: alt1
+Release: alt2
 
 Summary: Easy unit testing in node.js and the browser, based on the assert module
 
@@ -22,12 +22,14 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-intro >= 1.9.18
 
 BuildRequires: rpm-build-nodejs node
-BuildRequires(pre): rpm-macros-nodejs
+BuildRequires(pre): rpm-macros-nodejs >= 0.20.5
 
 BuildRequires: node-typescript
 
 #AutoReq: no
-#AutoProv: no
+AutoProv: no
+# TODO: improve macros (provide only base node_modules/name
+Provides: npm(%pname) = %version
 
 %description
 The project is very stale. We've kept it working on new versions of node,
@@ -45,23 +47,18 @@ You are strongly encouraged to check out other more modern testing options.
 
 %build
 %npm_build
-npm test
-npm prune --production
 
 %check
-#npm test
-echo "Checking %pname loading ..."
-node -e 'require("./")'
+%npm_test
+#echo "Checking %pname loading ..."
+#node -e 'require("./")'
 
 %install
 %npm_install
 mkdir -p %buildroot%_bindir
 ln -sr %buildroot%nodejs_sitelib/%pname/bin/nodeunit %buildroot%_bindir/nodeunit
 cp -a node_modules %buildroot/%nodejs_sitelib/%pname/
-# TODO: remove all test subdir
-rm -rf %buildroot/%nodejs_sitelib/%pname/test/
-# extra reqs
-rm -rf %buildroot/%nodejs_sitelib/%pname/node_modules/resolve/test/
+%npm_prune
 
 %files
 %doc LICENSE README.md
@@ -69,5 +66,8 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/node_modules/resolve/test/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt2
+- drop tests from packing, disable extra provides
+
 * Fri Feb 28 2020 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
 - initial build for ALT Sisyphus

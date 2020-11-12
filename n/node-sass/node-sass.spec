@@ -2,13 +2,13 @@
 
 Name: node-sass
 Version: 4.14.1
-Release: alt2
+Release: alt3
 
 Summary: Node.js bindings to libsass
 
 License: MIT License
 Group: Development/Other
-Url: https://github.com/sass/sass
+Url: https://github.com/sass/node-sass
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -30,8 +30,10 @@ BuildRequires: node-gyp node-mocha node-nan
 
 #Requires: node >= 8
 
-#AutoReq: no
-#AutoProv: no
+AutoReq: yes,noperl,nonodejs
+AutoProv: no
+# TODO: improve macros (provide only base node_modules/name
+Provides: npm(%pname) = %version
 
 %description
 Node-sass is a library that provides binding for Node.js to LibSass,
@@ -53,7 +55,6 @@ LIBSASS_EXT=auto npm run-script build
 #npm_build
 
 rm -f node_modules/node-gyp
-npm prune --production
 
 #%check
 #npm test
@@ -68,6 +69,7 @@ mkdir -p %buildroot%_bindir
 ln -sr %buildroot%nodejs_sitelib/%pname/bin/node-sass %buildroot%_bindir/node-sass
 cp -a node_modules %buildroot/%nodejs_sitelib/%pname/
 cp -a vendor %buildroot/%nodejs_sitelib/%pname/
+%npm_prune
 
 %files
 %doc LICENSE README.md TROUBLESHOOTING.md
@@ -75,6 +77,9 @@ cp -a vendor %buildroot/%nodejs_sitelib/%pname/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 4.14.1-alt3
+- drop tests from packing, disable modules provides
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.14.1-alt2
 - rebuild with optimized modules set
 
