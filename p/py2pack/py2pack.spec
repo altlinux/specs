@@ -1,7 +1,7 @@
 %define oname py2pack
 
 Name:       py2pack
-Version:    0.8.5
+Version:    0.8.6
 Release:    alt1
 
 Summary:    Generate distribution packages from Python packages on PyPI
@@ -61,6 +61,10 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%{oname}*
 
 %changelog
+* Tue Nov 10 2020 Andrey Cherepanov <cas@altlinux.org> 0.8.6-alt1
+- New version.
+- Fix scripts iteration in alt.spec.
+
 * Tue Oct 27 2020 Andrey Cherepanov <cas@altlinux.org> 0.8.5-alt1
 - New version.
 
