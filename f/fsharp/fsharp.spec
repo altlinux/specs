@@ -2,7 +2,7 @@
 
 Name: fsharp
 Version: 10.2.1
-Release: alt2
+Release: alt3
 
 Summary:        F# compiler, core library and core tools
 License:        MIT
@@ -26,9 +26,12 @@ BuildRequires: /usr/bin/7z
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
 %define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | \
-	sed "s/mono\(System.Collections.Immutable\).*/mono\(System.Collections.Immutable\) = 1.2.1.0/" | \
-	sed "s/mono\(System.ValueTuple\).*/mono\(System.ValueTuple\) = 4.0.3.0/"'
+%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | sed \\\
+	-e "s/mono\(System\.Collections\.Immutable\).*/mono\(System.Collections.Immutable\) = 1.2.1.0/" \\\
+	-e "s/mono\(System\.ValueTuple\).*/mono\(System.ValueTuple\) = 4.0.3.0/" \\\
+	-e "/mono\(System\.Core\) = 2\.0/d" \\\
+	-e "/mono\(System\.Net\) = 2\.0/d" \\\
+	-e "/mono\(System\.Numerics\) = 2\.0/d"'
 
 %description
 F# is a mature, open source, functional-first programming language
@@ -71,6 +74,9 @@ popd
 %_monodir/xbuild/Microsoft/VisualStudio/
 
 %changelog
+* Wed Nov 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 10.2.1-alt3
+- Updated runtime dependencies.
+
 * Fri Aug 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 10.2.1-alt2
 - Fixed build.
 
