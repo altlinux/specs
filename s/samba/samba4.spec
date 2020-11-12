@@ -60,7 +60,7 @@
 %endif
 
 Name:    samba
-Version: 4.12.9
+Version: 4.12.10
 Release: alt1
 
 Group:   System/Servers
@@ -1810,6 +1810,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Nov 12 2020 Evgeny Sinelikov <sin@altlinux.org> 4.12.10-alt1
+- Update to latest release of Samba 4.12
+
 * Thu Oct 29 2020 Evgeny Sinelikov <sin@altlinux.org> 4.12.9-alt1
 - Update to latest stable security release of the Samba 4.12
 - Security fixes:

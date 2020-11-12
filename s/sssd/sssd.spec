@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -790,6 +790,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Thu Nov 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.4.0-alt2
+- Reapply patch with ignore GPO if SecEdit/GptTmpl.inf is missing
+
 * Thu Oct 15 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.4.0-alt1
 - Update to 2.4.0
 
