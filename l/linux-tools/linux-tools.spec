@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt3
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -262,8 +262,10 @@ sed -i /^install:/s/runqslower_install// bpf/Makefile
   make hv
 %endif
 
+# acpi cannot make in parrallel.
+make acpi
+
 %make_build \
-	acpi \
 	cgroup \
 	firmware \
 	freefall \
@@ -542,6 +544,9 @@ fi
 %_man8dir/bpftool*
 
 %changelog
+* Thu Nov 12 2020 Vitaly Chikunov <vt@altlinux.org> 5.9-alt3
+- spec: Fix make acpi race appeared on armh.
+
 * Wed Nov 11 2020 Vitaly Chikunov <vt@altlinux.org> 5.9-alt2
 - spec: Fix 'rst2man.py: command not found' in p9.
 
