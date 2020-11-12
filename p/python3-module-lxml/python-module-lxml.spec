@@ -4,7 +4,7 @@
 
 Name: python3-module-lxml
 Version: 4.6.1
-Release: alt1
+Release: alt2
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
 
@@ -30,7 +30,8 @@ BuildRequires: python3-module-Cython >= 0.18
 BuildRequires: python3-devel
 
 %add_python3_req_skip etree
-#py3_requires cssselect
+# needed for: from lxml.cssselect import CSSSelector
+%py3_use cssselect
 
 %description
 lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.
@@ -89,6 +90,9 @@ PYTHONPATH=src python3 src/lxml/tests/selftest2.py
 %doc doc samples
 
 %changelog
+* Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt2
+- restore missed cssselect requires
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt1
 - new version 4.6.1 (with rpmrb script)
 
