@@ -1,6 +1,6 @@
 Name: kodi-addon-pvr-iptvsimple
 Version: 19.0
-Release: alt2
+Release: alt3
 
 Summary: IPTVSimple addon for Kodi
 License: GPL
@@ -32,6 +32,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.iptvsimple
 
 %changelog
+* Thu Nov 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt3
+- updated up to 7.0.0-Matrix
+
 * Fri Oct 09 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt2
 - follow addon API changes
 
