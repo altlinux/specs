@@ -21,7 +21,7 @@
 
 Name: emacs26
 Version: 26.3
-Release: alt12
+Release: alt13
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -337,6 +337,8 @@ Group: Editors
 BuildArch: noarch
 PreReq: %name-common = %emacs_version-%release
 Requires: emacs-X11-program
+# common version independent resources for X11
+Requires: emacs-base-X11
 Conflicts: app-defaults < 0.2.1-alt1
 # emacs26 obsoletes emacs21, emacs22, emacs23, emacs24 and emacs25
 Obsoletes: %shortname-X11
@@ -1529,6 +1531,9 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 %_includedir/emacs-module.h
 
 %changelog
+* Thu Nov 12 2020 Igor Vlasenko <viy@altlinux.ru> 26.3-alt13
+- NMU: added Requires: on emacs-base-X11 (closes: #39029)
+
 * Sun Nov 24 2019 Terechkov Evgenii <evg@altlinux.org> 26.3-alt12
 - Build without python(2)
 - Update License: tag
