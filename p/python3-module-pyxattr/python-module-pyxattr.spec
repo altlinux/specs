@@ -1,73 +1,45 @@
 %define oname pyxattr
-%define fname python3-module-%oname
-%define descr \
-This is the pyxattr module, a Python extension module which gives access \
-to the extended attributes for filesystem objects available in some \
-operating systems.
 
-Name: %fname
-Version: 0.6.1
+Name: python3-module-%oname
+Version: 0.7.1
 Release: alt1
 
-%if ""==""
 Summary: A python module for accessing filesystem Extended Attributes
-Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
 
 License: LGPLv2.1
+Group: Development/Python3
 Url: http://pyxattr.sourceforge.net/
+
 # https://github.com/iustin/pyxattr.git
 Source: %name-%version.tar
 
-BuildPreReq: libattr-devel python-module-sphinx-devel python-devel
 BuildRequires(pre): rpm-build-python3
-
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-%endif
+BuildRequires: libattr-devel
 
 %description
-%descr
-
-%if ""!=""
-This package contains documentation for %oname.
-%endif
+This is the pyxattr module, a Python extension module which gives access
+to the extended attributes for filesystem objects available in some
+operating systems.
 
 %prep
 %setup
-%if ""!=""
-%prepare_sphinx .
-ln -s ../objects.inv doc/
-%endif
 
 %build
-%if ""==""
-%python3_build
-%else
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make doc
-%endif
+%python3_build_debug
 
 %install
 %python3_install
 
-%if ""==""
 %files
+%doc NEWS README.md
 %python3_sitelibdir/*
-%doc NEWS README*
-
-%else
-
-%files
-%doc doc/*
-%python3_sitelibdir/*.egg-info*
-%endif
 
 %changelog
+* Thu Nov 12 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
+- Automatically updated to 0.7.1.
+- Build without specsubst.
+- Build without python2 support.
+
 * Mon Oct 08 2018 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
 - Build new version.
 
