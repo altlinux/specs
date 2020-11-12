@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 13.99.2
+Version: 13.99.3
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -350,6 +350,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Thu Nov 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.99.3-alt1
+- 13.99.3
+
 * Wed Sep 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.99.2-alt1
 - 13.99.2
 
