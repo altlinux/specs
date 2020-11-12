@@ -7,15 +7,15 @@
 Name: kernel-image-%flavour
 
 %define xenomai_version		3.1
-%define ipipe_version		4.19.140-cip33-x86-14
+%define ipipe_version		4.19.152-cip37-x86-15
 %define kernel_base_version	4.19
-%define kernel_sublevel		.140
+%define kernel_sublevel		.152
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip33
-%define kernel_ipipe_release	14
+%define kernel_cip_release	cip37
+%define kernel_ipipe_release	15
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2.%kernel_cip_release.%kernel_ipipe_release
+Release: alt1.%kernel_cip_release.%kernel_ipipe_release
 
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
@@ -457,6 +457,9 @@ vm-run "set -x
 %modules_dir/build
 
 %changelog
+* Thu Nov 12 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.152-alt1.cip37.15
+- Update to ipipe-core-4.19.152-cip37-x86-15 (released 2020-11-09)
+
 * Sat Sep 26 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.140-alt2.cip33.14
 - Fix depmod (modules.*) indices packaging.
 
