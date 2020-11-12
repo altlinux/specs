@@ -2,38 +2,39 @@
 
 %define oname testtools
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.3.0
 Release: alt3
-Summary: extensions to the Python standard library's unit testing framework
-Group: Development/Python
+
+Summary: Extensions to the Python standard library's unit testing framework
+
+Group: Development/Python3
 License: MIT
 Url: http://pypi.python.org/pypi/testtools
-BuildArch: noarch
 
-# https://github.com/testing-cabal/testtools.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils
-BuildRequires: python-module-extras python-module-html5lib python-module-mimeparse
-BuildRequires: python-module-objects.inv python-module-pbr python-module-pytest
-BuildRequires: python-module-unittest2
-BuildRequires: python2.7(testscenarios) python2.7(fixtures) python-module-twisted-core-test
+Patch1: %oname-1.8.0-fedora-py3.patch
 
-%py_requires mimeparse traceback2
+# https://github.com/testing-cabal/testtools/pull/271
+Patch2: %oname-2.3.0-py37.patch
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-extras python3-module-mimeparse
+BuildRequires: python3-module-pbr python3-module-pytest python3-module-unittest2
+BuildRequires: python3(testscenarios) python3(fixtures) python3-module-twisted-core-test
+
+%add_python3_req_skip twisted
+%add_findreq_skiplist %python3_sitelibdir/%oname/_compat2x.py
+%py3_requires traceback2 mimeparse
 
 %description
-testtools is a set of extensions to the Python standard library's unit
-testing framework. These extensions have been derived from years of
-experience with unit testing in Python and come from many different
-sources.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
 testtools is a set of extensions to the Python standard library's unit
 testing framework. These extensions have been derived from years of
 experience with unit testing in Python and come from many different
@@ -53,42 +54,39 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
 
 %build
 export PBR_VERSION=%version
-
-%python_build
+%python3_build
 
 export PYTHONPATH=$PWD
-%make -C doc pickle
+%make -C doc html SPHINXBUILD=sphinx-build-3
 
 %install
 export PBR_VERSION=%version
-
-%python_install
-
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+%python3_install
 
 %check
 export PBR_VERSION=%version
-
-%make check
+%make check PYTHON=python3
 
 %files
-%python_sitelibdir/testtools*
 %doc LICENSE NEWS README*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
 
-%files pickles
-%python_sitelibdir/*/pickle
+%files docs
+%doc doc/_build/html/*
 
 
 %changelog
 * Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt3
-- build python2 only
+- build python3 package separately
+- drop BR: html5lib
 
 * Mon Apr 22 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2
 - Fixed build for python3.7.
