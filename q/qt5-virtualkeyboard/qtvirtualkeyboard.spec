@@ -3,7 +3,7 @@
 
 Name: qt5-virtualkeyboard
 Version: 5.15.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtQuick virtual keyboard component
@@ -11,6 +11,7 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Requires: %name-common
+Provides: qml(QtQuick.VirtualKeyboard)
 
 Source: %qt_module-everywhere-src-%version.tar
 
@@ -121,6 +122,9 @@ export QT_HASH_SEED=0
 %_qt5_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Fri Nov 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt2
+- add compatibility provides
+
 * Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
 - new version
 
