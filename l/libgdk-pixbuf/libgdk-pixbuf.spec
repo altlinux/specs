@@ -3,16 +3,16 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.40
+%define ver_major 2.42
 %define _libexecdir %_prefix/libexec
+# timeout multiplier for tests
+%define timeout 2
 
 %def_enable gtk_doc
 %def_enable man
 %def_enable introspection
-%def_enable x11
-%def_enable libjasper
 %def_enable installed_tests
-%def_disable check
+%def_enable check
 
 Name: lib%_name
 Version: %ver_major.0
@@ -20,7 +20,7 @@ Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
-License: LGPL
+License: LGPL-2.1
 Url: http://www.gtk.org
 
 %if_disabled snapshot
@@ -29,11 +29,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 Patch: %_name-2.37.92-alt-compat-version-script.patch
-Patch1: %_name-2.38.1-alt-tests_timeouts.patch
 
 Source1: %_name.map
 Source2: %_name.lds
 
+%define meson_ver 0.56
 %define glib_ver 2.48.0
 %define gi_ver 0.9.5
 
@@ -42,12 +42,11 @@ Requires: %name-locales = %version
 Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): meson >= %meson_ver rpm-build-gir
 BuildRequires: /proc libgio-devel >= %glib_ver
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel
-BuildRequires: docbook-utils gtk-doc
-%{?_enable_x11:BuildRequires: libX11-devel}
-%{?_enable_libjasper:BuildRequires: libjasper-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_man:BuildRequires: docbook-utils xsltproc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 
 %description
@@ -55,19 +54,6 @@ The GdkPixBuf library provides a number of features:
 + Image loading facilities.
 + Rendering of a GdkPixBuf into various formats:
   drawables (windows, pixmaps), GdkRGB buffers.
-
-%package xlib
-Summary: An image loading and rendering library for Gdk
-Group: System/Libraries
-Requires: %name = %version-%release
-
-%description xlib
-The GdkPixBuf library provides a number of features:
-+ Image loading facilities.
-+ Rendering of a GdkPixBuf into various formats:
-  drawables (windows, pixmaps), GdkRGB buffers.
-
-This package provides Xlib version of %name.
 
 %package locales
 Summary: Internationalization for GdkPixBuf library
@@ -83,7 +69,6 @@ an image loading and rendering library for Gdk.
 Summary: Development files for GdkPixBuf applications
 Group: Development/C
 Requires: %name = %version-%release
-Requires: %name-xlib = %version-%release
 
 %description devel
 GdkPixBuf is an image loading and rendering library for Gdk.
@@ -134,7 +119,6 @@ the functionality of the installed GdkPixBuf library.
 %prep
 %setup -n %_name-%version
 %patch -p1 -b .alt
-%patch1 -b .timeout
 
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
@@ -145,14 +129,13 @@ install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 export LIBS=-lcxa
 %endif
 %meson \
-	%{?_enable_gtk_doc:-Ddocs=true} \
-	%{?_enable_man:-Dman=true} \
-	%{?_enable_introspection:-Dgir=true} \
-	%{?_enable_x11:-Dx11=true} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_man:-Dman=false} \
+	%{?_disable_introspection:-Dintrospection=disabled} \
 	%{?_enable_libjasper:-Djasper=true} \
 	%{?_disable_installed_tests:-Dinstalled_tests=false} \
 	-Dbuiltin_loaders='png'
-
+%nil
 %meson_build
 
 %install
@@ -178,7 +161,7 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test -t %timeout
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
@@ -201,17 +184,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xbm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xpm.so
-%{?_enable_libjasper:%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jasper.so}
 %ghost %_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %_datadir/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
-%_man1dir/gdk-pixbuf-query-loaders*
+%{?_enable_man:%_man1dir/gdk-pixbuf-query-loaders*}
 %_rpmlibdir/gdk-pixbuf-loaders.filetrigger
-
-%if_enabled x11
-%files xlib
-%_libdir/libgdk_pixbuf_xlib-2.0.so.*
-%endif
-%doc NEWS README.md
 
 %files locales -f %_name.lang
 
@@ -222,14 +198,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %dir %_includedir/%_name-%api_ver
 %_includedir/%_name-%api_ver/%_name
 %_pkgconfigdir/%_name-%api_ver.pc
-%if_enabled x11
-%_includedir/%_name-%api_ver/%_name-xlib
-%_pkgconfigdir/%_name-xlib-%api_ver.pc
-%endif
-%_man1dir/gdk-pixbuf-csource*
+%{?_enable_man:%_man1dir/gdk-pixbuf-csource*}
+%doc NEWS README.md
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -249,6 +224,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0 (removed libjasper loader, moved gdk-pixbuf-xlib library
+  to a separate repository)
+- use meson test with -t (timeout multiplier) for tests instead of patch,
+  enabled %%check
+- fixed License tag
+
 * Tue Oct 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
 - 2.40.0
 
