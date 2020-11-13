@@ -3,17 +3,19 @@
 %define oname greenlet
 
 Name: python3-module-%oname
-Version: 0.4.15
-Release: alt2
+Version: 0.4.17
+Release: alt1
 
 Summary: Lightweight in-process concurrent programming
+
 License: MIT
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/greenlet
 
-# https://github.com/python-greenlet/greenlet.git
-Source0: https://pypi.python.org/packages/03/a6/8842d7215e1c54537eb5d0b8fd3e8562cc869b6d193317b11027ff7d8009/%{oname}-%{version}.tar.gz
+# Source-url: %__pypi_url %oname
+Source: %oname-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 
@@ -38,28 +40,15 @@ tests/test_generator.py.
 Greenlets are provided as a C extension module for the regular
 unmodified interpreter.
 
-%package tests
-Summary: Tests for greenlet
-Group: Development/Python3
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description tests
-The greenlet package is a spin-off of Stackless, a version of CPython
-that supports micro-threads called "tasklets". Tasklets run
-pseudo-concurrently (typically in a single or a few OS-level threads)
-and are synchronized with data exchanges on "channels".
-
-This package contains tests for greenlet.
-
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %build
 %python3_build_debug
 
 %install
 %python3_install
+%python3_prune
 
 %check
 %__python3 setup.py test -v
@@ -71,11 +60,13 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/*
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 
-%files tests
-%doc tests
-
-
 %changelog
+* Fri Nov 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.17-alt1
+- new version 0.4.17 (with rpmrb script)
+
+* Fri Nov 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.15-alt3
+- cleanup spec, don't pack tests
+
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.15-alt2
 - Build for python2 disabled.
 
