@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt154
+Release: alt155
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -410,6 +410,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Nov 12 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt155
+- debugedit: Fix 'Unhandled relocation 0 in .debug_info section' on e2k.
+- debuginfo: Fix source paths with `..` by creating appropriate empty dirs
+  under `/usr/src/debug` tree (closes: #39175).
+
 * Wed Nov 11 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt154
 - addReqProv: issue a warning and ignore self-provides,
   providePackageNVR already does the right thing.
