@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.60
+Version: 0.8.61
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,13 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Fri Nov 13 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.61-alt1
+- 220-check-python:
+  + enhance the check whether python2 module packages have python3 requirements;
+  + enhance the check whether python3 module packages have python2 requirements;
+  + disallow packages containing both python2 and python3 modules;
+  + disallow python/python3 module docs containing unrelated files.
+
 * Wed Nov 11 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.60-alt1
 - 220-check-python: no python module is permitted to require
   its test subpackage.
