@@ -1,7 +1,7 @@
 Name: morse
 Summary: Morse Classic morse trainer program
 Version: 2.5
-Release: alt1
+Release: alt2
 License: BSD
 Group: Communications
 Url: http://catb.org/~esr/morse/
@@ -9,8 +9,6 @@ Source0: %name-%version.tar.gz
 Patch: morse2.5-nosound.patch
 
 %define Backends X11 OSS Linux PA ALSA
-
-PreReq: alternatives
 
 # Automatically added by buildreq on Tue Jun 28 2011
 # optimized out: alternatives docbook-dtds docbook-style-xsl libgpg-error pkg-config xml-common xml-utils xorg-xproto-devel xsltproc
@@ -35,21 +33,14 @@ Morse-code beeps.
 rm -f morse.1
 make DEVICE=ALSA QSO morse.1
 for DEVICE in %Backends; do
-rm -f morse.d/morse
 make -C morse.d DEVICE=$DEVICE morse
 done
 
 %install
-mkdir -p %buildroot%_bindir %buildroot%_man1dir
-install -s morse.d/%name[^.]* %buildroot%_bindir/
-install -s QSO %buildroot%_bindir/
-install %name.1 %buildroot%_man1dir/
-mkdir -p %buildroot/%_altdir
-N=10
-for B in %Backends; do
-echo "%_bindir/%name	%_bindir/%name$B	$N" > %buildroot/%_altdir/%name$B
-N=$((N+10))
-done
+install -D QSO %buildroot%_bindir/QSO
+install morse.d/%name[^.]* %buildroot%_bindir/
+ln -s morseALSA %buildroot%_bindir/morse
+install -D %name.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc README HISTORY
@@ -57,9 +48,11 @@ done
 %_man1dir/%name.1*
 %_bindir/%{name}*
 %_bindir/QSO
-%_altdir/%{name}*
 
 %changelog
+* Fri Nov 13 2020 Fr. Br. George <george@altlinux.ru> 2.5-alt2
+- Drop alternatives (Closes: #39257)
+
 * Sun Dec 16 2012 Fr. Br. George <george@altlinux.ru> 2.5-alt1
 - Autobuild version bump to 2.5
 
