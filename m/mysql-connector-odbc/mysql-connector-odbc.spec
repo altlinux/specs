@@ -2,7 +2,7 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 8.0.20
+Version: 8.0.22
 Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
@@ -20,7 +20,7 @@ Patch0:  %name-%version-%release.patch
 Source1: odbc.ini
 Source2: odbcinst.ini
 
-Patch1: %name-5.3.11-alt-rpath.patch
+Patch1: %name-8.0.22-alt-rpath.patch
 Patch2: %name-8.0.13-fedora-myodbc-64bit.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -44,7 +44,7 @@ setup instructions can be found at
 %setup
 %patch0 -p1
 
-%patch1
+%patch1 -p2
 %patch2 -p1
 
 %build
@@ -77,6 +77,10 @@ rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 %exclude %_prefix/test
 
 %changelog
+* Fri Nov 13 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.22-alt1
+- New version
+- Update alt-rpath patch
+
 * Sun May 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.20-alt1
 - New version
 
