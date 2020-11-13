@@ -1,9 +1,8 @@
-%def_with sb_kern_signature_check_relaxed
 %define efi_arches %ix86 x86_64 aarch64
 
 Name: grub
 Version: 2.02
-Release: alt29
+Release: alt30
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -73,7 +72,6 @@ Patch115: grub-2.02-sb-0015-linuxefi-minor-cleanups.patch
 Patch116: grub-2.02-sb-0016-Handle-multi-arch-64-on-32-boot-in-linuxefi-loader.patch
 Patch117: grub-2.02-sb-0017-Clean-up-some-errors-in-the-linuxefi-loader.patch
 
-Patch201: grub-2.02-alt-relaxed-kernel-sign-check.patch
 Patch202: grub-2.02-fedora-efi-chainloader-truncate-relocation.patch
 
 BuildRequires(pre): rpm-macros-uefi
@@ -239,7 +237,6 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch115 -p1
 %patch116 -p1
 %patch117 -p1
-%patch201 -p0
 %patch202 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
@@ -304,28 +301,6 @@ build_grub build-efi-ia32 \
 # use 64bit mkimage to build i386-efi image
 build_efi_image build-efi/grub-mkimage build-efi-ia32 i386-efi linuxefi
 %endif
-
-%if_with sb_kern_signature_check_relaxed
-# build grub efi binaries with relaxed kernel signature checks
-# (see patch#201).
-%ifarch %efi_arches
-CFLAGS='%optflags -DRELAX_KERNEL_SIGNATURE_CHECK=1' \
-	build_grub build-efi-relaxed \
-	--with-platform=efi \
-#
-build_efi_image build-efi-relaxed/grub-mkimage build-efi-relaxed %grubefiarch %linux_module_name
-%endif
-
-%ifarch x86_64
-CFLAGS='%optflags -DRELAX_KERNEL_SIGNATURE_CHECK=1' \
-	build_grub build-efi-ia32-relaxed \
-	--with-platform=efi \
-	--target=i386 \
-#
-# use 64bit mkimage to build i386-efi image
-build_efi_image build-efi-relaxed/grub-mkimage build-efi-ia32-relaxed i386-efi linuxefi
-%endif
-%endif
 %endif
 
 %install
@@ -333,12 +308,7 @@ build_efi_image build-efi-relaxed/grub-mkimage build-efi-ia32-relaxed i386-efi l
 %makeinstall_std -C build-pc
 %ifarch x86_64
 #"cherry pick" only i386 executable
-%if_with sb_kern_signature_check_relaxed
-install -pDm644 build-efi-ia32/grub.efi %buildroot%_efi_bindir/grubia32sb.efi
-install -pDm644 build-efi-ia32-relaxed/grub.efi %buildroot%_efi_bindir/grubia32.efi
-%else
 install -pDm644 build-efi-ia32/grub.efi %buildroot%_efi_bindir/grubia32.efi
-%endif
 
 #install ia32 version in parallel with x64 for x86_64 platforms with ia32 EFI
 %makeinstall_std -C build-efi-ia32
@@ -389,12 +359,7 @@ mkdir -p %buildroot%_sysconfdir/default
 ln -s ../sysconfig/grub2 %buildroot%_sysconfdir/default/grub
 
 %ifarch %efi_arches
-%if_with sb_kern_signature_check_relaxed
-install -pDm644 build-efi/grub.efi %buildroot%_efi_bindir/grub%{efi_suff}sb.efi
-install -pDm644 build-efi-relaxed/grub.efi %buildroot%_efi_bindir/grub%{efi_suff}.efi
-%else
 install -pDm644 build-efi/grub.efi %buildroot%_efi_bindir/grub%{efi_suff}.efi
-%endif
 
 # Remove headers
 rm -f %buildroot%_libdir/grub-efi/*/*.h
@@ -481,14 +446,8 @@ rm %buildroot%_sysconfdir/grub.d/41_custom
 %ifarch %efi_arches
 %files efi
 %_efi_bindir/grub%{efi_suff}.efi
-%if_with sb_kern_signature_check_relaxed
-%_efi_bindir/grub%{efi_suff}sb.efi
-%endif
 %ifarch x86_64
 %_efi_bindir/grubia32.efi
-%if_with sb_kern_signature_check_relaxed
-%_efi_bindir/grubia32sb.efi
-%endif
 %_libdir/grub/i386-efi
 %endif
 %_sbindir/grub-efi-autoupdate
@@ -525,6 +484,10 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Fri Oct 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt30
+- disallow kernels with unsigned EFI stub to be run by grub in SB mode
+  + remove alt-relaxed-kernel-sign-check patch
+
 * Wed Aug 19 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt29
 - spec: add tftp module into EFI image (closes: #38681)
 - sort kernels by mtime instead of ctime (ptrnine@)
