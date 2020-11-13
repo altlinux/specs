@@ -7,13 +7,13 @@
 %define resteasy_lib        %_javadir/resteasy
 %define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
-%define tomcatjss_version   7.5.0
-%define jss_version         4.7.0
+%define tomcatjss_version   7.6.0
+%define jss_version         4.8.0
 %define ldapjdk_version     4.22.0
 
 Name: pki-core
-Version: 10.9.4
-Release: alt2
+Version: 10.10.0
+Release: alt1
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -53,6 +53,7 @@ BuildRequires: tomcatjss >= %tomcatjss_version
 BuildRequires: xalan-j2
 BuildRequires: slf4j-jdk14
 BuildRequires: idm-console-framework
+BuildRequires: jna
 BuildRequires: junit
 
 # build dependency to build man pages
@@ -92,6 +93,7 @@ Requires: python3-module-pki-base = %EVR
 Requires: pki-base-java = %EVR
 Requires: pki-tools = %EVR
 Requires: pki-server = %EVR
+Requires: pki-acme = %EVR
 Requires: pki-ca = %EVR
 Requires: pki-kra = %EVR
 Requires: pki-ocsp = %EVR
@@ -105,6 +107,7 @@ to manage enterprise Public Key Infrastructure deployments.
 
 PKI consists of the following components:
 
+  * Automatic Certificate Management Environment (ACME) Responder
   * Certificate Authority (CA)
   * Key Recovery Authority (KRA)
   * Online Certificate Status Protocol (OCSP) Manager
@@ -194,14 +197,17 @@ Obsoletes: pki-silent < %EVR
 Conflicts: freeipa-server < 4.7.1
 
 %description -n pki-server
-The PKI Server Package contains libraries and utilities needed by the
-following PKI subsystems:
+The PKI Server Package contains libraries and utilities needed by other
+PKI subsystems.
 
-    the Certificate Authority (CA),
-    the Key Recovery Authority (KRA),
-    the Online Certificate Status Protocol (OCSP) Manager,
-    the Token Key Service (TKS), and
-    the Token Processing Service (TPS).
+%package -n pki-acme
+Summary: PKI ACME Package
+Group: System/Base
+Requires: pki-server = %EVR
+
+%description -n pki-acme
+the pki acme responder is a service that provides an automatic certificate
+management via ACME v2 protocol defined in RFC 8555.
 
 %package -n pki-ca
 Summary: Dogtag PKI CA Package
@@ -410,6 +416,7 @@ set +o pipefail
     -DJAVA_HOME=%java_home \
     -DJAVA_LIB_INSTALL_DIR=%_jnidir \
     -DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
+    -DWITH_SYSTEMD_NOTIFICATION:BOOL=ON \
     -DAPP_SERVER=$app_server \
     -DJAXRS_API_JAR=%jaxrs_api_jar \
     -DRESTEASY_LIB=%resteasy_lib \
@@ -546,7 +553,7 @@ fi
 %python3_sitelibdir/pki/
 
 %files -n pki-tools
-%doc base/native-tools/doc/README
+%doc base/tools/doc/README
 %_bindir/p7tool
 %_bindir/pistool
 %_bindir/pki
@@ -554,7 +561,7 @@ fi
 %_bindir/setpin
 %_bindir/sslget
 %_bindir/tkstool
-%_datadir/pki/native-tools/
+%_datadir/pki/tools/
 %_bindir/AtoB
 %_bindir/AuditVerify
 %_bindir/BtoA
@@ -579,7 +586,7 @@ fi
 %_bindir/PrettyPrintCrl
 %_bindir/TokenInfo
 %_javadir/pki/pki-tools.jar
-%_datadir/pki/java-tools/
+%_datadir/pki/tools/
 %_datadir/pki/lib/p11-kit-trust.so
 %_man1dir/AtoB.1.*
 %_man1dir/AuditVerify.1.*
@@ -642,6 +649,7 @@ fi
 %_javadir/pki/pki-cms.jar
 %_javadir/pki/pki-cmsbundle.jar
 %_javadir/pki/pki-tomcat.jar
+%_javadir/pki/pki-systemd.jar
 %dir %_sharedstatedir/pki
 %_man1dir/pkidaemon.1.*
 %_man5dir/pki_default.cfg.5.*
@@ -669,8 +677,10 @@ fi
 %_datadir/pki/server/etc/
 %_datadir/pki/server/lib/
 %_datadir/pki/server/upgrade/
-%_datadir/pki/acme/
+
+%files -n pki-acme
 %_javadir/pki/pki-acme.jar
+%_datadir/pki/acme/
 
 %files -n pki-ca
 %_javadir/pki/pki-ca.jar
@@ -741,6 +751,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Tue Nov 03 2020 Stanislav Levin <slev@altlinux.org> 10.10.0-alt1
+- 10.9.4 -> 10.10.0.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 10.9.4-alt2
 - Fixed FTBFS (new flake8 and pylint).
 
