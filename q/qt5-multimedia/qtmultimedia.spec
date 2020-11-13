@@ -6,7 +6,7 @@
 
 Name: qt5-multimedia
 Version: 5.15.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -79,6 +79,7 @@ Requires: libqt5-core = %_qt5_version
 # gstreamer plugins may be required for proper audio and video playback
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
 Provides: qt5-multimedia = %EVR
+Provides: qml(QtMultimedia)
 %description -n libqt5-multimedia
 %summary
 
@@ -137,6 +138,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Fri Nov 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt2
+- add compatibility provides
+
 * Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
 - new version
 
