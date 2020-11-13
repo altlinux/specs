@@ -4,8 +4,9 @@
 %def_without check
 
 Name: python3-module-dns
-Version: 2.0.0
-Release: alt1
+Version: 1.16.0
+Release: alt2
+Epoch: 1
 
 Summary: DNS toolkit
 
@@ -56,6 +57,9 @@ rm -f examples/._*
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 18 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.16.0-alt2
+- return to 1.16.0 due https://github.com/eventlet/eventlet/issues/619
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0 (with rpmrb script)
 
