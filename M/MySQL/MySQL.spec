@@ -12,7 +12,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.21
+Version: 8.0.22
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -64,8 +64,6 @@ Patch9: mysql-8.0.18-alt-disable-run-libmysql_api_test.patch
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
 Patch125: boost-1.57.0-mpl-print.patch
-
-Patch200: mysql-8.0.20-oracle-fix-charset-nullptr.patch
 
 # Automatically added by buildreq on Tue Nov 20 2018 (-bi)
 # optimized out: cmake cmake-modules control elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python-base sh3 xz
@@ -328,12 +326,10 @@ recommend upgrading your installation to MySQL Router 8.
 %patch9 -p1
 
 # Patch Boost
-pushd boost/boost_1_72_0
+pushd boost/boost_1_73_0
 %patch115 -p0
 %patch125 -p1
 popd
-
-%patch200 -p1
 
 # with patch4
 # Prepare commands list for completion in mysql client.
@@ -391,7 +387,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_SYSTEMD=ON \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DWITH_BOOST=../boost/boost_1_72_0 \
+	-DWITH_BOOST=../boost/boost_1_73_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 %if_with debug
 	-DWITH_DEBUG=1 \
@@ -502,6 +498,10 @@ rm -f %buildroot%_unitdir/mysqld@.service
 rm -f %buildroot%_bindir/comp_err
 %if_disabled static
 rm -f %buildroot%_libdir/libmysqlclient*.a
+%endif
+%if_without mysql_router
+rm -f %buildroot%_tmpfilesdir/mysqlrouter.conf
+rm -f %buildroot%_unitdir/mysqlrouter.service
 %endif
 
 # broken manpages referencing missing paths
@@ -715,6 +715,8 @@ fi
 %if_with mysql_router
 %files router
 %config(noreplace) %_sysconfdir/mysqlrouter/mysqlrouter.conf
+%_tmpfilesdir/mysqlrouter.conf
+%_unitdir/mysqlrouter.service
 %dir %_libdir/mysqlrouter
 %_libdir/mysqlrouter/*
 %_libdir/libmysqlrouter.so*
@@ -786,6 +788,11 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Mon Nov 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.22-alt1
+- new version
+- remove upstreamed oracle-fix-charset-nullptr patch
+- spec: add items to mysqlrouter file section
+
 * Mon Aug 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.21-alt1
 - new version
 - update alt-chroot patch
