@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gerbera
-Version: 1.6.0
+Version: 1.6.4
 Release: alt1
 
 Summary: UPnP Media Server
@@ -123,6 +123,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %config(noreplace) %_datadir/%name/js/common.js
 
 %changelog
+* Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.4-alt1
+- new version 1.6.4
+
 * Tue Aug 04 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
 - new version 1.6.0
 
