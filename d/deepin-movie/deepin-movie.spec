@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-movie
-Version: 5.7.6.74
+Version: 5.7.6.88
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
@@ -16,8 +16,10 @@ ExcludeArch: armh
 
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
+%else
+BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): gcc-c++ rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake qt5-base-devel qt5-x11extras-devel qt5-tools-devel dtk5-widget-devel libmpv-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel xorg-xcbproto-devel libavformat-devel libavutil-devel libavcodec-devel libffmpegthumbnailer-devel libpulseaudio-devel libdvdnav-devel gsettings-qt-devel libswresample-devel
 Requires: libdmr libdvdnav libgsettings-qt
 
@@ -80,6 +82,9 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Fri Nov 13 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.88-alt1
+- New version (5.7.6.88) with rpmgs script.
+
 * Thu Nov 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.74-alt1
 - New version (5.7.6.74) with rpmgs script.
 
