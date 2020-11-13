@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.75.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -81,6 +81,8 @@ KF5 library
 %K5install_move data doc
 mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 
+rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
+
 %find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 
@@ -126,6 +128,9 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Fri Nov 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt2
+- exclude FindSIP.py (closes: 39275)
+
 * Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
 - new version
 
