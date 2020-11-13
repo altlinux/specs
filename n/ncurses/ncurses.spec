@@ -1,6 +1,6 @@
 Name: ncurses
-Version: 6.1.20180407
-Release: alt2
+Version: 6.2.20201107
+Release: alt1
 
 %define rootdatadir /lib
 
@@ -311,7 +311,6 @@ xz -9k NEWS
 %ifarch %ix86
 %add_optflags -momit-leaf-frame-pointer
 %endif
-
 
 # Predefine these for configure:
 export \
@@ -681,7 +680,11 @@ done
 %endif # with_utf8
 
 %changelog
-* Fri Oct 29 2018 Andrew Savchenko <bircoph@altlinux.org> 6.1.20180407-alt2
+* Fri Nov 13 2020 Fr. Br. George <george@altlinux.ru> 6.2.20201107-alt1
+- Autobuild version bump to 6.2.20201107
+- (Closes: #39129)
+
+* Mon Oct 29 2018 Andrew Savchenko <bircoph@altlinux.org> 6.1.20180407-alt2
 - Move {screen,st,Eterm}-256color*, st to the base terms set.
 
 * Mon Apr 16 2018 Fr. Br. George <george@altlinux.ru> 6.1.20180407-alt1
@@ -789,7 +792,7 @@ Make terminfo noarch
 - latest snapshot, fixed bugs 6092,4889
 
 * Mon Jan 17 2005 Stanislav Ievlev <inger@altlinux.org> 5.4.20050108-alt2
-- temporary turn off building of widechar version 
+- temporary turn off building of widechar version
   (tinfo and tinfow are binary incompatible now)
 
 * Wed Jan 12 2005 Stanislav Ievlev <inger@altlinux.org> 5.4.20050108-alt1
@@ -861,7 +864,7 @@ Make terminfo noarch
   + to termutils: clear, reset*, toe, tput, tset;
   + to termutils-devel: *info*, tack, tic;
   + to libncurses: documentation.
- 
+
 * Fri Jul 19 2002 Ivan Zakharyaschev <imz@altlinux.ru> 5.2.20020622-alt2
 - moved term.h from libncurses-devel to libtinfo-devel;
 
@@ -948,7 +951,7 @@ Make terminfo noarch
 * Fri Nov 12 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
 - Add resetall script(r).
 
-* Sun Nov  7 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
+* Sun Nov 07 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
 - 5.0 anounced final.
 
 * Mon Oct 25 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
@@ -957,14 +960,14 @@ Make terminfo noarch
 * Wed Sep 29 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
 - update to 990925
 
-* Mon Sep  6 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
+* Mon Sep 06 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
 - update to 990904
 
 * Fri Jul 16 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
 
 - Rebuild for new environement (4mdk).
 
-* Mon Jul  5 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
+* Mon Jul 05 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
 - update to 990703
 
 * Wed May 19 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
@@ -992,7 +995,7 @@ Make terminfo noarch
 - update to 990307
 - link /lib/libncurses.so* to /usr/lib
 
-* Sun Feb  7 1999 Bernhard Rosenkraenzer <bero@microsoft.sucks.eu.org>
+* Sun Feb 07 1999 Bernhard Rosenkraenzer <bero@microsoft.sucks.eu.org>
 - update to 990206
 
 * Fri Jan 15 1999 Bernhard Rosenkraenzer <bero@microsoft.sucks.eu.org>
