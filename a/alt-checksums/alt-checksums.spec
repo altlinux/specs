@@ -1,17 +1,19 @@
 Name:     alt-checksums
 Version:  0.5
-Release:  alt2
+Release:  alt3
 
 Summary:  check of sums of executables
 License:  MIT
 Group:    Other
 Url:      http://git.altlinux.org/people/nbr/packages/genspec.git
 
+BuildArch: noarch
+
+
 Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildArch: noarch
 
 %description
 Counting and checking of checksums of binary files installed from RPMs
@@ -20,8 +22,8 @@ Counting and checking of checksums of binary files installed from RPMs
 %setup
 
 %install
-mkdir -p %buildroot%_bindir
-install -Dm 0600 alt-gensum %buildroot%_bindir/alt-gensum
+mkdir -p %buildroot%_sbindir
+install -Dm 0600  alt-gensum %buildroot%_sbindir/alt-gensum
 
 mkdir -p %buildroot%_docdir
 install -Dm 0600 README.md  %buildroot%_docdir
@@ -29,10 +31,13 @@ install -Dm 0600 COPYING.md  %buildroot%_docdir
 
 
 %files
-%_bindir/*
+%_sbindir/*
 %doc *.md
 
 %changelog
+* Fri Nov 13 2020 Denis Medvedev <nbr@altlinux.org> 0.5-alt3
+- added option to optionaly generate a list, instead to work on a default one
+
 * Fri Nov 13 2020 Denis Medvedev <nbr@altlinux.org> 0.5-alt2
 - fixed group
 
