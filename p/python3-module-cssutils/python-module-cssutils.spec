@@ -1,13 +1,12 @@
 %define oname cssutils
-%def_with python3
 
-Name: python-module-cssutils
+Name: python3-module-cssutils
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: CSS Cascading Style Sheets library for Python
 
-Group: Development/Python
+Group: Development/Python3
 License: LGPL
 Url: https://pypi.python.org/pypi/cssutils
 
@@ -16,31 +15,16 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Jun 01 2010 (-bi)
-BuildRequires: python-module-mechanize python-module-setuptools python-modules-encodings
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 # optional
-%add_python_req_skip google.appengine.api
 %add_python3_req_skip google.appengine.api
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
-
 
 %description
 A Python package to parse and build CSS Cascading Style Sheets. DOM only, not
 any rendering facilities!
-
-%package -n python3-module-%oname
-Summary: CSS Cascading Style Sheets library for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-A Python package to parse and build CSS Cascading Style Sheets. DOM only, not
-any rendering facilities!
-
 
 %package doc
 Summary: Documentation for CSS Cascading Style Sheets library for Python
@@ -55,56 +39,26 @@ This package contains documentation for %name.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-
-#pushd %buildroot%_bindir
-#for i in $(ls); do
-#	mv $i $i.py3
-#done
-#popd
-%endif
-
-
-rm -rf %buildroot%python_sitelibdir_noarch/%oname/tests/
-rm -rf %buildroot%python3_sitelibdir_noarch/%oname/tests/
-
+%python3_prune
 
 %files
-%doc PKG-INFO
-%if_without python3
-%_bindir/*
-%endif
-%python_sitelibdir_noarch/*
-
-%if_with python3
-%files -n python3-module-%oname
-%_bindir/*
+%_bindir/csscapture
+%_bindir/csscombine
+%_bindir/cssparse
 %python3_sitelibdir_noarch/*
-%endif
 
-%files doc
-%doc examples
+#files doc
+#doc examples
 
 %changelog
+* Fri Nov 13 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt2
+- build python3 package only
+
 * Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - switch to build from tarball
 - enable python3 module
