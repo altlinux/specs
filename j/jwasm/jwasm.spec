@@ -16,9 +16,9 @@
 #
 
 Name: jwasm
-Version: 2.12
+Version: 2.13
 Release: alt1
-License: Sybase Open Watcom Public License
+License: Watcom-1.0
 Summary: MASM-compatible assembler
 Url: http://jwasm.github.io/
 Group: Development/Other
@@ -70,6 +70,9 @@ install -D GccUnixD/jwasm %buildroot%_bindir/jwasm
 %_bindir/%name
 
 %changelog
+* Fri Nov 13 2020 Fr. Br. George <george@altlinux.ru> 2.13-alt1
+- Version up
+
 * Wed Nov 30 2016 Fr. Br. George <george@altlinux.ru> 2.12-alt1
 - Update to GH current version
 - Copy Regression sources
