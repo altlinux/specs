@@ -2,23 +2,25 @@
 
 Name: python3-module-%modulename
 Version: 0.7.4
-Release: alt1
+Release: alt2
 
 Summary: A toolkit for stream-based generation of output for the web
+
 License: BSD
 Group: Development/Python3
 Url: http://genshi.edgewall.org/
 
 Source: %modulename-%version.tar
 
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools rpm-build-python3 time
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-six
 
 %add_python3_req_skip compiler
 %add_python3_req_skip compiler.ast
-
-BuildArch: noarch
 
 %description
 Genshi is a Python library that provides an integrated set of
@@ -73,6 +75,7 @@ This package contains examples for Genshi.
 
 %install
 %python3_install
+%python3_prune
 
 %check
 %__python3 setup.py test
@@ -80,10 +83,12 @@ This package contains examples for Genshi.
 %files
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/*.egg-info
+%if 0
 %exclude %python3_sitelibdir/%modulename/tests
 
 %files tests
 %python3_sitelibdir/%modulename/tests
+%endif
 
 %files doc
 %doc doc
@@ -92,6 +97,9 @@ This package contains examples for Genshi.
 %doc examples
 
 %changelog
+* Fri Nov 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt2
+- NMU: cleanup spec, don't pack tests, fix tests requires
+
 * Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.4-alt1
 - Build new version.
 
