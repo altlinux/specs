@@ -1,8 +1,9 @@
 %def_enable pcsc
 %def_disable static
+%def_enable test
 
 Name: libcacard
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 Summary: Common Access Card (CAC) Emulation
 Group: System/Libraries
@@ -10,11 +11,14 @@ License: LGPLv2.1+
 Url: http://www.spice-space.org/download
 # https://gitlab.freedesktop.org/spice/libcacard.git
 Source: %name-%version.tar
+Patch1: libcacard-2.8.0-32bit.patch
 
-BuildRequires: autoconf-archive
-BuildRequires: pkgconfig(glib-2.0) >= 2.22 pkgconfig(gthread-2.0)
+BuildRequires(pre): meson
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(glib-2.0) >= 2.32
 BuildRequires: pkgconfig(nss) >= 3.12.8
 %{?_enable_pcsc:BuildRequires: pkgconfig(libpcsclite)}
+%{?_enable_test:BuildRequires: openssl gnutls-utils nss-utils opensc softhsm}
 
 %description
 Common Access Card (CAC) emulation library.
@@ -29,18 +33,21 @@ CAC emulation development files.
 
 %prep
 %setup
+%patch1 -p1
 echo "%version" > .tarball-version
 
 %build
-%autoreconf
-%configure \
-		%{subst_enable pcsc} \
-		%{subst_enable static}
+%meson \
+	%{?_enable_pcsc:-Dpcsc=enabled} \
+	%{?_disable_test:-Ddisable_tests=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+%meson_test
 
 %files
 %doc COPYING README.md NEWS
@@ -52,6 +59,9 @@ echo "%version" > .tarball-version
 %_libdir/libcacard.so
 
 %changelog
+* Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.8.0-alt1
+- new version 2.8.0
+
 * Fri Aug 02 2019 Alexey Shabalin <shaba@altlinux.org> 2.7.0-alt1
 - new version 2.7.0
 
