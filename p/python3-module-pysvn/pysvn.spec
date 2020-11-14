@@ -1,59 +1,31 @@
 %define oname pysvn
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.9.12
-Release: alt1
+Release: alt2
 Summary: Subversion support for python
 License: Apache-1.1
-Group: Development/Python
+Group: Development/Python3
 Url: https://pysvn.sourceforge.io/
 
 Source0: pysvn-%version.tar
 
-BuildRequires: gcc-c++ libcom_err-devel libexpat-devel libkrb5-devel libsubversion-devel python-devel python-modules-compiler python-modules-xml subversion
+BuildRequires: gcc-c++ libcom_err-devel libexpat-devel libkrb5-devel libsubversion-devel subversion
 BuildRequires: libaprutil1-devel
 BuildRequires: subversion-server-common
-BuildRequires: python-module-pycxx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pyutilib-svn
 BuildRequires: python3-module-pycxx-devel
-BuildPreReq: python3-devel python-tools-2to3
-%endif
+BuildPreReq: python3-devel
 
 %description
-The pysvn project's goal is to enable Tools to be written in Python that
-use Subversion.
-
-%package -n python3-module-%oname
-Summary: Subversion support for python
-Group: Development/Python3
-
-%description -n python3-module-%oname
 The pysvn project's goal is to enable Tools to be written in Python that
 use Subversion.
 
 %prep
 %setup -n pysvn-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-pushd Source
-%__python setup.py configure \
-    --apr-inc-dir=/usr/include/apr-1 \
-    --apu-inc-dir=/usr/include/apu-1 \
-    --norpath
-
-%make_build
-popd
-
-%if_with python3
-pushd ../python3
 pushd Source
 %__python3 setup.py configure \
     --apr-inc-dir=/usr/include/apr-1 \
@@ -62,30 +34,18 @@ pushd Source
 
 %make_build
 popd
-%endif
 
 %install
-mkdir -p %buildroot%python_sitelibdir
-cp -r Source/pysvn %buildroot%python_sitelibdir
-
-%if_with python3
-pushd ../python3
 mkdir -p %buildroot%python3_sitelibdir
 cp -r Source/pysvn %buildroot%python3_sitelibdir
-popd
-%endif
 
 %files
-%dir %python_sitelibdir/pysvn
-%python_sitelibdir/pysvn/*
-
-%if_with python3
-%files -n python3-module-%oname
-%dir %python_sitelibdir/pysvn
-%python3_sitelibdir/pysvn/*
-%endif
+%python3_sitelibdir/pysvn
 
 %changelog
+* Sat Nov 14 2020 Grigory Ustinov <grenka@altlinux.org> 1.9.12-alt2
+- Build without python2 support. (Closes: #39286)
+
 * Fri Jul 03 2020 Grigory Ustinov <grenka@altlinux.org> 1.9.12-alt1
 - Build new version.
 
