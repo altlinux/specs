@@ -2,7 +2,6 @@
 %def_enable sctp
 %def_enable nss
 %def_enable openssl
-%def_disable kronosnetd
 %def_enable libnozzle
 %def_enable zlib
 %def_enable lz4
@@ -14,7 +13,7 @@
 
 Name: kronosnet
 Summary: Multipoint-to-Multipoint VPN daemon
-Version: 1.18
+Version: 1.20
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: Networking/Other
@@ -27,7 +26,6 @@ BuildRequires: libqb-devel libxml2-devel doxygen
 %{?_enable_sctp:BuildRequires: lksctp-tools liblksctp-devel}
 %{?_enable_nss:BuildRequires: libnss-devel libnspr-devel}
 %{?_enable_openssl:BuildRequires: libssl-devel}
-%{?_enable_kronosnetd:BuildRequires: pam-devel}
 %{?_enable_libnozzle:BuildRequires: libnl-devel}
 %{?_enable_zlib:BuildRequires: zlib-devel}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
@@ -40,21 +38,6 @@ BuildRequires: libqb-devel libxml2-devel doxygen
 Kronosnet, often referred to as knet, is a network abstraction layer designed
 for High Availability use cases, where redundancy, security, fault tolerance
 and fast fail-over are the core requirements of your application.
-
-%package -n kronosnetd
-License: GPLv2+
-Group: System/Servers
-Summary: Multipoint-to-Multipoint VPN daemon
-
-%description -n kronosnetd
-The kronosnet daemon is a bridge between kronosnet switching engine
-and kernel network tap devices, to create and administer a
-distributed LAN over multipoint-to-multipoint VPNs.
-The daemon does a poor attempt to provide a configure UI similar
-to other known network devices/tools (Cisco, quagga).
-Beside looking horrific, it allows runtime changes and
-reconfiguration of the kronosnet(s) without daemon reload
-or service disruption.
 
 %package -n libnozzle1
 License: LGPLv2+
@@ -236,11 +219,7 @@ cp .version .tarball-version
 	%{?_enable_bzip2:--enable-compress-bzip2} \
 	%{?_enable_zstd:--enable-compress-zstd} \
 	%{?_enable_installtests:--enable-install-tests} \
-	%{subst_enable kronosnetd} \
-	%{subst_enable libnozzle} \
-	--with-initdefaultdir=%_sysconfdir/sysconfig \
-	--with-systemddir=%_unitdir \
-	--with-initddir=%_initdir
+	%{subst_enable libnozzle}
 
 %make_build
 
@@ -255,27 +234,6 @@ find %buildroot -name "*.la" -exec rm {} \;
 
 # remove docs
 rm -rf %buildroot/usr/share/doc/kronosnet
-
-
-%post -n kronosnetd
-%post_service kronosnetd
-
-%preun -n kronosnetd
-%preun_service kronosnetd
-
-%if_enabled kronosnetd
-%files -n kronosnetd
-%doc COPYING.* COPYRIGHT
-%dir %_sysconfdir/kronosnet
-%config(noreplace) %dir %_sysconfdir/kronosnet/*
-%config(noreplace) %_sysconfdir/sysconfig/kronosnetd
-%config(noreplace) %_sysconfdir/pam.d/kronosnetd
-%config(noreplace) %_logrotatedir/kronosnetd
-%_unitdir/kronosnetd.service
-%_initdir/kronosnetd
-%_sbindir/*
-%_man8dir/*
-%endif
 
 %if_enabled libnozzle
 %files -n libnozzle1
@@ -355,6 +313,9 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 %files -n libknet1-plugins-all
 
 %changelog
+* Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 1.20-alt1
+- 1.20
+
 * Tue Jul 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.18-alt1
 - 1.18
 
