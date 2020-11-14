@@ -4,7 +4,7 @@
 
 Name: lua5.1
 Version: 5.1.5
-Release: alt16
+Release: alt17
 
 Summary: Embeddable programming language
 License: MIT
@@ -62,6 +62,8 @@ Requires: lib%{name}-compat-devel = %EVR
 Requires: libreadline-devel
 
 %if_with lua_compat
+# avoid provided dependency collision with modern lua
+%filter_from_provides /^pkgconfig(lua)/d
 %package -n lib%{name}-compat-devel
 Summary: Embeddable programming language
 Group: Development/Other
@@ -272,6 +274,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Sat Nov 14 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt17
+- lua5.1-compat-devel: do not provide pkgconfig(lua)
+
 * Thu Sep 19 2019 Vladimir Didenko <cow@altlinux.org> 5.1.5-alt16
 - add lua(abi) = 5.1 to provides
 
