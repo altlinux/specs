@@ -12,11 +12,11 @@
 %define default_luks_format LUKS2
 
 Name: cryptsetup
-Version: 2.3.3
+Version: 2.3.4
 Release: alt1
 
-Summary: utility to setup a encrypted disks with LUKS support
-Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
+Summary: Utility to setup a encrypted disks with LUKS support
+Summary(ru_RU.UTF-8): Утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
 
 License: GPLv2+ and LGPLv2+
 Group: System/Kernel and hardware
@@ -219,6 +219,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %_pkgconfigdir/*
 
 %changelog
+* Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.3.4-alt1
+- 2.3.4 (Fixes: CVE-2020-14382)
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 2.3.3-alt1
 - 2.3.3
 
