@@ -10,8 +10,8 @@
 %define _localstatedir %_var
 
 Name: corosync
-Version: 3.0.4
-Release: alt2
+Version: 3.1.0
+Release: alt1
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
 Group: System/Base
@@ -31,8 +31,11 @@ Obsoletes: corosync2 < %version-%release
 Requires: lib%name = %version-%release
 # NSS crypto plugin should be always installed
 Requires: libknet1-crypto-nss-plugin
+# Support crypto reload
+Requires: libknet1 >= 1.18
 
-BuildRequires: doxygen libqb-devel graphviz libsocket-devel zlib-devel libknet-devel
+BuildRequires: doxygen libqb-devel graphviz libsocket-devel zlib-devel
+BuildRequires: libknet-devel >= 1.18
 %{?_enable_monitoring:BuildRequires: libstatgrab-devel}
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_enable_dbus:BuildRequires: libdbus-devel}
@@ -201,6 +204,9 @@ ln -r -s \
 %endif
 
 %changelog
+* Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Thu May 14 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.4-alt2
 - update systemd units
 
