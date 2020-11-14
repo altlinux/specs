@@ -1,7 +1,7 @@
 
 Name:		driverctl
-Version:	0.110
-Release:	alt12
+Version:	0.111
+Release:	alt1
 Summary:	Device driver control utility
 
 Group:      System/Configuration/Hardware
@@ -51,6 +51,9 @@ sed -i 's|/usr/sbin/driverctl|/sbin/driverctl|' driverctl@.service
 %_man8dir/driverctl.8*
 
 %changelog
+* Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 0.111-alt1
+- new version 0.111
+
 * Fri Jan 10 2020 Alexey Shabalin <shaba@altlinux.org> 0.110-alt12
 - Fixed ExecStart in systemd unit
 
