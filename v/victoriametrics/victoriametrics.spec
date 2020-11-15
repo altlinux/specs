@@ -1,15 +1,9 @@
 %global import_path github.com/VictoriaMetrics/VictoriaMetrics
-%global commit ba74d0c14cfe334e4fc1a8f2ddab52f1b4a3f84e
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name: victoriametrics
-Version: 1.41.0
+Version: 1.46.0
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -57,9 +51,11 @@ export COMMIT=%commit
 export BRANCH=altlinux
 export BUILDINFO_TAG=v%version
 
-make \
-    victoria-metrics \
+%make \
+	victoria-metrics \
 	vmagent \
+	vmalert \
+	vmauth \
 	vmbackup \
 	vmrestore
 
@@ -69,6 +65,8 @@ install -m 0755 -d %buildroot%_bindir
 cd .gopath/src/%import_path
 install -m 0755 bin/victoria-metrics %buildroot%_bindir/victoria-metrics
 install -m 0755 bin/vmagent %buildroot%_bindir/vmagent
+install -m 0755 bin/vmalert %buildroot%_bindir/vmalert
+install -m 0755 bin/vmauth %buildroot%_bindir/vmauth
 install -m 0755 bin/vmbackup %buildroot%_bindir/vmbackup
 install -m 0755 bin/vmrestore %buildroot%_bindir/vmrestore
 
@@ -98,6 +96,9 @@ install -m644 %SOURCE2 \
 %_bindir/vm*
 
 %changelog
+* Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.46.0-alt1
+- new version 1.46.0
+
 * Sat Sep 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.41.0-alt1
 - new version 1.41.0
 
