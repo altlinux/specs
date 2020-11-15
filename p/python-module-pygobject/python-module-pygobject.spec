@@ -7,7 +7,7 @@
 
 Name: python-module-pygobject
 Version: %major.7
-Release: alt1.1
+Release: alt2
 
 Summary: Python bindings for GObject
 
@@ -47,6 +47,7 @@ Summary: Development files for %oname
 Group: Development/Python
 Requires: %name = %version-%release
 Conflicts: python-module-pygtk-devel <= 2.8.2-alt2.1
+%filter_from_provides /pkgconfig(pygobject-2.0)/d
 
 %description devel
 Development files for %oname.
@@ -122,6 +123,9 @@ mv %buildroot%_includedir/pygtk-%gtk_api_ver %buildroot%_includedir/python%__pyt
 %endif
 
 %changelog
+* Sun Nov 15 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.7-alt2
+- -devel: do not provides pkgconfig(pygobject-2.0)
+
 * Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.7-alt1.1
 - rebuilt with latest pycairo
 - fixed license tag

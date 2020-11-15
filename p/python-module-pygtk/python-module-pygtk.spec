@@ -5,12 +5,12 @@
 %define major 2.24
 Name: python-module-pygtk
 Version: %major.0
-Release: alt8
+Release: alt9
 
 Summary: Python bindings for the GTK+ widget set
 
 Group: Development/Python
-License: LGPL
+License: LGPL-2.1
 Url: http://www.pygtk.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -39,7 +39,8 @@ Obsoletes: pygtk2
 Requires: python-module-pycairo >= %pycairo_ver
 %{?_enable_numpy:Requires:python-module-numpy python-module-numpy-addons}
 
-BuildRequires: rpm-build-compat gtk-doc rpm-build-python python-devel gnome-common
+BuildRequires(pre): rpm-build-compat rpm-build-python
+BuildRequires: gtk-doc python-devel gnome-common
 BuildRequires: python-module-pygobject-devel >= %pygobject_ver
 BuildRequires: python-module-pycairo-devel >= %pycairo_ver
 BuildRequires: libgtk+2-devel >= %gtk_ver
@@ -52,7 +53,6 @@ BuildRequires: python-module-pygobject-devel-doc
 PyGTK is an extension module for python that gives you access to the GTK+
 widget set.  Just about anything you can write in C with GTK+ you can write
 in python with PyGTK (within reason), but with all the benefits of python.
-
 
 %package libglade
 Summary: A wrapper for the libglade library for use with PyGTK
@@ -70,6 +70,7 @@ Summary: files needed to build wrappers for GTK+ addon libraries
 Group: Development/Python
 Requires: %name = %version-%release
 Requires: python-module-pygobject-devel
+%filter_from_requires /pkgconfig(pygobject-2.0)/d
 
 %description devel
 This package contains files required to build wrappers for GTK+ addon
@@ -151,6 +152,10 @@ test -f %buildroot%python_sitelibdir/gtk-2.0/gobject.so && exit 1
 %_datadir/gtk-doc/html/pygtk/
 
 %changelog
+* Sun Nov 15 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt9
+- -devel: do not requires pkgconfig(pygobject-2.0)
+- fixed License tag
+
 * Fri Oct 25 2019 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt8
 - rebuilt with pango-1.44.7
 

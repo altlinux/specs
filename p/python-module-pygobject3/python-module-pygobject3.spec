@@ -11,7 +11,7 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -76,6 +76,7 @@ Requires: %name = %version-%release
 Obsoletes: %name-common-devel < 3.37
 Provides: %name-common-devel = %EVR
 Conflicts: python3-module-pygobject3-devel > 3.37
+%filter_from_provides /pkgconfig(pygobject-3.0)/d
 
 %description devel
 Development files for %name.
@@ -113,6 +114,9 @@ xvfb-run %meson_test
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Sun Nov 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt3
+- -devel: do not provides pkgconfig(pygobject-3.0)
+
 * Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt2
 - separate python2 package (since 3.38 python2 is no longer supported)
 - removed common-devel subpackage
