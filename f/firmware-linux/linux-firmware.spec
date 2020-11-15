@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20201023
+Version: 20201109
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,21 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Nov 15 2020 Cronbuild Service <cronbuild@altlinux.org> 20201109-alt1
+- upstream changes (GIT 2ea8667):
+  + rtlwifi: v88.2 firmware files for RTL8192CU (thx Reto Schneider)
+  + rtw88: RTL8822C: Update firmware to v9.9.4 (thx Tzu-En Huang)
+  + Revert "rtw88: RTL8822C: Update firmware to v9.9.4" (thx Josh Boyer)
+  + vpdma: Move firmware to ti directory (thx Nikhil Devshatwar)
+  + amdgpu: update picasso VCN firmware (thx Alex Deucher)
+  + amdgpu: update raven2 VCN firmware (thx Alex Deucher)
+  + amdgpu: update raven VCN firmware (thx Alex Deucher)
+  + rtw88: RTL8822C: Update firmware to v9.9.4 (thx Tzu-En Huang)
+  + rtl_bt: Update RTL8822C BT(USB I/F) FW to 0x099A_281A (thx Max Chou)
+  + QCA: Update Bluetooth firmware for QCA6390 (thx Rocky Liao)
+  + qcom : updated venus firmware files for v5.4 (thx Asit Shah)
+  + QCA : Fixed BT SSR due to command timeout / IO fatal error (thx Asit Shah)
+
 * Sun Oct 25 2020 Cronbuild Service <cronbuild@altlinux.org> 20201023-alt1
 - upstream changes (GIT dae4b4c):
   + cypress: add Cypress firmware and clm_blob files (thx Chi-Hsien Lin)
