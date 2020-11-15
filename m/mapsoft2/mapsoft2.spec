@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.3
+Version:      1.4
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -15,8 +15,6 @@ BuildRequires: libjansson-devel libxml2-devel libzip-devel zlib-devel libproj-de
 BuildRequires: libjpeg-devel libgif-devel libtiff-devel libpng-devel libdb4.7-devel
 BuildRequires: librsvg-devel libcurl-devel
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html /usr/bin/unzip
-
-ExcludeArch: armh
 
 %description
 mapsoft2 - programs for working with maps and geodata
@@ -37,9 +35,33 @@ export SKIP_IMG_DIFFS=1
 %_mandir/man1/ms2*
 %_mandir/man5/mapsoft2*
 %dir %_datadir/mapsoft2
-%_datadir/mapsoft2/mapsoft2.css
+%_datadir/mapsoft2/*
 
 %changelog
+* Sun Nov 15 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.4-alt1
+- GeoJSON format: add extension for writing/reading maps. Now mapsoft2
+  geodata structure can be stored in json without losses.
+- SRTM layer: fix a few problems: parameter dialog, tile drawing,
+  coordinate calculation, srtm_width file reading. Add GeoTiff support.
+- Track layer: fix error in color setting. Adding new tracks in the viewer.
+- Map layer: fix handling of map lists with multiple maps, fix a few
+  problems with switching different viewer projections.
+- Maps menu: use {/usr/share/,${HOME}/.}mapsoft2/maps_menu.json
+  instead of hardcoded list of maps.
+- ms2conv: --srtm option, --htm option. --name, --comm filters.
+- Rendering raster images: --add,--title,--title_size options,
+  Fix paths in map-files. Fix --mag option. Fix border handling for
+  multiple maps.
+- MapDB: change configuration file format for MP import/export
+  (similar to VMAP import/export). Fix error in geohash calculation.
+  Fix label rendering (scale max_text_size properly).
+- ANSI escape sequences (\n, \t etc.) and empty words ("") in all
+  configuration files (in read_words).
+- Avoid throwing c++ exceptions through c code (in image/io_jpeg,io_tiff),
+  remove ExcludeArch: armh.
+- Fix difference between 32- and 64-bit systems (in image/image_remap).
+- Add ms2img program: converting raster images with mapsoft2 libraries.
+
 * Fri Sep 11 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.3-alt1
 - viewer: fix a few problems with tiled maps, rescaling and bounding box setting;
   faster srtm layers.
