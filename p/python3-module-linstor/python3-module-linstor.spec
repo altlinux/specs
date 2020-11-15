@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Summary: Linstor Python API
-Version: 1.1.2
+Version: 1.4.1
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -32,5 +32,8 @@ make -C linstor-common python
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Sat Jun 29 2019 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt1
 - Initial build for ALT
