@@ -1,6 +1,6 @@
 Name:     bup
 Version:  0.31
-Release:  alt1
+Release:  alt2
 
 Summary:  Very efficient backup system based on the git packfile format
 # all of the code is licensed as GNU Lesser General Public License v2, except:
@@ -22,16 +22,18 @@ Source:   %name-%version.tar
 Source1:  bup-web.service
 
 Patch1:   bup-disable-test_from_path_error.patch
+Patch2:   bup-python.patch
+Patch3:   bup-fix_uint32.patch
 
-BuildPreReq:   python-devel 
+BuildPreReq:   python3-dev
 BuildRequires: git-core
 BuildRequires: pandoc
-BuildRequires: python-module-fuse
-BuildRequires: python-module-pyxattr
-BuildRequires: python-module-libacl
-BuildRequires: python-module-tornado
+BuildRequires: python3-module-fuse
+BuildRequires: python3-module-pyxattr
+BuildRequires: python3-module-libacl
+BuildRequires: python3-module-tornado
 
-Requires: git-core python-module-pyxattr python-module-libacl python-module-fuse
+Requires: git-core python3-module-pyxattr python3-module-libacl python3-module-fuse
 
 %description
 Very efficient backup system based on the git packfile format, providing fast
@@ -62,7 +64,7 @@ License: LGPL-2.0
 Summary: Web server for browsing through bup repositories
 Group:   Archiving/Backup
 Requires: %name = %version-%release
-Requires: python-module-tornado
+Requires: python3-module-tornado
 
 %description web
 Provides the "bup web" command which runs a web server for browsing through
@@ -71,6 +73,8 @@ bup repositories.
 %prep
 %setup -q
 #patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 pushd config
@@ -83,10 +87,10 @@ pushd config
        --libexecdir=%{_libexecdir} \
        --mandir=%{_mandir}
 popd
-%make_build PREFIX=%_prefix
+%make_build PREFIX=%_prefix PYTHON=%__python3
 
 %install
-%makeinstall_std PREFIX=%_prefix
+%makeinstall_std PREFIX=%_prefix PYTHON=%__python3
 rm -f %buildroot%_bindir/%name
 ln -s ../lib/bup/cmd/bup %buildroot%_bindir/%name
 install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
@@ -117,6 +121,9 @@ install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 %_man1dir/bup-web.1*
 
 %changelog
+* Sat Nov 14 2020 Grigory Ustinov <grenka@altlinux.org> 0.31-alt2
+- Transfer on python3.
+
 * Sun Aug 23 2020 Andrey Cherepanov <cas@altlinux.org> 0.31-alt1
 - New version.
 
