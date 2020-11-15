@@ -2,7 +2,7 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.33.0.4.0f97
+Version: 2.1.34.0.3.1d42a
 Release: alt1
 Epoch: 5
 
@@ -384,6 +384,9 @@ fi
 %docdir/mailman-*
 
 %changelog
+* Thu Oct 22 2020 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.34.0.3.1d42a-alt1
+- 2.1.33-4-g0f97bcba -> 2.1.34-3-g1d42a8b8.
+
 * Fri May 29 2020 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.33.0.4.0f97-alt1
 - 2.1.29-9-ge227cb9f -> 2.1.33-4-g0f97bcba.
 - mm_config.py: reset MAILMAN_SITE_LIST to default (closes: #36460).
