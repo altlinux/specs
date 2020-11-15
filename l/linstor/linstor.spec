@@ -8,20 +8,21 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.7.1
+Version: 1.10.0
 Release: alt1
-Summary: LINSTOR SDS
+Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
 Url: https://github.com/LINBIT/linstor-server
 Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
-BuildArch: noarch
+Source1: gradle-6.7-bin.zip
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
 # BuildRequires: java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel
 BuildRequires: java-devel-default
 BuildRequires: python3
-BuildRequires: gradle
+BuildRequires: unzip
+#BuildRequires: gradle
 
 %description
 LINSTOR developed by LINBIT, is a software that manages replicated volumes across a group of machines.
@@ -30,10 +31,10 @@ LINSTOR is open-source software designed to manage block storage devices for lar
 It's used to provide persistent Linux block storage for cloudnative and hypervisor environments.
 
 %prep
-%setup -n %NAME_VERS
+%setup -n %NAME_VERS -a1
 
 %build
-rm -rf ./build/install
+export PATH=$PWD/gradle-6.7/bin:$PATH
 gradle %GRADLE_TASKS %GRADLE_FLAGS
 for p in server satellite controller; do echo "%LS_PREFIX/.$p" >> "%_builddir/%NAME_VERS/$p/jar.deps"; done
 
@@ -80,7 +81,7 @@ Linstor shared components between linstor-controller and linstor-satellite
 %package controller
 Summary: Linstor controller specific files
 Group: System/Servers
-Requires: linstor-common = %version
+Requires: linstor-common = %EVR
 
 %description controller
 Linstor controller manages linstor satellites and persistant data storage.
@@ -110,7 +111,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 %package satellite
 Summary: Linstor satellite specific files
 Group: System/Servers
-Requires: linstor-common = %version
+Requires: linstor-common = %EVR
 Requires: lvm2 thin-provisioning-tools
 Requires: drbd-utils >= 9.7.0
 
@@ -137,6 +138,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Tue Jun 23 2020 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
 - 1.7.1
 

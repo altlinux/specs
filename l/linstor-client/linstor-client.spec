@@ -1,7 +1,9 @@
+# error in help2man
+%def_disable manpages
 
 Name: linstor-client
 Summary: Linstor Client
-Version: 1.1.2
+Version: 1.4.1
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -10,7 +12,8 @@ Source: http://www.linbit.com/downloads/linstor/linstor-client-%version.tar.gz
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-linstor
+BuildRequires: python3-module-linstor >= 1.4.1
+%{?_enable_manpages:BuildRequires: help2man xsltproc docbook-style-xsl}
 
 %description
 User space client to ease DRBD9 resource management.
@@ -23,6 +26,9 @@ It automatically places the backing LVM/ZFS volumes among the participating mach
 %setup -n %name-%version
 
 %build
+%if_enabled manpages
+python3 setup.py build_man
+%endif
 %python3_build
 
 %install
@@ -31,10 +37,15 @@ It automatically places the backing LVM/ZFS volumes among the participating mach
 %files
 %doc README.md
 %_bindir/*
-%_sysconfdir/bash_completion.d/*
-%_man8dir/*
 %python3_sitelibdir/*
+%_sysconfdir/bash_completion.d/*
+%if_enabled manpages
+%_man8dir/*
+%endif
 
 %changelog
+* Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Sat Jun 29 2019 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt1
 - Initial build for ALT
