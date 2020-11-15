@@ -9,13 +9,14 @@
 
 Name: linstor
 Version: 1.10.0
-Release: alt1
+Release: alt2
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
 Url: https://github.com/LINBIT/linstor-server
 Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
 Source1: gradle-6.7-bin.zip
+BuildArch: noarch
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
 # BuildRequires: java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel
@@ -36,12 +37,13 @@ It's used to provide persistent Linux block storage for cloudnative and hypervis
 %build
 export PATH=$PWD/gradle-6.7/bin:$PATH
 gradle %GRADLE_TASKS %GRADLE_FLAGS
-for p in server satellite controller; do echo "%LS_PREFIX/.$p" >> "%_builddir/%NAME_VERS/$p/jar.deps"; done
+#for p in server satellite controller; do echo "%LS_PREFIX/.$p" >> "%_builddir/%NAME_VERS/$p/jar.deps"; done
 
 %install
 mkdir -p %buildroot%LS_PREFIX
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/lib %buildroot%LS_PREFIX
 rm %buildroot/%LS_PREFIX/lib/%NAME_VERS.jar
+chmod a-x %buildroot/%LS_PREFIX/lib/*.jar
 cp -r %_builddir/%NAME_VERS/server/build/install/server/lib/conf %buildroot%LS_PREFIX/lib
 mkdir -p %buildroot%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/Controller %buildroot%LS_PREFIX/bin
@@ -57,7 +59,7 @@ cp %_builddir/%NAME_VERS/scripts/firewalld/linstor-controller.xml %buildroot%FIR
 cp %_builddir/%NAME_VERS/scripts/firewalld/linstor-satellite.xml %buildroot%FIREWALLD_SERVICES
 mkdir -p %buildroot%_sysconfdir/drbd.d/
 cp %_builddir/%NAME_VERS/scripts/linstor-resources.res %buildroot%_sysconfdir/drbd.d/
-touch %buildroot%LS_PREFIX/{.server,.satellite,.controller}
+#touch %buildroot%LS_PREFIX/{.server,.satellite,.controller}
 mkdir -p %buildroot%_sysconfdir/linstor
 cp %_builddir/%NAME_VERS/docs/linstor.toml-example %buildroot%_sysconfdir/linstor/
 
@@ -138,6 +140,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt2
+- build as noarch again
+
 * Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
