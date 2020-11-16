@@ -1,6 +1,6 @@
 Name: git-cola
 Version: 3.8
-Release: alt1
+Release: alt2
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -17,9 +17,10 @@ BuildRequires: python3-module-sphinx-devel
 #BuildRequires: rpm-build-gir tcl
 BuildRequires: asciidoc
 # hasher tests:
-Requires: python3-module-pyinotify python3-module-PyQt5
+Requires: python3-module-pyinotify python3-module-PyQt5 git-core
 
-AutoProv:yes,nopython
+AutoReq: no
+AutoProv: yes,nopython
 # skip internal module reqs
 %add_python3_req_skip cola cola.i18n cola.models cola.widgets
 
@@ -59,6 +60,9 @@ chmod +x %buildroot%_datadir/git-cola/lib/cola/widgets/spellcheck.py
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 16 2020 Leontiy Volodin <lvol@altlinux.org> 3.8-alt2
+- Disabled AutoReq.
+
 * Tue Sep 15 2020 Leontiy Volodin <lvol@altlinux.org> 3.8-alt1
 - New version 3.8.
 
