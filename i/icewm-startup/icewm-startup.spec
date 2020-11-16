@@ -1,8 +1,9 @@
 %def_without xtdesktop
 %def_without desklaunch
 %def_without ivman
+%def_with blueberry
 Name: icewm-startup
-Version: 0.212
+Version: 0.214
 Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
@@ -65,6 +66,23 @@ at-spi bus is required for accessibility services.
 запуск сервиса вспомогатальных технологий поддержки доступности
 компьютерного интерфейса для людей с ограниченными возможностями
 при старте IceWM (Требует менеджер автозапуска программ IceWM).
+
+%if_with blueberry
+%package blueberry-tray
+Group: Graphical desktop/Icewm
+Summary: blueberry-tray autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск blueberry-tray при старте IceWM
+Requires: %name blueberry
+AutoReq: no
+
+%description blueberry-tray
+blueberry is the Bluetooth devices graphical configuration utility.
+This package provides blueberry-tray plug-in for IceWM autostart manager.
+
+%description -l ru_RU.UTF-8 blueberry-tray
+blueberry является графической утилитой для настройки и работы с Bluetooth устройствами.
+Установите этот пакет, если вы хотите запускать blueberry-tray при старте IceWM.
+%endif
 
 %package delay
 Group: Graphical desktop/Icewm
@@ -206,6 +224,17 @@ AutoReq: no
 
 %description pnmixer
 pnmixer plug-in for simple sound volume control.
+
+%package redshift-gtk
+Group: Graphical desktop/Icewm
+Summary: redshift-gtk autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск redshift-gtk при старте IceWM
+Requires: %name redshift
+AutoReq: no
+
+%description redshift-gtk
+redshift-gtk plug-in for screen brightness control.
+Redshift should be configured first in ~/.config/redshift.conf.
 
 %package simple-sound
 Group: Graphical desktop/Icewm
@@ -506,6 +535,9 @@ echo 'tray_mixer_plus&' > %buildroot/%icewmconfdir/startup.d/070-tray_mixer_plus
 echo '/usr/bin/nm-applet&' > %buildroot/%icewmconfdir/startup.d/080-networkmanager
 
 echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
+%if_with blueberry
+echo 'blueberry-tray&'> %buildroot/%icewmconfdir/startup.d/blueberry-tray
+%endif
 echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/gkrellm
 echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
 %if_with ivman
@@ -516,28 +548,26 @@ echo "pnmixer&" > %buildroot/%icewmconfdir/startup.d/pnmixer
 echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
 echo 'xscreensaver -nosplash&'> %buildroot/%icewmconfdir/startup.d/xscreensaver
 
+%define startup_if_config() \
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/%1\
+#!/bin/sh\
+# it is not wise to run non-configured %1, so we look\
+# whether it is configured.\
+# if [ -e %2 ] then user has configured %1 properly\
+if [ -e %2 ]; then\
+  %3\
+fi\
+EOF\
+%nil
+
+%startup_if_config redshift-gtk ~/.config/redshift.conf redshift-gtk&
+
 %if_with desklaunch
-cat <<EOF > %buildroot/%icewmconfdir/startup.d/desklaunch
-#!/bin/sh
-# it is not wise to run non-configured desklaunch, so we look 
-# whether it is configured.
-# if [ -e ~/.desklaunchrc ] then user has configured desklaunch properly
-if [ -e ~/.desklaunchrc ]; then
-  desklaunch&
-fi
-EOF
+%startup_if_config desklaunch ~/.desklaunchrc desklaunch&
 %endif #desklaunch
 
 %if_with xtdesktop
-cat <<EOF > %buildroot/%icewmconfdir/startup.d/xtdesktop
-#!/bin/sh
-# it is not wise to run non-configured xtdesktop, so we look 
-# whether it is configured.
-# if [ -e ~/.xtdeskrc ] then user has configured xtdesktop properly
-if [ -e ~/.xtdeskrc ]; then
-  xtdesktop&
-fi
-EOF
+%startup_if_config xtdesktop ~/.xtdeskrc xtdesktop&
 %endif #xtdesktop
 
 chmod 755 %buildroot/%icewmconfdir/startup.d/*
@@ -589,6 +619,11 @@ fi
 %files at-spi-dbus-bus
 %config %icewmconfdir/startup.d/015-at-spi-dbus-bus
 
+%if_with blueberry
+%files blueberry-tray
+%config %icewmconfdir/startup.d/blueberry-tray
+%endif
+
 %files delay
 %config %icewmconfdir/startup.d/010-delay
 
@@ -622,6 +657,9 @@ fi
 %files pnmixer
 %config %icewmconfdir/startup.d/pnmixer
 
+%files redshift-gtk
+%config %icewmconfdir/startup.d/redshift-gtk
+
 %files simple-sound
 %config %icewmconfdir/startup.d/000-simple-sound
 %config %icewmconfdir/shutdown.d/000-simple-sound
@@ -651,6 +689,12 @@ fi
 %icewmconfdir/XXkb.conf
 
 %changelog
+* Mon Nov 16 2020 Igor Vlasenko <viy@altlinux.ru> 0.214-alt1
+- added blueberry-tray
+
+* Sun Nov 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.213-alt1
+- added redshift-gtk
+
 * Fri Nov 13 2020 Igor Vlasenko <viy@altlinux.ru> 0.212-alt1
 - added xscreenserver; removed kde3kdesktop
 - at-spi-dbus-bus changed from 020 to 015
