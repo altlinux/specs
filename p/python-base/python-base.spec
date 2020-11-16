@@ -1,18 +1,19 @@
 %define python_ver 2.7
 
 Name: python-base
-Version: %python_ver.17
-Release: alt3
+Version: %python_ver.18
+Release: alt1
 
 Summary: Base python modules and executables
 Group: Development/Python
-#BuildArch: noarch
+BuildArch: noarch
 License: PSF
 Group: Development/Python
 URL: http://www.python.org/
 Packager: Python Development Team <python@packages.altlinux.org>
 
 Requires: /usr/bin/python%python_ver
+Requires: python2-base = %version
 
 %description
 Python is an interpreted, interactive, object-oriented programming
@@ -28,16 +29,16 @@ This package contains symlink to default python interpreter.
 mkdir -p %buildroot%_bindir
 ln -sf python%python_ver %buildroot%_bindir/python
 
-mkdir -p %buildroot%_libdir
-# hack to make arepo (remove me in the future)
-touch %buildroot%_libdir/libpython.so
-
 %files
 %_bindir/python
-# hack to make arepo (remote it in the future)
-%ghost %_libdir/libpython.so
 
 %changelog
+* Mon Nov 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt1
+- Bumped version.
+- Added versioned dependency to python2-base.
+- Removed temporary hacks.
+- Made it noarch.
+
 * Mon Nov 11 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.17-alt3
 - Separated to independent package (former subpackage of python package).
 
