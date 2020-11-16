@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 9.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Mon Nov 16 2020 Elena Mishina <lepata@altlinux.org> 9.1-alt3
+- fix to create bootable flash disk
+- fix some typos (ALT #38985)
+
 * Wed Sep 16 2020 Elena Mishina <lepata@altlinux.org> 9.1-alt2
 - update to latest public distr
 - fix some typos
