@@ -1,5 +1,5 @@
 Name: usermode-fs-tools
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: User-mode filesystems utilities
@@ -13,6 +13,7 @@ Packager: Leonid Krivoshein <klark@altlinux.org>
 Requires: usermode-extfs-tools = %version-%release
 Requires: usermode-vfat-tools  = %version-%release
 Requires: usermode-image-tools = %version-%release
+Requires: usermode-isofs-tools = %version-%release
 
 %description
 This package contains common build parts and requirements.
@@ -48,7 +49,7 @@ Requires: mtools
 This package contains vfat filesystem utilities.
 
 %package -n usermode-image-tools
-Summary: User-mode boot loader and image utilities
+Summary: User-mode boot loader and disk image utilities
 Group: File tools
 
 Requires: coreutils
@@ -75,7 +76,28 @@ Requires: grub-ieee1275
 %endif
 
 %description -n usermode-image-tools
-This package contains user-mode boot loader and image utilities.
+This package contains user-mode boot loader and disk image utilities.
+
+%package -n usermode-isofs-tools
+Summary: User-mode ISO-9660 image repack utilities
+Group: File tools
+BuildArch: noarch
+
+Requires: coreutils
+Requires: cpio
+Requires: gawk
+Requires: getopt
+Requires: p7zip
+Requires: rpm
+Requires: rsync
+Requires: sed
+Requires: service
+Requires: usermode-extfs-tools = %version-%release
+Requires: usermode-vfat-tools  = %version-%release
+Requires: usermode-image-tools = %version-%release
+
+%description -n usermode-isofs-tools
+This package contains user-mode ISO-9660 image repack utilities.
 
 %prep
 %setup
@@ -106,7 +128,17 @@ done
 %_bindir/img2parts
 %_bindir/parts2img
 
+%files -n usermode-isofs-tools
+%_bindir/iso2stick
+
 %changelog
+* Mon Nov 16 2020 Leonid Krivoshein <klark@altlinux.org> 1.1-alt1
+- New sub-package 'usermode-isofs-tools': iso2stick utility added.
+- dir2extfs, dir2vfat, parts2img: more user-friendly sizes input.
+- grub2dirs: deprecated option '--root' renamed to '--uuid'.
+- grub2dirs: '--foreign' feature added.
+- img2parts: bug fix for layout with single partition.
+
 * Thu Oct 15 2020 Leonid Krivoshein <klark@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus.
 
