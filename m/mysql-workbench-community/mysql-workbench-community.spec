@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.20
-Release: alt3
+Release: alt5
 
 Summary: A MySQL visual database modeling tool
 
@@ -10,8 +10,8 @@ Url: http://wb.mysql.com
 
 # Source-url: https://cdn.mysql.com/Downloads/MySQLGUITools/mysql-workbench-community-%version-src.tar.gz
 Source0: %name-%version.tar
+# TODO: build with external antlr4-runtime (>= 4.7.1)
 Source1: antlr-4.7.1-complete.jar
-Source2: antlr4-cpp-runtime-4.7.1-source.zip
 
 # https://www.mysql.com/support/supportedplatforms/workbench.html
 ExclusiveArch: %ix86 x86_64
@@ -21,7 +21,6 @@ Patch2: mysql-workbench-mariadb-check.patch
 Patch3: mysql-workbench-6.3.4-c++11.patch
 Patch4: %name-6.3.4-alt-gcc6.patch
 Patch5: mysql-workbench-community-6.3.10-32bit.patch
-Patch6: mysql-workbench-community-8.0.15-antlr4-runtime.patch
 Patch7: mysql-workbench-8.0.17.suppress-unsupported.patch
 Patch8: %name-%version-alt-boost-1.73.0-compat.patch
 
@@ -50,7 +49,11 @@ Obsoletes: mysql-query-browser < %version-%release
 
 %add_findreq_skiplist */mysql-workbench/libraries/grt_python_debugger.py
 
+%set_verify_elf_method unresolved=relaxed
+
+# used by library/sshtunnel/sshtunnel.py
 Requires: python-module-paramiko
+
 Requires: mysql-client gnome-keyring
 Requires: %name-data = %version
 
@@ -65,11 +68,8 @@ BuildRequires(pre): rpm-build-xdg
 BuildRequires: libmysqlclient-devel
 BuildConflicts: libmariadb-devel
 
-# Automatically added by buildreq on Sun Mar 20 2011
-# and edited manualy
-# - removed mysql-workbench-gpl
-# - boost-devel-headers changed to boost-devel
-BuildRequires: boost-devel gcc-c++ libglade-devel libgnome-devel libgtkmm2-devel liblua5-devel libpcre-devel libsqlite3-devel libuuid-devel libxml2-devel libzip-devel python-devel
+BuildRequires: boost-devel gcc-c++
+BuildRequires: liblua5-devel libpcre-devel libsqlite3-devel libxml2-devel libzip-devel
 
 BuildRequires: boost-signals-devel
 
@@ -97,16 +97,21 @@ BuildRequires: java-1.8.0-openjdk stringtemplate
 
 # 8.0.15
 BuildRequires: libdrm-devel libsecret-devel libssl-devel libfribidi-devel libmount-devel libblkid-devel
-BuildRequires: libtiff-devel libpng-devel libepoxy-devel libwayland-cursor-devel libwayland-egl-devel
-BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel libXcomposite-devel
-BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
+BuildRequires: libtiff-devel libpng-devel libepoxy-devel
+#BuildRequires: libwayland-cursor-devel libwayland-egl-devel
+#BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel libXcomposite-devel
+#BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
 BuildRequires: libssh-devel >= 0.8.5
 
 # 8.0.19
 BuildRequires: libthai-devel libdatrie-devel rapidjson
 
 # 8.0.20
-BuildRequires: libbrotli-devel libgcrypt-devel
+BuildRequires: libbrotli-devel libgcrypt-devel libuuid-devel
+
+BuildRequires: python-devel
+
+BuildRequires: libantlr4-devel
 
 %description
 MySQL Workbench is modeling tool that allows you to
@@ -130,8 +135,7 @@ Some parts of code have separate licenses.
 Look to %_defaultdocdir/%name-%version/License.txt
 
 %prep
-
-%setup -q
+%setup
 
 #patch1 -p1
 #patch2 -p1
@@ -140,25 +144,19 @@ Look to %_defaultdocdir/%name-%version/License.txt
 #ifarch %ix86
 #patch5 -p1
 #endif
-%patch6 -p2
 %patch7 -p2
 %patch8 -p2
 
 sed -i "s|pcre.h|pcre/pcre.h|" library/grt/src/grtpp_shell.cpp
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
-%set_verify_elf_method unresolved=relaxed
+#8.0.17: http://bugs.mysql.com/97116
+sed -i "s/ -Werror//" CMakeLists.txt
+
+#8.0.19: https://lists.altlinux.org/pipermail/devel/2020-March/210126.html
+sed -i "s/ -Wno-deprecated-copy//g" CMakeLists.txt
 
 %build
-
-mkdir %_builddir/%name-%version/ANTLR-CPP
-pushd %_builddir/%name-%version/ANTLR-CPP
- unzip %SOURCE2
- mkdir build && mkdir run && cd build
- cmake ..
- make
- DESTDIR=%_builddir/%name-%version/ANTLR-CPP make install
-popd
 
 %ifarch %ix86
 %add_optflags -Wno-error=format=
@@ -167,13 +165,8 @@ popd
 #8.0.17: wb_context_ui_home.cpp:59:10: fatal error: include <zip.h>
 %add_optflags -I/usr/include/libzip
 
-#8.0.19: https://lists.altlinux.org/pipermail/devel/2020-March/210126.html
-sed -i "s/ -Wno-deprecated-copy//g" CMakeLists.txt
-
 %cmake \
     -DWITH_ANTLR_JAR=%SOURCE1 \
-    -DANTLR4_INCLUDE_DIR=%_builddir/%name-%version/ANTLR-CPP/usr/local/include \
-    -DANTLR4_LIBRARIES="-static -L%_builddir/%name-%version/ANTLR-CPP/dist -lantlr4-runtime" \
 #
 
 cd BUILD
@@ -191,10 +184,6 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbench-32.png %buildroot%_nico
 mkdir -p %buildroot%_iconsdir/hicolor/32x32/mimetypes
 cp %_builddir/%name-%version/images/icons/MySQLPlugin-32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-plugin.png
 cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-model.png
-
-pushd %_builddir/%name-%version/ANTLR-CPP/dist
- cp -a *.so* %buildroot/%_libdir/mysql-workbench/
-popd
 
 %files
 %exclude %_libdir/mysql-workbench/modules/*.py?
@@ -229,6 +218,12 @@ popd
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 8.0.20-alt5
+- NMU: improve build requires, drop -Werror again
+
+* Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 8.0.20-alt4
+- NMU: build with external libantlr4
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 8.0.20-alt3
 - cleanup spec, drop pexpect requires
 
