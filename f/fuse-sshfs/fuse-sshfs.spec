@@ -1,6 +1,6 @@
 Name: fuse-sshfs
-Version: 3.7.0
-Release: alt2
+Version: 3.7.1
+Release: alt1
 
 Summary: SSH filesystem using FUSE
 License: GPL-2.0-or-later
@@ -56,6 +56,9 @@ that codebase, so he rewrote it. Features of this implementation are:
 %_man1dir/sshfs.*
 
 %changelog
+* Mon Nov 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.7.1-alt1
+- Updated to 3.7.1.
+
 * Thu Jun 11 2020 Sergey V Turchin <zerg@altlinux.org> 3.7.0-alt2
 - fix build manpage
 - allow to install with openssh-gostcrypto
