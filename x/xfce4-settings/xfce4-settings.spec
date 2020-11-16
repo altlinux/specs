@@ -1,5 +1,5 @@
 Name: xfce4-settings
-Version: 4.15.2
+Version: 4.15.3
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
@@ -14,9 +14,12 @@ Source: %name-%version.tar
 Source1: xfce4-fixkeyboard
 Patch: %name-%version-%release.patch
 
+%def_enable upower
+
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5
 BuildRequires: libxfce4ui-gtk3-devel libexo-gtk3-devel libxfconf-devel libgarcon-devel >= 0.1.10
-BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libxklavier-devel libupower-devel >= 0.99.4-alt2
+BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libxklavier-devel
+%{?_enable_upower:BuildRequires: libupower-devel >= 0.99.4-alt2}
 BuildRequires: libcolord-devel
 BuildRequires: xorg-drv-libinput-devel
 
@@ -50,6 +53,11 @@ for the Xfce desktop.
 	--enable-maintainer-mode \
 	--disable-silent-rules \
 	--enable-libnotify \
+%if_enabled upower
+	--enable-upower-glib \
+%else
+	--disable-upower-glib \
+%endif
 	--enable-xcursor \
 	--enable-xorg-libinput \
 	--enable-libxklavier \
@@ -64,7 +72,7 @@ for the Xfce desktop.
 install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 
 %files -f %name.lang
-%doc README TODO NEWS INSTALL COPYING AUTHORS
+%doc README.md TODO NEWS COPYING AUTHORS
 %_bindir/*
 %_libdir/xfce4/*
 %config(noreplace) %_sysconfdir/xdg/autostart/*
@@ -78,6 +86,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Mon Nov 16 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
+- Explicitly enabled upower support.
+- Updated to 4.15.3.
+
 * Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.2-alt1
 - Updated Vcs tag.
 - Updated to 4.15.2.
