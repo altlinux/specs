@@ -1,6 +1,6 @@
 Name: uzbl
 Version: 20190110
-Release: alt3
+Release: alt5
 Group: Networking/WWW
 License: GPL
 Summary: The uzbl web interface tools
@@ -12,10 +12,21 @@ Source0: %name-%version.tar
 BuildRequires: libwebkit2gtk-devel libgnutls-devel
 BuildRequires: rpm-build-python3 python3-module-wheel python3-module-pip
 BuildRequires: python3-module-mpl_toolkits
+BuildRequires: python3-module-setuptools
+Requires: python3-module-%name = %EVR
 Requires: dmenu
 
 %description
-The uzbl web interface tools
+The uzbl web interface tools.
+
+%package -n python3-module-%name
+Summary: %name python3 module
+Group: Development/Python3
+BuildArch: noarch
+Conflicts: %name < %version-%release
+
+%description -n python3-module-%name
+This package contains %name python3 module.
 
 %prep
 %setup
@@ -38,8 +49,6 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/uzbl*.dist-info
 
 %files
 %_bindir/*
-%dir %python3_sitelibdir_noarch/uzbl
-%python3_sitelibdir_noarch/uzbl/*
 %dir %_libdir/uzbl
 %_libdir/uzbl/*
 
@@ -58,7 +67,18 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/uzbl*.dist-info
 %_datadir/vim/ftdetect/uzbl.vim
 %_datadir/vim/syntax/uzbl.vim
 
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/uzbl*
+
 %changelog
+* Mon Nov 16 2020 Dmitry V. Levin <ldv@altlinux.org> 20190110-alt5
+- NMU.
+- Fixed another FTBFS by moving python3 module into separate subpackage
+  (closes: #39296, #39297).
+
+* Mon Nov 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 20190110-alt4
+- Fixed FTBFS.
+
 * Sat Jan 19 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190110-alt3
 - Remove buildroot path from uzbl-core
 
