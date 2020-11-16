@@ -1,7 +1,7 @@
 %define rname solid
 
 Name: kf5-%rname
-Version: 5.75.0
+Version: 5.76.0
 Release: alt1
 %K5init altplace
 
@@ -20,6 +20,7 @@ Patch1: alt-hack-repeat-unmount.patch
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules flex gcc-c++ libudev-devel media-player-info python-module-google qt5-declarative-devel qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires: libplist-devel libimobiledevice-devel libusbmuxd-devel
 BuildRequires: extra-cmake-modules flex bison libudev-devel qt5-declarative-devel qt5-tools-devel
 
 %description
@@ -86,6 +87,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexe
 %_K5qml/org/kde/solid/
 
 %changelog
+* Mon Nov 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.76.0-alt1
+- new version
+
 * Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
 - new version
 
