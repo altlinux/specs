@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 20.08.2
+Version: 20.11.80
 Release: alt1
 
 Group:   Video
@@ -86,7 +86,7 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %find_lang %name --all
 
 %files -f %name.lang
-%doc AUTHORS COPYING* README TODO
+%doc AUTHORS COPYING*
 %_K5bin/%name
 %_K5icon/hicolor/*/*/*.*
 %_K5xdgapp/*%name.desktop
@@ -97,6 +97,12 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Mon Nov 16 2020 Andrey Cherepanov <cas@altlinux.org> 20.11.80-alt1
+- New version.
+
+* Fri Nov 06 2020 Andrey Cherepanov <cas@altlinux.org> 20.08.3-alt1
+- New version.
+
 * Tue Oct 13 2020 Andrey Cherepanov <cas@altlinux.org> 20.08.2-alt1
 - New version.
 
