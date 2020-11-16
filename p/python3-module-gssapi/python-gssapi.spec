@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 1.6.5
+Version: 1.6.10
 Release: alt1
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
@@ -26,7 +26,7 @@ BuildRequires: python3(decorator)
 BuildRequires: python3(future)
 BuildRequires: python3(k5test)
 BuildRequires: python3(nose)
-BuildRequires: python3(nose_parameterized)
+BuildRequires: python3(parameterized)
 BuildRequires: python3(six)
 BuildRequires: python3(tox)
 BuildRequires: krb5-kdc >= 1.15
@@ -64,6 +64,10 @@ tox.py3 --sitepackages -r -vv
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Mon Nov 16 2020 Stanislav Levin <slev@altlinux.org> 1.6.10-alt1
+- 1.6.5 -> 1.6.10.
+- Applied upstream fixes(closes: #39167).
+
 * Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 1.6.5-alt1
 - 1.6.1 -> 1.6.5.
 - Stopped build Python2 package.
