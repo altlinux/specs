@@ -1,8 +1,8 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.3.16
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -214,6 +214,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 16 2020 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
+- New version.
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.16-alt2
 - NMU: skip internal python dependency 'common'
 
