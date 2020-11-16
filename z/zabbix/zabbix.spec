@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 5.0.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -533,6 +533,12 @@ fi
 %preun agent
 %preun_service zabbix_agentd
 
+%post phpfrontend-engine
+if [ -f %webserver_webappsdir/%name/frontends/php/conf/zabbix.conf.php -a ! -f %webserver_webappsdir/%name/ui/conf/zabbix.conf.php ]
+then
+    cp -p %webserver_webappsdir/%name/frontends/php/conf/zabbix.conf.php %webserver_webappsdir/%name/ui/conf/
+fi
+
 %files common
 %dir %attr(1775,root,%zabbix_group) %_logdir/%name
 %dir %_sysconfdir/%name
@@ -632,6 +638,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.5-alt2
+- Copy old zabbix.conf.php from pre-5.0 version (ALT #39282)
+
 * Tue Oct 27 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.5-alt1
 - 5.0.5
 
