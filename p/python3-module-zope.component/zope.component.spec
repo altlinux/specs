@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.6.1
-Release: alt2
+Version: 4.6.2
+Release: alt1
 
 Summary: Zope Component Architecture (Python3)
 License: ZPL-2.1
@@ -96,6 +96,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Mon Nov 16 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6.2-alt1
+- 4.6.1 -> 4.6.2
+
 * Thu Apr 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6.1-alt2
 - Fix tests by adding zope.security to BR:
 
