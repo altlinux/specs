@@ -1,15 +1,16 @@
 %def_enable ffmpeg
 %def_disable gstreamer
+%def_enable gepub
 
 Name: tumbler
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: A thumbnail D-Bus service
 License: GPLv2+ and LGPLv2+
 Group: Graphical desktop/XFce
 
-Url: https://git.xfce.org/xfce/tumbler/
+Url: https://docs.xfce.org/xfce/tumbler/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -24,6 +25,7 @@ BuildRequires: libpoppler-glib-devel libgsf-devel libcurl-devel
 %{?!_with_bootstrap:BuildRequires: libopenraw-gnome-devel}
 %{?_enable_ffmpeg:BuildRequires: libffmpegthumbnailer-devel}
 %{?_enable_gstreamer:BuildRequires: libgdk-pixbuf-devel gstreamer1.0-devel gst-plugins1.0-devel}
+%{?_enable_gepub:BuildRequires: libgepub-devel libgdk-pixbuf-devel}
 
 %define _unpackaged_files_terminate_build 1
 
@@ -61,6 +63,7 @@ Development files and headers for %name
 	--libexecdir=%_prefix/libexec \
 	%{?_disable_ffmpeg:--disable-ffmpeg-thumbnailer} \
 	%{?_disable_gstreamer:--disable-gstreamer-thumbnailer} \
+	%{?_disable_gepub:--disable-gepub-thumbnailer} \
 	--disable-static
 %make_build
 
@@ -74,6 +77,7 @@ Development files and headers for %name
 %_prefix/libexec/%name-1
 %_libdir/%name-1
 %_datadir/dbus-1/services/*.service
+%_iconsdir/hicolor/*/apps/*
 
 %exclude %_libdir/%name-1/plugins/*.la
 %exclude %_libdir/%name-1/plugins/cache/*.la
@@ -87,6 +91,11 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 16 2020 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
+- Updated Url tag.
+- Enabled gepub plugin.
+- Updated to 0.3.1.
+
 * Thu Sep 03 2020 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - Updated to 0.3.0.
 
