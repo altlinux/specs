@@ -5,7 +5,7 @@
 
 Name: SDL2
 Version: 2.0.12
-Release: alt3
+Release: alt4
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -36,6 +36,14 @@ BuildRequires: libjack-devel
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
 BuildRequires: libsamplerate-devel
 BuildRequires: libudev-devel
+# Wayland support
+BuildRequires: libxkbcommon-devel
+BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: libwayland-server-devel
+BuildRequires: wayland-devel
+BuildRequires: wayland-protocols
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -97,6 +105,9 @@ rm %buildroot%_libdir/*.a
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Mon Nov 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.12-alt4
+- NMU: Actually enable Wayland support (ATL#34657).
+
 * Thu Jul 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.12-alt3
 - Disabled rpath.
 
