@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper around the libevdev C library
 Group: Development/Python3
@@ -17,7 +17,7 @@ Source: https://pypi.io/packages/source/l/%modname/%modname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-tox}
+%{?_enable_check:BuildRequires: python3-module-pytest libevdev}
 
 %description
 python-libevdev is a Python wrapper around the libevdev C library. It
@@ -35,8 +35,9 @@ capabilities.
 %python3_install
 
 %check
-pushd test
-tox.py3
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+py.test3
+
 
 %files
 %python3_sitelibdir_noarch/%modname/
@@ -44,6 +45,9 @@ tox.py3
 %doc README*
 
 %changelog
+* Mon Nov 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt2
+- fixed %%check
+
 * Mon Aug 3 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt1
 - first build for Sisyphus
 
