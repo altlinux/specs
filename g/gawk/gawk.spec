@@ -1,5 +1,5 @@
 Name: gawk
-Version: 4.2.1.0.170.dc189d
+Version: 5.1.0.0.213.d04f
 Release: alt1
 
 %define _libexecdir %prefix/libexec
@@ -59,7 +59,7 @@ cd -
 
 %install
 %makeinstall_std
-rm %buildroot/bin/gawk-4.2.1a
+rm %buildroot/bin/gawk-5.1.0
 mkdir -p %buildroot%_bindir
 ln -rs %buildroot/bin/gawk %buildroot%_bindir/
 for n in awk dgawk pgawk; do
@@ -72,10 +72,16 @@ mkdir -p %buildroot%docdir
 install -pm644 AUTHORS NEWS POSIX.STD README \
 	%{?_with_doc:doc/{gawk,awkcard}.pdf} %buildroot%docdir/
 
+rm %buildroot/etc/profile.d/gawk.*sh
+
 %find_lang %name
 
 %check
 %make_build -k check
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files -f %name.lang
 /bin/*
@@ -97,6 +103,9 @@ install -pm644 AUTHORS NEWS POSIX.STD README \
 %endif
 
 %changelog
+* Mon Nov 16 2020 Dmitry V. Levin <ldv@altlinux.org> 5.1.0.0.213.d04f-alt1
+- gawk-4.2.1-170-gdc189dc6. -> gawk-5.1.0-213-gd04f08bb (closes: #38430).
+
 * Thu Feb 14 2019 Dmitry V. Levin <ldv@altlinux.org> 4.2.1.0.170.dc189d-alt1
 - Updated to gawk-4.2.1-170-gdc189dc6.
 - Ceased packaging of obsolete igawk script.
@@ -212,7 +221,7 @@ install -pm644 AUTHORS NEWS POSIX.STD README \
 - Fixed temporary file handling in igawk (owl).
 - fixed texinfo dircategory.
 
-* Wed Aug  8 2000 Dmitry V. Levin <ldv@fandra.org> 3.0.6-ipl1mdk
+* Tue Aug  8 2000 Dmitry V. Levin <ldv@fandra.org> 3.0.6-ipl1mdk
 - new release 3.0.6.
 
 * Wed Jul 26 2000 Dmitry V. Levin <ldv@fandra.org> 3.0.5-ipl1mdk
