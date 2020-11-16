@@ -2,13 +2,16 @@ Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
 Version: 1.6.0.107.g355c345f
-Release: alt1
+Release: alt2
 
 Group: Networking/Mail
 License: AGPL-3.0
 URL: https://public-inbox.org
 
 Source0: %name-%version.tar
+
+Patch0: 0001-Do-not-show-loose-matches.patch
+Patch1: 0002-Hide-from-thread-missing-messages.patch
 
 BuildArch: noarch
 
@@ -83,6 +86,8 @@ public-inbox spawned around three main ideas:
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 pushd certs
@@ -115,6 +120,10 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Mon Nov 16 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.107.g355c345f-alt2
+- Hide in thread missing messages.
+- Hide in thread loose matches.
+
 * Mon Nov 16 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.107.g355c345f-alt1
 - New git snapshot.
 
