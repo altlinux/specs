@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     12
-%define postgresql_minor     4
-%define postgresql_altrel    2
+%define postgresql_minor     5
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -779,6 +779,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 12.5-alt1
+- 12.5 (Fixes CVE-2020-25694, CVE-2020-25695, CVE-2020-25696)
+
 * Mon Sep 28 2020 Alexei Takaseev <taf@altlinux.org> 12.4-alt2
 - Disable -devel
 
