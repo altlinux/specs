@@ -1,8 +1,8 @@
 Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
-Version: 1.6.0.26.g8080720d
-Release: alt2
+Version: 1.6.0.107.g355c345f
+Release: alt1
 
 Group: Networking/Mail
 License: AGPL-3.0
@@ -115,6 +115,9 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Mon Nov 16 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.107.g355c345f-alt1
+- New git snapshot.
+
 * Fri Oct 16 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.26.g8080720d-alt2
 - Add missing Requires.
 
