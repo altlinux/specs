@@ -1,5 +1,5 @@
 Name: units
-Version: 2.20
+Version: 2.21
 Release: alt1
 
 Summary: A utility for converting amounts from one unit to another
@@ -52,6 +52,9 @@ esac
 %doc NEWS README
 
 %changelog
+* Mon Nov 16 2020 Dmitry V. Levin <ldv@altlinux.org> 2.21-alt1
+- 2.20 -> 2.21.
+
 * Wed Sep 30 2020 Dmitry V. Levin <ldv@altlinux.org> 2.20-alt1
 - 2.19 -> 2.20.
 
