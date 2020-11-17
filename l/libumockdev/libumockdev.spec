@@ -1,11 +1,12 @@
+%def_disable snapshot
 %define _name umockdev
 %define api_ver 1.0
 
-%def_enable gudev
+%def_enable gtk_doc
 %def_disable check
 
 Name: lib%_name
-Version: 0.14.4
+Version: 0.15.1
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -13,19 +14,21 @@ Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://launchpad.net/%_name
 
-# VCS: https://github.com/martinpitt/umockdev.git
-#Source: %url/trunk/%version.0/+download/%_name-%version.tar.gz
+%if_disabled snapshot
 Source: https://github.com/martinpitt/%_name/releases/download/%version/%_name-%version.tar.xz
+%else
+Vcs: https://github.com/martinpitt/umockdev.git
+Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.32
 
-BuildRequires: autoconf-archive
-BuildRequires: gtk-doc
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libudev-devel
-%{?_enable_gudev:BuildRequires: libgudev-devel}
+BuildRequires: libudev-devel libgudev-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: /proc,/dev/pts}
 
 %description
@@ -78,24 +81,20 @@ GObject introspection devel data for the %_name library.
 
 %prep
 %setup -n %_name-%version
-[ ! -d m4 ] && mkdir m4
 
 %build
-gtkdocize --docdir docs
-%autoreconf
-%configure \
-    --disable-static \
-    --enable-gtk-doc \
-    --enable-introspection \
-    --docdir=%pkg_docdir
-%make_build
+%meson \
+%{?_enable_gtk_doc:-Dgtk_doc=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 install -pD -m644 NEWS %buildroot%pkg_docdir
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_bindir/%_name-record
@@ -108,11 +107,14 @@ install -pD -m644 NEWS %buildroot%pkg_docdir
 %files devel
 %_includedir/%_name-%api_ver/
 %_libdir/%name.so
+%_libdir/%name-preload.so
 %_pkgconfigdir/%_name-%api_ver.pc
 %_vapidir/%_name-%api_ver.vapi
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name/
+%endif
 
 %files gir
 %_typelibdir/UMockdev-%api_ver.typelib
@@ -121,6 +123,9 @@ install -pD -m644 NEWS %buildroot%pkg_docdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Tue Nov 17 2020 Yuri N. Sedunov <aris@altlinux.org> 0.15.1-alt1
+- 0.15.1 (ported to Meson build system)
+
 * Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt1
 - 0.14.4
 
