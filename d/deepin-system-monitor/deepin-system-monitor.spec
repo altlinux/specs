@@ -1,5 +1,5 @@
 Name: deepin-system-monitor
-Version: 5.8.0.1
+Version: 5.8.0.4
 Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
@@ -59,6 +59,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/*.appdata.xml
 %_datadir/%name/
 
 %changelog
+* Tue Nov 17 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.4-alt1
+- New version (5.8.0.4) with rpmgs script.
+
 * Fri Oct 09 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.1-alt1
 - New version (5.8.0.1) with rpmgs script.
 
