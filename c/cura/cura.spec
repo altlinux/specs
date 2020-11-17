@@ -6,7 +6,7 @@
 
 Name: cura
 Epoch: 1
-Version: 4.7.1
+Version: 4.8
 Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
@@ -19,9 +19,7 @@ Source: %name-%version.tar
 
 # OpenSUSE path
 # PATCH-FIX-OPENSUSE disable-code-style-check.patch code style is no distro buisiness
-Patch1:         disable-code-style-check.patch
-# PATCH-FIX-OPENSUSE fix-runtime.patch
-Patch2:         fix-runtime.patch
+Patch1: disable-code-style-check.patch
 # PATCH-FIX-OPENSUSE fix-crash-on-start.patch
 Patch3:         fix-crash-on-start.patch
 # PATCH-FIX-OPENSUSE -- avoid bad UI layout and crash in preview
@@ -36,6 +34,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: dos2unix
 BuildRequires: python3-devel
 BuildRequires: Uranium >= %version
+BuildRequires: python3-module-pynest2d
 # Tests
 %if 0%{?with_check}
 BuildRequires: python3-module-pytest
@@ -72,7 +71,6 @@ needs. As it's open source, our community helps enrich it even more.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
@@ -100,7 +98,6 @@ dos2unix docs/How_to_use_the_flame_graph_profiler.md
 %if 0%{?with_check}
 %__python3 -m pip freeze
 %__python3 -m pytest -v
-#-k "not TestCollidesWithAreas"
 %endif
 
 desktop-file-validate %buildroot%_datadir/applications/%name.desktop
@@ -117,6 +114,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 1:4.8-alt1
+- New version 4.8
+
 * Fri Sep 18 2020 Anton Midyukov <antohami@altlinux.org> 1:4.7.1-alt1
 - New version 4.7.1
 

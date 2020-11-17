@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libsavitar
-Version: 4.7.1
+Version: 4.8
 Release: alt1
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: LGPLv3+
@@ -81,6 +81,9 @@ rm pugixml -rf
 %python3_sitelibdir/Savitar.so
 
 %changelog
+* Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 4.8-alt1
+- new version 4.8
+
 * Fri Sep 18 2020 Anton Midyukov <antohami@altlinux.org> 4.7.1-alt1
 - new version 4.7.1
 

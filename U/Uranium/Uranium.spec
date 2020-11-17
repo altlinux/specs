@@ -6,8 +6,8 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 4.7.1
-Release: alt2
+Version: 4.8
+Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -76,9 +76,7 @@ popd
 %check
 %if 0%{?with_check}
 pip3 freeze
-# skipping failing tests, see:
-# * https://github.com/Ultimaker/Uranium/issues/594
-python3 -m pytest -v -k "not TestHttpRequestManager"
+python3 -m pytest -v
 %endif
 
 %files -f uranium.lang
@@ -92,6 +90,9 @@ python3 -m pytest -v -k "not TestHttpRequestManager"
 %doc html LICENSE
 
 %changelog
+* Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 4.8-alt1
+- New version 4.8
+
 * Thu Nov 12 2020 Anton Midyukov <antohami@altlinux.org> 4.7.1-alt2
 - Fix buildrequires
 
