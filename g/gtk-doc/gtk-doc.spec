@@ -5,12 +5,12 @@
 %def_enable check
 
 Name: gtk-doc
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
-License: %gpl2plus
+License: GPLv2+
 Url: http://www.gtk.org/gtk-doc/
 
 %define pkgdocdir %_docdir/%name-%version
@@ -139,7 +139,7 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/README*
 %pkgdocdir/TODO
 %pkgdocdir/*.txt
-%pkgdocdir/*.dot
+#%pkgdocdir/*.dot
 %pkgdocdir/examples
 
 %if_with mkpdf
@@ -152,6 +152,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Tue Nov 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.33.1-alt1
+- 1.33.1
+
 * Thu Oct 01 2020 Yuri N. Sedunov <aris@altlinux.org> 1.33.0-alt1
 - 1.33.0
 
