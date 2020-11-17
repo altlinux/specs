@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.1
-Release: alt2
+Version: 4.4.0
+Release: alt1
 
 Summary: Zope Configuration Markup Language (ZCML) (Python 3)
 License: ZPL
@@ -105,23 +105,9 @@ install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-# cancel docbuild tests
 sed -i 's|sphinx-build|py3_sphinx-build|g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
 
 tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
-
-#export PYTHONPATH=$PWD/src
-#python3 setup.py test -v
-#nosetests3 -vv --with-xunit --with-xcoverage
 
 %files
 %doc *.txt *.rst docs/_build/html
@@ -137,6 +123,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Tue Nov 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.4.0-alt1
+- 4.3.1 -> 4.4.0
+
 * Wed Dec 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3.1-alt2
 - NMU: Remove python2 module build
 - Rearrange unittests execution
