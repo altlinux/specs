@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.10.1
-Release: alt3
+Release: alt4
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -52,6 +52,8 @@ Patch117: Ubuntu-CVE-2014-8241-849478.patch
 ## ALT patches
 Patch501: tigervnc-stdinpasswd.patch
 Patch502: ALT-FC-xserver120.patch
+Patch601: U_0001-Properly-store-certificate-exceptions.patch
+Patch602: U_0002-Properly-store-certificate-exceptions-in-Java-viewer.patch
 
 # Automatically added by buildreq on Thu Dec 19 2019
 # optimized out: cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libcrypt-devel libglvnd-devel libgpg-error libgpg-error-devel libsasl2-3 libstdc++-devel perl pkg-config python2-base sh4 xorg-proto-devel
@@ -139,6 +141,8 @@ TigerVNC extension for Xorg server
 ## ALT apply patches
 %patch501 -p1
 %patch502 -p1
+%patch601 -p1
+%patch602 -p1
 
 %build
 
@@ -276,6 +280,9 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Tue Nov 17 2020 Fr. Br. George <george@altlinux.ru> 1.10.1-alt4
+- Fix CVE-2020-26117
+
 * Thu Sep 17 2020 Fr. Br. George <george@altlinux.ru> 1.10.1-alt3
 - Update patches, fix vncviwewer "invalid resolution" bug
 
