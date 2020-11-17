@@ -3,7 +3,7 @@
 %define real_name Test-PerlTidy
 
 Name: perl-Test-PerlTidy
-Version: 20200412
+Version: 20200930
 Release: alt1
 
 Summary: Perl module to check that all project files are tidy
@@ -44,6 +44,9 @@ If you make any changes please remember to tidy them.
 %perl_vendor_privlib/Test/PerlTidy*
 
 %changelog
+* Tue Nov 17 2020 Nikolay A. Fetisov <naf@altlinux.org> 20200930-alt1
+- New version
+
 * Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 20200412-alt1
 - New version
 
