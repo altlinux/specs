@@ -1,6 +1,6 @@
 Name:     updater
 Version:  1.3
-Release:  alt2
+Release:  alt3
 
 Summary:  Updater of packages for distros with security and integrity
 License:  GPL v2+
@@ -44,6 +44,9 @@ install -Dm 0750 parser-bootloader-extlinux-conf.awk %buildroot%_sbindir/parser-
 /lib/systemd/system/*
 
 %changelog
+* Tue Nov 17 2020 Anton Midyukov <antohami@altlinux.org> 1.3-alt3
+- updater-start: fix unexpected failure to run when started directly
+
 * Thu Nov 12 2020 Denis Medvedev <nbr@altlinux.org> 1.3-alt2
 - fix unexpected failure to run when started directly
 
