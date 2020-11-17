@@ -4,8 +4,8 @@
 %def_without check
 
 Name:     earlyoom
-Version:  1.6.1
-Release:  alt2
+Version:  1.6.2
+Release:  alt1
 
 Summary:  Early OOM Daemon for Linux
 License:  MIT
@@ -76,6 +76,9 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Nov 16 2020 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt1
+- new version 1.6.2
+
 * Wed Aug 19 2020 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
 - Replace config to /etc/sysconfig/earlyoom (Closes: 38825)
 
