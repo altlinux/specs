@@ -15,10 +15,14 @@
 #Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp:
 #wpe_loader_init("libWPEBackend-fdo-1.0.so");
 %define wpebackend_fdo_sover 1
-
+%def_enable ninja
+%if_enabled ninja
+# redefine cmake macros
+%define cmake_build ninja-build %_smp_mflags -C BUILD
+%define cmakeinstall_std DESTDIR=%buildroot ninja-build -C BUILD install
+%endif
 %def_disable gtkdoc
 %def_enable gold
-%def_disable ninja
 %def_enable x11
 %def_enable wayland
 %def_enable systemd
@@ -30,11 +34,9 @@
 
 %def_enable bubblewrap_sandbox
 
-%define smp %__nprocs
-
 Name: libwebkitgtk4
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -53,7 +55,8 @@ Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
 %define bwrap_ver 0.3.1
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
-BuildRequires: /proc gcc-c++ cmake ninja-build
+BuildRequires: /proc gcc-c++ cmake
+%{?_enable_ninja:BuildRequires: ninja-build}
 BuildRequires: ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel libopenjpeg2.0-devel openjpeg-tools2.0
@@ -245,9 +248,7 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 %add_optflags -msse2 -mfpmath=sse
 %endif
 
-%ifarch x86_64 armh
-n=%smp
-[  "$n"  -lt  16  ]  ||  n=16
+%ifarch x86_64
 %if_disabled gigacage
 export GIGACAGE_ENABLED=0
 %endif
@@ -292,11 +293,7 @@ export PYTHON=%__python3
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
-%ifarch x86_64 armh
-%make -j $n -C BUILD
-%else
 %cmake_build
-%endif
 
 %install
 %cmakeinstall_std
@@ -363,6 +360,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Nov 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.2-alt1.1
+- rebuilt with ninja instead make
+
 * Fri Oct 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.2-alt1
 - 2.30.2
 
