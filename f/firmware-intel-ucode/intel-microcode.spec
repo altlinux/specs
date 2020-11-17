@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20200616
+%define orig_timestamp 20201110
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 13
+Version: 14
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -45,11 +45,62 @@ UCODE=${UCODE}-64
 mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 
 %files
-%doc changelog releasenote
+%doc license changelog releasenote.md security.md
 %dir /lib/firmware/intel-ucode
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Tue Nov 17 2020 L.A. Kostis <lakostis@altlinux.ru> 2:14-alt1.20201110
+- Sync with Debian 3.20201110.1:
+  + New upstream microcode datafile 20201110:
+    + Implements mitigation for CVE-2020-8696 and CVE-2020-8698,
+      aka INTEL-SA-00381: AVX register information leakage;
+      Fast-Forward store predictor information leakage
+    + Implements mitigation for CVE-2020-8695, Intel SGX information
+      disclosure via RAPL, aka INTEL-SA-00389
+    + Fixes critical errata on several processor models
+    + Reintroduces SRBDS mitigations(CVE-2020-0543, INTEL-SA-00320)
+      for Skylake-U/Y, Skylake Xeon E3
+    + New Microcodes:
+      sig 0x0005065b, pf_mask 0xbf, 2020-08-20, rev 0x700001e, size 27648
+      sig 0x000806a1, pf_mask 0x10, 2020-06-26, rev 0x0028, size 32768
+      sig 0x000806c1, pf_mask 0x80, 2020-10-02, rev 0x0068, size 107520
+      sig 0x000a0652, pf_mask 0x20, 2020-07-08, rev 0x00e0, size 93184
+      sig 0x000a0653, pf_mask 0x22, 2020-07-08, rev 0x00e0, size 94208
+      sig 0x000a0655, pf_mask 0x22, 2020-07-08, rev 0x00e0, size 93184
+      sig 0x000a0661, pf_mask 0x80, 2020-07-02, rev 0x00e0, size 93184
+    + Updated Microcodes:
+      sig 0x000306f2, pf_mask 0x6f, 2020-05-27, rev 0x0044, size 34816
+      sig 0x000406e3, pf_mask 0xc0, 2020-07-14, rev 0x00e2, size 105472
+      sig 0x00050653, pf_mask 0x97, 2020-06-18, rev 0x1000159, size 33792
+      sig 0x00050654, pf_mask 0xb7, 2020-06-16, rev 0x2006a08, size 35840
+      sig 0x00050656, pf_mask 0xbf, 2020-06-18, rev 0x4003003, size 52224
+      sig 0x00050657, pf_mask 0xbf, 2020-06-18, rev 0x5003003, size 52224
+      sig 0x000506c9, pf_mask 0x03, 2020-02-27, rev 0x0040, size 17408
+      sig 0x000506ca, pf_mask 0x03, 2020-02-27, rev 0x001e, size 15360
+      sig 0x000506e3, pf_mask 0x36, 2020-07-14, rev 0x00e2, size 105472
+      sig 0x000706a8, pf_mask 0x01, 2020-06-09, rev 0x0018, size 75776
+      sig 0x000706e5, pf_mask 0x80, 2020-07-30, rev 0x00a0, size 109568
+      sig 0x000806e9, pf_mask 0x10, 2020-05-27, rev 0x00de, size 104448
+      sig 0x000806e9, pf_mask 0xc0, 2020-05-27, rev 0x00de, size 104448
+      sig 0x000806ea, pf_mask 0xc0, 2020-06-17, rev 0x00e0, size 104448
+      sig 0x000806eb, pf_mask 0xd0, 2020-06-03, rev 0x00de, size 104448
+      sig 0x000806ec, pf_mask 0x94, 2020-05-18, rev 0x00de, size 104448
+      sig 0x000906e9, pf_mask 0x2a, 2020-05-26, rev 0x00de, size 104448
+      sig 0x000906ea, pf_mask 0x22, 2020-05-25, rev 0x00de, size 103424
+      sig 0x000906eb, pf_mask 0x02, 2020-05-25, rev 0x00de, size 104448
+      sig 0x000906ec, pf_mask 0x22, 2020-06-03, rev 0x00de, size 103424
+      sig 0x000906ed, pf_mask 0x22, 2020-05-24, rev 0x00de, size 103424
+      sig 0x000a0660, pf_mask 0x80, 2020-07-08, rev 0x00e0, size 94208
+  + 0x806c1: remove the new Tiger Lake update: causes hang on cold/warm boot
+    https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/issues/44
+    INTEL-SA-00381 AND INTEL-SA-00389 MITIGATIONS ARE THEREFORE NOT INSTALLED
+    FOR 0x806c1 TIGER LAKE PROCESSORS by this package update.  Contact your
+    system vendor for a firmware update, or wait fo a possible fix in a future
+    Intel microcode release.
+  + source: update symlinks to reflect id of the latest release, 20201110
+  + source: ship new upstream documentation (security.md, releasenote.md)
+
 * Mon Jul 13 2020 L.A. Kostis <lakostis@altlinux.ru> 2:13-alt1.20200616
 - Sync with Debian 3.20200616.1:
   + New upstream microcode datafile 20200616
