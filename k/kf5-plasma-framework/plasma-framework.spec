@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.75.0
+Version: 5.76.0
 Release: alt1
 %K5init altplace
 
@@ -131,6 +131,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Nov 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.76.0-alt1
+- new version
+
 * Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
 - new version
 

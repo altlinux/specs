@@ -1,7 +1,11 @@
 %define rname kglobalaccel
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+%define service_name plasma-kglobalaccel
 
 Name: kf5-%rname
-Version: 5.75.0
+Version: 5.76.0
 Release: alt1
 %K5init altplace
 
@@ -85,6 +89,7 @@ mkdir -p %buildroot/%_K5data/kglobalaccel/
 %_K5srv/kglobalaccel5.desktop
 %_K5dbus_srv/org.kde.kglobalaccel.service
 %_K5plug/org.kde.kglobalaccel5*/
+%_unitdir_user/%service_name.service
 
 %files devel
 %_K5inc/kglobalaccel_version.h
@@ -100,6 +105,9 @@ mkdir -p %buildroot/%_K5data/kglobalaccel/
 %_K5lib/libKF5GlobalAccelPrivate.so.*
 
 %changelog
+* Mon Nov 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.76.0-alt1
+- new version
+
 * Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
 - new version
 

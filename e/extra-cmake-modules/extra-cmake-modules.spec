@@ -19,8 +19,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.75.0
-Release: alt2
+Version: 5.76.0
+Release: alt1
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -87,6 +87,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.76.0-alt1
+- new version
+
 * Fri Oct 30 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt2
 - disable clang requires (closes: 39168)
 
