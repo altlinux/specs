@@ -3,12 +3,11 @@ Group: System/Base
 %define _localstatedir %{_var}
 Summary:        AES-based encryption tool for tar/cpio and loop-aes imagemore 
 Name:           aespipe
-Version:        2.4e
-Release:        alt1_4
+Version:        2.4f
+Release:        alt1_1
 License:        GPLv2+
 URL:            http://loop-aes.sourceforge.net/
 Source:         http://loop-aes.sourceforge.net/aespipe/aespipe-v%{version}.tar.bz2
-Patch0:         aespipe-v2.4e-configure.patch
 BuildRequires:  gcc
 BuildRequires:  gpg
 Requires:       gpg
@@ -28,8 +27,6 @@ kernel module.
 
 %prep
 %setup -q -n %{name}-v%{version}
-%global _default_patch_fuzz 3
-%patch0 -p1
 
 %build
 # Package calls CC to link
@@ -62,6 +59,9 @@ install -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
 %{_bindir}/aespipe
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2.4f-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 2.4e-alt1_4
 - update to new release by fcimport
 
