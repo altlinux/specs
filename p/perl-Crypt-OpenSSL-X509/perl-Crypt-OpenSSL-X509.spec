@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define bname Crypt-OpenSSL-X509
 Name: perl-%bname
-Version: 1.901
+Version: 1.902
 Release: alt1
 Summary: Perl interface to OpenSSL for X509
 License: Perl
@@ -39,6 +39,9 @@ rm -rf ./inc
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.902-alt1
+- automated CPAN update
+
 * Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.901-alt1
 - automated CPAN update
 
