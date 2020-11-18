@@ -16,7 +16,7 @@ BuildRequires: perl-podlators
 %define _enable_test 1
 
 Name: perl-Algorithm-CheckDigits
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: Perl extension to generate and test check digits
@@ -81,6 +81,9 @@ scripts for %name
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1
+- automated CPAN update
+
 * Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1
 - automated CPAN update
 
