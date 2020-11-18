@@ -1,7 +1,7 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.3.0.22
+Version: 5.3.0.24
 Release: alt1
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
@@ -45,6 +45,9 @@ ninja -j1
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 
 %changelog
+* Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.24-alt1
+- New version (5.3.0.24) with rpmgs script.
+
 * Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.22-alt1
 - New version (5.3.0.22) with rpmgs script.
 
