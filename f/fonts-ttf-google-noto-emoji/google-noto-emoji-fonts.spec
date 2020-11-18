@@ -1,9 +1,9 @@
 Group: System/Fonts/True type
 %define oldname google-noto-emoji-fonts
-%define fedora 30
+%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit0 16151a2312a1f8a7d79e91789d3cfe24559d61f7
+%global commit0 d5e261484286d33a1fe8a02676f5907ecc02106f
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %global fontname google-noto-emoji
@@ -16,7 +16,7 @@ Group: System/Fonts/True type
 
 
 Name:           fonts-ttf-google-noto-emoji
-Version:        20191019
+Version:        20200723
 Release:        alt1_2
 Summary:        Google a.'Noto Emojia.' Black-and-White emoji font
 
@@ -34,11 +34,10 @@ Source0:        https://github.com/googlei18n/noto-emoji/archive/%{commit0}.tar.
 Source2:        %{fontname}.metainfo.xml
 Source3:        %{fontname}-color.metainfo.xml
 
-Patch0:         noto-emoji-use-system-pngquant.patch
-Patch1:         noto-emoji-build-all-flags.patch
-Patch2:         noto-emoji-use-gm.patch
-Patch3:         noto-emoji-python3.patch
-Patch4:         noto-emoji-port-to-python3.patch
+Patch0:         noto-emoji-build-all-flags.patch
+Patch1:         noto-emoji-use-gm.patch
+Patch2:         noto-emoji-use-system-pngquant.patch
+Patch3:         noto-emoji-check-sequence.patch
 
 BuildArch:      noarch
 BuildRequires:  gcc
@@ -49,7 +48,7 @@ BuildRequires:  python3-module-fonttools
 BuildRequires:  nototools
 BuildRequires:  python3-module-nototools
 BuildRequires:  python3-devel
-BuildRequires:  GraphicsMagick
+BuildRequires:  libGraphicsMagick
 BuildRequires:  pngquant
 BuildRequires:  libzopfli zopfli
 BuildRequires:  libcairo-devel
@@ -74,11 +73,10 @@ This package provides the Google a.'Noto Color Emojia.' colored emoji font.
 
 %prep
 %setup -n noto-emoji-%{commit0}
-%patch0 -p1 -b .noto-emoji-use-system-pngquant
-%patch1 -p1 -b .noto-emoji-build-all-flags
-%patch2 -p1 -b .noto-emoji-use-gm.patch
-%patch3 -p1 -b .noto-emoji-python3.patch
-%patch4 -p1 -b .noto-emoji-port-to-python3.patch
+%patch0 -p1 -b .noto-emoji-build-all-flags
+%patch1 -p1 -b .noto-emoji-use-gm.patch
+%patch2 -p1 -b .noto-emoji-use-system-pngquant
+%patch3 -p1 -b .noto-emoji-check-sequence
 
 rm -rf third_party/pngquant
 
@@ -87,7 +85,7 @@ rm -rf third_party/pngquant
 # Work around UTF-8
 export LANG=C.UTF-8
 
-%make_build OPT_CFLAGS="$RPM_OPT_FLAGS"
+%make_build OPT_CFLAGS="$RPM_OPT_FLAGS" BYPASS_SEQUENCE_CHECK='True'
 %endif
 
 %install
@@ -158,6 +156,9 @@ fi
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 20200723-alt1_2
+- update to new release by fcimport
+
 * Wed Feb 26 2020 Igor Vlasenko <viy@altlinux.ru> 20191019-alt1_2
 - update to new release by fcimport
 
