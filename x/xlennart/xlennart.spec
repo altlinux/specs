@@ -1,5 +1,5 @@
 Name: xlennart
-Version: 1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Stop Lennart from loading his init system into all the computers
@@ -56,7 +56,7 @@ sed -ri -e 's,(bit|pix)maps/(apple|hurd|linux|next|os2|palm|palmcpu|sgi|sun)\.x[
 %build
 %configure \
 	--bindir=%_bindir \
-	--localstatedir=%_localstatedir/games \
+	--localstatedir=%_localstatedir \
 	--disable-gtk
 %make_build
 
@@ -67,13 +67,15 @@ install -pDm644 xlennart.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
 %attr(2711,root,games) %_bindir/xlennart
-%dir %_localstatedir/games/%name
-%config(noreplace) %attr(664,root,games) %_localstatedir/games/%name/scores
+%config(noreplace) %attr(664,root,games) %_localstatedir/games/%name.*
 %_datadir/%name
 %_man6dir/%name.6*
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Nov 18 2020 Michael Shigorin <mike@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Mon Nov 10 2014 Michael Shigorin <mike@altlinux.org> 1.0-alt1
 - built for ALT Linux (spec based on xbill's one)
 
