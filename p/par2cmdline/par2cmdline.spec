@@ -2,13 +2,16 @@ Group: Archiving/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: par2cmdline
-Version: 0.8.0
-Release: alt1_1
+Version: 0.8.1
+Release: alt1_2
 Summary: PAR 2.0 compatible file verification and repair tool
 
 License: GPLv2+
 URL: https://github.com/Parchive/par2cmdline/
 Source0: https://github.com/Parchive/par2cmdline/releases/download/v%{version}/par2cmdline-%{version}.tar.bz2
+# Fix tests to account for endianness correctly.
+# Backport of https://github.com/Parchive/par2cmdline/commit/4f3576a314d7169912842ec9dc1e595e61e52653.
+Patch0: 0001-Fix-for-Github-issue-143.-Test-did-not-account-for-e.patch
 
 BuildRequires: gcc-c++
 Source44: import.info
@@ -27,6 +30,8 @@ multi-part archives.
 
 %prep
 %setup -q
+%patch0 -p1
+
 
 # Remove executable permission from text files
 chmod -x ChangeLog configure.ac INSTALL Makefile.am NEWS stamp-h.in
@@ -56,6 +61,9 @@ make check-TESTS
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_2
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_1
 - update to new release by fcimport
 
