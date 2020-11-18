@@ -3,8 +3,8 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           rpm-build-gnat
-Version:        3.13
-Release:        alt1_1
+Version:        3.14
+Release:        alt1_2
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
@@ -24,8 +24,9 @@ Source44: import.info
 Patch33: macros.gnat.in.patch
 Provides: fedora-gnat-project-common = %version
 Requires: rpm-macros-gnat = %{version}-%{release}
-# macros.gnat requires __global_ldflags:
-# An RPM that knows about /usr/lib/rpm/macros.d is required:
+# macros.gnat requires build_*flags:
+# macros.gnat uses _smp_build_ncpus (RPM 4.15),
+# and an RPM that knows about /usr/lib/rpm/macros.d (4.11) is required:
 
 %description
 The fedora-gnat-project-common package contains files that are used by the GNAT
@@ -78,6 +79,9 @@ cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 3.14-alt1_2
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.13-alt1_1
 - update to new release by fcimport
 
