@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Algorithm-C3
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: %m_name - A module for merging hierarchies using the C3 algorithm  
@@ -22,7 +22,7 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/Algorithm-C3/
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/H/HA/HAARG/Algorithm-C3-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 14 2010 (-bi)
 BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
@@ -37,7 +37,7 @@ it tends to do such a nice job of preserving local precendence
 orderings.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -50,6 +50,9 @@ orderings.
 %doc README Changes
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
