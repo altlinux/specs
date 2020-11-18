@@ -7,12 +7,12 @@ BuildRequires: waf
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lv2
-%define version 1.16.0
+%define version 1.18.0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           lv2
-Version:        1.16.0
-Release:        alt1_3
+Version:        1.18.0
+Release:        alt1_1
 Summary:        Audio Plugin Standard
 
 # lv2specgen template.html is CC-AT-SA
@@ -27,7 +27,10 @@ BuildRequires:  gcc
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-Pygments
 Buildrequires:  python3-module-rdflib
+Buildrequires:  python3-module-markdown
+Buildrequires:  python3-module-lxml
 Buildrequires:  asciidoc asciidoc-a2x
+Buildrequires:  libcairo-devel >= 1.8.10
 
 # this package replaces lv2core 
 Provides:       lv2core = 6.0-4
@@ -56,6 +59,7 @@ Summary:        API for the LV2 Audio Plugin Standard
 
 Requires:       %{name} = %{version}-%{release}
 Requires:       python3-module-rdflib
+Requires:       python3-module-markdown
 Provides:       lv2core-devel = 6.0-4
 Obsoletes:      lv2core-devel < 6.0-4
 Provides:       lv2-ui-devel = 2.4-5
@@ -91,25 +95,26 @@ Example LV2 audio plugins
 # Fix wrong interpreter in lv2specgen.py
 sed -i '1s|^#!.*|#!%{__python3}|' lv2specgen/lv2specgen.py
 
-#rm -rf waflib
 %build
 
-python3 ./waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} \
-  --lv2dir=%{_libdir}/lv2
-python3 ./waf -vv %{?_smp_mflags}
+%{__python3} waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} \
+  --docs --docdir=%{_docdir}/%{name} --lv2dir=%{_libdir}/lv2 --no-check-links
+%{__python3} waf -vv %{?_smp_mflags}
 
 %install
-DESTDIR=%buildroot %{__python3} waf -vv install
-#mv %{buildroot}%{_docdir}/%{name}/%{name}/lv2plug.in/* %{buildroot}%{_docdir}/%{name}
-#find %{buildroot}%{_docdir}/%{name} -type d -empty | xargs rmdir
-#for f in COPYING NEWS README.md build/plugins/book.{txt,html} ; do
-#    install -p -m0644 $f %{buildroot}%{_docdir}/%{name}-%version
-#done
+DESTDIR=%{buildroot} %{__python3} waf -vv install
+mv %{buildroot}%{_docdir}/%{name}/%{name}/* %{buildroot}%{_docdir}/%{name}
+find %{buildroot}%{_docdir}/%{name} -type d -empty | xargs rmdir
+for f in COPYING NEWS README.md build/plugins/book.{txt,html} ; do
+    install -p -m0644 $f %{buildroot}%{_docdir}/%{name}
+done
 
 %files
-%doc COPYING
-%doc NEWS
-%doc README.md
+# don't include doc files via %%doc here (bz 913540)
+%dir %{_docdir}/%{name}
+%{_docdir}/%{name}/COPYING
+%{_docdir}/%{name}/NEWS
+%{_docdir}/%{name}/README.md
 %{_libdir}/%{name}/
 
 %exclude %{_libdir}/%{name}/*/*.[ch]
@@ -129,10 +134,13 @@ DESTDIR=%buildroot %{__python3} waf -vv install
 %files example-plugins
 %{_libdir}/%{name}/eg-*
 
-#%files doc
-#%doc build/plugins/book.{txt,html}
+%files doc
+%{_docdir}/%{name}/
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_3
 - new version
 
