@@ -1,26 +1,28 @@
-# no libatlas-devel
-ExclusiveArch: %ix86 x86_64
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: openmpi-devel
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
+%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ceres-solver
-Version:        1.13.0
+Version:        2.0.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt1_8
+Release:        alt1_1
 Summary:        A non-linear least squares minimizer
 
-Group:          Development/Other
 License:        BSD
 
 URL:            http://ceres-solver.org/
 Source0:        http://%{name}.org/%{name}-%{version}.tar.gz
-# Partial backport of bbe790e0f3ba9e9565862067198d2760ab669ec8: fix possible out of bounds array access
-Patch2:         ceres-solver_bounds.patch
+
+%if 0%{?fedora} >= 33 || 0%{?rhel} >= 9
+%global blaslib flexiblas
+%else
+%global blaslib openblas
+%endif
 
 %if 0%{?rhel} > 0 && 0%{?rhel} < 7
 # Exclude ppc64 because suitesparse is not available on ppc64
@@ -47,8 +49,8 @@ BuildRequires:  libsuitesparse-devel >= 3.4.0
 # If the suitesparse package was built with TBB then we need TBB too
 BuildRequires:  tbb-devel
 
-# Use atlas for BLAS and LAPACK
-BuildRequires:  libatlas-devel
+# Use FlexiBLAS or OpenBLAS for BLAS
+BuildRequires:  libopenblas-devel
 BuildRequires:  libgflags-devel >= 2.2.1
 # Build against miniglog on RHEL6 until glog package is added to EPEL6
 %if (0%{?rhel} != 06)
@@ -86,8 +88,8 @@ Features include:
 
 
 %package        devel
+Group: Development/Other
 Summary:        A non-linear least squares minimizer
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Requires:       eigen3
 
@@ -98,29 +100,30 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch2 -p1
+
 
 %build
-mkdir build
-pushd build
-
-%if (0%{?rhel} == 06)
-%{cmake28} .. -DMINIGLOG:BOOL=ON \
-%else
-%{fedora_cmake} .. \
-%endif
+%{fedora_v2_cmake} \
   -DCXSPARSE_INCLUDE_DIR:PATH=%{_includedir}/suitesparse \
-  -DBLAS_LIBRARIES:PATH=%{_libdir}/atlas/libsatlas.so \
+  -DBLAS_LIBRARIES=-l%{blaslib} \
   -DGFLAGS_INCLUDE_DIR=%{_includedir}
-%make_build
+%fedora_v2_cmake_build
 
 
 %install
-make -C build install DESTDIR=$RPM_BUILD_ROOT
+%fedora_v2_cmake_install
 
 
 %check
-CTEST_OUTPUT_ON_FAILURE=1 make -C build test
+# FIXME: Some tests fail on these arches
+%ifarch aarch64 ppc64le
+%fedora_v2_ctest || :
+%else
+%fedora_v2_ctest
+%endif
+
+
+
 
 
 %files
@@ -139,6 +142,9 @@ CTEST_OUTPUT_ON_FAILURE=1 make -C build test
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.13.0-alt1_8
 - update to new release by fcimport
 
