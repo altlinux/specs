@@ -1,5 +1,5 @@
 Name: pdfpc
-Version: 4.4.0
+Version: 4.4.1
 Release: alt1
 Summary: A GTK based presentation viewer application for GNU/Linux
 
@@ -44,6 +44,9 @@ which can be created using nearly any of today's presentation software.
 %_datadir/pixmaps/%name
 
 %changelog
+* Wed Nov 18 2020 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt1
+- Automatically updated to 4.4.1.
+
 * Thu Mar 26 2020 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
 - Automatically updated to 4.4.0.
 
