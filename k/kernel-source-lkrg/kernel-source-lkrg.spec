@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20201016.c7d427d
+%define module_version 0.8.1+git20201116
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -16,6 +16,7 @@ Source: %module_name-%version.tar
 
 ExclusiveArch: i586 x86_64 aarch64
 BuildRequires(pre): kernel-build-tools
+%{?!_without_check:%{?!_disable_check:BuildRequires: kernel-headers-modules-un-def}}
 BuildArch: noarch
 
 %description
@@ -38,10 +39,20 @@ This package contains the LKRG sources.
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
 
+%check
+# Just a test build on un-def kernel.
+cd %module_name-%version
+for V in $(ls /lib/modules); do
+	make -s %_smp_mflags KERNELRELEASE=$V
+done
+
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Nov 18 2020 Vitaly Chikunov <vt@altlinux.org> 0.8.1+git20201116-alt1
+- Update to 3f76f5148b184e02b0b5b24bb1e8bac0e96a3376 (2020-11-16).
+
 * Mon Oct 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201016.c7d427d-alt1
 - Updated to c7d427de476920f0585532ad57ee4280f083bf7f.
 
