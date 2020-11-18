@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: virtualgl
-Version: 2.6.4
-Release: alt2
+Version: 2.6.5
+Release: alt1
 
 %define vgl_name vgl
 
@@ -145,6 +145,9 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Wed Nov 18 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.6.5-alt1
+- new version
+
 * Tue Aug 25 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.6.4-alt2
 - spec: remove self-obsoletes
   + switch to strict dependencies
