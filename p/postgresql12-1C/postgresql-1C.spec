@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     12
 %define postgresql_minor     5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -386,16 +386,6 @@ chown postgres:postgres ~postgres/.bash_profile
 
 # $2, holds the number of instances of the target package that will remain
 # after the operation if $2 is 0, the target package will be removed
-%triggerpostun -- %{prog_name}9.3-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
-%triggerpostun -- %{prog_name}9.4-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
 %triggerpostun -- %{prog_name}9.5-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
@@ -411,12 +401,22 @@ if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}10-1C-server
+%triggerpostun -- %{prog_name}11-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}11-server
+%triggerpostun -- %{prog_name}12-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}12-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}13-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -782,6 +782,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 18 2020 Alexei Takaseev <taf@altlinux.org> 12.5-alt2
+- Add %%triggerpostun for PG 13
+
 * Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 12.5-alt1
 - 12.5 (Fixes CVE-2020-25694, CVE-2020-25695, CVE-2020-25696)
 - Re-applay patch from 1C
