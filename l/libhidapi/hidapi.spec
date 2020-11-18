@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/fox-config libusb-compat-devel
+BuildRequires: /usr/bin/fox-config
 # END SourceDeps(oneline)
 Group: Development/Other
 %add_optflags %optflags_shared
@@ -7,8 +7,8 @@ Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libhidapi
-Version:        0.9.0
-Release:        alt1_2
+Version:        0.10.0
+Release:        alt1_1
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
 License:        GPLv3 or BSD
@@ -71,6 +71,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_2
 - update to new release by fcimport
 
