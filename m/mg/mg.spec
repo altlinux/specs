@@ -5,8 +5,8 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		mg
-Version:	20200215
-Release:	alt1_1
+Version:	20200723
+Release:	alt1_2
 Summary:	Tiny Emacs-like editor
 
 License:	BSD and ISC and MirOS
@@ -29,8 +29,7 @@ reason to learn more editor types than Emacs or vi.
 %make_build CFLAGS="%{optflags}" LDFLAGS="%{optflags} -lncurses" libdir="%{_libdir}"
 
 %install
-make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
-     INSTALL='install -p'
+%makeinstall_std prefix=%{_prefix} mandir=%{_mandir}
 
 %files
 %doc README tutorial
@@ -38,6 +37,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1*
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 20200723-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 20200215-alt1_1
 - update to new release by fcimport
 
