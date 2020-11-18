@@ -1,47 +1,46 @@
-Name: slingshot
-Version: 0.9
-Release: alt2
-
-Summary: A Newtonian strategy game
-License: GPLv2+
 Group: Games/Other
-Url: https://github.com/ryanakca/slingshot
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-install python3-module-setuptools
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name: slingshot
+Version:  0.9
+Release:  alt2_12
+Summary: A Newtonian strategy game
 
-BuildArch: noarch
-
-Source0: %name-%version.tar.gz
+License: GPLv2+        
+URL: https://github.com/ryanakca/slingshot
+Source0: https://github.com/ryanakca/slingshot/archive/%{version}/slingshot-%{version}.tar.gz
 Source1: slingshot.desktop
-Source3: slingshot.appdata.xml
+Source2: slingshot.appdata.xml
+# Port to Python 3
+Patch0: 243aef95dde390f97f1e0abbbdb646b3e5b97f7d.patch
+BuildArch: noarch
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+BuildRequires: python3-devel
+BuildRequires: python3-module-distribute
+Requires: fonts-ttf-gnu-freefont-sans
+Requires: icon-theme-hicolor
+Requires: python3-module-pygame
 Source44: import.info
 
-Patch0: port-to-python3.patch
-Patch1: fix-type.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: /usr/bin/desktop-file-install
-BuildRequires: desktop-file-utils python3-tools
-
-Requires: icon-theme-hicolor fonts-ttf-gnu-freefont-sans
-
-
 %description
-Slingshot is a two dimensional, turn based simulation-strategy game
-set in the gravity fields of several planets. It is a highly
-addictive game, and never the same from round to round due to its
+Slingshot is a two dimensional, turn based simulation-strategy game 
+set in the gravity fields of several planets. It is a highly 
+addictive game, and never the same from round to round due to its 
 randomly generated playing fields.
 
 %prep
-%setup
-%patch0 -p2
-%patch1 -p2
+%setup -q
+%patch0 -p1
 
-$(find /usr/lib*/python%_python3_version/Tools/scripts/reindent.py) \
-                     $(find ./ \( -name '*.py' -o -name '%name' \))
+rm -f src/slingshot/data/FreeSansBold.ttf
 
 %build
-%python3_build_debug
-
-rm -f slingshot/data/FreeSansBold.ttf
+%python3_build
 
 %install
 %python3_install
@@ -50,32 +49,39 @@ rm -rf $RPM_BUILD_ROOT/slingshot
 rm -rf $RPM_BUILD_ROOT/home
 rm -rf $RPM_BUILD_ROOT/builddir
 
-mkdir -p $RPM_BUILD_ROOT%_datadir/applications
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install \
-  --dir $RPM_BUILD_ROOT%_datadir/applications \
-  %SOURCE1
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+  %{SOURCE1}
 
 mv src/slingshot/data/icon64x64.png src/slingshot/data/slingshot.png
 
-mkdir -p $RPM_BUILD_ROOT%_datadir/icons/hicolor/64x64/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 src/slingshot/data/slingshot.png \
-  $RPM_BUILD_ROOT%_datadir/icons/hicolor/64x64/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 
 #install appdata
-mkdir -p $RPM_BUILD_ROOT%_datadir/appdata
-install -p -m 664 %SOURCE3 $RPM_BUILD_ROOT%_datadir/appdata
+mkdir -p $RPM_BUILD_ROOT/%{_metainfodir}
+install -p -m 664 %{SOURCE2} $RPM_BUILD_ROOT/%{_metainfodir}
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT/%{_metainfodir}/*.appdata.xml
+
+#Link to font
+ln -s %{_datadir}/fonts/ttf/gnu-free/FreeSansBold.ttf $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}/%{name}/data/FreeSansBold.ttf
 
 %files
-%_bindir/slingshot
-%python3_sitelibdir_noarch/*
+%{_bindir}/slingshot
+%{python3_sitelibdir_noarch}/%{name}-*.egg-info
+%{python3_sitelibdir_noarch}/%{name}/
 %doc README
 %doc --no-dereference LICENSE
-%_datadir/applications/slingshot.desktop
-%_datadir/icons/hicolor/64x64/apps/slingshot.png
-%_datadir/appdata/slingshot.appdata.xml
-
+%{_datadir}/applications/slingshot.desktop
+%{_datadir}/icons/hicolor/64x64/apps/slingshot.png
+%{_metainfodir}/slingshot.appdata.xml
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_12
+- update to new release by fcimport
+
 * Mon Mar 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9-alt2
 - Porting to python3.
 
