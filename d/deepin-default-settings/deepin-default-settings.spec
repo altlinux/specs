@@ -1,7 +1,7 @@
 %define repo default-settings
 
 Name: deepin-default-settings
-Version: 2020.09.11
+Version: 2020.10.21
 Release: alt1
 Summary: deepin-default-settings
 License: GPL-3.0
@@ -63,5 +63,8 @@ mv -f %buildroot/etc/binfmt.d/wine.conf %buildroot%_binfmtdir/wine.conf
 %_datadir/music/bensound-sunny.mp3
 
 %changelog
+* Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 2020.10.21-alt1
+- New version (2020.10.21) with rpmgs script.
+
 * Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 2020.09.11-alt1
 - Initial build for ALT Sisyphus.
