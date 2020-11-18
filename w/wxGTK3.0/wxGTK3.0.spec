@@ -8,8 +8,8 @@
 %define wxbranch 3.0
 
 Name: wxGTK3.0
-Version: %wxbranch.4
-Release: alt6
+Version: %wxbranch.5.1
+Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -445,6 +445,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Nov 18 2020 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt1
+- Version 3.0.5.1
+
 * Wed Jun 03 2020 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt6
 - Disable build compat-libwxGTK3.0-gtk2
 
