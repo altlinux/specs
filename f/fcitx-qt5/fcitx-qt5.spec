@@ -1,6 +1,6 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 %global project_name FcitxQt5
 
 Name:           fcitx-qt5
-Version:        1.2.4
+Version:        1.2.5
 Release:        alt1_2
 Summary:        Fcitx IM module for Qt5
 
@@ -16,7 +16,7 @@ Summary:        Fcitx IM module for Qt5
 # platforminputcontext/ which is BSD
 License:        GPLv2+ and BSD
 URL:            https://github.com/fcitx/fcitx-qt5
-Source0:        http://download.fcitx-im.org/%{name}/%{name}-%{version}.tar.xz
+Source0:        https://download.fcitx-im.org/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires:  ctest cmake
 BuildRequires:  fcitx-devel
@@ -52,14 +52,11 @@ developing programs using fcitx-qt5 libraries.
 %setup -q
 
 %build
-mkdir -pv build
-pushd build
-%{fedora_cmake} ..
-popd
-%make_build -C build
+%{fedora_v2_cmake}
+%fedora_v2_cmake_build
 
 %install
-make install/fast DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" -C build
+%fedora_v2_cmake_install
 %find_lang %{name}
 
 
@@ -79,6 +76,9 @@ make install/fast DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" -C build
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt1_2
+- update to new release by fcimport
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_2
 - update to new release by fcimport
 
