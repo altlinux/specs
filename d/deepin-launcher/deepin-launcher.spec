@@ -1,7 +1,7 @@
 %global repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.3.0.22
+Version: 5.3.0.24
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -52,6 +52,9 @@ Header files and libraries for %name.
 %_includedir/%repo/
 
 %changelog
+* Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.24-alt1
+- New version (5.3.0.24) with rpmgs script.
+
 * Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.22-alt1
 - New version (5.3.0.22) with rpmgs script.
 
