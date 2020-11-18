@@ -1,5 +1,3 @@
-# for tests
-BuildRequires: /proc /dev/pts
 Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo zlib-devel
@@ -9,8 +7,8 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin
 %define target avr
 
 Name:           %{target}-binutils
-Version:        2.32
-Release:        alt1_5
+Version:        2.35
+Release:        alt1_1
 Epoch:          2
 Summary:        Cross Compiling GNU binutils targeted at %{target}
 License:        GPLv2+
@@ -39,10 +37,6 @@ pushd binutils-%{version}
 %patch1 -p2 -b .avr-size
 %patch2 -p1 -b .config
 
-# known to fail on avr
-rm ld/testsuite/ld-elf/pr22450.*
-rm ld/testsuite/ld-elf/notes.*
-
 # We call configure directly rather than via macros, thus if
 # we are using LTO, we have to manually fix the broken configure
 # scripts
@@ -56,6 +50,12 @@ popd
 popd 
 cp %{SOURCE1} .
 
+# known to fail on (arm?)
+rm binutils-*/ld/testsuite/ld-elf/pr22450.*
+
+# first build with old cc?
+[ %version = 2.35 ] && rm binutils-*/ld/testsuite/ld-elf/notes.exp
+
 %build
 
 mkdir -p build
@@ -68,9 +68,9 @@ popd
 
 %check
 cd build
-%ifnarch %ix86 armh
-# on x86 can't find proper config, export does not help for gas
-export DEJAGNU=site.exp
+%ifnarch %ix86 %arm
+# on x86 can't find proper config, export does not ot help for gas
+# export DEJAGNU=`pwd`/binutils/site.exp
 make check
 %endif
 
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2:2.35-alt1_1
+- update to new release by fcimport
+
 * Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 2:2.32-alt1_5
 - rebuild on armh
 
