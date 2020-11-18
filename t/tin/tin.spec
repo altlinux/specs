@@ -1,6 +1,6 @@
 Name: tin
-Version: 2.4.2
-Release: alt2
+Version: 2.4.4
+Release: alt1
 
 Summary: A basic Internet news reader
 License: BSD
@@ -62,6 +62,7 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/tin/attributes
 %_bindir/tin
 %_bindir/rtin
+%_bindir/metamutt
 %_man1dir/*
 %_man5dir/*
 %doc README doc/{CHANGES,CREDITS,TODO,DEBUG_REFS,filtering,good-netkeeping-seal,*.txt}
@@ -69,7 +70,13 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %exclude %_man5dir/mbox.*
 %exclude %_man5dir/mmdf.*
 
+# TODO: consider some more unpackaged scripts
+
 %changelog
+* Wed Nov 18 2020 Michael Shigorin <mike@altlinux.org> 2.4.4-alt1
+- new version (watch file uupdate)
+- package metamutt
+
 * Fri Nov 30 2018 Michael Shigorin <mike@altlinux.org> 2.4.2-alt2
 - build without libidn (to be dropped from sisyphus)
 
