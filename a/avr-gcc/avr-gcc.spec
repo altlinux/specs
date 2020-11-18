@@ -8,8 +8,8 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define target avr
 
 Name:           %{target}-gcc
-Version:        9.2.0
-Release:        alt1_6
+Version:        10.2.0
+Release:        alt1_1
 Epoch:          1
 Summary:        Cross Compiling GNU GCC targeted at %{target}
 License:        GPLv2+
@@ -147,6 +147,9 @@ rm -r $RPM_BUILD_ROOT%{_libexecdir}/gcc/%{target}/%{version}/install-tools ||:
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1:10.2.0-alt1_1
+- update to new release by fcimport
+
 * Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 1:9.2.0-alt1_6
 - rebuild on armh
 
