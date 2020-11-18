@@ -1,7 +1,8 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: libssl-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -20,8 +21,8 @@ BuildRequires: libssl-devel
 %bcond_without libisds_enables_test
 
 Name:           libisds
-Version:        0.11
-Release:        alt1_3
+Version:        0.11.1
+Release:        alt1_1
 Summary:        Library for accessing the Czech Data Boxes
 # COPYING:      LGPLv3 text
 # README:       LGPLv3+
@@ -68,8 +69,6 @@ Source0:        %{url}dist/%{name}-%{version}.tar.xz
 Source1:        %{url}dist/%{name}-%{version}.tar.xz.asc
 # Key exported from Petr Pisar's keyring
 Source2:        gpgkey-4B528393E6A3B0DFB2EF3A6412C9C5C767C6FAA2.gpg
-# Fix building with GCC 10, in upstream after 0.11
-Patch0:         libisds-0.11-tests-Fix-building-with-GCC-10.patch
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  coreutils
@@ -124,7 +123,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 autoreconf -fi
 
 %build
@@ -178,6 +176,9 @@ rm -rf client/.deps client/Makefile{,.in}
 %doc client
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1_1
+- update to new release by fcimport
+
 * Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3
 - new version
 
