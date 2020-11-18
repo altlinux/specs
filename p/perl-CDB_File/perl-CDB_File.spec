@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CDB_File
 Name: perl-%dist
-Version: 1.02
+Version: 1.03
 Release: alt1
 
 Summary: Perl extension for access to cdb databases
@@ -30,11 +30,14 @@ package for creating and reading constant databases.
 rm -f %buildroot%perl_vendor_archlib/bun-x.pl
 
 %files
-%doc ACKNOWLEDGE COPYRIGHT README.md Changelog
+%doc ACKNOWLEDGE COPYRIGHT Changelog
 %perl_vendor_archlib/CDB_File*
 %perl_vendor_autolib/CDB_File*
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
