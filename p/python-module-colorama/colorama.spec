@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 Summary: Simple cross-platform colored terminal text in Python
 License: BSD
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 18 2020 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1
+- Automatically updated to 0.4.4.
+
 * Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1
 - Build new version 0.4.3.
 
