@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,19 +5,19 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name	 Clone-PP
-%define upstream_version 1.07
+%define upstream_version 1.08
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.08
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Recursively copy Perl datatypes
 License:    Artistic/GPL
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}/
-Source0:    http://www.cpan.org/authors/id/N/NE/NEILB/%{upstream_name}-%{version}.tar.gz
+Url:        https://metacpan.org/release/%{upstream_name}
+Source0:    ftp://ftp.perl.org/pub/CPAN/modules/by-module/Clone/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Benchmark.pm)
 BuildRequires: perl(Carp.pm)
@@ -38,23 +37,26 @@ nested hash, array, scalar and reference types, including tied
 variables and objects.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-%make
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+%make_build
 
 %check
-%make test
+%make_build test
 
 %install
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README
+%doc Changes META.json META.yml  README
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1_1
+- update by mgaimport
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
