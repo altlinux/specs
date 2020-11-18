@@ -10,18 +10,15 @@ BuildRequires: /usr/bin/update-mime-database gcc-c++
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.6.1
-Release:        alt1_6
+Version:        0.6.2
+Release:        alt1_1
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
 License:        MIT
-URL:            https://easy-rpg.org
-Source0:        https://easy-rpg.org/downloads/player/%{version}/%{name}-%{version}.tar.xz
-# https://github.com/EasyRPG/liblcf/pull/341
-Patch0:         0001-pkgconfig-Fix-support-for-absolute-lib-and-include-d.patch
+URL:            https://easyrpg.org
+Source0:        https://easyrpg.org/downloads/player/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  ccmake cmake ctest
-BuildRequires:  doxygen
 BuildRequires:  libicu-devel
 BuildRequires:  libtool
 BuildRequires:  pkgconfig(expat)
@@ -76,7 +73,6 @@ a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -93,6 +89,9 @@ ln -s %{name}.so.%{major} %{name}.so.%{version}
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_1
+- update by mgaimport
+
 * Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1_6
 - update by mgaimport
 
