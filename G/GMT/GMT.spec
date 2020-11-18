@@ -1,11 +1,12 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/ffmpeg /usr/bin/git /usr/bin/gm /usr/bin/gs /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: /usr/bin/ffmpeg /usr/bin/git /usr/bin/gm /usr/bin/gs /usr/bin/pngquant /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/share/gmt/tools/gmt5syntax
 BuildRequires: chrpath
 BuildRequires: gcc-c++
+%define fedora 32
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,9 +15,16 @@ BuildRequires: gcc-c++
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%undefine __cmake_in_source_build
 %global gmthome %{_datadir}/gmt
 %global gmtconf %{_sysconfdir}/gmt
 %global gmtdoc %{_docdir}/gmt
+
+%if 0%{?fedora} >= 33
+%bcond_without flexiblas
+%else
+%bcond_with flexiblas
+%endif
 
 %bcond_with octave
 %if %with octave
@@ -31,28 +39,30 @@ BuildRequires: gcc-c++
 %endif
 
 Name:           GMT
-Version:        6.0.0 
-Release:        alt1_3
+Version:        6.1.1
+Release:        alt1_1
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
 URL:            https://www.generic-mapping-tools.org/
 Source0:        https://github.com/GenericMappingTools/gmt/releases/download/%{version}/gmt-%{version}-src.tar.xz
 
-# Fix GCC10 FTBS
-Patch0:         gmt_gcc10.patch
-
 BuildRequires:  ctest cmake
 BuildRequires:  gcc
 BuildRequires:  bash-completion
+%if %{with flexiblas}
+BuildRequires:  flexiblas-devel
+%else
+BuildRequires:  libopenblas-devel
+%endif
 BuildRequires:  libfftw3-devel
 BuildRequires:  gdal gdal-scripts
 BuildRequires:  libgdal-devel
+BuildRequires:  libgeos-devel
 BuildRequires:  glib2-devel libgio libgio-devel
-BuildRequires:  GraphicsMagick
+BuildRequires:  libGraphicsMagick
 BuildRequires:  libXt-devel libXaw-devel libXmu-devel libXext-devel
 BuildRequires:  libnetcdf-devel
-BuildRequires:  libopenblas-devel
 BuildRequires:  libpcre-devel libpcrecpp-devel
 BuildRequires:  dcw-gmt
 BuildRequires:  gshhg-gmt-nc4
@@ -63,12 +73,10 @@ BuildRequires:  octave-devel
 BuildRequires:  less
 BuildRequires:  xdg-utils
 # For docs
-#BuildRequires:  /usr/bin/sphinx-build
-BuildRequires:  python-module-sphinx
-#BuildRequires:  python3-module-sphinx-sphinx-build-symlink
+BuildRequires:  /usr/bin/sphinx-build
 BuildRequires:  ghostscript-utils ghostscript
 Requires:       gdal gdal-scripts
-Requires:       GraphicsMagick
+Requires:       libGraphicsMagick
 Requires:       less
 Requires:       %{name}-common = %{version}-%{release}
 Requires:       dcw-gmt
@@ -83,7 +91,6 @@ Obsoletes:      GMT-octave <= 4.5.11
 %global __provides_exclude_from ^%{_libdir}/gmt/.*\\.so$
 Source44: import.info
 Patch33: GMT-gstat.patch
-Patch34: GMT-6.0.0-fix-fno-common.patch
 
 %description
 GMT is an open source collection of ~60 tools for manipulating geographic and
@@ -155,14 +162,12 @@ applications that use %{name}.
 
 %prep
 %setup -q -n gmt-%{version}
-#patch0 -p1
 %patch33 -p2
-%patch34 -p1
+
+
 
 %build
-mkdir build
-pushd build
-%{fedora_cmake} \
+%{fedora_v2_cmake} \
   -DGSHHG_ROOT=%{_datadir}/gshhg-gmt-nc4 \
   -DGMT_INSTALL_MODULE_LINKS=on \
   -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES=off \
@@ -170,15 +175,20 @@ pushd build
 %if %with octave
   -DGMT_OCTAVE=BOOL:ON \
 %endif
-  -DGMT_OPENMP=BOOL:ON \
+  -DGMT_ENABLE_OPENMP=BOOL:ON \
   -DGMT_USE_THREADS=BOOL:ON \
-  -DBASH_COMPLETION_DIR=%{completion_dir} \
-  ..
-%make_build
+%if %{with flexiblas}
+  -DGMT_EXCLUDE_BLAS=BOOL:ON \
+  -DGMT_EXCLUDE_LAPACK=BOOL:ON \
+  -DBLAS_LIBRARY=-lflexiblas \
+  -DLAPACK_LIBRARY=-lflexiblas \
+%endif
+  -DBASH_COMPLETION_DIR=%{completion_dir}
+%fedora_v2_cmake_build
 
 
 %install
-%makeinstall_std -C build
+%fedora_v2_cmake_install
 #Setup configuration files 
 mkdir -p $RPM_BUILD_ROOT%{gmtconf}/{mgg,dbase,mgd77}
 pushd $RPM_BUILD_ROOT%{gmthome}/
@@ -238,6 +248,9 @@ done
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 6.1.1-alt1_1
+- update to new release by fcimport
+
 * Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_3
 - update
 
