@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist String-CRC32
 Name: perl-%dist
-Version: 1.8
+Version: 2
 Release: alt1
 
 Summary: Cyclic redundency check generation
@@ -9,7 +9,7 @@ License: Public Domain
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/L/LE/LEEJO/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEEJO/String-CRC3%{version}-2.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -19,7 +19,7 @@ This packages provides a perl module to generate checksums from strings
 and from files.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n String-CRC3%{version}-2
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ and from files.
 	%perl_vendor_autolib/String
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2-alt1
+- automated CPAN update
+
 * Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1
 - automated CPAN update
 
