@@ -19,7 +19,7 @@
 
 Name:           referenceassemblies-pcl
 Version:        2014.04.14
-Release:	alt4
+Release:	alt5
 Url:            http://go-mono.org/
 # https://github.com/mono/linux-packaging-referenceassemblies-pcl/
 Source0:	%name-%version.tar
@@ -33,7 +33,9 @@ BuildRequires(Pre): rpm-build-mono >= 2.0.0
 BuildRequires: mono-devel >= 5.0.0.0
 BuildRequires: /proc
 
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | sed "/mono\(System.Runtime.WindowsRuntime\).*/d" | sed "/mono\(Windows\).*/d"'
+# ALT Bug 39254
+AutoReq: no
+AutoProv: no
 
 %description
 PCL Reference Assemblies are used for compiling code which
@@ -56,6 +58,9 @@ cp -a v4.6  %buildroot%_monodir/xbuild-frameworks/.NETPortable/
 %doc EULA.rtf
 
 %changelog
+* Wed Nov 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.04.14-alt5
+- Disabled AutoReq and AutoProv (ALT #39254).
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2014.04.14-alt4
 - NMU: remove rpm-build-ubt from BR:
 
