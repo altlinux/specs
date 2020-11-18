@@ -1,7 +1,7 @@
 %global repo dde-polkit-agent
 
 Name: deepin-polkit-agent
-Version: 5.3.0.2
+Version: 5.3.0.3
 Release: alt1
 Summary: Deepin Polkit Agent
 License: GPL-3.0+
@@ -55,6 +55,9 @@ Header files and libraries for %name.
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.3-alt1
+- New version (5.3.0.3) with rpmgs script.
+
 * Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.2-alt1
 - New version (5.3.0.2) with rpmgs script.
 
