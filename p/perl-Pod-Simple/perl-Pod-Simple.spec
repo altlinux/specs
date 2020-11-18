@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Pod-Simple
 Name: perl-%dist
-Version: 3.41
+Version: 3.42
 Release: alt1
 
 Summary: Framework for parsing Pod
@@ -46,6 +46,9 @@ rm t/search50.t
 %doc	%perl_vendor_privlib/Pod/Simple/*.pod
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 3.42-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.41-alt1
 - automated CPAN update
 
