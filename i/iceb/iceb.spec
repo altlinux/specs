@@ -1,8 +1,8 @@
 %define oname iceB
 
 Name:    iceb
-Version: 19.14
-Release: alt2
+Version: 19.15
+Release: alt1
 
 Summary: Free financial accounting system (console)
 
@@ -62,6 +62,9 @@ rm -rf %buildroot/lib/terminfo
 %_libexecdir/cups/filter/iceb_ps
 
 %changelog
+* Wed Nov 18 2020 Cronbuild Service <cronbuild@altlinux.org> 19.15-alt1
+- new version 19.15
+
 * Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 19.14-alt2
 - Conflicts: python-module-spec due to /usr/bin/spec (ALT #38687).
 
