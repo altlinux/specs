@@ -1,7 +1,7 @@
 %global repo qt5integration
 
 Name: deepin-qt5integration
-Version: 5.1.0.8
+Version: 5.1.0.9
 Release: alt1
 Summary: Qt platform theme integration plugins for DDE
 # The entire source code is GPLv3+ except styles/ which is BSD,
@@ -45,6 +45,9 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 %_qt5_plugindir/imageformats/libdsvg.so
 
 %changelog
+* Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.1.0.9-alt1
+- New version (5.1.0.9) with rpmgs script.
+
 * Thu Oct 08 2020 Leontiy Volodin <lvol@altlinux.org> 5.1.0.8-alt1
 - New version (5.1.0.8) with rpmgs script.
 
