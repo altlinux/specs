@@ -1,36 +1,50 @@
+%def_disable snapshot
+# broken, not ported to Python 3
+%def_disable avahi_tests
+%def_enable check
+
 Name: telepathy-salut
 Version: 0.8.1
-Release: alt3
+Release: alt4
 
 Summary: A link-local XMPP connection manager
 License: LGPLv2.1+
 Group: Networking/Instant messaging
 Url: http://telepathy.freedesktop.org/
 
+%if_disabled snapshot
 Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+%else
+Vcs: https://github.com/TelepathyIM/telepathy-salut.git
+Source: %name-%version.tar
+%endif
+#https://src.fedoraproject.org/rpms/telepathy-salut/blob/master/f/telepathy-salut-0.8.1-python3.patch
+Patch: telepathy-salut-0.8.1-fc-python3.patch
 
-BuildPreReq: libtelepathy-glib-devel >= 0.17.5
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libtelepathy-glib-devel >= 0.23
 BuildRequires: gtk-doc libasyncns-devel libavahi-gobject-devel libdbus-glib-devel
 BuildRequires: libsasl2-devel libsoup-devel libxml2-devel python-module-PyXML valgrind
 BuildRequires: libgnutls-devel libgcrypt-devel libsqlite3-devel libcheck-devel libuuid-devel
-
-# for check
-BuildRequires: /proc dbus-tools-gui python-module-twisted-web python-module-twisted-words
-BuildRequires: python-module-avahi python-module-twisted-core-gui
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui
+%{?_enable_avahi_tests: python3-module-twisted-web python3-module-twisted-words
+BuildRequires: python3-module-avahi python3-module-twisted-core-gui}}
 
 %description
 A link-local XMPP connection manager for telepathy.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%configure --disable-static
+%configure --disable-static \
+	%{?_disable_avahi_tests:--disable-avahi-tests} \
+	PYTHON=%__python3
 %make_build
 
 %check
-# avahi/file-transfer/send-file-declined.py fails in hasher
-#%%make check
+%make check
 
 %install
 %makeinstall_std
@@ -50,6 +64,9 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_libdir/telepathy/salut-0/lib/*.la
 
 %changelog
+* Wed Nov 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt4
+- fixed build with Python3 (fc), updated BR
+
 * Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt3
 - rebuilt against libgnutls.so.30
 
