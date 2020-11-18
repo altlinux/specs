@@ -96,7 +96,7 @@ Packager: Igor Vlasenko <viy@altlinux.org>
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt3_7
+Release:	alt4_7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -826,6 +826,8 @@ find %{buildroot}%{texmfdistdir} -name \*.bat -exec rm -f {} \;
 
 mkdir -p %{buildroot}%{texmfbindir}
 
+# py2 scripts
+rm -f %{texmfdistdir}/scripts/de-macro/de-macro %{texmfdistdir}/scripts/dviasm/dviasm.py
 pushd %{buildroot}%{texmfbindir}
 	ln -sf %{texmfdistdir}/scripts/a2ping/a2ping.pl a2ping
 	ln -sf %{texmfdistdir}/scripts/fontools/afm2afm afm2afm
@@ -835,8 +837,8 @@ pushd %{buildroot}%{texmfbindir}
 	ln -sf %{texmfdistdir}/scripts/bibexport/bibexport.sh bibexport
 	ln -sf %{texmfdistdir}/scripts/bundledoc/bundledoc bundledoc
 	ln -sf %{texmfdistdir}/scripts/cachepic/cachepic.tlu cachepic
-	ln -sf %{texmfdistdir}/scripts/de-macro/de-macro de-macro
-	ln -sf %{texmfdistdir}/scripts/dviasm/dviasm.py dviasm
+#	ln -sf %{texmfdistdir}/scripts/de-macro/de-macro de-macro
+#	ln -sf %{texmfdistdir}/scripts/dviasm/dviasm.py dviasm
 	ln -sf %{texmfdistdir}/scripts/texlive/e2pall.pl e2pall
 	ln -sf %{texmfdistdir}/scripts/epstopdf/epstopdf.pl epstopdf
 	ln -sf %{texmfdistdir}/scripts/fig4latex/fig4latex fig4latex
@@ -1048,6 +1050,9 @@ find . %buildroot -type f -print0 |
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2019-alt4_7
+- removed python2 scripts de-macro and dviasm.py (closes: #39169)
+
 * Wed Nov 04 2020 Igor Vlasenko <viy@altlinux.ru> 2019-alt3_7
 - added nopython to AutoReq: not to block py2 deprecation
 
