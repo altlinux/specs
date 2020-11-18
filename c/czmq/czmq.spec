@@ -10,12 +10,16 @@ BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck gcc-c++
 
 Name:           czmq
 Version:        4.2.0
-Release:        alt1_1
+Release:        alt1_3
 Summary:        High-level C binding for 0MQ (ZeroMQ)
 Group:          Development/Other
 License:        MPLv2.0
 URL:            http://czmq.zeromq.org/
 Source0:        https://github.com/zeromq/czmq/releases/download/v%{version}/czmq-%{version}.tar.gz
+
+# Fix
+# https://github.com/zeromq/czmq/issues/2125
+Patch0: czmq-4.2.0-zarmour.patch
 
 BuildRequires:  gcc
 BuildRequires:  libuuid-devel
@@ -58,10 +62,9 @@ Provides:       lib%{name}-devel
 %description -n %{develname}
 This package contains files needed to develop applications using czmq.
 
-
 %prep
 %setup -q
-
+%patch0 -p1
 
 
 %build
@@ -76,7 +79,7 @@ This package contains files needed to develop applications using czmq.
 
 find %{buildroot} -name '*.la' -delete
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -102,6 +105,9 @@ make check
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_3
+- update by mgaimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_1
 - new version
 
