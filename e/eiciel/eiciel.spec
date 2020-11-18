@@ -1,22 +1,19 @@
 Group: System/Base
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate libattr-devel pkgconfig(gtkmm-2.4) pkgconfig(libgnome-2.0)
+BuildRequires: /usr/bin/desktop-file-validate pkgconfig(giomm-2.4) pkgconfig(gtkmm-2.4) pkgconfig(libgnome-2.0)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: eiciel
-Version: 0.9.12.1
-Release: alt2_8
+Version: 0.9.13
+Release: alt1_1
 Summary: Graphical editor for ACLs and xattr
 License: GPLv2+
 URL: http://rofi.roger-ferrer.org/eiciel
 Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{version}.tar.bz2
 
-# libxattr < 2.4.48-3.fc29 was missing xattr.h
-# and <attr/xattr.h> is deprecated, use <sys/xattr.h> instead
-Patch0: eiciel-0.9.12.1-sys-xattr.patch
-# avoid C++ name mangling for Nautilus extension symbols 
-Patch1: eiciel-0.9.12.1-nautilus-exports.patch
+# upstream PR #6
+Patch2: eiciel-0.9.13-missing-file.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgnomeui-devel
@@ -43,8 +40,7 @@ utility.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch2 -p1
 
 sed -i -e 's!attr/xattr\.h!sys/xattr\.h!g' configure
 [ "$(cksum ChangeLog|cut -d ' ' -f 1,2)" != "960335718 502" ] && exit -1
@@ -54,7 +50,6 @@ iconv -f ISO-8859-1 -t UTF-8 AUTHORS > foo ; mv foo AUTHORS
 
 %build
 %add_optflags -std=c++11
-export CXXFLAGS="%{optflags} -std=c++11"
 %configure --with-nautilus-extensions-dir=%{ext_dir} \
     --disable-static
 V=1 make %{?_smp_mflags}
@@ -85,6 +80,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.13-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.12.1-alt2_8
 - update to new release by fcimport
 
