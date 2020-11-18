@@ -1,5 +1,5 @@
 Name:     kiwix-lib
-Version:  9.4.0
+Version:  9.4.1
 Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
@@ -20,6 +20,7 @@ BuildRequires: libmicrohttpd-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libzim-devel
 BuildRequires: mustache-cpp-devel
+BuildRequires: zlib-devel
 
 %description
 %summary
@@ -57,8 +58,12 @@ Group: Development/C++
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/kiwix.pc
+%_man1dir/*.1*
 
 %changelog
+* Wed Nov 18 2020 Andrey Cherepanov <cas@altlinux.org> 9.4.1-alt1
+- New version.
+
 * Sun Aug 30 2020 Andrey Cherepanov <cas@altlinux.org> 9.4.0-alt1
 - New version.
 
