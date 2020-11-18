@@ -4,20 +4,25 @@
 %define name cjose
 %define major 0
 %define libname lib%{name}%{major}
+
+BuildRequires:  gcc
 %define develname lib%{name}-devel
 
 Name:		cjose
-Version:	0.5.1
-Release:	alt2_1.1
+Version:	0.6.1
+Release:	alt1_1
 Summary:	C library implementing the Javascript Object Signing and Encryption (JOSE)
-Url:		https://github.com/cisco/cjose
-Source:		https://github.com/cisco/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 Group:		System/Libraries
 License:	MIT
+URL:            https://github.com/cisco/cjose
+Source0:  	https://github.com/cisco/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+
+Patch1: concatkdf.patch
+
+BuildRequires:	doxygen
 BuildRequires:	pkgconfig(check) >= 0.9.2
 BuildRequires:	pkgconfig(jansson) >= 2.3
 BuildRequires:	pkgconfig(openssl) >= 1.0.1h
-BuildRequires:	doxygen >= 1.8
 Source44: import.info
 
 %description
@@ -45,7 +50,9 @@ and Encryption (JOSE).
 This package contains development files for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}
+%patch1 -p1
+
 
 %build
 %configure --disable-static
@@ -54,7 +61,7 @@ This package contains development files for %{name}.
 %check
 # testsuite fails on arm
 %ifnarch %{arm}
-%make_build check
+make check || (cat test/test-suite.log; exit 1)
 %endif
 
 %install
@@ -75,6 +82,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1_1
+- update by mgaimport
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.1-alt2_1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
