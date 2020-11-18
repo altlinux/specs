@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.11.0.36
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -139,10 +139,12 @@ install -Dm644 %SOURCE1 \
 %_unitdir/deepin-accounts-daemon.service
 %_unitdir/hwclock_stop.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
-%dir %_datadir/deepin-default-settings/
-%_datadir/deepin-default-settings/fontconfig.json
+%exclude %_datadir/deepin-default-settings/fontconfig.json
 
 %changelog
+* Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt4
+- Fixed conflict with deepin-default-settings.
+
 * Tue Oct 27 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt3
 - Fixed wallpaper settings.
 
