@@ -3,7 +3,7 @@ Group: Development/Tools
 %define _localstatedir %{_var}
 Name:           xa
 Version:        2.3.11
-Release:        alt1_2
+Release:        alt1_4
 Summary:        6502/65816 cross-assembler
 
 License:        GPLv2+
@@ -57,7 +57,7 @@ make test
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
+%makeinstall_std PREFIX=%{_prefix}
 
 
 %files
@@ -67,6 +67,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.11-alt1_4
+- update to new release by fcimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.11-alt1_2
 - update to new release by fcimport
 
