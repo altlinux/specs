@@ -6,15 +6,15 @@ BuildRequires: python3-module-setuptools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           autoarchive
-Version:        1.3.0
-Release:        alt1_11
-Summary:        A simple backup tool that uses tar
+Version:        1.4.1
+Release:        alt1_1
+Summary:        Simple backup tool that uses tar
 
 License:        GPLv3
 URL:            http://autoarchive.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 # Fix tests. Cannot submit upstream as issue tracker is locked
-Patch0:         autoarchive-1.3.0-fix_tests.patch
+#Patch0:         autoarchive-1.3.0-fix_tests.patch
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
@@ -36,7 +36,6 @@ which reads information from it and creates desired backup.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -52,11 +51,6 @@ export LANG=en_US.UTF-8
 %python3_install
 rm -rf %{buildroot}%{_defaultdocdir}/%{name}-%{version}/
 
-%check
-pushd AutoArchive
-%{__python3} tests/run_tests.py
-popd
-
 %files
 %doc NEWS README README.sk
 %doc --no-dereference COPYING
@@ -68,6 +62,9 @@ popd
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_1
+- update to new release by fcimport
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_11
 - update to new release by fcimport
 
