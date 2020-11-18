@@ -10,13 +10,13 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.14.6
+Version: 1.14.8
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
-Url: https://cgit.freedesktop.org/ModemManager/ModemManager/
-Vcs: https://cgit.freedesktop.org/ModemManager/ModemManager/
+Url: https://www.freedesktop.org/wiki/Software/ModemManager/
+Vcs: https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -233,6 +233,10 @@ fi
 %endif
 
 %changelog
+* Wed Nov 18 2020 Mikhail Efremov <sem@altlinux.org> 1.14.8-alt1
+- Updated Url and Vcs tags.
+- Updated to 1.14.8.
+
 * Fri Oct 16 2020 Mikhail Efremov <sem@altlinux.org> 1.14.6-alt1
 - Updated to 1.14.6.
 
