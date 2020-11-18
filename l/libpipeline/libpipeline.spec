@@ -6,8 +6,8 @@ Group: Development/Other
 
 Summary: A pipeline manipulation library
 Name: libpipeline
-Version: 1.5.2
-Release: alt1_2
+Version: 1.5.3
+Release: alt1_1
 License: GPLv3+
 URL: http://libpipeline.nongnu.org/
 Source: http://download.savannah.gnu.org/releases/libpipeline/libpipeline-%{version}.tar.gz
@@ -47,7 +47,7 @@ to develop programs that use libpipeline library.
 make check
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix} INSTALL='install -p'
+%makeinstall_std prefix=%{_prefix}
 rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 
 %files
@@ -63,6 +63,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_2
 - update to new release by fcimport
 
