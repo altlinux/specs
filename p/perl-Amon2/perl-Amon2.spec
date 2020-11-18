@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Amon2
-Version: 6.14
-Release: alt2
+Version: 6.15
+Release: alt1
 Summary: Amon2 - lightweight web application framework
 
 Group: Development/Perl
@@ -10,7 +10,6 @@ Url: %CPAN Amon2
 
 BuildArch: noarch
 Source: %name-%version.tar
-Patch: perl-Amon2-6.14-no-mro-compat.patch
 
 BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl-Test-Requires perl-Plack perl-Data-OptList perl-Text-Xslate perl-JSON perl-Module-Find perl-Mouse perl-Router-Simple perl-Router-Simple-Sinatraish perl-Class-Accessor perl-Text-Xslate-Bridge-TT2Like perl-Data-Section-Simple perl-Plack-Middleware-ReverseProxy perl-HTTP-Session perl-HTML-FillInForm-Lite perl-CGI perl-Encode-JP perl-Plack-Middleware-Session perl-AnyEvent perl-Protocol-WebSocket
 
@@ -19,7 +18,6 @@ BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -28,7 +26,7 @@ BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl
 %perl_vendor_install
 
 %files
-%doc LICENSE TODO Changes README.mkdn README.md
+%doc Changes README.mkdn README.md
 %_bindir/amon2-setup.pl
 %_man1dir/amon2-setup.*
 %perl_vendor_privlib/Amon2*
@@ -36,6 +34,9 @@ BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl
 %doc Changes
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 6.15-alt1
+- new version
+
 * Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 6.14-alt2
 - dropped MRO::Compat dep
 - upstream: https://github.com/tokuhirom/Amon/issues/128
