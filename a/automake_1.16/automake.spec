@@ -5,8 +5,8 @@
 %define apiname %realname%suff
 
 Name: %realname%dialect
-Version: 1.16.2.0.24.c8f8c
-Release: alt2
+Version: 1.16.3
+Release: alt1
 
 %define mydatadir %_datadir/%apiname
 %set_compress_method xz
@@ -15,7 +15,7 @@ Release: alt2
 %{?filter_from_provides:%filter_from_provides /^perl(/d}
 
 Summary: A GNU tool for automatically creating Makefiles
-License: GPLv2+ and GFDLv1.3+
+License: GPL-2.0-or-later and GFDL-1.3-or-later
 Group: Development/Other
 Url: https://www.gnu.org/software/automake/
 BuildArch: noarch
@@ -82,7 +82,8 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 	%buildroot%docdir/
 
 # Reenable perl-threads dependencies.
-%define __spec_autodep_custom_pre export AUTOMAKE_JOBS=1
+# Do not use automake from the OS during generation of package dependencies.
+%define __spec_autodep_custom_pre export AUTOMAKE_JOBS=1 AUTOMAKE_UNINSTALLED=1
 
 %define _unpackaged_files_terminate_build 1
 # This has no effect on this noarch package, but let it be.
@@ -103,6 +104,9 @@ chmod -R u+rwX t
 %docdir/
 
 %changelog
+* Thu Nov 19 2020 Dmitry V. Levin <ldv@altlinux.org> 1.16.3-alt1
+- v1.16.2-24-gc8f8c3d5f -> v1.16.3.
+
 * Thu Aug 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.16.2.0.24.c8f8c-alt2
 - Reverted automake --version from 1.16b back to 1.16.2.
 
