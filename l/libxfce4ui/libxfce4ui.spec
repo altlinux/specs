@@ -1,8 +1,9 @@
+%def_enable epoxy
 %def_enable introspection
 %def_enable vala
 
 Name: libxfce4ui
-Version: 4.15.4
+Version: 4.15.5
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -22,6 +23,7 @@ BuildRequires: gtk-doc intltool libSM-devel libstartup-notification-devel libxfc
 BuildRequires: libgtk+3-devel
 BuildRequires: libgladeui2.0-devel
 BuildRequires: libgtop-devel
+%{?_enable_epoxy:BuildRequires: libepoxy-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 
@@ -125,6 +127,7 @@ This package contains the 'About Xfce' dialog.
 	--enable-startup-notification \
 	--enable-gladeui2 \
 	--enable-glibtop \
+	%{subst_enable epoxy} \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
 	--enable-tests \
@@ -181,6 +184,10 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Thu Nov 19 2020 Mikhail Efremov <sem@altlinux.org> 4.15.5-alt1
+- Enabled libepoxy support.
+- Updated to 4.15.5.
+
 * Tue Nov 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.4-alt1
 - Enabled libgtop support.
 - Enabled tests.
