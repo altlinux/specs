@@ -1,5 +1,5 @@
 Name: erc
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -48,6 +48,10 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Thu Nov 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt1
+- erc: improve print supported formats
+- erc: add exe archives support (hack)
+
 * Tue Mar 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt1
 - ercat: add check for unpack binary and epm assure
 - ercat: add .zst (.zstd) support
