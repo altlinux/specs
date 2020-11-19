@@ -7,11 +7,11 @@
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 2.7.1
+%define        _version 2.7.2
 
 Name:          ruby
 Version:       %_version
-Release:       alt2.1
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -154,16 +154,17 @@ This package contains standard Ruby runtime libraries.
 
 
 %package       -n gem
-Epoch:         1
+Epoch:         2
 Version:       3.1.2
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
 Requires:      %name-stdlibs = %_version
-Provides:      %_bindir/gem
 Provides:      %{name}gems = 3.1.2
 Provides:      %name-tools
+Obsoletes:     %{name}gems
 Obsoletes:     %name-tools
+AutoReq:       yes,noshell
 
 %description   -n gem
 Ruby gem executable and framework.
@@ -210,8 +211,6 @@ Ruby ri executable man page
 Summary:       Ruby ri documentation
 Group:         Development/Documentation
 BuildArch:     noarch
-#AutoReq:       no
-#AutoProv:      no
 Provides:      %name-doc-ri
 Obsoletes:     %name-doc-ri
 Requires:      ri
@@ -262,10 +261,10 @@ sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' 
 cp -a /usr/share/gnu-config/config.* tool
 # FIX: automatize
 echo "
-#define RUBY_REVISION \"a0c7c23c9c\"
-#define RUBY_FULL_REVISION \"a0c7c23c9cec0d0ffcba012279cd652d28ad5bf3\"
+#define RUBY_REVISION \"647ee6f091\"
+#define RUBY_FULL_REVISION \"647ee6f091eafcce70ffb75ddf7e121e192ab217\"
 #define RUBY_BRANCH_NAME \"%version\"
-#define RUBY_RELEASE_DATETIME \"2020-03-31T19:27:41Z\"
+#define RUBY_RELEASE_DATETIME \"2019-12-25T09:50:58Z\"
 " > revision.h
 # NOTE: fix default path to support older ruby versions of gems
 sed "s/path << default_dir/path |= [ default_dir ] | Dir.glob(File.join(RbConfig::CONFIG['rubylibprefix'], 'gems', '*'))/" -i lib/rubygems/defaults.rb
@@ -433,6 +432,9 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Mon Nov 16 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.2-alt1
+- ^ ruby 2.7.1 -> 2.7.2
+
 * Thu Jul 23 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1-alt2.1
 - ! ruby development deps
 
