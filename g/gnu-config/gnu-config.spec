@@ -1,11 +1,12 @@
 Name: gnu-config
-Version: 1.0.961.1c43
+Version: 1.0.968.888c
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
 License: GPLv2+
 Group: Development/Other
-Url: http://git.savannah.gnu.org/gitweb/?p=config.git
+Url: https://www.gnu.org/software/config/
+Vcs: https://git.savannah.gnu.org/cgit/config.git
 BuildArch: noarch
 
 # git://git.altlinux.org/gears/g/gnu-config.git
@@ -18,18 +19,21 @@ config.sub files.
 %prep
 %setup -n %name-%version-%release
 
-%check
-%make_build -k check
-
 %install
 mkdir -p %buildroot%_datadir/%name
 install -pm755 config.guess config.sub %buildroot%_datadir/%name/
 %add_findreq_skiplist %_datadir/%name/config.guess
 
+%check
+%make_build -k check
+
 %files
 %_datadir/%name/
 
 %changelog
+* Thu Nov 19 2020 Dmitry V. Levin <ldv@altlinux.org> 1.0.968.888c-alt1
+- release-1-0-961-g1c43980 -> release-1-0-968-g888c8e3.
+
 * Wed Oct 21 2020 Dmitry V. Levin <ldv@altlinux.org> 1.0.961.1c43-alt1
 - release-1-0-895-g9e514cc -> release-1-0-961-g1c43980.
 
