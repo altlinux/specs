@@ -1,14 +1,14 @@
 
 Name: vzctl
-Version: 7.0.234
+Version: 7.0.236
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPLv2
 Group: System/Configuration/Other
 Url: http://openvz.org/
+Vcs: https://src.openvz.org/scm/ovzl/vzctl.git
 
-# git-vsc https://src.openvz.org/scm/ovzl/vzctl.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -52,8 +52,6 @@ OpenVZ Virtual Environments.
 %patch -p1
 
 %build
-#make_build CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version-%release\\\""
-#%make CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version-%release\\\""
 %make CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version\\\""
 
 %install
@@ -74,11 +72,6 @@ make install \
 ln -s -r %buildroot%_unitdir/vzevent.service %buildroot%_unitdir/vzeventd.service
 
 %post
-# rm -f /dev/vzctl
-# mknod -m 600 /dev/vzctl c 126 0
-# rm -rf %vzdir/dev/vzlink
-# mknod -m 600 %vzdir/dev/vzlink c 125 0
-
 %post_service vzeventd
 
 # Load sysctls
@@ -113,7 +106,7 @@ exit 0
 %_target_libdir_noarch/dracut/modules.d/*
 %_sbindir/*
 %_unitdir/*.service
-#%_initdir/*
+#%%_initdir/*
 %_libexecdir/vz
 %_libexecdir/vz-k8s-inside-ct
 %config(noreplace) %_logrotatedir/vzctl
@@ -128,6 +121,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Thu Nov 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.236-alt1
+- 7.0.236
+
 * Fri Oct 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.234-alt1
 - 7.0.234
 
