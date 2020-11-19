@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 5.0.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A network monitor
@@ -548,11 +548,11 @@ fi
 %doc database/sqlite3/schema.sql database/sqlite3/data.sql database/sqlite3/images.sql
 
 %files common-database-mysql
-%doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql
+%doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql database/mysql/double.sql
 
 %if_with pgsql
 %files common-database-pgsql
-%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql database/postgresql/timescaledb.sql
+%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql database/postgresql/double.sql database/postgresql/timescaledb.sql
 %endif
 
 %files server-common
@@ -638,6 +638,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Nov 19 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.5-alt3
+- Add lost double.sql (ALT #39311)
+
 * Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.5-alt2
 - Copy old zabbix.conf.php from pre-5.0 version (ALT #39282)
 
