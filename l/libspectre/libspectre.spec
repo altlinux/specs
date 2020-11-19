@@ -1,5 +1,5 @@
 Name: libspectre
-Version: 0.2.8.0.1.f88d2c2
+Version: 0.2.9
 Release: alt1
 Group: System/Libraries
 Summary: A PostScript rendering library
@@ -32,11 +32,12 @@ developing applications that use %name.
 %build
 %autoreconf
 %configure \
-    --disable-static
+    --disable-static \
+    #
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS NEWS README TODO
@@ -48,6 +49,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 16 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.9-alt1
+- Updated to 0.2.9.
+
 * Wed Feb 15 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.8.0.1.f88d2c2-alt1
 - Updated to 0.2.8-1-gf88d2c2.
 
