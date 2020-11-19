@@ -1,6 +1,6 @@
 Name: crystal-open
 Version: 2.14
-Release: alt3
+Release: alt4
 Summary: Sketch Engine web interface
 License: GPLv3
 Group: Text tools
@@ -30,6 +30,9 @@ Sketch Engine web interface, open source version.
 %config(noreplace) %_var/www/crystal/config.js
 
 %changelog
+* Mon Nov 16 2020 Kirill Maslinsky <kirill@altlinux.org> 2.14-alt4
+- Add tip in Russian, set default locale to ru
+
 * Fri Jun 26 2020 Kirill Maslinsky <kirill@altlinux.org> 2.14-alt3
 - built with current node
 - node_modules packaged
