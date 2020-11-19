@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20200821
 Version: %timestamp
-Release: alt2
+Release: alt3
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+ and Rdisc
@@ -17,6 +17,7 @@ Patch: %name-%version-%release.patch
 # Drop them when new version will be released.
 Patch100: common-fix-infinite-loop-when-getrandom-fails.patch
 Patch101: ping-fix-dead-loop-problem.patch
+Patch102: arpping-make-update-neighbours-work-again.patch
 
 Conflicts: netkit-base
 
@@ -58,9 +59,10 @@ Queries.
 %patch -p1
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
 
 %build
-%add_optflags -fno-strict-aliasing -Wstrict-prototypes -Werror
+%add_optflags -fno-strict-aliasing -Wstrict-prototypes -Werror -Wno-error=variadic-macros
 %ifarch s390 s390x
 	%add_optflags -fPIE
 %else
@@ -101,7 +103,7 @@ done
 
 %pre
 groupadd -r -f iputils ||:
-useradd -r -g iputils -d /dev/null -s /dev/null -n iputils >/dev/null 2>&1 ||:
+useradd -r -g iputils -d /dev/null -s /dev/null -N iputils >/dev/null 2>&1 ||:
 groupadd -r -f netadmin ||:
 
 %pre_control ping
@@ -158,6 +160,15 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Thu Nov 19 2020 Mikhail Efremov <sem@altlinux.org> 20200821-alt3
+- ninfod: Fix seq type.
+- Patch from upstream:
+    + arpping: make update neighbours work again.
+- Don't treat variadic macro warning as error.
+- meson: Use gnu99 instead of c99.
+- arping: Suppress unused argument warning.
+- Use useradd -N instead of -n.
+
 * Wed Sep 09 2020 Mikhail Efremov <sem@altlinux.org> 20200821-alt2
 - Patches from upstream:
     + common: fix infinite loop when getrandom fails;
