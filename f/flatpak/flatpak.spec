@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -25,6 +25,7 @@ Url: http://flatpak.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+Vcs: https://github.com/flatpak/flatpak.git
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
@@ -188,6 +189,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Thu Nov 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
