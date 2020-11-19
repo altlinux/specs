@@ -1,50 +1,65 @@
-%define flacdocs %_docdir/%name
 %define soversion 8
 %define cppsoversion 6
 
-%set_verify_elf_method textrel=relaxed
-
 Name: flac
-Version: 1.3.3
+Version: 1.3.3.0.62.ce6d
 Release: alt1
 
-Summary: Free Lossless Audio Codec
+Summary: An encoder/decoder for the Free Lossless Audio Codec
 License: GPL-2.0-or-later and BSD-3-Clause and GFDL-1.1-or-later
 Group: Sound
-Url: https://xiph.org/flac/download.html
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Url: https://xiph.org/flac/
+Vcs: https://github.com/xiph/flac.git
+# git://git.altlinux.org/gears/f/flac.git
+Source: %name-%version-%release.tar
 
-Requires: lib%name%soversion = %version-%release
+Requires: lib%name%soversion = %EVR
 
 %def_disable static
 %{?_enable_static:BuildRequires: glibc-devel-static}
 
-# Automatically added by buildreq on Fri Mar 25 2011
-BuildRequires: docbook-utils doxygen gcc-c++ libogg-devel
+BuildPreReq: gcc-c++ libogg-devel
 
 %description
-FLAC (%url) is an Open Source lossless audio codec.
+FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
+similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
+format, reference encoders and decoders in library form, flac, a command-line
+program to encode and decode FLAC files, metaflac, a command-line metadata
+editor for FLAC files and input plugins for various music players.
+
+This package contains the command-line tools and documentation.
 
 %package -n lib%name%soversion
 Summary: FLAC shared library
 Group: System/Libraries
 License: BSD-3-Clause
 Provides: lib%name = %version
+Obsoletes: lib%name < %version
 
 %description -n lib%name%soversion
-The lib%name package contains a shared library of
-functions for manipulating FLAC format audio files.
+FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
+similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
+format, reference encoders and decoders in library form, flac, a command-line
+program to encode and decode FLAC files, metaflac, a command-line metadata
+editor for FLAC files and input plugins for various music players.
+
+This package contains the FLAC shared library.
 
 %package -n lib%name-devel
 Summary: Development files for FLAC
 Group: Development/C
 License: BSD-3-Clause and GFDL-1.1-or-later
-Requires: lib%name%soversion = %version-%release
+Requires: lib%name%soversion = %EVR
 Provides: liboggflac-devel = %version
 Obsoletes: liboggflac-devel < %version
 
 %description -n lib%name-devel
+FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
+similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
+format, reference encoders and decoders in library form, flac, a command-line
+program to encode and decode FLAC files, metaflac, a command-line metadata
+editor for FLAC files and input plugins for various music players.
+
 This package contains development files required for packaging
 FLAC-based software.
 
@@ -52,9 +67,15 @@ FLAC-based software.
 Summary: Static libraries for FLAC
 Group: Development/C
 License: BSD-3-Clause
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
+FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
+similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
+format, reference encoders and decoders in library form, flac, a command-line
+program to encode and decode FLAC files, metaflac, a command-line metadata
+editor for FLAC files and input plugins for various music players.
+
 This package contains development libraries required for packaging
 statically linked FLAC-based software.
 
@@ -62,22 +83,34 @@ statically linked FLAC-based software.
 Summary: Object shared library FLAC++
 Group: System/Libraries
 License: BSD-3-Clause
-Requires: lib%name%soversion = %version-%release
+Requires: lib%name%soversion = %EVR
 Provides: lib%name++ = %version
 
 %description -n lib%name++%cppsoversion
-The lib%name++%cppsoversion package contains a object wrapper library
+FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
+similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
+format, reference encoders and decoders in library form, flac, a command-line
+program to encode and decode FLAC files, metaflac, a command-line metadata
+editor for FLAC files and input plugins for various music players.
+
+This package contains an object wrapper library
 of functions for manipulating FLAC format audio files.
 
 %package -n lib%name++-devel
 Summary: Development files for FLAC++ library
-Group: Development/C
+Group: Development/C++
 License: BSD-3-Clause
-Requires: lib%name++%cppsoversion = %version-%release
+Requires: lib%name++%cppsoversion = %EVR
 Provides: liboggflac++-devel = %version
 Obsoletes: liboggflac++-devel < %version
 
 %description -n lib%name++-devel
+FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
+similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
+format, reference encoders and decoders in library form, flac, a command-line
+program to encode and decode FLAC files, metaflac, a command-line metadata
+editor for FLAC files and input plugins for various music players.
+
 This package contains development files required for packaging
 FLAC++-based software.
 
@@ -85,31 +118,49 @@ FLAC++-based software.
 Summary: Static libraries for FLAC++ library
 Group: Development/C
 License: BSD-3-Clause
-Requires: lib%name++-devel = %version-%release
+Requires: lib%name++-devel = %EVR
 
 %description -n lib%name++-devel-static
+FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
+similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
+format, reference encoders and decoders in library form, flac, a command-line
+program to encode and decode FLAC files, metaflac, a command-line metadata
+editor for FLAC files and input plugins for various music players.
+
 This package contains development libraries required for packaging
 statically linked FLAC++-based software.
 
 %prep
-%setup
-%patch -p1
+%setup -n %name-%version-%release
+for f in m4/*.m4; do
+	if [ -f "%_datadir/aclocal/${f##*/}" ] ||
+	   [ -f "%_datadir/libtool/aclocal/${f##*/}" ]; then
+		rm -fv "$f"
+	fi
+done
 
 %build
-touch config.rpath
+> config.rpath
 %autoreconf
 %configure \
+	--disable-xmms-plugin \
 	%{?!_with_bootstrap:--enable-exhaustive-tests} \
 	%{subst_enable static} \
 #
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
+%define flacdocs %_docdir/%name
 install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
+rm %buildroot%flacdocs/FLAC.tag
 
 %check
 %make_build -k check
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files
 %_bindir/*
@@ -129,8 +180,6 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %_libdir/libFLAC.so
 %_includedir/FLAC/
 %_pkgconfigdir/flac.pc
-%dir %flacdocs/
-%flacdocs/api/
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -143,7 +192,7 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %files -n lib%name++-devel
 %_datadir/aclocal/libFLAC++.m4
 %_libdir/libFLAC++.so
-%_includedir/FLAC++
+%_includedir/FLAC++/
 %_pkgconfigdir/flac++.pc
 
 %if_enabled static
@@ -152,6 +201,10 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %endif
 
 %changelog
+* Thu Nov 19 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.3.0.62.ce6d-alt1
+- 1.3.3 -> 1.3.3-62-gce6dd6b5.
+- Disabled generation and packaging of API documentation.
+
 * Sun Aug 04 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.3-alt1
 - 1.3.2 -> 1.3.3.
 
