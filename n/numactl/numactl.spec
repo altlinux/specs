@@ -2,7 +2,7 @@
 
 Name: numactl
 Version: 2.0.14
-Release: alt1
+Release: alt2
 
 Summary: Simple NUMA policy support
 License: GPLv2
@@ -61,7 +61,8 @@ developing applications that use %name.
 %files
 %doc README.md
 %_bindir/*
-%_man2dir/*
+# Conflicts with man-pages
+%exclude %_man2dir/*
 %_man8dir/*
 
 %files -n libnuma
@@ -79,6 +80,9 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Fri Nov 20 2020 Andrew A. Vasilyev <andy@altlinux.org> 2.0.14-alt2
+- exclude conflicting move_pages(2) man pages
+
 * Thu Sep 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 2.0.14-alt1
 - 2.0.14
 
