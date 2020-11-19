@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt1
+Release: alt2
 
 %define package_name		%real_name
 %define weight			1001
@@ -45,6 +45,8 @@ Source9: python.sh
 Source10: python.csh
 Source11: pythonrc.py
 Source12: bdist_altrpm.py
+# test for CVE-2019-20907 fix
+Source20: recursion.tar
 
 Patch1: python-2.5.1-deb-setup.patch
 Patch2: python-2.5.1-deb-distutils-link.patch
@@ -83,6 +85,8 @@ Patch34: python-2.7.14-upstream-issue31530-patch2.patch
 # Another lib64 fix, for distutils/tests/test_install.py; not upstream:
 Patch104: 00104-lib64-fix-for-test_install.patch
 
+Patch105: python-2.7.18-fc-alt-cve-2019-20907-fix-infinite-loop-in-tarfile.patch
+Patch106: python-2.7.18-fc-cve-2020-26116-http-request-method-crlf-injection-in-httplib.patch
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
 %add_python_req_skip msilib
@@ -695,6 +699,7 @@ find . -type f -exec sed -Ei '1 s@(^#!.*/usr/bin/).*python$@\1%python_name@' '{}
 #mkdir info
 #tar -C info -xf #SOURCE1
 tar -xf %SOURCE3
+mv -- %SOURCE20 Lib/test/recursion.tar
 
 rm -r Modules/expat
 
@@ -732,6 +737,8 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 
 ##patch33 -p1
 ##patch34 -p1
+%patch105 -p2
+%patch106 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -1178,6 +1185,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Thu Nov 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt2
+- Fixed CVE-2019-20907 and CVE-2019-CVE-2020-26116.
+
 * Tue Apr 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt1
 - Updated to 2.7.18.
 
