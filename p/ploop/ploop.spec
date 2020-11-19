@@ -2,15 +2,16 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.237
+Version: 7.0.240
 Release: alt1
 Group: System/Base
 License: GPLv2
 Summary: Ploop tools
 URL: http://wiki.openvz.org/Ploop
+Vcs: https://src.openvz.org/scm/ovz/ploop.git
 Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
-Source: %name-%version.tar
 
+Source: %name-%version.tar
 Patch1: %name-%version.patch
 
 ExclusiveArch: x86_64
@@ -108,6 +109,9 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.240-alt1
+- 7.0.240
+
 * Fri Nov 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.237-alt1
 - 7.0.237
 - fix print() spacing style
