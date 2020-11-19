@@ -61,7 +61,7 @@
 
 Name:    samba
 Version: 4.12.10
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -342,6 +342,7 @@ Requires: %name-common = %version-%release
 Requires: %name-libs = %version-%release
 Provides: %dcname-common-tools = %version-%release
 Obsoletes: %dcname-common-tools < 4.10
+Conflicts: gnustep-gworkspace
 
 %description common-tools
 The %rname-common-tools package contains tools for Samba servers and
@@ -1810,6 +1811,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Nov 19 2020 Evgeny Sinelikov <sin@altlinux.org> 4.12.10-alt2
+- Spotlight searches against an SMB server mdfind utility in samba-common-tools
+  conflicts with gnustep-gworkspace due it also includes mdfind (closes: 39295)
+
 * Thu Nov 12 2020 Evgeny Sinelikov <sin@altlinux.org> 4.12.10-alt1
 - Update to latest release of Samba 4.12
 
