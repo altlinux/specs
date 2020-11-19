@@ -1,4 +1,4 @@
-%define git_version 2d095e947a02261ce61424021bb43bd3022d35cb
+%define git_version cb8c61a60551b72614257d632a574d420064c17a
 %define _unpackaged_files_terminate_build 1
 
 %def_with ocf
@@ -41,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 15.2.5
+Version: 15.2.6
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -1494,6 +1494,11 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Thu Nov 19 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.6-alt1
+- 15.2.6
+- Fixes for the following security vulnerabilities:
+  + CVE-2020-25660 Fix a regression in Messenger V2 replay attacks
+
 * Thu Sep 17 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.5-alt1
 - 15.2.5
 - drop python2 support
