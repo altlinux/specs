@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.11.0.36
-Release: alt4
+Release: alt5
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -20,7 +20,7 @@ Source3: deepin-auth
 Patch: dde-daemon_5.10_archlinux_fix-build.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libbamf3-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel golang-golang-x-net-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-gir-generator
+BuildRequires: glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libbamf3-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel golang-golang-x-net-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-gir-generator libgdk-pixbuf-xlib-devel
 BuildRequires: golang-github-go-dbus-devel golang-deepin-go-lib-devel golang-github-linuxdeepin-dbus-factory-devel golang-deepin-go-x11-client-devel golang-github-fsnotify-devel golang-golang-x-sys-devel golang-github-axgle-mahonia-devel golang-github-jinzhu-gorm-devel golang-github-jinzhu-inflection-devel golang-github-kelvins-sunrisesunset-devel golang-github-mattn-sqlite3-devel golang-github-mozillazg-go-pinyin-devel golang-github-nfnt-resize-devel golang-github-rickb777-date-devel golang-github-teambition-rrule-go-devel golang-x-image-devel golang-x-text-devel golang-x-xerrors-devel golang-gopkg-alecthomas-kingpin-2-devel golang-github-alecthomas-template-devel golang-github-alecthomas-units-devel golang-github-rickb777-plural-devel golang-deepin-api-devel golang-github-cryptix-wav-devel golang-github-davecgh-spew-devel
 BuildRequires: go-xgettext-devel golang-github-msteinert-pam-devel
 # Requires: bamfdaemon libbluez deepin-desktop-base deepin-desktop-schemas deepin-session-ui deepin-polkit-agent
@@ -142,6 +142,9 @@ install -Dm644 %SOURCE1 \
 %exclude %_datadir/deepin-default-settings/fontconfig.json
 
 %changelog
+* Thu Nov 19 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt5
+- Fixed BuildRequires.
+
 * Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt4
 - Fixed conflict with deepin-default-settings.
 
