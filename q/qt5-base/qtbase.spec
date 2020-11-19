@@ -35,7 +35,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.1
-Release: alt2
+Release: alt3
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -59,7 +59,6 @@ Patch1001: alt-enable-ft-lcdfilter.patch
 Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
-#
 Patch1005: alt-hidpi_scale_at_192.patch
 Patch1006: e2k-qt-5.15.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
@@ -68,6 +67,7 @@ Patch1009: alt-false-detect-groupswitchmodifier.patch
 Patch1010: alt-glx-check-version.patch
 Patch1011: alt-kernel-requires.patch
 Patch1012: alt-fix-paths.patch
+Patch1013: alt-QTBUG-88599.patch
 
 # macros
 %define _qt5 %gname
@@ -396,6 +396,7 @@ EGL integration library for the Qt%major toolkit
 %patch1010 -p2
 %patch1011 -p1
 %patch1012 -p1
+%patch1013 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -824,6 +825,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Nov 19 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt3
+- add fix against QTBUG-88599 (closes: 37756)
+
 * Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt2
 - require tslib
 
