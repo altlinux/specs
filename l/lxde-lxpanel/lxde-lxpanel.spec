@@ -4,7 +4,7 @@
 
 Name: lxde-%origname
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL
@@ -23,6 +23,7 @@ Requires: menu-cache
 BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc 
 
 BuildRequires: libfm-devel libxml2-devel libkeybinder-devel
+BuildRequires: libgdk-pixbuf-xlib-devel
 BuildRequires: libcurl-devel
 BuildPreReq: rpm-build-xdg libgtk+%gtkver-devel
 
@@ -72,6 +73,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 19 2020 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt2
+- Add missing buildrequires (Fix FTBFS)
+
 * Thu Mar 21 2019 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - new version 0.10.0
 
