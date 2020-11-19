@@ -1,4 +1,5 @@
 %def_enable tui
+%def_with debuginfod
 %def_disable check
 %def_with python
 
@@ -10,8 +11,8 @@
 %endif
 
 Name: gdb
-Version: 8.3
-Release: alt3
+Version: 10.1
+Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -29,7 +30,7 @@ Patch1: gdb-alt-testsuite-version.patch
 Patch2: gdb-alt-readline.patch
 Patch3: gdb-alt-bfd.patch
 Patch4: gdb-alt-fix-build-on-mips.patch
-Patch5: gdb-alt-fix-CVE-2019-1010180.patch
+Patch5: gdb-alt-fix-fedora-buildid-locate.patch
 
 ### Fedora patches
 # Match the Fedora's version info.
@@ -71,10 +72,6 @@ Patch1009: gdb-6.3-test-movedir-20050125.patch
 #=fedoratest
 Patch1010: gdb-6.3-threaded-watchpoints2-20050225.patch
 
-# Notify observers that the inferior has been created
-#=fedoratest
-Patch1011: gdb-6.3-inferior-notification-20050721.patch
-
 # Verify printing of inherited members test
 #=fedoratest
 Patch1012: gdb-6.3-inheritancetest-20050726.patch
@@ -100,412 +97,331 @@ Patch1016: gdb-6.5-last-address-space-byte-test.patch
 #=fedoratest
 Patch1017: gdb-6.5-readline-long-line-crash-test.patch
 
-# Fix bogus 0x0 unwind of the thread's topmost function clone(3) (BZ 216711).
-#=fedora
-Patch1018: gdb-6.5-bz216711-clone-is-outermost.patch
-
 # Test sideeffects of skipping ppc .so libs trampolines (BZ 218379).
 #=fedoratest
-Patch1019: gdb-6.5-bz218379-ppc-solib-trampoline-test.patch
+Patch1018: gdb-6.5-bz218379-ppc-solib-trampoline-test.patch
 
 # Fix lockup on trampoline vs. its function lookup; unreproducible (BZ 218379).
 #=fedora
-Patch1020: gdb-6.5-bz218379-solib-trampoline-lookup-lock-fix.patch
+Patch1019: gdb-6.5-bz218379-solib-trampoline-lookup-lock-fix.patch
 
 # Find symbols properly at their original (included) file (BZ 109921).
 #=fedoratest
-Patch1021: gdb-6.5-bz109921-DW_AT_decl_file-test.patch
+Patch1020: gdb-6.5-bz109921-DW_AT_decl_file-test.patch
 
 # Update PPC unwinding patches to their upstream variants (BZ 140532).
 #=fedoratest
-Patch1022: gdb-6.3-bz140532-ppc-unwinding-test.patch
+Patch1021: gdb-6.3-bz140532-ppc-unwinding-test.patch
 
 # Testcase for exec() from threaded program (BZ 202689).
 #=fedoratest
-Patch1023: gdb-6.3-bz202689-exec-from-pthread-test.patch
+Patch1022: gdb-6.3-bz202689-exec-from-pthread-test.patch
 
 # Testcase for PPC Power6/DFP instructions disassembly (BZ 230000).
 #=fedoratest
-Patch1024: gdb-6.6-bz230000-power6-disassembly-test.patch
+Patch1023: gdb-6.6-bz230000-power6-disassembly-test.patch
 
 # Allow running `/usr/bin/gcore' with provided but inaccessible tty (BZ 229517).
 #=fedoratest
-Patch1025: gdb-6.6-bz229517-gcore-without-terminal.patch
+Patch1024: gdb-6.6-bz229517-gcore-without-terminal.patch
 
 # Avoid too long timeouts on failing cases of "annota1.exp annota3.exp".
 #=fedoratest
-Patch1026: gdb-6.6-testsuite-timeouts.patch
+Patch1025: gdb-6.6-testsuite-timeouts.patch
 
 # Support for stepping over PPC atomic instruction sequences (BZ 237572).
 #=fedoratest
-Patch1027: gdb-6.6-bz237572-ppc-atomic-sequence-test.patch
-
-# Make upstream `set scheduler-locking step' as default.
-#=push+jan: How much is scheduler-locking relevant after non-stop?
-Patch1028: gdb-6.6-scheduler_locking-step-is-default.patch
-
-# Test kernel VDSO decoding while attaching to an i386 process.
-#=fedoratest
-Patch1029: gdb-6.3-attach-see-vdso-test.patch
+Patch1026: gdb-6.6-bz237572-ppc-atomic-sequence-test.patch
 
 # Test leftover zombie process (BZ 243845).
 #=fedoratest
-Patch1030: gdb-6.5-bz243845-stale-testing-zombie-test.patch
+Patch1028: gdb-6.5-bz243845-stale-testing-zombie-test.patch
 
 # New locating of the matching binaries from the pure core file (build-id).
 #=push+jan
-Patch1031: gdb-6.6-buildid-locate.patch
+Patch1029: gdb-6.6-buildid-locate.patch
 
 # Fix loading of core files without build-ids but with build-ids in executables.
 # Load strictly build-id-checked core files only if no executable is specified
 # (Jan Kratochvil, RH BZ 1339862).
 #=push+jan
-Patch1032: gdb-6.6-buildid-locate-solib-missing-ids.patch
+Patch1030: gdb-6.6-buildid-locate-solib-missing-ids.patch
 
 #=push+jan
-Patch1033: gdb-6.6-buildid-locate-rpm.patch
+Patch1031: gdb-6.6-buildid-locate-rpm.patch
 
 # Fix displaying of numeric char arrays as strings (BZ 224128).
 #=fedoratest: But it is failing anyway, one should check the behavior more.
-Patch1034: gdb-6.7-charsign-test.patch
+Patch1032: gdb-6.7-charsign-test.patch
 
 # Test PPC hiding of call-volatile parameter register.
 #=fedoratest
-Patch1035: gdb-6.7-ppc-clobbered-registers-O2-test.patch
+Patch1033: gdb-6.7-ppc-clobbered-registers-O2-test.patch
 
 # Testsuite fixes for more stable/comparable results.
 #=fedoratest
-Patch1036: gdb-6.7-testsuite-stable-results.patch
+Patch1034: gdb-6.7-testsuite-stable-results.patch
 
 # Test ia64 memory leaks of the code using libunwind.
 #=fedoratest
-Patch1037: gdb-6.5-ia64-libunwind-leak-test.patch
+Patch1035: gdb-6.5-ia64-libunwind-leak-test.patch
 
 # Test hiding unexpected breakpoints on intentional step commands.
 #=fedoratest
-Patch1038: gdb-6.5-missed-trap-on-step-test.patch
-
-# Test gcore memory and time requirements for large inferiors.
-#=fedoratest
-Patch1039: gdb-6.5-gcore-buffer-limit-test.patch
+Patch1036: gdb-6.5-missed-trap-on-step-test.patch
 
 # Test GCORE for shmid 0 shared memory mappings.
 #=fedoratest: But it is broken anyway, sometimes the case being tested is not reproducible.
-Patch1040: gdb-6.3-mapping-zero-inode-test.patch
+Patch1038: gdb-6.3-mapping-zero-inode-test.patch
 
 # Test a crash on `focus cmd', `focus prev' commands.
 #=fedoratest
-Patch1041: gdb-6.3-focus-cmd-prev-test.patch
+Patch1039: gdb-6.3-focus-cmd-prev-test.patch
 
 # Test various forms of threads tracking across exec() (BZ 442765).
 #=fedoratest
-Patch1042: gdb-6.8-bz442765-threaded-exec-test.patch
+Patch1040: gdb-6.8-bz442765-threaded-exec-test.patch
 
 # Test a crash on libraries missing the .text section.
 #=fedoratest
-Patch1043: gdb-6.5-section-num-fixup-test.patch
-
-# Fix register assignments with no GDB stack frames (BZ 436037).
-#=push+jan: This fix is incorrect.
-Patch1044: gdb-6.8-bz436037-reg-no-longer-active.patch
+Patch1041: gdb-6.5-section-num-fixup-test.patch
 
 # Fix resolving of variables at locations lists in prelinked libs (BZ 466901).
 #=fedoratest
-Patch1045: gdb-6.8-bz466901-backtrace-full-prelinked.patch
+Patch1042: gdb-6.8-bz466901-backtrace-full-prelinked.patch
 
 # New test for step-resume breakpoint placed in multiple threads at once.
 #=fedoratest
-Patch1046: gdb-simultaneous-step-resume-breakpoint-test.patch
+Patch1043: gdb-simultaneous-step-resume-breakpoint-test.patch
 
 # Fix GNU/Linux core open: Can't read pathname for load map: Input/output error.
 # Fix regression of undisplayed missing shared libraries caused by a fix for.
 #=fedoratest: It should be in glibc: libc-alpha: <20091004161706.GA27450@.*>
-Patch1047: gdb-core-open-vdso-warning.patch
-
-# Fix syscall restarts for amd64->i386 biarch.
-#=push+jan
-Patch1048: gdb-x86_64-i386-syscall-restart.patch
+Patch1044: gdb-core-open-vdso-warning.patch
 
 # Fix stepping with OMP parallel Fortran sections (BZ 533176).
 #=push+jan: It requires some better DWARF annotations.
-Patch1049: gdb-bz533176-fortran-omp-step.patch
-
-# Fix regression by python on ia64 due to stale current frame.
-#=push+jan
-Patch1050: gdb-follow-child-stale-parent.patch
+Patch1045: gdb-bz533176-fortran-omp-step.patch
 
 # Workaround ccache making lineno non-zero for command-line definitions.
 #=fedoratest: ccache is rarely used and it is even fixed now.
-Patch1051: gdb-ccache-workaround.patch
+Patch1046: gdb-ccache-workaround.patch
 
 #=push+jan: May get obsoleted by Tom's unrelocated objfiles patch.
-Patch1052: gdb-archer-pie-addons.patch
+Patch1047: gdb-archer-pie-addons.patch
 
 #=push+jan: Breakpoints disabling matching should not be based on address.
-Patch1053: gdb-archer-pie-addons-keep-disabled.patch
+Patch1048: gdb-archer-pie-addons-keep-disabled.patch
 
 # Testcase for "Do not make up line information" fix by Daniel Jacobowitz.
 #=fedoratest
-Patch1054: gdb-lineno-makeup-test.patch
+Patch1049: gdb-lineno-makeup-test.patch
 
 # Test power7 ppc disassembly.
 #=fedoratest
-Patch1055: gdb-ppc-power7-test.patch
-
-# Fix i386+x86_64 rwatch+awatch before run, regression against 6.8 (BZ 541866).
-# Fix i386 rwatch+awatch before run (BZ 688788, on top of BZ 541866).
-#=push+jan: It should be fixed properly instead.
-Patch1056: gdb-bz541866-rwatch-before-run.patch
+Patch1050: gdb-ppc-power7-test.patch
 
 # Workaround non-stop moribund locations exploited by kernel utrace (BZ 590623).
 #=push+jan: Currently it is still not fully safe.
-Patch1057: gdb-moribund-utrace-workaround.patch
+Patch1051: gdb-moribund-utrace-workaround.patch
 
 # Fix follow-exec for C++ programs (bugreported by Martin Stransky).
 #=fedoratest
-Patch1058: gdb-archer-next-over-throw-cxx-exec.patch
+Patch1052: gdb-archer-next-over-throw-cxx-exec.patch
 
 # Backport DWARF-4 support (BZ 601887, Tom Tromey).
 #=fedoratest
-Patch1059: gdb-bz601887-dwarf4-rh-test.patch
+Patch1053: gdb-bz601887-dwarf4-rh-test.patch
 
 #=push+jan
-Patch1060: gdb-6.6-buildid-locate-core-as-arg.patch
+Patch1054: gdb-6.6-buildid-locate-core-as-arg.patch
 
 # Workaround librpm BZ 643031 due to its unexpected exit() calls (BZ 642879).
 #=push+jan
-Patch1061: gdb-6.6-buildid-locate-rpm-librpm-workaround.patch
+Patch1055: gdb-6.6-buildid-locate-rpm-librpm-workaround.patch
 
 # [delayed-symfile] Test a backtrace regression on CFIs without DIE (BZ 614604).
 #=fedoratest
-Patch1062: gdb-test-bt-cfi-without-die.patch
-
-# Out of memory is just an error, not fatal (uninitialized VLS vars, BZ 568248).
-#=push+jan: Inferior objects should be read in parts, then this patch gets obsoleted.
-Patch1063: gdb-bz568248-oom-is-error.patch
+Patch1056: gdb-test-bt-cfi-without-die.patch
 
 # Verify GDB Python built-in function gdb.solib_address exists (BZ # 634108).
 #=fedoratest
-Patch1064: gdb-bz634108-solib_address.patch
+Patch1057: gdb-bz634108-solib_address.patch
 
 # New test gdb.arch/x86_64-pid0-core.exp for kernel PID 0 cores (BZ 611435).
 #=fedoratest
-Patch1065: gdb-test-pid0-core.patch
+Patch1058: gdb-test-pid0-core.patch
 
 # [archer-tromey-delayed-symfile] New test gdb.dwarf2/dw2-aranges.exp.
 #=fedoratest
-Patch1066: gdb-test-dw2-aranges.patch
+Patch1059: gdb-test-dw2-aranges.patch
 
 # [archer-keiths-expr-cumulative+upstream] Import C++ testcases.
 #=fedoratest
-Patch1067: gdb-test-expr-cumulative-archer.patch
+Patch1060: gdb-test-expr-cumulative-archer.patch
 
 # Fix regressions on C++ names resolving (PR 11734, PR 12273, Keith Seitz).
 #=fedoratest
-Patch1068: gdb-physname-pr11734-test.patch
+Patch1061: gdb-physname-pr11734-test.patch
 
 # Fix regressions on C++ names resolving (PR 11734, PR 12273, Keith Seitz).
 #=fedoratest
-Patch1069: gdb-physname-pr12273-test.patch
+Patch1062: gdb-physname-pr12273-test.patch
 
 # Test GDB opcodes/ disassembly of Intel Ivy Bridge instructions (BZ 696890).
 #=fedoratest
-Patch1070: gdb-test-ivy-bridge.patch
+Patch1063: gdb-test-ivy-bridge.patch
 
 # Hack for proper PIE run of the testsuite.
 #=fedoratest
-Patch1071: gdb-runtest-pie-override.patch
+Patch1064: gdb-runtest-pie-override.patch
 
 # Print reasons for failed attach/spawn incl. SELinux deny_ptrace (BZ 786878).
 #=push+jan
-Patch1072: gdb-attach-fail-reasons-5of5.patch
+Patch1065: gdb-attach-fail-reasons-5of5.patch
 
 # Workaround PR libc/14166 for inferior calls of strstr.
 #=fedoratest: Compatibility with RHELs (unchecked which ones).
-Patch1073: gdb-glibc-strstr-workaround.patch
+Patch1066: gdb-glibc-strstr-workaround.patch
 
 # Include testcase for `Unable to see a variable inside a module (XLF)' (BZ 823789).
 #=fedoratest
-Patch1074: gdb-rhel5.9-testcase-xlf-var-inside-mod.patch
+Patch1067: gdb-rhel5.9-testcase-xlf-var-inside-mod.patch
 
 # Testcase for `Setting solib-absolute-prefix breaks vDSO' (BZ 818343).
 #=fedoratest
-Patch1075: gdb-rhbz-818343-set-solib-absolute-prefix-testcase.patch
-
-# Fix `GDB cannot access struct member whose offset is larger than 256MB'
-# (RH BZ 795424).
-#=push
-Patch1076: gdb-rhbz795424-bitpos-20of25.patch
-
-# Fix `GDB cannot access struct member whose offset is larger than 256MB'
-# (RH BZ 795424).
-#=push
-Patch1077: gdb-rhbz795424-bitpos-21of25.patch
-
-# Fix `GDB cannot access struct member whose offset is larger than 256MB'
-# (RH BZ 795424).
-#=push
-Patch1078: gdb-rhbz795424-bitpos-22of25.patch
-
-# Fix `GDB cannot access struct member whose offset is larger than 256MB'
-# (RH BZ 795424).
-#=push
-Patch1079: gdb-rhbz795424-bitpos-23of25.patch
-
-# Fix `GDB cannot access struct member whose offset is larger than 256MB'
-# (RH BZ 795424).
-#=push
-Patch1080: gdb-rhbz795424-bitpos-25of25.patch
-
-# Fix `GDB cannot access struct member whose offset is larger than 256MB'
-# (RH BZ 795424).
-#=push
-Patch1081: gdb-rhbz795424-bitpos-25of25-test.patch
-
-# Fix `GDB cannot access struct member whose offset is larger than 256MB'
-# (RH BZ 795424).
-#=push
-Patch1082: gdb-rhbz795424-bitpos-lazyvalue.patch
+Patch1068: gdb-rhbz-818343-set-solib-absolute-prefix-testcase.patch
 
 # Import regression test for `gdb/findvar.c:417: internal-error:
 # read_var_value: Assertion `frame' failed.' (RH BZ 947564) from RHEL 6.5.
 #=fedoratest
-Patch1083: gdb-rhbz947564-findvar-assertion-frame-failed-testcase.patch
+Patch1069: gdb-rhbz947564-findvar-assertion-frame-failed-testcase.patch
 
 # Fix crash of -readnow /usr/lib/debug/usr/bin/gnatbind.debug (BZ 1069211).
 #=push+jan
-Patch1084: gdb-gnat-dwarf-crash-3of3.patch
+Patch1070: gdb-gnat-dwarf-crash-3of3.patch
 
 # Fix 'memory leak in infpy_read_memory()' (RH BZ 1007614)
 #=fedoratest
-Patch1085: gdb-rhbz1007614-memleak-infpy_read_memory-test.patch
+Patch1071: gdb-rhbz1007614-memleak-infpy_read_memory-test.patch
 
 # Fix 'gdb gives highly misleading error when debuginfo pkg is present,
 # but not corresponding binary pkg' (RH BZ 981154).
 #=push+jan
-Patch1086: gdb-6.6-buildid-locate-misleading-warning-missing-debuginfo-rhbz981154.patch
+Patch1072: gdb-6.6-buildid-locate-misleading-warning-missing-debuginfo-rhbz981154.patch
 
 #=fedoratest
-Patch1087: gdb-archer-vla-tests.patch
+Patch1073: gdb-archer-vla-tests.patch
 
 #=fedoratest
-Patch1088: gdb-vla-intel-tests.patch
+Patch1074: gdb-vla-intel-tests.patch
 
 # Continue backtrace even if a frame filter throws an exception (Phil Muldoon).
 #=push
-Patch1089: gdb-btrobust.patch
+Patch1075: gdb-btrobust.patch
 
 # Display Fortran strings in backtraces.
 #=fedoratest
-Patch1090: gdb-fortran-frame-string.patch
+Patch1076: gdb-fortran-frame-string.patch
 
 # Testcase for '[SAP] Recursive dlopen causes SAP HANA installer to
 # crash.' (RH BZ 1156192).
 #=fedoratest
-Patch1091: gdb-rhbz1156192-recursive-dlopen-test.patch
+Patch1077: gdb-rhbz1156192-recursive-dlopen-test.patch
 
 # Fix jit-reader.h for multi-lib.
 #=push+jan
-Patch1092: gdb-jit-reader-multilib.patch
+Patch1078: gdb-jit-reader-multilib.patch
 
 # Fix '`catch syscall' doesn't work for parent after `fork' is called'
 # (Philippe Waroquiers, RH BZ 1149205).
 #=fedoratest
-Patch1093: gdb-rhbz1149205-catch-syscall-after-fork-test.patch
+Patch1079: gdb-rhbz1149205-catch-syscall-after-fork-test.patch
 
 # Fix 'backport GDB 7.4 fix to RHEL 6.6 GDB' [Original Sourceware bug
 # description: 'C++ (and objc): Internal error on unqualified name
 # re-set', PR 11657] (RH BZ 1186476).
 #=fedoratest
-Patch1094: gdb-rhbz1186476-internal-error-unqualified-name-re-set-test.patch
+Patch1080: gdb-rhbz1186476-internal-error-unqualified-name-re-set-test.patch
 
 # Test 'info type-printers' Python error (RH BZ 1350436).
 #=fedoratest
-Patch1095: gdb-rhbz1350436-type-printers-error.patch
+Patch1081: gdb-rhbz1350436-type-printers-error.patch
 
 # Fix '[ppc64] and [s390x] wrong prologue skip on -O2 -g code' (Jan
 # Kratochvil, RH BZ 1084404).
 #=fedoratest
-Patch1096: gdb-rhbz1084404-ppc64-s390x-wrong-prologue-skip-O2-g-3of3.patch
+Patch1082: gdb-rhbz1084404-ppc64-s390x-wrong-prologue-skip-O2-g-3of3.patch
 
 # Never kill PID on: gdb exec PID (Jan Kratochvil, RH BZ 1219747).
 #=push+jan
-Patch1097: gdb-bz1219747-attach-kills.patch
+Patch1083: gdb-bz1219747-attach-kills.patch
 
 # Force libncursesw over libncurses to match the includes (RH BZ 1270534).
 #=push+jan
-Patch1098: gdb-fedora-libncursesw.patch
+Patch1084: gdb-fedora-libncursesw.patch
 
 # Test clflushopt instruction decode (for RH BZ 1262471).
 #=fedoratest
-Patch1099: gdb-opcodes-clflushopt-test.patch
+Patch1085: gdb-opcodes-clflushopt-test.patch
 
 # [rhel6] DTS backward Python compatibility API (BZ 1020004, Phil Muldoon).
 #=fedora
-Patch1100: gdb-dts-rhel6-python-compat.patch
+Patch1086: gdb-dts-rhel6-python-compat.patch
 
 # [SCL] Skip deprecated .gdb_index warning for Red Hat built files (BZ 953585).
 #=push+jan
-Patch1101: gdb-6.6-buildid-locate-rpm-scl.patch
-
-# Work around readline-6.2 incompatibility not asking for --more-- (BZ 701131).
-#=fedora
-Patch1102: gdb-readline62-ask-more-rh.patch
+Patch1087: gdb-6.6-buildid-locate-rpm-scl.patch
 
 # Make the GDB quit processing non-abortable to cleanup everything properly.
 #=fedora: It was useful only after gdb-6.8-attach-signalled-detach-stopped.patch .
-Patch1103: gdb-6.8-quit-never-aborts.patch
+Patch1088: gdb-6.8-quit-never-aborts.patch
 
 # [aarch64] Fix hardware watchpoints (RH BZ 1261564).
 #=fedoratest
-Patch1104: gdb-rhbz1261564-aarch64-hw-watchpoint-test.patch
+Patch1089: gdb-rhbz1261564-aarch64-hw-watchpoint-test.patch
 
 # Add messages suggesting more recent RHEL gdbserver (RH BZ 1321114).
 #=fedora
-Patch1105: gdb-container-rh-pkg.patch
+Patch1090: gdb-container-rh-pkg.patch
 
 # New test for Python "Cannot locate object file for block" (for RH BZ 1325795).
 #=fedoratest
-Patch1106: gdb-rhbz1325795-framefilters-test.patch
+Patch1091: gdb-rhbz1325795-framefilters-test.patch
 
 # [dts+el7] [x86*] Bundle linux_perf.h for libipt (RH BZ 1256513).
 #=fedora
-Patch1107: gdb-linux_perf-bundle.patch
+Patch1092: gdb-linux_perf-bundle.patch
 
 # Fix gdb-headless /usr/bin/ executables (BZ 1390251).
+#
+# Also, make /usr/bin/gdb.minimal be the default GDB used, if it's
+# present.  For rationale, see:
+#
+#   https://fedoraproject.org/wiki/Changes/Minimal_GDB_in_buildroot
 #=fedora
-Patch1108: gdb-libexec-add-index.patch
+Patch1093: gdb-libexec-add-index.patch
 
 # New testcase for: Fix <tab>-completion crash (Gary Benson, RH BZ 1398387).
 #=fedoratest
-Patch1109: gdb-rhbz1398387-tab-crash-test.patch
-
-# [testsuite] Fix false selftest.exp FAIL from system readline-6.3+ (Patrick Palka).
-#=fedoratest
-Patch1110: gdb-testsuite-readline63-sigint.patch
+Patch1094: gdb-rhbz1398387-tab-crash-test.patch
 
 # Python patches of: http://sourceware.org/gdb/wiki/ProjectArcher
 #=push
-Patch1111: gdb-archer.patch
+Patch1095: gdb-archer.patch
 
 # Revert upstream commit 469412dd9ccc4de5874fd3299b105833f36b34cd
-Patch1112: gdb-vla-intel-fix-print-char-array.patch
+Patch1096: gdb-vla-intel-fix-print-char-array.patch
 
 # [s390x] Backport arch12 instructions decoding (RH BZ 1553104).
 # =fedoratest
-Patch1113: gdb-rhbz1553104-s390x-arch12-test.patch
-
-# This patch is needed to compile GDB after -Werror=narrowing has
-# been enabled by default.
-# Author: Sergio Durigan Junior.
-Patch1114: gdb-rhbz795424-bitpos-arrayview.patch
-
+Patch1097: gdb-rhbz1553104-s390x-arch12-test.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: flex libreadline-devel libexpat-devel liblzma-devel zlib-devel
 BuildRequires: gcc-c++
 BuildRequires: makeinfo
-BuildRequires: %{?_with_python:python3-devel} %{?_enable_tui:libncursesw-devel}
+BuildRequires: %{?_with_python:python3-devel} %{?_enable_tui:libncursesw-devel} %{?_with_debuginfod:libdebuginfod-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu glibc-devel-static gcc-c++ gcc-fortran gcc-objc prelink valgrind /proc /dev/pts}}
 Requires: gdb-common = %version-%release
 
@@ -567,7 +483,7 @@ egrep -lZ 'A (Bison parser, made by GNU Bison|lexical scanner generated by flex)
 # Remove generated info files.
 rm */doc/*.info*
 # Somehow readline/doc is needed to build other docs.
-mv readline/doc readline-doc
+mv readline/readline/doc readline-doc
 
 ### Fedora patches
 %patch1001 -p1
@@ -580,7 +496,6 @@ mv readline/doc readline-doc
 %patch1008 -p1
 %patch1009 -p1
 %patch1010 -p1
-%patch1011 -p1
 %patch1012 -p1
 %patch1013 -p1
 %patch1014 -p1
@@ -596,17 +511,15 @@ mv readline/doc readline-doc
 %patch1024 -p1
 %patch1025 -p1
 %patch1026 -p1
-%patch1027 -p1
 %patch1028 -p1
 %patch1029 -p1
 %patch1030 -p1
-%patch1031 -p1
+# %%patch1031 -p1 # TODO: apt support
 %patch1032 -p1
-# %%patch1033 -p1 # TODO: apt support
+%patch1033 -p1
 %patch1034 -p1
 %patch1035 -p1
 %patch1036 -p1
-%patch1037 -p1
 %patch1038 -p1
 %patch1039 -p1
 %patch1040 -p1
@@ -624,13 +537,13 @@ mv readline/doc readline-doc
 %patch1052 -p1
 %patch1053 -p1
 %patch1054 -p1
-%patch1055 -p1
+# %%patch1055 -p1 # TODO: apt support
 %patch1056 -p1
 %patch1057 -p1
 %patch1058 -p1
 %patch1059 -p1
 %patch1060 -p1
-# %%patch1061 -p1 # TODO: apt support
+%patch1061 -p1
 %patch1062 -p1
 %patch1063 -p1
 %patch1064 -p1
@@ -656,7 +569,7 @@ mv readline/doc readline-doc
 %patch1084 -p1
 %patch1085 -p1
 %patch1086 -p1
-%patch1087 -p1
+# %%patch1087 -p1 # TODO: apt support
 %patch1088 -p1
 %patch1089 -p1
 %patch1090 -p1
@@ -667,23 +580,6 @@ mv readline/doc readline-doc
 %patch1095 -p1
 %patch1096 -p1
 %patch1097 -p1
-%patch1098 -p1
-%patch1099 -p1
-%patch1100 -p1
-# %%patch1101 -p1 # TODO: apt support
-%patch1102 -p1
-%patch1103 -p1
-%patch1104 -p1
-%patch1105 -p1
-%patch1106 -p1
-%patch1107 -p1
-%patch1108 -p1
-%patch1109 -p1
-%patch1110 -p1
-%patch1111 -p1
-%patch1112 -p1
-%patch1113 -p1
-%patch1114 -p1
 
 # ALT patches
 %patch1 -p1
@@ -742,6 +638,7 @@ pushd %buildtarget
 %configure \
 	%configure_opts \
 	%{subst_enable tui} \
+	%{subst_with debuginfod} \
 %if_with python
 	--with-python=python3 \
 %endif
@@ -756,7 +653,7 @@ rm -rf light
 mkdir light
 pushd light
 
-%configure %configure_opts --disable-tui --without-expat --without-python
+%configure %configure_opts --disable-tui --without-expat --without-python --without-debuginfod
 %make_build
 
 popd #light
@@ -833,6 +730,10 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Tue Nov 10 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.1-alt1
+- Updated to 10.1.
+- Built with debuginfod support.
+
 * Mon Oct 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3-alt3
 - Applied upstream patch (ALT#39135) (fixes CVE-2019-1010180).
 
