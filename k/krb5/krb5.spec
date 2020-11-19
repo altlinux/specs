@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: krb5
-Version: 1.18.2
-Release: alt2
+Version: 1.18.3
+Release: alt1
 
 %if_without bootstrap
 %if_with doc
@@ -542,6 +542,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Thu Nov 19 2020 Ivan A. Melnikov <iv@altlinux.org> 1.18.3-alt1
+- 1.18.3 (Fixes: CVE-2020-28196)
+
 * Mon Jul 06 2020 Ivan A. Melnikov <iv@altlinux.org> 1.18.2-alt2
 - provide krb5-libs (RH/Fedora compatibility, suggested by cas@)
 
