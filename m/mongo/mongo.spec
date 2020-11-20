@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo
-Version: 4.4.1
-Release: alt1.1
+Version: 4.4.2
+Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 
@@ -195,6 +195,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Fri Nov 20 2020 Vladimir Didenko <cow@altlinux.org> 4.4.2-alt1
+- 4.4.2
+
 * Wed Sep 30 2020 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1.1
 - use rm instead of scons clean
 
