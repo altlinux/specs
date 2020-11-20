@@ -2,7 +2,7 @@
 Name: sqliteodbc
 Summary: ODBC driver for SQLite
 Version: 0.9996
-Release: alt2
+Release: alt3
 Source: %name-%version.tar.gz
 Patch: sqliteodbc-0.993-alt-odbcinstext.patch
 Group: Databases
@@ -44,7 +44,7 @@ rm -f %buildroot%_libdir/libsqlite3_mod_*.{a,la}
 
 %post
 if [ -x /usr/bin/odbcinst ] ; then
-   INST=/tmp/sqliteinst$$
+   INST=$(/bin/mktemp)
    if [ -r %_libdir/libsqliteodbc.so ] ; then
       cat > $INST << 'EOD'
 [SQLITE]
@@ -106,6 +106,9 @@ fi
 %_libdir/*.so*
 
 %changelog
+* Fri Nov 20 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9996-alt3
+- Updated rpm post script (Fixes: CVE-2020-12050).
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9996-alt2
 - NMU: rebuild without sqlite2 support
 
