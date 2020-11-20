@@ -6,7 +6,7 @@
 
 %define gst_version   1.0
 %define nspr_version  4.29
-%define nss_version   3.58.0
+%define nss_version   3.59.0
 %define rust_version  1.46.0
 %define cargo_version 1.46.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        82.0.3
+Version:        83.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -49,18 +49,14 @@ Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
 Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
 Patch011: 0011-Bug-1640982-Set-CARGO_PROFILE_RELEASE_LTO-true-when-.patch
 Patch012: 0012-use-floats-for-audio-on-arm-too.patch
-Patch013: 0013-MOZILLA-1669495-Fix-wrong-tooltips-sizes-on-wayland-.patch
-Patch014: 0014-MOZILLA-1668771-Wayland-Use-timeout-for-frame-callba.patch
-Patch015: 0015-MOZILLA-1661192-Don-t-use-popup-offset-when-we-don-t.patch
-Patch016: 0016-MOZILLA-1656727-Wayland-Track-delayed-commits-global.patch
-Patch017: 0017-MOZILLA-1640567-Pass-expected-window-position-to-the.patch
-Patch018: 0018-MOZILLA-1634404-Fix-popup-position-when-layout.css.d.patch
-Patch019: 0019-MOZILLA-1666567-land-NSS-c28e20f61e5d-UPGRADE_NSS_RE.patch
-Patch020: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
-Patch021: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
-Patch022: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
-Patch023: 0023-MOZILLA-1666567-land-NSS-NSS_3_58_RTM-UPGRADE_NSS_RE.patch
-Patch024: 0024-MOZILLA-1605273-only-run-CRLite-on-certificates-with.patch
+Patch013: 0013-bmo-847568-Support-system-harfbuzz.patch
+Patch014: 0014-bmo-847568-Support-system-graphite2.patch
+Patch015: 0015-bmo-1559213-Support-system-av1.patch
+Patch016: 0016-VAAPI-Add-extra-frames.patch
+Patch017: 0017-bmo-1673313-Wayland-Don-t-fail-when-Shm-allocation-f.patch
+Patch018: 0018-Bug-1673601-Wayland-Remove-WindowBackBufferShm-and-u.patch
+Patch019: 0019-Bug-1667736-Update-packed_simd-to-compile-on-Rust-1..patch
+Patch020: 0020-gfx-qcms-do-not-use-primitives-from-core-arch-arm.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -120,6 +116,10 @@ BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(graphite2)
+BuildRequires: pkgconfig(aom)
+BuildRequires: pkgconfig(dav1d)
 
 # Python requires
 BuildRequires: /dev/shm
@@ -239,10 +239,6 @@ Most likely you don't need to use this package.
 %patch018 -p1
 %patch019 -p1
 %patch020 -p1
-%patch021 -p1
-%patch022 -p1
-%patch023 -p1
-%patch024 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -258,10 +254,13 @@ ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
 %ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
+%ifnarch armh
+ac_add_options --enable-lto=cross
 %endif
-%ifnarch x86_64
-ac_add_options --disable-webrtc
 %endif
+#ifnarch x86_64
+#ac_add_options --disable-webrtc
+#endif
 %ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
 %endif
@@ -306,9 +305,6 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-#export MOZ_LTO=cross
-#export MOZ_NO_PIE_COMPAT=1
-
 export MOZ_PARALLEL_BUILD=8
 export CC="clang"
 export CXX="clang++"
@@ -352,13 +348,6 @@ export srcdir="$PWD"
 #export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export MACH_USE_SYSTEM_PYTHON=1
-
-# Fix virtualenv
-python3 ./mach python --exec-file /dev/null
-pyver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_info))')"
-find objdir/_virtualenvs/init_py3/lib/python3/site-packages \
-	-mindepth 1 -maxdepth 1 \
-	-exec mv -t "objdir/_virtualenvs/init_py3/lib/$pyver/site-packages" -- '{}' '+'
 
 python3 ./mach build
 
@@ -512,6 +501,31 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Nov 17 2020 Alexey Gladkov <legion@altlinux.ru> 83.0-alt1
+- New release (83.0).
+- Security fixes:
+  + CVE-2020-26951: Parsing mismatches could confuse and bypass security sanitizer for chrome privileged code
+  + CVE-2020-26952: Out of memory handling of JITed, inlined functions could lead to a memory corruption
+  + CVE-2020-16012: Variable time processing of cross-origin images during drawImage calls
+  + CVE-2020-26953: Fullscreen could be enabled without displaying the security UI
+  + CVE-2020-26954: Local spoofing of web manifests for arbitrary pages in Firefox for Android
+  + CVE-2020-26955: Cookies set during file downloads are shared between normal and Private Browsing Mode in Firefox for Android
+  + CVE-2020-26956: XSS through paste (manual and clipboard API)
+  + CVE-2020-26957: OneCRL was not working in Firefox for Android
+  + CVE-2020-26958: Requests intercepted through ServiceWorkers lacked MIME type restrictions
+  + CVE-2020-26959: Use-after-free in WebRequestService
+  + CVE-2020-26960: Potential use-after-free in uses of nsTArray
+  + CVE-2020-15999: Heap buffer overflow in freetype
+  + CVE-2020-26961: DoH did not filter IPv4 mapped IP Addresses
+  + CVE-2020-26962: Cross-origin iframes supported login autofill
+  + CVE-2020-26963: History and Location interfaces could have been used to hang the browser
+  + CVE-2020-26964: Firefox for Android's Remote Debugging via USB could have been abused by untrusted apps on older versions of Android
+  + CVE-2020-26965: Software keyboards may have remembered typed passwords
+  + CVE-2020-26966: Single-word search queries were also broadcast to local network
+  + CVE-2020-26967: Mutation Observers could break or confuse Firefox Screenshots feature
+  + CVE-2020-26968: Memory safety bugs fixed in Firefox 83 and Firefox ESR 78.5
+  + CVE-2020-26969: Memory safety bugs fixed in Firefox 83
+
 * Tue Nov 10 2020 Alexey Gladkov <legion@altlinux.ru> 82.0.3-alt1
 - New release (82.0.3).
 - Security fixes:
