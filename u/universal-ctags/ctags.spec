@@ -4,7 +4,7 @@
 
 Name:    universal-ctags
 Version: p5.9.20201115.0
-Release: alt1
+Release: alt2
 
 Summary: Universal Ctags generates an index of language objects found in source
 License: GPL-2.0-only
@@ -12,6 +12,7 @@ Group:   Development/Other
 Url:     https://ctags.io/
 Vcs:     https://github.com/universal-ctags/ctags.git
 # Docs:  https://docs.ctags.io
+Conflicts: ctags
 
 Source: %name-%version.tar
 BuildRequires: libjansson-devel
@@ -63,5 +64,8 @@ together.
 %_man7dir/ctags-*.7*
 
 %changelog
+* Fri Nov 20 2020 Vitaly Chikunov <vt@altlinux.org> p5.9.20201115.0-alt2
+- Add conflict with ctags.
+
 * Thu Nov 19 2020 Vitaly Chikunov <vt@altlinux.org> p5.9.20201115.0-alt1
 - Initial import of p5.9.20201115.0 (updates: 39176).
