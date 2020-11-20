@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt4.a1.hg20150730.1.1.1
+Release: alt4.a1.hg20150730.1.1.2
 Summary: Cross-platform windowing and multimedia library
 
 Group: Development/Python
@@ -30,6 +30,9 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 %endif
 
 %add_python_req_skip Cocoa CoreFoundation LaunchServices Quartz
+%filter_from_requires /darwin/d
+%filter_from_requires /carbon/d
+%filter_from_requires /win32/d
 
 %description
 pyglet provides an object-oriented programming interface for developing
@@ -148,6 +151,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Nov 20 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.3.0-alt4.a1.hg20150730.1.1.2
+- mac and win32 requires supressed
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt4.a1.hg20150730.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
