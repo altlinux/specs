@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.15
+Version: %ver_major.16
 Release: alt1
 
 Summary: Media Sharing Server
@@ -131,7 +131,7 @@ This package contains command line utilities for the PipeWire media server.
 %files
 %_bindir/%name
 %_bindir/pw-jack
-%_bindir/pw-pulse
+%_bindir/%name-pulse
 
 %{?_enable_examples:%_bindir/%name-media-session}
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
@@ -140,20 +140,21 @@ This package contains command line utilities for the PipeWire media server.
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
 %if_enabled systemd
-%_prefix/lib/systemd/user/pipewire.service
-%_prefix/lib/systemd/user/pipewire.socket
+%_prefix/lib/systemd/user/%name.service
+%_prefix/lib/systemd/user/%name.socket
+%_prefix/lib/systemd/user/%name-pulse.service
+%_prefix/lib/systemd/user/%name-pulse.socket
 
 %{?_enable_systemd_system_service:
 %_unitdir/%name.service
 %_unitdir/%name.socket}
-
 %endif
 %_datadir/alsa/alsa.conf.d/50-pipewire.conf
 %_datadir/alsa/alsa.conf.d/99-pipewire-default.conf
 %if_enabled man
 %_man1dir/%name.1*
 %_man1dir/pw-jack.1*
-%_man1dir/pw-pulse.1*
+#%_man1dir/pw-pulse.1*
 %_man5dir/%name.conf.5*
 %endif
 %doc README* NEWS
@@ -205,6 +206,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
+- updated to 0.3.16-1-g4d085816
+
 * Wed Nov 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1
 - updated to 0.3.15-2-g7a437696
 
