@@ -1,6 +1,8 @@
+%def_without docs
+
 Name:    appstream
 Version: 0.12.11
-Release: alt1
+Release: alt2
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -10,6 +12,7 @@ URL:     http://www.freedesktop.org/wiki/Distributions/AppStream/Software
 Source0: appstream-%{version}.tar
 # VCS:   https://github.com/ximion/appstream
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++
 BuildRequires: ctest
 BuildRequires: gettext
@@ -23,14 +26,16 @@ BuildRequires: libstemmer-devel
 BuildRequires: libxapian-devel
 BuildRequires: libxml2-devel
 BuildRequires: libyaml-devel
-BuildRequires: meson
 BuildRequires: ninja-build
 BuildRequires: protobuf-compiler
+%if_with docs
 BuildRequires: daps
+%endif
 BuildRequires: qt5-base-devel
 BuildRequires: xmlto
 BuildRequires: gtk-doc
 BuildRequires: libsoup-devel
+BuildRequires: /proc
 
 #Requires: appstream-data
 
@@ -75,7 +80,11 @@ BuildArch: noarch
 
 %build
 %meson  -Dqt=true \
+%if_with docs
 	-Ddocs=true \
+%else
+	-Ddocs=false \
+%endif
 	-Dstemming=true
 %meson_build
 
@@ -127,6 +136,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Nov 20 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.11-alt2
+- Do not build API documentation because both daps and publican are not build for i586.
+
 * Thu May 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.11-alt1
 - New version.
 - Use daps instead of publican for documentation build.
