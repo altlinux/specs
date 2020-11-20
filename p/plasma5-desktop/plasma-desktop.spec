@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.20.2
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -35,6 +35,7 @@ Patch14: alt-def-desktop-icons.patch
 Patch15: alt-menu-add-tooltip.patch
 Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-def-krunners.patch
+Patch18: alt-users-use-gost-yescrypt.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libusb-compat libxcb-devel libxcbutil-image libxcbutil-keysyms libxkbfile-devel mkfontscale pkg-config python-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -117,6 +118,7 @@ Common polkit files for %name
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 
 #Fix translate in Input Method Panel (kimpanel) widget.
 #If the po-file is called differently than "plasma_applet_org.kde.plasma.kimpanel.po", the kimpanel widget menu will be in English only.
@@ -195,6 +197,9 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Fri Nov 20 2020 Slava Aseev <ptrnine@altlinux.org> 5.20.2-alt3
+- Use gost-yescrypt password hashing instead of SHA-512
+
 * Tue Nov 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.2-alt2
 - don't increase kicker button size when custom icon selected
 
