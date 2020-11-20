@@ -1,23 +1,34 @@
+%def_disable snapshot
 %define _libexecdir %prefix/libexec
 %define ver_major 1.0
 %define api_ver 1.0
 
+%def_enable gtk_doc
+
 Name: gsound
 Version: %ver_major.2
-Release: alt1.1
+Release: alt2
 
 Summary: GSound is a small library for playing system sounds
 Group: Sound
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/GSound
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
+Patch: %name-1.0.2-alt-tools_makefile.patch
 
 Requires: lib%name = %version-%release
 
 %define glib_ver 2.36.0
 %define gtk_doc_ver 1.20
-BuildPreReq: libgio-devel >= %glib_ver
+
+BuildRequires(pre): rpm-build-gir rpm-build-vala
+BuildRequires: autoconf-archive
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libcanberra-devel gobject-introspection-devel gtk-doc >= %gtk_doc_ver
 BuildRequires: vala-tools libcanberra-vala
 
@@ -76,6 +87,7 @@ GObject introspection devel data for the GSound library.
 
 %prep
 %setup
+%patch
 %ifarch %e2k
 # unsupported as of lcc 1.23.20
 sed -i 's,--warn-all,-Wall,;s,--warn-error,-Werror,' m4/ax_compiler_flags_gir.m4
@@ -83,7 +95,9 @@ sed -i 's,--warn-all,-Wall,;s,--warn-error,-Werror,' m4/ax_compiler_flags_gir.m4
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+    %{?_enable_gtk_doc:--enable-gtk-doc}
+%nil
 %make_build
 
 %install
@@ -105,8 +119,10 @@ sed -i 's,--warn-all,-Wall,;s,--warn-error,-Werror,' m4/ax_compiler_flags_gir.m4
 %_vapidir/%name.deps
 %_vapidir/%name.vapi
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name/
+%endif
 
 %files -n lib%name-gir
 %_typelibdir/GSound-%api_ver.typelib
@@ -115,6 +131,10 @@ sed -i 's,--warn-all,-Wall,;s,--warn-error,-Werror,' m4/ax_compiler_flags_gir.m4
 %_girdir/GSound-%api_ver.gir
 
 %changelog
+* Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
+- updated to 1.0.2-4-g7f42599 (gsound-play: fixed setlocale call)
+- fixed build with automake-1.16.3, updated BRs
+
 * Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1.1
 - E2K: avoid lcc-unsupported options
 
