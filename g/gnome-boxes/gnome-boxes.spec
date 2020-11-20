@@ -1,4 +1,4 @@
-# since 3.29.x depends on modules in %_libdir/%name
+# since 3.29.x depends on modules in %_libdir/%%name
 %set_verify_elf_method unresolved=relaxed
 
 %def_disable snapshot
@@ -9,7 +9,7 @@
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -34,7 +34,7 @@ Source: %name-%version.tar
 %define spice_gtk_ver 0.32
 %define gudev_ver 165
 %define osinfo_ver 0.2.12
-%define tracker_ver 0.13.1
+%define tracker_ver 3.0
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.38
 %define libarchive_ver 3.0.0
@@ -67,7 +67,7 @@ BuildRequires: libusb-devel >= %libusb_ver
 BuildRequires: pkgconfig(spice-client-gtk-3.0) >= %spice_gtk_ver
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: libosinfo-devel >= %osinfo_ver
-BuildRequires: pkgconfig(tracker-sparql-2.0) >= %tracker_ver
+BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
@@ -117,7 +117,7 @@ the functionality of the Boxes.
 %_datadir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.boxes.gschema.xml
-%_datadir/osinfo/os/gnome.org/gnome-nightly.xml
+#%_datadir/osinfo/os/gnome.org/gnome-nightly.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*
 %_libexecdir/gnome-boxes-search-provider
 %_datadir/dbus-1/services/*.service
@@ -133,6 +133,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
+- 3.38.2
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
