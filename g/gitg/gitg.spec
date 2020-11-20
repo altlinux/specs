@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 3.32
 %define api_ver 1.0
 %define xdg_name org.gnome.gitg
@@ -6,14 +6,15 @@
 %def_enable python
 %def_enable glade
 %def_enable docs
+%def_disable check
 
 Name: gitg
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
-License: GPL
+License: GPL-2.0
 Url: https://wiki.gnome.org/Apps/Gitg
 
 %if_disabled snapshot
@@ -28,12 +29,6 @@ Requires: typelib(PeasGtk)
 
 %define gitg_pluginsdir %_libdir/%name/plugins
 
-%if_enabled python
-# use python3
-AutoReqProv: nopython
-%define __python %nil
-%endif
-
 %define glib_ver 2.38
 %define gtk_ver 3.20
 %define gtksourceview_ver 3.10
@@ -42,7 +37,7 @@ AutoReqProv: nopython
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-build-vala
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdazzle-devel
@@ -175,6 +170,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt2
+- updated to v3.32.1-19-ge1014482
+- fixed BR
+- disabled broken %%check
+- fixed license tag
+
 * Thu Jul 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 
