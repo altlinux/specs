@@ -13,7 +13,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Control Center
@@ -181,6 +181,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
+- 3.38.2
+
 * Sun Oct 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
