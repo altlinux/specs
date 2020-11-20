@@ -1,23 +1,21 @@
 Name: mousepad
-Version: 0.4.2
+Version: 0.4.90
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
 Summary (ru_RU.UTF-8): Простой текстовый редактор для Xfce
-License: %gpl2plus
+License: GPLv2+
 Group: Editors
-Url: https://www.xfce.org
+Url: https://docs.xfce.org/apps/mousepad/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+Vcs: https://gitlab.xfce.org/apps/mousepad.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 4.14.0
 BuildRequires: libxfconf-devel
-BuildRequires: libgtk+3-devel intltool libgtksourceview3-devel libgio-devel
-BuildRequires: exo-csource
+BuildRequires: libgtk+3-devel intltool libgtksourceview3-devel
 
 Obsoletes: xfce-mousepad < %version
 Provides: xfce-mousepad = %version-%release
@@ -44,9 +42,8 @@ Mousepad - простой текстовый редактор для Xfce осн
 
 %build
 %xfce4reconf
-%configure --enable-dbus \
+%configure \
 	--enable-maintainer-mode \
-	--enable-gtk3 \
 	--enable-debug=minimum
 %make_build
 
@@ -55,13 +52,26 @@ Mousepad - простой текстовый редактор для Xfce осн
 %find_lang mousepad
 
 %files -f mousepad.lang
-%doc NEWS README
+%doc NEWS README.md
 %_bindir/*
 %_datadir/polkit-1/actions/*.policy
 %_datadir/glib-2.0/schemas/org.xfce.mousepad.gschema.xml
+%_datadir/metainfo/*.xml
+%_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 
 %changelog
+* Fri Nov 20 2020 Mikhail Efremov <sem@altlinux.org> 0.4.90-alt1
+- Dropped obsoleted configure option.
+- Updated to 0.4.90.
+
+* Sat Sep 12 2020 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt2.g03db74b
+- Dropped exo-csource from BR.
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Updated from upstream git.
+
 * Mon Jul 29 2019 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1
 - Updated to 0.4.2.
 
