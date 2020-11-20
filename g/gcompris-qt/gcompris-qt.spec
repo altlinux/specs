@@ -1,5 +1,5 @@
 Name:    gcompris-qt
-Version: 0.97.1
+Version: 1.0
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -82,7 +82,7 @@ tar xf %SOURCE2
 %find_lang --with-qt %name
 
 %files -f %name.lang
-%doc README README.rst
+%doc README README.md
 %_bindir/%name
 %_libexecdir/qml/Box2D.2.0
 %dir %_datadir/%name
@@ -94,6 +94,9 @@ tar xf %SOURCE2
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Fri Nov 20 2020 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
+- New version.
+
 * Mon Jun 29 2020 Andrey Cherepanov <cas@altlinux.org> 0.97.1-alt1
 - New version.
 - Fix License tag according to SPDX.
