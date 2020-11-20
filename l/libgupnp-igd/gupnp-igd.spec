@@ -11,7 +11,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library to handle UPnP IGD port mapping
 Group: System/Libraries
@@ -100,7 +100,7 @@ GObject introspection devel data for the gUPnP-IGD library
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test -v
+%__meson_test -v -t 2
 
 %files
 %_libdir/*.so.*
@@ -124,6 +124,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.1
+- made twice as much tests timeout 
+
 * Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
