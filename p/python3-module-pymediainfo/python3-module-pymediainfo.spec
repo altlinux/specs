@@ -1,7 +1,7 @@
 %define modname pymediainfo
 
 Name: python3-module-%modname
-Version: 4.3
+Version: 5.0.2
 Release: alt1
 
 Summary: A Python 3 wrapper for the mediainfo library
@@ -14,8 +14,10 @@ BuildArch: noarch
 
 Requires: libmediainfo
 
-BuildRequires: python3-devel rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
+%define python3_ver 3.5
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel >= %python3_ver python3-module-setuptools_scm
 
 %description
 This Python3 module provides a wrapper around the MediaInfo library.
@@ -36,6 +38,9 @@ This Python3 module provides a wrapper around the MediaInfo library.
 
 
 %changelog
+* Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
+- 5.0.2
+
 * Sun Nov 08 2020 Yuri N. Sedunov <aris@altlinux.org> 4.3-alt1
 - 4.3
 
