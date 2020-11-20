@@ -1,13 +1,13 @@
 
 Name: kde5-virtual
-Version: 5.17.0
+Version: 5.20.0
 Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
 License: Public Domain
 
-BuildArch: noarch
+#BuildArch: noarch
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -173,7 +173,7 @@ Requires: qmmp1
 
 %package -n kde5-messenger-client-0-dummy
 Group: Graphical desktop/KDE
-Summary: QMMP audio player
+Summary: Dummy messaging client
 Provides: kde5-messenger-client = %EVR
 Provides: kde5-messenger-client-dummy = %EVR
 Requires: kf5-filesystem
@@ -182,7 +182,7 @@ Requires: kf5-filesystem
 
 %package -n kde5-messenger-client-2-kopete
 Group: Graphical desktop/KDE
-Summary: QMMP audio player
+Summary: Kopete messaging client
 Provides: kde5-messenger-client = %EVR
 Provides: kde5-messenger-client-kopete = %EVR
 Requires: kf5-filesystem
@@ -192,12 +192,26 @@ Requires: kde5-kopete
 
 %package -n kde5-messenger-client-4-telepathy
 Group: Graphical desktop/KDE
-Summary: QMMP audio player
+Summary: Telepathy messaging client
 Provides: kde5-messenger-client = %EVR
 Provides: kde5-messenger-client-telepathy = %EVR
 Requires: kf5-filesystem
 Requires: kde5-telepathy
 %description -n kde5-messenger-client-4-telepathy
+%summary
+
+%package -n kde5-messenger-client-6-mix
+Group: Graphical desktop/KDE
+Summary: Mixed messaging client
+Provides: kde5-messenger-client = %EVR
+Provides: kde5-messenger-client-mix = %EVR
+Requires: kf5-filesystem
+Requires: choqok psi
+#Requires: blink-qt
+%ifnarch armh ppc64le aarch64
+Requires: telegram-desktop
+%endif
+%description -n kde5-messenger-client-6-mix
 %summary
 
 %files -n kde5-network-manager-0-dummy
@@ -224,8 +238,12 @@ Requires: kde5-telepathy
 %files -n kde5-messenger-client-0-dummy
 %files -n kde5-messenger-client-2-kopete
 %files -n kde5-messenger-client-4-telepathy
+%files -n kde5-messenger-client-6-mix
 
 %changelog
+* Fri Nov 20 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
+- add kde5-messenger-client-mix
+
 * Mon Apr 20 2020 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
 - update kmail requires
 
