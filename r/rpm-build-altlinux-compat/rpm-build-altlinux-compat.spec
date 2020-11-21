@@ -2,7 +2,7 @@
 
 Name: rpm-build-altlinux-compat
 Version: 2.2.6
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux compatibility and extensions in rpm build
 
@@ -61,6 +61,7 @@ Group: Development/Other
 Requires: %_rpmmacrosdir
 # we will use distr_vendor from it
 Requires: rpm-build-compat = %version-%release
+Provides: rpm-macros-intro = %version-%release
 
 %description -n rpm-build-intro
 This package contains new macros introduced for
@@ -86,6 +87,7 @@ package to build requires.
 Summary: ALT Linux compatibility macros for backport purposes
 Group: Development/Other
 Requires: %_rpmmacrosdir
+Provides: rpm-macros-compat = %version-%release
 
 %description -n rpm-build-compat
 This package contains ALT Linux compatibility layer
@@ -128,6 +130,9 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.6-alt2
+- restore rpm-macros-intro and rpm-macros-compat provides
+
 * Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.6-alt1
 - introduce python3_build_doc
 - drop duplicate self-provides
