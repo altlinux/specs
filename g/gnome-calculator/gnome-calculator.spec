@@ -6,8 +6,10 @@
 %define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
+%def_enable check
+
 Name: gnome-calculator
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -132,7 +134,6 @@ This package provides Development documentation for the GNOME Calculator
 GTK interface library.
 
 
-
 %prep
 %setup
 
@@ -142,8 +143,11 @@ GTK interface library.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -197,6 +201,10 @@ GTK interface library.
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
+- 3.38.2
+- enabled %%check
+
 * Fri Oct 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

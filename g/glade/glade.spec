@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: glade
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
@@ -162,6 +162,9 @@ xvfb-run %meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
+- 3.38.2
+
 * Mon Oct 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
