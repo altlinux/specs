@@ -1,7 +1,7 @@
 %def_disable static
 %define gecko_version 2.47.1
 %define mono_version 5.1.1
-%define major 5.20
+%define major 5.22
 %define rel %nil
 
 %def_with gtk3
@@ -15,7 +15,7 @@
 %endif
 
 Name: wine
-Version: %major.0.1
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -470,10 +470,24 @@ done
 %endif
 
 %libwinedir/ntdll.so
+%libwinedir/gdi32.so
 %libwinedir/user32.so
 %libwinedir/bcrypt.so
 %libwinedir/odbc32.so
 %libwinedir/windowscodecs.so
+%libwinedir/crtdll.so
+%libwinedir/crypt32.so
+%libwinedir/mscms.so
+%libwinedir/msvcr100.so
+%libwinedir/msvcr110.so
+%libwinedir/msvcr120.so
+%libwinedir/msvcr70.so
+%libwinedir/msvcr71.so
+%libwinedir/msvcr80.so
+%libwinedir/msvcr90.so
+%libwinedir/msvcrt.so
+%libwinedir/msvcrtd.so
+%libwinedir/ucrtbase.so
 %libwinedir/*.com.so
 %libwinedir/*.cpl.so
 %libwinedir/*.drv.so
@@ -486,9 +500,6 @@ done
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
-%_datadir/wine/winebus.inf
-%_datadir/wine/wineusb.inf
-%_datadir/wine/winehid.inf
 %_datadir/wine/nls/
 %_datadir/wine/fonts/
 
@@ -567,6 +578,12 @@ done
 %endif
 
 %changelog
+* Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.22.1-alt1
+- new version 5.22.1 (with rpmrb script)
+
+* Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.21.1-alt1
+- new version 5.21.1 (with rpmrb script)
+
 * Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.20.0.1-alt1
 - new version 5.20.0.1 (with rpmrb script)
 
