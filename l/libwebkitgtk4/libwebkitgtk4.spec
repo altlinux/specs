@@ -14,7 +14,11 @@
 # wpebackend-fdo >= 1.4
 #Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp:
 #wpe_loader_init("libWPEBackend-fdo-1.0.so");
+# fixed in 2.30.3
+#wpe_loader_init("libWPEBackend-fdo-1.0.so.1");
+
 %define wpebackend_fdo_sover 1
+
 %def_enable ninja
 %if_enabled ninja
 # redefine cmake macros
@@ -35,8 +39,8 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -227,9 +231,9 @@ GObject introspection devel data for the JavaScriptCore library
 %patch2 -b .arm64
 %endif
 
-# fix libWPEBackend-fdo soname
-sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
-	Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp
+# fixed in 2.30.3
+#sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
+#	Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp
 
 # Remove bundled libraries
 rm -rf Source/ThirdParty/gtest/
@@ -360,6 +364,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.3-alt1
+- 2.30.3
+
 * Tue Nov 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.2-alt1.1
 - rebuilt with ninja instead make
 
