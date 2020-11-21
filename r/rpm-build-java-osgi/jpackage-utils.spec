@@ -37,7 +37,7 @@
 
 Name:           rpm-build-java-osgi
 Version:        5.0.0
-Release:        alt45
+Release:        alt46
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -53,7 +53,7 @@ Source23:        abs2rel.lua
 # not used: duplicate Patch21: jpackage-utils-own-mavendirs.patch
 Patch0:  jpackage-utils-maven-macros.patch
 Patch1: jpackage-utils-openjdk-1.7.0-alt-version.patch
-Patch2: jpackage-utils-1.7.4-alt-fix-typo-in-comments.patch    
+Patch2: jpackage-utils-1.7.4-alt-fix-typo-in-comments.patch
 Patch3: jpackage-utils-1.7.5-alt-rpmscript-safe-mode.patch
 Patch4: jpackage-utils-1.7.5-alt-hasher-support-hack.patch
 Patch5: jpackage-utils-1.7.5-alt-undefined-alternatives-during-transaction-hack.patch
@@ -540,6 +540,9 @@ rm -f /etc/maven/maven2-depmap.xml
 %endif
 
 %changelog
+* Sat Nov 21 2020 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt46
+- fixed bug in osgi.prov (closes: #39328)
+
 * Fri Apr 20 2018 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt45
 - bugfix release
 
