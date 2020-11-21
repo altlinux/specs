@@ -6,8 +6,8 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: EOG plugins
 License: %gpl2plus
@@ -105,6 +105,9 @@ This package provides Eog plugin for upload pictures to Picasa web albums.
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.6-alt1
+- 3.26.6
+
 * Sun May 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.5-alt2
 - disabled postr plugin
 
