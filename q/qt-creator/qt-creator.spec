@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with ClangCodeModel
-%define llvm_version 10.0
+%define llvm_version 11.0
 
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.13.2
+Version: 4.13.3
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -141,6 +141,10 @@ export LLVM_INSTALL_DIR="%_prefix"
 # Remove Windows cdb debugger support to prevent unmet python2.7(cdbext)
 rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 
+# Make symlink to prevent package upgrade failure
+rm -rf %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-application/CocoaApplication/en_US.lproj
+ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-application/CocoaApplication/en_US.lproj
+
 %files
 %doc README* LICENSE*
 %_bindir/*
@@ -159,6 +163,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Nov 20 2020 Andrey Cherepanov <cas@altlinux.org> 4.13.3-alt1
+- New version.
+
 * Sun Oct 04 2020 Andrey Cherepanov <cas@altlinux.org> 4.13.2-alt1
 - New version.
 
