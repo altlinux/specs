@@ -1,10 +1,10 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           AGReader
 Version:        1.2
-Release:        alt2_21
+Release:        alt2_26
 Summary:        Console reader for viewing AmigaGuide files
-Group:          Text tools
 License:        GPL+
 URL:            http://main.aminet.net/misc/unix/
 Source0:        http://main.aminet.net/misc/unix/%{name}.tar.bz2
@@ -23,7 +23,7 @@ subset of the v40 specifications.
 
 
 %build
-make -C Sources %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS"
+%make_build -C Sources CFLAGS="$RPM_OPT_FLAGS"
 
 
 %install
@@ -41,6 +41,9 @@ install -m0755 Sources/agr %{buildroot}%{_bindir}
 
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_26
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_21
 - update to new release by fcimport
 
