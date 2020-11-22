@@ -1,7 +1,9 @@
-Group: System/Libraries
+%define oldname libqb
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(libsystemd) python-devel
+BuildRequires: /usr/bin/splint gcc-c++ python-devel
 # END SourceDeps(oneline)
+Group: System/Legacy libraries
+%add_optflags %optflags_shared
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,16 +14,14 @@ BuildRequires: gcc-c++ pkgconfig(libsystemd) python-devel
 %define _localstatedir %{_var}
 %bcond_without check
 
-Name:           libqb
-Version:        2.0.1
-Release:        alt1_2
+Name:           libqb0
+Version:        1.0.6
+Release:        alt2
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
-Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
-
-Patch1:         libqb-2.0.1-remove-deprecated-check-macros.patch
+Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{oldname}-%{version}.tar.xz
 
 BuildRequires:  autoconf automake libtool
 BuildRequires:  libcheck-devel
@@ -32,30 +32,17 @@ BuildRequires:  procps
 BuildRequires:  pkgconfig(glib-2.0)
 # git-style patch application
 BuildRequires:  git-core
-# For doxygen2man
-BuildRequires:  libxml2-devel
 Source44: import.info
+Conflicts: libqb < 1.0.6-alt2
+Obsoletes: libqb < 1.0.6-alt2
 
 %description
-A "Quite Boring" library that provides high-performance, reusable features for client-server
+libqb provides high-performance, reusable features for client-server
 architecture, such as logging, tracing, inter-process communication (IPC),
 and polling.
-
-%package -n libqb100
-Summary:        Shared library for the %name library
-Group:          System/Libraries
-
-%description -n libqb100
-A "Quite Boring" library that provides high-performance, reusable features for client-server
-architecture, such as logging, tracing, inter-process communication (IPC),
-and polling.
-
-This package contains the shared library.
 
 %prep
-%setup -q # for when patches around
-%patch1 -p1
-
+%setup -n %{oldname}-%{version} -q # for when patches around
 
 %build
 ./autogen.sh
@@ -70,23 +57,21 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 
 
 %files
-%{_sbindir}/qb-blackbox
-%{_mandir}/man8/qb-blackbox.8*
-
-%files -n libqb100
 %doc --no-dereference COPYING
-%_libdir/libqb.so.100
-%_libdir/libqb.so.100.*
+%{_libdir}/libqb.so.*
+#%{_sbindir}/qb-blackbox
+#%{_mandir}/man8/qb-blackbox.8*
 
+%if 0
 %package        devel
 Group: Development/Other
-Summary:        Development files for %{name}
-Requires:       libqb100 = %EVR
+Summary:        Development files for %{oldname}
+Requires:       %{name} = %{version}-%{release}
 Requires:       pkgconfig
 
 %description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+The %{oldname}-devel package contains libraries and header files for
+developing applications that use %{oldname}.
 
 %files          devel
 %doc README.markdown
@@ -94,25 +79,11 @@ developing applications that use %{name}.
 %{_libdir}/libqb.so
 %{_libdir}/pkgconfig/libqb.pc
 %{_mandir}/man3/qb*3*
-
-
-%package -n     doxygen2man
-Group: System/Libraries
-Summary:        Program to create nicely-formatted man pages from Doxygen XML files
-Requires:       libqb100 = %EVR
-
-
-%description -n doxygen2man
-This package contains a program to create nicely-formatted man pages from Doxygen XML files
-
-%files -n       doxygen2man
-%{_bindir}/doxygen2man
-%{_mandir}/man1/doxygen2man.1*
-
+%endif
 
 %changelog
-* Sun Nov 22 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2
-- new version
+* Sun Nov 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt2
+- compat library
 
 * Wed May 06 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.6-alt1
 - 1.0.6
