@@ -2,25 +2,24 @@
 
 Name: python3-module-%oname
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: Modular toolkit for Data Processing
+
 Group: Development/Python3
 License: LGPL v2
 URL: http://mdp-toolkit.sourceforge.net/
-# git://github.com/mdp-toolkit/mdp-toolkit
-BuildArch: noarch
 
+# git://github.com/mdp-toolkit/mdp-toolkit
 Source: %oname-%version.tar.gz
 Source1: MDP-tutorial.pdf
+
+BuildArch: noarch
 
 %add_python3_req_skip test shogun UserDict
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-scipy libnumpy-py3-devel
-BuildRequires: python-tools-2to3
-
-Requires: python3-module-%oname-tests = %version-%release
 
 
 %description
@@ -93,6 +92,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Sun Nov 22 2020 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt2
+- cleanup spec
+
 * Fri Nov 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.5-alt1
 - Version updated to 3.5
 - disable python2, enable python3
