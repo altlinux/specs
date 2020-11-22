@@ -2,7 +2,7 @@
 %define        gemname ruby_parser
 
 Name:          gem-%pkgname
-Version:       3.14.2
+Version:       3.15.0
 Release:       alt1
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby
 License:       MIT
@@ -15,10 +15,10 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: unifdef
-BuildRequires: gem(hoe)
+BuildRequires: gem-hoe
 BuildRequires: gem(sexp_processor)
 BuildRequires: gem(oedipus_lex)
-BuildRequires: gem(racc)
+BuildRequires: gem-racc
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
@@ -82,7 +82,10 @@ Executable file for %gemname gem.
 
 
 %changelog
-* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.14.2-alt1
+* Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 3.15.0-alt1
+- ^ 3.14.2 -> 3.15.0
+
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.14.2-alt0.1
 - updated (^) 3.13.1 -> 3.14.2
 - fixed (!) spec
 

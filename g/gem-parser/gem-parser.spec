@@ -1,8 +1,8 @@
 %define        pkgname parser
 
 Name:          gem-%pkgname
-Version:       2.7.1.4
-Release:       alt1.1
+Version:       2.7.2.0
+Release:       alt1
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
@@ -86,6 +86,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.2.0-alt1
+- ^ 2.7.1.4 -> 2.7.2.0
+
 * Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1.4-alt1.1
 - ! building by usage of compilation with ragel
 
