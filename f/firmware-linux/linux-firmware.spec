@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20201109
+Version: 20201120
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,20 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Nov 22 2020 Cronbuild Service <cronbuild@altlinux.org> 20201120-alt1
+- upstream changes (GIT bc9cd0b):
+  + Update AMD SEV firmware (thx John Allen)
+  + amdgpu: add sienna cichlid firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update vega20 firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update renoir firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update navi12 firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware for 20.45 (thx Alex Deucher)
+  + amdgpu: update raven firmware for 20.45 (thx Alex Deucher)
+
 * Sun Nov 15 2020 Cronbuild Service <cronbuild@altlinux.org> 20201109-alt1
 - upstream changes (GIT 2ea8667):
   + rtlwifi: v88.2 firmware files for RTL8192CU (thx Reto Schneider)
