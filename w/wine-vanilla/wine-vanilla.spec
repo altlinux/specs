@@ -11,8 +11,8 @@
 %endif
 
 Name: wine-vanilla
-Version: 5.20
-Release: alt1
+Version: 5.22
+Release: alt2
 
 Summary: Wine - environment for running Windows applications
 
@@ -195,6 +195,9 @@ Requires: libvulkan1
 #Requires: libnetapi libunixODBC2 libpcap0.8
 
 Requires: fontconfig libfreetype
+
+# https://lists.altlinux.org/pipermail/devel/2020-November/212533.html
+AutoProv: no
 
 
 %description -n lib%name
@@ -394,10 +397,24 @@ done
 %endif
 
 %_libdir/wine/ntdll.so
+%_libdir/wine/gdi32.so
 %_libdir/wine/user32.so
 %_libdir/wine/bcrypt.so
 %_libdir/wine/odbc32.so
 %_libdir/wine/windowscodecs.so
+%_libdir/wine/crtdll.so
+%_libdir/wine/crypt32.so
+%_libdir/wine/mscms.so
+%_libdir/wine/msvcr100.so
+%_libdir/wine/msvcr110.so
+%_libdir/wine/msvcr120.so
+%_libdir/wine/msvcr70.so
+%_libdir/wine/msvcr71.so
+%_libdir/wine/msvcr80.so
+%_libdir/wine/msvcr90.so
+%_libdir/wine/msvcrt.so
+%_libdir/wine/msvcrtd.so
+%_libdir/wine/ucrtbase.so
 %_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
@@ -410,9 +427,6 @@ done
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
-%_datadir/wine/winebus.inf
-%_datadir/wine/wineusb.inf
-%_datadir/wine/winehid.inf
 %_datadir/wine/nls/
 %_datadir/wine/fonts/
 
@@ -491,6 +505,15 @@ done
 %endif
 
 %changelog
+* Sun Nov 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.22-alt2
+- don't provide libwine.so.1 from libwine-vanilla subpackage
+
+* Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 5.22-alt1
+- new version 5.22
+
+* Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 5.21-alt1
+- new version 5.21
+
 * Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 5.20-alt1
 - new version 5.20
 
