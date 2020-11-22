@@ -21,7 +21,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.6.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -35,7 +35,6 @@ Source: %name-%version.tar
 
 Requires: python3-module-%oname = %EVR
 
-BuildRequires: libnumpy-devel
 BuildRequires: libhdf5-devel liblzo2-devel bzlib-devel
 BuildRequires: xsltproc inkscape fop
 BuildRequires: java-devel-default docbook-tldp-xsl docbook-dtds
@@ -46,7 +45,7 @@ BuildRequires: libblosc-devel
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
+BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: python3-module-distribute python3-module-Cython
 BuildRequires: python3-module-numexpr
 BuildRequires: python3-module-mock
@@ -111,7 +110,6 @@ export NPY_NUM_BUILD_JOBS=%__nprocs
 
 %install
 %python3_install --hdf5=%hdf5dir --root=%buildroot
-%python3_prune
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -137,11 +135,18 @@ cp -fR LICENSES %buildroot%_docdir/%name
 
 %files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests/
 
 %files doc
 %_docdir/%name
 
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/tests/
+
 %changelog
+* Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.1-alt4
+- NMU: update buildreqs, build tests subpackage
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.1-alt3
 - NMU: s/numexpr-tests/numexpr/
 - NMU: don't package tests
