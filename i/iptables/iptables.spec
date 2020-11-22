@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -125,14 +125,13 @@ sed s/NFPROTO_IPV4/NFPROTO_IPV6/ extensions/libipt_NETFLOW.c \
 %install
 %makeinstall_std
 
+# Relocate shared libraries from %%_libdir/ to /%%_lib/.
 mkdir -p %buildroot/%_lib
-# Relocate shared libraries from %_libdir/ to /%_lib/.
-for f in %buildroot%_libdir/lib*.so; do
-	t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
-	[ -n "$t" ]
-	ln -snf ../../%_lib/"$t" "$f"
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+for f in %buildroot%_libdir/*.so; do
+        t="$(readlink -v "$f")"
+        ln -fnrs %buildroot/%_lib/"$t" "$f"
 done
-mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 
 output_format=$(%__cc $CFLAGS $LDFLAGS -shared -xc /dev/null -o/dev/null -Wl,--verbose -v 2>&1 |
 		sed -n -f output-format.sed)
@@ -257,6 +256,9 @@ fi
 %endif
 
 %changelog
+* Sun Nov 22 2020 Dmitry V. Levin <ldv@altlinux.org> 1.8.6-alt1
+- v1.8.5-4-g848b4889 -> v1.8.6.
+
 * Tue Jun 09 2020 Dmitry V. Levin <ldv@altlinux.org> 1.8.5-alt1
 - v1.8.4 -> v1.8.5-4-g848b4889.
 
