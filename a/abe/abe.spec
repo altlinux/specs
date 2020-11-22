@@ -1,12 +1,12 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_33
+Release:        alt5_40
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 License:        GPL+
@@ -30,7 +30,7 @@ Patch3:         %{name}-1.1-aarch64.patch
 Patch4:         %{name}-1.1-format-security.patch
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libXi-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  libSDL-devel
@@ -62,7 +62,7 @@ sed -i "s|^CFLAGS =.*|CFLAGS = ${RPM_OPT_FLAGS} \$\(SDL_CFLAGS\)|" src/Makefile
 %make_build
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std
 
 # make install does not copy the game data files.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{name}
@@ -96,6 +96,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_40
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_33
 - update to new release by fcimport
 
