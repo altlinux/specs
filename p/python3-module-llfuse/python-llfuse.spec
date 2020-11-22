@@ -1,7 +1,7 @@
 %define oname llfuse
 
 Name: python3-module-llfuse
-Version: 1.3.6
+Version: 1.3.8
 Release: alt1
 
 Summary: Python Bindings for the low-level FUSE API
@@ -38,7 +38,7 @@ rm -rf src/llfuse.egg-info
 find -name '*.py' | xargs sed -i '1s|^#!python|#!%__python3|'
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -48,6 +48,9 @@ find -name '*.py' | xargs sed -i '1s|^#!python|#!%__python3|'
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 22 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1
+- Update for python3.9.
+
 * Wed Jun 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.6-alt1
 - new version (1.3.6) with rpmgs script
 - python3 module only
