@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Package-Stash
 Name: perl-%dist
-Version: 0.38
+Version: 0.39
 Release: alt1
 
 Summary: Routines for manipulating stashes
@@ -17,7 +17,7 @@ BuildArch: noarch
 Requires: perl-Package-Stash-XS
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-Dist-CheckConflicts perl-Package-DeprecationManager perl-Package-Stash-XS perl-Test-Fatal perl-Test-Requires perl(Module/Implementation.pm)
+BuildRequires: perl-Dist-CheckConflicts perl-Package-DeprecationManager perl-Package-Stash-XS perl-Test-Fatal perl-Test-Requires perl(Module/Implementation.pm) perl(CPAN/Meta/Check.pm) perl(Test/Needs.pm)
 
 %description
 Manipulating stashes (Perl's symbol tables) is occasionally necessary, but
@@ -44,6 +44,9 @@ sed -i- '/^check_conflicts/s/^/#/' Makefile.PL
 %perl_vendor_privlib/Package
 
 %changelog
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- automated CPAN update
+
 * Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - automated CPAN update
 
