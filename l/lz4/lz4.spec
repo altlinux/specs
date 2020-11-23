@@ -1,12 +1,12 @@
 Name: lz4
 Epoch: 1
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 Summary: Fast LZ compression algorithm library and tools
 License: GPLv2+ and BSD
 Group: Archiving/Compression
 Url: https://lz4.github.io/lz4/
-# https://github.com/lz4/lz4
+Vcs: https://github.com/lz4/lz4
 # git://git.altlinux.org/gears/l/lz4.git
 Source: %name-%version-%release.tar
 Requires: lib%name = %EVR
@@ -92,6 +92,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %check
 export CC=false CXX=false # nothing should be compiled or linked during check
@@ -118,6 +119,9 @@ make -k test -C tests BUILD_STATIC=%BUILD_STATIC
 %endif
 
 %changelog
+* Wed Nov 18 2020 Dmitry V. Levin <ldv@altlinux.org> 1:1.9.3-alt1
+- v1.9.2 -> v1.9.3-5-g416bc96.
+
 * Thu Aug 15 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.9.2-alt1
 - v1.9.1 -> v1.9.2.
 
