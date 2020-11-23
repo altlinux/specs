@@ -1,7 +1,7 @@
 
 Name: cacti
-Version: 1.2.10
-Release: alt3
+Version: 1.2.15
+Release: alt1
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -163,6 +163,9 @@ fi
 %cactidir/install
 
 %changelog
+* Mon Nov 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.15-alt1
+- Updated to upstream version 1.2.15 (Fixes: CVE-2020-13230, CVE-2020-13231).
+
 * Thu Mar 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt3
 - fix syntax error in include/global.php (thx to vercha@)
 
