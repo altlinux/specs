@@ -2,7 +2,7 @@
 
 Name:          termit
 Version:       3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Minimalistic terminal emulator with tabs and encoding support
 Url:           https://github.com/nonstop/termit/wiki
 Vcs:           https://github.com/nonstop/termit.git
@@ -24,7 +24,6 @@ BuildRequires: libpixman-devel
 BuildRequires: libXau-devel
 BuildRequires: liblua5.3-devel
 
-Provides:      xvt, %_bindir/xvt
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      fonts-ttf-paratype-pt-mono
 
@@ -53,7 +52,7 @@ cmake -DCMAKE_INSTALL_PREFIX=%_prefix .
 
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
-%_bindir/xvt %_bindir/termit 40
+%_bindir/termit 40
 EOF
 
 install -m644 -D %SOURCE1 %buildroot%_sysconfdir/xdg/termit/rc.lua
@@ -74,6 +73,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_metainfodir/%name.metainfo.xml
 
 %changelog
+* Mon Nov 23 2020 Pavel Skrylev <majioa@altlinux.org> 3.1-alt1.1
+- - invalid provides
+- ! invalid alternatives files for termit (closes #39338)
+
 * Thu Apr 16 2020 Pavel Skrylev <majioa@altlinux.org> 3.1-alt1
 - ^ 2.5.0 -> 3.1
 - * configuration lua-file
