@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.5.1
-Release: alt3
+Release: alt4
 
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: MIT / BSD
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Patch0: python-module-blosc-%version-arm.patch
 Patch1: %oname-%version-alt-docs.patch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libblosc-devel
 %if_with docs
@@ -90,6 +91,8 @@ This package contains pickles for %oname.
 %patch0 -p1
 %endif
 
+sed -i "s|.*blosc.test.*||" blosc/__init__.py
+
 %if_with docs
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 %endif
@@ -102,6 +105,8 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %install
 %python3_install --blosc=%prefix
+%python3_prune
+rm -fv %buildroot/%python3_sitelibdir/%oname/test.py
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -126,10 +131,12 @@ nosetests3 -v --with-doctest %oname
 %if_with docs
 %exclude %python3_sitelibdir/*/pickle
 %endif
+%if 0
 %exclude %python3_sitelibdir/*/test*
 
 %files tests
 %python3_sitelibdir/*/test*
+%endif
 
 %if_with docs
 %files pickles
@@ -138,6 +145,9 @@ nosetests3 -v --with-doctest %oname
 
 
 %changelog
+* Mon Nov 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt4
+- NMU: disable tests packing, fix build
+
 * Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5.1-alt3
 - build for python2 disabled
 
