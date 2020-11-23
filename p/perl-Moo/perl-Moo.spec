@@ -1,9 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %filter_from_requires /^perl.MRO.Compat.pm./d
 
-%define _unpackaged_files_terminate_build 1
 Name: perl-Moo
-Version: 2.004000
-Release: alt2
+Version: 2.004003
+Release: alt1
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
 Group: Development/Perl
@@ -39,6 +39,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 2.004003-alt1
+- new version
+
 * Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 2.004000-alt2
 - build w/o perl-MRO-Compat
 
