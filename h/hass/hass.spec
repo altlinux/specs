@@ -1,5 +1,5 @@
 Name: hass
-Version: 0.117.2
+Version: 0.118.2
 Release: alt1
 
 Summary: Home automation platform
@@ -20,7 +20,7 @@ Requires: python3-module-pip >= 8.0.3
 Requires: python3-module-astral >= 1.10.1
 Requires: python3-module-text-unidecode >= 1.3
 Requires: python3-module-aiohttp-cors >= 0.7.0
-Requires: python3-module-hass-frontend >= 20201021.4
+Requires: python3-module-hass-frontend >= 20201111.2
 Requires: python3-module-websocket-client >= 0.56.0
 
 %package -n python3-module-hass
@@ -85,6 +85,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Mon Nov 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.118.2-alt1
+- 0.118.2 released
+
 * Mon Nov 02 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.117.2-alt1
 - 0.117.2 released
 
