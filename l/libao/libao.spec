@@ -1,6 +1,6 @@
 Name: libao
 Version: 1.2.2
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Cross Platform Audio Output Library
@@ -46,7 +46,7 @@ sed -i 's,-O20,%optflags_optimization,g' configure*
 	--disable-esd \
 	--disable-arts \
 	--disable-nas
-%make_build
+%make_build AO_CFLAGS="%optflags"
 
 %install
 %makeinstall_std
@@ -54,7 +54,7 @@ sed -i 's,-O20,%optflags_optimization,g' configure*
 mkdir -p %buildroot%_sysconfdir
 cat <<__EOF__ >%buildroot%_sysconfdir/%name.conf
 # possible values for "default_driver" are: alsa, pulse
-default_driver=pulse
+default_driver=pulse,alsa
 __EOF__
 
 %files
@@ -74,6 +74,12 @@ __EOF__
 %_datadir/aclocal/*
 
 %changelog
+* Mon Nov 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.2.2-alt5
+- NMU: fallback to alsa driver if pulse fails (closes: #39337)
+- backported from e2k (thx mike@):
+  + piggyback our CFLAGS as these don't get respected by libao
+    (thx ldv@ yet again)
+
 * Mon Mar 23 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.2.2-alt4
 - pulse driver defined by default (closes: #32128)
 
