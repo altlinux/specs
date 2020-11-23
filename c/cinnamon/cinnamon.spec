@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.6.7
-Release: alt1
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -171,6 +171,9 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %filter_from_requires /libmuffin-clutter/d
 %filter_from_requires /libmuffin-cogl/d
 
+# Clean-up provides
+%filter_from_provides /typelib(St)/d
+
 %files
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
@@ -201,6 +204,9 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Mon Nov 23 2020 Vladimir Didenko <cow@altlinux.org> 4.6.7-alt2
+- Clean-up provides
+
 * Thu Sep 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.7-alt1
 - 4.6.7
 
