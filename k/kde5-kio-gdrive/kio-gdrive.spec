@@ -6,7 +6,7 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 20.08.2
+Version: 20.08.3
 Release: alt1
 %K5init altplace appdata
 
@@ -14,6 +14,8 @@ Group:     Networking/File transfer
 Summary:   KIO-client for Google Drive
 License:   GPLv2 / GPLv3
 URL:       https://cgit.kde.org/kio-gdrive.git/
+
+Requires: kde5-kaccounts-providers signon-plugin-oauth2
 
 Source: %rname-%version.tar
 Source10: kio5_gdrive_ru.po
@@ -66,6 +68,9 @@ rm -f "$tmp_file"
 %endif
 
 %changelog
+* Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
+- new version
+
 * Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
 - new version
 
