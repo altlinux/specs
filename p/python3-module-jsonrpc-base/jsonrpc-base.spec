@@ -1,5 +1,5 @@
 Name: python3-module-jsonrpc-base
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 Summary: JSON-RPC client implementation interface python code
@@ -30,5 +30,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/jsonrpc_base-%version-*-info
 
 %changelog
+* Mon Nov 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt1
+- 1.1.0 released
+
 * Mon Jan 13 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.3-alt1
 - initial
