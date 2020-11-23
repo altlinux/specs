@@ -1,6 +1,8 @@
+%def_without gir
+
 Name: ganv
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: Interactive Gtk widget for interactive "boxes and lines" or graph-like environments
 License: GPL-3.0
 Group: Graphics
@@ -120,11 +122,13 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 %_libdir/*.so
 %_pkgconfigdir/*
 
+%if_with gir
 %files -n lib%name-gir
 %_typelibdir/Ganv-1.0.typelib
 
 %files -n lib%name-gir-devel
 %_typelibdir/Ganv-1.0.gir
+%endif
 
 %files tests
 %_bindir/*
@@ -133,6 +137,9 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 %doc docs/*
 
 %changelog
+* Mon Nov 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt2
+- Build without introspection.
+
 * Sun May 31 2020 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version.
 - Use python3 in waf build scripts.
