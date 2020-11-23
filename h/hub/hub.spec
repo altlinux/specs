@@ -3,7 +3,7 @@
 # TODO: build with external sources
 
 Name: hub
-Version: 2.11.2
+Version: 2.14.2
 Release: alt1
 
 Summary: A command-line wrapper for git with github shortcuts
@@ -24,10 +24,7 @@ BuildRequires: golang >= 1.7
 # for man and help
 BuildRequires: ronn
 
-# FIXME
-#groff -Wall -mtty-char -mandoc -Tutf8 -rLL=87n share/man/man1/hub.1.ronn | col -b >share/man/man1/hub.1.txt
-#col: Invalid or incomplete multibyte or wide character
-Conflicts: groff-base
+BuildRequires: /usr/bin/groff
 
 BuildRequires: git-core
 
@@ -66,15 +63,20 @@ features and commands that make working with GitHub easier.
 #       vendor/github.com/mitchellh/go-homedir
 
 # TODO: macro
-mkdir -p Godeps/src/github.com/github
-ln -snf $(pwd) Godeps/src/github.com/github/hub
+#mkdir -p Godeps/src/github.com/github
+#ln -snf $(pwd) Godeps/src/github.com/github/hub
 
 %build
-export GOPATH=$(pwd):$(pwd)/Godeps:%go_path
-%gobuild -o bin/%name -ldflags '-X github.com/github/hub/version.Version=%version'
+#export GOPATH=$(pwd)/Godeps:%go_path
+#gobuild -o bin/%name -ldflags '-X github.com/github/hub/version.Version=%version'
+make
 
 # use system ronn, skip build from Internet
 ln -s %_bindir/ronn bin/ronn
+
+# col needs UTF-8 locale for UTF-8 input
+# https://github.com/karelzak/util-linux/issues/1198
+export LANG=en_US.UTF-8
 make man-pages
 
 %install
@@ -85,6 +87,7 @@ make install PREFIX=%buildroot%_prefix
 # Documentation
 #install -d -m 755 %buildroot%_man1dir/
 #cp -p man/hub.1 %buildroot%_man1dir/.
+mv %buildroot%_docdir/hub-doc %buildroot%_docdir/hub
 
 # Bash-completion
 install -d -m 755 %buildroot%_sysconfdir/bash_completion.d/
@@ -112,6 +115,7 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 %doc LICENSE
 %doc README.md CONTRIBUTING.md
 #doc man/hub.1.html man/hub.1.ronn
+%doc %_docdir/hub/
 %_bindir/hub
 %_man1dir/*
 %_sysconfdir/bash_completion.d/
@@ -120,6 +124,9 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 /usr/share/vim/vimfiles/syntax/pullrequest.vim
 
 %changelog
+* Mon Nov 23 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt1
+- new version 2.14.2 (with rpmrb script)
+
 * Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt1
 - new version 2.11.2 (with rpmrb script)
 
