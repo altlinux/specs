@@ -7,7 +7,7 @@
 %define _name webkitgtk
 # none/opengl/cairo/clutter
 %define acceleration_backend opengl
-%def_enable introspection
+%def_disable introspection
 %def_enable geolocation
 %def_enable web_audio
 %def_disable media_stream
@@ -21,7 +21,7 @@
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt10
+Release: alt11
 
 Summary: Web browser engine
 License: LGPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -78,10 +78,10 @@ BuildRequires: ruby ruby-stdlibs
 BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 %endif
 
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.32.0 libgtk+2-gir-devel libsoup-gir-devel}
-%{?_enable_geolocation:BuildPreReq: geoclue2-devel}
-%{?_enable_spellcheck:BuildPreReq: libenchant-devel}
-%{?_enable_media_stream:BuildPreReq: farstream0.2-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 1.32.0 libgtk+2-gir-devel libsoup-gir-devel}
+%{?_enable_geolocation:BuildRequires: geoclue2-devel}
+%{?_enable_spellcheck:BuildRequires: libenchant-devel}
+%{?_enable_media_stream:BuildRequires: farstream0.2-devel}
 %{?_enable_check:BuildRequires: xvfb-run python-module-pygobject3}
 
 %description
@@ -300,6 +300,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt11
+- disabled introspection
+
 * Sat Apr 11 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt10
 - switched to python2 for build
 

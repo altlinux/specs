@@ -1,9 +1,13 @@
 %define ver_major 16.04
 %define api_ver 0.4
 
+# disable introspection and vala for Gtk2 build
+%def_disable introspection
+%{?_disable_introspection:%def_disable vala}
+
 Name: libdbusmenu
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: A library that passes a menu structure across DBus
 Group: System/Libraries
@@ -18,7 +22,8 @@ Patch1: %name-16.04.0-alt-docs-build.patch
 
 BuildRequires: intltool gtk-doc vala-tools
 BuildRequires: libgtk+2-devel libgtk+3-devel libjson-glib-devel
-BuildRequires: gobject-introspection-devel libgtk+2-gir-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+%{?_enable_introspection:BuildRequires: libgtk+2-gir-devel}
 
 %description
 %name is a small library designed to make sharing and displaying
@@ -176,7 +181,7 @@ mv %name-%version %name-gtk3
 %define opts --disable-static --enable-gtk-doc --disable-dumper
 
 %autoreconf
-%configure  %opts --with-gtk=2
+%configure  %opts --with-gtk=2 %{?_disable_introspection:--enable-introspection=no --disable-vala}
 %make_build
 
 pushd %name-gtk3
@@ -226,8 +231,19 @@ popd
 %files gtk2
 %_libdir/%name-gtk.so.*
 
+%files gtk2-devel
+%_includedir/%name-gtk-%api_ver/
+%_libdir/%name-gtk.so
+%_pkgconfigdir/dbusmenu-gtk-%api_ver.pc
+%{?_enable_vala:%_vapidir/DbusmenuGtk-%api_ver.vapi}
+
+%if_enabled introspection
 %files gtk2-gir
 %_typelibdir/DbusmenuGtk-%api_ver.typelib
+
+%files gtk2-gir-devel
+%_girdir/DbusmenuGtk-%api_ver.gir
+%endif
 
 %files gtk3-devel
 %_includedir/%name-gtk3-%api_ver/
@@ -237,15 +253,6 @@ popd
 
 %files gtk3-gir-devel
 %_girdir/DbusmenuGtk3-%api_ver.gir
-
-%files gtk2-devel
-%_includedir/%name-gtk-%api_ver/
-%_libdir/%name-gtk.so
-%_pkgconfigdir/dbusmenu-gtk-%api_ver.pc
-%_vapidir/DbusmenuGtk-%api_ver.vapi
-
-%files gtk2-gir-devel
-%_girdir/DbusmenuGtk-%api_ver.gir
 
 %files devel-doc
 %doc README COPYING COPYING.2.1 AUTHORS
@@ -260,6 +267,9 @@ popd
 %doc tools/README.dbusmenu-bench
 
 %changelog
+* Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 16.04.0-alt3
+- gtk2: disabled introspection
+
 * Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 16.04.0-alt2
 - disabled -Werror
 - fised docs build

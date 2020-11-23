@@ -15,7 +15,7 @@
 
 Name: rhythmbox
 Version: %ver_major.4
-Release: alt1%rev
+Release: alt2%rev
 
 Summary: Music Management Application
 License: GPL-2.0
@@ -276,6 +276,7 @@ Summary: Python plugins for Rhythmbox
 Group: Sound
 Requires: %name = %version-%release
 Requires: lib%name-gir = %version-%release
+Requires: typelib(WebKit) = 3.0
 %{?_enable_zeitgeist:Requires: zeitgeist}
 
 %package -n lib%name-gir
@@ -475,6 +476,9 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt2
+- plugins-python(context): explicitly required typelib(WebKit) = 3.0
+
 * Sun Jan 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
 - 3.4.4 (removed sendto, mozilla plugins; new listenbrainz plugin)
 - fixed License tag
