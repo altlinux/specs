@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(
 %define module_name POSIX-1003
 
 Name: perl-POSIX-1003
-Version: 1.00
+Version: 1.02
 Release: alt1
 
 Summary: POSIX::1003, alternative for POSIX in core
@@ -41,6 +41,9 @@ BuildRequires: alternatives atop
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- new version
+
 * Wed Jun 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - new version
 
