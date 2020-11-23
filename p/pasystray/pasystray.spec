@@ -1,6 +1,6 @@
 Name:		pasystray
 Version:	0.7.1
-Release:	alt1
+Release:	alt2
 
 Summary:	a replacement for the deprecated padevchooser
 License:	GPLv2.1
@@ -15,7 +15,7 @@ Patch1:		%name-%version-%release.patch
 BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Sun Mar 05 2017
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libavahi-devel libavahi-glib libcairo-devel libdbusmenu-devel libdbusmenu-gtk2 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libpango-devel libwayland-client libwayland-server perl pkg-config python-base python-modules xorg-xproto-devel
-BuildRequires: libappindicator-devel libavahi-glib-devel libnotify-devel libpulseaudio-devel
+BuildRequires: libappindicator-gtk3-devel libavahi-glib-devel libnotify-devel libpulseaudio-devel
 Requires: pulseaudio-daemon >= 1.0
 
 %description
@@ -38,7 +38,7 @@ applications.
 	--enable-x11 \
 	--enable-statusicon \
 	--enable-appindicator \
-	--with-gtk=2 \
+	--with-gtk=3 \
 	#
 %make_build
 
@@ -59,6 +59,9 @@ applications.
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Mon Nov 23 2020 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt2
+- Rebuild with gtk3
+
 * Mon Jul 22 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
 - Build new version.
 

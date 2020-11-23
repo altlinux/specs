@@ -1,5 +1,5 @@
 Name:		nitroshare
-Release:	alt1
+Release:	alt2
 Version:	0.3.4
 Summary:	Transfer files from one device to another made extremely simple
 License:	MIT
@@ -10,10 +10,14 @@ Source0:	%name-%version.tar.gz
 Source1:	%name-uk_UA.ts
 
 Patch0:		%name-0.3.4-QStyle.patch
+Patch1:		%name-python3.patch
 
 # Automatically added by buildreq on Sun Sep 20 2020 (-bi)
 # optimized out: cmake-modules elfutils fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libatk-devel libcairo-devel libdbusmenu-devel libdbusmenu-gtk2 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgtk+2-devel libharfbuzz-devel libpango-devel libqt5-core libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libstdc++-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-tools rpm-build-gir rpm-build-python3 sh4 xz
-BuildRequires: cmake libappindicator-devel libnotify-devel libqhttpengine-devel libqmdnsengine-devel libssl-devel python-modules-compiler python3-dev qt5-svg-devel qt5-tools-devel
+BuildRequires: cmake libnotify-devel libqhttpengine-devel libqmdnsengine-devel libssl-devel python3-dev qt5-svg-devel qt5-tools-devel
+
+BuildRequires(pre): rpm-build-python3
+%add_python3_path %_datadir
 
 %description
 A cross-platform network file transfer application designed to make
@@ -28,6 +32,7 @@ Features
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 cp -a %SOURCE1 src/data/ts/uk_UA.ts
@@ -54,13 +59,13 @@ cd build
 %_datadir/icons/ubuntu*/apps/*/%{name}*.png
 
 # #%files extension-nautilus
-%_datadir/nautilus-python/extensions/%name.py*
+%_datadir/nautilus-python/extensions/*
 
 # #%files extension-nemo
-%_datadir/nemo-python/extensions/%name.py*
+%_datadir/nemo-python/extensions/*
 
 # #%files extension-caja
-%_datadir/caja-python/extensions/%name.py*
+%_datadir/caja-python/extensions/*
 
 # #%files console
 %_bindir/%name-send
@@ -69,5 +74,9 @@ cd build
 %_datadir/kservices5/%{name}_addtoservicemenu.desktop
 
 %changelog
+* Mon Nov 23 2020 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt2
+- rebuild without libappindicator
+- switch to python3
+
 * Sun Sep 20 2020 Motsyo Gennadi <drool@altlinux.ru> 0.3.4-alt1
 - initial build
