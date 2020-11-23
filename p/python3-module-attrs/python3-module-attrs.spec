@@ -2,7 +2,7 @@
 %define pkgname attrs
 
 Name: python3-module-%pkgname
-Version: 20.2.0
+Version: 20.3.0
 Release: alt1
 
 Summary: Python attributes without boilerplate
@@ -36,6 +36,9 @@ chores of implementing the most common attribute-related object protocols.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Nov 23 2020 Vladimir Didenko <cow@altlinux.org> 20.3.0-alt1
+- New version
+
 * Wed Sep 30 2020 Vladimir Didenko <cow@altlinux.org> 20.2.0-alt1
 - New version
 
