@@ -1,5 +1,5 @@
 Name: python3-module-gtts-token
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: A python implementation of the token validation of Google Translate
@@ -30,5 +30,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/gTTS_token-%version-*-info
 
 %changelog
+* Mon Nov 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.4-alt1
+- 1.1.4-alt1 released
+
 * Thu Jan 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.3-alt1
 - initial
