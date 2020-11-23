@@ -4,13 +4,14 @@
 
 Name: firecracker
 Version: 0.23.0
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Monitor for creating microVMs
 License: Apache-2.0
 Group: Emulators
 Url: https://firecracker-microvm.github.io/
 Source: %name-%version.tar
 Patch: %name-%version.patch
+Patch1: alt-allow-FUTEX_WAIT_BITSET_PRIVATE-argument-to-futex-syscall.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -29,6 +30,7 @@ multi-tenant container and function-based services.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 cargo build \
@@ -66,6 +68,9 @@ cargo test \
 %_bindir/jailer
 
 %changelog
+* Fri Nov 20 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.23.0-alt2
+- Allow FUTEX_WAIT_BITSET_PRIVATE argument to futex syscall.
+
 * Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 0.23.0-alt1
 - 0.23.0
 
