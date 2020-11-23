@@ -1,11 +1,11 @@
 %define ver_major 2.31
-%def_enable introspection
+%def_disable introspection
 %def_disable static
 %def_disable debug
 
 Name: libwnck
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: libwnck is a Window Navigator Construction Kit
 License: LGPL-2.0
@@ -21,7 +21,7 @@ Obsoletes: %{name}2.20
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-BuildPreReq: rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome
 # From configure.in
 BuildPreReq: intltool >= 0.40.0
 BuildPreReq: gnome-common
@@ -30,7 +30,9 @@ BuildPreReq: libX11-devel libXres-devel libXext-devel libXt-devel
 BuildPreReq: libgtk+2-devel >= 2.19.7
 BuildPreReq: glib2-devel >= 2.16.0
 BuildPreReq: gtk-doc >= 1.9
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libcairo-gobject-devel libgtk+2-gir-devel}
+BuildRequires: gobject-introspection-devel
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires:  libcairo-gobject-devel libgtk+2-gir-devel}
 
 %description
 libwnck is Window Navigator Construction Kit, i.e. a library to use for
@@ -137,6 +139,9 @@ mv %buildroot%_bindir/"$f" %buildroot%_bindir/"$f"-2; done
 %endif
 
 %changelog
+* Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.31.0-alt3
+- disabled introspection
+
 * Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2.31.0-alt2
 - renamed tools to avoid conflict with newer libwnck3
 

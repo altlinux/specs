@@ -11,7 +11,7 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -32,6 +32,7 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 Requires: typelib(GdkX11) = %gtk_api_ver
 %add_typelib_req_skiplist typelib(Foo)
 %filter_from_requires /Gst.*/d
+%filter_from_requires /typelib(WebKit)/d
 
 %define glib_ver 2.48.0
 %define gi_ver 1.46.0
@@ -114,6 +115,9 @@ xvfb-run %meson_test
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt4
+- pygtkcompat: removed dependency on old gtk2-based WebKit-1.0
+
 * Sun Nov 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt3
 - -devel: do not provides pkgconfig(pygobject-3.0)
 

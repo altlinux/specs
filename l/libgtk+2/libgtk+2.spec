@@ -14,12 +14,12 @@
 %endif
 
 %def_enable man
-%def_enable introspection
+%def_disable introspection
 %def_disable debug
 
 Name: libgtk+2
 Version: %ver_major.32
-Release: alt4
+Release: alt5
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: LGPL-2.0
@@ -371,6 +371,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %endif
 
 %changelog
+* Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt5
+- disabled introspection
+
 * Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt4
 - switched gtk-builder-convert to Python3 (upstream patch)
 - fixed License tag
