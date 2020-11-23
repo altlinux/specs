@@ -3,7 +3,7 @@
 %define name2 ardour6
 
 Name:    ardour
-Version: 6.3
+Version: 6.5
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -129,6 +129,9 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png \
 %_iconsdir/ardour6.png
 
 %changelog
+* Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 6.5-alt1
+- Build new version.
+
 * Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 6.3-alt1
 - Build new version.
 
