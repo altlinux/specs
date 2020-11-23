@@ -1,26 +1,25 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/CChecker.pm) perl(ExtUtils/PkgConfig.pm) perl(IO/Handle.pm) perl(IO/Poll.pm) perl(Module/Build.pm) perl(Module/Build/Compat.pm) perl(Socket.pm) perl(Test/Identity.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(XSLoader.pm) pkgconfig(libasyncns)
-# END SourceDeps(oneline)
-%define module_version 0.02
-%define module_name Net-LibAsyncNS
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/CChecker.pm) perl(ExtUtils/PkgConfig.pm) perl(IO/Handle.pm) perl(IO/Poll.pm) perl(Module/Build.pm) perl(Module/Build/Compat.pm) perl(Socket.pm) perl(Test/Identity.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(XSLoader.pm) pkgconfig(libasyncns) perl(Module/Build/Using/PkgConfig.pm)
+# END SourceDeps(oneline)
+%define module_name Net-LibAsyncNS
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.02
-Release: alt1.2
+Version: 0.04
+Release: alt1
 Summary: a Perl wrapper around F<libasyncns>
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/P/PE/PEVANS/Net-LibAsyncNS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,11 +28,14 @@ Source: http://www.cpan.org/authors/id/P/PE/PEVANS/Net-LibAsyncNS-%{version}.tar
 %perl_vendor_install
 
 %files
-%doc LICENSE README Changes examples
+%doc README Changes examples
 %perl_vendor_archlib/N*
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.2
 - rebuild with new perl 5.28.1
 
