@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt4
+Release:       alt5
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt5
+- ! trash in provides for packages with prebuild task enabled
+
 * Tue Sep 15 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt4
 - + using gut ls-files when no git app
 

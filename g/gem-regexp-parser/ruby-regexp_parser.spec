@@ -3,8 +3,8 @@
 %define        gemname regexp_parser
 
 Name:          gem-%pkgname
-Version:       1.7.1
-Release:       alt1.1
+Version:       1.8.2
+Release:       alt1
 Summary:       A regular expression parser library for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -74,6 +74,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 1.8.2-alt1
+- ^ 1.7.1 -> 1.8.2
+
 * Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1.1
 - ! building by usage of compilation with ragel
 

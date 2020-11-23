@@ -1,7 +1,7 @@
 %define        pkgname alexandria-book-collection-manager
 
 Name:          gem-%pkgname
-Version:       0.7.5
+Version:       0.7.7
 Release:       alt1
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPLv2
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.7-alt1
+- ^ 0.7.5 -> 0.7.7
+
 * Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.5-alt1
 - ^ 0.7.4 -> 0.7.5
 - ! spec syntax

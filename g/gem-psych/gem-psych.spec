@@ -1,8 +1,8 @@
 %define        pkgname psych
 
 Name:          gem-%pkgname
-Version:       3.1.1
-Release:       alt0.1
+Version:       3.2.0
+Release:       alt1
 Summary:       A libyaml wrapper for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -63,6 +63,9 @@ Documentation files for %{name}.
 %ruby_gemdocdir
 
 %changelog
+* Mon Nov 23 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.0-alt1
+- ^ 3.1.1pre -> 3.2.0
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.1-alt0.1
 - ^ 3.1.0 -> 3.1.1pre
 - ! spec syntax and tags

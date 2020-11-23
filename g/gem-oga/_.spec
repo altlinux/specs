@@ -2,7 +2,7 @@
 %define        pkgname oga
 
 Name:          gem-%pkgname
-Version:       2.17
+Version:       3.3
 Release:       alt1
 Summary:       Oga is an XML/HTML parser written in Ruby
 License:       MIT
@@ -93,6 +93,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 3.3-alt1
+- ^ 2.17 -> 3.3
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 2.17-alt1
 - ^ 2.15 -> 2.17
 - ! spec tag
