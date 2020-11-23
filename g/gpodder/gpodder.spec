@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.10.16
+Version: 3.10.17
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -34,6 +34,8 @@ AutoReqProv: nopython
 # last commit in 2015
 %add_python3_req_skip kaa.metadata
 
+Requires: typelib(Gtk) = 3.0
+Requires: python3-module-mygpoclient >= 1.7
 Requires: %_bindir/ffmpeg xdg-utils
 Requires: python3-module-eyeD3
 
@@ -83,6 +85,9 @@ PYTHON=python3 %make unittest
 
 
 %changelog
+* Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.17-alt1
+- 3.10.17
+
 * Mon Jun 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.16-alt1
 - 3.10.16
 
