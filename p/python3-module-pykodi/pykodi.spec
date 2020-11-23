@@ -1,5 +1,5 @@
 Name: python3-module-pykodi
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Python interface for Kodi
@@ -29,5 +29,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/pykodi-%version-*-info
 
 %changelog
+* Mon Nov 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.1-alt1
+- 0.2.1 released
+
 * Mon Sep 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.0-alt1
 - initial
