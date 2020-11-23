@@ -4,7 +4,7 @@
 %def_disable check
 
 Name:           python3-module-%pkgname
-Version:        2.24.0
+Version:        2.25.0
 Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
@@ -66,6 +66,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.25.0-alt1
+- 2.25.0
+
 * Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.24.0-alt1
 - 2.24.0
 
