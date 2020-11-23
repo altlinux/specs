@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -34,12 +35,12 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 %global cpan_version 2.024
-Version:        2.24.0
-Release:        alt2_1
+Version:        2.025
+Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETJ/PDL-%{cpan_version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/PDL-%{version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 # Disable Proj support when it's not compatible, bug #839651
@@ -196,7 +197,7 @@ turns perl into a free, array-oriented, numerical language similar to
 such commercial packages as IDL and MatLab.
 
 %prep
-%setup -q -n PDL-%{cpan_version}
+%setup -q -n PDL-%{version}
 # Uncomment to enable PDL::IO::Browser
 # %%patch0 -p1 -b .settings
 %if %{without perl_PDL_enables_proj}
@@ -240,8 +241,7 @@ make test
 %endif
 
 %files
-%doc --no-dereference COPYING
-%doc Changes INTERNATIONALIZATION README TODO
+%doc Changes INTERNATIONALIZATION README Bugs.pod Changes_CVS Doc Example
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
@@ -249,6 +249,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 2.025-alt1
+- automated CPAN update
+
 * Mon Sep 28 2020 Igor Vlasenko <viy@altlinux.ru> 2.24.0-alt2_1
 - manually removed BuildRequires:  libfftw3-devel
 
