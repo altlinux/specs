@@ -264,7 +264,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{majorver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt4_6jpp9
+Release: alt5_6jpp9
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -499,8 +499,6 @@ Provides: jce = %{epoch}:%{version}
 Provides: jdbc-stdext = 4.1
 Provides: java-sasl = %{epoch}:%{version}
 
-#https://bugzilla.redhat.com/show_bug.cgi?id=1312019
-Provides: /usr/bin/jjs
 Requires: java-common
 Requires: /proc
 Requires(post): /proc
@@ -1299,7 +1297,7 @@ cat <<EOF >%buildroot%_altdir/%name-java-headless
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/java
 EOF
 # binaries and manuals
-for i in keytool policytool servertool pack200 unpack200 \
+for i in jjs keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
   if [ -e %{_jvmdir}/%{sdkdir}/bin/$i ]; then
@@ -1660,6 +1658,9 @@ fi
 
 
 %changelog
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 0:9.0.4.11-alt5_6jpp9
+- added jjs alternative and fixed /usr/bin/jjs provides
+
 * Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 0:9.0.4.11-alt4_6jpp9
 - non-bootstrap build with java9
 
