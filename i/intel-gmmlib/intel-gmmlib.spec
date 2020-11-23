@@ -2,7 +2,7 @@
 %define soversion 11
 ExclusiveArch: x86_64
 Name:     intel-gmmlib
-Version:  20.3.2
+Version:  20.3.3
 Release:  alt1
 Summary:  Intel(R) Graphics Memory Management Library
 License:  MIT
@@ -50,6 +50,9 @@ rm -f %buildroot/%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 23 2020 Anton Farygin <rider@altlinux.ru> 20.3.3-alt1
+- 20.3.3
+
 * Wed Sep 30 2020 Anton Farygin <rider@altlinux.ru> 20.3.2-alt1
 - 20.3.2
 
