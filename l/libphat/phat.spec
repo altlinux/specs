@@ -10,7 +10,7 @@ Group: System/Libraries
 Summary: A collection of GTK+ widgets useful for audio applications
 Name:          libphat
 Version:       0.4.1
-Release:       alt1_22
+Release:       alt2_22
 License:       GPLv2+
 URL:           http://phat.berlios.de/
 Source0:       http://download.berlios.de/%{oldname}/%{oldname}-%{version}.tar.gz
@@ -20,7 +20,7 @@ Patch1:        phat-fix-fsf-address.patch
 Patch2:        phat-gdk-unref.patch
 
 BuildRequires:  gcc
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel 
+BuildRequires: libgtk+2-devel
 BuildRequires: libgnomecanvas-devel
 Source44: import.info
 Provides: phat = %{version}-%{release}
@@ -87,6 +87,9 @@ done
 %{_datadir}/gtk-doc/html/%{oldname}
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt2_22
+- updated buildrequires
+
 * Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_22
 - fixed build
 
