@@ -13,8 +13,8 @@
 %def_without rocksdb_lite
 
 Name: rocksdb
-Version: 6.1.2
-Release: alt3
+Version: 6.14.5
+Release: alt1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 # License is changed from "BSD-plus-Patents" (BSD-3-Clause) to GPL-2.0 AND Apache-2.0 in 2017.
@@ -26,7 +26,7 @@ Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: libgtest-devel  cmake
+BuildRequires: libgtest-devel libgflags-devel cmake >= 3.5.1
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_java:BuildRequires: java-devel}
 %{?_with_snappy:BuildRequires: libsnappy-devel}
@@ -94,6 +94,7 @@ rm build_tools/gnu_parallel
 
 %build
 %cmake \
+    -DROCKSDB_BUILD_SHARED:BOOL=ON \
     %{?_with_jemalloc:-DWITH_JEMALLOC:BOOL=ON} \
     %{?_with_java:-DWITH_JNI:BOOL=ON} \
     %{?_with_snappy:-DWITH_SNAPPY:BOOL=ON} \
@@ -102,6 +103,9 @@ rm build_tools/gnu_parallel
     %{?_with_bzip2:-DWITH_BZ2:BOOL=ON} \
     %{?_with_zstd:-DWITH_ZSTD:BOOL=ON} \
     %{?_with_rocksdb_lite:-DROCKSDB_LITE:BOOL=ON} \
+    -DWITH_CORE_TOOLS:BOOL=ON \
+    -DWITH_BENCHMARK_TOOLS:BOOL=OFF \
+    -DWITH_TOOLS:BOOL=OFF \
     -DPORTABLE:BOOL=ON
 
 #export EXTRA_CFLAGS="-fPIC"
@@ -134,6 +138,9 @@ install -D -p -m755 BUILD/tools/sst_dump %buildroot/%_bindir/sst_dump
 %_libdir/*.a
 
 %changelog
+* Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 6.14.5-alt1
+- 6.14.5
+
 * Mon Oct 26 2020 Vitaly Chikunov <vt@altlinux.org> 6.1.2-alt3
 - spec: Fix License, Url, add Vcs tags.
 - Package cmake rules into librocksdb-devel.
@@ -152,13 +159,13 @@ install -D -p -m755 BUILD/tools/sst_dump %buildroot/%_bindir/sst_dump
 - 5.14.3
 - build with PORTABLE=ON
 
-* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 5.13.3-alt1%ubt
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 5.13.3-alt1
 - 5.13.3
 
-* Wed Jun 06 2018 Alexey Shabalin <shaba@altlinux.ru> 5.8.8-alt1%ubt
+* Wed Jun 06 2018 Alexey Shabalin <shaba@altlinux.ru> 5.8.8-alt1
 - 5.8.8
 
-* Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 5.7.5-alt1%ubt
+* Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 5.7.5-alt1
 - 5.7.5
 
 * Mon Sep 25 2017 Alexey Shabalin <shaba@altlinux.ru> 5.7.4-alt1
