@@ -1,3 +1,4 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global git_snapshot 1
@@ -14,10 +15,9 @@
 
 Name:           kanatest
 Version:        %{mainver}
-Release:        alt1_0.1.D20170810git19dd1a7d
+Release:        alt1_%{mainrel}%{?git_version:.%{?git_version}}.6
 Summary:        Hiragana and Katakana drill tool
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://clayo.org/kanatest/
 %if 0%{?git_snapshot}
@@ -29,7 +29,7 @@ Source0:        http://clayo.org/kanatest/%{name}-%{version}.tar.gz
 Source100:      create-tarball-from-git.sh
 
 BuildRequires:  desktop-file-utils >= 0.9
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libgtk+2-devel >= 2.0
 BuildRequires:  libxml2-devel
 BuildRequires:  gettext gettext-tools
 %if 0%{?git_snapshot}
@@ -71,6 +71,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %find_lang %{name}
 
 
+
 %files -f %{name}.lang
 %doc README COPYING ChangeLog
 %{_bindir}/kanatest
@@ -85,6 +86,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.10-alt1_0.1.D20170810git19dd1a7d.6
+- updated buildrequires
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.10-alt1_0.1.D20170810git19dd1a7d
 - new version
 
