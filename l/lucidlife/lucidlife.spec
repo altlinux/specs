@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
@@ -5,17 +6,17 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_21
+Release:        alt3_27
 Summary:        A Conway's Life simulator
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://linux.softpedia.com/get/GAMES-ENTERTAINMENT/Simulation/LucidLife-26633.shtml
 Source0:        http://mirror.thecodergeek.com/src/lucidlife-0.9.2.tar.gz
 Patch1: 	%{name}-fix-FSF-address.patch
 Patch2: 	%{name}-printf-format-security.patch
 
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  gcc
+BuildRequires:  libgtk+2-devel >= 2.6.0
 BuildRequires:	gnome-vfs-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	perl(XML/Parser.pm)
@@ -42,7 +43,7 @@ more modern user interface and other enhancements.
 
 
 %build
-%{__autoconf}
+autoconf
 %configure LDFLAGS='-lX11'
 %make_build
 
@@ -68,6 +69,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_27
+- updated buildrequires
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_21
 - update to new release by fcimport
 
