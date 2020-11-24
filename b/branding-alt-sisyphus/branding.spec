@@ -9,7 +9,7 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20191026
+Version: 20201124
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -37,7 +37,7 @@ Source: branding.tar
 
 Group: Graphics
 Summary: System/Base
-License: GPL
+License: GPLv2+
 
 %description
 Distro-specific packages with design and texts
@@ -52,9 +52,9 @@ BuildRequires: gfxboot >= 4
 %endif #ifarch
 BuildRequires: design-bootloader-source >= 5.0-alt2
 Requires: coreutils
-Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
+Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-altlinux-%theme-bootloader
 
-Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
+Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-altlinux-%theme-bootloader
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootloader ";done )
 
 %define grub_normal white/black
@@ -84,7 +84,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
-Obsoletes: branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
+Obsoletes: branding-altlinux-%theme-browser-qt
 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-alterator-browser-desktop design-alterator-browser-server
@@ -101,7 +101,7 @@ BuildArch: noarch
 
 Provides: design-graphics-%theme branding-alt-%theme-graphics
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
-Obsoletes: branding-alt-%theme-graphics design-graphics-%theme
+Obsoletes: branding-altlinux-%theme-graphics design-graphics-%theme
 Requires: alternatives >= 0.2
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
 Conflicts: design-graphics-default
@@ -117,7 +117,7 @@ Summary: %distribution %Theme release file
 Group: System/Configuration/Other
 BuildArch: noarch
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme branding-alt-%theme-release
-Obsoletes: %obsolete_list branding-alt-%theme-release
+Obsoletes: %obsolete_list
 Conflicts: %conflicts_list
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-release ";done )
 
@@ -207,9 +207,8 @@ popd
 
 install -d %buildroot//etc/alternatives/packages.d
 cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
-%_datadir/artworks	%_datadir/design/%theme 10	
+%_datadir/artworks	%_datadir/design/%theme 11	
 %_datadir/design-current	%_datadir/design/%theme	10
-%_datadir/design/current	%_datadir/design/%theme	10
 __EOF__
 
 # bootsplash
@@ -269,8 +268,12 @@ echo $lang > lang
 [ "$lang" = "C" ] || echo lang | cpio -o --append -F message
 %endif #ifarch
 . shell-config
+shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
+shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
+# deprecated
+shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
 %ifarch %ix86 x86_64
 %preun bootloader
@@ -287,14 +290,11 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %_datadir/gfxboot/%theme
 /boot/splash/%theme
 %endif #ifarch
-
+/boot/grub/themes/%theme
 
 #bootsplash
 %post bootsplash
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-[ -f /etc/sysconfig/grub2 ] && \
-      subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
-             /etc/sysconfig/grub2 ||:
 
 %files alterator
 %config %_altdir/*.rcc
@@ -333,6 +333,12 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Tue Nov 24 2020 Anton Midyukov <antohami@altlinux.org> 20201124-alt1
+- Add support grub theme
+- Change License Tag to GPLv2+
+- Fix obsoletes itself
+- Fix weight for alternatives
+
 * Sat Oct 26 2019 Anton Midyukov <antohami@altlinux.org> 20191026-alt1
 - bootsplash: add system-logo
 
