@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: timeshift
-Version: 20.03
+Version: 20.11.1
 Summary: System restore tool for Linux
 Release: alt1
 License: GPLv3
@@ -31,17 +33,22 @@ rm -f %buildroot%_bindir/%name-uninstall
 %find_lang %name
 
 %files -f %name.lang
-%doc README.md
-%_bindir/*
-%_sysconfdir/default/%name.json
+%_bindir/%name
+%_bindir/%name-gtk
+%_bindir/%name-launcher
+%_man1dir/%name.1.xz
+%_datadir/%name/images/*
+%_sysconfdir/%name/default.json
 %_desktopdir/%name-gtk.desktop
 %_iconsdir/hicolor/*/apps/%name.png
-%_datadir/%name/images/*
 %_datadir/metainfo/%name.appdata.xml
-%_datadir/appdata/%name.appdata.xml
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
+%doc README.md
 
 %changelog
+* Tue Nov 24 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20.11.1-alt1
+- Updated to version 20.11.1
+
 * Sun Mar 08 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20.03-alt1
 - New version
 
