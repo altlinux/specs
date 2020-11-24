@@ -12,14 +12,14 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++
 
 Name:           scim-tables
 Version:        0.5.14
-Release:        alt1_3
+Release:        alt2_3
 Summary:        SCIM Generic Table IMEngine
 
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/scim
 Source0:        http://downloads.sourceforge.net/scim/%{name}-%{version}.tar.gz
 
-BuildRequires:  scim-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  scim-devel libgtk+2-devel
 BuildRequires:  gcc-common
 
 # if autotools scripts modified
@@ -460,6 +460,9 @@ rm ${RPM_BUILD_ROOT}/%{_datadir}/scim/{icons,tables}/{Hangul,Hanja,HIRAGANA,KATA
 %{_datadir}/scim/icons/Uyghur.png
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.14-alt2_3
+- updated buildrequires
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.14-alt1_3
 - NMU (for oddity@): new version by fcimport
 
