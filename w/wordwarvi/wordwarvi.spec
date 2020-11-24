@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -8,9 +9,8 @@ BuildRequires: /usr/bin/desktop-file-install
 
 Name:           wordwarvi
 Version:        1.1
-Release:        alt1_6.git%{shortcommit}
+Release:        alt1_12.git%{shortcommit}
 Summary:        Side-scrolling shoot 'em up '80s style arcade game
-Group:          Games/Other
 License:        GPLv2+ and CC-BY and CC-BY-SA
 URL:            https://smcameron.github.io/wordwarvi/
 # The 1.1 release never got a tag in git, so we use the commit-id
@@ -18,7 +18,8 @@ Source0:        https://github.com/smcameron/wordwarvi/archive/%{commit}/%{name}
 Source1:        %{name}.desktop
 Source2:        %{name}.png
 Source3:        %{name}.appdata.xml
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel libportaudio2-devel libvorbis-devel
+BuildRequires:  gcc
+BuildRequires:  libgtk+2-devel libportaudio2-devel libvorbis-devel
 BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -68,6 +69,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_12.git6beed31
+- updated buildrequires
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_6.git6beed31
 - update to new release by fcimport
 
