@@ -2,7 +2,7 @@
 
 Name: ganv
 Version: 1.6.0
-Release: alt2
+Release: alt3
 Summary: Interactive Gtk widget for interactive "boxes and lines" or graph-like environments
 License: GPL-3.0
 Group: Graphics
@@ -14,7 +14,9 @@ BuildRequires(pre): rpm-build-gir
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libgtk+2-devel doxygen graphviz libgtkmm2-devel
 BuildRequires: libgraphviz-devel gtk-doc
+%if_with gir
 BuildRequires: gobject-introspection-devel libgtk+2-gir-devel
+%endif
 
 %description
 Ganv is an interactive Gtk widget for interactive "boxes and lines" or
@@ -137,6 +139,9 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 %doc docs/*
 
 %changelog
+* Tue Nov 24 2020 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt3
+- Completely remove introspection build.
+
 * Mon Nov 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt2
 - Build without introspection.
 
