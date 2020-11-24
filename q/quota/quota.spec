@@ -1,5 +1,5 @@
 Name: quota
-Version: 4.05.0.3.f2eb
+Version: 4.06.0.4.43b6
 Release: alt1
 Epoch: 2
 
@@ -74,7 +74,6 @@ install -Dpm644 rpc-rquotad.service %buildroot%_unitdir/rpc-rquotad.service
 install -Dpm644 rpc-rquotad.sysconfig %buildroot/etc/sysconfig/rpc-rquotad
 %endif
 %define docdir %_docdir/%name
-gzip -9n %buildroot%docdir/*.eps
 gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 
 %find_lang %name
@@ -113,6 +112,9 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 %endif # rpc
 
 %changelog
+* Tue Nov 24 2020 Dmitry V. Levin <ldv@altlinux.org> 2:4.06.0.4.43b6-alt1
+- v4.05-3-gf2eb78c -> v4.06-4-g43b6e31.
+
 * Mon Apr 01 2019 Dmitry V. Levin <ldv@altlinux.org> 2:4.05.0.3.f2eb-alt1
 - v4.04-13-gd7694c9 -> v4.05-3-gf2eb78c.
 
@@ -204,7 +206,7 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 - 3.03
 - return old name
 
-* Tue Nov 28 2001 Konstantin Volckov <goldhead@altlinux.ru> 3.01-alt0.9
+* Wed Nov 28 2001 Konstantin Volckov <goldhead@altlinux.ru> 3.01-alt0.9
 - 3.01pre9
 - Some spec fixes
 
