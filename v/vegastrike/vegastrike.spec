@@ -7,7 +7,7 @@ BuildRequires: boost-python-devel
 %define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt8_35.r1
+Release:        alt9_35.r1
 Summary:        3D OpenGL spaceflight simulator
 License:        GPLv2+
 URL:            http://vegastrike.sourceforge.net/
@@ -36,7 +36,7 @@ Patch19:        vegastrike-0.5.1-gcc6.patch
 # https://sourceforge.net/p/vegastrike/patches/70/
 Patch20:        vegastrike-0.5.1-gcc7.patch
 BuildRequires:  gcc-c++
-BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel libgtk+2-devel
 BuildRequires:  libjpeg-devel libpng-devel boost-complete libexpat-devel python-devel
 BuildRequires:  boost-python-devel
 BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
@@ -136,6 +136,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt9_35.r1
+- updated buildrequires
+
 * Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 0.5.1-alt8_35.r1
 - e2k build
 
