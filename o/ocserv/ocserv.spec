@@ -4,7 +4,7 @@
 %def_with maxmind
 
 Name: ocserv
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: OpenConnect SSL VPN server
 Group: System/Servers
@@ -13,7 +13,7 @@ Url: http://www.infradead.org/ocserv/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: ronn
+BuildRequires: /usr/bin/ronn
 BuildRequires: libnettle-devel >= 2.7
 BuildRequires: libgnutls-devel >= 3.3.0
 BuildRequires: libprotobuf-c-devel protobuf-c-compiler
@@ -36,7 +36,7 @@ BuildRequires: libhttp-parser-devel
 BuildRequires: liblz4-devel
 BuildRequires: libkrb5-devel libtasn1-devel >= 3.4
 BuildRequires: libpcl-devel
-BuildRequires: iproute2
+BuildRequires: iproute2 gnutls-utils
 BuildRequires: gperf
 BuildRequires: haproxy
 BuildRequires: openconnect
@@ -77,8 +77,7 @@ sed -i 's/either version 3 of the License/either version 2 of the License/g' bui
 	--enable-systemd \
 	--without-libwrap \
 	--without-root-tests \
-	%{subst_with maxmind} \
-	--without-docker-tests
+	%{subst_with maxmind} 
 
 %make_build
 
@@ -99,7 +98,7 @@ install -D -m 0755 ocserv.init %buildroot%_initrddir/%name
 
 %check
 export PATH=/sbin:/usr/sbin:$PATH
-%make_build check XFAIL_TESTS=test-sighup-key-change
+%make check VERBOSE=1
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
@@ -131,6 +130,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
+- new version 1.1.1
+
 * Tue Jul 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 
