@@ -1,11 +1,11 @@
 %define  modulename bitarray
 
 Name:    python3-module-%modulename
-Version: 1.5.3
+Version: 1.6.1
 Release: alt1
 
-Summary: efficient arrays of booleans for Python
-License: PSF
+Summary: Efficient arrays of booleans for Python
+License: Python
 Group:   Development/Python3
 Url:     https://github.com/ilanschnell/bitarray
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
@@ -41,6 +41,9 @@ this module useful.
 %doc AUTHORS LICENSE README.md
 
 %changelog
+* Tue Nov 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Tue Sep 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.5.3-alt1
 - 1.5.3
 
