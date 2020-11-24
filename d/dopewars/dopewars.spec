@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/desktop-file-install glib2-devel libSDL-devel libesd-dev
 Summary:	A drug dealing game
 Name:		dopewars
 Version:	1.5.12
-Release:	alt1_20.%{rel}svn
+Release:	alt2_20.%{rel}svn
 URL:		http://dopewars.sourceforge.net/
 License:	GPLv2+
 Group:		Games/Other
@@ -22,7 +22,7 @@ Group:		Games/Other
 Source0:	%{name}-%{version}-%{rel}svn.tar.bz2
 
 BuildRequires:	desktop-file-utils
-BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:	libgtk+2-devel
 BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:	libSDL_mixer-devel
 
@@ -107,6 +107,9 @@ rm -rf %{buildroot}%{_docdir}
 %{_libdir}/dopewars/libsound_sdl.so
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt2_20.1033svn
+- updated buildrequires
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_20.1033svn
 - update to new release by fcimport
 
