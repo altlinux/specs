@@ -1,14 +1,13 @@
 
 Name: kde5-virtual
 Version: 5.20.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
 License: Public Domain
 
 #BuildArch: noarch
-BuildRequires(pre): rpm-build-ubt
 
 %description
 %summary
@@ -206,11 +205,14 @@ Summary: Mixed messaging client
 Provides: kde5-messenger-client = %EVR
 Provides: kde5-messenger-client-mix = %EVR
 Requires: kf5-filesystem
-Requires: choqok psi
+Requires: choqok
 #Requires: blink-qt
 %ifnarch armh ppc64le aarch64
 Requires: telegram-desktop
 %endif
+Requires: psi-plus psi-plus-l10n psi-plus-plugin-autoreply psi-plus-plugin-cleaner psi-plus-plugin-conferencelogger psi-plus-plugin-contentdownloader
+Requires: psi-plus-plugin-enummessages psi-plus-plugin-historykeeper psi-plus-plugin-image psi-plus-plugin-imagepreview psi-plus-plugin-messagefilter
+Requires: psi-plus-plugin-otr psi-plus-plugin-stopspam psi-plus-plugin-storagenotes
 %description -n kde5-messenger-client-6-mix
 %summary
 
@@ -241,6 +243,9 @@ Requires: telegram-desktop
 %files -n kde5-messenger-client-6-mix
 
 %changelog
+* Tue Nov 24 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt2
+- change requires from psi to psi-plus
+
 * Fri Nov 20 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
 - add kde5-messenger-client-mix
 
@@ -259,10 +264,10 @@ Requires: telegram-desktop
 * Tue Mar 26 2019 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - add enigmail to thunderbird
 
-* Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1%ubt
+* Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - update Plasma requires
 
-* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1%ubt
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - update kmail requires
 
 * Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
