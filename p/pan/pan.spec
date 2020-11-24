@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-validate pkgconfig(gcr-3) pkgconfig(gmime-3
 Summary:	A Usenet newsreader for GNOME/GTK+
 Name:		pan
 Version:	0.146
-Release:	alt1_1
+Release:	alt1_3
 Epoch:		1
 License:	GPLv2
 Source0:	http://pan.rebelbase.com/download/releases/%{version}/source/%{name}-%{version}.tar.bz2
@@ -18,7 +18,7 @@ BuildRequires:	gettext-tools libasprintf-devel
 BuildRequires:	intltool
 BuildRequires:	glib2-devel libgio libgio-devel
 BuildRequires:	libgmime-devel libgmime-gir-devel
-BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:	libgtk+2-devel  >= 2.16.0
 BuildRequires:	libgtkspell-devel >= 2.0.7
 BuildRequires:	libenchant-devel >= 1.6.0
 BuildRequires:	libappstream-glib
@@ -73,6 +73,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/pan.1*
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.146-alt1_3
+- updated buildrequires
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.146-alt1_1
 - update to new release by fcimport
 
