@@ -1,5 +1,5 @@
 Name: ansible-lint
-Version: 4.3.4
+Version: 4.3.7
 Release: alt1
 
 Summary: Best practices checker for Ansible
@@ -57,6 +57,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 4.3.7-alt1
+- new version 4.3.7
+
 * Sun Sep 06 2020 Alexey Shabalin <shaba@altlinux.org> 4.3.4-alt1
 - 4.3.4
 
