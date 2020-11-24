@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: libxkbcommon
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -125,6 +125,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Nov 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
