@@ -2,7 +2,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.5
-Release: alt1
+Release: alt2
 
 Summary: LXSession is the default X11 session manager of LXDE
 License: GPL-2.0-or-later
@@ -22,7 +22,7 @@ Patch: lxsession-0.4.6.1-alt-kdmfix.patch
 Patch1: lxsession-0.5.2-notify-daemon-default.patch
 Patch2: lxsession-0.5.2-reload.patch
 
-BuildPreReq: intltool libXau-devel libdbus-devel libgtk+%gtkver-devel xsltproc docbook-dtds docbook-style-xsl pkgconfig(dbus-glib-1) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(unique-1.0) pkgconfig(x11) pkgconfig(polkit-agent-1) vala pkgconfig(appindicator-0.1) pkgconfig(indicator-0.4) pkgconfig(libnotify)
+BuildPreReq: intltool libXau-devel libdbus-devel libgtk+%gtkver-devel xsltproc docbook-dtds docbook-style-xsl pkgconfig(dbus-glib-1) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(unique-1.0) pkgconfig(x11) pkgconfig(polkit-agent-1) vala pkgconfig(libnotify)
 %add_findreq_skiplist %_bindir/lxlock
 
 #Requires: lxde-lxpolkit = %version-%release
@@ -114,6 +114,9 @@ mkdir -p -m 755 %buildroot%_sysconfdir/xdg/%name
 %_datadir/%upstreamname/ui/lxpolkit.ui
 
 %changelog
+* Tue Nov 24 2020 Anton Midyukov <antohami@altlinux.org> 0.5.5-alt2
+- rebuild without libindicator, libappindicator
+
 * Thu Mar 26 2020 Anton Midyukov <antohami@altlinux.org> 0.5.5-alt1
 - new version 0.5.5
 - fixed license tag
