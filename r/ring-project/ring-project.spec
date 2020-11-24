@@ -28,8 +28,8 @@
 %define libringclient libringclient%ringclient_sover
 
 Name: ring-project
-Version: 20190814
-Release: alt2
+Version: 20201118
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -44,7 +44,9 @@ Source: %name-%version.tar
 Patch1: alt-fix-linking.patch
 Patch2: alt-pcre-include.patch
 Patch3: alt-armh.patch
-Patch4: alt-upnp-drop-obsolete-init.patch
+Patch4: alt-changelog.patch
+Patch5: alt-qt-build.patch
+Patch6: alt-load-l10n.patch
 
 BuildRequires(pre): rpm-build-ubt
 %IF_ver_gteq %ubt_id M90
@@ -53,7 +55,8 @@ BuildRequires: asio-devel
 BuildRequires: cmake gcc-c++ glibc-devel autoconf-archive
 BuildRequires: doxygen graphviz gtk-doc
 BuildRequires: qt5-tools-devel
-BuildRequires: chrpath
+BuildRequires: qt5-declarative-devel qt5-multimedia-devel qt5-svg-devel qt5-webengine-devel qt5-quickcontrols2-devel
+BuildRequires: chrpath desktop-file-utils
 BuildRequires: libalsa-devel libdbus-c++-devel libgnutls-devel libgsm-devel
 BuildRequires: libavutil-devel libavcodec-devel libavformat-devel libavdevice-devel libavfilter-devel libswscale-devel libswresample-devel
 BuildRequires: libssl-devel libgpg-error-devel libgcrypt-devel
@@ -92,11 +95,24 @@ the shell.
 Summary: Ring client written in GTK+
 Group: Networking/Instant messaging
 Requires: ring-daemon
-Provides: jami-client-gnome = %version-%release
+Provides: jami-client-gnome = %EVR
+Provides: jami-gnome = %EVR
 %description -n ring-client-gnome
 Ring-client-gnome is a Ring client written in GTK+. It uses libRingClient to
 communicate with the Ring daemon and for all of the underlying models and their
 logic. Ideally ring-client-gnome should only contain UI related code and any
+wrappers necessary for interacting with libRingClient.
+
+%package -n ring-client-qt
+Summary: Ring client written in Qt
+Group: Networking/Instant messaging
+Requires: ring-daemon
+Provides: jami-client-qt = %EVR
+Provides: jami-qt = %EVR
+%description -n ring-client-qt
+Ring-client-gnome is a Ring client written in Qt. It uses libRingClient to
+communicate with the Ring daemon and for all of the underlying models and their
+logic. Ideally ring-client-qt should only contain UI related code and any
 wrappers necessary for interacting with libRingClient.
 
 %package common
@@ -148,7 +164,9 @@ developing applications that use %name.
 %patch1 -p1
 #%patch2 -p1
 %patch3 -p1
-%patch4 -p2
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 # don't build internal vpx
 rm -rf daemon/contrib/src/vpx
@@ -212,10 +230,46 @@ pushd BUILD
 popd
 popd
 
+pushd client-qt
+%qmake_qt5 \
+    LRC=%builddir/lrc/src \
+    #
+%make_build
+lrelease-qt5 translations/*.ts
+popd
+
 %install
 %makeinstall -C daemon
 make install -C lrc/BUILD DESTDIR=%buildroot
 make install -C client-gnome/BUILD DESTDIR=%buildroot
+#make install -C client-qt DESTDIR=%buildroot
+install -m 0755 client-qt/jami-qt %buildroot/%_bindir/
+cp -ar %buildroot/%_desktopdir/jami-gnome.desktop %buildroot/%_desktopdir/jami-qt.desktop
+desktop-file-install \
+    --vendor="" \
+    --set-key=Exec \
+    --set-value="jami-qt %%u" \
+    --add-category="KDE" \
+    --add-category="Qt" \
+    --remove-category="GNOME" \
+    --remove-category="GTK" \
+    --dir %buildroot/%_desktopdir %buildroot/%_desktopdir/jami-qt.desktop
+mkdir -p %buildroot/%_datadir/ring/translations/
+install -m 0644 client-qt/translations/*.qm %buildroot/%_datadir/ring/translations/
+# find translations
+echo "%%defattr(644,root,root,755)" >jami-client-qt.lang
+find %buildroot/%_datadir/ring/translations/ -type f -name \*.qm | \
+while read t
+do
+    lang_file=`basename $t`
+    lang_name=`echo "$lang_file" | sed -e 's|\.qm$||' -e 's|.*windows_||'`
+    if echo $lang_name | grep -q ^en
+    then
+	echo "%%_datadir/ring/translations/$lang_file" >>jami-client-qt.lang
+    else
+	echo "%%lang($lang_name) %%_datadir/ring/translations/$lang_file" >>jami-client-qt.lang
+    fi
+done
 
 chrpath --delete %buildroot/%_libdir/ring/dring
 
@@ -239,6 +293,9 @@ cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
 __EOF__
 cat > %buildroot/%_sysconfdir/alternatives/packages.d/jami-client-gnome <<__EOF__
 %_bindir/jami       %_bindir/jami-gnome      10
+__EOF__
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/jami-client-qt <<__EOF__
+%_bindir/jami       %_bindir/jami-qt      9
 __EOF__
 
 %if "%_lib" == "lib64"
@@ -273,6 +330,12 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 %_datadir/glib-2.0/schemas/net.jami.*.gschema.xml
 %_datadir/metainfo/jami-gnome.appdata.xml
 
+%files -n ring-client-qt -f jami-client-qt.lang
+%dir %_datadir/ring/translations/
+%config %_sysconfdir/alternatives/packages.d/jami-client-qt
+%_bindir/jami-qt
+%_desktopdir/jami-qt.desktop
+
 %files -n %libring
 %doc daemon/AUTHORS daemon/COPYING daemon/README
 %_libdir/libring.so.%ring_sover
@@ -287,6 +350,7 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 %_libdir/lib*.so
 %_includedir/dring/
 %_includedir/libringclient/
+%_includedir/jami*.h
 %_datadir/dbus-1/interfaces/cx.ring.Ring.*.xml
 %_libdir/cmake/LibRingClient/
 %_man1dir/dring.*
@@ -295,6 +359,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Fri Nov 20 2020 Sergey V Turchin <zerg@altlinux.org> 20201118-alt1
+- new version
+
 * Wed Sep 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 20190814-alt2
 - rebuilt with libupnp-1.14
 
