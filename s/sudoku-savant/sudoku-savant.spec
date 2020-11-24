@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++
 %define _localstatedir %{_var}
 Name:           sudoku-savant
 Version:        1.3
-Release:        alt2_20
+Release:        alt3_20
 Summary:        Solve and generate sudoku puzzles through logical means
 Summary(de):    Lösen und Erstellen von Sudoku-Puzzles mit logischen Mitteln
 
@@ -26,7 +26,7 @@ Patch0:         %{name}-Makefile.patch
 Patch1:         %{name}-aarch64.patch
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libgtk+2-devel
 Source44: import.info
 
 %description
@@ -105,6 +105,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_20
+- updated buildrequires
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_20
 - update to new release by fcimport
 
