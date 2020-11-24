@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ texinfo
 # END SourceDeps(oneline)
@@ -5,10 +6,9 @@ BuildRequires: gcc-c++ texinfo
 %define _localstatedir %{_var}
 Name:           malaga
 Version:        7.12 
-Release:        alt2_25
+Release:        alt2_30
 Summary:        A programming language for automatic language analysis
 
-Group:          Development/Other
 License:        GPLv2+
 URL:            http://home.arcor.de/bjoern-beutel/malaga/
 Source0:        http://home.arcor.de/bjoern-beutel/malaga/%{name}-%{version}.tgz
@@ -23,7 +23,7 @@ Patch1:         malaga-malshow-lm.patch
 Patch2:         malaga-aarch64.patch
 
 BuildRequires:  gcc
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel readline-devel
+BuildRequires:  libgtk+2-devel readline-devel
 Requires: lib%{name} = %{version}-%{release}
 Source44: import.info
 
@@ -39,8 +39,8 @@ Malaga is based on the grammatical theory of the "Left Associative Grammar"
 University of Erlangen, Germany.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       lib%{name} = %{version}-%{release}
 
 %description    devel
@@ -48,8 +48,8 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %package -n	lib%{name}
+Group: Development/Other
 Summary:        Library files for %{name}
-Group:          Development/Other
 
 %description -n	lib%{name}
 Library files for %{name}.
@@ -87,6 +87,7 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 
+
 %files
 %{_infodir}/%{name}*
 %{_bindir}/mal*
@@ -103,6 +104,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_30
+- updated buildrequires
+
 * Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_25
 - rebuild with readline7
 
