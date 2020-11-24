@@ -1,5 +1,4 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 Group: System/Libraries
@@ -9,46 +8,38 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name suil
-%define version 0.10.6
+%define version 0.10.8
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsuil
-Version:    0.10.6
-Release:    alt1_2
+Version:    0.10.8
+Release:    alt1_1
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 License:    MIT 
 URL:        http://drobilla.net/software/suil/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
-# Patch sent upstream https://github.com/drobilla/suil/pull/10
-Patch0:     %{oldname}-wrong-cocoa-detection.patch
 
 
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 # https://fedoraproject.org/wiki/Packaging:Python#Dependencies
 BuildRequires:  python3
-BuildRequires:  lv2-devel >= 1.12.0
+BuildRequires:  lv2-devel >= 1.16.0
 # we need to track changess to these toolkits manually due to the 
 # requires filtering below
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libgtk+2-devel >= 2.18.0
 BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
-BuildRequires:  rpm-macros-qt5 qt5-designer qt5-3d-devel qt5-base-devel qt5-connectivity-devel qt5-declarative-devel qt5-location-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-tools-devel qt5-wayland-devel qt5-webchannel-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 BuildRequires:  gcc-c++
+BuildRequires:  pkgconfig(Qt5Core) >= 5.1.0
+BuildRequires:  pkgconfig(Qt5Widgets) >= 5.1.0
+BuildRequires:  pkgconfig(Qt5X11Extras) >= 5.1.0
 
-# lets not necessarily pull in toolkits dependancies. They will be provided by
+# Lets not necessarily pull in toolkits dependancies. They will be provided by
 # the host and or the plugin
-%filter_from_requires /.*libatk.*/d
-%filter_from_requires /.*libcairo.*/d
-%filter_from_requires /.*libfont.*/d
-%filter_from_requires /.*libfree.*/d
-%filter_from_requires /.*libg.*/d
-%filter_from_requires /.*libpango.*/d
-%filter_from_requires /.*libQt.*/d
-%filter_from_requires /.*libX*/d
-
+%define __requires_exclude ^lib.*$
 Source44: import.info
 Provides: suil = %{version}-%{release}
 
@@ -70,14 +61,12 @@ This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-%patch0 -p1
 
-# we'll run ldconfig, and add our optflags 
+# Don't run ldconfig
 sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" wscript
 
 %build
-export CXXFLAGS="%{optflags}"
-export LINKFLAGS="%{__global_ldflags}"
+
 python3 waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
@@ -98,7 +87,7 @@ install -pm 644 AUTHORS COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/COPYING
 %doc --no-dereference COPYING
 %dir %{_libdir}/suil-%{maj}
-%{_libdir}/lib%{oldname}-*.so.*
+%{_libdir}/lib%{oldname}-*.so.%{maj}*
 %{_libdir}/suil-%{maj}/libsuil_gtk2_in_qt4.so
 %{_libdir}/suil-%{maj}/libsuil_qt4_in_gtk2.so
 %{_libdir}/suil-%{maj}/libsuil_x11_in_qt4.so
@@ -118,6 +107,9 @@ install -pm 644 AUTHORS COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.8-alt1_1
+- new version
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.6-alt1_2
 - update
 
