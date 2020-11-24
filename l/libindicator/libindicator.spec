@@ -3,12 +3,12 @@ Group: System/Libraries
 BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
-%define fedora 30
+%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_16
+Release:	alt1_19
 Summary:	Shared functions for Ayatana indicators
 
 License:	GPLv3
@@ -22,7 +22,7 @@ BuildRequires:	gtk-doc gtk-doc-mkpdf
 BuildRequires:	libtool
 
 BuildRequires:	libdbus-glib-devel
-BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:	libgtk+2-devel
 BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 
 BuildRequires:	gnome-common
@@ -93,7 +93,7 @@ tools for the GTK+3 build of %{name}.
 
 %prep
 %setup -q
-%if 0%{?fedora} >= 31
+%if 0%{?fedora} >= 31 || 0%{?rhel} >= 9
 %patch1 -p2 -b .orig
 %endif
 
@@ -115,11 +115,9 @@ USE_GNOME2_MACROS=1 \
 . gnome-autogen.sh
 EOF
 
-sed -i s,-Werror,, `find . -name Makefile'*'`
 NOCONFIGURE=1 \
 	sh autogen.sh
 %patch33 -p2
-
 
 
 %build
@@ -235,6 +233,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_19
+- updated buildrequires
+
 * Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_16
 - fixed build
 
