@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_0.pre01jpp8
+Release:    alt2_0.pre01jpp8
 Summary:    Java ATK Wrapper
 
 License:    LGPLv2+
@@ -29,7 +29,7 @@ BuildRequires:	clang
 BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libgtk+2-devel
 BuildRequires:  xorg-utils
 BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
@@ -85,6 +85,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so \
 
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.33.2.1-alt2_0.pre01jpp8
+- updated buildrequires
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.33.2.1-alt1_0.pre01jpp8
 - new version
 
