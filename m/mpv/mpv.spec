@@ -3,8 +3,8 @@
 %endif
 
 Name: mpv
-Version: 0.29.1
-Release: alt9.1
+Version: 0.33.0
+Release: alt1.1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -22,9 +22,13 @@ BuildRequires(pre): rpm-macros-luajit
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
-BuildRequires: libpulseaudio-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel libjack-devel
+BuildRequires: libpulseaudio-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel
 
-BuildRequires: libenca-devel libuchardet-devel
+BuildRequires: libsmbclient-devel libswresample-devel libxkbcommon-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel libjack-devel
+
+BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-devel libwayland-cursor-devel libwayland-client-devel wayland-protocols python3-base
+
+BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libspirv-cross-devel libavdevice-devel
 
 %if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
@@ -43,13 +47,23 @@ MPlayer и mplayer2. Он поддерживает большое количес
 видеоформатов, аудио и видео кодеков и форматов субтитров.
 
 %package -n zsh-completion-%name
-Summary: Zsh completion for mpv
+Summary: Zsh completion for %name
 Group: Shells
 BuildArch: noarch
 Requires: %name = %version-%release
 
 %description -n zsh-completion-%name
 Zsh completion for %name.
+
+%package -n bash-completion-%name
+Summary: Bash completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
+
+%description -n bash-completion-%name
+Bash completion for %name.
 
 %package -n libmpv-devel
 Summary: Header files for %name
@@ -68,7 +82,7 @@ This package contains %name shared library
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
+%patch -p1
 
 ls
 chmod ugo+rx waf
@@ -79,13 +93,12 @@ chmod ugo+rx waf
 --enable-alsa \
 --enable-gl-x11 \
 %{subst_enable lua} \
---enable-zsh-comp \
 --enable-libbluray \
 --enable-dvdnav \
---enable-libsmbclient \
 --enable-libmpv-shared \
---enable-tv \
 --enable-jack \
+--enable-vulkan \
+--enable-sdl2 \
 #
 
 %build
@@ -112,6 +125,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/_mpv
 
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/*
+
 %files -n libmpv-devel
 %_libdir/libmpv.so
 %_includedir/%name
@@ -121,6 +137,27 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Tue Nov 24 2020 L.A. Kostis <lakostis@altlinux.ru> 0.33.0-alt1.1
+- Add libspirv-cross-devel to BR.
+- Add missing libavdevice-devel to BR (should fix v4l).
+
+* Mon Nov 23 2020 L.A. Kostis <lakostis@altlinux.ru> 0.33.0-alt1
+- 0.33.0.
+- remove buggy libsmbclient.
+- waf: use python3.
+- add bash-completition package.
+
+* Mon Jul 20 2020 L.A. Kostis <lakostis@altlinux.ru> 0.32.0-alt1
+- 0.32.0.
+- Enabled support:
+  + vulkan
+  + SDL2
+  + gbm (for drm output)
+
+* Mon Jul 20 2020 L.A. Kostis <lakostis@altlinux.ru> 0.29.1-alt10
+- Added vulkan vo.
+- Fix wayland support.
+
 * Mon Jul 20 2020 L.A. Kostis <lakostis@altlinux.ru> 0.29.1-alt9.1
 - Don't exit on fail ABI check (complete a fix from ALT#37106).
 
