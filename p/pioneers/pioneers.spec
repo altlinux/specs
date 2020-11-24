@@ -6,14 +6,14 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/rsvg-convert ImageMagick-t
 %define _localstatedir %{_var}
 Name:           pioneers
 Version:        15.6
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Turnbased board strategy game (colonize an island)
 License:        GPLv2+
 URL:            http://pio.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pio/%{name}-%{version}.tar.gz
 Patch0:         pioneers-15.6-sanitize.patch
 BuildRequires:  gcc
-BuildRequires:  libgnome-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools scrollkeeper intltool
+BuildRequires:  libgnome-devel libgtk+2-devel gettext gettext-tools scrollkeeper intltool
 BuildRequires:  itstool
 BuildRequires:  perl(XML/Parser.pm) desktop-file-utils
 Requires:       icon-theme-hicolor
@@ -142,6 +142,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 15.6-alt2_1
+- updated buildrequires
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 15.6-alt1_1
 - update to new release by fcimport
 
