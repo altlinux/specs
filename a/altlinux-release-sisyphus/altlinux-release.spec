@@ -1,43 +1,30 @@
-%ifndef distro
 %define distro Sisyphus
-%endif
-%ifndef timestamp
-%define timestamp 20081222
-%endif
-%ifndef dtext
+%define timestamp 20201124
+%{expand: %%global code %([ -n '' ] && echo '' || echo %timestamp)}
 %define dtext %distribution %distro
-%endif
-%ifndef text_summary
-%define text_summary %dtext
-%endif
-%ifndef text_descr
-%define text_descr %dtext
-%endif
-%ifndef text_file
-%define text_file %dtext (%timestamp)
-%endif
-%ifndef provide_list
+%define text_file %dtext (%code)
+%{expand: %%global ldistro %(echo %distro |tr '[:upper:]' '[:lower:]')}
 %define provide_list altlinux fedora redhat system
-%endif
-%ifndef obsolete_list
-%define obsolete_list altlinux-4.0 altlinux-release altlinux-release-4.0 altlinux-release-4.1 altlinux-release-5.0 altlinux-release-chainmail altlinux-release-desktop altlinux-release-homeros altlinux-release-hpc altlinux-release-junior altlinux-release-master altlinux-release-office-server altlinux-release-school-server altlinux-release-server altlinux-release-skif altlinux-release-small_business altlinux-release-terminal fedora-release redhat-release
-%endif
+%define obsolete_list 4.0 4.1 5.0 5.1 c6 c7 c7.1 c8 c8.1 c9f1 c9m1 chainmail desktop homeros hpc icarus junior master office-server p5 p6 p7 p8 p9 school-server server sisyphus skif small_business t6 t7 terminal
+%define conflicts_list Platform6-server-light alt-education alt-server alt-server-v alt-sisyphus alt-spserver alt-spworkstation alt-starterkit alt-tonk alt-workstation altlinux-backup-server altlinux-centaurus altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-p7 altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-starterkit altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light xalt-kworkstation
 
-Name: altlinux-release-sisyphus
+Name: altlinux-release-%ldistro
 Version: %timestamp
 Release: alt1
 
-Summary: %text_summary release file
-Copyright: GPL
+Summary: %dtext release files
+License: GPLv2+
 Group: System/Configuration/Other
 BuildArch: noarch
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done)
-Obsoletes: %obsolete_list
+Obsoletes: %(for n in %provide_list; do echo -n "$n-release < %version "; done)
+Obsoletes: altlinux-4.0
+Obsoletes: %(for n in %obsolete_list; do [ "$n" = "%ldistro" ] || echo -n "altlinux-release-$n "; done)
+Conflicts: %(for n in %conflicts_list; do echo -n "branding-$n-release "; done)
 
 %description
-%text_descr release file.
+This package contains %dtext release files.
 
 %install
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name
@@ -46,11 +33,38 @@ for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
 
+cat > %buildroot%_sysconfdir/os-release <<-__EOF__
+	NAME=%distro
+	VERSION=%version
+	ID=altlinux
+	VERSION_ID=%version
+	PRETTY_NAME="%dtext"
+	ANSI_COLOR="1;33"
+	CPE_NAME="cpe:/o:alt:%ldistro:%version"
+	HOME_URL="https://www.altlinux.org"
+	BUG_REPORT_URL="https://bugzilla.altlinux.org"
+__EOF__
+
+mkdir -p %buildroot%_rpmmacrosdir
+cat > %buildroot%_rpmmacrosdir/altlinux-release <<-__EOF__
+	%%_priority_distbranch	%ldistro
+__EOF__
+
+%define _unpackaged_files_terminate_build 1
+
 %files
 %_sysconfdir/*-*
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%_rpmmacrosdir/altlinux-release
 
 %changelog
+* Tue Nov 24 2020 Dmitry V. Levin <ldv@altlinux.org> 20201124-alt1
+- Fixed license tag.
+- Updated Obsoletes list.
+- Added conflicts with all known branding-*-release packages.
+- Packaged /etc/os-release file (see #37565).
+- Packaged %_rpmmacrosdir/altlinux-release file (see #37192).
+
 * Mon Dec 22 2008 Dmitry V. Levin <ldv@altlinux.org> 20081222-alt1
 - Updated Obsoletes list.
 
@@ -73,7 +87,7 @@ done
 * Mon Apr 23 2001 Dmitry V. Levin <ldv@altlinux.ru> Sisyphus-alt20010423
 - Renamed to altlinux-release.
 
-* Thu Jan 10 2001 Dmitry V. Levin <ldv@fandra.org> 7.2-ipl0.20010111
+* Wed Jan 10 2001 Dmitry V. Levin <ldv@fandra.org> 7.2-ipl0.20010111
 - Renamed to %name.
 - Implemented autoversioning.
 
