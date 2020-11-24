@@ -1,6 +1,6 @@
 %define module_name	lkrg
 %define module_version	0.8.1+git20201116
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 %define karch		%ix86 x86_64 aarch64 armh
@@ -21,6 +21,9 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 URL: https://www.openwall.com/lkrg/
+
+Source1: lkrg.init
+
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
@@ -45,6 +48,7 @@ file) based on the unauthorized credentials.
 rm -rf %module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n %module_name-%module_version
+cp -a %SOURCE1 .
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour modules M=$(pwd)
@@ -52,6 +56,7 @@ echo "enable lkrg.service" > lkrg.preset
 
 %install
 install -D -p -m0644 p_lkrg.ko %buildroot%module_dir/p_lkrg.ko
+install -D -p -m0755 lkrg.init %buildroot%_initdir/lkrg
 install -D -p -m0644 scripts/bootup/systemd/lkrg.service %buildroot%_unitdir/lkrg.service
 install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 
@@ -63,12 +68,16 @@ install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 
 %files
 %module_dir/p_lkrg.ko
+%_initdir/lkrg
 %_unitdir/lkrg.service
 %_presetdir/30-lkrg.preset
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Tue Nov 24 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201116-alt2
+- Added SysVini script.
 
 * Wed Nov 18 2020 Vitaly Chikunov <vt@altlinux.org> 0.8.1+git20201116-alt1
 - Update to 3f76f5148b184e02b0b5b24bb1e8bac0e96a3376 (2020-11-16).
