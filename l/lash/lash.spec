@@ -1,16 +1,15 @@
 Epoch: 1
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ python-devel texinfo
 # END SourceDeps(oneline)
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
-Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:      LASH Audio Session Handler
 Name:         lash
 Version:      0.5.4
-Release:      alt1_40
+Release:      alt1_43
 License:      GPLv2+
 URL:          http://www.nongnu.org/lash/
 Source0:      http://download.savannah.gnu.org/releases/lash/lash-%{version}.tar.gz
@@ -27,7 +26,7 @@ Patch3:       lash-Modernize-texi2html-arguments.patch
 BuildRequires: libalsa-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gcc
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel 
+BuildRequires: libgtk+2-devel 
 BuildRequires: libjack-devel
 BuildRequires: libxml2-devel
 BuildRequires: readline-devel
@@ -83,7 +82,7 @@ CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" %configure --disable-static --disable-serv
 
 %install
 mkdir -p %{buildroot}%{_sysconfdir}
-make DESTDIR=%{buildroot} install
+%makeinstall_std
 rm -f %{buildroot}%{_infodir}/dir
 rm -f %{buildroot}%{_libdir}/liblash.la
 
@@ -150,6 +149,9 @@ fi
 %{_libdir}/liblash.so.1.*
 
 %changelog
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_43
+- updated buildrequires
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_40
 - update to new release by fcimport
 
