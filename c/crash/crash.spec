@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name:    crash
-Version: 7.2.8.0.21.gc4862e1
-Release: alt3
+Version: 7.2.9
+Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -52,11 +53,14 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %files
 %doc README COPYING3
 %_bindir/crash
-%_includedir/crash/defs.h
+%_includedir/crash
 %_man8dir/crash.8*
-%_libdir/crash/extensions
+%_libdir/crash
 
 %changelog
+* Wed Nov 25 2020 Vitaly Chikunov <vt@altlinux.org> 7.2.9-alt1
+- Update to 7.2.9 (2020-11-20).
+
 * Sun Jul 12 2020 Vitaly Chikunov <vt@altlinux.org> 7.2.8.0.21.gc4862e1-alt3
 - spec: ExcludeArch: e2k
 
