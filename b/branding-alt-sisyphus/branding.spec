@@ -10,7 +10,7 @@
 
 Name: branding-%brand-%theme
 Version: 20201124
-Release: alt1
+Release: alt2
 
 Url: http://en.altlinux.org
 
@@ -209,6 +209,7 @@ install -d %buildroot//etc/alternatives/packages.d
 cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
 %_datadir/artworks	%_datadir/design/%theme 11	
 %_datadir/design-current	%_datadir/design/%theme	10
+%_datadir/design/current	%_datadir/design/%theme	10
 __EOF__
 
 # bootsplash
@@ -333,6 +334,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Wed Nov 25 2020 Anton Midyukov <antohami@altlinux.org> 20201124-alt2
+- Revert missing alternative
+
 * Tue Nov 24 2020 Anton Midyukov <antohami@altlinux.org> 20201124-alt1
 - Add support grub theme
 - Change License Tag to GPLv2+
