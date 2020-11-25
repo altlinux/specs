@@ -29,7 +29,7 @@
 
 Name: ring-project
 Version: 20201118
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -109,6 +109,7 @@ Group: Networking/Instant messaging
 Requires: ring-daemon
 Provides: jami-client-qt = %EVR
 Provides: jami-qt = %EVR
+Obsoletes: ring-client-kde5 < 3.2
 %description -n ring-client-qt
 Ring-client-gnome is a Ring client written in Qt. It uses libRingClient to
 communicate with the Ring daemon and for all of the underlying models and their
@@ -359,6 +360,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20201118-alt2
+- obsolete ring-client-kde5
+
 * Fri Nov 20 2020 Sergey V Turchin <zerg@altlinux.org> 20201118-alt1
 - new version
 
