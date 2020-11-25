@@ -6,7 +6,7 @@
 
 Name: gnome-books
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: An e-book manager application for GNOME
 License: GPL-2.0
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 %endif
 
 %set_typelibdir %_libdir/%name/girepository-1.0
+%filter_from_provides /typelib(Gd)\|typelib(GdPrivate)/d
 
 %define gtk_ver 3.22.15
 %define gjs_ver 1.48
@@ -37,10 +38,8 @@ Requires: libgjs >= %gjs_ver
 Requires: typelib(cairo)
 Requires: typelib(EvinceDocument)
 Requires: typelib(EvinceView)
-Requires: typelib(Gd)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
-Requires: typelib(GdPrivate)
 Requires: typelib(Gepub)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
@@ -99,6 +98,9 @@ A simple application to access, organize and read your e-books on GNOME.
 
 
 %changelog
+* Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt4
+- removed self-satisfied typelib(Gd/GdPrivate) from Provides/Requires
+
 * Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt3
 - updated to 3.34.0-33-g50e83629
 

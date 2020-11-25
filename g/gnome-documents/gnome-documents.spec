@@ -7,7 +7,7 @@
 
 Name: gnome-documents
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: A document manager application for GNOME
 Group: Office
@@ -39,11 +39,9 @@ Requires: libreofficekit >= %lok_ver
 Requires: typelib(cairo)
 Requires: typelib(EvinceDocument)
 Requires: typelib(EvinceView)
-Requires: typelib(Gd)
 Requires: typelib(GData)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
-Requires: typelib(GdPrivate)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
@@ -61,6 +59,7 @@ Requires: typelib(Zpj)
 %define pkgdatadir %_datadir/%name
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
+%filter_from_provides /typelib(Gd)\|typelib(GdPrivate)/d
 
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils docbook-style-xsl
@@ -158,6 +157,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt4
+- removed self-satisfied typelib(Gd/GdPrivate) from Provides/Requires
+
 * Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt3
 - updated to 3.34.0-19-g4ad13cf1
 
