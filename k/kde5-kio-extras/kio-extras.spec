@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 20.08.2
+Version: 20.08.3
 Release: alt1
 %K5init altplace
 
@@ -142,6 +142,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
+- new version
+
 * Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
 - new version
 

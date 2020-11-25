@@ -7,7 +7,7 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 20.08.2
+Version: 20.08.3
 Release: alt1
 %K5init
 
@@ -25,7 +25,6 @@ Requires: kf5-kirigami
 
 Source: %rname-%version.tar
 Patch1: alt-hide-menu-item.patch
-Patch2: alt-kf5-requires.patch
 
 
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
@@ -95,7 +94,6 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
 
 %build
 %K5build \
@@ -144,6 +142,9 @@ KF5 library
 %_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
+- new version
+
 * Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
 - new version
 
