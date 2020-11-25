@@ -7,7 +7,7 @@
 %def_enable docs
 
 Name: %{_name}2
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -96,6 +96,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10.6-alt1
+- 2.10.6
+
 * Sun Sep 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10.4-alt1
 - 2.10.4 (ported to Meson build system)
 

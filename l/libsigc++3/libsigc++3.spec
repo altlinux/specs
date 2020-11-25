@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -89,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
+- 3.0.6
+
 * Sun Sep 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
 - 3.0.4
 
