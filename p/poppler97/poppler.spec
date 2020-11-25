@@ -40,7 +40,7 @@
 %define bugfix 1
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -84,8 +84,9 @@ BuildRequires: libqt4-devel
 %if_enabled glib
 BuildRequires: glib2-devel
 %endif
-BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel libnss-devel
-BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libtiff-devel libpng-devel
+BuildRequires: gcc-c++ glibc-devel libcurl-devel zlib-devel libnss-devel
+BuildRequires: libjpeg-devel liblcms2-devel libtiff-devel libpng-devel
+BuildRequires: libgtk+3-gir-devel libgtk+3-devel
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel poppler-data
@@ -408,6 +409,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 0.86.1-alt2
+- fix build requires
+
 * Wed Mar 11 2020 Sergey V Turchin <zerg@altlinux.org> 0.86.1-alt1
 - new version
 
