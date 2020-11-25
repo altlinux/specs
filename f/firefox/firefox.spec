@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        83.0
-Release:        alt1
+Release:        alt2
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -445,7 +445,10 @@ install -D -m 644 %SOURCE7 ./%_datadir/applications/firefox-wayland.desktop
 
 # Add alternatives
 mkdir -p ./%_altdir
-printf '%_bindir/xbrowser\t%_bindir/firefox\t100\n' >./%_altdir/firefox
+cat >./%_altdir/firefox <<EOF
+%_bindir/xbrowser	%_bindir/firefox	200
+%_bindir/x-www-browser	%_bindir/firefox	200
+EOF
 
 rm -f -- \
 	./%firefox_prefix/removed-files
@@ -501,6 +504,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Nov 25 2020 Alexey Gladkov <legion@altlinux.ru> 83.0-alt2
+- Fix alternatives.
+
 * Tue Nov 17 2020 Alexey Gladkov <legion@altlinux.ru> 83.0-alt1
 - New release (83.0).
 - Security fixes:
