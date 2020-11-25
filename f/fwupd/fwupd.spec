@@ -17,7 +17,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -26,50 +26,42 @@ Source0: %name-%version.tar
 Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
-
-BuildRequires: docbook-utils
-BuildRequires: gettext
-BuildRequires: glib2-devel
-BuildRequires: libappstream-glib-devel
-BuildRequires: libjson-glib-devel
-BuildRequires: libgudev-devel
-BuildRequires: libudev-devel
-BuildRequires: libgusb-devel
-BuildRequires: libsoup-devel
-BuildRequires: libsoup-gir-devel
-BuildRequires: libcolord-devel
-BuildRequires: libpolkit-devel
-BuildRequires: libsqlite3-devel
-BuildRequires: libsystemd-devel
-BuildRequires: libgpgme-devel
-BuildRequires: systemd 
-BuildRequires: libumockdev-devel
-BuildRequires: gcab
-BuildRequires: libarchive-devel
-BuildRequires: gobject-introspection-devel
-BuildRequires: libgcab-devel
-BuildRequires: valgrind-devel
-BuildRequires: libelf-devel
-BuildRequires: gtk-doc
-BuildRequires: libuuid-devel
-BuildRequires: libgnutls-devel
-BuildRequires: gnutls-utils
-BuildRequires: meson git
-BuildRequires: libjcat-devel
-BuildRequires: vala-tools
-BuildRequires: help2man
-BuildRequires: libxmlb-devel
 BuildRequires: bash-completion
-BuildRequires: libtpm2-tss-devel
 BuildRequires: cmake
+BuildRequires: gcab
+BuildRequires: git-core
+BuildRequires: gtk-doc
+BuildRequires: libappstream-glib-devel
+BuildRequires: libarchive-devel
+BuildRequires: libcolord-devel
+BuildRequires: libcurl-devel
+BuildRequires: libefivar-devel
+BuildRequires: libelf-devel
+BuildRequires: libgcab-devel
+BuildRequires: libgnutls-devel
+BuildRequires: libgpgme-devel
+BuildRequires: libgudev-devel
 BuildRequires: libgusb-gir-devel
-BuildRequires: python3 python3-module-pycairo python3-module-pygobject3 python3-module-Pillow rpm-build-python3
-BuildRequires: /proc
-
+BuildRequires: libjcat-devel
+BuildRequires: libpango-devel
+BuildRequires: libpolkit-devel
 %if_enabled dell
 BuildRequires: libsmbios-devel
 %endif
-
+BuildRequires: libsoup-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libtpm2-tss-devel
+BuildRequires: libudev-devel
+BuildRequires: libumockdev-devel
+BuildRequires: libuuid-devel
+BuildRequires: libxmlb-devel
+BuildRequires: meson
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-pycairo
+BuildRequires: python3-module-pygobject3
+BuildRequires: vala-tools
+BuildRequires: /proc
 
 %if_enabled uefi
 BuildRequires: libpango-devel
@@ -258,6 +250,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ep963x.so
 %_libdir/fwupd-plugins-3/libfu_plugin_fresco_pd.so
+%_libdir/fwupd-plugins-3/libfu_plugin_hailuck.so
 %_libdir/fwupd-plugins-3/libfu_plugin_tpm.so
 %_libdir/fwupd-plugins-3/libfu_plugin_tpm_eventlog.so
 %_libdir/fwupd-plugins-3/libfu_plugin_fastboot.so
@@ -272,7 +265,6 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_acpi_dmar.so
 %_libdir/fwupd-plugins-3/libfu_plugin_acpi_facp.so
 %_libdir/fwupd-plugins-3/libfu_plugin_bcm57xx.so
-%_libdir/fwupd-plugins-3/libfu_plugin_bios.so
 %_libdir/fwupd-plugins-3/libfu_plugin_cros_ec.so
 %_libdir/fwupd-plugins-3/libfu_plugin_elantp.so
 %_libdir/fwupd-plugins-3/libfu_plugin_goodixmoc.so
@@ -303,6 +295,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_thelio_io.so
 %_libdir/fwupd-plugins-3/libfu_plugin_thunderbolt.so
 %if_enabled uefi
+%_libdir/fwupd-plugins-3/libfu_plugin_bios.so
 %_libdir/fwupd-plugins-3/libfu_plugin_nvme.so
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi.so
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi_recovery.so
@@ -341,6 +334,10 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Wed Nov 25 2020 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
+- 1.5.2
+- cleanup build requires
+
 * Mon Nov 09 2020 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 
