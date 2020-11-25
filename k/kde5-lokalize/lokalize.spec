@@ -12,7 +12,7 @@
 
 %define rname lokalize
 Name: kde5-%rname
-Version: 20.08.2
+Version: 20.08.3
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -84,6 +84,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
+- new version
+
 * Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
 - new version
 
