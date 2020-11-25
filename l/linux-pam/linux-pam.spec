@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -340,6 +340,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Tue Nov 24 2020 Dmitry V. Levin <ldv@altlinux.org> 1.5.1-alt1
+- v1.5.0 -> v1.5.1.
+
 * Thu Nov 05 2020 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt1
 - v1.4.0-52-g650273e7 -> v1.5.0.
   Note that pam_tally and pam_tally2 were removed in favour of pam_faillock.
