@@ -1,19 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name:		codespell
-Version:	1.17.1
+Version:	2.0.0
 Release:	alt1
 Summary:	Check code for common misspellings
 Group:		Development/Tools
 License:	GPL-2.0-only
-URL:		https://github.com/codespell-project/codespell
+Url:		https://github.com/codespell-project/codespell
 Vcs:		https://github.com/codespell-project/codespell.git
 Source:		%name-%version.tar
 BuildArch:	noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: help2man
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: help2man
 
 %description
 Fix common misspellings in text files. It's designed primarily for checking
@@ -24,12 +27,16 @@ misspelled words in source code, but it can be used with other files as well.
 subst 's/help2man/& -L en_US.UTF-8 --no-discard-stderr/' Makefile
 
 %build
-make
 %python3_build
+make codespell.1
 
 %install
 %python3_install
 install -D -m644 %name.1 %buildroot%_man1dir/%name.1
+# Compatibility with scripts/checkpatch.pl
+ln -sf -r %buildroot%python3_sitelibdir/codespell_lib/data %buildroot/usr/share/codespell
+# I think we don't need this:
+rm -rf %buildroot%python3_sitelibdir/codespell_lib/data/{__pycache__,__init__.py}
 
 %check
 cd %buildroot
@@ -48,8 +55,12 @@ echo Millenium  > /tmp/example.txt
 %_bindir/%name
 %_man1dir/%name.1*
 %python3_sitelibdir/*
+/usr/share/codespell
 
 %changelog
+* Wed Nov 25 2020 Vitaly Chikunov <vt@altlinux.org> 2.0.0-alt1
+- Update to v2.0.0 (2020-11-23).
+
 * Mon May 25 2020 Vitaly Chikunov <vt@altlinux.org> 1.17.1-alt1
 - Update to v1.17.1.
 
