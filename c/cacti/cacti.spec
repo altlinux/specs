@@ -1,7 +1,7 @@
 
 Name: cacti
 Version: 1.2.15
-Release: alt1
+Release: alt2
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -163,6 +163,9 @@ fi
 %cactidir/install
 
 %changelog
+* Wed Nov 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.15-alt2
+- Fixed issues in 1.2.15 release.
+
 * Mon Nov 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.15-alt1
 - Updated to upstream version 1.2.15 (Fixes: CVE-2020-13230, CVE-2020-13231).
 
