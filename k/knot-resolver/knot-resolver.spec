@@ -5,7 +5,7 @@
 %def_disable doc
 
 Name: knot-resolver
-Version: 5.1.3
+Version: 5.2.0
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -19,7 +19,7 @@ Patch0: %name-%version.patch
 
 ExclusiveArch: %luajit_arches
 
-BuildRequires(pre): meson >= 0.46 rpm-macros-luajit
+BuildRequires(pre): meson >= 0.49 rpm-macros-luajit
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(gnutls)
@@ -27,6 +27,7 @@ BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(libknot) >= 2.8
 BuildRequires: pkgconfig(libzscanner) >= 2.8
 BuildRequires: pkgconfig(libdnssec) >= 2.8
+BuildRequires: pkgconfig(libnghttp2)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libcap-ng)
 BuildRequires: pkgconfig(libuv) >= 1.7
@@ -75,16 +76,17 @@ Group: Documentation
 Documentation for Knot Resolver
 
 %package module-http
-Summary: HTTP/2 module for Knot Resolver
+Summary: HTTP module for Knot Resolver
 Group: System/Servers
 Requires: %name = %EVR
 Requires: lua5.1-module-http
 Requires: lua5.1-module-mmdblua
 
 %description module-http
-HTTP/2 module for Knot Resolver has multiple uses. It enables use of
-DNS-over-HTTP, can serve as API endpoint for other modules or provide a web
-interface for local visualization of the resolver cache and queries.
+HTTP module for Knot Resolver can serve as API endpoint for other modules or
+provide a web interface for local visualization of the resolver cache and
+queries. It can also serve DNS-over-HTTPS, but it is deprecated in favor of
+native C implementation, which doesn't require this package.
 
 %prep
 %setup
@@ -129,8 +131,8 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/lib:$(pwd)/%{__builddir}
 %meson_test
 
 %pre
-%_sbindir/groupadd -r -f %name
-%_sbindir/useradd -M -r -d /var/lib/%name -s /bin/false -c "Knot Resolver" -g %name %name >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f %name >/dev/null 2>&1 ||:
+%_sbindir/useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %name %name >/dev/null 2>&1 ||:
 
 %post
 systemctl daemon-reload ||:
@@ -148,19 +150,20 @@ fi
 
 %files
 %doc COPYING AUTHORS NEWS etc/config/config.*
-%attr(755,root,%name) %dir %_sysconfdir/%name
-%attr(644,root,%name) %config(noreplace) %_sysconfdir/%name/kresd.conf
-%attr(644,root,%name) %config(noreplace) %_sysconfdir/%name/root.hints
-%attr(644,root,%name) %_sysconfdir/%name/icann-ca.pem
-%attr(775,root,%name) %dir %_sharedstatedir/%name
-%attr(664,root,%name) %_sharedstatedir/%name/root.keys
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/kresd.conf
+%config(noreplace) %_sysconfdir/%name/root.hints
+%_sysconfdir/%name/icann-ca.pem
+%attr(750,%name,%name) %dir %_sharedstatedir/%name
+%attr(640,%name,%name) %_sharedstatedir/%name/root.keys
 %attr(750,%name,%name) %dir %_cachedir/%name
 %_unitdir/kresd@.service
 %_unitdir/kres-cache-gc.service
 %_unitdir/kresd.target
 %_unitdir/multi-user.target.wants/kresd.target
-%_man7dir/*
+/lib/sysusers.d/knot-resolver.conf
 %_tmpfilesdir/%name.conf
+%_man7dir/*
 %_sbindir/kresd
 %_sbindir/kresc
 %_sbindir/kres-cache-gc
@@ -213,6 +216,9 @@ fi
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Wed Nov 25 2020 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Thu Sep 10 2020 Alexey Shabalin <shaba@altlinux.org> 5.1.3-alt1
 - 5.1.3
 
