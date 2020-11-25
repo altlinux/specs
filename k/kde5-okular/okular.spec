@@ -14,7 +14,7 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 20.08.2
+Version: 20.08.3
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
@@ -202,6 +202,15 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
+- new version
+
+* Wed Nov 11 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt3
+- apply patch for document loading progress
+
+* Tue Nov 03 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt2
+- don't apply patch for document loading progress
+
 * Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
 - new version
 
