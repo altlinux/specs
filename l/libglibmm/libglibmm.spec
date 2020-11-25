@@ -5,8 +5,12 @@
 %define ver_base 2.64
 %define api_ver 2.4
 
+%def_enable docs
+# see %%setup section below
+%def_enable check
+
 Name: libglibmm
-Version: %major.2
+Version: %major.4
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -20,13 +24,16 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.64.0
+%define glib_ver 2.61.2
 %define sigc_ver 2.9.1
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
 
-BuildRequires: gcc-c++ libgio-devel >= %glib_ver libsigc++2-devel >= %sigc_ver
-BuildRequires: mm-common perl-XML-Parser doxygen xsltproc graphviz
+BuildRequires(pre): meson
+BuildRequires: mm-common gcc-c++
+BuildRequires: libgio-devel >= %glib_ver libsigc++2-devel >= %sigc_ver
+BuildRequires: perl-XML-Parser
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
 A C++ interface for glib library.
@@ -60,25 +67,24 @@ This package contains all API documentation for glibmm.
 
 %prep
 %setup -n %rname-%version
+# online tests restricted in hasher
+sed -i  '/giomm_tls_client/d' tests/meson.build
 
 %build
-mm-common-prepare --force --copy
-%autoreconf
-%configure \
-	--disable-static \
-%if_enabled snapshot
-	--enable-maintainer-mode \
-	--enable-documentation
-%endif
-
-%make_build
+%{?_enable_snapshot:mm-common-prepare -f}
+%meson \
+    %{?_enable_docs:-Dbuild-documentation=true} \
+    %{?_enable_snapshot:-Dmaintainer-mode=true
+    -Dbuild-documentation=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-# online tests restricted
-#%%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %doc AUTHORS NEWS
@@ -92,11 +98,17 @@ mm-common-prepare --force --copy
 %_libdir/giomm-%api_ver/
 %_pkgconfigdir/*-%api_ver.pc
 
+%if_enabled docs
 %files doc
 %_docdir/%rname-%api_ver/
 %_datadir/devhelp/books/%rname-%api_ver
+%endif
 
 %changelog
+* Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.4-alt1
+- 2.64.4 (ported to Meson build system)
+- enabled %%check
+
 * Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.2-alt1
 - 2.64.2
 
