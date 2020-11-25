@@ -1,10 +1,10 @@
-%set_verify_elf_method unresolved=no
+#set_verify_elf_method unresolved=no
 
 %define repo dde-kwin
 
 Name: deepin-kwin
 Version: 5.2.0.2
-Release: alt2
+Release: alt2.1
 %K5init altplace
 
 Summary: KWin configuration for Deepin Desktop Environment
@@ -26,6 +26,7 @@ Patch6: kwin-5.19.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ninja
 BuildRequires: gcc-c++ cmake extra-cmake-modules qt5-tools qt5-tools-devel qt5-base-devel plasma5-kdecoration-devel qt5-x11extras-devel qt5-declarative-devel kf5-kwindowsystem-devel kf5-kcoreaddons-devel dtk5-gui-devel kf5-kconfig-devel kf5-kglobalaccel-devel kf5-ki18n-devel gsettings-qt-devel plasma5-kwin-devel plasma5-kwayland-server-devel kf5-kwayland-devel
 BuildRequires: zlib-devel bzlib-devel libpng-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel
+BuildRequires: libkwin5
 
 %description
 This package provides a kwin configuration that used as the new WM for Deepin
@@ -52,9 +53,13 @@ Header files and libraries for %name.
 %__subst 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' tabbox/CMakeLists.txt
 
 %build
+# Workaround for missing libkwin.so
+mkdir libs
+ln -s %_libdir/libkwin.so.5 libs/libkwin.so
 %K5cmake \
     -GNinja \
-    -DCMAKE_INSTALL_LIBDIR=%_K5lib
+    -DCMAKE_INSTALL_LIBDIR=%_K5lib \
+    -DKWIN_LIBRARY_PATH=`pwd`/libs
 %ninja_build -C BUILD
 
 %install
@@ -92,6 +97,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Wed Nov 25 2020 Andrey Cherepanov <cas@altlinux.org> 5.2.0.2-alt2.1
+- Link with libkwin to prevent unresolved symbols.
+
 * Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.2-alt2
 - Fixed file locations.
 
