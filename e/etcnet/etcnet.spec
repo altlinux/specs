@@ -1,6 +1,6 @@
 Name:		etcnet
-Version:	0.9.19
-Release:	alt2
+Version:	0.9.20
+Release:	alt1
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -141,6 +141,12 @@ fi
 %files full
 
 %changelog
+* Wed Nov 25 2020 Mikhail Efremov <sem@altlinux.org> 0.9.20-alt1
+- dhcpcd: Support dhcpcd-9 pidfiles location.
+- dhcpcd: Stop dhcpcd if -4 or -6 options were used.
+- contrib: Increase DHCP_GRACE_TIME value.
+- dhcpcd: Use DHCP_GRACE_TIME again.
+
 * Tue Nov 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.19-alt2
 - Removed ncpfs from dependencies.
 
