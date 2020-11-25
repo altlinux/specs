@@ -1,9 +1,7 @@
 %define oname DistroDbMaker
 
-%def_with python3
-
 Name: %oname
-Version: 0.027
+Version: 0.029
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPLv2+
@@ -13,15 +11,9 @@ Url: https://www.altlinux.org/Packaging_Automation/DistroDb
 Source: %name-%version.tar
 BuildArch: noarch
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
 Requires: python3-module-rpm
-%else
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-Requires: python-module-rpm python-module-backports.lzma
-%endif
 
 Conflicts: distrodb-utils < 0.21
 Conflicts: python-module-DistroDbMaker < 0.027
@@ -30,10 +22,6 @@ Obsoletes: python-module-DistroDbMaker < 0.027
 %description
 %summary
 
-%if_without python3
-%endif
-
-%if_with python3
 %package -n python3-module-%oname
 Summary: DistroDb Maker tools
 Group: Development/Python3
@@ -41,48 +29,30 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 %summary
-%else
-%package -n python-module-%oname
-Summary: DistroDb Maker tools
-Group: Development/Python
-#py_provides %oname
-Conflicts: distrodb-utils < 0.21
-
-%description -n python-module-%oname
-%summary
-%endif
 
 %prep
 %setup
 
 %build
-%if_with python3
 sed -i 1s,/usr/bin/python,/usr/bin/python3, *.py
 %python3_build_debug
-%else
-sed -i 1s,/usr/bin/python,/usr/bin/python2, *.py
-%python_build_debug
-%endif
 
 %install
-%if_with python3
 %python3_install
-%else
-%python_install
-%endif
 
 %files
 %_bindir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%else
-%files -n python-module-%oname
-%python_sitelibdir/*
-%endif
 
 %changelog
+* Wed Nov 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.029-alt1
+- dropped python2 support
+
+* Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
+- python3 bugfixes
+
 * Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1
 - switched to python3
 
