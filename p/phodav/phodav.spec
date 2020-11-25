@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %def_with avahi
 
 Name: phodav
-Version: 2.4
+Version: 2.5
 Release: alt1
 Summary: A WebDAV server using libsoup
 
@@ -50,7 +51,7 @@ Requires: lib%name = %version-%release
 The chezdav package contains a simple tool to share a directory
 with WebDAV. The service is announced over mDNS for clients to discover.
 
-%package -n     spice-webdavd
+%package -n spice-webdavd
 Summary: Spice daemon for the DAV channel
 Group: Graphical desktop/Other
 Requires: avahi-daemon dbus
@@ -88,6 +89,7 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_datadir/gtk-doc/html/phodav-2.0
 
 %files -n chezdav
 %_bindir/chezdav
@@ -102,6 +104,9 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %config(noreplace) /etc/sysconfig/spice-webdavd
 
 %changelog
+* Wed Nov 25 2020 Alexey Shabalin <shaba@altlinux.org> 2.5-alt1
+- new version 2.5
+
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 2.4-alt1
 - new version 2.4
 
