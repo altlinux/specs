@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 
 Name: radcli
-Version: 1.2.11
+Version: 1.3.0
 Release: alt1
 Summary: RADIUS protocol client library
 Group: System/Libraries
-License: BSD and MIT
+License: MIT AND BSD-2-Clause
 Url: http://radcli.github.io/radcli/
 Source: %name-%version.tar
 
@@ -57,21 +58,11 @@ cp -p %buildroot%_datadir/%name/dictionary %buildroot%_sysconfdir/%name/dictiona
 %make_build check
 
 %files -n lib%name
-%doc README.rst NEWS
-
+%doc README.md NEWS
 %_libdir/*.so.*
-
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/*
-
-%dir %_datadir/%name
-%_datadir/%name/dictionary
-%_datadir/%name/dictionary.roaringpenguin
-%_datadir/%name/dictionary.microsoft
-%_datadir/%name/dictionary.ascend
-%_datadir/%name/dictionary.compat
-%_datadir/%name/dictionary.merit
-%_datadir/%name/dictionary.sip
+%_datadir/%name
 
 %files -n lib%name-devel
 %_includedir/*
@@ -80,5 +71,8 @@ cp -p %buildroot%_datadir/%name/dictionary %buildroot%_sysconfdir/%name/dictiona
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Tue Sep 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.11-alt1
 - initial build for ALT
