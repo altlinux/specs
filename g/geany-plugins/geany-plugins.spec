@@ -1,6 +1,6 @@
 Name: geany-plugins
-Version: 1.36
-Release: alt2
+Version: 1.37
+Release: alt1
 %define geany_ver %version
 
 Summary: Plugins for Geany
@@ -33,9 +33,9 @@ BuildRequires(pre): geany geany-devel intltool
 
 Requires: geany-plugins-vc
 
-# Automatically added by buildreq on Wed Feb 27 2019
-# optimized out: fontconfig fontconfig-devel geany glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libatk-devel libcairo-devel libcrypt-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+2-devel libjavascriptcoregtk2-devel liblua5.1-devel libpango-devel libsoup-devel perl perl-XML-Parser pkg-config python-base python-devel python-module-docutils python-module-pygobject-devel python-modules python-modules-distutils sh4 vala xorg-proto-devel zlib-devel
-BuildRequires: cppcheck geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgit2-devel libgpgme-devel libgtkspell-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel python-module-pygtk-devel libctpl-devel
+# Automatically added by buildreq on Mon Nov 09 2020
+# optimized out: at-spi2-atk fontconfig geany glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libenchant2-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+3-devel libharfbuzz-devel libjavascriptcoregtk4-devel liblua5.1-devel libpango-devel libsoup-devel libwayland-client libwayland-cursor libwayland-egl perl perl-XML-Parser pkg-config python-modules python2-base python3 python3-base sh4 shared-mime-info vala xorg-proto-devel
+BuildRequires: cppcheck geany-devel intltool libcheck-devel libctpl-devel libgit2-devel libgpgme-devel libgtkspell3-devel libvte3-devel libwebkit2gtk-devel libxml2-devel python3-dev
 
 BuildRequires: liblua5.1-devel
 
@@ -91,6 +91,10 @@ export PYTHON_VERSION=2
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Sat Nov 07 2020 Fr. Br. George <george@altlinux.ru> 1.37-alt1
+- Autobuild version bump to 1.37
+- Switch to GTK3
+
 * Wed Jun 24 2020 Michael Shigorin <mike@altlinux.org> 1.36-alt2
 - Fix ftbfs (specify python version explicitly)
 

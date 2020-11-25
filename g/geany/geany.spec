@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.36
+Version: 1.37
 Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
@@ -16,11 +16,12 @@ Patch: geany-1.35-defaults.patch
 Requires: libvte
 Requires: %name-data = %version
 BuildPreReq: desktop-file-utils
-# Automatically added by buildreq on Tue Jul 05 2016
-# optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-lxml python-modules python-modules-compiler python-modules-encodings xorg-xproto-devel
-BuildRequires: gcc-c++ intltool libgtk+2-devel python-module-docutils time
 
 %add_findreq_skiplist %_datadir/%name/templates/files/*
+
+# Automatically added by buildreq on Sat Nov 07 2020
+# optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent pkg-config python-module-lxml python-modules python-modules-compiler python-modules-encodings python2-base sh4 shared-mime-info wayland-devel xorg-proto-devel
+BuildRequires: gcc-c++ git-core intltool libgtk+3-devel libgtk4-devel python-module-docutils time
 
 %description
 Geany is a small and lightweight integrated development environment.
@@ -120,6 +121,10 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Sat Nov 07 2020 Fr. Br. George <george@altlinux.ru> 1.37-alt1
+- Autobuild version bump to 1.37
+- Switch to GTK3
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.36-alt1
 - Autobuild version bump to 1.36
 

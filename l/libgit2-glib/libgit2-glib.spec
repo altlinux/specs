@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.28
+%define ver_major 0.99
 %define api_ver 1.0
 
 %def_enable gtk_doc
@@ -24,7 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define libgit2_ver 0.27.8
+%define libgit2_ver 0.25
 %define glib_ver 2.44
 
 BuildRequires(pre): meson
@@ -84,6 +84,8 @@ This package contains documentation needed for developing Libgit2-glib applicati
 
 %prep
 %setup
+# fix python install dir
+sed -i 's/purelib/platlib/' %name/meson.build
 
 %build
 %meson \
@@ -111,8 +113,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/%name-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
 %if_enabled vala
-%_vapidir/ggit-%api_ver.vapi
-%_vapidir/ggit-%api_ver.deps
 %_vapidir/%name-%api_ver.vapi
 %_vapidir/%name-%api_ver.deps
 %endif
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Oct 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.99.0.1-alt1
+- 0.99.0.1
+
 * Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.28.0.1-alt1
 - 0.28.0.1
 
