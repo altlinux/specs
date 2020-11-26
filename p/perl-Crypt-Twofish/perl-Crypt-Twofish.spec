@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-Twofish
 Name: perl-%dist
-Version: 2.17
-Release: alt2.2
+Version: 2.18
+Release: alt1
 
 Summary: The Twofish Encryption Algorithm
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AM/AMS/Crypt-Twofish-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AM/AMS/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Crypt-CBC perl-devel
@@ -25,7 +26,7 @@ interface that is call-compatible with Crypt::Twofish 1.0, but its use
 in new code is strongly discouraged.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +40,9 @@ in new code is strongly discouraged.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Nov 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2.2
 - rebuild with new perl 5.28.1
 
