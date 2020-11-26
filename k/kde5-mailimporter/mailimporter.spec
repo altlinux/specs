@@ -5,7 +5,7 @@
 %define libkf5mailimporterakonadi libkf5mailimporterakonadi%sover
 
 Name: kde5-%rname
-Version: 20.08.2
+Version: 20.08.3
 Release: alt1
 %K5init
 
@@ -95,6 +95,9 @@ KF5 library
 %_K5lib/libKF5MailImporterAkonadi.so.*
 
 %changelog
+* Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
+- new version
+
 * Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
 - new version
 
