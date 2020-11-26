@@ -3,13 +3,14 @@
 %define _stripped_files_terminate_build 1
 
 %def_enable debug
+%def_enable perl
 %def_enable ruby
 %def_disable devel
 
 Name: unit
 Summary: NGINX Unit - Web Application Server
 Version: 1.21.0
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 Url: https://unit.nginx.org/
@@ -21,12 +22,21 @@ BuildRequires: libssl-devel
 BuildRequires: libpcre-devel
 BuildRequires: libruby-devel
 BuildRequires: ruby
+BuildRequires: perl-devel perl-base
 
 %description
 NGINX Unit is a polyglot app server, a reverse proxy, and a static
 file server, available for Unix-like systems. It was built by nginx
 team members from scratch to be highly efficient and fully configurable
 at runtime.
+
+%package perl
+Summary: Perl module for NGINX Unit
+Group: System/Servers
+Requires: unit
+
+%description perl
+Perl module for NGINX Unit
 
 %package ruby
 Summary: Ruby module for NGINX Unit
@@ -59,6 +69,9 @@ CONFIGURE_ARGS="
 CFLAGS="%optflags" \
 ./configure $CONFIGURE_ARGS \
 	--modules=%_libdir/unit/modules
+%if_enabled perl
+  ./configure perl
+%endif
 %if_enabled ruby
   ./configure ruby
 %endif
@@ -73,6 +86,9 @@ mv build build-nodebug
   ./configure $CONFIGURE_ARGS \
 	--modules=%_libdir/unit/debug-modules \
 	--debug
+  %if_enabled perl
+    ./configure perl
+  %endif
   %if_enabled ruby
     ./configure ruby
   %endif
@@ -92,6 +108,9 @@ sed -i -e 's!Environment=.*!EnvironmentFile=/etc/sysconfig/unit!' pkg/rpm/rpmbui
 %install
 ln -sf build-nodebug build
 %makeinstall_std unitd-install libunit-install
+%if_enabled perl
+  %makeinstall_std perl-install
+%endif
 %if_enabled ruby
   %makeinstall_std ruby-install
 %endif
@@ -102,6 +121,9 @@ ln -sf build-nodebug build
     install -m755 build-debug/libunit.a %buildroot%_libdir/libunit-debug.a
   %endif
   mkdir -p %buildroot%_libdir/unit/debug-modules/
+  %if_enabled perl
+    install -m755 build-debug/perl.unit.so %buildroot%_libdir/unit/debug-modules/perl.unit.so
+  %endif
   %if_enabled ruby
     install -m755 build-debug/ruby.unit.so %buildroot%_libdir/unit/debug-modules/ruby.unit.so
   %endif
@@ -117,7 +139,9 @@ mkdir -p %buildroot%_logdir/unit
 
 ln NOTICE COPYRIGHT
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-ruby-app    ruby-app.ru
-ln pkg/rpm/rpmbuild/SOURCES/unit.example-ruby-config unit.config
+ln pkg/rpm/rpmbuild/SOURCES/unit.example-ruby-config ruby-unit.config
+ln pkg/rpm/rpmbuild/SOURCES/unit.example-perl-app    perl-app.ru
+ln pkg/rpm/rpmbuild/SOURCES/unit.example-perl-config perl-unit.config
 
 %check
 build/tests
@@ -142,7 +166,8 @@ build/tests
 %_localstatedir/unit
 %_runtimedir/unit
 %_logdir/unit
-%dir %_libdir/unit/*modules
+%dir %_libdir/%name
+%dir %_libdir/%name/*modules
 %if_enabled devel
   %_libdir/libunit*.a
   %_includedir/nxt_*.h
@@ -151,13 +176,21 @@ build/tests
   %exclude %_includedir/nxt_*.h
 %endif
 
+%if_enabled perl
+%files perl
+%doc COPYRIGHT perl-app.ru perl-unit.config
+%_libdir/unit/*modules/perl.unit.so
+%endif
 %if_enabled ruby
 %files ruby
-%doc COPYRIGHT ruby-app.ru unit.config
+%doc COPYRIGHT ruby-app.ru ruby-unit.config
 %_libdir/unit/*modules/ruby.unit.so
 %endif
 
 %changelog
+* Thu Nov 26 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.21.0-alt2
+- Add Perl module.
+
 * Tue Nov 24 2020 Vitaly Chikunov <vt@altlinux.org> 1.21.0-alt1
 - Initial import of v1.21.0 (2020-11-19).
 - Only ruby module is built.
