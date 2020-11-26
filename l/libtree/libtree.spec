@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -88,6 +88,9 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Nov 19 2020 Alexey Appolonov <alexey@altlinux.org> 0.5.0-alt1
+- Ability to reserve tree items by passing empty branch drafts.
+
 * Fri Feb 07 2020 Alexey Appolonov <alexey@altlinux.org> 0.4.0-alt1
 - Handling attributes of '<...>:<attribute_name>' format;
 - Ability to avoid empty lines in string representation of selected data.
