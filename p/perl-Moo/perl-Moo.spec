@@ -2,7 +2,7 @@
 %filter_from_requires /^perl.MRO.Compat.pm./d
 
 Name: perl-Moo
-Version: 2.004003
+Version: 2.004004
 Release: alt1
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
@@ -39,6 +39,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Thu Nov 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.004004-alt1
+- new version
+
 * Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 2.004003-alt1
 - new version
 
