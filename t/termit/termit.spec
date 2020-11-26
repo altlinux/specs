@@ -2,7 +2,7 @@
 
 Name:          termit
 Version:       3.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Minimalistic terminal emulator with tabs and encoding support
 Url:           https://github.com/nonstop/termit/wiki
 Vcs:           https://github.com/nonstop/termit.git
@@ -52,7 +52,7 @@ cmake -DCMAKE_INSTALL_PREFIX=%_prefix .
 
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
-%_bindir/termit 40
+%_bindir/xvt %_bindir/termit 100
 EOF
 
 install -m644 -D %SOURCE1 %buildroot%_sysconfdir/xdg/termit/rc.lua
@@ -73,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_metainfodir/%name.metainfo.xml
 
 %changelog
+* Thu Nov 26 2020 Pavel Skrylev <majioa@altlinux.org> 3.1-alt1.2
+- ! alternatives files for termit to proper format
+
 * Mon Nov 23 2020 Pavel Skrylev <majioa@altlinux.org> 3.1-alt1.1
 - - invalid provides
 - ! invalid alternatives files for termit (closes #39338)
