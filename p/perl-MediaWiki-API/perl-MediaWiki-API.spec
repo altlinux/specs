@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-MediaWiki-API
-Version: 0.41
+Version: 0.52
 Release: alt1
 
 Summary: Provides a Perl interface to the MediaWiki API (http://www.mediawiki.org/wiki/API)
@@ -27,7 +27,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/E/EX/EXOBUZZ/MediaWiki-API-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/EX/EXOBUZZ/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Feb 03 2010
 BuildRequires: perl-JSON perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
@@ -38,7 +38,7 @@ This module provides an interface between Perl and the MediaWiki API
 automate editing and extraction of data from MediaWiki driven sites like Wikipedia.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -48,9 +48,13 @@ automate editing and extraction of data from MediaWiki driven sites like Wikiped
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc README CONTRIBUTING.md LICENSE Changes
 %perl_vendor_privlib/MediaWiki/*
 
 %changelog
+* Thu Nov 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- automated CPAN update
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - automated CPAN update
 
