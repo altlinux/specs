@@ -2,7 +2,7 @@
 %define oname django-recaptcha
 
 Name: python3-module-%oname
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: Django recaptcha form field/widget app
@@ -47,15 +47,17 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %files
 %doc *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests.*
-%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python3_sitelibdir/*/tests.*
-%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/tests
 
 
 %changelog
+* Thu Nov 26 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.6-alt1
+- Automatically updated to 2.0.6.
+- Fix packaging tests (Closes: #39264).
+
 * Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.5-alt1
 - Version updated to 2.0.5
 - build for python2 disabled
