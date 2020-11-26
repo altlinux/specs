@@ -9,7 +9,7 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.7.9
+Version: 0.8.0
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -23,7 +23,6 @@ Source: https://github.com/FontManager/%name/archive/%version/%name-%version.tar
 Vcs: https://github.com/FontManager/font-manager.git
 Source: %name-%version.tar
 %endif
-Patch: font-manager-0.7.5-alt-build.patch
 
 Requires: file-roller
 
@@ -38,6 +37,7 @@ BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libgtk+3-gir-devel
+BuildRequires: pkgconfig(webkit2gtk-4.0)
 %if_with nautilus
 BuildRequires(pre): rpm-build-gnome
 BuildRequires: libnautilus-devel
@@ -58,10 +58,10 @@ Enlightenment, and even KDE.
 
 %prep
 %setup
-%patch
 
 %build
 %meson \
+	-Dreproducible=true \
 	%{?_with_nautilus:-Dnautilus=true}
 %meson_build
 
@@ -81,6 +81,7 @@ Enlightenment, and even KDE.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name1.gschema.xml
 %_iconsdir/hicolor/*/apps/*.png
+%_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/metainfo/%xdg_name1.appdata.xml
@@ -89,6 +90,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Thu Nov 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon Sep 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
 - 0.7.9
 
