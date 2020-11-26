@@ -1,7 +1,7 @@
 %define  modulename pyrad
 
 Name:    python3-module-%modulename
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: Python RADIUS Implementation
@@ -42,5 +42,8 @@ decoding responses.
 %doc *.rst
 
 %changelog
+* Thu Nov 26 2020 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1
+- Automatically updated to 2.4.
+
 * Fri May 29 2020 Grigory Ustinov <grenka@altlinux.org> 2.3-alt1
 - Initial build for Sisyphus.
