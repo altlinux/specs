@@ -1,7 +1,7 @@
 %define  modulename identify
 
 Name:    python3-module-%modulename
-Version: 1.5.9
+Version: 1.5.10
 Release: alt1
 
 Summary: File identification library for Python
@@ -37,5 +37,8 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Thu Nov 26 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.10-alt1
+- Automatically updated to 1.5.10.
+
 * Sun Nov 08 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.9-alt1
 - Initial build for Sisyphus.
