@@ -16,7 +16,7 @@
 #%%def_without test
 
 Name: perl-Net-SIP
-Version: 0.823
+Version: 0.825
 Release: alt1
 
 Summary: Perl framework for SIP (Voice Over IP, RFC3261)
@@ -56,6 +56,9 @@ layer for common tasks.
 %doc Changes README HOWTO BUGS COPYRIGHT samples bin
 
 %changelog
+* Thu Nov 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.825-alt1
+- automated CPAN update
+
 * Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.823-alt1
 - automated CPAN update
 
