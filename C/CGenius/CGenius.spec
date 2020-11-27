@@ -1,9 +1,9 @@
 Name: CGenius
-Version: 2.3.1
-Release: alt1
+Version: 2.6.3.1
+Release: alt1.git.11.gb3efc3da2
 
 Summary: the clone of Commander Keen
-License: GPL
+License: GPL2
 Group: Games/Arcade
 Url: http://clonekeenplus.sourceforge.net
 
@@ -11,7 +11,7 @@ Source: https://gitlab.com/Dringgstein/Commander-Genius/-/archive/v%version/Comm
 
 # Automatically added by buildreq on Fri Feb 08 2019
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libsasl2-3 libstdc++-devel python-base python-modules python3 python3-base sh4 xorg-proto-devel
-BuildRequires: boost-devel-headers cmake gcc-c++ libSDL2_image-devel libSDL2_mixer-devel libcurl-devel python3-dev zlib-devel
+BuildRequires: boost-devel-headers cmake gcc-c++ libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libcurl-devel python3-dev zlib-devel
 
 %description
 Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which
@@ -60,7 +60,7 @@ implementation with even more features like:
 Group: Games/Arcade
 Summary: High Quality Pack for CGenius, the clone of Commander Keen
 BuildArch: noarch
-Requires: %name
+Requires: %name >= %version
 
 %description hqp
 The High Quality Pack provides extra resources for Commander Genius like music
@@ -99,6 +99,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Fri Nov 27 2020 Ildar Mulyukov <ildar@altlinux.ru> 2.6.3.1-alt1.git.11.gb3efc3da2
+- new version
+
 * Mon Feb 25 2019 Ildar Mulyukov <ildar@altlinux.ru> 2.3.1-alt1
 - new version
 
