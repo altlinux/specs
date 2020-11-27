@@ -74,12 +74,12 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 246
+%define ver_major 247
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.6
-Release: alt5
+Version: %ver_major
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -161,7 +161,7 @@ BuildRequires: pkgconfig(mount) >= 2.27
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: libkeyutils-devel
-BuildRequires: pkgconfig(fdisk)
+BuildRequires: pkgconfig(fdisk) >= 2.33
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 2.0.1}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
@@ -616,6 +616,7 @@ Static library for libudev.
 %build
 
 %meson \
+	-Dmode=release \
 	-Dlink-udev-shared=false \
 	-Dlink-systemctl-shared=false \
 	-Dlink-networkd-shared=false \
@@ -630,6 +631,9 @@ Static library for libudev.
 	-Dsysvinit-path=%_initdir \
 	-Dsysvrcnd-path=%_sysconfdir/rc.d \
 	-Drc-local=%_sysconfdir/rc.d/rc.local \
+	-Dinstall-sysconfdir=true \
+	-Dkernel-install=true \
+	-Dpamconfdir=%_sysconfdir/pam.d \
 	-Ddebug-shell=/bin/bash \
 	-Dquotaon-path=/sbin/quotaon \
 	-Dquotacheck-path=/sbin/quotacheck \
@@ -642,6 +646,7 @@ Static library for libudev.
 	-Dsetfont-path=/bin/setfont \
 	-Dtelinit-path=/sbin/telinit \
 	-Dnologin-path=/sbin/nologin \
+	-Dcompat-mutable-uid-boundaries=true \
 	-Dsystem-uid-max=499 \
 	-Dsystem-gid-max=499 \
 	-Dtty-gid=5 \
@@ -651,7 +656,7 @@ Static library for libudev.
 	-Dbump-proc-sys-fs-file-max=false \
 	-Dbump-proc-sys-fs-nr-open=false \
 	%{?_enable_elfutils:-Delfutils=true} \
-    %{?_enable_pwquality:-Dpwquality=true} \
+	%{?_enable_pwquality:-Dpwquality=true} \
 	%{?_enable_xz:-Dxz=true} \
 	%{?_enable_zlib:-Dzlib=true} \
 	%{?_enable_bzip2:-Dbzip2=true} \
@@ -670,15 +675,15 @@ Static library for libudev.
 	%{?_enable_qrencode:-Dqrencode=true} \
 	%{?_enable_microhttpd:-Dmicrohttpd=true} \
 	%{?_enable_gnutls:-Dgnutls=true} \
-    %{?_enable_openssl:-Dopenssl=true } \
-    %{?_enable_p11kit:-Dp11kit=true } \
+	%{?_enable_openssl:-Dopenssl=true } \
+	%{?_enable_p11kit:-Dp11kit=true } \
 	%{?_enable_libcurl:-Dlibcurl=true} \
 	%{?_enable_libidn:-Dlibidn=true} \
 	%{?_enable_libidn2:-Dlibidn2=true} \
 	%{?_enable_libiptc:-Dlibiptc=true} \
 	%{?_enable_polkit:-Dpolkit=true} \
 	%{?_enable_efi:-Defi=true} \
-    %{?_enable_homed:-Dhomed=true} \
+	%{?_enable_homed:-Dhomed=true} \
 	%{?_enable_networkd:-Dnetworkd=true} \
 	%{?_enable_resolve:-Dresolve=true} \
 	-Ddns-servers="" \
@@ -1256,6 +1261,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_bindir/systemd-cgtop
 %_bindir/systemd-delta
 %_bindir/systemd-detect-virt
+%_bindir/systemd-dissect
 %_bindir/systemd-id128
 %_bindir/systemd-mount
 %_bindir/systemd-umount
@@ -1266,7 +1272,6 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/systemd/systemd
 /lib/systemd/systemd-ac-power
 /lib/systemd/systemd-cgroups-agent
-/lib/systemd/systemd-dissect
 %if_enabled libcryptsetup
 /lib/systemd/systemd-cryptsetup
 /lib/systemd/systemd-veritysetup
@@ -1363,6 +1368,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_man1dir/systemd-cgtop.*
 %_man1dir/systemd-delta.*
 %_man1dir/systemd-detect-virt.*
+%_man1dir/systemd-dissect.*
 %_man1dir/systemd-inhibit.*
 %_man1dir/systemd-id128.*
 %_man1dir/systemd-mount.*
@@ -1979,6 +1985,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Nov 27 2020 Alexey Shabalin <shaba@altlinux.org> 1:247-alt1
+- 247
+
 * Sun Nov 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt5
 - add cloud@altlinux.org key to import-pubring.gpg
 
