@@ -12,8 +12,8 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.18.4
-Release: alt5
+Version: 0.18.5
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -34,12 +34,12 @@ Patch2: %name-build-with-external-smesh.patch
 #Patch3: upstream.patch
 Patch4: %name-desktop-ru.patch
 
-Patch5: %name-%version-alt-boost-1.73.0-compat.patch
-
-Patch6: %name-%version-upstream-qt-5.15-compat-1.patch
-Patch7: %name-%version-upstream-qt-5.15-compat-2.patch
-Patch8: %name-%version-upstream-qt-5.15-compat-3.patch
-Patch9: %name-%version-upstream-qt-5.15-compat-4.patch
+Patch5: %name-0.18.4-alt-boost-1.73.0-compat.patch
+Patch6: %name-0.18.4-upstream-qt-5.15-compat-1.patch
+Patch7: %name-0.18.4-upstream-qt-5.15-compat-2.patch
+Patch8: %name-0.18.4-upstream-qt-5.15-compat-3.patch
+Patch9: %name-0.18.4-upstream-qt-5.15-compat-4.patch
+Patch10: %name-alt-ignore-macro-with-empty-name.patch 
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -105,6 +105,8 @@ Requires: libEGL-devel libGLU-devel
 %py_provides ImageGui PartDesignGui _PartDesign
 %add_python_req_skip pyopencl IfcImport Units
 %add_findreq_skiplist %ldir/Mod/*
+Requires: openscad
+Requires: python-module-GitPython
 
 %description
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -152,6 +154,7 @@ rm -rf src/3rdParty
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -239,6 +242,11 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Fri Nov 27 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.5-alt1
+- New version.
+- Add requirements of openscad and GitPython.
+- Fix Addon Manager during macro info retrieving.
+
 * Fri Sep 11 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.4-alt5
 - Require python-module-matplotlib-qt4 for workbench (ALT #38925).
 
