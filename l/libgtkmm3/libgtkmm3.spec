@@ -9,7 +9,7 @@
 
 Name: libgtkmm3
 Version: %ver_major.2
-Release: alt2.1
+Release: alt3
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
 License: GPL-2.0 and LGPL-2.1
@@ -118,6 +118,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt3
+- updated to 3.24.2-81-gcfa54b63
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2.1
 - fixed "docs" knob logic
 
