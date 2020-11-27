@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 
 Summary: Media Sharing Server
@@ -137,6 +137,9 @@ This package contains command line utilities for the PipeWire media server.
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
+%dir %_sysconfdir/%name/media-session.d
+%_sysconfdir/%name/media-session.d/with-jack
+%_sysconfdir/%name/media-session.d/with-pulseaudio
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
 %if_enabled systemd
@@ -206,6 +209,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.17-alt1
+- 0.3.17
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
 - updated to 0.3.16-1-g4d085816
 
