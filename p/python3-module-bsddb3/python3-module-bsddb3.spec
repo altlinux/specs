@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 6.2.8
+Version: 6.2.9
 Release: alt1
 
 Summary: Python bindings for BerkleyDB
@@ -39,6 +39,9 @@ This package provides Python 3 wrappers for Berkeley DB                         
 %exclude %_includedir/python*/%modname/bsddb.h
 
 %changelog
+* Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 6.2.9-alt1
+- 6.2.9
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 6.2.8-alt1
 - 6.2.8 (python3-only)
 
