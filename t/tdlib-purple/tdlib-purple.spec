@@ -1,6 +1,6 @@
 Name:     tdlib-purple
 Version:  0.7.2
-Release:  alt1
+Release:  alt2
 
 Summary:  libpurple Telegram plugin using tdlib
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libpng-devel libpurple-devel librlottie-devel libssl-devel libtgvoip-devel libwebp-devel tdlib-devel-static
 BuildRequires: libpcre-devel
 
-#FIXME: tdlib requires tdlib-devel-static to build with
+#NOTE: tdlib requires tdlib-devel-static to build with by design
 #FIXME: system librlottie lacks some symbols so building with bundled Lottie
 
 %description
@@ -34,7 +34,7 @@ BuildRequires: libpcre-devel
 # 	-DNoBundledLottie=True \
 %cmake_insource \
 	-Dtgvoip_INCLUDE_DIRS=`pkg-config --cflags tgvoip | sed "s/-I//"` \
-	..
+	-DSTUFF=AFADBDIyvuCrHF@E@GCC@qAvGus@rIArrGGtIvqC ..
 %make_build
 
 %install
@@ -48,6 +48,9 @@ BuildRequires: libpcre-devel
 %doc *.md
 
 %changelog
+* Fri Nov 20 2020 Ildar Mulyukov <ildar@altlinux.ru> 0.7.2-alt2
+- fix connection problems
+
 * Mon Oct 26 2020 Ildar Mulyukov <ildar@altlinux.ru> 0.7.2-alt1
 - new version
 - added "keep-inline-downloads" option
