@@ -1,7 +1,7 @@
 
 Name: cacti
 Version: 1.2.15
-Release: alt2
+Release: alt3
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -163,6 +163,9 @@ fi
 %cactidir/install
 
 %changelog
+* Fri Nov 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.15-alt3
+- Fixed merge issue in lib/clog_webapi.php found by Alexander Makeenkov.
+
 * Wed Nov 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.15-alt2
 - Fixed issues in 1.2.15 release.
 
