@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt2
+Release: alt3
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -45,6 +45,8 @@ Requires: deepin-launcher
 Requires: icon-theme-deepin
 Requires: deepin-polkit-agent
 Requires: startdde
+Requires: deepin-kwin
+Requires: deepin-desktop-schemas
 # %%ifnarch armh ppc64le
 Requires: deepin-file-manager
 Requires: deepin-desktop
@@ -114,6 +116,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Fri Nov 27 2020 Leontiy Volodin <lvol@altlinux.org> 5-alt3
+- Added deepin-kwin and deepin-desktop-schemas to requires.
+
 * Fri Nov 27 2020 Leontiy Volodin <lvol@altlinux.org> 5-alt2
 - Added startdde to requires.
 
