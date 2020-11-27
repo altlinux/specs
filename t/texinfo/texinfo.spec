@@ -1,6 +1,6 @@
 Name: texinfo
-Version: 6.5
-Release: alt2
+Version: 6.7
+Release: alt1
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPL-3.0-or-later
@@ -24,11 +24,8 @@ Patch3: texinfo-alt-install-info-rpm.patch
 Patch4: texinfo-alt-texi2dvi-baroque-shells.patch
 Patch5: texinfo-alt-texi2any-version.patch
 Patch6: texinfo-alt-makeinfo-split-size.patch
-Patch7: texinfo-alt-perl_vendor_libdir.patch
+Patch7: texinfo-alt-perl-fix-syntax-error.patch
 Patch8: texinfo-alt-tests.patch
-
-Patch11: texinfo-deb-perl-fixes.patch
-Patch12: texinfo-deb-Update-locale-handling-for-Perl-5.28.patch
 
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
@@ -41,11 +38,12 @@ BuildRequires: perl(Pod/Simple/PullParser.pm)
 BuildRequires: perl(Text/Unidecode.pm)
 BuildRequires: perl(Unicode/EastAsianWidth.pm)
 BuildRequires: perl(Unicode/Normalize.pm)
-%{?!_without_check:%{?!_disable_check:BuildRequires: gzip-utils /dev/pts}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
 
 %package -n makeinfo
 Summary: Utilities for translating texinfo source documentation to various other formats
 Group: Publishing
+AutoProv: yes, noperl
 Requires: rpm-macros-info-install = %version-%release
 
 %package -n texi2dvi
@@ -59,7 +57,7 @@ Conflicts: tetex-core <= 0:2.0-alt8
 %package -n info-install
 Summary: A program to update the GNU texinfo config file
 Group: System/Base
-PreReq: libzio >= 0:0.1-alt4
+Requires: libzio >= 0:0.1-alt4
 
 %package -n info
 Summary: A standalone tty-based reader for GNU texinfo documentation
@@ -112,9 +110,6 @@ This packages contains new RPM macros for packaging texinfo files.
 %patch7 -p1
 %patch8 -p1
 
-%patch11 -p1
-%patch12 -p1
-
 install -pm755 %_sourcedir/texi2pdf util/
 
 %build
@@ -131,22 +126,15 @@ done
 	--with-external-Unicode-EastAsianWidth \
 	--enable-perl-xs \
 	#
-%make_build MAKEINFOFLAGS=--no-split \
-	perl_vendor_privlibdir=%perl_vendor_privlib \
-	perl_vendor_archlibdir=%perl_vendor_archlib \
-	#
+%make_build MAKEINFOFLAGS=--no-split
 xz -k9 NEWS
 
 %install
 %makeinstall_std install-tex \
-	TEXMF=%_texmfmain MAKEINFOFLAGS=--no-split \
-	perl_vendor_privlibdir=%perl_vendor_privlib \
-	perl_vendor_archlibdir=%perl_vendor_archlib \
-	#
+	TEXMF=%_texmfmain MAKEINFOFLAGS=--no-split
 
 # these files shouldn't be packaged
-rm %buildroot%perl_vendor_archlib/Texinfo/Convert/XSParagraph/*.{l,}a
-rm %buildroot%perl_vendor_privlib/Texinfo/Convert/XSParagraph/TestXS.pm
+rm %buildroot%_libdir/texinfo/*.la
 
 # generic/epsf/epsf.tex is packaged in tetex and texlive
 rm -r %buildroot%_texmfmain/tex/generic
@@ -176,12 +164,18 @@ install -pm755 %_sourcedir/update-info-dir %buildroot%_sbindir/
 mkdir -p %buildroot%_man8dir
 install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 
+rm -r %buildroot%_datadir/locale/*.us-ascii
 %find_lang --output=texinfo.lang texinfo texinfo_document
 
 %check
 export ALL_TESTS=yes LANG=en_US.utf8
 %make_build -k check VERBOSE=1
 unset ALL_TESTS LANG
+
+%filter_from_requires /^perl(.*Texinfo/d
+%add_perl_lib_path %_datadir/texinfo
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files -f texinfo.lang
 %doc AUTHORS NEWS.* README TODO
@@ -196,9 +190,7 @@ unset ALL_TESTS LANG
 %_man5dir/texinfo.*
 %_infodir/texinfo.*
 %_datadir/texinfo/
-%perl_vendor_archlib/Texinfo/
-%perl_vendor_privlib/*Texinfo/
-%perl_vendor_privlib/Pod/Simple/*
+%_libdir/texinfo/
 
 %files -n texi2dvi
 %_bindir/*texi2dvi
@@ -227,6 +219,9 @@ unset ALL_TESTS LANG
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Nov 26 2020 Dmitry V. Levin <ldv@altlinux.org> 6.7-alt1
+- 6.5 -> 6.7 (closes: #36551).
+
 * Thu Jan 31 2019 Dmitry V. Levin <ldv@altlinux.org> 6.5-alt2
 - Applied Debian fixes for Perl 5.28.
 - Updated texinfo.tex.
