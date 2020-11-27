@@ -1,6 +1,8 @@
-%define ver_major 4.6
+%define ver_major 4.8
 %define _name cjs
 %define api_ver 1.0
+
+%def_disable check
 
 Name: lib%_name
 Version: %ver_major.0
@@ -16,8 +18,6 @@ License: MIT and (MPL-1.1 or GPLv2+ or LGPLv2+)
 Url: https://github.com/linuxmint/cjs
 
 Source: %_name-%version.tar
-Source1: pkg.m4
-Patch: %_name-%version-%release.patch
 
 %define glib_ver 2.33.14
 %define gi_ver 1.33.14
@@ -26,7 +26,11 @@ BuildRequires: gcc-c++ libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 BuildRequires: gnome-common
-BuildRequires: libmozjs52-devel
+BuildRequires: libmozjs78-devel
+BuildRequires: meson
+BuildRequires: pkgconfig(sysprof-capture-4) valgrind
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui
+BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0}
 
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -49,40 +53,44 @@ Files for development with %name.
 
 %prep
 %setup -q -n %_name-%version
-[ ! -d m4 ] && mkdir m4
-cp %SOURCE1 m4/
-%patch0 -p1
 
 %build
-%autoreconf
-%configure \
-    --disable-static
-
-%make_build
+%meson -Dinstalled-tests=false
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
-#%check
-#%make check
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files
 %_bindir/%_name
 %_bindir/%_name-console
 %_libdir/*.so.*
+%dir %_datadir/cjs-1.0
 %dir %_libdir/%_name/
 %dir %_libdir/%_name/girepository-1.0
 %_libdir/%_name/girepository-1.0/CjsPrivate-%api_ver.typelib
+%exclude %_libexecdir/installed-tests/%_name
+%exclude %_datadir/installed-tests/%_name/
+%exclude %_datadir/glib-2.0/schemas/org.cinnamon.CjsTest.gschema.xml
 %doc COPYING NEWS README
 
 %files devel
 %_includedir/%_name-%api_ver/
 %_libdir/*.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
+%_datadir/cjs-1.0/lsan
+%_datadir/cjs-1.0/valgrind
 
 %doc examples/*
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
 - 4.6.0
 

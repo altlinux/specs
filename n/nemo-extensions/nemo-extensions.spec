@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 4.6.0
-Release: alt2
+Version: 4.8.0
+Release: alt1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -11,11 +11,12 @@ Packager: Vladimir Didenko <cow at altlinux.org>
 Group: Graphical desktop/GNOME
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 AutoReqProv: nopython
 %define __python %nil
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildPreReq: rpm-build-gnome rpm-build-licenses rpm-build-python3
 BuildRequires: libnemo-devel
 BuildRequires: python3-dev
 BuildRequires: desktop-file-utils
@@ -160,6 +161,7 @@ Context menu comparison extension for Nemo file manager.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 pushd nemo-fileroller
@@ -182,10 +184,8 @@ popd
 %set_typelibdir %_libdir/nemo-preview
 %set_girdir %_datadir/nemo-preview
 pushd nemo-preview
-[ ! -d m4 ] && mkdir m4
-%autoreconf
-%configure
-%make
+%meson
+%meson_build
 popd
 
 pushd nemo-image-converter
@@ -193,6 +193,18 @@ pushd nemo-image-converter
 %autoreconf
 %configure
 %make
+popd
+
+pushd nemo-terminal
+%python3_build
+popd
+
+pushd nemo-emblems
+%python3_build
+popd
+
+pushd nemo-compare
+%python3_build
 popd
 
 %install
@@ -212,19 +224,15 @@ pushd nemo-share
 popd
 
 pushd nemo-terminal
-mkdir %buildroot/%_datadir/nemo-terminal
-mkdir -p %buildroot/%_datadir/glib-2.0/schemas/
-install -pm 0644 src/nemo_terminal.py %buildroot/%_datadir/nemo-python/extensions/
-install -pm 0644 src/org.nemo.extensions.nemo-terminal.gschema.xml %buildroot/%_datadir/glib-2.0/schemas/
-install -pm 0644 pixmap/logo_120x120.png %buildroot/%_datadir/nemo-terminal
+%python3_install
 popd
 
 pushd nemo-preview
-%makeinstall_std
+%meson_install
 popd
 
 pushd nemo-emblems
-install -pm 0644 nemo-extension/nemo-emblems.py %buildroot/%_datadir/nemo-python/extensions/
+%python3_install
 popd
 
 pushd nemo-image-converter
@@ -232,11 +240,7 @@ pushd nemo-image-converter
 popd
 
 pushd nemo-compare
-mkdir -p %buildroot/%_datadir/applications/
-install -pm 0644 src/{nemo-compare,utils}.py %buildroot/%_datadir/nemo-python/extensions/
-install -pm 0755 src/nemo-compare-preferences.py %buildroot/%_datadir/nemo-python/extensions/
-mkdir -p %buildroot/%_bindir
-ln -s %_datadir/nemo-python/extensions/nemo-compare-preferences.py %buildroot/%_bindir/nemo-compare-preferences
+%python3_install
 popd
 
 rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.la
@@ -273,9 +277,11 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %files -n nemo-terminal
 %doc nemo-terminal/README
 %doc nemo-terminal/COPYING
+%_bindir/nemo-terminal-prefs
 %_datadir/nemo-python/extensions/nemo_terminal.py*
 %_datadir/nemo-terminal/
 %_datadir/glib-2.0/schemas/org.nemo.extensions.nemo-terminal.gschema.xml
+%python3_sitelibdir_noarch/nemo_terminal-*.egg-*
 
 %files -n nemo-preview -f nemo-preview.lang
 %doc nemo-preview/README
@@ -289,6 +295,7 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %files -n nemo-emblems
 %doc nemo-emblems/COPYING.GPL3
 %_datadir/nemo-python/extensions/nemo-emblems.py*
+%python3_sitelibdir_noarch/nemo_emblems-*.egg-*
 
 %files -n nemo-image-converter
 %doc nemo-image-converter/README
@@ -298,11 +305,14 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 
 %files -n nemo-compare
 %_datadir/nemo-python/extensions/nemo-compare.py*
-%_datadir/nemo-python/extensions/nemo-compare-preferences.py*
-%_datadir/nemo-python/extensions/utils.py*
+%_datadir/nemo-compare
 %_bindir/nemo-compare-preferences
+%python3_sitelibdir_noarch/nemo_compare-*.egg-*
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Sat May 16 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
 - restore nemo-share
 

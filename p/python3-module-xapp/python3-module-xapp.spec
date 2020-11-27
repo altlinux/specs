@@ -1,7 +1,7 @@
 %define oname xapp
 
 Name: python3-module-%oname
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Python Xapp Library
@@ -33,6 +33,9 @@ Python Xapp Library
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1
+- New version
+
 * Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
 - New version
 

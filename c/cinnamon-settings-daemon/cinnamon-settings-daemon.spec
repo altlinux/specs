@@ -1,4 +1,4 @@
-%define ver_major 4.6
+%define ver_major 4.8
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -52,8 +52,8 @@ BuildRequires: libdbus-devel libdbus-glib-devel libpolkit-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 BuildRequires: libxkbfile-devel
-BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
-BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel
+BuildRequires: rpm-build-gnome docbook-style-xsl xsltproc
+BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel libXtst-devel
 BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel
@@ -63,6 +63,7 @@ BuildRequires: libxklavier-devel >= %xklavier_ver
 BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: libcom_err-devel
 BuildRequires: libkrb5-devel
+BuildRequires: meson
 
 %description
 Cinnamon Settings Daemon is a program that organizes access to general Cinnamon
@@ -84,21 +85,16 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	%{?_disable_smartcard:--disable-smartcard-support} \
-	%{subst_enable systemd} \
-	--disable-schemas-compile \
-        --enable-polkit
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%meson_install
 
 %files
 %doc AUTHORS NEWS
 %dir %_libdir/%name-%api_ver
+%_bindir/csd-*
 %_libdir/%name-%api_ver/*.so
 %_libexecdir/csd-*
 %_datadir/%name
@@ -112,7 +108,6 @@ developing applications that use %name.
 %_sysconfdir/xdg/autostart/*.desktop
 %_datadir/applications/*.desktop
 
-%exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
 
 %files devel
@@ -120,6 +115,9 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.1-alt1
+- 4.8.1
+
 * Mon Jun 22 2020 Vladimir Didenko <cow@altlinux.org> 4.6.4-alt1
 - 4.6.4
 

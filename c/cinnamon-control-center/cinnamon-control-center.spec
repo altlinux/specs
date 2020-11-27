@@ -1,4 +1,4 @@
-%define ver_major 4.6
+%define ver_major 4.8
 %define api_ver 1.0
 
 %def_disable debug
@@ -8,7 +8,7 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -50,7 +50,7 @@ Requires: gnome-online-accounts >= %goa_ver
 BuildPreReq: rpm-build-gnome >= 0.9
 
 # From configure.in
-BuildPreReq: intltool >= 0.50 gnome-common desktop-file-utils gnome-doc-utils gtk-doc xsltproc
+BuildPreReq: gnome-common desktop-file-utils gnome-doc-utils gtk-doc xsltproc
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libXft-devel >= %xft_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -58,6 +58,7 @@ BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: cinnamon-settings-daemon-devel >= %sett_daemon_ver
+BuildRequires: meson
 BuildRequires: libxkbfile-devel
 %{?_enable_ibus:BuildPreReq: libibus-devel >= %ibus_ver}
 BuildRequires: libGConf-devel libdbus-glib-devel libupower-devel libpolkit1-devel
@@ -112,22 +113,11 @@ you'll want to install this package.
 %patch0 -p1
 
 %build
-[ -d m4 ] || mkdir m4
-%autoreconf
-%configure \
-	%{subst_enable debug} \
-	%{subst_enable static} \
-	--disable-update-mimedb \
-	%{subst_enable systemd} \
-	%{subst_enable ibus} \
-	%{subst_enable onlineaccounts}
-
-# Fix build on beekeeper machines
-export NPROCS=1
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%meson_install
 
 %find_lang %name-timezones
 
@@ -140,24 +130,16 @@ export NPROCS=1
 %_libdir/%{name}-1/panels/libnetwork.so
 %_libdir/%{name}-1/panels/libregion.so
 %_libdir/%{name}-1/panels/libwacom-properties.so
-%_libdir/%{name}-1/panels/libdate_time.so
 %{?_enable_onlineaccounts:%_libdir/%{name}-1/panels/libonline-accounts.so}
 %_libdir/*.so.*
-
-%exclude %_libdir/%{name}-1/panels/*.la
 
 %files data -f %name-timezones.lang
 %dir %_datadir/%name
 %_datadir/%name/ui
-%_datadir/%name/datetime
 # This desktop files are outdated and not usable/useful anymore
 # TODO: Notify upstream about this issue
 %exclude %_desktopdir/*.desktop
-%_sysconfdir/xdg/menus/cinnamoncc.menu
-%_datadir/desktop-directories/*
 %_iconsdir/hicolor/*/*/*
-%_datadir/polkit-1/rules.d/cinnamon-control-center.rules
-%_datadir/polkit-1/actions/org.cinnamon.controlcenter.datetime.policy
 %doc AUTHORS NEWS README
 
 %files devel
@@ -168,6 +150,9 @@ export NPROCS=1
 
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Thu Sep 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt1
 - 4.6.2
 
