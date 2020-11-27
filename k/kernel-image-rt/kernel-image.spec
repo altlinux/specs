@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.152
-%define kernel_rt_release	rt65
+%define kernel_sublevel		.160
+%define kernel_rt_release	rt69
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -114,12 +114,9 @@ Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
 Requires: startup >= 0.8.3-alt1
+Requires: coreutils
 
 Provides: kernel = %kversion
-
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: mkinitrd >= 1:2.9.9-alt1
 
 AutoReqProv: no
 
@@ -443,6 +440,9 @@ vm-run cat /sys/kernel/realtime
 %endif
 
 %changelog
+* Fri Nov 27 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.160-alt1.rt69
+- Update to v4.19.160-rt69 (25 Nov 2020).
+
 * Sun Nov 08 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.152-alt1.rt65
 - Update to v4.19.152-rt65 (30 Oct 2020).
 
