@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sane-airscan
-Version: 0.99.15
+Version: 0.99.21
 Release: alt1
 
 Summary: This package contains SANE backend for AirScan (eSCL) and WSD document scanners
@@ -66,6 +66,9 @@ meson ./BUILD
 %_man5dir/*.5.xz
 
 %changelog
+* Tue Nov 24 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.99.21-alt1
+- new version
+
 * Mon Aug 31 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.99.15-alt1
 - new version
   + spec: add libgnutls-devel to and remove libsoup-devel from BR:
