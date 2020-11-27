@@ -9,7 +9,7 @@
 %endif
 
 Name: blender
-Version: 2.90.1
+Version: 2.91.0
 Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
@@ -27,10 +27,10 @@ Source: %name-%version.tar
 # git submodules
 # before updating submodules via script don't forget
 # to update relative submodule paths into absolute ones
-Source1: locale-%version.tar
-Source2: addons-%version.tar
-Source3: addons_contrib-%version.tar
-Source4: tools-%version.tar
+Source1: %name-%version-release-datafiles-locale.tar
+Source2: %name-%version-release-scripts-addons_contrib.tar
+Source3: %name-%version-release-scripts-addons.tar
+Source4: %name-%version-source-tools.tar
 
 Patch11: 0001-blender_thumbnailer.patch
 Patch12: 0002-install_in_usr_share.patch
@@ -38,7 +38,6 @@ Patch13: 0004-do_not_use_version_number_in_system_path.patch
 
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
-Patch23: blender-2.77-alt-usertempdir.patch
 Patch24: blender-2.80-alt-include-deduplication-check-skip.patch
 Patch25: blender-2.80-alt-use-system-glog.patch
 Patch26: blender-2.83.1-alt-remove-python2-dependency.patch
@@ -164,7 +163,6 @@ This package contains documentation for Blender.
 
 %patch21 -p1
 %patch22 -p1
-%patch23 -p1
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
@@ -278,6 +276,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Nov 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.0-alt1
+- Updated to upstream version 2.91.0.
+
 * Thu Sep 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.90.1-alt1
 - Updated to upstream version 2.90.1.
 
