@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt1
+Release: alt2
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -44,6 +44,7 @@ Requires: deepin-qt5platform-plugins
 Requires: deepin-launcher
 Requires: icon-theme-deepin
 Requires: deepin-polkit-agent
+Requires: startdde
 # %%ifnarch armh ppc64le
 Requires: deepin-file-manager
 Requires: deepin-desktop
@@ -113,5 +114,8 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Fri Nov 27 2020 Leontiy Volodin <lvol@altlinux.org> 5-alt2
+- Added startdde to requires.
+
 * Thu Nov 26 2020 Leontiy Volodin <lvol@altlinux.org> 5-alt1
 - Initial build for ALT Sisyphus.
