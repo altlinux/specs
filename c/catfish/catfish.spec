@@ -1,6 +1,6 @@
 Name: catfish
 Version: 1.4.10
-Release: alt1
+Release: alt2
 Summary: A handy file search tool
 
 Group: File tools
@@ -14,6 +14,7 @@ Patch: catfish-1.4.10-ALT-searchODF.patch
 # Automatically added by buildreq on Mon Jun 10 2019
 # optimized out: at-spi2-atk fontconfig gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent python-base python-modules python3 python3-base python3-module-dbus python3-module-ptyprocess python3-module-pygobject3 sh4
 BuildRequires: intltool python3-dev python3-module-distutils-extra python3-module-pexpect python3-module-zeitgeist2.0
+BuildRequires: rpm-build-gir
 
 # search engine
 Requires: %_bindir/locate
@@ -71,6 +72,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Nov 27 2020 Anton Midyukov <antohami@altlinux.org> 1.4.10-alt2
+- Add automatic search for gobject introspection dependencies
+
 * Wed Sep 25 2019 Fr. Br. George <george@altlinux.ru> 1.4.10-alt1
 - Autobuild version bump to 1.4.10
 - Rewrite internal fulltext search; avoid non-files here
