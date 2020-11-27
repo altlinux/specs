@@ -1,9 +1,9 @@
-%define oname convertdate
+%define modname convertdate
 
 %def_disable check
 
-Name: python3-module-%oname
-Version: 2.2.2
+Name: python3-module-%modname
+Version: 2.3.0
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
@@ -12,13 +12,13 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/convertdate/
 BuildArch: noarch
 
-# https://github.com/fitnr/convertdate.git
-Source: %name-%version.tar
+Vcs: https://github.com/fitnr/convertdate.git
+Source: https://github.com/fitnr/%modname/archive/v%version/%modname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest python-module-pytz
 
-%py3_provides %oname
+%py3_provides %modname
 %py3_requires pytz pymeeus
 
 %description
@@ -27,7 +27,7 @@ included: Baha'i, French Republican, Hebrew, Indian Civil, Islamic,
 Julian, Mayan and Persian.
 
 %prep
-%setup
+%setup -n %modname-%version
 
 %build
 %python3_build_debug
@@ -44,6 +44,9 @@ py.test-%_python3_version tests/*.py
 %doc *.rst *.md
 
 %changelog
+* Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
 - 2.2.2
 
