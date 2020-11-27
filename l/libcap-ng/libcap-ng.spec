@@ -1,5 +1,5 @@
 Name: libcap-ng
-Version: 0.8
+Version: 0.8.1
 Release: alt1
 
 Summary: An alternate posix capabilities library
@@ -68,10 +68,14 @@ export PYTHON=python3
 
 # Move the symlink
 rm -f %buildroot/%_lib/%name.so
+rm -f %buildroot/%_lib/libdrop_ambient.so
 mkdir -p %buildroot%_libdir
 VLIBNAME=$(ls %buildroot/%_lib/%name.so.*.*.*)
+VLIBNAME_DROP=$(ls %buildroot/%_lib/libdrop_ambient.so.*.*.*)
 LIBNAME=$(basename $VLIBNAME)
+LIBDROP_NAME=$(basename $VLIBNAME_DROP)
 ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/%name.so
+ln -s ../../%_lib/$LIBDROP_NAME %buildroot%_libdir/libdrop_ambient.so
 
 # Move the pkgconfig file
 mv %buildroot/%_lib/pkgconfig %buildroot%_libdir
@@ -83,11 +87,13 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %files
 %doc COPYING.LIB
 /%_lib/libcap-ng.so.*
+/%_lib/libdrop_ambient.so.*
 
 %files devel
 %_man3dir/*
 %_includedir/cap-ng.h
 %_libdir/libcap-ng.so
+%_libdir/libdrop_ambient.so
 %_datadir/aclocal/cap-ng.m4
 %_pkgconfigdir/libcap-ng.pc
 
@@ -95,11 +101,15 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %doc COPYING
 %_bindir/*
 %_man8dir/*
+%_man7dir/*
 
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 23 2020 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1
+- 0.8.1
+
 * Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 0.8-alt1
 - 0.8
 
