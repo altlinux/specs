@@ -2,7 +2,7 @@
 
 Name: purple-plugin-lurch
 Version: 0.6.8
-Release: alt1
+Release: alt2
 
 Summary: OMEMO for libpurple
 License: GPL-3.0-only
@@ -15,6 +15,7 @@ Source: %_name-%version-src.tar
 
 Patch1: 0001-SUSE-libomemo-fix-dino-compat.patch
 Patch2: 0002-ALT-fix-linking-with-libjabber.so.patch
+Patch3: 0003-GH-libomemo-12-byte-for-initilization-vector.patch
 
 BuildRequires: cmake gcc-c++ libgcrypt-devel libmxml-devel libpurple-devel libsqlite3-devel libxml2-devel
 
@@ -38,5 +39,8 @@ export CFLAGS='%optflags'
 %_libdir/purple-2/%_name.so
 
 %changelog
+* Sat Nov 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.8-alt2
+- Fixed OMEMO 12 byte for initilization vector (GH:gkdr/libomemo#24).
+
 * Sat Oct 05 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.8-alt1
 - Initial build for ALT Sisyphus based on openSUSE spec file.
