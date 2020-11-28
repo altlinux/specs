@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.47.0
+Version: 1.48.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -8,10 +8,11 @@ Group: Development/Other
 License: Apache-2.0 and MIT
 URL: http://www.rust-lang.org/
 
-# https://static.rust-lang.org/dist/rustc-%version-src.tar.xz
+# https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
 Source: rustc-src.tar
 
 Patch1: rust-gdb.patch
+Patch2: rust-disable-lint-tests.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -34,8 +35,8 @@ BuildRequires: pkgconfig(libssh2)
 BuildRequires: pkgconfig(tinfo)
 %if_without bundled_llvm
 BuildRequires: pkgconfig(libffi)
-BuildRequires: llvm10.0-devel
-BuildRequires: llvm10.0-devel-static
+BuildRequires: llvm11.0-devel
+BuildRequires: llvm11.0-devel-static
 %else
 BuildRequires: ninja-build
 %endif
@@ -51,7 +52,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.46.0
+%define r_ver 1.47.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
@@ -203,6 +204,7 @@ data to provide information about the Rust standard library.
 %setup -n %{name}c-src
 
 %patch1 -p2
+%patch2 -p2
 
 %if_with bootstrap
 tar xf %r_src
@@ -225,11 +227,8 @@ sed -i 's/Path::new("lib")/Path::new("%_lib")/' src/bootstrap/builder.rs
 sed -i -e '/LZMA_API_STATIC/d' src/bootstrap/tool.rs
 
 %if_without bundled_llvm
-# Static linking to distro LLVM needs to add -lffi
-# https://github.com/rust-lang/rust/issues/34486
-sed -i -e '$a #[link(name = "ffi")] extern {}' src/librustc_llvm/lib.rs
-
-rm -rf src/llvm-project
+rm -rf -- src/llvm-project
+mkdir -p -- src/llvm-project/libunwind/
 %endif
 
 # We never enable emscripten.
@@ -428,6 +427,12 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Wed Nov 25 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.48.0-alt1
+- New version (1.48.0).
+
+* Sat Oct 17 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.47.0-alt2
+- rebuild
+
 * Wed Oct 14 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.47.0-alt1
 - New version (1.47.0).
 
