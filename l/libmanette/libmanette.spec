@@ -8,21 +8,22 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A simple GObject game controller library
 Group: System/Libraries
 License: LGPL-2.1
-Url: https://gitlab.gnome.org/aplazas/libmanette
+Url: https://gnome.pages.gitlab.gnome.org/libmanette
 
-# VCS: https://gitlab.gnome.org/aplazas/libmanette
+Vcs: https://gitlab.gnome.org/GNOME/libmanette.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%define meson_ver 0.53
 %define glib_ver 2.50
 %define evdev_ver 1.4.5
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): meson >= %meson_ver rpm-build-gir
 BuildRequires: libgio-devel >= %glib_ver libevdev-devel >= %evdev_ver
 BuildRequires: libgudev-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
@@ -106,6 +107,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/%_name-test
 
 %changelog
+* Sat Nov 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
+- 0.2.6
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
 - 0.2.5
 
