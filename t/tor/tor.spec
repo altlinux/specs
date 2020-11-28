@@ -11,7 +11,7 @@
 
 Name: tor
 Version: 0.4.4.6
-Release: alt1
+Release: alt2
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -68,7 +68,8 @@ sed -i 's:^#DataDirectory.*:DataDirectory %_var/cache/%name:' src/config/torrc.s
 install -pD -m755 %SOURCE1 %buildroot/%_initdir/%name
 mv %buildroot/%_sysconfdir/%name/torrc.sample %buildroot/%_sysconfdir/%name/torrc
 mkdir -p %buildroot%_tor_root
-mkdir -p %buildroot%_var/{cache/%name,log/%name,run/%name}
+mkdir -p %buildroot%_var/{cache/%name,log/%name}
+mkdir -p %buildroot/run/%name
 mkdir -p %buildroot%_tmpfilesdir
 
 install -D -p -m 0644 %SOURCE2 %buildroot/%_unitdir/%{name}.service
@@ -140,11 +141,14 @@ fi
 %defattr(640,root,%toruser,3770)
 %_var/log/%name
 %defattr(640,root,%toruser,2730)
-%_var/run/%name
+/run/%name
 %defattr(640,%toruser,%toruser,2700)
 %_var/cache/%name
 
 %changelog
+* Sat Nov 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.4.4.6-alt2
+- fix SysVinit service startup: place pidfile to /run/tor
+
 * Fri Nov 13 2020 Vladimir Didenko <cow@altlinux.ru> 0.4.4.6-alt1
 - new version (fixes TROVE-2020-005)
 
@@ -199,56 +203,56 @@ fi
 * Thu Aug 30 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.3.9-alt1.S1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
-* Mon Jul 16 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.3.9-alt1%ubt
+* Mon Jul 16 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.3.9-alt1
 - new version
 
-* Wed May 23 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.3.6-alt1%ubt
+* Wed May 23 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.3.6-alt1
 - new version
 
-* Tue Mar 13 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.2.10-alt1%ubt
+* Tue Mar 13 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.2.10-alt1
 - new version (Fixes: CVE-2018-0491)
 
-* Fri Jan 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.2.9-alt2%ubt
+* Fri Jan 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.2.9-alt2
 - add tmpfiles.d conf (fix service startup)
 
-* Fri Jan 12 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.2.9-alt1%ubt
+* Fri Jan 12 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.2.9-alt1
 - new version
 
-* Fri Dec 1 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.1.9-alt1%ubt
+* Fri Dec 1 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.1.9-alt1
 - new version (Fixes: CVE-2017-8819, CVE-2017-8820, CVE-2017-8821,
 CVE-2017-8822, CVE-2017-8823)
 
-* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.1.8-alt1%ubt
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.1.8-alt1
 - new version
 
-* Mon Sep 18 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.1.7-alt1%ubt
+* Mon Sep 18 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.1.7-alt1
 - new version (Fixes: CVE-2017-0380)
 
-* Wed Aug 2 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.10-alt1%ubt
+* Wed Aug 2 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.10-alt1
 - new version
 
-* Fri Jun 30 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.9-alt1%ubt
+* Fri Jun 30 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.9-alt1
 - new version (Fixes: CVE-2017-0377)
 
-* Thu Jun 8 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.8-alt1%ubt
+* Thu Jun 8 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.8-alt1
 - new version
 
-* Tue May 16 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.7-alt1%ubt
+* Tue May 16 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.7-alt1
 - new version
 
-* Fri Apr 28 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.6-alt1%ubt
+* Fri Apr 28 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.6-alt1
 - new version
 
-* Mon Mar 6 2017 Vladimir Didenko <cow@altlinux.ru> 0.2.9.10-alt1%ubt
+* Mon Mar 6 2017 Vladimir Didenko <cow@altlinux.ru> 0.2.9.10-alt1
 - new version
 
-* Tue Jan 24 2017 Vladimir Didenko <cow@altlinux.ru> 0.2.9.9-alt1%ubt
+* Tue Jan 24 2017 Vladimir Didenko <cow@altlinux.ru> 0.2.9.9-alt1
 - new version
 
-* Tue Dec 20 2016 Vladimir Didenko <cow@altlinux.ru> 0.2.9.8-alt1%ubt
+* Tue Dec 20 2016 Vladimir Didenko <cow@altlinux.ru> 0.2.9.8-alt1
 - new version
 
-* Fri Dec 09 2016 Anton Farygin <rider@altlinux.ru> 0.2.8.11-alt1%ubt
+* Fri Dec 09 2016 Anton Farygin <rider@altlinux.ru> 0.2.8.11-alt1
 - new version
 - %%ubt macros added for easy backporting to stable branches
 
