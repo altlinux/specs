@@ -1,19 +1,16 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.6.7
-Release: alt2
+Version: 4.8.0
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
 Group: Graphical desktop/GNOME
 
 Url: http://cinnamon.linuxmint.com
-# To generate tarball
-# wget https://github.com/linuxmint/Cinnamon/tarball/1.6.4 -O cinnamon-1.6.4.tar.gz
 Source0: %name-%version.tar
-Source2: org.%name.settings-users.policy
-Source3: polkit-%name-authentication-agent-1.desktop
+Source1: polkit-%name-authentication-agent-1.desktop
 
 Patch: %name-%version-%release.patch
 
@@ -56,6 +53,7 @@ BuildRequires(pre): rpm-build-gir >= 0.7.3 rpm-build-python3
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcjs-devel >= %cjs_ver
 BuildPreReq: libjson-glib-devel >= %json_glib_ver
+BuildRequires: meson
 BuildRequires: gcc-c++
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel
 BuildRequires: libstartup-notification-devel libcinnamon-desktop-gir-devel
@@ -120,19 +118,12 @@ Development docs package for Cinnamon.
 rm -rf debian
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-compile-warnings=yes \
-	--without-ca-certificates \
-	%{?_disable_gtk_doc:--disable-gtk-doc}
-%make_build
+%meson
+%meson_build -j1
 
 %install
-%makeinstall_std
+%meson_install
 
-# Remove .la file
-rm -rf %buildroot/%_libdir/cinnamon/libcinnamon.la
 
 rm -f %buildroot/%_man1dir/gnome-session-cinnamon.1
 rm -f %buildroot/%_man1dir/gnome-session-cinnamon2d.1
@@ -140,19 +131,8 @@ rm -f %buildroot/%_man1dir/gnome-session-cinnamon2d.1
 desktop-file-validate %buildroot%_desktopdir/cinnamon.desktop
 desktop-file-validate %buildroot%_desktopdir/cinnamon2d.desktop
 
-desktop-file-install                                 \
- --add-category="Utility"                            \
- --remove-category="DesktopSettings"                 \
- --remove-key="Encoding"                             \
- --add-only-show-in="GNOME"                          \
- --delete-original                                   \
- --dir=%buildroot%_datadir/applications       \
- %buildroot%_desktopdir/cinnamon-settings.desktop
-
 #install polkit files
-install -m 0755 -d %buildroot/%_datadir/polkit-1/actions/
-install -D -p -m 0644 %SOURCE2 %buildroot/%_datadir/polkit-1/actions/
-install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
+install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 
 # Clean-up requires
 
@@ -178,9 +158,6 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
 %_libdir/cinnamon/
-%dir %_libexecdir/cinnamon/
-%_libexecdir/cinnamon/cinnamon-hotplug-sniffer
-%_libexecdir/cinnamon/cinnamon-perf-helper
 
 %files data
 %exclude %_xdgmenusdir/cinnamon-applications-merged
@@ -204,6 +181,9 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
+- 4.8.0-3-g8171c084
+
 * Mon Nov 23 2020 Vladimir Didenko <cow@altlinux.org> 4.6.7-alt2
 - Clean-up provides
 

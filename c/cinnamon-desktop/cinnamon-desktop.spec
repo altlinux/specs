@@ -1,12 +1,12 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 4.6
+%define ver_major 4.8
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
@@ -154,6 +154,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Thu Sep 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.4-alt1
 - 4.6.4
 

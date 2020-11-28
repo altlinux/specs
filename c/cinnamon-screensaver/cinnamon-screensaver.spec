@@ -1,9 +1,9 @@
-%define ver_major 4.6
+%define ver_major 4.8
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -118,6 +118,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Fri May 15 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
 - add USE_SETRES flag (screensaver doesn't work properly without it)
 

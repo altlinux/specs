@@ -3,7 +3,7 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 1.8.10
+Version: 2.0.0
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -137,6 +137,9 @@ XAppStatusIcon applet for mate panel
 %install
 %meson_install
 
+install -m 0755 -d %buildroot%_x11sysconfdir/profile.d
+mv %buildroot%_x11sysconfdir/Xsession.d/80xapp-gtk3-module %buildroot%_x11sysconfdir/profile.d/xapp-gtk3-module.sh
+
 %find_lang %translations_name
 
 # This module name is too generic. I don't want to make it visible for
@@ -150,6 +153,7 @@ XAppStatusIcon applet for mate panel
 %files -n %name-icons
 %_datadir/icons/hicolor/scalable/actions/*
 %_datadir/icons/hicolor/scalable/categories/*
+%_datadir/icons/hicolor/scalable/emblems/
 
 %files -n %name-utils
 %_bindir/xfce4-set-wallpaper
@@ -160,6 +164,8 @@ XAppStatusIcon applet for mate panel
 
 %files -n lib%name -f %translations_name.lang
 %_libdir/*.so.*
+%_libdir/gtk-3.0/modules/*.so
+%_x11sysconfdir/profile.d/*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -196,6 +202,9 @@ XAppStatusIcon applet for mate panel
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Fri Sep 25 2020 Vladimir Didenko <cow@altlinux.org> 1.8.10-alt1
 - 1.8.10
 
