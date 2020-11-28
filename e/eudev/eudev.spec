@@ -1,7 +1,7 @@
 Summary: eudev - an userspace implementation of devfs
 Name: eudev
 Version: 3.2.9
-Release: alt1
+Release: alt2
 
 Url: https://github.com/gentoo/eudev
 Group: System/Configuration/Hardware
@@ -78,18 +78,19 @@ install -pD -m755 %SOURCE2 %buildroot/%_rpmlibdir/eudev-hwdb.filetrigger
 # service
 install -pD -m755 %SOURCE3 %buildroot/%_initdir/eudevd
 
-# Rename
-mv -f -- %buildroot/%_man5dir/udev.conf.5 %buildroot/%_man5dir/eudev-udev.conf.5
-mv -f -- %buildroot/%_man7dir/udev.7      %buildroot/%_man7dir/eudev.7
-mv -f -- %buildroot/%_man8dir/udevd.8     %buildroot/%_man8dir/eudevd.8
-mv -f -- %buildroot/%_man8dir/udevadm.8   %buildroot/%_man8dir/eudevadm.8
-
 # Move *.pc to better place
 mkdir -p -- %buildroot/%_pkgconfigdir
 mv -f -- \
     %buildroot/lib/pkgconfig/*.pc \
     %buildroot/%_datadir/pkgconfig/*.pc \
     %buildroot/%_pkgconfigdir/
+
+# Rename
+mv -f -- %buildroot/%_man5dir/udev.conf.5     %buildroot/%_man5dir/eudev-udev.conf.5
+mv -f -- %buildroot/%_man7dir/udev.7          %buildroot/%_man7dir/eudev.7
+mv -f -- %buildroot/%_man8dir/udevd.8         %buildroot/%_man8dir/eudevd.8
+mv -f -- %buildroot/%_man8dir/udevadm.8       %buildroot/%_man8dir/eudevadm.8
+mv -f -- %buildroot/%_pkgconfigdir/libudev.pc %buildroot/%_pkgconfigdir/libeudev.pc
 
 mkdir -p -- \
 	%buildroot/%_sysconfdir/eudev/rules.d \
@@ -151,9 +152,12 @@ rm -rf -- \
 %files -n libeudev-devel
 %_includedir/libudev.h
 /lib/libeudev.so
-%_pkgconfigdir/libudev.pc
+%_pkgconfigdir/libeudev.pc
 
 %changelog
+* Sat Nov 28 2020 Alexey Gladkov <legion@altlinux.ru> 3.2.9-alt2
+- Rename pkg-config file.
+
 * Wed Sep 02 2020 Alexey Gladkov <legion@altlinux.ru> 3.2.9-alt1
 - New version (3.2.9).
 
