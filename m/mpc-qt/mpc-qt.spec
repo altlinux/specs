@@ -1,11 +1,11 @@
 Name:     mpc-qt
-Version:  19.06
+Version:  20.10
 Release:  alt1
 
 Summary:  A clone of Media Player Classic reimplemented in Qt.
 License:  GPL-2.0
 Group:    Video
-Url:      https://gitlab.com/mpc-qt/mpc-qt
+Url:      https://github.com/cmdrkotori/mpc-qt-origin.git
 
 Source:   %name-%version.tar
 
@@ -15,9 +15,9 @@ BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: libmpv-devel
 
 %description
-Media Player Classic Home Cinema (mpc-hc) is considered by many to be the 
-quintessential media player for the Windows desktop. 
-Media Player Classic Qute Theater (mpc-qt) aims to reproduce most of the 
+Media Player Classic Home Cinema (mpc-hc) is considered by many to be the
+quintessential media player for the Windows desktop.
+Media Player Classic Qute Theater (mpc-qt) aims to reproduce most of the
 interface and functionality of mpc-h.
 
 %prep
@@ -38,6 +38,10 @@ interface and functionality of mpc-h.
 %_datadir/%name
 
 %changelog
+* Sun Nov 29 2020 Anton Midyukov <antohami@altlinux.org> 20.10-alt1
+- New version 20.10
+- Update url
+
 * Mon Dec 23 2019 Anton Midyukov <antohami@altlinux.org> 19.06-alt1
 - New snapshot
 - Update url
