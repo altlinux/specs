@@ -2,14 +2,18 @@
 %define api_ver 1
 %define _libexecdir %_prefix/libexec
 
+%def_enable pulseaudio
+%def_enable vala
+%def_disable check
+
 Name: retro-gtk
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Toolkit to write Gtk+3-based frontends to libretro
 License: GPLv3
 Group: System/Libraries
-Url: https://git.gnome.org/browse/%name
+Url: https://gnome.pages.gitlab.gnome.org/retro-gtk
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -21,11 +25,12 @@ BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(epoxy)
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
-BuildRequires: pkgconfig(libpulse)
+%{?_enable_pulseaudio:BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libpulse-simple)
-BuildRequires: pkgconfig(samplerate)
-BuildRequires: vala-tools
+BuildRequires: pkgconfig(samplerate)}
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
 %name is a toolkit allowing to easily write GTK+3 based Libretro
@@ -71,16 +76,21 @@ Requires: lib%name-gir = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library.
 
-
 %prep
 %setup
 
 %build
-%meson
+%meson \
+%{?_disable_vala:-Dvapi=false}
+%nil
 %meson_build
 
 %install
 %meson_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
@@ -91,8 +101,8 @@ GObject introspection devel data for the %name library.
 %_libdir/lib%name-%api_ver.so
 %_includedir/%name/
 %_pkgconfigdir/%name-%api_ver.pc
-%_vapidir/%name-%api_ver.deps
-%_vapidir/%name-%api_ver.vapi
+%{?_enable_vala:%_vapidir/%name-%api_ver.deps
+%_vapidir/%name-%api_ver.vapi}
 
 %files -n lib%name-gir
 %_typelibdir/Retro-%api_ver.typelib
@@ -105,6 +115,10 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Sun Nov 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+- enabled %%check
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
