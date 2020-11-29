@@ -1,6 +1,6 @@
 Name:     fusioninventory-agent
-Version:  2.5.2
-Release:  alt2
+Version:  2.6
+Release:  alt1
 
 Summary:  FusionInventory Agent
 License:  GPL-2.0+
@@ -123,6 +123,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Sun Nov 29 2020 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1
+- New version.
+
 * Tue Sep 08 2020 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt2
 - Fix License (GPL-2.0+).
 
