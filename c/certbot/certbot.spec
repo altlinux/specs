@@ -5,7 +5,7 @@
 
 Name: certbot
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: A free, automated certificate authority client
 
@@ -22,6 +22,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
+# man pages
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-repoze.sphinx.autointerface
+BuildRequires: python3-module-configargparse
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-configobj
 
 %define acme_version %version
 
@@ -160,6 +167,8 @@ cd ../certbot-dns-route53
 %python3_build
 cd ../certbot-dns-rfc2136
 %python3_build
+cd ../certbot/docs
+%make_build SPHINXBUILD=/usr/bin/py3_sphinx-build man
 
 
 %install
@@ -178,7 +187,7 @@ cd ../certbot-dns-route53
 %endif
 cd ../certbot-dns-rfc2136
 %python3_install --install-purelib=%certbotdir
-cd -
+cd ..
 
 # TODO: remove compat dirs
 mkdir -p %buildroot%_sysconfdir/letsencrypt
@@ -189,6 +198,9 @@ mkdir -p %buildroot%_logdir/letsencrypt
 ln -s letsencrypt %buildroot%_logdir/%name
 
 ln -s %name %buildroot%_bindir/letsencrypt
+
+install -Dp -m644 certbot/docs/_build/man/certbot.1 %buildroot/%_man1dir/certbot.1
+install -Dp -m644 certbot/docs/_build/man/certbot.7 %buildroot/%_man7dir/certbot.7
 
 rm -rfv %buildroot%certbotdir/certbot*/tests/
 rm -rfv %buildroot%certbotdir/certbot/*/*_test*
@@ -211,7 +223,8 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %doc LICENSE.txt
 %doc README.rst CHANGELOG.md CONTRIBUTING.md
 %_bindir/%name
-#%doc %attr(0644,root,root) %_man1dir/%{name}*
+%_man1dir/%{name}*
+%_man7dir/%{name}*
 %dir %_sysconfdir/%name/
 %dir %_sharedstatedir/%name/
 %dir %_logdir/%name/
@@ -257,6 +270,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sun Nov 29 2020 Vitaly Chikunov <vt@altlinux.org> 1.9.0-alt2
+- Add man pages.
+
 * Thu Oct 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - new version 1.9.0 (with rpmrb script)
 
