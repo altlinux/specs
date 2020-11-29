@@ -4,13 +4,14 @@
 
 %def_enable debug
 %def_enable perl
+%def_enable php
 %def_enable ruby
 %def_disable devel
 
 Name: unit
 Summary: NGINX Unit - Web Application Server
 Version: 1.21.0
-Release: alt2
+Release: alt3
 License: Apache-2.0
 Group: System/Servers
 Url: https://unit.nginx.org/
@@ -18,11 +19,14 @@ Vcs: http://hg.nginx.org/unit/
 # Mirror Vcs: https://github.com/nginx/unit
 
 Source: %name-%version.tar
+
 BuildRequires: libssl-devel
 BuildRequires: libpcre-devel
-BuildRequires: libruby-devel
-BuildRequires: ruby
-BuildRequires: perl-devel perl-base
+%{?_enable_ruby:BuildRequires: ruby libruby-devel}
+%{?_enable_perl:BuildRequires: perl-devel perl-base}
+%{?_enable_php:BuildRequires: php7 php7-devel php-base}
+
+Provides: nginx-unit
 
 %description
 NGINX Unit is a polyglot app server, a reverse proxy, and a static
@@ -37,6 +41,14 @@ Requires: unit
 
 %description perl
 Perl module for NGINX Unit
+
+%package php
+Summary: PHP module for NGINX Unit
+Group: System/Servers
+Requires: unit
+
+%description php
+PHP module for NGINX Unit
 
 %package ruby
 Summary: Ruby module for NGINX Unit
@@ -72,6 +84,9 @@ CFLAGS="%optflags" \
 %if_enabled perl
   ./configure perl
 %endif
+%if_enabled php
+  ./configure php
+%endif
 %if_enabled ruby
   ./configure ruby
 %endif
@@ -88,6 +103,9 @@ mv build build-nodebug
 	--debug
   %if_enabled perl
     ./configure perl
+  %endif
+  %if_enabled php
+    ./configure php
   %endif
   %if_enabled ruby
     ./configure ruby
@@ -111,6 +129,9 @@ ln -sf build-nodebug build
 %if_enabled perl
   %makeinstall_std perl-install
 %endif
+%if_enabled php
+  %makeinstall_std php-install
+%endif
 %if_enabled ruby
   %makeinstall_std ruby-install
 %endif
@@ -123,6 +144,9 @@ ln -sf build-nodebug build
   mkdir -p %buildroot%_libdir/unit/debug-modules/
   %if_enabled perl
     install -m755 build-debug/perl.unit.so %buildroot%_libdir/unit/debug-modules/perl.unit.so
+  %endif
+  %if_enabled php
+      install -m755 build-debug/php.unit.so %buildroot%_libdir/unit/debug-modules/php.unit.so
   %endif
   %if_enabled ruby
     install -m755 build-debug/ruby.unit.so %buildroot%_libdir/unit/debug-modules/ruby.unit.so
@@ -142,6 +166,8 @@ ln pkg/rpm/rpmbuild/SOURCES/unit.example-ruby-app    ruby-app.ru
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-ruby-config ruby-unit.config
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-perl-app    perl-app.ru
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-perl-config perl-unit.config
+ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-app     php-app.ru
+ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-config  php-unit.config
 
 %check
 build/tests
@@ -181,6 +207,11 @@ build/tests
 %doc COPYRIGHT perl-app.ru perl-unit.config
 %_libdir/unit/*modules/perl.unit.so
 %endif
+%if_enabled php
+%files php
+%doc COPYRIGHT php-app.ru php-unit.config
+%_libdir/unit/*modules/php.unit.so
+%endif
 %if_enabled ruby
 %files ruby
 %doc COPYRIGHT ruby-app.ru ruby-unit.config
@@ -188,6 +219,9 @@ build/tests
 %endif
 
 %changelog
+* Sun Nov 29 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.21.0-alt3
+- Add PHP module.
+
 * Thu Nov 26 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.21.0-alt2
 - Add Perl module.
 
