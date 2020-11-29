@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: dwz
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: DWARF optimization and duplicate removal tool
@@ -11,6 +14,7 @@ Source: dwz-%version.tar
 
 # Automatically added by buildreq on Fri Jan 05 2018
 BuildRequires: libelf-devel
+BuildRequires: dejagnu
 
 %description
 dwz is a program that attempts to optimize DWARF debugging information
@@ -25,16 +29,23 @@ and using DW_TAG_imported_unit to import it into each CU that needs it.
 %setup -q
 
 %build
-make CFLAGS='%optflags'
+%make_build CFLAGS='%optflags'
 
 %install
 install -pD -m755 dwz %buildroot%_bindir/dwz
 install -pD -m644 dwz.1 %buildroot%_man1dir/dwz.1
+
+%check
+make check
+cat dwz.sum
 
 %files
 %_bindir/dwz
 %_man1dir/dwz.1*
 
 %changelog
+* Thu Nov 26 2020 Vitaly Chikunov <vt@altlinux.org> 0.13-alt1
+- Update to dwz-0.13 (2019-08-02).
+
 * Fri Jan 05 2018 Alexey Tourbin <at@altlinux.ru> 0.12-alt1
 - initial revision
