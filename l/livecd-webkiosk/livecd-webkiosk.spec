@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: start the browser for a suitable webkiosk environment
 License: Public domain
@@ -10,7 +10,7 @@ Url: http://en.altlinux.org/starterkits
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: ratpoison xinit libshell
-BuildArch: noarch
+ExcludeArch: ppc64le armh aarch64
 
 %define skeldir %_sysconfdir/skel
 %define ifacedir %_sysconfdir/net/ifaces/eth0
@@ -147,6 +147,9 @@ chmod +x %wrapper
 %endif
 
 %changelog
+* Mon Nov 30 2020 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt2
+- ExcludeArch: ppc64le armh aarch64 (as for firefox and seamonkey).
+
 * Fri Sep 13 2019 Leonid Krivoshein <klark@altlinux.org> 0.6.1-alt1
 - fixed typo in the spec: url from cmdline now realy used
 
