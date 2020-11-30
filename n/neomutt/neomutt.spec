@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: neomutt
-Version: 20200925
+Version: 20201127
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -78,6 +78,12 @@ make -s test
 %docdir
 
 %changelog
+* Mon Nov 30 2020 Vitaly Chikunov <vt@altlinux.org> 20201127-alt1
+- Update to 20201127.
+
+* Wed Nov 25 2020 Vitaly Chikunov <vt@altlinux.org> 20201120-alt1
+- Update to 20201120.
+
 * Sun Sep 27 2020 Vitaly Chikunov <vt@altlinux.org> 20200925-alt1
 - Update to 20200925.
 
