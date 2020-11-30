@@ -13,8 +13,8 @@
 %global forgeurl https://github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 5.3.0.12
-Release: alt2
+Version: 5.3.0.13
+Release: alt1
 Summary: Go-lang bingding for dde-daemon
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -103,6 +103,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.13-alt1
+- New version (5.3.0.13) with rpmgs script.
+
 * Thu Nov 19 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.12-alt2
 - Fixed BuildRequires.
 
