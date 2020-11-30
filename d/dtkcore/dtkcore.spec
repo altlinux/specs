@@ -1,5 +1,5 @@
 Name: dtkcore
-Version: 5.2.2.15
+Version: 5.2.2.16
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -9,7 +9,11 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ git-core fdupes qt5-linguist qt5-declarative-devel qt5-multimedia-devel qt5-x11extras-devel gsettings-qt-devel
+BuildRequires: gcc-c++
+BuildRequires: git-core
+BuildRequires: fdupes
+BuildRequires: qt5-base-devel
+BuildRequires: gsettings-qt-devel
 
 %description
 Deepin tool kit core modules.
@@ -32,9 +36,13 @@ Header files and libraries for %name.
 
 %prep
 %setup
+#sed -i 's|/lib|/libexec|' tools/settings/settings.pro
+sed -i 's|/lib|%_lib|' dtk_build_config.prf
+sed -i "s|'/lib'|'%_lib'|" conanfile.py
+#sed -i 's|qmake|qmake-qt5|' src/dtk_module.prf
+#sed -i 's|lrelease|lrelease-qt5|' tools/script/dtk-translate.py src/dtk_translation.prf
 
 %build
-%__subst 's/system(lrelease/system(lrelease-qt5/g' src/dtk_translation.prf
 %qmake_qt5 \
     CONFIG+=nostrip \
     PREFIX=%prefix \
@@ -67,6 +75,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.16-alt1
+- New version (5.2.2.16) with rpmgs script.
+
 * Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.15-alt1
 - New version (5.2.2.15) with rpmgs script.
 
