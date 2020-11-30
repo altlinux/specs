@@ -15,7 +15,7 @@
 
 Name: clsync
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -174,6 +174,12 @@ mv doc/doxygen/html %buildroot%_docdir/%name/
 %_docdir/%name/html
 
 %changelog
+* Mon Nov 30 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt2
+- Major init script improvements, including:
+  - Support for multiple clsync instances via config blocks and
+    corresponding init script symlinks.
+  - Add actions to control clsync via signals.
+
 * Sun Nov 08 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt1
 - Version bump
 - Enable LTO support
