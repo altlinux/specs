@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20201120
+Version: 20201123
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Nov 30 2020 Cronbuild Service <cronbuild@altlinux.org> 20201123-alt1
+- upstream changes (GIT b362fd4):
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2008.2018 (thx Petr Machata)
+
 * Sun Nov 22 2020 Cronbuild Service <cronbuild@altlinux.org> 20201120-alt1
 - upstream changes (GIT bc9cd0b):
   + Update AMD SEV firmware (thx John Allen)
