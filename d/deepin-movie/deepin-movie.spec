@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-movie
-Version: 5.7.6.88
-Release: alt1
+Version: 5.7.6.157
+Release: alt1.git1ad288f
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
 Group: Video
@@ -10,7 +10,6 @@ Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar.gz
-# Patch: deepin-movie_5.7.6.69_alt_fix-build.patch
 
 ExcludeArch: armh
 
@@ -20,7 +19,24 @@ BuildRequires(pre): clang11.0-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake qt5-base-devel qt5-x11extras-devel qt5-tools-devel dtk5-widget-devel libmpv-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel xorg-xcbproto-devel libavformat-devel libavutil-devel libavcodec-devel libffmpegthumbnailer-devel libpulseaudio-devel libdvdnav-devel gsettings-qt-devel libswresample-devel
+BuildRequires: cmake
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: libmpv-devel
+BuildRequires: libxcb-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: xorg-xcbproto-devel
+BuildRequires: libavformat-devel
+BuildRequires: libavutil-devel
+BuildRequires: libavcodec-devel
+BuildRequires: libffmpegthumbnailer-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libdvdnav-devel
+BuildRequires: gsettings-qt-devel
+BuildRequires: libswresample-devel
 Requires: libdmr libdvdnav libgsettings-qt
 
 %description
@@ -42,11 +58,8 @@ This package provides development files for libdmr.
 
 %prep
 %setup -n %name-reborn-%version
-# %%if_disabled clang
-# %%patch -p2
-# %%endif
 
-sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
+#sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
 
 %build
 %if_enabled clang
@@ -82,6 +95,9 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.157-alt1.git1ad288f
+- Built from git.
+
 * Fri Nov 13 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.88-alt1
 - New version (5.7.6.88) with rpmgs script.
 

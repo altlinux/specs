@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.2.0.76
-Release: alt1
+Release: alt2.git7ccae23
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,7 +12,6 @@ Url: https://github.com/linuxdeepin/dde-file-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-file-manager_5.2.0.69_alt_fix-build.patch
 
 ExcludeArch: armh ppc64le
 
@@ -120,7 +119,7 @@ sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file
 %_datadir/dbus-1/services/org.freedesktop.FileManager.service
 %_datadir/dbus-1/system-services/com.deepin.filemanager.daemon.service
 %_datadir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
-%_unitdir/dde-filemanager-daemon.service
+# %%_unitdir/dde-filemanager-daemon.service
 %dir %_datadir/deepin/
 %_datadir/deepin/%repo/
 %_datadir/polkit-1/actions/com.deepin.filemanager.daemon.policy
@@ -141,6 +140,7 @@ sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file
 %dir %_libdir/%repo/plugins/previews/
 %_libdir/%repo/plugins/previews/*.so
 # Bad elfs detected.
+%exclude %_libdir/%repo/plugins/previews/libdde-video-preview-plugin.so
 %exclude %_libdir/%repo/plugins/previews/libdde-music-preview-plugin.so
 
 %files devel
@@ -161,6 +161,9 @@ sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.76-alt2.git7ccae23
+- Built from git.
+
 * Tue Nov 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.76-alt1
 - New version (5.2.0.76) with rpmgs script.
 
