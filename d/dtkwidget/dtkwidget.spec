@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.3.0
+Version: 5.4.1
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+
@@ -14,7 +14,24 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %endif
-BuildRequires: qt5-linguist qt5-base-devel qt5-svg-devel qt5-x11extras-devel dtk5-core-devel dtk5-gui-devel gsettings-qt-devel deepin-qt-dbus-factory-devel libudev-devel librsvg-devel libstartup-notification-devel libXi-devel libX11-devel libXext-devel libxcbutil-devel libxkbcommon-devel libXrender-devel libcups-devel
+BuildRequires: qt5-linguist
+BuildRequires: qt5-base-devel-static
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: dtk5-core-devel
+BuildRequires: dtk5-gui-devel
+BuildRequires: gsettings-qt-devel
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: libudev-devel
+BuildRequires: librsvg-devel
+BuildRequires: libstartup-notification-devel
+BuildRequires: libXi-devel
+BuildRequires: libX11-devel
+BuildRequires: libXext-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: libXrender-devel
+BuildRequires: libcups-devel
 # libQt5Gui.so.5(Qt_5_PRIVATE_API)(64bit) needed by dtkwidget
 BuildRequires: libqt5-gui
 
@@ -38,18 +55,22 @@ Header files and libraries for %name.
 
 %prep
 %setup
+sed -i 's|lrelease|lrelease-qt5|' \
+    tools/translate_generation.sh \
+    tools/translate_generation.py
+sed -i "s|'/lib'|'/%_lib'|" conanfile.py
 
 %build
-%if_enabled clang
+# help find (and prefer) qt5 utilities, e.g. qmake, lrelease
+export PATH=%{_qt5_bindir}:$PATH
 %qmake_qt5 \
+%if_enabled clang
+    QMAKE_STRIP= -spec linux-clang \
+%endif
     CONFIG+=nostrip \
     PREFIX=%_prefix \
-    QMAKE_STRIP= -spec linux-clang
-%else
-%qmake_qt5 \
-    CONFIG+=nostrip \
-    PREFIX=%_prefix
-%endif
+    LIB_INSTALL_DIR=%_libdir \
+    DBUS_VERSION_0_4_2=YES
 
 %make_build
 
@@ -71,6 +92,9 @@ Header files and libraries for %name.
 %_libdir/lib%name.so
 
 %changelog
+* Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.4.1-alt1
+- New version (5.4.1) with rpmgs script.
+
 * Wed Oct 28 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0-alt1
 - New version (5.3.0) with rpmgs script.
 
