@@ -4,7 +4,7 @@
 
 Name:    crash
 Version: 7.2.9
-Release: alt1
+Release: alt2
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -30,6 +30,9 @@ investigate either live systems, kernel core dumps created from dump
 creation facilities.
 
 Whitepaper: https://crash-utility.github.io/crash_whitepaper.html
+
+Note: You will need -debuginfo package for the kernel installed for this
+ tool to work! Because, it requires vmlinux binary present in -debuginfo.
 
 %prep
 %setup
@@ -58,6 +61,9 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_libdir/crash
 
 %changelog
+* Mon Nov 30 2020 Vitaly Chikunov <vt@altlinux.org> 7.2.9-alt2
+- Add usage note to %%description.
+
 * Wed Nov 25 2020 Vitaly Chikunov <vt@altlinux.org> 7.2.9-alt1
 - Update to 7.2.9 (2020-11-20).
 
