@@ -1,7 +1,7 @@
 %define oname pyxattr
 
 Name: python3-module-%oname
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: A python module for accessing filesystem Extended Attributes
@@ -35,6 +35,9 @@ operating systems.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 30 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
+- Automatically updated to 0.7.2.
+
 * Thu Nov 12 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
 - Automatically updated to 0.7.1.
 - Build without specsubst.
