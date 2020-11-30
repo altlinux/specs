@@ -5,8 +5,8 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
-Version:	0.11.0
-Release:	alt3
+Version:	0.11.4
+Release:	alt1
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -119,6 +119,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Mon Nov 30 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.4-alt1
+- Update to v0.11.4 (2020-11-13).
+
 * Tue Aug 25 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt3
 - Rename man pages with bpftrace- prefix.
 - Rebuild with debuginfo.
