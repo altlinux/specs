@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 9.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -44,6 +44,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Mon Nov 30 2020 Elena Mishina <lepata@altlinux.org> 9.1-alt4
+- update Zabbix documentation for 5.0
+
 * Mon Nov 16 2020 Elena Mishina <lepata@altlinux.org> 9.1-alt3
 - add ALT Media Writer
 - add configured new hosts in Zabbix
