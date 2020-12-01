@@ -1,5 +1,5 @@
-%define module_name CBOR-XS
 %define _unpackaged_files_terminate_build 1
+%define module_name CBOR-XS
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Canary/Stability.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Math/BigRat.pm) perl(Time/Piece.pm) perl(Types/Serialiser.pm) perl(URI.pm) perl(XSLoader.pm) perl(common/sense.pm)
 # END SourceDeps(oneline)
@@ -7,8 +7,8 @@ Epoch: 2
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.71
-Release: alt1.1
+Version: 1.82
+Release: alt1
 Summary: Concise Binary Object Representation (CBOR, RFC7049)
 Group: Development/Perl
 License: GPL-3
@@ -59,11 +59,14 @@ vice versa.
 %perl_vendor_install
 
 %files
-%doc Changes COPYING README
+%doc Changes README
 %perl_vendor_archlib/C*
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 2:1.82-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2:1.71-alt1.1
 - rebuild with new perl 5.28.1
 
