@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.36
 %def_disable static
@@ -12,7 +12,7 @@
 
 Name: gnome-keyring
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: %name is a password keeper for GNOME
 License: GPL-2.0 and LGPL-2.1
@@ -150,6 +150,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Tue Dec 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- updated to 3.36.0-13-gebc7bc9e (update libcap-ng-0.8.1 capability handling)
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
