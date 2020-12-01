@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave-config makeinfo
+BuildRequires: makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg io
 Epoch: 1
 Name: octave-%octpkg
-Version: 2.4.13
+Version: 2.6.3
 Release: alt1
 Summary: Input/Output
 
@@ -23,8 +23,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(io) = %version
-# Depends: octave (>= 3.8.0)
-Requires: octave >= 3.8.0
+# Depends: octave (>= 4.2.0)
+Requires: octave >= 4.2.0
 
 
 %description
@@ -40,13 +40,16 @@ Input/Output in external formats.
 %octave_install
 
 %files
-%doc DESCRIPTION NEWS COPYING doc
+%doc DESCRIPTION COPYING NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.6.3-alt1
+- regenerated from template by package builder
+
 * Wed Feb 19 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.4.13-alt1
 - New version.
 

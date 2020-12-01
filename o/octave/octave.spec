@@ -6,8 +6,8 @@
 %endif
 
 Name: octave
-Version: 5.2.0
-Release: alt3
+Version: 6.1.0
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -21,7 +21,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
 Source2: %name.watch
-Source3: ru_RU.ts
 
 Patch0: octave-include-pcre.patch
 Patch1: octave-alt-desktop-l10n.patch
@@ -145,7 +144,6 @@ GNU Octave является высокоуровневым языком, в пе
 %patch1 -p2
 %patch4 -p1
 %patch5 -p2
-cp %SOURCE3 libgui/languages/
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -226,6 +224,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Mon Nov 30 2020 Andrey Cherepanov <cas@altlinux.org> 6.1.0-alt1
+- New version.
+
 * Mon Oct 19 2020 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt3
 - Complete Russian translations by Dmitry Astankov <mornie@basealt.ru>.
 

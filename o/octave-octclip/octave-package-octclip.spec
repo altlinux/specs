@@ -4,13 +4,13 @@ BuildRequires: makeinfo
 %def_with _octave_arch
 %define octpkg octclip
 Name: octave-%octpkg
-Version: 1.0.8
-Release: alt4
+Version: 2.0.1
+Release: alt1
 Summary: GNU Octave clipping polygons tool
 
 Group: Sciences/Mathematics
 License: GPLv3+, modified BSD
-URL: http://davis.wpi.edu/~matt/courses/clipping/
+URL: https://bitbucket.org/jgpallero/octclip
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
@@ -22,8 +22,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(octclip) = %version
-# Depends: Octave (>= 2.9.7)
-Requires: octave >= 2.9.7
+# Depends: Octave (>= 3.6.0)
+Requires: octave >= 3.6.0
 
 
 %description
@@ -39,13 +39,16 @@ This package allows to do boolean operations with polygons using
 %octave_install
 
 %files
-%doc DESCRIPTION NEWS COPYING doc
+%doc COPYING DESCRIPTION NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1
+- regenerated from template by package builder
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt4
 - rebuild with octave 5
 

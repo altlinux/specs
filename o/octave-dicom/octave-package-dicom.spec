@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: /usr/bin/octave-config makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg dicom
 Name: octave-%octpkg
-Version: 0.2.2
-Release: alt2
+Version: 0.4.0
+Release: alt1
 Summary: dicom: file io for medical images and other data
 
 Group: Sciences/Mathematics
@@ -25,6 +25,8 @@ Provides: octave(dicom) = %version
 
 # SystemRequirements: libgdcm2.0 (>= 2.0.16)
 BuildRequires: gdcm-devel >= 2.0.16
+# Depends: octave (>= 3.8.0)
+Requires: octave >= 3.8.0
 
 
 %description
@@ -40,13 +42,16 @@ Digital communications in medicine (DICOM) file io.
 %octave_install
 
 %files
-%doc DESCRIPTION COPYING NEWS
+%doc README.md COPYING DESCRIPTION NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1
+- regenerated from template by package builder
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2
 - rebuild with gbcm
 
