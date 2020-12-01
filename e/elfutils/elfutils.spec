@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.182
-Release: alt2
+Release: alt3
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -15,6 +15,7 @@ Requires: libelf = %EVR
 %def_enable check
 %def_enable libdebuginfod
 %def_enable debuginfod
+%def_enable debuginfod_urls
 
 BuildRequires: gettext
 BuildRequires: bison
@@ -176,6 +177,7 @@ This package contains static libelf library.
 Summary: Shared library to access debuginfod
 License: GPLv2+ or LGPLv3+
 Group: System/Libraries
+Requires: debuginfod-urls = %EVR
 
 %description -n libdebuginfod
 This package provides libdebuginfod shared library.
@@ -188,6 +190,26 @@ Requires: libdebuginfod = %EVR
 
 %description -n libdebuginfod-devel
 This package contains the library and header files for libdebuginfod.
+
+%package -n debuginfod-find
+Summary: A command line client for build-id HTTP ELF/DWARF server
+License: GPLv3+
+Group: Development/C
+Requires: libdebuginfod = %EVR
+
+%description -n debuginfod-find
+This packages contains debuginfod-find command line client
+for build-id HTTP ELF/DWARF server.
+
+%package -n debuginfod-urls
+Summary: Shell profiles with canned debuginfod urls
+License: GPLv3+ or LGPLv3+
+Group: Development/C
+BuildArch: noarch
+Requires: libelf = %EVR
+
+%description -n debuginfod-urls
+This package contains debuginfod url for ALT.
 
 %package -n debuginfod
 Summary: Debuginfo-related http file-server daemon
@@ -212,6 +234,9 @@ cd %buildtarget
 	--enable-maintainer-mode \
 	--program-prefix=eu- \
 	%{subst_enable libdebuginfod} \
+%if_enabled debuginfod_urls
+	--enable-debuginfod-urls="https://debuginfod.altlinux.org/" \
+%endif
 	%{subst_enable debuginfod}
 %make_build
 
@@ -222,9 +247,11 @@ cd %buildtarget
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%if_disabled debuginfod_urls
 # Explicitly remove debuginfod profile.d's as we don't have
 # default value for DEBUGINFOD_URLS anyway.
 rm %buildroot/%_sysconfdir/profile.d/debuginfod.*
+%endif
 
 %check
 export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
@@ -249,10 +276,6 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-strip
 %_bindir/eu-unstrip
 %_man1dir/eu-*
-%if_enabled libdebuginfod
-%_bindir/debuginfod-find
-%_man1dir/debuginfod-find.*
-%endif
 
 %files devel
 
@@ -326,6 +349,10 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libdebuginfod.so
 %_pkgconfigdir/libdebuginfod.pc
 %_man3dir/debuginfod*.3*
+
+%files -n debuginfod-find
+%_bindir/debuginfod-find
+%_man1dir/debuginfod-find.1*
 %endif
 
 %if_enabled debuginfod
@@ -334,7 +361,17 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_man8dir/debuginfod.*
 %endif
 
+%if_enabled debuginfod_urls
+%files -n debuginfod-urls
+%config(noreplace) %_sysconfdir/profile.d/debuginfod.*sh
+%endif
+
 %changelog
+* Tue Dec 01 2020 Dmitry V. Levin <ldv@altlinux.org> 0.182-alt3
+- Added libelf to libdebuginfod requirements.
+- Packaged debuginfod-find tool into a separate subpackage.
+- Packaged debuginfod-urls pointing to ALT debuginfod server (by Vitaly Chikunov).
+
 * Tue Nov 03 2020 Vitaly Chikunov <vt@altlinux.org> 0.182-alt2
 - spec: Enable libdebuginfod and debuginfod.
 
