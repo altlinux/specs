@@ -1,8 +1,8 @@
 %def_without docs
 
 Name:    appstream
-Version: 0.12.11
-Release: alt2
+Version: 0.13.1
+Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -136,6 +136,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Dec 01 2020 Andrey Cherepanov <cas@altlinux.org> 0.13.1-alt1
+- New version.
+
 * Fri Nov 20 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.11-alt2
 - Do not build API documentation because both daps and publican are not build for i586.
 
