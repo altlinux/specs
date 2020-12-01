@@ -1,6 +1,6 @@
 Name: openscad
 Version: 2019.05
-Release: alt6
+Release: alt7
 Summary: The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -43,9 +43,6 @@ BuildRequires: qt5-base-devel qt5-designer
 BuildRequires: qt5-multimedia-devel
 BuildRequires: flex
 BuildRequires: libqscintilla2-qt5-devel
-Requires: font(liberationmono)
-Requires: font(liberationsans)
-Requires: font(liberationserif)
 Requires: %name-MCAD = %EVR
 %add_python3_path %_datadir/%name/libraries/MCAD
 
@@ -141,6 +138,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Tue Dec 01 2020 Anton Midyukov <antohami@altlinux.org> 2019.05-alt7
+- Not required fonts (Closes: 39356)
+
 * Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.05-alt6
 - Rebuilt with boost-1.74.0.
 
