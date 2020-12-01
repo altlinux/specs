@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name PAR-Dist
 
 Name: perl-%module_name
-Version: 0.49
+Version: 0.51
 Release: alt1
 
 Summary: %module_name module for perl
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/R/RS/RSCHUPP/PAR-Dist-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RS/RSCHUPP/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ BuildRequires: perl-Archive-Zip perl-Test-Pod perl-Test-Pod-Coverage perl-YAML-S
 PAR::Dist, a toolkit to create and manipulate PAR distributions.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 export PERL_TEST_POD=1
@@ -31,9 +32,13 @@ export PERL_TEST_POD=1
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/PAR/
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
 - automated CPAN update
 
