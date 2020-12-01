@@ -1,5 +1,5 @@
 Name:     alt-checksums
-Version:  0.9
+Version:  1.0 
 Release:  alt1
 
 Summary:  ALT SP checksumming for sp distros.
@@ -29,7 +29,7 @@ and after that stores the checksum of that file.
 %install
 mkdir -p %buildroot%_sbindir
 install -Dm 0700  alt-gensum %buildroot%_sbindir/alt-gensum
-install -Dm 0700  alt-gensum-chk.sh %buildroot%_sbindir/alt-gensum-chk.sh
+install -Dm 0700  alt-gensum-chk %buildroot%_sbindir/alt-gensum-chk
 
 mkdir -p %buildroot%_docdir
 install -Dm 0600 README.md  %buildroot%_docdir
@@ -45,6 +45,9 @@ install -Dm 0600 alt-checksum.service %buildroot%_unitdir
 %doc *.md
 
 %changelog
+* Mon Nov 30 2020 Denis Medvedev <nbr@altlinux.org> 1.0-alt1
+- List creation and checksumming are done separately.
+
 * Fri Nov 27 2020 Denis Medvedev <nbr@altlinux.org> 0.9-alt1
 - A list of files is now being generated after first boot by
 asking rpm base of installed packages and checking for ELF files
