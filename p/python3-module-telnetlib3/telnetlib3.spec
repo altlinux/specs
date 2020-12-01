@@ -1,112 +1,56 @@
 %define _unpackaged_files_terminate_build 1
 %define oname telnetlib3
 
-%def_without python2
-%def_with python3
 %def_enable check
 
-Name: python-module-%oname
-Version: 1.0.2
+Name: python3-module-%oname
+Version: 1.0.3
 Release: alt1
 Summary: Telnet server and client Protocol library using asyncio
 License: ISC
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/telnetlib3/
 
 # https://github.com/jquast/telnetlib3.git
 Source: %name-%version.tar
 
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(asyncio)
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio)
 BuildRequires: python3-module-html5lib
-%endif
 
-%py_provides %oname
-%py_requires asyncio
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
+
+%py3_provides %oname
+%py3_requires asyncio
 
 %description
 telnetlib3 is a Telnet Client and Server Protocol library for python.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Telnet server and client Protocol library using asyncio
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires asyncio
-
-%description -n python3-module-%oname
-telnetlib3 is a Telnet Client and Server Protocol library for python.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%if_with python2
-%python_install
-%endif
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
 %doc LICENSE.txt *.rst docs/*.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE.txt *.rst docs/*.rst
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Dec 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt1
+- Automatically updated to 1.0.3.
+- Clean transfer on python3.
+
 * Tue Apr 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - new version 1.0.2
 
