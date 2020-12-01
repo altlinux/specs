@@ -1,20 +1,25 @@
 Name: live555
-Version: 20140725
-Release: alt2
+Version: 20201201
+Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
-License: LGPL
+License: LGPLv3
 Group: System/Libraries
 Url: http://www.live555.com/liveMedia/
 
 Source: %name-%version-%release.tar
 
-Requires: lib%name = %version-%release
-# renamed...
-Provides: live = %version-%release
-Obsoletes: live < %version-%release
+BuildRequires: gcc-c++ libssl-devel
 
-BuildRequires: gcc-c++
+%package -n lib%name
+Summary: Live555.com Streaming Media Library
+Group: System/Libraries
+
+%package -n lib%name-devel
+Summary: Development files of the Live555.com Streaming Media Library
+Group: Development/C++
+Provides: liblive-devel = %version-%release
+Obsoletes: liblive-devel < %version-%release
 
 %description
 This code forms a set of C++ libraries for multimedia streaming, using
@@ -24,19 +29,6 @@ QNX (and other POSIX-compliant systems) - can be used to build
 streaming applications.
 
 This package contains the example apps of live555.com.
-
-%package -n lib%name
-Summary: Live555.com Streaming Media Library
-Group: System/Libraries
-Provides: liblive555-0 = %version-%release
-Obsoletes: liblive555-0
-
-%package -n lib%name-devel
-Summary: Development files of the Live555.com Streaming Media Library
-Group: Development/C++
-Requires: lib%name = %version-%release
-Provides: liblive-devel = %version-%release
-Obsoletes: liblive-devel < %version-%release
 
 %description -n lib%name
 This code forms a set of C++ libraries for multimedia streaming, using
@@ -60,12 +52,11 @@ This package contains all needed files to build programs based on live555.com.
 %setup
 
 %build
-./genMakefiles linux
-%make_build CFLAGS='%optflags %optflags_shared'
+sh genMakefiles linux
+%make_build CPPFLAGS='%optflags %optflags_shared'
 
 %install
 %makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
-
 for f in BasicUsageEnvironment UsageEnvironment groupsock; do
 echo 'INPUT(AS_NEEDED(%_libdir/libliveMedia.so))' >%buildroot%_libdir/lib$f.so
 done
@@ -85,6 +76,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Tue Dec 01 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 20201201-alt1
+- 2020.12.01 released
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20140725-alt2
 - Fixed build with new glibc.
 
