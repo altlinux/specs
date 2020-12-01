@@ -1,13 +1,13 @@
 Name: gmp
-Version: 6.1.2
-Release: alt3
+Version: 6.2.1
+Release: alt1
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
 Group: System/Libraries
 Url: http://gmplib.org/
 
-# ftp://ftp.gmplib.org/pub/gmp-%version/gmp-%version.tar.xz
+# https://gmplib.org/download/gmp/gmp-%version.tar.xz
 Source: gmp-%version.tar
 Patch: gmp-%version-%release.patch
 
@@ -155,9 +155,12 @@ __gmpn_dcpi1_bdiv_qr
 __gmpn_dcpi1_div_q
 __gmpn_dcpi1_div_qr
 __gmpn_dcpi1_divappr_q
-__gmpn_divexact
 __gmpn_div_q
+__gmpn_divexact
 __gmpn_dump
+__gmpn_fib2_ui
+__gmpn_fib2m
+__gmpn_gcd_22
 __gmpn_get_d
 __gmpn_hgcd
 __gmpn_hgcd_appr
@@ -198,6 +201,7 @@ __gmpn_powlo
 __gmpn_preinv_divrem_1
 __gmpn_sbpi1_bdiv_q
 __gmpn_sbpi1_bdiv_qr
+__gmpn_sbpi1_bdiv_r
 __gmpn_sbpi1_div_q
 __gmpn_sbpi1_div_qr
 __gmpn_sbpi1_divappr_q
@@ -224,6 +228,7 @@ __gmpn_toom6h_mul
 __gmpn_toom8_sqr
 __gmpn_toom8h_mul
 __gmpz_divexact_gcd
+__gmpz_lucas_mod
 EOF
 sort -u -o libgmp.sym libgmp.sym
 %make_build
@@ -261,6 +266,9 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.2.1-alt1
+- Updated to 6.2.1.
+
 * Mon May 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.2-alt3
 - Made __gmpn_clz_tab symbol visible to fix testsuite (on at least
   riscv64 architecture).

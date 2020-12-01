@@ -1,9 +1,9 @@
 Name: libmpc3
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 
 Summary: C library for multiple precision complex arithmetic
-License: LGPLv3+, GFDL
+License: LGPL-3.0-or-later and GFDL-1.3-or-later
 Group: System/Libraries
 Url: http://multiprecision.org/
 
@@ -53,6 +53,9 @@ export EGREP=egrep
 %_infodir/mpc.info*
 
 %changelog
+* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.1-alt1
+- Updated to 1.2.1.
+
 * Wed Jan 17 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0-alt1
 - Updated to 1.1.0.
 
