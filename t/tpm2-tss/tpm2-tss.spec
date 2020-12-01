@@ -1,8 +1,10 @@
 %define udevrules_prefix 60-
 %define soname 0
 %define _localstatedir /var
+%def_enable check
+
 Name: tpm2-tss
-Version: 2.4.3
+Version: 3.0.2
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -22,6 +24,11 @@ BuildRequires: libgcrypt-devel
 BuildRequires: openssl-devel
 BuildRequires: libjson-c-devel
 BuildRequires: libcurl-devel
+%if_enabled check
+BuildRequires: libuthash-devel
+BuildRequires: procps
+BuildRequires: libcmocka-devel
+%endif
 
 %description
 tpm2-tss is a software stack supporting Trusted Platform Module(TPM) 2.0 system
@@ -41,6 +48,7 @@ APIs for applications to access TPM module through kernel TPM drivers.
 %package -n lib%name-common
 Summary: Common files for TPM2.0 Software Stack
 Group: System/Configuration/Hardware
+Requires: systemd-stateless
 
 %description -n lib%name-common
 This package contains common files required to work witj libtpm2-tss.
@@ -68,10 +76,16 @@ use tpm2-tss.
     --with-udevrulesprefix=%udevrules_prefix \
     --with-runstatedir=/run \
     --with-sysusersdir=/lib/sysusers.d \
-    --with-tmpfilesdir=%_tmpfilesdir
-
+    --with-tmpfilesdir=%_tmpfilesdir \
+%if_enabled check
+    --enable-unit \
+%endif
+    %nil
 
 %make_build
+
+%check
+%make_build check
 
 %install
 %makeinstall_std
@@ -93,6 +107,8 @@ mkdir -p %buildroot%_sharedstatedir/%name/system/keystore
 %_tmpfilesdir/*
 %_man5dir/*
 /lib/sysusers.d/*
+%dir %_sharedstatedir/%name
+%dir %_sharedstatedir/%name/system
 %attr(0775,tss,tss) %dir %_sharedstatedir/%name/system/keystore
 
 %files -n lib%name-devel
@@ -103,6 +119,10 @@ mkdir -p %buildroot%_sharedstatedir/%name/system/keystore
 %_man7dir/*
 
 %changelog
+* Tue Dec 01 2020 Danil Shein <dshein@altlinux.org> 3.0.2-alt1
+- update version to 3.0.2
+- enable unit tests
+
 * Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
 - 2.4.3 (fixes: CVE-2020-24455)
 
