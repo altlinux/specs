@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.5.6
-Release: alt2.gitc9ebe68
+Version: 1.5.6.1
+Release: alt1
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -11,7 +11,8 @@ Url: http://www.scribus.net/
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-# Source-url: https://github.com/scribusproject/scribus/archive/master.zip
+##Source-url: https://github.com/scribusproject/scribus/archive/master.zip
+# Source-url: http://prdownloads.sf.net/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
 BuildRequires: cmake zlib-devel libssl-devel
@@ -168,6 +169,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.6.1-alt1
+- new version (1.5.6.1) with rpmgs script
+- build from release tarball
+
 * Sat Sep 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.6-alt2.gitc9ebe68
 - build git c9ebe68847e7157dea75248a54cc5c8ec414da11
 
