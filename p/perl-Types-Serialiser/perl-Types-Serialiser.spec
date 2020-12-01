@@ -2,19 +2,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(common/sense.pm) perl(overload.pm)
 # END SourceDeps(oneline)
-%define module_version 1.0
 %define module_name Types-Serialiser
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.0
+Version: 1.01
 Release: alt1
 Summary: simple data types for common serialisation formats
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Types-Serialiser-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -25,7 +24,7 @@ different implementations so they become interoperable between each other.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +33,13 @@ different implementations so they become interoperable between each other.
 %perl_vendor_install
 
 %files
-%doc Changes README COPYING
+%doc Changes README
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Mon Dec 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - automated CPAN update
 
