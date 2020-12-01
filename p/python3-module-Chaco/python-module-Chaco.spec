@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 4.8.0
-Release: alt2
+Release: alt3
 
 Summary: Interactive 2-Dimensional Plotting
 License: BSD and GPLv2
@@ -12,8 +12,9 @@ URL: http://code.enthought.com/projects/chaco/
 # https://github.com/enthought/chaco.git
 Source: %oname-%version.tar.gz
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel python-tools-2to3
+BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-sphinx python3-module-Pygments
 BuildRequires: python3-module-traits
 
@@ -59,8 +60,6 @@ This package contains documentation for Chaco.
 %prep
 %setup
 
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
@@ -70,6 +69,8 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %install
 %python3_install
+%python3_prune
+rm -rfv %buildroot%python3_sitelibdir/chaco/tests_with_backend/
 
 export PYTHONPATH=%buildroot%python3_sitelibdir:$PWD/docs/source/sphinxext
 sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
@@ -78,12 +79,14 @@ sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
 %doc *.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/example*
+%if 0
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/tests
+%endif
 
 %files doc
 %doc docs/*.txt docs/*.pdf docs/*.tgz docs/chaco* docs/scipy_tutorial
@@ -91,6 +94,9 @@ sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
 
 
 %changelog
+* Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt3
+- NMU: drop tests packing
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0-alt2
 - Fixed build with numpy.
 
