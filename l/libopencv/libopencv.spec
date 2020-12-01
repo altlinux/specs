@@ -38,7 +38,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.5.0
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -308,6 +308,7 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	-DOPENCV_LICENSES_INSTALL_PATH=%_datadir/%Name-%version/licenses \
 	-DOPENCV_OTHER_INSTALL_PATH=%_datadir/%Name \
 	-DOPENCV_GENERATE_PKGCONFIG:BOOL=ON \
+	-DOPENCV_SKIP_CMAKE_CXX_STANDARD:BOOL=ON \
 	%nil
 
 %cmake_build VERBOSE=1
@@ -359,6 +360,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/quality
 
 %changelog
+* Tue Dec 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.0-alt2
+- Fixed build.
+
 * Mon Oct 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.0-alt1
 - Updated to upstream version 4.5.0.
 
