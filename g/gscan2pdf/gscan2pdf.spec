@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 2.9.1
+Version: 2.10.0
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -17,13 +17,10 @@ Source: http://prdownloads.sf.net/%name/%name/%version/%name-%version.tar
 
 BuildArch: noarch
 
-# perl(Gtk2/Ex/PodViewer.pm) at line 3501 (depth 4) inside eval SKIP
-#Requires: perl(Gtk2/Ex/PodViewer.pm)
-
 BuildRequires: libdb4-devel perl-Archive-Tar perl-Config-General perl-Filesys-Df perl-List-MoreUtils perl-Locale-gettext perl-Log-Log4perl perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Set-IntSpan perl-Sub-Name perl-podlators perl-Text-Balanced
 
 BuildRequires: perl-Data-UUID perl-JSON-PP perl-Date-Calc perl-Image-Sane perl-Sub-Override perl-Time-Piece
-BuildRequires: perl-Gtk3 perl-Gtk3-SimpleList libgoocanvas2-gir perl-GooCanvas2 perl-Locale-Codes
+BuildRequires: perl-Gtk3 perl-Gtk3-ImageView perl-Gtk3-SimpleList libgoocanvas2-gir perl-GooCanvas2 perl-Locale-Codes perl-PDF-Builder
 
 Requires: libgoocanvas2-gir perl-Pod-Perldoc
 
@@ -96,6 +93,10 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt1
+- new version 2.10.0 (with rpmrb script)
+- add BR: perl-PDF-Builder
+
 * Fri Sep 25 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.1-alt1
 - new version 2.9.1 (with rpmrb script)
 
