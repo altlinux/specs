@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       7.0.0
-Release:       alt1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -15,6 +15,7 @@ Source:        %name-%version.tar
 Source1:       client.init
 Source2:       puppet.service
 Source3:       puppet-nm-dispatcher
+Source4:       auth.conf
 
 Patch1: puppet-alt-adjust-default-paths.patch
 Patch2: puppet-fix-locale-loading.patch
@@ -113,6 +114,8 @@ cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
 #[agent]
 #server = puppet
 END.
+touch %buildroot%_sysconfdir/puppet/autosign.conf
+install -Dm644 %SOURCE4 %buildroot%_sysconfdir/puppet/auto.conf
 
 # link to gem library code base
 ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
@@ -165,6 +168,8 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %dir %_sysconfdir/puppet/code/environments/production/manifests
 %dir %_sysconfdir/puppet/code
 %_sysconfdir/puppet/code
+%config(noreplace) %_sysconfdir/puppet/autosign.conf
+%config(noreplace) %_sysconfdir/puppet/auto.conf
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/sysconfig/puppet
 %config(noreplace) %_sysconfdir/logrotate.d/puppet
@@ -185,6 +190,9 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %ruby_gemdocdir
 
 %changelog
+* Mon Nov 30 2020 Pavel Skrylev <majioa@altlinux.org> 7.0.0-alt2
+- + default static config files for auth and authsign
+
 * Sat Nov 14 2020 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt1
 - New version.
 

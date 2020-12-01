@@ -1,7 +1,7 @@
 %define        pkgname rails
 
 Name:          gem-%pkgname
-Version:       5.2.4.3
+Version:       5.2.4.4
 Release:       alt1
 Summary:       Ruby on Rails
 License:       MIT
@@ -369,6 +369,11 @@ install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 
 
 %changelog
+* Mon Nov 30 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.4-alt1
+- ^ 5.2.4.1 -> 5.2.4.3
+- ! CVE-2020-15169
+- * railsctl to support locale setup
+
 * Mon Jun 29 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.3-alt1
 - ^ 5.2.4.1 -> 5.2.4.3
 - ! bugfixes

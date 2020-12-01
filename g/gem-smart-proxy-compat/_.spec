@@ -2,10 +2,10 @@
 %define        pkgname smart-proxy
 %define        gemname smart_proxy
 
-Name:          gem-%pkgname
-Version:       2.1.0
-Release:       alt2.1
-Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
+Name:          gem-%pkgname-compat
+Version:       1.24.3
+Release:       alt1
+Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet. Compatible package
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/theforeman/smart-proxy
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-ruby
 %gem_replace_version json ~> 2.3.1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Conflicts:     gem-%pkgname-compat
+Conflicts:     gem-%pkgname
 
 %description
 Smart Proxy is a free open source project that provides restful API to
@@ -50,18 +50,18 @@ Currently Supported modules:
 * Templates - unattended Foreman endpoint proxy
 
 
-%package       -n %pkgname
+%package       -n %pkgname-compat
 Summary:       Executable file for %gemname gem
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Conflicts:     %pkgname-compat
+Conflicts:     %pkgname
 
-%description   -n %pkgname
+%description   -n %pkgname-compat
 Executable file for %gemname gem.
 
-%description   -n %pkgname -l ru_RU.UTF8
+%description   -n %pkgname-compat -l ru_RU.UTF8
 Исполнямка для %gemname самоцвета.
 
 
@@ -71,7 +71,7 @@ Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gem
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Conflicts:     gem-%pkgname-compat-doc
+Conflicts:     gem-%pkgname-doc
 
 %description   doc
 Documentation files for %gemname gem.
@@ -89,7 +89,7 @@ Documentation files for %gemname gem.
 sed "s/https/http/" -i config/settings.d/puppetca.yml
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --alias=%pkgname-compat
 
 %install
 %ruby_install
@@ -107,17 +107,17 @@ install -Dm644 %SOURCE4 %buildroot%_sysconfdir/%pkgname/config/settings.d/puppet
 %check
 %ruby_test
 
-%pre           -n %pkgname
+%pre           -n %pkgname-compat
 getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent passwd _smartforeman >/dev/null || \
    %_sbindir/useradd -r -G puppet,foreman -d %_localstatedir/%pkgname -s /bin/bash -c "Foreman" _smartforeman
 
-%post          -n %pkgname
+%post          -n %pkgname-compat
 rm -rf %_localstatedir/%pkgname/Gemfile.lock
 %post_service %pkgname
 
-%preun         -n %pkgname
+%preun         -n %pkgname-compat
 %preun_service %pkgname
 
 
@@ -128,7 +128,7 @@ rm -rf %_localstatedir/%pkgname/Gemfile.lock
 %config(noreplace) %_sysconfdir/%pkgname/config/settings.yml
 %config(noreplace) %_sysconfdir/%pkgname/config/settings.d/*.yml
 
-%files         -n %pkgname
+%files         -n %pkgname-compat
 %doc README*
 %_bindir/%{pkgname}*
 %_unitdir/%pkgname.service
@@ -142,33 +142,6 @@ rm -rf %_localstatedir/%pkgname/Gemfile.lock
 
 
 %changelog
-* Mon Nov 30 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt2.1
-- + requires dep to facter executable
-- + explicitly the other required gems to Gemfile as a patch
-- + conflicts to compat packages
-
-* Thu Jul 16 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt2
-- + conf file to keep rights on some folders after reset
-- + _smartforeman user with home of /var/lib/smart-proxy
-- * moving config files to sysconf folder
-- ! config dependent code
-- ! config syntax
-
-* Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
-- ^ 2.0.0 -> 2.1.0
-- + _foreman user to puppet group
-
-* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt4
-- + copy Gemfile to %%_localstatedir/smart-proxy
-- + setup foreman user and groups
-- - service dep out of the foreman
-- ! service work dir
-
-* Thu Jul 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt3
-- + settings yamls
-
-* Mon Jun 15 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt2
-- * dependencies by patch
-
-* Tue Jun 9 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
-- + packaged gem with usage Ruby Policy 2.0
+* Wed Nov 25 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3-alt1
+- + packaged compatible gem with usage Ruby Policy 2.0
+- + explicitly the facter and other required gems to Gemfile as a patch
