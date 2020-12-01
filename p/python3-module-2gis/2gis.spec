@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: 2gis library for Python
 License: BSD
@@ -14,8 +14,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-mock
+BuildRequires: python3-module-mock
 BuildRequires: python3-module-requests
+BuildRequires: python3-module-sphinx
 
 %py3_provides dgis
 %py3_requires requests six
@@ -77,6 +78,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt2
+- NMU: fix buildreqs
+
 * Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.1-alt1
 - version updated to 1.3.1
 
