@@ -1,6 +1,6 @@
 Name:     nudoku
-Version:  2.0.0
-Release:  alt3
+Version:  2.1.0
+Release:  alt1
 
 Summary:  ncurses based sudoku game
 License:  GPLv3
@@ -12,8 +12,6 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
 
-Patch: nudoku-2.0.0-fix-gettext-version.patch
-
 BuildRequires: libncursesw-devel
 BuildRequires: libcairo-devel
 
@@ -22,7 +20,6 @@ BuildRequires: libcairo-devel
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -39,6 +36,9 @@ BuildRequires: libcairo-devel
 %doc AUTHORS LICENSE README.md
 
 %changelog
+* Tue Dec 01 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Fri May 08 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt3
 - Build with cairo support (Closes: #38456).
 
