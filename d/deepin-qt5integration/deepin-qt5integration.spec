@@ -1,7 +1,9 @@
-%global repo qt5integration
+%define repo qt5integration
+
+%def_disable clang
 
 Name: deepin-qt5integration
-Version: 5.1.0.9
+Version: 5.1.5
 Release: alt1
 Summary: Qt platform theme integration plugins for DDE
 # The entire source code is GPLv3+ except styles/ which is BSD,
@@ -13,7 +15,33 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: gcc-c++ libatk-devel dtk5-core-devel dtk5-widget-devel fontconfig-devel libfreetype-devel libgtk+2-devel glib2-devel libgdk-pixbuf-devel libICE-devel libinput-devel libudev-devel libpango-devel qt5-base-devel qt5-svg-devel libqtxdg-devel >= 3.0.0 qt5-x11extras-devel libX11-devel libXext-devel libXrender-devel libxcb-devel libmtdev-devel qt5-multimedia-devel
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
+BuildRequires: libatk-devel
+BuildRequires: dtk5-core-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: fontconfig-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: glib2-devel
+BuildRequires: libgdk-pixbuf-devel
+BuildRequires: libICE-devel
+BuildRequires: libinput-devel
+BuildRequires: libudev-devel
+BuildRequires: libpango-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: libqtxdg-devel >= 3.0.0
+BuildRequires: qt5-x11extras-devel
+BuildRequires: libX11-devel
+BuildRequires: libXext-devel
+BuildRequires: libXrender-devel
+BuildRequires: libxcb-devel
+BuildRequires: libmtdev-devel
+BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-base-common
 # for libQt5ThemeSupport.a
 BuildRequires: qt5-base-devel-static
@@ -27,6 +55,9 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 
 %build
 %qmake_qt5 \
+%if_enabled clang
+    QMAKE_STRIP= -spec linux-clang \
+%endif
     CONFIG+=nostrip \
     PREFIX=%prefix
 %make_build
@@ -38,13 +69,15 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 %doc README.md
 %doc LICENSE
 %_qt5_plugindir/platformthemes/libqdeepin.so
-# %_qt5_plugindir/styles/libdstyleplugin.so
 %_qt5_plugindir/styles/libchameleon.so
 %_qt5_plugindir/iconengines/libdsvgicon.so
 %_qt5_plugindir/iconengines/libdtkbuiltin.so
 %_qt5_plugindir/imageformats/libdsvg.so
 
 %changelog
+* Tue Dec 01 2020 Leontiy Volodin <lvol@altlinux.org> 5.1.5-alt1
+- New version (5.1.5) with rpmgs script.
+
 * Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.1.0.9-alt1
 - New version (5.1.0.9) with rpmgs script.
 
