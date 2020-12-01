@@ -1,5 +1,5 @@
 Name: deepin-terminal
-Version: 5.3.0.5
+Version: 5.4.0.6
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -10,12 +10,25 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake qt5-base-devel dtk5-widget-devel dtk5-gui-devel dtk5-core-devel glib2-devel libat-spi2-core-devel deepin-qt-dbus-factory-devel qt5-tools-devel libsecret-devel
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: qt5-base-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: dtk5-gui-devel
+BuildRequires: dtk5-core-devel
+BuildRequires: glib2-devel
+BuildRequires: libat-spi2-core-devel
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: libsecret-devel
+BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
 # right-click menu style
 Requires: deepin-menu
 # run command by create_from_commandline
 Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
+Requires: %name-data
 #Recommends:     deepin-manual
 #Recommends:     zssh
 
@@ -66,8 +79,9 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 # rm -rf 3rdparty/
 
 %build
-%cmake -GNinja \
-       -DDTKCORE_TOOL_DIR=%_libdir/libdtk-5*/DCore/bin
+%cmake \
+    -GNinja \
+    -DDTKCORE_TOOL_DIR=%_libdir/libdtk-5*/DCore/bin
 %ninja_build -C BUILD
 
 %install
@@ -98,6 +112,9 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %_includedir/terminalwidget5/
 
 %changelog
+* Tue Dec 01 2020 Leontiy Volodin <lvol@altlinux.org> 5.4.0.6-alt1
+- New version (5.4.0.6) with rpmgs script.
+
 * Tue Nov 17 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.5-alt1
 - New version (5.3.0.5) with rpmgs script.
 
