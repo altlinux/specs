@@ -1,16 +1,18 @@
-Name: isl
-Version: 0.23
-Release: alt1
+%def_disable devel
+
+Name: isl15
+Version: 0.18
+Release: alt2
 
 Summary: Integer Set Library
 License: MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://isl.gforge.inria.fr/
 # git://git.altlinux.org/gears/i/isl.git
 Source: %name-%version-%release.tar
 BuildRequires: libgmp-devel
 
-%define sover 23
+%define sover 15
 
 %description
 isl is a library for manipulating sets and relations of integer points
@@ -24,7 +26,7 @@ graphs), dependence analysis and bounds on piecewise step-polynomials.
 
 %package -n libisl%sover
 Summary: Integer Set Library
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %description -n libisl%sover
 isl is a library for manipulating sets and relations of integer points
@@ -38,12 +40,12 @@ graphs), dependence analysis and bounds on piecewise step-polynomials.
 
 This package contains isl shared library.
 
-%package -n libisl-devel
+%package -n libisl%sover-devel
 Summary: Development tools for ISL
 Group: Development/C
 Requires: libisl%sover = %EVR
 
-%description -n libisl-devel
+%description -n libisl%sover-devel
 isl is a library for manipulating sets and relations of integer points
 bounded by linear constraints. Supported operations on sets include
 intersection, union, set difference, emptiness check, convex hull,
@@ -72,16 +74,18 @@ echo %name-%version > GIT_HEAD_ID
 rm %buildroot%_libdir/libisl.so.*.py
 
 %files -n libisl%sover
-%_libdir/libisl.so.%{sover}*
+%_libdir/libisl.so.*
 
-%files -n libisl-devel
+%if_enabled devel
+%files -n libisl%sover-devel
 %_includedir/isl/
 %_libdir/libisl.so
 %exclude %_pkgconfigdir/isl.pc
+%endif
 
 %changelog
-* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.23-alt1
-- Updated to 0.23.
+* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.18-alt2
+- Packaged libisl15 as a legacy library.
 
 * Thu Jan 12 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.18-alt1
 - Updated to 0.18.

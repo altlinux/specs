@@ -1,6 +1,6 @@
 Name: mpfr
-Version: 4.0.2
-Release: alt2
+Version: 4.1.0
+Release: alt1
 
 Summary: Multiple Precision Floating-Point library
 License: LGPL-3.0-or-later
@@ -76,6 +76,7 @@ rm m4/l*.m4
 # extra symbols required by test suite
 cat >>src/libmpfr.sym <<'EOF'
 mpfr_clz_tab
+mpfr_ubf_zexp2exp
 EOF
 sort -u -o src/libmpfr.sym{,}
 
@@ -113,6 +114,9 @@ make check-exported-symbols
 %endif
 
 %changelog
+* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.0-alt1
+- Updated to 4.1.0.
+
 * Mon May 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.2-alt2
 - Made mpfr_clz_tab symbol visible to fix testsuite (on at least ppc64le,
   and riscv64 architectures).

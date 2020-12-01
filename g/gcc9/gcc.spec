@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 9.3.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -97,7 +97,7 @@ Url: https://gcc.gnu.org/
 # and changes interpackage dependencies to non-strict (>=);
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
-%def_disable precompat
+%def_enable precompat
 %def_disable compat
 
 # For some architectures we do not want multilib support.
@@ -2133,6 +2133,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3.1-alt2
+- Rebuilt in precompat mode to prepare for gcc10 build.
+
 * Mon May 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3.1-alt1
 - Updated to git://gcc.gnu.org/git/gcc.git releases/gcc-9
   commit e8dcd6c79335997a80f75db389263b63dfa45ca1.
