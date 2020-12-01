@@ -1,7 +1,7 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.32
+Version: 2.35.1
 Release: alt1
 Epoch: 1
 
@@ -18,23 +18,22 @@ Source3: g++.sh
 Source4: ld.sh
 Source5: output-format.sed
 
-Patch: binutils-2_32-branch.patch
+Patch: binutils-2_35-branch.patch
 
-Patch1: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
-Patch2: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
-Patch3: 0003-Don-t-check-the-plugin-target-twice.patch
-Patch4: 0004-x86-64-Skip-protected-check-on-symbol-defined-by-lin.patch
-Patch5: 0005-ld-testsuite-ld-ifunc-pr18808b.c-pass-Wno-return-typ.patch
-Patch6: 0006-ld-testsuite-ld-elf-pr22269-1.c-pass-Wno-return-type.patch
-Patch7: 0007-bfd-export-demangle.h-and-hashtab.h.patch
-Patch8: 0008-ld-add-no-warn-shared-textrel-option.patch
-Patch9: 0009-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
-Patch10: 0010-ld-enable-z-relro-by-default.patch
-Patch11: 0011-gold-enable-z-relro-by-default.patch
-Patch12: 0012-ld-testsuite-restore-upstream-default-options.patch
-Patch13: 0013-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
-Patch14: 0014-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
-Patch15: 0015-Stop-gold-from-complaining-about-annobin-note-relocs.patch
+Patch01: 0001-ld-testsuite-ld-ifunc-pr18808b.c-pass-Wno-return-typ.patch
+Patch02: 0002-ld-testsuite-ld-elf-pr22269-1.c-pass-Wno-return-type.patch
+Patch03: 0003-bfd-export-demangle.h-and-hashtab.h.patch
+Patch04: 0004-ld-add-no-warn-shared-textrel-option.patch
+Patch05: 0005-ld-enable-optimization-by-default.patch
+Patch06: 0006-ld-testsuite-restore-upstream-default-options.patch
+Patch07: 0007-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
+Patch08: 0008-readelf-objdump-enable-wide-unconditionally.patch
+Patch09: 0009-Drop-redundant-and-misleading-test-headers.patch
+Patch10: 0010-Dropped-unused-test-file.patch
+Patch11: 0011-Use-wide-output-of-readelf-and-objdump-in-tests.patch
+Patch12: 0012-Load-libdebuginfod-library-on-demand.patch
+
+%def_with debuginfod
 
 # List of architectures worthy to care about test results.
 %define check_arches x86_64 %ix86 ppc64le
@@ -47,6 +46,13 @@ Conflicts: gcc-common < 0:1.2.1-alt4
 BuildRequires: flex makeinfo perl-Pod-Parser zlib-devel
 BuildRequires: gcc-c++ libstdc++-devel-static
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, gcc-c++, glibc-devel-static, zlib-devel-static, bc, /proc, /dev/pts}}
+%if_with debuginfod
+BuildRequires: libdebuginfod-devel
+%endif
+
+%package -n libctf-nobfd0
+Summary: Compact C Type Format library (no BFD dependency)
+Group: System/Libraries
 
 %package devel
 Summary: Development files for development with BFD, opcodes and libiberty libraries
@@ -74,6 +80,10 @@ Binutils is a collection of binary utilities, including:
 + strings: listing printable strings from files;
 + strip: discarding symbols.
 
+%description -n libctf-nobfd0
+This package includes the libctf-nobfd shared library.  The Compact C Type
+Format (CTF) is a way of representing information about a binary program.
+
 %description devel
 This package contains include files, dynamic and static libraries needed
 for development software based on Binary File Descriptor library and
@@ -88,21 +98,18 @@ This package contains source code of GNU Binutils.
 %patch -p1
 chmod +x gold/testsuite/plugin_pr22868.sh
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
+%patch04 -p1
+%patch05 -p1
+%patch06 -p1
+%patch07 -p1
+%patch08 -p1
+%patch09 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
 
 # Replay libtool commits
 # a042d335197ac7afb824ab54c3aab91f3e79a2d0
@@ -134,6 +141,7 @@ ADDITIONAL_TARGETS="--enable-targets=i386-alt-linux"
 ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --enable-64-bit-bfd"
 %endif
 %configure \
+	%{subst_with debuginfod} \
 	--with-system-zlib \
 	--enable-shared \
 	--with-pic \
@@ -146,6 +154,8 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 %ifnarch mipsel mips64el
 	--enable-default-hash-style=gnu \
 %endif
+	--enable-relro \
+	--enable-textrel-check=warning \
 	$ADDITIONAL_TARGETS
 
 for t in configure-host maybe-all-{libiberty,bfd,opcodes} all; do
@@ -262,28 +272,40 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %endif
     #
 
+%files -f files.lst
+%_bindir/*
+%_prefix/lib/ldscripts/
+%_mandir/man?/*
+%_libdir/libopcodes-*.so
+%_libdir/libbfd-*.so
+%_libdir/libctf.so.0*
+%_infodir/*.info*
+%exclude %_infodir/bfd.info*
+%doc NEWS*
+
+%files -n libctf-nobfd0
+%_libdir/libctf-nobfd.so.0*
 
 %files devel
 %_libdir/*.a
 %_libdir/libbfd.so
 %_libdir/libopcodes.so
+%_libdir/libctf-nobfd.so
+%_libdir/libctf.so
 %_includedir/bfd/
 %_includedir/*.h
 %_infodir/bfd.info*
-
-%files -f files.lst
-%_bindir/*
-%_prefix/lib/ldscripts/
-%_mandir/man?/*
-%_libdir/*-*.so
-%_infodir/*.info*
-%exclude %_infodir/bfd.info*
-%doc NEWS*
 
 %files source
 %binutils_sourcedir
 
 %changelog
+* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.1-alt1
+- Updated to 2.35.1 20201123.
+- enabled features in objdump and readelf:
+  + unconditional --wide;
+  + libdebuginfod support.
+
 * Wed Oct 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.32-alt1
 - Updated to 2.32 20190906.
 
