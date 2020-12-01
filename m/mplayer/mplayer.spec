@@ -7,7 +7,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38193
+%define svnrev 38203
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -71,6 +71,7 @@
 %def_enable cddb
 %def_disable librtmp
 %def_disable nemesi
+%def_enable bzlib
 
 # Codecs:
 %def_enable mng
@@ -108,7 +109,7 @@
 %def_disable crystalhd
 %def_enable mad
 %def_disable toolame
-%def_disable twolame
+%def_enable twolame
 %def_disable xmms
 %def_enable liba52
 %def_enable libmpeg2
@@ -216,7 +217,7 @@
 %def_without htmldocs
 %def_with tools
 %define default_vo %{subst_o xv}%{subst_o gl}%{subst_o x11}%{subst_o_pre x vidix}%{subst_o mga}%{subst_o dfbmga}%{subst_o tdfxfb}%{subst_o 3dfx}%{subst_o s3fb}%{subst_o_pre c vidix}%{subst_o_post fbdev 2}%{subst_o vesa}%{subst_o caca}%{subst_o aa}
-%define default_ao %{subst_o sdl}%{subst_o alsa}%{subst_o oss}%{subst_o openal}%{subst_o pulse}%{subst_o nas}
+%define default_ao %{subst_o pulse}%{subst_o alsa}%{subst_o sdl}%{subst_o oss}%{subst_o openal}%{subst_o nas}
 
 # ARM
 #%%def_disable armv5te
@@ -298,7 +299,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt4.38193.1
+Release: alt5.38203.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -389,6 +390,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_enca:BuildRequires: libenca-devel}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel}
 %endif
+%{?_enable_bzlib:BuildRequires: bzlib-devel}
 
 %{?_enable_vdpau:BuildRequires: libvdpau-devel}
 %{?_enable_gif:BuildRequires: libungif-devel}
@@ -402,6 +404,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_xvid:BuildRequires: libxvid-devel}
 %{?_enable_x264:BuildRequires: libx264-devel}
 %{?_enable_shared_ffmpeg:BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libswscale-devel}
+%{?_enable_vf_lavfi:BuildRequires: libavfilter-devel}
 %{?_enable_tremor:BuildRequires: libtremor-devel}
 %{?_enable_vorbis:BuildRequires: libvorbis-devel}
 %{?_enable_speex:BuildRequires: libspeex-devel >= 1.1}
@@ -431,6 +434,8 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_nemesi:BuildRequires: libnemesi-devel}
 %{?_enable_mpg123:BuildRequires: libmpg123-devel}
 %{?_enable_ass:BuildRequires: libass-devel}
+%{?_enable_twolame:BuildRequires: libtwolame-devel}
+%{?_enable_postproc:BuildRequires: libpostproc-devel}
 
 %{?_enable_xvmc:BuildRequires: libXvMC-devel}
 %if_enabled mplayer
@@ -656,6 +661,9 @@ echo "NotShowIn=KDE;" >> etc/%lname.desktop
 %build
 %define _optlevel 3
 %add_optflags -Wno-switch-enum -Wno-switch
+%ifarch i586
+%set_verify_elf_method textrel=relaxed
+%endif
 %ifarch armh
 %add_optflags -Wa,-mimplicit-it=thumb
 %endif
@@ -1122,6 +1130,12 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Tue Dec 01 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt5.38203.1
+- Updated to SVN snapshot (revision 38203).
+- Enabled bzlib, twolame and postproc support.
+- Updated config file: new commented options, changed default ao order: pulse
+  first, then alsa, etc.
+
 * Sun Aug 30 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt4.38193.1
 - Updated to SVN snapshot (revision 38193).
 - Make a fixed video system for multiple files default in the system config.
