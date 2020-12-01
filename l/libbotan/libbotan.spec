@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libbotan
-Version: 2.17.0
+Version: 2.17.2
 Release: alt1
 
 Summary: A C++ Crypto Library
@@ -101,6 +101,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.17.2-alt1
+- new version 2.17.2 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.17.0-alt1
 - new version 2.17.0 (with rpmrb script)
 
