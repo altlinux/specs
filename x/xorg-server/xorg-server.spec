@@ -23,8 +23,8 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 1.20.9
-Release: alt2
+Version: 1.20.10
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -312,6 +312,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Dec 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.10-alt1
+- 1.20.10 (fixes: CVE-2020-25712, CVE-2020-14360)
+
 * Mon Sep 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.9-alt2
 - revert 249a12c5, 74b7427c, 5c96eb5f (closes: #38854)
 
