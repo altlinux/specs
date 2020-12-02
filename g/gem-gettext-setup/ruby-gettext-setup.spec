@@ -1,20 +1,24 @@
 %define        pkgname gettext-setup
- 
-Name: 	       ruby-%pkgname
-Version:       0.30
-Release:       alt3
- 
+
+Name:          gem-%pkgname
+Version:       1.0.1
+Release:       alt1
 Summary:       A gem that configures gettext for internationalization
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/puppetlabs/gettext-setup-gem
-%vcs           https://github.com/puppetlabs/gettext-setup-gem.git
+Vcs:           https://github.com/puppetlabs/gettext-setup-gem.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
- 
+
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%gem_replace_version fast_gettext ~> 1.7
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
+%gem_replace_version gettext >= 3.0.2
 
 %description
 This is a simple gem to set up i18n for Ruby projects (including Sinatra
@@ -28,25 +32,29 @@ that locale.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
-Group:         Documentation
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
 BuildArch:     noarch
- 
+
 %description   doc
 Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
- 
+
 %build
 %ruby_build --use=%gemname --version-replace=%version
- 
+
 %install
 %ruby_install
 
 %check
 %ruby_test
- 
+
 %files
 %doc README*
 %ruby_gemspec
@@ -57,8 +65,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Dec 02 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
+- ^ 0.30 -> 1.0post
+
 * Fri Jun 21 2019 Pavel Skrylev <majioa@altlinux.org> 0.30-alt3
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
 
 * Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 0.30-alt2
 - Update fastgettext to 1.7

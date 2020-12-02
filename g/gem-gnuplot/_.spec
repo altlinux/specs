@@ -1,27 +1,25 @@
-%define        pkgname puppet-forge
-%define        gemname puppet_forge
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname gnuplot
 
 Name:          gem-%pkgname
-Version:       2.3.4
+Version:       2.6.2.1
 Release:       alt1
-Summary:       Ruby client for the Puppet Forge API
+Summary:       Utility library to aid in interacting with gnuplot from ruby
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/puppetlabs/forge-ruby
-Vcs:           https://github.com/puppetlabs/forge-ruby.git
+Url:           https://github.com/rdp/ruby_gnuplot
+Vcs:           https://github.com/rdp/ruby_gnuplot.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-%gem_replace_version gettext-setup ~> 1.0
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
-Access and manipulate the Puppet Forge API from Ruby.
-
-Tools that can be used to access Forge API information on Modules, Users, and
-Releases. As well as download, unpack, and install Releases to a directory.
+%summary.
 
 
 %package       doc
@@ -41,7 +39,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -50,15 +48,14 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         doc
 %ruby_gemdocdir
 
-%changelog
-* Wed Dec 02 2020 Pavel Skrylev <majioa@altlinux.org> 2.3.4-alt1
-- ^ 2.2.9 -> 2.3.4
 
-* Thu Jun 21 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.9-alt1
-- Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
+%changelog
+* Wed Dec 02 2020 Pavel Skrylev <majioa@altlinux.org> 2.6.2.1-alt1
+- + packaged gem with usage Ruby Policy 2.0
