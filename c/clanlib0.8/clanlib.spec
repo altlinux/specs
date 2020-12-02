@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
+%def_disable docs
+
 Name: clanlib0.8
 Version: 0.8.1
-Release: alt6.qa1
+Release: alt7
 
 Summary: The ClanLib Game SDK
 License: LGPL
@@ -8,7 +12,8 @@ Group: System/Libraries
 Url: http://www.clanlib.org/
 
 # http://clanlib.org/~sphair/download/
-Source: http://clanlib.org/download/releases-0.8/ClanLib-%version.tar.gz
+# http://clanlib.org/download/releases-0.8/ClanLib-%version.tar.gz
+Source: ClanLib-%version.tar
 Source1: launch_x11_clanapp.sh
 
 Patch0: ClanLib-0.8.1-link-fix.patch
@@ -21,8 +26,9 @@ Patch6: clanlib-0.8.1-alt-gcc6.patch
 Patch7: clanlib-0.8.1-alt-perl.patch
 
 
-Obsoletes: clanLib, lib%name
-Provides: lib%name = %version
+Obsoletes: clanLib
+Provides: lib%name = %EVR
+Obsoletes: lib%name < %EVR
 
 BuildRequires: gcc-c++ libGLU-devel libICE-devel libXi-devel libXmu-devel libalsa-devel
 BuildRequires: libmikmod-devel libjpeg-devel libpng-devel xorg-cf-files xsltproc libvorbis-devel
@@ -38,12 +44,16 @@ commercial quality games.
 %package devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C++
-Requires: %name = %version-%release, %name-gl = %version-%release, %name-gui = %version-%release
-Requires: %name-mikmod = %version-%release, %name-network = %version-%release
-Requires: %name-sound = %version-%release, %name-vorbis = %version-%release
-Requires: %name-sdl = %version-%release
+Requires: %name = %EVR
+Requires: %name-gl = %EVR
+Requires: %name-gui = %EVR
+Requires: %name-mikmod = %EVR
+Requires: %name-network = %EVR
+Requires: %name-sound = %EVR
+Requires: %name-vorbis = %EVR
+Requires: %name-sdl = %EVR
 Provides: lib%name-devel = %version
-Obsoletes: lib%name-devel
+Obsoletes: lib%name-devel < %version
 
 %description devel
 This package contains the headers that programmers will need to develop
@@ -52,7 +62,7 @@ applications which will use %name.
 %package devel-static
 Summary: Static libraries for developing programs that will use %name
 Group: Development/C++
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 Provides: lib%name-devel-static = %version
 
 %description devel-static
@@ -62,9 +72,9 @@ to develop applications which will use %name.
 %package sound
 Summary: ClanLib Sound module
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: lib%name-sound = %version
-Obsoletes: lib%name-sound
+Obsoletes: lib%name-sound < %version
 
 %description sound
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -73,9 +83,9 @@ work for game developers. This package is the Sound module (clanSound).
 %package sdl
 Summary: ClanLib SDL module
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: lib%name-sdl = %version
-Obsoletes: lib%name-sdl
+Obsoletes: lib%name-sdl < %version
 
 %description sdl
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -84,10 +94,10 @@ work for game developers. This package is the SDL module (clanSDL).
 %package vorbis
 Summary: ClanLib Vorbis module
 Group: System/Libraries
-Requires: %name = %version-%release
-Requires: %name-sound = %version-%release
+Requires: %name = %EVR
+Requires: %name-sound = %EVR
 Provides: lib%name-vorbis = %version
-Obsoletes: lib%name-vorbis
+Obsoletes: lib%name-vorbis < %version
 
 %description vorbis
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -96,9 +106,9 @@ work for game developers. This package is the Vorbis module (clanVorbis).
 %package gl
 Summary: ClanLib GL module
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: lib%name-gl = %version
-Obsoletes: lib%name-gl
+Obsoletes: lib%name-gl < %version
 
 %description gl
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -107,9 +117,9 @@ work for game developers. This package is the GL module (clanGL).
 %package network
 Summary: ClanLib Network module
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: lib%name-network = %version
-Obsoletes: lib%name-network
+Obsoletes: lib%name-network < %version
 
 %description network
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -118,9 +128,9 @@ work for game developers. This package is the Network module (clanNetwork).
 %package gui
 Summary: ClanLib Gui module
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: lib%name-gui = %version
-Obsoletes: lib%name-gui
+Obsoletes: lib%name-gui < %version
 
 %description gui
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -129,10 +139,10 @@ work for game developers. This package is the Gui module (clanGUI).
 %package mikmod
 Summary: ClanLib MikMod module
 Group: System/Libraries
-Requires: %name = %version-%release
-Requires: %name-sound = %version-%release
+Requires: %name = %EVR
+Requires: %name-sound = %EVR
 Provides: lib%name-mikmod = %version
-Obsoletes: lib%name-mikmod
+Obsoletes: lib%name-mikmod < %version
 
 %description mikmod
 The ClanLib Game SDK is a crossplatform game library designed to ease the
@@ -141,9 +151,9 @@ work for game developers. This package is the MikMod module (clanMikMod).
 %package docs
 Summary: ClanLib documentation
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: lib%name-docs = %version
-Obsoletes: lib%name-docs
+Obsoletes: lib%name-docs < %version
 BuildArch: noarch
 
 %description docs
@@ -163,8 +173,15 @@ work for game developers. This package contains the documentation.
 
 %build
 echo >> acinclude.m4
-autoreconf -fisv
-%configure --enable-dyn --disable-debug --disable-directfb
+%autoreconf
+%configure \
+	--enable-dyn \
+	--disable-debug \
+	--disable-directfb \
+%if_disabled docs
+	--disable-docs \
+%endif
+	%nil
 
 %make_build all
 
@@ -176,6 +193,10 @@ autoreconf -fisv
 	TARGET_PREFIX=%buildroot%_libdir/ClanLib \
 	MAN_PREFIX=%buildroot%_mandir \
 	HTML_PREFIX=%buildroot%_docdir/clanlib-%version
+
+%if_disabled docs
+mkdir -p %buildroot%_docdir/clanlib-%version
+%endif
 
 install -pD -m644 README CREDITS CODING_STYLE ascii-logo %buildroot%_docdir/clanlib-%version
 install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
@@ -202,12 +223,14 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
 %files devel-static
 %_libdir/*.a
 
+%if_enabled docs
 %files docs
 %dir %_docdir/clanlib-%version
 %_docdir/clanlib-%version/*.html
 %_docdir/clanlib-%version/Overview
 %_docdir/clanlib-%version/Reference
 %_docdir/clanlib-%version/Tutorial
+%endif
 
 %files mikmod
 %_libdir/libclanMikMod-*.so.*
@@ -232,6 +255,10 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
 %_libdir/libclanGUIStyleSilver-*.so.*
 
 %changelog
+* Wed Dec 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt7
+- Spec cleanup.
+- Disabled docs due to too new perl version.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt6.qa1
 - NMU: applied repocop patch
 
