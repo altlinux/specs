@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: fossology-nomos
-Version: 3.8.0
+Version: 3.9.0
 Release: alt1
 
 Summary: Architecture for analyzing software, nomos standalone
@@ -52,6 +53,9 @@ src/nomos/agent/nomossa -d .gear
 %_bindir/nomossa
 
 %changelog
+* Wed Dec 02 2020 Vitaly Chikunov <vt@altlinux.org> 3.9.0-alt1
+- Update to 3.9.0 (2020-11-30).
+
 * Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 3.8.0-alt1
 - Update to 3.8.0.
 - Add %%check section to spec.
