@@ -4,8 +4,8 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.6.1
-Release: alt1
+Version: 4.7.0
+Release: alt0.rc1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -187,7 +187,8 @@ export PYTHON=%__python3
 %configure	\
 		--with-version=%version \
 		--with-systemdsystemunitdir=%_unitdir \
-		--with-initdir=%_initdir
+		--with-initdir=%_initdir \
+		--with-ras-set=all
 
 %make_build
 
@@ -207,7 +208,7 @@ mkdir -p %buildroot%_var/run/resource-agents
 %post_service ldirectord
 
 %files
-%doc AUTHORS COPYING COPYING.GPLv3 COPYING.LGPL ChangeLog doc/README.webapps
+%doc AUTHORS COPYING COPYING.GPLv3 COPYING.LGPL ChangeLog doc/README.webapps heartbeat/README.galera
 %_datadir/%name/ra-api-1.dtd
 
 %_unitdir/*.target
@@ -225,6 +226,7 @@ mkdir -p %buildroot%_var/run/resource-agents
 %exclude %_datadir/%name/ocft/runocft.prereq
 
 %_datadir/cluster
+%_datadir/pkgconfig/%name.pc
 
 %dir %_libexecdir/ocf
 %dir %_libexecdir/ocf/resource.d
@@ -366,6 +368,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Dec 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.7.0-alt0.rc1
+- 4.7.0rc1
+
 * Fri Jul 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.6.1-alt1
 - 4.6.1
 
