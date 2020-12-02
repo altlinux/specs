@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2020.07.31
+Version: 2020.11.04
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -8,7 +8,7 @@ Url: https://github.com/linuxdeepin/deepin-desktop-base
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-desktop-base_2020.07.31_alt_fix-multiarch-build.patch
+Patch: deepin-desktop-base_2020.11.04_alt_fix-multiarch-build.patch
 
 BuildArch: noarch
 #Recommends:     deepin-wallpapers
@@ -29,7 +29,7 @@ Group: Graphical desktop/Other
 
 %description -n deepin-manual-directory
 This package owns the Deepin manual directory. This is a workaround
-before deepin-manual actually comes into Fedora to unblock packaging.
+before deepin-manual actually comes into ALT to unblock packaging.
 
 %prep
 %setup
@@ -41,10 +41,12 @@ before deepin-manual actually comes into Fedora to unblock packaging.
 sed -E '/lsb-release|systemd|apt|back/d' Makefile
 
 # Fix data path
-%__subst 's|/usr/lib|%_datadir|' Makefile
+sed -i 's|/usr/lib|%_datadir|' Makefile
 
-# Set deepin type to ALT Linux
-%__subst 's|Type=.*|Type=ALT Linux|; /Type\[/d' files/desktop-version*.in
+# Set deepin type to ALT
+sed -i 's|Type=.*|Type=ALT|; /Type\[/d; s|Version=.*|Version=9|' files/desktop-version*.in
+
+sed -i 's|/etc/systemd/|/lib/systemd/|' Makefile
 
 %build
 %make_build
@@ -58,31 +60,30 @@ ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
 
 mkdir -p %buildroot%_datadir/dman
 echo "This package owns the Deepin manual directory. This is a workaround
-before deepin-manual actually comes into ALT Linux to unblock packaging." > %buildroot%_datadir/dman/README.altlinux
+before deepin-manual actually comes into ALT to unblock packaging." > %buildroot%_datadir/dman/README.ALT
 
 %files
 %doc LICENSE
-%config(noreplace) %_sysconfdir/appstore.json
-%_sysconfdir/deepin-version
-%exclude %_sysconfdir/os-version
+%exclude %_sysconfdir/appstore.json
 %dir %_datadir/deepin/
-%_datadir/deepin/desktop-version
-%_datadir/deepin/dde-desktop-watermask.json
 %_datadir/i18n/i18n_dependent.json
 %_datadir/i18n/language_info.json
-%dir %_datadir/plymouth
-%_datadir/plymouth/deepin-logo.png
+%_datadir/deepin/desktop-version
+%_sysconfdir/deepin-version
+%exclude %_datadir/plymouth/deepin-logo.png
 %exclude %_datadir/deepin/uos_logo.svg
 %exclude %_sysconfdir/lsb-release
-%exclude %_sysconfdir/systemd/system.conf.d/deepin-base.conf
-%exclude %_sysconfdir/systemd/logind.conf.d/deepin-base.conf
+/lib/systemd/system.conf.d/deepin-base.conf
+/lib/systemd/logind.conf.d/deepin-base.conf
 %exclude %_datadir/python-apt/templates/Deepin.info
 %exclude %_datadir/python-apt/templates/Deepin.mirrors
-%exclude %_var/uos/os-license
 
 %files -n deepin-manual-directory
 %_datadir/dman
 
 %changelog
+* Wed Dec 02 2020 Leontiy Volodin <lvol@altlinux.org> 2020.11.04-alt1
+- New version (2020.11.04) with rpmgs script.
+
 * Tue Aug 04 2020 Leontiy Volodin <lvol@altlinux.org> 2020.07.31-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
