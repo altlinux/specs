@@ -1,8 +1,8 @@
-%define gcc_branch 9
+%define gcc_branch 10
 
 Name: gcc%gcc_branch
-Version: 9.3.1
-Release: alt3
+Version: 10.2.1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20200123
+%define snapshot 20201125
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -98,7 +98,7 @@ Url: https://gcc.gnu.org/
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
 %def_disable precompat
-%def_enable compat
+%def_disable compat
 
 # For some architectures we do not want multilib support.
 %ifarch riscv64
@@ -134,10 +134,10 @@ Url: https://gcc.gnu.org/
 
 Source: %srcfilename.tar
 
-Patch0: gcc-9-branch.patch
+# Backports from upstream.
+Patch001: testsuite-expect-additional-warning-in-analyzer-pr93.patch
 
 # Fedora patches.
-Patch99: gcc-fedora-vendor-branch.patch
 Patch100: gcc-hack.patch
 Patch101: gcc-i386-libgomp.patch
 Patch102: gcc-sparc-config-detection.patch
@@ -186,6 +186,15 @@ Patch730: deb-alt-mips-gcc-multiarch.diff
 Patch731: alt-riscv64-not-use-lp64d.patch
 Patch732: alt-defaults-cxx-Werror-return-type.patch
 Patch733: alt-disable-gdb-plugin-versioning.patch
+Patch734: alt-testsuite-ssp.patch
+Patch735: alt-testsuite-cxx-Werror-return-type.patch
+Patch736: alt-libphobos-disable-on-ppc64le.patch
+Patch737: alt-testsuite-vtable-verify.patch
+Patch738: alt-defaults-stack-clash-protection.patch
+Patch739: alt-testsuite-scp.patch
+Patch740: alt-testsuite-pie.patch
+Patch741: alt-defaults-pie-now.patch
+Patch742: alt-build-lto1-and-lto-dump-as-one-binary.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
@@ -197,7 +206,7 @@ Requires: libgcc1 %REQ %EVR
 Requires: libatomic1 %REQ %EVR
 %endif
 %ifarch %libasan_arches
-Requires: libasan5 %REQ %EVR
+Requires: libasan6 %REQ %EVR
 %endif
 %ifarch %libitm_arches
 Requires: libitm1 %REQ %EVR
@@ -293,19 +302,19 @@ This package contains GNU Atomic static library.
 ####################################################################
 # Address Sanitizer library
 
-%package -n libasan5
+%package -n libasan6
 Summary: The Address Sanitizer runtime library
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libasan5
+%description -n libasan6
 This package contains the Address Sanitizer runtime library
 which is used for -fsanitize=address instrumented programs.
 
 %package -n libasan%gcc_branch-devel-static
 Summary: The Address Sanitizer static library
 Group: Development/C
-Requires: libasan5 %REQ %EVR
+Requires: libasan6 %REQ %EVR
 
 %description -n libasan%gcc_branch-devel-static
 This package contains Address Sanitizer static library.
@@ -616,18 +625,18 @@ in order to explicitly use the GNU C++ compiler version %version.
 ####################################################################
 # D Runtime
 
-%package -n libgdruntime76
+%package -n libgdruntime1
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgdruntime76
+%description -n libgdruntime1
 This package contains DRuntime shared library which is the
 low-level runtime library backing the D programming language.
 
 %package -n libgdruntime%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgdruntime76 = %EVR
+Requires: libgdruntime1 = %EVR
 
 %description -n libgdruntime%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -635,24 +644,24 @@ This package contains development files for DRuntime library.
 %package -n libgdruntime%gcc_branch-devel-static
 Summary: Static DRuntime library
 Group: Development/Other
-Requires: libgdruntime76 = %EVR
+Requires: libgdruntime1 = %EVR
 Requires: libgdruntime%gcc_branch-devel = %EVR
 
 %description -n libgdruntime%gcc_branch-devel-static
 This package contains static DRuntime library.
 
-%package -n libgphobos76
+%package -n libgphobos1
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgphobos76
+%description -n libgphobos1
 This packages contains the standard library for the D Programming
 Language which is needed to run D dynamically linked programs.
 
 %package -n libgphobos%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgphobos76 = %EVR
+Requires: libgphobos1 = %EVR
 
 %description -n libgphobos%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -832,8 +841,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of libquadmath_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc8-fortran-doc gcc7-fortran-doc
-Obsoletes: gcc8-fortran-doc gcc7-fortran-doc
+Conflicts: gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
+Obsoletes: gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
 
 %description fortran-doc
 This package contains documentation for the GNU Fortran Compiler
@@ -882,7 +891,7 @@ package includes the static libraries needed for Ada 95 development.
 %package gnat
 Summary: The GNU Ada Compiler
 Group: Development/Other
-Obsoletes: gcc8-gnat gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+Obsoletes: gcc9-gnat gcc8-gnat gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 Requires(pre): gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
@@ -905,8 +914,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of gnat_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc8-gnat-doc gcc7-gnat-doc
-Obsoletes: gcc8-gnat-doc gcc7-gnat-doc
+Conflicts: gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
+Obsoletes: gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
 
 %description gnat-doc
 This package contains documentation for the GNU Ada Compiler
@@ -915,12 +924,12 @@ version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo14
+%package -n libgo16
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo14
+%description -n libgo16
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -929,7 +938,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 Requires(pre): gcc-common >= 1.4.7
-Requires: libgo14 %REQ %EVR
+Requires: libgo16 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -971,8 +980,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of go_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc8-go-doc gcc7-go-doc
-Obsoletes: gcc8-go-doc gcc7-go-doc
+Conflicts: gcc9-go-doc gcc8-go-doc gcc7-go-doc
+Obsoletes: gcc9-go-doc gcc8-go-doc gcc7-go-doc
 
 %description go-doc
 This package contains documentation for the GNU compiler version %version
@@ -1024,7 +1033,8 @@ Conflicts: gcc5-doc
 Conflicts: gcc6-doc
 Conflicts: gcc7-doc
 Conflicts: gcc8-doc
-Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc gcc8-doc
+Conflicts: gcc9-doc
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc gcc8-doc gcc9-doc
 
 %description doc
 This package contains documentation for the GNU Compiler Collection
@@ -1033,10 +1043,10 @@ version %version.
 %prep
 %setup -n %srcdirname
 
-%patch0 -p1
+# Backports from upstream.
+%patch001 -p1
 
 # Fedora patches.
-%patch99 -p1
 %patch100 -p0
 %patch101 -p0
 %patch102 -p0
@@ -1087,6 +1097,15 @@ version %version.
 %patch731 -p1
 %patch732 -p1
 %patch733 -p1
+%patch734 -p1
+%patch735 -p1
+%patch736 -p1
+%patch737 -p1
+%patch738 -p1
+%patch739 -p1
+%patch740 -p1
+%patch741 -p1
+%patch742 -p1
 
 echo '%distribution %version-%release' > gcc/DEV-PHASE
 
@@ -1188,7 +1207,7 @@ fi
 
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
-%remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback
+%remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback %optflags_warnings
 export CC=%__cc \
 	CFLAGS="%optflags" \
 	CXXFLAGS="%optflags" \
@@ -1212,6 +1231,7 @@ CONFIGURE_OPTS="\
 	--with-system-zlib \
 	--without-included-gettext \
 	%{subst_enable multilib} \
+	--enable-default-pie \
 	--enable-gnu-unique-object \
 	--enable-linker-build-id \
 %ifnarch mips mips64 mipsel mips64el
@@ -1424,6 +1444,7 @@ pushd %buildroot%_bindir
 	  cpp \
 	  gcc gcov gcov-tool gcov-dump \
 	  g++ \
+	  lto-dump \
 	  %{?_with_fortran:gfortran} \
 	  %{?_with_ada:gnat %ada_binaries} \
 	  %{?_with_go:gccgo} \
@@ -1433,6 +1454,13 @@ pushd %buildroot%_bindir
 		ln -snf "%gcc_target_platform-$n%psuffix" "$n%psuffix"
 	done
 popd
+
+# Hardlink merged lto1 and lto-dump.
+cmp %buildroot%gcc_target_libexecdir/lto1 \
+	%buildroot%_bindir/%gcc_target_platform-lto-dump%psuffix
+
+ln -f %buildroot%gcc_target_libexecdir/lto1 \
+	%buildroot%_bindir/%gcc_target_platform-lto-dump%psuffix
 
 pushd %buildroot%_libdir
 	rm lib*.la
@@ -1596,6 +1624,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_bindir/gcc-ar%psuffix
 %_bindir/gcc-nm%psuffix
 %_bindir/gcc-ranlib%psuffix
+%_bindir/lto-dump%psuffix
 %_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcov%psuffix
 %_bindir/%gcc_target_platform-gcov-tool%psuffix
@@ -1603,10 +1632,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_bindir/%gcc_target_platform-gcc-ar%psuffix
 %_bindir/%gcc_target_platform-gcc-nm%psuffix
 %_bindir/%gcc_target_platform-gcc-ranlib%psuffix
+%_bindir/%gcc_target_platform-lto-dump%psuffix
 %_man1dir/gcc%psuffix.*
 %_man1dir/gcov%psuffix.*
 %_man1dir/gcov-tool%psuffix.*
 %_man1dir/gcov-dump%psuffix.*
+%_man1dir/lto-dump%psuffix.*
 %dir %gcc_target_libdir/
 %dir %gcc_target_libdir/include/
 %gcc_target_libdir/include/float.h
@@ -1626,13 +1657,20 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/include/unwind.h
 %gcc_target_libdir/include/varargs.h
 
+%ifarch aarch64
+%gcc_target_libdir/include/arm_sve.h
+%endif
 %ifarch aarch64 armh
 %gcc_target_libdir/include/arm_acle.h
+%gcc_target_libdir/include/arm_bf16.h
 %gcc_target_libdir/include/arm_fp16.h
 %gcc_target_libdir/include/arm_neon.h
 %endif
 %ifarch armh
+%gcc_target_libdir/include/arm_cde.h
 %gcc_target_libdir/include/arm_cmse.h
+%gcc_target_libdir/include/arm_mve.h
+%gcc_target_libdir/include/arm_mve_types.h
 %endif
 %ifarch armh arm
 %gcc_target_libdir/include/mmintrin.h
@@ -1739,14 +1777,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libatomic1
 %_libdir/libatomic.so.1*
 %endif
-%endif
 
 %ifarch %libasan_arches
-%files -n libasan5
-%_libdir/libasan.so.5*
+%files -n libasan6
+%_libdir/libasan.so.6*
 %endif
 
-%if_disabled compat
 %ifarch %libtsan_arches
 %files -n libtsan0
 %_libdir/libtsan.so.0*
@@ -1813,6 +1849,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgomp%gcc_branch-devel
 %dir %gcc_target_libdir/
 %dir %gcc_target_libdir/include/
+%gcc_target_libdir/include/acc_prof.h
 %gcc_target_libdir/include/omp.h
 %gcc_target_libdir/include/openacc.h
 %gcc_target_libdir/libgomp.so
@@ -1921,8 +1958,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 
 %if_enabled d
 %ifarch %d_runtime_arches
-%files -n libgphobos76
-%_libdir/libgphobos.so.76*
+%files -n libgphobos1
+%_libdir/libgphobos.so.1*
 
 %files -n libgphobos%gcc_branch-devel
 %gcc_target_libdir/include/d
@@ -1932,8 +1969,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libgphobos%gcc_branch-devel-static
 %gcc_target_libdir/libgphobos.a
 
-%files -n libgdruntime76
-%_libdir/libgdruntime.so.76*
+%files -n libgdruntime1
+%_libdir/libgdruntime.so.1*
 
 %files -n libgdruntime%gcc_branch-devel
 %gcc_target_libdir/libgdruntime.so
@@ -2072,8 +2109,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files go-doc
 %_infodir/gccgo.info*
 
-%files -n libgo14
-%_libdir/libgo.so.14*
+%files -n libgo16
+%_libdir/libgo.so.16*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2135,17 +2172,22 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
-* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3.1-alt3
-- Rebuilt in gcc10 compatibility mode.
+* Thu Dec 03 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.1-alt2
+- Enabled hardenings by default:
+  + stack clash protection;
+  + PIE executables;
+  + -Wl,-z,now for PIE executables.
+- Merged lto1 and lto-dump programs into one binary.
 
-* Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3.1-alt2
-- Rebuilt in precompat mode to prepare for gcc10 build.
+* Wed Dec 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.1-alt1
+- Updated to git://gcc.gnu.org/git/gcc.git vendors/redhat/heads/gcc-10-branch
+  commit 2cd1f70a7b47cb9bd8da4aa4663e7d75b0cfcac5.
+- Synced with Fedora gcc 10.2.1-9 and Debian gcc-10 10.2.0-18.
 
 * Mon May 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3.1-alt1
 - Updated to git://gcc.gnu.org/git/gcc.git releases/gcc-9
   commit e8dcd6c79335997a80f75db389263b63dfa45ca1.
 - Rebased redhat vendor branch to releases/gcc-9 branch.
-
 
 * Sun Jan 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.2.1-alt3
 - Updated to git://gcc.gnu.org/git/gcc.git vendors/redhat/heads/gcc-9-branch
