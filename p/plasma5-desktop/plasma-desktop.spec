@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.20.2
-Release: alt3
+Version: 5.20.4
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -197,6 +197,9 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Dec 02 2020 Sergey V Turchin <zerg@altlinux.org> 5.20.4-alt1
+- new version
+
 * Fri Nov 20 2020 Slava Aseev <ptrnine@altlinux.org> 5.20.2-alt3
 - Use gost-yescrypt password hashing instead of SHA-512
 
