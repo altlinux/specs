@@ -8,12 +8,14 @@
 
 Name: sawfish
 Version: 1.12.90
-Release: alt2
+Release: alt3
 
 Summary: An extensible window manager for the X Window System
 Group: Graphical desktop/Sawfish
 License: GPLv2
 Url: https://sawfish.wikia.com/
+
+ExcludeArch: armh
 
 Provides: %_x11sysconfdir/sawfish/site-init.d
 Provides: %_datadir/sawfish/site-lisp
@@ -37,6 +39,7 @@ Requires: %{get_dep rep-gtk}
 BuildRequires(pre): rep-gtk-devel
 # Automatically added by buildreq on Mon Apr 27 2009
 BuildRequires: libXtst-devel libSM-devel libXext-devel libXinerama-devel libXrandr-devel libgtk+2-devel
+BuildRequires: libgdk-pixbuf-xlib-devel
 BuildRequires: librep-devel >= 0.92.3-alt2.git20120908
 BuildRequires: /usr/bin/makeinfo
 
@@ -51,7 +54,6 @@ using a GTK+ interface.  Sawfish is mostly GNOME compliant.
 %package gnome
 Summary: GNOME integration package
 Group: Graphical desktop/GNOME
-BuildArch: noarch
 PreReq: %name = %EVR
 PreReq: gnome-filesystem
 Requires: gnome-session
@@ -83,7 +85,6 @@ Header files for sawfish development.
 %package -n rpm-build-%name
 Summary: RPM macros for sawfish-related packages
 Group: Development/Other
-BuildArch: noarch
 Conflicts: %name < %EVR
 Conflicts: %name > %EVR
 
@@ -205,6 +206,10 @@ EOF
 %_rpmmacrosdir/sawfish
 
 %changelog
+* Wed Dec 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt3
+- Updated build dependencies.
+- Explicitly disabled build on armh architecture due to insufficient dependencies.
+
 * Tue Aug 20 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt2
 - Fixed build with new pango.
 
