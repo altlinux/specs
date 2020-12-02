@@ -1,19 +1,26 @@
+%define _unpackaged_files_terminate_build 1
+
+%def_disable docs
+
 Name: gri
 Version: 2.12.23
-Release: alt6
+Release: alt7
 
 Summary: A language for scientific illustration
 License: GPLv3+
 Group: Development/Tools
 
 Url: http://gri.sourceforge.net
-Source: %name-%version.tar.gz
+
+Source: %name-%version.tar
 Source1: http://gri.sourceforge.net/refcard.pdf
 Source2: http://gri.sourceforge.net/cmdrefcard.pdf
 Source3: http://gri.sourceforge.net/gri.pdf
+
 Patch1: %name-%version-debian-texi.patch
 Patch2: %name-%version-alt-perl-compat.patch
 Patch3: %name-%version-alt-gcc7-compat.patch
+Patch4: %name-%version-alt-disable-docs.patch
 
 BuildRequires: gcc-c++ ImageMagick-tools texlive-base-bin info
 BuildRequires: ghostscript-classic makeinfo
@@ -64,6 +71,9 @@ This package contains documentation for Gri.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%if_disabled docs
+%patch4 -p2
+%endif
 
 %build
 %ifarch %e2k
@@ -77,21 +87,30 @@ This package contains documentation for Gri.
 %install
 %makeinstall_std
 
+%if_enabled docs
 mv %buildroot%_docdir/%name-%version %buildroot%_docdir/%name
+%else
+install -d %buildroot%_docdir/%name
+%endif
 install -pm644 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%_docdir/%name
 
 %files
 %doc AUTHORS COPYING ChangeLog NEWS README THANKS license.txt copyright.txt
 %_bindir/*
 %_datadir/%name
+%if_enabled docs
 %_man1dir/*
 %_infodir/*
+%endif
 %_emacslispdir/*
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Wed Dec 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.23-alt7
+- Disabled documentation build due to incompatible new perl.
+
 * Fri Nov 01 2019 Michael Shigorin <mike@altlinux.org> 2.12.23-alt6
 - Updated License: tag
 - E2K: explicit -std=c++11
