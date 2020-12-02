@@ -4,8 +4,8 @@
 %def_without dns_route53
 
 Name: certbot
-Version: 1.9.0
-Release: alt2
+Version: 1.10.0
+Release: alt1
 
 Summary: A free, automated certificate authority client
 
@@ -64,6 +64,8 @@ Obsoletes: letsencrypt
 %define certbotdir %_datadir/%name
 #add_python_req_skip certbot
 %py3_provides certbot
+
+AutoProv:yes,nopython
 
 # https://lists.altlinux.org/pipermail/devel/2012-March/193598.html
 # https://lists.altlinux.org/pipermail/devel/2019-October/208661.html
@@ -270,6 +272,10 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Wed Dec 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
+- new version 1.10.0 (with rpmrb script)
+- AutoProv: yes,nopython
+
 * Sun Nov 29 2020 Vitaly Chikunov <vt@altlinux.org> 1.9.0-alt2
 - Add man pages.
 
