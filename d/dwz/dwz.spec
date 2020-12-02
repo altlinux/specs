@@ -3,7 +3,7 @@
 
 Name: dwz
 Version: 0.13
-Release: alt1
+Release: alt2
 
 Summary: DWARF optimization and duplicate removal tool
 License: GPLv2+
@@ -36,14 +36,16 @@ install -pD -m755 dwz %buildroot%_bindir/dwz
 install -pD -m644 dwz.1 %buildroot%_man1dir/dwz.1
 
 %check
-make check
-cat dwz.sum
+make check || { grep FAIL dwz.log; exit 1; }
 
 %files
 %_bindir/dwz
 %_man1dir/dwz.1*
 
 %changelog
+* Wed Dec 02 2020 Vitaly Chikunov <vt@altlinux.org> 0.13-alt2
+- Fix pr24468.sh test.
+
 * Thu Nov 26 2020 Vitaly Chikunov <vt@altlinux.org> 0.13-alt1
 - Update to dwz-0.13 (2019-08-02).
 
