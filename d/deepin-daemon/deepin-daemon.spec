@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.11.0.36
-Release: alt5
+Release: alt6
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -13,16 +13,68 @@ Url: https://github.com/linuxdeepin/dde-daemon
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-# upstream default mono font set to 'Noto Mono', which is not yet available in repository
-Source1: fontconfig.json
 Source2: %name.sysusers
 Source3: deepin-auth
 Patch: dde-daemon_5.10_archlinux_fix-build.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libbamf3-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel golang-golang-x-net-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-gir-generator libgdk-pixbuf-xlib-devel
-BuildRequires: golang-github-go-dbus-devel golang-deepin-go-lib-devel golang-github-linuxdeepin-dbus-factory-devel golang-deepin-go-x11-client-devel golang-github-fsnotify-devel golang-golang-x-sys-devel golang-github-axgle-mahonia-devel golang-github-jinzhu-gorm-devel golang-github-jinzhu-inflection-devel golang-github-kelvins-sunrisesunset-devel golang-github-mattn-sqlite3-devel golang-github-mozillazg-go-pinyin-devel golang-github-nfnt-resize-devel golang-github-rickb777-date-devel golang-github-teambition-rrule-go-devel golang-x-image-devel golang-x-text-devel golang-x-xerrors-devel golang-gopkg-alecthomas-kingpin-2-devel golang-github-alecthomas-template-devel golang-github-alecthomas-units-devel golang-github-rickb777-plural-devel golang-deepin-api-devel golang-github-cryptix-wav-devel golang-github-davecgh-spew-devel
-BuildRequires: go-xgettext-devel golang-github-msteinert-pam-devel
+BuildRequires: glib2-devel
+BuildRequires: libgio-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libudev-devel
+BuildRequires: fontconfig-devel
+BuildRequires: libbamf3-devel
+BuildRequires: libpam0-devel
+BuildRequires: libnl-devel
+BuildRequires: librsvg-devel
+BuildRequires: libfprint2-devel
+BuildRequires: libalsa-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXfixes-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libXi-devel
+BuildRequires: libgudev-devel
+BuildRequires: libinput-devel
+BuildRequires: libddcutil-devel
+BuildRequires: librsvg-utils
+BuildRequires: deepin-gettext-tools
+BuildRequires: deepin-gir-generator
+BuildRequires: libgdk-pixbuf-xlib-devel
+# nm module
+#BuildRequires: libnm-gir-devel
+#BuildRequires: python3-module-pygobject3
+#BuildRequires: golang-gopkg-yaml-2-devel
+# golang BR
+BuildRequires: golang-github-go-dbus-devel
+BuildRequires: golang-deepin-go-lib-devel
+BuildRequires: golang-github-linuxdeepin-dbus-factory-devel
+BuildRequires: golang-deepin-go-x11-client-devel
+BuildRequires: golang-github-fsnotify-devel
+BuildRequires: golang-golang-x-sys-devel
+BuildRequires: golang-github-axgle-mahonia-devel
+BuildRequires: golang-github-jinzhu-gorm-devel
+BuildRequires: golang-github-jinzhu-inflection-devel
+BuildRequires: golang-github-kelvins-sunrisesunset-devel
+BuildRequires: golang-github-mattn-sqlite3-devel
+BuildRequires: golang-github-mozillazg-go-pinyin-devel
+BuildRequires: golang-github-nfnt-resize-devel
+BuildRequires: golang-github-rickb777-date-devel
+BuildRequires: golang-github-teambition-rrule-go-devel
+BuildRequires: golang-golang-x-net-devel
+BuildRequires: golang-x-image-devel
+BuildRequires: golang-x-text-devel
+BuildRequires: golang-x-xerrors-devel
+BuildRequires: golang-gopkg-alecthomas-kingpin-2-devel
+BuildRequires: golang-github-alecthomas-template-devel
+BuildRequires: golang-github-alecthomas-units-devel
+BuildRequires: golang-github-rickb777-plural-devel
+BuildRequires: golang-deepin-api-devel
+BuildRequires: golang-github-cryptix-wav-devel
+BuildRequires: golang-github-davecgh-spew-devel
+BuildRequires: go-xgettext-devel
+BuildRequires: golang-github-msteinert-pam-devel
 # Requires: bamfdaemon libbluez deepin-desktop-base deepin-desktop-schemas deepin-session-ui deepin-polkit-agent
 %ifnarch s390 s390x %arm power64
 Requires: acpid rfkill
@@ -34,32 +86,39 @@ Daemon handling the DDE session settings
 
 %prep
 %setup -n %repo-%version
-# patch langselector/locale.go < rpm/locale.go.patch
 %patch -p1
 install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
 
 # Fix library exec path
-%__subst '/deepin/s|lib|libexec|' Makefile
-%__subst '/${DESTDIR}\/usr\/lib\/deepin-daemon\/service-trigger/s|${DESTDIR}%_libexecdir/deepin-daemon/service-trigger|${DESTDIR}/usr/libexec/deepin-daemon/service-trigger|g' Makefile
-%__subst '/${DESTDIR}${PREFIX}\/lib\/deepin-daemon/s|${DESTDIR}${PREFIX}/lib/deepin-daemon|${DESTDIR}${PREFIX}/usr/libexec/deepin-daemon|g' Makefile
-%__subst 's|lib/NetworkManager|libexec|' network/utils_test.go
-%__subst 's#/usr/share/backgrounds/default_background.jpg#/usr/share/backgrounds/deepin/desktop.jpg#' accounts/user.go
+sed -i '/deepin/s|lib|libexec|' Makefile
+sed -i '/${DESTDIR}\/usr\/lib\/deepin-daemon\/service-trigger/s|${DESTDIR}%_libexecdir/deepin-daemon/service-trigger|${DESTDIR}/usr/libexec/deepin-daemon/service-trigger|g' Makefile
+sed -i '/${DESTDIR}${PREFIX}\/lib\/deepin-daemon/s|${DESTDIR}${PREFIX}/lib/deepin-daemon|${DESTDIR}${PREFIX}/usr/libexec/deepin-daemon|g' Makefile
+sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' accounts/user.go
 
 for file in $(grep "%_libexecdir/deepin-daemon" * -nR |awk -F: '{print $1}')
 do
     sed -i 's|%_libexecdir/deepin-daemon|/usr/libexec/deepin-daemon|g' $file
 done
+sed -i 's|%_libexecdir/deepin-daemon|/usr/libexec/deepin-daemon|g' \
+    misc/applications/deepin-toggle-desktop.desktop
+sed -i 's|%_libexecdir/fprintd/fprintd|%_libexecdir/fprintd|' \
+    bin/dde-authority/fprint_transaction.go
+
+# Fix autologin
+sed -i 's|/usr/libexec/lxdm-greeter-gtk|%_libexecdir/lxdm-greeter-gtk|' \
+    accounts/users/testdata/autologin/lxdm_autologin.conf \
+    accounts/users/testdata/autologin/lxdm.conf
 
 # Fix grub.cfg path
-%__subst 's|boot/grub|boot/grub2|' grub2/{grub2,grub_params,theme}.go
+sed -i 's|boot/grub|boot/grub2|' grub2/{grub2,grub_params,theme}.go
 
 # Fix activate services failed (Permission denied)
 # dbus service
 pushd misc/system-services/
-%__subst '$aSystemdService=deepin-accounts-daemon.service' com.deepin.system.Power.service \
+sed -i '$aSystemdService=deepin-accounts-daemon.service' com.deepin.system.Power.service \
     com.deepin.daemon.{Accounts,Apps,Daemon}.service \
     com.deepin.daemon.{Gesture,SwapSchedHelper,Timedated}.service
-%__subst '$aSystemdService=dbus-com.deepin.dde.lockservice.service' com.deepin.dde.LockService.service
+sed -i '$aSystemdService=dbus-com.deepin.dde.lockservice.service' com.deepin.dde.LockService.service
 popd
 # systemd service
 cat > misc/systemd/services/dbus-com.deepin.dde.lockservice.service <<EOF
@@ -78,33 +137,31 @@ WantedBy=graphical.target
 EOF
 
 # Replace reference of google-chrome to chromium-browser
-%__subst 's/google-chrome/chromium-browser/g' misc/dde-daemon/mime/data.json
+#sed -i 's/google-chrome/chromium-browser/g' misc/dde-daemon/mime/data.json
 
 %build
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
 export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-# make -C network/nm_generator gen-nm-code
+export LIBS="-L/%_lib -lpam -lsystemd:$LIBS"
+#make -C network/nm_generator gen-nm-code
 %make_build
 
 %install
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
-%makeinstall_std PAM_MODULE_DIR=%_libdir/security
+export LIBS="-L/%_lib -lpam -lsystemd:$LIBS"
+%makeinstall_std PAM_MODULE_DIR=/%_lib/security
 
 #install -Dm644 %{S:2} %buildroot%_libexecdir/sysusers.d/%name.conf
 
 # fix systemd/logind config
-install -d %buildroot%_libexecdir/systemd/logind.conf.d/
-cat > %buildroot%_libexecdir/systemd/logind.conf.d/10-%repo.conf <<EOF
+install -d %buildroot/lib/systemd/logind.conf.d/
+cat > %buildroot/lib/systemd/logind.conf.d/10-%repo.conf <<EOF
 [Login]
 HandlePowerKey=ignore
 HandleSuspendKey=ignore
 EOF
-
-# install default settings
-install -Dm644 %SOURCE1 \
-%buildroot%_datadir/deepin-default-settings/fontconfig.json
 
 %find_lang %repo
 
@@ -115,7 +172,7 @@ install -Dm644 %SOURCE1 \
 %_sysconfdir/pam.d/deepin-auth-keyboard
 %_sysconfdir/pam.d/deepin-auth
 %_prefix/libexec/%name/
-%_libexecdir/systemd/logind.conf.d/10-%repo.conf
+/lib/systemd/logind.conf.d/10-%repo.conf
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/system.d/*.conf
@@ -134,14 +191,16 @@ install -Dm644 %SOURCE1 \
 /lib/udev/rules.d/80-deepin-fprintd.rules
 %_datadir/pam-configs/deepin-auth
 /var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Fprintd.pkla
-%_libdir/security/pam_deepin_auth.so
+/%_lib/security/pam_deepin_auth.so
 %_unitdir/dbus-com.deepin.dde.lockservice.service
 %_unitdir/deepin-accounts-daemon.service
 %_unitdir/hwclock_stop.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
-%exclude %_datadir/deepin-default-settings/fontconfig.json
 
 %changelog
+* Wed Dec 02 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt6
+- Fixed paths.
+
 * Thu Nov 19 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt5
 - Fixed BuildRequires.
 
