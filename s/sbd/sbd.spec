@@ -1,13 +1,14 @@
 
 
 Name:     sbd
-Version:  1.4.1
-Release:  alt3
+Version:  1.4.2
+Release:  alt1
 
 Summary:  Storage-based death
 License:  GPLv2+
 Group:    System/Servers
-Url:      https://github.com/ClusterLabs/sbd.git
+Url:      https://github.com/ClusterLabs/sbd
+Vcs:      https://github.com/ClusterLabs/sbd.git
 
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
@@ -96,6 +97,9 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_libdir/libsbdtestbed.so
 
 %changelog
+* Wed Dec 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Thu Dec 26 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt3
 - add tests-devel package
 
