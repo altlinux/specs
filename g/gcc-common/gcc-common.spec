@@ -1,5 +1,5 @@
 Name: gcc-common
-Version: 1.4.25
+Version: 1.4.26
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -130,7 +130,7 @@ ln -s gcc_wrapper %buildroot%_bindir/gcc
 %ifarch %e2k
 for n in cc cpp g++ gcc-{ar,nm,ranlib} gcov gfortran; do
 %else
-for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcov gdc gfortran gnat gtreelang protoize unprotoize; do
+for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcov gdc gfortran gnat gtreelang lto-dump protoize unprotoize; do
 %endif
 	ln -s gcc "%buildroot%_bindir/$n"
 done
@@ -194,6 +194,7 @@ cpp --version
 %ifnarch %e2k
 %_bindir/gcov-tool
 %_bindir/gcov-dump
+%_bindir/lto-dump
 %_bindir/protoize
 %_bindir/unprotoize
 %endif
@@ -227,6 +228,9 @@ cpp --version
 %endif
 
 %changelog
+* Wed Dec 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.26-alt1
+- gcc-common: added lto-dump symlink.
+
 * Mon Jul 27 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.25-alt1
 - Optimized gcc_wrapper further.
 
