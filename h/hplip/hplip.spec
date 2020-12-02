@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.20.9
+Version: 3.20.11
 Release: alt1
 Epoch:   1
 
@@ -142,6 +142,7 @@ Source6: %name-icons.tar
 Source7: %name-fixppd.sh
 Source8: %name.watch
 Source9: upstream-signing-key.asc
+Source10: hp-systray
 
 #TODO: see what fdi is better:
 # https://bugzilla.redhat.com/show_bug.cgi?id=478495
@@ -176,8 +177,6 @@ Patch13: hplip-alt-fix-PPD-file-choose-in-qt5.patch
 Patch14: hplip-alt-use-l10n.patch
 # Use python3 in service file
 Patch15: hplip-alt-use-python3-in-service.patch
-# Fix systray icon menu (see https://bugs.launchpad.net/ubuntu/+source/mate-panel/+bug/1810745)
-Patch16: hplip-alt-systray-menu.patch
 # Fix undefined _GDB() function
 Patch17: hplip-alt-fix-undefined-_GDB-call.patch
 
@@ -646,7 +645,6 @@ tar -xf %SOURCE6
 %patch14 -p2
 %endif
 %patch15 -p2
-%patch16 -p2
 %patch17 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
@@ -901,6 +899,10 @@ mv %{buildroot}/usr/lib/udev %{buildroot}/lib/
 
 # remove hp-uiscan.desktop
 rm -f %buildroot%_desktopdir/hp-uiscan.desktop
+
+# Replace symlink by shell wrapper to correct behaviour of right mouse button
+rm -f %buildroot%_bindir/hp-systray
+install -Dm0755 %{SOURCE10} %buildroot%_bindir/hp-systray
 
 %pre
 # TODO: drop it somewhere after p7 release
@@ -1186,6 +1188,10 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Dec 02 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.11-alt1
+- New version.
+- Replace symlink by shell wrapper to correct behaviour of right mouse button.
+
 * Fri Oct 02 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.9-alt1
 - New version.
 - Added support for the following new Printers:
