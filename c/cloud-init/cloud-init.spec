@@ -1,8 +1,8 @@
-%def_disable check
+%def_enable check
 
 Name:    cloud-init
-Version: 20.1
-Release: alt2
+Version: 20.4
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -37,7 +37,8 @@ BuildRequires: python3-module-contextlib2 python3-module-prettytable
 BuildRequires: /proc
 BuildRequires: python3-module-requests python3-module-jsonpatch
 BuildRequires: python3-module-configobj python3-module-mock
-BuildRequires: python3-module-oauthlib rpm-build-vm
+BuildRequires: python3-module-oauthlib python3-module-pytest
+BuildRequires: shadow-utils passwd
 %endif
 
 Requires: sudo
@@ -101,9 +102,8 @@ rm -f %buildroot%_sysconfdir/cloud/templates/*.suse.*
 rm -f %buildroot%_sysconfdir/cloud/templates/*.ubuntu.*
 
 %check
-if [ -w /dev/kvm ]; then
-    vm-run make unittest3
-fi
+export PATH="$PATH:/usr/sbin"
+make unittest
 
 %post
 %post_service cloud-config
@@ -145,6 +145,11 @@ fi
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Dec 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 20.4-alt1
+- Update to 20.4
+- Enable check
+- Fix not setting password via passwd field
+
 * Mon Nov 09 2020 Mikhail Gordeev <obirvalger@altlinux.org> 20.1-alt2
 - Fix dictionary key lookup for python3 (Closes: 38848)
 
