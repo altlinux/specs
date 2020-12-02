@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.1.3
-Release: alt1
+Release: alt2
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -103,6 +103,9 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Wed Dec 02 2020 Dmitry V. Levin <ldv@altlinux.org> 3.1.3-alt2
+- Fixed build with gcc 10.x.
+
 * Thu Feb 15 2018 Dmitry V. Levin <ldv@altlinux.org> 3.1.3-alt1
 - v3.1.2 -> v3.1.3 (fixes CVE-2018-5764).
 - Fixed running with an unknown current directory

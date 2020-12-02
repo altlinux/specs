@@ -1,6 +1,6 @@
 Name: postfix
 Version: 2.11.11
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -709,6 +709,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Dec 02 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.11.11-alt4
+- Fixed build with gcc 10.x.
+
 * Sun Jul 05 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.11.11-alt3
 - Fixed build on linux 5.x.
 

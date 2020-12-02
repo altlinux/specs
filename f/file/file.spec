@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt15
+Release: alt16
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -105,6 +105,9 @@ make -k check
 %endif
 
 %changelog
+* Wed Dec 02 2020 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt16
+- Fixed build with gcc 10.x.
+
 * Sun Nov 08 2020 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt15
 - Dropped python-module-magic subpackage (closes: #39228).
 
