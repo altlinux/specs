@@ -4,7 +4,7 @@
 
 Name: openstack-%oname
 Epoch: 1
-Version: 15.0.0
+Version: 15.4.0
 Release: alt1
 
 Summary: OpenStack Volume service
@@ -13,7 +13,7 @@ Group: System/Servers
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar
 Source1: cinder-dist.conf
 Source2: cinder.logrotate
 Source3: cinder-tgt.conf
@@ -53,7 +53,6 @@ BuildRequires: python3-module-greenlet >= 0.4.10
 BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-jsonschema >= 2.6.0
-BuildRequires: python3-module-ipaddress >= 1.0.17
 BuildRequires: python3-module-keystoneauth1 >= 3.7.0
 BuildRequires: python3-module-keystonemiddleware >= 4.21.0
 BuildRequires: python3-module-lxml >= 3.4.1
@@ -95,7 +94,7 @@ BuildRequires: python3-module-simplejson >= 3.5.1
 BuildRequires: python3-module-SQLAlchemy >= 1.0.10
 BuildRequires: python3-module-migrate >= 0.11.0
 BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-suds-jurko >= 0.6
+BuildRequires: python3-module-suds >= 0.6
 BuildRequires: python3-module-webob >= 1.7.1
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.vmware >= 2.17.0
@@ -165,6 +164,8 @@ This package contains documentation files for cinder.
 
 %prep
 %setup -n %oname-%version
+
+sed -i -e "s|suds-jurko|suds|" *.txt cinder.egg-info/*.txt
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -324,6 +325,13 @@ rm -rf %buildroot/usr/etc
 %endif
 
 %changelog
+* Wed Dec 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1:15.4.0-alt1
+- NMU: new version 15.4.0 (with rpmrb script)
+- NMU: use suds instead of suds-jurko (obsoleted)
+
+* Wed Dec 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1:15.0.0-alt2
+- NMU: remove BR: python3-module-ipaddress (it is python < 3.3 deps)
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:15.0.0-alt1
 - Automatically updated to 15.0.0.
 
