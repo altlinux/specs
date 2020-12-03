@@ -1,6 +1,6 @@
 Name: borg
 Version: 1.1.14
-Release: alt1
+Release: alt2
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -11,6 +11,7 @@ Url: https://borgbackup.github.io/borgbackup/
 # Source-url: https://github.com/borgbackup/borg/archive/%version.tar.gz
 Source: %name-%version.tar
 Patch1: borg-unbundle-xxhash-1.1.10.patch
+Patch2: borg-remove-testsuite-1.1.14.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -36,6 +37,7 @@ fully trusted targets.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 rm -rfv src/borg/algorithms/{lz4,xxh64,zstd,blake2}/
 # TODO: remove with the patch after 1.2.0
 %__subst "s|xxh64/xxhash.c|xxhash.h|" src/borg/algorithms/checksums.pyx
@@ -56,7 +58,12 @@ rm -rfv %buildroot%python3_sitelibdir/borg/testsuite/
 %python3_sitelibdir/borg/
 %python3_sitelibdir/borgbackup-*.egg-info/
 
+%exclude %python3_sitelibdir/borg/selftest.py
+
 %changelog
+* Thu Dec 03 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.14-alt2
+- removed unittest selftest.py
+
 * Sun Nov 01 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.14-alt1
 - 1.1.14 release
 
