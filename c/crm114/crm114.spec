@@ -1,6 +1,6 @@
 Name: crm114
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: The Controllable Regex Mutilator
 License: GPLv2
@@ -81,6 +81,9 @@ install -m 644 %name-mode.el %buildroot%_emacslispdir/%name-mode/
 %_emacslispdir/%name-mode/*.el*
 
 %changelog
+* Thu Dec 3 2020 Vladimir Didenko <cow@altlinux.org> 1.0-alt3
+- Fix build with GCC 10
+
 * Thu Oct 15 2015 Vladimir Didenko <cow@altlinux.org> 1.0-alt2
 - Fix build with GCC 5
 
