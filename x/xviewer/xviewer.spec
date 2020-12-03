@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: xviewer
-Version: 2.6.2
+Version: 2.8.0
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -32,6 +32,7 @@ BuildPreReq: libjpeg-devel librsvg-devel
 BuildPreReq: libpeas-devel >= 0.7.4
 BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
+BuildRequires: libxapps-devel
 
 Requires: xapps-icons
 
@@ -124,6 +125,9 @@ the functionality of the Xviewer GUI.
 %exclude %_libdir/%name/lib%name.la
 
 %changelog
+* Thu Dec 3 2020 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- New version
+
 * Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
 - New version
 
