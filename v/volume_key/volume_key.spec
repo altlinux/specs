@@ -1,9 +1,10 @@
 %def_enable snapshot
+%def_without python3
 %def_enable check
 
 Name: volume_key
 Version: 0.3.12
-Release: alt1
+Release: alt2
 
 Summary: An utility for manipulating storage encryption keys and passphrases
 License: GPLv2
@@ -13,16 +14,20 @@ Url: https://pagure.io/volume_key
 %if_disabled snapshot
 Source: https://fedorahosted.org/releases/v/o/%name/%name-%version.tar.xz
 %else
-# VCS: https://pagure.io/volume_key.git
+Vcs: https://pagure.io/volume_key.git
 Source: %name-%version.tar
 %endif
+
+%define gpg_ver 2.2.7
+%define gpgme_ver 1.11.0
 
 Requires: lib%name = %version-%release
 Requires: pinentry-gtk
 
-BuildRequires: glib2-devel libcryptsetup-devel /usr/bin/gpg2
-BuildRequires: libgpgme-devel libblkid-devel libnss-devel
-BuildRequires: rpm-build-python3 python3-devel swig
+BuildRequires: glib2-devel libcryptsetup-devel gnupg2 >= %gpg_ver
+BuildRequires: libgpgme-devel >= %gpgme_ver libblkid-devel libnss-devel
+%{?_with_python3:BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel swig}
 %{?_enable_check:BuildRequires: %_bindir/certutil}
 
 %description
@@ -38,7 +43,7 @@ company data after an employee leaves abruptly.
 %package -n lib%name
 Summary: A library for manipulating storage encryption keys and passphrases
 Group: System/Libraries
-Requires: /usr/bin/gpg2
+Requires: gnupg2 >= %gpg_ver
 
 %description -n lib%name
 This package provides libvolume_key, a library for manipulating storage volume
@@ -89,7 +94,7 @@ for other formats is possible, some formats are planned for future releases.
 
 %build
 %autoreconf
-%configure --without-python
+%configure --without-python %{subst_with python3}
 %make_build
 
 %install
@@ -112,13 +117,19 @@ for other formats is possible, some formats are planned for future releases.
 %_includedir/%name/
 %_libdir/lib%name.so
 
+%if_with python3
 %files -n python3-module-%name
 %python3_sitelibdir/_%name.so
 %python3_sitelibdir/%name.py*
 %python3_sitelibdir/__pycache__/%{name}*
 %exclude %python3_sitelibdir/_%name.la
+%endif
 
 %changelog
+* Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt2
+- updated to 0.3.12-5-g28e542c (Add support for higher versions of LUKS)
+- disabled useless python3 module
+
 * Fri Feb 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
 - updated to 0.3.12-2-ge236747
 
