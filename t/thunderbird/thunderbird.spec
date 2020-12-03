@@ -12,7 +12,7 @@
 %define llvm_version      11.0
 
 Name: 	 thunderbird
-Version: 78.5.0
+Version: 78.5.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -53,6 +53,7 @@ Patch38: Bug-628252-os2.cc-fails-to-compile-against-GCC-4.6-m.patch
 Patch39: Load-dependent-libraries-with-their-real-path-to-avo.patch
 Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
 Patch41: fix-function-nsMsgComposeAndSend-to-respect-Replo.patch
+Patch42: thunderbird-update-packed_simd-for-rust-1.48.patch
 
 Patch120: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
 Patch121: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
@@ -284,6 +285,7 @@ tar -xf %SOURCE6
 %patch39 -p1
 %patch40 -p1
 %patch41 -p1
+%patch42 -p0
 
 %patch120 -p2
 %patch121 -p2
@@ -657,6 +659,11 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Dec 02 2020 Andrey Cherepanov <cas@altlinux.org> 78.5.1-alt1
+- New version (78.5.1).
+- Security fixes:
+  + CVE-2020-26970 Stack overflow due to incorrect parsing of SMTP server response codes
+
 * Thu Nov 19 2020 Andrey Cherepanov <cas@altlinux.org> 78.5.0-alt1
 - New version (78.5.0).
 - Fixes:
