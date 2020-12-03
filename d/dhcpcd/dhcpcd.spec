@@ -2,10 +2,13 @@
 %set_verify_elf_method strict
 
 %define dbdir %_localstatedir/%name
+%define _pseudouser_user     _dhcpcd
+%define _pseudouser_group    _dhcpcd
+%define _pseudouser_home     %_localstatedir/dhcpcd
 
 Name: dhcpcd
 Epoch: 1
-Version: 8.1.7
+Version: 9.3.4
 Release: alt1
 
 Summary: DHCP Client
@@ -18,7 +21,8 @@ Patch0: %name-%version-%release.patch
 
 AutoReq: yes, noshell
 
-Conflicts: etcnet < 0.9.10-alt6
+Conflicts: etcnet < 0.9.20-alt1
+Conflicts: NetworkManager-daemon < 1.28.0-alt1
 
 # NetworkManager can use dhcpcd
 Provides: nm-dhcp-client
@@ -40,7 +44,8 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 export LDFLAGS=-pie
 %configure \
         --sbindir=/sbin \
-        --rundir=/var/run \
+		--runstatedir=/run \
+        --rundir=/run/dhcpcd \
         --libexecdir=/lib/%name \
         --dbdir=%dbdir \
         --serviceexists='[ -x %_initdir/"$1" ]' \
@@ -52,11 +57,20 @@ export LDFLAGS=-pie
 		--enable-dhcp6 \
 		--enable-auth \
 		--enable-ipv4ll \
+		--with-default-hostname='(none)' \
+		--enable-privsep \
+		--privsepuser=%_pseudouser_user \
         --without-udev
 %make_build
 
 %install
 %makeinstall_std BINMODE=0755
+mkdir -p %buildroot%dbdir
+
+%pre
+/usr/sbin/groupadd -r -f %_pseudouser_group ||:
+/usr/sbin/useradd -g %_pseudouser_group -c 'dhcpcd user' \
+        -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
 # These files changed their name/location since 7.0.0.
 # Don't move lease files, they can be used and often removed when dhcpcd
@@ -77,7 +91,7 @@ fi
 %_man8dir/*
 %_man5dir/*
 %config(noreplace) %_sysconfdir/%name.conf
-%dir %_localstatedir/%name
+%dir %dbdir
 %dir /lib/%name
 %dir /lib/%name/%name-hooks
 /lib/%name/%name-hooks/*
@@ -89,6 +103,20 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Thu Dec 03 2020 Mikhail Efremov <sem@altlinux.org> 1:9.3.4-alt1
+- Fix build on ppc64le (thx glebfm@).
+- Add support for e2k seccomp filter.
+- Conflict with NetworkManager < 1.28.0-alt1.
+- Conflict with etcnet < 0.9.20-alt1.
+- Set rundir to /run/dhcpcd.
+- Updated to 9.3.4.
+
+* Wed Apr 29 2020 Mikhail Efremov <sem@altlinux.org> 1:9.0.2-alt1
+- Updated to 9.0.2.
+
+* Mon Apr 06 2020 Mikhail Efremov <sem@altlinux.org> 1:9.0.0-alt1
+- Updated to 9.0.0.
+
 * Thu Apr 02 2020 Mikhail Efremov <sem@altlinux.org> 1:8.1.7-alt1
 - Updated to 8.1.7.
 
