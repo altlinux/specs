@@ -1,23 +1,59 @@
 # Upstream joined two projects, fbi and ida (framebuffer and Motif-based image
 # viewers) into united project named "fbida". But we really not interested in
 # packaging ugly motif apps, so we will name our main package just "fbi".
+
+%def_enable snapshot
+
 Name: fbi
 Version: 2.14
-Release: alt1
+Release: alt2
 
 Summary: Image viewer for Linux framebuffer console
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphics
-
 Url: http://www.kraxel.org/cgit/fbida/
-Source: http://www.kraxel.org/releases/fbida/fbida-%version.tar.gz
+Vcs: https://git.kraxel.org/git/fbida
 
-BuildRequires: libdrm-devel libepoxy-devel libexif-devel libgbm-devel libgif-devel
-BuildRequires: libjpeg-devel liblirc-devel libpoppler-glib-devel libsane-devel libtiff-devel libwebp-devel
-BuildRequires: libpixman-devel
+%if_disabled snapshot
+Source: http://www.kraxel.org/releases/fbida/fbida-%version.tar.gz
+%else
+Source: fbida-%version.tar
+%endif
+
+BuildRequires(pre): meson
+# image format BR
+BuildRequires: libjpeg-devel
+BuildRequires: libpcd-devel
+BuildRequires: pkgconfig(libexif)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libtiff-4)
+BuildRequires: pkgconfig(libwebp)
+BuildRequires: pkgconfig(pixman-1)
+# fbi & fbpdf BR
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(poppler-glib)
+BuildRequires: pkgconfig(gbm)
+BuildRequires: pkgconfig(egl)
+BuildRequires: pkgconfig(epoxy)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(xkbcommon)
+# fbcon BR
+BuildRequires: pkgconfig(libtsm)
+BuildRequires: pkgconfig(systemd)
 
 %description
 Image viewer for Linux framebuffer console.
+
+%package -n fbpdf
+Summary: Framebuffer PDF viewer
+Group: Graphics
+
+%description -n fbpdf
+PDF viewer for Linux framebuffer console.
 
 %package -n exiftran
 Summary: Command line tool to do lossless transformations of JPEG images
@@ -27,29 +63,44 @@ Group: Graphics
 Command line tool to do lossless transformations of JPEG images, similar to
 jpegtran but includes EXIF data.
 
+%package -n fbcon
+Summary: Framebuffer terminal console
+Group: Graphics
+
+%description -n fbcon
+Framebuffer terminal console.
+
 %prep
 %setup -n fbida-%version
 echo %version > VERSION
-# Get rid of build time checks that will bloat buildreq-generated deps.
-subst 's/^HAVE_MOTIF.*$//' GNUmakefile
 
 %build
-# Must use CFLAGS as env variable, because makefile _adds_ flags to it.
-export CFLAGS="%optflags"
-%make_build HAVE_MOTIF=no verbose=yes exiftran fbi
+%meson
+%meson_build
 
 %install
-%makeinstall_std STRIP="" prefix=%_prefix
+%meson_install
 
 %files
-%_bindir/fb*
-%_man1dir/fb*
+%_bindir/fbi
+%_man1dir/fbi.1*
+
+%files -n fbpdf
+%_bindir/fbpdf
 
 %files -n exiftran
 %_bindir/exiftran
 %_man1dir/exiftran*
 
+%files -n fbcon
+%_bindir/fbcon
+%_datadir/wayland-sessions/fbcon.desktop
+
 %changelog
+* Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt2
+- updated to 2.14-1-120-ge1a7db6 (ported to Meson build system)
+- new fbpdf and fbcon subpackages
+
 * Wed Oct 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt1
 - 2.14
 
