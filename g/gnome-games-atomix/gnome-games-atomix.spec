@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name atomix
@@ -7,14 +8,18 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Build molecules out of single atoms
 Group: Games/Boards
 License: GPLv2+
 Url: https://wiki.gnome.org/Apps/Atomix
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 Provides:  %_name = %version-%release
 
@@ -54,6 +59,9 @@ other obstacles on the playfield.
 
 
 %changelog
+* Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
+- updated to 3.34.0-11-gbfe0acc (fixed build with gcc10/-fno-common)
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
