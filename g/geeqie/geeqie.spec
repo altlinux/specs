@@ -1,22 +1,23 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
+%define rdn_name org.geeqie.Geeqie
 
-# ffmpegthumbnailer code is broken
+%def_enable map
 %def_enable ffmpegthumbnailer
 
 Name: geeqie
-Version: 1.5.1
+Version: 1.6
 Release: alt1
 
 Summary: Graphics file browser utility
 License: GPLv2+
 Group: Graphics
 
-Url: http://%name.org
+Url: https://%name.org
 %if_disabled snapshot
 Source: %url/%name-%version.tar.xz
 %else
-# VCS: http://www.geeqie.org/git/geeqie.git
+Vcs: https://github.com/BestImageViewer/geeqie.git
 Source: %name-%version.tar
 %endif
 
@@ -25,11 +26,17 @@ Patch: %name-1.5-libdir-fix.patch
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
 
-BuildRequires: gcc-c++ gnome-doc-utils intltool libgtk+2-devel libjpeg-devel
-BuildRequires: liblcms2-devel liblirc-devel libtiff-devel libexiv2-devel
+Requires: %_bindir/exiftool %_bindir/exiftran
+Requires: %_bindir/convert %_bindir/gphoto2
+
+BuildRequires: gcc-c++ yelp-tools intltool libappstream-glib-devel
+BuildRequires: python3-module-markdown
+BuildRequires: libgtk+3-devel libjpeg-devel libtiff-devel libwebp-devel
+BuildRequires: libopenjpeg2.0-devel libdjvu-devel liblcms2-devel
+BuildRequires: libpoppler-glib-devel libheif-devel
+BuildRequires: libexiv2-devel liblirc-devel
+%{?_enable_map:BuildRequires: libgps-devel pkgconfig(clutter-gtk-1.0) libchamplain-gtk3-devel}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
-# while gtk+2 is a default
-#BuildRequires: libchamplain-gtk3-devel
 
 %description
 Geeqie is a lightweight image viewer. It was forked from GQview. The development
@@ -43,7 +50,6 @@ ExifTool.
 sed -i 's/\-Werror//' configure.ac
 
 %build
-#%%add_optflags -Wno-error=unused-variable -Wno-parentheses -Wunused-variable
 %{?_enable_ffmpegthumbnailer:%add_optflags -Wno-error=unused-function}
 %autoreconf
 %configure --enable-lirc \
@@ -67,9 +73,15 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_man1dir/%name.1.*
+%_datadir/metainfo/%rdn_name.appdata.xml
 %doc NEWS README.*
 
 %changelog
+* Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6 (GTK3 build)
+- note: to run geeqie under wayland need to use following command
+  "GDK_BACKEND=x11 geeqie --disable-clutter"
+
 * Thu Aug 22 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
