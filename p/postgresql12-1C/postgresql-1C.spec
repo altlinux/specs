@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     12
 %define postgresql_minor     5
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -782,6 +782,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 03 2020 Alexei Takaseev <taf@altlinux.org> 12.5-alt3
+- Decrased shared_buffers from 4G to 512M
+
 * Wed Nov 18 2020 Alexei Takaseev <taf@altlinux.org> 12.5-alt2
 - Add %%triggerpostun for PG 13
 
