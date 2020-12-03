@@ -1,6 +1,6 @@
 Name: bluez-tools
 Version: 0.2.0
-Release: alt2.git20161212
+Release: alt3.git20201025
 
 Summary: A set of tools to manage Bluetooth devices for Linux
 License: GPLv2+
@@ -43,6 +43,9 @@ pedometers and other specific APIs have not been ported to bluez-tools.
 %_man1dir/*.1*
 
 %changelog
+* Thu Dec 3 2020 Vladimir Didenko <cow@altlinux.org> 0.2.0-alt3.git20201025
+- new git snapshot
+
 * Tue Jan 15 2019 Vladimir Didenko <cow@altlinux.org> 0.2.0-alt2.git20161212
 - rebuild with libreadline7
 
