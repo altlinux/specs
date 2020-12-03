@@ -1,9 +1,8 @@
 %global pypi_name httpretty
-%def_with python3
 
 Name:           python-module-%{pypi_name}
 Version:        0.8.10
-Release:        alt1.1.2
+Release:        alt2
 Summary:        HTTP client mock for Python
 License:        MIT
 Group:		Development/Python
@@ -26,59 +25,24 @@ BuildArch:      noarch
 This libary allows mocking of http protocol based
 unit tests.
 
-%if_with python3
-%package -n python3-module-%{pypi_name}
-Summary:        HTTP client mock for Python
-Group:		Development/Python
-BuildArch:      noarch
-#BuildRequires:  rpm-build-python3
-#BuildRequires:  python3-module-setuptools
-Requires:       python3-module-testtools
-
-%description -n python3-module-%{pypi_name}
-This libary allows mocking of http protocol based
-unit tests.
-
-%endif
-
-
 %prep
 %setup
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
 export LC_ALL=en_US.UTF-8
 %python_build
 
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
-
 %install
 export LC_ALL=en_US.UTF-8
 %python_install
 
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-%endif
-
 %files
 %{python_sitelibdir}/*
 
-%if_with python3
-%files -n python3-module-%{pypi_name}
-%{python3_sitelibdir}/*
-%endif
-
 %changelog
+* Thu Dec 03 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.8.10-alt2
+- Move python3 module to separate package
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.8.10-alt1.1.2
 - (NMU) rebuild with python3.6
 
