@@ -41,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 15.2.6
+Version: 15.2.7
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -1494,6 +1494,9 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Fri Dec 04 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.7-alt1
+- 15.2.7
+
 * Thu Nov 19 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.6-alt1
 - 15.2.6
 - Fixes for the following security vulnerabilities:
