@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: dtkcore
-Version: 5.2.2.16
+Version: 5.4.0
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -9,7 +11,11 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
 BuildRequires: git-core
 BuildRequires: fdupes
 BuildRequires: qt5-base-devel
@@ -44,6 +50,9 @@ sed -i "s|'/lib'|'%_lib'|" conanfile.py
 
 %build
 %qmake_qt5 \
+%if_enabled clang
+    QMAKE_STRIP= -spec linux-clang \
+%endif
     CONFIG+=nostrip \
     PREFIX=%prefix \
     DTK_VERSION=%version \
@@ -54,6 +63,8 @@ sed -i "s|'/lib'|'%_lib'|" conanfile.py
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
+chmod +x %buildroot%_libdir/libdtk-5.4.0/DCore/bin/dtk-license.py
+chmod +x %buildroot%_libdir/libdtk-5.4.0/DCore/bin/dtk-translate.py
 
 %files -n libdtk5-core
 %doc README.md LICENSE
@@ -75,6 +86,9 @@ sed -i "s|'/lib'|'%_lib'|" conanfile.py
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Thu Dec 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
+- New version (5.4.0) with rpmgs script.
+
 * Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.16-alt1
 - New version (5.2.2.16) with rpmgs script.
 
