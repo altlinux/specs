@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 2.6.2
+Version: 2.8.0
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -35,14 +35,14 @@ BuildPreReq: libenchant-devel
 BuildPreReq: iso-codes-devel
 BuildPreReq: libgio-devel
 BuildPreReq: libgtk+3-devel
-BuildPreReq: libgtksourceview3-devel
+BuildPreReq: libgtksourceview4-devel
 BuildRequires: meson
 BuildRequires: libattr-devel gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
 BuildRequires: libSM-devel
 BuildRequires: libpeas-devel
 BuildRequires: python3-dev
 BuildRequires: libgtk+3-gir-devel
-BuildRequires: libgtksourceview3-gir-devel
+BuildRequires: libgtksourceview4-gir-devel
 BuildRequires: libgspell-devel
 BuildRequires: libxapps-devel
 
@@ -140,6 +140,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Thu Dec 3 2020 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- New version
+
 * Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
 - New version
 
