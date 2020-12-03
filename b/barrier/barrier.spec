@@ -2,7 +2,7 @@
 
 Name: barrier
 Version: 2.3.3
-Release: alt1
+Release: alt2
 
 Summary: Keyboard and mouse sharing solution
 License: GPLv2
@@ -32,7 +32,7 @@ BuildRequires: xvfb-run
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 
 %build
 %cmake
@@ -82,7 +82,7 @@ END
 
 %check
 ./BUILD/bin/unittests
-xvfb-run ./BUILD/bin/integtests
+xvfb-run --server-args='-extension GLX -screen 0 1280x1024x24 -noreset' ./BUILD/bin/integtests
 
 %files -f %name.lang
 %doc LICENSE ChangeLog res/Readme.txt doc/barrier.conf.example*
@@ -94,6 +94,9 @@ xvfb-run ./BUILD/bin/integtests
 %_man1dir/barriers.1*
 
 %changelog
+* Thu Dec 03 2020 Danil Shein <dshein@altlinux.org> 2.3.3-alt2
+- fixed integration tests failing in highly loaded build environment
+
 * Wed Nov 11 2020 Danil Shein <dshein@altlinux.org> 2.3.3-alt1
 - initial build for ALT
 
