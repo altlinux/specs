@@ -15,7 +15,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -174,6 +174,7 @@ the functionality of the installed Mutter.
 
 %files -f %name.lang
 %_bindir/*
+%_udevrulesdir/61-%name.rules
 %_libexecdir/%name-restart-helper
 %dir %pkglibdir/plugins
 %pkglibdir/plugins/*.so
@@ -218,6 +219,12 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.38.2-alt1
+- 3.38.2
+
+* Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.38.1-alt2
+- updated to 3.38.1-21-gced6b3341
+
 * Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.38.1-alt1
 - 3.38.1
 
