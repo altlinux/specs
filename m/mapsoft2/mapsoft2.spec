@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.4
+Version:      1.5
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -38,6 +38,23 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/*
 
 %changelog
+* Thu Dec 03 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.5-alt1
+- Reading/writing geodata:
+  - use filename as a waypoint list name when reading waypolints from gpx or wpt,
+  - fix writing Ozi map files (Projection Setup line),
+  - fix reading track comments from GeoJSON.
+- Geodata filtering:
+  - add name parameter to --join filter,
+  - add --rescale_maps and --shift_maps filters (same as in mapsoft1)
+- Update documentation; add geodata_ru.htm text.
+- Map rendering:
+  - add --map_min_sc, --map_max_sc, --map_def_col options,
+  - fix and optimize drawing of multiple maps combined in a single map list.
+- ms2view: many tools for editing geodata. Interface is not finished,
+  but a few operations are possible: adding/moving/deleting track points,
+  adding/moving/deleting/editing waypoints, adding/deleting/editing tracks.
+- Fix error handling in libtiff interface.
+
 * Sun Nov 15 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.4-alt1
 - GeoJSON format: add extension for writing/reading maps. Now mapsoft2
   geodata structure can be stored in json without losses.
