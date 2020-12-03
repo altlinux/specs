@@ -2,7 +2,7 @@
 
 Name: welcome2l
 Version: 3.04
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: Linux ANSI boot logo
 License: GPL
@@ -10,7 +10,7 @@ Group: System/Configuration/Boot and Init
 Url: http://www.LittleIgloo.org
 
 Source: %altname-%version.src.tar.bz2
-Patch: %altname-3.04-alt-fixes.patch.bz2
+Patch: %altname-3.04-alt-fixes.patch
 
 %description
 Welcome2L is a little program that may run at login time
@@ -39,6 +39,9 @@ produce 80 column ANSI screens.
 %doc AUTHORS ChangeLog INSTALL README THANKS
 
 %changelog
+* Thu Dec 03 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.04-alt4.qa2
+- Fixed FTBFS with gcc10 (change of default to -fno-common).
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.04-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
