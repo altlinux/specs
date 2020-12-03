@@ -1,5 +1,4 @@
 %global _unpackaged_files_terminate_build 1
-%set_verify_elf_method unresolved=no
 
 %global project pkg.deepin.io
 %global repo lib
@@ -11,7 +10,7 @@
 # %%endif
 
 Name: golang-deepin-go-lib
-Version: 5.5.0.12
+Version: 5.6.0.2
 Release: alt1
 Summary: Go bindings for Deepin Desktop Environment development
 
@@ -83,6 +82,9 @@ export GOPATH="%go_path"
 %go_path/src/%import_path
 
 %changelog
+* Thu Dec 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.2-alt1
+- New version (5.6.0.2) with rpmgs script.
+
 * Wed Sep 09 2020 Leontiy Volodin <lvol@altlinux.org> 5.5.0.12-alt1
 - New version (5.5.0.12) with rpmgs script.
 
