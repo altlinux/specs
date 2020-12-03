@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		eaa427cf19
+%define svnrev		93895db26b
 
 %def_with pgsql
 %def_enable java
@@ -16,8 +16,8 @@
 
 
 Name: zabbix
-Version: 5.0.5
-Release: alt3
+Version: 5.0.6
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -638,6 +638,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Dec 03 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.6-alt1
+- 5.0.6
+- Edit Apache config file (ALT #37494)
+
 * Thu Nov 19 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.5-alt3
 - Add lost double.sql (ALT #39311)
 
