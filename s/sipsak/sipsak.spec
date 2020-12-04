@@ -2,7 +2,7 @@
 
 Name: sipsak
 Version: 0.9.7
-Release: alt1
+Release: alt1.git.02e5b5c
 Summary: CLI tool for SIP developers and administrators
 License: GPLv2+
 Group: Communications
@@ -37,6 +37,9 @@ simple tests on SIP applications and devices.
 %_man1dir/*
 
 %changelog
+* Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1.git.02e5b5c
+- Updated to latest upstream commit.
+
 * Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1
 - Updated to upstream version 0.9.7.
 
