@@ -4,10 +4,10 @@
 
 Name: webalizer
 Version: %majver.%minver.%suff
-Release: alt1
+Release: alt2
 
 Summary: Web/ftp/proxy server log analyser
-License: GPL
+License: GPL-2.0
 Group: Monitoring
 
 Url: http://www.patrickfrei.ch/webalizer/%name
@@ -66,7 +66,7 @@ The Webalizer -- программа для анализа лог-файлов we
 %setup -n %name-%majver-%minver-%suff
 
 %build
-CFLAGS="%optflags -fsigned-char"
+CFLAGS="%optflags -fsigned-char -fcommon"
 %configure \
 	--with-db \
 	--with-dblib \
@@ -103,7 +103,6 @@ install -d %buildroot%_docdir
 install -d %buildroot%webalizer_home
 install -d %buildroot%webalizer_html
 install -d %buildroot%_mandir/man1
-install -m644 sample.conf %buildroot%_docdir/
 install -m644 apache.conf %buildroot%_sysconfdir/%name/
 install -m644 vsftpd.conf %buildroot%_sysconfdir/%name/
 install -m755 webalizer %buildroot%_bindir
@@ -180,6 +179,10 @@ done
 # - bak-around userdel -r in early packages?
 
 %changelog
+* Fri Dec 04 2020 Andrew A. Vasilyev <andy@altlinux.org> 2.23.08.RB30-alt2
+- fix unnecessary sample.conf install
+- fix -fno-common to be default in GCC 10
+
 * Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 2.23.08.RB30-alt1
 - 2.23-08 based RB30
 - minor spec fixups
