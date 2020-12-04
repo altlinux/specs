@@ -9,7 +9,7 @@
 
 Name: dhcp
 Version: 4.4.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -84,6 +84,9 @@ Patch0036: 0036-dhclient-Don-t-hang-before-returning.patch
 Patch0037: 0037-dhcrelay-fix-relaying-of-return-packets.patch
 Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
 Patch0039: 0039-fix-spelling-mistakes.patch
+
+# Patch from upstream git
+Patch1001: fix-gcc10-build.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -238,6 +241,8 @@ server
 %patch0038 -p2
 %patch0039 -p2
 
+%patch1001 -p1
+
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
 	xargs -r0 grep -EZl '(/etc|ETCDIR)/(dhclient|dhcpd|dhcrelay)' -- |
@@ -390,8 +395,8 @@ if [ -f /var/run/dhclient.restart ]; then
 fi
 
 %pre server
-%_sbindir/useradd -r -n -g %name -d %ROOT/dhcpd -s /dev/null -c 'The ISC DHCP server daemon' dhcpd >/dev/null 2>&1 ||:
-%_sbindir/useradd -r -n -g %name -d %ROOT/dhcpd6 -s /dev/null -c 'The ISC DHCPv6 server daemon' dhcpd6 >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -N -g %name -d %ROOT/dhcpd -s /dev/null -c 'The ISC DHCP server daemon' dhcpd >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -N -g %name -d %ROOT/dhcpd6 -s /dev/null -c 'The ISC DHCPv6 server daemon' dhcpd6 >/dev/null 2>&1 ||:
 rm -f /var/run/dhcpd.restart
 # stop _old_ dhcpd if running
 if [ $1 -eq 1 ] && [ -x %_initdir/dhcpd ] && %_initdir/dhcpd status >/dev/null 2>&1; then
@@ -431,8 +436,8 @@ fi
 /sbin/chkconfig --add dhcpd
 
 %pre relay
-%_sbindir/useradd -r -n -g %name -d /var/empty -s /dev/null -c 'The ISC DHCP relay daemon' dhcrelay >/dev/null 2>&1 ||:
-%_sbindir/useradd -r -n -g %name -d /var/empty -s /dev/null -c 'The ISC DHCPv6 relay daemon' dhcrelay6 >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -N -g %name -d /var/empty -s /dev/null -c 'The ISC DHCP relay daemon' dhcrelay >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -N -g %name -d /var/empty -s /dev/null -c 'The ISC DHCPv6 relay daemon' dhcrelay6 >/dev/null 2>&1 ||:
 rm -f /var/run/dhcrelay.restart
 if [ $1 -ge 2 ] && [ -x %_initdir/dhcrelay ] && %_initdir/dhcrelay status >/dev/null 2>&1; then
 	%_initdir/dhcrelay condstop && touch /var/run/dhcrelay.restart ||:
@@ -563,6 +568,10 @@ fi
 # }}}
 
 %changelog
+* Fri Dec 04 2020 Mikhail Efremov <sem@altlinux.org> 1:4.4.2-alt2
+- Fixed build with gcc-10.
+- Used useradd -N instead of -n.
+
 * Fri Jan 24 2020 Mikhail Efremov <sem@altlinux.org> 1:4.4.2-alt1
 - Fixed license tag.
 - Updated patches.
