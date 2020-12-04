@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: unbound
-Version: 1.12.0
-Release: alt2
+Version: 1.13.0
+Release: alt1
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -237,6 +237,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri Dec 04 2020 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt1
+- 1.13.0 (Fixes CVE-2020-28935)
+
 * Fri Oct 09 2020 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt2
 - Add lost contrib/unbound.service.in
 
