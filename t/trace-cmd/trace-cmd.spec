@@ -4,7 +4,7 @@
 
 Name:     trace-cmd
 Version:  2.9.1
-Release:  alt2
+Release:  alt3
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
 License:  GPL-2.0 and LGPL-2.1
@@ -29,8 +29,9 @@ BuildRequires: gcc-c++
 BuildRequires: libfreeglut-devel
 BuildRequires: libjson-c-devel
 BuildRequires: libXi-devel
-BuildRequires: libXmu-devel
 BuildRequires: libxml2-devel
+BuildRequires: libXmu-devel
+BuildRequires: polkit
 BuildRequires: python-devel
 BuildRequires: qt5-base-devel
 BuildRequires: swig
@@ -166,6 +167,9 @@ vm-run --cpu=2 '
 %_datadir/polkit-1/actions/org.freedesktop.kshark-record.policy
 
 %changelog
+* Fri Dec 04 2020 Vitaly Chikunov <vt@altlinux.org> 2.9.1-alt3
+- Enable pkexec (RM#24461).
+
 * Sun Sep 27 2020 Vitaly Chikunov <vt@altlinux.org> 2.9.1-alt2
 - Build kernelshark, libs, devel, and python3 packages.
 
