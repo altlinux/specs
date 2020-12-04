@@ -1,6 +1,8 @@
+%def_disable clang
+
 Name: startdde
-Version: 5.6.0.11
-Release: alt2
+Version: 5.6.0.30
+Release: alt1
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -9,6 +11,11 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang-github-linuxdeepin-dbus-factory-devel golang-deepin-go-lib-devel golang-deepin-go-x11-client-devel golang-x-xerrors-devel golang-github-davecgh-spew-devel deepin-gir-generator golang-golang-x-net-devel golang-deepin-api-devel golang-github-cryptix-wav-devel golang-github-go-dbus-devel golang-github-fsnotify-devel golang-golang-x-sys-devel
 BuildRequires: jq glib2-devel libgio-devel libgtk+3-devel libXcursor-devel libXfixes-devel libXi-devel libgudev-devel libgnome-keyring-devel libpulseaudio-devel libalsa-devel
@@ -19,15 +26,26 @@ Startdde is used for launching DDE components and invoking user's custom applica
 
 %prep
 %setup
-patch Makefile < rpm/Makefile.patch
-# patch misc/auto_launch/chinese.json < rpm/chinese.json.patch
-# patch misc/auto_launch/default.json < rpm/default.json.patch
 # go get github.com/cryptix/wav golang.org/x/xerrors
-%__subst 's/sbin/bin/' Makefile
-%__subst 's|/usr/lib/polkit-1-dde/dde-polkit-agent|/usr/libexec/polkit-1-dde/dde-polkit-agent|' misc/auto_launch/{chinese,default}.json
-%__subst 's|/lib/deepin-daemon|/libexec/deepin-daemon|' main.go Makefile session.go utils.go display/manager.go
+sed -i 's/sbin/bin/' Makefile
+sed -i 's|/etc/X11/Xsession.d/|/etc/X11/xinit/xinitrc.d/|' Makefile
+sed -i 's|/lib/deepin-daemon|/libexec/deepin-daemon|' \
+    main.go \
+    Makefile \
+    session.go \
+    utils.go \
+    display/manager.go
+sed -i 's|/usr/lib/|/usr/libexec/|' \
+    misc/auto_launch/{chinese,default}.json \
+    watchdog/{deepinid_daemon.go,dde_polkit_agent.go}
+sed -i 's|/usr/lib/|%_libdir/|' startmanager.go
 
 %build
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+%endif
 export GOPATH="%go_path"
 make GO_BUILD_FLAGS=-trimpath
 
@@ -53,6 +71,9 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/xsessions/deepin.desktop
 
 %changelog
+* Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.30-alt1
+- New version (5.6.0.30) with rpmgs script.
+
 * Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.11-alt2
 - Fixed conflict with lightdm.
 

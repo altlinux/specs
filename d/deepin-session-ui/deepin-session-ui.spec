@@ -1,7 +1,9 @@
-%global repo dde-session-ui
+%def_disable clang
+
+%define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.3.0.22
+Version: 5.3.0.26
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -11,7 +13,28 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: gcc-c++ deepin-gettext-tools dtk5-widget-devel deepin-qt-dbus-factory-devel gsettings-qt-devel libgtk+2-devel lightdm-devel libsystemd-devel qt5-base-devel qt5-svg-devel qt5-x11extras-devel qt5-multimedia-devel libxcbutil-icccm-devel libXcursor-devel libXtst-devel libpam0-devel qt5-linguist deepin-dock-devel
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
+BuildRequires: deepin-gettext-tools
+BuildRequires: dtk5-widget-devel
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: gsettings-qt-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: lightdm-devel
+BuildRequires: libsystemd-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-multimedia-devel
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXtst-devel
+BuildRequires: libpam0-devel
+BuildRequires: qt5-linguist
+BuildRequires: deepin-dock-devel
 
 %description
 This project include those sub-project:
@@ -24,9 +47,12 @@ This project include those sub-project:
 
 %prep
 %setup -n %repo-%version
-%__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
-%__subst 's|default_background.jpg|default.png|' widgets/fullscreenbackground.cpp
-%__subst 's|lib|libexec|' \
+sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
+sed -i 's|default_background.jpg|deepin/default.png|' \
+    widgets/fullscreenbackground.cpp \
+    lightdm-deepin-greeter/logintheme.qrc \
+    dde-lock/logintheme.qrc
+sed -i 's|lib|libexec|' \
     misc/applications/deepin-toggle-desktop.desktop* \
     dde-osd/dde-osd_autostart.desktop \
     dde-osd/com.deepin.dde.osd.service \
@@ -42,10 +68,13 @@ This project include those sub-project:
     dde-suspend-dialog/dde-suspend-dialog.pro \
     dnetwork-secret-dialog/dnetwork-secret-dialog.pro \
     dde-lowpower/dde-lowpower.pro
-%__subst 's|%_libexecdir/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifications/notifications.pro
+sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifications/notifications.pro
 
 %build
 %qmake_qt5 \
+%if_enabled clang
+    QMAKE_STRIP= -spec linux-clang \
+%endif
     CONFIG+=nostrip \
     PREFIX=%prefix \
     PKGTYPE=rpm
@@ -80,6 +109,9 @@ This project include those sub-project:
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.26-alt1
+- New version (5.3.0.26) with rpmgs script.
+
 * Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.22-alt1
 - New version (5.3.0.22) with rpmgs script.
 
