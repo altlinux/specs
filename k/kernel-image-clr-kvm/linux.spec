@@ -10,7 +10,7 @@
 %define krelease %release
 
 %define kernel_base_version     5.4
-%define kernel_sublevel .80
+%define kernel_sublevel .81
 %define kernel_extra_version    %nil
 
 %define kernel_extra_version_numeric 1.0.0
@@ -163,6 +163,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/*
 
 %changelog
+* Fri Dec 04 2020 Andrew A. Vasilyev <andy@altlinux.org> 5.4.81-alt1
+- 5.4.81
+
 * Wed Nov 11 2020 Andrew A. Vasilyev <andy@altlinux.org> 5.4.80-alt1
 - initial build for ALT
 
