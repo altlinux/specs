@@ -1,8 +1,8 @@
-# %%define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 
 Name: aircrack-ng
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -12,6 +12,7 @@ Url: http://aircrack-ng.org
 
 # https://github.com/aircrack-ng/aircrack-ng.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -32,8 +33,16 @@ like KoreK attacks, thus making the attack much faster compared to
 other WEP cracking tools. In fact aircrack is a set of tools for
 auditing wireless networks.
 
+%package devel
+Group: Development/C++
+Summary: Development files for %name
+
+%description devel
+Development files for %name
+
 %prep
 %setup
+%patch0 -p1
 
 # change python shebangs to python3
 find . -name '*.py' | xargs sed -i \
@@ -70,7 +79,14 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/*
 %_defaultdocdir/%name
 
+%files devel
+%_includedir/*
+
 %changelog
+* Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt2
+- Fixed build with -fno-common.
+- Introduced %name-devel package.
+
 * Tue Mar 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.6-alt1
 - Version updated to 1.6
 - porting to python3.
