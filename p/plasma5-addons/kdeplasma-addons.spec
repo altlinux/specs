@@ -8,7 +8,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.20.2
+Version: 5.20.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -130,6 +130,7 @@ KF5 library
 %_K5plug/plasmacalendarplugins/*.so
 %_K5plug/plasmacalendarplugins/*/
 %_K5plug/potd/
+%_K5plug/kf5/krunner/*.so
 %_K5qml/org/kde/plasma/private/*/
 %_K5qml/org/kde/plasmacalendar/*/
 #%_K5exec/*
@@ -158,6 +159,9 @@ KF5 library
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Wed Dec 02 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.4-alt1
+- new version
+
 * Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
 - new version
 

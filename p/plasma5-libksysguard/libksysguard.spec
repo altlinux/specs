@@ -11,7 +11,7 @@
 %define libksysguardsensors libksysguardsensors%sover2
 
 Name: plasma5-%rname
-Version: 5.20.2
+Version: 5.20.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -157,6 +157,7 @@ KF5 library
 %_K5data/knsrcfiles/*
 
 %files devel
+%_K5plug/designer/*.so
 #%_K5inc/libksysguard_version.h
 %_K5inc/ksysguard/
 %_K5link/lib*.so
@@ -195,6 +196,9 @@ KF5 library
 
 
 %changelog
+* Wed Dec 02 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.4-alt1
+- new version
+
 * Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %define openssh_askpass_dir %_libexecdir/openssh
 
 Name: plasma5-%rname
-Version: 5.20.2
+Version: 5.20.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -88,6 +88,9 @@ EOF
 #%_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Wed Dec 02 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.4-alt1
+- new version
+
 * Wed Oct 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.2-alt1
 - new version
 
