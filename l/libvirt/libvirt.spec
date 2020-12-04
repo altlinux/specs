@@ -160,7 +160,6 @@
 %def_with libssh2
 
 %def_without wireshark
-%def_with bash_completion
 
 # nss plugin depends on network
 %if_with network
@@ -170,7 +169,7 @@
 %endif
 
 Name: libvirt
-Version: 6.8.0
+Version: 6.10.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -226,12 +225,12 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_netcf:BuildRequires: netcf-devel >= 0.1.8}
 %{?_with_esx:BuildRequires: libcurl-devel}
-%{?_with_hyperv:BuildRequires: libwsman-devel}
+%{?_with_hyperv:BuildRequires: libwsman-devel >= 2.6.3}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
 %{?_with_pm_utils:BuildRequires: pm-utils}
 %{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel >= 2.1.0}
-%{?_with_bash_completion:BuildRequires: pkgconfig(bash-completion) >= 2.0}
+BuildRequires: pkgconfig(bash-completion) >= 2.0
 
 BuildRequires: /proc
 BuildRequires: libblkid-devel
@@ -773,6 +772,7 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 %build
 %meson \
 		-Drootprefix='/' \
+		-Drpath=disabled \
 		-Drunstatedir=%_runtimedir \
 		-Dpackager_version="%release" \
 		-Dinit_script=systemd \
@@ -820,9 +820,9 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		%{?_with_libssh2:-Dlibssh2=enabled} \
 		%{?_with_audit:-Daudit=enabled} \
 		%{?_with_dtrace:-Ddtrace=enabled} \
-		%{?_with_bash_completion:-Dbash_completion=enabled} \
 		%{?_with_nss:-Dnss=enabled} \
 		%{?_with_sasl:-Dsasl=enabled} \
+		-Ddocs=enabled \
 		-Dexpensive_tests=enabled
 
 %meson_build
@@ -844,21 +844,9 @@ rm -f %buildroot%_libdir/%name/*/*.{a,la}
 # delete docs
 rm -rf %buildroot%_datadir/doc/libvirt
 
-%if_with network
-# We don't want to install /etc/libvirt/qemu/networks in the main %files list
-# because if the admin wants to delete the default network completely, we don't
-# want to end up re-incarnating it on every RPM upgrade.
-install -d -m 0755 %buildroot%_datadir/libvirt/networks/
-cp %buildroot%_sysconfdir/libvirt/qemu/networks/default.xml \
-   %buildroot%_datadir/libvirt/networks/default.xml
-rm -f %buildroot%_sysconfdir/libvirt/qemu/networks/default.xml
+# We install /etc/libvirt/qemu/networks/autostart/default.xml as ghost
 rm -f %buildroot%_sysconfdir/libvirt/qemu/networks/autostart/default.xml
-# Strip auto-generated UUID - we need it generated per-install
-sed -i -e "/<uuid>/d" %buildroot%_datadir/libvirt/networks/default.xml
-%else
-rm -f %buildroot%_sysconfdir/libvirt/qemu/networks/default.xml
-rm -f %buildroot%_sysconfdir/libvirt/qemu/networks/autostart/default.xml
-%endif
+touch %buildroot%_sysconfdir/libvirt/qemu/networks/autostart/default.xml
 
 %if_without qemu
 rm -f %buildroot%_datadir/augeas/lenses/libvirtd_qemu.aug
@@ -945,16 +933,6 @@ if [ $1 -ge 1 ] ; then
     fi
 fi
 
-%post daemon-config-network
-if [ $1 -eq 1 ]; then
-    if [ ! -f %_sysconfdir/libvirt/qemu/networks/default.xml ]; then
-	UUID=`/usr/bin/uuidgen`
-	sed -e "s,</name>,</name>\n  <uuid>$UUID</uuid>," \
-         < %_datadir/libvirt/networks/default.xml \
-         > /etc/libvirt/qemu/networks/default.xml
-    fi
-fi
-
 %post client
 %post_service libvirt-guests
 
@@ -977,9 +955,7 @@ fi
 %_man1dir/virt-xml-validate.*
 %_man1dir/virt-pki-validate.*
 %_man1dir/virt-host-validate.*
-%if_with bash_completion
 %_datadir/bash-completion/completions/*
-%endif
 
 %config(noreplace) %_sysconfdir/sysconfig/libvirt-guests
 %_initdir/libvirt-guests
@@ -1006,7 +982,6 @@ fi
 %dir %attr(0700, root, root) %_sysconfdir/libvirt
 %dir %_datadir/libvirt
 %dir %attr(0700, root, root) %_logdir/libvirt
-%dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config(noreplace) %_sysconfdir/sysconfig/virtproxyd
 %config /lib/tmpfiles.d/libvirtd.conf
@@ -1078,16 +1053,17 @@ fi
 %files daemon-config-network
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/qemu
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/qemu/networks
+%config(noreplace) %attr(0600, root, root) %_sysconfdir/libvirt/qemu/networks/default.xml
+%ghost %_sysconfdir/libvirt/qemu/networks/autostart/default.xml
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/qemu/networks/autostart
-%dir %_datadir/libvirt/networks
-%_datadir/libvirt/networks/default.xml
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/network
 %dir %attr(0755, root, root) %_localstatedir/lib/libvirt/dnsmasq
 %endif
 
 %if_with nwfilter
 %files daemon-config-nwfilter
-%_sysconfdir/libvirt/nwfilter/*.xml
+%dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter
+%config(noreplace) %attr(0600, root, root) %_sysconfdir/libvirt/nwfilter/*.xml
 %endif
 
 %if_with driver_modules
@@ -1366,6 +1342,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Dec 04 2020 Alexey Shabalin <shaba@altlinux.org> 6.10.0-alt1
+- 6.10.0
+
 * Fri Oct 09 2020 Alexey Shabalin <shaba@altlinux.org> 6.8.0-alt1
 - 6.8.0 (Fixes: CVE-2020-15708, CVE-2020-25637)
 
