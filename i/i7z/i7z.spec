@@ -1,6 +1,6 @@
 Name:           i7z
 Version:        93.20131013
-Release:        alt1
+Release:        alt2
 Summary:        A better i7 (and now i3, i5) reporting tool for Linux
 License:        GPLv2
 URL:            https://github.com/ajaiantilal/i7z
@@ -65,6 +65,9 @@ install GUI/i7z_GUI %buildroot/%_sbindir
 %_sbindir/perfmon-i7z
 
 %changelog
+* Fri Dec 04 2020 Andrew Savchenko <bircoph@altlinux.org> 93.20131013-alt2
+- Fix build with -fcommon (or gcc-10)
+
 * Sun Oct 21 2018 Andrew Savchenko <bircoph@altlinux.org> 93.20131013-alt1
 - Initial spec.
 - Use latest upstream snapshot.
