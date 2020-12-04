@@ -1,12 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 4.4
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 4.5
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -17,7 +19,7 @@ Url: https://github.com/elementary/%_name
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-#VCS: https://github.com/elementary/files.git
+Vcs: https://github.com/elementary/files.git
 Source: %_name-%version.tar
 %endif
 
@@ -41,6 +43,8 @@ BuildRequires: libpolkit-devel
 BuildRequires: libcanberra-devel libcanberra-vala
 BuildRequires: libcloudproviders-devel
 BuildRequires: libgit2-glib-devel
+BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(systemd)
 
 %description
 The simple, powerful, and sexy file manager from elementary.
@@ -88,6 +92,11 @@ This package provides Vala language bindings for the pantheon-files.
 %_pixmapsdir/%rdn_name/*.png
 %_datadir/metainfo/%rdn_name.appdata.xml
 
+%_libexecdir/%rdn_name.xdg-desktop-portal
+%_prefix/lib/systemd/user/%rdn_name.xdg-desktop-portal.service
+%_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.elementary.files.service
+%_datadir/xdg-desktop-portal/portals/%rdn_name.portal
+
 %files devel
 %_includedir/%name-widgets.h
 %_includedir/%name-core/
@@ -102,6 +111,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Fri Dec 04 2020 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
+- updated to 4.5.0-133-g96fe89cfd
+
 * Sun Jul 05 2020 Yuri N. Sedunov <aris@altlinux.org> 4.4.4-alt1
 - 4.4.4
 
