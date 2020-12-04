@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: qstat
 Version: 2.14
-Release: alt1.85fbecb
+Release: alt2.git.502167b
 Summary: Game server browsing utility
-License: Artistic
+License: Artistic-1.0
 Group: Networking/Other
 URL: https://github.com/multiplay/qstat
 
 Source: %name-%version.tar
-%define _unpackaged_files_terminate_build 1
 
 %description 
 QStat is a command-line program that displays information about
@@ -45,6 +46,10 @@ rm -f template/Makefile*
 %_bindir/qstat
 
 %changelog
+* Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.14-alt2.git.502167b
+- Updated to latest upstream commit.
+- Updated license.
+
 * Fri Feb 08 2019 Konstantin Rybakov <kastet@altlinux.org> 2.14-alt1.85fbecb
 - New version from upstream Git repository
 
