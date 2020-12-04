@@ -2,20 +2,21 @@
 
 Name: pax
 Version: 3.4
-Release: alt8
+Release: alt9
 Summary: POSIX File System Archiver
 License: BSD
 Group: Archiving/Backup
 URL: http://ftp.suse.com/pub/people/kukuk/pax
 
 Source: pax-%version.tar
-Patch1: pax-3.4-rdtruncate.patch
-Patch2: pax-3.4-abs100.patch
-Patch3: pax-3.4-PATHMAX.patch
-Patch4: pax-3.4-rh-gcc46.patch
+Patch1: %name-%version-rdtruncate.patch
+Patch2: %name-%version-abs100.patch
+Patch3: %name-%version-PATHMAX.patch
+Patch4: %name-%version-rh-gcc46.patch
 Patch5: %name-%version-alt-includes.patch
 Patch6: %name-%version-alt-gcc8.patch
 Patch7: %name-%version-alt-gcc9.patch
+Patch8: %name-%version-alt-fno-common.patch
 
 %description
 'pax' is the POSIX standard archive tool. It supports the two most
@@ -30,6 +31,7 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %patch5 -p2
 %patch6 -p2
 %patch7 -p2
+%patch8 -p2
 
 %build
 %add_optflags -Wno-error=implicit-fallthrough
@@ -44,6 +46,9 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %_man1dir/*
 
 %changelog
+* Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4-alt9
+- Fixed build with -fno-common.
+
 * Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4-alt8
 - Fixed build with new toolchain.
 
