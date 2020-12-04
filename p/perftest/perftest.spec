@@ -1,10 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: perftest
 Summary: IB Performance tests
-Version: 4.4 
+Version: 4.4.0.32
 Release: alt1
 License: %gpl2only
 Group: Monitoring
 Url: https://github.com/linux-rdma/perftest
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -32,6 +35,9 @@ install -m 0755 raw_ethernet_{bw,lat} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0.32-alt1
+- Updated to upstream version 4.4-0.32.
+
 * Sun Nov 11 2018 Alexander Makeenkov <amakeenk@altlinux.org> 4.4-alt1
 - New version
 
