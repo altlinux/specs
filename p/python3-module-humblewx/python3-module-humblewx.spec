@@ -1,7 +1,7 @@
 %define  modulename humblewx
 
 Name:    python3-module-%modulename
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Library that simplifies creating user interfaces with wxPython.
@@ -36,5 +36,8 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Dec 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt1
+- New version.
+
 * Fri May 22 2020 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus.
