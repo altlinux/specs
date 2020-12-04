@@ -1,19 +1,24 @@
 %define        pkgname mocha
 
-Name:          ruby-%pkgname
-Version:       1.9.0
+Name:          gem-%pkgname
+Version:       1.11.2
 Release:       alt1
 Summary:       Library for mocking and stubbing in Ruby
 Group:         Development/Ruby
 License:       MIT
 Url:           https://github.com/freerange/mocha
-%vcs           https://github.com/freerange/mocha.git
+Vcs:           https://github.com/freerange/mocha.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby 
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(metaclass)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 Mocha is a library for mocking and stubbing in Ruby using a syntax
@@ -56,9 +61,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Fri Dec 04 2020 Pavel Skrylev <majioa@altlinux.org> 1.11.2-alt1
+- ^ 1.9.0 -> 1.11.2
+- ! spec tags
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.9.0-alt1
-- Bump to 1.9.0
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 1.7.0 -> 1.9.0
 
 * Mon Sep 17 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - New version.
