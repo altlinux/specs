@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: megaglest
 Version: 3.13.0
-Release: alt1
+Release: alt2
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPLv3
 Group: Games/Strategy
@@ -13,6 +15,7 @@ Source3: %name.png
 Source4: %name.desktop
 
 Patch1: %name-%version-alt-fixes.patch
+Patch2: %name-%version-alt-fno-common.patch
 
 BuildRequires: cmake fontconfig-devel gcc-c++ libSDL2-devel libXau-devel libXdmcp-devel libcurl-devel libftgl-devel libglew-devel libjpeg-devel
 BuildRequires: liblua5-devel libopenal-devel libpng-devel libvorbis-devel libwxGTK-devel libxerces-c-devel libxml2-devel
@@ -29,6 +32,7 @@ with their corresponding tech trees, units, buildings and some maps.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 sed -in '/^#include <curl\/types\.h>/d' source/shared_lib/sources/platform/posix/miniftpclient.cpp
 sed -i 's#DataPath=$APPLICATIONDATAPATH#DataPath=/usr/share/games/megaglest/#g' mk/linux/glest.ini
 
@@ -38,12 +42,11 @@ sed -i \
 	source/shared_lib/sources/graphics/font.cpp
 
 %build
-%add_optflags -fpermissive
 %cmake_insource \
 	-DWANT_GIT_STAMP:BOOL=OFF \
 	-DCUSTOM_DATA_INSTALL_PATH="%_datadir/games/megaglest/" \
 	-DWANT_STATIC_LIBS:BOOL=OFF \
-	.
+	%nil
 
 %make_build VERBOSE=1
 
@@ -72,6 +75,9 @@ rm -f %buildroot%_datadir/%name/start_megaglest_gameserver
 %_datadir/%name/*.ico
 
 %changelog
+* Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt2
+- Fixed build with -fno-common.
+
 * Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt1
 - Updated to upstream release version 3.13.0.
 
