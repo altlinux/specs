@@ -6,7 +6,7 @@
 
 Name: xenomai
 Version: 3.1
-Release: alt2
+Release: alt3
 Summary: Real-Time Framework for Linux
 License: GPL-2.0+ and LGPL-2.0+ and LGPL-2.1 and MIT
 Group: System/Kernel and hardware
@@ -42,7 +42,7 @@ to work.
 %package cobalt
 Summary: Real-Time Framework for Linux (Cobalt core)
 Group: System/Kernel and hardware
-Provides: xenomai-runtime
+Provides: xenomai-runtime = %EVR
 
 %description cobalt
 This package contains tools for dual kernel version of Xenomai
@@ -61,7 +61,9 @@ This package contains tools for native Linux kernel version of Xenomai
 %package -n libcobalt
 Summary: Xenomai (Cobalt core) system libraries (v%version)
 Group: System/Libraries
-Provides: libxenomai1
+Obsoletes: libxenomai  < %EVR
+Obsoletes: libxenomai1 < %EVR
+Provides:  libxenomai1 = %EVR
 
 %description -n libcobalt
 System libraries for dual kernel Xenomai (Cobalt core).
@@ -87,7 +89,7 @@ Summary: Xenomai Cobalt development libraries (v%version)
 Group: Development/C
 Requires: xenomai-devel-common = %EVR
 Requires: libcobalt = %EVR
-Provides: libxenomai-dev
+Provides: libxenomai-dev = %EVR
 
 %description -n libcobalt-devel
 Development libraries for dual kernel Xenomai (Cobalt core).
@@ -396,6 +398,9 @@ find /usr/share/doc/xenomai/demo -name a.out -delete
 %files checkinstall
 
 %changelog
+* Fri Dec 04 2020 Vitaly Chikunov <vt@altlinux.org> 3.1-alt3
+- spec: Add Obsoletes for libxenomai (for p9), fixes RM#24461.
+
 * Mon Sep 14 2020 Vitaly Chikunov <vt@altlinux.org> 3.1-alt2
 - Multi-library (Cobalt and Mercury) package.
 - Package docs (with demo, pdf, html).
