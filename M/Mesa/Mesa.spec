@@ -64,10 +64,11 @@
 %endif
 %ifarch %armsoc_arches
 %vulkan_drivers_add freedreno
+%vulkan_drivers_add broadcom
 %endif
 
 Name: Mesa
-Version: 20.2.3
+Version: 20.3.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -244,7 +245,7 @@ Mesa-based DRI drivers
 
 %build
 %meson \
-	-Dplatforms=x11,wayland,drm \
+	-Dplatforms=x11,wayland \
 	-Ddri-drivers='%{?dri_drivers}' \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
@@ -259,8 +260,8 @@ Mesa-based DRI drivers
 	-Dgallium-opencl=icd \
 %endif
 %ifarch %radeon_arches
-	-Dllvm=true \
-	-Dshared-llvm=true \
+	-Dllvm=enabled \
+	-Dshared-llvm=enabled \
 %endif
 	-Dshared-glapi=true \
 %if_enabled egl
@@ -463,14 +464,19 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %ifarch %armsoc_arches
 %files -n xorg-dri-armsoc -f xorg-dri-armsoc.list
 %_libdir/libvulkan_freedreno.so
+%_libdir/libvulkan_broadcom.so
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/freedreno_icd*.json
+%_datadir/vulkan/icd.d/broadcom_icd*.json
 %endif
 
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Dec 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.3.0-alt1
+- 20.3.0
+
 * Tue Nov 24 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.2.3-alt1
 - 20.2.3
 
