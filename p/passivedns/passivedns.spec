@@ -2,7 +2,7 @@
 
 Name: passivedns
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: A network sniffer that logs all DNS server replies for use in a passive DNS setup
 License: GPLv2
 Group: Monitoring
@@ -129,6 +129,9 @@ EOF
 %_bindir/*.pl
 
 %changelog
+* Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt2
+- Fixed build with -fno-common.
+
 * Wed Feb 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1
 - Updated to upstream version 1.2.1.
 - Removed %%ubt macro from release.
