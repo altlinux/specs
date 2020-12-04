@@ -5,7 +5,7 @@
 
 Name: rpm-build-vm
 Version: 1.18
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -119,7 +119,10 @@ install -D -p -m 0755 filetrigger %buildroot%_rpmlibdir/vm-run.filetrigger
 
 %pre run
 # Only allow to install inside of hasher.
-[ -d /.host -a -d /.in -a -d /.out ]
+[ -d /.host -a -d /.in -a -d /.out ] || {
+        echo >&2 'rpm-build-vm-run is not allowed outside hasher environments'
+        exit 1
+}
 
 %files
 
@@ -168,6 +171,9 @@ vm-run --verbose uname -a
 vm-run --verbose --overlay=ext4 uname -a
 
 %changelog
+* Fri Dec 04 2020 Vitaly Chikunov <vt@altlinux.org> 1.18-alt2
+- Warning if there is attempt to install rpm-build-vm-run outside of hasher.
+
 * Sat Nov 14 2020 Vitaly Chikunov <vt@altlinux.org> 1.18-alt1
 - Support to find and run uncompressed vmlinux kernels.
 
