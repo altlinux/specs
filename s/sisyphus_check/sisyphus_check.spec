@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.61
+Version: 0.8.62
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Sat Dec 05 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.62-alt1
+- 160-check-static: new check, disallows packages containing
+  both .so symlinks and corresponding .a files.
+
 * Fri Nov 13 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.61-alt1
 - 220-check-python:
   + enhance the check whether python2 module packages have python3 requirements;
