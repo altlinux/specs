@@ -9,7 +9,7 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.8.0
+Version: 0.8.3
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -90,6 +90,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Thu Nov 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
