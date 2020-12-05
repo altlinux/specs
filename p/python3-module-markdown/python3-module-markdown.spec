@@ -1,10 +1,11 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 %define modname markdown
 
 %def_enable check
 
 Name: python3-module-%modname
-Version: 3.2.2
+Version: 3.3.3
 Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
@@ -12,8 +13,12 @@ Group: Development/Python3
 License: BSD-3-Clause
 Url: http://pypi.python.org/pypi/Markdown/
 
-#VCS: git://github.com/waylan/Python-Markdown.git
-Source: https://pypi.io/packages/source/M/Markdown/Markdown-%{version}.tar.gz
+%if_disabled snapshot
+Source: https://pypi.io/packages/source/M/Markdown/Markdown-%version.tar.gz
+%else
+Vcs: git://github.com/waylan/Python-Markdown.git
+Source: Markdown-%version.tar
+%endif
 
 BuildArch: noarch
 Requires: python3-module-Pygments
@@ -51,9 +56,10 @@ This package contains documentation for Markdown.
 %python3_install
 mv %buildroot%_bindir/%{modname}_py \
 	%buildroot%_bindir/%{modname}_py3
+
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-nosetests3 -v
+%__python3 -m unittest discover tests
 %buildroot%_bindir/%{modname}_py3 README.md >README.html
 
 %files
@@ -62,6 +68,9 @@ nosetests3 -v
 
 
 %changelog
+* Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
+- updated to 3.3.3-4-g8e7528f
+
 * Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
