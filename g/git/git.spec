@@ -1,6 +1,6 @@
 Name: git
 Version: 2.29.2
-Release: alt1
+Release: alt2
 
 Summary: Git core and tools
 License: GPLv2
@@ -10,17 +10,18 @@ Url: https://git-scm.com/
 # git://git.altlinux.org/gears/g/git.git
 Source: %name-%version-%release.tar
 
-%def_enable curl
-%def_enable expat
+%def_disable devel
 %def_with arch
+%def_with curl
 %def_with cvs
-%def_with email
-%def_with tk
-%def_with gui
 %def_with doc
+%def_with email
+%def_with expat
 %def_with gitweb
+%def_with gui
 %def_without python
 %def_with svn
+%def_with tk
 
 # List of architectures worthy of running the test suite.
 %define check_arches x86_64 %ix86
@@ -39,8 +40,8 @@ Requires: %name-core = %EVR, perl-Git = %EVR
 BuildRequires: hardlink, libssl-devel, perl-devel, perl-podlators, perl(Error.pm), zlib-devel >= 0:1.2
 %{!?_without_python:BuildRequires: python-modules-encodings >= 0:2.4}
 %{!?_without_cvs:BuildRequires: cvs perl(DBI.pm)}
-%{!?_disable_curl:BuildRequires: libcurl-devel}
-%{!?_disable_expat:BuildRequires: libexpat-devel}
+%{!?_without_curl:BuildRequires: libcurl-devel}
+%{!?_without_expat:BuildRequires: libexpat-devel}
 %{!?_without_email:BuildRequires: perl(Mail/Address.pm) perl(Net/SMTP/SSL.pm) perl(Term/ReadLine.pm)}
 %{!?_without_svn:BuildRequires: perl(Encode.pm) perl(Memoize.pm) perl(SVN/Core.pm) perl(Term/ReadKey.pm) perl(YAML/Any.pm) subversion subversion-server-common}
 %{!?_without_doc:BuildRequires: asciidoc > 0:6.0.3, xmlto}
@@ -292,8 +293,8 @@ libdir = %_libdir
 mandir = %_mandir
 htmldir = %pkgdocdir
 NO_PERL_CPAN_FALLBACKS = 1
-%{?_disable_curl:NO_CURL = 1}
-%{?_disable_expat:NO_EXPAT = 1}
+%{?_without_curl:NO_CURL = 1}
+%{?_without_expat:NO_EXPAT = 1}
 %{?_without_python:NO_PYTHON = 1}
 %{?_without_python:SCRIPT_PYTHON_INS = }
 EOF
@@ -311,10 +312,11 @@ touch git-gui/credits
 
 %install
 %makeinstall_std \
-	install-lib \
+	%{?_enable_devel:install-lib} \
 	%{!?_without_doc:install-man install-html}
 %makeinstall_std %{!?_without_doc:install-doc} -C contrib/subtree
 
+%if_enabled devel
 mkdir -p %buildroot%_includedir/git
 find -name \*.d -print0 |
 	xargs -0 sed -n 's/^\([^:[:space:]]*\.h\)[[:space:]]*:.*/\1/p' -- |
@@ -326,6 +328,7 @@ tr / '\n' < headers.list |
 	sort -u |
 	xargs -i ln -s . %buildroot%_includedir/git/'{}'
 xargs install -pm644 -t %buildroot%_includedir/git -- < headers.list
+%endif #devel
 
 chmod a-x %buildroot%gitexecdir/git-sh-setup
 install -pDm644 contrib/completion/git-completion.bash \
@@ -366,6 +369,7 @@ rm -r %buildroot%_datadir/git-core/contrib/subtree
 %{?_without_arch:rm %buildroot%gitexecdir/git-archimport}
 %{?_without_email:rm %buildroot%gitexecdir/git-*email*}
 %{?_without_svn:rm %buildroot%gitexecdir/git-*svn*}
+%{?_enable_devel:rm %buildroot%_libdir/common-main.o}
 
 # Relocate hooks, convert template hooks to symlinks.
 pushd %buildroot%_datadir/git-core/templates/hooks
@@ -500,10 +504,11 @@ popd
 %endif #doc
 %endif #gitweb
 
+%if_enabled devel
 %files -n libgit-devel
-%exclude %_libdir/common-main.o
 %_libdir/lib*
 %_includedir/*
+%endif
 
 %files doc
 %pkgdocdir/
@@ -523,6 +528,11 @@ popd
 %endif #doc
 
 %changelog
+* Fri Dec 04 2020 Dmitry V. Levin <ldv@altlinux.org> 2.29.2-alt2
+- Dropped libgit-devel subpackage:
+  libgit.a is not a publicly usable library,
+  its last user was parsecvs removed from Sisyphus 8 years ago.
+
 * Thu Oct 29 2020 Dmitry V. Levin <ldv@altlinux.org> 2.29.2-alt1
 - 2.25.4 -> 2.29.2.
 
