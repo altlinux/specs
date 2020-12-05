@@ -1,7 +1,8 @@
+%def_disable snapshot
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 4.2.0
+Version: 20.12.0
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -9,20 +10,27 @@ License: GPLv3
 Group: Graphical desktop/KDE
 Url: https://www.kde.org/applications/system/kdepartitionmanager/
 
-# VCS: https://github.com/KDE/partitionmanager.git
-Source: https://download.kde.org/stable/partitionmanager/%version/src/%name-%version.tar.xz
+%if_disabled snapshot
+#Source: https://github.com/KDE/%name/archive/v%version/%name-%version.tar.gz
+Source: https://download.kde.org/stable/release-service/%version/src/%name-%version.tar.xz
+%else
+Vcs: https://github.com/KDE/partitionmanager.git
+Source: %name-%version.tar
+%endif
 
 %K5init no_altplace appdata
 
-Requires: qca-qt5-ossl lvm2 cryptsetup
-
 %define qt_ver 5.7.0
-%define kpmcore_ver 4.2.0
+%define kpmcore_ver %version
+
+Requires: libkpmcore >= %kpmcore_ver
+Requires: qca-qt5-ossl lvm2 cryptsetup
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel >= %qt_ver
 BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kdbusaddons-devel
+BuildRequires: kf5-kdoctools
 BuildRequires: libkpmcore-devel >= %kpmcore_ver libatasmart-devel libblkid-devel
 BuildRequires: libappstream-glib-devel
 
@@ -57,6 +65,9 @@ file systems.
 %doc README*
 
 %changelog
+* Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 20.12.0-alt1
+- 20.12.0
+
 * Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
