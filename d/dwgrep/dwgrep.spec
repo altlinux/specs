@@ -4,7 +4,7 @@
 
 Name: dwgrep
 Version: 0.4
-Release: alt1
+Release: alt2
 Summary: A tool for querying Dwarf (debuginfo) graphs
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
 Group: Development/Debuggers
@@ -43,6 +43,9 @@ a different path through the graph.
 %install
 %cmakeinstall_std VERBOSE=1
 
+rm -rf %buildroot%_includedir/libzwerg
+rm -rf %buildroot%_libdir/libzwerg.so
+
 %check
 # %%cmake_buidl cannot be used due to newline prefix.
 LD_LIBRARY_PATH=%buildroot%_libdir \
@@ -51,10 +54,12 @@ LD_LIBRARY_PATH=%buildroot%_libdir \
 %files
 %doc AUTHORS COPYING COPYING-LGPLV3 NEWS README
 %_bindir/dwgrep
-%_includedir/libzwerg
-%_libdir/libzwerg.so*
+%_libdir/libzwerg.so.*
 %_man1dir/dwgrep.1.xz
 
 %changelog
+* Sat Dec 05 2020 Vitaly Chikunov <vt@altlinux.org> 0.4-alt2
+- Do not package libzwerg development files.
+
 * Thu Dec 03 2020 Vitaly Chikunov <vt@altlinux.org> 0.4-alt1
 - First import of 0.4-13-g24b93c3 (2020-11-20).
