@@ -1,12 +1,11 @@
 %define gst_api_ver 1.0
 %def_disable audacious
 %def_enable gstreamer
-# not ready for 3.10
 %def_enable gtk3
 
 Name: mp3splt-gtk
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: GTK3 GUI for libmp3splt
 License: GPLv2+
@@ -14,6 +13,7 @@ Group: Sound
 Url: http://mp3splt.sourceforge.net/mp3splt_page/home.php
 
 Source: http://prdownloads.sourceforge.net/mp3splt/%name-%version.tar.gz
+Patch: %name-0.9.2-fno-common.patch
 
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-ugly%gst_api_ver
 BuildRequires: libmp3splt-devel >= 0.9.2 libltdl-devel
@@ -36,6 +36,7 @@ mp3splt-gtk features :
 
 %prep
 %setup
+%patch -p1 -b .gcc10
 
 %build
 %configure %{subst_enable audacious} \
@@ -54,6 +55,9 @@ mp3splt-gtk features :
 %_man1dir/%name.1*
 
 %changelog
+* Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt2
+- fixed build with gcc10/-fno-common
+
 * Sat Jul 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
 - 0.9.2
 
