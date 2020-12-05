@@ -1,8 +1,7 @@
 
 Name: espeak
 Version: 1.44.05
-Release: alt4
-Packager: Michael Pozhidaev <msp@altlinux.org>
+Release: alt5
 
 Summary:%name is a software speech synthesizer for English and other languages
 Summary(ru_RU.UTF-8): Программный синтезатор речи для английского и других языков 
@@ -130,10 +129,13 @@ cd ..
 
 %files -n lib%name-devel
 %_includedir/*
-%_libdir/libespeak.a
 %_libdir/libespeak.so
 
 %changelog
+* Sat Dec 05 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.44.05-alt5
+- libespeak-devel: Do not pack libespeak.a to pass sisyphus_check
+- spec: Remove packager field.
+
 * Mon Aug 29 2011 Michael Pozhidaev <msp@altlinux.ru> 1.44.05-alt4
 - Experimental build with libao instead of portaudio
 
