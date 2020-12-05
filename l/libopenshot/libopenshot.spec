@@ -8,7 +8,7 @@
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -23,6 +23,7 @@ Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.g
 Source: %name-%version.tar
 %endif
 Patch: libopenshot-0.2.4-alt-return-type.patch
+Patch1: libopenshot-0.2.5-up-gcc10.patch
 
 %define __python %nil
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
@@ -62,6 +63,7 @@ This package provides Python3 bindings for OpenShot Video Library.
 %prep
 %setup
 %patch -b .return-type
+%patch1 -p1 -b .gcc10
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) -DNDEBUG
@@ -89,6 +91,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/*
 
 %changelog
+* Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt2
+- fixed build with gcc10/-fno-common (upstream patch)
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
 - 0.2.5
 
