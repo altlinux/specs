@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 # Based on https://github.com/iovisor/bcc/blob/master/SPECS/bcc.spec
 
@@ -20,7 +21,7 @@
 
 Name:		bcc
 Version:	0.16.0
-Release:	alt2
+Release:	alt3
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -35,19 +36,6 @@ Source:		%name-%version.tar
 Source1:	libbpf.tar
 
 ExclusiveArch:	x86_64 aarch64 ppc64le
-
-# Note: clang-10.0 have tests failed:
-#  # /usr/src/tmp/bcc-buildroot/usr/share/bcc/tools/cpudist 1 1
-#  Traceback (most recent call last):
-#    File "/usr/src/tmp/bcc-buildroot/usr/share/bcc/tools/cpudist", line 15, in <module>
-#      from bcc import BPF
-#    File "/usr/src/tmp/bcc-buildroot/usr/lib64/python3/site-packages/bcc/__init__.py", line 26, in <module>
-#      from .libbcc import lib, bcc_symbol, bcc_symbol_option, bcc_stacktrace_build_id, _SYM_CB_TYPE
-#    File "/usr/src/tmp/bcc-buildroot/usr/lib64/python3/site-packages/bcc/libbcc.py", line 17, in <module>
-#      lib = ct.CDLL("libbcc.so.0", use_errno=True)
-#    File "/usr/lib64/python3.8/ctypes/__init__.py", line 373, in __init__
-#      self._handle = _dlopen(self._name, mode)
-#  OSError: /usr/src/tmp/bcc-buildroot/usr/lib64/libbcc.so.0: undefined symbol: _ZN4llvm19RTDyldMemoryManager16registerEHFramesEPhmm
 
 %define clang_version 10.0
 
@@ -103,29 +91,37 @@ Shared Library for BPF Compiler Collection (BCC)
 %package -n libbcc-devel
 Summary:	BPF Compiler Collection (BCC) (devel package)
 Group:		Development/C
-Requires:	libbcc = %version-%release
+Requires:	libbcc = %EVR
 AutoReq:	nocpp
 %description -n libbcc-devel
 Includes and pkg-config for developing BCC programs
 
+%package -n libbcc-devel-static
+Summary:	BPF Compiler Collection (BCC) (static libs)
+Group:		Development/C
+Requires:	libbcc-devel = %EVR
+AutoReq:	nocpp
+%description -n libbcc-devel-static
+Static libraries for developing BCC programs
+
 %package -n python3-module-bcc
 Summary:	Python bindings for BPF Compiler Collection (BCC)
 Group:		Development/Python
-Requires:	libbcc = %version-%release
+Requires:	libbcc = %EVR
 %description -n python3-module-bcc
 Python bindings for BPF Compiler Collection (BCC)
 
 %package -n bcc-lua
 Summary:	Standalone tool to run BCC tracers written in Lua
 Group:		Development/Other
-Requires:	libbcc = %version-%release
+Requires:	libbcc = %EVR
 %description -n bcc-lua
 Standalone tool to run BCC tracers written in Lua
 
 %package -n bcc-tools
 Summary:	Command line tools for BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
-Requires:	python3-module-bcc = %version-%release
+Requires:	python3-module-bcc = %EVR
 %description -n bcc-tools
 Command line tools for BPF Compiler Collection (BCC)
 
@@ -187,6 +183,9 @@ rename '' bcc- *.gz
 popd
 rm -rf %buildroot/usr/share/bcc/man
 
+# Lib with unknown purpose.
+rm -rf %buildroot%_bindir/libbcc-loader-static.a
+
 %check
 # Simple smoke test, only if KVM is enabled
 # (Will fail on ppc64le w/o KVM).
@@ -198,12 +197,16 @@ fi
 
 %files -n libbcc
 %doc LICENSE.txt
-%_libdir/lib*
+%_libdir/lib*.so.*
 
 %files -n libbcc-devel
 %doc FAQ.txt LINKS.md README.md
+%_libdir/lib*.so
 %_libdir/pkgconfig/*.pc
-%_includedir/bcc/
+%_includedir/bcc
+
+%files -n libbcc-devel-static
+%_libdir/lib*.a
 
 %files -n python3-module-bcc
 %python3_sitelibdir/bcc*
@@ -219,6 +222,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Sat Dec 05 2020 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt3
+- Spin off -static package and fix wrongly packaged .a libs.
+- Do not package libbcc-loader-static.a.
+
 * Mon Aug 24 2020 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt2
 - Update to bcc v0.16.0 (2020-08-22), libbpf v0.1.0 (2020-08-18).
 - spec: Fix debuginfo packages.
