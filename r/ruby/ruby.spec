@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt1.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -21,8 +21,9 @@ Vcs:           https://github.com/ruby/ruby.git
 Source0:       %name-%version.tar
 Source3:       fakeruby.sh
 Source4:       miniruby.sh
-BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
+BuildRequires(pre): rpm-macros-ruby >= 1:1.0.0
 BuildRequires(pre): rpm-macros-valgrind
+BuildRequires: /usr/bin/setup.rb
 BuildRequires: doxygen
 BuildRequires: groff-base
 BuildRequires: libdb4-devel
@@ -33,12 +34,10 @@ BuildRequires: libreadline-devel
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libyaml-devel
-BuildRequires: libgit-devel
 %ifarch %valgrind_arches
 BuildRequires: valgrind-devel
 %endif
 BuildRequires: gcc-c++
-%{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:1.0.0}
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %EVR}
 
 %gem_replace_version rake ~> 13.0
@@ -95,7 +94,6 @@ Requires:      libgdbm-devel
 Requires:      libncursesw-devel
 Requires:      zlib-devel
 Requires:      libyaml-devel
-Requires:      libgit-devel
 %ifarch %valgrind_arches
 Requires:      valgrind-devel
 %endif
@@ -432,6 +430,10 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Sat Dec 05 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.2-alt1.1
+- - by dropping dep to libgit, and build req to rpm-build-ruby replaced with
+    only macros
+
 * Mon Nov 16 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.2-alt1
 - ^ ruby 2.7.1 -> 2.7.2
 
