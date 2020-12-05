@@ -1,5 +1,5 @@
 Name: weechat
-Version: 2.8
+Version: 3.0
 Release: alt1
 
 Summary: fast, light & extensible IRC client
@@ -21,10 +21,8 @@ BuildRequires: lua-devel
 BuildRequires: libcurl-devel
 BuildRequires: zlib-devel
 BuildRequires: libncursesw-devel
-BuildRequires: libruby-devel
 BuildRequires: perl-devel
 BuildRequires: python3-devel
-BuildRequires: source-highlight
 BuildRequires: tcl-devel
 
 Obsoletes: weechat-plugin-ruby <= 2.6-alt1
@@ -78,7 +76,7 @@ Group: Networking/IRC
 Requires: %name = %version-%release
 
 %description plugin-tcl
-This package contains ruby plugin for weechat.
+This package contains tcl plugin for weechat.
 
 %prep
 %setup
@@ -123,7 +121,7 @@ find %buildroot -name '*.a' -delete
 %_bindir/*
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
-%_niconsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 %_libdir/%name/plugins/alias.so
 %_libdir/%name/plugins/buflist.so
 %_libdir/%name/plugins/charset.so
@@ -155,6 +153,9 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Sat Dec 05 2020 Alexey Gladkov <legion@altlinux.ru> 3.0-alt1
+- New version (3.0)
+
 * Thu Apr 09 2020 Alexey Gladkov <legion@altlinux.ru> 2.8-alt1
 - New version (2.8)
 - Drop weechat-plugin-ruby.
