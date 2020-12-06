@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20201123
+Version: 20201130
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,12 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Dec 06 2020 Cronbuild Service <cronbuild@altlinux.org> 20201130-alt1
+- upstream changes (GIT 7455a36):
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + i915: Add GuC firmware v49.0.1 for all platforms (thx John Harrison)
+  + i915: Remove duplicate KBL DMC entry (thx John Harrison)
+
 * Mon Nov 30 2020 Cronbuild Service <cronbuild@altlinux.org> 20201123-alt1
 - upstream changes (GIT b362fd4):
   + Mellanox: Add new mlxsw_spectrum firmware xx.2008.2018 (thx Petr Machata)
