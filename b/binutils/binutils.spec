@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.35.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -165,6 +165,9 @@ done
 %install
 %makeinstall_std tooldir=%_prefix install-info
 
+# Remove static libctf libraries.
+rm %buildroot%_libdir/libctf*.a
+
 # Install ld.default and ld wrapper.
 ln -snf ld.bfd %buildroot%_bindir/ld.default
 install -pm755 %_sourcedir/ld.sh %buildroot%_bindir/ld
@@ -300,6 +303,9 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Sun Dec 06 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.35.1-alt2
+- binutils-devel: removed libctf.a and libctf-nobfd.a files.
+
 * Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.1-alt1
 - Updated to 2.35.1 20201123.
 - enabled features in objdump and readelf:
