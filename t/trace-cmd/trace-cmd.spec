@@ -4,7 +4,7 @@
 
 Name:     trace-cmd
 Version:  2.9.1
-Release:  alt4
+Release:  alt5
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
 License:  GPL-2.0 and LGPL-2.1
@@ -167,6 +167,9 @@ vm-run --cpu=2 '
 %_datadir/polkit-1/actions/org.freedesktop.kshark-record.policy
 
 %changelog
+* Sun Dec 06 2020 Vitaly Chikunov <vt@altlinux.org> 2.9.1-alt5
+- Enable pkexec (RM#24461) in a way complatible with old cmake (for p9).
+
 * Sat Dec 05 2020 Vitaly Chikunov <vt@altlinux.org> 2.9.1-alt4
 - Allow connect from pkexec'd process (RM#24461).
 
