@@ -1,23 +1,24 @@
 %define vrs	3.1
-%define tstamp 	20190324
+%define tstamp 	20191231
 #def_enable Werror
 
 Name: libedit3
 Version: %vrs.%tstamp
 Release: alt1
 
-Summary: libedit is a replacement or alternative to the GNU readline commandline editing functionality.
-License: BSD
+Summary: The BSD editline library
+License: BSD-3-Clause
 Group: System/Libraries
-Url: http://www.thrysoee.dk/editline/
+Url: https://www.thrysoee.dk/editline/
 
-# Repacked http://www.thrysoee.dk/editline/libedit-%tstamp-%vrs.tar.gz
+# Repacked https://www.thrysoee.dk/editline/libedit-%tstamp-%vrs.tar.gz
 Source: libedit-%tstamp-%vrs.tar
 
 Patch0: libedit-alt-use-OpenBSD-soname.patch
+Patch1: libedit-alt-configure-AC_SYS_LARGEFILE.patch
 
 # Automatically added by buildreq on Tue Feb 15 2011
-BuildRequires: groff-base libncurses-devel
+BuildRequires: groff-base libtinfo-devel
 
 %description
 This is an autotool- and libtoolized port of the NetBSD Editline
@@ -38,17 +39,20 @@ command line interface for users.
 %prep
 %setup -q -n libedit-%tstamp-%vrs
 %patch0 -p2
+%patch1 -p2
+rm aclocal.m4 m4/*.m4
 
 %build
 %add_optflags %optflags_warnings -Wunused-function -Wunused-label -Wunused-variable -Wunused-value
 %autoreconf
 %configure \
 	--disable-examples \
+	--disable-static \
 #
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 # In 20160618-3.1 some manpages dropped prefix for some reason.
 cd %buildroot%_man3dir
@@ -57,19 +61,27 @@ cd %buildroot%_man3dir
 	done
 cd -
 
+%set_verify_elf_method strict
+%define _stripped_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
+
 %files
 %_libdir/*.so.*
-
-%files -n libedit-devel
-%_libdir/*.a
-%_libdir/*.so
-%_libdir/pkgconfig/libedit.pc
-%_includedir/*
-%_man3dir/*
 %_man5dir/*
 %_man7dir/*
 
+%files -n libedit-devel
+%_libdir/*.so
+%_pkgconfigdir/libedit.pc
+%_includedir/*
+%_man3dir/*
+
 %changelog
+* Sun Dec 06 2020 Dmitry V. Levin <ldv@altlinux.org> 3.1.20191231-alt1
+- 20190324-3.1 -> 20191231-3.1.
+- libedit-devel: removed libedit.a.
+- Moved user manpages from libedit-devel to libedit3.
+
 * Fri Aug 23 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20190324-alt1
 - Updated to 20190324-3.1.
 
