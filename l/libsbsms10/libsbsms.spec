@@ -3,7 +3,7 @@
 Summary: C++ library for subband sinusoidal modeling time stretching and pitch scaling
 Name: libsbsms%major
 Version: 2.0.2
-Release: alt3
+Release: alt4
 License: GPLv2
 Group: System/Libraries
 URL: http://sbsms.sourceforge.net/
@@ -14,6 +14,9 @@ Patch2: ALT-e2k-fft.patch
 Patch3: GENTOO-cflags.patch
 Patch4: ALT-audacity-bug-955.patch
 Patch5: ALT-audacity-bug-1808.patch
+# Required for --enable-multithreaded
+# https://bugzilla.audacityteam.org/show_bug.cgi?id=2492
+Patch6:	ALT-audacity-bug-2492.patch
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(sndfile)
@@ -38,8 +41,11 @@ Development files of the C++ library for subband sinusoidal modeling time stretc
 %patch3 -p1
 %patch4 -p3
 %patch5 -p3
+%patch6 -p3
 
 %build
+# for multithreading
+export LIBS="-lpthread"
 %autoreconf
 
 %configure \
@@ -50,12 +56,7 @@ Development files of the C++ library for subband sinusoidal modeling time stretc
 %else
 	--disable-sse \
 %endif
-	--disable-multithreaded
-# According to Gentoo's ebuild
-# (https://gitweb.gentoo.org/repo/gentoo.git/tree/media-libs/libsbsms),
-# multithreaded build segfaults.
-# Multithereding is also disabled by default in both
-# sbsms's upstream and Audacity's built-in sbsms.
+	--enable-multithreaded
 	
 %make_build
 
@@ -75,6 +76,9 @@ Development files of the C++ library for subband sinusoidal modeling time stretc
 
 #--------------------------------------
 %changelog
+* Sun Dec 06 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.0.2-alt4
+- Fixed and enabled multithreded processing
+  https://bugzilla.audacityteam.org/show_bug.cgi?id=2492
 
 * Sun Nov 24 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.0.2-alt3
 - Port from Audacity commit df1d9a0: ALT-audacity-bug-1808.patch
