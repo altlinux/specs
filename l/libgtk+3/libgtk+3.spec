@@ -16,15 +16,15 @@
 %def_enable wayland
 # broadway (HTML5) gdk backend
 %def_enable broadway
-%def_enable cloudprint
+%def_disable cloudprint
 %def_disable cloudproviders
 %def_disable tracker3
 %def_enable installed_tests
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.23
-Release: alt2
+Version: %ver_major.24
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -464,6 +464,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Sun Dec 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.24-alt1
+- 3.24.24
+
 * Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.23-alt2
 - temporarily disabled tracker3 support for GNOME-3.38 to avoid
   conflict with tracker-2.0 applications (gnome-{books,documents})
