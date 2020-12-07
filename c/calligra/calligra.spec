@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.2.1
-Release: alt1
+Release: alt2
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -36,7 +36,7 @@ Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 Patch103: alt-disable-products.patch
 
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: kf5-attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python rpm-build-ruby
+BuildRequires: kf5-attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-declarative-devel qt5-script-devel qt5-x11extras-devel
 #BuildRequires: qt5-quick1-devel
@@ -414,6 +414,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Mon Dec 07 2020 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt2
+- clean build requries (closes: 39382)
+
 * Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt1
 - new version
 
