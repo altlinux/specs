@@ -3,17 +3,19 @@
 %def_without debug
 
 Name: libnfc-nci
-Version: 2.4
-Release: alt2.dev.git20190613
+Version: 2.4.1
+Release: alt1
 
 Summary: Linux NFC stack for NCI based NXP NFC Controllers.
-License: Apache 2.0
+License: Apache-2.0
 Group: System/Libraries
 
 Url: https://www.nxp.com/docs/en/application-note/AN11697.pdf
 # Git: https://github.com/NXPNFCLinux/linux_libnfc-nci
 Source: %name-%version.tar
 Source1: 42-pn5xx_i2c.rules
+
+Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Jul 25 2019
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libstdc++-devel perl pkg-config python-base python-modules sh4
@@ -47,6 +49,7 @@ of libnfc-nci.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 ./bootstrap
@@ -98,6 +101,11 @@ install -pDm644 %SOURCE1 %buildroot%_udevrulesdir/42-pn5xx_i2c.rules
 %_udevrulesdir/*.rules
 
 %changelog
+* Mon Dec 07 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.4.1-alt1
+- fix FTBFS by GCC10 with default -fno-common
+- switch to build from tag R2.4.1 which is exactly the same as R2.4+git20190613
+- fix license tag
+
 * Thu Nov 07 2019 Michael Shigorin <mike@altlinux.org> 2.4-alt2.dev.git20190613
 - E2K: explicit -std=c++11
 - minor spec cleanup
