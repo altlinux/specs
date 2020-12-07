@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method textrel=relaxed
 
 ExclusiveArch: %ix86 x86_64 
@@ -14,7 +16,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name: warsow
 Version: 2.1.2
-Release: alt1
+Release: alt2
 
 Summary: Free online multiplayer competitive FPS based on the Qfusion engine.
 License: GPLv2
@@ -29,6 +31,7 @@ Source3: %{name}48.png
 
 Patch1: %name-fedora-build.patch
 Patch2: %name-fedora-paths.patch
+Patch3: %name-alt-fno-common.patch
 
 Requires: warsow-data = %version
 
@@ -47,6 +50,7 @@ the streets.
 %setup -q -n %{name}_21_sdk
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 sed -i -e "/fs_basepath =/ s:\.:%_libdir/%name:" source/qcommon/files.c
 
@@ -59,16 +63,15 @@ dos2unix docs/license.txt
 dos2unix docs/sourcecode_quickstart.txt
 
 %build
-mkdir -p source/cmake_build
-pushd source/cmake_build
+pushd source
 
-cmake \
+%cmake \
 	-DQFUSION_GAME=Warsow \
 	-DUSE_SDL2=YES \
 	-DCMAKE_BUILD_TYPE=Debug \
-	..
+	%nil
 
-%make
+%cmake_build
 
 popd
 
@@ -96,12 +99,14 @@ ln -sf %_datadir/warsow/basewsw %buildroot%_libdir/warsow/basewsw
 %files
 %doc docs/*
 %_bindir/*
-%dir %_libdir/warsow
-%_libdir/warsow/
+%_libdir/warsow
 %_desktopdir/warsow.desktop
 %_iconsdir/hicolor/*/apps/warsow.png
 
 %changelog
+* Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.2-alt2
+- Fixed build with -fno-common.
+
 * Thu Aug 21 2018 Pavel Moseev <mars@altlinux.org> 2.1.2-alt1
 - Updated to upstream version 2.1.2
 
