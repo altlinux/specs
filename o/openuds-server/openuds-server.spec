@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt2
+Release: alt3
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -22,7 +22,6 @@ Source10: openuds-httpd.conf
 Source11: openuds-httpd-ssl.conf
 Source12: openuds.logrotate
 Source13: openuds-nginx-sites.conf
-Source14: openuds-nginx-webapps.conf
 Source15: openuds-taskmanager.service
 Source16: openuds-web.service
 Source17: openuds-web.socket
@@ -66,12 +65,12 @@ Group: Networking/WWW
 BuildArch: noarch
 Summary: nginx configs for %name
 Requires: %name = %version-%release
-Requires: nginx nginx-webapps-ssl 
+Requires: nginx
 Requires: python3-module-gunicorn
+Requires: cert-sh-functions
 
 %description nginx
 %summary
-
 
 %prep
 %setup
@@ -93,12 +92,9 @@ install -p -D -m 644 %SOURCE11 %buildroot%apache2_sites_available/openuds-ssl.co
 mkdir -p %buildroot%apache2_sites_enabled
 touch %buildroot%apache2_sites_enabled/openuds.conf
 install -p -D -m 644 %SOURCE12 %buildroot%_logrotatedir/openuds-server
-mkdir -p %buildroot%_sysconfdir/nginx/{sites-enabled.d,webapps-enabled.d,webapps-ssl-enabled.d}
 install -p -D -m 644 %SOURCE13 %buildroot%_sysconfdir/nginx/sites-available.d/openuds.conf
+mkdir -p %buildroot%_sysconfdir/nginx/sites-enabled.d
 touch %buildroot%_sysconfdir/nginx/sites-enabled.d/openuds.conf
-install -p -D -m 644 %SOURCE14 %buildroot%_sysconfdir/nginx/webapps-available.d/openuds.conf
-touch %buildroot%_sysconfdir/nginx/webapps-enabled.d/openuds.conf
-touch %buildroot%_sysconfdir/nginx/webapps-ssl-enabled.d/openuds.conf
 install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/openuds-taskmanager.service
 install -p -D -m 644 %SOURCE16 %buildroot%_unitdir/openuds-web.service
 install -p -D -m 644 %SOURCE17 %buildroot%_unitdir/openuds-web.socket
@@ -119,10 +115,11 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" %_sysco
 
 %post nginx
 %post_service openuds-web
+# Create SSL certificate for HTTPS server
+cert-sh generate nginx-openuds ||:
 
 %preun nginx
 %preun_service openuds-web
-
 
 %files
 %_datadir/openuds
@@ -138,14 +135,15 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" %_sysco
 
 %files nginx
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openuds.conf
-%config(noreplace) %_sysconfdir/nginx/webapps-available.d/openuds.conf
 %ghost %_sysconfdir/nginx/sites-enabled.d/openuds.conf
-%ghost %_sysconfdir/nginx/webapps-enabled.d/openuds.conf
-%ghost %_sysconfdir/nginx/webapps-ssl-enabled.d/openuds.conf
 %_unitdir/openuds-web.service
 %_unitdir/openuds-web.socket
 
 %changelog
+* Mon Dec 07 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt3
+- merge with upstream v3.0 branch (b1c43850908c5c207afa5812edc6c1ce46d8ca78)
+- update nginx config
+
 * Thu Dec 03 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt2
 - move apache config to apache2 package
 - add package with nginx config and service for start django app over gunicorn
