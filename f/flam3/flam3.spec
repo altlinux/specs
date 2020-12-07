@@ -1,5 +1,5 @@
 Name: flam3
-Version: 3.0.1
+Version: 3.1.1
 Release: alt1
 
 Summary: Cosmic Recursive Fractal Flames
@@ -7,12 +7,12 @@ License: GPL
 Group: Graphics
 Url: http://flam3.com/
 
-Packager: Alexandra Panyukova <mex3@altlinux.ru>
 Source: %name-%version.tar.gz
 Patch: flam3-3.0.1-alt-libpng15.diff
 
-# Automatically added by buildreq on Wed Apr 11 2007
-BuildRequires: libjpeg-devel libpng-devel libxml2-devel
+# Automatically added by buildreq on Mon Dec 07 2020 (-bi)
+# optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 perl pkg-config python-base sh4 termutils xz zlib-devel
+BuildRequires: glibc-devel-static libjpeg-devel libpng-devel libxml2-devel
 
 %description
 Flam3 renders fractal flames and manipulates their genomes.
@@ -43,7 +43,7 @@ Static libraries for %name
 
 %prep
 %setup
-%patch -p1
+# #%patch -p1
 
 %build
 %autoreconf
@@ -70,6 +70,9 @@ Static libraries for %name
 %_libdir/lib%name.a
 
 %changelog
+* Mon Dec 07 2020 Motsyo Gennadi <drool@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+
 * Sat Oct 18 2014 Motsyo Gennadi <drool@altlinux.ru> 3.0.1-alt1
 - 3.0.1
 
