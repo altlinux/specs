@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.2.0.76
-Release: alt2.git7ccae23
+Version: 5.2.0.82
+Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,6 +12,7 @@ Url: https://github.com/linuxdeepin/dde-file-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: deepin-file-manager_5.2.0.82_qt5.15.patch
 
 ExcludeArch: armh ppc64le
 
@@ -50,14 +51,16 @@ Deepin desktop environment - desktop module.
 
 %prep
 %setup -n %repo-%version
-# %%patch -p2
+%patch -p2
 
-sed -i 's|lrelease|lrelease-qt5|' dde-desktop/translate_generation.sh
-sed -i 's|lrelease|lrelease-qt5|' dde-file-manager-lib/generate_translations.sh
-sed -i 's|lrelease|lrelease-qt5|' dde-file-manager/generate_translations.sh
-sed -i 's|lrelease|lrelease-qt5|' dde-file-manager-plugins/generate_translations.sh
-sed -i 's|lupdate|lupdate-qt5|' dde-file-manager-lib/update_translations.sh
-sed -i 's|lupdate|lupdate-qt5|' dde-file-manager-plugins/update_translations.sh
+sed -i 's|lrelease|lrelease-qt5|' \
+    dde-desktop/translate_generation.sh \
+    dde-file-manager-lib/generate_translations.sh \
+    dde-file-manager/generate_translations.sh \
+    dde-file-manager-plugins/generate_translations.sh
+sed -i 's|lupdate|lupdate-qt5|' \
+    dde-file-manager-lib/update_translations.sh \
+    dde-file-manager-plugins/update_translations.sh
 
 # sed -i 's|"groups":|"groups"\ :|' dde-file-manager-lib/configure/global-setting-template*.js
 
@@ -72,11 +75,10 @@ sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-m
 sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/ut_dfilestatisticsjob.cpp
 sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
 
-# sed -i 's|-lKF5Codecs|%_K5link/libKF5Codecs.so|' dde-file-manager/dde-file-manager.pro dde-file-manager-lib/dde-file-manager-lib.pro dde-file-manager-daemon/dde-file-manager-daemon.pro
-
 %build
 %qmake_qt5 \
            CONFIG+=nostrip \
+           unix:LIBS+="-L%_libdir -lgio-2.0 -licui18n -lX11" \
            unix:LIBS+="-L%_K5link -lKF5Codecs" \
            QT.KCodecs.libs=%_K5link \
            PREFIX=%prefix \
@@ -119,7 +121,7 @@ sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file
 %_datadir/dbus-1/services/org.freedesktop.FileManager.service
 %_datadir/dbus-1/system-services/com.deepin.filemanager.daemon.service
 %_datadir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
-# %%_unitdir/dde-filemanager-daemon.service
+%_unitdir/dde-filemanager-daemon.service
 %dir %_datadir/deepin/
 %_datadir/deepin/%repo/
 %_datadir/polkit-1/actions/com.deepin.filemanager.daemon.policy
@@ -141,7 +143,7 @@ sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file
 %_libdir/%repo/plugins/previews/*.so
 # Bad elfs detected.
 %exclude %_libdir/%repo/plugins/previews/libdde-video-preview-plugin.so
-%exclude %_libdir/%repo/plugins/previews/libdde-music-preview-plugin.so
+# %%exclude %%_libdir/%%repo/plugins/previews/libdde-music-preview-plugin.so
 
 %files devel
 %_includedir/%repo/
@@ -161,6 +163,9 @@ sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Dec 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.82-alt1
+- New version (5.2.0.82) with rpmgs script.
+
 * Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.76-alt2.git7ccae23
 - Built from git.
 
