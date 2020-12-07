@@ -1,18 +1,18 @@
-Version:	1.5.0
+Version:	1.6.0
 Name:		qosmic
-Release:	alt1.1
+Release:	alt1
 Summary:	Qosmic Fractal Flame Editor
-License: 	GPLv2
+License: 	GPLv3
 Group: 		Graphics
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://code.google.com/p/qosmic/
 Source0:	http://qosmic.googlecode.com/files/%name-%version.tar.bz2
 Source1:	%name.desktop
 Source2:	%name
-Patch0:		%name-1.4.8-alt_dirs.diff
+Patch0:		%name-1.6.0-alt.diff
 Requires:	flam3-palettes
 
-BuildRequires: /usr/bin/convert flam3-palettes flam3-devel-static >= 3.0.1 gcc-c++ libjpeg-devel liblua5.1-devel libqt4-devel libxml2-devel
+BuildRequires: /usr/bin/convert flam3-devel libjpeg-devel libxml2-devel lua-devel qt5-base-devel
 
 %description
 Qosmic is a nifty toy with which you can
@@ -23,8 +23,7 @@ edit and render flam3 fractal images.
 %patch0 -p1
 
 %build
-export PATH=$PATH:%_qt4dir/bin
-qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
 %make_build
 
 %install
@@ -49,6 +48,9 @@ convert -resize 48x48 icons/%name.xpm %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Mon Dec 07 2020 Motsyo Gennadi <drool@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1.1
 - NMU: rebuild with new lua 5.1
 
