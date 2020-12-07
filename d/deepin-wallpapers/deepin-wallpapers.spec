@@ -1,6 +1,6 @@
 Name: deepin-wallpapers
 Version: 1.7.7
-Release: alt1
+Release: alt2
 Summary: Deepin Wallpapers provides wallpapers of DDE
 License: GPL-3.0+
 Group: Graphics
@@ -54,10 +54,13 @@ cp -r image-blur %buildroot%_cachedir/
 %doc README.md
 %doc LICENSE
 %dir %_datadir/backgrounds/deepin/
-%ghost %_datadir/backgrounds/deepin/desktop.jpg
+%_datadir/backgrounds/deepin/desktop.jpg
 %_datadir/wallpapers/deepin/
 %_cachedir/image-blur/
 
 %changelog
+* Mon Dec 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.7.7-alt2
+- Fixed background.
+
 * Wed Oct 14 2020 Leontiy Volodin <lvol@altlinux.org> 1.7.7-alt1
 - Initial build for ALT Sisyphus (thanks archlinux for this spec).
