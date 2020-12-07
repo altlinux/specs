@@ -1,13 +1,13 @@
 %define        pkgname metaclass
 
-Name:          ruby-%pkgname
-Version:       0.0.4
-Release:       alt2
+Name:          gem-%pkgname
+Version:       0.0.4.1
+Release:       alt1
 Summary:       Adds a metaclass method to all Ruby objects
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/floehopper/metaclass
-%vcs           https://github.com/floehopper/metaclass.git
+Vcs:           https://github.com/floehopper/metaclass.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,12 @@ BuildRequires(pre): rpm-build-ruby
 
 %description
 Adds a __metaclass__ method to all Ruby objects.
+
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 
 %package       doc
@@ -35,7 +41,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -53,8 +59,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Dec 07 2020 Pavel Skrylev <majioa@altlinux.org> 0.0.4.1-alt1
+- ^ 0.0.4 -> 0.0.4post
+
 * Thu Aug 01 2019 Pavel Skrylev <majioa@altlinux.org> 0.0.4-alt2
-^ Ruby Policy 2.0
+- > Ruby Policy 2.0
 
 * Mon Aug 20 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.4-alt1.1
 - Rebuild with new Ruby autorequirements.
