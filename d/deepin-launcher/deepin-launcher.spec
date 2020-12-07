@@ -2,7 +2,7 @@
 
 Name: deepin-launcher
 Version: 5.3.0.29
-Release: alt1
+Release: alt2
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -28,14 +28,19 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
+sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 # for Qt 5.15
-%__subst '/include <QPainter>/a #include <QPainterPath>' src/widgets/miniframenavigation.cpp src/widgets/avatar.cpp src/widgets/miniframebutton.cpp
+# sed -i '/include <QPainter>/a #include <QPainterPath>' \
+#    src/widgets/miniframenavigation.cpp src/widgets/avatar.cpp src/widgets/miniframebutton.cpp
+# Fixed background for the launcher.
+sed -i 's|/backgrounds/default_background.jpg|/wallpapers/deepin/desktop.jpg|' \
+    src/boxframe/{backgroundmanager.cpp,boxframe.cpp}
 
 %build
 %cmake_insource \
     -GNinja \
-    -DCMAKE_INSTALL_PREFIX=%_prefix
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DWITHOUT_UNINSTALL_APP=1
 %ninja_build
 
 %install
@@ -52,6 +57,9 @@ Header files and libraries for %name.
 %_includedir/%repo/
 
 %changelog
+* Mon Dec 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.29-alt2
+- Fixed background.
+
 * Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.29-alt1
 - New version (5.3.0.29) with rpmgs script.
 
