@@ -1,6 +1,6 @@
 Name:          foreman
-Version:       1.24.2
-Release:       alt6.2
+Version:       1.24.3.1
+Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -137,6 +137,7 @@ install -Dm0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 # install -Dm0644 %%SOURCE6 %buildroot%_sysconfdir/sysconfig/dynflowd
 # install -Dm0644 %%SOURCE7 %buildroot%_unitdir/dynflowd.service
 install -Dm0755 %SOURCE8 %buildroot%_unitdir/%name.service
+install -Dm0750 %buildroot%_libexecdir/%name/Gemfile %buildroot%_localstatedir/%name/Gemfile
 
 # public www TODO
 mkdir -p %buildroot%webserver_datadir
@@ -149,17 +150,16 @@ install -d %buildroot%_logdir/%name
 # Add the "foreman" user and group
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent passwd _foreman >/dev/null || \
-   %_sbindir/useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
+   %_sbindir/useradd -r -g foreman -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
 exit 0
 
 %post
-#railsctl setup %name
-# %post_service foreman
+%post_service foreman
 # %post_service dynflowd
 
 %preun
 railsctl cleanup %name
-# %preun_service foreman
+%preun_service foreman
 # %preun_service dynflowd
 
 
@@ -180,13 +180,20 @@ railsctl cleanup %name
 %_unitdir/*
 %webserver_datadir/%name
 %attr(750,_foreman,foreman) %_logdir/%name
-# %attr(750,_foreman,foreman) %_localstatedir/%name
+%attr(750,_foreman,foreman) %_localstatedir/%name
 # %_man8dir/*.8*
 
 %files         doc
 %ruby_ridir/*
 
 %changelog
+* Thu Dec 03 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3.1-alt1
+- ^ 1.24.2 -> 1.24.3
+
+* Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6.3
+- > post services for foreman
+- * moving user _foreman's home to /var/lib/foreman
+
 * Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6.2
 - ! spec dep replace for net-ssh gem to 6.x
 - ! spec post script
