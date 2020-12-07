@@ -1,8 +1,8 @@
 %define  oname PlayOnLinux
 
 Name:    playonlinux
-Version: 4.2.10
-Release: alt5
+Version: 4.3.4
+Release: alt1
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -44,6 +44,9 @@ and respectful of the free software.
 
 # fix python shebangs
 find . -type f -print0 |
+    xargs -r0 sed -i 's@!/usr/bin/python@!%__python@' --
+
+find . -type f -print0 |
     xargs -r0 sed -i 's@/usr/bin/env python@%__python@' --
 
 find . -type f -print0 |
@@ -81,6 +84,9 @@ ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 %_libdir/%name/*
 
 %changelog
+* Mon Dec 07 2020 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt1
+- Build new version.
+
 * Tue Aug 25 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.10-alt5
 - Fix FTBFS.
 
