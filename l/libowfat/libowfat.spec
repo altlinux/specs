@@ -1,22 +1,24 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libowfat
-Version: 0.31
+Version: 0.32
 Release: alt1
-
 Summary: Reimplementation of libdjb
-
 License: GPLv2
 Group: System/Libraries
 Url: http://www.fefe.de/libowfat/
 
-Source: %name-%version.tar.bz2
-Patch0: %name-%version-alt-shared.patch
+Source: %name-%version.tar
+Patch0: %name-%version-alt-build-flags.patch
 Patch1: %name-%version-alt-no-dietlibc.patch
 Patch2: %name-%version-alt-no-man.patch
+Patch3: %name-%version-debian-fix-gcc10.patch
+Patch4: %name-%version-alt-fno-common.patch
 
 %package devel
 Summary: Headers and static lib for libowfat development
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description
 This library is a reimplementation of libdjb, which means that it provides
@@ -33,21 +35,34 @@ Install this package if you want do compile applications using the
 %name library.
 
 %prep
-%setup -q
+%setup
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
+%patch4 -p2
 
 %build
 %add_optflags %optflags_shared
-%make havescope.h
-%make_build
+
+%make -f GNUmakefile \
+        havescope.h \
+        CFLAGS="%optflags" \
+        %nil
+
+%make_build -f GNUmakefile \
+        CFLAGS="%optflags" \
+        %nil
 
 %install
+%add_optflags %optflags_shared
+
 make -f GNUmakefile install \
         prefix="%buildroot%prefix" \
         LIBDIR="%buildroot%_libdir" \
-        INCLUDEDIR="%buildroot%_includedir/%name"
+        INCLUDEDIR="%buildroot%_includedir/%name" \
+        CFLAGS="%optflags" \
+        %nil
 
 ln -s libowfat.so.%version %buildroot%_libdir/libowfat.so.0
 ln -s libowfat.so.0 %buildroot%_libdir/libowfat.so
@@ -61,6 +76,10 @@ ln -s libowfat.so.0 %buildroot%_libdir/libowfat.so
 %_includedir/%name/
 
 %changelog
+* Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.32-alt1
+- Updated to upstream version 0.32.
+- Fixed build with -fno-common.
+
 * Mon Jul 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.31-alt1
 - Updated to upstream version 0.31.
 
