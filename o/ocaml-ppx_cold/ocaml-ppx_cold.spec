@@ -3,20 +3,16 @@
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Expands [@cold] into [@inline never][@specialise never][@local never]
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_cold
 
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
-BuildRequires: dune ocaml-base-devel ocaml-migrate-parsetree-devel
-BuildRequires: ocaml-result-devel ocaml-compiler-libs-devel ocaml-ppxlib-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
-
+BuildRequires: dune
+BuildRequires: ocaml-base-devel
+BuildRequires: ocaml-ppxlib-devel
 Source:  %modulename-%version.tar
 
 %description
@@ -35,30 +31,22 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
-%doc README.md
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
+%check
+%dune_check
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
-%_libdir/ocaml/%{modulename}*/*.exe
+%files -f ocaml-files.runtime
+
+%files devel -f ocaml-files.devel
 
 %changelog
+* Mon Dec 07 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- migrated to rpm-build-ocaml 1.4
+- cleanup for spec and BR
+
 * Wed Jul 29 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
