@@ -6,7 +6,7 @@
 
 %define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %define wpa_supplicant_version 0.7.3-alt3
-%define dhcpcd_version 4.0.0
+%define dhcpcd_version 9.0.0
 %define openresolv_version 3.5.4-alt3
 
 %def_enable systemd
@@ -55,7 +55,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.27.91
+Version: 1.28.0
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -76,7 +76,7 @@ Patch: %name-%version-%release.patch
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
-%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python3-module-dbus}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-dbus}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: iproute2 ppp-devel
@@ -89,8 +89,9 @@ BuildRequires: libndp-devel
 BuildRequires: libreadline-devel
 BuildRequires: libaudit-devel
 BuildRequires: libcurl-devel libpsl-devel
-BuildRequires: python-module-pygobject3
-%{?_enable_teamdctl:BuildRequires: libteamdctl-devel libjansson-devel}
+BuildRequires: libjansson-devel
+BuildRequires: python3-module-pygobject3
+%{?_enable_teamdctl:BuildRequires: libteamdctl-devel}
 %{?_enable_nmtui:BuildRequires: libnewt-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
@@ -367,11 +368,6 @@ export LDFLAGS=-pie
 %endif
 	--with-libaudit=yes-disabled-by-default \
 	--with-ofono=no \
-%if_enabled teamdctl
-	--enable-json-validation \
-%else
-	--disable-json-validation \
-%endif
 	--with-libpsl=yes \
 	--enable-firewalld-zone \
 %if_enabled sanitizers
@@ -620,6 +616,28 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Dec 07 2020 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt1
+- dhcpcd: Try to kill dhcpcd w/o protocol option.
+- Conflict with dhcpcd < 9.0.0.
+- dhcpcd: Update pidfile path for dhcpcd-9.x.
+- dhcpcd: Fix pidfile path.
+- dhcpcd: Fix error message.
+- etcnet-alt: No delayed setup for autoconnect property.
+- etcnet-alt: Drop nms-etcnet-alt-common.c.
+- etcnet-alt: Drop unneeded include.
+- etcnet-alt: Rework plugin to simplify it.
+- etcnet-alt: Update tests for previouse commit.
+- etcnet-alt: Drop profiles support.
+- etcnet-alt: Drop dead code.
+- etcnet-alt: Fix tests LDFLAGS.
+- etcnet-alt: Add test for dev type from iface name.
+- etcnet-alt: Drop libudev support.
+- etcnet-alt: Drop debug print.
+- Fix systemd_NR_pidfd_* syscals numbers.
+- Fix build without check.
+- Always build with libjansson-devel.
+- Updated to 1.28.0.
+
 * Thu Oct 22 2020 Mikhail Efremov <sem@altlinux.org> 1.27.91-alt1
 - etcnet-alt: Normalize connection.
 - Set default DNS manager to auto.
