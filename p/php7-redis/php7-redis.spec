@@ -6,7 +6,7 @@
 %define 	real_name	redis
 Name:	 	php7-%php7_extension
 Version:	5.3.1
-Release:	alt1
+Release:	alt1.%php7_version
 Summary:	Client extension for Redis key-value store
 License:	PHP-3.01
 Group:		System/Servers
