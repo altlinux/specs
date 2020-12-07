@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_enable shared
 %def_enable static
 %def_disable Werror
@@ -9,7 +11,7 @@
 %define bname aal
 Name: lib%bname
 Version: 1.0.7
-Release: alt1
+Release: alt2
 Summary: Abstraction library for ReiserFS utilities
 License: GPLv2
 Group: System/Libraries
@@ -24,7 +26,7 @@ It include device abstraction, libc independence code, etc.
 %package devel
 Summary: Headers and libraries for developing with %name
 Group: Development/C
-Requires: %name%{?_disable_shared:-devel-static} = %version-%release
+Requires: %name%{?_disable_shared:-devel-static} = %EVR
 
 %description devel
 This package includes headers and libraries for developing with the
@@ -33,7 +35,7 @@ This package includes headers and libraries for developing with the
 %package devel-static
 Summary: Static libraries for developing with %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package includes static libraries for developing with the %name
@@ -48,18 +50,31 @@ Group: System/Libraries
 %description minimal
 This is a minimal library that provides application abstraction
 mechanism. It include device abstraction, libc independence code, etc.
-%endif
 
 %package minimal-devel
 Summary: Headers and libraries for developing with %name-minimal
 Group: Development/C
-Requires: %name-minimal = %version-%release
-Requires: %name-devel = %version-%release
-Provides: %name-minimal-devel-static = %version-%release
+Requires: %name-minimal = %EVR
+Requires: %name-devel = %EVR
 
 %description minimal-devel
 This package includes the headers and libraries for developing with the
 %name-minimal library.
+%endif
+
+%if_enabled static
+%package minimal-devel-static
+Summary: Static libraries for developing with %name-minimal
+Group: Development/C
+%if_enabled shared
+Requires: %name-minimal = %EVR
+Requires: %name-devel = %EVR
+%endif
+
+%description minimal-devel-static
+This package includes static libraries for developing with the
+%name-minimal library.
+%endif
 %endif
 
 %prep
@@ -76,7 +91,8 @@ sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.am
 	%{subst_enable Werror} \
 	%{subst_enable largefile} \
 	%{subst_enable libminimal} \
-	%{subst_enable_to memory_manager memory-manager}
+	%{subst_enable_to memory_manager memory-manager} \
+	%nil
 
 %make_build
 
@@ -113,13 +129,21 @@ install -m 0644 AUTHORS COPYING CREDITS ChangeLog THANKS %buildroot%_docdir/%nam
 %if_enabled shared
 %files minimal
 /%_lib/%name-minimal.so.*
-%endif
 
 %files minimal-devel
-%_libdir/%name-minimal.*
+%_libdir/%name-minimal.so
+%endif
+
+%if_enabled static
+%files minimal-devel-static
+%_libdir/%name-minimal.a
+%endif
 %endif
 
 %changelog
+* Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt2
+- Split static libraries from %name-minimal-devel into %name-minimal-devel-static.
+
 * Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt1
 - Updated to upstream version 1.0.7.
 
