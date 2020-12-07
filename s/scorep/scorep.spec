@@ -5,7 +5,7 @@
 
 Name: scorep
 Version: 6.0
-Release: alt1
+Release: alt2
 Summary: Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes)
 License: BSD
 Group: Development/Tools
@@ -48,6 +48,19 @@ easy-to-use tool suite for profiling, event trace recording, and
 online analysis of HPC applications.
 
 This package contains development files of Score-P.
+
+%package -n lib%name-devel-static
+Summary: Static libraries of Score-P
+Group: Development/C++
+Requires: lib%name-devel = %EVR
+
+%description -n lib%name-devel-static
+The Score-P (Scalable Performance Measurement Infrastructure for
+Parallel Codes) measurement infrastructure is a highly scalable and
+easy-to-use tool suite for profiling, event trace recording, and
+online analysis of HPC applications.
+
+This package contains static libraries of Score-P.
 
 %package docs
 Summary: Documentation for Score-P
@@ -108,13 +121,18 @@ find %buildroot -type f -name libtool -print -delete
 %_bindir/scorep-config
 %_includedir/*
 %_libdir/*.so
-%_libdir/*.a
 %_libdir/scorep/*.o
+
+%files -n lib%name-devel-static
+%_libdir/*.a
 
 %files docs
 %_docdir/%name
 
 %changelog
+* Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0-alt2
+- Moved static libraries from lib%name-devel into lib%name-devel-static.
+
 * Mon Sep 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0-alt1
 - Updated to upstream version 6.0.
 
