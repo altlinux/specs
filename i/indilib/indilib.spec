@@ -3,7 +3,7 @@
 
 Name: indilib
 Version: 1.7.5
-Release: alt3
+Release: alt4
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -118,11 +118,14 @@ popd
 %files -n lib%shortname-devel
 #%doc src/examples
 %_libdir/*.so
-%_libdir/*.a
+#%_libdir/*.a
 %_includedir/libindi
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Mon Dec 07 2020 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt4
+- don't package static libs into -devel subpackage
+
 * Mon Sep 23 2019 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt3
 - E2K: strip UTF-8 BOM for lcc < 1.24 (thanks mike@alt)
 
