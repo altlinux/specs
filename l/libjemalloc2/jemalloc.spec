@@ -5,7 +5,7 @@
 
 Name: libjemalloc2
 Version: 5.2.0
-Release: alt1
+Release: alt2
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -49,7 +49,6 @@ Starting up wrapper for use %title.
 Summary: Development files, debugging and profiling version of %title
 Group: System/Libraries
 License: BSD
-Requires: google-perftools
 
 %description -n libjemalloc-devel
 Development files, debugging and profiling version of %title
@@ -115,6 +114,9 @@ rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 07 2020 Nikita Ermakov <arei@altlinux.org> 5.2.0-alt2
+- Remove the not needed google-perftools requirement in libjemalloc-devel.
+
 * Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt1
 - Updated to upstream version 5.2.0
 
