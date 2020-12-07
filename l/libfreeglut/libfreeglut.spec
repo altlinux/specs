@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: 3.2.1
-Release: alt2
+Release: alt3
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
@@ -25,6 +25,8 @@ Source: %_name-%version.tar
 %endif
 Patch1: libfreeglut-alt-fix-visibility-hidden.patch
 Patch2: libfreeglut-alt-enable-visibility-hidden.patch
+# b9998bbc1e1c329f6bf69c24606a2be7a4973b8c
+Patch3: freeglut-3.2.1-up-gcc10.patch
 
 Provides: libglut = %version %_name = %version
 Obsoletes: libglut < %version %_name < %version
@@ -71,6 +73,7 @@ license.
 %setup -n %_name-%version
 %patch1 -p3
 %patch2 -p3
+%patch3 -p3
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -119,6 +122,9 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Mon Dec 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt3
+- fixed build with gcc10/-fno-common
+
 * Tue Oct 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt2
 - disabled wayland support (ALT #37367)
 
