@@ -7,7 +7,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.4.12
+Version: 7.4.13
 Release: alt1
 
 %define php7_name      %name
@@ -343,12 +343,11 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 mkdir -p  %buildroot%_rpmlibdir
 cat > %buildroot%_rpmlibdir/89-%name.filetrigger << EOF
 #!/bin/sh
-LC_ALL=C egrep -qs '^%php7_extdir' || exit 0
+LC_ALL=C egrep -qs '^%php7_sysconfdir/.*/php.d|^%php7_extdir' || exit 0
 if [ -x %php7_postin ]; then
     export php_servicedir=%php7_servicedir
     export php_sysconfdir=%php7_sysconfdir
     export php_extconf=%php7_extconf
-    export sapiList=cli
     %php7_postin ||:
 fi
 EOF
@@ -443,6 +442,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Fri Nov 27 2020 Anton Farygin <rider@altlinux.ru> 7.4.13-alt1
+- 7.4.13
+
 * Thu Oct 29 2020 Anton Farygin <rider@altlinux.ru> 7.4.12-alt1
 - 7.4.12
 - filetrigger renamed to 89-php.filetrigger for sync
