@@ -9,8 +9,8 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.094.0
-Release: alt3
+Version: 2.094.2
+Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
 License: BSL-1.0
@@ -37,11 +37,14 @@ BuildRequires: dmd
 BuildRequires: /proc
 
 Provides: libdruntime = %EVR
-Provides: libdruntime-devel = %EVR
-Provides: libphobos = %EVR
-Provides: libphobos-devel = %EVR
 Conflicts: ldc
 Requires: /proc
+
+Requires: libdruntime-devel = %EVR
+Requires: libdruntime-devel-static = %EVR
+Requires: libphobos2 = %EVR
+Requires: libphobos2-devel = %EVR
+Requires: libphobos2-devel-static = %EVR
 
 %description
 The D programming language is an object-oriented, imperative, multi-paradigm
@@ -51,26 +54,54 @@ by that language, it is not a variant of C++. D has redesigned some C++ features
 and has been influenced by concepts used in other programming languages, such as
 Java, Python, Ruby, C#, and Eiffel.
 
-#%package -n libphobos2
-#Summary: Phobos is the standard runtime library that comes with the D language compiler.
-#Group: System/Libraries
+%package -n dmd-devel-common
+Summary: Common development files for D language compiler.
+Group: Development/Other
 
-#%description -n libphobos2
-#Phobos is the standard runtime library that comes with the D language compiler.
+%description -n dmd-devel-common
+Common development files for D language compiler.
 
-#%package -n libphobos2-devel
-#Summary: Phobos is the standard runtime library that comes with the D language compiler.
-#Group: Development/Other
+%package -n libdruntime-devel
+Summary: D runtime development files.
+Group: Development/Other
+Requires: dmd-devel-common = %EVR
 
-#%description -n libphobos2-devel
-#Phobos is the standard runtime library that comes with the D language compiler.
+%description -n libdruntime-devel
+D runtime development files.
 
-#%package -n libphobos2-devel-static
-#Summary: Phobos is the standard runtime library that comes with the D language compiler.
-#Group: Development/Other
+%package -n libdruntime-devel-static
+Summary: Static D runtime development files.
+Group: Development/Other
+Requires: libdruntime-devel = %EVR
 
-#%description -n libphobos2-devel-static
-#Phobos is the standard runtime library that comes with the D language compiler.
+%description -n libdruntime-devel-static
+Static D runtime development files.
+
+%package -n libphobos2
+Summary: Phobos is the standard runtime library that comes with the D language compiler.
+Group: System/Libraries
+Provides: libphobos = %EVR
+
+%description -n libphobos2
+Phobos is the standard runtime library that comes with the D language compiler.
+
+%package -n libphobos2-devel
+Summary: Phobos is the standard runtime library that comes with the D language compiler.
+Group: Development/Other
+Requires: dmd-devel-common = %EVR
+Requires: libphobos2 = %EVR
+Provides: libphobos-devel = %EVR
+
+%description -n libphobos2-devel
+Phobos is the standard runtime library that comes with the D language compiler.
+
+%package -n libphobos2-devel-static
+Summary: Phobos is the standard runtime library that comes with the D language compiler.
+Group: Development/Other
+Requires: libphobos2-devel = %EVR
+
+%description -n libphobos2-devel-static
+Phobos is the standard runtime library that comes with the D language compiler.
 
 %prep
 %setup -b2 -b3 -b4 -n %name
@@ -157,24 +188,34 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_sysconfdir/*
 %_man1dir/*
 %_man5dir/*
-%dir %_includedir/d
-%_includedir/d/core
-%_includedir/d/*.d
-%_libdir/libdruntime.a
 %_libdir/libdruntime.so
 
-#%files -n libphobos2
+%files -n dmd-devel-common
+%dir %_includedir/d
+
+%files -n libdruntime-devel
+%_includedir/d/core
+%_includedir/d/*.d
+
+%files -n libdruntime-devel-static
+%_libdir/libdruntime.a
+
+%files -n libphobos2
 %_libdir/libphobos2.so.*
 
-#%files -n libphobos2-devel
+%files -n libphobos2-devel
 %_libdir/libphobos2.so
 %_includedir/d/std
 %_includedir/d/etc
 
-#%files -n libphobos2-devel-static
+%files -n libphobos2-devel-static
 %_libdir/libphobos2.a
 
 %changelog
+* Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.094.2-alt1
+- Updated to upstream version 2.094.2.
+- Split package into multiple subpackages.
+
 * Mon Oct 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.094.0-alt3
 - Renamed catdoc to dmd-catdoc due to file conflicts (ALT #39060).
 
