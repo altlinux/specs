@@ -1,5 +1,5 @@
 Name: gcc-common
-Version: 1.4.26
+Version: 1.4.27
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -228,6 +228,9 @@ cpp --version
 %endif
 
 %changelog
+* Mon Dec 07 2020 Ivan Savin <svn17@altlinux.org> 1.4.27-alt1
+- Add support buildcache via GCC_USE_BUILDCACHE environment variable.
+
 * Wed Dec 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.26-alt1
 - gcc-common: added lto-dump symlink.
 
