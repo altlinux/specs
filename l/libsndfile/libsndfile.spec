@@ -1,6 +1,6 @@
 Name: libsndfile
 Version: 1.0.30
-Release: alt1
+Release: alt2
 
 Summary: A library to handle various audio file formats
 Group: System/Libraries
@@ -17,6 +17,7 @@ Patch1: libsndfile-1.0.25-zerodivfix.patch
 
 BuildRequires: gcc-c++ libalsa-devel libflac-devel libsqlite3-devel libvorbis-devel libgsm-devel
 BuildRequires: autogen
+BuildRequires: libopus-devel
 # for check
 BuildRequires: python-modules
 
@@ -80,6 +81,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/*.1*
 
 %changelog
+* Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.30-alt2
+- Updated build dependencies for external libraries detection.
+
 * Thu Dec 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.30-alt1
 - Updated to upstream version 1.0.30 (Fixes: CVE-2017-8362, CVE-2017-14245,
   CVE-2017-14246, CVE-2017-14634, CVE-2018-13139, CVE-2018-13419, CVE-2018-19432,
