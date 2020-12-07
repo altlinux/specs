@@ -1,7 +1,7 @@
 %define        pkgname racc
 
 Name:          gem-%pkgname
-Version:       1.5.0
+Version:       1.5.1
 Release:       alt1
 Epoch:         1
 Summary:       Ruby LALR(1) parser generator
@@ -60,7 +60,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --shebang=auto
+%ruby_build --pre=compile --shebang=auto
 
 %install
 %ruby_install
@@ -81,6 +81,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Dec 07 2020 Pavel Skrylev <majioa@altlinux.org> 1:1.5.1-alt1
+- ^ 1.5.0 -> 1.5.1
+- ! restored lost files by adding the compile pre stage
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1:1.5.0-alt1
 - ^ 1.4.15 -> 1.5.0
 - ! spec tags and syntax
