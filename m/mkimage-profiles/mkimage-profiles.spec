@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,23 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Dec 07 2020 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt1
+- Initial feature drm, added Nvidia proprietary driver support
+- Adapted use/repo/main for vm/ targets
+- oem: Added ability to set alterator-setup steps
+- oem: Added use/oem/install target
+- wireless: Update kernel modules for wi-fi
+- armh-skit: Initial feature
+- grub: Drop multiple kernel support
+- stage1: Also add STAGE1_KMODULES
+- bootloader, plymouth: Add splash to BASE_BOOTARGS only when using
+  the plymouth feature
+- tar2fs: Not add EFI partition for all aarch64, armh, but only for
+  those with grub-efi bootloader or VM_BOOTTYPE variable set
+- regular.mk, x11: Initial regular-deepin.iso
+- arm-rpi4: Cleanup
+- grub: Added EFI_BOOTARGS into BOOT/EFI/grub.cfg
+
 * Mon Oct 26 2020 Anton Midyukov <antohami@altlinux.org> 1.4.4-alt1
 - apply server-v 9.1 release patches (thanks shaba@)
 - apply e2k patches (mike@)
