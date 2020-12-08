@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -224,6 +224,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Dec 08 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.2-alt1
+- 2.42.2
+
 * Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
 - 2.42.0 (removed libjasper loader, moved gdk-pixbuf-xlib library
   to a separate repository)
