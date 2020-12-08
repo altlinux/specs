@@ -2,8 +2,8 @@
 %define        confdir        ext/redhat
 
 Name:          gem-%pkgname
-Version:       7.0.0
-Release:       alt2
+Version:       7.1.0
+Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -98,6 +98,9 @@ touch %buildroot%_sysconfdir/puppet/code/modules/.dir
 # Create service directory
 mkdir -p %buildroot{%_cachedir,%_logdir,/run}/puppet
 
+# Create puppet modules link
+ln -s %_libexecdir %buildroot%ruby_gemlibdir/vendor_modules
+
 # Install NetworkManager dispatcher
 install -Dpv %SOURCE3 \
     %buildroot%_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
@@ -190,6 +193,10 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %ruby_gemdocdir
 
 %changelog
+* Mon Dec 14 2020 Pavel Skrylev <majioa@altlinux.org> 7.1.0-alt1
+- ^ 7.0.0 -> 7.1.0
+- + link to vendor modules for puppet gem
+
 * Mon Nov 30 2020 Pavel Skrylev <majioa@altlinux.org> 7.0.0-alt2
 - + default static config files for auth and authsign
 

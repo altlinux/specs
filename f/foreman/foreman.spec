@@ -1,5 +1,5 @@
 Name:          foreman
-Version:       1.24.3.1
+Version:       1.24.3.2
 Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
@@ -22,6 +22,7 @@ Source10:      manifest.js
 Patch:         patch.patch
 Patch1:        sass.patch
 Patch2:        1.22.2.patch
+Patch3:        1.22.3.1.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-webserver-common
@@ -109,6 +110,7 @@ Foreman code documentation.
 # TODO remove when patternfly-sass gem will be upgraded to new font-awesome-sass v5
 %patch1 -p1
 %patch2
+%patch3
 sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
 sed "s,gem 'turbolinks'.*,gem 'gitlab-turbolinks-classic'," -i Gemfile
 rm -rf ./node_modules/node-sass/ ./node_modules/.bin/node-sass
@@ -187,8 +189,14 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt1
+- ^ 1.24.3[1] -> 1.24.3[2]
+- * updated embedded node packages
+- ! path to images for some views
+- ! scss files to conform new sprockets and sassc
+
 * Thu Dec 03 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3.1-alt1
-- ^ 1.24.2 -> 1.24.3
+- ^ 1.24.2 -> 1.24.3[1]
 
 * Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6.3
 - > post services for foreman
