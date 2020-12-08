@@ -19,7 +19,7 @@
 %def_enable broadway
 %def_enable cloudprint
 %def_enable cloudproviders
-%def_enable tracker3
+%def_disable tracker3
 %def_enable vulkan
 %def_disable sysprof
 %def_enable tests
@@ -28,7 +28,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -37,6 +37,7 @@ License: LGPL-2.0-or-later
 Url: http://www.gtk.org
 
 %if_enabled snapshot
+Vcs: https://gitlab.gnome.org/GNOME/gtk.git
 Source: %_name-%version.tar
 %else
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
@@ -205,6 +206,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_wayland:-Dwayland-backend=true} \
     %{?_enable_broadway:-Dbroadway-backend=true} \
     %{?_enable_cloudproviders:-Dcloudproviders=enabled} \
+    %{?_enable_tracker:-Dtracker=enabled} \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_man:-Dman-pages=true} \
     %{?_enable_colord:-Dcolord=enabled} \
@@ -212,7 +214,7 @@ the functionality of the installed GTK+3 packages.
     %{?_disable_tests:-Dbuild-tests=false} \
     %{?_enable_install_tests:-Dinstall-tests=true} \
     %{?_disable_vulkan:-Dvulkan=disabled}
-#    %{?_enable_cloudprint:-Dcloudprint-print-backend=yes} \
+%nil
 %meson_build
 
 %install
@@ -353,6 +355,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Tue Dec 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.5-alt1
+- 3.99.5
+
 * Thu Nov 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.4-alt1
 - 3.99.4
 
