@@ -2,7 +2,7 @@
 %define        pkgname sassc-rails
 
 Name:          gem-%pkgname
-Version:       2.1.2
+Version:       2.1.2.1
 Release:       alt1
 Summary:       Integrate SassC-Ruby with Rails
 License:       MIT
@@ -45,7 +45,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -63,5 +63,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.2.1-alt1
+- ^ 2.1.2 -> 2.1.2[1]
+
 * Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1
 - + packaged gem with usage Ruby Policy 2.0

@@ -1,7 +1,7 @@
 %define        pkgname sprockets-rails
 
 Name:          gem-%pkgname
-Version:       3.2.1.1
+Version:       3.2.2
 Release:       alt1
 Summary:       Sprockets Rails integration
 License:       MIT
@@ -58,8 +58,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.2-alt1
+- ^ 3.2.1[1] -> 3.2.2
+
 * Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.1.1-alt1
-- ^ 3.2.1 -> 3.2.2[1]
+- ^ 3.2.1 -> 3.2.1[1]
 - ! spec syntax
 
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.1-alt3.1
