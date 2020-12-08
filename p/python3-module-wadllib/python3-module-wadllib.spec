@@ -1,25 +1,21 @@
 %define _unpackaged_files_terminate_build 1
-%def_with python3
 
-Name: python-module-wadllib
+Name: python3-module-wadllib
 Version: 1.3.3
-Release: alt4
+Release: alt5
 Summary: Python library for navigating WADL files
-License: lgpl3
-Group: Development/Python
+License: LGPLv3
+Group: Development/Python3
 Url: https://launchpad.net/wadllib
 Packager: Anatoly Kitaikin <cetus@altlinux.ru>
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-%add_python_req_skip lazr
-Requires: python%_python_version(lazr.uri)
+%add_python3_req_skip lazr
+Requires: python3(lazr.uri)
 
-BuildPreReq: rpm-build-licenses
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-%endif
 
 %description
 The Web Application Description Language is an XML vocabulary
@@ -31,76 +27,37 @@ This project is also part of https://launchpad.net/lazr.
 
 %package tests
 Summary: wadllib tests
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
-%description -n python-module-wadllib-tests
+%description tests
 %summary
-
-%if_with python3
-
-%package -n python3-module-wadllib
-Summary: wadllib tests
-Group: Development/Python3
-
-%description -n python3-module-wadllib
-%summary
-
-%package -n python3-module-wadllib-tests
-Summary: wadllib tests
-Group: Development/Python3
-Requires: python3-module-wadllib = %version-%release
-
-%description -n python3-module-wadllib-tests
-%summary
-
-%endif
 
 %prep
 %setup -q
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
+#find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
-popd
-%endif
+
+%check
+%python3_build check
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/wadllib/tests
-%doc HACKING.txt README.txt
-
-%files tests
-%python_sitelibdir/wadllib/tests
-
-%if_with python3
-
-%files -n python3-module-wadllib
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/wadllib/tests
 %doc HACKING.txt README.txt
 
-%files -n python3-module-wadllib-tests
+%files tests
 %python3_sitelibdir/wadllib/tests
 
-%endif
-
 %changelog
+* Tue Dec 08 2020 Anatoly Kitaykin <cetus@altlinux.org> 1.3.3-alt5
+- Drop python 2 support
+
 * Sun Aug 11 2019 Anatoly Kitaikin <cetus@altlinux.org> 1.3.3-alt4
 - Requirements fix
 
