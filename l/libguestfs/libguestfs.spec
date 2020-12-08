@@ -19,7 +19,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.42.0
-Release: alt2
+Release: alt3
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -36,6 +36,7 @@ Patch2: %name-%version-alt-fixes-common.patch
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++ flex
+BuildRequires: rpcgen
 BuildRequires: glibc-utils libselinux-devel libaugeas-devel
 BuildRequires: libgio-devel libgtk+3-devel
 BuildRequires: gtk-doc
@@ -574,6 +575,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 1.42.0-alt3
+- added rpcgen to build requires against glibc 2.32
+
 * Tue Jun 30 2020 Alexey Shabalin <shaba@altlinux.org> 1.42.0-alt2
 - Set default guestfs appliance path to $libdir/guestfs
 

@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.4
+Version: 1.4.1
 Release: alt1
 BuildArch: noarch
 
@@ -34,6 +34,10 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Sun Dec 06 2020 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
+- require full version of the ocaml-runtime
+- relaxed the text relocations check for 32-bit x86 and armh architectures
+
 * Fri Sep 11 2020 Anton Farygin <rider@altlinux.ru> 1.4-alt1
 - %%ocamldir renamed to %%_ocamldir
 - added %%dune_build, %%dune_install and %%dune_check

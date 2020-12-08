@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
 Version: 5.3.0
-Release: alt2
+Release: alt3
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -15,8 +15,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
 BuildRequires: dune ocaml-cppo ocaml-bisect_ppx-devel ocaml-ocplib-endian-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-ppx_tools_versioned-devel ocaml-result-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires: ocaml-dune-devel
 
 %description
 Lwt is a lightweight thread library for Objective Caml.  This library
@@ -37,45 +36,24 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-dune build
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc CHANGES README.md
-%dir %_libdir/ocaml/lwt
-%dir %_libdir/ocaml/lwt/unix
-%dir %_libdir/ocaml/lwt_ppx
-%dir %_libdir/ocaml/lwt_react
-%_libdir/ocaml/lwt*/META
-%_libdir/ocaml/lwt*/*.cma
-%_libdir/ocaml/lwt*/*.cmi
-%_libdir/ocaml/lwt*/*.cmxs
-%_libdir/ocaml/lwt/unix/*.cma
-%_libdir/ocaml/lwt/unix/*.cmi
-%_libdir/ocaml/lwt/unix/*.cmxs
-%_libdir/ocaml/stublibs/*.so
 
-%files devel
-%_libdir/ocaml/lwt*/dune-package
-%_libdir/ocaml/lwt*/opam
-%_libdir/ocaml/lwt*/*.a
-%_libdir/ocaml/lwt*/*.cmt*
-%_libdir/ocaml/lwt*/*.cmxa
-%_libdir/ocaml/lwt*/*.cmx
-%_libdir/ocaml/lwt*/*.mli
-%_libdir/ocaml/lwt*/*.ml
-%_libdir/ocaml/lwt*/*.exe
-%_libdir/ocaml/lwt/unix/*.a
-%_libdir/ocaml/lwt/unix/*.cmt*
-%_libdir/ocaml/lwt/unix/*.cmxa
-%_libdir/ocaml/lwt/unix/*.cmx
-%_libdir/ocaml/lwt/unix/*.mli
-%_libdir/ocaml/lwt/unix/*.ml
+%files devel -f ocaml-files.devel
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 5.3.0-alt3
+- build process mirgrated to rpm-build-ocaml 1.4
+
 * Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 5.3.0-alt2
 - added ocaml-ocplib-endian-devel requires to devel package
 

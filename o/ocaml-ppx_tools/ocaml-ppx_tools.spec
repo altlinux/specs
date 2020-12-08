@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppx_tools
 Name: ocaml-%libname
-Version: 6.1
+Version: 6.2
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
@@ -43,8 +43,6 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%libname/META
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmxs
 %_libdir/ocaml/%libname/dumpast
 %_libdir/ocaml/%libname/ast_lifter
@@ -52,16 +50,31 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%libname/ppx_metaquot
 %_libdir/ocaml/%libname/metaquot
 %_libdir/ocaml/%libname/rewriter
+%exclude %_libdir/ocaml/%libname/*/*.cmx
+%exclude %_libdir/ocaml/%libname/*/*.cmxa
+%exclude %_libdir/ocaml/%libname/*/*.cmt*
+%exclude %_libdir/ocaml/%libname/*/*.a
+%exclude %_libdir/ocaml/%libname/*/*.ml
 
 %files devel
 %_libdir/ocaml/%libname/opam
 %_libdir/ocaml/%libname/dune-package
 %_libdir/ocaml/%libname/*.cmx
+%_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmt*
+%_libdir/ocaml/%libname/*.a
 %_libdir/ocaml/%libname/*.mli
 %_libdir/ocaml/%libname/*.ml
+%_libdir/ocaml/%libname/*/*.cmx
+%_libdir/ocaml/%libname/*/*.cmxa
+%_libdir/ocaml/%libname/*/*.cmt*
+%_libdir/ocaml/%libname/*/*.a
+%_libdir/ocaml/%libname/*/*.ml
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 6.2-alt1
+- 6.2
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 6.1-alt1
 - 6.1
 

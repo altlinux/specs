@@ -2,8 +2,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-dose3
-Version: 5.0.1
-Release: alt7.5.2git2c1b8df
+Version: 5.0.2
+Release: alt8.5.2git2c1b8df
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
@@ -33,7 +33,6 @@ BuildRequires: ocaml-cppo
 BuildRequires: ocaml-curl
 BuildRequires: ocaml-zip-devel
 BuildRequires: ocaml-camlbz2-devel
-BuildRequires: ocaml-ounit-devel
 
 BuildRequires: rpm-devel
 BuildRequires: zlib-devel
@@ -85,7 +84,7 @@ for manipulating packages of various formats.
 
 %build
 %autoreconf
-%configure --with-zip --with-bz2 --with-oUnit --with-rpm4 --with-xml --with-curl
+%configure --with-zip --with-bz2 --without-oUnit --with-rpm4 --with-xml --with-curl
 make
 make man
 
@@ -141,6 +140,9 @@ ln -s %_bindir/distcheck %buildroot%_bindir/eclipsecheck
 %_mandir/man8/*.8*
 
 %changelog
+* Fri Dec 11 2020 Anton Farygin <rider@altlinux.ru> 5.0.2-alt8.5.2git2c1b8df
+- built without ounit
+
 * Wed Feb 19 2020 Anton Farygin <rider@altlinux.ru> 5.0.1-alt7.5.2git2c1b8df
 - fixed build with ounit2
 

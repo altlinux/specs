@@ -2,7 +2,7 @@
 %define oname ppxfind
 Name: ocaml-%oname
 Version: 1.4
-Release: alt1
+Release: alt2
 Summary: Ocamlfind ppx tool
 License: MIT
 Group: Development/ML
@@ -25,16 +25,19 @@ rewriters is incomplete, i.e. the cmxs files are missing
 %setup
 
 %build
-make all
+%dune_build -p %oname
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %files
 %doc README.md
 %_bindir/ppxfind
 
 %changelog
+* Sat Dec 12 2020 Anton Farygin <rider@altlinux.ru> 1.4-alt2
+- used macros from rpm-build-ocaml 1.4
+
 * Sat Apr 25 2020 Anton Farygin <rider@altlinux.ru> 1.4-alt1
 - 1.4
 

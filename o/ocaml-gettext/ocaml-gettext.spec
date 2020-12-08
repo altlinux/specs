@@ -1,8 +1,9 @@
 %set_verify_elf_method textrel=relaxed
 %def_with check
-Name: ocaml-gettext
+%define ocamlmodule gettext
+Name: ocaml-%ocamlmodule
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: OCaml library for i18n
 Group: Development/ML
 
@@ -12,6 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires: ocaml
 BuildRequires: dune
+BuildRequires: ocaml-dune-devel
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-camomile-devel
@@ -48,38 +50,30 @@ developing applications that use %name.
 %setup
 
 %build
-dune build
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
 find test -type f -name dune -exec sed -i 's,oUnit,ounit2,' {} \;
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE.txt
-%_libdir/ocaml/gettext*
-%exclude %_libdir/ocaml/gettext*/*.a
-%exclude %_libdir/ocaml/gettext*/*.cmxa
-%exclude %_libdir/ocaml/gettext*/*.cmx
-%exclude %_libdir/ocaml/gettext*/*.ml
-%exclude %_libdir/ocaml/gettext*/*.mli
-%_libdir/ocaml/stublibs/*.so
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc README.md CHANGES.md TODO.md
-%_libdir/ocaml/gettext*/*.a
-%_libdir/ocaml/gettext*/*.cmxa
-%_libdir/ocaml/gettext*/*.cmx
-%_libdir/ocaml/gettext*/*.ml
-%_libdir/ocaml/gettext*/*.mli
 %_bindir/ocaml-gettext
 %_bindir/ocaml-xgettext
 %_man1dir/*.1*
 %_man5dir/*.5*
 
 %changelog
+* Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 0.4.2-alt2
+- added ocaml-dune-devel to BuildRequires
+- build process moved to macros from rpm-build-ocaml 1.4
+
 * Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 0.4.2-alt1
 - 0.4.2
 - enabled tests

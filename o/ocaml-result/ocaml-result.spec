@@ -2,7 +2,7 @@
 %define module result
 Name: ocaml-%module
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: Compat result type
 
 License: BSD
@@ -31,26 +31,20 @@ files for developing applications that use %name.
 %setup
 
 %build
-dune build
+%dune_build -p %module
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%_libdir/ocaml/%module
-%exclude %_libdir/ocaml/%module/*.a
-%exclude %_libdir/ocaml/%module/*.cmxa
-%exclude %_libdir/ocaml/%module/*.cmx
-%exclude %_libdir/ocaml/%module/*.ml
 
-%files devel
-%_libdir/ocaml/%module/*.a
-%_libdir/ocaml/%module/*.cmxa
-%_libdir/ocaml/%module/*.cmx
-%_libdir/ocaml/%module/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 1.5-alt2
+- fixed checksum providing in module (add -p (--release) option to dune)
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.5-alt1
 - 1.5
 

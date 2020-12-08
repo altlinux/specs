@@ -2,12 +2,13 @@
 
 Name:           ocaml-gsl
 Version:        1.24.1
-Release:        alt1
+Release:        alt2
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License:        GPLv2
 Group:          Development/ML
 Url:            http://mmottl.github.io/gsl-ocaml/
+ExcludeArch: armh
 
 Provides:	ocaml4-gsl
 Obsoletes:	ocaml4-gsl
@@ -63,6 +64,9 @@ dune install \
 %exclude %_libdir/ocaml/gsl/*.ml*
 
 %changelog
+* Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 1.24.1-alt2
+- exclude the armh architecture
+
 * Tue Feb 04 2020 Anton Farygin <rider@altlinux.ru> 1.24.1-alt1
 - 1.24.1
 

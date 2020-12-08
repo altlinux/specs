@@ -3,14 +3,14 @@
 %define oname ppx_tools_versioned
 Name: ocaml-%oname
 Version: 5.4.0
-Release: alt1
+Release: alt2
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
 Group: Development/ML
 Url: https://opam.ocaml.org/packages/ppx_tools_versioned/
 # https://github.com/let-def/ppx_tools_versioned
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib ocaml-migrate-parsetree-devel ocaml-result-devel opam dune
+BuildRequires: ocaml-findlib ocaml-migrate-parsetree-devel ocaml-result-devel dune
 
 %description
 Tools for authors of syntactic tools (such as ppx rewriters).
@@ -34,40 +34,23 @@ developing applications that use %name.
 %setup
 
 %build
-make all
+%dune_build -p %oname
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%oname
-%_libdir/ocaml/%oname/dune-package
-%_libdir/ocaml/%oname/opam
-%_libdir/ocaml/%oname/META
-%_libdir/ocaml/%oname/*.cmi
-%_libdir/ocaml/%oname/*.cma
-%_libdir/ocaml/%oname/*.a
-%_libdir/ocaml/%oname/*.cmxa
-%_libdir/ocaml/%oname/*.cmxs
-%_libdir/ocaml/%oname/metaquot_402
-%_libdir/ocaml/%oname/metaquot_403
-%_libdir/ocaml/%oname/metaquot_404
-%_libdir/ocaml/%oname/metaquot_405
-%_libdir/ocaml/%oname/metaquot_406
-%_libdir/ocaml/%oname/metaquot_407
-%_libdir/ocaml/%oname/metaquot_408
-%_libdir/ocaml/%oname/metaquot_409
-%_libdir/ocaml/%oname/metaquot_410
-%_libdir/ocaml/%oname/metaquot_411
 
-%files devel
-%_libdir/ocaml/%oname/*.cmx
-%_libdir/ocaml/%oname/*.cmt*
-%_libdir/ocaml/%oname/*.mli
-%_libdir/ocaml/%oname/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 5.4.0-alt2
+- specfile migrated to rpm-build-ocaml 1.4
+
 * Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 5.4.0-alt1
 - 5.4.0
 

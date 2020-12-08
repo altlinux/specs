@@ -2,7 +2,7 @@
 %define  modulename ppx_fields_conv
 
 Name:    ocaml-%modulename
-Version: 0.14.1
+Version: 0.14.2
 Release: alt1
 
 Summary: Generation of accessor and iteration functions for ocaml records
@@ -10,13 +10,11 @@ License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_fields_conv
 
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
-BuildRequires: dune ocaml-fieldslib-devel ocaml-ppxlib-devel
-BuildRequires: ocaml-compiler-libs-devel ocaml-migrate-parsetree-devel
-BuildRequires: ocaml-result-devel ocaml-base-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires: dune 
+BuildRequires: ocaml-fieldslib-devel
+BuildRequires: ocaml-ppxlib-devel
+BuildRequires: ocaml-result-devel
+BuildRequires: ocaml-base-devel
 
 Source:  %modulename-%version.tar
 
@@ -36,33 +34,23 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build -p %modulename
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
-%doc README.md
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
+%files -f ocaml-files.runtime
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Dec 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.2-alt1
+- 0.14.2
+- migrated to rpm-build-ocaml 1.4
+
 * Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 

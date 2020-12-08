@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-migrate-parsetree
-Version: 1.7.3
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
 License: LGPLv2+ with exceptions
@@ -31,40 +31,23 @@ files for developing applications that use %name.
 %setup
 
 %build
-dune build -p %name --verbose
+%dune_build -p %name
 
 %install
-dune install --destdir=%buildroot 
+%dune_install
 
 %check
-%make_build test
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md MANUAL.md CHANGES.md LICENSE.md
-%_libdir/ocaml/*
-%exclude %_libdir/ocaml/*/*.a
-%exclude %_libdir/ocaml/*/*.cmxa
-%exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.ml
-%exclude %_libdir/ocaml/*/*.mli
-%exclude %_libdir/ocaml/*/driver-main/*.a
-%exclude %_libdir/ocaml/*/driver-main/*.cmxa
-%exclude %_libdir/ocaml/*/driver-main/*.cmx
-%exclude %_libdir/ocaml/*/driver-main/*.ml
 
-%files devel
-%doc README.md MANUAL.md CHANGES.md LICENSE.md
-%_libdir/ocaml/*/*.a
-%_libdir/ocaml/*/*.cmxa
-%_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.ml
-%_libdir/ocaml/*/*.mli
-%_libdir/ocaml/*/driver-main/*.a
-%_libdir/ocaml/*/driver-main/*.cmxa
-%_libdir/ocaml/*/driver-main/*.cmx
-%_libdir/ocaml/*/driver-main/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Wed Dec 09 2020 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 1.7.3-alt2
 - built in verbose mode
 - fixed requires in devel package (by change BR from
