@@ -1,7 +1,7 @@
 
 Name: vzctl
 Version: 7.0.236
-Release: alt1
+Release: alt2
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPLv2
@@ -121,6 +121,11 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Tue Dec 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.236-alt2
+- add binfmt_misc kernel module for criu functioning
+- fix -fno-common default in GCC 10.0
+- fix warning: 's' may be used uninitialized in this function
+
 * Thu Nov 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.236-alt1
 - 7.0.236
 

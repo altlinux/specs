@@ -1,5 +1,5 @@
 Name: crtools-ovz
-Version: 3.12.5.52
+Version: 3.15.0.9
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -20,11 +20,10 @@ BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: asciidoc xmlto %_bindir/a2x
 BuildRequires: libnftables-devel
 BuildRequires: libgnutls-devel
-
-BuildRequires: python3-devel
 BuildRequires: glibc-devel
 BuildRequires: libnl-devel
 BuildRequires: libcap-devel
+BuildRequires: python3-base
 # BuildRequires: libselinux-devel
 BuildRequires(pre): rpm-build-python3
 
@@ -37,11 +36,13 @@ An utility to checkpoint/restore tasks for OpenVZ containers.
 %setup -n criu-%version
 
 %build
-export CFLAGS="%optflags"
+export CFLAGS="%optflags -fcommon"
+export PYTHON=python3
 %make_build \
 	PREFIX=%prefix V=1 all docs
 
 %install
+export PYTHON=python3
 %makeinstall_std \
 	PREFIX=%prefix LIBDIR=%_libdir LIBEXECDIR=%_libexecdir SYSTEMDUNITDIR=%_unitdir
 
@@ -75,6 +76,9 @@ rm -f %buildroot%_pkgconfigdir/criu.pc
 %_man8dir/crtools.8*
 
 %changelog
+* Tue Dec 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 3.15.0.9-alt1
+- 3.15.0.9
+
 * Mon Nov 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 3.12.5.52-alt1
 - 3.12.5.52
 - cherry-picked commit 86a386a0171eb553d5d3bcb5db92ff13b1f60ad4
