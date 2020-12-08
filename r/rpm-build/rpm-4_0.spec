@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt156
+Release: alt157
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -410,6 +410,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Dec 08 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt157
+- Add support and enable multi-threaded xz payload compression.
+- Add affinity aware %%getncpus macro.
+- platform: change %%__nprocs to use %%getncpus instead of nproc(1).
+
 * Sat Nov 14 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt156
 - debugedit: Do not 'edit_dwarf2' when just extracting build-id.
 - debuginfo: Fix 'warning: File listed twice' for debug sources.
