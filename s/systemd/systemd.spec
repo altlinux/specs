@@ -79,7 +79,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1985,6 +1985,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Dec 08 2020 Stanislav Levin <slev@altlinux.org> 1:247-alt2
+- Backported fix for systemd GH#17768.
+
 * Fri Nov 27 2020 Alexey Shabalin <shaba@altlinux.org> 1:247-alt1
 - 247
 
