@@ -1,11 +1,13 @@
+%define with_doc 1
+
 Name: tcsh
 Version: 6.20.00
-Release: alt2
+Release: alt3
 Summary: An enhanced version of csh, the C shell
 License: BSD
 Group: Shells
 URL: http://www.tcsh.org
-Source0: ftp://ftp.astron.com/pub/tcsh/tcsh-%version.tar.gz
+Source0: %name-%version.tar.xz
 Source1: tcsh.login
 Source2: tcsh.cshrc
 Source3: tcshrc.skel
@@ -19,7 +21,11 @@ Patch6: tcsh-%version-owl-no-TIOCSTI.diff
 Patch7: tcsh-%version-owl-strnxxx.diff
 Patch8: tcsh-%version-owl-tmp.diff
 Patch9: tcsh-%version-owl-warnings.diff
+
+# remove this obsolete line on occasion
+# (when all supported branches would use fixed versions)
 Conflicts: setup < 2.2.14-alt2
+
 Provides: csh = %version
 
 # Automatically added by buildreq on Sun Jan 15 2012
@@ -27,20 +33,24 @@ BuildRequires: groff-base libtinfo-devel
 
 %description
 tcsh is an enhanced but completely compatible version of csh, the C
-shell.  tcsh is a command language interpreter which can be used both
+shell. tcsh is a command language interpreter which can be used both
 as an interactive login shell and as a shell script command processor.
 tcsh includes a command line editor, programmable word completion,
 spelling correction, a history mechanism, job control and a C language
 like syntax.
 
+%if %with_doc
 %package doc
-Group: Shells
+Group: Documentation
 Summary: Optional documentation for %name
 BuildArch: noarch
-Requires: %name = %EVR
+#Requires: %name = %EVR
+# documentation does not require anything;
+# also, some people read it on other computers
 
 %description doc
 This package contains optional documentation for %name.
+%endif
 
 %prep
 %setup
@@ -58,6 +68,11 @@ This package contains optional documentation for %name.
 %define _bindir	/bin
 
 %build
+# gcc10 defaults to -fno-common; however, this causes a false trigger
+# of "multiple definition of 'handle_interrupt'" for definitions in
+# tc.sig.c and sh.h
+export CFLAGS="-fcommon"
+
 %configure \
   --disable-rpath
 %__make all
@@ -97,33 +112,37 @@ EOF
 %find_lang tcsh
 
 %post
-# do not edit /etc/shells on upgrades
-if [ $1 -eq 1 ]; then
-	grep -Fqx /bin/csh /etc/shells || echo /bin/csh >> /etc/shells
-	grep -Fqx /bin/tcsh /etc/shells || echo /bin/tcsh >> /etc/shells
-fi
+grep -Fqx /bin/csh /etc/shells || echo /bin/csh >> /etc/shells
+grep -Fqx /bin/tcsh /etc/shells || echo /bin/tcsh >> /etc/shells
 
 %preun
 # do not edit /etc/shells on upgrades
-if [ $1 -eq 0 ]; then
-	sed -i -e '/^\/bin\/t\?csh$/d' /etc/shells
-fi
+test "$1" = 0 && sed -i -e '/^\/bin\/t\?csh$/d' /etc/shells
 
 %files -f tcsh.lang
 %config(noreplace) /etc/csh.*
 %config(noreplace) /etc/skel/.tcshrc
-/bin/csh
-/bin/tcsh
+%_bindir/csh
+%_bindir/tcsh
 %_man1dir/*.*
 
+%if %with_doc
 %files doc
 %doc NewThings FAQ complete.tcsh Fixes tcsh.html
+%endif
 
 %changelog
+* Tue Dec 08 2020 Alexey V. Vissarionov <gremlin@altlinux.org> 6.20.00-alt3
+- Prepared for building with gcc10 (explicit -fcommon parameter in CFLAGS).
+- Removed dependency for the documentation subpackage (it does not require
+  anything, and many people run the software and read the documentation on
+  different computers).
+- Pretty colors in csh.cshrc
+
 * Thu Aug 24 2017 Dmitry V. Levin <ldv@altlinux.org> 6.20.00-alt2
 - Fixed and cleaned up spec, resurrected %%changelog.
 
-* Tue Jul 25 2017 Alexey V.Vissarionov <gremlin@altlinux.org> 6.20.00-alt1
+* Tue Jul 25 2017 Alexey V. Vissarionov <gremlin@altlinux.org> 6.20.00-alt1
 - Updated to 6.20.00.
 - Disabled TIOCSTI (avoid CVE-2017-5226 issues).
 - Moved documentation to separate subpackage.
