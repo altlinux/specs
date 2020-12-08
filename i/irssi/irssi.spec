@@ -1,6 +1,6 @@
 Name: irssi
-Version: 1.2.0
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: Modular text mode IRC client with Perl scripting
 License: GPLv2+
@@ -59,7 +59,7 @@ sed -i 's/^autoreconf.*/%autoreconf || exit/' autogen.sh
 # workaround the absence of irssi.git
 sed -i 's/^git log /: &/' autogen.sh
 # git log -1 --pretty=format:%%ai %version > date-%version
-echo '2019-02-11 18:05:57 +0100' > date-1.2.0
+echo '2019-08-29 02:25:21 +0200' > date-1.2.2
 sed -i 's/^DATE=.*/DATE="$(cat date-%version)"/' utils/irssi-version.sh
 
 %build
@@ -135,6 +135,9 @@ export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %p
 
 
 %changelog
+* Tue Dec 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
+- Updated to upstream version 1.2.2 (Fixes: CVE-2019-13045, CVE-2019-15717).
+
 * Wed Apr 22 2020 Dmitry V. Levin <ldv@altlinux.org> 1.2.0-alt2
 - Really fixed build by fixing LFS in irssi-otr and
   re-enabling "%%set_verify_elf_method strict".
