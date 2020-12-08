@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: sysstat
-Version: 12.0.5
+Version: 12.5.1
 Release: alt1
 
 Summary: The sar and iostat system monitoring commands
@@ -8,6 +8,7 @@ License: GPLv2+
 Group: System/Base
 
 URL: http://sebastien.godard.pagesperso-orange.fr/
+# https://github.com/sysstat/sysstat.git
 Source: %name-%version.tar
 Source1: sysstat.init
 
@@ -113,6 +114,9 @@ fi
 %_man1dir/isag.*
 
 %changelog
+* Tue Dec 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 12.5.1-alt1
+- Updated to upstream version 12.5.1 (Fixes: CVE-2019-16167, CVE-2019-19725).
+
 * Mon Jun 03 2019 Alexey Melyashinsky <bip@altlinux.org> 12.0.5-alt1
 - Update to upstraem version 12.0.5.
 
