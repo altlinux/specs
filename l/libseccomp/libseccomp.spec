@@ -1,6 +1,6 @@
 
 Name: libseccomp
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
@@ -69,6 +69,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man3dir/*
 
 %changelog
+* Tue Dec 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.5.1-alt1
+- new version 2.5.1
+
 * Fri Aug 07 2020 Alexey Shabalin <shaba@altlinux.org> 2.5.0-alt1
 - new version 2.5.0
 
