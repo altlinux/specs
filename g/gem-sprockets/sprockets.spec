@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Epoch:         1
-Version:       4.0.0
+Version:       4.0.2
 Release:       alt1
 Summary:       Rack-based asset packaging system
 License:       MIT
@@ -78,6 +78,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 1:4.0.2-alt1
+- ^ 4.0.0 -> 4.0.2
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 1:4.0.0-alt1
 - updated (^) 3.7.2 -> 4.0.0
 - fixed (-) spec

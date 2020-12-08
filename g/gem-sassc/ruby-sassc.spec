@@ -1,8 +1,8 @@
 %define        pkgname sassc
 
 Name:          gem-%pkgname
-Version:       2.2.1
-Release:       alt3
+Version:       2.4.0
+Release:       alt1
 Summary:       Use libsass with Ruby!
 License:       MIT
 Group:         Development/Ruby
@@ -17,7 +17,6 @@ BuildRequires: gem(bundler)
 BuildRequires: gem(rake)
 BuildRequires: gem(rake-compiler)
 BuildRequires: gem(rake-compiler-dock)
-BuildRequires: gem(pry)
 BuildRequires: gem-minitest
 BuildRequires: libsass-devel
 
@@ -74,7 +73,10 @@ ln -s $(realpath $(find %_libdir/ -name libsass.so 2>/dev/null)) %buildroot%ruby
 
 
 %changelog
-* Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.1-alt3
+* Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
+- ^ 2.2.1 -> 2.4.0
+
+* Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.1-alt2.1
 - ! spec tags and syntax, build procedure
 
 * Fri Nov 08 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.1-alt2
@@ -84,7 +86,7 @@ ln -s $(realpath $(find %_libdir/ -name libsass.so 2>/dev/null)) %buildroot%ruby
 
 * Thu Sep 26 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.1-alt1
 - update (^) 2.0.0 -> 2.2.1
-- update (^) Ruby Police 2.0
+- use (>) Ruby Police 2.0
 
 * Wed Sep 26 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
