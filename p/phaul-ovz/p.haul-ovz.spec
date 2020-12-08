@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    phaul-ovz
-Version: 0.1.75
+Version: 0.1.77
 Release: alt1
 
 Summary: Process HAULer -- a tool to live-migrate containers and processes
@@ -60,6 +60,9 @@ popd
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Dec 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.1.77-alt1
+- 0.1.77
+
 * Mon Nov 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.1.75-alt1
 - initial build for ALT
 
