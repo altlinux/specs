@@ -4,7 +4,7 @@
 
 Name: deepin-kwin
 Version: 5.2.0.2
-Release: alt3
+Release: alt4
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -34,6 +34,7 @@ BuildRequires: cmake extra-cmake-modules qt5-tools qt5-tools-devel qt5-base-deve
 BuildRequires: zlib-devel bzlib-devel libpng-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel
 BuildRequires: libxcb-devel libglvnd-devel libX11-devel
 BuildRequires: libkwin5
+Requires: plasma5-kwin libkwineffects12 libkwinglutils12 libxcb libGL libX11
 
 %description
 This package provides a kwin configuration that used as the new WM for Deepin
@@ -60,11 +61,15 @@ Header files and libraries for %name.
 sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/scripts|%_K5data/kwin/scripts/|' scripts/CMakeLists.txt
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' tabbox/CMakeLists.txt
-sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' plugins/kwineffects/multitasking/background.cpp
+sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' \
+    plugins/kwineffects/multitasking/background.cpp \
+    deepin-wm-dbus/deepinwmfaker.cpp
 sed -i 's|/usr/lib/deepin-daemon|/usr/libexec/deepin-daemon|' deepin-wm-dbus/deepinwmfaker.cpp
 sed -i 's|/lib|/%_lib|' plugins/platforms/plugin/main_wayland.cpp \
                         plugins/platforms/plugin/main.cpp \
                         plugins/platforms/lib/CMakeLists.txt
+# Fix wm error
+sed -i 's|kwin_x11 -platform|%_K5bin/kwin_x11 -platform|' configures/kwin_no_scale.in
 # Fix build future version with kwin 5.20
 # sed -i '/m_blurManager->create();/d' plugins/kwineffects/blur/blur.cpp
 
@@ -117,6 +122,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Tue Dec 08 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.2-alt4
+- Fixed critical wm error.
+
 * Wed Nov 25 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.2-alt3
 - Fixed undefined symbols in elfs.
 - Fixed url.
