@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/containers/podman
-%global commit 9f6d6ba0b314d86521b66183c9ce48eaa2da1de2
+%global commit db1d2ff111ee9b012779ff3a5279a982520ccda4
 
 Name:     podman
-Version:  2.1.1
+Version:  2.2.0
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -41,6 +41,8 @@ Summary:  Emulate Docker CLI using podman
 Group:    System/Configuration/Other
 BuildArch: noarch
 Conflicts: docker-ce
+Conflicts: docker-engine
+Requires: %name = %EVR
 
 %description docker
 %summary.
@@ -48,6 +50,7 @@ Conflicts: docker-ce
 %package remote
 Group:    System/Configuration/Other
 Summary: (Experimental) Remote client for managing %name containers
+Requires: %name = %EVR
 
 %description remote
 Remote client for managing %name containers.
@@ -105,6 +108,7 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
+%_datadir/fish/vendor_completions.d/%name.fish
 %_unitdir/*
 %_prefix/lib/systemd/user/*
 %config(noreplace) %_sysconfdir/cni/net.d/87-podman-bridge.conflist
@@ -113,18 +117,28 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %exclude %_man1dir/%name-remote*
 %exclude %_man1dir/docker*
 %_man5dir/*
+%exclude %_man5dir/containers-mounts*
 %doc *.md
+%_tmpfilesdir/%name.conf
 
 %files remote
 %_bindir/%name-remote
 %_man1dir/%name-remote*
+%_man1dir/docker-remote*
+%_datadir/bash-completion/completions/%name-remote
+%_datadir/fish/vendor_completions.d/%name-remote.fish
+%_datadir/zsh/site-functions/_%name-remote
 
 %files docker
 %_bindir/docker
 %_man1dir/docker*
+%exclude %_man1dir/docker-remote*
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Tue Dec 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.0-alt1
+- new version 2.2.0
+
 * Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt1
 - new version 2.1.1
 
