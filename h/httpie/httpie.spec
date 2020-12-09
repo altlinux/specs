@@ -1,9 +1,9 @@
 %define py3bdir ../%name-%version-python3-build
-%define realversion 0.9.8
+%define realversion 2.3.0
 
 Name: httpie
-Version: 0.9.9
-Release: alt2
+Version: 2.3.0
+Release: alt1
 
 Summary: A Curl-like tool for humans
 Group: Networking/WWW
@@ -12,7 +12,6 @@ Url: http://httpie.org
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Patch0: %name-%version-system-urllib3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -34,7 +33,6 @@ responses.
 
 %prep
 %setup
-%patch0 -p0
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -53,6 +51,7 @@ help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man
 
 %files
 %_bindir/http.python3
+%_bindir/https
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%{realversion}*
 %_man1dir/http.python3.1.*
@@ -60,6 +59,9 @@ help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man
 
 
 %changelog
+* Wed Dec 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
+- Updated to upstream version 2.3.0 (Fixes: CVE-2019-10751).
+
 * Sat Dec 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.9-alt2
 - build for python2 disabled
 
