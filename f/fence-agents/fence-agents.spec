@@ -6,7 +6,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -151,6 +151,15 @@ Requires: fence-agents-common = %version-%release
 
 %description compute
 The fence-agents-compute package contains a fence agent for Nova compute nodes.
+
+%package crosslink
+BuildArch: noarch
+Group: System/Base
+Summary: Two node cross-link fence agent
+Requires: fence-agents-common = %version-%release
+
+%description crosslink
+Two node cross-link fence agent.
 
 %package docker
 BuildArch: noarch
@@ -660,6 +669,7 @@ xz  %buildroot%_man8dir/*.8
 %_defaultdocdir/%name
 %_datadir/fence
 %_datadir/cluster
+%_datadir/pkgconfig/%name.pc
 %exclude %_datadir/fence/azure_fence.*
 %exclude %_datadir/cluster/fence_scsi_check*
 %exclude %_sbindir/fence_ack_manual
@@ -721,6 +731,10 @@ xz  %buildroot%_man8dir/*.8
 %_man8dir/fence_compute.8*
 %_sbindir/fence_evacuate
 %_man8dir/fence_evacuate.8*
+
+%files crosslink
+%_sbindir/fence_crosslink
+%_man8dir/fence_crosslink.8*
 
 %files docker
 %_sbindir/fence_docker
@@ -940,6 +954,9 @@ xz  %buildroot%_man8dir/*.8
 %_man8dir/fence_zvmip.8*
 
 %changelog
+* Wed Dec 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.7.0-alt1
+- 4.7.0
+
 * Thu Sep 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.6.0-alt1
 - 4.6.0
 
