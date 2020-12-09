@@ -125,6 +125,14 @@
 %endif
 #soversion
 
+# nvidia cuda doesn't support arm
+# https://developer.nvidia.com/nvidia-video-codec-sdk/download
+%ifarch %arm
+%def_disable cuvid
+%else
+%def_enable cuvid
+%endif # cuvid
+
 %define avdevicever 58
 %define avformatver 58
 %define avfilterver 7
@@ -138,7 +146,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.3.1
-Release:	alt3
+Release:	alt3.2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -217,6 +225,7 @@ BuildRequires:	yasm
 %{?_enable_vaapi:BuildRequires: libva-devel}
 %{?_enable_vdpau:BuildRequires: libvdpau-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
+%{?_enable_cuvid:BuildRequires: nv-codec-headers}
 
 %define common_descr \
 FFmpeg is a collection of libraries and tools to process multimedia content\
@@ -676,6 +685,7 @@ xz Changelog
 	%{subst_enable vdpau} \
 	%{subst_enable vulkan} \
 	%{subst_enable zlib} \
+	%{subst_enable cuvid} \
 	--enable-hardcoded-tables \
 	--enable-runtime-cpudetect \
 %if_enabled debug
@@ -853,6 +863,12 @@ xz Changelog
 %endif
 
 %changelog
+* Wed Dec 09 2020 L.A. Kostis <lakostis@altlinux.ru> 2:4.3.1-alt3.2
+- Disable cuvid on arm.
+
+* Mon Dec 07 2020 L.A. Kostis <lakostis@altlinux.ru> 2:4.3.1-alt3.1
+- Enable cuvid support.
+
 * Mon Aug 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:4.3.1-alt3
 - enable v4l2 mem2mem and request-api on arm arches
 
