@@ -12,7 +12,6 @@
 %def_with bootstrap
 %def_enable introspection
 %def_enable upower
-%def_enable network_manager
 %def_enable stemmer
 %def_enable docs
 %def_enable man
@@ -24,7 +23,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -67,7 +66,6 @@ BuildRequires: libgio-devel >= %glib_ver libpango-devel >= %pango_ver libgtk+3-d
 BuildRequires: libsoup-devel >= %soup_ver libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
-%{?_enable_network_manager:BuildRequires: libnm-devel}
 %{?_enable_stemmer:BuildRequires: libstemmer-devel}
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
 BuildRequires: vala-tools
@@ -146,7 +144,6 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %build
 %meson \
 	-Dunicode_support=%unicode_support \
-	%{?_enable_network_manager:-Dnetwork_manager=enabled} \
 	%{?_enable_stemmer:-Dstemmer=enabled} \
 	%{?_disable_docs:-Ddocs=false} \
 	%{?_disable_man:-Dman=false} \
@@ -208,6 +205,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Wed Dec 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Fri Oct 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
