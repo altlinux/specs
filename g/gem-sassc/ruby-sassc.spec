@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.4.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Use libsass with Ruby!
 License:       MIT
 Group:         Development/Ruby
@@ -68,6 +68,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Dec 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt2
+- ! typo
+
 * Wed Dec 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1.1
 - ! picking up the libsass from system if any
 
