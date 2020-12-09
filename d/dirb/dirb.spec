@@ -1,6 +1,6 @@
 Name: dirb
 Version: 2.22
-Release: alt2
+Release: alt3
 
 Summary: Web Content Scanner.
 
@@ -11,6 +11,7 @@ Url: http://dirb.sourceforge.net/
 Packager: Nikita Ermakov <arei@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: Fix-DIRB-for-GCC-10.patch
 
 BuildPreReq: rpm-build-licenses
 BuildRequires: libcurl-devel autoconf
@@ -22,6 +23,7 @@ against a web server and analizing the response.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -51,6 +53,9 @@ find wordlists/vulns -maxdepth 1 -type f -exec install -m 0644 '{}' %buildroot/%
 %doc LICENSE.txt README.txt docs/GENDICT.TXT docs/FAQ.txt docs/TRICKS.txt docs/CHANGES.txt
 
 %changelog
+* Wed Dec 09 2020 Nikita Ermakov <arei@altlinux.org> 2.22-alt3
+- Fix DIRB for GCC 10.
+
 * Tue Nov 12 2019 Nikita Ermakov <arei@altlinux.org> 2.22-alt2
 - Rename gendict to gendict-dirb to avoid collisions with icu-utils.
 

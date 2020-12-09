@@ -1,6 +1,6 @@
 Name: finger
 Version: 1.3
-Release: alt2
+Release: alt3
 
 Summary: Show user information (client)
 License: BSD
@@ -14,6 +14,7 @@ Source1: %name.xinetd
 # https://build.opensuse.org/package/show/openSUSE:Factory/finger
 Patch1: finger-memory-leak.patch
 Patch2: finger-utf8_segfault.patch
+Patch3: finger-no-common.patch
 
 %package server
 Summary: A Server for Showing User Information
@@ -37,8 +38,10 @@ and you'd like finger information to be available.
 %setup -q -n finger-bsd-%version
 %patch1 -p1
 %patch2 -p0
+%patch3 -p1
 
 %build
+export CFLAGS=-fno-common
 %configure
 %make_build
 
@@ -58,6 +61,9 @@ install -D -m640 %SOURCE1 $RPM_BUILD_ROOT%_sysconfdir/xinetd.d/%name
 %_man8dir/*
 
 %changelog
+* Tue Dec 08 2020 Nikita Ermakov <arei@altlinux.org> 1.3-alt3
+- Fix build for GCC 10 (-fno-common).
+
 * Mon Apr 20 2020 Nikita Ermakov <arei@altlinux.org> 1.3-alt2
 - Update spec:
   + Update URL.
