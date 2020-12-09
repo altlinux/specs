@@ -1,27 +1,27 @@
 %define write_group users
 
-Name:           leiningen
-Version:        2.9.4
-Release:        alt1
-Summary:        Leiningen is for automating Clojure projects without setting your hair on fire
+Name: leiningen
+Version: 2.9.5
+Release: alt1
+Summary: Leiningen is for automating Clojure projects without setting your hair on fire
+License: EPL-1.0
+Group:   Development/Java
+URL: https://leiningen.org/
 
-Group:          Development/Java
-License:        EPL-1.0
-URL:            https://leiningen.org/
-Source0:        %name-%version.tar
+Source0: %name-%version.tar
 # Get by command: LEIN_VERSION=2.9.2; wget https://github.com/technomancy/leiningen/releases/download/$LEIN_VERSION/leiningen-$LEIN_VERSION-standalone.zip
-Source1:        leiningen-%version-standalone.zip
-Source2:	repository.tar
-Source3: 	lein-classpath
-Patch1:         alt-lein-use-offline-repo.patch
+Source1: leiningen-%version-standalone.zip
+Source2: repository.tar
+Source3: lein-classpath
+Patch1: alt-lein-use-offline-repo.patch
 
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-devel >= 1.8.0
-BuildRequires:  /proc
-BuildRequires:  clojure
+BuildRequires: java-devel >= 1.8.0
+BuildRequires: /proc
+BuildRequires: clojure
 
-BuildArch:      noarch
-Requires:       clojure
+BuildArch: noarch
+Requires: clojure
 
 %description
 Leiningen is the easiest way to use Clojure. With a focus on project
@@ -60,6 +60,9 @@ find %buildroot%_localstatedir/%name/.m2/repository -type d | sed 's|%buildroot|
 %attr(775,root,%write_group) %config(noreplace) %_localstatedir/%name/.m2/.lein-classpath
 
 %changelog
+* Wed Dec 09 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.5-alt1
+- New version.
+
 * Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.4-alt1
 - New version.
 
