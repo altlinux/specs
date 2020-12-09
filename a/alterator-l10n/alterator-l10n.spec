@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.76
+Version: 2.9.77
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Dec 09 2020 Lenar Shakirov <snejok@altlinux.org> 2.9.77-alt1
+- alterator-printers: update translations
+
 * Thu Oct 29 2020 Oleg Solovyov <mcpain@altlinux.org> 2.9.76-alt1
 - alterator-vm: translate pending operations
 
