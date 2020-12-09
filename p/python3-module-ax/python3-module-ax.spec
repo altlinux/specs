@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,12 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Dec 09 2020 Alexey Appolonov <alexey@altlinux.org> 0.14.0-alt1
+- New functions that help to work with versions that contain a date;
+- Upgraded function 'SVerToLVer' that splits a given version not only into
+  parts linked by delimiters in this version, but also into a year, month,
+  and day of a date that may be found in this version.
+
 * Thu Nov 26 2020 Alexey Appolonov <alexey@altlinux.org> 0.13.0-alt1
 - Separate module 'ver' for working with software versions.
 
