@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 
 # https://github.com/sass/sass-spec.git requires for tests
 %define sass_spec_ver 3.6.0
 %def_disable check
 
 Name: libsass
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 
 Summary: A C/C++ implementation of a Sass compiler
@@ -16,7 +16,7 @@ Url: http://libsass.org/
 %if_disabled snapshot
 Source: https://github.com/sass/%name/archive/%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/sass/libsass.git
+Vcs: https://github.com/sass/libsass.git
 Source: %name-%version.tar
 %endif
 
@@ -68,6 +68,9 @@ export LIBSASS_VERSION=%version
 %_pkgconfigdir/*
 
 %changelog
+* Wed Dec 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
+- updated to 3.6.4-17-gd4d74ef5
+
 * Wed Apr 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 

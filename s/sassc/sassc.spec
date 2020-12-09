@@ -1,13 +1,14 @@
 %define ver_major 3.6
 
 %def_disable snapshot
+%def_enable spec_snapshot
 %def_enable check
 # use corresponding 3.6.x version
 %define testspec_version %ver_major.3
 
 Name: sassc
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Wrapper around libsass to compile CSS stylesheet
 Group: Text tools
@@ -16,11 +17,15 @@ Url: http://github.com/sass/sassc
 
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
+%else
+Vcs: https://github.com/sass/sassc.git
+Source: %name-%version.tar
+%endif
+
+%if_disabled spec_snapshot
 Source1: https://github.com/sass/sass-spec/archive/libsass-%testspec_version/sass-spec-libsass-%testspec_version.tar.gz
 %else
-#VCS: https://github.com/sass/sassc.git
-Source: %name-%version.tar
-#VCS: https://github.com/sass/sass-spec.git
+Vcs: https://github.com/sass/sass-spec.git
 Source1: sass-spec-%testspec_version.tar
 %endif
 
@@ -33,7 +38,7 @@ application that can be installed and packaged for several operating systems.
 
 %prep
 %setup -a 1
-mv sass-spec-%{?_disable_snapshot:libsass-}%testspec_version sass-spec
+mv sass-spec-%{?_disable_spec_snapshot:libsass-}%testspec_version sass-spec
 echo %version > VERSION
 
 %build
@@ -53,6 +58,10 @@ ruby sass-spec/sass-spec.rb --impl libsass -c ./%name
 %doc LICENSE Readme.md
 
 %changelog
+* Wed Dec 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
+- updated sassc-spec to 3.6.3-164-g6015399e
+  to make check happy against libsass-3.6.4
+
 * Fri Aug 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
