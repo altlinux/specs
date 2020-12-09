@@ -2,23 +2,24 @@
 
 Name:          gem-%pkgname
 Version:       2.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Use libsass with Ruby!
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/sass/sassc-ruby
 Vcs:           https://github.com/sass/sassc-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
 Source:        %name-%version.tar
 Patch:         patch-2.2.1.patch
+Patch1:        use-system-libsass.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(bundler)
 BuildRequires: gem(rake)
 BuildRequires: gem(rake-compiler)
 BuildRequires: gem(rake-compiler-dock)
 BuildRequires: gem-minitest
-BuildRequires: libsass-devel
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -47,18 +48,13 @@ Documentation files for %gemname gem.
 %prep
 %setup
 %patch -p1
-# TODO to upstream
-sed "s,Dir.entries(libsass_dir).size <= 3,false,"  -i *.gemspec ext/extconf.rb
-sed 's/File.expand_path("libsass.#{dl_ext}", __dir__)/"libsass.so"/'  -i lib/sassc/native.rb
+%patch1
 
 %build
 %ruby_build
 
 %install
 %ruby_install
-mkdir -p %buildroot%ruby_gemextdir
-# TODO with setup.rb
-ln -s $(realpath $(find %_libdir/ -name libsass.so 2>/dev/null)) %buildroot%ruby_gemextdir/libsass.so
 
 %check
 %ruby_test
@@ -66,13 +62,15 @@ ln -s $(realpath $(find %_libdir/ -name libsass.so 2>/dev/null)) %buildroot%ruby
 %files
 %ruby_gemspec
 %ruby_gemlibdir
-%ruby_gemextdir
 
 %files         doc
 %ruby_gemdocdir
 
 
 %changelog
+* Wed Dec 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1.1
+- ! picking up the libsass from system if any
+
 * Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
 - ^ 2.2.1 -> 2.4.0
 
