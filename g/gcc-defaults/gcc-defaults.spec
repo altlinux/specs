@@ -1,6 +1,6 @@
 %set_compress_method none
 
-%define gcc_branch 9
+%define gcc_branch 10
 %define psuffix -%gcc_branch
 
 %define gnat_arches		%ix86 x86_64
@@ -16,7 +16,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt2
+Release: alt1
 License: None
 Group: Development/Other
 
@@ -242,6 +242,9 @@ ln_bin gcc-{ar,nm,ranlib}
 ln_bin gcov{,-tool,-dump}
 ln_man gcov{,-tool,-dump}
 
+ln_bin lto-dump
+ln_man lto-dump
+
 # gcc-c++
 ln_bin g++
 ln_man g++
@@ -287,6 +290,9 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %_bindir/%gcc_target_platform-gcov-dump
 %_man1dir/gcov-dump.1.xz
 
+%_bindir/%gcc_target_platform-lto-dump
+%_man1dir/lto-dump.1.xz
+
 %files -n gcc-c++
 %_bindir/%gcc_target_platform-g++
 %_man1dir/g++.1.xz
@@ -311,6 +317,10 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Wed Dec 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 10-alt1
+- Changed default compiler to gcc10.
+- gcc: added lto-dump symlinks.
+
 * Mon May 18 2020 Andrew Savchenko <bircoph@altlinux.org> 9-alt2
 - Added libquadmath-devel-static subpackage.
 
