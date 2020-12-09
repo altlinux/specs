@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.8.2
+Version: 1.8.6
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -81,8 +81,8 @@ NetworkManager panel applet.
 %find_lang %name
 
 %files
-%doc AUTHORS
-%config %_sysconfdir/dbus-1/system.d/nm-l2tp-service.conf
+%doc AUTHORS NEWS README.md
+%config %_datadir/dbus-1/system.d/nm-l2tp-service.conf
 %_libexecdir/NetworkManager/nm-l2tp-service
 %_libdir/pppd/%ppp_version/*.so
 %if_with libnm_glib
@@ -97,12 +97,15 @@ NetworkManager panel applet.
 %_libexecdir/NetworkManager/nm-l2tp-auth-dialog
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp.so
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp-editor.so
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Dec 09 2020 Mikhail Efremov <sem@altlinux.org> 1.8.6-alt1
+- Updated to 1.8.6.
+
 * Mon Apr 20 2020 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
 - Updated to 1.8.2.
 
