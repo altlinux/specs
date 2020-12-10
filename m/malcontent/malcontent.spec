@@ -5,7 +5,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Parental controls implementation
@@ -148,7 +148,7 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 %_datadir/dbus-1/interfaces/*.xml
 %_datadir/polkit-1/actions/*.policy
 %_datadir/polkit-1/rules.d/*.rules
-%doc README.md
+%doc README.md NEWS
 
 %files -n lib%name
 %_libdir/libmalcontent-%api_ver.so.*
@@ -192,6 +192,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Thu Dec 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Thu Sep 17 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - first build for Sisyphus
 
