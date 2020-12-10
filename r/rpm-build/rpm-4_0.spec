@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt157
+Release: alt158
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -410,6 +410,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Dec 10 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt158
+- Prevent exceeding 32 bit memory limitations with xz compression.
+
 * Tue Dec 08 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt157
 - Add support and enable multi-threaded xz payload compression.
 - Add affinity aware %%getncpus macro.
