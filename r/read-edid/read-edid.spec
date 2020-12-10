@@ -1,6 +1,6 @@
 Name: read-edid
 Version: 3.0.2
-Release: alt2
+Release: alt3
 Group: System/Configuration/Other
 License: GPL
 
@@ -12,7 +12,7 @@ Source0: %name-%version.tar
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: libx86-devel cmake gcc-c++
-ExcludeArch: aarch64
+ExcludeArch: armh aarch64 ppc64le
 
 %description
 This package will try to read the monitor details directly from the
@@ -37,6 +37,10 @@ summary.
 %_bindir/*
 
 %changelog
+* Thu Dec 10 2020 Vladislav Zavjalov <slazav@altlinux.org> 3.0.2-alt3
+- fix multiple definition error (for gcc-10)
+- update ExcludeArch (libx86 is available only on i586 and x86_64)
+
 * Sat Oct 20 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.0.2-alt2
 - fix segmentation fault in VBE mode (closes #35525)
 
