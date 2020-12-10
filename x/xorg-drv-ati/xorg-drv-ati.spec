@@ -1,6 +1,6 @@
 Name: xorg-drv-ati
 Version: 19.1.0
-Release: alt1
+Release: alt2
 Epoch: 4
 Summary: ATI video driver
 License: MIT/X11
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 Requires: xorg-drv-radeon
-%ifnarch %e2k aarch64
+%ifnarch %e2k aarch64 armh
 Requires: xorg-drv-r128 xorg-drv-mach64
 %endif
 
@@ -31,7 +31,9 @@ See those manpages for specific cards supported.
 Summary: ATI RADEON video driver
 Group: System/X11
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
+%ifnarch %e2k armh
 Requires: xorg-dri-radeon
+%endif
 
 %description -n xorg-drv-radeon
 radeon is an Xorg driver for ATI RADEON based video cards. It contains full support for 8, 15, 16 and 24 bit pixel
@@ -63,6 +65,9 @@ and the Xinerama extension.
 %_man4dir/radeon.4*
 
 %changelog
+* Thu Dec 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.0-alt2
+git snapshot master.8da3e45
+
 * Wed Oct 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.0-alt1
 - 19.1.0
 
