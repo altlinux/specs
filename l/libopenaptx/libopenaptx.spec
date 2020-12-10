@@ -1,8 +1,8 @@
-%define git ebcf004
+%define git %nil
 
 Name: libopenaptx
-Version: 1.0.0
-Release: alt0.1.g%{git}
+Version: 1.2.0
+Release: alt1
 Summary: reverse-engineered apt-X codec library
 License: MIT
 Group: System/Libraries
@@ -11,7 +11,7 @@ Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 Source: %name-%version.tar
 
-BuildRequires: libsndfile-devel
+BuildRequires: libsndfile-devel libavcodec-devel
 
 %description
 [open]aptx - reverse-engineered apt-X
@@ -53,6 +53,7 @@ develop programs which make use of %name
 	--enable-aptx422 \
 	--enable-aptxHD100 \
 	--with-sndfile \
+	--with-ffmpeg \
 	--disable-static
 %make_build
 
@@ -70,6 +71,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Dec 10 2020 L.A. Kostis <lakostis@altlinux.ru> 1.2.0-alt1
+- 1.2.0.
+- use ffmpeg for encoding.
+
 * Mon Sep 16 2019 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt0.1.gebcf004
 - Initial build for ALTLinux.
-

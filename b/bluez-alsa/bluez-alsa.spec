@@ -1,3 +1,5 @@
+%define git bb39d41
+
 %def_enable aptx
 %def_enable aac
 %def_enable ldac
@@ -7,8 +9,8 @@
 %def_disable test
 
 Name: bluez-alsa
-Version: 2.1.0
-Release: alt1
+Version: 3.0.0
+Release: alt1.g%{git}
 Serial: 5
 Summary: BlueZ ALSA backend for Linux
 License: MIT
@@ -75,6 +77,9 @@ bluealsa. The device is based on the ALSA software PCM plugin.
 %_unitdir/*.service
 
 %changelog
+* Thu Dec 10 2020 L.A. Kostis <lakostis@altlinux.ru> 5:3.0.0-alt1.gbb39d41
+- GIT bb39d41.
+
 * Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.0-alt1
 - 2.1.0.
 - Enable upower (to expose battery change percentage).
