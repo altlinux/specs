@@ -1,6 +1,6 @@
 Name: vpcs
 Version: 0.8
-Release: alt2.20171012
+Release: alt3.20171012
 
 Summary: Virtual PC Simulator
 License: BSD
@@ -37,7 +37,7 @@ popd
 
 %build
 pushd src
-export CFLAGS="%optflags -fno-strict-aliasing"
+export CFLAGS="%optflags -fno-strict-aliasing -fcommon"
 make -f Makefile.linux CPUTYPE=%_target_cpu
 popd
 
@@ -53,6 +53,9 @@ cp man/vpcs.1.xz %buildroot/%_man1dir/
 %_man1dir/*.1.*
 
 %changelog
+* Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 0.8-alt3.20171012
+- Set CFLAGS+=-fcommon to workaround gcc10 errors
+
 * Tue Oct 16 2018 Anton Midyukov <antohami@altlinux.org> 0.8-alt2.20171012
 - first build for aarch64
 - drop ubt
