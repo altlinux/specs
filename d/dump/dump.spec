@@ -1,6 +1,6 @@
 Name: dump
 Version: 0.4b44
-Release: alt2
+Release: alt3
 
 Summary: Programs for backing up and restoring ext2/ext3 filesystems
 License: BSD
@@ -47,6 +47,7 @@ subst s,termcap,tinfo,g ./configure.in
 sed -i '/^#include <sys.un.h>/ a#include <sys/sysmacros.h>' restore/tape.c
 
 %build
+%add_optflags -fcommon
 #autoconf
 %autoreconf
 %configure \
@@ -90,6 +91,9 @@ popd
 %doc COPYRIGHT
 
 %changelog
+* Thu Dec 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4b44-alt3
+- fixed build with gcc10
+
 * Tue Apr 28 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4b44-alt2
 - fixed build with glibc >=2.26
 
