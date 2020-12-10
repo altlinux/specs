@@ -3,7 +3,7 @@
 
 Name: fossology-nomos
 Version: 3.9.0
-Release: alt1
+Release: alt2
 
 Summary: Architecture for analyzing software, nomos standalone
 License: GPL-2.0-or-later
@@ -53,6 +53,9 @@ src/nomos/agent/nomossa -d .gear
 %_bindir/nomossa
 
 %changelog
+* Thu Dec 10 2020 Vitaly Chikunov <vt@altlinux.org> 3.9.0-alt2
+- Fix build on gcc 10.2.1.
+
 * Wed Dec 02 2020 Vitaly Chikunov <vt@altlinux.org> 3.9.0-alt1
 - Update to 3.9.0 (2020-11-30).
 
