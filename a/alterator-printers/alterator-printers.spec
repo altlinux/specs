@@ -1,6 +1,6 @@
 Name: alterator-printers
-Version: 6.2
-Release: alt2
+Version: 6.3
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -39,6 +39,9 @@ simple alterator module for printer administration
 %_libexecdir/%name
 
 %changelog
+* Mon Dec 07 2020 Lenar Shakirov <snejok@altlinux.org> 6.3-alt1
+- Socket:// type added
+
 * Fri Mar 06 2020 Lenar Shakirov <snejok@altlinux.org> 6.2-alt2
 - Change path to /usr/sbin/accept -> /usr/sbin/cupsaccept
 
