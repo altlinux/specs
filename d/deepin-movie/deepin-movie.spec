@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-movie
-Version: 5.7.6.157
-Release: alt1.git1ad288f
+Version: 5.7.6.164
+Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
 Group: Video
@@ -10,6 +10,9 @@ Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar.gz
+# archlinux patches
+Patch: deepin-movie_5.7.6.164_archlinux_mpv-qthelper.patch
+Patch1: deepin-movie_5.7.6.164_archlinux_libavformat-version-check.patch
 
 ExcludeArch: armh
 
@@ -37,7 +40,7 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: libdvdnav-devel
 BuildRequires: gsettings-qt-devel
 BuildRequires: libswresample-devel
-Requires: libdmr libdvdnav libgsettings-qt
+Requires: libdmr libdvdnav libgsettings-qt libmpv1
 
 %description
 %summary.
@@ -58,8 +61,10 @@ This package provides development files for libdmr.
 
 %prep
 %setup -n %name-reborn-%version
+%patch -p1
+%patch1 -p1
 
-#sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
+sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
 
 %build
 %if_enabled clang
@@ -95,6 +100,10 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu Dec 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.164-alt1
+- New version (5.7.6.164) with rpmgs script.
+- Fixed build with mpv (thanks archlinux for the patches).
+
 * Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.157-alt1.git1ad288f
 - Built from git.
 
