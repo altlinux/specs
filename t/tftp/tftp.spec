@@ -6,7 +6,7 @@
 Name: tftp
 %define dname %{name}d
 Version: 5.2
-Release: alt2
+Release: alt3
 Summary: The client for the Trivial File Transfer Protocol (TFTP)
 License: BSD
 Group: Networking/File transfer
@@ -103,6 +103,7 @@ install -m0644 %SOURCE4  .
 
 %build
 %define _optlevel s
+%add_optflags -fcommon
 %autoreconf
 %configure \
     %{subst_enable largefile} \
@@ -168,6 +169,9 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Thu Dec 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt3
+- fix build with gcc10
+
 * Sun May 12 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt2
 - add systemd units
 
