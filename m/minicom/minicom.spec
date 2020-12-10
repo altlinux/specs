@@ -5,15 +5,20 @@
 
 Name: minicom
 Version: 2.7.1
-Release: alt1
+Release: alt2
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
-License: GPL
+# Some files are built from Public Domain files in addition to GPLv2+ files
+# (/usr/bin/minicom). Some LGPLv2+ files *may* be used in building of certain
+# files (minicom, ascii-xfr, runscript). They are probably not actually used,
+# but I wasn't able to exclude them from the build process completely yet.
+# The rest is simply GPLv2+.
+License: GPLv2+ and LGPLv2+ and Public Domain
 Url: http://alioth.debian.org/projects/minicom/
 # Source-url: https://alioth.debian.org/frs/download.php/file/4215/%name-%version.tar.gz
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: %name.sh
 Source2: %name.csh
 Source4: %name.admin
@@ -21,6 +26,27 @@ Source5: %name.admin.ru
 Source6: %name.xpm
 Source7: %name-xstart.sh
 Source9: %name.FAQ.ru
+
+# Upstream patch:
+Patch1: 0001-Add-a-missing-va_end-call.patch
+# Upstream patch:
+Patch2: 0002-Make-sure-strings-copied-by-strncpy-are-null-termina.patch
+# Upstream patch:
+Patch3: 0003-Fix-file-descriptor-leaks.patch
+# Upstream patch:
+Patch4: 0004-Fix-a-directory-handle-leak.patch
+# Upstream patch:
+Patch5: 0005-Fix-a-read-past-end-of-buffer.patch
+# Upstream patch:
+Patch6: 0006-Fix-a-warning-about-an-unused-variable.patch
+# Upstream patch:
+Patch7: 0007-loadconv-Add-missing-fclose.patch
+# Upstream patch:
+Patch8: 0001-Drop-superfluous-global-variable-definitions.patch
+# Upstream patch:
+Patch9: 0002-Drop-superfluous-global-variable-definitions.patch
+# Upstream patch:
+Patch10: 0003-Drop-superfluous-global-variable-definitions.patch
 
 # Without this dependency it would be difficult to find the package with file-transfer tools
 Requires: lrzsz
@@ -51,6 +77,7 @@ and to test and configure your modem.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -120,6 +147,10 @@ EOF
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 2.7.1-alt2
+- Added upstream patchs
+- Fix License Tag
+
 * Sat Sep 02 2017 Anton Midyukov <antohami@altlinux.org> 2.7.1-alt1
 - New version 2.7.1
 - Fix desktop files.
