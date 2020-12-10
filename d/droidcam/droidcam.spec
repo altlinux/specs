@@ -1,7 +1,7 @@
 Name: droidcam
 Summary: DroidCam turns your mobile device into a webcam for your PC
 Version: 1.6
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Video
 Url: https://github.com/aramg/droidcam
@@ -27,12 +27,7 @@ cli version of %name
 
 %build
 pushd linux
-%ifarch ppc64le
-OPTFLAGS="%optflags -DNO_WARN_X86_INTRINSICS" \
-%else
-OPTFLAGS="%optflags" \
-%endif
-%make_build
+OPTFLAGS="%optflags" %make_build
 popd
 
 %install
@@ -48,6 +43,8 @@ install -m644 linux/icon2.png %buildroot%_iconsdir/droidcam.png
 %_bindir/%name-cli
 
 %changelog
+* Thu Dec 10 2020 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt2
+- Remove ppc64 workaround (should be working fine without).
+
 * Wed Dec 09 2020 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt1
 - Initial build for Sisyphus.
-
