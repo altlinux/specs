@@ -3,10 +3,10 @@
 
 Name: menu-cache
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
-License: GPL
+License: LGPLv2+ and GPLv2+
 Group: Graphical desktop/Other
 
 Url: http://lxqt.org
@@ -16,6 +16,9 @@ Packager: LXDE Development Team <lxde at packages.altlinux.org>
 # Automatically added by buildreq on Wed Jan 23 2013
 # optimized out: glib2-devel pkg-config
 BuildRequires: gtk-doc libfm-devel libgio-devel
+
+# https://github.com/lxde/menu-cache/pull/19
+Patch: menu-cache-1.1.0-0001-Support-gcc10-compilation.patch
 
 %description
 libmenu-cache is a library creating and utilizing caches to speed up
@@ -56,6 +59,7 @@ This package contains development headers for libmenu-cache.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -80,6 +84,9 @@ This package contains development headers for libmenu-cache.
 %exclude %_libdir/*.a
 
 %changelog
+* Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt2
+- Fix compilation with gcc10 -fno-common
+
 * Sat Jan 26 2019 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 
