@@ -3,7 +3,7 @@
 Name: obs-studio-plugin-droidcam
 Summary: Droidcam plugin for OBS studio
 Version: 1.1
-Release: alt2.g%{git}
+Release: alt2.g%{git}.1
 License: GPLv2
 Group: Video
 Url: https://github.com/dev47apps/droidcam-obs-plugin
@@ -28,7 +28,7 @@ many devices as you want, over WiFi or USB!
 %build
 mkdir build
 %ifarch ppc64le
-OPTFLAGS="%optflags %optflags_shared -DNO_WARN_X86_INTRINSICS" \
+OPTFLAGS="%optflags %optflags_shared -DNO_WARN_X86_INTRINSICS -mvsx" \
 %else
 OPTFLAGS="%optflags %optflags_shared" \
 %endif
@@ -44,8 +44,11 @@ cp -ar data/locale %buildroot%_datadir/obs/obs-plugins/droidcam-obs/
 %_datadir/obs/obs-plugins/droidcam-obs/
 
 %changelog
+* Thu Dec 10 2020 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt2.gc9ca053.1
+- Extend ppc64 build flags (libobs knows how to handle them).
+
 * Wed Dec 09 2020 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt2.gc9ca053
-- Fix build on ppc64le (hope that turojpeg is working there).
+- Fix build on ppc64le.
 
 * Wed Dec 09 2020 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt1.gc9ca053
 - GIT gc9ca053.
