@@ -1,137 +1,90 @@
 %define _unpackaged_files_terminate_build 1
-%define _libexecdir /usr/libexec
 
 %global provider        github
 %global provider_tld    com
 %global project         docker
-%global repo_engine     docker
-%global repo_cli        cli
+%global repo            docker
+%global servicename     docker
 
-%global import_path_engine %{provider}.%{provider_tld}/%{project}/%{repo_engine}
-%global import_path_cli %{provider}.%{provider_tld}/%{project}/%{repo_cli}
-%global build_dir ./_build
-%global build_dir_cli %build_dir/src/%import_path_cli
-%global build_dir_engine %build_dir/src/%import_path_engine
-%global commit      4484c46d9d1a2d10b8fc662923ad586daeedb04f
+%global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
+%global commit      eeddea2f9026b9b3e6a14b8bdb40bafec81ef10a
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Name:       docker-ce
-Version:    19.03.13
+Name:    docker-engine
+Version: 20.10.0
 Release: alt2
-Summary: Automates deployment of containerized applications
+Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
 
-%global versuffix ce
-%global fullversion %{version}-%{versuffix}
-
-Url: https://github.com/docker/docker-ce
+Url: https://github.com/moby/moby
 ExclusiveArch: %go_arches
 Conflicts: docker
 
 Source0: %name-%version.tar
-Source1: %repo_engine.service
-Source2: %repo_engine.init
-Source3: %repo_engine.sysconf
-Source4: %repo_engine-storage.sysconf
+Source1: %servicename.service
+Source2: %servicename.init
+Source3: %servicename.sysconf
+Source4: %servicename-storage.sysconf
 Source5: daemon.json
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
-BuildRequires: go-md2man
 Requires: tar xz
 Provides: docker-io = %version-%release
+Provides: docker-ce = %version-%release
 Obsoletes: docker-io <= 17.05.0
 Obsoletes: docker-io-devel <= 17.05.0
+Obsoletes: docker-ce < 20.10.0
 Requires: /usr/bin/docker-proxy
 Requires: docker-containerd >= 1.0.2-alt1
 Requires: docker-runc >= 1.0.0-alt4.rc5
 Requires: docker-init >= 0.17.0-alt1
+Requires: docker-cli >= 20.10.0-alt1.rc2
 Requires: iptables
 
 # do not extract debuginfo
 %define __find_debuginfo_files %nil
 
-# do not run debugedit for them
-%add_debuginfo_skiplist /usr/bin/docker
-
 %description
-Docker is an open-source engine that automates the deployment of any
-application as a lightweight, portable, self-sufficient container that will
-run virtually anywhere.
+Docker Engine is an open source containerization technology for building and
+containerizing your applications. Docker Engine acts as a client-server application with:
 
-Docker containers can encapsulate any payload, and will run consistently on
-and between virtually any server. The same container that a developer builds
-and tests on a laptop will run at scale, in production*, on VMs, bare-metal
-servers, OpenStack clusters, public instances, or combinations of the above.
+* A server with a long-running daemon process dockerd.
+* APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
+* A command line interface (CLI) client docker
 
 %prep
 %setup
 
 %build
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="%go_path:$BUILDDIR"
 
-mkdir -p %{build_dir}
-export GOPATH="$(pwd)/%{build_dir}:%{go_path}"
+%golang_prepare
 
-# build cli
-mkdir -p %{build_dir_cli}
-cp -alv -- components/cli/* %{build_dir_cli}
-DISABLE_WARN_OUTSIDE_CONTAINER=1 make -C %{build_dir_cli} VERSION=%{version} GITCOMMIT=%{shortcommit}
-DISABLE_WARN_OUTSIDE_CONTAINER=1 make -C %{build_dir_cli} manpages
-
-# build daemon
 export DOCKER_GITCOMMIT=%{shortcommit}
 export DOCKER_BUILDTAGS='selinux journald pkcs11 seccomp'
 export VERSION=%{version}
-mkdir -p %{build_dir_engine}
-cp -alv -- components/engine/* %{build_dir_engine}
-pushd %{build_dir_engine}
 hack/make.sh dynbinary
-popd
 
 %install
 # install binary
 install -d %{buildroot}%{_bindir}
-install -p -m 755 %{build_dir_cli}/build/docker %{buildroot}%{_bindir}/docker
-install -p -m 755 %{build_dir_engine}/bundles/dynbinary-daemon/dockerd %{buildroot}%{_bindir}/dockerd
-
-install -d %{buildroot}%{_libexecdir}/docker
-
-# install manpages
-install -d %{buildroot}%{_mandir}/man1
-install -p -m 644 %{build_dir_cli}/man/man1/*.1 %{buildroot}%{_mandir}/man1
-install -d %{buildroot}%{_mandir}/man5
-install -p -m 644 %{build_dir_cli}/man/man5/*.5 %{buildroot}%{_mandir}/man5
-install -d %{buildroot}%{_mandir}/man8
-install -p -m 644 %{build_dir_cli}/man/man8/*.8 %{buildroot}%{_mandir}/man8
-
-# install bash completion
-install -Dp -m 644 %{build_dir_cli}/contrib/completion/bash/docker %{buildroot}%{_datadir}/bash-completion/completions/docker
-
-# install zsh completion
-install -Dp -m 644 %{build_dir_cli}/contrib/completion/zsh/_docker %{buildroot}%{_datadir}/zsh/site-functions/_docker
-
-# install fish completion
-install -Dp -m 644 %{build_dir_cli}/contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/fish/completions/docker.fish
-
-# install vim syntax highlighting
-# (in process of being included in default vim)
-install -d %{buildroot}%{_datadir}/vim/vimfiles/{doc,ftdetect,syntax}
-install -p -m 644 %{build_dir_engine}/contrib/syntax/vim/doc/dockerfile.txt %{buildroot}%{_datadir}/vim/vimfiles/doc
-install -p -m 644 %{build_dir_engine}/contrib/syntax/vim/ftdetect/dockerfile.vim %{buildroot}%{_datadir}/vim/vimfiles/ftdetect
-install -p -m 644 %{build_dir_engine}/contrib/syntax/vim/syntax/dockerfile.vim %{buildroot}%{_datadir}/vim/vimfiles/syntax
+install -p -m 755 bundles/dynbinary-daemon/dockerd %{buildroot}%{_bindir}/dockerd
 
 # install udev rules
 install -d %{buildroot}%{_sysconfdir}/udev/rules.d
-install -m 644 -p %{build_dir_engine}/contrib/udev/80-docker.rules %{buildroot}%{_sysconfdir}/udev/rules.d
+install -m 644 -p contrib/udev/80-docker.rules %{buildroot}%{_sysconfdir}/udev/rules.d
 
 # install storage dir
-install -d %{buildroot}%{_sharedstatedir}/%{repo_engine}
+install -d %{buildroot}%{_sharedstatedir}/%{servicename}
 
 # install systemd/init scripts
-install -p -D -m 644 altlinux/%{repo_engine}.service %{buildroot}%{_unitdir}/%{repo_engine}.service
-install -p -m 644 %{build_dir_engine}/contrib/init/systemd/docker.socket %{buildroot}%{_unitdir}/
-install -p -D -m 755 altlinux/%{repo_engine}.init %{buildroot}%{_initddir}/%{repo_engine}
+install -p -D -m 644 altlinux/%{servicename}.service %{buildroot}%{_unitdir}/%{servicename}.service
+install -p -m 644 contrib/init/systemd/docker.socket %{buildroot}%{_unitdir}/
+install -p -D -m 755 altlinux/%{servicename}.init %{buildroot}%{_initddir}/%{servicename}
 
 install -d %buildroot%_sysconfdir/sysconfig
 install -p -m 644 altlinux/docker.sysconf %buildroot%_sysconfdir/sysconfig/docker
@@ -151,33 +104,27 @@ exit 0
 %preun_service docker
 
 %files
-%doc components/engine/AUTHORS components/engine/LICENSE
-%doc components/engine/MAINTAINERS components/engine/NOTICE
+%doc AUTHORS LICENSE
+%doc MAINTAINERS NOTICE
 %doc CHANGELOG.md CONTRIBUTING.md README.md
-%doc components/engine/contrib/syntax/vim/LICENSE
-%doc components/engine/contrib/syntax/vim/README.md
 %config(noreplace) %{_sysconfdir}/sysconfig/docker
 %config(noreplace) %{_sysconfdir}/sysconfig/docker-storage
 %config(noreplace) %{_sysconfdir}/docker/daemon.json
-%{_mandir}/man1/*
-%{_mandir}/man5/*
-%{_mandir}/man8/*
-%{_bindir}/docker
 %{_bindir}/dockerd
-%dir %{_libexecdir}/docker
 %{_unitdir}/docker.service
 %{_unitdir}/docker.socket
 %_initdir/docker
-%{_datadir}/bash-completion/completions/docker
-%{_datadir}/zsh/site-functions/_docker
-%{_datadir}/fish/completions/docker.fish
 %dir %{_sharedstatedir}/docker
 %{_sysconfdir}/udev/rules.d/80-docker.rules
-%{_datadir}/vim/vimfiles/doc/dockerfile.txt
-%{_datadir}/vim/vimfiles/ftdetect/dockerfile.vim
-%{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Wed Dec 9 2020 Vladimir Didenko <cow@altlinux.org> 20.10.0-alt2
+- 20.10.0 release
+
+* Fri Dec 4 2020 Vladimir Didenko <cow@altlinux.org> 20.10.0-alt1.rc2
+- rename package to docker-engine because of new upstream repo
+- 20.10.0-rc2
+
 * Sat Oct 24 2020 Alexey Shabalin <shaba@altlinux.org> 19.03.13-alt2
 - fix docker and dockerd --version
 - update default docker daemon config (daemon.json)
