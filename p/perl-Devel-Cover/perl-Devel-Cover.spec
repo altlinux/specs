@@ -1,10 +1,11 @@
+BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
 %add_findreq_skiplist %_bindir/cpancover
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
 Version: 1.36
-Release: alt1
+Release: alt2
 
 Summary: Code coverage metrics for Perl
 License: GPL or Artistic
@@ -14,7 +15,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/P/PJ/PJCJ/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 12 2011 (-bi)
-BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn rpm-build-ruby perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm) perl(JSON/MaybeXS.pm)
+BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm) perl(JSON/MaybeXS.pm)
 
 %description
 This module provides code coverage metrics for Perl. Code coverage
@@ -22,6 +23,18 @@ metrics describe how thoroughly tests exercise code. By using
 Devel::Cover you can discover areas of code not exercised by your tests
 and determine which tests to create to increase coverage. Code coverage
 can be considered as an indirect measure of quality.
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+BuildArch: noarch
+Requires: %name = %EVR
+Conflicts: %name < 1.36-alt2
+Conflicts: golang
+
+%description scripts
+scripts for %name
+
 
 %prep
 %setup -q -n %{dist}-%{version}
@@ -43,15 +56,22 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 
 %files
 %doc Changes docs README.md
-%_bindir/cover
-%_bindir/cpancover
-%_bindir/gcov2perl
-%_man1dir/*
 %perl_vendor_archlib/Devel
 %perl_vendor_autolib/Devel
 %exclude /hack.pm
 
+%files scripts
+%_bindir/cover
+%_bindir/cpancover
+%_bindir/gcov2perl
+%_man1dir/*
+
 %changelog
+* Thu Dec 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.36-alt2
+- scripts moved to scripts subpackage (closes: #38533)
+- added conflict with golang to scripts
+- buildreq cleanup (closes: #39399)
+
 * Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
 - automated CPAN update
 
