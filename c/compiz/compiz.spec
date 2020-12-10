@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -127,6 +127,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/*.egg-info
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Thu Dec 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.1-alt4
+- 0.9.14.1+20.10.20200813
+
 * Wed Apr 29 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.1-alt3
 - 0.9.14.1+20.10.20200427
 
