@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: sysstat
 Version: 12.5.1
-Release: alt1
+Release: alt2
 
 Summary: The sar and iostat system monitoring commands
 License: GPLv2+
@@ -11,6 +11,9 @@ URL: http://sebastien.godard.pagesperso-orange.fr/
 # https://github.com/sysstat/sysstat.git
 Source: %name-%version.tar
 Source1: sysstat.init
+
+# https://github.com/sysstat/sysstat/pull/281
+Patch1: %name-%version-alt-32bit-fix.patch
 
 # Automatically added by buildreq on Wed Aug 04 2010
 BuildRequires: libsensors3-devel
@@ -34,6 +37,7 @@ by a previous sar run.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 export CFLAGS="%optflags"
@@ -114,6 +118,9 @@ fi
 %_man1dir/isag.*
 
 %changelog
+* Thu Dec 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 12.5.1-alt2
+- Fixed issue on 32bit systems where generated system activity file could not be read.
+
 * Tue Dec 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 12.5.1-alt1
 - Updated to upstream version 12.5.1 (Fixes: CVE-2019-16167, CVE-2019-19725).
 
