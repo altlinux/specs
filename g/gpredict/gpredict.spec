@@ -1,7 +1,7 @@
 %define _localstatedir %_var
 Name: gpredict
 Version: 2.2.1
-Release: alt1
+Release: alt2
 Summary: Real-time satellite tracking and orbit prediction program
 Group: Communications
 License: GPLv2+
@@ -10,6 +10,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Source1: gpredict.desktop
+Source2: gpredict.appdata.xml
+Patch0: build_fix.patch
 
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(goocanvas-2.0)
@@ -27,6 +29,7 @@ algorithms, which are compatible with the NORAD Keplerian elements.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -43,9 +46,13 @@ desktop-file-install \
     --dir %buildroot%_desktopdir \
     %SOURCE1
 
+mkdir -p %buildroot%_datadir/appdata/
+install -m 644 %SOURCE2 %buildroot%_datadir/appdata/%name.appdata.xml
+
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog NEWS README
 %_bindir/*
+%_datadir/appdata/*%name.appdata.xml
 %_datadir/%name
 %_desktopdir/*%name.desktop
 %_pixmapsdir/gpredict
@@ -53,6 +60,10 @@ desktop-file-install \
 %_man1dir/gpredict*
 
 %changelog
+* Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 2.2.1-alt2
+- Fix build with gcc10
+- Add appdata metafile
+
 * Wed Mar 28 2018 Anton Midyukov <antohami@altlinux.org> 2.2.1-alt1
 - New version 2.2.1
 
