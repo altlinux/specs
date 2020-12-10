@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: deepin-screen-recorder
-Version: 5.8.0.57
+Version: 5.8.0.60
 Release: alt1
 Summary: Default screen recorder application for Deepin
 License: GPL-3.0+
@@ -13,9 +15,33 @@ Patch: deepin-screen-recorder_5.8.0.57_alt_qt5.15.patch
 Provides: %name-data = %version
 Obsoletes: %name-data < %version
 
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools libxcbutil-devel deepin-qt-dbus-factory-devel dtk5-gui-devel dtk5-widget-devel qt5-x11extras-devel qt5-multimedia-devel libprocps-devel libavcodec-devel libavformat-devel libavfilter-devel libswresample-devel libswscale-devel libavdevice-devel libgbm-devel libepoxy-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-kwayland-devel kf5-ki18n-devel kf5-kconfig-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools
+BuildRequires: libxcbutil-devel
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: dtk5-gui-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-multimedia-devel
+BuildRequires: libprocps-devel
+BuildRequires: libavcodec-devel
+BuildRequires: libavformat-devel
+BuildRequires: libavfilter-devel
+BuildRequires: libswresample-devel
+BuildRequires: libswscale-devel
+BuildRequires: libavdevice-devel
+BuildRequires: libgbm-devel
+BuildRequires: libepoxy-devel
+BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: kf5-kwayland-devel
+BuildRequires: kf5-ki18n-devel
+BuildRequires: kf5-kconfig-devel
 
 %description
 %summary.
@@ -24,10 +50,16 @@ BuildRequires: kf5-kwindowsystem-devel kf5-kwayland-devel kf5-ki18n-devel kf5-kc
 %setup -n %name-%version
 %patch -p2
 sed -i 's|lupdate|lupdate-qt5|; s|lrelease|lrelease-qt5|' screen_shot_recorder.pro
+# X11 header's weirdness with GCC 10
+sed -i '/include <X11.extensions.XTest.h>/a #undef min' src/event_monitor.cpp
+sed -i '/#include <iostream>/d;1i #include <iostream>' src/screen_shot_event.cpp
 
 %build
 %qmake_qt5 \
     CONFIG+=nostrip \
+%if_enabled clang
+    QMAKE_STRIP= -spec linux-clang \
+%endif
     QT.KWindowSystem.libs=%_K5link \
     QT.KWaylandClient.libs=%_K5link \
     QT.KI18n.libs=%_K5link \
@@ -53,6 +85,10 @@ sed -i 's|lupdate|lupdate-qt5|; s|lrelease|lrelease-qt5|' screen_shot_recorder.p
 %_datadir/dbus-1/services/com.deepin.Screenshot.service
 
 %changelog
+* Thu Dec 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.60-alt1
+- New version (5.8.0.60) with rpmgs script.
+- Fixed build with gcc10 (thanks archlinux).
+
 * Fri Oct 23 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.57-alt1
 - New version (5.8.0.57) with rpmgs script.
 - Rewritten patch for qt5.15 compatibility.
