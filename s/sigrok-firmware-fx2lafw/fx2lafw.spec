@@ -1,5 +1,5 @@
 Name: sigrok-firmware-fx2lafw
-Version: 0.1.5
+Version: 0.1.7
 Release: alt1
 
 Summary: Firmware for Cypress EZ-USB FX2(LP) based scopes
@@ -28,5 +28,8 @@ tar xf %SOURCE0 --strip-components=1 -C %buildroot%_datadir/sigrok-firmware --wi
 %_datadir/sigrok-firmware
 
 %changelog
+* Thu Dec 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.7-alt1
+- 0.1.7 released
+
 * Thu Jun 22 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.5-alt1
 - initial
