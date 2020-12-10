@@ -1,9 +1,9 @@
 Name: ggaoed
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Summary: AoE target implementation for Linux
-License: GPL
+License: GPL-2.0-or-later
 Group: Networking/Other
 Url: http://code.google.com/p/ggaoed/
 
@@ -33,6 +33,7 @@ ggaoed is an AoE target implementation for Linux, with the following features:
 %setup
 
 %build
+%add_optflags -fcommon
 %autoreconf
 %configure --localstatedir=/var
 %make_build
@@ -41,6 +42,7 @@ ggaoed is an AoE target implementation for Linux, with the following features:
 %make_install DESTDIR=%buildroot install
 mkdir -p %buildroot%_localstatedir/ggaoed
 install -pm0755 -D aoed.init %buildroot%_initdir/aoed
+install -pm0644 -D aoed.service %buildroot%_unitdir/aoed.service
 install -pm0600 -D ggaoed.conf.dist %buildroot%_sysconfdir/ggaoed.conf
 
 %post
@@ -53,6 +55,7 @@ install -pm0600 -D ggaoed.conf.dist %buildroot%_sysconfdir/ggaoed.conf
 %doc README COPYING NEWS
 
 %_initdir/aoed
+%_unitdir/aoed.service
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/ggaoed.conf
 
 %_sbindir/ggaoectl
@@ -65,6 +68,10 @@ install -pm0600 -D ggaoed.conf.dist %buildroot%_sysconfdir/ggaoed.conf
 %_man8dir/ggaoed.8*
 
 %changelog
+* Thu Dec 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1-alt3
+- added systemd unit
+- fixed build with gcc10
+
 * Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1-alt2
 - fix build
 
