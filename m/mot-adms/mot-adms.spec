@@ -8,25 +8,21 @@
 %define majver 2.3
 
 Name: mot-adms
-Version: %majver.4
-Release: alt1.1
+Version: %majver.7
+Release: alt1
 Summary: An electrical compact device models converter
 
 Group: Engineering
-License: LGPLv2+
-Url: http://mot-adms.sourceforge.net/
+License: GPLv3+
+Url: https://github.com/Qucs/ADMS
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: http://sourceforge.net/projects/mot-adms/files/adms-source/%majver/adms-%version.tar.gz
+Source: adms-%version.tar
+# Source-url: https://github.com/Qucs/ADMS/archive/release-%version/adms-%version.tar.gz
 
-# Remove useless perl-GD dependency
-Patch: mot-adms-remove-BR-perl-GD.patch
-
-BuildRequires: %_bindir/perl gcc-c++ perl(GD.pm)
+BuildRequires: gcc-c++
 BuildRequires: flex perl-XML-LibXML
-#bison 
-#BuildRequires: automake-common autoconf-common libtool-common
 
 %description
 ADMS is a code generator that converts electrical compact
@@ -38,13 +34,15 @@ transforms Verilog-AMS code into other target languages.
 %prep
 %setup -n adms-%version
 
-%patch -p1 -b .perlGD
-mv README.md README
-
 %build
 %autoreconf
-%configure --enable-maintainer-mode
+%configure --enable-maintainer-mode --disable-silent-rules
 
+%make_build -C admsXml \
+	admstpathYacc.h \
+	preprocessorYacc.h \
+	verilogaYacc.y \
+	%nil
 %make_build
 
 %install
@@ -52,16 +50,28 @@ mv README.md README
 %makeinstall_std
 
 # Remove libtool archives and static libs
-find %buildroot -type f -name "*.la" -delete
+find %buildroot -type f '(' -name '*.la' -or -name '*.a' ')' -delete
+# For now, remove these .so files
+find %buildroot -type l -name '*.so' -delete
 
 %files
-%doc AUTHORS TODO README ChangeLog
-%doc COPYING
-%_bindir/*
-%_man1dir/admsXml.1*
+%doc AUTHORS TODO README.md ChangeLog
+%_bindir/admsCheck
+%_bindir/admsXml
+
+%_libdir/libadms*.so.*
+%dir %_includedir/adms
+%_includedir/adms/*.vams
+
 %_man1dir/admsCheck.1*
+%_man1dir/admsXml.1*
 
 %changelog
+* Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 2.3.7-alt1
+- New version 2.3.7
+- Fix License Tag
+- Update Url Tag
+
 * Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 2.3.4-alt1.1
 - Rebuilt for aarch64
 
