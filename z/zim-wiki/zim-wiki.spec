@@ -1,64 +1,74 @@
-%define real_name zim
-Summary: A desktop wiki and outliner
-Name: zim-wiki
-Version: 0.67
-Release: alt1.qa1
-Packager: Pavel Vyazovoy <paulelms@altlinux.org>
+%def_enable snapshot
 
-#Source: https://github.com/jaap-karssenberg/zim-desktop-wiki/archive/%version.tar.gz
-Source: %name-%version.tar
-License: GPLv2
+%define real_name zim
+
+Name: zim-wiki
+Version: 0.73.4
+Release: alt1
+
+Summary: A desktop wiki and outliner
 Group: Editors
+License: GPLv2
 Url: http://www.zim-wiki.org/
 
-BuildRequires: python-devel
-BuildRequires: python-module-pygobject-devel
-BuildRequires: python-modules-json python-module-pygtk python-module-pyxdg xdg-utils python-modules-sqlite3
-Requires: python
-Requires: python-module-pygtk
-Requires: python-module-pygobject
-Requires: python-modules-json
-Requires: python-module-pyxdg
-Requires: xdg-utils
+%if_disabled snapshot
+Source: https://zim-wiki.org/downloads/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
+
+BuildArch: noarch
+Requires: typelib(Gtk) = 3.0
+# see README.md and PKG-INFO
+Requires: python3-module-pyxdg xdg-utils
+# Mac-specific
+%add_typelib_req_skiplist typelib(GtkosxApplication)
+# typelib(AppIndicator3)
 
 Conflicts: zim
 
-BuildArch: noarch
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-module-pygobject3 python3-modules-sqlite3
+BuildRequires: typelib(Gtk) = 3.0
 
 %description
-Zim is a WYSIWYG text editor written in Gtk2-python which aims to bring
-the concept of a wiki to your desktop. Every page is saved as a text
-file with wiki markup. Pages can contain links to other pages, and are
-saved automatically. Creating a new page is as easy as linking to a
-non-existing page. Pages are ordered in a hierarchical structure that
-gives it the look and feel of an outliner. This tool is intended to
-keep track of TODO lists or to serve as a personal scratch book.
+Zim is a graphical text editor used to maintain a collection of wiki
+pages. Each page can contain links to other pages, simple formatting and
+images. Pages are stored in a folder structure, like in an outliner, and
+can have attachments. Creating a new page is as easy as linking to a
+nonexistent page. All data is stored in plain text files with wiki
+formatting. Various plugins provide additional functionality, like a task
+list manager, an equation editor, a tray icon, and support for version
+control.
 
 %prep
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install --skip-xdg-cmd
+%python3_install
 %find_lang %real_name
 
 %files -f %real_name.lang
-%doc README.txt CHANGELOG.txt LICENSE.txt
 %_bindir/%real_name
 %_datadir/%real_name
 %_desktopdir/%real_name.desktop
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_man1dir/%{real_name}*
 %_datadir/mime/*
-%_datadir/appdata/*
+%_datadir/metainfo/*
 %_iconsdir/hicolor/*/*/*
-%exclude %_iconsdir/ubuntu-mono-light
-%exclude %_iconsdir/ubuntu-mono-dark
+%exclude %_iconsdir/ubuntu*
 %_datadir/pixmaps/*
 
+%doc README.md CHANGELOG.md
+
 %changelog
+* Thu Dec 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.73.4-alt1
+- 0.73.4 (ported to Python 3)
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1.qa1
 - NMU: applied repocop patch
 
