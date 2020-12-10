@@ -1,5 +1,5 @@
 Name: minidlna
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: DLNA AV Media Server
@@ -33,14 +33,13 @@ install -pm0644 -D minidlnad.8 %buildroot%_man8dir/minidlnad.8
 install -pm0755 -D minidlna.init %buildroot%_initdir/minidlna
 install -pm0644 -D minidlna.sysconfig %buildroot%_sysconfdir/sysconfig/minidlna
 install -pm0644 -D minidlna.service %buildroot%_unitdir/minidlna.service
-install -pm0644 -D minidlna.tmpfiles %buildroot%_tmpfilesdir/minidlna.conf
-mkdir -p %buildroot%_cachedir/%name %buildroot%_runtimedir/%name
+mkdir -p %buildroot%_cachedir/%name
 
 %find_lang %name
 
 %pre
 /usr/sbin/groupadd -r -f _minidlna &>/dev/null ||:
-/usr/sbin/useradd -r -g _minidlna -d %_runtimedir/%name -s /dev/null \
+/usr/sbin/useradd -r -g _minidlna -d %_cachedir/%name -s /dev/null \
     -c "minidlna service" -M -n _minidlna &>/dev/null ||:
 
 %post
@@ -56,16 +55,17 @@ mkdir -p %buildroot%_cachedir/%name %buildroot%_runtimedir/%name
 
 %_initdir/minidlna
 %_unitdir/minidlna.service
-%_tmpfilesdir/minidlna.conf
 
 %_sbindir/minidlnad
 %_man5dir/minidlna.conf.5*
 %_man8dir/minidlnad.8*
 
 %dir %attr(0770,root,_minidlna) %_cachedir/%name
-%dir %attr(0770,root,_minidlna) %_runtimedir/%name
 
 %changelog
+* Thu Dec 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
+- 1.3.0 released
+
 * Thu Jun 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
 - 1.2.1 released
 
