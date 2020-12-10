@@ -13,7 +13,7 @@
 %global forgeurl https://github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 5.3.0.13
+Version: 5.3.0.14
 Release: alt1
 Summary: Go-lang bingding for dde-daemon
 License: GPL-3.0+
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires: libalsa-devel libcairo-devel libgio-devel libgtk+3-devel libgdk-pixbuf-devel libgudev-devel libcanberra-devel libpulseaudio-devel librsvg-devel libpoppler-glib-devel libpolkitqt5-qt5-devel libsystemd-devel libXfixes-devel libXcursor-devel libX11-devel libXi-devel deepin-gettext-tools deepin-gir-generator libgdk-pixbuf-xlib-devel
 BuildRequires: golang-github-linuxdeepin-dbus-factory-devel golang-deepin-go-lib-devel golang-deepin-go-x11-client-devel golang-github-burntsushi-xgbutil-devel golang-github-burntsushi-xgbutil-devel golang-github-disintegration-imaging-devel golang-github-cryptix-wav-devel golang-github-fogleman-gg-devel golang-github-nfnt-resize-devel golang-gopkg-alecthomas-kingpin-2-devel golang-x-image-devel golang-golang-x-net-devel golang-github-rickb777-date-devel golang-github-rickb777-plural-devel golang-github-alecthomas-template-devel golang-github-alecthomas-units-devel golang-github-freetype-devel golang-github-mattn-sqlite3-devel go-xgettext-devel golang-github-fsnotify-devel golang-github-go-dbus-devel golang-golang-x-sys-devel
 Requires: deepin-desktop-base rfkill
-Requires(pre): shadow-utils
+Requires(pre): shadow-utils dbus-tools
 
 %description
 %summary.
@@ -103,6 +103,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Thu Dec 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.14-alt1
+- New version (5.3.0.14) with rpmgs script.
+
 * Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.13-alt1
 - New version (5.3.0.13) with rpmgs script.
 
