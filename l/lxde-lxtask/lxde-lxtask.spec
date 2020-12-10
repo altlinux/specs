@@ -1,13 +1,13 @@
 %define upstreamname lxtask
 %define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: Task manager for LXDE
-License: GPL
+License: GPLv2+
 Group: Graphical desktop/Other
-Url: http://git.lxde.org/gitweb/?p=lxde/lxtask.git
+Url: https://github.com/lxde/lxtask.git
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 Source: %upstreamname-%version.tar
@@ -43,6 +43,11 @@ and some improvement of the user interface.
 %_man1dir/*
 
 %changelog
+* Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 0.1.10-alt1
+- new version 0.1.10
+- Fix License Tag
+- Update URL Tag
+
 * Thu Mar 21 2019 Anton Midyukov <antohami@altlinux.org> 0.1.9-alt1
 - new version 0.1.9
 
