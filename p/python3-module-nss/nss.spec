@@ -4,15 +4,17 @@
 
 Name: python3-module-%mname
 Version: 1.0.1
-Release: alt5
+Release: alt6
 
 Summary: Python binding for NSS (Network Security Services) and NSPR (Netscape Portable Runtime)
-License: MPLv2.0 or GPLv2+ or LGPLv2+
+License: MPL-2.0 or GPL-2.0+ or LGPL-2.0+
 Group: Development/Python3
 Url: http://www.mozilla.org/projects/security/pki/python-nss
 
 # hg clone https://hg.mozilla.org/projects/python-nss
 Source: %name-%version.tar
+Patch0: 0001-Rename-DSA-RSA-PublicKey-to-Py-DSA-RSA-PublicKey.patch
+Patch1: 0002-Fix-python-names-of-RSAPublicKey-DSAPublicKey.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -40,6 +42,7 @@ python-nss exposes elements of NSPR.
 
 %prep
 %setup
+%autopatch -p2
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -58,6 +61,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Thu Dec 10 2020 Stanislav Levin <slev@altlinux.org> 1.0.1-alt6
+- Applied upstream fixes.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt5
 - Build for python2 disabled.
 
