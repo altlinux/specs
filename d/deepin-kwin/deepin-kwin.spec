@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-kwin
-Version: 5.2.0.2
-Release: alt4
+Version: 5.2.0.11
+Release: alt1
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -17,13 +17,11 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 # archlinux patches
 Patch1: %name-added-functions-from-their-forked-kwin.patch
 Patch2: %name-tabbox-chameleon-rename.patch
-Patch3: %name-build-fix.patch
-Patch4: %name-unload-blur.patch
-Patch5: deepin-kwin-qt5.15.patch
-Patch6: kwin-5.19.patch
+Patch3: %name-unload-blur.patch
 # ALT patches
 Patch11: deepin-kwin_5.2.0.2_ALT_cmake_bad-elfs.patch
 Patch12: deepin-kwin_5.2.0.2_ALT_bad-elfs_multitasking.patch
+Patch13: deepin-kwin_5.2.0.2_ALT_bad-elfs_cursor.patch
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %else
@@ -52,11 +50,9 @@ Header files and libraries for %name.
 %patch1 -R -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 %patch11 -p2
 %patch12 -p2
+%patch13 -p2
 
 sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/scripts|%_K5data/kwin/scripts/|' scripts/CMakeLists.txt
@@ -71,7 +67,7 @@ sed -i 's|/lib|/%_lib|' plugins/platforms/plugin/main_wayland.cpp \
 # Fix wm error
 sed -i 's|kwin_x11 -platform|%_K5bin/kwin_x11 -platform|' configures/kwin_no_scale.in
 # Fix build future version with kwin 5.20
-# sed -i '/m_blurManager->create();/d' plugins/kwineffects/blur/blur.cpp
+sed -i '/m_blurManager->create();/d' plugins/kwineffects/blur/blur.cpp
 
 %build
 %if_enabled clang
@@ -122,6 +118,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Fri Dec 11 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.11-alt1
+- New version (5.2.0.11) with rpmgs script.
+
 * Tue Dec 08 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.2-alt4
 - Fixed critical wm error.
 
