@@ -4,7 +4,7 @@
 %define so_x509_version 0
 
 Name: %pkgname%so_tls_version
-Version: 2.16.8
+Version: 2.16.9
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -14,8 +14,8 @@ Group: System/Legacy libraries
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/ARMmbed/mbedtls/archive/%pkgname-%version/%pkgname-%pkgname-%version.tar.gz
-Source: %pkgname-%pkgname-%version.tar
+# https://github.com/ARMmbed/%pkgname/archive/v%version/%pkgname-%version.tar.gz
+Source: %pkgname-%version.tar
 
 Patch0: %pkgname-alt-threading.patch
 
@@ -61,7 +61,7 @@ and write X.509 certificates, read/write Certificate Signing Requests
 and read Certificate Revocation Lists.
 
 %prep
-%setup -n %pkgname-%pkgname-%version
+%setup -n %pkgname-%version
 %patch0 -p1
 
 %build
@@ -99,6 +99,9 @@ popd
 %_libdir/libmbedx509.so.*
 
 %changelog
+* Sat Dec 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.16.9-alt1
+- Version 2.16.9
+
 * Wed Sep 02 2020 Nazarov Denis <nenderus@altlinux.org> 2.16.8-alt1
 - Version 2.16.8
 

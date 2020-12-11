@@ -1,21 +1,21 @@
+%define pkgname mbedtls
 %define so_tls_version 13
-%define so_crypto_version 6
-%define so_x509_version 1
+%define so_crypto_version 5
 %def_disable static
 
-Name: mbedtls
-Version: 2.25.0
-Release: alt1
+Name: %pkgname%so_tls_version
+Version: 2.24.0
+Release: alt2
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/ARMmbed/%name/archive/v%version/%name-%version.tar.gz
-Source: %name-%version.tar
+# https://github.com/ARMmbed/%pkgname/archive/%pkgname-%version/%pkgname-%pkgname-%version.tar.gz
+Source: %pkgname-%pkgname-%version.tar
 
 BuildRequires: cmake
 BuildRequires: libpkcs11-helper-devel
@@ -28,64 +28,17 @@ library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n lib%name%so_tls_version
-Summary: Transport Layer Security protocol suite
-Group: System/Libraries
-Conflicts: hiawatha
-
-%description -n lib%name%so_tls_version
-mbed TLS is a light-weight open source cryptographic and SSL/TLS
-library written in C. mbed TLS makes it easy for developers to include
-cryptographic and SSL/TLS capabilities in their (embedded)
-applications with as little hassle as possible.
-
 %package -n libmbedcrypto%so_crypto_version
 Summary: Cryptographic base library for mbedtls
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %description -n libmbedcrypto%so_crypto_version
 This subpackage of mbedtls contains a library that exposes
 cryptographic ciphers, hashes, algorithms and format support such as
 AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
 
-%package -n libmbedx509-%so_x509_version
-Summary: Library to work with X.509 certificates
-Group: System/Libraries
-Conflicts: hiawatha < 10.10
-
-%description -n libmbedx509-%so_x509_version
-This subpackage of mbedtls contains a library that can read, verify
-and write X.509 certificates, read/write Certificate Signing Requests
-and read Certificate Revocation Lists.
-
-%package -n lib%name-devel
-Summary: Development files for mbed TLS
-Group: Development/C
-Conflicts: hiawatha
-
-%description -n lib%name-devel
-Contains libraries and header files for
-developing applications that use mbed TLS
-
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: Static libraries for mbed TLS
-Group: Development/C
-
-%description -n lib%name-devel-static
-Static libraries for developing applications
-that use mbed TLS
-%endif
-
-%package utils
-Summary: Utilities for PolarSSL
-Group: Development/Tools
-
-%description utils
-Cryptographic utilities based on mbed TLS 
-
 %prep
-%setup
+%setup -n %pkgname-%pkgname-%version
 
 %build
 %__mkdir_p %_target_platform
@@ -118,43 +71,18 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__mkdir_p %buildroot%_libexecdir/%name
-%__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
 %__rm -rf %buildroot%_bindir
-
-%files -n lib%name%so_tls_version
-%_libdir/lib%name.so.*
+%__rm -rf %buildroot%_includedir
+%__rm -rf %buildroot%_libdir/*.so
+%__rm -rf %buildroot%_libdir/lib%pkgname.so.*
+%__rm -rf %buildroot%_libdir/libmbedx509.so.*
 
 %files -n libmbedcrypto%so_crypto_version
 %_libdir/libmbedcrypto.so.*
 
-%files -n libmbedx509-%so_x509_version
-%_libdir/libmbedx509.so.*
-
-%files -n lib%name-devel
-%doc ChangeLog LICENSE README.md
-%dir %_includedir/%name
-%_includedir/%name/*.h
-%dir %_includedir/psa
-%_includedir/psa/*h
-%_libdir/libmbedcrypto.so
-%_libdir/lib%name.so
-%_libdir/libmbedx509.so
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/libmbedcrypto.a
-%_libdir/lib%name.a
-%_libdir/libmbedx509.a
-%endif
-
-%files utils
-%dir %_libexecdir/%name
-%_libexecdir/%name/*
-
 %changelog
-* Fri Dec 11 2020 Nazarov Denis <nenderus@altlinux.org> 2.25.0-alt1
-- Version 2.25.0
+* Sat Dec 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.24.0-alt2
+- Build as legacy library
 
 * Wed Sep 02 2020 Nazarov Denis <nenderus@altlinux.org> 2.24.0-alt1
 - Version 2.24.0
