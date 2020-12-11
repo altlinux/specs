@@ -3,7 +3,7 @@
 
 Name: httpie
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: A Curl-like tool for humans
 Group: Networking/WWW
@@ -21,6 +21,7 @@ BuildRequires: help2man
 Requires: python3-module-requests >= 2.11.0
 Requires: python3-module-Pygments >= 2.1.3
 
+Obsoletes: httpie-python3 < %EVR
 
 %description
 HTTPie is a CLI HTTP utility built out of frustration with existing tools. The
@@ -42,23 +43,28 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %install
 %__python3 setup.py install --skip-build --root %buildroot
-mv %buildroot%_bindir/http %buildroot%_bindir/http.python3
 
 mkdir -p %buildroot/%_man1dir
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
-help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man1dir/http.python3.1
+help2man --no-discard-stderr %buildroot/%_bindir/http > %buildroot/%_man1dir/http.1
+help2man --no-discard-stderr %buildroot/%_bindir/https > %buildroot/%_man1dir/https.1
 
 %files
-%_bindir/http.python3
+%_bindir/http
 %_bindir/https
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%{realversion}*
-%_man1dir/http.python3.1.*
+%_man1dir/http.1*
+%_man1dir/https.1*
 %doc LICENSE README.rst
 
 
 %changelog
+* Fri Dec 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt2
+- Updated obsoletes.
+- Stopped renaming binaries and man pages.
+
 * Wed Dec 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Updated to upstream version 2.3.0 (Fixes: CVE-2019-10751).
 
