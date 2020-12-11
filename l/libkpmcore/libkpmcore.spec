@@ -3,15 +3,16 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 4.2.0
+Version: 20.12.0
 Release: alt1
 
-Summary: Library for managing partitions
+Summary: KDE Partition Manager core library
 Group: System/Libraries
 License: GPLv3
 Url: https://github.com/KDE/%_name
 
-Source: %url/archive/v%version/%_name-%version.tar.gz
+Source: https://download.kde.org/stable/release-service/%version/src/%_name-%version.tar.xz
+#Source: %url/archive/v%version/%_name-%version.tar.gz
 
 Provides: %_name = %version-%release
 
@@ -66,6 +67,9 @@ using %_name.
 
 
 %changelog
+* Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 20.12.0-alt1
+- 20.12.0
+
 * Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
