@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-EOL
-Version:	2.00
-Release:	alt1_10
+Version:	2.02
+Release:	alt1
 Summary:	Check the correct line endings in your project
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-EOL
-Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-EOL-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-EOL-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
@@ -59,7 +59,7 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc --no-dereference LICENCE
+%doc LICENCE
 %else
 %doc LICENCE
 %endif
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_10
 - update to new release by fcimport
 
