@@ -1,7 +1,26 @@
-%global v_major 11.0
-%global llvm_name llvm%v_major
-%global clang_name clang%v_major
-%global lld_name lld%v_major
+%define _unpackaged_files_terminate_build 1
+
+%global v_major 11
+%global v_majmin %v_major.0
+%global v_full %v_majmin.0
+%global rcsuffix %nil
+%global llvm_name llvm%v_majmin
+%global clang_name clang%v_majmin
+%global clangd_name clangd%v_majmin
+%global lld_name lld%v_majmin
+
+%global llvm_default_name llvm%_llvm_version
+%global clang_default_name clang%_llvm_version
+%global lld_default_name lld%_llvm_version
+
+%global llvm_prefix %_prefix/lib/llvm-%v_majmin
+%global llvm_bindir %llvm_prefix/bin
+%global llvm_libdir %llvm_prefix/%_lib
+%global llvm_includedir %llvm_prefix/include
+%global llvm_libexecdir %llvm_prefix/libexec
+%global llvm_datadir %llvm_prefix/share
+%global llvm_man1dir %llvm_datadir/man/man1
+%global llvm_docdir %llvm_datadir/doc
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm
@@ -11,6 +30,8 @@
 %define optflags_debug -g1
 %endif
 
+%define hwasan_symbolize_arches x86_64 aarch64
+
 %def_disable tests
 %ifarch x86_64 aarch64
 %def_without clang
@@ -18,44 +39,62 @@
 %def_without clang
 %endif
 
+%define tarversion %v_full%rcsuffix
+
 Name: %llvm_name
-Version: 11.0.0
-Release: alt1
-Summary: The Low Level Virtual Machine
+Version: %v_full
+Release: alt2
+Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
-License: NCSA
+License: Apache-2.0 with LLVM-exception
 Url: http://llvm.org
-Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%version/llvm-%version.src.tar.xz
-Source1: https://github.com/llvm/llvm-project/releases/download/llvmorg-%version/clang-%version.src.tar.xz
-Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%version/lld-%version.src.tar.xz
-Source3: https://github.com/llvm/llvm-project/releases/download/llvmorg-%version/compiler-rt-%version.src.tar.xz
+Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/llvm-%tarversion.src.tar.xz
+Source1: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/clang-%tarversion.src.tar.xz
+Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/clang-tools-extra-%tarversion.src.tar.xz
+Source3: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/lld-%tarversion.src.tar.xz
+Source4: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/compiler-rt-%tarversion.src.tar.xz
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-11-alt-triple.patch
+Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
 Patch3: llvm-alt-fix-linking.patch
 Patch4: llvm-alt-triple.patch
 Patch5: compiler-rt-9-alt-i586-arch.patch
 Patch6: RH-0001-CMake-Split-static-library-exports-into-their-own-ex.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
+Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch9: lld-11-alt-mipsel-permit-textrels-by-default.patch
 Patch10: llvm-10-alt-python3.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
+Patch15: llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
+Patch16: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
 
-# ThinLTO requires /proc/cpuinfo to exists so the same does llvm
+%if_with clang
+# https://bugs.altlinux.org/show_bug.cgi?id=34671
+%set_verify_elf_method lint=skip
+%endif
+
+# ThinLTO requires /proc/cpuinfo to exist; so the same does llvm
 BuildPreReq: /proc
+
+# Obtain %%__python3 at prep stage.
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-llvm-common
 
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
-BuildRequires: chrpath libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
+BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: python3-module-recommonmark zip zlib-devel binutils-devel ninja-build
 %if_with clang
-BuildRequires: %clang_name %llvm_name-devel %lld_name
+BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
 %endif
 
-Provides: llvm = %EVR
-Obsoletes: llvm < %version
+%define requires_filesystem Requires: %name-filesystem = %EVR
+%requires_filesystem
+Requires: llvm >= %_llvm_version
 
 %description
 LLVM is a compiler infrastructure designed for compile-time, link-time,
@@ -63,11 +102,19 @@ runtime, and idle-time optimization of programs from arbitrary
 programming languages. The compiler infrastructure includes mirror sets
 of programming tools as well as libraries with equivalent functionality.
 
+%package filesystem
+Group: Development/Other
+Summary: Owns the installation prefix for LLVM
+
+%description filesystem
+This package owns the installation prefix for LLVM. It is designed to be
+pulled in by all non-empty LLVM packages.
+
 %package devel
 Group: Development/C
 Summary: Libraries and header files for LLVM
-Provides: llvm-devel = %EVR
-Obsoletes: llvm-devel < %version
+%requires_filesystem
+Requires: llvm-devel >= %_llvm_version
 Requires: %name = %EVR
 
 %description devel
@@ -77,8 +124,8 @@ native programs that use the LLVM infrastructure.
 %package devel-static
 Summary: Static libraries for LLVM
 Group: Development/C
-Provides: llvm-devel-static = %EVR
-Obsoletes: llvm-devel-static < %version
+%requires_filesystem
+Requires: llvm-devel-static >= %_llvm_version
 Requires: %name-devel = %EVR
 
 %description devel-static
@@ -88,26 +135,38 @@ native programs that use the LLVM infrastructure.
 %package libs
 Group: Development/C
 Summary: LLVM shared libraries
+%requires_filesystem
 
 %description libs
-Shared libraries for the LLVM compiler infrastructure.
+This package contains shared libraries needed to develop new
+native programs that use LLVM.
 
 %package doc
 Summary: Documentation for LLVM
 Group: Documentation
 BuildArch: noarch
-Provides: llvm-doc = %EVR
-Obsoletes: llvm-doc < %version
+%requires_filesystem
 
 %description doc
 Documentation for the LLVM compiler infrastructure.
 
+%package tools
+Summary: Various minor tools bundled with LLVM
+Group: Development/C
+%requires_filesystem
+
+%description tools
+This package contains various tools maintained as part of LLVM, including
+opt-viewer.
+
 %package -n %clang_name
 Summary: A C language family frontend for LLVM
 Group: Development/C
+%requires_filesystem
+# clang uses various parts of GNU crt bundled with gcc.
+# Should they be packaged separately?
 Requires: gcc
-Provides: clang = %EVR
-Obsoletes: clang < %version
+Requires: clang >= %_llvm_version
 
 %description -n %clang_name
 clang: noun
@@ -122,15 +181,36 @@ as libraries and designed to be loosely-coupled and extendable.
 %package -n %clang_name-libs
 Group: Development/C
 Summary: clang shared libraries
+%requires_filesystem
+Requires: %clang_name-libs-support = %EVR
 
 %description -n %clang_name-libs
 Shared libraries for the clang compiler.
 
+%package -n %clang_name-libs-support
+Group: Development/C
+Summary: Support for Clang's shared libraries
+%requires_filesystem
+
+%description -n %clang_name-libs-support
+The Clang's shared libraries implement compilers for C and C++, and thus have
+to bundle additional platform support headers and libraries for use within the
+compilation product. This package contains the platform support.
+
+%package -n %clang_name-libs-support-shared-runtimes
+Group: Development/C
+Summary: Shared runtimes for Clang's shared libraries
+%requires_filesystem
+Requires: %clang_name-libs-support = %EVR
+
+%description -n %clang_name-libs-support-shared-runtimes
+This package contains shared runtime libraries for Scudo and sanitizers.
+
 %package -n %clang_name-devel
 Summary: Header files for clang
 Group: Development/C
-Provides: clang-devel = %EVR
-Obsoletes: clang-devel < %version
+%requires_filesystem
+Requires: clang-devel >= %_llvm_version
 Requires: %clang_name = %EVR
 
 %description -n %clang_name-devel
@@ -139,8 +219,7 @@ This package contains header files for the Clang compiler.
 %package -n %clang_name-devel-static
 Summary: Static libraries for clang
 Group: Development/C
-Provides: clang-devel-static = %EVR
-Obsoletes: clang-devel-static < %version
+%requires_filesystem
 Requires: %clang_name-devel = %EVR
 
 %description -n %clang_name-devel-static
@@ -150,8 +229,7 @@ This package contains static libraries for the Clang compiler.
 Summary: A source code analysis framework
 Group: Development/C
 BuildArch: noarch
-Provides: clang-analyzer = %EVR
-Obsoletes: clang-analyzer < %version
+%requires_filesystem
 Requires: %clang_name = %EVR
 
 %description -n %clang_name-analyzer
@@ -160,21 +238,38 @@ framework and a standalone tool that finds bugs in C and Objective-C
 programs. The standalone tool is invoked from the command-line, and is
 intended to run in tandem with a build of a project or code base.
 
+%package -n %clang_name-tools
+Summary: Various clang-based tools
+Group: Development/C
+%requires_filesystem
+Requires: %clang_name = %EVR
+
+%description -n %clang_name-tools
+This package contains various code analysis and manipulation tools based on
+libclang, including clang-format.
+
 %package -n %clang_name-doc
 Summary: Documentation for Clang
 Group: Documentation
 BuildArch: noarch
-Provides: clang-doc = %EVR
-Obsoletes: clang-doc < %version
+%requires_filesystem
 
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
 
+%package -n %clangd_name
+Summary: A clang-based language server
+Group: Development/C
+%requires_filesystem
+
+%description -n %clangd_name
+This package contains clangd, a Clang-based language server for C and C++.
+
 %package -n %lld_name
 Summary: LLD - The LLVM Linker
 Group: Development/C
-Provides: lld = %EVR
-Obsoletes: lld < %version
+%requires_filesystem
+Requires: lld >= %_llvm_version
 
 %description -n %lld_name
 LLD is a linker from the LLVM project. That is a drop-in replacement for system
@@ -184,8 +279,8 @@ useful for toolchain developers.
 %package -n %lld_name-devel
 Summary: Header files for LLD
 Group: Development/C
-Provides: lld-devel = %EVR
-Obsoletes: lld-devel < %version
+%requires_filesystem
+Requires: lld-devel >= %_llvm_version
 Requires: %lld_name = %EVR
 
 %description -n %lld_name-devel
@@ -195,35 +290,48 @@ This package contains header files for the LLD linker.
 Summary: Documentation for LLD
 Group: Documentation
 BuildArch: noarch
-Provides: lld-doc = %EVR
-Obsoletes: lld-doc < %version
+%requires_filesystem
 
 %description -n %lld_name-doc
 Documentation for the LLD linker.
 
 %prep
-%setup -n llvm-%version.src -a1 -a2 -a3
+%setup -n llvm-%tarversion.src -a1 -a2 -a3 -a4
 for pkg in clang lld; do
-   mv $pkg-%version.src tools/$pkg
+   mv $pkg-%tarversion.src tools/$pkg
 done
-mv compiler-rt-%version.src projects/compiler-rt
+mv clang-tools-extra-%tarversion.src tools/clang/tools/extra
+mv compiler-rt-%tarversion.src projects/compiler-rt
 %patch -p1 -b .alt-i586-fallback
 %patch1 -p1 -b .alt-triple
+%patch2 -p1
+sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 %patch3 -p1 -b .alt-fix-linking
 %patch4 -p1 -b .alt-triple
 %patch5 -p1 -b .alt-i586-arch
 %patch6 -p1
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
+%patch8 -p1
 %patch9 -p1 -b .alt-mipsel-permit-textrels-by-default
 %patch10 -p1
 %patch14 -p1
+%patch15 -p2
+%patch16 -p1
+
+# Explicitly use python2 in hashbangs.
+# TODO: LLVM 12 and onward deprecate Python 2:
+# https://releases.llvm.org/11.0.0/docs/ReleaseNotes.html
+subst '/^#!.*python$/s|python$|python2|' $(grep -Rl '#!.*python$' *)
 
 %build
+%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja \
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
 	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF;NVPTX;" \
+	-DLLVM_TARGETS_TO_BUILD="all" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
@@ -287,13 +395,13 @@ ninja -vvv -j %__nprocs -C BUILD
 
 %install
 pushd BUILD
-cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix ../
+cmake -DCMAKE_INSTALL_PREFIX=%buildroot%llvm_prefix ../
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' build.ninja
 sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' tools/lld/cmake_install.cmake
 popd
 ninja -C BUILD install
 
-# And prepare Clang documentation
+# Prepare Clang documentation.
 rm -rf BUILD/clang-docs
 mkdir -p BUILD/clang-docs
 for f in LICENSE.TXT NOTES.txt README.txt; do
@@ -301,113 +409,295 @@ for f in LICENSE.TXT NOTES.txt README.txt; do
 done
 rm -rf tools/clang/docs/{doxygen*,Makefile*,*.graffle,tools}
 
-install -m 0755 BUILD/%_lib/LLVMHello.so %buildroot%_libdir/
-install -m 0755 BUILD/%_lib/BugpointPasses.so %buildroot%_libdir/
-mkdir -p %buildroot%_docdir/lld
-
-file %buildroot%_bindir/* | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
-file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
+install -m 0755 BUILD/%_lib/LLVMHello.so %buildroot%llvm_libdir/
+install -m 0755 BUILD/%_lib/BugpointPasses.so %buildroot%llvm_libdir/
+mkdir -p %buildroot%llvm_docdir/lld
 
 %ifarch %ix86
-cd %buildroot%_libdir/clang/%version/lib/linux
+cd %buildroot%llvm_libdir/clang/%v_full/lib/linux
 ls *-i[3-9]86* | while read f; do ln -s $f $(echo $f | sed 's|i[3-9]86|i386|') ; done
 %endif
 
+# The following files are not used by LLVM builds for Linux.
+rm -f %buildroot%llvm_bindir/argdumper
+rm -f %buildroot%llvm_datadir/clang/clang-format-bbedit.applescript
+
+# Install the clang bash completion.
+mkdir -p %buildroot%_datadir/bash-completion/completions
+ln -sr %buildroot%llvm_datadir/clang/bash-autocomplete.sh %buildroot%_datadir/bash-completion/completions/clang-%v_major
+
+# Symlink executables to %_bindir.
+mkdir -p %buildroot%_bindir
+for b in %buildroot%llvm_bindir/*; do
+	bb="$(basename "$b")"
+	echo "$bb" | grep -q -- '-%v_major$' && continue # if already appended
+	ln -srv "$b" "%buildroot%_bindir/$bb-%v_major"
+done
+# Symlink man pages to the man dirs.
+for mand in %buildroot%llvm_datadir/man/man*; do
+	mand_index="${mand##*/man}"
+	for m in "$mand"/*.[1-9]*; do
+		# Let's force compress the man page, then symlink it.
+		# /usr/lib/llvm-11.0/share/man/manD/utilX.D.xz -> /usr/share/man/manD/utilX-11.D.xz
+		# Otherwise, brp-alt(compress) keeps fucking us up.
+		# It remakes the symlinks first, then compresses their targets,
+		# severing the symlinks.
+		/usr/lib/rpm/compress_files "$m"
+
+		mb="$(basename "$m")" # e. g. llvm-ar.1.xz
+		new_mb="${mb%%.[1-9]*}-%v_major.$mand_index" # e. g. llvm-ar-11.1.xz
+
+		mkdir -p "%buildroot%_mandir/man$mand_index"
+		ln -srv "$m" "%buildroot%_mandir/man$mand_index/$new_mb"
+	done
+done
+
+# Symlink sonamed shared libraries in %llvm_prefix/%_libdir to %_libdir.
+mkdir -p %buildroot%_libdir
+find %buildroot%llvm_libdir/*.so* -type f | grep -E '^%buildroot%llvm_libdir/.*(%v_major)' | sort | tee %_tmppath/shared-objects \
+	| sed 's)%llvm_libdir)%_libdir)' > %_tmppath/shared-object-links
+paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object link; do
+	ln -srv "$object" "$link"
+done
+
+# List all packaged binaries in this source package.
+find %buildroot%_bindir/*-%v_major > %_tmppath/PATH-executables
+
+# For paranoic reasons library packaging policy covers peculiar directory paths.
+# If there are $A.a and $A.so in %llvm_libdir/clang, they should not end up in the
+# same package (but can be co-installed on a system).
+# Let's list all the $A.so for which $A.a exists into a separate package.
+# We also consider i386-symlinks for iN86.
+find %buildroot%llvm_libdir/clang -type f,l -name '*.a' -or -name '*.so' | \
+    sed -r -n 's/^(\/.+)\.a$/\1/p; s/^(.+)\.so$/\1/p' | sort | uniq -d > %_tmppath/libclang-support-dupes
+sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.a/' > %_tmppath/libclang-support-static-runtimes
+sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.so/' > %_tmppath/libclang-support-shared-runtimes
+sed < %_tmppath/libclang-support-shared-runtimes 's/^/%%exclude /' > %_tmppath/dyn-files-libclang-support
+echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-files-libclang-support
+
 %check
 %if_enabled tests
-LD_LIBRARY_PATH=%buildroot%_libdir:$LD_LIBRARY_PATH
+LD_LIBRARY_PATH=%buildroot%llvm_libdir:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
 ninja -C BUILD check-all || :
 %endif
 
+# Do not generate dependencies for clang-{format,rename} plugins.
+%add_findreq_skiplist %llvm_datadir/clang/*
+
+%files filesystem
+%dir %llvm_prefix
+%dir %llvm_bindir
+%dir %llvm_libdir
+%dir %llvm_includedir
+%dir %llvm_libexecdir
+%dir %llvm_datadir
+%dir %llvm_datadir/clang
+%dir %llvm_datadir/man
+%dir %llvm_man1dir
+%dir %llvm_docdir
+
 %files
 %doc CREDITS.TXT LICENSE.TXT README.txt
+%llvm_bindir/*
 %_bindir/*
+%llvm_man1dir/*
 %_man1dir/*
+%exclude %llvm_bindir/llvm-config*
 %exclude %_bindir/llvm-config*
+%exclude %llvm_bindir/*clang*
 %exclude %_bindir/*clang*
-%exclude %_bindir/c-index-test
+%exclude %llvm_bindir/*clangd*
+%exclude %_bindir/*clangd*
+%exclude %llvm_bindir/c-index-test
+%exclude %_bindir/c-index-test-%v_major
+%exclude %llvm_bindir/find-all-symbols
+%exclude %_bindir/find-all-symbols-%v_major
+%exclude %llvm_bindir/scan-*
 %exclude %_bindir/scan-*
-%exclude %_man1dir/llvm-config.1.*
-%exclude %_man1dir/clang.1*
-%exclude %_man1dir/scan-build.1*
+%exclude %llvm_man1dir/llvm-config.1.*
+%exclude %_man1dir/llvm-config-%v_major.1.*
+%exclude %llvm_man1dir/clang.1*
+%exclude %_man1dir/clang-%v_major.1*
+%exclude %llvm_man1dir/scan-build.1*
+%exclude %_man1dir/scan-build-%v_major.1*
+%exclude %llvm_bindir/lld*
 %exclude %_bindir/lld*
-%exclude %_bindir/ld*.lld
-%exclude %_bindir/wasm-ld
+%exclude %llvm_bindir/ld*.lld
+%exclude %_bindir/ld*.lld-%v_major
+%exclude %llvm_bindir/wasm-ld
+%exclude %_bindir/wasm-ld-%v_major
 
 %files libs
+%llvm_libdir/libLLVM-*.so
 %_libdir/libLLVM-*.so
+%llvm_libdir/libLTO.so.*
 %_libdir/libLTO.so.*
+%llvm_libdir/libRemarks.so.*
 %_libdir/libRemarks.so.*
 
+%files tools
+%llvm_datadir/opt-viewer
+
 %files devel
-%_bindir/llvm-config
-%_man1dir/llvm-config.1.*
-%_includedir/llvm
-%_includedir/llvm-c
-%_libdir/libLLVM.so
-%_libdir/libLTO.so
-%_libdir/LLVMgold.so
-%_libdir/libRemarks.so
-%_libdir/LLVMHello.so
-%_libdir/BugpointPasses.so
-%_libdir/cmake/llvm
-%exclude %_libdir/cmake/llvm/LLVMStaticExports*.cmake
+%llvm_bindir/llvm-config
+%_bindir/llvm-config-%v_major
+%llvm_man1dir/llvm-config.1.*
+%_man1dir/llvm-config-%v_major.1.*
+%llvm_includedir/llvm
+%llvm_includedir/llvm-c
+%llvm_libdir/libLLVM.so
+%llvm_libdir/libLTO.so
+%llvm_libdir/LLVMgold.so
+%llvm_libdir/libRemarks.so
+%llvm_libdir/LLVMHello.so
+%llvm_libdir/BugpointPasses.so
+%dir %llvm_libdir/cmake
+%llvm_libdir/cmake/llvm
+%exclude %llvm_libdir/cmake/llvm/LLVMStaticExports.cmake
 
 %files devel-static
-%_libdir/*.a
-%exclude %_libdir/libclang*.a
-%_libdir/cmake/llvm/LLVMStaticExports*.cmake
+%llvm_libdir/*.a
+%exclude %llvm_libdir/libclang*.a
+%dir %llvm_libdir/cmake
+%dir %llvm_libdir/cmake/llvm
+%llvm_libdir/cmake/llvm/LLVMStaticExports.cmake
 
 %files -n %clang_name
 %doc BUILD/clang-docs/*
-%_bindir/*clang*
-%_bindir/c-index-test
-%_man1dir/clang.1*
+%llvm_bindir/clang-%v_major
+%llvm_bindir/clang
+%_bindir/clang-%v_major
+%llvm_bindir/clang++
+%_bindir/clang++-%v_major
+%llvm_bindir/clang-cl
+%_bindir/clang-cl-%v_major
+%llvm_bindir/clang-cpp
+%_bindir/clang-cpp-%v_major
+%llvm_man1dir/clang.1*
+%_man1dir/clang-%v_major.1*
+%exclude %llvm_bindir/clang-check*
+%exclude %_bindir/clang-check*
+%exclude %llvm_bindir/clang-extdef-mapping*
+%exclude %_bindir/clang-extdef-mapping*
+%exclude %llvm_bindir/clang-format*
+%exclude %_bindir/clang-format*
+%exclude %llvm_bindir/git-clang-format*
+%exclude %_bindir/git-clang-format*
+%exclude %llvm_bindir/clang-offload-*
+%exclude %_bindir/clang-offload-*
+%exclude %llvm_bindir/clang-refactor*
+%exclude %_bindir/clang-refactor*
+%exclude %llvm_bindir/clang-rename*
+%exclude %_bindir/clang-rename*
+%llvm_datadir/clang/bash-autocomplete.sh
+%_datadir/bash-completion/completions/clang*
 
 %files -n %clang_name-libs
-%_libdir/clang
+%llvm_libdir/libclang*.so.*
 %_libdir/libclang*.so.*
 
+%files -n %clang_name-libs-support -f %_tmppath/dyn-files-libclang-support
+%llvm_libdir/clang
+# clang-tools
+%ifarch %hwasan_symbolize_arches
+%exclude %llvm_libdir/clang/%v_full/bin/hwasan_symbolize
+%endif
+
+%files -n %clang_name-libs-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
+
 %files -n %clang_name-devel
-%_includedir/clang
-%_includedir/clang-c
-%_libdir/libclang*.so
-%_libdir/cmake/clang
+%llvm_includedir/clang
+%llvm_includedir/clang-c
+%llvm_includedir/clang-tidy
+%llvm_libdir/libclang*.so
+%dir %llvm_libdir/cmake
+%llvm_libdir/cmake/clang
 
 %files -n %clang_name-devel-static
-%_libdir/libclang*.a
+%llvm_libdir/libclang*.a
 
 %files -n %clang_name-analyzer
-%_prefix/libexec/*-analyzer
-%_bindir/scan-build
-%_bindir/scan-view
-%_datadir/scan-build
-%_datadir/scan-view
-%_man1dir/scan-build.1*
+%llvm_prefix/libexec/*-analyzer
+%llvm_bindir/scan-build
+%_bindir/scan-build-%v_major
+%llvm_bindir/scan-view
+%_bindir/scan-view-%v_major
+%llvm_datadir/scan-build
+%llvm_datadir/scan-view
+%llvm_man1dir/scan-build.1*
+%_man1dir/scan-build-%v_major.1*
+
+%files -n %clang_name-tools
+%llvm_bindir/c-index-test
+%_bindir/c-index-test-%v_major
+%llvm_bindir/clang-*
+%_bindir/clang-*
+%exclude %llvm_bindir/clang-%v_major
+%exclude %llvm_bindir/clang
+%exclude %_bindir/*clang-%v_major
+%exclude %llvm_bindir/clang++
+%exclude %_bindir/clang++-%v_major
+%exclude %llvm_bindir/clang-cl
+%exclude %_bindir/clang-cl-%v_major
+%exclude %llvm_bindir/clang-cpp
+%exclude %_bindir/clang-cpp-%v_major
+%llvm_bindir/find-all-symbols
+%_bindir/find-all-symbols-%v_major
+%llvm_datadir/clang
+%exclude %llvm_datadir/clang/bash-autocomplete.sh
+%ifarch %hwasan_symbolize_arches
+%llvm_libdir/clang/%v_full/bin/hwasan_symbolize
+%endif
+
+%files -n %clangd_name
+%llvm_bindir/clangd
+%_bindir/clangd-%v_major
 
 %files -n %lld_name
+%llvm_bindir/lld*
 %_bindir/lld*
-%_bindir/ld*.lld
-%_bindir/wasm-ld
+%llvm_bindir/ld*.lld
+%_bindir/ld*.lld-%v_major
+%llvm_bindir/wasm-ld
+%_bindir/wasm-ld-%v_major
 
 %files -n %lld_name-devel
-%dir %_includedir/lld
-%_includedir/lld/*
-%_libdir/cmake/lld
+%dir %llvm_includedir/lld
+%llvm_includedir/lld/*
+%dir %llvm_libdir/cmake
+%llvm_libdir/cmake/lld
 
 %files doc
-%doc %_docdir/llvm
+%doc %llvm_docdir/llvm
 
 %files -n %clang_name-doc
-%doc %_docdir/clang
+%doc %llvm_docdir/clang
+%doc %llvm_docdir/clang-tools
 
 %files -n %lld_name-doc
-%doc %_docdir/lld
+%doc %llvm_docdir/lld
 
 %changelog
+* Fri Dec 11 2020 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt2
+- Installed to /usr/lib/llvm-11.0 to ensure peaceful co-existence with other
+  LLVM versions.
+  Numbered shared libraries in %llvm_prefix/%%_lib are symlinked to %%_libdir
+  to properly generate library dependencies.
+- Moved clang-format and other clang-based tools to clang11.0-tools.
+- New LLVM subproject: clang-tools-extra.
+  + 2 new packages: clang11.0-tools, clangd11.0
+- Enabled all LLVM targets.
+- Moved C/C++ compiler support away from clang-libs to clang-libs-support.
+- Moved Clang .so runtimes (scudo and sanitizers) with available static variants
+  to clang-libs-support-shared-runtimes to comply with sisyphus-check-static.
+
 * Tue Oct 13 2020 Valery Inozemtsev <shrek@altlinux.ru> 11.0.0-alt1
 - 11.0.0
+- Built with gcc.
+
+* Wed Aug 12 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 10.0.1-alt2
+- Applied upstream patch which should fix ppc64le-specific issue.
 
 * Tue Aug 11 2020 Valery Inozemtsev <shrek@altlinux.ru> 10.0.1-alt1
 - 10.0.1
