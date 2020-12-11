@@ -3,7 +3,7 @@ Group: Other
 %define _localstatedir %{_var}
 Name:       light
 Version:    1.2.2
-Release:    alt1_2
+Release:    alt1_3
 Summary:    Control backlight controllers
 
 License:    GPLv3
@@ -37,6 +37,7 @@ Features
 
 
 %build
+%add_optflags -fcommon
 %global build_cflags %{optflags} -fcommon
 ./autogen.sh
 %configure
@@ -62,6 +63,9 @@ fi
 
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_3
+- fixed build
+
 * Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2
 - update to new release by fcimport
 
