@@ -1,7 +1,7 @@
 %define  modulename pre-commit
 
 Name:    python3-module-%modulename
-Version: 2.9.2
+Version: 2.9.3
 Release: alt1
 
 Summary: A framework for managing and maintaining multi-language pre-commit hooks.
@@ -37,6 +37,9 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Dec 11 2020 Grigory Ustinov <grenka@altlinux.org> 2.9.3-alt1
+- Automatically updated to 2.9.3.
+
 * Tue Dec 01 2020 Grigory Ustinov <grenka@altlinux.org> 2.9.2-alt1
 - Automatically updated to 2.9.2.
 
