@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           ninvaders
 Version:        0.1.1
-Release:        alt2_16
+Release:        alt3_16
 Summary:        Space Invaders clone written in ncurses for cli gaming
 
 Group:          Games/Other
@@ -27,6 +27,7 @@ iconv -f iso-8859-1 -t utf8 ChangeLog > ChangeLog.new && \
 touch -r ChangeLog ChangeLog.new && mv ChangeLog.new ChangeLog
 
 %build
+%add_optflags -fcommon
 %make_build
 
 %install
@@ -38,6 +39,9 @@ install -Dp -m0755 nInvaders %{buildroot}%{_bindir}/nInvaders
 
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt3_16
+- fixed build with gcc10
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_16
 - update to new release by fcimport
 
