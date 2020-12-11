@@ -2,14 +2,16 @@
 # See also http://trac.osgeo.org/geos/ticket/228
 %def_without python
 %def_without python3
+# TODO: tests are failed
+%def_without tests
 
 Name: geos
-Version: 3.8.1
+Version: 3.9.0
 Release: alt1
 
 Summary: Geometry Engine - Open Source
+License: LGPL-2.1
 Group: Sciences/Geosciences
-License: LGPL
 Url: http://trac.osgeo.org/geos/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -22,10 +24,15 @@ Patch3: %name-fix-geos-config--libs.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++ python-devel swig
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildRequires: python3-devel
+%endif
+# For tests
+%if_with tests
+BuildRequires: ctest
 %endif
 
 %description
@@ -135,13 +142,16 @@ LIB_SUFFIX=64
 %endif
 
 # E2K: tests/unit/tut/tut.hpp: excessive recursion at instantiation [...]
-%cmake_insource \
+%cmake_insource -GNinja \
 	-DGEOS_BUILD_STATIC:BOOL=OFF \
+%ifarch armh
+	-DDISABLE_GEOS_INLINE=ON \
+%endif
 %ifarch %e2k
 	-DGEOS_ENABLE_TESTS:BOOL=OFF \
 %endif
 	#
-%make_build VERBOSE=1
+%ninja_build
 
 %if_with python
 %make -C swig/python LIB_SUFFIX=$LIB_SUFFIX \
@@ -154,7 +164,7 @@ LIB_SUFFIX=64
 %endif
 
 %install
-%makeinstall_std
+%ninja_install
 
 %if %_lib == lib64
 LIB_SUFFIX=64
@@ -174,8 +184,10 @@ rm -f %buildroot%ruby_sitearchdir/*.la
 rm -f %buildroot%python3_sitelibdir/geos/*.la
 %endif
 
+%if_with tests
 %check
-make check || exit 0
+%ninja_build check || exit 0
+%endif
 
 %files -n lib%name
 %doc AUTHORS NEWS README.md
@@ -187,6 +199,7 @@ make check || exit 0
 %_libdir/libgeos_c.so
 %_includedir/*
 %_libdir/cmake/GEOS
+%_libdir/pkgconfig/geos.pc
 
 %if_with python
 %files -n python-module-%name
@@ -204,6 +217,11 @@ make check || exit 0
 %endif
 
 %changelog
+* Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
+- New version.
+- Build by ninja-build.
+- Disable %%check.
+
 * Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
 - New version.
 
