@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Cache-FastMmap
 Name: perl-%dist
-Version: 1.51
+Version: 1.53
 Release: alt1
 
 Summary: Uses an mmap'ed file to act as a shared memory interprocess cache
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/R/RO/ROBM/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-IO-Compress perl-devel
+BuildRequires: perl-IO-Compress perl-devel perl(Test/Deep.pm)
 
 %description
 In multi-process environments (eg mod_perl, forking daemons,
@@ -34,6 +34,9 @@ cache shared between processes.
 %perl_vendor_autolib/Cache
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.53-alt1
+- automated CPAN update
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
 - automated CPAN update
 
