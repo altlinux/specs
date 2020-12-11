@@ -1,6 +1,6 @@
 %define dist Class-Singleton
 Name: perl-%dist
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: Implementation of a "Singleton" class
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHAY/Class-Singleton-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHAY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ Class::Singleton, your module will inherit the Singleton instantiation
 method and can implement whatever specific functionality is required.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,10 +35,13 @@ method and can implement whatever specific functionality is required.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Artistic Copying
 %perl_vendor_privlib/Class*
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1
+- automated CPAN update
+
 * Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1
 - automated CPAN update
 
