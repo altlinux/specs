@@ -1,28 +1,36 @@
-%def_with beesu
-%def_without applet
+# libddccontrol_dbus_client use symbols from libddccontrol
+%set_verify_elf_method unresolved=relaxed
+%def_without beesu
+# applet is not supported on Gnome 3
+%def_disable applet
 %def_disable static
+%def_disable ddcpci
+%ifarch x86_64 %ix86
+%def_enable ddcpci
+%endif
+
 %def_enable doc
-%define ddcreleasedate 20140603git9d89d8c
+%define ddcreleasedate 20200630gitf3d003f
 
 Name: ddccontrol
-Version: 0.4.2
-Release: alt17.%ddcreleasedate
+Version: 0.4.4
+Release: alt1.%ddcreleasedate
 
 Summary: Control your monitor by software using the DDC/CI protocol
 License: GPLv2+
 Group: System/Configuration/Hardware
 
 URL: http://ddccontrol.sourceforge.net/
-Source0: http://dl.sf.net/ddccontrol/ddccontrol-%version-%ddcreleasedate.tar
-Patch1: ddccontrol-0.4.2-fixasneeded.patch
+Vcs: git://github.com/ddccontrol/ddccontrol
+Source0: ddccontrol-%version.tar
+Source1: %{name}-modules-autoload.conf
 Patch2: ddccontrol-0.4.2-desktop-alt11.patch
-Patch3: ddccontrol-0.4.2-alt-fix-linkage.patch
+Patch3: ddccontrol-0.4.4-alt-fix-linkage.patch
 Patch5: ddccontrol-0.4.2-russian.patch
-Patch6: ddccontrol-autopoint.patch
+Patch6: ddccontrol-0.4.4-autopoint.patch
 
-# Automatically added by buildreq on Thu Oct 21 2010
-BuildRequires: intltool libICE-devel libpci-devel libxml2-devel libgtk+2-devel
-%if_with applet
+BuildRequires: intltool libICE-devel libpci-devel libxml2-devel libgtk+2-devel libsystemd-devel
+%if_enabled applet
 BuildRequires: libgnome-panel-devel libgtk+3-devel
 %endif
 %if_enabled doc
@@ -82,17 +90,24 @@ GNOME applet for ddccontrol.
 
 %prep
 %setup
-#patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch5 -p1
 %patch6 -p1 -b .autopoint
 
 %build
-#autoreconf
 touch config.rpath
 ./autogen.sh
-%configure %{subst_enable static} %{subst_enable doc}
+%configure \
+    %configure \
+    %{subst_enable static} \
+    %{subst_enable doc} \
+    %{subst_enable ddcpci} \
+    --disable-rpath \
+%if_disabled applet
+    --disable-gnome-applet
+%endif
+
 # safety belts :)
 echo "#define HAVE_BUGGY_I2C_DEV 1" >>src/config.h
 %make_build
@@ -106,13 +121,29 @@ rm -rf %buildroot%_datadir/doc/%name
 sed -i -e s,xdg-su,beesu, %buildroot/%_desktopdir/*.desktop
 %endif
 
+# autoload i2c-dev module
+install -m 644 -D %SOURCE1 %buildroot%_sysconfdir/modules-load.d/%name.conf
+
 %find_lang %name
+
+%post
+# autoload i2c-dev module
+/sbin/modprobe i2c-dev &>/dev/null || :
 
 %files -f %name.lang
 %doc AUTHORS NEWS doc/html
 %_bindir/ddccontrol
-%_bindir/ddcpci
+#%_bindir/ddcpci
 %_man1dir/%{name}*
+%_sysconfdir/modules-load.d/%name.conf
+%if_enabled ddcpci
+%_libexecdir/%name/ddcpci
+%endif
+%_unitdir/ddccontrol.service
+%_libexecdir/%name/ddccontrol_service
+%_datadir/dbus-1/interfaces/ddccontrol.DDCControl.xml
+%_datadir/dbus-1/system-services/ddccontrol.DDCControl.service
+%_sysconfdir/dbus-1/system.d/ddccontrol.DDCControl.conf
 
 %files -n gddccontrol
 %_bindir/gddccontrol
@@ -129,7 +160,9 @@ sed -i -e s,xdg-su,beesu, %buildroot/%_desktopdir/*.desktop
 %_includedir/*
 %_pkgconfigdir/*.pc
 
-%if_with applet
+
+
+%if_enabled applet
 %files applet
 %dir %_libdir/ddccontrol
 %_libdir/ddccontrol/ddcc-applet
@@ -138,6 +171,9 @@ sed -i -e s,xdg-su,beesu, %buildroot/%_desktopdir/*.desktop
 %endif
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.4-alt1.20200630gitf3d003f
+- new version
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt17.20140603git9d89d8c
 - updated from git
 
