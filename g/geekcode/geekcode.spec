@@ -1,7 +1,7 @@
 Group: Games/Other
 Name:           geekcode
 Version:        1.7.3
-Release:        alt2_18
+Release:        alt3_18
 Summary:        Geek Code generator
 Summary(pl):    Generator Geek Code
 License:        GPLv2+
@@ -33,6 +33,7 @@ sed -i 's/\r//' COPYING
 %patch1 -p1
 
 %build
+%add_optflags -fcommon
 make %{?_smp_mflags}
 
 %install
@@ -45,6 +46,9 @@ install -m 755 geekcode %{buildroot}%{_bindir}
 %{_bindir}/%{name}
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt3_18
+- fixed build with gcc10
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_18
 - update to new release by fcimport
 
