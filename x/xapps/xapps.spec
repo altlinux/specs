@@ -3,7 +3,7 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 2.0.0
+Version: 2.0.3
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -13,6 +13,7 @@ Url: https://github.com/linuxmint/xapps
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 AutoReqProv: nopython
 %define __python %nil
@@ -129,6 +130,7 @@ XAppStatusIcon applet for mate panel
 
 %prep
 %setup -q -n %name-%version
+%patch -p1
 
 %build
 %meson -D deprecated_warnings=false
@@ -138,7 +140,7 @@ XAppStatusIcon applet for mate panel
 %meson_install
 
 install -m 0755 -d %buildroot%_x11sysconfdir/profile.d
-mv %buildroot%_x11sysconfdir/Xsession.d/80xapp-gtk3-module %buildroot%_x11sysconfdir/profile.d/xapp-gtk3-module.sh
+mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x11sysconfdir/profile.d/xapp-gtk3-module.sh
 
 %find_lang %translations_name
 
@@ -151,9 +153,7 @@ mv %buildroot%_x11sysconfdir/Xsession.d/80xapp-gtk3-module %buildroot%_x11syscon
 %_datadir/glib-2.0/schemas/org.x.apps.*.xml
 
 %files -n %name-icons
-%_datadir/icons/hicolor/scalable/actions/*
-%_datadir/icons/hicolor/scalable/categories/*
-%_datadir/icons/hicolor/scalable/emblems/
+%_datadir/icons/hicolor/scalable/*/*
 
 %files -n %name-utils
 %_bindir/xfce4-set-wallpaper
@@ -202,6 +202,9 @@ mv %buildroot%_x11sysconfdir/Xsession.d/80xapp-gtk3-module %buildroot%_x11syscon
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
