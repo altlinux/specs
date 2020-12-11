@@ -1,6 +1,6 @@
 Name: trinity
 Version: 1.9
-Release: alt1
+Release: alt2
 Summary: System call fuzz tester
 
 License: GPL-2.0
@@ -12,6 +12,7 @@ Packager: Pavel Vasenkov <pav@altlinux.org>
 Source0: http://codemonkey.org.uk/projects/%name/%name-%version.tar.xz
 # Fix crash due to walking off the end of the net_protocols array
 Patch0: %name-net-protocols.patch
+Patch1: %name-rm-definition.patch
 
 %description
 Trinity makes syscalls at random, with random arguments.  Where Trinity
@@ -44,6 +45,7 @@ and fed to subsequent syscalls, sometimes with hilarious results.
 %prep
 %setup
 %patch0 -p0
+%patch1 -p2
 
 %build
 %configure
@@ -62,6 +64,9 @@ install -Dm0755 scripts/* -t %buildroot%_libexecdir/%name
 %_libexecdir/%name/
 
 %changelog
+* Fri Dec 11 2020 Pavel Vasenkov <pav@altlinux.org> 1.9-alt2
+- Remove multiple defined variables
+
 * Fri Feb 25 2020 Pavel Vasenkov <pav@altlinux.org> 1.9-alt1
 - Removed %{?_smp_mflags} option from %make_build macro.
 - Changed prefix INSTALL="/bin/install -p" to install
