@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/pkg-config libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name: matchbox-window-manager
 Version: 1.2
-Release: alt4.1
+Release: alt5.1
 Summary: Window manager for the Matchbox Desktop
 License: GPLv2+
 Group: Graphical desktop/Other
@@ -50,6 +50,7 @@ for patch in `cat debian/patches/series`; do
 done
 
 %build
+%add_optflags -fcommon
 cp -a %name %name-embedded
 pushd %name
 autoreconf -fisv
@@ -100,6 +101,9 @@ install -D -m 644 %{SOURCE3} %buildroot/%_sysconfdir/matchbox/kbdconfig
 %_bindir/matchbox-window-manager-light
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt5.1
+- fixed build with gcc10
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4.1
 - updated watch file
 
