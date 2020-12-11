@@ -1,6 +1,6 @@
 %define dist XML-Encoding
 Name: perl-%dist
-Version: 2.09
+Version: 2.11
 Release: alt1
 
 Summary: Module for parsing XML encoding maps
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHAY/XML-Encoding-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHAY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ that compiles these to the binary form used by XML::Parser in order to
 parse scripts in the given encoding.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,12 +31,16 @@ parse scripts in the given encoding.
 %perl_vendor_install
 
 %files
+%doc Artistic Changes Copying README
 %_bindir/make_encmap
 %_bindir/compile_encoding
 %dir %perl_vendor_privlib/XML
 %perl_vendor_privlib/XML/Encoding.pm
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
 - automated CPAN update
 
