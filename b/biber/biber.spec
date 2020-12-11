@@ -1,3 +1,4 @@
+%define perl_bootstrap 1
 Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,7 +8,7 @@ BuildRequires: perl(DateTime.pm) perl(DateTime/TimeZone.pm) perl(IO/String.pm) p
 %define _localstatedir %{_var}
 Name:           biber
 Version:        2.14
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Command-line bibliographic manager, BibTeX replacement
 License:        (GPL+ or Artistic 2.0) and Artistic 2.0
 URL:            http://biblatex-biber.sourceforge.net/
@@ -99,7 +100,10 @@ BuildRequires:  perl(XML/LibXML/Simple.pm)
 BuildRequires:  perl(XML/LibXSLT.pm)
 BuildRequires:  perl(XML/Writer.pm)
 # For tests
+# Break build cycle biber -> texlive-plain -> texlive-biblatex -> biber
+%if !%{defined perl_bootstrap}
 BuildRequires:  texlive-collection-basic
+%endif
 Requires:       perl(autovivification.pm)
 Requires:       perl(Business/ISBN.pm)
 Requires:       perl(Business/ISMN.pm)
@@ -166,7 +170,9 @@ chmod u+w %{buildroot}%{_bindir}/*
 
 
 %check
+%if !%{defined perl_bootstrap}
 ./Build test verbose=1
+%endif
 
 
 %files
@@ -177,6 +183,9 @@ chmod u+w %{buildroot}%{_bindir}/*
 
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1_4
+- fixed build
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1_1
 - update to new release by fcimport
 
