@@ -1,18 +1,19 @@
 Summary: xppaut -- Phase Plane Plus Auto: Solves many kinds of equations
 
 Name: xppaut
-Version: 6.10
-Release: alt2
+Version: 6.11b
+Release: alt1
 
 License: GPL
 Group: Sciences/Mathematics
 Url: http://www.math.pitt.edu/~bard/xpp/xpp.html
 Packager: Vlasenko Igor <viy@altlinux.ru>
-Source: http://ftp.debian.org/debian/pool/main/x/xppaut/%{name}%{version}.tar
+Source: http://ftp.debian.org/debian/pool/main/x/xppaut/%{name}-%{version}.tar
 Source1: %{name}_16.xpm
 Source2: %{name}_32.xpm
 Source3: %{name}_48.xpm
-Patch0: http://ftp.debian.org/debian/pool/main/x/xppaut/xppaut-5.98-fix-build-alt-1.diff
+# debian
+Patch0: 010_makefile.diff
 
 # Automatically added by buildreq on Wed May 14 2008 (-bi)
 BuildRequires: libX11-devel
@@ -33,12 +34,12 @@ The code brings together a number of useful algorithms and is extremely portable
 
 %prep
 %setup -c -n %{name}-%{version}
-#patch0 -p1
+%patch0 -p1
 find . -name '*~' -delete
 
 %build
 
-%make_build CFLAGS=' -g -pedantic -O -DNOERRNO -DNON_UNIX_STDIO -DAUTO -DCVODE_YES -DHAVEDLL -DMYSTR1=$(MAJORVER) -DMYSTR2=$(MINORVER) -I/usr/include/X11' LDFLAGS=
+%make_build CFLAGS=' -g -pedantic -fcommon -O -DNOERRNO -DNON_UNIX_STDIO -DAUTO -DCVODE_YES -DHAVEDLL -DMYSTR1=$(MAJORVER) -DMYSTR2=$(MINORVER) -I/usr/include/X11' LDFLAGS=
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT BINDIR=%_bindir MANDIR=%_man1dir DOCDIR=/usr/share/doc/xppaut
@@ -76,6 +77,12 @@ pushd $RPM_BUILD_ROOT%_docdir; %__ln_s %{name}-%{version} %{name}; popd
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 6.11b-alt1
+- new version
+
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 6.10-alt3
+- fixed build with gcc10 (added -fcommon)
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 6.10-alt2
 - localized .desktop file
 
