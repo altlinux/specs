@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Name: seven-gnomes
 Version: 0.5
-Release: alt2
+Release: alt3
 
 Summary: Seven Gnomes is the helper utility for Cinelerra.
 License: GPL
@@ -23,6 +23,7 @@ Seven Gnomes is the helper utility for Cinelerra non-linear video editing progra
 %setup -q
 
 %build
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -53,6 +54,9 @@ rm -rf %buildroot/usr/share/seven-gnomes/doc/en
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.5-alt3
+- fixed build
+
 * Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2
 - fixed unpackaged files
 
