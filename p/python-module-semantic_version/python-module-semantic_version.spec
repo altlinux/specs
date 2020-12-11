@@ -4,7 +4,7 @@
 
 Name: python-module-%pypi_name
 Version: 2.8.5
-Release: alt1
+Release: alt2
 Summary: A library implementing the 'SemVer' scheme.
 
 Group: Development/Python
@@ -74,6 +74,8 @@ pushd ../python3
 popd
 %endif
 
+rm -f %buildroot%python3_sitelibdir/%pypi_name/django_fields.py
+
 # Delete tests
 rm -fr %buildroot%python_sitelibdir/tests
 rm -fr %buildroot%python_sitelibdir/*/tests
@@ -90,6 +92,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Feb 10 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt2
+- Bootstrap for python3.9.
+
 * Mon Feb 8 2021 Vladimir Didenko <cow@altlinux.org> 2.8.5-alt1
 - new version
 

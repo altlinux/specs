@@ -3,7 +3,7 @@
 %define oname django
 %define pkg_name python3-module-%oname
 
-%def_enable check
+%def_disable check
 
 %add_python3_req_skip cx_Oracle
 %add_python3_req_skip hotshot StringIO
@@ -12,7 +12,7 @@
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: %pkg_name%branch
 Version: %branch.17
-Release: alt1
+Release: alt2
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python3
@@ -177,6 +177,9 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Tue Feb 09 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.17-alt2
+- Disable check for bootstrap of python3.9.
+
 * Fri Dec 11 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.17-alt1
 - new version 2.2.17
 - Fixes for the following security vulnerabilities:

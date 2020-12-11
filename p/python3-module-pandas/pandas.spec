@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -42,7 +42,7 @@ BuildRequires: python3(numpydoc) python3(matplotlib.sphinxext) python3(matplotli
 %add_python3_req_skip pyarrow
 %py3_requires pytz dateutil numpy sqlalchemy numexpr
 %py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt
-%py3_requires tables statsmodels
+%py3_requires tables
 
 %description
 pandas is an open source, BSD-licensed library providing
@@ -54,7 +54,7 @@ Summary: Tests for pandas
 Group: Development/Python3
 Requires: %name = %EVR
 %py3_requires numpy.ma.testutils pymysql psycopg2
-%py3_requires statsmodels.stats.multitest
+#py3_requires statsmodels.stats.multitest
 
 %description tests
 pandas is an open source, BSD-licensed library providing
@@ -138,6 +138,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
+- Bootstrap for python3.9.
+
 * Fri Jan 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
 - Updated to upstream version 1.2.0.
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt10.1.1.1
+Release: alt11
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -13,6 +13,7 @@ Group: Development/Python3
 Url: http://www.pygtk.org/
 
 Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
+Patch: python3.9.patch
 
 %add_python_lib_path  %python3_sitelibdir/gtk-%gtk_api_ver
 %add_findprov_lib_path %python3_sitelibdir/gtk-%gtk_api_ver/gtk
@@ -71,6 +72,7 @@ facilitate the creation of Python bindings.
 
 %prep
 %setup -q -n %oname-%version
+%patch -p2
 
 find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 
@@ -128,6 +130,9 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Sat Jan 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.28.6-alt11
+- Fixed build with python3.9.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.28.6-alt10.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

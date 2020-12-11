@@ -1,8 +1,8 @@
 %define oname Chaco
 
 Name: python3-module-%oname
-Version: 4.8.0
-Release: alt3
+Version: 4.8.0.0.91.git22972069
+Release: alt1
 
 Summary: Interactive 2-Dimensional Plotting
 License: BSD and GPLv2
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-sphinx python3-module-Pygments
 BuildRequires: python3-module-traits
+BuildRequires: python3-module-Cython
 
 
 %description
@@ -94,6 +95,9 @@ sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
 
 
 %changelog
+* Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 4.8.0.0.91.git22972069-alt1
+- Build from last commit for python3.9.
+
 * Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt3
 - NMU: drop tests packing
 

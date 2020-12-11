@@ -12,7 +12,7 @@
 
 Name: pitivi
 Version: %ver_major.01
-Release: alt1
+Release: alt2
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -24,7 +24,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: pitivi-0.999-py38.patch
 
 # use python3
 AutoReqProv: nopython
@@ -62,7 +61,6 @@ newbies and professionals alike.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson
@@ -85,6 +83,9 @@ newbies and professionals alike.
 
 
 %changelog
+* Mon Feb 01 2021 Grigory Ustinov <grenka@altlinux.org> 2021.01-alt2
+- Drop useless patch.
+
 * Mon Feb 01 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.01-alt1
 - 2021.01
 

@@ -11,7 +11,7 @@
 
 Name: python3-module-%{_name}3
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Python3 bindings for GObject
 Group: Development/Python
@@ -39,7 +39,7 @@ BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: python3-devel python3-module-pytest 
+BuildRequires: python3-devel
 %{?_enable_pycairo:BuildRequires: python3-module-pycairo-devel libcairo-gobject-devel}
 %{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui libgtk+3-gir-devel glibc-i18ndata}
 
@@ -123,6 +123,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Sat Jan 30 2021 Grigory Ustinov <grenka@altlinux.org> 3.38.0-alt3
+- fixed build requires
+
 * Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
 - pygtkcompat: removed dependency on old gtk2-based WebKit-1.0
 

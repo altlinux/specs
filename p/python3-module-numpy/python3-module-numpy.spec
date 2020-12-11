@@ -8,7 +8,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.19.5
-Release: alt1
+Release: alt2
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
@@ -28,8 +28,8 @@ BuildRequires: swig
 BuildRequires: python3-devel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-alabaster python3-module-html5lib python3-module-matplotlib-sphinxext python3-module-notebook python3-module-numpydoc python3-module-objects.inv
 %if_with doc
+BuildRequires: python3-module-alabaster python3-module-html5lib python3-module-matplotlib-sphinxext python3-module-notebook python3-module-numpydoc python3-module-objects.inv
 BuildRequires: tex(preview.sty)
 %endif
 
@@ -411,6 +411,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 02 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.19.5-alt2
+- Bootstrap for python3.9.
+
 * Fri Jan 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.19.5-alt1
 - Updated to upstream version 1.19.5.
 

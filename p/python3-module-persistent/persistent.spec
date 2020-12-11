@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname persistent
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 4.6.4
-Release: alt1
+Release: alt2
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -109,6 +109,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -
 %python3_sitelibdir/%oname/test*
 
 %changelog
+* Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 4.6.4-alt2
+- Bootstrap for python3.9.
+
 * Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 4.6.4-alt1
 - Automatically updated to 4.6.4.
 

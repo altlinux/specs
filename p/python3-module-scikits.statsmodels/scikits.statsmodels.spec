@@ -4,10 +4,12 @@
 %define rname statsmodels
 %define oname %mname.%rname
 
+%def_disable check
+
 Name: python3-module-%oname
 Epoch: 1
 Version: 0.11.1
-Release: alt1
+Release: alt2
 Summary: Statistical computations and models for use with SciPy
 License: BSD-3-Clause
 Group: Development/Python3
@@ -99,6 +101,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/%rname/*/test*
 
 %changelog
+* Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1:0.11.1-alt2
+- Disable check for python3.9 bootstrap.
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.11.1-alt1
 - Updated to upstream version 0.11.1.
 - Re-enabled tests.

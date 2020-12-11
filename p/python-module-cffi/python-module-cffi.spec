@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define modulename cffi
 
-%def_with check
+%def_without check
 
 Name: python-module-cffi
 Version: 1.14.0
-Release: alt1
+Release: alt2
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -87,6 +87,9 @@ tox.py3 --sitepackages -vr
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt2
+- Disabled check for bootstrap on python3.9.
+
 * Tue Mar 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
 - Build new version.
 - Enable check.
