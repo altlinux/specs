@@ -3,8 +3,8 @@ BuildRequires: perl-podlators
 Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.72
-Release: alt3
+Version: 4.73
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -62,6 +62,9 @@ scripts for %name
 
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2:4.73-alt1
+- automated CPAN update
+
 * Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 2:4.72-alt3
 - fixed warning: scripts should be .noarch
 
