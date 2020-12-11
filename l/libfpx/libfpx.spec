@@ -1,10 +1,12 @@
+# gcc10
+%add_optflags -fcommon
 %define _unpackaged_files_terminate_build 1
 
 # based on PLD libfpx $Revision: 1.35 $, $Date: 2003/11/12 18:36:15 $
 
 Name: libfpx
-Version: 1.3.1
-Release: alt1.10
+Version: 1.3.1.10
+Release: alt1
 Summary: FlashPIX OpenSource Toolkit
 License: distributable (see COPYING)
 Group: System/Libraries
@@ -60,6 +62,10 @@ FlashPIX header files and programmer's documentation.
 %doc doc/*.pdf doc/readme.txt
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.1.10-alt1
+- included upstream release in version (as in PLD)
+- fixed build with gcc10
+
 * Thu Aug 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1.10
 - Updated to upstream version 1.3.1-10
 - Fixes:
