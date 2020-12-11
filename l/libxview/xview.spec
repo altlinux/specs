@@ -5,7 +5,7 @@
 
 Name: lib%origname
 Version: 3.2p1.4
-Release: alt10
+Release: alt11
 
 Summary: XView libraries for X11
 License: Distributable
@@ -59,7 +59,7 @@ a good candidate for old hardware.
 %package devel
 Summary: Header files for XView development
 Group: Development/C
-Requires: %name = %{?serial:%serial:}%{version}-%{release}
+Requires: %name = %{?serial:%epoch:}%{version}-%{release}
 
 %description devel
 All the files needed to develop applications that, using the XView
@@ -103,6 +103,7 @@ sed -e 's/MSG_UTIL = xgettext msgfmt/#MSG_UTIL = xgettext msgfmt/' \
 %patch24 -p1
 
 %build
+%add_optflags -fcommon
 rm -f make
 # Create the makefile
 export IMAKEINCLUDE="-I"`pwd`"/config -I%_datadir/X11/config"
@@ -166,6 +167,9 @@ ln -sf libxview.so.3.2.4 %buildroot%_libdir/libxview.so
 %endif
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt11
+- fixed build with gcc10
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt10
 - fixed build
 
