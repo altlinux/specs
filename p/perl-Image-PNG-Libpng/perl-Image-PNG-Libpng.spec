@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Image-PNG-Libpng
 
 Name: perl-Image-PNG-Libpng
-Version: 0.48
-Release: alt2
+Version: 0.49
+Release: alt1
 
 Summary: Perl interface to libpng
 
@@ -50,6 +51,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
+- new version
+
 * Wed Dec 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.48-alt2
 - human build for ALT Sisyphus
 - drop BR:libsowing-devel
