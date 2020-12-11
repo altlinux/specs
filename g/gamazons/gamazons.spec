@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 Name:           gamazons
 Version:        0.83
-Release:        alt4_19
+Release:        alt5_19
 Summary:        GNOME Amazons
 
 Group:          Games/Other
@@ -37,6 +37,7 @@ opponent or section off a good chunk of the board for yourself.
 
 
 %build
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -62,6 +63,9 @@ desktop-file-install \
 
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.83-alt5_19
+- fixed build with gcc10
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_19
 - update to new release by fcimport
 
