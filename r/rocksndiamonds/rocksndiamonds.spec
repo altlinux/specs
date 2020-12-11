@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 4.2.0.4
+Version: 4.2.0.5
 Release: alt1
 
 Summary: A boulderdash like game
@@ -81,6 +81,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Fri Dec 11 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0.5-alt1
+- Automatically updated to 4.2.0.5.
+
 * Wed Nov 18 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0.4-alt1
 - Automatically updated to 4.2.0.4.
 
