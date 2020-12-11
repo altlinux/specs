@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.8.0
-Release: alt1
+Version: 4.8.2
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -158,6 +158,8 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
 %_libdir/cinnamon/
+%_libexecdir/cinnamon-hotplug-sniffer
+%_libexecdir/cinnamon-perf-helper
 
 %files data
 %exclude %_xdgmenusdir/cinnamon-applications-merged
@@ -181,6 +183,12 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 4.8.2-alt2
+- Don't use parallel build since it is broken
+
+* Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 4.8.2-alt1
+- 4.8.2-7-gc2e7db6a
+
 * Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
 - 4.8.0-3-g8171c084
 

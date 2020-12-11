@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -88,6 +88,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 4.8.1-alt1
+- 4.8.1
+
 * Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
 - 4.8.0
 

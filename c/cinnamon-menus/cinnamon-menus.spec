@@ -2,7 +2,7 @@
 %define api_ver 3.0
 
 Name: cinnamon-menus
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Cinnamon desktop menu
@@ -103,6 +103,9 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 
 %changelog
+* Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 4.8.2-alt1
+- 4.8.2
+
 * Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.1-alt1
 - 4.8.1
 
