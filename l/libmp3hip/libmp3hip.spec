@@ -1,6 +1,6 @@
 Name: libmp3hip
 Version: 0.1.2.1
-Release: alt3
+Release: alt4
 
 Summary: A LGPLed mpeg audio decoding library
 License: LGPLv2+
@@ -9,6 +9,7 @@ Group: System/Libraries
 Url: https://launchpad.net/ubuntu/+source/libmp3hip/0.1.2.1
 Source: %name-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Patch0: %name-fix-definition.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildPreReq: python-devel
@@ -62,6 +63,8 @@ This package contains python module of libmp3hip.
 
 %prep
 %setup
+%patch0 -p2
+
 cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 sed -i 's,-O20,-O%_optlevel,g' configure*
 sed -i 's,-all-static,,' examples/Makefile*
@@ -103,6 +106,9 @@ install -p -m644 AUTHORS README TODO %buildroot%_docdir/%name-0.1/
 %python_sitelibdir/*
 
 %changelog
+* Fri Dec 11 2020 Pavel Vasenkov <pav@altlinux.org> 0.1.2.1-alt4
+- NMU: fix variable definition
+
 * Fri Aug 07 2020 Pavel Vasenkov <pav@altlinux.org> 0.1.2.1-alt3
 - NMU: set correct python2 executable in shebang and scripts
 
