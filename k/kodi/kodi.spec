@@ -1,6 +1,6 @@
 Name: kodi
 Version: 19.0
-Release: alt0.20201117
+Release: alt0.20201207
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -66,6 +66,7 @@ BuildRequires: pkgconfig(libpulse-simple)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libtasn1)
+BuildRequires: pkgconfig(libudfread)
 BuildRequires: pkgconfig(libva)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libxslt)
@@ -77,7 +78,6 @@ BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(taglib)
 BuildRequires: pkgconfig(tinyxml)
 BuildRequires: pkgconfig(udev)
-BuildRequires: pkgconfig(udfread)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(vdpau)
 BuildRequires: pkgconfig(wayland-protocols)
@@ -182,6 +182,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Fri Dec 11 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt0.20201207
+- 19.0b2 Matrix
+
 * Thu Nov 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt0.20201117
 - 19.0b1 Matrix
 
