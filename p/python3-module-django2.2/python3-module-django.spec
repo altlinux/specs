@@ -1,6 +1,4 @@
 %define branch 2.2
-%define version %branch.12
-%define release alt3
 %define origname Django
 %define oname django
 %define pkg_name python3-module-%oname
@@ -13,8 +11,8 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: %pkg_name%branch
-Version: %version
-Release: %release
+Version: %branch.17
+Release: alt1
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python3
@@ -179,6 +177,14 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Fri Dec 11 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.17-alt1
+- new version 2.2.17
+- Fixes for the following security vulnerabilities:
+  + CVE-2020-13254 Potential data leakage via malformed memcached keys
+  + CVE-2020-13596 Possible XSS via admin ForeignKeyRawIdWidget
+  + CVE-2020-24583: Incorrect permissions on intermediate-level directories on Python 3.7+
+  + CVE-2020-24584: Permission escalation in intermediate-level directories of the file system cache on Python 3.7+
+
 * Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.12-alt3
 - add more provides
 
@@ -191,9 +197,9 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 * Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.12-alt1
 - 2.2.12
 - Fixes for the following security vulnerabilities:
-  + CVE-2019-19118: Privilege escalation in the Django admin.
-  + CVE-2019-19844: Potential account hijack via password reset form
-  + CVE-2020-7471: Potential SQL injection via StringAgg(delimiter)
+  + CVE-2019-19118 Privilege escalation in the Django admin.
+  + CVE-2019-19844 Potential account hijack via password reset form
+  + CVE-2020-7471 Potential SQL injection via StringAgg(delimiter)
   + CVE-2020-9402 Potential SQL injection via tolerance parameter in GIS functions and aggregates on Oracle
 
 * Fri Aug 23 2019 Alexey Appolonov <alexey@altlinux.org> 2.2.4-alt2
