@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-Test-WWW-Mechanize
-Version: 1.52
+Version: 1.54
 Release: alt1
 
 Summary: Test-WWW-Mechanize - Testing-specific WWW::Mechanize subclass
@@ -66,6 +66,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Test/*
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
 - automated CPAN update
 
