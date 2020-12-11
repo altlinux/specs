@@ -1,34 +1,41 @@
-%define oname fuse
-Name: spectrum-fuse
-Version: 1.5.7
-Release: alt1
+%define        oname fuse
 
-Summary: The Free Unix Spectrum Emulator
+Name:          spectrum-fuse
+Version:       1.5.8
+Release:       alt0.1
+Summary:       The Free Unix Spectrum Emulator
+License:       GPLv2
+Group:         Emulators
+Url:           http://fuse-emulator.sourceforge.net/
+Vcs:           https://git.code.sf.net/p/fuse-emulator/fuse
+Packager:      ZX Spectrum Development Team <spectrum@packages.altlinux.org>
 
-License: GPLv2
-Group: Emulators
-Url: http://fuse-emulator.sourceforge.net/
-
-Packager: ZX Spectrum Development Team <spectrum@packages.altlinux.org>
-
-Source: %name-%version.tar
-Source3: README.z88sdk
+Source:        %name-%version.tar
+Source3:       README.z88sdk
+BuildRequires: glibc-devel
+BuildRequires: libalsa-devel
+BuildRequires: libgtk+3-devel
+# libgcrypt: the ability to digitally sign RZX files (note that Fuse requires version 1.1.42 or later).
+BuildRequires: libgcrypt-devel
+# libjsw: allow joystick input to be used (not required for joystick emulation).
+BuildRequires: libjsw-devel
+# libxml2: the ability to load and save Fuse's current configuration.
+BuildRequires: libxml2-devel
+# libpng: the ability to save screenshots.
+BuildRequires: libpng-devel
+# zlib: support for compressed RZX files.
+BuildRequires: zlib-devel
+# bzip2: support for certain compressed files.
+BuildRequires: bzip2-devel
+# libaudiofile: support for loading from .wav files.
+BuildRequires: libaudiofile-devel
+BuildRequires: glib2-devel
+BuildRequires: pkgconfig(libspectrum) >= 1.4.5
+BuildRequires: xorg-cf-files
+BuildRequires: flex
+BuildRequires: gcc-c++
 
 Provides: fuse-emulator = %version
-
-# Automatically added by buildreq on Sun Jul 29 2007
-BuildRequires: flex gcc-c++ glibc-devel libgcrypt-devel libjsw-devel libspectrum-devel libxml2-devel xorg-cf-files
-
-# Optional:
-# libgcrypt: the ability to digitally sign RZX files (note that Fuse requires version 1.1.42 or later).
-# libpng: the ability to save screenshots.
-# libxml2: the ability to load and save Fuse's current configuration.
-# libjsw: allow joystick input to be used (not required for joystick emulation).
-# zlib: support for compressed RZX files.
-# libbzip2: support for certain compressed files.
-# libaudiofile: support for loading from .wav files.
-
-BuildRequires: libspectrum-devel >= 1.4.1 libpng-devel libalsa-devel libgtk+3-devel
 
 %description
 Fuse is a Sinclair ZX Spectrum emulator. It supports several models
@@ -44,7 +51,11 @@ sed -e "s/\(^\|\" \|B \"\?\|IR \|TH \)fuse/\1spectrum\\\\-fuse/" -i man/fuse.1
 
 %build
 %autoreconf
-%configure --disable-ui-joystick --enable-joystick --with-gtk --enable-desktop-integration
+%configure \
+      --disable-ui-joystick \
+      --enable-joystick \
+      --with-gtk \
+      --enable-desktop-integration
 %make_build
 
 %install
@@ -71,6 +82,10 @@ install -pm0644 %{SOURCE3} .
 %_iconsdir/hicolor/*/mimetypes/application-x-spectrum.png
 
 %changelog
+* Fri Dec 11 2020 Pavel Skrylev <majioa@altlinux.org> 1.5.8-alt0.1
+- ^ 1.5.7 -> 1.5.8[gamma]
+- + support for zlib, bzip2, libaudiofile
+
 * Wed Dec 12 2018 Pavel Skrylev <majioa@altlinux.org> 1.5.7-alt1
 - Removed sources from gear.
 - Cleaned up the spec.

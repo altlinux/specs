@@ -3,7 +3,7 @@
 %def_enable    doc
 
 Name:          denemo
-Version:       2.3.0
+Version:       2.4.0
 Release:       alt1
 
 Summary:       WYSIWYG musical score editor, and frontend for Lilypond
@@ -116,6 +116,9 @@ fc-cache %_datadir/fonts/ttf/%name ||:
 %doc AUTHORS ChangeLog* LICENSE_OFL.txt NEWS README*
 
 %changelog
+* Fri Dec 11 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
+- ^ 2.3.0 -> 2.4.0
+
 * Wed Jan 22 2020 Pavel Skrylev <majioa@altlinux.org> 2.3.0-alt1
 - updated (^) 0.8.12 -> 2.3.0
 

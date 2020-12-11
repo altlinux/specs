@@ -1,25 +1,31 @@
-Name: libspectrum
-Version: 1.4.1
-Release: alt1
+Name:          libspectrum
+Version:       1.4.5
+Release:       alt0.1
+Summary:       ZX Spectrum emulation shared library
+License:       GPLv2
+Group:         Emulators
+Url:           https://sourceforge.net/projects/fuse-emulator/
+Vcs:           https://git.code.sf.net/p/fuse-emulator/libspectrum
+Packager:      ZX Spectrum Development Team <spectrum@packages.altlinux.org>
 
-Summary: ZX Spectrum emulation shared library
+Source:        %name-%version.tar
+# libbzip2: support for certain compressed files.
+BuildRequires: bzlib-devel
+# libaudiofile: support for loading from .wav files.
+BuildRequires: libaudiofile-devel
+# zlib: support for compressed RZX files.
+BuildRequires: zlib-devel
+# libgcrypt: the ability to digitally sign RZX files (note that Fuse requires version 1.1.42 or later).
+BuildRequires: libgcrypt-devel
+BuildRequires: glib2-devel
+BuildRequires: libgpg-error-devel
+BuildRequires: pkgconfig
+BuildRequires: gcc-c++
 
-Packager: ZX Spectrum Development Team <spectrum@packages.altlinux.org>
-
-License: GPLv2
-Group: Emulators
-Url: https://sourceforge.net/projects/fuse-emulator/
-
-Source: %name-%version.tar
-
-# manually removed: gcc-g77 hostinfo 
-# Automatically added by buildreq on Sun Feb 06 2005
-BuildRequires: bzlib-devel gcc-c++ glib2-devel libgcrypt-devel libgpg-error-devel libstdc++-devel pkgconfig zlib-devel
-
-%package devel
-Summary: ZX Spectrum emulation library, header files
-Group: Emulators
-Requires: %name = %version-%release
+%package       devel
+Summary:       ZX Spectrum emulation library, header files
+Group:         Emulators
+Requires:      %name = %version-%release
 
 %description
 libspectrum is a library which is designed to make the input and
@@ -37,6 +43,8 @@ This package contains header files for %name.
 
 %prep
 %setup
+# for 1.4.4 TODO
+sed "s/1.4.4/1.4.5/" -i ./configure.ac
 
 %build
 %autoreconf
@@ -56,6 +64,10 @@ This package contains header files for %name.
 %_includedir/%name.h
 
 %changelog
+* Fri Dec 11 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.5-alt0.1
+- ^ 1.4.1 -> 1.4.5[gamma]
+- + support for bzlib, libaudiofile, and zlib
+
 * Thu Dec 06 2018 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt1
 - Removed sources from gear.
 - Bump to 1.4.1.
