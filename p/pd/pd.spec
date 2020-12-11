@@ -11,7 +11,7 @@ BuildRequires: gcc-c++
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	%{ver}
-Release:	alt3_%{rel}
+Release:	alt4_%{rel}
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
@@ -65,6 +65,7 @@ sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
 sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
 
 %build
+%add_optflags -fcommon
 pushd src
 autoconf
 export CPPFLAGS="%{optflags}"
@@ -106,6 +107,9 @@ install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.42.6-alt4_12
+- fixed build with gcc10
+
 * Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.42.6-alt3_12
 - update by mgaimport
 
