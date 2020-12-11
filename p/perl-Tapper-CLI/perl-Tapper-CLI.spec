@@ -8,7 +8,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %define upstream_version 5.0.4
 
 Name:       perl-%{upstream_name}
-Version:    5.0.6
+Version:    5.0.7
 Release:    alt1
 %if %release == alt3nt
 %define _without_test 1
@@ -89,6 +89,9 @@ Command line tools for Tapper.
 %_man1dir/tapper*
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.7-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1
 - automated CPAN update
 
