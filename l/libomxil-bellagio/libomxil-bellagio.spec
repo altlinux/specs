@@ -1,12 +1,11 @@
 Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define _legacy_common_support 1
+%add_optflags -fcommon
 
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        alt1_24
+Release:        alt1_25
 Summary:        OpenMAX Integration Layer
 
 License:        LGPLv2+
@@ -130,6 +129,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_25
+- fixed build with new gcc10
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_24
 - update to new release by fcimport
 
