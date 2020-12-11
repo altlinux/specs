@@ -1,7 +1,6 @@
 %define pkgname	chardet
 %def_with python3
 
-
 %define python3_dirsetup \
 %if_with python3 \
 rm -rf ../python3 \
@@ -31,12 +30,12 @@ popd \
 
 
 Name: python-module-chardet
-Version: 3.0.4
+Version: 4.0.0
 Release: alt1
 
 Summary: Character encoding auto-detection in Python
 
-License: LGPL
+License: LGPL-2.1
 Url: https://pypi.python.org/pypi/%pkgname
 Group: Development/Python
 
@@ -92,6 +91,9 @@ rm -rf %buildroot%_bindir/
 %endif
 
 %changelog
+* Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Wed Sep 27 2017 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1
 - New version
 
