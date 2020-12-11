@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/col /usr/bin/dvipdf /usr/bin/dvips /usr/bin/emacs /usr/b
 Summary:  Fuzzing framework
 Name: autodafe
 Version: 0.1
-Release: alt2_6
+Release: alt3_6
 License: GPLv2+
 Group: Development/Tools
 URL: http://autodafe.sourceforge.net/
@@ -41,6 +41,7 @@ for i in README TUTORIAL; do iconv -f iso-8859-1 -t utf-8 < $i > $i.NEW && mv -f
 cd docs; tar cfz tutorials.tgz tutorials
 
 %build
+%add_optflags -fcommon
 %configure
 make # do not use it in broken Makefile %{?_smp_mflags}
 
@@ -67,6 +68,9 @@ mv ./etc/generator/autodafe $RPM_BUILD_ROOT%{_datadir}
 %doc docs/tutorials.tgz
 
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_6
+- fixed build with gcc10
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_6
 - fixed build
 
