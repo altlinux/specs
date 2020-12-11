@@ -1,7 +1,8 @@
-BuildRequires: chrpath
+Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libncurses-devel
 # END SourceDeps(oneline)
+BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # No FUSE on RHEL5
@@ -11,10 +12,9 @@ BuildRequires: gcc-c++ libncurses-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_25
+Release:        alt3_32
 Summary:        Apple Filing Protocol client
 
-Group:          System/Base
 License:        GPL+
 URL:            http://alexthepuffin.googlepages.com/home
 Source0:        http://downloads.sourceforge.net/afpfs-ng/%{name}-%{version}.tar.bz2
@@ -36,8 +36,8 @@ Apple Filing Protocol.
 
 %if %{?!_without_fuse:1}0
 %package -n fuse-afp
+Group: System/Base
 Summary:        FUSE driver for AFP filesystem
-Group:          System/Base
 
 %description -n fuse-afp
 A FUSE file system server to access files exported from Mac OS system
@@ -47,8 +47,8 @@ The command line client for AFP is in fuse-afp package
 
 
 %package devel
+Group: Development/Other
 Summary:        Development files for afpfs-ng
-Group:          Development/Other
 Requires:       %{name} = %{version}
 
 %description devel
@@ -69,6 +69,7 @@ Library for dynamic linking and header files of afpfs-ng.
 # Prerequisite `configure.ac' is newer than target `aclocal.m4'.
 touch --reference aclocal.m4 configure.ac Makefile.in
 
+export CFLAGS="${RPM_OPT_FLAGS} -fcommon" 
 %configure %{?_without_fuse:--disable-fuse} --disable-static
 %make_build
 
@@ -110,7 +111,13 @@ done
 %{_libdir}/*.so
 
 
+
+
+
 %changelog
+* Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_32
+- fixed build
+
 * Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_25
 - rebuild with readline7
 
