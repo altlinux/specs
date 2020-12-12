@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-macros-java
 %set_compress_method none
 %filter_from_requires /.usr.bin.java/d
 BuildRequires: /proc rpm-build-java
-%define fedora 31
+%define fedora 32
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -38,8 +38,8 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.9.7
-%define release 0.0.ea
+%define version 11.0.9.11
+%define release 0.3.ea
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
 # http://rpm.org/user_doc/conditional_builds.html
@@ -300,8 +300,8 @@ BuildRequires: /proc rpm-build-java
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global minorver        0
-%global buildver        7
-%global rpmrelease      0
+%global buildver        11
+%global rpmrelease      3
 #%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
 %if %is_system_jdk
@@ -318,7 +318,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           0
+%global is_ga           1
 %if %{is_ga}
 %global ea_designator ""
 %global ea_designator_zip ""
@@ -445,7 +445,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1_0.0.eajpp11
+Release: alt1_0.3.eajpp10
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -543,34 +543,22 @@ Patch4: pr3694-rh1340845-support_fedora_rhel_system_crypto_policy.patch
 Patch6:    rh1566890-CVE_2018_3639-speculative_store_bypass.patch
 # PR3695: Allow use of system crypto policy to be disabled by the user
 Patch7: pr3695-toggle_system_crypto_policy.patch
-# S390 ambiguous log2_intptr call
+
+#############################################
+#
+# Patches appearing in 11.0.10
+#
+# This section includes patches which are present
+# in the listed OpenJDK 11u release and should be
+# able to be removed once that release is out
+# and used by this RPM.
+#############################################
+# JDK-8222286: S390 ambiguous log2_intptr call
 Patch8: s390-8214206_fix.patch
-
-#############################################
-#
-# Patches appearing in 11.0.8
-#
-# This section includes patches which are present
-# in the listed OpenJDK 11u release and should be
-# able to be removed once that release is out
-# and used by this RPM.
-#############################################
-
-#############################################
-#
-# Patches appearing in 11.0.9
-#
-# This section includes patches which are present
-# in the listed OpenJDK 11u release and should be
-# able to be removed once that release is out
-# and used by this RPM.
-#############################################
-
-#############################################
-#
-# JDK 9+ only patches
-#
-#############################################
+# JDK-8254177: (tz) Upgrade time-zone data to tzdata2020b
+Patch9: jdk8254177-tzdata2020b.patch
+# JDK-8250861: Crash in MinINode::Ideal(PhaseGVN*, bool)
+Patch10: jdk8250861-crash_in_MinINode_Ideal.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -607,8 +595,8 @@ BuildRequires: java-%{buildjdkver}-openjdk-devel
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
 %endif
-# 2020a required as of JDK-8243541 in 11.0.8+4
-BuildRequires: tzdata-java >= 2020a
+# 2020b required as of JDK-8254177 in October CPU
+BuildRequires: tzdata-java >= 2020b
 # Earlier versions have a bug in tree vectorization on PPC
 BuildRequires: gcc >= 4.8.3
 
@@ -686,7 +674,7 @@ Requires: ca-trust
 Requires: javapackages-filesystem
 # Require zone-info data provided by tzdata-java sub-package
 # 2020a required as of JDK-8243541 in 11.0.8+4
-Requires: tzdata-java >= 2020a
+Requires: tzdata-java >= 2020b
 # for support of kernel stream control
 # libsctp.so.1 is being `dlopen`ed on demand
 Requires: liblksctp lksctp-tools
@@ -964,6 +952,8 @@ pushd %{top_level_dir_name}
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 popd # openjdk
 
 %patch1000
@@ -1067,9 +1057,11 @@ bash ../configure \
 %ifarch %{ppc64le}
     --with-jobs=1 \
 %endif
-    --with-version-build=%{buildver} \
+    --with-version-build=1 \
     --with-version-pre="%{ea_designator}" \
     --with-version-opt=%{lts_designator} \
+    --with-version-patch=1 \
+    --with-version-date="2020-11-04" \
     --with-vendor-version-string="%{vendor_version_string}" \
     --with-vendor-name="Red Hat, Inc." \
     --with-vendor-url="https://www.redhat.com/" \
@@ -1308,7 +1300,8 @@ if ! echo $suffix | grep -q "debug" ; then
   # Install Javadoc documentation
   install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
   cp -a %{buildoutputdir}/images/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
-  cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  #cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  cp -a %{buildoutputdir}/bundles/jdk-11.0.9.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 fi
 
 # Install release notes
@@ -1464,7 +1457,7 @@ cat <<EOF >%buildroot%_altdir/%name-java-headless
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/java
 EOF
 # binaries and manuals
-for i in keytool policytool servertool pack200 unpack200 \
+for i in jjs keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
   if [ -e %{_jvmdir}/%{sdkdir}/bin/$i ]; then
@@ -1803,6 +1796,9 @@ fi
 %endif
 
 %files static-libs
+%dir %{_jvmdir}/%{sdkdir}/lib/static
+%dir %{_jvmdir}/%{sdkdir}/lib/static/linux-%{archinstall}
+%dir %{_jvmdir}/%{sdkdir}/lib/static/linux-%{archinstall}/glibc
 %{_jvmdir}/%{sdkdir}/lib/static/linux-%{archinstall}/glibc/lib*.a
 
 %files jmods
@@ -1821,7 +1817,7 @@ fi
 %_altdir/%altname-javadoc
 %_sysconfdir/buildreqs/packages/substitute.d/%name-javadoc
 %doc %{_javadocdir}/%{uniquejavadocdir}
-%doc --no-dereference %{buildoutputdir}/images/%{jdkimage}/legal
+%{_jvmdir}/%{sdkdir}/legal
 %if %is_system_jdk
 %if %{is_release_build}
 %ghost %{_javadocdir}/java
@@ -1834,7 +1830,7 @@ fi
 # same for debug variant
 %files javadoc-zip
 %doc %{_javadocdir}/%{uniquejavadocdir}.zip
-%doc --no-dereference %{buildoutputdir}/images/%{jdkimage}/legal
+%{_jvmdir}/%{sdkdir}/legal
 %if %is_system_jdk
 %if %{is_release_build}
 %ghost %{_javadocdir}/java-zip
@@ -1860,6 +1856,9 @@ fi
 
 
 %changelog
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 0:11.0.9.11-alt1_0.3.eajpp10
+- new version
+
 * Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0:11.0.9.7-alt1_0.0.eajpp11
 - new version
 
