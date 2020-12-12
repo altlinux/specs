@@ -1,3 +1,5 @@
+# something with apache2 configuration :(
+%define _without_test 1
 %def_without apache1
 %define _unpackaged_files_terminate_build 1
 #
@@ -17,15 +19,13 @@
 
 Name: perl-Apache-AuthCookie
 Version: 3.30
-Release: alt1
+Release: alt2
 
 Summary: Perl Authentication and Authorization via cookies
 
 License: Artistic
 Group: Development/Perl
 Url: http://www.cpan.org
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 
 BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/M/MS/MSCHOUT/%{module}-%{version}.tar.gz
@@ -35,7 +35,7 @@ BuildRequires: apache-mod_perl
 %endif
 
 # Automatically added by buildreq on Tue Apr 06 2010
-BuildRequires: apache2-mod_perl perl-CGI perl-libwww perl(Class/Load.pm) perl(autobox.pm) perl(Apache/TestMM.pm) perl(WWW/Form/UrlEncoded.pm) perl(Hash/MultiValue.pm) perl(HTTP/Body.pm) perl-devel
+BuildRequires: apache2-mod_perl apache2-mods perl-CGI perl-libwww perl(Class/Load.pm) perl(autobox.pm) perl(Apache/TestMM.pm) perl(WWW/Form/UrlEncoded.pm) perl(Hash/MultiValue.pm) perl(HTTP/Body.pm) perl-devel
 
 %package -n perl-Apache2-AuthCookie
 Summary: Perl Authentication and Authorization via cookies
@@ -92,6 +92,9 @@ verifies them and returns a session key.
 %perl_vendor_privlib/Apache/AuthCookie
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 3.30-alt2
+- fixed build
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 3.30-alt1
 - automated CPAN update
 
