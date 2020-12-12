@@ -4,7 +4,7 @@ BuildRequires: chrpath
 #
 # spec file for package libu2f-server
 #
-# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2020 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -22,14 +22,14 @@ BuildRequires: chrpath
 %define soname  0
 Name:           libu2f-server
 Version:        1.1.0
-Release:        alt2_2.5
+Release:        alt2_3.2
 Summary:        Yubico Universal 2nd Factor (U2F) Server C Library
 License:        BSD-2-Clause
 Group:          Security/Networking
-Url:            https://developers.yubico.com/
+URL:            https://developers.yubico.com/
 Source0:        https://developers.yubico.com/libu2f-server/Releases/%{name}-%{version}.tar.xz
 Source1:        https://developers.yubico.com/libu2f-server/Releases/%{name}-%{version}.tar.xz.sig
-Patch1: f7c4983b31909299c47bf9b2627c84b6bfe225de.patch
+Patch0:         json-c-update.patch
 BuildRequires:  gengetopt
 BuildRequires:  help2man
 BuildRequires:  libhidapi-devel
@@ -76,7 +76,8 @@ Command line tool that implements the server-side of the Universal 2nd Factor (U
 
 %prep
 %setup -q
-%patch1 -p1
+%patch0 -p1
+
 
 %build
 %configure --disable-static
@@ -86,7 +87,7 @@ Command line tool that implements the server-side of the Universal 2nd Factor (U
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 find %{buildroot} -type f -name "*.la" -delete -print
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -108,6 +109,9 @@ done
 %{_mandir}/man1/u2f-server.1*
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_3.2
+- updated patch from suse
+
 * Sun May 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt2_2.5
 - fixed build with json-c-0.14.0
 
