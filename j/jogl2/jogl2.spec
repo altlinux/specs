@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jogl2
 Version:        2.3.2
-Release:        alt2_9jpp8
+Release:        alt4_9jpp8
 %global src_name jogl-v%{version}
 Summary:        Java bindings for the OpenGL API
 
@@ -26,7 +26,6 @@ Patch5:         %{name}-add-secarchs.patch
 Patch6:         %{name}-mesa-profile-detection.patch
 
 BuildRequires:  gcc
-BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  gluegen2-devel = %{version}
 BuildRequires:  eclipse-swt
@@ -37,7 +36,6 @@ BuildRequires:  libXrandr-devel
 BuildRequires:  libXcursor-devel
 BuildRequires:  maven-local
 
-Requires:       java
 Requires:       jpackage-utils
 Requires:       gluegen2 = %{version}
 Source44: import.info
@@ -90,6 +88,9 @@ sed -i 's/executable="git"/executable="true"/' make/build-common.xml
 %patch33 -p2
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 cd make
 
 # As we never cross-compile this package, the SDK root is always /
@@ -148,6 +149,12 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt4_9jpp8
+- use zerg@'s hack for armh
+
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt3_9jpp8
+- fixed build with new java
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_9jpp8
 - new version
 
