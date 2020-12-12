@@ -24,17 +24,17 @@ BuildRequires: libtinfo-devel
 
 Name:           diskscan
 Version:        0.20
-Release:        alt1_2.6
+Release:        alt1_2.10
 Summary:        Scan disk for bad or near failure sectors
 License:        GPL-3.0-or-later
 Group:          System/Kernel and hardware
 URL:            http://blog.disksurvey.org/proj/diskscan/
 Source0:        https://github.com/baruch/diskscan/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-BuildRequires:  ccmake cmake ctest
+BuildRequires:  cmake >= 3.0.2
 BuildRequires:  gcc-c++
-BuildRequires:  python-module-markdown python3-module-markdown
+BuildRequires:  python3-module-markdown
 BuildRequires:  python3-module-yaml
-BuildRequires:  python3-module-BeautifulSoup4
+BuildRequires:  python3-module-beautifulsoup4
 BuildRequires:  pkgconfig(ncurses)
 BuildRequires:  pkgconfig(zlib)
 Source44: import.info
@@ -66,6 +66,9 @@ the disk vendor decision making logic.
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_2.10
+- cleaned python2 buildrequires
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_2.6
 - update by suseimport
 
