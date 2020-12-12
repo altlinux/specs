@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build.pm)
 Name: perl-Minilla
 Version: 3.1.11
-Release: alt1
+Release: alt2
 
 Summary: CPAN module authoring tool
 Group: Development/Perl
@@ -12,7 +12,7 @@ Url: %CPAN Minilla
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Validator.pm) perl(File/Which.pm) perl(Time/Piece.pm) perl(TOML.pm) perl(Data/Section/Simple.pm) perl(CPAN/Meta.pm) perl(Module/Build/Tiny.pm) perl(Archive/Tar.pm) perl(Pod/Markdown.pm) perl(Test/Output.pm) perl(CPAN/Meta/Prereqs.pm) perl-devel perl(Text/MicroTemplate.pm) perl(Try/Tiny.pm) perl(Term/ANSIColor.pm) perl(parent.pm) perl(File/pushd.pm) perl(Moo.pm) perl-App-cpanminus perl(Module/CPANfile.pm) perl(File/Copy/Recursive.pm) perl(Config/Identity/PAUSE.pm) perl(URI.pm)
+BuildRequires: perl(Module/Runtime.pm) perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Validator.pm) perl(File/Which.pm) perl(Time/Piece.pm) perl(TOML.pm) perl(Data/Section/Simple.pm) perl(CPAN/Meta.pm) perl(Module/Build/Tiny.pm) perl(Archive/Tar.pm) perl(Pod/Markdown.pm) perl(Test/Output.pm) perl(CPAN/Meta/Prereqs.pm) perl-devel perl(Text/MicroTemplate.pm) perl(Try/Tiny.pm) perl(Term/ANSIColor.pm) perl(parent.pm) perl(File/pushd.pm) perl(Moo.pm) perl-App-cpanminus perl(Module/CPANfile.pm) perl(File/Copy/Recursive.pm) perl(Config/Identity/PAUSE.pm) perl(URI.pm)
 
 %description
 %summary
@@ -33,6 +33,9 @@ BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Va
 %doc Changes README.md
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.11-alt2
+- fixed build
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.11-alt1
 - new version
 
