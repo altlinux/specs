@@ -5,7 +5,7 @@
 
 Name:           python3-module-%pkgname
 Version:        2.25.0
-Release:        alt1
+Release:        alt2
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
 
@@ -29,6 +29,8 @@ Patch3:         requests-2.12.4-tests_nonet.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1653223
 Patch5:         requests-2.20.0-no-py2-httpbin.patch
 
+Patch6: requests-2.25.0-chardet-version.patch
+
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -51,6 +53,7 @@ designed to make HTTP requests easy for developers.
 %patch2 -p1
 %patch3 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -66,6 +69,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/*
 
 %changelog
+* Sat Dec 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.25.0-alt2
+- fix for chardet >= 4.0.0
+
 * Mon Nov 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.25.0-alt1
 - 2.25.0
 
