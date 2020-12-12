@@ -2,19 +2,18 @@ Epoch: 0
 Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           fop
 Summary:        XSL-driven print formatter
-Version:        2.2
-Release:        alt1_4jpp8
+Version:        2.4
+Release:        alt2_1jpp8
 # ASL 1.1:
 # several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
 # rest is ASL 2.0
@@ -23,20 +22,18 @@ URL:            https://xmlgraphics.apache.org/fop
 Source0:        https://www.apache.org/dist/xmlgraphics/%{name}/source/%{name}-%{version}-src.tar.gz
 Source1:        %{name}.script
 Source2:        batik-pdf-MANIFEST.MF
-Source3:        https://maven.ibiblio.org/maven2/org/apache/xmlgraphics/%{name}/%{version}/%{name}-%{version}.pom
+Source3:        https://repo1.maven.org/maven2/org/apache/xmlgraphics/%{name}/%{version}/%{name}-%{version}.pom
 Source4:        https://www.apache.org/licenses/LICENSE-1.1.txt
 Patch1:         0001-Main.patch
 Patch2:         0002-Use-sRGB.icc-color-profile-from-colord-package.patch
 Patch3:         0003-Disable-javadoc-doclint.patch
 Patch4:         0004-Port-to-QDox-2.0.patch
 Patch5:         0005-Allow-javascript-in-javadoc.patch
-Patch6:         0006-Non-free-colour-profile-was-removed.patch
 
 BuildArch:      noarch
 
 Requires:       apache-commons-io >= 1.2
 Requires:       apache-commons-logging >= 1.0.4
-Requires:       avalon-framework >= 4.1.4
 Requires:       batik >= 1.7
 Requires:       fontbox
 Requires:       apache-commons-httpclient
@@ -51,7 +48,6 @@ Requires:       javapackages-tools
 BuildRequires:  ant
 BuildRequires:  apache-commons-io
 BuildRequires:  apache-commons-logging
-BuildRequires:  avalon-framework
 BuildRequires:  batik
 BuildRequires:  fontbox
 BuildRequires:  javapackages-local
@@ -89,7 +85,7 @@ Javadoc for %{name}.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+
 
 cp %{SOURCE4} LICENSE-1.1
 
@@ -99,6 +95,9 @@ rm -f fop/lib/*.jar fop/lib/build/*.jar
 ln -s %{_javadir}/qdox.jar fop/lib/build/qdox.jar
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 #qdox intentionally left off classpath -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
 export CLASSPATH=$(build-classpath apache-commons-logging apache-commons-io \
     fontbox xmlgraphics-commons batik-all avalon-framework-api \
@@ -157,6 +156,13 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt2_1jpp8
+- use zerg@'s hack for armh
+
+* Tue Oct 13 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_1jpp8
+- new version
+- note: manually edited fop.pom, dropped parent
+
 * Fri Jun 21 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_4jpp8
 - new version
 

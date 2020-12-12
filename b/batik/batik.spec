@@ -1,19 +1,28 @@
 Epoch: 0
 Group: Graphics
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Allow conditionally building without deps on scripting libs rhino and jython
+%bcond_with jp_minimal
+
 %global classpath batik:rhino:xml-commons-apis:xml-commons-apis-ext:xmlgraphics-commons:jai_imageio
 
 Name:           batik
-Version:        1.10
-Release:        alt1_4jpp8
+Version:        1.11
+Release:        alt2_3jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
@@ -29,9 +38,11 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.xmlgraphics:xmlgraphics-commons)
+BuildRequires:  mvn(org.apache.xmlgraphics:xmlgraphics-commons) >= 2.3
+%if %{without jp_minimal}
 BuildRequires:  mvn(org.mozilla:rhino)
 BuildRequires:  mvn(org.python:jython)
+%endif
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-apis:xml-apis)
 BuildRequires:  mvn(xml-apis:xml-apis-ext)
@@ -53,10 +64,17 @@ Batik is a Java(tm) technology based toolkit for applications that want
 to use images in the Scalable Vector Graphics (SVG) format for various
 purposes, such as viewing, generation or manipulation.
 
+%package util
+Group: Graphics
+Summary:        Batik utility library
+Obsoletes:      %{name} < 1.11-1
+
+%description util
+Util component of the Apache Batik SVG manipulation and rendering library.
+
 %package css
 Group: Graphics
 Summary:        Batik CSS engine
-Obsoletes:      %{name} < 1.8-0.17.svn1230816
 #32067
 Conflicts: batik < 0:1.8-alt1_1
 
@@ -194,13 +212,7 @@ cp -p %{SOURCE1} batik-svgbrowser/src/main/resources/org/apache/batik/apps/svgbr
 # It's an uberjar, it shouldn't have requires
 %pom_xpath_inject pom:dependency '<optional>true</optional>' batik-all
 
-# eclipse expects xmlgraphics to be optional
-%pom_xpath_inject 'pom:dependency[pom:artifactId="xmlgraphics-commons"]' '<optional>true</optional>' batik-css
-
-# eclipse expects it there
-cp -pr batik-i18n/src/main/java/org/apache/batik/i18n batik-util/src/main/java/org/apache/batik/
-%pom_remove_dep :batik-i18n batik-util
-
+# Generate OSGi metadata
 for pom in `find -mindepth 2 -name pom.xml -not -path ./batik-all/pom.xml`; do
     %pom_add_plugin org.apache.felix:maven-bundle-plugin $pom "
         <extensions>true</extensions>
@@ -213,10 +225,19 @@ for pom in `find -mindepth 2 -name pom.xml -not -path ./batik-all/pom.xml`; do
     %pom_xpath_inject pom:project '<packaging>bundle</packaging>' $pom
 done
 
-# for eclipse
-%pom_xpath_set pom:Bundle-SymbolicName org.apache.batik.util.gui batik-gui-util
-
-%pom_disable_module batik-test-old
+%if %{with jp_minimal}
+# Remove optional deps on rhino and jython for minimal build
+%pom_remove_dep :rhino batik-{bridge,script}
+%pom_remove_dep :jython batik-script
+rm -rf batik-script/src/main/java/org/apache/batik/script/{jpython,rhino}
+rm batik-bridge/src/main/java/org/apache/batik/bridge/BatikWrapFactory.java
+rm batik-bridge/src/main/java/org/apache/batik/bridge/SVG12RhinoInterpreter.java
+rm batik-bridge/src/main/java/org/apache/batik/bridge/RhinoInterpreter.java
+rm batik-bridge/src/main/java/org/apache/batik/bridge/RhinoInterpreterFactory.java
+rm batik-bridge/src/main/java/org/apache/batik/bridge/EventTargetWrapper.java
+rm batik-bridge/src/main/java/org/apache/batik/bridge/GlobalWrapper.java
+rm batik-bridge/src/main/java/org/apache/batik/bridge/WindowWrapper.java
+%endif
 
 %mvn_package :batik-squiggle squiggle
 %mvn_package :batik-squiggle-ext squiggle
@@ -226,11 +247,17 @@ done
 %mvn_package :batik-rasterizer-ext rasterizer
 %mvn_package :batik-slideshow slideshow
 %mvn_package :batik-css css
+%mvn_package :batik-constants util
+%mvn_package :batik-i18n util
+%mvn_package :batik-util util
 %mvn_package ':batik-test*' __noinstall
 
 %mvn_file :batik-all batik-all
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 
 export ANT_OPTS="-Xmx512m"
 # due to javadoc x86_64 out of memory
@@ -271,6 +298,7 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 %doc CHANGES MAINTAIN README
 
 %files css -f .mfiles-css
+%files util -f .mfiles-util
 
 %files squiggle -f .mfiles-squiggle
 %{_bindir}/squiggle
@@ -300,6 +328,12 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt2_3jpp8
+- use zerg@'s hack for armh
+
+* Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_3jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_4jpp8
 - new version
 
