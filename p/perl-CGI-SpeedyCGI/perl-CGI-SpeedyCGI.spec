@@ -2,10 +2,10 @@
 %define dist CGI-SpeedyCGI
 Name: perl-%dist
 Version: 2.22
-Release: alt8.2
+Release: alt9
 
 Summary: Speed up perl scripts by running them persistently
-License: GPL
+License: GPLv2
 Group: Development/Perl
 
 URL: %CPAN %dist
@@ -22,6 +22,7 @@ Patch6:		perl-CGI-SpeedyCGI-2.22-c99_inline.patch
 Patch7:         CGI-SpeedyCGI-2.22-Fix-building-on-Perl-without-dot-in-INC.patch
 # alt orig
 Patch33: CGI-SpeedyCGI-2.22-alt-perl5.26-EU-MM.patch
+Patch34: CGI-SpeedyCGI-2.22-alt-gcc10.patch
 # Patches from Debian
 Patch10: 10big-socket-buffers.patch
 Patch20: 20makefile-manpage.patch    
@@ -74,6 +75,7 @@ programs.
 %patch7 -p1 -b .inc
 
 %patch33 -p1
+%patch34 -p1
 
 # unfortunately. let's wait for a patch
 [ %version = 2.22 ] && 	rm speedy/t/be_memleak.t
@@ -92,6 +94,9 @@ NPROCS=1
 %perl_vendor_privlib/CGI
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.22-alt9
+- fixed build with new gcc10
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.22-alt8.2
 - rebuild with new perl 5.28.1
 
