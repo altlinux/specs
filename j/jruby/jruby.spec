@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jruby
 Version:        1.7.22
-Release:        alt2_8jpp8
+Release:        alt3_10jpp8
 Summary:        Pure Java implementation of the Ruby interpreter
 # (CPL or GPLv2+ or LGPLv2+) - JRuby itself
 # BSD - some files under lib/ruby/shared
@@ -39,6 +39,7 @@ Patch3:         jruby-remove-rubygems-dirs-definition.patch
 # Port to latest snakeyaml
 # TODO: rebase for JRuby 9000 master and send upstream
 Patch4:         jruby-snakeyaml-1.16.patch
+Patch5:         jruby-snakeyaml-1.20.patch
 
 # BRs generated automatically using xmvn-builddep, sanitized manually
 BuildRequires:  maven-local
@@ -139,6 +140,7 @@ Javadoc for %{name}.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # delete windows specific files
 find -name "*.exe" -delete
@@ -189,6 +191,9 @@ find lib/ruby/ -name "*.rb" -exec sed --in-place "s|^#!/usr/bin/env ruby||" '{}'
 %mvn_alias org.jruby:jruby-core org.jruby:jruby
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 %mvn_build
 
 %install
@@ -274,6 +279,12 @@ EOF
 %doc COPYING LICENSE.RUBY LEGAL
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt3_10jpp8
+- use zerg@'s hack for armh
+
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt2_10jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt2_8jpp8
 - explicit build with java8
 
