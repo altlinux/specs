@@ -1,3 +1,4 @@
+%add_optflags -fcommon
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: /usr/bin/desktop-file-install
@@ -234,7 +235,9 @@ BuildRequires: /proc rpm-build-java
 %global buildver        13
 # priority must be 7 digits in total
 # setting to 1, so debug ones can have 0
-%global priority        00000%{minorver}1
+#global priority        00000%{minorver}1
+# normal priority for java 10
+%define priority %(printf '%02d%02d%02d%02d' %{majorver} %{minorver} %{securityver} %{buildver} )
 %global newjavaver      %{majorver}.%{minorver}.%{securityver}
 
 %global javaver         %{majorver}
@@ -316,7 +319,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-10-openjdk
 Version: %{newjavaver}.%{buildver}
-Release: alt2_7jpp9
+Release: alt4_7jpp9
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -483,6 +486,7 @@ Provides: java = %EVR
 Patch33: java-10-openjdk-alt-link-fontmanager.patch
 Patch34: java-9-openjdk-alt-no-objcopy.patch
 Patch35: java-9-openjdk-alt-JDK-8237879.patch
+Patch36: java-10-openjdk-10.0.2.13-7.aarch64-fix-errors.patch
 
 %description
 The %{origin_nice} runtime environment.
@@ -534,8 +538,6 @@ Provides: java-%{javaver}-headless = %{epoch}:%{version}-%{release}
 Provides: java-%{origin}-headless = %{epoch}:%{version}-%{release}
 Provides: java-headless = %{epoch}:%{javaver}
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1312019
-Provides: /usr/bin/jjs
 Requires: java-common
 Requires: /proc
 Requires(post): /proc
@@ -762,8 +764,8 @@ fi
 %setup -q -c -n %{uniquesuffix ""} -T -a 0
 # https://bugzilla.redhat.com/show_bug.cgi?id=1189084
 prioritylength=`expr length %{priority}`
-if [ $prioritylength -ne 7 ] ; then
- echo "priority must be 7 digits in total, violated"
+if [ $prioritylength -ne 8 ] ; then
+ echo "priority must be 8 digits in total, violated"
  exit 14
 fi
 
@@ -831,9 +833,13 @@ sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
 %patch33 -p0
 %patch34 -p0
 %patch35 -p0
+%patch36 -p0
 
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 # How many CPU's do we have?
 #export NUM_PROC=%(/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :)
 export NUM_PROC=${NUM_PROC:-1}
@@ -1256,7 +1262,7 @@ cat <<EOF >%buildroot%_altdir/%name-java-headless
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/java
 EOF
 # binaries and manuals
-for i in keytool policytool servertool pack200 unpack200 \
+for i in jjs keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
   if [ -e %{_jvmdir}/%{sdkdir}/bin/$i ]; then
@@ -1600,6 +1606,12 @@ fi
 
 
 %changelog
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:10.0.2.13-alt4_7jpp9
+- use zerg@'s hack for armh
+
+* Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 0:10.0.2.13-alt3_7jpp9
+- added jjs alternative and fixed /usr/bin/jjs provides
+
 * Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0:10.0.2.13-alt2_7jpp9
 - fixed build
 
