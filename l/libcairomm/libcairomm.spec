@@ -1,33 +1,38 @@
 %def_disable snapshot
 
 %define _name cairomm
+%define ver_major 1.14
+%define api_ver 1.0
 
-%def_disable docs
-%def_enable check
+%def_enable docs
+# boost.pc required
+%def_disable check
 
 Name: lib%_name
-Version: 1.12.2
+Version: %ver_major.2
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
-License: LGPL
+License: LGPL-2.0
 Group: System/Libraries
 Url: https://cairographics.org/cairomm
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 %if_disabled snapshot
-Source: https://www.cairographics.org/releases/%_name-%version.tar.gz
+Source: https://www.cairographics.org/releases/%_name-%version.tar.xz
 %else
-#VCS: git://git.cairographics.org/git/cairomm
+Vcs: git://git.cairographics.org/git/cairomm
 Source: %_name-%version.tar
 %endif
 
-%define cairo_ver 1.10.0
+%define cairo_ver 1.12
 %define sigc_ver 2.6.0
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++ mm-common
-BuildRequires: libcairo-devel >= %cairo_ver libsigc++2.0-devel >= %sigc_ver
-%{?_enable_docs:BuildRequires: doxygen graphviz xsltproc}
+BuildRequires: libcairo-devel >= %cairo_ver libsigc++2-devel >= %sigc_ver
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
+%{?_enable_check:BuildRequires: boost-test-devel fontconfig-devel}
 
 %description
 This library provides a C++ interface to cairo.
@@ -55,27 +60,30 @@ This package contains documentation needed for developing %_name applications.
 %setup -n %_name-%version
 
 %build
-%{?_enable_snapshot:mm-common-prepare --force --copy}
-%autoreconf
-%configure \
-	--disable-static \
-	%{?_disable_docs:--disable-documentation} \
-	%{?_enable_snapshot:--enable-maintainer-mode}
-%make_build
+%{?_enable_snapshot:mm-common-prepare -f}
+%meson \
+    %{?_enable_docs:-Dbuild-documentation=true} \
+    %{?_enable_snapshot:-Dmaintainer-mode=true
+    -Dbuild-documentation=true} \
+    %{?_enable_check:-Dbuild-tests=true
+    -Dboost-shared=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %doc AUTHORS NEWS
 %_libdir/*.so.*
 
 %files devel
-%_includedir/cairomm-1.0
-%_libdir/cairomm-1.0
+%_includedir/cairomm-%api_ver
+%_libdir/cairomm-%api_ver
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
@@ -86,6 +94,9 @@ This package contains documentation needed for developing %_name applications.
 %endif
 
 %changelog
+* Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2 (ported to Meson build system)
+
 * Wed Mar 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
