@@ -28,10 +28,10 @@ popd \
 
 #TODO: python3_dircheck
 
-
 Name: python-module-chardet
-Version: 4.0.0
-Release: alt1
+Version: 3.0.4
+Release: alt2
+Epoch: 1
 
 Summary: Character encoding auto-detection in Python
 
@@ -91,6 +91,9 @@ rm -rf %buildroot%_bindir/
 %endif
 
 %changelog
+* Sun Dec 13 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.0.4-alt2
+- Downgrade to version 3.0.4.
+
 * Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
 - New version.
 
