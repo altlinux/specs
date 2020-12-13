@@ -7,27 +7,38 @@
 %def_disable lapack
 
 Name: hugin
-Version: 2019.2.0
+Version: 2020.0.0
 Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
 License: GPLv2+
-Url: http://hugin.sourceforge.net/
+Url: https://hugin.sourceforge.net/
 
 #tarball: https://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
 
-BuildPreReq: libpano13-devel boost-devel >= 1.34 libwxGTK3.0-devel >= 3.0.0
-BuildPreReq: boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
-BuildRequires: boost-devel boost-thread-devel boost-datetime-devel boost-regex-devel
-BuildRequires: boost-filesystem-devel boost-iostreams-devel boost-system-devel
-BuildRequires: boost-signals-devel libglew-devel libXi-devel libXmu-devel
-BuildRequires: libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
-BuildRequires: libpng-devel libstdc++-devel libtiff-devel
-BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
-BuildRequires: liblensfun-devel libvigra-devel libgomp-devel libfftw3-devel libsqlite3-devel
+%define boost_ver 1.54
+%define pano_ver 2.9.19
+%define wx_ver 3.0.0
+%define enblend_ver 3.2
+
+Requires: libpano13 >= %pano_ver
+Requires: enblend >= %enblend_ver
+Requires: autopano-sift-C perl-Image-ExifTool make
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ gcc-fortran libgomp-devel
+BuildRequires: libpano13-devel >= %pano_ver libwxGTK3.0-devel >= %wx_ver
+BuildRequires: boost-devel >= %boost_ver boost-thread-devel boost-devel boost-thread-devel
+BuildRequires: boost-datetime-devel boost-regex-devel boost-filesystem-devel boost-iostreams-devel
+BuildRequires: boost-system-devel boost-signals-devel
+BuildRequires: libXi-devel libXmu-devel libglew-devel
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel libexiv2-devel
+BuildRequires: liblensfun-devel liblcms2-devel libvigra-devel
+BuildRequires: zlib-devel libpango-devel openexr-devel libtclap-devel
+BuildRequires: libfftw3-devel libsqlite3-devel
 BuildRequires: libflann-devel
 %if_enabled hsi
 BuildRequires(pre): rpm-build-python3
@@ -35,10 +46,7 @@ BuildRequires: python3-devel swig
 %add_python3_path %_datadir/%name/data/plugins*
 %endif
 %{?_enable_lapack:BuildRequires: liblapack-devel}
-BuildRequires: desktop-file-utils
-BuildRequires: liblcms2-devel
-
-Requires: enblend >= 3.2 libpano13 libwxGTK3.0 >= 3.0.0  autopano-sift-C perl-Image-ExifTool make
+BuildRequires: desktop-file-utils libappstream-glib-devel perl-podlators
 
 %description
 With hugin you can assemble a mosaic of photographs into a complete immersive
@@ -80,16 +88,18 @@ done
 %_datadir/mime/packages/hugin.xml
 %_libdir/%name/
 %{?_enable_hsi:%python3_sitelibdir/*}
-%_niconsdir/*
-%_iconsdir/gnome/48x48/mimetypes/gnome-mime-application-x-ptoptimizer-script.png
+%_iconsdir/gnome/48x48/mimetypes/application-x-ptoptimizer-script.png
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/*
-%_datadir/appdata/PTBatcherGUI.appdata.xml
-%_datadir/appdata/calibrate_lens_gui.appdata.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/PTBatcherGUI.appdata.xml
+%_datadir/metainfo/calibrate_lens_gui.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2020.0.0-alt1
+- 2020.0.0
+
 * Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 2019.2.0-alt1
 - 2019.2.0
 
