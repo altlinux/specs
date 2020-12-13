@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt158
+Release: alt159
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -410,6 +410,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Dec 13 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt159
+- rpmio: Lower memory limit on 32-bit systems for xz compression.
+- rpmio: Make liblzma errors more verbose.
+
 * Thu Dec 10 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt158
 - Prevent exceeding 32 bit memory limitations with xz compression.
 
