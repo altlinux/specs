@@ -1,9 +1,9 @@
 Name: hostinfo
 Version: 2.2
-Release: alt6
+Release: alt7
 
 Summary: Utility for looking up hostnames and IP addresses
-License: BSD-style
+License: MIT
 Group: System/Configuration/Networking
 Url: http://www.jmknoble.net/software/hostinfo
 
@@ -41,12 +41,22 @@ install -pD -m644 hostinfo.1 %buildroot%_man1dir/hostinfo.1
 install -pm755 resolve %buildroot%_bindir/
 install -pm644 resolve.1 %buildroot%_man1dir/
 
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+%check
+[ 'localhost.localdomain' = "$(%buildroot%_bindir/hostinfo -n 127.0.0.1)" ]
+
 %files
 %_bindir/*
 %_man1dir/*
 %doc ChangeLog
 
 %changelog
+* Sun Dec 13 2020 Dmitry V. Levin <ldv@altlinux.org> 2.2-alt7
+- Enabled -debuginfo subpackage.
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 2.2-alt6
 - Fixed compilation warnings.
 
