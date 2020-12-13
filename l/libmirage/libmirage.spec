@@ -1,8 +1,10 @@
+%add_optflags -fcommon
+
 %define soversion 11
 
 Name: libmirage
 Version: 3.2.4
-Release: alt1
+Release: alt2
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -104,6 +106,9 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sun Dec 13 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2
+- Build with -fcommon instead -fno-common by default
+
 * Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1
 - Version 3.2.4 (ALT #39133)
 

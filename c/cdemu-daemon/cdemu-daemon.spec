@@ -1,6 +1,8 @@
+%add_optflags -fcommon
+
 Name: cdemu-daemon
 Version: 3.2.4
-Release: alt1
+Release: alt2
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -79,6 +81,9 @@ popd
 %_unitdir/vhba.service
 
 %changelog
+* Sun Dec 13 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2
+- Build with -fcommon instead -fno-common by default
+
 * Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1
 - Version 3.2.4
 
