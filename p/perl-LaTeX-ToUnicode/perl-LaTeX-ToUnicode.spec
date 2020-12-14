@@ -1,27 +1,26 @@
-%define module_version 0.05
+%define _unpackaged_files_terminate_build 1
 %define module_name LaTeX-ToUnicode
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dumper/Concise.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt2
+Version: 0.11
+Release: alt1
 Summary: Convert LaTeX commands to Unicode
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/B/BO/BORISV/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BO/BORISV/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %perl_vendor_privlib/L*
 
 %changelog
+* Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Sat Jan 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - to Sisyphus as texlive dep
 
