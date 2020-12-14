@@ -1,4 +1,4 @@
-%define kernel_base_version 5.9
+%define kernel_base_version 5.10
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -321,6 +321,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Dec 13 2020 Dmitry V. Levin <ldv@altlinux.org> 5.10-alt1
+- v5.9 -> v5.10.
+
 * Sun Oct 11 2020 Dmitry V. Levin <ldv@altlinux.org> 5.9-alt1
 - v5.8 -> v5.9.
 
