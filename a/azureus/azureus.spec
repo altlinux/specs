@@ -2,9 +2,6 @@ Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-Obsoletes: vuse < 4.2.0.3
-Conflicts: vuse < 4.2.0.3
-Requires: java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -13,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		azureus
 Version:	5.7.6.0
-Release:	alt1_9jpp8
+Release:	alt1_13jpp8
 Summary:	A BitTorrent Client
 
 #Exception for using Eclipse SWT
@@ -69,6 +66,12 @@ Provides:	vuze = %{version}-%{release}
 
 BuildArch:	noarch
 Source44: import.info
+# alt #39429
+Requires: libjavascriptcoregtk3
+Requires: java
+# old azureus name
+Conflicts: vuse < 4.2.0.3
+Obsoletes: vuse < 4.2.0.3
 
 
 %description 
@@ -108,6 +111,13 @@ rm -rf org/gudy/azureus2/ui/console/multiuser/TestUserManager.java
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
 
+# NameService SPI was removed in Java 9; there is no replacement
+rm META-INF/services/sun.net.spi.nameservice.NameServiceDescriptor \
+   org/gudy/azureus2/core3/util/spi/AENameServiceDescriptor.java
+
+# Point compression was removed in bouncycastle, avoid use of removed API
+sed -i -e 's/getEncoded()/getEncoded(false)/' com/aelitis/azureus/core/security/CryptoECCUtils.java
+
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
 chmod 644 *.txt
@@ -122,9 +132,7 @@ rm -fR org/json
 %build
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
-  junit apache-commons-lang json_simple
-
-ln -s %_jnidir/swt.jar build/libs
+  junit apache-commons-lang json_simple swt
 
 ant jar
 
@@ -165,6 +173,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 5.7.6.0-alt1_13jpp8
+- added requires on libjavascriptcoregtk3 (closes: #39429)
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 5.7.6.0-alt1_9jpp8
 - new version
 
