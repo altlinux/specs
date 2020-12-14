@@ -1,5 +1,5 @@
 Name:     jsonnet
-Version:  0.16.0
+Version:  0.17.0
 Release:  alt1
 
 Summary:  Jsonnet - The data templating language
@@ -34,6 +34,9 @@ make test
 %doc *.md examples
 
 %changelog
+* Tue Dec 15 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.17.0-alt1
+- new version 0.17.0
+
 * Wed Oct 28 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.16.0-alt1
 - new version 0.16.0
 
