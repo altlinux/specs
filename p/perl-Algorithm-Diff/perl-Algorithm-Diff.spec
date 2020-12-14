@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 Epoch: 1
 %define dist Algorithm-Diff
 Name: perl-%dist
-Version: 1.200
-Release: alt1.1
+Version: 1.201
+Release: alt1
 
 Summary: Compute `intelligent' differences between two files / lists
 License: GPL or Artistic
@@ -31,15 +32,16 @@ find the *smallest possible* set of differences.
 %install
 %perl_vendor_install
 
-rm %buildroot%perl_vendor_privlib/Algorithm/*diff*.pl
-
 %files
-%doc Changes README *diff*.pl
+%doc Changes README
 %dir %perl_vendor_privlib/Algorithm
 %perl_vendor_privlib/Algorithm/Diff.pm
 %perl_vendor_privlib/Algorithm/DiffOld.pm
 
 %changelog
+* Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.201-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.200-alt1.1
 - automated CPAN update
 
