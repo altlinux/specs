@@ -3,7 +3,7 @@
 
 Name: httpie
 Version: 2.3.0
-Release: alt2
+Release: alt3
 
 Summary: A Curl-like tool for humans
 Group: Networking/WWW
@@ -20,6 +20,7 @@ BuildRequires: help2man
 
 Requires: python3-module-requests >= 2.11.0
 Requires: python3-module-Pygments >= 2.1.3
+Requires: python3-module-socks
 
 Obsoletes: httpie-python3 < %EVR
 
@@ -61,6 +62,9 @@ help2man --no-discard-stderr %buildroot/%_bindir/https > %buildroot/%_man1dir/ht
 
 
 %changelog
+* Mon Dec 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt3
+- Updated runtime dependencies.
+
 * Fri Dec 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt2
 - Updated obsoletes.
 - Stopped renaming binaries and man pages.

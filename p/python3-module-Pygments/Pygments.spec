@@ -6,7 +6,7 @@
 
 Name: python3-module-Pygments
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: Pygments is a syntax highlighting package written in Python
 
@@ -80,6 +80,7 @@ ln -s ../objects.inv doc/
 
 %python3_build
 %if_with docs
+export PYTHONPATH=$(pwd)/build/lib
 %make SPHINXBUILD='py3_sphinx-build' -C doc pickle
 %make SPHINXBUILD='py3_sphinx-build' -C doc html
 %endif
@@ -130,6 +131,9 @@ tox.py3 --sitepackages -vv -r
 %endif
 
 %changelog
+* Mon Dec 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1-alt2
+- Fixed documentation generation on p9.
+
 * Wed May 06 2020 Stanislav Levin <slev@altlinux.org> 2.6.1-alt1
 - 2.4.2 -> 2.6.1.
 - Enabled testing.
