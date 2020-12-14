@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-Parser
 Name: perl-%dist
-Version: 2.44
-Release: alt2.2
+Version: 2.46
+Release: alt1
 
 Summary: Perl module for parsing XML files
 License: GPL or Artistic
@@ -35,11 +36,14 @@ find blib/lib/XML/Parser/Encodings -type f -not -name '*.enc' -print -delete
 %perl_vendor_install
 
 %files
-%doc Changes README examples
+%doc Changes README
 %perl_vendor_archlib/XML
 %perl_vendor_autolib/XML
 
 %changelog
+* Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 2.46-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.44-alt2.2
 - rebuild with new perl 5.28.1
 
