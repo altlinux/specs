@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Mojolicious
-Version: 8.67
+Version: 8.67.1
 Release: alt1
 Summary: Real-time web framework
 
@@ -65,6 +65,9 @@ cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 %doc Changes
 
 %changelog
+* Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 8.67.1-alt1
+- unofficial 8.68 pre release for aas@
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 8.67-alt1
 - new version
 
