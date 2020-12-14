@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Text-Balanced
 Name: perl-%dist
-Version: 2.03
+Version: 2.04
 Release: alt1
 
 Summary: Extract delimited text sequences from strings
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHAY/Text-Balanced-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHAY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ The various subroutines may be used to extract a delimited substring,
 possibly after skipping a specified prefix string.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,10 +30,13 @@ possibly after skipping a specified prefix string.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Artistic Copying
 %perl_vendor_privlib/Text*
 
 %changelog
+* Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
 - automated CPAN update
 
