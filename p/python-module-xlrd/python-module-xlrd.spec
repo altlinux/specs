@@ -1,5 +1,5 @@
 Name:           python-module-xlrd
-Version:        1.2.0
+Version:        2.0.1
 Release:        alt1
 Summary:        Library to extract data from Microsoft Excel (TM) spreadsheet files
 
@@ -43,6 +43,7 @@ cp -a * ../python3 ||:
 
 %build
 %python_build
+export PYTHONPATH=`pwd`:$PYTHONPATH
 make -C docs man
 pushd ../python3
 %python3_build
@@ -56,29 +57,25 @@ popd
 install -Dm0644 docs/_build/man/xlrd.1 %buildroot%_man1dir/xlrd.1
 
 # add shebang and remove .py extension
-(
-  echo '#!/usr/bin/python'
-  cat %buildroot%_bindir/runxlrd.py
-) >> %buildroot%_bindir/runxlrd
-rm -rf %buildroot%_bindir/runxlrd.py* \
-  %buildroot/%python_sitelibdir/xlrd/doc \
-  %buildroot/%python_sitelibdir/xlrd/examples \
-  %buildroot/%python3_sitelibdir/xlrd/doc \
-  %buildroot/%python3_sitelibdir/xlrd/examples
+subst 's|^#!.*|#!%__python|' %buildroot%_bindir/runxlrd.py
+mv %buildroot%_bindir/runxlrd{.py,}
 
 %files
-%doc examples
-%_bindir/*
+%doc README.rst
+%_bindir/runxlrd
 %python_sitelibdir/xlrd/*
 %python_sitelibdir/*egg-info
 %_man1dir/xlrd.1*
 
 %files -n python3-module-xlrd
-%doc examples
+%doc README.rst
 %python3_sitelibdir/xlrd/*
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version.
+
 * Sun Dec 16 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - New version.
 - Do not generate html documentation.
