@@ -19,7 +19,7 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.76.0
+Version: 5.77.0
 Release: alt1
 
 Group: Development/Other
@@ -87,6 +87,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.77.0-alt1
+- new version
+
 * Mon Nov 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.76.0-alt1
 - new version
 

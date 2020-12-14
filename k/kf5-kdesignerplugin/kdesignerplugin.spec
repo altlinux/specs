@@ -1,7 +1,7 @@
 %define rname kdesignerplugin
 
 Name: kf5-%rname
-Version: 5.76.0
+Version: 5.77.0
 Release: alt1
 %K5init altplace
 
@@ -75,6 +75,9 @@ KF5 library
 %_K5lib/cmake/KF5DesignerPlugin
 
 %changelog
+* Mon Dec 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.77.0-alt1
+- new version
+
 * Mon Nov 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.76.0-alt1
 - new version
 
