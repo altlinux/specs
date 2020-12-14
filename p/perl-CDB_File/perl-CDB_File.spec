@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CDB_File
 Name: perl-%dist
-Version: 1.03
+Version: 1.05
 Release: alt1
 
 Summary: Perl extension for access to cdb databases
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-devel perl(B/COW.pm)
+BuildRequires: perl-devel perl(B/COW.pm) perl(Test/Fatal.pm) perl(Test/Warnings.pm)
 
 %description
 CDB_File is a module which provides a Perl interface to Dan
@@ -35,6 +35,9 @@ rm -f %buildroot%perl_vendor_archlib/bun-x.pl
 %perl_vendor_autolib/CDB_File*
 
 %changelog
+* Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
