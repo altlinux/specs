@@ -1,6 +1,6 @@
 %global import_path github.com/cli/cli
 Name:     github-cli
-Version:  1.3.0
+Version:  1.3.1
 Release:  alt1
 
 Summary:  GitHub's official command line tool
@@ -36,7 +36,7 @@ install -Dm 755 bin/gh %buildroot/%_bindir/gh
 install -Dm644 completions/bash %buildroot/%_datadir/bash-completion/completions/gh
 install -Dm644 completions/zsh %buildroot/%_datadir/zsh/site-functions/_gh
 install -Dm644 completions/fish %buildroot/%_datadir/fish/vendor_completions.d/gh.fish
-cp -r share/man -T %buildroot/%_mandir
+cp -a share/man -T %buildroot/%_mandir
 
 %files
 %_bindir/gh
@@ -47,6 +47,9 @@ cp -r share/man -T %buildroot/%_mandir
 %doc *.md
 
 %changelog
+* Tue Dec 15 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.1-alt1
+- update to 1.3.1
+
 * Wed Dec 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.0-alt1
 - update to 1.3.0
 
