@@ -1,6 +1,6 @@
 Name: gedit-source-code-browser
 Version: 3.0.3
-Release: alt2.git.11.g56d9ae0
+Release: alt3.git.11.g56d9ae0
 Summary: source code class and function browser plugin for Gedit 3
 License: BSD
 Group: Editors
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on ...
 BuildRequires: time
 
-Requires: ctags gedit
+Requires: gedit /usr/bin/ctags
 
 %define  gedit_pluginsdir %_libdir/gedit/plugins
 
@@ -44,6 +44,9 @@ install -m644 sourcecodebrowser/data/*.gschema.xml \
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Mon Dec 14 2020 Ildar Mulyukov <ildar@altlinux.ru> 3.0.3-alt3.git.11.g56d9ae0
+- fix ctags dep to allow working with universal-ctags
+
 * Wed Nov 04 2020 Ildar Mulyukov <ildar@altlinux.ru> 3.0.3-alt2.git.11.g56d9ae0
 - fix "Breaks with gedit 3.36.1"
 
