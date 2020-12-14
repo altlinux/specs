@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.10.6
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Dec 14 2020 Anton Midyukov <antohami@altlinux.org> 1.10.6-alt2
+- Set locale to last $LANG (needed for rEFInd)
+
 * Fri Nov 06 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.6-alt1
 - don't remove drm modules when virtio presents
 
