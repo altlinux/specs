@@ -15,8 +15,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox-esr
-Version: 78.5.0
-Release: alt2
+Version: 78.6.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -456,6 +456,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Dec 14 2020 Andrey Cherepanov <cas@altlinux.org> 78.6.0-alt1
+- New version (78.6.0).
+- Fixes:
+  + CVE-2020-16042 Operations on a BigInt could have caused uninitialized memory to be exposed
+  + CVE-2020-26971 Heap buffer overflow in WebGL
+  + CVE-2020-26973 CSS Sanitizer performed incorrect sanitization
+  + CVE-2020-26974 Incorrect cast of StyleGenericFlexBasis resulted in a heap use-after-free
+  + CVE-2020-26978 Internal network hosts could have been probed by a malicious webpage
+  + CVE-2020-35111 The proxy.onRequest API did not catch view-source URLs
+  + CVE-2020-35112 Opening an extension-less download may have inadvertently launched an executable instead
+  + CVE-2020-35113 Memory safety bugs fixed in Firefox 84 and Firefox ESR 78.6
+
 * Thu Dec 03 2020 Andrey Cherepanov <cas@altlinux.org> 78.5.0-alt2
 - Fix build against rust-1.48.
 
