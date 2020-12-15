@@ -4,7 +4,7 @@
 
 Name: deepin-kwin
 Version: 5.2.0.11
-Release: alt1
+Release: alt2
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -57,7 +57,7 @@ Header files and libraries for %name.
 sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/scripts|%_K5data/kwin/scripts/|' scripts/CMakeLists.txt
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' tabbox/CMakeLists.txt
-sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' \
+sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
     plugins/kwineffects/multitasking/background.cpp \
     deepin-wm-dbus/deepinwmfaker.cpp
 sed -i 's|/usr/lib/deepin-daemon|/usr/libexec/deepin-daemon|' deepin-wm-dbus/deepinwmfaker.cpp
@@ -118,6 +118,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Tue Dec 15 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.11-alt2
+- Changed default background.
+
 * Fri Dec 11 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.11-alt1
 - New version (5.2.0.11) with rpmgs script.
 
