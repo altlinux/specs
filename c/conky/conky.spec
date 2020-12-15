@@ -1,89 +1,93 @@
-Name: conky
-Version: 1.9.0
-Release: alt2
+%define subst_buildoption() %{expand:-DBUILD_%(echo %{1} |sed 's/./\\U&/g')=%%{?_enable_%{1}:ON}%%{?_disable_%{1}:OFF}}
 
-%def_enable lua
-%def_enable ncurses
-%def_disable audacious
-%def_enable mpd
-%def_enable moc
-%def_enable nvidia
-%def_enable wlan
 %def_enable alsa
+%def_enable argb
+%def_disable audacious
+%def_enable cmus
+%def_enable curl
+%def_enable docs
 %def_enable eve
+%def_enable hddtemp
+%def_enable http
+%def_enable ibm
+%def_enable ical
+%def_enable iconv
+%def_enable imlib2
+%def_enable iostats
+%def_enable ipv6
+%def_enable irc
+%def_enable lua
+%def_enable lua_cairo
+%def_enable lua_imlib2
+%def_enable lua_rsvg
+%def_enable math
+%def_enable moc
+%def_enable mpd
+%def_disable mysql
+%def_enable ncurses
+%def_enable nvidia
+%def_enable old_config
+%def_enable port_monitor
+%def_enable pulseaudio
 %def_enable rss
 %def_enable weather_metar
 %def_enable weather_xoap
-%def_enable imlib2
-%def_enable lua_imlib2
-%def_enable lua_cairo
+%def_enable wlan
+%def_enable xdamage
+%def_enable xdbe
+%def_enable xft
+%def_enable xinerama
+%def_disable xmms2
+%def_enable xshape
 
-%define subst_enable_to() %{expand:%%{?_enable_%1:--enable-%2}} %{expand:%%{?_disable_%1:--disable-%2}}
+Name: conky
+Version: 1.11.6
+Release: alt1
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
-License: GPLv3 with various free software licenses (see COPYING)
+License: GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT
 Group: Monitoring
 Url: http://conky.sourceforge.net/
 
-Source: %name-%version.tar.bz2
+# repacked https://github.com/brndnmtthws/conky/archive/v%version.tar.gz
+Source: %name-%version.tar
 Source1: conky-dotfiles.tar.bz2
-Patch1: conky-1.9.0-fix-apcupsd-support.patch
+Source99: conky.watch
 
-# Automatically added by buildreq on Tue Jul 07 2009
-BuildRequires: glib2-devel libXdamage-devel libXext-devel libXft-devel xsltproc zlib-devel
+Patch1: 0001-ALT-compiler-flags.patch
+Patch2: 0002-ALT-convert.lua-explicitly-uses-lua5.3.patch
 
-%if_enabled lua
-BuildPreReq: lua5.1-devel
-%endif
+BuildRequires(pre): cmake gcc-c++ rpm-build-vim
 
-%if_enabled ncurses
-BuildPreReq: ncurses-devel
-%endif
+%{?_enable_alsa:BuildRequires: libalsa-devel}
+%{?_enable_audacious:BuildRequires: libaudacious-devel}
+%{?_enable_curl:BuildRequires: libcurl-devel}
+%{?_enable_docs:BuildRequires: docbook2X docbook-to-man docbook-tldp-xsl man-db}
+%{?_enable_eve:BuildRequires: libcurl-devel}
+%{?_enable_ical:BuildRequires: libical-devel}
+%{?_enable_imlib2:BuildRequires: imlib2-devel}
+%{?_enable_irc:BuildRequires: libircclient-devel}
+%{?_enable_http:BuildRequires: libmicrohttpd-devel}
+%{?_enable_lua:BuildRequires:lua-devel}
+%{?_enable_lua_cairo:BuildRequires: lua5.3-devel tolua++-devel libcairo-devel}
+%{?_enable_lua_imlib2:BuildRequires: lua5.3-devel tolua++-devel imlib2-devel}
+%{?_enable_lua_rsvg:BuildRequires: lua5.3-devel tolua++-devel librsvg-devel}
+%{?_enable_ncurses:BuildRequires: ncurses-devel}
+%{?_enable_nvidia:BuildRequires: nvidia-settings-devel}
+%{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
+%{?_enable_rss:BuildRequires: libcurl-devel libxml2-devel}
+%{?_enable_weather_metar:BuildRequires: libcurl-devel libxml2-devel}
+%{?_enable_weather_xoap:BuildRequires: libcurl-devel libxml2-devel}
+%{?_enable_wlan:BuildRequires: libwireless-devel}
+%{?_enable_xdamage:BuildRequires: libXdamage-devel}
+%{?_enable_xft:BuildRequires: libXft-devel}
+%{?_enable_xinerama:BuildRequires: libXinerama-devel}
 
-%if_enabled audacious
-BuildPreReq: libaudacious-devel
-%endif
-
-%if_enabled nvidia
-BuildPreReq: nvidia-settings-devel
-%endif
-
-%if_enabled wlan
-BuildPreReq: libwireless-devel
-%endif
-
-%if_enabled alsa
-BuildPreReq: libalsa-devel
-%endif
-
-%if_enabled eve
-BuildPreReq: libcurl-devel
-%endif
-
-%if_enabled rss
-BuildPreReq: libcurl-devel libxml2-devel
-%endif
-
-%if_enabled weather_metar
-BuildPreReq: libcurl-devel libxml2-devel
-%endif
-
-%if_enabled weather_xoap
-BuildPreReq: libcurl-devel libxml2-devel
-%endif
-
-%if_enabled imlib2
-BuildPreReq: imlib2-devel
-%endif
-
-%if_enabled lua_imlib2
-BuildPreReq: lua5.1-devel libtolua++-lua5.1-devel imlib2-devel
-%endif
-
-%if_enabled lua_cairo
-BuildPreReq: lua5.1-devel libtolua++-lua5.1 libcairo-devel
-%endif
+%package -n vim-plugin-conky
+BuildArch: noarch
+Summary: VIm syntax plugin for conky config file
+Group: Editors
 
 %description
 Conky is a program which can display arbitrary information (such as
@@ -95,58 +99,113 @@ Conky - это утилита, позволяющая отображать пр�
 (такую как текущая дата, температура процессора, статус проигрывателя
 mpd, и т.д.) в окне графической системы X11.
 
-Данная утилита настраивается в чрезвычайно широких пределах (для
-примера, см. снимки экрана на http://conky.sf.net) и совсем не
+Данная утилита настраивается в чрезвычайно широких пределах и совсем не
 требовательна к ресурсам компьютера.
+
+%description -n vim-plugin-conky
+VIm syntax plugin for conky config file.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p2
 
 %build
-%autoreconf
-%configure \
-	--enable-xft \
-	%{subst_enable lua} \
-	%{subst_enable ncurses} \
-	%{subst_enable curl} \
-	%{subst_enable audacious} \
-	%{subst_enable mpd} \
-	%{subst_enable moc} \
-	%{subst_enable nvidia} \
-	%{subst_enable wlan} \
-	%{subst_enable alsa} \
-	%{subst_enable eve} \
-	%{subst_enable rss} \
-	%{subst_enable_to weather_metar weather-metar} \
-	%{subst_enable_to weather_xoap weather-xoap} \
-	%{subst_enable imlib2} \
-	%{subst_enable_to lua_imlib2 lua-imlib2} \
-	%{subst_enable_to lua_cairo lua-cairo} \
-	--enable-ibm \
-	--enable-double-buffer \
-	--disable-static
+%cmake \
+	-DRELEASE=True \
+	-DBUILD_SHARED_LIBS=OFF \
+	%{subst_buildoption alsa} \
+	%{subst_buildoption argb} \
+	%{subst_buildoption audacious} \
+	%{subst_buildoption cmus} \
+	%{subst_buildoption curl} \
+	%{subst_buildoption docs} \
+	%{subst_buildoption eve} \
+	%{subst_buildoption hddtemp} \
+	%{subst_buildoption http} \
+	%{subst_buildoption ibm } \
+	%{subst_buildoption ical} \
+	%{subst_buildoption iconv} \
+	%{subst_buildoption imlib2} \
+	%{subst_buildoption iostats} \
+	%{subst_buildoption ipv6} \
+	%{subst_buildoption irc} \
+	%{subst_buildoption lua} \
+	%{subst_buildoption lua_cairo} \
+	%{subst_buildoption lua_imlib2} \
+	%{subst_buildoption lua_rsvg} \
+	%{subst_buildoption math} \
+	%{subst_buildoption moc} \
+	%{subst_buildoption mpd} \
+	%{subst_buildoption mysql} \
+	%{subst_buildoption ncurses} \
+	%{subst_buildoption nvidia} \
+	%{subst_buildoption old_config} \
+	%{subst_buildoption port_monitor} \
+	%{subst_buildoption pulseaudio} \
+	%{subst_buildoption rss} \
+	%{subst_buildoption weather_metar} \
+	%{subst_buildoption weather_xoap} \
+	%{subst_buildoption wlan} \
+	%{subst_buildoption xdbe } \
+	%{subst_buildoption xft} \
+	%{subst_buildoption xmms2} \
+	%{subst_buildoption xshape} \
+	#
 
-%make_build
+%cmake_build
 
 %install
 install -p -m644 %SOURCE1 ./
-%makeinstall_std
+%cmakeinstall_std
+
+# install config files
+mkdir -p %buildroot%_sysconfdir/conky
+install -m644 -p data/conky.conf data/conky_no_x11.conf %buildroot%_sysconfdir/conky
+
+# install config converter
+mkdir -p %buildroot/usr/libexec/conky
+install -m755 -p extras/convert.lua %buildroot/usr/libexec/conky
+
+# install vim plugins
+mkdir -p %buildroot%vim_runtime_dir
+cp -a extras/vim/ftdetect %buildroot%vim_runtime_dir
+cp -a extras/vim/syntax %buildroot%vim_runtime_dir
+
+# remove static libs
+rm %buildroot%_libdir/libtcp-portmon.a
 
 %files
-%doc COPYING conky-dotfiles.tar.bz2 doc/config_settings.html doc/variables.html doc/docs.html
-%if_enabled lua
-%doc doc/lua.html
+%doc AUTHORS COPYING LICENSE LICENSE.BSD README.md
+%doc conky-dotfiles.tar.bz2
+
+%_bindir/conky
+/usr/libexec/conky/convert.lua
+%if_enabled lua_cairo || lua_imlib2 || lua_rsvg
+%_libdir/conky
 %endif
-%_bindir/*
-%_man1dir/*
-%_libdir/%name
-%exclude %_libdir/%name/libimlib2.la
-%dir %_sysconfdir/%name
-%config %_sysconfdir/%name/%name.conf
-%config %_sysconfdir/%name/%{name}_no_x11.conf
+%{?_enable_docs:%_man1dir/conky.1*}
+
+%dir %_sysconfdir/conky
+%config %_sysconfdir/conky/conky.conf
+%config %_sysconfdir/conky/conky_no_x11.conf
+
+%_desktopdir/conky.desktop
+%_iconsdir/hicolor/scalable/apps/conky-logomark-violet.svg
+
+%files -n vim-plugin-conky
+%vim_runtime_dir/ftdetect/conkyrc.vim
+%vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Tue Dec 15 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.11.6-alt1
+- Updated to 1.11.6.
+- Packed converter to new config format.
+- Built with support of the various additional options.
+- Built VIm syntax plugin.
+- Do not build and package HTML documentation.
+- Updated watch file.
+- Cleaned up spec and fixed license field.
+
 * Wed Nov 14 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.9.0-alt2
 - fixed apcupsd support (ALT#32298)
 
