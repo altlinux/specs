@@ -1,5 +1,5 @@
 Name: libabigail
-Version: 1.7
+Version: 1.8
 Release: alt1
 Summary: ABI Generic Analysis and Instrumentation Library and tools
 Group: Development/Other
@@ -76,9 +76,10 @@ find %buildroot -name '*.la' -delete
 make -C doc/manuals install-man-and-info-doc DESTDIR=%buildroot
 
 %check
-%make_build -k check
+%make_build -k check check-self-compare
 
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 %files -n libabigail0
@@ -97,6 +98,9 @@ make -C doc/manuals install-man-and-info-doc DESTDIR=%buildroot
 %_infodir/abigail.info*
 
 %changelog
+* Mon Nov 30 2020 Dmitry V. Levin <ldv@altlinux.org> 1.8-alt1
+- 1.7 -> 1.8.
+
 * Wed Feb 26 2020 Dmitry V. Levin <ldv@altlinux.org> 1.7-alt1
 - 1.6 -> 1.7.
 
