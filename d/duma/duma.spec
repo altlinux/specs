@@ -7,8 +7,8 @@
 Summary: Detect Unintended Memory Access
 Name: duma
 Version: 2.5.15
-Release: alt3
-License: GPL
+Release: alt4
+License: GPLv2
 Group: Development/Other
 Url: http://duma.sourceforge.net/
 
@@ -32,10 +32,18 @@ Summary: Header files, libraries and development documentation for %name
 Group: Development/Other
 Requires: %name = %version-%release
 
+%package devel-static
+Summary: Static libraries for %name
+Group: Development/Other
+Requires: %name-devel = %version-%release
+
 %description devel
 This package contains the header files, static libraries and development
 documentation for %name. If you like to develop programs using %name,
 you will need to install %name-devel.
+
+%description devel-static
+Static libraries for %name
 
 %prep
 %setup -n duma_%real_version
@@ -60,13 +68,18 @@ sed -i 's@%_lib/@%_libdir@g' gdbinit.rc
 %_bindir/duma
 %_libdir/libduma.so.*
 
+%files devel-static
+%_libdir/libduma.a
+
 %files devel
 %doc comparisons example*
-%_libdir/libduma.a
 %_libdir/libduma.so
 %_includedir/*
 
 %changelog
+* Tue Dec 15 2020 Fr. Br. George <george@altlinux.ru> 2.5.15-alt4
+- Fix build
+
 * Wed Oct 10 2018 Fr. Br. George <george@altlinux.ru> 2.5.15-alt3
 - Fix build, revive package
 
