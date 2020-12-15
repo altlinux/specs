@@ -5,7 +5,7 @@
 
 Name:     simpletest
 Version:  11
-Release:  alt4
+Release:  alt5
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -71,6 +71,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Tue Dec 15 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt5
+- Fix configure exit code when all sanitizers are disabled.
+
 * Mon Jul 27 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt4
 - Add lcc-1.25 support (-pg + msan are not compatible).
 
