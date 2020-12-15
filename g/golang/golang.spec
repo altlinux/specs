@@ -39,7 +39,7 @@
 
 Name:    golang
 Version: 1.15.6
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -127,7 +127,8 @@ Summary:   Golang compiler miscellaneous sources
 Group:     Development/Other
 BuildArch: noarch
 Requires:  %name = %version-%release
- 
+AutoReqProv: no
+
 %description misc
 %summary.
 
@@ -336,6 +337,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.15.6-alt2
+- Disable AutoReqProv for misc package
+
 * Fri Dec 04 2020 Alexey Shabalin <shaba@altlinux.org> 1.15.6-alt1
 - New version (1.15.6).
 
