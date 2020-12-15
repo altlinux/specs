@@ -11,6 +11,7 @@
 %def_enable omhiredis
 %def_enable ommongodb
 %def_enable omhttp
+%def_disable imhttp
 %def_enable omhttpfs
 %def_enable elasticsearch
 %def_enable openssl
@@ -23,7 +24,7 @@
 %def_enable impcap
 
 Name: rsyslog
-Version: 8.2006.0
+Version: 8.2012.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -58,6 +59,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_elasticsearch:BuildRequires: libcurl-devel}
 %{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
 %{?_enable_omhttp:BuildRequires: libcurl-devel}
+%{?_enable_imhttp:BuildRequires: libcivetweb-devel}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
 %{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
 %{?_enable_mmkubernetes:BuildRequires: libcurl-devel}
@@ -464,13 +466,14 @@ export HIREDIS_LIBS=-lhiredis
 %makeinstall_std
 rm -f %buildroot%mod_dir/*.la
 
-mkdir -p %buildroot{%_sysconfdir/{sysconfig,%name.d},%_initdir,%_var/spool/%name}
+mkdir -p %buildroot{%_sysconfdir/{sysconfig,%name.d},%_initdir,%_unitdir,%_var/spool/%name}
 
 install -m640 rsyslog.conf.alt %buildroot%_sysconfdir/%name.conf
 install -m640 rsyslogd.alt %buildroot%_sysconfdir/sysconfig/rsyslogd
 install -m755 rsyslogd.init %buildroot%_initdir/rsyslogd
 install -m640 *_*.conf %buildroot%_sysconfdir/rsyslog.d/
 install -m640 syslog.conf %buildroot%_sysconfdir/syslog.conf
+install -m644 platform/redhat/centos/rsyslog.service %buildroot%_unitdir/rsyslog.service
 install -m755 rsyslog-systemd.prestart %buildroot%_unitdir/../altlinux-rsyslog-extrasockets
 touch %buildroot%_sysconfdir/rsyslog.d/00_extrasockets.conf
 
@@ -671,6 +674,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 8.2012.0-alt1
+- new version 8.2012.0
+
 * Tue Aug 18 2020 Alexey Shabalin <shaba@altlinux.org> 8.2006.0-alt1
 - 8.2006.0
 
@@ -687,25 +693,25 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 * Mon Oct 01 2018 Alexey Shabalin <shaba@altlinux.org> 8.38.0-alt1
 - new version 8.38.0
 
-* Mon Sep 03 2018 Alexey Shabalin <shaba@altlinux.org> 8.37.0-alt1%ubt
+* Mon Sep 03 2018 Alexey Shabalin <shaba@altlinux.org> 8.37.0-alt1
 - 8.37.0
 - add package with openssl TLS driver
 - build without liblogging (without rfc3195 too)
 
-* Wed May 16 2018 Alexey Shabalin <shaba@altlinux.ru> 8.35.0-alt1%ubt
+* Wed May 16 2018 Alexey Shabalin <shaba@altlinux.ru> 8.35.0-alt1
 - 8.35.0
 
-* Sat Apr 07 2018 Alexey Shabalin <shaba@altlinux.ru> 8.34.0-alt1%ubt
+* Sat Apr 07 2018 Alexey Shabalin <shaba@altlinux.ru> 8.34.0-alt1
 - 8.34.0
 
-* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 8.32.0-alt1%ubt
+* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 8.32.0-alt1
 - 8.32.0
 
-* Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 8.31.0-alt1%ubt
+* Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 8.31.0-alt1
 - 8.31.0
 - update systemd drop-in config (ALT#32812)
 
-* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 8.30.0-alt1%ubt
+* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 8.30.0-alt1
 - 8.30.0
 
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 8.28.0-alt2
