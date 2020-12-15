@@ -1,9 +1,9 @@
 Name: startup
-Version: 0.9.9.9
+Version: 0.9.9.10
 Release: alt1
 
 Summary: The system startup scripts
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Base
 BuildArch: noarch
 
@@ -147,6 +147,10 @@ done
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Tue Dec 15 2020 Alexey Gladkov <legion@altlinux.ru> 0.9.9.10-alt1
+- rc.sysinit:
+  + Create /dev/{core,fd,stdin,stdout,stderr} symlinks if needed (ALT#39423).
+
 * Thu Nov 28 2019 Alexey Gladkov <legion@altlinux.ru> 0.9.9.9-alt1
 - rc.sysinit:
   + Remount procfs/sysfs even if these filesystems were not mounted.
