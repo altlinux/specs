@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.11.0.36
-Release: alt6
+Release: alt7
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -80,6 +80,9 @@ BuildRequires: golang-github-msteinert-pam-devel
 Requires: acpid rfkill
 %endif
 # Requires: upower udisks2 systemd pulseaudio libnm polkit-gnome gnome-keyring deepin-session-ui xorg-drv-wacom libinput xdotool fontconfig pam libnl3 libfprint2 dnsmasq
+# Manually founded requires in the code.
+#Requires: glibc-utils deepin-launcher deepin-kwin setxkbmap systemd-services dbus-tools qt5-dbus libgio deepin-system-monitor coreutils util-linux xinitrc lightdm gdm-data sddm lxde-lxdm python3 zsh xterm xauth setup xorg-server sysvinit
+Requires: xdotool bamfdaemon xkeyboard-config
 
 %description
 Daemon handling the DDE session settings
@@ -93,7 +96,9 @@ install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
 sed -i '/deepin/s|lib|libexec|' Makefile
 sed -i '/${DESTDIR}\/usr\/lib\/deepin-daemon\/service-trigger/s|${DESTDIR}%_libexecdir/deepin-daemon/service-trigger|${DESTDIR}/usr/libexec/deepin-daemon/service-trigger|g' Makefile
 sed -i '/${DESTDIR}${PREFIX}\/lib\/deepin-daemon/s|${DESTDIR}${PREFIX}/lib/deepin-daemon|${DESTDIR}${PREFIX}/usr/libexec/deepin-daemon|g' Makefile
-sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' accounts/user.go
+sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
+    accounts/user.go \
+    accounts/users/testdata/autologin/lxdm.conf
 
 for file in $(grep "%_libexecdir/deepin-daemon" * -nR |awk -F: '{print $1}')
 do
@@ -104,23 +109,40 @@ sed -i 's|%_libexecdir/deepin-daemon|/usr/libexec/deepin-daemon|g' \
 sed -i 's|%_libexecdir/fprintd/fprintd|%_libexecdir/fprintd|' \
     bin/dde-authority/fprint_transaction.go
 
+sed -i 's|/bin/nologin|/sbin/nologin|' accounts/users/users_test.go
+sed -i 's|/etc/systemd/system/display-manager.service|/lib/systemd/system/display-manager.service|' \
+    accounts/users/display_manager.go
+sed -i 's|/etc/gdm/custom.conf|/etc/X11/gdm/custom.conf|' \
+    accounts/users/display_manager.go
+sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
+    accounts/users/display_manager.go
+sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
+    accounts/users/testdata/autologin/slim.conf
+sed -i 's|/usr/bin/X11/X|/usr/bin/X|' \
+    accounts/users/testdata/autologin/slim.conf
+#sed -i 's|/etc/X11/default-display-manager|/etc/rc.d/init.d/dm|' \
+#    accounts/users/display_manager.go
+#sed -i 's|/deepin-screenshot.desktop|/deepin-screen-recorder.desktop|' \
+#    dock/desktop_file_path_test.go
+#sed -i 's|/usr/local/share/applications/deepin-screenshot.desktop|%_desktopdir/deepin-screen-recorder.desktop|' \
+#    launcher/utils_test.go
+
 # Fix autologin
 sed -i 's|/usr/libexec/lxdm-greeter-gtk|%_libexecdir/lxdm-greeter-gtk|' \
     accounts/users/testdata/autologin/lxdm_autologin.conf \
     accounts/users/testdata/autologin/lxdm.conf
+sed -i 's|/usr/bin/lightdm|/usr/sbin/lightdm|' \
+    accounts/users/testdata/autologin/lightdm.service
 
-# Fix grub.cfg path
-sed -i 's|boot/grub|boot/grub2|' grub2/{grub2,grub_params,theme}.go
-
-# Fix activate services failed (Permission denied)
-# dbus service
+## Fix activate services failed (Permission denied)
+## dbus service
 pushd misc/system-services/
 sed -i '$aSystemdService=deepin-accounts-daemon.service' com.deepin.system.Power.service \
     com.deepin.daemon.{Accounts,Apps,Daemon}.service \
     com.deepin.daemon.{Gesture,SwapSchedHelper,Timedated}.service
 sed -i '$aSystemdService=dbus-com.deepin.dde.lockservice.service' com.deepin.dde.LockService.service
 popd
-# systemd service
+## systemd service
 cat > misc/systemd/services/dbus-com.deepin.dde.lockservice.service <<EOF
 [Unit]
 Description=Deepin Lock Service
@@ -140,20 +162,24 @@ EOF
 #sed -i 's/google-chrome/chromium-browser/g' misc/dde-daemon/mime/data.json
 
 %build
+export CGO_CPPFLAGS="${CPPFLAGS}"
+export CGO_CFLAGS="${CFLAGS}"
+export CGO_CXXFLAGS="${CXXFLAGS}"
+export CGO_LDFLAGS="${LDFLAGS}"
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
 export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-export LIBS="-L/%_lib -lpam -lsystemd:$LIBS"
+export LIBS+="-L/%_lib -lpam -lsystemd"
 #make -C network/nm_generator gen-nm-code
 %make_build
 
 %install
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
-export LIBS="-L/%_lib -lpam -lsystemd:$LIBS"
+export LIBS+="-L/%_lib -lpam -lsystemd"
 %makeinstall_std PAM_MODULE_DIR=/%_lib/security
 
-#install -Dm644 %{S:2} %buildroot%_libexecdir/sysusers.d/%name.conf
+install -Dm644 %SOURCE2 %buildroot%_libexecdir/sysusers.d/%name.conf
 
 # fix systemd/logind config
 install -d %buildroot/lib/systemd/logind.conf.d/
@@ -162,6 +188,8 @@ cat > %buildroot/lib/systemd/logind.conf.d/10-%repo.conf <<EOF
 HandlePowerKey=ignore
 HandleSuspendKey=ignore
 EOF
+
+chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 
 %find_lang %repo
 
@@ -173,6 +201,7 @@ EOF
 %_sysconfdir/pam.d/deepin-auth
 %_prefix/libexec/%name/
 /lib/systemd/logind.conf.d/10-%repo.conf
+%_libexecdir/sysusers.d/%name.conf
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/system.d/*.conf
@@ -198,6 +227,10 @@ EOF
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue Dec 15 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt7
+- Changes default background.
+- Fixed paths.
+
 * Wed Dec 02 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt6
 - Fixed paths.
 
