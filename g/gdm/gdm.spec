@@ -25,7 +25,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.2
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -303,6 +303,9 @@ dbus-run-session %meson_test
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Dec 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2.1-alt1
+- 3.38.2.1 (fixed CVE-2020-27837)
+
 * Tue Nov 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
