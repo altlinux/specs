@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: Media Sharing Server
@@ -184,6 +184,7 @@ This package contains command line utilities for the PipeWire media server.
 %_bindir/pw-cat
 %_bindir/pw-cli
 %_bindir/pw-dot
+%_bindir/pw-dump
 %_bindir/pw-metadata
 %_bindir/pw-mididump
 %_bindir/pw-midiplay
@@ -201,6 +202,7 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
 %_man1dir/pw-dot.1.*
+#%_man1dir/pw-dump.1.*
 %_man1dir/pw-metadata.1.*
 %_man1dir/pw-mididump.1.*
 %_man1dir/pw-mon.1*
@@ -209,6 +211,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Tue Dec 15 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.18-alt1
+- updated to 0.3.18-1-g13cb51ef
+
 * Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.17-alt1
 - 0.3.17
 
