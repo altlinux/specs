@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.76.0
+Version: 5.77.0
 Release: alt1
 %K5init altplace
 
@@ -25,7 +25,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
 BuildRequires: python-module-PyQt5-devel
 %endif
-BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel qt5-wayland-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel
 BuildRequires: libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel
 BuildRequires: libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
@@ -134,6 +134,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Dec 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.77.0-alt1
+- new version
+
 * Mon Nov 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.76.0-alt1
 - new version
 
