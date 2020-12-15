@@ -39,7 +39,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Web browser engine
@@ -109,8 +109,10 @@ Linux.
 %package -n libwebkit2gtk
 Summary: WebKit2 is a new API layer for WebKit
 Group: System/Libraries
-Provides: %name = %version-%release
-Requires: libjavascriptcoregtk4 = %version-%release
+Provides: %name = %EVR
+#https://bugzilla.altlinux.org/39394
+Provides: webkitgtk4 = %EVR
+Requires: libjavascriptcoregtk4 = %EVR
 Requires: gst-plugins-base1.0 >= %gst_ver gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
 %{?_enable_bubblewrap_sandbox:Requires: bubblewrap >= %bwrap_ver xdg-dbus-proxy}
@@ -124,7 +126,7 @@ that we have built the process split model directly into the framework, allowing
 %package -n %_name-minibrowser
 Summary: Simple WebKit browser
 Group: Networking/WWW
-Requires: libwebkit2gtk = %version-%release
+Requires: libwebkit2gtk = %EVR
 
 %description -n %_name-minibrowser
 This package provides simple browser from webkitgtk project.
@@ -132,9 +134,9 @@ This package provides simple browser from webkitgtk project.
 %package -n libwebkit2gtk-devel
 Summary: Development files for WebKit GTK+ port
 Group: Development/C++
-Provides: %name-devel = %version-%release
-Requires: libwebkit2gtk = %version-%release
-Requires: libjavascriptcoregtk4-devel = %version-%release
+Provides: %name-devel = %EVR
+Requires: libwebkit2gtk = %EVR
+Requires: libjavascriptcoregtk4-devel = %EVR
 
 %description -n libwebkit2gtk-devel
 The GTK+ port of WebKit is intended to provide a browser component
@@ -165,7 +167,7 @@ WebKit package.
 %package -n libjavascriptcoregtk4-devel
 Summary: Development files for JavaScriptCore library
 Group: Development/C++
-Requires: libjavascriptcoregtk4 = %version-%release
+Requires: libjavascriptcoregtk4 = %EVR
 
 %description -n libjavascriptcoregtk4-devel
 This package provides development files for GTK+3 version of the
@@ -174,7 +176,7 @@ JavaScriptCore engine.
 %package -n jsc4
 Summary: JavaScriptCore shell for WebKit GTK+
 Group: Development/GNOME and GTK+
-Requires: libjavascriptcoregtk4 = %version-%release
+Requires: libjavascriptcoregtk4 = %EVR
 # since 2.14.1 jsc moved to %pkglibexecdir
 #Conflicts: jsc
 
@@ -185,9 +187,9 @@ allows you to interact with the JavaScript engine directly.
 %package -n libwebkit2gtk-gir
 Summary: GObject introspection data for the Webkit2GTK library
 Group: System/Libraries
-Requires: libwebkit2gtk = %version-%release
-Requires: libjavascriptcoregtk4 = %version-%release
-Requires: libjavascriptcoregtk4-gir  = %version-%release
+Requires: libwebkit2gtk = %EVR
+Requires: libjavascriptcoregtk4 = %EVR
+Requires: libjavascriptcoregtk4-gir  = %EVR
 
 %description -n libwebkit2gtk-gir
 GObject introspection data for the Webkit2GTK library
@@ -196,11 +198,11 @@ GObject introspection data for the Webkit2GTK library
 Summary: GObject introspection devel data for the Webkit2GTK library
 Group: Development/Other
 BuildArch: noarch
-Requires: libwebkit2gtk-gir = %version-%release
-Requires: libwebkit2gtk-devel = %version-%release
-Requires: libjavascriptcoregtk4-gir = %version-%release
-Requires: libjavascriptcoregtk4-devel = %version-%release
-Requires: libjavascriptcoregtk4-gir-devel = %version-%release
+Requires: libwebkit2gtk-gir = %EVR
+Requires: libwebkit2gtk-devel = %EVR
+Requires: libjavascriptcoregtk4-gir = %EVR
+Requires: libjavascriptcoregtk4-devel = %EVR
+Requires: libjavascriptcoregtk4-gir-devel = %EVR
 
 %description -n libwebkit2gtk-gir-devel
 GObject introspection devel data for the Webkit2GTK library
@@ -208,7 +210,7 @@ GObject introspection devel data for the Webkit2GTK library
 %package -n libjavascriptcoregtk4-gir
 Summary: GObject introspection data for the JavaScriptCore library
 Group: System/Libraries
-Requires: libjavascriptcoregtk4 = %version-%release
+Requires: libjavascriptcoregtk4 = %EVR
 
 %description -n libjavascriptcoregtk4-gir
 GObject introspection data for the JavaScriptCore library
@@ -217,8 +219,8 @@ GObject introspection data for the JavaScriptCore library
 Summary: GObject introspection devel data for the JavaScriptCore library
 Group: Development/Other
 BuildArch: noarch
-Requires: libjavascriptcoregtk4-gir = %version-%release
-Requires: libjavascriptcoregtk4-devel = %version-%release
+Requires: libjavascriptcoregtk4-gir = %EVR
+Requires: libjavascriptcoregtk4-devel = %EVR
 
 %description -n libjavascriptcoregtk4-gir-devel
 GObject introspection devel data for the JavaScriptCore library
@@ -364,6 +366,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Dec 15 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.4-alt1
+- 2.30.4
+
 * Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.3-alt1
 - 2.30.3
 
