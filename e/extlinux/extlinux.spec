@@ -1,7 +1,7 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
 Version: 6.04.pre3
-Release: alt2
+Release: alt3
 License: GPL-2.0-or-later
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
@@ -13,7 +13,10 @@ Source2: extlinux.sysconfig
 Source3: extlinux-config
 Source4: extlinux.filetrigger
 
-Patch0: strip-gnu-property.patch
+Patch0: 0016-strip-gnu-property.patch
+Patch1: 0017-single-load-segment.patch
+Patch2: 0018-prevent-pow-optimization.patch
+Patch3: 0019-GCC-10-compatibility.patch
 
 BuildRequires: libe2fs-devel
 BuildRequires: libuuid-devel
@@ -46,6 +49,9 @@ Extlinux documentation.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 rm -rf mk/devel.mk
@@ -109,6 +115,9 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %doc sample
 
 %changelog
+* Tue Dec 15 2020 Alexey Gladkov <legion@altlinux.ru> 6.04.pre3-alt3
+- Built with gcc-10
+
 * Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 6.04.pre3-alt2
 - Built with python3.
 
