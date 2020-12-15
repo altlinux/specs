@@ -2,8 +2,8 @@
 
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
-Version: 4.1.7
-Release: alt2
+Version: 4.1.11
+Release: alt1
 License: GPLv3+
 Group: Monitoring
 Url: http://loganalyzer.adiscon.com/
@@ -84,6 +84,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %files php7
 
 %changelog
+* Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 4.1.11-alt1
+- new version 4.1.11
+
 * Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 4.1.7-alt2
 - drop php5 package
 
