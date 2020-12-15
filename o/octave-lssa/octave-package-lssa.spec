@@ -4,13 +4,13 @@ BuildRequires: makeinfo
 %def_with _octave_arch
 %define octpkg lssa
 Name: octave-%octpkg
-Version: 0.1.3
-Release: alt2
+Version: 0.1.4
+Release: alt1
 Summary: Least squares spectral analysis
 
 Group: Sciences/Mathematics
 License: GPLv3+
-URL: http://www.jstatsoft.org/v11/i02
+URL: https://octave.sourceforge.io/lssa/
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
@@ -39,13 +39,16 @@ A package implementing tools to compute spectral decompositions of
 %octave_install
 
 %files
-%doc COPYING NEWS DESCRIPTION
+%doc DESCRIPTION NEWS COPYING
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt1
+- regenerated from template by package builder
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt2
 - rebuild with octave 5
 

@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave-config /usr/bin/rpcgen libtirpc-devel linux-gpib-devel makeinfo texinfo
+BuildRequires: makeinfo
 # END SourceDeps(oneline)
-%def_with _octave_arch
-%define octpkg instrument-control
+%define octpkg linear-algebra
+Epoch: 1
 Name: octave-%octpkg
-Version: 0.6.0
+Version: 2.2.3
 Release: alt1
-Summary: Instrument Control
+Summary: Linear algebra.
 
 Group: Sciences/Mathematics
-License: GPLv3+
-Url: http://octave.sourceforge.net/
+License: GPLv3+, LGPLv3+, FreeBSD
+URL: http://octave.sf.net
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
@@ -21,13 +21,13 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(instrument-control) = %version
-# Depends: octave (>= 3.8.0)
-Requires: octave >= 3.8.0
+Provides: octave(linear-algebra) = %version
+# Depends: octave (>= 4.0.0)
+Requires: octave >= 4.0.0
 
 
 %description
-Low level I/O functions for serial, i2c, spi, parallel, tcp, gpib, vxi11, udp and usbtmc interfaces.
+Additional linear algebra code, including matrix functions.
 
 %prep
 %setup -q -n %{octpkg}-%{version}
@@ -39,22 +39,25 @@ Low level I/O functions for serial, i2c, spi, parallel, tcp, gpib, vxi11, udp an
 %octave_install
 
 %files
-%doc DESCRIPTION README.md COPYING NEWS doc
+%doc COPYING NEWS DESCRIPTION
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
-* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.2.3-alt1
 - regenerated from template by package builder
 
-* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2
-- rebuild with octave 5
-
-* Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1
+* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.2-alt1
 - regenerated from template by package builder
 
-* Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1
-- initial import by package builder
+* Wed Jan 15 2014 Cronport Service <cronport@altlinux.org> 1:2.2.0-alt1.M70T.1
+- backport
+
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:2.2.0-alt1
+- updated by octave-package-builder
+
+* Thu Nov 17 2011 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1
+- initial import by octave-package-builder
 

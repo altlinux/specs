@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: /usr/bin/octave makeinfo perl(FileHandle.pm) perl(IPC/Open3.pm) perl(Text/Wrap.pm) texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octpkg sockets
+%define octpkg communications
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
-Summary: Sockets
+Summary: Communications
 
 Group: Sciences/Mathematics
 License: GPLv3+
-URL: http://octave.sourceforge.net
+URL: http://octave.sf.net
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
@@ -22,13 +22,13 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(sockets) = %version
-# Depends: octave (>= 3.6.0)
-Requires: octave >= 3.6.0
+Provides: octave(communications) = %version
+# Depends: octave (>= 4.4), signal (>= 1.1.3)
+Requires: octave >= 4.4 octave(signal) >= 1.1.3
 
 
 %description
-Socket functions for networking from within octave.
+Digital Communications, Error Correcting Codes (Channel Code), Source Code functions, Modulation and Galois Fields
 
 %prep
 %setup -q -n %{octpkg}-%{version}
@@ -40,34 +40,28 @@ Socket functions for networking from within octave.
 %octave_install
 
 %files
-%doc NEWS COPYING DESCRIPTION
+%doc DESCRIPTION NEWS COPYING doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
-* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.1-alt1
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt1
 - regenerated from template by package builder
 
-* Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2.0-alt4
-- rebuild with octave 5
-
-* Tue May 22 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.2.0-alt3
-- rebuild with octave 4.4
-
-* Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 1:1.2.0-alt2
+* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2.1-alt1
 - regenerated from template by package builder
 
-* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2.0-alt1
-- regenerated from template by package builder
-
-* Wed Jan 15 2014 Cronport Service <cronport@altlinux.org> 1:1.0.8-alt1.M70T.1
+* Wed Jan 15 2014 Cronport Service <cronport@altlinux.org> 1:1.2.0-alt0.M70T.1
 - backport
 
-* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.0.8-alt1
+* Wed Oct 16 2013 Cronport Service <cronport@altlinux.org> 1:1.1.1-alt1.M70T.1
+- backport
+
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.1-alt1
 - updated by octave-package-builder
 
-* Thu Nov 17 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1
+* Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - initial import by octave-package-builder
 

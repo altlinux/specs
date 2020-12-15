@@ -4,7 +4,7 @@ BuildRequires: makeinfo texinfo
 %def_with _octave_arch
 %define octpkg zeromq
 Name: octave-%octpkg
-Version: 1.5.0
+Version: 1.5.2
 Release: alt1
 Summary: ZeroMQ Toolbox
 
@@ -42,13 +42,16 @@ ZeroMQ bindings for GNU Octave
 %octave_install
 
 %files
-%doc COPYING NEWS DESCRIPTION doc
+%doc COPYING README.md NEWS DESCRIPTION doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1
+- regenerated from template by package builder
+
 * Wed Feb 19 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - New version.
 

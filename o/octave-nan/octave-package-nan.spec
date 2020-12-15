@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libblas-devel libgomp-devel makeinfo
+BuildRequires: libblas-devel libgomp-devel libsvm-devel makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg nan
 Name: octave-%octpkg
-Version: 3.4.5
+Version: 3.5.2
 Release: alt1
 Summary: The NaN-toolbox
 
@@ -22,8 +22,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(nan) = %version
-# Depends: octave (> 3.2.0)
-Requires: octave > 3.2.0
+# Depends: octave (>= 4.4.1)
+Requires: octave >= 4.4.1
 
 
 %description
@@ -39,13 +39,16 @@ A statistics and machine learning toolbox for data with and w/o missing values
 %octave_install
 
 %files
-%doc COPYING NEWS DESCRIPTION doc
+%doc COPYING DESCRIPTION NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 3.5.2-alt1
+- regenerated from template by package builder
+
 * Wed Feb 19 2020 Andrey Cherepanov <cas@altlinux.org> 3.4.5-alt1
 - New version.
 
