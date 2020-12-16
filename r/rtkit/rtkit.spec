@@ -2,7 +2,7 @@
 
 Name: rtkit
 Version: 0.11
-Release: alt1%ubt
+Release: alt2
 Summary: Realtime Policy and Watchdog Daemon
 Group: System/Servers
 License: GPLv3+ and BSD
@@ -62,7 +62,10 @@ dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesk
 %_man8dir/*.8*
 
 %changelog
-* Wed Jan 31 2018 Alexey Shabalin <shaba@altlinux.ru> 0.11-alt1%ubt
+* Thu Dec 17 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11-alt2
+- Bumped release to drop ubt suffix.
+
+* Wed Jan 31 2018 Alexey Shabalin <shaba@altlinux.ru> 0.11-alt1
 - 0.11 (with patches from master)
 - add systemd unit
 - add dbus-1/interfaces/org.freedesktop.RealtimeKit1.xml
