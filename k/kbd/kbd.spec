@@ -2,12 +2,12 @@
 
 Name: kbd
 Epoch: 0
-Version: 2.0.4
-Release: alt3
+Version: 2.4.0
+Release: alt1
 
 Group: Terminals
 Summary: Tools for managing the Linux console
-License: GPL
+License: GPL-2.0
 Url: http://kbd-project.org
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -33,15 +33,11 @@ Conflicts: console-common-scripts <= 0.2.2-alt1.4
 
 Source0: kbd-%version.tar
 
-# Debian kbd-1.12-10 patches (according to debian/patches/series):
-Patch22: po_makefile.diff
-Patch23: man_pages.diff
-
 #NMU Patches:
 Patch100: kbd-1.12-alt-unicode_start_vs_setfont.patch
 
 # Automatically added by buildreq on Mon Jan 07 2008 (-bi)
-BuildRequires: flex libpam-devel libcheck-devel
+BuildRequires: flex libpam-devel
 
 %{?_with_doc:BuildRequires: doxygen}
 
@@ -93,7 +89,7 @@ Conflicts: console-tools < 0:0.2.3-ipl30mdk
 
 %description -n console-vt-tools
 console-vt-tools perform simple control operations on the VTs on Linux console
-(like switching between them). 
+(like switching between them).
 
 Usually, several VTs are used ontop of the Linux console.
 These scripts are useful for writing scripts that need to control them.
@@ -112,12 +108,12 @@ Conflicts: console-tools < 0.2.3-ipl29mdk
 
 %description -n console-scripts
 This package is required if you have an interactive system with console.
-The package is dedicated to both system-wide and per-user Linux console/other VT 
+The package is dedicated to both system-wide and per-user Linux console/other VT
 configuration.
 
-It is responsible for the ways the console configuration is managed, 
-stored and used (activated), either at system-boot time 
-or user session startup. 
+It is responsible for the ways the console configuration is managed,
+stored and used (activated), either at system-boot time
+or user session startup.
 
 %package -n kbdrate
 Group: System/Configuration/Hardware
@@ -158,7 +154,7 @@ This package contains usermode bindings for kbdrate.
 Summary: A program which locks one or more virtual consoles
 Group: Terminals
 
-PreReq: /etc/tcb
+Requires(pre): /etc/tcb
 
 %description -n vlock
 The vlock program locks one or more sessions on the console.  Vlock can
@@ -191,8 +187,10 @@ the libkeymap library.
 %autoreconf -I m4
 %configure \
 	--bindir=/bin \
+	--libdir=/%_lib \
 	--datadir=/lib/%name \
-	--mandir=%_mandir \
+	--localedir=%_datadir/locale \
+	--docdir=%_docdir/%name-%version/libkeymap \
 	--enable-nls \
 	--enable-optional-progs \
 	--enable-libkeymap \
@@ -201,13 +199,7 @@ the libkeymap library.
 %make_build
 
 %install
-%makeinstall \
-	bindir="%buildroot/bin" \
-	libdir="%buildroot/%_lib" \
-	datadir="%buildroot/lib/%name" \
-	localedir="%buildroot/%_datadir/locale" \
-	gnulocaledir="%buildroot/%_datadir/locale" \
-	#
+%makeinstall_std
 
 # Backward compatibility link
 mkdir -p -- %buildroot/%_bindir %buildroot/%_libdir
@@ -224,28 +216,24 @@ mkdir -p \
 	%buildroot/%_sysconfdir/security/console.apps \
 	%buildroot/%_sysconfdir/pam.d
 
-install -p -m640 rpm/util-linux-2.9w-kbdrate.pamd %buildroot/%_sysconfdir/pam.d/kbdrate
-install -p -m640 rpm/util-linux-2.9w-kbdrate.apps %buildroot/%_sysconfdir/security/console.apps/kbdrate
+install -p -m640 rpm/kbdrate.pamd %buildroot/%_sysconfdir/pam.d/kbdrate
+install -p -m640 rpm/kbdrate.apps %buildroot/%_sysconfdir/security/console.apps/kbdrate
 
 mv %buildroot/bin/kbdrate %buildroot/sbin/
 ln -s -- %_usr/lib/consolehelper/helper %buildroot/bin/kbdrate
 
-install -p -m640 src/vlock/vlock.pamd %buildroot/%_sysconfdir/pam.d/vlock
-sed -i \
-	-e 's/^account  include	system-auth$/account  required	pam_permit.so/' \
-	-e 's/^password include	system-auth$/password required	pam_permit.so/' \
-	%buildroot/%_sysconfdir/pam.d/vlock
+install -p -m640 rpm/vlock.pamd %buildroot/%_sysconfdir/pam.d/vlock
 
-mv %buildroot/bin/vlock %buildroot/%_bindir/
+mv -f -- %buildroot/bin/vlock %buildroot/%_bindir/
+mv -f -- %buildroot/%_lib/pkgconfig %buildroot/%_libdir/
 
-mv -f -- \
-	%buildroot/%_lib/{pkgconfig,libkeymap.so} \
-	%buildroot/%_libdir/
-rm -f -- %buildroot/%_lib/*.{la,a}
+for libname in libkeymap libkbdfile; do
+	t=$(readlink -v %buildroot/%_lib/$libname.so)
+	rl=$(relative "/%_lib/$t" %_libdir/$libname.so)
+	ln -sf -- "$rl" %buildroot/%_libdir/$libname.so
+done
 
-t=$(readlink -v %buildroot/%_libdir/libkeymap.so)
-rl=$(relative "/%_lib/$t" %_libdir/libkeymap.so)
-ln -sf -- "$rl" %buildroot/%_libdir/libkeymap.so
+rm -f -- %buildroot/%_lib/*.{la,a,so}
 
 mkdir -p \
 	%buildroot/%_initdir \
@@ -313,6 +301,9 @@ touch consolefont keyboard console/setterm
 # Set default font
 echo 'SYSFONT=UniCyr_8x16' > consolefont
 
+%check
+make check
+
 %triggerpostun -n %name-data -- console-data
 [ $2 = 0 ] || exit 0
 [ ! -d '%_libdir/%name' ] ||
@@ -323,7 +314,7 @@ echo 'SYSFONT=UniCyr_8x16' > consolefont
 %triggerpostun -n console-scripts -- console-common-scripts <= 0.2.2-alt1.4, console-scripts < 0:1.13.99-alt4
 /sbin/chkconfig keytable on
 /sbin/chkconfig consolesaver on
-	
+
 %post -n console-scripts
 %post_service keytable
 %post_service consolesaver
@@ -381,6 +372,7 @@ done
 %if_with doc
 %files -n %name-docs
 %doc ChangeLog CREDITS README docs/doc/*.txt docs/doc/kbd.FAQ*.html docs/doc/font-formats/*.html docs/doc/utf
+%doc %_docdir/%name-%version
 %endif
 
 %files -n console-vt-tools
@@ -425,6 +417,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Wed Dec 16 2020 Alexey Gladkov <legion@altlinux.ru> 0:2.4.0-alt1
+- New release version (2.4.0).
+
 * Tue Feb 12 2019 Alexey Gladkov <legion@altlinux.ru> 0:2.0.4-alt3
 - Rebuilt to remove automatic dependency on i586-glibc-kernheaders.
 
