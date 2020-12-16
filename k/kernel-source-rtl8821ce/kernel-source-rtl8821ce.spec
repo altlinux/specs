@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8821ce
 Version: 5.5.2
-Release: alt4
+Release: alt5
 Summary: Source for the rtl8821ce driver
 License: GPLv2
 Group: Development/Kernel
@@ -26,6 +26,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Dec 16 2020 Valery Inozemtsev <shrek@altlinux.ru> 5.5.2-alt5
+- fixes for Linux 5.10
+
 * Wed Sep 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 5.5.2-alt4
 - fixes for Linux 5.8
 
