@@ -1,13 +1,13 @@
 Name: pinta
-Version: 1.6
-Release: alt5
+Version: 1.7
+Release: alt1
 
 Summary: An easy to use drawing and image editing program
 
 Group: Graphics
 
 # the code is licensed under the MIT license while the icons are licensed as CC-BY
-License: MIT and CC-BY
+License: MIT and CC-BY-2.5
 Url: http://pinta-project.com/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -22,9 +22,14 @@ ExclusiveArch: %ix86 x86_64 ppc ppc64 ia64 %arm sparcv9 alpha s390x
 
 # Manually:
 BuildRequires(pre): rpm-build-mono
-BuildRequires: glib2-devel intltool monodevelop libgtk-sharp2-devel
+BuildRequires: glib2-devel
+BuildRequires: intltool
+BuildRequires: libgtk-sharp2-devel
+BuildRequires: mono-addins-devel
+BuildRequires: mono-devel
 
 Requires: icon-theme-hicolor
+Requires: mono-addins
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
 %define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
@@ -62,13 +67,17 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Wed Dec 16 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7-alt1
+- new version 1.7 (close: #39106)
+- update BR:
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt5
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt4
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt3%ubt
+* Wed May 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt3
 - NMU: rebuilt with %%ubt.
 
 * Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt3
