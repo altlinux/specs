@@ -4,7 +4,7 @@
 
 %define	TDSVER 7.4
 %define	name freetds
-%define	release alt1
+%define	release alt2
 %define	version 1.2.17
 
 Name:		%name
@@ -19,6 +19,9 @@ URL:		http://www.freetds.org/
 Source0:	%name-%version.tar
 Source1:	%name.sh
 Source2:	%name.csh
+
+Patch1: %name-alt-revert-dblib-fix-TDS_DONE_RESULT-empty-rowsets.patch
+Patch2: %name-alt-fix-datacopy-logging.patch
 
 # Automatically added by buildreq on Sun Aug 19 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libncurses-devel libtinfo-devel libunixODBC-devel-compat perl pkg-config python-base python-modules python3 python3-base python3-dev ruby sh3
@@ -112,6 +115,8 @@ useful utilities.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p2
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -168,6 +173,9 @@ useful utilities.
 
 
 %changelog
+* Wed Dec 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.17-alt2
+- Fixed datacopy functionality and logging.
+
 * Wed Dec 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.17-alt1
 - Updated to upstream version 1.2.17 (Fixes: CVE-2019-13508).
 
