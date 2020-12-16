@@ -78,7 +78,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -504,7 +504,6 @@ Summary: systemd-boot and bootctl utils
 %description boot-efi
 systemd-boot and bootctl utils.
 
-
 %package coredump
 Group: System/Servers
 Summary: systemd-coredump and coredumpctl utils
@@ -609,6 +608,38 @@ License: LGPLv2.1+
 %description -n libudev-devel-static
 Static library for libudev.
 
+%package modules-load-standalone
+Summary: Standalone systemd-modules-load binary for use in non-systemd systems
+Group: System/Configuration/Boot and Init
+
+%description modules-load-standalone
+Standalone systemd-modules-load binary with no dependencies on the systemd-shared
+library or other libraries from libsystemd.
+
+%package sysctl-standalone
+Summary: Standalone systemd-sysctl binary for use in non-systemd systems
+Group: System/Configuration/Boot and Init
+
+%description sysctl-standalone
+Standalone systemd-sysctl binary with no dependencies on the systemd-shared
+library or other libraries from libsystemd.
+
+%package sysusers-standalone
+Summary: Standalone systemd-sysusers binary for use in non-systemd systems
+Group: System/Configuration/Boot and Init
+
+%description sysusers-standalone
+Standalone systemd-sysusers binary with no dependencies on the systemd-shared
+library or other libraries from libsystemd.
+
+%package tmpfiles-standalone
+Summary: Standalone systemd-tmpfiles binary for use in non-systemd systems
+Group: System/Configuration/Boot and Init
+
+%description tmpfiles-standalone
+Standalone systemd-tmpfiles binary with no dependencies on the systemd-shared
+library or other libraries from libsystemd.
+
 %prep
 %setup -q
 %patch1 -p1
@@ -623,6 +654,7 @@ Static library for libudev.
 	-Dlink-timesyncd-shared=false \
 	%{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
 	%{?_enable_static_libudev:-Dstatic-libudev=pic} \
+	-Dstandalone-binaries=true \
 	-Drpmmacrosdir=no \
 	-Drootlibdir=/%_lib \
 	-Dpamlibdir=/%_lib/security \
@@ -1743,6 +1775,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_unitdir/systemd-network-generator.service
 %_unitdir/*resolv*
 %_unitdir/*/*resolv*
+/lib/systemd/network/80-container-host0.network
 /lib/systemd/network/80-wifi-adhoc.network
 /lib/systemd/network/80-wifi-ap.network.example
 /lib/systemd/network/80-wifi-station.network.example
@@ -1784,7 +1817,6 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/systemd/systemd-import-fs
 /lib/systemd/systemd-importd
 /lib/systemd/systemd-pull
-/lib/systemd/network/80-container-host0.network
 /lib/systemd/network/80-container-ve.network
 /lib/systemd/network/80-container-vz.network
 /lib/systemd/network/80-vm-vt.network
@@ -1918,7 +1950,19 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_unitdir/ldconfig.service
 %_unitdir/sysinit.target.wants/ldconfig.service
 %endif #ldconfig
+
+%files sysusers-standalone
+/sbin/systemd-sysusers.standalone
 %endif #sysuser
+
+%files modules-load-standalone
+/sbin/systemd-modules-load.standalone
+
+%files sysctl-standalone
+/sbin/systemd-sysctl.standalone
+
+%files tmpfiles-standalone
+/sbin/systemd-tmpfiles.standalone
 
 %files -n libudev1
 /%_lib/libudev.so.*
@@ -1985,6 +2029,15 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Dec 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:247.2-alt1
+- 247.2
+- Move 80-container-host0.network to networkd subpackage.
+- Add separate packages for standalone binaries:
+  + systemd-modules-load
+  + systemd-sysctl
+  + systemd-sysusers
+  + systemd-tmpfiles
+
 * Tue Dec 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:247.1-alt1
 - 247.1
 
