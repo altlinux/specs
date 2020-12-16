@@ -56,7 +56,7 @@
 
 Name: NetworkManager
 Version: 1.28.0
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -616,6 +616,14 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Dec 16 2020 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt2
+- etcnet-alt: Add test for unknown type with NM_CONTROLLED=yes.
+- etcnet-alt: Fix tests with bad type.
+- etcnet-alt: Fix comment.
+- etcnet-alt: Always manage ifaces with NM_CONTROLLED=yes
+    (closes: #39421).
+- etcnet-alt: Fix check for unmanaged devices (closes: #39437).
+
 * Mon Dec 07 2020 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt1
 - dhcpcd: Try to kill dhcpcd w/o protocol option.
 - Conflict with dhcpcd < 9.0.0.
