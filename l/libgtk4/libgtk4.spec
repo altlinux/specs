@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 3.99
+%define ver_major 4.0
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -28,7 +28,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -65,6 +65,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 Requires: gtk-update-icon-cache
 Requires: icon-theme-adwaita
 Requires: iso-codes
+Requires: librsvg >= %rsvg_ver
 # ALT #32028
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
@@ -355,6 +356,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Wed Dec 16 2020 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Tue Dec 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.5-alt1
 - 3.99.5
 
