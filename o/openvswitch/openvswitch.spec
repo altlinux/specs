@@ -7,13 +7,18 @@
 # According to the "ExclusiveArch:" from the dpdk.
 %ifarch x86_64 %ix86 aarch64 ppc64le
 %def_with dpdk
+# afxdp build with numa, disable it for arm
+%def_enable afxdp
 %endif
 
 Name: openvswitch
 Version: 2.14.0
-Release: alt1
+Release: alt2
 
 Summary: An open source, production quality, multilayer virtual switch
+# All code is Apache-2.0 except
+# - lib/sflow* which is SISSL
+# - utilities/bugtool which is LGPL-2.1
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
 Group: Networking/Other
 
@@ -44,13 +49,15 @@ Requires: pam0(runuser)
 %filter_from_requires /lsb-release/d
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libcap-ng-devel
 BuildRequires: libunwind-devel
+BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
-BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL
+BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx
 %{?_with_dpdk:BuildRequires: dpdk-devel >= 19.11 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
-
+%{?_enable_afxdp:BuildRequires: libbpf-devel libelf-devel libnuma-devel}
 %define ksrcdir %_usrsrc/kernel/sources
 
 %description
@@ -74,7 +81,9 @@ Source for kernel modules supporting the openvswitch datapath
 
 %package debugtools
 Group: Networking/Other
-License: Apache-2.0
+# All code is Apache-2.0 except
+# - utilities/bugtool which is LGPL-2.1
+License: Apache-2.0 AND LGPL-2.1-only
 Summary: Open vSwitch bug reporting tool
 BuildArch: noarch
 Requires: %name = %EVR
@@ -161,7 +170,9 @@ export PYTHON3=%__python3
 %configure \
 	--disable-static \
 	--enable-shared \
+	--enable-ndebug \
 	--enable-ssl \
+	%{subst_enable afxdp} \
 %if_with dpdk
 	--with-dpdk=$(dirname %_libdir/dpdk/*/.config) \
 %endif
@@ -393,7 +404,8 @@ chown -R %name:%name %_localstatedir/%name
 %_pkgconfigdir/*.pc
 
 %files -n python3-module-openvswitch
-%python3_sitelibdir/*
+%python3_sitelibdir/ovs
+%python3_sitelibdir/ovs-*.egg-info
 
 %if_with ksrc
 %files -n kernel-source-%name
@@ -401,6 +413,10 @@ chown -R %name:%name %_localstatedir/%name
 %endif
 
 %changelog
+* Wed Dec 16 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt2
+- enable NDEBUG
+- build with experimental AF_XDP support for OVS netdev
+
 * Thu Sep 24 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt1
 - 2.14.0
 - Use strongswan for ipsec

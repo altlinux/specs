@@ -1,5 +1,5 @@
-# Add option to build as static libraries (--without shared)
-%def_with shared
+%define _unpackaged_files_terminate_build 1
+
 # Add option to build without examples
 %def_with examples
 # Add option to build without tools
@@ -18,7 +18,7 @@
 
 
 Name: dpdk
-Version: 19.11.3
+Version: 19.11.5
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -32,8 +32,6 @@ Patch4: dpdk-19.11.3-fix-redefinition.patch
 
 # fedora patches
 Patch100: app-pie.patch
-
-Provides: lib%{name} = %EVR
 
 #
 # The DPDK is designed to optimize througput of network traffic using, among
@@ -82,18 +80,25 @@ BuildRequires: texlive-wrapfig texlive-parskip texlive-upquote texlive-multirow
 BuildRequires: texlive-helvetic texlive-times texlive-dvips
 %endif
 
+Requires: lib%name = %EVR
+
 %description
 The Data Plane Development Kit is a set of libraries and drivers for
 fast packet processing in the user space.
+
+%package -n lib%name
+Summary: Data Plane Development Kit runtime libraries
+Group: System/Libraries
+
+%description -n lib%name
+This package contains the runtime libraries needed for 3rd party application
+to use the Data Plane Development Kit.
 
 %package devel
 Summary: Data Plane Development Kit development files
 Group: System/Libraries
 Requires: %name = %EVR
-Provides: lib%{name}-devel = %EVR
-%if_without shared
-Provides: %name-static = %EVR
-%endif
+Provides: lib%name-devel = %EVR
 
 %description devel
 This package contains the headers and other files needed for developing
@@ -193,9 +198,7 @@ setconf CONFIG_RTE_LIBRTE_PMD_CAAM_JR n
 setconf CONFIG_RTE_LIBRTE_PMD_CAAM_JR_BE n
 %endif
 
-%if_with shared
 setconf CONFIG_RTE_BUILD_SHARED_LIB y
-%endif
 
 %make_build V=1 O=%target -Wimplicit-fallthrough=0
 %if_with doc
@@ -273,10 +276,10 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 # BSD
 %_bindir/testpmd
 %_bindir/dpdk-procinfo
-%if_with shared
+
+%files -n lib%name
 %_libdir/*.so.*
-%pmddir/
-%endif
+%pmddir
 
 %if_with doc
 %files doc
@@ -295,11 +298,7 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 %exclude %sdkdir/examples/
 %endif
 %_sysconfdir/profile.d/dpdk-sdk-*.*
-%if_without shared
-%_libdir/*.a
-%else
 %_libdir/*.so
-%endif
 
 %if_with tools
 %files tools
@@ -308,7 +307,9 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 %_bindir/dpdk-pdump
 %_bindir/dpdk-pmdinfo
 %_bindir/dpdk-test-bbdev
+%_bindir/dpdk-test-compress-perf
 %_bindir/dpdk-test-crypto-perf
+%_bindir/testsad
 %endif
 
 %if_with examples
@@ -318,15 +319,23 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 %endif
 
 %changelog
+* Wed Dec 16 2020 Alexey Shabalin <shaba@altlinux.org> 19.11.5-alt1
+- Update to LTS release 19.11.5
+- Add libdpdk package
+- Fixes for the following security vulnerabilities:
+  + CVE-2020-14374 vhost/crypto: fix data length check
+  + CVE-2020-14378 vhost/crypto: fix incorrect descriptor deduction
+  + CVE-2020-14376, CVE-2020-14377 vhost/crypto: fix missed request check for copy mode
+  + CVE-2020-14375 vhost/crypto: fix possible TOCTOU attack
+
 * Thu Aug 13 2020 Alexey Shabalin <shaba@altlinux.org> 19.11.3-alt1
 - Update to LTS release 19.11.3
-- Fixes:
-  + vhost: check log mmap offset and size overflow (CVE-2020-10722)
-  + vhost: fix translated address not checked (CVE-2020-10723)
-  + vhost/crypto: validate keys lengths (CVE-2020-10724)
-  + vhost: fix potential memory space leak (CVE-2020-10725)
-  + vhost: fix potential fd leak (CVE-2020-10726)
-  + vhost: fix vring index check (CVE-2020-10726)
+- Fixes for the following security vulnerabilities:
+  + CVE-2020-10722 vhost: check log mmap offset and size overflow
+  + CVE-2020-10723 vhost: fix translated address not checked
+  + CVE-2020-10724 vhost/crypto: validate keys lengths
+  + CVE-2020-10725 vhost: fix potential memory space leak
+  + CVE-2020-10726 vhost: fix potential fd leak, fix vring index check
 
 * Thu Aug 13 2020 Alexey Shabalin <shaba@altlinux.org> 18.11.9-alt1
 - Update to LTS release 18.11.9
