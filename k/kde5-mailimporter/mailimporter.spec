@@ -5,7 +5,7 @@
 %define libkf5mailimporterakonadi libkf5mailimporterakonadi%sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -22,7 +22,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-tools-devel-static
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-libkdepim-devel
-BuildRequires: kde5-pimcommon-devel kde5-kimap-devel
+BuildRequires: kde5-pimcommon-devel kde5-kimap-devel kde5-grantleetheme-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel
@@ -75,8 +75,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-#%doc COPYING*
-#%config(noreplace) %_K5xdgconf/*.*categories
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -95,6 +94,9 @@ KF5 library
 %_K5lib/libKF5MailImporterAkonadi.so.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

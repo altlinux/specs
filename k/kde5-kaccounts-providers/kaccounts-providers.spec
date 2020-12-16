@@ -1,7 +1,7 @@
 %define rname kaccounts-providers
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace
 
@@ -49,14 +49,19 @@ Requires: kf5-filesystem
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
+%doc LICENSES/*
 %config(noreplace) /etc/signon-ui/webkit-options.d/*.conf
 %_K5plug/kaccounts/ui/*.so
 %_datadir/accounts/providers/kde/
 %_datadir/accounts/services/kde/
 %_K5data/kpackage/genericqml/org.kde.kaccounts.*/
+%_K5icon/hicolor/*/apps/kaccounts-*.*
 
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

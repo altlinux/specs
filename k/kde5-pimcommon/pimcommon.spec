@@ -5,7 +5,7 @@
 %define libkf5pimcommonakonadi libkf5pimcommonakonadi%sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -24,7 +24,7 @@ BuildRequires: extra-cmake-modules
 BuildRequires: qt5-declarative-devel qt5-tools-devel-static qt5-webengine-devel
 BuildRequires: grantlee5-devel libsasl2-devel xsltproc
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kimap-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel
-BuildRequires: kde5-kldap-devel kde5-akonadi-search-devel
+BuildRequires: kde5-kldap-devel kde5-akonadi-search-devel kde5-grantleetheme-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel-static
@@ -77,7 +77,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-#%doc COPYING*
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libKF5PimCommonAkonadi.so.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

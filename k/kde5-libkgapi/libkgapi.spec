@@ -11,7 +11,7 @@
 %define libkpimgapitasks libkpimgapitasks%sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace
 
@@ -139,8 +139,7 @@ done
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
-%doc LICENSE*
-#%config(noreplace) %_K5xdgconf/*.*categories
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -170,6 +169,9 @@ done
 %_K5lib/libKPimGAPITasks.so.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

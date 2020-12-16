@@ -6,7 +6,7 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace appdata
 
@@ -56,8 +56,9 @@ rm -f "$tmp_file"
 %find_lang --with-kde --all-name %rname
 
 %files -f %rname.lang
+%doc LICENSES/*
 %_K5data/remoteview/*drive*.desktop
-%_K5plug/kf5/kio/*drive*.so
+%_K5plug/kf5/*/*drive*.so
 %_datadir/metainfo/*drive*.xml
 %if_enabled qtkeychain
 %else
@@ -68,6 +69,9 @@ rm -f "$tmp_file"
 %endif
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname akonadi-calendar-tools
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -37,14 +37,16 @@ Akonadi Calendar Tools.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
-#%config(noreplace) %_K5xdgconf/*.*categories
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 %_K5bin/*alendar*
 %_K5xdgapp/*alendar*.desktop
 %_K5icon/*/*/apps/*alendar*.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
