@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20190829
+Version: 20201216
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,15 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Wed Dec 16 2020 Dmitry Terekhin <jqt4@altlinux.org> 20201216-alt1
+- mkmodpack: warn about incorrect patterns
+  Kernel modules may be needed to access rootfs.
+  Such modules must be present in the initramfs.
+  The mkmodpack script finds modules by given patterns.
+  If the pattern is specified incorrectly, the module
+  will not be found and booting will become impossible.
+  Need to warn about module patterns that do not match with anything.
+
 * Thu Aug 29 2019 Evgeny Sinelnikov <sin@altlinux.org> 20190829-alt1
 - fix hangs until http socket not closed on server side (closes: #37150)
 - tools.c: break reading cycle if we actually loaded program into memory
