@@ -1,9 +1,8 @@
-%define xfce_ver 4.15
 %def_enable introspection
 %def_enable vala
 
 Name: xfce4-panel
-Version: 4.15.5
+Version: 4.15.6
 Release: alt1
 
 Summary: Panel for Xfce
@@ -17,13 +16,14 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfce4ui-gtk3-devel >= %xfce_ver libexo-gtk3-devel >= 0.6.0 libgarcon-gtk3-devel
+BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
+BuildRequires: libxfce4util-devel >= 4.15.6-alt1
+BuildRequires: libxfce4ui-gtk3-devel >= 4.15.7-alt1 libexo-gtk3-devel >= 0.6.0 libgarcon-gtk3-devel
 BuildRequires: gtk-doc libwnck3-devel libICE-devel libXext-devel libSM-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libdbusmenu-gtk3-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel >= 4.15.6-alt1}
+%{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala >= 4.15.6-alt1}
 
 Requires: xfce4-common
 
@@ -160,6 +160,11 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Wed Dec 16 2020 Mikhail Efremov <sem@altlinux.org> 4.15.6-alt1
+- Added libxfce4util-vala to BR for vala bindings.
+- Updated BR.
+- Updated to 4.15.6.
+
 * Tue Nov 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.5-alt1
 - Updated to 4.15.5.
 

@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -17,8 +17,8 @@ Vcs: https://gitlab.xfce.org/xfce/garcon.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel
+BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
+BuildRequires: libxfce4util-devel >= 4.15.6-alt1 libxfce4ui-gtk3-devel >= 4.15.7-alt1
 BuildRequires: glib2-devel >= 2.14
 BuildRequires: libgtk+3-devel
 BuildRequires: gtk-doc
@@ -197,6 +197,7 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 %files gtk3
 %_libdir/%name-gtk3-1.so.*
+%_niconsdir/*.*
 
 %files gtk3-devel
 %_includedir/%_name-gtk3-1/
@@ -213,6 +214,10 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Wed Dec 16 2020 Mikhail Efremov <sem@altlinux.org> 0.7.3-alt1
+- Updated BR.
+- Updated to 0.7.3.
+
 * Mon Nov 09 2020 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
 - Updated to 0.7.2.
 
