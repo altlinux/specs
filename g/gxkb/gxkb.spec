@@ -1,5 +1,5 @@
 Name: gxkb
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: X11 keyboard indicator and switcher
@@ -11,7 +11,7 @@ Source: http://download.sourceforge.net/%name/%name-%version.tar.gz
 
 Requires: setxkbmap
 
-BuildRequires: libgtk+2-devel libxklavier-devel libwnck-devel
+BuildRequires: libgtk+3-devel libxklavier-devel libwnck3-devel
 
 %description
 GXKB shows a flag of current keyboard in a systray area and allows you to
@@ -33,9 +33,12 @@ switch to another one. It's written in C and uses the GTK library.
 %_datadir/%name/
 %_datadir/pixmaps/%name.xpm
 %_man1dir/%name.1.*
-%doc README* doc/AUTHORS doc/NEWS 
+%doc README* doc/AUTHORS doc/NEWS
 
 %changelog
+* Wed Dec 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0 (ported to GTK3)
+
 * Wed Jul 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
