@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		classloader-leak-test-framework
 Version:	1.1.1
-Release:	alt1_8jpp8
+Release:	alt1_13jpp8
 Summary:	Detection and verification of Java ClassLoader leaks
 License:	ASL 2.0
 URL:		https://github.com/mjiderhamn/classloader-leak-prevention/tree/master/%{name}
@@ -26,8 +26,6 @@ BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(org.apache.bcel:bcel)
 %if %{with tests}
 BuildRequires: mvn(javax.el:el-api)
-BuildRequires: mvn(com.sun.faces:jsf-api)
-BuildRequires: mvn(com.sun.faces:jsf-impl)
 %endif
 Source44: import.info
 
@@ -47,14 +45,18 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n classloader-leak-prevention-%{name}-%{version}
+
 rm -r classloader-leak-prevention
 cp -r %{name}/* .
 
+%pom_remove_dep com.sun.faces:jsf-api
+%pom_remove_dep com.sun.faces:jsf-impl
+
 %build
 %if %{with tests}
-%mvn_build
+%mvn_build --xmvn-javadoc
 %else
-%mvn_build -f
+%mvn_build -f --xmvn-javadoc
 %endif
 
 %install
@@ -68,6 +70,9 @@ cp -r %{name}/* .
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Dec 16 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_13jpp8
+- build w/o mojarra
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_8jpp8
 - fc update
 
