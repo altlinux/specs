@@ -1,7 +1,7 @@
 %def_without test
 
 Name: conan
-Version: 1.32.0
+Version: 1.32.1
 Release: alt1
 
 Summary: Conan - The open-source C/C++ package manager
@@ -79,8 +79,11 @@ Decentralized, open-source (MIT), C/C++ package manager.
 
 %prep
 %setup
-#patch0 -p0
+
 %__subst "s|node-semver==|node-semver>=|" conans/requirements.txt
+
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39271
+find -type f -name "*.py" | xargs subst "s|from semver|from node_semver|"
 
 %build
 %python3_build
@@ -99,6 +102,10 @@ rm -rfv %buildroot%python_sitelibdir/conans/test_integration/
 %doc README.rst LICENSE.md
 
 %changelog
+* Wed Dec 16 2020 Vitaly Lipatov <lav@altlinux.ru> 1.32.1-alt1
+- new version 1.32.1 (with rpmrb script)
+- use node_semver instead of semver (see bug 39442)
+
 * Fri Dec 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.32.0-alt1
 - new version 1.32.0 (with rpmrb script)
 - update requirements, fix test removing
