@@ -1,6 +1,6 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20201116
-%define module_release	alt2
+%define module_version	0.8.1+git20201210
+%define module_release	alt1
 
 %define flavour		std-debug
 %define karch		%ix86 x86_64
@@ -75,6 +75,10 @@ install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Wed Dec 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201210-alt1
+- Updated to 47d6aca4d424f21044f2b890c245fccfad3a40f3.
+- Fixed build against kernel 5.10.
 
 * Tue Nov 24 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201116-alt2
 - Added SysVini script.

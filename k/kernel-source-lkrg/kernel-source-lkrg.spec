@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20201116
+%define module_version 0.8.1+git20201210
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -13,6 +13,7 @@ Url:  https://www.openwall.com/lkrg/
 
 VCS: https://github.com/openwall/lkrg.git
 Source: %module_name-%version.tar
+Patch: %module_name-%version-%release.patch
 
 ExclusiveArch: i586 x86_64 aarch64
 BuildRequires(pre): kernel-build-tools
@@ -34,6 +35,9 @@ This package contains the LKRG sources.
 
 %prep
 %setup -q -c
+pushd %module_name-%version
+%patch -p1
+popd
 
 %install
 mkdir -p %kernel_srcdir
@@ -50,6 +54,10 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Dec 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201210-alt1
+- Updated to 47d6aca4d424f21044f2b890c245fccfad3a40f3 (2020-12-10).
+- Fixed build against kernel 5.10.
+
 * Wed Nov 18 2020 Vitaly Chikunov <vt@altlinux.org> 0.8.1+git20201116-alt1
 - Update to 3f76f5148b184e02b0b5b24bb1e8bac0e96a3376 (2020-11-16).
 
