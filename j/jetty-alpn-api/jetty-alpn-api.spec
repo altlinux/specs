@@ -7,7 +7,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jetty-alpn-api
 Version:        1.1.3
-Release:        alt1_8jpp8
+Release:        alt2_8jpp8
 Summary:        Jetty ALPN API
 License:        ASL 2.0 and EPL
 URL:            http://www.eclipse.org/jetty
@@ -61,6 +61,9 @@ cp %{SOURCE1} %{SOURCE2} .
 
 
 %changelog
+* Wed Dec 16 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt2_8jpp8
+- build w/o mojarra
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_8jpp8
 - fc update
 
