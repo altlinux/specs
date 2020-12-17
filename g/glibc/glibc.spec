@@ -1,8 +1,8 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.30
-Release: alt3
+Version: 2.32
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -11,7 +11,7 @@ Summary: The GNU libc libraries
 # and shared libraries (e.g. crt files, lib*_nonshared.a) have an additional
 # exception which allows linking it into any kind of programs or shared
 # libraries without restrictions.
-License: LGPLv2+, LGPLv2+ with exceptions, GPLv2+
+License: LGPL-2.1+ and ISC and BSD-3-Clause and GPL-2.0-or-later
 Group: System/Base
 Url: http://www.gnu.org/software/glibc/
 
@@ -29,7 +29,13 @@ Url: http://www.gnu.org/software/glibc/
 %def_disable multiarch
 %endif
 
-%define basever 2.30
+%ifarch aarch64 i586 x86_64
+%def_enable static_pie
+%else
+%def_disable static_pie
+%endif
+
+%define basever 2.32
 
 %define enablekernel 3.2
 
@@ -360,13 +366,14 @@ pushd %buildtarget
 	--enable-kernel=%enablekernel \
 	--enable-tunables \
 	--enable-stack-protector=strong \
+	%{?_enable_static_pie:--enable-static-pie} \
 	#
 
 make %PARALLELMFLAGS
 
 popd #%buildtarget
 
-make -C alt enablekernel=%enablekernel CC=%__cc path_link=../%buildtarget
+make -C alt CC=%__cc objdir=../%buildtarget
 
 ################################################################################
 %install
@@ -778,6 +785,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Dec 16 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.32-alt1
+- Updated to glibc-2.32-23-g050022910b from 2.32 branch
+  (fixes CVE-2016-10228, CVE-2020-27618).
+
 * Wed Nov 04 2020 Dmitry V. Levin <ldv@altlinux.org> 6:2.30-alt3
 - Updated to glibc-2.30-81-g61e8ae9b66 from 2.30 branch
   (fixes: CVE-2020-6096).
