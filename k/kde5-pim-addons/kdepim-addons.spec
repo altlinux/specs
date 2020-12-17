@@ -12,9 +12,11 @@
 %define libkmailmarkdown libkmailmarkdown%sover
 %define libkmailquicktextpluginprivate libkmailquicktextpluginprivate%sover
 %define libdkimverifyconfigure libdkimverifyconfigure%sover
+%define libexpireaccounttrashfolderconfig libexpireaccounttrashfolderconfig%sover
+%define libfolderconfiguresettings libfolderconfiguresettings%sover
 
 Name: kde5-pim-addons
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -35,17 +37,17 @@ Patch1: alt-akonadi-plugins-dir.patch
 
 # Automatically added by buildreq on Thu Sep 01 2016 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules elfutils fontconfig gcc-c++ grantlee5-devel kde5-libkleo-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgpg-error-devel libgpgme-devel libgst-plugins1.0 libical-devel libjson-c libkf5gpgmepp-pthread libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webengine libqt5-webenginecore libqt5-webenginewidgets libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel qt5-webkit-devel rpm-build-python3 ruby ruby-stdlibs
-#BuildRequires: extra-cmake-modules kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-gpgmepp-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kdgantt2-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel kf5-kdeclarative-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kpackage-devel kf5-kwallet-devel kf5-libkgapi-devel libsasl2-devel python-module-google python3-dev qt5-webengine-devel rpm-build-ruby
+#BuildRequires: extra-cmake-modules kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-gpgmepp-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kdgantt2-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel  kde5-pimcommon-devel kf5-kdeclarative-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kpackage-devel kf5-kwallet-devel kf5-libkgapi-devel libsasl2-devel python-module-google python3-dev qt5-webengine-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-webengine-devel
 BuildRequires: libpoppler-qt5-devel libdiscount-devel
 BuildRequires: libsasl2-devel libgpgme-devel libassuan-devel
-BuildRequires: kde5-libkgapi-devel
+BuildRequires: kde5-libkgapi-devel kde5-kaddressbook-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel
 BuildRequires: kde5-calendarsupport-devel kde5-eventviews-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-libksieve-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
 BuildRequires: kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel
-BuildRequires: kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel
+BuildRequires: kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel  kde5-pimcommon-devel
 BuildRequires: kde5-mailimporter-devel kde5-akonadi-import-wizard-devel kde5-kontactinterface-devel
 BuildRequires: kde5-kpkpass-devel kde5-kitinerary-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kpackage-devel
@@ -69,6 +71,34 @@ Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
+
+%package kaddressbook
+Summary: addon
+Group: Graphical desktop/KDE
+Requires: %name-common
+%description kaddressbook
+%summary.
+
+%package kmail
+Summary: addon
+Group: Graphical desktop/KDE
+Requires: %name-common
+%description kmail
+%summary.
+
+%package korganizer
+Summary: addon
+Group: Graphical desktop/KDE
+Requires: %name-common
+%description korganizer
+%summary.
+
+%package plugins
+Summary: addon
+Group: Graphical desktop/KDE
+Requires: %name-common
+%description plugins
+%summary.
 
 %package -n %libkaddressbookmergelibprivate
 Group: System/Libraries
@@ -140,33 +170,19 @@ Requires: %name-common
 %description -n %libkmailquicktextpluginprivate
 KF5 library
 
-%package kaddressbook
-Summary: addon
-Group: Graphical desktop/KDE
+%package -n %libexpireaccounttrashfolderconfig
+Group: System/Libraries
+Summary: KF5 library
 Requires: %name-common
-%description kaddressbook
-%summary.
+%description -n %libexpireaccounttrashfolderconfig
+KF5 library
 
-%package kmail
-Summary: addon
-Group: Graphical desktop/KDE
+%package -n %libfolderconfiguresettings
+Group: System/Libraries
+Summary: KF5 library
 Requires: %name-common
-%description kmail
-%summary.
-
-%package korganizer
-Summary: addon
-Group: Graphical desktop/KDE
-Requires: %name-common
-%description korganizer
-%summary.
-
-%package plugins
-Summary: addon
-Group: Graphical desktop/KDE
-Requires: %name-common
-%description plugins
-%summary.
+%description -n %libfolderconfiguresettings
+KF5 library
 
 %prep
 %setup -n %rname-%version
@@ -186,7 +202,7 @@ Requires: %name-common
 %files
 
 %files common -f %name.lang
-#%doc COPYING*
+%doc LICENSES/*
 %config(noreplace) %_K5xdgconf/kmail.*
 %_datadir/qlogging-categories5/*.*categories
 %_K5conf_up/*.upd
@@ -232,9 +248,9 @@ Requires: %name-common
 %files -n %libkaddressbookmergelibprivate
 %_K5lib/libkaddressbookmergelibprivate.so.%sover
 %_K5lib/libkaddressbookmergelibprivate.so.*
-%files -n %libkaddressbookimportexportlibprivate
-%_K5lib/libkaddressbookimportexportlibprivate.so.%sover
-%_K5lib/libkaddressbookimportexportlibprivate.so.*
+#%files -n %libkaddressbookimportexportlibprivate
+#%_K5lib/libkaddressbookimportexportlibprivate.so.%sover
+#%_K5lib/libkaddressbookimportexportlibprivate.so.*
 %files -n %libshorturlpluginprivate
 %_K5lib/libshorturlpluginprivate.so.%sover
 %_K5lib/libshorturlpluginprivate.so.*
@@ -259,8 +275,17 @@ Requires: %name-common
 %files -n %libdkimverifyconfigure
 %_K5lib/libdkimverifyconfigure.so.%sover
 %_K5lib/libdkimverifyconfigure.so.*
+%files -n %libexpireaccounttrashfolderconfig
+%_K5lib/libexpireaccounttrashfolderconfig.so.%sover
+%_K5lib/libexpireaccounttrashfolderconfig.so.*
+%files -n %libfolderconfiguresettings
+%_K5lib/libfolderconfiguresettings.so.%sover
+%_K5lib/libfolderconfiguresettings.so.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

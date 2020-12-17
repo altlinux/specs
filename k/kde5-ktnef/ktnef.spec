@@ -1,7 +1,7 @@
 %define rname ktnef
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace
 
@@ -67,8 +67,7 @@ rm -rf %buildroot/%_K5doc/*/ktnef
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-#%doc COPYING*
-#%config(noreplace) %_K5xdgconf/*.*categories
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -82,6 +81,9 @@ rm -rf %buildroot/%_K5doc/*/ktnef
 %_K5lib/libKF5Tnef.so.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

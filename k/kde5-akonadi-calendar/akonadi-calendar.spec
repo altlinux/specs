@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace
 
@@ -21,6 +21,7 @@ BuildRequires: boost-devel-headers libsasl2-devel
 BuildRequires: kde5-akonadi-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
 BuildRequires: kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel
 BuildRequires: kde5-akonadi-mime-devel kde5-akonadi-contacts-devel
+BuildRequires: kde5-grantleetheme-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static
@@ -66,7 +67,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-#%config(noreplace) %_K5xdgconf/*.*categories
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -83,6 +84,9 @@ KF5 library
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_kcalcore.desktop
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

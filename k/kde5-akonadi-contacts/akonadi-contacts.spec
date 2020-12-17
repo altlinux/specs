@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules qt5-base-devel qt5-webengine-devel
 BuildRequires: grantlee5-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel
+BuildRequires: kde5-grantleetheme-devel kde5-libkleo-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-prison-devel
 
 %description
@@ -36,6 +37,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kde5-grantleetheme-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -68,8 +70,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
-#%config(noreplace) %_K5xdgconf/*contact*.*categories
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -102,6 +103,9 @@ KF5 library
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_contactgroup.desktop
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

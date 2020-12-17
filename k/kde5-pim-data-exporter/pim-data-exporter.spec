@@ -4,7 +4,7 @@
 %define libpimdataexporterprivate libpimdataexporterprivate%pim_sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init no_appdata
 
@@ -66,14 +66,14 @@ Requires: %name-common = %version-%release
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
+%_datadir/qlogging-categories5/*.*categories
 
 %files
 %_K5bin/*pimdataexporter*
 %_K5conf_up/*pimsettingexporter*
 %_K5xdgapp/*pimdataexporter*.desktop
 %_K5cfg/*pimdataexporter*
-%_datadir/qlogging-categories5/*.*categories
 
 #%files devel
 #%_K5inc/pim-data-exporter_version.h
@@ -87,6 +87,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libpimdataexporterprivate.so.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

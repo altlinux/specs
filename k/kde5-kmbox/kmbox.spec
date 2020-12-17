@@ -1,7 +1,7 @@
 %define rname kmbox
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace
 
@@ -66,8 +66,7 @@ KF5 library
 
 #files common -f %name.lang
 %files common
-#%doc COPYING*
-#%config(noreplace) %_K5xdgconf/*.*categories
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -75,12 +74,15 @@ KF5 library
 %_K5inc/KMbox/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Mbox/
-%_K5archdata/mkspecs/modules/qt_Mbox.pri
+%_K5archdata/mkspecs/modules/qt_*Mbox.pri
 
 %files -n libkf5mbox
 %_K5lib/libKF5Mbox.so.*
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

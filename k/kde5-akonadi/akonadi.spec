@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace
 
@@ -30,7 +30,7 @@ Patch7: alt-find-mysql-global-conf.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules qt5-declarative-devel qt5-tools-devel
 BuildRequires: xsltproc xml-utils shared-mime-info
-BuildRequires: libsqlite3-devel libxslt-devel
+BuildRequires: libsqlite3-devel libxslt-devel liblzma-devel
 BuildRequires: signon-devel libaccounts-glib-devel accounts-qt5-devel kde5-kaccounts-integration-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -215,6 +215,7 @@ done
 %_bindir/akonadi5_mysql_install_db
 
 %files common -f %name.lang
+%doc LICENSES/*
 %dir %_K5plug/akonadi/
 %dir %_K5plug/akonadi/contacts/
 %dir %_K5plug/akonadi/contacts/plugins/
@@ -271,6 +272,9 @@ done
 %endif
 
 %changelog
+* Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Mon Nov 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
