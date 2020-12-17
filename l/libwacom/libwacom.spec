@@ -1,5 +1,15 @@
-%define ver_major 1.6
+%def_disable snapshot
+
+%define ver_major 1.7
 %def_disable docs
+
+%ifnarch %valgrind_arches
+%def_disable tests
+%def_disable check
+%else
+%def_enable tests
+%def_enable check
+%endif
 
 Name: libwacom
 Version: %ver_major
@@ -10,13 +20,23 @@ Group: System/Libraries
 License: MIT
 Url: https://github.com/linuxwacom/libwacom
 
+%if_disabled snapshot
 Source: %url/releases/download/%name-%version/%name-%version.tar.bz2
+%else
+Vcs: https://github.com/linuxwacom/libwacom.git
+Source: %name-%version.tar
+%endif
 
 Requires: %name-data = %version-%release
 
-BuildRequires(pre): meson
-BuildRequires: /proc glib2-devel libgudev-devel libxml2-devel
+BuildRequires(pre): meson rpm-macros-valgrind
+BuildRequires: glib2-devel libgudev-devel libxml2-devel
 %{?_enable_docs:BuildRequires: doxygen graphviz}
+%{?_enable_tests:
+BuildRequires: /proc python3-module-pytest
+BuildRequires: libudev-devel python3-module-pyudev
+BuildRequires: libevdev-devel python3-module-libevdev
+BuildRequires: valgrind}
 
 %description
 %name is a library to identify Wacom tablets and their model-specific
@@ -55,11 +75,13 @@ developing applications that use %name.
 
 %prep
 %setup
+%{?_enable_tests:sed -i 's/pytest-3/py.test-3/' meson.build}
 
 %build
 %meson \
     -Dudev-dir='/lib/udev' \
-    %{?_disable_docs:-Ddocumentation=disabled}
+    %{?_disable_docs:-Ddocumentation=disabled} \
+    %{?_disable_tests:-Dtests=disabled}
 %nil
 %meson_build
 
@@ -93,6 +115,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Dec 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7
+
 * Tue Nov 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6
 
