@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ovn
-Version: 20.06.2
+Version: 20.09.0
 Release: alt1
 
 Summary: Open Virtual Network support
@@ -24,12 +24,14 @@ Requires: lib%name = %EVR
 Requires: openvswitch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libopenvswitch-devel
 BuildRequires: libcap-ng-devel
 BuildRequires: libunwind-devel
+BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
-BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL
+BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx
 
 %define ovs_dir %_builddir/ovs
 
@@ -130,6 +132,7 @@ pushd %ovs_dir
 %configure \
     --disable-static \
     --enable-shared \
+    --enable-ndebug \
     --enable-ssl \
     --with-rundir=/run/openvswitch \
     --with-logdir=%_logdir/openvswitch \
@@ -265,6 +268,9 @@ done
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Thu Dec 17 2020 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt1
+- 20.09.0
+
 * Fri Sep 25 2020 Alexey Shabalin <shaba@altlinux.org> 20.06.2-alt1
 - Provide new OVN packages splitting from openvswitch
 
