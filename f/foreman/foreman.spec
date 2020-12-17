@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.3.2
-Release:       alt1
+Release:       alt2
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -189,6 +189,9 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Thu Dec 17 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt2
+- ! to add modules
+
 * Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt1
 - ^ 1.24.3[1] -> 1.24.3[2]
 - * updated embedded node packages
