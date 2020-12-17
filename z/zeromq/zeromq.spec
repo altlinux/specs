@@ -2,7 +2,7 @@
 
 Name: zeromq
 Version: 4.2.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: a software library that lets you quickly design and implement a fast message-based application
 Group: System/Libraries
@@ -12,6 +12,8 @@ Url: http://www.zeromq.org
 Source: %name-%version.tar
 Source1: https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
 Source2: https://raw.githubusercontent.com/zeromq/cppzmq/master/LICENSE
+
+Patch: 0001-Fix-gcc-8-build-warning-error-with-O3.patch
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
@@ -67,6 +69,7 @@ This package contains files for developing C++ %name applications.
 
 %prep
 %setup
+%patch -p1
 cp -a %SOURCE2 .
 
 %build
@@ -102,6 +105,9 @@ install -m644 -p %SOURCE1 %buildroot%_includedir/
 %doc LICENSE
 
 %changelog
+* Thu Dec 17 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.3-alt1.qa1
+- Fixed FTBFS with gcc10.
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.3-alt1
 - Updated to upstream version 4.2.3.
 
