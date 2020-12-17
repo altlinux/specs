@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Dec 15 2020 Alexey Appolonov <alexey@altlinux.org> 0.15.0-alt1
+- New module 'vul' that can be used to extract vulnerability IDs from text.
+
 * Wed Dec 09 2020 Alexey Appolonov <alexey@altlinux.org> 0.14.0-alt1
 - New functions that help to work with versions that contain a date;
 - Upgraded function 'SVerToLVer' that splits a given version not only into
