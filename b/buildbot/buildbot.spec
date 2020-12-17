@@ -1,7 +1,5 @@
-%def_disable check
-
 Name: buildbot
-Version: 2.8.4
+Version: 2.9.3
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -25,23 +23,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-%if_enabled check
-BuildRequires: python3-module-twisted-core-test
-BuildRequires: python3-module-service-identity
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-autobahn
-BuildRequires: python3-module-jwt
-BuildRequires: python3-module-migrate
-BuildRequires: python3(future) python3(dateutil) python3(yaml) python3(treq)
-BuildRequires: python3-module-cairosvg
-BuildRequires: python3-module-klein
-BuildRequires: python3-module-cairocffi
-BuildRequires: python3-module-characteristic
-BuildRequires: python3-module-parameterized
-BuildRequires: /dev/pts openssh-clients
-%endif
-
-Requires: python3-module-service-identity
+Requires: python3-module-service-identity buildbot-www
 
 ###############################################################################
 # Skip win requires
@@ -136,6 +118,33 @@ Requires: python3-module-buildbot-www-extra-plugins = %EVR
 %description www-extra-plugins
 %summary.
 
+###############################################################################
+# Package buildbot-checkinstall
+###############################################################################
+
+%package checkinstall
+Summary: Chekinstall for %name
+Group: Other
+BuildArch: noarch
+Requires(pre): buildbot = %EVR buildbot-worker = %EVR buildbot-www = %EVR
+Requires(pre): python3-module-buildbot-tests = %EVR
+Requires: /dev/pts python3-module-pbr python3-module-treq
+
+%description checkinstall
+%summary.
+
+###############################################################################
+# Package python3-module-buildbot
+###############################################################################
+
+%package -n python3-module-buildbot-tests
+Summary: Tests for %name
+Group: Other
+BuildArch: noarch
+
+%description -n python3-module-buildbot-tests
+%summary.
+
 
 ###############################################################################
 # Build and Install
@@ -175,12 +184,11 @@ rm %buildroot%_bindir/buildbot_worker_windows_service
 
 
 ###############################################################################
-# Check
+# Chekinstall
 ###############################################################################
-%check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-trial.py3 -e buildbot.test
-trial.py3 -e buildbot_worker.test
+
+%post checkinstall
+trial -e buildbot.test buildbot_worker.test
 
 
 ###############################################################################
@@ -212,6 +220,7 @@ trial.py3 -e buildbot_worker.test
 %_man1dir/buildbot-worker.1.*
 %_bindir/buildbot-worker
 %python3_sitelibdir/buildbot_worker
+%exclude %python3_sitelibdir/buildbot_worker/test
 %python3_sitelibdir/buildbot_worker-*.egg-info
 
 %files
@@ -219,9 +228,20 @@ trial.py3 -e buildbot_worker.test
 %_man1dir/buildbot.1.*
 %_bindir/buildbot
 %python3_sitelibdir/buildbot
+%exclude %python3_sitelibdir/buildbot/test
 %python3_sitelibdir/buildbot-*.egg-info
 
+%files checkinstall
+
+%files -n python3-module-buildbot-tests
+%python3_sitelibdir/buildbot/test
+%python3_sitelibdir/buildbot_worker/test
+
 %changelog
+* Thu Dec 17 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.9.3-alt1
+- new version 2.9.3
+- enable tests via checkinstall
+
 * Wed Oct 28 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.8.4-alt1
 - new version 2.8.4
 
