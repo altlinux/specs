@@ -1,6 +1,6 @@
 Name: emelfm2
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: file manager for UNIX-like operating systems
 License: GPLv3+
@@ -26,7 +26,9 @@ buttons or assigned keys can be used to initiate commands.
 %setup -q
 
 %build
-make PREFIX=%_prefix LIB_DIR=%_libdir    CFLAGS="--pipe -Wall -g -O2" STRIP=0 \
+%add_optflags -fcommon
+%make_build \
+     PREFIX=%_prefix LIB_DIR=%_libdir    CFLAGS="%optflags" STRIP=0 \
      DOCS_VERSION=1  WITH_TRANSPARENCY=1 WITH_KERNELFAM=1 EDITOR_SPELLCHECK=1 \
      NEW_COMMAND=1   WITH_DEVKIT=1       WITH_THUMBS=1    WITH_TRACKER=1 \
      WITH_ACL=1      WITH_POLKIT=1
@@ -57,6 +59,9 @@ done
 %_datadir/doc/%name-%version
 
 %changelog
+* Thu Dec 17 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt2
+- Added -fcommon to %%optflags to fix FTBFS with gcc10.
+
 * Mon Dec 16 2013 Vladimir Lettiev <crux@altlinux.ru> 0.9.0-alt1
 - 0.9.0
 - patch moved upstream
