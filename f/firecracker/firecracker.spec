@@ -3,8 +3,8 @@
 %define clib gnu
 
 Name: firecracker
-Version: 0.23.0
-Release: alt2
+Version: 0.23.1
+Release: alt1
 Summary: Virtual Machine Monitor for creating microVMs
 License: Apache-2.0
 Group: Emulators
@@ -68,6 +68,9 @@ cargo test \
 %_bindir/jailer
 
 %changelog
+* Fri Dec 18 2020 Alexey Shabalin <shaba@altlinux.org> 0.23.1-alt1
+- new version 0.23.1
+
 * Fri Nov 20 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.23.0-alt2
 - Allow FUTEX_WAIT_BITSET_PRIVATE argument to futex syscall.
 
