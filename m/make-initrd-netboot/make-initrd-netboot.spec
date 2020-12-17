@@ -1,8 +1,8 @@
 %add_findreq_skiplist /usr/share/make-initrd/features/*
 
 Name: make-initrd-netboot
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 
 Summary: Netboot feature for make-initrd
 License: GPL
@@ -12,6 +12,9 @@ Source0: %name-%version.tar
 
 # For modern init script scheme
 Requires: make-initrd >= 0.9.0
+
+# Programs packed into initrd
+Requires: coreutils curl dhcpcd >= 9.0.0 grep iproute2 sed tar zstd
 
 BuildArch: noarch
 
@@ -35,6 +38,10 @@ cp -a netboot %buildroot/usr/share/make-initrd/features/
 %_datadir/make-initrd/features/netboot
 
 %changelog
+* Thu Dec 17 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4-alt1
+- Added dependencies for programs used in initrd.
+- Fixed work with and switched to dhcpcd >= 9.0.0.
+
 * Wed Jul 08 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3-alt2
 - Updated package %%description.
 
