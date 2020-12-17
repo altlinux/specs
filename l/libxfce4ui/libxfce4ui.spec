@@ -3,7 +3,7 @@
 %def_enable vala
 
 Name: libxfce4ui
-Version: 4.15.7
+Version: 4.15.8
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -186,6 +186,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Thu Dec 17 2020 Mikhail Efremov <sem@altlinux.org> 4.15.8-alt1
+- Updated to 4.15.8.
+
 * Wed Dec 16 2020 Mikhail Efremov <sem@altlinux.org> 4.15.7-alt1
 - Added libxfce4util-vala to BR for vala bindings.
 - Enabled libgudev support.
