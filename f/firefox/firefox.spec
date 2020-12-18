@@ -7,15 +7,15 @@
 %define gst_version   1.0
 %define nspr_version  4.29
 %define nss_version   3.59.0
-%define rust_version  1.46.0
-%define cargo_version 1.46.0
+%define rust_version  1.48.0
+%define cargo_version 1.48.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        83.0
-Release:        alt2
+Version:        84.0
+Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -47,16 +47,11 @@ Patch007: 0007-ALT-Fix-aarch64-build.patch
 Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
 Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
-Patch011: 0011-Bug-1640982-Set-CARGO_PROFILE_RELEASE_LTO-true-when-.patch
-Patch012: 0012-use-floats-for-audio-on-arm-too.patch
-Patch013: 0013-bmo-847568-Support-system-harfbuzz.patch
-Patch014: 0014-bmo-847568-Support-system-graphite2.patch
-Patch015: 0015-bmo-1559213-Support-system-av1.patch
-Patch016: 0016-VAAPI-Add-extra-frames.patch
-Patch017: 0017-bmo-1673313-Wayland-Don-t-fail-when-Shm-allocation-f.patch
-Patch018: 0018-Bug-1673601-Wayland-Remove-WindowBackBufferShm-and-u.patch
-Patch019: 0019-Bug-1667736-Update-packed_simd-to-compile-on-Rust-1..patch
-Patch020: 0020-gfx-qcms-do-not-use-primitives-from-core-arch-arm.patch
+Patch011: 0011-use-floats-for-audio-on-arm-too.patch
+Patch012: 0012-bmo-847568-Support-system-harfbuzz.patch
+Patch013: 0013-bmo-847568-Support-system-graphite2.patch
+Patch014: 0014-bmo-1559213-Support-system-av1.patch
+Patch015: 0015-VAAPI-Add-extra-frames.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -234,11 +229,6 @@ Most likely you don't need to use this package.
 %patch013 -p1
 %patch014 -p1
 %patch015 -p1
-%patch016 -p1
-%patch017 -p1
-%patch018 -p1
-%patch019 -p1
-%patch020 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -504,6 +494,24 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Dec 17 2020 Alexey Gladkov <legion@altlinux.ru> 84.0-alt1
+- New release (84.0).
+- Security fixes:
+  + CVE-2020-16042: Operations on a BigInt could have caused uninitialized memory to be exposed
+  + CVE-2020-26971: Heap buffer overflow in WebGL
+  + CVE-2020-26972: Use-After-Free in WebGL
+  + CVE-2020-26973: CSS Sanitizer performed incorrect sanitization
+  + CVE-2020-26974: Incorrect cast of StyleGenericFlexBasis resulted in a heap use-after-free
+  + CVE-2020-26975: Malicious applications on Android could have induced Firefox for Android into sending arbitrary attacker-specified headers
+  + CVE-2020-26976: HTTPS pages could have been intercepted by a registered service worker when they should not have been
+  + CVE-2020-26977: URL spoofing via unresponsive port in Firefox for Android
+  + CVE-2020-26978: Internal network hosts could have been probed by a malicious webpage
+  + CVE-2020-26979: When entering an address in the address or search bars, a website could have redirected the user before they were navigated to the intended url
+  + CVE-2020-35111: The proxy.onRequest API did not catch view-source URLs
+  + CVE-2020-35112: Opening an extension-less download may have inadvertently launched an executable instead
+  + CVE-2020-35113: Memory safety bugs fixed in Firefox 84 and Firefox ESR 78.6
+  + CVE-2020-35114: Memory safety bugs fixed in Firefox 84
+
 * Wed Nov 25 2020 Alexey Gladkov <legion@altlinux.ru> 83.0-alt2
 - Fix alternatives.
 
