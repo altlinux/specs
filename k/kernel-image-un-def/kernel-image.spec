@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	5.9
-%define kernel_sublevel .8
+%define kernel_base_version	5.10
+%define kernel_sublevel .0
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -427,7 +427,7 @@ echo "Kernel built $KernelVer"
 
 %if_enabled docs
 # psdocs, pdfdocs don't work yet
-%make_build SPHINXOPTS="-j %__nprocs" htmldocs
+%make_build SPHINXOPTS="-j $([ %__nprocs -ge 8 ] && echo 8 || echo %__nprocs)" htmldocs
 %endif
 
 %install
@@ -514,6 +514,7 @@ KbuildFiles="
 	scripts/bin2c
 	scripts/gcc-version.sh
 	scripts/gcc-goto.sh
+	scripts/module.lds
 	scripts/recordmcount.pl
 	scripts/recordmcount.h
 	scripts/recordmcount.c
@@ -701,6 +702,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Dec 14 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.10.0-alt1
+- v5.10
+
+* Fri Dec 11 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.9.14-alt1
+- v5.9.14  (Fixes: CVE-2020-28588)
+
+* Tue Dec 08 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.9.13-alt1
+- v5.9.13
+
+* Wed Dec 02 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.9.12-alt1
+- v5.9.12
+
+* Tue Nov 24 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.9.11-alt1
+- v5.9.11
+
+* Sun Nov 22 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.9.10-alt1
+- v5.9.10  (Fixes: CVE-2020-4788)
+
+* Thu Nov 19 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.9.9-alt1
+- v5.9.9
+
 * Thu Nov 12 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.9.8-alt1
 - v5.9.8
 
