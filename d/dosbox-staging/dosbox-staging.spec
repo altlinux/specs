@@ -1,14 +1,17 @@
-Name:		dosbox-staging
-Version:	0.75.0
-Release:	alt1
-License:	GPLv2
-Summary:	An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment 
-Group:		Emulators
-Source:		%name-%version.tar.gz
+Name: dosbox-staging
+Version: 0.76.0
+Release: alt1
+License: GPLv2
+Summary: An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment
+Group: Emulators
+Source: %name-%version.tar.gz
+%ifarch %ix86
+%set_verify_elf_method textrel=relaxed
+%endif
 
-# Automatically added by buildreq on Wed May 13 2020
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libglvnd-devel libogg-devel libopus-devel libstdc++-devel perl pkg-config python2-base sh4 zlib-devel
-BuildRequires: gcc-c++ libSDL2_net-devel libopusfile-devel libpng-devel
+# Automatically added by buildreq on Fri Dec 18 2020
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libglvnd-devel libgpg-error libogg-devel libopus-devel libstdc++-devel perl pkg-config python2-base sh4 zlib-devel
+BuildRequires: gcc-c++ libSDL2-devel libSDL2_net-devel libalsa-devel libfluidsynth-devel libopusfile-devel libpng-devel
 
 %description
 dosbox-staging is an attempt to revitalize DOSBox's development process.
@@ -52,6 +55,10 @@ install -D contrib/linux/dosbox-staging.desktop %buildroot/%_desktopdir/dosbox-s
 %_desktopdir/*
 
 %changelog
+* Fri Dec 18 2020 Fr. Br. George <george@altlinux.ru> 0.76.0-alt1
+- Autobuild version bump to 0.76.0
+- Fix build on i686 (allow textrel)
+
 * Wed May 13 2020 Fr. Br. George <george@altlinux.ru> 0.75.0-alt1
 - Initial build for ALT
 
