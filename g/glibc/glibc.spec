@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.32
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -112,6 +112,8 @@ PreReq: setup
 PreReq: %name-preinstall >= %EVR
 Conflicts: %name < %EVR
 Conflicts: glibc-core-archopt
+Conflicts: openssh-server < 7.9p1-alt2
+Conflicts: openssh-server-gostcrypto < 7.9p1-alt4.gost
 Provides: linuxthreads, ldconfig
 Obsoletes: linuxthreads, ldconfig
 # The dynamic linker supports DT_GNU_HASH
@@ -785,6 +787,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.32-alt2
+- Added conflicts with openssh-server packages versions lacking support
+  of this libc in seccomp filters.
+
 * Wed Dec 16 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.32-alt1
 - Updated to glibc-2.32-23-g050022910b from 2.32 branch
   (fixes CVE-2016-10228, CVE-2020-27618).
