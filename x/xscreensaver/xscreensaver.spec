@@ -9,7 +9,7 @@
 #
 
 Name: xscreensaver
-Version: 5.44
+Version: 5.45
 Release: alt1
 
 Summary: A screen saver and locker for the X window system
@@ -50,8 +50,9 @@ BuildPrereq: gnome-screensaver-utils
 %endif
 BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel
 BuildRequires: libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel
-BuildRequires: libXxf86vm-devel libglade-devel libgle-devel libjpeg-devel
-BuildRequires: libpam-devel libxml2-devel xorg-cf-files xsltproc
+BuildRequires: libXxf86vm-devel libgle-devel libjpeg-devel
+BuildRequires: libpam-devel libxml2-devel xorg-cf-files
+BuildRequires: libgdk-pixbuf-xlib-devel libgtk+2-devel libsystemd-devel
 
 %description
 A modular screen saver and locker for the X Window System.
@@ -283,6 +284,7 @@ find %buildroot -name "*handsy*" -delete
 %_bindir/%name-getimage-file
 %_bindir/%name-getimage-video
 %_bindir/%name-text
+%_bindir/%name-systemd
 %_bindir/update-%name
 %_man1dir/%name.1*
 %_man1dir/%name-command.1*
@@ -290,9 +292,9 @@ find %buildroot -name "*handsy*" -delete
 %_man1dir/%name-getimage-file.1*
 %_man1dir/%name-getimage-video.1*
 %_man1dir/%name-text.1*
+%_man1dir/%name-systemd.1*
 
 %dir %_datadir/%name
-%_datadir/%name/glade
 %dir %xss_conf_dir
 %doc %xss_conf_dir/README
 %dir %xss_hack_dir
@@ -307,6 +309,7 @@ find %buildroot -name "*handsy*" -delete
 %_man1dir/%name-demo.1*
 %_desktopdir/xscreensaver-properties.desktop
 %_datadir/pixmaps/%name.xpm
+%_datadir/%name/ui
 
 %files -n rpm-build-%name
 %_rpmmacrosdir/%name
@@ -324,11 +327,14 @@ find %buildroot -name "*handsy*" -delete
 %files modules-gl -f xscreensaver-modules-gl
 %dir %xss_hack_dir
 
-%files -n desktop-screensaver-modules-xscreensaver -f xscreensaver-desktop-std
+%files -n desktop-screensaver-modules-xscreensaver
 
-%files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
+%files -n desktop-screensaver-modules-xscreensaver-gl
 
 %changelog
+* Wed Dec 16 2020 Grigory Ustinov <grenka@altlinux.org> 5.45-alt1
+- Build new version (new hacks covid19, headroom, sphereeversion and beats).
+
 * Sun Mar 22 2020 Grigory Ustinov <grenka@altlinux.org> 5.44-alt1
 - Build new version (new hacks gibson, etruscanvenus and scooter).
 
