@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 1.9.2
+Version: 2.0.0
 Release: alt1
 Epoch:3
 
@@ -34,11 +34,11 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
-# Automatically added by buildreq on Thu Oct 03 2019
-BuildRequires: asciidoctor cmake gcc-c++ gem-did-you-mean libSM-devel
-BuildRequires: libXcomposite-devel libXdamage-devel libXft-devel
-BuildRequires: libXinerama-devel libXpm-devel libXrandr-devel libalsa-devel
-BuildRequires: librsvg-devel libsndfile-devel perl-Pod-Usage
+# Automatically added by buildreq on Fri Dec 18 2020
+BuildRequires: asciidoctor cmake gcc-c++ gem-did-you-mean imlib2-devel libSM-devel
+BuildRequires: libXcomposite-devel libXdamage-devel libXft-devel libXinerama-devel
+BuildRequires: libXpm-devel libXrandr-devel libalsa-devel librsvg-devel
+BuildRequires: libsndfile-devel perl-Pod-Usage
 
 %description
  Window Manager for X Window System. Can emulate the look of Windows'95, OS/2
@@ -62,7 +62,7 @@ sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
 	-DCFGDIR=%_sysconfdir/X11/%realname \
 	-DLIBDIR=%_x11x11dir/%realname \
 	-DDOCDIR=%_datadir/doc/%name-%version \
-	-DCONFIG_GDK_PIXBUF_XLIB=on \
+	-DCONFIG_IMLIB2=on \
 	-DCONFIG_XPM=on \
 	-DCONFIG_LIBPNG=off \
 	-DCONFIG_LIBRSVG=on \
@@ -123,6 +123,10 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Fri Dec 18 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.0.0-alt1
+- 2.0.0
+- built with imlib2 as libgdk_pixbuf_xlib is deprecated
+
 * Thu Nov 12 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.9.2-alt1
 - 1.9.2
 
