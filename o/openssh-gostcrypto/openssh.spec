@@ -1,7 +1,7 @@
 %define oname openssh
 Name: openssh-gostcrypto
 Version: 7.9p1
-Release: alt3.gost
+Release: alt4.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -330,6 +330,12 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt4.gost
+- Merged upstream patches for seccomp filter into -gostcrypto version.
+
+* Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt2
+- Backported upstream patches for seccomp filter.
+
 * Thu Dec 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt3.gost
 - Moved config dir to /etc/openssh .
 - Added Conflicts to default openssh subpackages.
