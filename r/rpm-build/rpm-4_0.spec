@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt160
+Release: alt161
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -411,6 +411,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri Dec 18 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt161
+- debuginfo: strip --reloc-debug-sections for kernel modules.
+- rpmio: Lower memory limit on 32-bit arches for xz compression, again.
+- brp-debuginfo: Add debug sources check.
+- rpmio: Include rpmmacro.h to fix compilation warning.
+
 * Tue Dec 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt160
 - Add a wrapper for install in %%install section to skip strip.
 
