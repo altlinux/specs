@@ -17,7 +17,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.56
+Version: 1.4.57
 Release: alt1
 
 Summary: A fast webserver with minimal memory-footprint
@@ -353,6 +353,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Fri Dec 18 2020 Alexei Takaseev <taf@altlinux.org> 1.4.57-alt1
+- 1.4.57
+
 * Wed Dec 02 2020 Alexei Takaseev <taf@altlinux.org> 1.4.56-alt1
 - 1.4.56
 
