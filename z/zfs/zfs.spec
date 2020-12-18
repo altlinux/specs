@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 0.8.4
-Release: alt4
+Version: 0.8.6
+Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
 Group: System/Kernel and hardware
@@ -15,7 +15,7 @@ Source1: gitrevision.h
 Patch1: zfs-0.7.13-import-by-disk-id.patch
 Patch2: zfs-0.8.4-fix-unresolved-aok.patch
 
-BuildRequires: libblkid-devel libssl-devel libudev-devel libuuid-devel python3-devel zlib-devel rpm-build-kernel
+BuildRequires: libblkid-devel libssl-devel libudev-devel libuuid-devel python3-devel zlib-devel rpm-build-kernel libtirpc-devel
 
 %description
 This package contains the ZFS command line utilities
@@ -195,6 +195,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Fri Dec 18 2020 Anton Farygin <rider@altlinux.ru> 0.8.6-alt1
+- 0.8.6
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.8.4-alt4
 - applied upstream patches to the kernel-source package
 
