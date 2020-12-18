@@ -1,13 +1,16 @@
 Name: conntrack-tools
 Version: 1.4.6
-Release: alt1
+Release: alt2
 Summary: Tool to manipulate netfilter connection tracking table
 Group: System/Kernel and hardware
 License: GPLv2
 Url: http://netfilter.org
 Source0: http://netfilter.org/projects/conntrack-tools/files/%name-%version.tar
 
-BuildRequires: flex libnetfilter_conntrack-devel libmnl-devel libnetfilter_cttimeout-devel libnetfilter_cthelper-devel libnetfilter_queue-devel libsystemd-devel
+BuildRequires: flex libnetfilter_conntrack-devel libmnl-devel
+BuildRequires: libnetfilter_cttimeout-devel libnetfilter_cthelper-devel libnetfilter_queue-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libtirpc-devel
 
 %description
 %name  is  used to search, list, inspect and maintain the netfilter
@@ -40,6 +43,9 @@ rm -f %buildroot%_libdir/conntrack-tools/*.la
 %_man5dir/*
 
 %changelog
+* Fri Dec 18 2020 Anton Farygin <rider@altlinux.ru> 1.4.6-alt2
+- added libtirpc to BuildRequires against glibc-2.32
+
 * Tue Apr 14 2020 Anton Farygin <rider@altlinux.ru> 1.4.6-alt1
 - 1.4.6
 - cleanup spec
