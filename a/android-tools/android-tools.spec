@@ -2,8 +2,8 @@
 %def_enable docs
 
 Name: android-tools
-Version: 8.1.0
-Release: alt3.r23
+Version: 10.0.0
+Release: alt1.r36
 
 Summary: Android Debug CLI tools
 License: APL
@@ -21,21 +21,19 @@ Source: %name-%version-%release.tar
 # Debian core patches
 Patch0: move-log-file-to-proper-dir.patch
 Patch1: Added-missing-headers.patch
-Patch2: Direct-include-fs_config-header.patch
 Patch3: libusb-header-path.patch
 Patch4: stdatomic.patch
 Patch5: Nonnull.patch
-Patch6: ucontext.patch
 Patch7: Vector-cast.patch
 Patch8: use-Python-3-for-mkbootimg.patch
-Patch9: major-minor-moved-to-sysmacros.patch
-Patch10: drop-libext4_utils.patch
 Patch11: throw-exception-on-unknown-os.patch
-Patch12: ENODATA-BSD.patch
-
-# Debian extras patches
-Patch20: f2fs_dlutils_library_names.diff
-Patch21: remove-duplicated-symbols.patch
+Patch12: simg_dump-python3.patch
+Patch13: fix-attribute-issue-with-gcc.patch
+Patch14: workaround-error-expected-primary-expression-before-.-token.patch
+Patch15: fix-gettid-exception-declaration.patch
+Patch16: fix-build-on-non-x86.patch
+#Patch17: add-missing-headers.patch
+Patch18: hard-code-build-number.patch
 
 # Debian libunwind patches
 Patch30: user_pt_regs.patch
@@ -50,14 +48,16 @@ Patch101: adb-system-openssl.patch
 Patch200: alt-libbacktrace-fix-GetErrorString-return.patch
 Patch201: alt-make-ext4fs-fix-fs_config-include.patch
 Patch202: alt-libunwind-fix-ppc64le-build.patch
-#Patch20x: android-tools-5.1.1-boehm-use-stdatomic.patch
+Patch203: alt-libadb-fix-attribute-usage.patch
+Patch204: alt-liblp-fix-cstring-header.patch
+Patch205: alt-libunwindstack-dirty-ppc64-compile-fix.patch
 
 Requires: udev-android
 
 BuildRequires: gcc-c++
 BuildRequires: p7zip
 BuildRequires: libssl-devel zlib-devel libselinux-devel
-BuildRequires: libusb-devel libgtest-devel f2fs-tools-devel libsafe-iop-devel
+BuildRequires: libusb-devel libgtest-devel libsafe-iop-devel
 %if_enabled docs
 BuildRequires: pandoc
 %endif
@@ -65,40 +65,36 @@ BuildRequires: pandoc
 %description
 This package contains following utilities:
 
-Android Debug Bridge (adb) -- it is a versatile tool, which lets you manage the
-state of an emulator instance or Android-powered device. Consider "udev-android"
-package to used adb without superuser privileges.
+Android Debug Bridge (adb) -- it is a versatile command line tool, which lets
+you communicate with an emulator instance or connected Android-powered device.
 
-Fastboot -- is a diagnostic protocol primarily used to update the flash
-filesystem of Android devices over USB.
+Fastboot -- is a command line tool for flashing an Android device, boot an
+Android device to fastboot mode, etc.
 
 Mkbootimg -- creates Android boot images that includes kernel image and ramdisk,
 in a special format which can be used with fastboot.
 
 Command line tools to create sparse images for usage with Android devices.
-Includes simgimg, img2simg, simg2simg, simg_dump and append2simg tools.
-Look at /usr/lib/android/bin for binaries.
+Includes sim2img, img2simg, simg2simg and append2simg tools.
 
 %prep
 %setup
 pushd system/core
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
 %patch11 -p1
 %patch12 -p1
-popd
-pushd system/extras
-%patch20 -p1
-%patch21 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+#%patch17 -p1
+%patch18 -p1
 popd
 
 pushd system/external/libunwind
@@ -112,10 +108,13 @@ pushd system/core
 %patch101 -p3
 
 %patch200 -p1
+%patch203 -p1
+%patch204 -p1
+%patch205 -p1
 popd
 
 pushd system/extras
-%patch201 -p3
+#%patch201 -p3
 popd
 
 pushd system/external/libunwind
@@ -157,58 +156,53 @@ case %_arch in
         ;;
 esac
 
-CFLAGS+="%optflags -DNDEBUG -UDEBUG "
-CXXFLAGS+="%optflags -DNDEBUG -UDEBUG "
-CPPFLAGS+=" -DNDEBUG -UDEBUG "
-LDFLAGS+="-Wl,-R%aprefix/lib -L%outlibdir "
-DEB_VERSION=%version \
-export CFLAGS CPPFLAGS CXXFLAGS LDFLAGS DEB_VERSION CPU
+CFLAGS+=" %optflags -DNDEBUG -UDEBUG -Wno-unknown-pragmas -Wno-attributes"
+CFLAGS+=" -I%_builddir/%name-%version/debian/include"
+CPPFLAGS+=" %optflags -DNDEBUG -UDEBUG -Wno-unknown-pragmas -Wno-attributes"
+CPPFLAGS+=" -I%_builddir/%name-%version/debian/include"
+CPPFLAGS+=" $(getconf LFS_CFLAGS)"
+LDFLAGS+=" -Wl,-R%aprefix/lib -L%outlibdir"
+DEB_VERSION=%version
+export CFLAGS CPPFLAGS LDFLAGS DEB_VERSION CPU
 
 mkdir -p %outbindir
 mkdir -p %outlibdir
 mkdir -p %outmandir
 
+# dirty workaround to link against 7z library (needed for libunwind)
+ln -s %_libdir/p7zip/7z.so %outlibdir/lib7z.so
+
 # building libunwind
 pushd system/external/libunwind
-CFLAGS=$CFLAGS" -I%_builddir/%name-%version/debian/include" \
-      LDFLAGS=$LDFLAGS"%_libdir/p7zip/7z.so " \
-      OUT_DIR=%outlibdir \
-      make -f %makefilesdir/libunwind.mk
+OUT_DIR=%outlibdir make -f %makefilesdir/libunwind.mk
 popd
 
 # order is important
 core_components_libs=" \
 		    liblog \
-		    libcutils \
 		    libbase \
+		    libcutils \
 		    libcrypto_utils \
 		    libadb \
  		    libbacktrace \
 		    libutils \
 		    libziparchive \
 		    libsparse"
-core_components_tools=" \
-        adb \
-        fastboot"
 core_simg_tools=" \
 		    simg2img \
 		    simg2simg \
 		    img2simg \
 		    append2simg"
 
+core_tools="adb fastboot"
+
 extras_components_libs=" \
-		    libext4_utils \
-        libf2fs_utils"
-extras_components_tools=" \
-        ext4fixup \
-        make_ext4fs"
+		    libext4_utils"
 
 # building core libraries at first
 pushd system/core
 for i in $core_components_libs; do
-    CFLAGS=$CFLAGS" -I../external/libunwind/include" \
-          CPPFLAGS=$CPPFLAGS" -I../external/libunwind/include" \
-          make -f %makefilesdir/$i.mk
+    make -f %makefilesdir/$i.mk
     cp -a $i.so* %outlibdir
 done
 popd
@@ -216,80 +210,80 @@ popd
 # now building extra libraries
 pushd system/extras
 for i in $extras_components_libs; do
-    CFLAGS=$CFLAGS" -I../core/include -I../core/libsparse/include" \
-          CPPFLAGS=$CPPFLAGS" -I../core/include -I../core/libsparse/include" \
-          OUT_DIR=%outlibdir \
-          make -f %makefilesdir/$i.mk
+    OUT_DIR=%outlibdir make -f %makefilesdir/$i.mk
 done
 popd
 
 # building core tools
 pushd system/core
-for i in $core_components_tools; do
-    CFLAGS=$CFLAGS" -I../extras/f2fs_utils" \
-          CPPFLAGS=$CPPFLAGS" -I../extras/f2fs_utils" \
-          make -f %makefilesdir/$i.mk
+for i in $core_tools; do
+    make -f %makefilesdir/$i.mk
     cp -a $i/$i %outbindir
 done
+
 # simg stuff requires special handling as it is libsparse-based
 for i in $core_simg_tools; do
-    CFLAGS=$CFLAGS" -I../extras/f2fs_utils" \
-          CPPFLAGS=$CPPFLAGS" -I../extras/f2fs_utils" \
-          make -f %makefilesdir/$i.mk
+    make -f %makefilesdir/$i.mk
     cp -a libsparse/$i %outbindir
 done
 popd
 
-# building extra tools
-pushd system/extras
-for i in $extras_components_tools; do
-    CFLAGS=$CFLAGS" -I../core -I../core/include" \
-          CPPFLAGS=$CPPFLAGS" -I../core -I../core/include" \
-          OUT_DIR=%outbindir \
-          make -f %makefilesdir/$i.mk
-done
-popd
+# we do not need symlink to 7z library anymore
+rm -f %outlibdir/lib7z.so
 
 # do not forget about mkbootimg
-cp system/core/mkbootimg/mkbootimg %outbindir
+cp system/core/mkbootimg/mkbootimg.py %outbindir/mkbootimg
+cp system/core/mkbootimg/unpack_bootimg.py %outbindir/unpack_bootimg
 
 %if_enabled docs
 # building man pages
-pandoc -s -o %outmandir/adb.1 debian/adb.1.md
-pandoc -s -o %outmandir/fastboot.1 debian/fastboot.1.md
+for i in $core_tools; do
+    pandoc -s -o %outmandir/$i.1 debian/$i.1.md
+done
 %endif
 
 %install
+
+core_tools="adb fastboot"
+
 mkdir -p %buildroot%_bindir %buildroot%aprefix/bin %buildroot%aprefix/lib %buildroot%_man1dir
 
-for i in adb fastboot mkbootimg; do
+for i in $core_tools mkbootimg unpack_bootimg; do
     install -pm0755 %outbindir/$i %buildroot%_bindir/$i
 done
-for i in append2simg ext4fixup img2simg make_ext4fs simg2img simg2simg; do
+for i in append2simg img2simg simg2img simg2simg; do
     install -pm0755 %outbindir/$i %buildroot%aprefix/bin
 done
 
 cp -a %outlibdir/* %buildroot%aprefix/lib
 
-for i in adb fastboot; do
+for i in $core_tools; do
     install -pm0644 %outmandir/$i.1 %buildroot%_man1dir
 done
 
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
-for i in adb fastboot; do
+for i in $core_tools; do
     install -pm0644 debian/bash_completion.d/$i %buildroot%_sysconfdir/bash_completion.d
 done
 
 %files
-%_bindir/adb
-%_bindir/fastboot
-%_bindir/mkbootimg
-%_man1dir/adb.1*
-%_man1dir/fastboot.1*
+%_bindir/*
+%_man1dir/*
 %_sysconfdir/bash_completion.d/*
 %aprefix
 
 %changelog
+* Fri Dec 18 2020 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt1.r36
+- updated to 10.0.0_r36
+- debian/create-snapshot updated
+- Debian patches refreshed
+- Debian makefiles refreshed
+- Debian 7z includes updated
+- f2fs is not used anymore
+- ext4* tools are not used anymore
+- documentation and bash completion updated
+- minor spec cleanup
+
 * Fri Jun 19 2020 Ivan A. Melnikov <iv@altlinux.org> 8.1.0-alt3.r23
 - mipsel support
 
