@@ -1,13 +1,13 @@
 %define rname kdeconnect-kde
 
-%define sover 1
+%define sover 20
 %define libkdeconnectcore libkdeconnectcore%sover
 %define libkdeconnectpluginkcm libkdeconnectpluginkcm%sover
 %define libkdeconnectinterfaces libkdeconnectinterfaces%sover
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -102,11 +102,11 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data plasma locale
+%K5install_move data plasma locale kdeconnect
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -125,8 +125,10 @@ KF5 library
 %_K5srv/*kdeconnect*.*
 %_K5srvtyp/*kdeconnect*.*
 %_K5data/plasma/plasmoids/org.kde.kdeconnect/
+%_K5data/kdeconnect/
 %_datadir/metainfo/*kdeconnect*.xml
 %_datadir/zsh/site-functions/_kdeconnect
+%_datadir/deepin/dde-file-manager/oem-menuextensions/*connect*.desktop
 
 %files -n %libkdeconnectcore
 %_K5lib/libkdeconnectcore.so.%sover
@@ -137,11 +139,14 @@ KF5 library
 %files -n %libkdeconnectinterfaces
 %_K5lib/libkdeconnectinterfaces.so.%sover
 %_K5lib/libkdeconnectinterfaces.so.*
-%files -n %libkdeconnectsmshelper
-%_K5lib/libkdeconnectsmshelper.so.%sover
-%_K5lib/libkdeconnectsmshelper.so.*
+#%files -n %libkdeconnectsmshelper
+#%_K5lib/libkdeconnectsmshelper.so.%sover
+#%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Fri Dec 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
