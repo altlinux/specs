@@ -1,6 +1,6 @@
 Name: openssh
 Version: 7.9p1
-Release: alt1
+Release: alt2
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -348,6 +348,10 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt2
+- Backported upstream patches for seccomp filter.
+- Fixed build with gcc10.
+
 * Wed Oct 24 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt1
 - Updated to 7.9p1.
 
