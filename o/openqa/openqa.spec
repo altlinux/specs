@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt16
+Release: alt17
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -34,8 +34,7 @@ Source0: %name-%version.tar
 Source1: cache.tar
 #Please check $ git grep geekotest
 Patch0: addpseudouser.patch
-Patch1: rmservices.patch
-BuildArch: noarch
+#BuildArch: noarch
 
 BuildRequires: %t_requires
 BuildRequires: spectool postgresql10-server systemd ruby-sass ruby-rb-inotify ruby-sass-listen os-autoinst osc
@@ -168,7 +167,6 @@ writing, etc., covering both openQA and the os-autoinst test engine.
 %setup -n %name-%version
 tar xf %SOURCE1 -C assets
 %patch0 -p1
-%patch1 -p1
 sed -i -e 's|../webfonts/|https://use.fontawesome.com/releases/v5.0.10/webfonts/|g' assets/cache/use.fontawesome.com/releases/v5.0.10/css/all.css
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
@@ -184,6 +182,7 @@ rm -rf systemd/openqa-vde_switch.service
 rm -rf systemd/openqa-slirpvde.service
 rm -rf script/openqa-slirpvde
 rm -rf script/openqa-vde_switch
+rm -rf script/openqa-auto-update
 
 %build
 %make_build
@@ -231,6 +230,7 @@ rm -f t/25-cache-service.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/42-screenshots.t
 rm -f t/44-scripts.t
+rm -f t/api/08-jobtemplates.t 
 rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
@@ -340,7 +340,6 @@ fi
 %dir %_localstatedir/openqa/share/factory
 %dir %_localstatedir/openqa/share/tests
 %_localstatedir/openqa/testresults
-%ghost %attr(0640,_geekotest,root) %_localstatedir/openqa/db/db.sqlite
 
 %files python-scripts
 %_datadir/openqa/script/openqa-label-all
@@ -382,6 +381,7 @@ fi
 %_unitdir/openqa-worker-cacheservice-minion.service
 %_unitdir/openqa-worker-cacheservice.service
 %_unitdir/openqa-worker-no-cleanup@.service
+%_unitdir/openqa-worker-auto-restart@.service
 %_tmpfilesdir/openqa.conf
 #worker libs
 %dir %{_datadir}/openqa
@@ -432,6 +432,9 @@ fi
 %files single-instance
 
 %changelog
+* Tue Dec 08 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt17
+- update to current version
+
 * Thu Oct 08 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt16
 - update to current version
 
