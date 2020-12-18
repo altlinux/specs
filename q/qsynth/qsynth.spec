@@ -1,7 +1,7 @@
 %def_enable qt5
 
 Name: qsynth
-Version: 0.6.3
+Version: 0.9.0
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -69,6 +69,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Fri Dec 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Sat Aug 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
 - 0.6.3
 
