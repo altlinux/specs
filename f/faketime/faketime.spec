@@ -1,5 +1,5 @@
 Name: faketime
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: Execute program with changed notion of system time
@@ -49,6 +49,9 @@ diff exp out
 %_man1dir/*
 
 %changelog
+* Fri Dec 18 2020 Dmitry V. Levin <ldv@altlinux.org> 0.2.7-alt1
+- Fixed build with fresh glibc.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 0.2.6-alt1
 - Fixed build with fresh gnulib.
 - Built with gnulib v0.1-2305-g95c96b6dd.
