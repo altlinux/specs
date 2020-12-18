@@ -2,7 +2,7 @@
 
 Name: deepin-launcher
 Version: 5.3.0.29
-Release: alt2
+Release: alt3
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -33,7 +33,7 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 # sed -i '/include <QPainter>/a #include <QPainterPath>' \
 #    src/widgets/miniframenavigation.cpp src/widgets/avatar.cpp src/widgets/miniframebutton.cpp
 # Fixed background for the launcher.
-sed -i 's|/backgrounds/default_background.jpg|/wallpapers/deepin/desktop.jpg|' \
+sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' \
     src/boxframe/{backgroundmanager.cpp,boxframe.cpp}
 
 %build
@@ -57,6 +57,9 @@ sed -i 's|/backgrounds/default_background.jpg|/wallpapers/deepin/desktop.jpg|' \
 %_includedir/%repo/
 
 %changelog
+* Tue Dec 15 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.29-alt3
+- Changed default background.
+
 * Mon Dec 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.29-alt2
 - Fixed background.
 
