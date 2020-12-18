@@ -1,6 +1,6 @@
 Name:		rosa-media-player
 Version:	1.6.11
-Release:	alt3
+Release:	alt4
 Summary:	Multimedia player based on mplayer technology
 
 License:	GPLv2+
@@ -9,6 +9,8 @@ Url:		https://abf.rosalinux.ru/uxteam/ROSA_Media_Player/tree/develop
 
 Source:		%name-%version.tar.gz
 Patch0:     %name-g++8.patch
+# Patch from ROSA
+Patch1:     rosa-media-player-1.6.11-wildmidi4.patch
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
@@ -42,6 +44,7 @@ record screen presentations and many other things.
 %prep
 %setup -q -n %name
 %patch0 -p2
+%patch1 -p1
 
 %build
 %make_build QMAKE=%_qt4dir/bin/qmake LRELEASE=%_qt4dir/bin/lrelease PREFIX=%_prefix
@@ -61,6 +64,9 @@ strip %buildroot%_bindir/%name
 %_datadir/apps/solid/actions/Open-with-ROMP.desktop
 
 %changelog
+* Fri Dec 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.11-alt4
+- Rebuilt with new wildmidi.
+
 * Fri Feb 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.6.11-alt3
 - no return statement in the non-void function fixed (according g++8)
 

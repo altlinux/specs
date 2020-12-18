@@ -1,16 +1,14 @@
-%define _unpackaged_files_terminate_build 1
+%define oname wildmidi
 
-%define soname 2
-
-Name: wildmidi
-Version: 0.4.3
-Release: alt1
+Name: %{oname}1
+Version: 0.3.8
+Release: alt2
 Summary: WildMidi Open Source Midi Sequencer
 Group: Sound
 
 License: GPLv3+
 Url: http://www.mindwerks.net/projects/wildmidi/
-Source: %name-%version.tar
+Source: %oname-%version.tar
 
 # Automatically added by buildreq on Tue May 20 2014 (-bi)
 # optimized out: cmake-modules elfutils python-base
@@ -22,7 +20,7 @@ Requires: timidity-instruments
 WildMidi is a software midi play which has a core softsynth library that can be use with other applications.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %build
 %cmake
@@ -31,12 +29,12 @@ WildMidi is a software midi play which has a core softsynth library that can be 
 %install
 %cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
 
-%files
-%_bindir/%name
-%_man1dir/*
-%_man5dir/*
+#files
+#_bindir/%name
+#_man1dir/*
+#_man5dir/*
 
-%define libname lib%{name}%{soname}
+%define libname lib%oname
 
 %package -n %libname
 Summary: Library for wildmidi
@@ -47,30 +45,28 @@ License: LGPLv3+
 This package contains library files for wildmidi
 
 %files -n %libname
-%_libdir/*.so.%{soname}
-%_libdir/*.so.%{soname}.*
+%_libdir/*.so.*
 
 %define develname lib%name-devel
 
 %package -n %develname
 Summary: Development files for wildmidi
 Group: Development/Other
-Requires: %libname = %EVR
-Provides: %libname-devel = %EVR
+Requires: %libname = %version
 License: LGPLv3+
 
 %description -n %develname
 This package contains development files for wildmidi
 
-%files -n %develname
-%_libdir/*.so
-%_includedir/*.h
-%_pkgconfigdir/*
-%_man3dir/*.3*
+#files -n %develname
+#doc docs/ProgRef.odt
+#_libdir/*.so
+#_includedir/*.h
+#_man3dir/*.3*
 
 %changelog
-* Fri Dec 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.3-alt1
-- Updated to upstream version 0.4.3 (Fixes: CVE-2017-1000418).
+* Fri Dec 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.8-alt2
+- Rebuilt as legacy library.
 
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 0.3.8-alt1
 - Autobuild version bump to 0.3.8
