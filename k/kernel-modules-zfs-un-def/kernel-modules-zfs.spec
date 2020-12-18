@@ -1,5 +1,5 @@
 %define module_name zfs
-%define module_version 0.8.4
+%define module_version 0.8.6
 %define module_release alt1
 
 %define flavour un-def
