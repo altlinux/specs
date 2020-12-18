@@ -1,7 +1,7 @@
 %add_findreq_skiplist /usr/share/make-initrd/features/*
 
 Name: make-initrd-netboot
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Netboot feature for make-initrd
@@ -38,6 +38,9 @@ cp -a netboot %buildroot/usr/share/make-initrd/features/
 %_datadir/make-initrd/features/netboot
 
 %changelog
+* Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.1-alt1
+- Fixed dhcpcd >= 9.0.0 support (quote all lease variable values).
+
 * Thu Dec 17 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4-alt1
 - Added dependencies for programs used in initrd.
 - Fixed work with and switched to dhcpcd >= 9.0.0.
