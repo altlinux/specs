@@ -1,6 +1,6 @@
 Name:          canorus
 Version:       0.7.3.git3a25392
-Release:       alt1
+Release:       alt2
 Summary:       Free cross-platform music score editor
 Group:         Sound
 License:       GPLv3+
@@ -9,15 +9,20 @@ Vcs:           https://github.com/canorusmusic/canorus.git
 Packager:      Ildar Mulyukov <ildar@altlinux.ru>
 
 Source:        %name-%version.tar
+Patch:         config.patch
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: swig
 BuildRequires: desktop-file-utils
 BuildRequires: convert
+BuildRequires: libruby-devel
 BuildRequires: libalsa-devel
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: zlib-devel
 BuildRequires: qt5-svg-devel
+%add_optflags -Wno-error=deprecated-declarations
 
 %add_findreq_skiplist %_datadir/%name/*
 
@@ -34,21 +39,15 @@ NoteEdit and others.
 
 %prep
 %setup
+%patch
 
 %build
-%cmake_insource
-%make_build VERBOSE=1
+%cmake -DTTF_INSTALL_DIR:PATH=%_datadir/fonts/ttf/%name \
+# TODO       -DNO_RUBY:BOOL=OFF
+%cmake_build
 
 %install
-find -name cmake_install.cmake | xargs -i \
-	subst 's|/usr/share/canorus/doc|%buildroot/usr/share/canorus/doc|' {}
-%makeinstall_std
-%find_lang %name
-rm -f %buildroot%_datadir/%name/*.so
-rm -f %buildroot%_libdir/*.py
-rm -rf %buildroot%_datadir/fonts/truetype/
-mkdir -p %buildroot%_datadir/fonts/ttf/%name/
-install -m644 src/fonts/Emmentaler-14.ttf %buildroot%_datadir/fonts/ttf/%name/
+%cmakeinstall_std
 
 mkdir -p %buildroot%_desktopdir
 install -m644 %name.desktop %buildroot%_desktopdir
@@ -62,18 +61,23 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=AudioVideo \
 	%buildroot%_desktopdir/canorus.desktop
 
+
 %post
 fc-cache %_datadir/fonts/ttf/%name ||:
 
 %files
+%doc AUTHORS DEVELOPERS NEWS README TODO
 %_bindir/%name
-%_desktopdir/%name.desktop
 %_datadir/%name
 %_datadir/fonts/ttf/%name
 %_iconsdir/hicolor/*/apps/*.png
-%doc AUTHORS DEVELOPERS NEWS README TODO
+%_desktopdir/%name.desktop
+
 
 %changelog
+* Thu Aug 27 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.3.git3a25392-alt2
+- ! build
+
 * Wed Jan 22 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.3.git3a25392-alt1
 - updated (^) 0.6svn -> 0.7.3.git3a25392
 
