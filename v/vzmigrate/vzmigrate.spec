@@ -1,5 +1,5 @@
 Name:     vzmigrate
-Version:  7.0.138
+Version:  7.0.139
 Release:  alt1
 
 Summary:  Virtuozzo migration tool
@@ -79,6 +79,9 @@ make install \
 %doc *.md
 
 %changelog
+* Sat Dec 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.139-alt1
+- 7.0.139
+
 * Tue Nov 03 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.138-alt1
 - 7.0.138
 
