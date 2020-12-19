@@ -1,5 +1,5 @@
 Name:       dmenu-wl
-Version:    0.1
+Version:    0.1.51.g304c8e9
 Release:    alt1
 Summary:    Dynamic menu for wayland
 Group:      Graphical desktop/Other
@@ -40,5 +40,8 @@ BuildRequires:  pkgconfig(xkbcommon)
 %_man1dir/*
 
 %changelog
+* Sat Dec 19 2020 Alexey Gladkov <legion@altlinux.ru> 0.1.51.g304c8e9-alt1
+- Update from git.
+
 * Wed Aug 07 2019 Alexey Gladkov <legion@altlinux.ru> 0.1-alt1
 - New version (0.1).
