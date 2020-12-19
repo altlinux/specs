@@ -1,13 +1,13 @@
 %define _sover 4.7
 Name: libdb%_sover
 Version: %_sover.25
-Release: alt9
+Release: alt10
 %define srcname db-%version
 
 Summary: Berkeley database library
-License: BSD-style
+License: Sleepycat
 Group: System/Libraries
-Url: http://www.oracle.com/technology/products/berkeley-db/db/index.html
+Url: https://www.oracle.com/database/technologies/related/berkeleydb-downloads.html
 
 # http://download.oracle.com/berkeley-db/db-%srcname.tar.gz
 Source:  %srcname.tar
@@ -26,6 +26,8 @@ Patch4: db-4.7.25.4.patch
 Patch100: db-4.7.25-alt-build.patch
 Patch101: db-4.7.25-alt-bound.patch
 Patch102: db-4.7.25-alt-glibc.patch
+Patch103: db-4.7.25-alt-env_file.patch
+Patch104: db-4.7.25-alt-env_open-CVE-2017-10140.patch
 
 Provides: libdb4 = %version-%release, db4 = %version-%release
 Conflicts: glibc <= 6:2.1.3
@@ -46,7 +48,7 @@ Conflicts: glibc <= 6:2.1.3
 %def_disable java
 #endif
 %def_disable posixmutexes
-%def_enable rpc
+%def_disable rpc
 %def_disable tcl
 %def_disable test
 %def_disable uimutexes
@@ -58,6 +60,7 @@ BuildPreReq: rpm-build >= 4.0.4-alt1
 %{?_enable_dump185:BuildPreReq: libdb1-devel}
 %{?_enable_java:BuildPreReq: jdkgcj, sharutils, /proc}
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
+%{?_enable_rpc:BuildPreReq: rpcgen libtirpc-devel}
 
 %package -n db%_sover-utils
 Summary: Command line tools for managing Berkeley DB databases
@@ -316,9 +319,11 @@ This package contains documentation for developers.
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
+%patch103 -p1
+%patch104 -p1
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing%{?_enable_rpc: -I/usr/include/tirpc}
 %define _configure_script ../dist/configure
 
 pushd build_unix
@@ -347,7 +352,7 @@ pushd build_unix
 		xargs -r0 grep -lZ '^sys_lib_dlsearch_path_spec="' -- |
 		xargs -r0 sed -i 's|^\(sys_lib_dlsearch_path_spec="\).*|\1/%_lib %_libdir"|' --
 	# SMP-incompatible build.
-	make LDFLAGS=-Wl,--no-undefined
+	make LDFLAGS=-Wl,--no-undefined%{?_enable_rpc: LIBCSO_LIBS='-lpthread -ltirpc'}
 popd
 
 rm -f examples_*/tags
@@ -499,6 +504,10 @@ done
 %_libdir/libdb-[0-9]*.a
 
 %changelog
+* Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt10
+- Do not access DB_CONFIG when env->db_home is not set (fixes: CVE-2017-10140).
+- Build without RPC support.
+
 * Sat Mar 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.7.25-alt9
 - Rebuilt without Java and Tcl support.
 
