@@ -1,9 +1,9 @@
 Name: procmail
 Version: 3.22
-Release: alt10
+Release: alt11
 
 Summary: The procmail mail processing program
-License: GPLv2+ or Artistic
+License: GPLv2+ or Artistic-1.0
 Group: Networking/Mail
 #Url: http://www.procmail.org
 Url: https://en.wikipedia.org/wiki/Procmail
@@ -28,6 +28,7 @@ Patch12: procmail-3.22-deb-771958-bound.patch
 Patch13: procmail-3.22-deb-769937-formail-bound.patch
 Patch14: procmail-3.22-deb-876511-formail-bound-CVE-2017-16844.patch
 Patch15: procmail-3.22-rh-formail-uninitialized.patch
+Patch16: procmail-3.22-alt-autoconf-strstr.patch
 
 Provides: MDA
 # This procmail requires useradd with mailspool support installed.
@@ -43,21 +44,7 @@ installed by default as the local delivery agent.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
+%autopatch -p1
 
 find -type f -name \*.orig -delete
 
@@ -100,6 +87,9 @@ install -pm644 %_sourcedir/mailstat.1 %buildroot%_man1dir/
 %doc Artistic FAQ FEATURES HISTORY.xz KNOWN_BUGS README README.Maildir examples
 
 %changelog
+* Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 3.22-alt11
+- Fixed build with gcc-10.
+
 * Mon Mar 26 2018 Dmitry V. Levin <ldv@altlinux.org> 3.22-alt10
 - Applied various fixes from Debian 3.22-26 package, including
   fixes for memory corruption bugs in formail (fixes: CVE-2017-16844).
