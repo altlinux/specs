@@ -2,7 +2,7 @@
 
 Name: seabios
 Version: 1.14.0
-Release: alt1
+Release: alt2
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -18,6 +18,7 @@ Patch: %name-%version-snapshot.patch
 Patch0001: 0001-Workaround-for-a-win8.1-32-S4-resume-bug.patch
 Patch0002: 0002-reserve-more-memory-on-fseg.patch
 Patch0003: 0003-vgabios-Reorder-video-modes-to-work-around-a-Windows.patch
+Patch4: alt-skip-flags-when-parse-objdump-section.patch
 
 Source10: config.vga.cirrus
 Source11: config.vga.isavga
@@ -59,6 +60,7 @@ SeaVGABIOS is an open-source VGABIOS implementation.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch4 -p1
 
 echo %version > .version
 
@@ -113,6 +115,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Sat Dec 19 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.14.0-alt2
+- Fix rebuild: skip flags when parse objdump section
+
 * Sat Sep 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
