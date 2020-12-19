@@ -1,6 +1,6 @@
 Name: quota
 Version: 4.06.0.4.43b6
-Release: alt1
+Release: alt2
 Epoch: 2
 
 %def_enable rpc
@@ -21,7 +21,7 @@ Source: %name-%version-%release.tar
 
 Requires: vitmp
 BuildRequires: libe2fs-devel
-%{?_enable_rpc:BuildRequires: libtirpc-devel}
+%{?_enable_rpc:BuildRequires: rpcgen libtirpc-devel}
 
 %description
 This package contains system administration tools for monitoring
@@ -78,8 +78,9 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 
 %find_lang %name
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %post rpc
 %post_service rpc.rquotad
@@ -112,6 +113,10 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 %endif # rpc
 
 %changelog
+* Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 2:4.06.0.4.43b6-alt2
+- Fixed build with glibc-utils >= 2.32 no longer providing rpcgen
+  by adding rpcgen to BuildRequires.
+
 * Tue Nov 24 2020 Dmitry V. Levin <ldv@altlinux.org> 2:4.06.0.4.43b6-alt1
 - v4.05-3-gf2eb78c -> v4.06-4-g43b6e31.
 
