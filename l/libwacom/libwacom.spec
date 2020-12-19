@@ -13,7 +13,7 @@
 
 Name: libwacom
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -30,10 +30,10 @@ Source: %name-%version.tar
 Requires: %name-data = %version-%release
 
 BuildRequires(pre): meson rpm-macros-valgrind
-BuildRequires: glib2-devel libgudev-devel libxml2-devel
+BuildRequires: /proc glib2-devel libgudev-devel libxml2-devel
 %{?_enable_docs:BuildRequires: doxygen graphviz}
 %{?_enable_tests:
-BuildRequires: /proc python3-module-pytest
+BuildRequires: python3-module-pytest
 BuildRequires: libudev-devel python3-module-pyudev
 BuildRequires: libevdev-devel python3-module-libevdev
 BuildRequires: valgrind}
@@ -115,6 +115,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Dec 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1.1
+- fixed BR with disabled %%check
+
 * Thu Dec 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - 1.7
 
