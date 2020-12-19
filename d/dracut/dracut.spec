@@ -11,8 +11,8 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 050
-Release: alt4.git.831e31
+Version: 051
+Release: alt1
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -305,6 +305,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/04watchdog
 %dracutlibdir/modules.d/04watchdog-modules
 %dracutlibdir/modules.d/05busybox
+%dracutlibdir/modules.d/06dbus
 %dracutlibdir/modules.d/06rngd
 %dracutlibdir/modules.d/10i18n
 %dracutlibdir/modules.d/30convertfs
@@ -387,6 +388,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/02systemd-networkd
 %dracutlibdir/modules.d/35network-manager
 %dracutlibdir/modules.d/35network-legacy
+%dracutlibdir/modules.d/35network-wicked
 %dracutlibdir/modules.d/40network
 %dracutlibdir/modules.d/45ifcfg
 %dracutlibdir/modules.d/90kernel-network-modules
@@ -443,6 +445,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Fri Dec 18 2020 Alexey Shabalin <shaba@altlinux.org> 051-alt1
+- 051
+
 * Sun Nov 08 2020 Alexey Shabalin <shaba@altlinux.org> 050-alt4.git.831e31
 - Fixed path /usr/lib/udev -> /lib/udev
 
