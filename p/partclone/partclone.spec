@@ -1,10 +1,11 @@
 %def_enable xfs
 %def_disable jfs
+%def_disable apfs
 %def_enable reiser4
 %def_enable checkfs
 
 Name: partclone
-Version: 0.3.12
+Version: 0.3.17
 Release: alt1
 
 Summary: File System Clone Utilities
@@ -15,13 +16,12 @@ Url: http://partclone.org
 # Upstream: git://github.com/Thomas-Tsai/partclone.git
 Source: http://download.sourceforge.net/%name/%name-%version.tar
 Patch1: partclone-0.3.6-no_fail_mbr.patch
-Patch2: partclone-0.3.12-few_warns.patch
+Patch2: partclone-0.3.17-few_warns.patch
 Patch3: partclone-0.3.12-checkfs.patch
 
 # Automatically added by buildreq on Fri Dec 04 2015
 # optimized out: libaal-devel libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config xz
 BuildRequires: libblkid-devel libe2fs-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libuuid-devel
-BuildRequires: libvmfs-devel > 0.2.1-alt1
 BuildRequires: libssl-devel
 %if_enabled xfs
 BuildRequires: libxfs-devel
@@ -45,11 +45,11 @@ BuildRequires: reiser4progs
 %endif
 %endif
 
-# TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils)
+# TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils), apfs
 
 %description
 A set of file system clone utilities, including ext2/3/4,%{?_enable_xfs: xfs,}%{?_enable_jfs: jfs,}
-reiserfs,%{?_enable_reiser4: reiser4,} btrfs, ntfs, fat, vmfs and hfs+ file systems.
+reiserfs,%{?_enable_reiser4: reiser4,}%{?_enable_apfs: apfs,} btrfs, ntfs, fat and hfs+ file systems.
 
 %prep
 %setup
@@ -71,12 +71,13 @@ echo '#define git_version "%version"' > src/version.h
 	--enable-hfsp \
 	--enable-fat \
 	--enable-ntfs \
-	--enable-vmfs \
+	--disable-vmfs \
 	%{subst_enable reiser4} \
+	%{subst_enable apfs} \
 	%{subst_enable xfs} \
 	%{subst_enable jfs} \
 	--enable-ncursesw
-%make_build CC="gcc -I/usr/include/vmfs"
+%make_build CC="gcc"
 
 %install
 %makeinstall_std
@@ -106,10 +107,14 @@ popd
 %_man8dir/*
 
 %changelog
+* Sun Dec 20 2020 Leonid Krivoshein <klark@altlinux.org> 0.3.17-alt1
+- Updated to upstream version 0.3.17 from SourceForge.
+- Dropped VMFS support.
+
 * Wed Feb 19 2020 Leonid Krivoshein <klark@altlinux.org> 0.3.12-alt1
 - Updated to upstream version 0.3.12 from GitHub.
 - Fixed upstream sources for suppress few warnings.
-- Enabled checkfs test suite based on modern vm-run future.
+- Enabled checkfs test suite based on modern vm-run feature.
 
 * Wed Jul 31 2019 Michael Shigorin <mike@altlinux.org> 0.3.6-alt0.4.git96f986f
 - introduce reiser4 knob (on by default)
