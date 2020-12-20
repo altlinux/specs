@@ -1,13 +1,12 @@
 Name: cpuburn
-Version: 1.4
-Release: alt5.qa1
+Version: 1.4a
+Release: alt1
 
 Summary: CPU testing utilities
-License: GPL
+License: GPL-2.0-only
 Group: Monitoring
 Url: http://pages.sbcglobal.net/redelm/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 %arm
 
 # http://pages.sbcglobal.net/redelm/cpuburn_1_4_tar.gz
 Source: cpuburn-%version.tar
@@ -24,23 +23,51 @@ and P5 Pentium chips.
 %patch -p1
 
 %build
+%ifarch %ix86 x86_64
 %define cpulist P6 BX K6 K7 MMX P5
 for n in %cpulist; do
-	gcc -m32 -Wa,--noexecstack -nostdlib -o burn$n burn$n.S
+	gcc -m32 -s -Wa,--noexecstack -no-pie -fno-PIE -nostdlib -o burn$n burn$n.S
 done
+%endif
+%ifarch %arm
+make -C ARM CC='gcc -s -Wa,--noexecstack -no-pie -fno-PIE'
+%endif
 
 %install
+mkdir -p %buildroot%_bindir
+%ifarch %ix86 x86_64
 for n in %cpulist; do
-	install -p -m755 -D burn$n %buildroot%_bindir/burn$n
+	install -p -m755 burn$n %buildroot%_bindir/
 done
+%endif
+%ifarch %arm
+install -p -m755 ARM/burnCortexA8 %buildroot%_bindir/
+%endif
+
+%check
+status=0
+for f in %buildroot%_bindir/*; do
+	time timeout 1 "$f" && status=1 || {
+		[ $? -eq 124 ] ||
+			status=1
+	}
+done
+exit $status
 
 %files
-%doc Design README
 %_bindir/*
+%ifarch %ix86 x86_64
+%doc Design README
+%endif
+%ifarch %arm
+%doc ARM/Design
+%endif
 
 %changelog
-* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt5.qa1
-- NMU: rebuilt for debuginfo.
+* Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4a-alt1
+- 1.4 -> 1.4a.
+- Enabled on %%armh.
+- Fixed build when gcc is configured with --enable-default-pie.
 
 * Tue Jan 23 2007 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt5
 - Mark utilities as not requiring executable stack.
