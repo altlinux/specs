@@ -1,6 +1,6 @@
 Name: gnupg
 Version: 1.4.23
-Release: alt1
+Release: alt2
 
 Summary: The GNU Privacy Guard
 # see e.e. keyserver subdirectory
@@ -104,6 +104,10 @@ rm -rv %buildroot%_datadir/%name
 
 %find_lang %name
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %pre
 /usr/sbin/groupadd -r -f _gnupg
 
@@ -129,6 +133,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.23-alt2
+- Fixed build with gcc-10.
+
 * Mon Jun 11 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.23-alt1
 - 1.4.22 -> 1.4.23.
 
