@@ -3,11 +3,11 @@
 
 Name: autoconf-defaults
 Version: 2.69
-Release: alt4
+Release: alt5
 Epoch: 2
 
 Summary: %vendor setup for the GNU Autoconf
-License: None
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 BuildArch: noarch
 Url: http://git.altlinux.org/gears/a/autoconf-defaults.git
@@ -30,18 +30,15 @@ This package provides default %summary.
 %install
 mkdir -p %buildroot{%_bindir,%_datadir,%_infodir,%_man1dir}
 
-for i in %_bindir/{autoconf,autoheader,autom4te,autoreconf,autoscan,autoupdate,ifnames}-default; do
-	ln -rs %buildroot"${i/default/%autoconf_version}" \
-		%buildroot"$i"
+for i in autoconf autoheader autom4te autoreconf autoscan autoupdate ifnames; do
+	ln -rs %buildroot%_bindir/$i-%autoconf_version \
+	       %buildroot%_bindir/$i-default
+	ln -rs %buildroot%_man1dir/$i-%autoconf_version.1.xz \
+	       %buildroot%_man1dir/$i.1.xz
 done
 
 for i in %_datadir/autoconf %_infodir/autoconf.info.xz; do
 	ln -rs %buildroot"${i/autoconf/autoconf-%autoconf_version}" \
-		%buildroot"$i"
-done
-
-for i in %_man1dir/{autoconf,autoheader,autom4te,autoreconf,autoscan,autoupdate,config.guess,config.sub,ifnames}.1.xz; do
-	ln -rs %buildroot"${i/.1/-%autoconf_version.1}" \
 		%buildroot"$i"
 done
 
@@ -66,10 +63,11 @@ done
 %_man1dir/autoreconf.1.xz
 %_man1dir/autoscan.1.xz
 %_man1dir/autoupdate.1.xz
-%_man1dir/config.guess.1.xz
-%_man1dir/config.sub.1.xz
 %_man1dir/ifnames.1.xz
 
 %changelog
+* Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt5
+- Moved config.guess.1 and config.sub.1 to gnu-config.
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt4
 - Initial revision (replaces autoconf alternatives).
