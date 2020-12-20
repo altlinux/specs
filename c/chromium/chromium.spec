@@ -28,7 +28,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        87.0.4280.66
+Version:        87.0.4280.88
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -82,6 +82,7 @@ Patch017: 0017-FEDORA-vtable-symbol-undefined.patch
 Patch018: 0018-FEDORA-remove-noexcept.patch
 Patch019: 0019-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch020: 0020-ALT-Fix-memcpy.patch
+Patch021: 0021-ALT-Fix-build.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -194,6 +195,7 @@ tar -xf %SOURCE1
 %patch018 -p1
 %patch019 -p1
 %patch020 -p1
+%patch021 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -451,6 +453,16 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sun Dec 20 2020 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.88-alt1
+- New version (87.0.4280.88).
+- Security fixes:
+  - CVE-2020-16037: Use after free in clipboard.
+  - CVE-2020-16038: Use after free in media.
+  - CVE-2020-16039: Use after free in extensions.
+  - CVE-2020-16040: Insufficient data validation in V8.
+  - CVE-2020-16041: Out of bounds read in networking.
+  - CVE-2020-16042: Uninitialized Use in V8.
+
 * Sat Nov 21 2020 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.66-alt1
 - New version (87.0.4280.66).
 - Security fixes:
