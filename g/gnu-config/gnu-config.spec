@@ -1,5 +1,5 @@
 Name: gnu-config
-Version: 1.0.968.888c
+Version: 1.0.971.ff53
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
@@ -12,6 +12,8 @@ BuildArch: noarch
 # git://git.altlinux.org/gears/g/gnu-config.git
 Source: %name-%version-%release.tar
 
+Conflicts: autoconf < 2:2.69-alt5
+
 %description
 This packages contains a recent revision of GNU config.guess and
 config.sub files.
@@ -20,17 +22,24 @@ config.sub files.
 %setup -n %name-%version-%release
 
 %install
-mkdir -p %buildroot%_datadir/%name
+mkdir -p %buildroot{%_datadir/%name,%_man1dir}
 install -pm755 config.guess config.sub %buildroot%_datadir/%name/
+install -pm644 doc/config.guess.1 doc/config.sub.1 %buildroot%_man1dir/
 %add_findreq_skiplist %_datadir/%name/config.guess
+%define _unpackaged_files_terminate_build 1
 
 %check
 %make_build -k check
 
 %files
 %_datadir/%name/
+%_man1dir/*.1*
 
 %changelog
+* Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.0.971.ff53-alt1
+- release-1-0-968-g888c8e3 -> release-1-0-971-gff53d91.
+- Packaged manpages.
+
 * Thu Nov 19 2020 Dmitry V. Levin <ldv@altlinux.org> 1.0.968.888c-alt1
 - release-1-0-961-g1c43980 -> release-1-0-968-g888c8e3.
 
