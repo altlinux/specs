@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 %define api_version 3.0
 %define rname gtkmm
 %define ver_major 3.24
 %def_enable atkmm
 %def_disable demos
 %def_enable check
-%{?_enable_snapshot:%def_enable docs}
+%def_enable docs
 
 Name: libgtkmm3
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.3
+Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
 License: GPL-2.0 and LGPL-2.1
@@ -30,11 +30,12 @@ Provides: %rname = %version
 %define atkmm_ver 2.24.2
 %define cairo_ver 1.12.0
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++ mm-common libgtk+3-devel >= %gtk_ver
 BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= %pangomm_ver
 BuildRequires: libcairomm-devel >= %cairo_ver libepoxy-devel
 %{?_enable_atkmm:BuildRequires: libatkmm-devel >= %atkmm_ver}
-%{?_enable_docs:BuildRequires: doxygen xsltproc graphviz}
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 %{?_enable_check:BuildRequires: xvfb-run}
 
 %description
@@ -75,24 +76,22 @@ The %name-demos package contains source code of demo programs for %name.
 %setup -n %rname-%version
 
 %build
-%if_enabled snapshot
-NOCONFIGURE=1 ./autogen.sh
-%else
-%autoreconf
-%endif
-%configure \
-	--disable-static \
-	%{?_disable_atkmm:--disable-api-atkmm} \
-	%{?_enable_snapshot:--enable-maintainer-mode \
-	%{?_enable docs:--enable-documentation}}
+%{?_enable_snapshot:mm-common-prepare -f}
+%meson \
+    %{?_disable_atkmm:-Dbuild-atkmm-api=false} \
+    %{?_disable_demos:-Dbuild-demos=false} \
+    %{?_enable_docs:-Dbuild-documentation=true} \
+    %{?_enable_snapshot:-Dmaintainer-mode=true
+    -Dbuild-documentation=true}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std  gtkmm_docdir=%_docdir/%rname-%api_version
+%meson_install
 
 %check
-xvfb-run %make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files
 %doc AUTHORS NEWS
@@ -118,6 +117,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
+- 3.24.3 (ported to Meson build system)
+
 * Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt3
 - updated to 3.24.2-81-gcfa54b63
 

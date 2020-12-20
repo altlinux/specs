@@ -1,9 +1,14 @@
+%def_disable snapshot
+
 %define rname pangomm
 %define major 2.42
 %define api_ver 1.4
 
+%def_enable docs
+%def_enable check
+
 Name: lib%rname
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -13,16 +18,22 @@ Url: http://gtkmm.sourceforge.net/
 
 Conflicts: libgtkmm2 < 2.14.1
 
+%if_enabled snapshot
+Source: %rname-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.xz
+%endif
 
 %define glib_ver 2.48.0
-%define cairo_ver 1.12
+%define cairo_ver 1.2.2
 %define pango_ver 1.41.0
 
+BuildRequires(pre): meson
 BuildRequires: mm-common gcc-c++
 BuildRequires: libcairomm-devel >= %cairo_ver
 BuildRequires: libglibmm-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
 This library provides a C++ interface to pango.
@@ -51,12 +62,20 @@ BuildArch: noarch
 %setup -n %rname-%version
 
 %build
-%configure \
-	--disable-static
-%make_build
+%{?_enable_snapshot:mm-common-prepare -f}
+%meson \
+    %{?_enable_docs:-Dbuild-documentation=true} \
+    %{?_enable_snapshot:-Dmaintainer-mode=true
+    -Dbuild-documentation=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %doc AUTHORS NEWS
@@ -68,11 +87,16 @@ BuildArch: noarch
 %_libdir/%rname-%api_ver
 %_pkgconfigdir/*.pc
 
+%if_enabled docs
 %files doc
 %_datadir/devhelp/books/%rname-%api_ver
 %_docdir/%rname-%api_ver
+%endif
 
 %changelog
+* Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.2-alt1
+- 2.42.2 (ported to Meson build system)
+
 * Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.1-alt1
 - 2.42.1
 - fixed License tag
