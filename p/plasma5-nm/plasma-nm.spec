@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.20.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -284,6 +284,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Mon Dec 21 2020 Oleg Solovyov <mcpain@altlinux.org> 1:5.20.4-alt2
+- Fix bold text on wireless passphrase request dialog
+
 * Wed Dec 02 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.4-alt1
 - new version
 
