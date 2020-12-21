@@ -1,6 +1,6 @@
 Name: xfce4-mount-plugin
-Version: 1.1.3
-Release: alt2.ge162062
+Version: 1.1.4
+Release: alt1
 
 Summary: Mount plugin for Xfce Desktop
 License: GPLv2+
@@ -51,6 +51,9 @@ information on each device.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Dec 21 2020 Mikhail Efremov <sem@altlinux.org> 1.1.4-alt1
+- Updated to 1.1.4.
+
 * Mon Sep 14 2020 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt2.ge162062
 - Fixed BR.
 - Added Vcs tag.
