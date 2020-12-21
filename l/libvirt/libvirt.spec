@@ -170,7 +170,7 @@
 
 Name: libvirt
 Version: 6.10.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -246,7 +246,7 @@ BuildRequires: python3-module-docutils
 BuildRequires: zlib-devel
 BuildRequires: iproute2
 BuildRequires: dmidecode
-BuildRequires: libtirpc-devel
+BuildRequires: libtirpc-devel /usr/bin/rpcgen
 BuildRequires: glibc-utils
 BuildRequires: kmod
 BuildRequires: radvd
@@ -1342,6 +1342,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Dec 21 2020 Alexey Shabalin <shaba@altlinux.org> 6.10.0-alt2
+- fixed rebuild
+
 * Fri Dec 04 2020 Alexey Shabalin <shaba@altlinux.org> 6.10.0-alt1
 - 6.10.0
 
