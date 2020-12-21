@@ -2,7 +2,7 @@
 
 Name: seabios
 Version: 1.14.0
-Release: alt2
+Release: alt3
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -11,7 +11,7 @@ ExclusiveArch: x86_64
 License: LGPLv3
 Url: http://www.seabios.org
 
-# git://git.seabios.org/seabios.git
+Vcs: https://git.seabios.org/seabios.git
 Source: %name-%version.tar
 Patch: %name-%version-snapshot.patch
 
@@ -33,6 +33,7 @@ Source19: config.vga.virtio
 Source20: config.vga.bochs-display
 Source21: config.vga.ramfb
 Source22: config.vga.ati
+Source23: config.seabios-microvm
 
 BuildRequires: python3
 BuildRequires: acpica
@@ -87,6 +88,7 @@ build_bios %SOURCE15 Csm16.bin bios-csm.bin
 build_bios %SOURCE16 bios.bin.elf bios-coreboot.bin
 build_bios %SOURCE17 bios.bin bios.bin
 build_bios %SOURCE18 bios.bin bios-256k.bin
+build_bios %SOURCE23 bios.bin bios-microvm.bin
 
 # seavgabios
 for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE19 %SOURCE20 %SOURCE21 %SOURCE22 ; do
@@ -100,6 +102,7 @@ install -m 0644 binaries/bios.bin %buildroot%_datadir/%name/bios.bin
 install -m 0644 binaries/bios-256k.bin %buildroot%_datadir/%name/bios-256k.bin
 install -m 0644 binaries/bios-csm.bin %buildroot%_datadir/%name/bios-csm.bin
 install -m 0644 binaries/bios-coreboot.bin %buildroot%_datadir/%name/bios-coreboot.bin
+install -m 0644 binaries/bios-microvm.bin %buildroot%_datadir/%name/bios-microvm.bin
 
 mkdir -p %buildroot%_datadir/seavgabios
 install -m 0644 binaries/vgabios*.bin %buildroot%_datadir/seavgabios
@@ -115,6 +118,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Sat Dec 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt3
+- add microvm bios
+
 * Sat Dec 19 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.14.0-alt2
 - Fix rebuild: skip flags when parse objdump section
 
