@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ispc
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -80,7 +80,7 @@ This package will try to build all %name examples.
 	-DISPC_INCLUDE_TESTS=OFF \
 	-DISPC_INCLUDE_EXAMPLES=OFF \
 
-%cmake_build
+%cmake_build VERBOSE=1
 
 %pre checkinstall
 set -ex
@@ -115,6 +115,9 @@ ispc --support-matrix
 ./run_tests.py --jobs=$(nproc) --non-interactive --arch=$(arch)
 
 %changelog
+* Mon Dec 21 2020 Vitaly Chikunov <vt@altlinux.org> 1.15.0-alt1
+- Update to v1.15.0 (2020-12-18).
+
 * Sun Aug 30 2020 Vitaly Chikunov <vt@altlinux.org> 1.14.1-alt1
 - Update to v1.14.1 (2020-08-28).
 
