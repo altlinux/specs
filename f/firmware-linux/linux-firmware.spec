@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20201130
+Version: 20201216
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,17 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Dec 21 2020 Cronbuild Service <cronbuild@altlinux.org> 20201216-alt1
+- upstream changes (GIT 646f159):
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + add firmware for Lontium LT9611UXC DSI to HDMI bridge (thx Dmitry Baryshkov)
+  + mediatek: update MT8173 VPU firmware to v1.1.6 (thx Irui Wang)
+  + QCA : Updated firmware files for WCN3991 (thx sampnimm)
+
 * Sun Dec 06 2020 Cronbuild Service <cronbuild@altlinux.org> 20201130-alt1
 - upstream changes (GIT 7455a36):
   + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
