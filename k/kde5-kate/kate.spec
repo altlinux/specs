@@ -4,7 +4,7 @@
 %define libkateinterfaces libkateinterfaces%sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -31,7 +31,7 @@ BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-ki
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwallet-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel kf5-syntax-highlighting-devel
 
 %description
 A fast and advanced text editor with nice plugins
@@ -124,7 +124,7 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kate.desktop
 kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5icon/hicolor/*/apps/kate.*
 #%_K5icon/hicolor/*/actions/*.*
 
@@ -166,6 +166,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Fri Dec 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

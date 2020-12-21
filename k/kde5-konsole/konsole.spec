@@ -4,7 +4,7 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -122,6 +122,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Fri Dec 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
