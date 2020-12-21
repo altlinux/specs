@@ -2,7 +2,7 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.1.26
+Version: 1.1.28
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -11,8 +11,8 @@ License: LGPL-3.0
 Url: https://lsp-plug.in/
 
 #Source: https://sourceforge.net/projects/%name/files/%name/%version/%name-src-%version.tar.gz
-#VCS: https://github.com/sadko4u/lsp-plugins
-Source: https://github.com/sadko4u/%name/archive/%name-%version.tar.gz
+Vcs: https://github.com/sadko4u/lsp-plugins
+Source: https://github.com/sadko4u/%name/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++
@@ -64,7 +64,7 @@ BuildArch: noarch
 Documentation for LSP (Linux Studio Plugins) plugins.
 
 %prep
-%setup -n %name-%name-%version
+%setup -n %name-%version
 
 %build
 export PLATFORM=Linux SYSTEM=Linux
@@ -110,6 +110,9 @@ export VERSION=%version
 
 
 %changelog
+* Mon Dec 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.28-alt1
+- 1.1.28
+
 * Thu Sep 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.26-alt1
 - 1.1.26
 
