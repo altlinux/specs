@@ -1,6 +1,6 @@
 Name: dejagnu
 Version: 1.6.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A front end for testing other programs
@@ -33,11 +33,16 @@ into software development).
 
 %install
 %makeinstall_std
-%add_findreq_skiplist %_datadir/%name/libexec/config.guess
+ln -rsnf %buildroot/usr/share/gnu-config/config.guess \
+	%buildroot%_datadir/%name/libexec/
 
 %check
 [ -w /dev/ptmx ] || exit 0
 %make_build -k check
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files
 %_bindir/*
@@ -48,6 +53,9 @@ into software development).
 %doc NEWS README AUTHORS ChangeLog
 
 %changelog
+* Mon Dec 21 2020 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.2-alt2
+- Replaced config.guess file with a symlink.
+
 * Wed Nov 28 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.2-alt1
 - dejagnu-1.5.3-release~2-24-gdb24ef8 -> dejagnu-1.6.2-release.
 
