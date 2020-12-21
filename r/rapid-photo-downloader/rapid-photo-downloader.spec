@@ -1,5 +1,5 @@
 Name: rapid-photo-downloader
-Version: 0.9.24
+Version: 0.9.25
 Release: alt1
 
 %define xdg_name net.damonlynch.rapid_photo_downloader
@@ -23,7 +23,7 @@ Requires: python3-module-typing >= 3.6.4
 
 Requires: python3-module-PyQt5 >= 5.9.2 libqt5-svg
 Requires: python3-module-zmq >= 16.0.2
-Requires: python3-module-easygui
+Requires: python3-module-easygui >= 0.98.1
 Requires: python3-module-pymediainfo >= 2.2.0
 Requires: python3-module-rawkit >= 0.6.0
 Requires: python3-module-pyprind
@@ -67,6 +67,9 @@ cp -r build/mo/* %buildroot%_datadir/locale
 
 
 %changelog
+* Mon Dec 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.25-alt1
+- 0.9.25
+
 * Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.24-alt1
 - 0.9.24
 
