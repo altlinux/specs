@@ -2,7 +2,7 @@
 
 Name:     tty-solitaire
 Version:  1.3.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Play solitaire in your terminal!
 
@@ -13,6 +13,7 @@ Url:      https://github.com/mpereira/tty-solitaire
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
+Patch: make-gcc10-happy.patch
 
 Buildrequires: libncursesw-devel
 
@@ -21,6 +22,7 @@ Buildrequires: libncursesw-devel
 
 %prep
 %setup
+%patch -p1
 
 %build
 %make_build CFLAGS='%optflags -std=gnu11'
@@ -36,6 +38,9 @@ make test
 %doc LICENSE README CHANGELOG TODO.md
 
 %changelog
+* Mon Dec 21 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt2
+- Fixed build with gcc10.
+
 * Tue Jun 02 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0.
 - Add check.
