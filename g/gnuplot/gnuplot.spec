@@ -2,8 +2,8 @@
 %def_with emacs
 
 Name: gnuplot
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -13,7 +13,7 @@ URL: http://www.gnuplot.info/
 
 # git://git.code.sf.net/p/gnuplot/gnuplot-main
 Source0: %name-%version.tar
-Source2: http://www.gnuplot.info/faq/%name-faq.html.bz2
+Source2: http://www.gnuplot.info/faq/faq.pdf
 Source3: %name.desktop
 Source4: %name.menu
 
@@ -32,12 +32,6 @@ Patch4: gnuplot-5.2.2-doc.patch
 Patch5: gnuplot-5.4.0-libgd.patch
 # ALT 34350
 Patch6: gnuplot-5.4.0-fix-help.patch
-
-# Remove with update (fixes for CVEs)
-Patch10: 052cbd17c3cbbc602ee080b2617d32a8417d7563.patch
-Patch11: 1f36c4fbb3e8e0beb213b4a29ab463e43db9ef42.patch
-Patch12: 963c7df3e0c5266efff260d0dff757dfe03d3632.patch
-Patch13: a31c3b70d8d4f887f906afe35accbc9a59ebcd37.patch
 
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
@@ -154,11 +148,6 @@ plotting tool
 %patch5 -p1
 %patch6 -p1
 
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
 %ifarch %e2k
@@ -195,10 +184,6 @@ ln -s ../configure .
 %make_build
 cd -
 
-
-install -p -m644 %SOURCE2 .
-bunzip *.html.bz2
-
 # Docs don't build properly out of tree
 %configure  %configure_opts --with-tutorial
 ln -s ../wx/src/gnuplot src/
@@ -226,6 +211,7 @@ install -p -m 755 minimal/src/%name %buildroot%_bindir/%name-minimal
 
 # install docs
 %makeinstall_std -C docs
+install -p -m644 %SOURCE2 %buildroot/%_datadir/%name
 
 # Add alternatives for gnuplot
 mkdir -p %buildroot%_altdir
@@ -285,6 +271,10 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Mon Dec 21 2020 Grigory Ustinov <grenka@altlinux.org> 1:5.4.1-alt1
+- Build new version.
+- Update faq file.
+
 * Wed Nov 11 2020 Grigory Ustinov <grenka@altlinux.org> 1:5.4.0-alt2
 - Quickfix (Fixes: CVE-2020-25559, CVE-2020-25412) (Closes: #39253).
 
