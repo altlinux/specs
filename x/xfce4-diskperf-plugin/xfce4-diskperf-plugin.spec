@@ -1,6 +1,6 @@
 Name: xfce4-diskperf-plugin
-Version: 2.6.2
-Release: alt2.g00e91df
+Version: 2.6.3
+Release: alt1
 
 Summary: Disk performance plugin for the Xfce panel
 License: BSD-2-Clause
@@ -46,6 +46,9 @@ Requires: xfce4-panel >= 4.11
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Dec 21 2020 Mikhail Efremov <sem@altlinux.org> 2.6.3-alt1
+- Updated for 2.6.3.
+
 * Mon Sep 14 2020 Mikhail Efremov <sem@altlinux.org> 2.6.2-alt2.g00e91df
 - Fixed BR.
 - Added Vcs tag.
