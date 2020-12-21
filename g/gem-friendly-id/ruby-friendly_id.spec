@@ -2,7 +2,7 @@
 %define        gemname friendly_id
 
 Name:          gem-%pkgname
-Version:       5.3.0
+Version:       5.4.1
 Release:       alt1
 Summary:       FriendlyId is the "Swiss Army bulldozer" of slugging and permalink plugins for ActiveRecord.
 License:       MIT
@@ -16,8 +16,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname
-Provides:      ruby-%gemname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 FriendlyId is the "Swiss Army bulldozer" of slugging and permalink plugins for
@@ -83,13 +84,17 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Dec 21 2020 Pavel Skrylev <majioa@altlinux.org> 5.4.1-alt1
+- ^ 5.3.0 -> 5.4.1
+- ! spec
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 5.3.0-alt1
-- updated (^) 5.2.5 -> 5.3.0
-- fixed (!) spec
+- ^ 5.2.5 -> 5.3.0
+- * policify name
 
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.5-alt1
-- updated (^) 5.2.4 -> 5.2.5
-- used (>) Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 5.2.4 -> 5.2.5
 
 * Mon Sep 24 2018 Pavel Skrylev <majioa@altlinux.org> 5.2.4-alt1
 - Initial gemified build for Sisyphus
