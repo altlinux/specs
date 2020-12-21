@@ -1,5 +1,5 @@
 Name:         xfig
-Version:      3.2.7b
+Version:      3.2.8
 Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
@@ -14,11 +14,15 @@ Source2:      xfig32.png
 Source3:      xfig48.png
 Source4:      xfig.sh
 Source5:      xfig.alt.desktop
+Patch1:       0001-revert-10pt-search-tolerance-back-to-4pt.patch
+Patch2:       0002-w_library.c-fix-error-message.patch
+Patch3:       0003-app-defaults-use-original-Fig.in.patch
 
-Requires:     transfig = %version fonts-type1-urw
+Requires:     transfig = %version fonts-type1-urw /usr/bin/gs netpbm
 
 BuildPreReq:  libXpm-devel libXt-devel libXmu-devel libXaw-devel
 BuildPreReq:  libpng-devel libjpeg-devel libXi-devel libXp-devel
+BuildPreReq:  libtiff-devel libgs-devel
 BuildPreReq:  libXaw3d-devel >= 1.5e
 BuildRequires: transfig = %version
 
@@ -49,6 +53,9 @@ XFig documentation
 
 %prep
 %setup -q
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
 
 %build
 %autoreconf
@@ -83,6 +90,16 @@ install -D -m 644 %SOURCE5 %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Mon Dec 21 2020 Vladislav Zavjalov <slazav@altlinux.org> 3.2.8-alt1
+- 3.2.8
+- Keep old modifications as patches:
+  - 4pt search distance (upstream have changed it to 10 pt in 3.2.5b)
+  - if xfig-libs package is missing it is mentioned in error message
+  - Alt-specific add-defaults
+- Update Requires/BuildRequires as recommended by the upstream:
+  - Requires: add /usr/bin/gs and netpbm (to read gif images)
+  - BuildRequires: add libgs, libtiff
+
 * Sat Sep 12 2020 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7b-alt1
 - 3.2.7b
 
