@@ -1,5 +1,5 @@
 Name: pdfpc
-Version: 4.4.1
+Version: 4.5.0
 Release: alt1
 Summary: A GTK based presentation viewer application for GNU/Linux
 
@@ -9,7 +9,7 @@ Url: https://github.com/pdfpc/pdfpc
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gst-plugins1.0-devel libgee0.8-devel libgtk+3-devel libpoppler-glib-devel vala
+BuildRequires: cmake gst-plugins1.0-devel libgee0.8-devel libgtk+3-devel libgtk4-devel libpoppler-glib-devel libwebkit2gtk-devel vala libdiscount-devel libjson-glib-devel
 
 Provides: pdf-presenter-console
 
@@ -36,7 +36,7 @@ which can be created using nearly any of today's presentation software.
 %cmakeinstall_std
 
 %files
-%doc README.rst CHANGELOG.txt
+%doc README.rst CHANGELOG.rst
 %_bindir/%name
 %config(noreplace) %_sysconfdir/%{name}rc
 %_mandir/man1/%{name}*
@@ -44,6 +44,9 @@ which can be created using nearly any of today's presentation software.
 %_datadir/pixmaps/%name
 
 %changelog
+* Mon Dec 21 2020 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+
 * Wed Nov 18 2020 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt1
 - Automatically updated to 4.4.1.
 
