@@ -1,7 +1,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.8.2
+Version: 4.8.3
 Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -183,6 +183,12 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri Dec 22 2020 Vladimir Didenko <cow@altlinux.org> 4.8.3-alt2
+- Disable parallel build because it is still broken
+
+* Mon Dec 21 2020 Vladimir Didenko <cow@altlinux.org> 4.8.3-alt1
+- 4.8.3-2-gea573265
+
 * Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 4.8.2-alt2
 - Don't use parallel build since it is broken
 
