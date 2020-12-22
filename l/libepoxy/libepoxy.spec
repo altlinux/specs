@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: libepoxy
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Direct Rendering Manager runtime library
@@ -14,8 +14,8 @@ Group: System/Libraries
 License: MIT
 Url: https://github.com/anholt/libepoxy
 
-Source: %url/releases/download/%version/%name-%version.tar.xz
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %url/releases/download/%version/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires(pre): meson
 BuildRequires: python3 libglvnd-devel libGL-devel
@@ -77,6 +77,9 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir
 
 
 %changelog
+* Tue Dec 22 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.5-alt1
+- 1.5.5
+
 * Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.4-alt1
 - 1.5.4 (ported to Meson build system)
 
