@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.8.3
-Release: alt2
+Release: alt3
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -119,7 +119,7 @@ rm -rf debian
 
 %build
 %meson
-%meson_build -j1
+%meson_build
 
 %install
 %meson_install
@@ -183,6 +183,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri Dec 22 2020 Vladimir Didenko <cow@altlinux.org> 4.8.3-alt3
+- Another try to fix parallel build
+
 * Fri Dec 22 2020 Vladimir Didenko <cow@altlinux.org> 4.8.3-alt2
 - Disable parallel build because it is still broken
 
