@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 5.9
+Version: 5.10
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -94,6 +94,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Tue Dec 22 2020 Dmitry V. Levin <ldv@altlinux.org> 5.10-alt1
+- 5.9 -> 5.10.
+
 * Sun Nov 01 2020 Dmitry V. Levin <ldv@altlinux.org> 5.9-alt1
 - 5.8 -> 5.9.
 
