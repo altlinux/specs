@@ -1,12 +1,16 @@
 %define soname 8
 Name: libdvdread
 Version: 6.1.1
-Release: alt1
+Release: alt2
 Summary: A library for reading DVD-Video images
 License: GPLv2
 Group: System/Libraries
 Url: https://www.videolan.org/developers/libdvdnav.html
+
 Source: %name-%version.tar
+Patch1: alt-link-libdl.patch
+
+BuildRequires: libdvdcss-devel glibc-devel
 
 %description
 libdvdread provides a simple foundation for reading DVD-Video images.
@@ -36,9 +40,11 @@ applications reading DVD-video images
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %autoreconf
+
 %configure \
 	--disable-static
 %make_build
@@ -57,6 +63,9 @@ rm -rf %buildroot%_datadir/doc/libdvdread
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt2
+- build with libdvdcss (dlopen)
+
 * Fri Apr 17 2020 Anton Farygin <rider@altlinux.ru> 6.1.1-alt1
 - 6.1.1
 - added version to package name with library
