@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.6
-Release: alt1
+Release: alt2
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -122,10 +122,12 @@ ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 	%buildroot%ltdldocdir/COPYING.LIB
 
-# This config.guess file usually emits tons of unwanted deps.
-%add_findreq_skiplist %_datadir/%libtool/build-aux/config.guess
+ln -rsnf %buildroot/usr/share/gnu-config/config.{guess,sub} \
+	%buildroot%_datadir/%libtool/build-aux/
 
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files
 %_bindir/*
@@ -152,6 +154,10 @@ ln -rsnf %buildroot%_licensedir/LGPL-2.1 \
 %_libdir/*.a
 
 %changelog
+* Mon Dec 21 2020 Dmitry V. Levin <ldv@altlinux.org> 2.4.6-alt2
+- libltdl: enabled LFS on 32-bit architectures.
+- Replaced config.* files with symlinks.
+
 * Tue Apr 09 2019 Dmitry V. Levin <ldv@altlinux.org> 2.4.6-alt1
 - 2.4.2 -> v2.4.6-44-gb9b44533 (closes: #31849, #32972).
 

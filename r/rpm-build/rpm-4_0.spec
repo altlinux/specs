@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt162
+Release: alt163
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -411,6 +411,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Mon Dec 21 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt163
+- Added fixup method: gnuconfig.
+
 * Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt162
 - Downgrade XZ->LZMA automatically for small payloads (by Alexey Tourbin).
 - Added payload compression string diagnostics.
