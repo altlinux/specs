@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt6
+Release:       alt7
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
 Url:           https://github.com/rubyworks/setup
-# Vcs:           https://github.com/majioa/setup.git
+Vcs:           https://github.com/majioa/setup.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -89,9 +89,12 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Thu Dec 17 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt7
+- ! proper detection for requires / provides
+- * sort the uniq requires for combined targets
+
 * Wed Dec 02 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt6
 - ! workaround to remove the "!ruby/array:Files" from yaml
-
 
 * Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt5
 - ! trash in provides for packages with prebuild task enabled

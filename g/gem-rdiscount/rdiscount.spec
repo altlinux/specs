@@ -1,8 +1,8 @@
 %define        pkgname rdiscount
 
 Name:          gem-%pkgname
-Version:       2.2.0.1
-Release:       alt4.6
+Version:       2.2.0.2
+Release:       alt1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -15,6 +15,7 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(ronn)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Discount is an implementation of John Gruber's Markdown markup language
@@ -23,41 +24,33 @@ document and passes the Markdown 1.0 test suite.
 
 
 %package       -n %pkgname
-Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
+Summary:       %summary
 Group:         Development/Ruby
 BuildArch:     noarch
-
-Provides:      ruby-%pkgname = %EVR
-Obsoletes:     ruby-%pkgname < %EVR
 
 %description   -n %pkgname
 Discount is an implementation of John Gruber's Markdown markup language
 in C. It implements all of the language described in the markdown syntax
 document and passes the Markdown 1.0 test suite.
 
-%summary.
-
 %description   -n %pkgname -l ru_RU.UTF8
 Исполнямка для самоцвета %gemname.
 
 
-%package       -n gem-%pkgname-doc
+%package       doc
 Summary:       Documentation files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Provides:      %pkgname-doc
-Obsoletes:     %pkgname-doc
-
-%description   -n gem-%pkgname-doc
+%description   doc
 Documentation files for %gemname gem.
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+%description   doc -l ru_RU.UTF8
 Файлы сведений для самоцвета %gemname.
 
 
-%package       -n gem-%pkgname-devel
+%package       devel
 Summary:       Development headers files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Documentation
@@ -68,10 +61,10 @@ Conflicts:     libbobpp-devel
 Conflicts:     libdiscount-devel
 Conflicts:     libpicosat-devel
 
-%description   -n gem-%pkgname-devel
+%description   devel
 Development headers for %gemname gem.
 
-%description   -n gem-%pkgname-devel -l ru_RU.UTF8
+%description   devel -l ru_RU.UTF8
 Файлы заголовков для самоцвета %gemname.
 
 
@@ -98,14 +91,18 @@ Development headers for %gemname gem.
 %_bindir/%pkgname
 %_mandir/*
 
-%files         -n gem-%pkgname-doc
+%files         doc
 %ruby_gemdocdir
 
-%files         -n gem-%pkgname-devel
+%files         devel
 %ruby_includedir/*
 
 
 %changelog
+* Tue Dec 22 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.2-alt1
+- ^ 2.2.0.1 -> 2.2.0.2
+- ! spec
+
 * Thu Jun 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.6
 - + conflict dep to libbobpp-devel, libdiscount-devel, libpicosat-devel
 
