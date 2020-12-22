@@ -10,7 +10,7 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image viewer and browser utility.
@@ -141,6 +141,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Dec 22 2020 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
+- New version
+
 * Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt1
 - New version
 
