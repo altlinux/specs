@@ -1,10 +1,11 @@
 %define _name apsw
 %define rel r1
-%define sqlite_ver 3.33.0
+%define sqlite_ver 3.34.0
 %def_with python2
+%def_enable check
 
 Name: python-module-%_name
-Version: 3.33.0
+Version: 3.34.0
 Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
@@ -67,6 +68,17 @@ pushd ../python2
 popd
 %endif
 
+%check
+%if_with python2
+pushd ../python2
+export PYTHONPATH=%buildroot%python_sitelibdir
+%__python tests.py
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 tests.py
+
 %files
 %if_with python2
 %python_sitelibdir/*
@@ -79,6 +91,10 @@ popd
 
 
 %changelog
+* Tue Dec 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1.r1
+- 3.34.0
+- enabled %%check
+
 * Tue Sep 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.33.0-alt1.r1
 - 3.33.0
 
