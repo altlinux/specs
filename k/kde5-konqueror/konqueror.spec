@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init no_appdata
 
@@ -97,7 +97,7 @@ KF5 library
 #    cp -arl %buildroot/%_K5data/konqueror/* %buildroot/%_datadir/konqueror/
 #    rm -rf %buildroot/%_K5data/konqueror/
 #fi
-%K5install_move data akregator doc dolphinpart fsview kcmcss kcontrol khtml kwebkitpart templates konqueror webenginepart konqsidebartng
+%K5install_move data kconf_update akregator doc dolphinpart fsview kcmcss kcontrol khtml kwebkitpart templates konqueror webenginepart konqsidebartng
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
@@ -141,8 +141,9 @@ done
 %_K5icon/*/*/apps/konqueror.*
 %_K5icon/*/*/apps/fsview.*
 %_K5icon/*/*/apps/webengine.*
-%_K5icon/*/*/actions/babelfish.png
-%_K5icon/*/*/actions/imagegallery.png
+%_K5icon/*/*/actions/babelfish.*
+%_K5icon/*/*/actions/imagegallery.*
+%_K5icon/*/*/actions/webarchiver.*
 #%_K5srvtyp/*.desktop
 %_datadir/qlogging-categories5/*.*categories
 
@@ -150,6 +151,7 @@ done
 %config /%_sysconfdir/alternatives/packages.d/kde5-konqueror
 %config(noreplace) %_K5xdgconf/*rc
 %_K5bin/konqueror
+%_K5bin/kcreatewebarchive
 %_K5bin/kfmclient
 %_K5bin/fsview
 %_K5lib/libkdeinit5_konqueror.so
@@ -174,6 +176,7 @@ done
 %_K5srv/*.desktop
 %_K5xdgapp/*.desktop
 %_K5xmlgui/*/
+%_K5conf_up/*.upd
 %if_enabled text2speech
 %_K5plug/khtmlttsplugin.so
 %endif
@@ -195,6 +198,9 @@ done
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Mon Dec 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
