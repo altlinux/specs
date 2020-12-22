@@ -1,7 +1,7 @@
 %define rname katomic
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -33,21 +33,24 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-kcrash-devel
 
 %install
 %K5install
-%K5install_move data katomic kconf_update
+%K5install_move data katomic kconf_update knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/katomic.knsrc
 %_K5bin/katomic
 %_K5data/katomic/
 %_K5xmlgui/katomic/
 %_K5icon/*/*/apps/katomic.*
 %_K5xdgapp/org.kde.katomic.desktop
 %_K5conf_up/katomic-*
+%_K5data/knsrcfiles/*katomic*.knsrc
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
