@@ -1,7 +1,7 @@
 %define rname kwordquiz
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -42,12 +42,11 @@ language learning features, please try KVocTrain.
 
 %install
 %K5install
-%K5install_move data kwordquiz
+%K5install_move data kwordquiz knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/kwordquiz.knsrc
 %_K5bin/kwordquiz
 %_K5data/kwordquiz/
 %_K5xmlgui/kwordquiz/
@@ -56,8 +55,12 @@ language learning features, please try KVocTrain.
 %_K5xdgapp/org.kde.kwordquiz.desktop
 %_K5cfg/kwordquiz.kcfg
 %_K5notif/kwordquiz.notifyrc
+%_K5data/knsrcfiles/*kwordquiz*.knsrc
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

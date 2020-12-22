@@ -1,7 +1,7 @@
 %define rname step
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -44,17 +44,17 @@ you can not only learn but feel how physics works!
 
 %install
 %K5install
-%K5install_move data step
+%K5install_move data step knsrcfiles
 
 %K5find_qtlang %name --all-name
 %find_lang %name --with-kde --all-name --append
 
 %files -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/step.knsrc
 %_datadir/locale/*/LC_SCRIPTS/step/
 %_K5bin/step
 %_K5data/step/
+%_K5data/knsrcfiles/*step*.knsrc
 %_K5xdgapp/org.kde.step.desktop
 %_K5cfg/step.kcfg
 %_K5icon/*/*/apps/step.*
@@ -64,6 +64,9 @@ you can not only learn but feel how physics works!
 %_K5xdgmime/*step*.xml
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

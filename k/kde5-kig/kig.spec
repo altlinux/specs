@@ -4,7 +4,7 @@
 %define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -71,6 +71,9 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 %_K5srv/kig_part.desktop
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
