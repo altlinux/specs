@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.36
+Version: 0.2.37
 Release: alt1
 
 Summary: Simple image creator
@@ -86,6 +86,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Tue Dec 22 2020 Alexey Gladkov <legion@altlinux.ru> 0.2.37-alt1
+- Rewrite mki-print-uris.
+
 * Fri Dec 18 2020 Alexey Gladkov <legion@altlinux.ru> 0.2.36-alt1
 - mki-copy-ieee1275boot: copy grub modules
 - mki-copy-grubaa64boot: copy theme for grub-efi (aarch64)
