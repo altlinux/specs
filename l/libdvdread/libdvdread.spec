@@ -1,7 +1,7 @@
 %define soname 8
 Name: libdvdread
 Version: 6.1.1
-Release: alt2
+Release: alt3
 Summary: A library for reading DVD-Video images
 License: GPLv2
 Group: System/Libraries
@@ -63,8 +63,14 @@ rm -rf %buildroot%_datadir/doc/libdvdread
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt3
+- merge p9 changelog
+
 * Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt2
 - build with libdvdcss (dlopen)
+
+* Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 6.1.1-alt0.1.p9
+- Backport new version to p9 branch with save inheritance.
 
 * Fri Apr 17 2020 Anton Farygin <rider@altlinux.ru> 6.1.1-alt1
 - 6.1.1
