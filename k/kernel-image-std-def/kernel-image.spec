@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	5.4
 %define kernel_sublevel .85
@@ -45,7 +45,6 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
 
-%brp_strip_none /boot/*
 %add_verify_elf_skiplist %modules_dir/*
 
 Summary: The Linux kernel (the core of the Linux operating system)
@@ -79,7 +78,7 @@ ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 
 %define image_path arch/%base_arch/boot/%make_target
 %ifarch ppc64le
-%define image_path %make_target
+%define image_path %make_target.stripped
 %endif
 
 %define arch_dir %base_arch
@@ -419,6 +418,9 @@ scripts/kconfig/merge_config.sh -m $CONFIGS
 %make_build oldconfig
 #%make_build include/linux/version.h
 %make_build %make_target
+%ifarch ppc64le
+eu-strip --remove-comment -o %image_path vmlinux
+%endif
 %make_build modules
 %ifarch aarch64 %arm
 %make_build dtbs
@@ -704,6 +706,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Dec 21 2020 Vitaly Chikunov <vt@altlinux.org> 2:5.4.85-alt2
+- spec: Strip vmlinux for installation as vmlinuz on ppc64le.
+- spec: Enable stripping for /boot (for vmlinux).
+
 * Mon Dec 21 2020 Kernel Bot <kernelbot@altlinux.org> 2:5.4.85-alt1
 - v5.4.85
 
