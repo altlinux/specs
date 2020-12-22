@@ -1,7 +1,7 @@
 %define rname ktp-contact-runner
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init altplace
 
@@ -61,8 +61,7 @@ KF5 library
 
 %files -f %name.lang
 %doc COPYING*
-%_K5plug/krunner_ktp_contacts.so
-%_K5srv/plasma-runner-ktp-contact.desktop
+%_K5plug/kf5/krunner/krunner_ktp_contacts.so
 
 #%files devel
 #%_K5inc/ktp-contact-runner_version.h
@@ -75,6 +74,9 @@ KF5 library
 #%_K5lib/libktp-contact-runner.so.*
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
