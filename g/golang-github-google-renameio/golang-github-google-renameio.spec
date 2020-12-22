@@ -4,7 +4,7 @@
 %global goipath         github.com/google/renameio
 
 Name: golang-github-google-renameio
-Version: 0.1.0
+Version: 1.0.0
 Release: alt1
 Summary: Atomically create or replace a file or symbolic link
 
@@ -58,6 +58,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Tue Dec 22 2020 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1
+- New version (1.0.0).
+
 * Wed Apr 29 2020 Leontiy Volodin <lvol@altlinux.org> 0.1.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
