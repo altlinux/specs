@@ -3,7 +3,7 @@
 
 Name:          puppet-%pkgname
 Version:       16.0.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Foreman server configuration
 License:       GPLv3
 Group:         Development/Ruby
@@ -15,8 +15,6 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-%add_findreq_skiplist %ruby_gemslibdir/**/*
-%add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      puppet
 
 %description
@@ -54,16 +52,21 @@ and related services.
 %install
 %ruby_install
 chmod a+x %buildroot%_libexecdir/%name/files/*.rb
+mkdir -p %buildroot%_libexecdir/puppet-modules/
+mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
 
 %check
 %ruby_test
 
 %files
 %doc README*
-%_libexecdir/%name
+%_libexecdir/puppet-modules/%pkgname
 
 
 %changelog
+* Wed Dec 23 2020 Pavel Skrylev <majioa@altlinux.org> 16.0.0-alt1.2
+- ! placement for the puppet modules
+
 * Wed Dec 23 2020 Pavel Skrylev <majioa@altlinux.org> 16.0.0-alt1.1
 - + requires to puppet
 - * to enable execution of embedded scripts
