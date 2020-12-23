@@ -1,13 +1,13 @@
 Name: gqview
 Version: 2.1.5
-Release: alt8
+Release: alt9
 
 Summary: Image viewer and browser utility
 License: GPLv2+
 Group: Graphics
 
-Url: http://gqview.sourceforge.net/
-Source: http://dl.sourceforge.net/gqview/gqview-%version.tar.gz
+Url: https://gqview.sourceforge.net/
+Source: https://dl.sourceforge.net/gqview/gqview-%version.tar.gz
 Patch0: gqview-2.1.5-editors.patch
 Patch1: gqview-1.5.8-zoom-defaults.patch
 Patch2: gqview-enable_dng.patch
@@ -16,6 +16,8 @@ Patch4: gqview-native-icons.patch
 Patch5: gqview-2.1.5-alt-histfile_perms.patch
 Patch6: gqview-pixbuf-renderer-use-gdk_region.patch
 Patch7: gqview-pixbuf-renderer-use-gdk_window_scroll.patch
+#https://gitweb.gentoo.org/repo/gentoo.git/tree/media-gfx/gqview/files/gqview-2.1.5-gcc-10.patch
+Patch8: gqview-2.1.5-gcc-10.patch
 
 # Automatically added by buildreq on Mon Feb 25 2008
 BuildRequires: libgtk+2-devel liblcms-devel
@@ -37,6 +39,7 @@ editors, previewing images using thumbnails, and zoom.
 %patch5 -p1
 %patch6 -p2
 %patch7 -p2
+%patch8 -p1
 sed -i 's,^gqview_LDADD = ,&-lm ,' src/Makefile*
 
 %build
@@ -59,6 +62,9 @@ install -pDm644 gqview.png %buildroot%_liconsdir/gqview.png
 %_man1dir/*
 
 %changelog
+* Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt9
+- rebuilt with gcc10
+
 * Mon May 26 2014 Michael Shigorin <mike@altlinux.org> 2.1.5-alt8
 - fixed FTBFS (-lm now missing from GTK_LIBS)
 - added deps to ensure jpegtran and mogrify are there (closes: #30094)
