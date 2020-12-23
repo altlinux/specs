@@ -4,8 +4,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.12
-Release: alt4
+Version: 2.0.14
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -105,6 +105,9 @@ rm %buildroot%_libdir/*.a
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Wed Dec 23 2020 Nazarov Denis <nenderus@altlinux.org> 2.0.14-alt1
+- Version 2.0.14
+
 * Mon Nov 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.12-alt4
 - NMU: Actually enable Wayland support (ATL#34657).
 
