@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.2.0.82
-Release: alt1
+Release: alt2
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -13,6 +13,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-file-manager_5.2.0.82_qt5.15.patch
+Patch1: deepin-file-manager_5.2.0.82_desktop.patch
 
 ExcludeArch: armh ppc64le
 
@@ -24,7 +25,48 @@ BuildRequires(pre): gcc7-c++
 %endif
 
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: git-core desktop-file-utils deepin-gettext-tools deepin-dock-devel libmagic-devel libjemalloc-devel kf5-kcodecs-devel libatk-devel dtk5-widget-devel dtk5-gui-devel deepin-qt-dbus-factory-devel libgtk+2-devel gsettings-qt-devel libsecret-devel libpoppler-cpp-devel libpolkit-devel libpolkitqt5-qt5-devel qt5-base-devel qt5-svg-devel qt5-multimedia-devel qt5-x11extras-devel libtag-devel libuchardet-devel libxcbutil-devel libxcbutil-icccm-devel qt5-linguist udisks2-qt5-devel disomaster-devel qt5-tools libgio-qt-devel libssl-devel libqtxdg-devel libmediainfo-devel libpcre-devel libffmpegthumbnailer-devel libdmr-devel deepin-anything-devel liblucene++-devel libxml2-devel libhtmlcxx-devel libgsf-devel libmimetic-devel
+BuildRequires: git-core
+BuildRequires: desktop-file-utils
+BuildRequires: deepin-gettext-tools
+BuildRequires: deepin-dock-devel
+BuildRequires: libmagic-devel
+BuildRequires: libjemalloc-devel
+BuildRequires: kf5-kcodecs-devel
+BuildRequires: libatk-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: dtk5-gui-devel
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: gsettings-qt-devel
+BuildRequires: libsecret-devel
+BuildRequires: libpoppler-cpp-devel
+BuildRequires: libpolkit-devel
+BuildRequires: libpolkitqt5-qt5-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-multimedia-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: libtag-devel
+BuildRequires: libuchardet-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: qt5-linguist
+BuildRequires: udisks2-qt5-devel
+BuildRequires: disomaster-devel
+BuildRequires: qt5-tools
+BuildRequires: libgio-qt-devel
+BuildRequires: libssl-devel
+BuildRequires: libqtxdg-devel
+BuildRequires: libmediainfo-devel
+BuildRequires: libpcre-devel
+BuildRequires: libffmpegthumbnailer-devel
+BuildRequires: libdmr-devel
+BuildRequires: deepin-anything-devel
+BuildRequires: liblucene++-devel
+BuildRequires: libxml2-devel
+BuildRequires: libhtmlcxx-devel
+BuildRequires: libgsf-devel
+BuildRequires: libmimetic-devel
 
 # run command by QProcess
 # Requires: deepin-shortcut-viewer deepin-terminal deepin-desktop file-roller gvfs samba xdg-user-dirs gst-plugins-good1.0-qt5
@@ -52,6 +94,7 @@ Deepin desktop environment - desktop module.
 %prep
 %setup -n %repo-%version
 %patch -p2
+%patch1 -p2
 
 sed -i 's|lrelease|lrelease-qt5|' \
     dde-desktop/translate_generation.sh \
@@ -74,8 +117,17 @@ sed -i 's|systembusconf.path = /etc/dbus-1/system.d|systembusconf.path = /usr/sh
 sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-manager-daemon.pro dde-file-manager-daemon/test-dde-file-manager-daemon.pro
 sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/ut_dfilestatisticsjob.cpp
 sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
+# don't create files on the desktop by default
+#sed -i '/desktop/d' ?/dde-desktop.conf
 
 %build
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
 %qmake_qt5 \
            CONFIG+=nostrip \
            unix:LIBS+="-L%_libdir -lgio-2.0 -licui18n -lX11" \
@@ -163,6 +215,9 @@ sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Tue Dec 22 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.82-alt2
+- Removed non-working shortcuts from the desktop.
+
 * Mon Dec 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.82-alt1
 - New version (5.2.0.82) with rpmgs script.
 
