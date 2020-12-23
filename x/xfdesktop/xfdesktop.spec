@@ -1,5 +1,5 @@
 Name: xfdesktop
-Version: 4.15.1
+Version: 4.16.0
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -61,6 +61,10 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Fixed changelog entry.
+- Updated to 4.16.0.
+
 * Mon Nov 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.1-alt1
 - Updated to 4.15.1.
 
@@ -71,7 +75,7 @@ Requires: exo-utils
 * Mon Jan 13 2020 Mikhail Efremov <sem@altlinux.org> 4.14.2-alt1
 - Use Vcs rpm tag.
 - Don't use rpm-build-licenses.
-- Updated to 4.14.0.
+- Updated to 4.14.2.
 
 * Mon Sep 30 2019 Mikhail Efremov <sem@altlinux.org> 4.14.1-alt2
 - Fixed package version.

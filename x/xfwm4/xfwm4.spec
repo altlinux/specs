@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.15.3
+Version: 4.16.0
 Release: alt1
 
 %def_enable epoxy
@@ -80,6 +80,9 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Mon Nov 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
 - Explicitly enabled support of X Input 2 extension.
 - Updated to 4.15.3.
