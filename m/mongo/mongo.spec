@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo
-Version: 4.4.2
-Release: alt1
+Version: 4.4.3
+Release: alt2
 Summary: mongo client shell and tools
 License: SSPL-1.0
 
@@ -195,6 +195,12 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Dec 23 2020 Vladimir Didenko <cow@altlinux.org> 4.4.3-alt2
+- use /run instead of /var/run and /lock instead of /var/lock
+
+* Wed Dec 23 2020 Vladimir Didenko <cow@altlinux.org> 4.4.3-alt1
+- 4.4.3
+
 * Fri Nov 20 2020 Vladimir Didenko <cow@altlinux.org> 4.4.2-alt1
 - 4.4.2
 
