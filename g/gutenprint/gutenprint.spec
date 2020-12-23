@@ -1,18 +1,21 @@
 Name: gutenprint
-Version: 5.3.3
+Version: 5.3.4
 Release: alt1
 Epoch: 1
 Summary: Gutenprint Printer Drivers
+License: GPL-2.0+
 Group: Publishing
-License: GPLv2+
 Requires: lib%name = %EVR, ghostscript
 Url: http://gimp-print.sourceforge.net/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: http://download.sourceforge.net/gimp-print/%name-%version.tar.bz2
+Source: %name-%version.tar
+Source1: %name.watch
+Source2: ru.po
+
 Patch0: gutenprint-5.3.1-alt-fixes.patch
 Patch1: gutenprint-5.2.9-alt-makefile.patch
-Patch2: gutenprint-5.3.3-alt-LFS.patch
+Patch2: gutenprint-alt-LFS.patch
 Patch3: gutenprint-alt-link-plugins-with-libraries.patch
 
 BuildRequires: flex foomatic-db-engine libcups-devel libgimp-devel libreadline-devel
@@ -89,6 +92,8 @@ This package contains PPDs for gutenprint-cups.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+rm -rf gutenprint/po/*.gmo
+install %SOURCE2 po/ru.po
 
 %build
 %undefine _configure_gettext
@@ -184,6 +189,10 @@ fi
 %_datadir/cups/model/Global
 
 %changelog
+* Thu Dec 17 2020 Andrey Cherepanov <cas@altlinux.org> 1:5.3.4-alt1
+- New version.
+- Package watch file.
+
 * Tue Dec 03 2019 Andrey Cherepanov <cas@altlinux.org> 1:5.3.3-alt1
 - New version.
 
