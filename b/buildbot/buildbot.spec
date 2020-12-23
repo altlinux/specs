@@ -1,6 +1,6 @@
 Name: buildbot
 Version: 2.9.3
-Release: alt1
+Release: alt2
 Summary: Python-based continuous integration testing framework
 
 Group: Development/Python
@@ -127,22 +127,9 @@ Summary: Chekinstall for %name
 Group: Other
 BuildArch: noarch
 Requires(pre): buildbot = %EVR buildbot-worker = %EVR buildbot-www = %EVR
-Requires(pre): python3-module-buildbot-tests = %EVR
 Requires: /dev/pts python3-module-pbr python3-module-treq
 
 %description checkinstall
-%summary.
-
-###############################################################################
-# Package python3-module-buildbot
-###############################################################################
-
-%package -n python3-module-buildbot-tests
-Summary: Tests for %name
-Group: Other
-BuildArch: noarch
-
-%description -n python3-module-buildbot-tests
 %summary.
 
 
@@ -220,7 +207,6 @@ trial -e buildbot.test buildbot_worker.test
 %_man1dir/buildbot-worker.1.*
 %_bindir/buildbot-worker
 %python3_sitelibdir/buildbot_worker
-%exclude %python3_sitelibdir/buildbot_worker/test
 %python3_sitelibdir/buildbot_worker-*.egg-info
 
 %files
@@ -228,16 +214,15 @@ trial -e buildbot.test buildbot_worker.test
 %_man1dir/buildbot.1.*
 %_bindir/buildbot
 %python3_sitelibdir/buildbot
-%exclude %python3_sitelibdir/buildbot/test
 %python3_sitelibdir/buildbot-*.egg-info
 
 %files checkinstall
 
-%files -n python3-module-buildbot-tests
-%python3_sitelibdir/buildbot/test
-%python3_sitelibdir/buildbot_worker/test
-
 %changelog
+* Wed Dec 23 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.9.3-alt2
+- merge python3-module-buildbot-tests back into buildbot package, because
+  buildbot.test.fake is used in buildbot dataspec
+
 * Thu Dec 17 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.9.3-alt1
 - new version 2.9.3
 - enable tests via checkinstall
