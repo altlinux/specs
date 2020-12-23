@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 Name: xfce4
-Version: 4.15
+Version: 4.16
 Release: alt1
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
@@ -91,6 +91,7 @@ Requires: xfce4-diskperf-plugin \
 Requires: xfce4-eyes-plugin \
 Requires: xfce4-fsguard-plugin \
 Requires: xfce4-genmon-plugin \
+Requires: xfce4-mailwatch-plugin \
 Requires: xfce4-mount-plugin \
 Requires: xfce4-netload-plugin \
 Requires: xfce4-places-plugin \
@@ -100,6 +101,7 @@ Requires: xfce4-stopwatch-plugin \
 Requires: xfce4-systemload-plugin \
 Requires: xfce4-time-out-plugin \
 Requires: xfce4-timer-plugin \
+Requires: xfce4-verve-plugin \
 Requires: xfce4-weather-plugin \
 Requires: xfce4-whiskermenu-plugin \
 Requires: xfce4-xkb-plugin
@@ -159,6 +161,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16-alt1
+- full,regular: Add xfce4-verve-plugin again.
+- full,regular: Add xfce4-mailwatch-plugin again.
+
 * Tue Sep 08 2020 Mikhail Efremov <sem@altlinux.org> 4.15-alt1
 - Updated Url tag.
 - Don't use rpm-build-licenses.
