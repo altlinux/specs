@@ -1,20 +1,20 @@
 Name: xfce4-terminal
-Version: 0.8.9.2
+Version: 0.8.10
 Release: alt1
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
 License: GPLv2+
 Group: Terminals
-Url: https://www.xfce.org
+Url: https://docs.xfce.org/apps/terminal/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
-Vcs: git://git.xfce.org/apps/xfce4-terminal
+Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-gtk3-devel
-BuildPreReq: gnome-doc-utils xml-utils xsltproc
+BuildPreReq: gtk-doc
 BuildRequires: libpcre2-devel
 
 # Automatically added by buildreq on Fri Aug 07 2009
@@ -56,14 +56,20 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %find_lang %name
 
 %files -f %name.lang
-%doc README TODO THANKS HACKING
+%doc README.md NEWS THANKS
 %_bindir/*
 %_man1dir/*
 %_datadir/xfce4/terminal
 %_datadir/gnome-control-center/default-apps/%name-default-apps.xml
+%_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 0.8.10-alt1
+- Updated Url tag.
+- Updated Vcs tag.
+- Updated to 0.8.10.
+
 * Mon Mar 30 2020 Mikhail Efremov <sem@altlinux.org> 0.8.9.2-alt1
 - Add Vcs tag.
 - Drop obsoleted configure option.
