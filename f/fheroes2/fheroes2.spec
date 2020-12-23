@@ -1,8 +1,8 @@
 %def_with sdl2
-%define rev 20201104
+%define rev 20201223
 Name: fheroes2
 Epoch: 2
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPLv2+
@@ -61,6 +61,9 @@ install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_do
 
 
 %changelog
+* Wed Dec 23 2020 Igor Vlasenko <viy@altlinux.ru> 2:0.8.4-alt1.20201223
+- new version
+
 * Thu Nov 12 2020 Igor Vlasenko <viy@altlinux.ru> 2:0.8.3-alt1.20201104
 - new version
 
