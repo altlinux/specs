@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -46,9 +46,10 @@ BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
 BuildRequires: gcr-libs-vala
 BuildRequires: libgdata-devel libchamplain-gtk3-devel
+BuildRequires: libsecret-devel
 # opencv4 also supported
 %{?_enable_face_detection:BuildRequires: gcc-c++ libopencv-devel}
-%{?_enable_check:BuildRequires: python3}
+%{?_enable_check:BuildRequires: python3 dbus}
 
 %description
 Shotwell is a digital photo organizer designed for the GNOME desktop
@@ -62,9 +63,10 @@ mode, and export them to share with others.
 
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
-%meson -Dunity-support=false \
-       -Dinstall-apport-hook=false \
-       %{?_enable_face_detection:-Dface-detection=true}
+%meson -Dunity_support=false \
+       -Dinstall_apport_hook=false \
+       %{?_enable_face_detection:-Dface_detection=true}
+%nil
 #%%meson_build %name-pot %name-update-po
 %meson_build
 
@@ -82,6 +84,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libexecdir/%name/%name-video-thumbnailer
 %if_enabled face_detection
 %_libexecdir/%name/%name-facedetect
+%_datadir/dbus-1/services/%xdg_name.Faces1.service
 %dir %_datadir/%name
 %_datadir/%name/facedetect-haarcascade.xml
 %endif
@@ -95,7 +98,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_desktopdir/%{xdg_name}*.desktop
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_datadir/dbus-1/services/%xdg_name.Faces1.service
 %_datadir/glib-2.0/schemas/*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/%name.1.*
@@ -103,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt1
+- 0.31.3
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.31.2-alt1
 - 0.31.2
 
