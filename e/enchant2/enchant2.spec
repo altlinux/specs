@@ -8,7 +8,7 @@
 
 
 Name: %_name%api_ver
-Version: 2.2.14
+Version: 2.2.15
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
@@ -53,7 +53,7 @@ using libenchant.
 %setup -n %_name-%version
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static \
 	%{subst_enable relocatable} \
@@ -86,6 +86,9 @@ using libenchant.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.15-alt1
+- 2.2.15
+
 * Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.14-alt1
 - 2.2.14
 
