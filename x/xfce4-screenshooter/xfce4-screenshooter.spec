@@ -2,21 +2,19 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.9.7
+Version: 1.9.8
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/applications/xfce4-screenshooter
+Url: https://docs.xfce.org/apps/screenshooter/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/apps/xfce4-screenshooter
+Vcs: https://gitlab.xfce.org/apps/xfce4-screenshooter.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
@@ -66,7 +64,7 @@ mkdir m4/
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README.md AUTHORS NEWS
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
@@ -79,6 +77,12 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 1.9.8-alt1
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.9.8.
+
 * Tue Nov 05 2019 Mikhail Efremov <sem@altlinux.org> 1.9.7-alt1
 - Updated to 1.9.7.
 
