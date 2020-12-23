@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -31,6 +31,7 @@ Requires: lib%name = %version-%release
 %define mutter_ver 3.38.0
 %define gjs_ver 1.54
 
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgjs-devel >= %gjs_ver libmutter-devel >= %mutter_ver
@@ -38,7 +39,7 @@ BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
 BuildRequires: vala-tools >= %vala_ver libvala-devel
 # since 3.20
-BuildRequires: systemd-devel
+BuildRequires: pkgconfig(systemd)
 
 %description
 This package provides gpaste-daemon is a clipboard management daemon with DBus
@@ -101,18 +102,15 @@ in notification area.
 
 %prep
 %setup -n %_name-%version
-# automake 1.15 required
-subst 's/1\.15/1.14/' configure.ac
 
 %build
-%autoreconf
-%configure \
-  --disable-schemas-compile \
-  --enable-vala
-%make_build
+%meson \
+  -Dschemas-compile=false \
+  -Dvala=true
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %_name
 
 %files -f %_name.lang
@@ -162,6 +160,9 @@ subst 's/1\.15/1.14/' configure.ac
 
 
 %changelog
+* Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
+- 3.38.4 (ported to Meson build system)
+
 * Mon Nov 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 
