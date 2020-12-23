@@ -5,7 +5,7 @@
 %def_disable gsettings
 
 Name: lib%_name
-Version: 4.15.1
+Version: 4.16.0
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -159,6 +159,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Mon Nov 09 2020 Mikhail Efremov <sem@altlinux.org> 4.15.1-alt1
 - Updated to 4.15.1.
 

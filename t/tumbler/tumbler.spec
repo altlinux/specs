@@ -3,7 +3,7 @@
 %def_enable gepub
 
 Name: tumbler
-Version: 0.3.1
+Version: 4.16.0
 Release: alt1
 
 Summary: A thumbnail D-Bus service
@@ -91,6 +91,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Mon Nov 16 2020 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Updated Url tag.
 - Enabled gepub plugin.

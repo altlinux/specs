@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.7.3
+Version: 0.8.0
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -68,7 +68,7 @@ GObject introspection devel data for %name.
 
 %package devel-doc
 Summary: Development files for %name
-License: GFDLv1.1+
+License: GFDL-1.1+
 Group: Development/C
 Conflicts: %name-devel < %version
 BuildArch: noarch
@@ -214,6 +214,10 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- devel-doc: Fixed License tag.
+- Updated to 0.8.0.
+
 * Wed Dec 16 2020 Mikhail Efremov <sem@altlinux.org> 0.7.3-alt1
 - Updated BR.
 - Updated to 0.7.3.

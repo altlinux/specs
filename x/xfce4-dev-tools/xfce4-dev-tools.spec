@@ -1,5 +1,5 @@
 Name: xfce4-dev-tools
-Version: 4.15.1
+Version: 4.16.0
 Release: alt1
 
 Summary: Development tools for Xfce
@@ -56,6 +56,9 @@ make check
 %_man1dir/*
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Tue Nov 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.1-alt1
 - Updated to 4.15.1.
 

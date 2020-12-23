@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 4.15.3
+Version: 4.16.0
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -129,6 +129,9 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Mon Nov 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
 - Dropped perl-URI from BR.
 - Updated to 4.15.3.
