@@ -1,5 +1,5 @@
 Name: alterator-setup-kworkstation
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation
@@ -52,6 +52,9 @@ cp -r -u %_sysconfdir/%name/steps %_datadir/alterator/
 > /root/.bash_history
 
 %changelog
+* Wed Dec 23 2020 Ivan Razzhivin <underwit@altlinux.org> 0.0.3-alt1
+- change the procedure for deleting users
+
 * Wed Dec 23 2020 Ivan Razzhivin <underwit@altlinux.org> 0.0.2-alt1
 - fix hook script
 - small fix spec file
