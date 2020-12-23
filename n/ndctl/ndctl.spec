@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 71
+Version: 71.1
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -139,6 +139,9 @@ echo %version > version
 %_pkgconfigdir/libdaxctl.pc
 
 %changelog
+* Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 71.1-alt1
+- 71.1
+
 * Sun Dec 20 2020 Yuri N. Sedunov <aris@altlinux.org> 71-alt1
 - 71
 
