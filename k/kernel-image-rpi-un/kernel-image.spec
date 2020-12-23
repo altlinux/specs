@@ -3,9 +3,9 @@
 Name: kernel-image-rpi-un
 Release: alt1
 epoch:1 
-%define kernel_need_version	5.8
+%define kernel_need_version	5.10
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	5.8
+%define kernel_base_version	5.10
 %define kernel_sublevel .2
 %define kernel_extra_version	%nil
 # kernel version is need version
@@ -490,6 +490,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed Dec 23 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.2-alt1
+- Updated to 5.10.2 (still RPi-specific)
+
 * Tue Sep 01 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.8.2-alt1
 - Updated to 5.8.2 (still RPi-specific)
 
