@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt2
+Release: alt3
 
 %define package_name		%real_name
 %define weight			1001
@@ -101,7 +101,6 @@ Requires: %name-modules %name-modules-encodings
 Requires: %name-modules-curses %name-modules-xml %name-modules-compiler
 Requires: %name-modules-email %name-modules-hotshot %name-modules-bsddb
 Requires: %name-modules-logging
-Requires: %name-modules-nis
 
 BuildPreReq: rpm >= 4.0.4-alt36.d8, rpm-build-python >= 0.34.4-alt1
 # Automatically added by buildreq on Sun Apr 08 2007
@@ -110,9 +109,6 @@ BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel lib
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 %{?_with_ssl:BuildRequires: libssl-devel}
 %{?_with_bluez:BuildRequires: libbluez-devel}
-# Not to loose a module which used to be a part of our standard "interface"
-# (i.e., no reqs were generated because nis was assumed to be always present).
-BuildPreReq: libnsl2-devel
 %{?!_without_check:%{?!_disable_check:BuildPreReq: /proc /dev/pts}}
 
 # NB:
@@ -143,7 +139,6 @@ Summary: Python with strict conflicts: using other pythons are prohibited
 Group: Development/Python
 Requires: %name = %version-%release
 Provides: %real_name = %require_ver
-Provides: %name-strict = %version-%release
 Conflicts: %name-relaxed
 Conflicts: python24
 Conflicts: python = 2.4
@@ -167,7 +162,6 @@ Summary: Python with relaxed conflicts: using with python24 are allowed
 Group: Development/Python
 Requires: %name = %version-%release
 Provides: %real_name = %require_ver
-Provides: %name-relaxed = %version-%release
 Conflicts: %name-strict
 Obsoletes: %python_name-relaxed <= %noversion_from
 BuildArch: noarch
@@ -209,12 +203,7 @@ Summary: Standard python modules
 Group: Development/Python
 Requires: python2-base
 Obsoletes: %python_name-modules <= %noversion_from
-# We have split nis from python-modules. Therefore, for now,
-# we require it in order not to break the past promises. (rpm-build-python
-# didn't generate individual Requires on modules provided by python-modules.)
-# After a Sisyphus test rebuild, we'll detect the packages needing python2.7(nis),
-# actually rebuild them, and after that, we can drop this Requires if we want.
-Requires: %name-modules-nis
+Obsoletes: %name-modules-nis < %version
 
 %description modules
 The Python programming language's interpreter can be extended with
@@ -459,17 +448,6 @@ sometimes referred to as "PyUnit," is a Python language version of JUnit,
 by Kent Beck and Erich Gamma.Based on PEP 282 and comments thereto in
 comp.lang.python, and influenced by Apache's log4j system.
 
-%package modules-nis
-Summary: NIS module from Python
-Group: Development/Python
-Requires: %name-modules = %version-%release
-
-%description modules-nis
-This package contains the "nis" module from Python.
-
-It used to be in %name-modules, but since NIS is deprecated in glibc,
-this separate package was made because of extra library dependencies.
-
 %package dev
 Summary: The libraries and header files needed for Python development
 Group: Development/Python
@@ -699,7 +677,7 @@ find . -type f -exec sed -Ei '1 s@(^#!.*/usr/bin/).*python$@\1%python_name@' '{}
 #mkdir info
 #tar -C info -xf #SOURCE1
 tar -xf %SOURCE3
-mv -- %SOURCE20 Lib/test/recursion.tar
+cp -a -- %SOURCE20 Lib/test/recursion.tar
 
 rm -r Modules/expat
 
@@ -1093,8 +1071,6 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/ensurepip/*pyc
 %python_libdir/ensurepip/*pyo
 
-%files modules-nis -f modules-nis-list
-
 #%files obsolete
 #%python_libdir/lib-old
 
@@ -1185,6 +1161,13 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Mon Dec 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt3
+- Fixed FTBFS:
+  + Removed python-modules-nis subpackages (NIS is obsoleted by glibc) and
+    obsoleted it by python-modules;
+  + Removed self-provides;
+  + Do not lose %%SOURCE20.
+
 * Thu Nov 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt2
 - Fixed CVE-2019-20907 and CVE-2019-CVE-2020-26116.
 
