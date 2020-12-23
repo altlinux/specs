@@ -1,12 +1,12 @@
 %define lib_name libalkimia5
 
-Name:    libalkimia
-Version: 8.0.3
+Name:    alkimia
+Version: 8.0.4
 Release: alt1
 
-Summary: A library with common classes and functionality used by finance applications for the KDE SC
+Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
-Group:	 System/Libraries
+Group:	 Office
 URL:     http://community.kde.org/Alkimia/libalkimia
 # Download from https://download.kde.org/stable/alkimia/
 
@@ -30,28 +30,29 @@ BuildRequires: kf5-kxmlgui-devel
 BuildRequires: mpir-devel
 BuildRequires: doxygen
 
+Requires: lib%name = %version-%release
+
 %description
-libalkimia is a library with common classes and functionality used by
-finance applications for the KDE SC. Currently it supports a common
-class to represent monetary values with arbitrary precision.
-
-%package -n alkimia
-Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
-Group: Office
-Requires: %name = %version-%release
-
-%description -n alkimia
 Alkimia is the infrastructure for common storage and business logic that
 will be used by all financial applications in KDE. The target is to
 share financial related information over application bounderies.
 
-%package devel
+%package -n lib%name
+Summary: A library with common classes and functionality used by finance applications for the KDE SC
+Group:   System/Libraries
+
+%description -n lib%name
+libalkimia is a library with common classes and functionality used by
+finance applications for the KDE SC. Currently it supports a common
+class to represent monetary values with arbitrary precision.
+
+%package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/KDE and QT
-Requires: %name = %version-%release
+Requires: lib%name = %version-%release
 Requires: mpir-devel
 
-%description devel
+%description -n lib%name-devel
 Headers and other files for develop with %name.
 
 %prep
@@ -66,22 +67,22 @@ Headers and other files for develop with %name.
 %K5install
 %find_lang alkimia --all
 
-%files
+%files -f alkimia.lang
 %doc README.md
-%_libdir/%lib_name.so.*
-
-%files -n alkimia -f alkimia.lang
 %_bindir/onlinequoteseditor*
 %_K5qml/org/kde/alkimia
 %_desktopdir/kf5/*.desktop
-%_datadir/alkimia5
+#_datadir/alkimia5
 %_iconsdir/hicolor/*/apps/onlinequoteseditor*
 %_datadir/metainfo/*.appdata.xml
 %_K5data/plasma/plasmoids/org.wincak.foreigncurrencies2
 %_K5srv/*.desktop
 %_K5xdgconf/*.knsrc
 
-%files devel
+%files -n lib%name
+%_libdir/%lib_name.so.*
+
+%files -n lib%name-devel
 %dir %_includedir/alkimia
 %_includedir/alkimia/*
 %_K5link/%lib_name.so
@@ -89,6 +90,10 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Wed Dec 23 2020 Andrey Cherepanov <cas@altlinux.org> 8.0.4-alt1
+- New version.
+- Rename source package to upstream name alkimia.
+
 * Wed Jan 29 2020 Andrey Cherepanov <cas@altlinux.org> 8.0.3-alt1
 - New version.
 

@@ -1,5 +1,5 @@
 Name:    kmymoney
-Version: 5.1.0
+Version: 5.1.1
 Release: alt1
 
 Summary: A Personal Finance Manager for KDE
@@ -367,6 +367,9 @@ Internationalization and documentation for KMyMoney
 %exclude %_K5doc/en
 
 %changelog
+* Tue Dec 22 2020 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt1
+- New version.
+
 * Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
 - New version.
 - Fix License and Summary.
