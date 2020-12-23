@@ -1,6 +1,6 @@
 Name: xfce4-genmon-plugin
-Version: 4.0.2
-Release: alt2.gc4f051b
+Version: 4.1.0
+Release: alt1
 
 Summary: Generic monitor plugin for the Xfce panel
 License: LGPLv2.1+
@@ -45,6 +45,9 @@ captures its output and displays it as a string into the panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.1.0-alt1
+- Updated to 4.1.0.
+
 * Sun Sep 13 2020 Mikhail Efremov <sem@altlinux.org> 4.0.2-alt2.gc4f051b
 - Fixed BR.
 - Added Vcs tag.
