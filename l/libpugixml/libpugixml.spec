@@ -1,7 +1,7 @@
 %define rname pugixml
 
 Name: libpugixml
-Version: 1.11.3
+Version: 1.11.4
 Release: alt1
 Summary: A light-weight C++ XML processing library
 
@@ -56,6 +56,9 @@ Development files for package %name
 %_libdir/pkgconfig/pugixml.pc
 
 %changelog
+* Wed Dec 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.11.4-alt1
+- New version.
+
 * Sat Dec 19 2020 Andrey Cherepanov <cas@altlinux.org> 1.11.3-alt1
 - New version.
 
