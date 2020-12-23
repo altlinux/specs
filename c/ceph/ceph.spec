@@ -1,4 +1,4 @@
-%define git_version cb8c61a60551b72614257d632a574d420064c17a
+%define git_version bdf3eebcd22d7d0b3dd4d5501bee5bac354d5b55
 %define _unpackaged_files_terminate_build 1
 
 %def_with ocf
@@ -41,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 15.2.7
+Version: 15.2.8
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -80,6 +80,8 @@ Source32: spawn.tar
 Source33: rook-client-python.tar
 
 Patch: %name-%version.patch
+Patch100: erasure_code-aarch64-textrel.patch
+
 BuildRequires(pre): rpm-build-python3
 # in cmake-3.10.2-alt add support find boost-1.66
 BuildRequires: cmake >= 3.10.2-alt1
@@ -225,6 +227,9 @@ namespace, coordinating access to the shared OSD cluster.
 Summary: Ceph Monitor Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
+Requires: /usr/sbin/smartctl
+Requires: /usr/sbin/nvme
+
 %description mon
 ceph-mon is the cluster monitor daemon for the Ceph distributed file
 system. One or more instances of ceph-mon form a Paxos part-time
@@ -702,6 +707,9 @@ tar -xf %SOURCE18 -C src/erasure-code/jerasure/gf-complete
 tar -xf %SOURCE19 -C src/erasure-code/jerasure/jerasure
 tar -xf %SOURCE20 -C src/googletest
 tar -xf %SOURCE21 -C src/isa-l
+pushd src/isa-l
+%patch100 -p1
+popd
 tar -xf %SOURCE22 -C src/lua
 tar -xf %SOURCE23 -C src/rapidjson
 %if_without system_rocksdb
@@ -876,7 +884,6 @@ touch %buildroot%_localstatedir/cephadm/.ssh/authorized_keys
 
 # sudoers.d
 install -m 0600 -D sudoers.d/ceph-osd-smartctl %buildroot%_sysconfdir/sudoers.d/ceph-osd-smartctl
-install -m 0600 -D sudoers.d/cephadm %buildroot%_sysconfdir/sudoers.d/cephadm
 
 # prometheus alerts
 install -m 644 -D monitoring/prometheus/alerts/ceph_default_alerts.yml %{buildroot}/etc/prometheus/ceph/ceph_default_alerts.yml
@@ -1152,7 +1159,6 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %files -n cephadm
 %_sbindir/cephadm
 %_man8dir/cephadm.8*
-%config(noreplace) %_sysconfdir/sudoers.d/cephadm
 %attr(0700,cephadm,cephadm) %dir %_localstatedir/cephadm
 %attr(0700,cephadm,cephadm) %dir %_localstatedir/cephadm/.ssh
 %attr(0600,cephadm,cephadm) %_localstatedir/cephadm/.ssh/authorized_keys
@@ -1360,7 +1366,6 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %files -n librgw2
 %_libdir/libradosgw.so.*
 %_libdir/librgw.so.*
-%_libdir/librgw_admin_user.so.*
 %if_with lttng
 %_libdir/librgw_op_tp.so.*
 %_libdir/librgw_rados_tp.so.*
@@ -1369,10 +1374,8 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %files -n librgw-devel
 %_includedir/rados/librgw.h
 %_includedir/rados/rgw_file.h
-%_includedir/rados/librgw_admin_user.h
 %_libdir/libradosgw.so
 %_libdir/librgw.so
-%_libdir/librgw_admin_user.so
 %if_with lttng
 %_libdir/librgw_op_tp.so
 %_libdir/librgw_rados_tp.so
@@ -1494,6 +1497,12 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Thu Dec 24 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.8-alt1
+- 15.2.8
+- Fixes for the following security vulnerabilities:
+  + CVE-2020-27781 OpenStack Manila use of ceph_volume_client.py library
+    allowed tenant access to any Ceph credential's secret.
+
 * Fri Dec 04 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.7-alt1
 - 15.2.7
 
