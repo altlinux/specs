@@ -4,13 +4,13 @@
 %def_enable python3
 %def_disable luajit
 
-%define cantor_sover 27
+%define cantor_sover 28
 %define libcantorlibs libcantorlibs%cantor_sover
 %define cantor_config_sover 0
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -96,15 +96,13 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data cantor
+%K5install_move data cantor knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
 
 %files
-%config(noreplace) %_K5xdgconf/cantor.knsrc
-%config(noreplace) %_K5xdgconf/cantor_*.knsrc
 %_K5bin/cantor*
 %_K5lib/cantor_pythonbackend.so
 %_K5plug/libcantorpart.so
@@ -114,6 +112,7 @@ KF5 library
 %_K5xdgapp/org.kde.cantor.desktop
 %_K5icon/*/*/apps/*.*
 %_K5xmlgui/cantor/
+%_K5data/knsrcfiles/*cantor*.knsrc
 
 %files devel
 #%_K5inc/cantor_version.h
@@ -130,6 +129,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

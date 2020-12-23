@@ -4,7 +4,7 @@
 %define libmarblewidget libmarblewidget-qt5%marblewidget_sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -86,7 +86,7 @@ sed -i '/add_subdirectory(marble-qt)/d' src/apps/CMakeLists.txt
 
 %install
 %K5install
-%K5install_move data marble config.kcfg icons
+%K5install_move data marble config.kcfg icons knsrcfiles
 
 mv %buildroot/%_K5xdgmime/geo{,-kde5}.xml
 
@@ -102,7 +102,6 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 
 %files common -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/marble.knsrc
 %_K5cfg/marble.kcfg
 %_K5xdgmime/geo-kde5.xml
 
@@ -113,6 +112,7 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5plug/*marble*.so
 %_K5data/marble/
 %_K5data/plasma/*/org.kde.plasma.*world*/
+%_K5data/knsrcfiles/*marble*.knsrc
 %_K5lib/marble/
 %_K5qml/org/kde/marble/
 %_K5srv/*marble*.desktop
@@ -136,6 +136,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

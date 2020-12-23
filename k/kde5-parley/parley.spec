@@ -1,7 +1,7 @@
 %define rname parley
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -45,12 +45,11 @@ also known as flash cards.
 
 %install
 %K5install
-%K5install_move data parley
+%K5install_move data parley knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/parley*.knsrc
 %_K5bin/parley
 %_K5data/parley/
 %_K5xmlgui/parley/
@@ -61,8 +60,12 @@ also known as flash cards.
 %_K5cfg/documentsettings.kcfg
 %_K5cfg/languagesettings.kcfg
 %_K5cfg/parley.kcfg
+%_K5data/knsrcfiles/*parley*.knsrc
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
