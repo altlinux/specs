@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2020d
+Version: 2020e
 Release: alt1
 
 Summary: Timezone data
@@ -73,6 +73,9 @@ make -k check_tables
 %srcdir/
 
 %changelog
+* Wed Dec 23 2020 Dmitry V. Levin <ldv@altlinux.org> 2020e-alt1
+- 2020d -> 2020e-1-g15e0ac3.
+
 * Wed Oct 21 2020 Dmitry V. Levin <ldv@altlinux.org> 2020d-alt1
 - 2020a -> 2020d.
 
