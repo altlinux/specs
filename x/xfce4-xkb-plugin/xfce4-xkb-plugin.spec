@@ -1,6 +1,6 @@
 Name: xfce4-xkb-plugin
-Version: 0.8.1
-Release: alt3.g6026349
+Version: 0.8.2
+Release: alt1
 
 Summary: XKB layout switch plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
@@ -63,6 +63,9 @@ XFce panel.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
 
 %changelog
+* Thu Dec 24 2020 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
+- Updated to 0.8.2.
+
 * Sun Sep 13 2020 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt3.g6026349
 - Fixed BR.
 - Updated Vcs tag.
