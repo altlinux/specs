@@ -4,7 +4,7 @@
 
 Name: golang-github-linuxdeepin-dbus-factory
 Version: 1.8.0.27
-Release: alt1
+Release: alt2
 Summary: Go DBus factory for Deepin Desktop Environment
 
 License: GPL-3.0-only
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-golang
 # BuildRequires: golang(pkg.deepin.io/lib/dbus1) golang(pkg.deepin.io/lib/dbusutil) golang(pkg.deepin.io/lib/dbusutil/proxy)
 # BuildRequires: golang(golang.org/x/net/context) golang(pkg.deepin.io/gir/gio-2.0) golang(pkg.deepin.io/gir/glib-2.0) glib2-devel libgio-devel libgtk+3-devel
 BuildRequires: deepin-gir-generator golang-golang-x-net-devel golang-deepin-go-lib-devel glib2-devel libgio-devel libgtk+3-devel golang-github-go-dbus-devel
+BuildRequires: golang-github-fsnotify-devel golang-golang-x-sys-devel
 
 %description
 Go DBus factory for Deepin Desktop Environment.
@@ -36,10 +37,21 @@ Go DBus factory for Deepin Desktop Environment.
 rm -rf debian
 
 %build
-%make_build
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%goipath"
+export GOPATH="%go_path"
+
+%golang_prepare
+
+cd .build/src/%goipath
+for cmd in _tool/* ; do
+%golang_build $cmd ||:
+done
 
 %install
-%makeinstall_std GOPATH="%go_path"
+export BUILDDIR="$PWD/.build"
+export GOPATH="%go_path"
+%golang_install
 
 %if_with check
 %check
@@ -47,15 +59,18 @@ export GOPATH="%go_path"
 %gotest
 %endif
 
-# %%files
-# %%_bindir/*
+%files
+%doc CHANGELOG.md README.md LICENSE
+%_bindir/*
 
 %files devel
-%doc CHANGELOG.md README.md LICENSE
 %go_path/src/%goipath
-#%%exclude %%go_path/src/%%goipath/_tool
+%exclude %go_path/src/%goipath/_tool
 
 %changelog
+* Thu Dec 24 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.0.27-alt2
+- Packed needed files.
+
 * Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.0.27-alt1
 - New version (1.8.0.27) with rpmgs script.
 
