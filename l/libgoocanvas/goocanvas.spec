@@ -4,7 +4,7 @@
 
 Name: lib%oname
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 Summary: A new canvas widget for GTK+ that uses cairo for drawing
 
 Group: System/Libraries
@@ -13,7 +13,7 @@ Url: http://live.gnome.org/GooCanvas
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome rpm-build-gir
 # From configure.in
 BuildPreReq: libgtk+2-devel >= 2.12.0
 BuildPreReq: glib2-devel >= 2.10.0
@@ -61,7 +61,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %oname
 
@@ -78,6 +78,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Dec 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.1
+- rebuild
+
 * Thu Jun 09 2011 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 - move docs to devel-doc subpackage
