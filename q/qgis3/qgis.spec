@@ -8,7 +8,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.14.1
+Version: 3.16.2
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -37,6 +37,8 @@ Patch3: %rname-fix-unresolved-variable.patch
 %define _libexecdir %prefix/libexec
 
 Conflicts: qgis
+
+ExcludeArch: armh
 
 # TODO: Pyspatialite is included if you use the bundled libspatialite.
 # Some plug-ins need it.
@@ -96,6 +98,7 @@ BuildRequires: ocl-icd-devel
 BuildRequires: libhdf5-devel
 BuildRequires: libnetcdf-devel
 BuildRequires: libxml2-devel
+BuildRequires: /proc
 
 #Requires: libqt4-sql-sqlite
 Requires: qca-qt5-ossl
@@ -106,6 +109,7 @@ Requires: libqwt6-qt5
 %add_findprov_skiplist %%python_sitelibdir/qgis/*.so 
 %add_python3_path %_datadir/qgis/python
 %filter_from_requires /^python3(processing.core.GeoAlgorithm)/d
+%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
 
 %description
 Geographic Information System (GIS) manages, analyzes, and displays
@@ -177,6 +181,7 @@ sed -i '/dxf2shp_converter/d' src/plugins/CMakeLists.txt
 gzip ChangeLog
 
 %build
+%add_optflags -Wno-error=return-type
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
 CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
 export LD_LIBRARY_PATH=`pwd`/output/%_lib
@@ -205,17 +210,16 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
         -DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
         -DLIBZIP_CONF_INCLUDE_DIR:PATH=%_libdir/libzip/include \
         -DQCA_INCLUDE_DIR:PATH=%_includedir/qt5/Qca-qt5/QtCrypto \
-        -DPYUIC_PROGRAM=%_bindir/pyuic5.py3 \
-        -DPYRCC_PROGRAM=%_bindir/pyrcc5.py3 \
 	.
-#export NPROCS=1
+%ifarch %ix86
+export NPROCS=8
+%endif
 %ninja_build
 
 %install
 %ninja_install
 
 # Install desktop files
-#desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
 desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE2
 
 # Install MIME type definitions
@@ -361,6 +365,21 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Thu Dec 24 2020 Andrey Cherepanov <cas@altlinux.org> 3.16.2-alt1
+- New version.
+
+* Wed Dec 16 2020 Andrey Cherepanov <cas@altlinux.org> 3.16.1-alt1
+- New version.
+
+* Mon Nov 02 2020 Andrey Cherepanov <cas@altlinux.org> 3.16.0-alt1
+- New version.
+
+* Mon Aug 24 2020 Andrey Cherepanov <cas@altlinux.org> 3.14.15-alt1
+- New version.
+- Skip python3 requires: PyQt5.QtWebKit, PyQt5.QtWebKitWidgets.
+- Exclude armh from build architectures.
+- Build in 8 threads on i586.
+
 * Tue Jul 21 2020 Andrey Cherepanov <cas@altlinux.org> 3.14.1-alt1
 - New version.
 
