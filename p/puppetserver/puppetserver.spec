@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.13.0
-Release:    alt2
+Release:    alt3
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -49,6 +49,20 @@ control over the Ruby runtime.
 sed "s|gem-path: \\[.*\\]|gem-path: [$(echo $(ls /usr/lib/ruby/gems | \
    sed -e "s,^,/usr/lib/ruby/gems/,") | sed "s/ \\+/, /")]|" \
    -i ext/config/conf.d/puppetserver.conf
+subst 's|/var/log/puppetlabs|/var/log|' $(find -name '*.xml')
+sed '/name.*environments/a \
+        }, \
+        { \
+            match-request: { \
+                path: "/puppet/v3/environment_classes" \
+                type: path \
+                method: get \
+            } \
+            allow: "*" \
+            sort-order: 500 \
+            name: "puppetlabs environment_classes"' \
+      -i ext/config/conf.d/auth.conf
+
 
 %install
 install -d -m 0755 %buildroot%_datadir/%name
@@ -139,6 +153,12 @@ chmod 0755 /var/run/puppetserver
 chown puppet:puppet /var/lib/puppetserver/jars
 chmod 0700 /var/lib/puppetserver/jars
 
+if [ -d /var/log/puppetlabs/puppetserver ]; then
+   find /var/log/puppetlabs/puppetserver/ -name \*.log | while read -r f; do sed "s|/var/log/puppetlabs|/var/log|" -i "$f"; done
+   mv -f /var/log/puppetlabs/puppetserver/* /var/log/puppetserver
+   rm -rf /var/log/puppetlabs/puppetserver
+fi
+
 %files
 %_datadir/%name
 %_sysconfdir/%name
@@ -152,6 +172,10 @@ chmod 0700 /var/lib/puppetserver/jars
 %_sysconfdir/default/%name
 
 %changelog
+* Wed Dec 23 2020 Pavel Skrylev <majioa@altlinux.org> 6.13.0-alt3
+- + environment_classes to ''auth.conf''
+- + replacings for the log folder, removing puppetlabs from it
+
 * Tue Nov 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.13.0-alt2
 - Updated dependencies for p9 compatibility.
 

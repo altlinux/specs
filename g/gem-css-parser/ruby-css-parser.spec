@@ -2,19 +2,24 @@
 %define        pkgname css-parser
 %define        gemname css_parser
 
-Name:          ruby-%pkgname
-Version:       1.7.0
+Name:          gem-%pkgname
+Version:       1.7.1
 Release:       alt1
 Summary:       Ruby CSS Parser
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/premailer/css_parser
-%vcs           https://github.com/premailer/css_parser.git
+Vcs:           https://github.com/premailer/css_parser.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 Load, parse and cascade CSS rule sets in Ruby.
@@ -58,9 +63,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Dec 24 2020 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1
+- ^ 1.7.0 -> 1.7.1
+- * policify name
+
 * Wed Jul 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.7.0-alt1
-- Bump to 1.7.0
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 1.6.0 -> 1.7.0
 
 * Tue Sep 25 2018 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
 - Initial gemified build for Sisyphus

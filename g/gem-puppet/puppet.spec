@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       7.1.0
-Release:       alt1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -16,10 +16,11 @@ Source1:       client.init
 Source2:       puppet.service
 Source3:       puppet-nm-dispatcher
 Source4:       auth.conf
+Source5:       puppet.conf
 
-Patch1: puppet-alt-adjust-default-paths.patch
-Patch2: puppet-fix-locale-loading.patch
-Patch3: puppet-alt-aptrpm-osfamily.patch
+Patch1:        puppet-alt-adjust-default-paths.patch
+Patch2:        puppet-fix-locale-loading.patch
+Patch3:        puppet-alt-aptrpm-osfamily.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(yard)
@@ -27,6 +28,7 @@ BuildRequires: gem(yard)
 %gem_replace_version CFPropertyList ~> 3.0
 %add_findreq_skiplist %ruby_gemslibdir/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      %pkgname = %EVR
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -99,26 +101,15 @@ touch %buildroot%_sysconfdir/puppet/code/modules/.dir
 mkdir -p %buildroot{%_cachedir,%_logdir,/run}/puppet
 
 # Create puppet modules link
-ln -s %_libexecdir %buildroot%ruby_gemlibdir/vendor_modules
+ln -s %_libexecdir/puppet-modules %buildroot%ruby_gemlibdir/vendor_modules
 
 # Install NetworkManager dispatcher
 install -Dpv %SOURCE3 \
     %buildroot%_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
 
-# Add puppetdb example configuration to puppet.conf
-cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
-# Example of puppetdb integration
-#[master]
-#storeconfigs = true
-#storeconfigs_backend = puppetdb
-#report = true
-#reports = puppetdb
-#
-#[agent]
-#server = puppet
-END.
 touch %buildroot%_sysconfdir/puppet/autosign.conf
 install -Dm644 %SOURCE4 %buildroot%_sysconfdir/puppet/auto.conf
+install -Dm644 %SOURCE5 %buildroot%_sysconfdir/puppet/puppet.conf
 
 # link to gem library code base
 ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
@@ -128,8 +119,8 @@ mkdir -p %buildroot%ruby_gemlibdir/public
 touch %buildroot%ruby_gemlibdir/public/.dir
 
 # Create locale and modules directories
-mkdir -p %buildroot%_datadir/puppet-{locale,modules}
-touch %buildroot%_datadir/puppet-{locale,modules}/.dir
+mkdir -p %buildroot%_datadir/puppet-locale %buildroot%_libexecdir/puppet-modules
+touch %buildroot%_datadir/puppet-locale/.dir %buildroot%_libexecdir/puppet-modules/.dir
 
 %pre           -n %pkgname
 [ ! -d %_sysconfdir/puppetlabs/puppet/ssl ] || (
@@ -137,10 +128,12 @@ touch %buildroot%_datadir/puppet-{locale,modules}/.dir
    rm -rf %_sysconfdir/puppetlabs/puppet/ssl)
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
-%_sbindir/useradd -r -n -G puppet,foreman -d %_cachedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -N -G puppet,foreman -d %_cachedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
 
 %post          -n %pkgname
 %post_service puppet
+sed -e "s,sample.server.name,$(hostname)," \
+    -i %_sysconfdir/puppet/puppet.conf
 
 %preun         -n %pkgname
 %preun_service puppet
@@ -148,6 +141,7 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %files
 %ruby_gemspec
 %ruby_gemlibdir
+%_libexecdir/puppet-modules
 
 %files         -n %pkgname
 %_bindir/puppet
@@ -171,7 +165,7 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %dir %_sysconfdir/puppet/code/environments/production/manifests
 %dir %_sysconfdir/puppet/code
 %_sysconfdir/puppet/code
-%config(noreplace) %_sysconfdir/puppet/autosign.conf
+%attr(0644,_puppet,puppet) %config(noreplace) %_sysconfdir/puppet/autosign.conf
 %config(noreplace) %_sysconfdir/puppet/auto.conf
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/sysconfig/puppet
@@ -180,7 +174,6 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
 %_datadir/puppet
 %_datadir/puppet-locale
-%_datadir/puppet-modules
 %attr(1770,_puppet,puppet) %dir %_cachedir/puppet
 %_cachedir/puppet/
 %attr(1770,_puppet,puppet) %dir %_logdir/puppet
@@ -193,6 +186,10 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %ruby_gemdocdir
 
 %changelog
+* Mon Dec 14 2020 Pavel Skrylev <majioa@altlinux.org> 7.1.0-alt2
+- * default puppet.conf
+- ! spec
+
 * Mon Dec 14 2020 Pavel Skrylev <majioa@altlinux.org> 7.1.0-alt1
 - ^ 7.0.0 -> 7.1.0
 - + link to vendor modules for puppet gem
