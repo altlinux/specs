@@ -1,11 +1,12 @@
 Name:    msd_lite
 Version: 1.08
-Release: alt4
+Release: alt5
 License: BSD
 Group:	 Networking/Other
 URL: http://www.netlab.linkpc.net/wiki/ru:software:msd:lite
 
 Source: %name-%version.tar
+BuildRequires: glibc-kernheaders-generic
 
 Summary: msd_lite is a program for organizing streaming IP TV on the network via HTTP.
 
@@ -51,6 +52,10 @@ install -pDm0644 %name.service		%buildroot%_unitdir/%name.service
 %doc AUTHORS COPYING README
 
 %changelog
+* Thu Dec 24 2020 Alexei Takaseev <taf@altlinux.org> 1.08-alt5
+- Fix build with glibc-2.32
+- Add BR: glibc-kernheaders-generic
+
 * Thu Sep 06 2018 Alexei Takaseev <taf@altlinux.org> 1.08-alt4
 - Remove the deprecated sysctl system calls
 
