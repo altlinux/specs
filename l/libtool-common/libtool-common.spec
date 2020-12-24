@@ -1,5 +1,5 @@
 Name: libtool-common
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Wrapper and common files for different versions of libtool
@@ -31,10 +31,17 @@ for f in libtool libtoolize; do
 done
 install -pm755 libtool-ldconfig-dump %buildroot%_bindir/
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %_bindir/*
 
 %changelog
+* Wed Dec 30 2020 Dmitry V. Levin <ldv@altlinux.org> 0.2.3-alt1
+- Simplified libtool_wrapper a bit.
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 0.2.2-alt1
 - Cleaned up libtool_wrapper.
 

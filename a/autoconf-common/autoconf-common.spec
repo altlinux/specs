@@ -1,5 +1,5 @@
 Name: autoconf-common
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Wrapper and common files for different versions of the GNU Autoconf
@@ -29,6 +29,9 @@ done
 %_bindir/*
 
 %changelog
+* Thu Dec 24 2020 Dmitry V. Levin <ldv@altlinux.org> 0.3.2-alt1
+- Simplified autoconf_wrapper a bit.
+
 * Sat Aug 04 2018 Dmitry V. Levin <ldv@altlinux.org> 0.3.1-alt1
 - Cleaned up autoconf_wrapper.
 
