@@ -1,6 +1,6 @@
 Name: xfce4-smartbookmark-plugin
-Version: 0.5.1
-Release: alt2.g3fc7592
+Version: 0.5.2
+Release: alt1
 
 Summary: Smart bookmarks for the Xfce panel
 License: GPLv2+
@@ -42,12 +42,15 @@ directly to your browser and perform custom searches.
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README.md NEWS AUTHORS
 %_libdir/xfce4/panel/plugins/*.so
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Dec 24 2020 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
+- Updated to 0.5.2.
+
 * Mon Sep 14 2020 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt2.g3fc7592
 - Fixed BR.
 - Added Vcs tag.
