@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.26.3
+Version: 1.26.4
 Release: alt1
 
 Summary: MPEG audio player
@@ -46,11 +46,9 @@ is required. Mono and/or reduced quality playback (22 kHz or
 For information on the MP3 License, please visit:
 %url
 
-
 %package -n libmpg123
 Summary: mpg123 library
 Group: System/Libraries
-Provides: libmpg123
 
 %description -n libmpg123
 This package provides mpg123 library.
@@ -115,6 +113,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Thu Dec 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.26.4-alt1
+- 1.26.4
+
 * Fri Jul 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.26.3-alt1
 - 1.26.3
 
