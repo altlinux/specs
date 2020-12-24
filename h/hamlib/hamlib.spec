@@ -3,26 +3,26 @@
 
 Name:           hamlib
 Version:        3.3
-Release:        alt1.2
+Release:        alt1.3
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
 License:        GPLv2+ and LGPLv2+
-URL:            http://hamlib.sourceforge.net
+URL:            https://hamlib.github.io/
 Source0:        %name-%version.tar
 
 # Install python and perl bindings into proper dirs
 Patch0:         hamlib-3.2-bindings.patch
 BuildRequires:  gcc-c++
 BuildRequires:  python-devel, swig, libgd2-devel, libxml2-devel, tcl-devel
-BuildRequires:  libusb-devel, pkgconfig, boost-devel, libltdl3-devel
+BuildRequires:  libusb-devel, pkgconfig, boost-devel, libltdl-devel
 BuildRequires:  doxygen
 BuildRequires:  perl-devel
 BuildRequires:  libusb-compat-devel
 BuildRequires:  lua-devel
 BuildRequires:  libreadline-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+# explicitly added makeinfo for info files
+BuildRequires: makeinfo
 
 %description
 Hamlib provides a standardized programming interface that applications
@@ -201,6 +201,11 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Thu Dec 24 2020 Dmitry V. Levin <ldv@altlinux.org> 3.3-alt1.3
+- NMU.
+- Updated URL.
+- Fixed build dependencies.
+
 * Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1.2
 - NMU: fixed build in preparation to perl upgrade
 
