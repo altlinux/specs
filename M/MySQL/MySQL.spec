@@ -13,7 +13,7 @@
 
 Name: MySQL
 Version: 8.0.22
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -80,6 +80,8 @@ BuildRequires: zlib-devel
 BuildRequires: libsystemd-devel
 BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-lite-devel
+BuildRequires: libtirpc-devel
+BuildRequires: rpcgen
 
 %define soname 21
 
@@ -788,6 +790,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Dec 24 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.22-alt2
+- fix FTBFS against glibc 2.32 (Sun RPC is removed from glibc)
+  + spec: add libtirpc-devel and rpcgen to BR:
+
 * Mon Nov 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.22-alt1
 - new version
 - remove upstreamed oracle-fix-charset-nullptr patch
