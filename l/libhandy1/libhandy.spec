@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library with GTK+3 widgets for mobile devices (API version 1)
@@ -123,6 +123,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Thu Dec 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Thu Nov 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
