@@ -4,14 +4,14 @@
 
 Name: libid3tag
 Version: 0.15.1b
-Release: alt9
+Release: alt10
 Summary: ID3 Tag manipulation library
 Summary(ru_RU.UTF-8): Библиотека для работы с тегами ID3
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Sound
-Url: http://mad.sourceforge.net/
+Url: https://www.underbit.com/products/mad/
 
-# http://download.sourceforge.net/%name/%name-%version.tar.bz2
+# https://download.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch1: %name-0.15.0b-alt-pkgconfig.patch
 Patch2: libid3tag-0.15.1b-fix-CVE-2008-2109.patch
@@ -41,7 +41,7 @@ both ID3v1 and the various versions of ID3v2.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-PreReq: %name = %EVR
+Requires: %name = %EVR
 
 %description devel
 This package contains development files required for packaging software
@@ -54,7 +54,7 @@ using %name library.
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C
-PreReq: %name-devel = %EVR
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains development libraries required for packaging
@@ -78,7 +78,6 @@ statically linked %name-based software.
 touch NEWS AUTHORS ChangeLog
 
 %build
-%set_libtool_version 1.5
 %autoreconf
 
 %configure %{subst_enable static}
@@ -105,6 +104,11 @@ touch NEWS AUTHORS ChangeLog
 %endif
 
 %changelog
+* Thu Dec 24 2020 Dmitry V. Levin <ldv@altlinux.org> 0.15.1b-alt10
+- NMU.
+- Fixed License tag.
+- Removed libtool_1.5 from build dependencies.
+
 * Mon Oct 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.1b-alt9
 - Applied patches from Debian and Gentoo (Fixes: CVE-2004-2779).
 
