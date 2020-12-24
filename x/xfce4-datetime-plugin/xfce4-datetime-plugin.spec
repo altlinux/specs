@@ -1,6 +1,6 @@
 Name: xfce4-datetime-plugin
-Version: 0.8.0
-Release: alt2.g9c5e958
+Version: 0.8.1
+Release: alt1
 
 Summary: Datetime plugin for the Xfce panel
 License: GPLv2+
@@ -38,12 +38,14 @@ Requires: xfce4-panel >= 4.14
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README.md NEWS AUTHORS
 %_libdir/xfce4/panel/plugins/*.so
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Dec 24 2020 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+
 * Sun Sep 13 2020 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt2.g9c5e958
 - Fixed xfce4-panel requires.
 - Fixed BR.
