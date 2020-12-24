@@ -17,7 +17,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.5.2
+Version: 1.5.4
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -117,6 +117,7 @@ Data files for installed tests.
     -Dfirmware-packager=true \
     -Dman=false \
     -Dlvfs=true \
+    -Dsupported_build=true \
     -Dplugin_flashrom=false \
 %if_enabled msr
     -Dplugin_msr=true \
@@ -278,7 +279,6 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_pci_bcr.so
 %_libdir/fwupd-plugins-3/libfu_plugin_pci_mei.so
-%_libdir/fwupd-plugins-3/libfu_plugin_platform_integrity.so
 %_libdir/fwupd-plugins-3/libfu_plugin_optionrom.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_rmi.so
 %_libdir/fwupd-plugins-3/libfu_plugin_vli.so
@@ -334,6 +334,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1
+- 1.5.4
+
 * Wed Nov 25 2020 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 - cleanup build requires
