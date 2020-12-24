@@ -1,12 +1,11 @@
-# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname taskjuggler
 
 Name:          %pkgname
-Version:       3.6.0
-Release:       alt2
+Version:       3.7.1
+Release:       alt1
 Summary:       TaskJuggler - Project Management beyond Gantt chart drawing
+License:       GPL-2.0
 Group:         Office
-License:       GPLv2
 URL:           http://www.taskjuggler.org
 %vcs           https://github.com/taskjuggler/TaskJuggler.git
 BuildArch:     noarch
@@ -14,9 +13,10 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(term-ansicolor)
-BuildRequires: gem(mail)
+BuildRequires: gem(term-ansicolor)
+BuildRequires: git-core
 
-%add_findreq_skiplist %ruby_gemslibdir/**/*
+Requires: gem-%pkgname = %EVR
 
 %description
 TaskJuggler is a modern and powerful project management tool. Its new
@@ -29,7 +29,6 @@ completion of the project. It assists you during project scoping,
 resource assignment, cost and revenue planning, and risk and
 communication management.
 
-
 %package       -n gem-%pkgname
 Summary:       Library for %gemname gem
 Summary(ru_RU.UTF-8): Библиотечные файлы для самоцвета %gemname
@@ -41,7 +40,6 @@ Library for %gemname gem.
 
 %description   -n gem-%pkgname -l ru_RU.UTF8
 Библиотечные файлы для %gemname самоцвета.
-
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
@@ -57,32 +55,39 @@ Documentation files for %gemname gem.
 %description   -n gem-%pkgname-doc -l ru_RU.UTF8
 Файлы сведений для самоцвета %gemname.
 
-
 %prep
 %setup
+git init .
+git add .
 
 %build
-%ruby_build
+%gem_build
 
 %install
-%ruby_install
+%gem_show
+%gem_install
+# Fix shebang
+subst 's|^#!/usr/bin/env ruby -w$|#!/usr/bin/ruby -w|' `grep -Rl '^#!/usr/bin/env ruby -w$' %buildroot%ruby_gemslibdir`
 
 %check
 %ruby_test
 
 %files
 %doc README*
-#%_bindir/tj3*
-#%_mandir/*
+%_bindir/*
 
-%files         -n gem-%pkgname
+%files -n gem-%pkgname
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n gem-%pkgname-doc
+%files -n gem-%pkgname-doc
 %ruby_gemdocdir
 
 %changelog
+* Thu Dec 24 2020 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
+- New version.
+- Package complete gem.
+
 * Thu Jul 18 2019 Pavel Skrylev <majioa@altlinux.org> 3.6.0-alt2
 - Use Ruby Policy 2.0
 
