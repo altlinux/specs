@@ -20,8 +20,8 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.16.0
-Release:	alt3
+Version:	0.17.0
+Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -222,6 +222,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Fri Dec 25 2020 Vitaly Chikunov <vt@altlinux.org> 0.17.0-alt1
+- Update to v0.17.0 (2020-10-29).
+
 * Sat Dec 05 2020 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt3
 - Spin off -static package and fix wrongly packaged .a libs.
 - Do not package libbcc-loader-static.a.
