@@ -1,11 +1,13 @@
 %def_disable snapshot
+%def_enable check
+
 Name: mobile-broadband-provider-info
-Version: 20190618
+Version: 20201225
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
 Group: System/Configuration/Networking
-License: Creative Commons Public Domain
+License: Public-domain
 Url: https://wiki.gnome.org/Projects/NetworkManager/MobileBroadband/ServiceProviders
 
 %if_disabled snapshot
@@ -16,8 +18,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-# for check
-BuildRequires: xmllint xsltproc
+BuildRequires: xsltproc
+%{?_enable_check:BuildRequires: xmllint}
 
 %description
 This package contains listings of mobile broadband (3G) providers and
@@ -45,6 +47,9 @@ associated network and plan information.
 %doc COPYING README
 
 %changelog
+* Fri Dec 25 2020 Yuri N. Sedunov <aris@altlinux.org> 20201225-alt1
+- 20201225
+
 * Tue Jun 18 2019 Yuri N. Sedunov <aris@altlinux.org> 20190618-alt1
 - 20190618
 
