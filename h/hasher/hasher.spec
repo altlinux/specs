@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,9 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Fri Dec 25 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.6-alt1
+- mkaptbox: invoke rpm --showrc and rpmdb --initdb using setarch wrapper.
+
 * Sun Nov 29 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.5-alt1
 - Made exclude_docs configuration variable easier to use.
 - hsh, hsh-rebuild: introduced --rpmbuild-args (by Arseny Maslennikov).
