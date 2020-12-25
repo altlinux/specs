@@ -1,7 +1,7 @@
 %define rname kigo
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -35,7 +35,7 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 
 %install
 %K5install
-%K5install_move data %rname
+%K5install_move data %rname knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -46,11 +46,13 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_K5xmlgui/%{rname}/
 %_K5data/%{rname}/
 %_K5cfg/%{rname}.kcfg
-%_K5xdgconf/%{rname}-games.knsrc
-%_K5xdgconf/%{rname}.knsrc
+%_K5data/knsrcfiles/*%{rname}*.knsrc
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname knights
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init no_altplace
 
@@ -62,17 +62,18 @@ Requires: %name-common = %version-%release
 
 %install
 %K5install
+%K5install_move data knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSE*
-%config(noreplace) %_K5xdgconf/*.knsrc
 %_K5bin/knights
 %_datadir/knights/
 %_K5icon/hicolor/*/apps/knights.*
 %_K5cfg/knights.kcfg
 %_K5xmlgui/knights/
 %_K5xdgapp/*knights*.desktop
+%_K5data/knsrcfiles/*knights*.knsrc
 %_datadir/metainfo/*knights*.xml
 %_datadir/qlogging-categories5/*.categories
 
@@ -87,6 +88,9 @@ Requires: %name-common = %version-%release
 #%_K5dbus_iface/*nights*.xml
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 

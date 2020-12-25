@@ -4,7 +4,7 @@
 %define libiris_ksirk libiris_ksirk%iris_ksirk_sover
 
 Name: kde5-%rname
-Version: 20.08.3
+Version: 20.12.0
 Release: alt1
 %K5init
 
@@ -62,7 +62,7 @@ Requires: %name-common = %version-%release
 
 %install
 %K5install
-%K5install_move data ksirk ksirkskineditor
+%K5install_move data ksirk ksirkskineditor knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -70,7 +70,6 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %files
-%config(noreplace) %_K5xdgconf/*rc
 %_K5bin/ksirk*
 %_K5xdgapp/org.kde.ksirk*.desktop
 %_K5data/ksirk/
@@ -79,12 +78,16 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/ksirkskineditor/
 %_K5icon/*/*/apps/ksirk.*
 %_K5cfg/ksirk*.kcfg
+%_K5data/knsrcfiles/*ksirk*.*
 
 %files -n %libiris_ksirk
 %_K5lib/libiris_ksirk.so.%iris_ksirk_sover
 %_K5lib/libiris_ksirk.so.*
 
 %changelog
+* Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- new version
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.3-alt1
 - new version
 
