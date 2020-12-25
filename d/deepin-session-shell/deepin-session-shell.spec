@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.3.0.41
-Release: alt1
+Release: alt2
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -39,10 +39,22 @@ BuildRequires: lightdm-devel
 
 %prep
 %setup -n %repo-%version
-%patch -p2
+# %%patch -p2
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i 's|/lib|/libexec|' scripts/lightdm-deepin-greeter
 sed -i 's|/usr/bin/bash|/bin/bash|' src/dde-shutdown/view/contentwidget.cpp
+sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
+    src/widgets/fullscreenbackground.cpp
+sed -i 's|/usr/share/backgrounds/deepin/desktop.jpg|/usr/share/design-current/backgrounds/default.png|' \
+    src/dde-shutdown/view/contentwidget.cpp
+sed -i 's|/usr/share/wallpapers/deepin/desktop.jpg|/usr/share/design-current/backgrounds/default.png|' \
+    src/widgets/fullscreenbackground.cpp \
+    src/session-widgets/userinfo.cpp
+#sed -i 's|theme/background/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
+#    src/dde-lock/logintheme.qrc \
+#    src/lightdm-deepin-greeter/logintheme.qrc
+#sed -i 's/common-auth/system-login/' src/libdde-auth/authagent.cpp
+sed -i 's|qdbusxml2cpp|qdbusxml2cpp-qt5|' CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -53,9 +65,7 @@ export AR="llvm-ar"
 %cmake_insource \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix
-# warning: out of memory
-ninja -j1
-# %%ninja_build
+%ninja_build
 
 %install
 %ninja_install
@@ -79,6 +89,10 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 
 %changelog
+* Fri Dec 25 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.41-alt2
+- Fixed background.
+- Fixed qdbus generations.
+
 * Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.41-alt1
 - New version (5.3.0.41) with rpmgs script.
 
