@@ -1,6 +1,6 @@
 Name: tzdata
 Version: 2020e
-Release: alt2
+Release: alt3
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -42,7 +42,12 @@ xz -9k NEWS
 make CFLAGS='%optflags' VERSION=%version
 
 %install
-%make_install install_default DESTDIR=%buildroot TZDATA_TEXT= VERSION=%version
+case "$(rpm --eval %%_priority_distbranch)" in
+	'' | %%* | [a-z][0-9] | [a-z][0-9][^0-9]* ) ZFLAGS='-b fat' ;;
+	*) ZFLAGS= ;;
+esac
+%make_install install_default \
+	DESTDIR=%buildroot TZDATA_TEXT= VERSION=%version ZFLAGS="$ZFLAGS"
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
 rm %buildroot%_datadir/zoneinfo-posix
 mkdir %buildroot%_datadir/zoneinfo/posix
@@ -93,6 +98,9 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Fri Dec 25 2020 Dmitry V. Levin <ldv@altlinux.org> 2020e-alt3
+- Use "zic -b fat" for old branches (see ALT#39164).
+
 * Fri Dec 25 2020 Dmitry V. Levin <ldv@altlinux.org> 2020e-alt2
 - %%check: test compatibility with glibc.
 
