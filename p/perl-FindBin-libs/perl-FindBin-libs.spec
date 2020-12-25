@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
+Epoch: 1
 %define module_name FindBin-libs
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Cwd.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Symbol.pm) perl(Test/More.pm) perl(lib.pm) perl(strict.pm)
+BuildRequires: perl(Carp.pm) perl(Cwd.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Symbol.pm) perl(Test/More.pm) perl(lib.pm) perl(strict.pm) perl(File/Copy/Recursive/Reduced.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.1502
-Release: alt1
+Version: 2.200
+Release: alt1.1
 Summary: FindBin::libs - locate and a 'use lib' or export 
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/L/LE/LEMBARK/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEMBARK/Perl6/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -29,10 +30,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc Changes README example
+%doc README example CHANGES
 %perl_vendor_privlib/F*
 
 %changelog
+* Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.200-alt1.1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.1502-alt1
 - automated CPAN update
 
