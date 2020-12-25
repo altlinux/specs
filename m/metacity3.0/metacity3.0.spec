@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name metacity
 %define ver_major 3.38
 %define api_ver 3.0
@@ -7,10 +7,10 @@
 
 Name: %_name%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Metacity window manager
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/Metacity
 
@@ -38,8 +38,8 @@ Requires: lib%name = %version-%release
 Requires: zenity
 
 # From configure.ac
-BuildRequires: rpm-build-gnome rpm-build-licenses
-BuildRequires: intltool >= 0.34.90
+BuildRequires(pre): rpm-build-gnome
+BuildRequires: autoconf-archive
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libstartup-notification-devel >= %startup_notification_ver
@@ -134,6 +134,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Fri Dec 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
+- updated to 3.38.0-3-g7e3f13a4
+
 * Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
