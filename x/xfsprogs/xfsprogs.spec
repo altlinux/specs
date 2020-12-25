@@ -2,7 +2,7 @@
 
 Name: xfsprogs
 Version: 5.10.0
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL-2.1 and GPL-2.0
@@ -14,8 +14,6 @@ Patch0: %name-%version-alt.patch
 
 Requires: libxfs = %version-%release
 Conflicts: xfsdump < 3.0.0-alt1
-
-%set_libtool_version 1.5
 
 BuildPreReq: rpm-build >= 4.0.4-alt96.11
 
@@ -81,13 +79,9 @@ If you install libxfs-devel-static, you'll also want to install xfsprogs.
 %prep
 %setup
 %patch0 -p1
-sed 's|^\(hardcode_into_libs\)=.*$|\1=no|' < %_bindir/libtool-default > libtool
-install -pm755 include/install-sh install-sh
 
 %build
-libtoolize --copy --force
-aclocal -I m4
-autoconf
+make configure
 %configure \
 	--libdir=/%_lib \
 	--libexecdir=%_libdir
@@ -146,6 +140,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Fri Dec 25 2020 Anton Farygin <rider@altlinux.ru> 5.10.0-alt2
+- removed libtool_1.5 build dependency
+
 * Mon Dec 14 2020 Anton Farygin <rider@altlinux.ru> 5.10.0-alt1
 - 5.10.0
 
