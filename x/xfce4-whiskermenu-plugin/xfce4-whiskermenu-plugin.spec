@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
-Version: 2.4.6
+Version: 2.5.0
 Release: alt1%git_date
 
 Summary: Alternate Xfce menu
@@ -11,7 +11,7 @@ Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/panel-plugins/xfce4-whiskermenu-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://github.com/gottcode/xfce4-whiskermenu-plugin.git
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-whiskermenu-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -51,6 +51,10 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Fri Dec 25 2020 Mikhail Efremov <sem@altlinux.org> 2.5.0-alt1
+- Updated Vcs tag.
+- Updated to 2.5.0.
+
 * Thu Jul 23 2020 Mikhail Efremov <sem@altlinux.org> 2.4.6-alt1
 - Updated to 2.4.6.
 
