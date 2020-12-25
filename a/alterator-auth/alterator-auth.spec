@@ -2,7 +2,7 @@
 
 Name: alterator-auth
 Version: 0.43.9
-Release: alt2
+Release: alt3
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
 
@@ -168,6 +168,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Fri Nov 13 2020 Ivan Savin <svn17@altlinux.org> 0.43.9-alt3
+- Fix an error message (the password is expired).
+
 * Wed Oct 07 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.9-alt2
 - Avoid dependency to gpupdate-setup due gpupdate mechanism is not mandatory.
 

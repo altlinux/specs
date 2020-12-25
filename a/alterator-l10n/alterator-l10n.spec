@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.78
+Version: 2.9.79
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Dec 25 2020 Ivan Savin <svn17@altlinux.org> 2.9.79-alt1
+- alterator-auth: update translation
+
 * Fri Dec 25 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.78-alt1
 - Update timezones from tzdata-2020e.
 
