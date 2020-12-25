@@ -16,7 +16,7 @@ Epoch: 1
 %define _enable_test 1
 
 Name: perl-App-CLI
-Version: 0.50
+Version: 0.52
 Release: alt1
 
 Summary: Dispatcher module for command line interface programs
@@ -49,6 +49,9 @@ None.
 %perl_vendor_privlib/Ap*
 
 %changelog
+* Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.52-alt1
+- automated CPAN update
+
 * Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.50-alt1
 - automated CPAN update
 
