@@ -1,6 +1,6 @@
 Name: catfish
 Version: 1.4.10
-Release: alt2
+Release: alt3
 Summary: A handy file search tool
 
 Group: File tools
@@ -37,6 +37,8 @@ Group: Development/Python3
 License: GPLv2+
 Summary: Supplemental module for catfish
 
+Requires: typelib(Gtk) = 3.0
+
 %description -n python3-module-catfish
 Supplemental Python3 module for catfish, a handy file search tool
 
@@ -72,6 +74,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Dec 25 2020 Anton Midyukov <antohami@altlinux.org> 1.4.10-alt3
+- Add requires typelib(Gtk) = 3.0
+
 * Fri Nov 27 2020 Anton Midyukov <antohami@altlinux.org> 1.4.10-alt2
 - Add automatic search for gobject introspection dependencies
 
