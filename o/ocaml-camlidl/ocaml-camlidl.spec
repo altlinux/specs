@@ -1,6 +1,7 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-camlidl
 Version: 1.09
-Release: alt1
+Release: alt2
 Summary: Stub code generator and COM binding for Objective Caml
 License: QPL and LGPLv2 with exceptions
 Group: Development/ML
@@ -83,6 +84,9 @@ make OCAMLLIB=%buildroot%_libdir/ocaml \
 %_libdir/ocaml/caml/*.h
 
 %changelog
+* Mon Dec 14 2020 Anton Farygin <rider@altlinux.ru> 1.09-alt2
+- enable relaxed mode for textrel check
+
 * Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 1.09-alt1
 - 1.09
 

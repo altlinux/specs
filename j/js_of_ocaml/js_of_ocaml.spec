@@ -1,8 +1,12 @@
 %set_verify_elf_method textrel=relaxed
+%ifarch %ix86 armh
+%def_without check
+%else
 %def_with check
+%endif
 Name: js_of_ocaml
-Version: 3.7.0
-Release: alt2
+Version: 3.8.0
+Release: alt1
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -20,7 +24,6 @@ BuildRequires: ocaml-lwt-devel >= 2.4.4
 BuildRequires: ocaml-menhir
 BuildRequires: ocaml-tyxml-devel
 BuildRequires: ocaml-reactiveData-devel
-BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-yojson-devel
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-fieldslib-devel
@@ -104,6 +107,9 @@ files for developing applications that use %name.
 %_libdir/ocaml/js_of_ocaml-ppx/ppx_js
 
 %changelog
+* Fri Dec 11 2020 Anton Farygin <rider@altlinux.ru> 3.8.0-alt1
+- 3.8.0
+
 * Sat Sep 19 2020 Anton Farygin <rider@altlinux.ru> 3.7.0-alt2
 - optimized build dependencies
 

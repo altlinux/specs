@@ -4,15 +4,16 @@
 #/usr/lib/ocaml/nums.cmxs
 #/usr/lib/ocaml/bigarray.cmxs
 %set_verify_elf_method textrel=relaxed
+
 # fix for build on armv7
 %remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.10.0
-Release: alt2
+Version: 4.11.1
+Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
-License: LGPLv2.1 with exceptions
+License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
 
 Url: http://caml.inria.fr/
@@ -22,8 +23,9 @@ Source1: ocaml-reqprov.ml
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
 Patch2: ocaml-4.08-alt-mk-reqprov.patch
 Patch3: ocaml-4.10.0-debian-do_not_die_in_output_complete_exe.patch
+Patch4: ocaml-4.11.1-RH-configure-Allow-user-defined-C-compiler-flags.patch
 
-Requires: rpm-build-ocaml >= 1.1
+Requires: rpm-build-ocaml >= 1.4
 BuildRequires(pre): rpm-build-ocaml >= 1.1.1
 
 Conflicts: ocaml4
@@ -41,8 +43,6 @@ Requires: %name-runtime = %EVR
 Summary: Runtime part of the OCaml system
 Group: Development/ML
 Provides: %name-runtime = %(v=%version; IFS=.; set $v; echo "$1.$2")
-# For some reason, this is Requires, not Provides.
-Requires: %_rpmlibdir/ocaml-reqprov
 Obsoletes: ocaml4-runtime
 
 %package ocamldoc
@@ -80,14 +80,21 @@ from special comments embedded in source files.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
-./configure OC_CFLAGS="$CFLAGS" OC_LDFLAGS="$LDFLAGS"  -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
+./configure \
+	OC_CFLAGS="$CFLAGS" \
+	OC_LDFLAGS="$LDFLAGS"  \
+	-bindir %_bindir \
+	-libdir %_libdir/ocaml \
+	-mandir %_mandir \
+	%nil
 
-make world.opt
-make opt
-make opt.opt
+%make_build world.opt
+%make_build opt
+%make_build opt.opt
 
 install -pD -m644 %SOURCE1 tools/reqprov.ml
 make -C tools reqprov
@@ -154,6 +161,9 @@ install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 4.11.1-alt1
+- 4.11.1
+
 * Wed Sep 09 2020 Anton Farygin <rider@altlinux.ru> 4.10.0-alt2
 - built with binutils-devel to add cmxs support to ocamlobjinfo
 

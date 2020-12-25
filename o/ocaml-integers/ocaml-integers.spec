@@ -3,13 +3,13 @@
 
 Name:    ocaml-%modulename
 Version: 0.4.0
-Release: alt2
-
+Release: alt3
 Summary: Various signed and unsigned integer types for OCaml
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/ocamllabs/ocaml-integers
 BuildRequires: dune
+BuildRequires: ocaml rpm-build-ocaml
 Source:  %modulename-%version.tar
 
 %description
@@ -43,6 +43,9 @@ developing applications that use %name.
 %_libdir/ocaml/%{modulename}*/*.h
 
 %changelog
+* Thu Oct 15 2020 Anton Farygin <rider@altlinux.ru> 0.4.0-alt3
+- added ocaml to BuildRequires
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 0.4.0-alt2
 - migrated to rpm-build-ocaml 1.4
 

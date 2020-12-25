@@ -1,11 +1,12 @@
 %set_verify_elf_method textrel=relaxed
 %add_ocaml_req_skip Ppx_sigs_reflected
+%def_disable check
 %define libname tyxml
 Name:           ocaml-%libname
 Version:        4.4.0
-Release:        alt2
+Release:        alt3
 Summary:        TyXML is a library for building statically correct HTML5 and SVG documents
-License:        LGPL2.1 with exeptions
+License:        LGPLv2.1 with exeptions
 Group:          Development/ML
 Url:            https://ocsigen.org/tyxml/
 # https://github.com/ocsigen/tyxml
@@ -13,8 +14,11 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml >= 4.07.1 opam dune ocaml-migrate-parsetree-devel
-BuildRequires: ocaml-ocamldoc ocaml-re ocaml-ppx_tools_versioned ocaml-uutf-devel ocaml-markup-devel
+BuildRequires: ocaml-ocamldoc ocaml-re ocaml-ppx_tools_versioned-devel ocaml-uutf-devel ocaml-markup-devel
 BuildRequires: ocaml-re-devel ocaml-result-devel
+%if_enabled check
+BuildRequires: ocaml-alcotest-devel
+%endif
 BuildRequires(pre):rpm-build-ocaml
 
 %package devel
@@ -37,64 +41,26 @@ programs which use %name
 %patch0 -p1
 
 %build
-%make
+%dune_build --release @install
+
+%check
+%dune_check
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
 
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE CHANGES.md README.md
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname-ppx
-%exclude %_libdir/ocaml/%libname/functor/*.a
-%exclude %_libdir/ocaml/%libname/functor/*.cmxa
-%exclude %_libdir/ocaml/%libname/functor/*.cmx
-%exclude %_libdir/ocaml/%libname-ppx/*.a
-%exclude %_libdir/ocaml/%libname-ppx/*.cmxa
-%exclude %_libdir/ocaml/%libname-ppx/*.cmx
-%exclude %_libdir/ocaml/%libname-ppx/internal/*.a
-%exclude %_libdir/ocaml/%libname-ppx/internal/*.cmx
-%exclude %_libdir/ocaml/%libname-ppx/internal/*.cmxa
-%exclude %_libdir/ocaml/%libname-ppx/internal/*.mli
-%_libdir/ocaml/%libname-jsx
-%exclude %_libdir/ocaml/%libname-jsx/*.a
-%exclude %_libdir/ocaml/%libname-jsx/*.cmxa
-%exclude %_libdir/ocaml/%libname-jsx/*.cmx
-%_libdir/ocaml/%libname-syntax
-%exclude %_libdir/ocaml/%libname-syntax/*.a
-%exclude %_libdir/ocaml/%libname-syntax/*.cmxa
-%exclude %_libdir/ocaml/%libname-syntax/*.cmx
 
-
-%files devel
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/functor/*.a
-%_libdir/ocaml/%libname/functor/*.cmxa
-%_libdir/ocaml/%libname/functor/*.cmx
-%_libdir/ocaml/%libname-ppx/*.a
-%_libdir/ocaml/%libname-ppx/*.cmxa
-%_libdir/ocaml/%libname-ppx/*.cmx
-%_libdir/ocaml/%libname-ppx/internal/*.a
-%_libdir/ocaml/%libname-ppx/internal/*.cmx
-%_libdir/ocaml/%libname-ppx/internal/*.cmxa
-%_libdir/ocaml/%libname-ppx/internal/*.mli
-%_libdir/ocaml/%libname-jsx/*.a
-%_libdir/ocaml/%libname-jsx/*.cmxa
-%_libdir/ocaml/%libname-jsx/*.cmx
-%_libdir/ocaml/%libname-syntax/*.a
-%_libdir/ocaml/%libname-syntax/*.cmxa
-%_libdir/ocaml/%libname-syntax/*.cmx
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 4.4.0-alt3
+- BR: devel package for ocaml-ppx_tools_versioned
+- building process moved to rpm-build-ocaml 1.4
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 4.4.0-alt2
 - devel parts moved to the ocaml-tyxml-devel package
 

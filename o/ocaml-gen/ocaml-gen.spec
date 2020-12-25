@@ -2,7 +2,7 @@
 %define libname gen
 Name: ocaml-%libname
 Version: 0.5.3
-Release: alt2
+Release: alt3
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
@@ -35,7 +35,10 @@ sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
 %dune_install
 
 %check
+# check disabled on armh due to https://github.com/ocaml/dune/issues/2527
+%ifnarch armh
 %dune_check
+%endif
 
 %files -f ocaml-files.runtime
 %doc README.md LICENSE CHANGELOG.md
@@ -44,6 +47,9 @@ sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 0.5.3-alt3
+- disabled check on armh due to incompatibilty -nodynlink and PIE
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 0.5.3-alt2
 - enabled tests
 - migrated to rpm-build-ocaml 1.4

@@ -1,8 +1,25 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppxlib
+
+# tests fail on armh:
+#( cd _build/default && /usr/bin/ocamlopt.opt -w -24 -o src/.cinaps/cinaps.exe /usr/lib/ocaml/unix.cmxa -I /usr/lib/ocaml /usr/lib/ocaml/cinaps/runtime/cinaps_runtime.cmxa /usr/lib/ocaml/re/re.cmxa src/cinaps/ppxlib_cinaps_helpers.cmxa src/.cinaps/.cinaps.eobjs/native/dune__exe__Cinaps.cmx)
+# /usr/bin/ld.default: src/.cinaps/.cinaps.eobjs/native/dune__exe__Cinaps.o: relocation R_ARM_THM_MOVW_ABS_NC against `camlCinaps_runtime' can not be used when making a shared object; recompile with -fPIC
+# src/.cinaps/.cinaps.eobjs/native/dune__exe__Cinaps.o: in function `.L297':
+# :(.text+0xdec): dangerous relocation: unsupported relocation
+# ...
+# ...
+# /usr/bin/ld.default: warning: creating DT_TEXTREL in a PIE
+# collect2: error: ld returned 1 exit status
+# File "caml_startup", line 1:
+# Error: Error during linking (exit code 1)
+
+%ifarch armh
+%def_without check
+%endif
+
 Name: ocaml-%libname
 Version: 0.15.0
-Release: alt1
+Release: alt2
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
@@ -41,47 +58,25 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-dune build -p %libname --verbose
+%dune_build -p %libname
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md LICENSE.md CHANGES.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/*
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.cmt*
-%exclude %_libdir/ocaml/%libname/*.ml
-%exclude %_libdir/ocaml/%libname/*.mli
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmxs
-%exclude %_libdir/ocaml/%libname/*/*.cmx
-%exclude %_libdir/ocaml/%libname/*/*.cmt*
-%exclude %_libdir/ocaml/%libname/*/*.ml
-%exclude %_libdir/ocaml/%libname/*/*.mli
-%exclude %_libdir/ocaml/%libname/*/*.cmxa
-%exclude %_libdir/ocaml/%libname/*/*.cmxs
 
 
-%files devel
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.ml
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
-%_libdir/ocaml/%libname/*/*.cmx
-%_libdir/ocaml/%libname/*/*.cmt*
-%_libdir/ocaml/%libname/*/*.ml
-%_libdir/ocaml/%libname/*/*.mli
-%_libdir/ocaml/%libname/*/*.cmxa
-%_libdir/ocaml/%libname/*/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sat Dec 12 2020 Anton Farygin <rider@altlinux.ru> 0.15.0-alt2
+- added upstream patch fix build with ocaml 4.11
+- used macros from rpm-build-ocaml 1.4
+
 * Wed Sep 15 2020 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
 - 0.15.0
  
