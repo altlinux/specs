@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Format-W3CDTF
 Name: perl-%dist
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Parse and format W3CDTF datetime strings
@@ -35,6 +35,9 @@ date format of RSS 1.0.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
