@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1127.10.1.vz7.162.9
-%define orelease 1127.10.1.vz7.162.9
+#     rh7-3.10.0-1127.10.1.vz7.162.16
+%define orelease 1127.10.1.vz7.162.16
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -94,7 +94,7 @@ ExclusiveArch: x86_64
 
 %define perf_make_opts %{?_enable_verbose:V=1} prefix=%_prefix perfexecdir=%_libexecdir/perf WERROR=0 EXTRA_CFLAGS="%optflags %{?_disable_debug:-g0}" NO_GTK2=1
 
-BuildPreReq: rpm-build-kernel
+BuildRequires(pre): rpm-build-kernel
 BuildRequires: dev86 flex
 BuildRequires: libdb4-devel
 BuildRequires: bc
@@ -139,11 +139,9 @@ This kernel has LTS and suitable for servers and workstations.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 %{?kgcc_version:Requires: gcc%kgcc_version}
-Provides: kernel-headers-modules-%flavour = %version-%release
 Provides: kernel-devel-%flavour = %version-%release
 %{?base_flavour:Provides: kernel-devel-%base_flavour = %version-%release}
 Provides: kernel-devel = %version-%release
-#Obsoletes: kernel-headers-modules-%flavour = %version
 AutoReqProv: no
 
 %description -n kernel-headers-modules-%flavour
@@ -185,8 +183,6 @@ Group: Development/Kernel
 Requires: kernel-headers-common >= 1.1.5
 Provides: kernel-headers = %version
 %{?base_flavour:Provides: kernel-headers-%base_flavour = %version}
-Provides: kernel-headers-%flavour = %version-%release
-#Obsoletes: kernel-headers-%flavour = %version
 Provides: %kheaders_dir/include
 AutoReqProv: no
 
@@ -322,6 +318,7 @@ export CC=gcc-$GCC_VERSION
 %make_build kernelversion
 %make_build kernelrelease
 export KCFLAGS=-Wno-missing-attributes # Avoid flood of gcc9 warnings
+export HOST_EXTRACFLAGS="-fcommon"
 %make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION bzImage
 %make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION modules
 
@@ -342,6 +339,7 @@ echo "Kernel docs built %kversion-%flavour-%krelease"
 
 %install
 export ARCH=%base_arch
+export HOST_EXTRACFLAGS="-fcommon"
 cd rh7-%version
 
 install -Dp -m644 System.map %buildroot/boot/System.map-%kversion-%flavour-%krelease
@@ -588,6 +586,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Fri Dec 25 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1127.10.1.vz7.162.16
+- Build rh7-3.10.0-1127.10.1.vz7.162.16
+
 * Wed Sep 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1127.10.1.vz7.162.9
 - Build rh7-3.10.0-1127.10.1.vz7.162.9
 
