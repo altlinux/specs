@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Math-Base85
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Perl extension for base 85 numbers, as referenced by RFC 1924
@@ -60,10 +60,13 @@ use.  (They will be exported upon request.)
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc README.md Changes rfc1924.txt LICENSE
+%doc README.md Changes rfc1924.txt
 %perl_vendor_privlib/Math/*
 
 %changelog
+* Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1
 - automated CPAN update
 
