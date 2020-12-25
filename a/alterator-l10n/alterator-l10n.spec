@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.77
+Version: 2.9.78
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Dec 25 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.78-alt1
+- Update timezones from tzdata-2020e.
+
 * Wed Dec 09 2020 Lenar Shakirov <snejok@altlinux.org> 2.9.77-alt1
 - alterator-printers: update translations
 
