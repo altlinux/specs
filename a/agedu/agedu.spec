@@ -1,15 +1,15 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/halibut
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global rel 20171202.8a8299e
+%global rel 20200705.2a7d4a2
 
 Name:           agedu
 Version:        0
-Release:        alt2_15.%{rel}
+Release:        alt2_22.%{rel}
 Summary:        An utility for tracking down wasted disk space
-Group:          System/Base
 License:        MIT
 URL:            http://www.chiark.greenend.org.uk/~sgtatham/agedu/
 # Upstream tarball is regenerated nightly, so md5sums will differ.
@@ -26,24 +26,22 @@ files and directories.
 %prep
 %setup -q -n %{name}-%{rel}
 
-
 %build
 %configure
 %make_build
 
-
 %install
-make install DESTDIR=%{buildroot} INSTALL="install -p"
-
-
+%makeinstall_std
 
 %files
 %doc LICENCE TODO
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
-
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0-alt2_22.20200705.2a7d4a2
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt2_15.20171202.8a8299e
 - update to new release by fcimport
 
