@@ -11,22 +11,23 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Tapper-Cmd
-%define upstream_version 5.0.11
+%define upstream_version 5.0.12
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.12
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Tapper - Backend functions for CLI and Web
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://metacpan.org/release/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Source0:    https://cpan.metacpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(DBI.pm)
+BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(DateTime.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Copy/Recursive.pm)
@@ -65,7 +66,7 @@ Source44: import.info
 Tapper backend functions for the command line and the Web.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -80,10 +81,13 @@ Tapper backend functions for the command line and the Web.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.12-alt1_1
+- update by mgaimport
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.12-alt1
 - automated CPAN update
 
