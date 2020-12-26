@@ -2,7 +2,7 @@
 
 Name: ovn
 Version: 20.09.0
-Release: alt1
+Release: alt2
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
@@ -11,6 +11,7 @@ Group: Networking/Other
 URL: http://www.openvswitch.org/
 Source0: %name-%version.tar
 Source1: ovs.tar
+Source2: %name.tmpfiles
 
 Patch11: 0001-ovn-fix-linking.patch
 Patch12: 0002-ovn-var_run-to-run.patch
@@ -171,6 +172,8 @@ for service in ovn-controller ovn-controller-vtep ovn-northd; do
             %buildroot%_unitdir/${service}.service
 done
 
+install -pDm644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
+
 #install -d %buildroot%_prefix/lib/firewalld/services
 #install -p -m 0644 rhel/usr_lib_firewalld_services_ovn-central-firewall-service.xml \
 #        %buildroot%_prefix/lib/firewalld/services/ovn-central-firewall-service.xml
@@ -228,6 +231,9 @@ done
 %_man8dir/ovn-sbctl.*
 %_man5dir/ovn-nb.*
 %_man5dir/ovn-sb.*
+%dir %attr(0755, openvswitch, openvswitch) %_logdir/%name
+%dir %attr(0755, openvswitch, openvswitch) %_localstatedir/%name
+%_tmpfilesdir/%name.conf
 
 %files -n lib%name
 %_libdir/lib%{name}*.so.*
@@ -268,6 +274,10 @@ done
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Sat Dec 26 2020 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt2
+- own /var/log/ovn and /var/lib/ovn dirs
+- add tmpfiles config
+
 * Thu Dec 17 2020 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt1
 - 20.09.0
 
