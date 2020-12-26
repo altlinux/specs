@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           boswars
 Version:        2.7
-Release:        alt1_22.svn160110
+Release:        alt1_24.svn160110
 Summary:        Bos Wars is a futuristic real-time strategy game
 License:        GPLv2
 URL:            http://www.boswars.org/
@@ -29,7 +29,7 @@ BuildRequires:  gcc gcc-c++
 BuildRequires:  libtheora-devel libvorbis-devel libSDL-devel libGL-devel
 BuildRequires:  libtolua++-lua5.1-devel libpng-devel scons
 BuildRequires:  libappstream-glib desktop-file-utils
-Requires:       icon-theme-hicolor xorg-utils
+Requires:       icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -91,6 +91,9 @@ install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_24.svn160110
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_22.svn160110
 - update to new release by fcimport
 
