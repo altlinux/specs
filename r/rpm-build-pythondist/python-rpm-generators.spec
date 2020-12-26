@@ -6,7 +6,7 @@ Group: Development/Python3
 Name:           rpm-build-pythondist
 Summary:        Dependency generators for Python RPMs
 Version:        11
-Release:        alt1_11
+Release:        alt1_12
 
 # Originally all those files were part of RPM, so license is kept here
 License:        GPLv2+
@@ -68,6 +68,9 @@ install -D -m755 python3dist.prov.files %buildroot%_rpmlibdir/python3dist.prov.f
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 11-alt1_12
+- update to new release by fcimport
+
 * Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 11-alt1_11
 - new version
 
