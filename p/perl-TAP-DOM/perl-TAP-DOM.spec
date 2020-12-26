@@ -6,19 +6,19 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    TAP-DOM
-%define upstream_version 0.91
+%define upstream_version 0.92
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.92
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{upstream_name}-%{version}.tar.gz
+Source0:    https://cpan.metacpan.org/modules/by-module/TAP/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(Class/XSAccessor.pm)
@@ -54,7 +54,7 @@ exploration tools", like Data::DPath.
 change, so your data tools can, well, rely on it.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -68,10 +68,13 @@ change, so your data tools can, well, rely on it.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_1
+- update by mgaimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1
 - automated CPAN update
 
