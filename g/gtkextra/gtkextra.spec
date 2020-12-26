@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/db2html /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/xsltproc docbook-dtds docbook-style-xsl gobject-introspection-devel gtk+2-devel pkgconfig(gladeui-1.0)
+BuildRequires: /usr/bin/db2html /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/xsltproc docbook-dtds docbook-style-xsl gobject-introspection-devel pkgconfig(gladeui-1.0)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -13,7 +13,7 @@ BuildRequires: /usr/bin/db2html /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr
 Name:		gtkextra
 Summary:	A library of gtk+ widgets
 Version:	3.3.4
-Release:	alt2_1
+Release:	alt2_4
 License:	LGPLv2
 Group:		System/Libraries
 URL:		http://sourceforge.net/projects/gtkextra
@@ -79,6 +79,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.4-alt2_4
+- update by mgaimport
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.4-alt2_1
 - updated buildrequires
 
