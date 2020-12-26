@@ -1,14 +1,15 @@
-Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires: pkgconfig(tevent)
 # END SourceDeps(oneline)
+Group: Development/C
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global homepage https://github.com/latchset/libverto
 
 Name:           libverto
 Version:        0.3.0
-Release:        alt1_7
+Release:        alt1_11
 Summary:        Main loop abstraction library
 
 License:        MIT
@@ -144,6 +145,7 @@ and signal.
 %setup -q
 %patch0 -p1
 
+
 %build
 autoreconf -fiv
 %configure --disable-static
@@ -208,6 +210,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_11
+- update to new release by fcimport
+
 * Thu Feb 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_7
 - rebuild with libevent
 
