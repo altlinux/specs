@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install libglvnd-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt3_14
+Release:        alt3_19
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -20,6 +20,7 @@ Source0:        https://github.com/frogatto/frogatto/archive/%{commit}/%{name}-%
 Source1:        %{name}.sh
 Source2:        %{name}.desktop
 Source3:        %{name}.pod
+Source4:        %{name}.appdata.xml
 # Patch Makefile not to link lSDLmain
 Patch0:         %{name}-1.2-Makefile.patch
 # Boost no longer has separate non mt and -mt variants of its libs
@@ -32,9 +33,8 @@ Patch3:         %{name}-1.3-narrowing-conversion-fixes.patch
 # Fix comparison between pointer and integer errors
 # https://github.com/anura-engine/anura/commit/18ad198565f7a3280d991a5878316f6e5c9351d3
 Patch4:         %{name}-1.3-comparison.patch
-
-# Based on https://github.com/anura-engine/anura/commit/faecd8a86d73d2239ebc7998aea5c69d0511decb
-Patch100:       %{name}-1.3-alt-support-boost-1.71.0.patch
+# Fix building with Boost 1.70+
+Patch5:         %{name}-1.3-boost.patch
 
 # We have problems with these architectures
 # https://lists.rpmfusion.org/archives/list/rpmfusion-developers@lists.rpmfusion.org/thread/LQXC5S37G6S4NRZNB7KKGD2Q25OKXSEV/
@@ -53,6 +53,7 @@ BuildRequires:  boost-complete
 BuildRequires:  perl-podlators
 BuildRequires:  libicns-utils
 BuildRequires:  desktop-file-utils 
+BuildRequires:  libappstream-glib
 Requires:       icon-theme-hicolor
 Requires:       fonts-ttf-gnu-freefont-mono
 Source44: import.info
@@ -88,7 +89,7 @@ Game data for frogatto.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch100 -p2
+%patch5 -p0
 
 # Fix locale file path
 sed -i 's!"./locale/"!"%{_datadir}/locale/"!' src/i18n.cpp
@@ -141,23 +142,35 @@ pod2man --section=6 \
   -date="July 13th, 2010" \
   %{SOURCE3} > %{buildroot}%{_mandir}/man6/%{name}.6
 
+# Install AppData file
+install -d %{buildroot}%{_datadir}/metainfo
+install -p -m 644 %{SOURCE4} %{buildroot}%{_datadir}/metainfo
+appstream-util validate-relax --nonet \
+  %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
+
+
 %find_lang %{name}
 
 
 %files -f %{name}.lang
+%doc modules/%{name}/CHANGELOG
 %{_bindir}/%{name}
 %{_libexecdir}/%{name}
 
 %files gamedata
-%doc modules/%{name}/CHANGELOG LICENSE
+%doc --no-dereference LICENSE
 %{_datadir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/metainfo/%{name}.appdata.xml
 %{_mandir}/man6/%{name}.6*
 
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt3_19
+- update to new release by fcimport
+
 * Thu Nov 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt3_14
 - Rebuilt with boost-1.71.0.
 
