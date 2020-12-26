@@ -17,7 +17,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt2_17
+Release:        alt2_21
 Summary:        Library for human-machine Natural Interaction
 
 License:        ASL 2.0 and BSD
@@ -40,6 +40,9 @@ Patch5:         openni-1.5.2.23-disable-softfloat.patch
 Patch6:         openni-1.5.2.23-armsamples.patch
 Patch7:         openni-1.5.7.10-rename-equivalent-for-gcc6.patch
 Patch8:         openni-freeglut.patch
+# Fix compilation with -ansi or -std options
+# https://github.com/OpenNI/OpenNI/commit/ca99f6181234c682bba42a6ba988cc10cee894d7
+Patch9:         openni-ansi.patch
 
 ExclusiveArch:  %{ix86} x86_64 %{arm}
 
@@ -47,6 +50,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  libfreeglut-devel, tinyxml-devel, libjpeg-devel, dos2unix, libusb-devel
 BuildRequires:  python, doxygen graphviz libgraphviz
 Source44: import.info
+Patch33: openni-1.5.7.10-alt-armh.patch
 
 %description
 OpenNI (Open Natural Interaction) is a multi-language, cross-platform
@@ -111,6 +115,7 @@ The %{name}-examples package contains example programs for OpenNI.
 %patch6 -p1 -b .armsamples
 %patch7 -p1 -b .rename-equivalent-for-gcc6
 %patch8 -p0 -b .freeglut
+%patch9 -p1 -b .ansi
 rm -rf Source/External
 rm -rf Platform/Linux/Build/Prerequisites/*
 find Samples -name GL -prune -exec rm -rf {} \;
@@ -126,6 +131,8 @@ sed -i 's|if (os.path.exists("/usr/bin/gmcs"))|if (0)|' Platform/Linux/CreateRed
 
 dos2unix README
 dos2unix LICENSE
+
+%patch33 -p1
 
 %build
 cd Platform/Linux/CreateRedist
@@ -233,6 +240,9 @@ fi
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_21
+- update to new release by fcimport
+
 * Sun Dec 08 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_17
 - fixed build
 
