@@ -11,7 +11,7 @@ BuildRequires: unzip
 %global archivename SourceHanSansTW
 
 Name:           fonts-otf-adobe-source-han-sans-tw
-Version:        2.001
+Version:        2.002
 Release:        alt1_1
 Summary:        Adobe OpenType Pan-CJK font family for Traditional Chinese
 
@@ -41,7 +41,7 @@ Japanese, and Korean.
 
 
 %prep
-%setup -q -n %{archivename}
+%setup -n %{oldname}-%{version} -q -c
 
 
 
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.002-alt1_1
+- update to new release by fcimport
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.001-alt1_1
 - update to new release by fcimport
 
