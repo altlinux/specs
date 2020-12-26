@@ -1,13 +1,16 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install libSDL-devel libglvnd-devel libmad-devel libogg-devel zlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# vavoom's CMakefiles are a mess, force in-source building
+%global _vpath_builddir .
+
 Name:           vavoom
 Version:        1.33
-Release:        alt2_31
+Release:        alt2_34
 Summary:        Enhanced Doom, Heretic, Hexen and Strife source port - meta package
 Source0:        http://downloads.sourceforge.net/vavoom/%{name}-%{version}.tar.bz2
 Source1:        doom.autodlrc
@@ -171,7 +174,7 @@ datafiles for you.
 # Build with -std=gnu++98, c++11 causes issues on exit, likely due to
 # bad interactions with the new / delete overloading in vc_object.cpp
 export CXXFLAGS="$RPM_OPT_FLAGS -std=gnu++98 -fno-strict-aliasing -Wno-unused -Wno-unused-but-set-variable -Wno-unused-result -Wno-sign-compare -Wno-reorder"
-%{fedora_cmake} -DWITH_LIBMAD:BOOL=OFF
+%{fedora_v2_cmake} -DWITH_LIBMAD:BOOL=OFF
 
 # This one line sed command is easier than trying to muck with the Makefile
 # to add the proper -D definition.
@@ -266,6 +269,9 @@ install -p -m 644 %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_34
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_31
 - update to new release by fcimport
 
