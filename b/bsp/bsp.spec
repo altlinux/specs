@@ -3,7 +3,7 @@ Group: Games/Other
 %define _localstatedir %{_var}
 Name:           bsp
 Version:        5.2
-Release:        alt2_21
+Release:        alt2_26
 Summary:        The most popular node builder for Doom
 
 License:        GPLv2+
@@ -36,7 +36,7 @@ mv bsp.6.tmp bsp.6
 
 %build
 %configure
-make CFLAGS='%{optflags}' LIBS="-lm" %{?_smp_mflags}
+%make_build CFLAGS='%{optflags}' LIBS="-lm"
 
 
 %install
@@ -52,6 +52,9 @@ install -D -p -m 644 bsp.6 $RPM_BUILD_ROOT/%{_mandir}/man6/bsp.6
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_26
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_21
 - update to new release by fcimport
 
