@@ -9,7 +9,7 @@ Version: %ver_base.%ver_snap
 %else
 Version: %ver_base
 %endif
-Release: alt3
+Release: alt4
 
 Summary: Programs for dealing with floppy disks
 License: GPLv2+
@@ -27,6 +27,7 @@ Patch3: fdutils-5.4-alt-texinfo.patch
 Patch4: fdutils-alt-nodvi.patch
 Patch5: fdutils-alt-ext2_fs.patch
 Patch6: fdutils-deb-config-ftbfs.patch
+Patch7: fdutils-deb-fix-gcc10.patch
 
 Requires: util-linux >= 2.11h-alt2
 
@@ -55,6 +56,7 @@ controller, etc.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %configure
@@ -79,6 +81,9 @@ rm %buildroot%_man4dir/fd.4*
 %doc CREDITS Changelog doc/FAQ.html doc/README doc/floppy_formats
 
 %changelog
+* Sat Dec 26 2020 Dmitry V. Levin <ldv@altlinux.org> 5.5.20081027-alt4
+- Applied another build fix from Debian.
+
 * Thu Mar 26 2020 Dmitry V. Levin <ldv@altlinux.org> 5.5.20081027-alt3
 - Applied build fix from Debian.
 
