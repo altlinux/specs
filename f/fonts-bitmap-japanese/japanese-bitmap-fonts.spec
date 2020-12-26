@@ -1,6 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
+Group: System/Fonts/True type
 %define oldname japanese-bitmap-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -24,12 +22,11 @@ BuildRequires: /usr/bin/perl
 
 Name:           fonts-bitmap-japanese
 Version:        0.20080710
-Release:        alt2_21
+Release:        alt2_27
 License:        Public Domain and BSD and mplus
-Group:          System/Fonts/True type
 BuildArch:      noarch
-BuildRequires:  bdftopcf mkfontdir mkfontscale xorg-font-utils mkfontdir gawk fontpackages-devel
-BuildRequires:	gcc
+BuildRequires:  bdftopcf fonttosfnt mkfontscale xorg-font-utils mkfontdir gawk fontpackages-devel
+BuildRequires:	gcc perl
 
 ## files in ttfonts-ja
 Source2:        FAPIcidfmap.ja
@@ -328,8 +325,6 @@ install -m 0644 -p fonts-ja/fonts.alias $RPM_BUILD_ROOT%{_fontdir}/
 # Install catalogue symlink
 install -m 0755 -d $RPM_BUILD_ROOT%{cataloguedir}
 ln -sf %{_fontdir} $RPM_BUILD_ROOT%{cataloguedir}/%{fontname}
-
-# touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{_fontdir}/encodings.dir
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -391,6 +386,9 @@ fi
 %{cataloguedir}/*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_27
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_21
 - update to new release by fcimport
 
