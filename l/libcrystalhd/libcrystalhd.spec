@@ -1,7 +1,8 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-BuildRequires(pre): kernel-build-tools
+BuildRequires(pre): rpm-build-kernel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorminor 1.0
@@ -12,9 +13,8 @@ BuildRequires(pre): kernel-build-tools
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt3_20
+Release:       alt3_24
 License:       LGPLv2
-Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal-hd/
 ExcludeArch:   s390 s390x
 
@@ -49,18 +49,18 @@ bcm970012 hardware, and up to 1080p at 60fps for the second-generation
 bcm970015 hardware.
 
 %package devel
+Group: Development/Other
 Summary:       Development libs for libcrystalhd
-Group:         Development/Other
 Requires:      %{name} = %{version}-%{release}
 
 %description devel
 Development libraries needed to build applications against libcrystalhd.
 
 %package -n firmware-crystalhd
+Group: System/Kernel and hardware
 Summary:       Firmware for the Broadcom Crystal HD video decoder
 License:       Redistributable, no modification permitted
 BuildArch:     noarch
-Group:         System/Kernel and hardware
 Requires:      %{name} = %{version}-%{release}
 
 %description -n firmware-crystalhd
@@ -68,8 +68,8 @@ Firmwares for the Broadcom Crystal HD (bcm970012 and bcm970015)
 video decoders.
 
 %package -n gstreamer-plugin-crystalhd
+Group: Sound
 Summary:       Gstreamer crystalhd decoder plugin
-Group:         Sound
 Requires:      %{name} = %{version}-%{release}
 Requires:      gst-plugins-base1.0
 
@@ -136,6 +136,8 @@ tar jcf %kernel_srcdir/kernel-source-crystalhd-%version.tar.bz2 kernel-source-cr
 
 
 
+
+
 %files
 %doc README_07032010 LICENSE
 %{_libdir}/libcrystalhd.so.*
@@ -160,6 +162,9 @@ tar jcf %kernel_srcdir/kernel-source-crystalhd-%version.tar.bz2 kernel-source-cr
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_24
+- updated BR:
+
 * Thu Jan 31 2019 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_20
 - aarch64 build
 
