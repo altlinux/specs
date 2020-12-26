@@ -10,7 +10,7 @@ Version:        2.0.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A non-linear least squares minimizer
 
 License:        BSD
@@ -142,6 +142,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_1
 - update to new release by fcimport
 
