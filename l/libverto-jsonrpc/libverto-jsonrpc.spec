@@ -4,7 +4,7 @@ Group: Other
 %define _localstatedir %{_var}
 Name:           libverto-jsonrpc
 Version:        0.1.0
-Release:        alt3_22
+Release:        alt3_25
 Summary:        JSON-RPC support for libverto
 
 License:        MIT
@@ -58,6 +58,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt3_25
+- update to new release by fcimport
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt3_22
 - update to new release by fcimport
 
