@@ -4,7 +4,7 @@ Group: Other
 Name:             adobe-mappings-pdf
 Summary:          PDF mapping resources from Adobe
 Version:          20180407
-Release:          alt1_4
+Release:          alt1_7
 License:          BSD
 
 URL:              https://www.adobe.com/
@@ -34,7 +34,7 @@ Summary:          RPM macros for Adobe's PDF mapping resources
 Requires:         %{name} = %{version}-%{release}
 
 %description devel
-This package is useful for Fedora development purposes only. It installs RPM
+This package is useful for development purposes only. It installs RPM
 macros useful for building packages against %{name},
 as well as all the fonts contained in this font set.
 
@@ -78,6 +78,9 @@ _EOF
 # =============================================================================
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 20180407-alt1_7
+- update to new release by fcimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 20180407-alt1_4
 - new version
 
