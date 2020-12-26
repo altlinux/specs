@@ -4,7 +4,7 @@ Group: Other
 Name:             adobe-mappings-cmap
 Summary:          CMap resources for Adobe's character collections
 Version:          20171205
-Release:          alt1_6
+Release:          alt1_9
 License:          BSD
 
 URL:              https://www.adobe.com/
@@ -41,7 +41,7 @@ Requires:         %{name} = %{version}-%{release}
 Requires:         %{name}-deprecated = %{version}-%{release}
 
 %description devel
-This package is useful for Fedora development purposes only. It installs RPM
+This package is useful for development purposes only. It installs RPM
 macros useful for building packages against %{name},
 as well as all the fonts contained in this font set.
 
@@ -91,6 +91,9 @@ _EOF
 # =============================================================================
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 20171205-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 20171205-alt1_6
 - new version
 
