@@ -1,11 +1,11 @@
+Group: Development/Tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atasm
 Version:        1.08
-Release:        alt1_1
+Release:        alt1_6
 Summary:        6502 cross-assembler
 
-Group:          Development/Tools
 License:        GPLv2+
 URL:            http://atari.miribilist.com/atasm/
 # fedora-getsvn atasm https://svn.code.sf.net/p/atasm/code/trunk 100
@@ -58,6 +58,9 @@ popd
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1_6
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1_1
 - update to new release by fcimport
 
