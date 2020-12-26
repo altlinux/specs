@@ -1,17 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libxml2-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libmetalink
 Version:	0.1.3
-Release:	alt1_6
+Release:	alt1_13
 Summary:	Metalink library written in C
-Group:		System/Libraries
 License:	MIT
 URL:		https://launchpad.net/libmetalink
 Source0:	https://launchpad.net/libmetalink/trunk/%{name}-%{version}/+download/%{name}-%{version}.tar.bz2
+# https://bugs.launchpad.net/libmetalink/+bug/1888672
+Patch0:     libmetalink-0.1.3-ns_uri.patch
+
+BuildRequires:  gcc
 BuildRequires:	libexpat-devel
 BuildRequires:	CUnit-devel
 Source44: import.info
@@ -21,8 +25,8 @@ libmetalink is a Metalink C library. It adds Metalink functionality such as
 parsing Metalink XML files to programs written in C.
 
 %package	devel
+Group: Development/Other
 Summary:	Files needed for developing with %{name}
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 
 %description	devel
@@ -30,6 +34,8 @@ Files needed for building applications with libmetalink.
 
 %prep
 %setup -q
+%patch0 -p1
+
 
 %build
 %configure --disable-static
@@ -39,7 +45,7 @@ Files needed for building applications with libmetalink.
 make check
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
 
 
@@ -64,6 +70,9 @@ find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1_13
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1_6
 - update to new release by fcimport
 
