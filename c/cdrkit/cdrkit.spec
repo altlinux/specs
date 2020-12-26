@@ -1,7 +1,7 @@
 %define svn_rev 852
 Name: cdrkit
 Version: 1.1.11
-Release: alt1.qa1
+Release: alt2
 Epoch: 1
 
 Summary: A collection of command-line CD/DVD recording utilities
@@ -20,6 +20,8 @@ Patch5: cdrkit-1.1.9-owl-privacy.patch
 Patch6: cdrkit-1.1.9-owl-messages.patch
 Patch7: cdrkit-1.1.9-alt-bound.patch
 Patch8: cdrkit-1.1.9-alt-format.patch
+Patch9: cdrkit-1.1.11-alt-no_common.patch
+Patch10: cdrkit-1.1.11-alt-memset.patch
 
 Requires: wodim = %epoch:%version-%release
 Requires: readom = %epoch:%version-%release
@@ -134,6 +136,8 @@ netscsid is a NET SCSI Daemon.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 sed -i '/^require v5\.8\.1;$/d' 3rd-party/dirsplit/dirsplit
 find -type f -print0 |
@@ -249,6 +253,9 @@ ln -snf wodim %_bindir/cdrecord
 %exclude %_man1dir/dirsplit.*
 
 %changelog
+* Sat Dec 26 2020 Dmitry V. Levin <ldv@altlinux.org> 1:1.1.11-alt2
+- Fixed build with gcc-10.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.1.11-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
