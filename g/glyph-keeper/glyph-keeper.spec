@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,15 +6,15 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           glyph-keeper
 Version:        0.32
-Release:        alt3_22
+Release:        alt3_30
 Summary:        Library for text rendering
-Group:          System/Libraries
 License:        zlib
 URL:            http://www.allegro.cc/resource/Libraries/Text/GlyphKeeper
 # Upstream is MIA
 Source0:        %{name}-%{version}.zip
 Patch0:         glyph-keeper-0.29.1-fixes.patch
 Patch1:         glyph-keeper-0.32-so-compat.patch
+BuildRequires:  gcc
 BuildRequires:  libfreetype-devel >= 2.1.10
 BuildRequires:  libSDL_gfx-devel liballegro-devel
 Source44: import.info
@@ -27,8 +28,8 @@ uses FreeType as a font engine.
 
 
 %package        allegro
+Group: System/Libraries
 Summary:        Library for text rendering with Allegro
-Group:          System/Libraries
 # Only the allegro package is currently actually used in Fedora, so make this
 # one obsolete the old glyph-keeper package which had both allegro and SDL
 # variants in one package
@@ -43,8 +44,8 @@ FreeType as a font engine. This package contains glyph-keeper build for use
 with Allegro apps.
 
 %package        allegro-devel
+Group: Development/Other
 Summary:        Development files for glyph-keeper-allegro
-Group:          Development/Other
 Requires:       glyph-keeper-allegro = %{version}-%{release}
 Provides:       %{name}-devel = %{version}-%{release}
 Obsoletes:      %{name}-devel < 0.32-9
@@ -55,8 +56,8 @@ developing applications that use glyph-keeper-allegro.
 
 
 %package        SDL
+Group: System/Libraries
 Summary:        Library for text rendering with SDL
-Group:          System/Libraries
 
 %description    SDL
 Glyph Keeper is a library for text rendering. It is written in C and can be
@@ -66,8 +67,8 @@ FreeType as a font engine. This package contains glyph-keeper build for use
 with SDL apps.
 
 %package        SDL-devel
+Group: Development/Other
 Summary:        Development files for glyph-keeper-SDL
-Group:          Development/Other
 Requires:       glyph-keeper-SDL = %{version}-%{release}
 
 %description    SDL-devel
@@ -89,7 +90,7 @@ gcc -shared -o libglyph-alleg.so.0 -Wl,-soname,libglyph-alleg.so.0 \
   obj/glyph-alleg.o -lfreetype $(allegro-config --libs)
 
 %make_build -f Makefile.GNU.all TARGET=SDL FT_LIB=-lfreetype \
-  OFLAGS="$RPM_OPT_FLAGS -fpic -I/usr/include/freetype2" lib
+  OFLAGS="$RPM_OPT_FLAGS -fpic $(sdl-config --cflags) -I/usr/include/freetype2" lib
 gcc -shared -o libglyph-sdl.so.0 -Wl,-soname,libglyph-sdl.so.0 \
   obj/glyph-sdl.o -lfreetype -lSDL -lSDL_gfx
 
@@ -101,6 +102,11 @@ install -m 755 libglyph-*.so.0 $RPM_BUILD_ROOT%{_libdir}
 ln -s libglyph-alleg.so.0 $RPM_BUILD_ROOT%{_libdir}/libglyph-alleg.so
 ln -s libglyph-sdl.so.0 $RPM_BUILD_ROOT%{_libdir}/libglyph-sdl.so
 install -m 644 include/glyph.h $RPM_BUILD_ROOT%{_includedir}
+
+
+
+
+
 
 
 %files allegro
@@ -121,6 +127,9 @@ install -m 644 include/glyph.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_30
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_22
 - update to new release by fcimport
 
