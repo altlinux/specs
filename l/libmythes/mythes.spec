@@ -1,18 +1,15 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: System/Libraries
 %define oldname mythes
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      libmythes
 Summary:   A thesaurus library
 Version:   1.2.4
-Release:   alt1_8
+Release:   alt1_15
 Source:    http://downloads.sourceforge.net/hunspell/%{oldname}-%{version}.tar.gz
-Group:     System/Libraries
 URL:       http://hunspell.sourceforge.net/
 License:   BSD and MIT
-BuildRequires: libhunspell-devel hunspell-utils
+BuildRequires: hunspell-utils libhunspell-devel, gcc-c++
 Source44: import.info
 
 %description
@@ -21,9 +18,9 @@ index file with binary search to look up words and phrases and return
 information on part of speech, meanings, and synonyms.
 
 %package devel
-Requires: libmythes = %{version}-%{release}, pkg-config
-Summary: Files for developing with mythes
 Group: Development/Other
+Requires: libmythes = %{version}-%{release}, pkgconfig
+Summary: Files for developing with mythes
 
 %description devel
 Includes and definitions for developing with mythes
@@ -40,10 +37,12 @@ Includes and definitions for developing with mythes
 ./example morph.idx morph.dat morph.lst morph.aff morph.dic
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std
 rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
 rm -f $RPM_BUILD_ROOT/%{_libdir}/*.la
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
+
+
 
 %files
 %doc README COPYING AUTHORS
@@ -58,6 +57,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_8
 - update to new release by fcimport
 
