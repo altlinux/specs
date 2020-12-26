@@ -5,8 +5,8 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt3
-License: LGPL
+Release: alt4
+License: GPLv2+ and LGPLv2+ and MIT
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
 %def_with pulse
@@ -43,7 +43,6 @@ Requires: libsox-fmt-xi = %version-%release
 Requires: libsox-fmt-caf = %version-%release
 Requires: libsox-fmt-fap = %version-%release
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
-%set_automake_version 1.14
 
 %package -n libsox-devel
 Summary: The SoX sound file format converter headers files and libraries
@@ -293,6 +292,7 @@ sed -i 's,\(/usr/\)local/,\1,' %buildroot%_bindir/soxeffect
 rm -f %buildroot%_bindir/rec
 ln -s play %buildroot%_bindir/rec
 cat << EOF >%buildroot%_bindir/%{name}play
+#!/bin/sh
 %_bindir/%name \$1 -t .au - >/dev/audio
 EOF
 chmod 755 %buildroot%_bindir/%{name}play
@@ -390,6 +390,11 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Sat Dec 26 2020 Dmitry V. Levin <ldv@altlinux.org> 14.4.2-alt4
+- NMU.
+- spec: fixed License tag.
+- spec: removed bogus "%%set_automake_version 1.14".
+
 * Fri Mar 01 2019 Dmitry V. Levin <ldv@altlinux.org> 14.4.2-alt3
 - NMU: removed bogus Provides from libsox3.
 
@@ -585,4 +590,3 @@ chmod 755 %buildroot%_bindir/%{name}play
 
 * Thu Nov 06 1997 Erik Troan <ewt@redhat.com>
 - built against glibc
-
