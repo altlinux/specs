@@ -26,7 +26,7 @@
 Name: maxima
 Version: 5.43.2
 %define maxima_version 5.43.2
-Release: alt1
+Release: alt2
 Summary: Maxima Computer Algebra System
 License: GPL-2.0
 Group: Sciences/Mathematics
@@ -70,7 +70,7 @@ Group: Sciences/Mathematics
 Provides: maxima = %version-%release
 
 Requires: gnuplot >= 4.0.0 rlwrap maxima-bin = %version-%release
-BuildRequires: sed perl texlive-collection-latexrecommended texinfo automake_1.7
+BuildRequires: sed perl texlive-collection-latexrecommended texinfo
 AutoReq: yes, noshell
 %description common
 This package contains common files needed to run Maxima with
@@ -267,7 +267,6 @@ cp -pv /usr/share/gnu-config/* .
 %build
 export SBCL_HOME=%_libdir/sbcl/
 %if %CVS_BUILD
-#%set_automake_version 1.7
 ./bootstrap
 %endif
 
@@ -577,6 +576,10 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Sat Dec 26 2020 Dmitry V. Levin <ldv@altlinux.org> 5.43.2-alt2
+- NMU.
+- spec: removed bogus "%%set_automake_version 1.7".
+
 * Wed Apr 29 2020 Andrey Cherepanov <cas@altlinux.org> 5.43.2-alt1
 - 5.43.2 (ALT #34445).
 - Fix bogus changelog entries.
