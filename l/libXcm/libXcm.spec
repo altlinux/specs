@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(x11)
-# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libXcm
 Version:        0.5.3
-Release:        alt1_13
+Release:        alt1_17
 Summary:        X Color Management Library
 License:        MIT
 URL:            http://www.oyranos.org
@@ -17,7 +14,7 @@ BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libXfixes-devel
 BuildRequires:  libXmu-devel
-BuildRequires:  xorg-pmproto-devel xorg-proto-devel xorg-xf86miscproto-devel
+BuildRequires:  libX11-devel libXvMC-devel xorg-proto-devel
 BuildRequires:  xorg-util-macros
 Source44: import.info
 Patch33: libXcm-0.5.3-alt-linkage.patch
@@ -64,6 +61,9 @@ find %{buildroot} -name '*.la' -delete -print
 %{_mandir}/man3/*.3*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_17
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_13
 - update to new release by fcimport
 
