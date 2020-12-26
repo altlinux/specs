@@ -1,11 +1,11 @@
+Group: System/Base
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: enum
 Version: 1.1
-Release: alt1_13
+Release: alt1_19
 Summary: Seq- and jot-like enumerator
 
-Group:   System/Base
 License: BSD
 URL:     https://fedorahosted.org/enum
 Source0: https://fedorahosted.org/releases/e/n/enum/%{name}-%{version}.tar.bz2
@@ -30,7 +30,7 @@ over input interpretation and output is possible.
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 %check
 make check
@@ -43,6 +43,9 @@ make check
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_19
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_13
 - update to new release by fcimport
 
