@@ -5,7 +5,7 @@ Group: Other
 
 Name:		arduino-%{shortname}
 Version:	1.4.0
-Release:	alt1_4
+Release:	alt1_8
 Summary:	Simple multiplatform program to list serial ports with vid/pid/iserial fields
 License:	LGPLv3+
 URL:		http://www.arduino.cc
@@ -38,6 +38,9 @@ install -m755 liblistSerialsj.so %{buildroot}%{_libdir}/arduino/
 %{_libdir}/arduino/liblistSerialsj.so
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_8
+- update to new release by fcimport
+
 * Fri Jul 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_4
 - aarch64 build
 
