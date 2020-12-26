@@ -2,7 +2,7 @@
 %define dist Quota
 Name: perl-%dist
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to file system quotas
 License: GPL or Artistic
@@ -11,8 +11,7 @@ Group: Development/Perl
 URl: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/T/TO/TOMZO/%{dist}-%{version}.tar.gz
 
-# Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel libtirpc-devel
 
 %description
 The Quota module provides access to file system quotas.
@@ -40,6 +39,9 @@ sed -i- 's/Linux 2/Linux/' Makefile.PL
 %perl_vendor_autolib/Quota
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2
+- built with libtirpc
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1
 - automated CPAN update
 
