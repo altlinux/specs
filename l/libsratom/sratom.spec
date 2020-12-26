@@ -8,18 +8,21 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sratom
-%define version 0.6.4
+%define version 0.6.6
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsratom
-Version:    0.6.4
-Release:    alt1_2
+Version:    0.6.6
+Release:    alt1_1
 Summary:    A C library for serializing LV2 plugins
 
 License:    MIT
 URL:        http://drobilla.net/software/%{oldname}/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
+# Patch from upstream
+Patch0:     %{oldname}-remove-deprecated-doxygen.patch
+
 BuildRequires:  python3
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
@@ -53,7 +56,9 @@ control with network transparency.
 This package contains the headers and development libraries for %{oldname}.
 
 %prep
-%setup -n %{oldname}-%{version} -q 
+%setup -n %{oldname}-%{version} -q
+%patch0 -p1
+
 
 # for packagers sake, build the tests with debug symbols
 sed -i -e "s| '-ftest-coverage'\]|\
@@ -94,6 +99,9 @@ install -pm 644 COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1_2
 - update
 
