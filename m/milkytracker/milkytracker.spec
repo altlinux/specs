@@ -1,13 +1,13 @@
 Group: Sound
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmlto libalsa-devel libglvnd-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           milkytracker
 Version:        1.02.00
-Release:        alt3_5
+Release:        alt3_9
 Summary:        Module tracker software for creating music
 
 License:        GPLv3+
@@ -44,13 +44,11 @@ find . -regex '.*\.\(cpp\|h\|inl\)' -print0 | xargs -0 chmod 644
 %patch33 -p1
 
 %build
-mkdir build
-cd build
-%{fedora_cmake} -DBUILD_SHARED_LIBS:BOOL=OFF ..
-%make_build
+%{fedora_v2_cmake} -DBUILD_SHARED_LIBS:BOOL=OFF
+%fedora_v2_cmake_build
 
 %install
-cd build
+cd %{_vpath_builddir}
 make install DESTDIR=%{buildroot}
 cd ..
 
@@ -81,6 +79,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %{_docdir}/%{name}
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.02.00-alt3_9
+- update to new release by fcimport
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.02.00-alt3_5
 - update to new release by fcimport
 
