@@ -1,18 +1,21 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 BuildRequires: chrpath
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           librfid
-Version:        0.2.0 
-Release:        alt3_15
-Summary:     The librfid is a Free Software RFID library
+Name:          librfid
+Version:       0.2.0
+Release:       alt3_22
+Summary:       The librfid is a Free Software RFID library
 
-Group:          System/Libraries
-License:        GPLv2
-URL:               http://www.openmrtd.org/projects/librfid/
-Source0:        http://openmrtd.org/projects/librfid/files/librfid-%{version}.tar.bz2
+License:       GPLv2
+URL:           https://www.openhub.net/p/librfid
+Source0:       http://openmrtd.org/projects/librfid/files/librfid-%{version}.tar.bz2
 
-BuildRequires:  libusb-compat-devel automake-common libtool-common autoconf-common
+BuildRequires: libusb-compat-devel automake libtool autoconf
 Source44: import.info
 
 
@@ -23,10 +26,10 @@ Mifare Ultralight and Mifare Classic. Support for iCODE and
 other 13.56MHz based transponders is planned.
 
 
-%package        devel
-Summary:      Development files for %{name}
-Group:           Development/Other
-Requires:       %{name} = %{version}-%{release}
+%package       devel
+Group: Development/Other
+Summary:       Development files for %{name}
+Requires:      %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -37,22 +40,27 @@ developing applications that use %{name}.
 %setup -q
 
 
+
 %build
 %configure --disable-static
-%make_build
+%{make_build}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%{makeinstall_std}
+find $RPM_BUILD_ROOT -name '*.la' -delete
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
 
+
+
+
 %files
-%doc COPYING README TODO
+%doc --no-dereference COPYING
+%doc README TODO
 %{_libdir}/*.so.*
 %{_bindir}/librfid-tool
 %{_bindir}/mifare-tool
@@ -68,6 +76,9 @@ done
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_15
 - update to new release by fcimport
 
