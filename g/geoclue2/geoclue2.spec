@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: %{_name}2
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -198,6 +198,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Sat Dec 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.7-alt1
+- 2.5.7
+
 * Sun Mar 15 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.6-alt1
 - 2.5.6
 
