@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel
 %define _localstatedir %{_var}
 Name:           advancecomp
 Version:        2.1
-Release:        alt1_11
+Release:        alt1_16
 Summary:        Recompression utilities for png, mng, zip and gz files
 License:        GPLv3
 URL:            http://www.advancemame.it/
@@ -43,6 +43,7 @@ This package contains:
 dos2unix -k doc/*.txt
 
 %build
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 %configure
 %make_build
 
@@ -60,6 +61,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_16
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_11
 - update to new release by fcimport
 
