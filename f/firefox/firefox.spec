@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        84.0
+Version:        84.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -139,9 +139,6 @@ BuildRequires: /proc
 BuildRequires: pkgconfig(nspr) >= %nspr_version
 BuildRequires: pkgconfig(nss) >= %nss_version
 BuildRequires: libnss-devel-static
-
-BuildRequires: autoconf_2.13
-%set_autoconf_version 2.13
 
 Provides: webclient
 Requires: mozilla-common
@@ -494,6 +491,10 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 84.0.1-alt1
+- New release (84.0.1).
+- No longer requires autoconf_2.13 to build.
+
 * Thu Dec 17 2020 Alexey Gladkov <legion@altlinux.ru> 84.0-alt1
 - New release (84.0).
 - Security fixes:
