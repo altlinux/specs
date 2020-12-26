@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname artwiz-aleczapka-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -13,14 +14,14 @@ software and support an extended character set. \
 
 Name:		fonts-bitmap-artwiz-aleczapka
 Version:	1.3
-Release:	alt2_21
+Release:	alt2_28
 Summary:	Very small futuristic font family
-Group:		System/Fonts/True type
 License:	GPLv2
 URL:		http://artwizaleczapka.sourceforge.net/
-Source0:	http://dl.sf.net/artwizaleczapka/artwiz-aleczapka-en-sources-1.3.tar.bz2
-Source1:	http://dl.sf.net/artwizaleczapka/artwiz-aleczapka-de-sources-1.3.tar.bz2
-Source2:	http://dl.sf.net/artwizaleczapka/artwiz-aleczapka-se-sources-1.3.tar.bz2
+
+Source0:	http://downloads.sourceforge.net/project/artwizaleczapka/iso-8859-1/sources-%{version}/%{fontname}-en-sources-%{version}.tar.bz2
+Source1:	http://downloads.sourceforge.net/project/artwizaleczapka/iso-8859-1/sources-%{version}/%{fontname}-de-sources-%{version}.tar.bz2
+Source2:	http://downloads.sourceforge.net/project/artwizaleczapka/iso-8859-1/sources-%{version}/%{fontname}-se-sources-%{version}.tar.bz2
 Source3:	artwiz-aleczapka-fonts-anorexia-fontconfig.conf
 Source4:	artwiz-aleczapka-fonts-aqui-fontconfig.conf
 Source5:	artwiz-aleczapka-fonts-cure-fontconfig.conf
@@ -39,7 +40,7 @@ Source17:	artwiz-aleczapka-fonts-snap-fontconfig.conf
 Patch0:		artwiz-aleczapka-fkp-cleanups.patch
 Patch1:		artwiz-aleczapka-fonts-1.3-fix-makepcf.patch
 BuildArch:	noarch
-BuildRequires:	bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils, fontpackages-devel
+BuildRequires:	bdftopcf fonttosfnt mkfontscale xorg-font-utils, fontpackages-devel
 Requires:	fonts-bitmap-artwiz-aleczapka-anorexia = %{version}-%{release}
 Requires:	fonts-bitmap-artwiz-aleczapka-aqui = %{version}-%{release}
 Requires:	fonts-bitmap-artwiz-aleczapka-cure = %{version}-%{release}
@@ -62,30 +63,31 @@ Source44: import.info
 This is a metapackage, which pulls in all the separated fonts in this family.
 
 %package -n fonts-bitmap-artwiz-aleczapka-common
+Group: System/Fonts/True type
 Summary:	Common files for Artwiz Aleczapka fonts (documentation...)
-Group:		System/Fonts/True type
 
 %description -n fonts-bitmap-artwiz-aleczapka-common
 %common_desc
 
 %package -n fonts-bitmap-artwiz-aleczapka-anorexia
+Group: System/Fonts/True type
 Summary:	Anorexia font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-anorexia
 %common_desc
-This package contains the Anorexia font in three encodings, English, German, 
+This package contains the Anorexia font in three encodings, English, German,
 and Swedish.
 
 %files -n fonts-bitmap-artwiz-aleczapka-anorexia
 %{_fontconfig_templatedir}/%{fontconf}-anorexia.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-anorexia.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/anorexia*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-aqui
+Group: System/Fonts/True type
 Summary:	Aqui font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-aqui
@@ -96,26 +98,28 @@ Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-aqui
 %{_fontconfig_templatedir}/%{fontconf}-aqui.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-aqui.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/aqui*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-cure
+Group: System/Fonts/True type
 Summary:	Cure font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-cure
 %common_desc
-This package contains the Cure font in three encodings, English, German, and 
+This package contains the Cure font in three encodings, English, German, and
 Swedish.
 
 %files -n fonts-bitmap-artwiz-aleczapka-cure
 %{_fontconfig_templatedir}/%{fontconf}-cure.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-cure.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/cure*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-drift
+Group: System/Fonts/True type
 Summary:	Drift font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-drift
@@ -126,11 +130,12 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-drift
 %{_fontconfig_templatedir}/%{fontconf}-drift.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-drift.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/drift*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-edges
+Group: System/Fonts/True type
 Summary:	Edges font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-edges
@@ -141,11 +146,12 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-edges
 %{_fontconfig_templatedir}/%{fontconf}-edges.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-edges.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/edges*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-fkp
+Group: System/Fonts/True type
 Summary:	Fkp font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-fkp
@@ -156,11 +162,12 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-fkp
 %{_fontconfig_templatedir}/%{fontconf}-fkp.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-fkp.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/fkp*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-gelly
+Group: System/Fonts/True type
 Summary:	Gelly font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-gelly
@@ -171,42 +178,45 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-gelly
 %{_fontconfig_templatedir}/%{fontconf}-gelly.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gelly.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/gelly*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-glisp
+Group: System/Fonts/True type
 Summary:	Glisp fonts in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-glisp
 %common_desc
 This package contains the Glisp font in three encodings, English, German,
-and Swedish. It also includes a Regular and Bold version of the font for 
+and Swedish. It also includes a Regular and Bold version of the font for
 each encoding.
 
 %files -n fonts-bitmap-artwiz-aleczapka-glisp
 %{_fontconfig_templatedir}/%{fontconf}-glisp.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-glisp.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/glisp*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-kates
+Group: System/Fonts/True type
 Summary:	Kates font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-kates
 %common_desc
 This package contains the Kates font in three encodings, English, German,
-and Swedish. 
+and Swedish.
 
 %files -n fonts-bitmap-artwiz-aleczapka-kates
 %{_fontconfig_templatedir}/%{fontconf}-kates.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-kates.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/kates*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-lime
+Group: System/Fonts/True type
 Summary:	Lime font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-lime
@@ -217,11 +227,12 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-lime
 %{_fontconfig_templatedir}/%{fontconf}-lime.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-lime.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/lime*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-mints-mild
+Group: System/Fonts/True type
 Summary:	Mints Mild font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-mints-mild
@@ -232,26 +243,28 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-mints-mild
 %{_fontconfig_templatedir}/%{fontconf}-mints-mild.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mints-mild.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/mints-mild*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-mints-strong
+Group: System/Fonts/True type
 Summary:	Mints Strong font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-mints-strong
 %common_desc
-This package contains the Mints Strong font in three encodings, English, 
+This package contains the Mints Strong font in three encodings, English,
 German, and Swedish.
 
 %files -n fonts-bitmap-artwiz-aleczapka-mints-strong
 %{_fontconfig_templatedir}/%{fontconf}-mints-strong.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mints-strong.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/mints-strong*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-nu
+Group: System/Fonts/True type
 Summary:	Nu font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-nu
@@ -262,26 +275,28 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-nu
 %{_fontconfig_templatedir}/%{fontconf}-nu.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nu.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/nu*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-smoothansi
+Group: System/Fonts/True type
 Summary:	Smoothansi font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-smoothansi
 %common_desc
-This package contains the Smoothansi font in three encodings, English, 
+This package contains the Smoothansi font in three encodings, English,
 German, and Swedish.
 
 %files -n fonts-bitmap-artwiz-aleczapka-smoothansi
 %{_fontconfig_templatedir}/%{fontconf}-smoothansi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-smoothansi.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/smoothansi*.pcf
 
 %package -n fonts-bitmap-artwiz-aleczapka-snap
+Group: System/Fonts/True type
 Summary:	Snap font in Artwiz family
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-bitmap-artwiz-aleczapka-snap
@@ -292,6 +307,7 @@ and Swedish.
 %files -n fonts-bitmap-artwiz-aleczapka-snap
 %{_fontconfig_templatedir}/%{fontconf}-snap.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-snap.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/snap*.pcf
 
 %prep
@@ -376,13 +392,18 @@ fi
 %files -n fonts-bitmap-artwiz-aleczapka-common
 # generic docs are the same for every lang (AUTHORS has all info in german dir
 # so use it from german font dir)
-%doc artwiz-aleczapka-de-sources-1.3/COPYING
-%doc artwiz-aleczapka-de-sources-1.3/{AUTHORS,README,VERSION}
+%doc --no-dereference artwiz-aleczapka-de-sources-1.3/COPYING
+%doc artwiz-aleczapka-de-sources-1.3/AUTHORS
+%doc artwiz-aleczapka-de-sources-1.3/README
+%doc artwiz-aleczapka-de-sources-1.3/VERSION
 %doc artwiz-aleczapka-de-sources-1.3/README.DE
 %doc artwiz-aleczapka-se-sources-1.3/README.SE
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_28
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_21
 - update to new release by fcimport
 
