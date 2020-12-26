@@ -10,13 +10,13 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sord
-%define version 0.16.4
+%define version 0.16.6
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
-Version:    0.16.4
-Release:    alt1_5
+Version:    0.16.6
+Release:    alt1_1
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 License:    ISC
@@ -53,7 +53,7 @@ This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-# we'll run ldconfig, and add our optflags 
+# Do not run ldconfig, and add our optflags
 sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" \
        -e "s|cflags          = [ '-DSORD_INTERNAL' ]\
 |cflags          = [ '-DSORD_INTERNAL' ] + '%optflags'.split(' ') |" wscript
@@ -100,6 +100,9 @@ install -pm 644 AUTHORS NEWS README.md COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.6-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.4-alt1_5
 - update to new release by fcimport
 
