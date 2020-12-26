@@ -1,7 +1,8 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(libsystemd) python-devel
+BuildRequires: /usr/bin/doxygen2man gcc-c++ pkgconfig(libsystemd) python-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,7 +14,7 @@ BuildRequires: gcc-c++ pkgconfig(libsystemd) python-devel
 %bcond_without check
 
 Name:           libqb
-Version:        2.0.1
+Version:        2.0.2
 Release:        alt1_2
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
@@ -21,7 +22,7 @@ License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
-Patch1:         libqb-2.0.1-remove-deprecated-check-macros.patch
+#Patch1:         libqb-2.0.1-remove-deprecated-check-macros.patch
 
 BuildRequires:  autoconf automake libtool
 BuildRequires:  libcheck-devel
@@ -54,7 +55,6 @@ This package contains the shared library.
 
 %prep
 %setup -q # for when patches around
-%patch1 -p1
 
 
 %build
@@ -111,6 +111,9 @@ This package contains a program to create nicely-formatted man pages from Doxyge
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_2
+- update to new release by fcimport
+
 * Sun Nov 22 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2
 - new version
 
