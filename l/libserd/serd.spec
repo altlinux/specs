@@ -9,7 +9,7 @@ Group: System/Libraries
 %global maj 0
 
 Name:           libserd
-Version:        0.30.2
+Version:        0.30.6
 Release:        alt1_1
 Summary:        A lightweight C library for RDF syntax
 
@@ -85,6 +85,9 @@ mv %{buildroot}%{_docdir}/%{oldname}-%{maj}/html %{buildroot}%{_docdir}/%{oldnam
 %{_includedir}/%{oldname}-%{maj}/
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.30.6-alt1_1
+- update to new release by fcimport
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.30.2-alt1_1
 - update to new release by fcimport
 
