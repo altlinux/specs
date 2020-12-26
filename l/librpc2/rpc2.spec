@@ -1,18 +1,23 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname rpc2
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global optflags %{optflags} -fPIC -fPIE
+
 Name:           librpc2
 Version:        2.10
-Release:        alt1_17
+Release:        alt1_25
 Summary:        C library for remote procedure calls over UDP
-Group:          System/Libraries
 License:        LGPLv2
 URL:            http://www.coda.cs.cmu.edu/
 Source0:        ftp://ftp.coda.cs.cmu.edu/pub/rpc2/src/%{oldname}-%{version}.tar.gz
 Source1:        ftp://ftp.coda.cs.cmu.edu/pub/rpc2/src/%{oldname}-%{version}.tar.gz.asc
 Patch0:		rpc2-2.10-lua-5.2-fix.patch
 Patch1:		rpc2-2.10-format-security-fix.patch
+Patch2:		rpc2-2.10-lua-5.4.patch
+Patch3:		rpc2-2.10-rp2gen-cflags.patch
+BuildRequires:  gcc-c++
 BuildRequires:  liblwp-devel lua-devel flex bison
 Source44: import.info
 Provides: rpc2 = %{version}-%{release}
@@ -21,8 +26,8 @@ Provides: rpc2 = %{version}-%{release}
 The RPC2 library, a C library for remote procedure calls over UDP.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{oldname}
-Group:          Development/Other
 # headers are LGPLv2, rp2gen is GPLv2
 License:        LGPLv2 and GPLv2
 Requires:       %{name} = %{version}-%{release}
@@ -36,9 +41,10 @@ developing applications that use %{oldname}.
 %setup -n %{oldname}-%{version} -q
 %patch0 -p1 -b .lua52fix
 %patch1 -p1 -b .format-security
+%patch2 -p1 -b .lua54
+%patch3 -p1 -b .cflags
 
 %build
-export CC="gcc -fPIC"
 %configure --disable-static --with-lua
 # Don't use rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -48,6 +54,8 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+
 
 %files
 %doc COPYING NEWS
@@ -61,6 +69,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_17
 - update to new release by fcimport
 
