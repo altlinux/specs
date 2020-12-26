@@ -1,3 +1,4 @@
+Group: Communications
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Authen/SASL.pm) perl(Net/Domain.pm) perl(Net/XMPP.pm) perl(open.pm) perl-devel
 # END SourceDeps(oneline)
@@ -7,13 +8,17 @@ BuildRequires: /usr/bin/pod2man
 Summary:	A Perl script to send XMPP messages
 Name:		sendxmpp
 Version:	1.24
-Release:	alt1_5
+Release:	alt1_12
 License:	GPLv2
-Group:		Communications
-URL:		http://sendxmpp.hostname.sk/
-Source:		https://github.com/lhost/%{name}/archive/v%{version}.tar.gz
+URL:		https://sendxmpp.hostname.sk/
+Source:		https://github.com/lhost/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:		sendxmpp-1.24-git20161113.patch
 BuildRequires:	rpm-build-perl
+%if 0%{?rhel} && 0%{?rhel} <= 7
+BuildRequires:	perl(ExtUtils/MakeMaker.pm), findutils
+%else
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+%endif
 BuildArch:	noarch
 Source44: import.info
 
@@ -24,14 +29,17 @@ individual recipients and chat rooms.
 
 %prep
 %setup -q
+%patch0 -p1 -b .git20161113
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
 %make_build
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
+%makeinstall_std
+%if 0%{?rhel} && 0%{?rhel} <= 7
+find $RPM_BUILD_ROOT \( -name perllocal.pod -o -name .packlist \) -exec rm -f {} \;
+%endif
 chmod -R u+w $RPM_BUILD_ROOT/*
 
 %files
@@ -40,6 +48,9 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1_12
+- update to new release by fcimport
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1_5
 - new version
 
