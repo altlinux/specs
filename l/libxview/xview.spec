@@ -5,7 +5,7 @@
 
 Name: lib%origname
 Version: 3.2p1.4
-Release: alt11
+Release: alt12
 
 Summary: XView libraries for X11
 License: Distributable
@@ -24,6 +24,7 @@ Source0: %{origname}_%version.orig.tar.gz
 Patch0: xview-3.2p1.4-debian-26.patch
 Patch1: %{origname}_%version-alt-xorg7.patch
 Patch2: xview_3.2p1.4-alt-gcc41.patch
+Patch3: xview_3.2p1.4-alt-sys_errlist.patch
 
 # debian patches
 Patch21: olvwm-posix-regex.patch
@@ -35,8 +36,7 @@ Patch24: xview-sysv-wait-and-signals.patch
 
 Provides: %origname = %version
 
-# Automatically added by buildreq on Tue Jul 22 2008 (-bi)
-BuildRequires: gccmakedep imake libXext-devel xorg-cf-files libX11-devel
+BuildRequires: gccmakedep imake libXext-devel xorg-cf-files libX11-devel libtirpc-devel
 
 #imake
 #set_gcc_version 3.3
@@ -81,6 +81,7 @@ Static libraries for XView development
 %patch0 -p1
 %patch1 -p0
 %patch2 -p1
+%patch3 -p1
 
 # gentoo
 # Do not build xgettext and msgfmt since they are provided by the gettext
@@ -104,8 +105,12 @@ sed -e 's/MSG_UTIL = xgettext msgfmt/#MSG_UTIL = xgettext msgfmt/' \
 
 %build
 %add_optflags -fcommon
+%add_optflags -I/usr/include/tirpc
+#add_optflags -DTEST1_tirpc
 rm -f make
-# Create the makefile
+
+sed -i 's,-DNO_CAST_VATOAV,-DNO_CAST_VATOAV -I/usr/include/tirpc,' config/XView.cf
+
 export IMAKEINCLUDE="-I"`pwd`"/config -I%_datadir/X11/config"
 cd config
 imake -DUseInstalled 
@@ -167,6 +172,9 @@ ln -sf libxview.so.3.2.4 %buildroot%_libdir/libxview.so
 %endif
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt12
+- built with libtirc
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt11
 - fixed build with gcc10
 
