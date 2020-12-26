@@ -1,14 +1,14 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ascii
 Version:        3.18
-Release:        alt1_4
+Release:        alt1_10
 URL:            http://www.catb.org/~esr/ascii/
 Source0:        http://www.catb.org/~esr/ascii/ascii-3.18.tar.gz
 BuildRequires:  xmlto, gcc
 
 License:        GPLv2
-Group:          Text tools
 Summary:        Interactive ascii name and synonym chart
 Source44: import.info
 
@@ -38,6 +38,9 @@ cp ascii.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 %doc README COPYING
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.18-alt1_10
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.18-alt1_4
 - update to new release by fcimport
 
