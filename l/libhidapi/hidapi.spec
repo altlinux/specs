@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/fox-config
+BuildRequires: /usr/bin/fox-config gcc-c++
 # END SourceDeps(oneline)
 Group: Development/Other
 %add_optflags %optflags_shared
@@ -7,7 +7,7 @@ Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libhidapi
-Version:        0.10.0
+Version:        0.10.1
 Release:        alt1_1
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
@@ -19,7 +19,6 @@ Source0:        https://github.com/libusb/hidapi/archive/%{oldname}-%{version}.t
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: gcc
-BuildRequires: gcc-c++
 BuildRequires: libtool
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
@@ -71,6 +70,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.1-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_1
 - update to new release by fcimport
 
