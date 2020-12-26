@@ -5,8 +5,8 @@
 %define tuneddir %_prefix/lib/tuned
 
 Name: tuned
-Version: 2.14.0
-Release: alt2
+Version: 2.15.0
+Release: alt1
 
 Summary: A dynamic adaptive system tuning daemon
 
@@ -189,6 +189,14 @@ Requires: %name = %EVR
 %description profiles-compat
 Additional tuned profiles mainly for backward compatibility with tuned 1.0.
 It can be also used to fine tune your system for specific scenarios.
+
+%package profiles-postgresql
+Group: System/Configuration/Other
+Summary: Additional tuned profile(s) targeted to PostgreSQL server loads
+Requires: %name = %EVR
+
+%description profiles-postgresql
+Additional tuned profile(s) targeted to PostgreSQL server loads.
 
 %prep
 %setup
@@ -445,7 +453,14 @@ fi
 %tuneddir/spindown-disk
 %_man7dir/tuned-profiles-compat.7*
 
+%files profiles-postgresql
+%tuneddir/postgresql
+%_man7dir/tuned-profiles-postgresql.7*
+
 %changelog
+* Sat Dec 26 2020 Vitaly Chikunov <vt@altlinux.org> 2.15.0-alt1
+- Update to v2.15.0 (2020-12-17).
+
 * Tue Nov 10 2020 Vitaly Chikunov <vt@altlinux.org> 2.14.0-alt2
 - ALT specific profile recommend.
 
