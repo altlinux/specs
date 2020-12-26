@@ -8,11 +8,13 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt1_8
+Release:        alt1_13
 Summary:        Unicode Text Segmentation Package
 License:        GPLv2+ or Artistic clarified
 URL:            http://sf.net/projects/linefold/
 Source0:        https://github.com/hatukanezumi/sombok/archive/%{oldname}-%{version}.tar.gz
+# A multilib-safe wrapper, bug #1853260
+Source1:        sombok.h
 
 BuildRequires:  libthai-devel
 BuildRequires:  autoconf
@@ -58,6 +60,11 @@ rm -rf doc/html/search
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
+# Rename sombok.h to sombok-ARCH.h and install a sombok.h wrapper to avoid
+# a file conflict on multilib systems, bug #1853260
+mv %{buildroot}/%{_includedir}/sombok.h %{buildroot}/%{_includedir}/sombok-%{_arch}.h
+install -m 0644 %{SOURCE1} %{buildroot}/%{_includedir}/sombok.h
+
 
 
 
@@ -75,6 +82,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_13
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_8
 - update to new release by fcimport
 
