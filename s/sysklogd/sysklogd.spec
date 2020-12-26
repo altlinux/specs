@@ -1,5 +1,5 @@
 Name: sysklogd
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 %define ROOT %_localstatedir/klogd
@@ -11,8 +11,6 @@ Url: https://github.com/legionus/sysklogd/
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
-
-Patch01: 0001-ALT-simplify-makefile.patch
 
 Requires(pre): syslogd = %version-%release
 Requires(pre): klogd   = %version-%release
@@ -44,15 +42,15 @@ via system logger.
 %prep
 %setup -q
 
-%patch01 -p1
-
 %build
+%autoreconf -fi
+%configure --sbindir=/sbin
 %make_build
 
 %install
 mkdir -p %buildroot{%_mandir/man{5,8},/sbin}
 
-%makeinstall prefix=%buildroot
+%makeinstall_std
 
 install -pD -m640 altlinux/syslog.conf       %buildroot%_sysconfdir/syslog.conf
 install -pD -m755 altlinux/syslogd.init      %buildroot%_initdir/syslogd
@@ -144,6 +142,14 @@ fi
 %doc README* NEWS
 
 %changelog
+* Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 1.7.0-alt1
+- New version (1.7.0)
+- syslogd: Implement customization of log file records without extra memory
+  allocations.
+- syslogd: Implement checksum (sha256) chains for log entries as mechanism for
+  detecting intrusion into log files.
+- syslogd: Allow to have more than 20 inputs.
+
 * Mon May 04 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0-alt1
 - New version (1.6.0)
 - Add a trigger to migrate -A to -P option.
@@ -215,7 +221,7 @@ fi
 * Fri Aug 01 2003 Dmitry V. Levin <ldv@altlinux.org> 1.4.1-alt16
 - Updated URL.
 - Updated documentation from CVS.
-- %syslog_name: changed chroot jail from /var/empty
+- syslog_name: changed chroot jail from /var/empty
   to /var/resolv (#0002807).
 - Updated build dependencies.
 
@@ -271,7 +277,7 @@ fi
 - Patched klogd to reopen log socket on each ECONNRESET.
 
 * Mon Jul 23 2001 Stanislav Ievlev <inger@altlinux.ru> 1.4.1-alt4
-- Splited to separate %syslog_name and klogd packages.
+- Splited to separate syslog_name and klogd packages.
 - We will need it for syslog-ng.
 - Added %_sysconfdir/sysconfig/* config scripts.
 
