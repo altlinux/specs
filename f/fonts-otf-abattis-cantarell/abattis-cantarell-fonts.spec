@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 
 Name: fonts-otf-abattis-cantarell
 Version: 0.201
-Release: alt1_2
+Release: alt1_4
 Summary: Humanist sans serif font
 
 License: OFL
@@ -96,6 +96,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/metainfo/org.gnome.cantarell.metainfo.xml
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.201-alt1_4
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.201-alt1_2
 - update to new release by fcimport
 
