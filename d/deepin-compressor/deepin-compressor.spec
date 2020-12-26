@@ -2,7 +2,7 @@
 
 Name: deepin-compressor
 Version: 5.10.0.7
-Release: alt1
+Release: alt2
 Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
 Group: Archiving/Compression
@@ -17,8 +17,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %else
-%set_gcc_version 7
-BuildRequires(pre): gcc7-c++
+BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): desktop-file-utils rpm-build-kf5 rpm-build-ninja
 BuildRequires: cmake
@@ -64,6 +63,11 @@ sed -i 's|lib/|%_lib/|' CMakeLists.txt
 # remove unbuilded translation
 rm -rf translations/deepin-compressor*.ts
 
+%if_disabled clang
+sed -i 's|int myshowWarningDialog|void myshowWarningDialog|' \
+    test/UnitTest/deepin-compressor/source/src/uncompresspage_test.cpp
+%endif
+
 %build
 %if_enabled clang
 export CC="clang"
@@ -99,6 +103,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_libdir/%name/plugins/*.so
 
 %changelog
+* Sat Dec 26 2020 Leontiy Volodin <lvol@altlinux.org> 5.10.0.7-alt2
+- Built with gcc10.
+
 * Wed Dec 23 2020 Leontiy Volodin <lvol@altlinux.org> 5.10.0.7-alt1
 - New version (5.10.0.7) with rpmgs script.
 
