@@ -3,7 +3,7 @@
 Summary:	OpenDesktop.Org.tw Font -- Simplified and Traditional Chinese and Japanese Ming and Kai Face
 Name:		fonts-ttf-chinese-opendesktop
 Version:	1.6.100
-Release:	alt1_11
+Release:	alt1_12
 # Extracted from ftp://opensource.nchc.org.tw/odp/others/fc17/SRPMS/opendesktop-fonts-1.6.100-1.fc17.src.rpm
 Source0:	opendesktop-fonts-%{version}.tar.bz2
 URL:		http://www.opendesktop.org.tw/
@@ -87,6 +87,9 @@ fi
 %{_datadir}/ghostscript/conf.d/*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.100-alt1_12
+- update by mgaimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.100-alt1_11
 - update by mgaimport
 
