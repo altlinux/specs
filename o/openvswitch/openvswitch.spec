@@ -13,7 +13,7 @@
 
 Name: openvswitch
 Version: 2.14.0
-Release: alt2
+Release: alt3
 
 Summary: An open source, production quality, multilayer virtual switch
 # All code is Apache-2.0 except
@@ -281,8 +281,10 @@ LC_CTYPE=en_US.UTF-8 LC_COLLATE=en_US.UTF-8 make check
 %_sbindir/useradd -r -n -g %name -d / -s /sbin/nologin -c 'openvswitch server daemon' %name >/dev/null 2>&1 ||:
 
 %post
-chown %name:%name %_sysconfdir/openvswitch/system-id.conf
-chown -R %name:%name %_localstatedir/%name
+if [ $1 -eq 2 ] && [ -f %_sysconfdir/openvswitch/system-id.conf ] ; then
+    chown %name:%name %_sysconfdir/openvswitch/system-id.conf
+    chown -R %name:%name %_localstatedir/%name
+fi
 %post_service %name
 
 %preun
@@ -413,6 +415,9 @@ chown -R %name:%name %_localstatedir/%name
 %endif
 
 %changelog
+* Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt3
+- Fixed post script for update.
+
 * Wed Dec 16 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt2
 - enable NDEBUG
 - build with experimental AF_XDP support for OVS netdev
