@@ -3,7 +3,7 @@
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt1
+Release: alt2
 
 Summary:  Linux Kernel Runtime Guard module sources
 
@@ -16,7 +16,7 @@ Source: %module_name-%version.tar
 Patch: %module_name-%version-%release.patch
 
 ExclusiveArch: i586 x86_64 aarch64
-BuildRequires(pre): kernel-build-tools
+BuildRequires(pre): rpm-build-kernel
 %{?!_without_check:%{?!_disable_check:BuildRequires: kernel-headers-modules-un-def}}
 BuildArch: noarch
 
@@ -54,6 +54,9 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sat Dec 26 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201210-alt2
+- Fixed BR: kernel-build-tools -> rpm-build-kernel.
+
 * Wed Dec 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201210-alt1
 - Updated to 47d6aca4d424f21044f2b890c245fccfad3a40f3 (2020-12-10).
 - Fixed build against kernel 5.10.
