@@ -9,15 +9,16 @@ BuildRequires: pkgconfig(theora)
 
 Name:		libshout-idjc
 Version:	2.4.1
-Release:	alt1_1
+Release:	alt1_4
 Summary:	Libshout with extensions for IDJC
 Source:		http://downloads.sf.net/idjc/libshout-idjc-%{version}.tar.gz
-URL:		http://sourceforge.net/projects/idjc/
+Patch0:		01-libshout-tls-compile-with-OpenSSL-1.1.0.patch
+URL:		https://sourceforge.net/projects/idjc/
 Group:		System/Libraries
 License:	LGPL-2.1+
-BuildRequires:	libogg-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	libspeex-devel
+BuildRequires:	pkgconfig(ogg)
+BuildRequires:	pkgconfig(vorbis)
+BuildRequires:	pkgconfig(speex)
 Source44: import.info
 
 %description
@@ -41,6 +42,7 @@ This package contains the development files for the library.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 autoreconf -vfi
@@ -66,6 +68,9 @@ rm -rf %{buildroot}%{_datadir}/doc/libshout-idjc
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_4
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_1
 - new version
 
