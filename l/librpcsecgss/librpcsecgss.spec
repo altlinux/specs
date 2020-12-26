@@ -10,12 +10,14 @@ BuildRequires: gcc-c++
 Summary:	Allows secure rpc communication using the rpcsec_gss protocol
 Name:		librpcsecgss
 Version:	0.19
-Release:	alt1.qa1_10
+Release:	alt1.qa1_13
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.citi.umich.edu/projects/nfsv4/linux/
 Source0:	http://www.citi.umich.edu/projects/nfsv4/linux/%{name}/%{name}-%{version}.tar.gz
+Patch1:		librpcsecgss-libtirpc.patch
 BuildRequires:	pkgconfig(libgssglue)
+BuildRequires:	pkgconfig(libtirpc)
 Source44: import.info
 
 %description
@@ -47,12 +49,12 @@ This package contains the static librpcsecgss library and its
 header files.
 
 %prep
-%setup -q -n librpcsecgss-%{version}
+%setup -q
+%patch1 -p1
+
 
 %build
-# fix build on aarch64
 autoreconf -vfi
-
 %configure --disable-static
 %make_build
 
@@ -73,6 +75,9 @@ rm -f %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.qa1_13
+- update by mgaimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.qa1_10
 - update by mgaimport
 
