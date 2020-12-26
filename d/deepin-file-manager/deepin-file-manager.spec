@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.2.0.82
-Release: alt2
+Release: alt3
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -14,14 +14,14 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-file-manager_5.2.0.82_qt5.15.patch
 Patch1: deepin-file-manager_5.2.0.82_desktop.patch
+Patch2: deepin-file-manager_5.2.0.82_gcc10.patch
 
 ExcludeArch: armh ppc64le
 
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %else
-%set_gcc_version 7
-BuildRequires(pre): gcc7-c++
+BuildRequires(pre): gcc-c++
 %endif
 
 BuildRequires(pre): rpm-build-kf5
@@ -95,6 +95,9 @@ Deepin desktop environment - desktop module.
 %setup -n %repo-%version
 %patch -p2
 %patch1 -p2
+%if_disabled clang
+%patch2 -p2
+%endif
 
 sed -i 's|lrelease|lrelease-qt5|' \
     dde-desktop/translate_generation.sh \
@@ -117,8 +120,6 @@ sed -i 's|systembusconf.path = /etc/dbus-1/system.d|systembusconf.path = /usr/sh
 sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-manager-daemon.pro dde-file-manager-daemon/test-dde-file-manager-daemon.pro
 sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/ut_dfilestatisticsjob.cpp
 sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
-# don't create files on the desktop by default
-#sed -i '/desktop/d' ?/dde-desktop.conf
 
 %build
 %if_enabled clang
@@ -215,6 +216,9 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Sat Dec 26 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.82-alt3
+- Built with gcc10.
+
 * Tue Dec 22 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.82-alt2
 - Removed non-working shortcuts from the desktop.
 
