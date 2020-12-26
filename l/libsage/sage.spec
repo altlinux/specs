@@ -1,21 +1,22 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: imake libGL-devel libX11-devel libXt-devel xorg-cf-files
+BuildRequires: gcc-c++ imake libX11-devel libXt-devel libglvnd-devel xorg-cf-files
 # END SourceDeps(oneline)
+Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname sage
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libsage
 Version:        0.2.0
-Release:        alt2_17
+Release:        alt2_24
 Summary:        OpenGL extensions library using SDL
 
-Group:          Development/Other
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/sage
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.gz
 Patch0:         sage-0.1.2-noopt.patch
 
+BuildRequires:  gcc
 BuildRequires:  libSDL-devel
 Source44: import.info
 Provides: sage = %{version}-%{release}
@@ -26,9 +27,9 @@ checking for and loading OpenGL extensions in an application.
 
 
 %package devel
+Group: Development/Other
 Summary:        Development files for sage
-Group:   Development/Other
-Requires: pkg-config %{oldname} = %{version}-%{release}
+Requires: pkgconfig %{oldname} = %{version}-%{release}
 Provides: sage-devel = %{version}-%{release}
 
 
@@ -52,14 +53,17 @@ rm -f sage/wglext_sage.h
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}.la
 
 %check
 # There are no tests yet, but upstream tends to be good about adding 
 # them.  This is a placeholder for when upstread finally adds the tests.
-make %{?_smp_mflags} check
+%make_build check
+
+
+
 
 
 
@@ -76,6 +80,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_17
 - update to new release by fcimport
 
