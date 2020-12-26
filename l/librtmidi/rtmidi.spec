@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 %define oldname rtmidi
@@ -8,7 +5,7 @@ Group: Development/C
 %define _localstatedir %{_var}
 Name:       librtmidi
 Version:    3.0.0
-Release:    alt1_2
+Release:    alt1_9
 Summary:    Library for realtime MIDI input/output (ALSA support)
 License:    MIT
 URL:        http://www.music.mcgill.ca/~gary/rtmidi/index.html
@@ -17,6 +14,7 @@ Patch0:     rtmidi-3.0.0-buildfix.patch
 BuildRequires:  libalsa-devel, libjack-devel
 BuildRequires:  autoconf, automake, libtool, /usr/bin/dos2unix
 BuildRequires:  doxygen
+BuildRequires:  gcc-c++
 Obsoletes:  %{oldname}-jack < 2.0.0
 Source44: import.info
 Provides: rtmidi = %{version}-%{release}
@@ -56,7 +54,7 @@ This package contains shared library for %name.
 %package devel
 Group: Development/C
 Summary:    Development headers and libraries for rtmidi
-Requires:   %{name}4 = %{version}-%{release}
+Requires:   librtmidi4 = %{version}-%{release}
 Provides: rtmidi-devel = %{version}-%{release}
 
 %description devel
@@ -67,13 +65,10 @@ Development headers and libraries for rtmidi.
 
 %patch0 -p1
 
-# cp -f /usr/lib/rpm/config.{guess,sub} config/
 sed -i.orig -e 's/\/lib/\/%{_lib}/' Makefile.in rtmidi.pc.in
 # fix end of line
 dos2unix doc/release.txt doc/doxygen/tutorial.txt
 sed -i -e 's,$(LIBS) $(SOURCE),$(SOURCE) $(LIBS),' Makefile*
-
-rm config/ltmain.sh
 
 %build
 find . -name Makefile.in -delete
@@ -100,6 +95,8 @@ find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' 
 find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
 
 
+
+
 %files -n librtmidi4
 %doc README.md
 %{_libdir}/lib%{oldname}.so.*
@@ -112,6 +109,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_9
+- update to new release by fcimport
+
 * Thu Jun 21 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2
 - new version
 
