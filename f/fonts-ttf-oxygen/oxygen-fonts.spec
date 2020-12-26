@@ -1,6 +1,7 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: cmake gcc-c++
 # END SourceDeps(oneline)
 %define oldname oxygen-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -9,8 +10,8 @@ BuildRequires: gcc-c++ rpm-macros-fedora-compat
 %global fontconf 61-%{fontname}
 
 Name:           fonts-ttf-oxygen
-Version: 5.4.3
-Release: alt1_12
+Version:        5.4.3
+Release:        alt1_15
 Summary:        Oxygen fonts created by the KDE Community
 
 # See LICENSE-GPL+FE for details about the exception
@@ -73,15 +74,12 @@ developing applications that use %{oldname}.
 %setup -q -n %{oldname}-%{version}
 
 %build
-mkdir %{_target_platform}
-pushd %{_target_platform}
-%{fedora_cmake} .. %{?fontforge} -DOXYGEN_FONT_INSTALL_DIR=%{_fontdir}
-popd
+%{cmake_kf5} %{?fontforge} -DOXYGEN_FONT_INSTALL_DIR=%{_fontdir}
+%fedora_v2_cmake_build
 
-%make_build -C %{_target_platform}
 
 %install
-make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%fedora_v2_cmake_install
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -151,6 +149,9 @@ fi
 %{_libdir}/cmake/OxygenFont/
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 5.4.3-alt1_15
+- update to new release by fcimport
+
 * Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 5.4.3-alt1_12
 - update
 
