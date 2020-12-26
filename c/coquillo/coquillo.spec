@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:		coquillo
 Version:	2.0.1
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Audio Metadata Editor
 License:	LGPLv3+
 Group:		Sound
@@ -49,6 +49,9 @@ FLAC and many others.
 
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2
+- update by mgaimport
+
 * Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_1
 - update by mgaimport
 
