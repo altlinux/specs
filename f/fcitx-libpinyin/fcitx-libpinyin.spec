@@ -1,14 +1,14 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-qt5-webengine
 BuildRequires: gcc-c++ qt5-base-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		fcitx-libpinyin
 Version:	0.5.3
-Release:	alt1_5
+Release:	alt1_11
 Summary:	Libpinyin Wrapper for Fcitx
-Group:		System/Libraries
 License:	GPLv2+
 URL:		https://fcitx-im.org/wiki/Libpinyin
 Source0:	http://download.fcitx-im.org/fcitx-libpinyin/%{name}-%{version}_dict.tar.xz
@@ -34,16 +34,11 @@ Libpinyin is a Frontend of the Intelligent Pinyin IME Backend.
 
 
 %build
-mkdir -pv build
-pushd build
-%{fedora_cmake} ..
-make VERBOSE=1 %{?_smp_mflags}
-popd
+%{fedora_v2_cmake}
+%fedora_v2_cmake_build
 
 %install
-pushd build
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-popd
+%fedora_v2_cmake_install
 
 %find_lang %{name}
 
@@ -60,6 +55,9 @@ popd
 %{_datadir}/icons/hicolor/48x48/status/fcitx-*.png
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_11
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_5
 - update to new release by fcimport
 
