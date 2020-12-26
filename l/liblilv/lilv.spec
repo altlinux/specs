@@ -11,23 +11,26 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lilv
-%define version 0.24.6
+%define version 0.24.10
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 %global maj 0
 
 Name:       liblilv
-Version:    0.24.6
-Release:    alt1_2
+Version:    0.24.10
+Release:    alt1_1
 Summary:    An LV2 Resource Description Framework Library
 
 License:    MIT
 URL:        http://drobilla.net/software/lilv/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
+# New test suite looks for unversioned python
+Patch0:     %{oldname}-test-python.patch
+
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libsord-devel >= 0.14.0
 BuildRequires:  libsratom-devel >= 0.4.4
-BuildRequires:  lv2-devel >= 1.16.0
+BuildRequires:  lv2-devel >= 1.18.0
 BuildRequires:  python3
 BuildRequires:  python3-devel
 BuildRequires:  swig
@@ -35,6 +38,7 @@ BuildRequires:  libserd-devel >= 0.30.0
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  libsndfile-devel >= 1.0.0
+Requires:       lv2 >= 1.18.0
 Source44: import.info
 Provides: lilv = %{version}-%{release}
 
@@ -68,8 +72,10 @@ supports reading and writing Turtle and NTriples.
 This package contains the python libraries for %{oldname}.
 
 %prep
-%setup -n %{oldname}-%{version} -q 
-# we'll run ld config
+%setup -n %{oldname}-%{version} -q
+%patch0 -p1
+
+# Do not run ld config
 sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
 # for packagers sake, build the tests with debug symbols
 sed -i -e "s|'-ftest-coverage'\]|\
@@ -81,8 +87,7 @@ export LINKFLAGS="%{__global_ldflags}"
 python3 waf configure -v --prefix=%{_prefix} \
  --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir} \
  --docdir=%{_docdir}/%{oldname} \
- --docs --test --dyn-manifest \
- --default-lv2-path=%{_libdir}/lv2
+ --docs --test --dyn-manifest
 python3 waf -v build %{?_smp_mflags}
 
 %install
@@ -90,7 +95,7 @@ python3 waf -v install --destdir=%{buildroot}
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 
 %check
-./build/test/lilv_test
+python3 waf test
 
 %files
 %doc AUTHORS NEWS README.md
@@ -117,6 +122,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python3_sitelibdir_noarch}/__pycache__/*
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.24.10-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 0.24.6-alt1_2
 - update
 
