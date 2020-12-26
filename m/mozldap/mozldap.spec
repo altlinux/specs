@@ -12,7 +12,7 @@
 Summary:	Mozilla LDAP C SDK
 Name:		mozldap
 Version:	6.0.7
-Release:	alt5
+Release:	alt6
 License:	MPL-1.1 or GPL-2.0 or LGPL-2.1
 URL:		https://wiki.mozilla.org/LDAP_C_SDK
 Group:		System/Libraries
@@ -29,6 +29,7 @@ Patch6:		mozldap-fix-pthread-link.patch
 Patch7:		mozldap-alt-fix-ldap_str2charray.patch
 
 # Automatically added by buildreq on Mon Feb 26 2007 (-bi)
+BuildRequires: autoconf
 BuildRequires: chrpath
 BuildRequires: gcc-c++
 BuildRequires: libnspr-devel
@@ -41,9 +42,6 @@ BuildRequires: libsvrcore-devel
 %endif
 
 Conflicts: mozilla < 1.8
-
-BuildRequires: autoconf_2.13
-%set_autoconf_version 2.13
 
 %description
 The Mozilla LDAP C SDK is a set of libraries that
@@ -203,6 +201,9 @@ done
 %_datadir/%name
 
 %changelog
+* Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 6.0.7-alt6
+- Use newer autoconf.
+
 * Wed Dec 04 2019 Alexey Gladkov <legion@altlinux.ru> 6.0.7-alt5
 - Update license tag.
 - Update BuildRequires.
