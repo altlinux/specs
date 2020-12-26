@@ -1,23 +1,24 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global		postver	-r2
+%global		postver	-r3
 %global		postrpmver	%(echo "%postver" | sed -e 's|-|.|g' | sed -e 's|^\.||')
 
 %global		mainver		2.2.7
 
-%global		fedorarel	2
+%global		fedorarel	3
 %global		rpmrel		%{fedorarel}%{?postver:.%postrpmver}
 
 Name:		libtcd
 Version:	%{mainver}
-Release:	alt1_%{rpmrel}.4
+Release:	alt1_%{rpmrel}
 Summary:	Tide Constituent Database Library
+BuildRequires:	gcc
 
-Group:		System/Libraries
 License:	Public Domain
 URL:		http://www.flaterco.com/xtide/
-Source0:	ftp://ftp.flaterco.com/xtide/%{name}-%{version}%{?postver}.tar.bz2
+Source0:	ftp://ftp.flaterco.com/xtide/%{name}-%{version}%{?postver}.tar.xz
 Source44: import.info
 
 
@@ -26,8 +27,8 @@ libtcd provides a software API for reading and writing Tide
 Constituent Database (TCD) files.
 
 %package	devel
+Group: Development/Other
 Summary:	Development files for %{name}
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 
 %description	devel
@@ -50,6 +51,10 @@ make \
 
 # remove unneeded files
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
+# This file is to be installed later
+rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/*html
+
+
 
 %files
 %doc COPYING
@@ -62,6 +67,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
 %{_libdir}/*.so
 
 %changelog
+* Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_3.r3
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_2.r2.4
 - update to new release by fcimport
 
