@@ -2,7 +2,7 @@
 
 Name: admc
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: AD editor
 License: GPLv2+
@@ -23,7 +23,6 @@ BuildRequires: libcmocka-devel
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
 
-Requires: openldap
 Requires: libsasl2
 Requires: qt5-base-common
 
@@ -61,6 +60,9 @@ cd BUILD
 %_libdir/libgptbackend.so
 
 %changelog
+* Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 0.3.1-alt2
+- Delete openldap package from requires.
+
 * Tue Jul 28 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.3.1-alt1
 - Fixed login dialog closing app
 - Fixed app sometimes segfaulting when reading ber format attributes

@@ -17,7 +17,7 @@
 %def_enable ntlm
 
 Name: openldap
-Version: %_sover.54
+Version: %_sover.56
 Release: alt1
 
 Provides: openldap2.4 = %version-%release
@@ -29,7 +29,7 @@ Obsoletes: openldap2.4 < %version-%release
 %define ldap_dir %_localstatedir/ldap
 
 Summary: LDAP libraries and sample clients
-License: OpenLDAP Public License
+License: OLDAP-2.8
 Group: System/Servers
 Url: http://www.openldap.org/
 
@@ -123,6 +123,7 @@ Summary: OpenLDAP libraries
 Group: System/Libraries
 Provides: libldap2.4 = %version-%release
 Obsoletes: libldap2.4 < %version-%release
+Requires: %name-common = %version-%release
 
 %package -n libldap-devel
 Summary: OpenLDAP development libraries and header files
@@ -139,10 +140,16 @@ Requires: libldap-devel = %version-%release
 Provides: openldap-devel-static = %version-%release
 Obsoletes: openldap-devel-static < %version-%release
 
+%package common
+Summary: Common files for OpenLDAP
+Group: System/Servers
+Obsoletes: %name < 2.4.56-alt1
+BuildArch: noarch
+
 %package servers
 Summary: LDAP servers
 Group: System/Servers
-Requires: libldap = %version-%release, %name = %version-%release
+Requires: libldap = %version-%release
 
 Provides: openldap2.4-servers = %version-%release
 Obsoletes: openldap2.4-servers < %version-%release
@@ -150,7 +157,7 @@ Obsoletes: openldap2.4-servers < %version-%release
 %package clients
 Summary: LDAP utilities, tools and sample clients
 Group: Networking/Remote access
-Requires: libldap = %version-%release, %name = %version-%release
+Requires: libldap = %version-%release
 
 Provides: openldap2.4-clients = %version-%release
 Obsoletes: openldap2.4-clients < %version-%release
@@ -215,6 +222,9 @@ tools, and sample clients.
 
 This package includes the static libraries needed for developing statically
 linked applications that use LDAP internals.
+
+%description common
+Common files for OpenLDAP.
 
 %description servers
 OpenLDAP is an open source suite of LDAP (Lightweight Directory Access
@@ -401,13 +411,8 @@ sdf -2txt guide.sdf
 popd
 %endif
 
-%check
-%make_build test
-
 %install
-
-%make DESTDIR=%buildroot install
-
+%makeinstall_std STRIP=""
 ###
 ## Install all slapd's file
 ###
@@ -546,6 +551,9 @@ for n in ldap lber; do
     mv %buildroot/%_libdir/lib$n-*.so.* %buildroot/%_lib/
 done
 
+%check
+%make_build test
+
 %pre servers
 # Take care to only do ownership-changing if we're adding the user.
 /usr/sbin/groupadd -rf ldap
@@ -572,10 +580,6 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %files -n libldap
 /%_lib/*.so.*
 %_libdir/*.so.*
-# libldap/client config
-%_man5dir/ldap.conf.*
-# the common format
-%_man5dir/ldif.*
 
 %files -n libldap-devel
 %_libdir/*.so
@@ -586,10 +590,14 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %files -n libldap-devel-static
 %_libdir/*.a
 
-%files
+%files common
 %doc ANNOUNCEMENT CHANGES COPYRIGHT LICENSE README
 %dir %_sysconfdir/%_bname
 %config(noreplace) %_sysconfdir/%_bname/ldap.conf
+# libldap/client config
+%_man5dir/ldap.conf.*
+# the common format
+%_man5dir/ldif.*
 
 %files servers
 %_sysconfdir/chroot.d/ldap.all
@@ -692,6 +700,14 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.56-alt1
+- 2.4.56 (Fixes: CVE-2020-25709, CVE-2020-25710)
+- do not strip binaries to produce correct .debuginfo packages (ALT#27895)
+- move common file to openldap-common (ALT#18754)
+
+* Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.56-alt1
+- 2.4.55 (Fixes: CVE-2020-25692)
+
 * Fri Oct 23 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.54-alt1
 - 2.4.54 (Fixes: CVE-2020-12243)
 
