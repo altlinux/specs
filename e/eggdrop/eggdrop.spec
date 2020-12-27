@@ -4,10 +4,10 @@
 
 Name: eggdrop
 Version: 1.8.4
-Release: alt1
+Release: alt2
 
 Summary: Eggdrop is an IRC bot, written in C
-License: GPL
+License: GPL-2.0
 Group: Networking/IRC
 
 Url: http://www.eggheads.org
@@ -18,7 +18,7 @@ Source1: %name.README.ALT.UTF8
 Source2: %name.init
 Patch2:  %name-fix-config-interpreter.patch
 
-BuildRequires: tcl-devel zlib-devel autoconf_2.5
+BuildRequires: tcl-devel zlib-devel autoconf
 %add_findreq_skiplist %_datadir/%name/scripts/*
 
 %description
@@ -113,6 +113,10 @@ rm -rf %buildroot%_datadir/%name/doc
 %doc doc/* README*
 
 %changelog
+* Sun Dec 27 2020 Andrey Cherepanov <cas@altlinux.org> 1.8.4-alt2
+- Rebuild with latest autoconf.
+- Fix License according to SPDX.
+
 * Fri Dec 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.4-alt1
 - New version.
 
@@ -122,7 +126,7 @@ rm -rf %buildroot%_datadir/%name/doc
 * Mon Aug 14 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.2-alt1
 - New version
 
-* Wed Mar 27 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.1-alt1.qa1
+* Mon Mar 27 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.1-alt1.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
 * Mon Mar 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
