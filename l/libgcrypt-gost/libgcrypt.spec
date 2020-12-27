@@ -1,26 +1,43 @@
-Name: libgcrypt
-Version: 1.8.7
-Release: alt1
+%def_disable static
+%def_disable pth
+%def_enable info_nogen
+%define req_gpgerror_ver 1.11
+%define soversion 20
+
+Name: libgcrypt-gost
+Version: 1.8.5
+Release: alt5
+
+%define soname %{name}%{soversion}
 
 Group: System/Libraries
 Summary: The GNU crypto library
-License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-3.0-or-later
-Url: http://www.gnupg.org/
+License: LGPL
+URL: http://www.gnupg.org/
 
-Source: %name-%version.tar
+Source: libgcrypt-%version.tar
 
-Patch0: 0001-Fix-LFS-on-32-bit-systems.patch
+Patch0: libgcrypt-1.8.4-fix-overflow-streebog.patch
 
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
+# GOST patch
+%define vko_ver 2.0.0
+%define imit_ver 1.0.0
+%define keymeshing_ver 1.0.0
+Patch1: %name-1.8.5-curves-2012.patch
+Patch2: %name-1.8.5-vko-salt.patch
+Patch3: %name-1.8.5-gost89-optimize.patch
+Patch4: %name-1.8.5-gost89-imit.patch
+Patch5: %name-1.8.5-gost89-keymeshing.patch
 
-%set_verify_elf_method strict
-
-%define soversion 20
-%define soname %name%soversion
-
-BuildRequires: pkgconfig(gpg-error)
-BuildRequires: makeinfo
+BuildRequires: libgpg-error-devel >= %req_gpgerror_ver
+%if_enabled static
+BuildRequires: glibc-devel-static
+%endif
+%if_enabled pth
+BuildRequires: libpth-devel
+%endif
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Libgcrypt is a general purpose cryptographic library
@@ -29,106 +46,156 @@ based on the code from GNU Privacy Guard.
 %package -n %soname
 Summary: The GNU crypto library
 Group: System/Libraries
-Provides: %name = %version-%release
-
+Requires: libgpg-error >= %req_gpgerror_ver
+Conflicts: libgcrypt%{soversion}
+Provides: libgcrypt = %version-%release
+# GOST provides
+Provides: libgcrypt(vko) = %vko_ver
+Provides: libgcrypt(imit) = %imit_ver
+Provides: libgcrypt(keymeshing) = %keymeshing_ver
 %description -n %soname
 Libgcrypt is a general purpose cryptographic library
 based on the code from GNU Privacy Guard.
 
-%package -n gcrypt-utils
+%package -n %soname-pth
+Summary: GNU Crypto library with GNU Pth user-space thread support
+Group: System/Libraries
+Conflicts: libgcrypt%{soversion}-pth
+Requires: libgpg-error >= %req_gpgerror_ver
+%description -n %soname-pth
+This is a portion of Libgcrypt supporting user-space
+threads provided by the GNU Pth library.
+
+%package -n gcrypt-gost-utils
 Group: Networking/Other
 Summary: Utilities for the %name package
+Conflicts: gcrypt-utils
 Conflicts: %name-devel <= 1.4.2
 Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
-
-%description -n gcrypt-utils
+%description -n gcrypt-gost-utils
 This package contains %name utilities.
 
 %package devel
 Group: Development/Other
 Summary: Development files for the %name package
 Requires: %soname = %version-%release
+Requires: libgpg-error-devel  >= %req_gpgerror_ver
+%if_enabled pth
+Requires: %soname-pth = %version-%release
+%endif
+Conflicts: libgcrypt%{soversion}-devel
 Conflicts: %{name}0-devel
-
 %description devel
 Libgcrypt is a general purpose cryptographic library
 based on the code from GNU Privacy Guard.
 This package contains files needed to develop
 applications using libgcrypt (e.g. Aegypten project).
 
-%prep
-%setup
-%autopatch -p1
+%package devel-static
+Summary: Static libraries for the %name-devel package
+Group: Development/Other
+Requires: %name-devel = %version-%release
+Requires: libgpg-error-devel-static  >= %req_gpgerror_ver
+Conflicts: libgcrypt%{soversion}-devel-static
+Conflicts: %{name}0-devel-static
+%description devel-static
+Static libraries for the %name-devel package
 
-cat > doc/version.texi <<EOF
-@set UPDATED $(LANG=C date -u -r doc/gcrypt.texi +'%%d %%B %%Y')
-@set UPDATED-MONTH $(LANG=C date -u -r doc/gcrypt.texi +'%%B %%Y')
-@set EDITION %version
-@set VERSION %version
-EOF
+
+%prep
+%setup -q -n libgcrypt-%version
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%if_enabled info_nogen
+sed -i "s|^info_TEXINFOS|#info_TEXINFOS|" doc/Makefile.am
+sed -i "s|^gcrypt_TEXINFOS|#gcrypt_TEXINFOS|" doc/Makefile.am
+%endif
+
+# Rename library: libgcrypt -> libgcrypt-gost.
+sed -i \
+	-e 's/libgcrypt\(\.la\)/libgcrypt-gost\1/g' \
+	-e 's/libgcrypt\(_la\)/libgcrypt_gost\1/g' \
+	*/Makefile.am
 
 %build
+%add_optflags %optflags_shared
 %autoreconf
 
-%configure \
+rm -f COPYING.LIB
+ln -s %_licensedir/LGPL-2.1 COPYING.LIB
+
+%configure %{subst_enable static} \
     --enable-shared \
     --enable-noexecstack \
     --enable-ld-version-script \
     --enable-random=linux \
-    --disable-dev-random \
-    --disable-doc
+    --disable-dev-random
 
+%make_build -C doc ||:
 %make_build
-%make_build -C doc hmac256.1 gcrypt.info
 
 %install
-%makeinstall_std
+%makeinstall
 
-install -D -m0644 doc/gcrypt.info %buildroot%_infodir/gcrypt.info
-install -D -m0644 doc/hmac256.1 %buildroot%_man1dir/hmac256.1
+mv %buildroot%_libdir/libgcrypt{-gost,}.so
 
 # relocate shared libraries from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/libgcrypt.so; do
-        t=$(readlink -v "$f")
-        ln -rsnf %buildroot/%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+mv -f %buildroot%_libdir/libgcrypt*.so.* %buildroot/%_lib
+ln -sf ../../%_lib/libgcrypt-gost.so.%soversion %buildroot%_libdir/libgcrypt.so
+
+%if_enabled info_nogen
+mkdir %buildroot/%_infodir/
+install -m 0644 doc/*.info %buildroot/%_infodir/
+%endif
 
 %check
 %ifnarch aarch64
 %make check
 %endif
 
-%files -n gcrypt-utils
+%define _unpackaged_files_terminate_build 1
+%filter_from_provides /^pkgconfig(libgcrypt)/d
+
+%files -n gcrypt-gost-utils
 %_bindir/dumpsexp
 %_bindir/hmac256
 %_bindir/mpicalc
 %_man1dir/hmac256.*
 
 %files -n %soname
-/%_lib/%name.so.*
-%doc AUTHORS NEWS README
+/%_lib/*.so.*
+#%_libdir/%name-pthread.so.*
+%doc AUTHORS ChangeLog NEWS README THANKS TODO
+
+%if_enabled pth
+%files %soname-pth
+%_libdir/%name-pth.so.*
+%endif
 
 %files devel
 %_bindir/*-config
 %_includedir/*
 %_libdir/*.so
-%_aclocaldir/*
+%_datadir/aclocal/*
+%_infodir/*
 %_pkgconfigdir/*.pc
-%_infodir/*.info*
+
+%if_enabled static
+%files devel-static
+%_libdir/*.a
+%endif
 
 %changelog
-* Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.8.7-alt1
-- New version (1.8.7).
-- Update License tag.
-- Rebased to upstream git history.
-- Hardened build checks.
-- Fixed build dependencies.
-- Fixed libgcrypt.so symlink.
-- Drop static library.
-- Drop separate GOST patches.
+* Mon Dec 28 2020 Alexey Gladkov <legion@altlinux.ru> 1.8.5-alt5
+- NMU.
+- Renamed to libgcrypt-gost.
+- Changed soname to libgcrypt-gost.
 
 * Sun Dec 27 2020 Dmitry V. Levin <ldv@altlinux.org> 1.8.5-alt4
 - NMU.
@@ -341,6 +408,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 * Fri Feb 07 2003 Sergey V Turchin <zerg@altlinux.ru> 1.1.10-alt1
 - build for ALT
 
+* Sat Nov 23 2002 Per Øyvind Karlsen <peroyvind@sintrax.net> 1.1.10-6mdk
 - Better fix for binary name(Patch #0)
 - Follow mdk lib policy
 - Removed non-existing libgcrypt.txt file from filelist

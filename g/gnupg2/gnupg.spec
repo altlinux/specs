@@ -1,83 +1,63 @@
-
-%def_disable gpgutils
-%define _localstatedir /var
-%def_disable beta
-
 Name: gnupg2
-Version: 2.2.19
-Release: alt2
+Version: 2.2.26
+Release: alt1
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
-License: GPLv3+
-Url: http://www.gnupg.org/
+License: GPL-3.0-or-later
+Url: https://www.gnupg.org/
 
-# ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-%version.tar.bz2
-Source0: gnupg-%version.tar
-Source1: gnupg-agent.sh
-Source2: gnupg-agent-wrapper.sh
+Source0: %name-%version.tar
 
-%define docdir %_docdir/gnupg-%version
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%define _localstatedir /var
+
+%set_verify_elf_method strict
 
 Provides: newpg = %version-%release
 Obsoletes: newpg < %version-%release
+
 Provides: dirmngr = %version-%release
 Obsoletes: dirmngr < %version-%release
-Provides: gnupg-agent = %version-%release
-Provides: %name-agent = %version-%release
-Provides: %name-gpg = %version-%release
-Provides: %name-common = %version-%release
-Obsoletes: %name-agent < %version-%release
-Obsoletes: %name-common < %version-%release
 
-# due to "enable -f /usr/lib/bash/lockf lockf"
-Requires: bash-builtin-lockf >= 0:0.2
+Provides: gnupg-agent = %version-%release
+Provides: %name-gpg = %version-%release
+
+Provides: %name-agent = %version-%release
+Obsoletes: %name-agent < %version-%release
+
+Provides: %name-common = %version-%release
+Obsoletes: %name-common < %version-%release
 
 # due to passing OPTION allow-external-password-cache
 Conflicts: pinentry < 0.9.2
 Conflicts: pinentry-common < 0.9.2
 Conflicts: gnupg-pkcs11-scd <= 0.9.2-alt5
 
-# FC
-Patch11: gnupg-2.2.17-insttools.patch
-Patch12: gnupg-2.1.19-exponential.patch
-Patch13: gnupg-2.1.10-secmem.patch
-Patch14: gnupg-2.1.1-ocsp-keyusage.patch
-Patch15: gnupg-2.1.1-fips-algo.patch
-Patch16: gnupg-2.1.21-large-rsa.patch
-Patch17: gnupg-2.2.0-file-is-digest.patch
-# ALT
-Patch100: alt-revision.patch
-Patch101: alt-xloadimage.patch
-Patch102: alt-agent-fix-password-request.patch
-Patch103: alt-texinfo.patch
+Patch01: 0001-FEDORA-compatibility-with-system-FIPS-mode.patch
+Patch02: 0002-FEDORA-fix-handling-of-missing-key-usage-on-ocsp-rep.patch
+Patch03: 0003-FEDORA-disable-DIGEST_ALGO_RMD160-in-fips-mode.patch
+Patch04: 0004-FEDORA-allow-8192-bit-RSA-keys-in-keygen-UI-with-lar.patch
+Patch05: 0005-FEDORA-non-upstreamable-patch-adding-file-is-digest-.patch
+Patch06: 0006-ALT-replace-xloadimage-by-xli.patch
+Patch07: 0007-ALT-replace-gnupg-by-gnupg2-in-texinfo.patch
+Patch08: 0008-SUSE-set-umask-before-open-outfile.patch
+Patch09: 0009-gpg-Prefer-SHA-512-and-SHA-384-in-personal-digest-pr.patch
 
-# GOST patch/requires/provides
-%define gostversion 2.0.3
-Patch18: %name-%version-gost-common.patch
-Patch19: %name-%version-gost-agent.patch
-Patch20: %name-%version-gost-g10.patch
-Patch21: %name-%version-gost-sm.patch
-Patch22: %name-%version-gost-dirmngr.patch
-Requires: libgcrypt(vko) >= 2.0.0
-Requires: libgcrypt(imit) >= 1.0.0
-Requires: libgcrypt(keymeshing) >= 1.0.0
-Requires: libksba(gost) >= 2.0.0
-Provides: %name(gost) = %gostversion
-
-# Issuers patch/provides
-%define issuersconfversion 1.0.1
-Patch23: %name-%version-issuersconf.patch
-Provides: %name(issuersconf) = %issuersconfversion
-
-BuildRequires: libgcrypt-devel >= 1.8.5-alt2
-BuildRequires: libksba-devel >= 1.3.6-alt12
-BuildRequires: libassuan-devel
-BuildRequires: libgnutls-devel libnpth-devel
-BuildRequires: bzlib-devel libcurl-devel libldap-devel
-BuildRequires: libreadline-devel zlib-devel libusb-devel pkgconfig(sqlite3)
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: libldap-devel
+BuildRequires: libreadline-devel
+BuildRequires: makeinfo
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(ksba)
+BuildRequires: pkgconfig(libassuan)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libgcrypt)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(npth)
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(zlib)
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.  It can
@@ -91,99 +71,127 @@ S/MIME.  It has a different design philosophy that splits
 functionality up into several modules.
 
 %prep
-%setup -n gnupg-%version
-%patch11 -p2
-#%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch101 -p1
-#%patch102 -p1
-%patch103 -p1
-rm doc/*.info*
-
-# Version revision
-%patch100 -p2
-%if_disabled beta
-sed -i -e 's/@BETA@/no/' configure.ac
-%else
-sed -i -e 's/@BETA@/yes/' configure.ac
-%endif
-sed -i -e 's/@REVISION@/gost-%gostversion/' -e 's/@REVISION_DESC@/ALT/' configure.ac
+%setup
+%autopatch -p1
 
 %build
-# Need to regenerate the build files in order to include the new
-# GOST modules:
 %autoreconf
 
-%add_optflags -fno-strict-aliasing
 %configure \
-	--enable-gpg-is-gpg2 \
-	--enable-g13 \
-	--enable-large-secmem \
+	--disable-doc \
 	--disable-rpath \
-	--with-capabilities \
+	--enable-g13 \
+	--enable-gpg-is-gpg2 \
+	--enable-large-secmem \
+	--enable-maintainer-mode \
 	--enable-symcryptrun \
+	--libexecdir=%_libexecdir/gnupg \
+	--with-capabilities \
+	--with-default-trust-store-file=%_datadir/ca-certificates/ca-bundle.crt \
 	--with-mailprog=%_sbindir/sendmail \
 	--with-pinentry-pgm=%_bindir/pinentry \
-	--libexecdir=%_libexecdir/gnupg \
-	--with-default-trust-store-file=%_datadir/ca-certificates/ca-bundle.crt \
-	--docdir=%docdir
-%make_build MAKEINFOFLAGS=--no-split
+	#
+
+%make_build
+%make_build -C doc gnupg.7 gnupg.info help.txt
 
 %install
 %makeinstall_std
 
-mkdir -p %buildroot/usr/lib/systemd/user/
-install -m 0644 doc/examples/systemd-user/dirmngr.service %buildroot/usr/lib/systemd/user
-install -m 0644 doc/examples/systemd-user/dirmngr.socket  %buildroot/usr/lib/systemd/user
-install -m 0644 doc/examples/systemd-user/gpg-agent-browser.socket  %buildroot/usr/lib/systemd/user/
-install -m 0644 doc/examples/systemd-user/gpg-agent-extra.socket    %buildroot/usr/lib/systemd/user/
-install -m 0644 doc/examples/systemd-user/gpg-agent-ssh.socket      %buildroot/usr/lib/systemd/user/
-install -m 0644 doc/examples/systemd-user/gpg-agent.service         %buildroot/usr/lib/systemd/user/
-install -m 0644 doc/examples/systemd-user/gpg-agent.socket          %buildroot/usr/lib/systemd/user/
+rm -r -- \
+	%buildroot%_docdir/gnupg \
+	%buildroot%_sbindir/addgnupghome \
+	%buildroot%_sbindir/applygnupgdefaults \
+	#
 
-install -pDm755 %_sourcedir/gnupg-agent.sh \
-	%buildroot%_sysconfdir/profile.d/gnupg-agent.sh
-sed -i 's|@LIBEXECDIR@|%_libexecdir|g' \
-	%buildroot%_sysconfdir/profile.d/gnupg-agent.sh
-install -pDm755 %_sourcedir/gnupg-agent-wrapper.sh \
-	%buildroot%_libexecdir/gnupg/gnupg-agent-wrapper
+mv %buildroot%_bindir/gpg{,2}split
 
-install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
+mkdir -p -- %buildroot/usr/lib/systemd/user
+install -m 0644 \
+	doc/examples/systemd-user/*.service \
+	doc/examples/systemd-user/*.socket \
+	%buildroot/usr/lib/systemd/user/
+
+install -D -m 0644 doc/examples/gpgconf.conf %buildroot%_sysconfdir/gnupg/gpgconf.conf
+install -D -m 0644 doc/gnupg.info %buildroot%_infodir/gnupg.info
+
+mkdir -p -- %buildroot%_datadir/gnupg
+install -pm 0644 doc/help*.txt %buildroot%_datadir/gnupg/
+
+mkdir -p -- %buildroot%_man1dir
+install -pm 0644 doc/*.1 %buildroot%_man1dir/
+
+mkdir -p -- %buildroot%_man7dir
+install -pm 0644 doc/*.7 %buildroot%_man7dir/
+
+mkdir -p -- %buildroot%_man8dir
+install -pm 0644 doc/*.8 %buildroot%_man8dir/
 
 %find_lang %name
 
 %check
 %make_build -k check
 
-%define _unpackaged_files_terminate_build 1
+%pre
+/usr/sbin/groupadd -r -f _gnupg
 
 %files -f %name.lang
-%config %_sysconfdir/profile.d/gnupg-agent.sh
-%_bindir/*
-%if_disabled gpgutils
-%exclude %_bindir/gpg-zip
-%exclude %_bindir/gpgsplit
-%endif
-%_sbindir/*
-%_libexecdir/gnupg/
+%dir %_sysconfdir/gnupg
+%config(noreplace) %_sysconfdir/gnupg/gpgconf.conf
+%_bindir/dirmngr
+%_bindir/dirmngr-client
+%_bindir/g13
+%_bindir/gpg-connect-agent
+%_bindir/gpg-wks-server
+%_bindir/gpgconf
+%_bindir/gpgparsemail
+%_bindir/gpgscm
+%_bindir/gpgsm
+%_bindir/gpg2split
+%_bindir/gpgtar
+%_bindir/gpgv2
+%_bindir/kbxutil
+%_bindir/watchgnupg
+%_sbindir/g13-syshelp
+%attr(2711,root,_gnupg) %_bindir/gpg-agent
+%attr(2711,root,_gnupg) %_bindir/gpg2
+%dir %_libexecdir/gnupg
+%_libexecdir/gnupg/dirmngr_ldap
+%_libexecdir/gnupg/gpg-check-pattern
+%_libexecdir/gnupg/gpg-preset-passphrase
+%_libexecdir/gnupg/gpg-protect-tool
+%_libexecdir/gnupg/gpg-wks-client
+%_libexecdir/gnupg/scdaemon
 /usr/lib/systemd/user/*.*
-%_datadir/gnupg/
+%dir %_datadir/gnupg
+%_datadir/gnupg/distsigkey.gpg
+%_datadir/gnupg/sks-keyservers.netCA.pem
+%_datadir/gnupg/help*.txt
 %_infodir/*.info*
-%_mandir/man?/*
-#exclude %_man1dir/gpg-zip.*
-%docdir
+%_man1dir/*
+%_man7dir/*
+%_man8dir/*
+%doc AUTHORS NEWS README doc/OpenPGP doc/KEYSERVER
+%doc doc/examples/gpgconf.conf doc/examples/debug.prf doc/examples/trustlist.txt
+%doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 2.2.26-alt1
+- New version (2.2.26) (ALT#39307).
+- Rebased to upstream git history.
+- Hardened build checks.
+- Fixed build dependencies.
+- Updated License tag.
+- Changed the permissions for creating plaintext files.
+- Changed the defaults for --personal-digest-preferences to advertise a
+  preference for SHA-512.
+- Removed GOST patches.
+- Removed seahorse-agent (removed 13 years ago in seahorse 2.21.90).
+- Removed support for the GPG_AGENT_INFO envvar (removed 6 years ago in
+  gnupg2 2.1.0-beta864) (ALT#34418).
+- Removed per user gpg-agent startup.
+- Moved addgnupghome and applygnupgdefaults utilities to docs.
+
 * Tue Dec 10 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.19-alt2
 - Fixed gpgsm decryption: test for GCRY_CIPHER_GOST28147 before
   checking the key length.
@@ -209,7 +217,7 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 - Fixed build requires.
 
 * Wed Oct 16 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt3
-- Mark the version as release with GOST revision number %gostversion.
+- Mark the version as release with GOST revision number %%gostversion.
 
 * Tue Oct 15 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt2
 - Support GOST-R.3410-2012 in OpenPGP and S/MIME modes.

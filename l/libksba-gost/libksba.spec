@@ -1,26 +1,33 @@
-Name: libksba
-Version: 1.5.0
-Release: alt1
+%def_disable static
+
+Name: libksba-gost
+Version: 1.3.6
+Release: alt15
 
 Group: System/Libraries
 Summary: X.509 library
-URL: https://www.gnupg.org/
-License: (LGPL-3.0-or-later OR GPL-2.0-or-later) AND GPL-3.0-or-later AND MIT
+URL: http://www.gnupg.org/
+License: LGPLv3 / GPLv2
 
-Source0: %name-%version.tar
-Patch1: %{name}-info.patch
-Patch2: 0001-Fix-a-possible-segv-in-case-of-an-unknown-CMS-object.patch
-Patch3: 0002-Fix-LFS-on-32-bit-systems.patch
+Source0: libksba-%version.tar
+Patch1:		libksba-info.patch
 
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
+# GOST patch
+%define gostversion 2.0.0
+Patch2: %name-%version-derutil.patch
+Patch3: %name-%version-gost-cms.patch
+Patch4: %name-%version-pkcs7-gost.patch
+#Patch5: %name-%version-pkcs8.patch
+Provides: libksba(gost) = %gostversion
 
-%set_verify_elf_method strict
+Conflicts: libksba
 
-BuildRequires: gcc-c++
-BuildRequires: pkgconfig(libgcrypt)
-BuildRequires: pkgconfig(gpg-error)
-BuildRequires: makeinfo
+# Automatically added by buildreq on Tue Apr 06 2004 (-bi)
+#BuildRequires: gcc-c++ gcc-g77 libgcrypt-devel libgpg-error-devel libstdc++-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: gcc-c++ libgcrypt-gost-devel libstdc++-devel
+BuildRequires: libgpg-error-devel >= 0.6
+BuildRequires: texinfo
 
 %description
 KSBA is a library designed to build software based
@@ -30,52 +37,75 @@ on the X.509 and CMS protocols.
 Summary: Development files for the %name package
 Group: Development/Other
 Requires: %name = %version-%release
+Conflicts: libksba-devel
 %description -n %name-devel
 Development files for the %name package
 
-%prep
-%setup -q
-%autopatch -p1
+%package -n %name-devel-static
+Summary: Static libraries for the %name-devel package
+Group: Development/Other
+Requires: %name-devel = %version-%release
+Requires: glibc-devel-static
+Conflicts: libksba-devel-static
+%description -n %name-devel-static
+Static libraries for the %name-devel package
 
-cat > doc/version.texi <<EOF
-@set UPDATED $(LANG=C date -u -r doc/ksba.texi +'%%d %%B %%Y')
-@set UPDATED-MONTH $(LANG=C date -u -r doc/ksba.texi +'%%B %%Y')
-@set EDITION %version
-@set VERSION %version
-EOF
+%prep
+%setup -q -n libksba-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+#%patch5 -p1
+
+# Rename library: libksba -> libksba-gost.
+sed -i \
+	-e 's/libksba\(\.la\)/libksba-gost\1/g' \
+	-e 's/libksba\(_la\)/libksba_gost\1/g' \
+	*/Makefile.am
 
 %build
-%autoreconf
+#__aclocal
+#__autoconf
+#__automake
+./autogen.sh
 %configure \
+    %{subst_enable static} \
     --enable-ld-version-script
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall
+mv %buildroot%_libdir/libksba{-gost,}.so
+#rm -fv %buildroot/usr/share/info/dir
 
 %check
 %make_build check
 
 %files
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README 
+%_libdir/*.so.8
 %_libdir/*.so.*
 
 %files -n %name-devel
+%doc TODO ChangeLog
 %_bindir/*
-%_aclocaldir/*
-%_includedir/*.h
+%prefix/share/aclocal/*
+%prefix/include/*.h
+#%_libdir/*.la
 %_libdir/*.so
-%_pkgconfigdir/ksba.pc
 %_infodir/*.info*
 
+%if_enabled static
+%files -n %name-devel-static
+%_libdir/*.a
+%endif
+
 %changelog
-* Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.5.0-alt1
-- New version (1.5.0).
-- Rebased to upstream git history.
-- Hardened build checks.
-- Fixed build dependencies.
-- Updated License tag.
-- Removed GOST patches.
+* Mon Dec 28 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.6-alt15
+- NMU.
+- Renamed to libksba-gost.
+- Changed soname to libksba-gost.
 
 * Sun Nov 08 2020 Michael Shigorin <mike@altlinux.org> 1.3.6-alt14
 - srpm_cleanup related ftbfs fixup
