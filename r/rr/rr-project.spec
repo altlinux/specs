@@ -4,10 +4,10 @@
 
 Name:		rr
 Version:	5.4.0
-Release:	alt1
+Release:	alt2
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
-License:	Linux-OpenIB or MIT-style
+License:	MIT and BSD and Apache-2.0
 URL:		https://rr-project.org/
 Vcs:		https://github.com/mozilla/rr.git
 # Upstream issue tracker: https://github.com/mozilla/rr/issues/
@@ -40,6 +40,7 @@ subst "s!/bin/!/lib/rr/!" src/replay_syscall.cc
 subst "s!/bin/rr_page_!lib/rr/rr_page_!" src/AddressSpace.cc
 
 %build
+%add_optflags -Wno-error=class-memaccess
 %cmake -Ddisable32bit=ON -DBUILD_TESTS=OFF
 %cmake_build
 
@@ -59,6 +60,10 @@ rm -f %buildroot%_bindir/rr_page*
 %_libdir/rr
 
 %changelog
+* Sun Dec 27 2020 Vitaly Chikunov <vt@altlinux.org> 5.4.0-alt2
+- spec: Temporary disable '-Werror=class-memaccess'.
+- spec: Update licenses.
+
 * Thu Oct 29 2020 Vitaly Chikunov <vt@altlinux.org> 5.4.0-alt1
 - Update to 5.4.0 (2020-10-29).
 - spec: Rename from rr-project to rr.
