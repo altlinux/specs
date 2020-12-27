@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.4.0
+Version: 2.4.2
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -13,8 +13,8 @@ Source: %name-%version.tar
 # due to gear-srpmimport.
 Requires: faketime
 
-# due to git-diff-tree --no-ext-diff
-Requires: git-core >= 0:1.5.3
+# due to magic signature in pathspec.
+Requires: git-core >= 0:1.9.0
 
 # due to quote_shell_args()
 Requires: libshell >= 0:0.1.0
@@ -59,6 +59,14 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc docs/QUICKSTART* docs/ABOUT*
 
 %changelog
+* Sun Dec 27 2020 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt1
+- Updated git-core requirement.
+- gear-srpmimport: expanded help text on --stdin option a bit.
+- tests: sort output before comparison in one more place (by Ivan Zakharyaschev).
+
+* Sat Dec 26 2020 Vitaly Chikunov <vt@altlinux.org> 2.4.1-alt1
+- Re-enable multi-threaded compression for xz and zstd.
+
 * Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 2.4.0-alt1
 - Added "exclude=" option to "diff" directive
   (by Vladimir D. Seleznev, Alexey Gladkov, and me).
