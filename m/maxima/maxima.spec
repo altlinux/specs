@@ -1,10 +1,21 @@
 %set_verify_info_method relaxed
 
+%ifarch %sbcl_arches
 %define DEFAULT_LISP    sbcl
+%define BUILD_SBCL	1
+%else
+%define DEFAULT_LISP    clisp
+%define BUILD_SBCL	0
+%endif
+
+%ifarch %e2k
+%define BUILD_EMACS     0
+%else
+%define BUILD_EMACS     1
+%endif
 
 %define BUILD_GCL	0
 %define BUILD_CLISP 	1
-%define BUILD_SBCL	1
 %define BUILD_CMUCL	0
 
 %define BUILD_LANG_ES		1
@@ -16,7 +27,6 @@
 
 %define BUILD_GCL_ANSI  1
 
-%define BUILD_EMACS     1
 %define BUILD_XMAXIMA   1
 
 %define BUILD_BOOK      0
@@ -26,14 +36,14 @@
 Name: maxima
 Version: 5.43.2
 %define maxima_version 5.43.2
-Release: alt2
+Release: alt3
+
 Summary: Maxima Computer Algebra System
 License: GPL-2.0
 Group: Sciences/Mathematics
+
 Url: http://maxima.sourceforge.net
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-
-ExclusiveArch: armh aarch64 %ix86 x86_64 ppc sparcv9                                                           
 
 Source0: maxima-%version.tar.gz
 Source6: maxima-modes.el
@@ -54,6 +64,10 @@ Patch51: maxima-5.30.0-build-fasl.patch
 ## Other maxima reference docs
 Source10: http://starship.python.net/crew/mike/TixMaxima/macref.pdf
 Source11: http://maxima.sourceforge.net/docs/maximabook/maximabook-19-Sept-2004.pdf
+
+BuildRequires(pre): rpm-macros-sbcl
+
+ExclusiveArch: %sbcl_arches %e2k ppc64le armh
 
 %description
 Maxima is a full symbolic computation program.  It is full featured
@@ -576,6 +590,10 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Sun Dec 27 2020 Michael Shigorin <mike@altlinux.org> 5.43.2-alt3
+- non-%%sbcl_arches: build with clisp
+- E2K: avoid emacs subpackage (missing so far)
+
 * Sat Dec 26 2020 Dmitry V. Levin <ldv@altlinux.org> 5.43.2-alt2
 - NMU.
 - spec: removed bogus "%%set_automake_version 1.7".
