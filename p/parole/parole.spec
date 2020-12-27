@@ -1,20 +1,18 @@
 Name: parole
-Version: 1.0.5
+Version: 4.15.0
 Release: alt1
 
 %def_enable clutter
 
 Summary: Media player for the Xfce desktop
-License: %gpl2plus
+License: GPLv2+
 Group: Video
 
-URL: https://goodies.xfce.org/projects/applications/parole
-# git://git.xfce.org/apps/parole
+URL: https://docs.xfce.org/apps/parole/start
+Vcs: https://gitlab.xfce.org/apps/parole.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
@@ -66,7 +64,7 @@ mkdir m4
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS README THANKS
+%doc AUTHORS README.md THANKS NEWS
 %_bindir/%name
 %_libdir/%name-*/
 %exclude %_libdir/%name-*/*.la
@@ -80,6 +78,12 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Dec 27 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Updated to 4.15.0.
+
 * Mon Nov 18 2019 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt1
 - Updated to 1.0.5.
 
