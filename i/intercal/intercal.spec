@@ -1,5 +1,5 @@
 Name: intercal
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: A compiler for the INTERCAL language
@@ -35,6 +35,10 @@ rm -r examples/{lib,Makefile}
 %check
 %make_build -k fuzz
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %_bindir/*
 %_libdir/*.a
@@ -45,6 +49,11 @@ rm -r examples/{lib,Makefile}
 %doc BUGS NEWS README HISTORY examples/ etc/%name.el
 
 %changelog
+* Sun Dec 27 2020 Dmitry V. Levin <ldv@altlinux.org> 0.31-alt1
+- 0.30 -> 0.31.
+- Fixed build with gcc-10.
+- Enabled LFS on 32-bit systems.
+
 * Mon Mar 04 2019 Dmitry V. Levin <ldv@altlinux.org> 0.30-alt1
 - Updated to 0.30.
 
