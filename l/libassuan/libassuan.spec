@@ -1,5 +1,5 @@
 Name: libassuan
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: IPC library used by some GnuPG related software
@@ -74,6 +74,9 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %endif
 
 %changelog
+* Wed Dec 23 2020 Paul Wolneykien <manowar@altlinux.org> 2.5.4-alt1
+- Freshed up to v2.5.4.
+
 * Mon Mar 25 2019 Paul Wolneykien <manowar@altlinux.org> 2.5.3-alt1
 - Freshed up to version 2.5.3.
 - Get rid of %%ubt.

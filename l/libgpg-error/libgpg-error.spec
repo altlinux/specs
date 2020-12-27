@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.36
+Version: 1.41
 Release: alt1
 
 Group: System/Libraries
@@ -9,7 +9,7 @@ Summary: Error library for GnuPG and related projects
 License: LGPL
 URL: http://www.gnupg.org/
 
-Packager: Sergey V Turchin <zerg@altlinux.org>
+Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source: %name-%version.tar.bz2
 
@@ -88,6 +88,9 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %endif
 
 %changelog
+* Wed Dec 23 2020 Paul Wolneykien <manowar@altlinux.org> 1.41-alt1
+- Freshed up to v1.41.
+
 * Mon Mar 25 2019 Paul Wolneykien <manowar@altlinux.org> 1.36-alt1
 - Freshed up to version 1.36.
 - Get rid of %%ubt.
