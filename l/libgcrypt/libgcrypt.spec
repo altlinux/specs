@@ -1,5 +1,4 @@
-
-%def_enable static
+%def_disable static
 %def_disable pth
 %def_enable info_nogen
 %define req_gpgerror_ver 1.11
@@ -7,7 +6,7 @@
 
 Name: libgcrypt
 Version: 1.8.5
-Release: alt3
+Release: alt4
 
 %define soname %{name}%{soversion}
 
@@ -179,6 +178,10 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Sun Dec 27 2020 Dmitry V. Levin <ldv@altlinux.org> 1.8.5-alt4
+- NMU.
+- Disabled %name-devel-static.
+
 * Tue Oct 22 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt3
 - Maintenance release.
 
