@@ -1,25 +1,18 @@
-# BEGIN SourceDeps(oneline):
-#BuildRequires: libdispatch-objc2-devel
-# END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
-%define oldname npth
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           libnpth
-Version:        1.6
-Release:        alt1_1
-Summary:        The New GNU Portable Threads library
-License:        LGPLv2+
-URL:            https://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git
-Source:         https://gnupg.org/ftp/gcrypt/npth/%{oldname}-%{version}.tar.bz2
-#Source1:        ftp://ftp.gnupg.org/gcrypt/npth/npth-%{version}.tar.bz2.sig
-# Manual page is re-used and changed pth-config.1 from pth-devel package
-Source2:        npth-config.1
+Name: npth
+Version: 1.6.0.20.g7e45b50
+Release: alt1
+Summary: The New GNU Portable Threads library
 
-BuildRequires:  gcc
-Source44: import.info
-Provides: npth = %{version}-%{release}
+Group: System/Libraries
+License: LGPL-2.1-or-later
+Url: https://www.gnupg.org/
+
+Source: npth-%version.tar
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+%set_verify_elf_method strict
 
 %description
 nPth is a non-preemptive threads implementation using an API very similar
@@ -28,49 +21,59 @@ GNU Pth for non-ancient operating systems. In contrast to GNU Pth is is
 based on the system's standard threads implementation. Thus nPth allows
 the use of libraries which are not compatible to GNU Pth.
 
-%package        devel
-Group: Development/C
-Summary:        Development files for %{oldname}
-Requires:       %{name} = %{version}-%{release}
-Provides: npth-devel = %{version}-%{release}
+%package -n libnpth
+Group: System/Libraries
+Summary: %summary
 
-%description    devel
+%description -n libnpth
+nPth is a non-preemptive threads implementation using an API very similar
+to the one known from GNU Pth. It has been designed as a replacement of
+GNU Pth for non-ancient operating systems. In contrast to GNU Pth is is
+based on the system's standard threads implementation. Thus nPth allows
+the use of libraries which are not compatible to GNU Pth.
+
+%package -n libnpth-devel
+Group: Development/C
+Summary: Development files for npth
+Requires: lib%name = %version-%release
+
+%description -n libnpth-devel
 This package contains libraries and header files for
-developing applications that use %{oldname}.
+developing applications that use npth.
 
 %prep
-%setup -n %{oldname}-%{version} -q
-
+%setup -n npth-%version
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-install -Dpm0644 -t %{buildroot}%{_mandir}/man1 %{S:2}
-find %{buildroot} -name '*.la' -delete -print
+
+# Manual page is re-used and changed pth-config.1 from libpth-devel package
+install -D -pm0644 .rpm/npth-config.1 %buildroot%_man1dir/npth-config.1
 
 %check
 make check
 
+%files -n libnpth
+%_libdir/libnpth.so.*
 
-
-%files
-%doc --no-dereference COPYING.LIB
-%{_libdir}/lib%{oldname}.so.*
-
-%files devel
-%doc AUTHORS ChangeLog NEWS README
-%{_bindir}/%{oldname}-config
-%{_libdir}/lib%{oldname}.so
-%{_includedir}/%{oldname}.h
-%{_mandir}/man1/%{oldname}-config.1*
-%{_datadir}/aclocal/%{oldname}.m4
+%files -n libnpth-devel
+%doc AUTHORS NEWS README
+%_bindir/npth-config
+%_libdir/libnpth.so
+%_includedir/npth.h
+%_man1dir/npth-config.1*
+%_aclocaldir/npth.m4
+%_pkgconfigdir/*.pc
 
 %changelog
-* Mon Dec 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1
-- new version
+* Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.20.g7e45b50-alt1
+- New version (1.6) and git snapshot.
+- Update License tag.
 
 * Sun Feb 04 2018 Fr. Br. George <george@altlinux.ru> 1.5-alt2
 - Remove unused buildreq
