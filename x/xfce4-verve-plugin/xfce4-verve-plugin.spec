@@ -1,6 +1,6 @@
 Name: xfce4-verve-plugin
-Version: 2.0.0
-Release: alt1.gdff7f2d
+Version: 2.0.1
+Release: alt1
 
 Summary: Command line plugin for Xfce Desktop
 License: GPLv2+
@@ -58,6 +58,9 @@ plugin for the Xfce panel. It supports several nice features, such as:
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Dec 28 2020 Mikhail Efremov <sem@altlinux.org> 2.0.1-alt1
+- Updated to 2.0.1.
+
 * Wed Dec 09 2020 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1.gdff7f2d
 - Added Vcs tag.
 - Updated Url tag,
