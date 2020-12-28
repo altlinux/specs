@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ perl(Test/More.pm)
 
 Name:		tap
 Version:	1.14.0
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Write tests that implement the Test Anything Protocol
 License:	GPL
 Group:		System/Libraries
@@ -53,7 +53,7 @@ sed -i 's,@VERSION@,%version,' libtap.pc.in
 
 %build
 %{mageia_cmake}
-%mageia_cmake_build CFLAGS+=-UHAVE_LIBPTHREAD
+%mageia_cmake_build
 
 %install
 %mageia_cmake_install
@@ -71,6 +71,9 @@ sed -i 's,@VERSION@,%version,' libtap.pc.in
 
 
 %changelog
+* Mon Dec 28 2020 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_3
+- mga update
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_2
 - fixed build
 
