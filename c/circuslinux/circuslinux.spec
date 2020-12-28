@@ -1,11 +1,13 @@
 Summary: Cute breakout-like
 Name: circuslinux
 Version: 1.0.3
-Release: alt7.qa1
-License: GPL
+Release: alt7.qa2
+License: GPL-2.0
 Url: http://newbreedsoftware.com/circus-linux/
 Group: Games/Arcade
 Source0: ftp://ftp.billsgames.com/unix/x/circus-linux/src/%name-%version.tar.bz2
+Patch0: circuslinux-alt-fix-CFLAGS.patch
+Patch1: circuslinux-alt-fix-version.patch
 Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Tue Sep 22 2009
@@ -19,19 +21,20 @@ a wall.
 
 %prep
 %setup -q
+%patch0 -p2
+%patch1 -p2
 
 %define _optlevel 3
 %add_optflags %optflags_notraceback %optflags_fastmath
 sed -i 's/| pentium2-/| x86_* | pentium2-/' config.sub
+ln -s AUTHORS.txt AUTHORS
+ln -s README.txt README
+ln -s COPYING.txt COPYING
+ln -s CHANGES.txt ChangeLog
+touch NEWS
 
 %build
-%set_autoconf_version 2.5
-%set_automake_version 1.4
-
-#./autogen.sh
-aclocal
-automake --foreign -a
-autoconf
+%autoreconf
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
 %make_build bindir=%_gamesbindir datadir=%_gamesdatadir
 
@@ -59,6 +62,10 @@ install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Dec 28 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt7.qa2
+- NMU: use latest automake and autoconf.
+- NMU: fix License tag according to SPDX.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt7.qa1
 - NMU: rebuilt for debuginfo.
 
