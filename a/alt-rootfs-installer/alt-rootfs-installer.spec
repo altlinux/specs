@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -40,6 +40,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Sun Dec 27 2020 Anton Midyukov <antohami@altlinux.org> 0.4.3-alt1
+- Fix resize root partition
+
 * Fri Nov 27 2020 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt1
 - Fixed support newer u-boot for Rockchip
 - Update supported boards
