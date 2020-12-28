@@ -1,11 +1,11 @@
 Name: tuxracer
 Version: 0.61
-Release: alt13.qa2
+Release: alt13.qa3
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
 Summary: Tux Racer
-License: GPLv2+
+License: GPL-2.0+
 # Games/Sports was Mandriva choice... well, this is "racing" game, so may share
 # rpm group with racing simulators. Other logical choice - Arcade (as in desktop
 # menu grouping). Ok, rpm grouping is not so important ;)
@@ -21,11 +21,7 @@ Source5: tuxracer.desktop
 Source10: http://www.brcha.iz.rs/data/projects/RoadsOfSerbia/RoadsOfSerbia.tar.bz2
 Patch3: tuxracer-0.61-gcc33.patch
 
-# Automatically added by buildreq on Tue Dec 02 2008
 BuildRequires: gcc-c++ imake libGL-devel libSDL-devel libSDL_mixer-devel libXext-devel libXi-devel libXmu-devel tcl-devel xorg-cf-files
-
-BuildRequires: autoconf_2.5
-BuildRequires: automake_1.4
 
 Requires: %name-gamedata
 
@@ -92,6 +88,11 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/tuxracer.desktop
 %_gamesdatadir/tuxracer/
 
 %changelog
+* Mon Dec 28 2020 Andrey Cherepanov <cas@altlinux.org> 0.61-alt13.qa3
+- Use latest autoconf and automake.
+- Fix bogus dates in changelog.
+- Fix License tag according to SPDX.
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.61-alt13.qa2
 - NMU: rebuilt against Tcl/Tk 8.6.
 
@@ -122,7 +123,7 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/tuxracer.desktop
 * Wed Oct 01 2003 Rider <rider@altlinux.ru> 0.61-alt7
 - fix build
 
-* Tue Oct 10 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.61-alt6
+* Thu Oct 10 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.61-alt6
 - Rebuild with new tcl & gcc3.2
 
 * Sat Jun 15 2002 Sergey Bolshakov <s.bolshakov@belcaf.com> 0.61-alt5
@@ -131,7 +132,7 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/tuxracer.desktop
 * Tue Dec 04 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.61-alt4
 - Fixed permissions
 
-* Thu Nov 19 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.61-alt3
+* Mon Nov 19 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.61-alt3
 - Fixed icons
 
 * Fri Aug 17 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.61-alt2
