@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat rpm-macros-ninja-build
-BuildRequires: /usr/bin/desktop-file-install libncurses-devel libqt4-devel pkgconfig(libusb-1.0)
+BuildRequires: /usr/bin/desktop-file-install libncurses-devel libqt4-devel libreadline-devel pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		android-file-transfer
-Version:	3.9
-Release:	alt1_3
+Version:	4.1
+Release:	alt1_1
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
 License:	LGPLv2+
@@ -20,9 +20,13 @@ BuildRequires:	gcc-c++
 BuildRequires:	ninja-build
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Help)
+BuildRequires:	pkgconfig(Qt5Network)
 BuildRequires:	pkgconfig(Qt5Widgets)
 BuildRequires:	pkgconfig(fuse)
-BuildRequires:	libreadline-devel
+BuildRequires:	pkgconfig(openssl)
+#BuildRequires:	pkgconfig(readline)
+BuildRequires:	pkgconfig(taglib)
 Source44: import.info
 
 %description
@@ -71,6 +75,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Mon Dec 28 2020 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_1
+- new version
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_3
 - fixed build
 
