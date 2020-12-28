@@ -3,7 +3,7 @@
 %global goipath github.com/rogpeppe/go-internal
 
 Name: golang-github-rogpeppe-internal
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Summary: Selected Go-internal packages factored out from the standard library
 
@@ -12,7 +12,7 @@ Group: Development/Other
 Url: https://github.com/rogpeppe/go-internal
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: go-internal-%version.tar.gz
+Source: %url/archive/%version/go-internal-%version.tar.gz
 
 BuildRequires(pre): rpm-build-golang
 # BuildRequires: golang(gopkg.in/errgo.v2/fmt/errors)
@@ -62,6 +62,10 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Dec 28 2020 Leontiy Volodin <lvol@altlinux.org> 1.6.2-alt1
+- New version.
+- Updated source link.
+
 * Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.6.1-alt1
 - New version.
 
