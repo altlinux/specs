@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname aom
-%define soname 2
+%define soname 3
 %define libname lib%{oname}%{soname}
 
 # tests require approximately 500Mb of video data and run really long (up to a few hours)
 %def_disable check
 
 Name: lib%oname
-Version: 2.0.2
+Version: 3.0.0
 Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
@@ -85,6 +85,9 @@ echo -n %version > version
 	-DENABLE_DOCS:BOOL=ON \
 	-DENABLE_EXAMPLES:BOOL=ON \
 	-DENABLE_TOOLS:BOOL=ON \
+%if_disabled check
+	-DENABLE_TESTS:BOOL=OFF \
+%endif
 	%nil
 
 %cmake_build
@@ -119,6 +122,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/BUILD/third_party/googletest/sr
 %doc BUILD/docs/html
 
 %changelog
+* Fri Apr 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt1
+- Updated to upstream version 3.0.0.
+
 * Wed Mar 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1
 - Updated to upstream version 2.0.2.
 
