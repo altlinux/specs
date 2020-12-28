@@ -4,8 +4,8 @@
 
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
-Version:  1.9
-Release:  alt2
+Version:  1.10
+Release:  alt1
 
 Summary:  Programs that test various rt-linux features
 License:  GPL-2.0-or-later
@@ -42,6 +42,9 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 %_man8dir/*.8*
 
 %changelog
+* Mon Dec 28 2020 Vitaly Chikunov <vt@altlinux.org> 1.10-alt1
+- Update to v1.10 (2020-12-22).
+
 * Sun Oct 18 2020 Vitaly Chikunov <vt@altlinux.org> 1.9-alt2
 - Build for armh.
 
