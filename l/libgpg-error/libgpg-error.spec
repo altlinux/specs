@@ -1,34 +1,29 @@
-%def_enable static
-
 Name: libgpg-error
 Version: 1.41
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
-License: LGPL
-URL: http://www.gnupg.org/
+License: GPL-2.0-or-later AND LGPL-2.1-or-later
+URL: https://www.gnupg.org/
 
-Packager: Paul Wolneykien <manowar@altlinux.org>
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
-Source: %name-%version.tar.bz2
+%set_verify_elf_method strict
 
-BuildRequires: glibc-devel
-%if_enabled static
-BuildRequires: glibc-devel-static
-%endif
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+Source: %name-%version.tar
+
+Patch0: libgpg-error-1.29-multilib.patch
+Patch1: 0001-Fix-LFS-on-32-bit-systems.patch
+
+BuildRequires: makeinfo
 
 %package devel
 Summary: Development files for the %name package
+License: GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
 Group: Development/C
 Requires: %name = %version-%release
-
-%package devel-static
-Summary: Static libraries for the %name-devel package
-Group: Development/C
-Requires: %name-devel = %version-%release
 
 %description
 This is a library that defines common error values for all GnuPG
@@ -39,55 +34,68 @@ pinentry, SmartCard Daemon and possibly more in the future.
 This package contains files needed to develop
 applications using the GnuPG error library.
 
-%description devel-static
-Static build of the GnuPG error library.
-
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+
+cat > doc/version.texi <<EOF
+@set UPDATED $(LANG=C date -u -r doc/gpgrt.texi +'%%d %%B %%Y')
+@set UPDATED-MONTH $(LANG=C date -u -r doc/gpgrt.texi +'%%B %%Y')
+@set EDITION %version
+@set VERSION %version
+EOF
 
 %build
 %autoreconf
-%configure %{subst_enable static} --disable-rpath
+%configure \
+	--disable-static \
+	--with-pic
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 # relocate shared libraries from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
-mv -f %buildroot%_libdir/libgpg-error.so.* %buildroot/%_lib
-ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
+for f in %buildroot%_libdir/libgpg-error.so; do
+        t=$(readlink -v "$f")
+        ln -rsnf %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %find_lang %name
 
 %check
 %make check
 
-%define _unpackaged_files_terminate_build 1
-
 %files -f %name.lang
 /%_lib/lib*.so.*
 %_bindir/gpg-error
 %_datadir/libgpg-error/
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS NEWS README
 
 %files devel
 %_bindir/*-config
 %_bindir/yat2m
 %_libdir/*.so
 %_includedir/*
-%_datadir/aclocal/*
+%_aclocaldir/*
 %_man1dir/gpgrt-config.1.*
 %_infodir/gpgrt.*
 %_pkgconfigdir/*.pc
 %_datadir/common-lisp/source/gpg-error
 
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
-
 %changelog
+* Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 1.41-alt2
+- Updated Licence tag.
+- Disabled static library.
+- Rebased to upstream git history.
+- Uncompressed source tarball.
+- Hardened build checks.
+- Fixed build dependencies.
+- Fixed libgpg-error.so symlink.
+
 * Wed Dec 23 2020 Paul Wolneykien <manowar@altlinux.org> 1.41-alt1
 - Freshed up to v1.41.
 

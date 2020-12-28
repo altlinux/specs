@@ -1,20 +1,22 @@
 Name: libassuan
-Version: 2.5.4
+Version: 2.5.4.4.g05535d9
 Release: alt1
 
 Summary: IPC library used by some GnuPG related software
-License: LGPLv2.1+
+License: GPL-3.0-or-later AND LGPL-2.1-or-later
 Group: System/Libraries
-Url: http://gnupg.org/related_software/libraries.html
+Url: https://www.gnupg.org/
 
-# ftp://ftp.gnupg.org/gcrypt/libassuan/libassuan-%version.tar.bz2
 Source: libassuan-%version.tar
+Patch0: 0001-Fix-LFS-on-32-bit-systems.patch
 
-BuildRequires: libgpg-error-devel
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
-%def_disable static
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+%set_verify_elf_method strict
+
+BuildRequires: pkgconfig(gpg-error)
+BuildRequires: makeinfo
 
 %package devel
 Summary: Development files for the libassuan library
@@ -22,43 +24,43 @@ Group: Development/C
 Requires: %name = %version-%release
 Conflicts: libassuan0-devel
 
-%package devel-static
-Summary: Static libassuan library
-Group: Development/C
-Requires: %name-devel = %version-%release
-
 %description
 This is the IPC library used by GnuPG 2, GPGME and a few other packages.
 
 %description devel
 This package contains development files for the libassuan library.
 
-%description devel-static
-This package contains static libassuan library.
-
 %prep
 %setup
+
+%patch0 -p1
 
 # Rename library: libassuan -> libassuan2.
 sed -i 's/libassuan\(.la\)/libassuan2\1/g' */Makefile.am
 
+cat > doc/version.texi <<EOF
+@set UPDATED $(LANG=C date -u -r doc/assuan.texi +'%%d %%B %%Y')
+@set UPDATED-MONTH $(LANG=C date -u -r doc/assuan.texi +'%%B %%Y')
+@set EDITION %version
+@set VERSION %version
+EOF
+
 %build
 %autoreconf
-%configure --enable-shared %{subst_enable static}
+%configure
 %make_build
 
 %install
 %makeinstall_std
-mv %buildroot%_libdir/libassuan{2,}.so
 
 %check
 %make_build check
 
-%define _unpackaged_files_terminate_build 1
+mv %buildroot%_libdir/libassuan{2,}.so
 
 %files
-%doc AUTHORS NEWS README THANKS
-%_libdir/lib*.so.0*
+%doc AUTHORS NEWS README
+%_libdir/lib*.so.*
 
 %files devel
 %_bindir/libassuan-config
@@ -68,12 +70,13 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %_infodir/*.info*
 %_pkgconfigdir/*.pc
 
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
-
 %changelog
+* Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 2.5.4.4.g05535d9-alt1
+- Rebased to upstream git history.
+- Updated License tag.
+- Hardened build checks.
+- Fixed build dependencies.
+
 * Wed Dec 23 2020 Paul Wolneykien <manowar@altlinux.org> 2.5.4-alt1
 - Freshed up to v2.5.4.
 
