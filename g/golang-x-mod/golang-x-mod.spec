@@ -4,7 +4,7 @@
 %global forgeurl        https://github.com/golang/mod
 
 Name: golang-x-mod
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 Summary: Go module mechanics libraries
 Group: Development/Other
@@ -66,6 +66,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Dec 28 2020 Leontiy Volodin <lvol@altlinux.org> 0.4.0-alt1
+- New version.
+
 * Wed May 20 2020 Leontiy Volodin <lvol@altlinux.org> 0.3.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
