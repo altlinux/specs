@@ -1,29 +1,28 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/python3 gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define hash    b9bd7694f268
-
 %define major   1
 %define libname libtcod%{major}
 %define devname libtcod-devel
 
 Name:           libtcod
-Version:        1.6.6
-Release:        alt1_2
+Version:        1.15.1
+Release:        alt1_1
 Summary:        Color console, input management and other tools for roguelike games
 Group:          System/Libraries
 License:        BSD
-URL:            https://bitbucket.org/libtcod/libtcod
-# https://bitbucket.org/libtcod/libtcod/downloads?tab=tags
-Source0:        https://bitbucket.org/libtcod/libtcod/get/%{version}.tar.bz2
-# TODO: Have upstream handle their soname properly
-Patch0:         libtcod-1.6.6-mga-soname.patch
-Patch1:		Add-console_rexpaint.h.patch
+URL:            https://github.com/libtcod/libtcod
+Source0:        https://github.com/libtcod/libtcod/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:         libtcod-1.15.1-autotools.patch
 
 BuildRequires:  pkgconfig(sdl2)
+#BuildRequires:  pkgconfig(libutf8proc)
 BuildRequires:  pkgconfig(zlib)
+
+Provides:       bundled(libutf8proc)
+Provides:       bundled(lodepng)
 Source44: import.info
 
 %description
@@ -60,7 +59,8 @@ Provides:       %{name}-devel = %{version}-%{release}
 This package contains development headers and libraries for %{name}.
 
 %files -n       %{devname}
-%doc libtcod-CHANGELOG.txt LIBTCOD-CREDITS.txt LIBTCOD-LICENSE.txt
+%doc CHANGELOG.md
+%doc --no-dereference LIBTCOD-CREDITS.txt LICENSE.txt
 %{_includedir}/%{name}/
 %{_libdir}/%{name}*.so
 %{_libdir}/pkgconfig/%{name}.pc
@@ -68,19 +68,20 @@ This package contains development headers and libraries for %{name}.
 #----------------------------------------------------------------------
 
 %prep
-%setup -q -n %{name}-%{name}-%{hash}
+%setup -q
 %patch0 -p1
-%patch1 -p1
-rm -rf src/zlib
+
+
+rm -rf src/vendor/zlib
 
 %build
-cd build/autotools
+cd buildsys/autotools
 autoreconf -vfi
 %configure
 %make_build
 
 %install
-cd build/autotools
+cd buildsys/autotools
 %makeinstall_std
 
 find %{buildroot}%{_libdir} -name "*.la" -delete -o -name "*.a" -delete
@@ -103,6 +104,9 @@ EOF
 
 
 %changelog
+* Mon Dec 28 2020 Igor Vlasenko <viy@altlinux.ru> 1.15.1-alt1_1
+- new version
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt1_2
 - update by mgaimport
 
