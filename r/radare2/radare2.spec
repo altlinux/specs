@@ -1,6 +1,6 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 4.5.1
+Version: 5.0.0
 Release: alt1
 License: LGPL-3.0-or-later
 Group: Development/Tools
@@ -8,7 +8,7 @@ Url: http://radare.org/
 Source: %name-%version.tar
 Packager: Nikita Ermakov <arei@altlinux.org>
 
-BuildRequires: rpm-build-licenses libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash-devel liblz4-devel meson openssl-devel libuv-devel
+BuildRequires: libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash-devel liblz4-devel meson openssl-devel libuv-devel libtree-sitter-devel
 
 # bundled sdb ./shlr/sdb/README.md
 # bundled js0n ./shlr/sdb/src/json/README
@@ -34,29 +34,25 @@ Development files for %name package.
 %setup
 
 %build
-sed -i "s;^gittip = 'unknown'$;gittip = '%version-%release';g" meson.build
-%meson                    \
-  -Duse_sys_magic=true    \
-  -Duse_sys_zip=true      \
-  -Duse_sys_zlib=true     \
-  -Duse_sys_lz4=true      \
-  -Duse_sys_xxhash=true   \
-  -Duse_sys_openssl=true  \
-  -Duse_libuv=true        \
-  -Duse_sys_capstone=true
+%meson                               \
+  -Dr2_gittip=%version-%release      \
+  -Duse_sys_magic=true               \
+  -Duse_sys_zip=true                 \
+  -Duse_sys_zlib=true                \
+  -Duse_sys_lz4=true                 \
+  -Duse_sys_xxhash=true              \
+  -Duse_sys_openssl=true             \
+  -Duse_libuv=true                   \
+  -Duse_sys_capstone=true            \
+  -Duse_sys_tree_sitter=true
 %meson_build
 
 %install
 %meson_install
-# Remove static library
-rm -f %buildroot/%_libdir/libr_shlr.a
 # Remove package manager
 rm %buildroot/%_bindir/r2pm
 # Copy r_jemalloc to the include directory
 cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
-# Create symbolic link to the radare2.
-# Some programs (e.g. rahash2) looking for r2 instead of radare2.
-ln -s radare2 %buildroot/usr/bin/r2
 
 %files devel
 %_libdir/pkgconfig/*.pc
@@ -74,6 +70,9 @@ ln -s radare2 %buildroot/usr/bin/r2
 %_datadir/zsh
 
 %changelog
+* Fri Dec 28 2020 Nikita Ermakov <arei@altlinux.org> 5.0.0-alt1
+- Update to 5.0.0
+
 * Mon Sep 07 2020 Nikita Ermakov <arei@altlinux.org> 4.5.1-alt1
 - Update to 4.5.1
 
