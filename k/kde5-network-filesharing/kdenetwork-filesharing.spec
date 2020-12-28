@@ -3,7 +3,7 @@
 
 Name: kde5-network-filesharing
 Version: 20.12.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -14,8 +14,10 @@ License: GPLv2+ / LGPLv2+
 #Requires: %pkg_samba
 
 Source: %rname-%version.tar
+Source10: ru-add.po
 Patch1: alt-allow-guest.patch
 Patch2: alt-uid-min-max.patch
+Patch3: alt-i18n.patch
 
 # Automatically added by buildreq on Wed Jan 13 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base ruby ruby-stdlibs
@@ -36,6 +38,9 @@ BuildRequires: kf5-kpackage-devel
 %setup -n %rname-%version
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1 -b .i18n
+
+cat %SOURCE10 >>po/ru/kfileshare.po
 
 %build
 %K5build \
@@ -58,6 +63,9 @@ BuildRequires: kf5-kpackage-devel
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Mon Dec 28 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt2
+- translate "Everyone" user name
+
 * Fri Dec 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 
