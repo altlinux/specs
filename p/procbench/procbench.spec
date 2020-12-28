@@ -1,21 +1,22 @@
 Name: procbench
 Version: 0.9.0a
-Release: alt4
+Release: alt5
 
 Summary: CPU benchmark and information tool
 License: GPLv2+
 Group: System/Kernel and hardware
 
 Url: http://procbench.sourceforge.net/
-Source: http://download.sourceforge.net/procbench/procbench_%version.tar.gz
+# http://download.sourceforge.net/procbench/procbench_%version.tar.gz
+Source: procbench_%version.tar
 Patch0: procbench-0.9.0-stdio.patch
 Patch1: procbench-0.9.0a-alt-glibc-2.16.patch
 Patch2: %name-g++8.patch
 
-BuildRequires: automake_1.10
+#BuildRequires: automake_1.10
 # Automatically added by buildreq on Fri Jun 12 2009
 BuildRequires: gcc-c++
-ExclusiveArch: i586 x86_64
+ExclusiveArch: %ix86 x86_64
 
 %description
 Procbench is an information tool and CPU benchmark that tests memory transfer
@@ -24,15 +25,15 @@ pb_gcc) to get the best GCC optimization parameters for a CPU.
 
 %prep
 # weird...
-%setup -n procbench_0.9.0aubuntu3~intrepid
+%setup -n procbench_%version
 %patch0 -p1
 %patch1 -p3
 %patch2 -p3
 
 %build
 # QnD... :\
-cp -f /usr/share/automake-1.10/config.sub .
-cp -f /usr/share/automake-1.10/config.guess .
+cp -f /usr/share/automake-*/config.sub .
+cp -f /usr/share/automake-*/config.guess .
 
 %configure
 %make_build
@@ -51,6 +52,9 @@ cp -f /usr/share/automake-1.10/config.guess .
 %_libdir/libpbbench.so*
 
 %changelog
+* Mon Dec 28 2020 Sergey V Turchin <zerg@altlinux.org> 0.9.0a-alt5
+- don't require old automake to build
+
 * Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0a-alt4
 - no return statement in the non-void function fixed (according g++8)
 
