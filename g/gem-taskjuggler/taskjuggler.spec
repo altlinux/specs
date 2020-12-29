@@ -1,22 +1,27 @@
 %define        pkgname taskjuggler
 
-Name:          %pkgname
-Version:       3.7.1
-Release:       alt1
+Name:          gem-%pkgname
+Version:       3.7.1.1
+Release:       alt0.1
 Summary:       TaskJuggler - Project Management beyond Gantt chart drawing
 License:       GPL-2.0
 Group:         Office
-URL:           http://www.taskjuggler.org
-%vcs           https://github.com/taskjuggler/TaskJuggler.git
+Url:           http://www.taskjuggler.org
+Vcs:           https://github.com/taskjuggler/TaskJuggler.git
 BuildArch:     noarch
+Autoreq:       yes,noshebang
 
 Source:        %name-%version.tar
+Source1:       %{pkgname}.rc
+Source2:       tj3d.service
+Source3:       tj3webd.service
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(term-ansicolor)
-BuildRequires: gem(term-ansicolor)
-BuildRequires: git-core
+BuildRequires: /usr/bin/md5sum
 
-Requires: gem-%pkgname = %EVR
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     %gemname < %EVR
 
 %description
 TaskJuggler is a modern and powerful project management tool. Its new
@@ -29,61 +34,71 @@ completion of the project. It assists you during project scoping,
 resource assignment, cost and revenue planning, and risk and
 communication management.
 
-%package       -n gem-%pkgname
-Summary:       Library for %gemname gem
+
+%package       -n %pkgname
+Summary:       Executables for TaskJuggler the Project Management beyond Gantt chart drawing
 Summary(ru_RU.UTF-8): Библиотечные файлы для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n gem-%pkgname
+%description   -n %pkgname
 Library for %gemname gem.
 
-%description   -n gem-%pkgname -l ru_RU.UTF8
+%description   -n %pkgname -l ru_RU.UTF8
 Библиотечные файлы для %gemname самоцвета.
 
-%package       -n gem-%pkgname-doc
+
+%package       doc
 Summary:       Documentation files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      %pkgname-doc
-Obsoletes:     %pkgname-doc
 
-%description   -n gem-%pkgname-doc
+%description   doc
 Documentation files for %gemname gem.
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+%description   doc -l ru_RU.UTF8
 Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
-git init .
-git add .
 
 %build
-%gem_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
-%gem_show
-%gem_install
-# Fix shebang
-subst 's|^#!/usr/bin/env ruby -w$|#!/usr/bin/ruby -w|' `grep -Rl '^#!/usr/bin/env ruby -w$' %buildroot%ruby_gemslibdir`
+%ruby_install
+mkdir -p %buildroot%_sysconfdir %buildroot%_logdir/%pkgname
+cat %SOURCE1 | sed "s,<hash>,$(md5sum <<< $(tj3d --help) | sed "s/  -.*//")," > %buildroot%_sysconfdir/%{pkgname}.rc
+install -Dm755 %SOURCE2 %buildroot%_unitdir/tj3d.service
+install -Dm755 %SOURCE3 %buildroot%_unitdir/tj3webd.service
 
 %check
 %ruby_test
 
 %files
 %doc README*
-%_bindir/*
-
-%files -n gem-%pkgname
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files -n gem-%pkgname-doc
+%files         -n %pkgname
+%doc README*
+%_bindir/*
+%_sysconfdir/%{pkgname}.rc
+%_unitdir/*.service
+%_logdir/%pkgname
+
+%files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Thu Dec 29 2020 Pavel Skrylev <majioa@altlinux.org> 3.7.1.1-alt0.1
+- ^ 3.7.1 -> 3.7.1[1]
+- + services and config
+- ! spec
+
 * Thu Dec 24 2020 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
 - New version.
 - Package complete gem.
