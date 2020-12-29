@@ -1,6 +1,6 @@
 Name: hikari
 Version: 2.2.2
-Release: alt1
+Release: alt2
 
 Summary: a stacking Wayland compositor
 
@@ -11,8 +11,10 @@ Url: https://hikari.acmelabs.space/
 # repacked https://hikari.acmelabs.space/releases/hikari-%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.watch
+Patch1: 0001-ALT-fix-permissions.patch
 
 Requires: xorg-xwayland
+Requires: libdrmhelper
 
 # Automatically added by buildreq on Thu Nov 12 2020
 # optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libcairo-devel libglvnd-devel libgpg-error libharfbuzz-devel libpixman-devel libudev-devel libwayland-client libwayland-egl libwayland-server libwayland-server-devel libxcb-devel libxcbutil-icccm pkg-config python2-base sh4 wayland-devel
@@ -26,6 +28,7 @@ is heavily inspired by the Calm Window manager (cwm(1)).
 
 %prep
 %setup
+%autopatch -p2
 
 %define env \
   unset MAKEFLAGS; \
@@ -62,7 +65,7 @@ bmake \
 %config(noreplace) %_sysconfdir/pam.d/hikari-unlocker
 
 %_bindir/hikari
-%_bindir/hikari-unlocker
+%attr(2711,root,chkpwd) %_bindir/hikari-unlocker
 
 %dir %_datadir/backgrounds
 %dir %_datadir/backgrounds/hikari
@@ -73,6 +76,10 @@ bmake \
 %_man1dir/hikari.1*
 
 %changelog
+* Tue Dec 29 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.2-alt2
+- Fixed hikari and hikari-unlocker executables permissions (no more suid);
+- Added dependency to libdrmhelper.
+
 * Thu Nov 12 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.2-alt1
 - Initial build for ALT Sisyphus.
 
