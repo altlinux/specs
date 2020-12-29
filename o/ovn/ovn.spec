@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define rpmstate /run/openvswitch-rpm-state-
 
 Name: ovn
 Version: 20.09.0
-Release: alt2
+Release: alt3
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
@@ -22,7 +23,7 @@ Obsoletes: openvswitch-ovn-common < 2.14.0
 Provides: openvswitch-ovn = %EVR
 Obsoletes: openvswitch-ovn < 2.14.0
 Requires: lib%name = %EVR
-Requires: openvswitch
+Requires: openvswitch >= 2.14.0
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -185,23 +186,99 @@ install -pDm644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 #      %buildroot%_prefix/lib/ocf/resource.d/ovn/ovndb-servers
 
 
-%post -n ovn-central
+%post central
+# Save the "enabled" state across the transition of
+# ownership of ovn-northd.service from openvswitch-ovn-central to
+# ovn-central.
+SYSTEMCTL=systemctl
+if [ $1 -eq 1 ]; then
+    if sd_booted && "$SYSTEMCTL" --quiet is-enabled ovn-northd; then
+    	touch %{rpmstate}ovn-northd ||:
+    fi
+fi
 %post_service ovn-northd
 
-%preun -n ovn-central
+%preun central
 %preun_service ovn-northd
 
-%post -n ovn-host
+%triggerpostun central -- openvswitch-ovn-central < 2.14.0
+SYSTEMCTL=systemctl
+[ $2 -eq 0 ] || exit 0
+if [ -e %{rpmstate}ovn-northd ]; then
+    rm %{rpmstate}ovn-northd
+    # copy db and log from openvswitch to ovn dir
+    for db in ovnnb ovnsb; do
+        [ ! -f %_localstatedir/openvswitch/${db}_db.db ] || mv -f %_localstatedir/openvswitch/${db}_db.db %_localstatedir/%name/
+        [ ! -f %_localstatedir/openvswitch/.${db}_db.db.~lock~ ] || mv -f %_localstatedir/openvswitch/.${db}_db.db.~lock~ %_localstatedir/%name/
+    done
+    for log in ovn-northd ovsdb-server-nb ovsdb-server-sb; do
+        [ ! -f %_logdir/openvswitch/${log}.log ] || mv -f %_logdir/openvswitch/${log}.log* %_logdir/%name/
+    done
+    chown -R openvswitch:openvswitch %_logdir/%name %_localstatedir/%name
+    if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    	"$SYSTEMCTL" --quiet enable ovn-northd ||:
+	"$SYSTEMCTL" try-restart ovn-northd ||:
+    fi
+fi
+
+
+%post host
+# Save the "enabled" state across the transition of
+# ownership of ovn-controller.service from openvswitch-ovn-host to
+# ovn-host.
+SYSTEMCTL=systemctl
+if [ $1 -eq 1 ]; then
+    if sd_booted && "$SYSTEMCTL" --quiet is-enabled ovn-controller; then
+    	touch %{rpmstate}ovn-controller ||:
+    fi
+fi
 %post_service ovn-controller
 
-%preun -n ovn-host
+%preun host
 %preun_service ovn-controller
 
-%post -n ovn-vtep
+%triggerpostun host -- openvswitch-ovn-host < 2.14.0
+SYSTEMCTL=systemctl
+[ $2 -eq 0 ] || exit 0
+if [ -e %{rpmstate}ovn-controller ]; then
+    rm %{rpmstate}ovn-controller
+    # copy log from openvswitch to ovn dir
+    [ ! -f %_logdir/openvswitch/ovn-controller.log ] || mv -f %_logdir/openvswitch/ovn-controller.log* %_logdir/%name/
+    chown -R openvswitch:openvswitch %_logdir/%name
+    if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    	"$SYSTEMCTL" --quiet enable ovn-controller ||:
+	"$SYSTEMCTL" try-restart ovn-controller ||:
+    fi
+fi
+
+%post vtep
+# Save the "enabled" state across the transition of
+# ownership of ovn-controller-vtep.service from openvswitch-ovn-vtep to
+# ovn-vtep.
+SYSTEMCTL=systemctl
+if [ $1 -eq 1 ]; then
+    if sd_booted && "$SYSTEMCTL" --quiet is-enabled ovn-controller-vtep; then
+    	touch %{rpmstate}ovn-controller-vtep ||:
+    fi
+fi
 %post_service ovn-controller-vtep
 
-%preun -n ovn-vtep
+%preun vtep
 %preun_service ovn-controller-vtep
+
+%triggerpostun vtep -- openvswitch-ovn-vtep < 2.14.0
+SYSTEMCTL=systemctl
+[ $2 -eq 0 ] || exit 0
+if [ -e %{rpmstate}ovn-controller-vtep ]; then
+    rm %{rpmstate}ovn-controller-vtep
+    # copy log from openvswitch to ovn dir
+    [ ! -f %_logdir/openvswitch/ovn-controller-vtep.log ] || mv -f %_logdir/openvswitch/ovn-controller-vtep.log* %_logdir/%name/
+    chown -R openvswitch:openvswitch %_logdir/%name
+    if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    	"$SYSTEMCTL" --quiet enable ovn-controller-vtep ||:
+	"$SYSTEMCTL" try-restart ovn-controller-vtep ||:
+    fi
+fi
 
 %files
 %config(noreplace) %_logrotatedir/%name
@@ -274,6 +351,9 @@ install -pDm644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Tue Dec 29 2020 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt3
+- Fix migrate from openvswitch-ovn to ovn packages name
+
 * Sat Dec 26 2020 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt2
 - own /var/log/ovn and /var/lib/ovn dirs
 - add tmpfiles config
