@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.6.0.30
+Version: 5.6.0.34
 Release: alt1
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
@@ -10,6 +10,7 @@ Url: https://github.com/linuxdeepin/startdde
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: startdde_5.6.0.34_xdg-paths.patch
 
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
@@ -26,6 +27,7 @@ Startdde is used for launching DDE components and invoking user's custom applica
 
 %prep
 %setup
+%patch -p2
 # go get github.com/cryptix/wav golang.org/x/xerrors
 sed -i 's/sbin/bin/' Makefile
 sed -i 's|/etc/X11/Xsession.d/|/etc/X11/xinit/xinitrc.d/|' Makefile
@@ -39,6 +41,12 @@ sed -i 's|/usr/lib/|/usr/libexec/|' \
     misc/auto_launch/{chinese,default}.json \
     watchdog/{deepinid_daemon.go,dde_polkit_agent.go}
 sed -i 's|/usr/lib/|%_libdir/|' startmanager.go
+sed -i 's|/etc/X11/Xresources|/etc/X11|' \
+    etc_x11_session_d.go
+sed -i 's|/usr/sbin/|/usr/bin/|' \
+    misc/lightdm.conf
+# Uncomment xdg dirs.
+#sed -i 's|\#||' misc/profile.d/deepin-xdg-dir.sh
 
 %build
 %if_enabled clang
@@ -71,6 +79,10 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/xsessions/deepin.desktop
 
 %changelog
+* Tue Dec 29 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.34-alt1
+- New version (5.6.0.34) with rpmgs script.
+- Fixed paths.
+
 * Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.30-alt1
 - New version (5.6.0.30) with rpmgs script.
 
