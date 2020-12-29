@@ -1,5 +1,5 @@
 Name: deepin-calculator
-Version: 5.6.0.1
+Version: 5.6.0.7
 Release: alt1
 Summary: An easy to use calculator for ordinary users
 License: GPL-3.0+
@@ -40,6 +40,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Dec 29 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.7-alt1
+- New version (5.6.0.7) with rpmgs script.
+
 * Sat Oct 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.1-alt1
 - New version (5.6.0.1) with rpmgs script.
 
