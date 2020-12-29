@@ -1,5 +1,5 @@
 Name: xfce4-taskmanager
-Version: 1.2.3
+Version: 1.4.0
 Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
@@ -8,14 +8,13 @@ License: GPLv2+
 Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/apps/xfce4-taskmanager
 Packager: Xfce Team <xfce@packages.altlinux.org>
-Vcs: git://git.xfce.org/apps/xfce4-taskmanager
+Vcs: https://gitlab.xfce.org/apps/xfce4-taskmanager.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: glib2-devel intltool libXmu-devel
 BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
-BuildRequires: exo-csource
 
 %define _unpackaged_files_terminate_build 1
 
@@ -34,7 +33,6 @@ mkdir m4/
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
-	--enable-gtk3 \
 	--enable-wnck3 \
 	--enable-debug=minimum
 %make_build
@@ -44,12 +42,17 @@ mkdir m4/
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README.md AUTHORS NEWS
 %_bindir/*
 %_desktopdir/xfce4-taskmanager.desktop
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Tue Dec 29 2020 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Updated Vcs tag.
+- Dropped exo-csource from BR.
+- Updated to 1.4.0.
+
 * Sat Apr 11 2020 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt1
 - Update url.
 - Add Vcs tag.
