@@ -1,12 +1,12 @@
 %define pg_ver 13
 
 Name: postgis
-Version: 3.0.3
+Version: 3.1.0
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL
-License: GPLv2
+License: GPL-2.0
 Group: Databases
 Url: http://postgis.refractions.net
 
@@ -98,6 +98,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %doc %_datadir/doc/postgresql/extension/README.address_standardizer
 
 %changelog
+* Mon Dec 28 2020 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Sun Nov 22 2020 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt1
 - New version (build with PosgreSQL 13).
 
