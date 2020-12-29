@@ -5,8 +5,8 @@
 %def_enable wayland
 
 Name: vlc
-Version: 3.0.11.1
-Release: alt2
+Version: 3.0.12.1
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -16,7 +16,6 @@ Url: http://www.videolan.org
 Source: vlc-%version.tar
 Patch: vlc-3.0.6-alt-e2k-lcc123.patch
 Patch1: 0001-configure-fix-linking-on-RISC-V-ISA.patch
-Patch2: vlc-3.0.10-qt-5.15.patch
 
 BuildRequires: gcc-c++
 BuildRequires: freetype2-devel glib2-devel flex
@@ -644,7 +643,6 @@ sed -i 's,const ATTR_USED,const,' modules/video_filter/deinterlace/yadif.h
 %endif
 
 %patch1 -p1
-%patch2 -p1
 
 %build
 %add_optflags -I%_includedir/samba-4.0
@@ -804,6 +802,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access/libidummy_plugin.so
 %vlc_plugindir/access/libimem_plugin.so
 %vlc_plugindir/access/libnfs_plugin.so
+%vlc_plugindir/access/librist_plugin.so
 %vlc_plugindir/access/librtp_plugin.so
 %vlc_plugindir/access/libsatip_plugin.so
 %vlc_plugindir/access/libsdp_plugin.so
@@ -815,10 +814,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access/libvdr_plugin.so
 %vlc_plugindir/access/libvnc_plugin.so
 
+
 %dir %vlc_plugindir/access_output
 %vlc_plugindir/access_output/libaccess_output_dummy_plugin.so
 %vlc_plugindir/access_output/libaccess_output_file_plugin.so
 %vlc_plugindir/access_output/libaccess_output_http_plugin.so
+%vlc_plugindir/access_output/libaccess_output_rist_plugin.so
 %vlc_plugindir/access_output/libaccess_output_udp_plugin.so
 %vlc_plugindir/access_output/libaccess_output_livehttp_plugin.so
 
@@ -1370,6 +1371,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %endif
 
 %files -n lib%name
+%dir %vlc_libdir
 %_libdir/libvlccore.so.*
 %_libdir/libvlc.so.*
 %_libdir/vlc/libvlc_pulse.so.*
@@ -1399,6 +1401,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Dec 28 2020 Anton Farygin <rider@altlinux.ru> 3.0.12.1-alt1
+- 3.0.12.1
+
 * Sun Oct 04 2020 Anton Farygin <rider@altlinux.ru> 3.0.11.1-alt2
 - fixed build with qt-5.15
 
