@@ -1,25 +1,29 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name openjpeg
-%define ver_major 2.3
+%define ver_major 2.4
 %define api_ver 2.0
 %define libname libopenjp2
 
+%def_enable docs
+#required https://github.com/uclouvain/openjpeg-data
+%def_disable check
+
 Name: lib%_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
-License: BSD
+License: BSD-2-Clause
 Group: System/Libraries
-Url: http://www.openjpeg.org/
+Url: https://www.openjpeg.org/
 
 %if_enabled snapshot
-# VCS: https://github.com/uclouvain/openjpeg.git
-Source: %_name-%version-%rev.tar
+Vcs: https://github.com/uclouvain/openjpeg.git
+Source: %_name-%version.tar
 %else
 #Source: https://github.com/uclouvain/%_name/archive/%_name-%version.tar.gz
-Source: http://www.openjpeg.org/%_name-%version.tar.gz
+Source: %url%_name-%version.tar.gz
 %endif
 
 BuildRequires: cmake gcc-c++ libtiff-devel liblcms2-devel libpng-devel zlib-devel
@@ -45,6 +49,17 @@ Group: Graphics
 %description -n openjpeg-tools%api_ver
 OpenJPEG is an open-source JPEG 2000 codec written in C.
 
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+The %name-devel-doc package includes documentation necessary for
+developing with %name library.
+
+
 %prep
 %setup -n %_name-%version
 
@@ -54,7 +69,9 @@ OpenJPEG is an open-source JPEG 2000 codec written in C.
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DOPENJPEG_INSTALL_LIB_DIR=%_lib \
 	-DBUILD_THIRDPARTY:BOOL=OFF \
-	-DBUILD_DOC:BOOL=ON
+	%{?_enable_docs:-DBUILD_DOC:BOOL=ON} \
+	%{?_enable_check:-DBUILD_TESTING=ON -DBUILD_UNIT_TESTS=ON}
+%nil
 %cmake_build
 
 %install
@@ -69,6 +86,9 @@ mv %buildroot%_man1dir/opj_decompress.1 %buildroot%_man1dir/opj2_decompress.1
 mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 # and fix cmake-files
 subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%ver_major/*.cmake
+
+%check
+%make -C BUILD tests
 
 %files
 %_libdir/%libname.so.*
@@ -87,10 +107,16 @@ subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%
 %_bindir/opj2_dump
 %_man1dir/*
 
-%exclude %_datadir/doc/%_name-%ver_major/
-%exclude %_datadir/doc/html/
+%files devel-doc
+%_datadir/doc/%_name-%ver_major/
 
 %changelog
+* Tue Dec 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- updated to v2.4.0-2-gb897e2cb (fixed CVE-2020-8112, CVE-2020-6851
+  CVE-2019-6988, CVE-2019-12973)
+- new -devel-doc subpackage
+- fixed License tag
+
 * Wed Apr 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1 (fixed CVE-2017-14041, CVE-2018-6616, CVE-2018-5785, CVE-2018-14423)
 
