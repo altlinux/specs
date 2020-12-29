@@ -1,6 +1,6 @@
 Name: tuxracer
 Version: 0.61
-Release: alt13.qa3
+Release: alt13.qa4
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -20,6 +20,7 @@ Source4: tuxracer-48.xpm
 Source5: tuxracer.desktop
 Source10: http://www.brcha.iz.rs/data/projects/RoadsOfSerbia/RoadsOfSerbia.tar.bz2
 Patch3: tuxracer-0.61-gcc33.patch
+Patch4: tuxracer-alt-use-newer-autoconf.patch
 
 BuildRequires: gcc-c++ imake libGL-devel libSDL-devel libSDL_mixer-devel libXext-devel libXi-devel libXmu-devel tcl-devel xorg-cf-files
 
@@ -41,20 +42,19 @@ Data files for Tux Racer racing game.
 
 %prep
 %setup -a 1 -a 10
-
 %patch3 -p1
-%set_automake_version 1.4
-%set_autoconf_version 2.5
+%patch4 -p2
 
 # Fix CFLAGS
 %define _optlevel 3
 %add_optflags %optflags_kernel %optflags_notraceback %optflags_fastmath
 
-%build
-libtoolize -i
-
 # cosmetic: eliminate gcc warnings
 subst 's/malign/falign/g' configure.in
+
+%build
+mv configure.in configure.ac
+%autoreconf
 
 export CPPFLAGS="-DGLX_GLXEXT_LEGACY"
 %configure \
@@ -88,6 +88,9 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/tuxracer.desktop
 %_gamesdatadir/tuxracer/
 
 %changelog
+* Tue Dec 29 2020 Andrey Cherepanov <cas@altlinux.org> 0.61-alt13.qa4
+- Do not set up specific autoconf and automake versions by macros.
+
 * Mon Dec 28 2020 Andrey Cherepanov <cas@altlinux.org> 0.61-alt13.qa3
 - Use latest autoconf and automake.
 - Fix bogus dates in changelog.
