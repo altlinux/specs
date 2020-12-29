@@ -1,10 +1,10 @@
 Name: make-initrd-propagator
-Version: 0.42
+Version: 0.43
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
 
-License: GPL
+License: GPLv2+
 Group: System/Base
 URL: https://www.altlinux.org/Make-initrd-propagator
 
@@ -39,6 +39,10 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Sun Dec 27 2020 Anton Midyukov <antohami@altlinux.org> 0.43-alt1
+- init-bottom: Do not calculate starting sector for alt-live-storage
+- Fix License Tag
+
 * Tue Jun 25 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.42-alt1
 - config.mk: removed copy of *-net-name-slot.rules udev rule (copying
   of absent file is going to be error in upcoming release of make-initrd).
