@@ -14,7 +14,7 @@
 
 Name: vulkan-amdgpu
 Version: 2020.Q4.6
-Release: alt1
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -25,7 +25,7 @@ ExclusiveArch: %ix86 x86_64
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel libssl-devel llvm-devel
+BuildRequires: gcc9-c++ cmake python3-devel curl libstdc++9-devel libxcb-devel libssl-devel llvm-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel spirv-headers libspirv-tools-devel glslang-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
@@ -62,7 +62,7 @@ popd
 %build
 # build amdvlk.so
 pushd %_builddir/xgl
-export GCC_VERSION=7 \
+export GCC_VERSION=9 \
 %cmake \
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
@@ -92,6 +92,9 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Dec 28 2020 L.A. Kostis <lakostis@altlinux.ru> 2020.Q4.6-alt2
+- Rebuild w/ gcc9.
+
 * Tue Dec 15 2020 L.A. Kostis <lakostis@altlinux.ru> 2020.Q4.6-alt1
 - 2020-12-14 update:
   + icd: bump vulkan API version to 1.2.162
