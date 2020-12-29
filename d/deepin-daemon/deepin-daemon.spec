@@ -3,8 +3,8 @@
 %global repo dde-daemon
 
 Name: deepin-daemon
-Version: 5.11.0.36
-Release: alt7
+Version: 5.11.0.42
+Release: alt1
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -15,7 +15,8 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 Source2: %name.sysusers
 Source3: deepin-auth
-Patch: dde-daemon_5.10_archlinux_fix-build.patch
+# archlinux patches
+Patch: deepin-daemon-fix-vanilla-libinput.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: glib2-devel
@@ -227,6 +228,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue Dec 29 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.42-alt1
+- New version (5.11.0.42) with rpmgs script (thanks archlinux for the patch).
+
 * Tue Dec 15 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt7
 - Changes default background.
 - Fixed paths.
