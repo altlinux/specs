@@ -1,11 +1,11 @@
 Name: hikari
 Version: 2.2.2
-Release: alt2
+Release: alt3
 
 Summary: a stacking Wayland compositor
 
 License: BSD-2-Clause
-Group: Graphical desktop/XFce
+Group: Graphical desktop/Other
 Url: https://hikari.acmelabs.space/
 
 # repacked https://hikari.acmelabs.space/releases/hikari-%version.tar.gz
@@ -76,6 +76,9 @@ bmake \
 %_man1dir/hikari.1*
 
 %changelog
+* Wed Dec 30 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.2-alt3
+- Fixed package group (ALT#39488).
+
 * Tue Dec 29 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.2-alt2
 - Fixed hikari and hikari-unlocker executables permissions (no more suid);
 - Added dependency to libdrmhelper.
