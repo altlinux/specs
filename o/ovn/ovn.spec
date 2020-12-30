@@ -3,7 +3,7 @@
 
 Name: ovn
 Version: 20.09.0
-Release: alt3
+Release: alt4
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
@@ -97,6 +97,7 @@ OVN vtep controller
 Summary: Open Virtual Network support
 License: Apache-2.0
 Group: Networking/Other
+BuildArch: noarch
 Requires: %name = %EVR
 Provides: openvswitch-ovn-docker = %EVR
 Obsoletes: openvswitch-ovn-docker < 2.14.0
@@ -351,6 +352,9 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Wed Dec 30 2020 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt4
+- Build docker subpackage as noarch
+
 * Tue Dec 29 2020 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt3
 - Fix migrate from openvswitch-ovn to ovn packages name
 
