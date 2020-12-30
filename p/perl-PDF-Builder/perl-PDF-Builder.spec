@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %filter_from_requires /^perl.unicore.Lbrk.pl./d
 %define module_name PDF-Builder
 
 Name: perl-PDF-Builder
-Version: 3.020
-Release: alt2
+Version: 3.021
+Release: alt1
 
 Summary: Facilitates the creation and modification of PDF files
 
@@ -75,13 +76,16 @@ Examples for %module_name.
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTING README Changes docs
+%doc CONTRIBUTING Changes docs README.md examples
 %perl_vendor_privlib/P*
 
 %files examples
 %doc examples
 
 %changelog
+* Wed Dec 30 2020 Igor Vlasenko <viy@altlinux.ru> 3.021-alt1
+- new version
+
 * Wed Dec 02 2020 Vitaly Lipatov <lav@altlinux.ru> 3.020-alt2
 - human build for ALT Sisyphus
 - separate examples to the subpackage
