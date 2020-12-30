@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 5.8.0.32
+Version: 5.8.0.42
 Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
@@ -29,13 +29,18 @@ Requires: gtk-theme-deepin
 %setup
 
 # fix default background url
-sed -i '/picture-uri/s|/default_background.jpg|/deepin/default.png|' \
+sed -i '/picture-uri/s|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
     overrides/common/com.deepin.wrap.gnome.desktop.override
-sed -i 's|/default_background.jpg|/deepin/default.jpg|' \
+sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
     schemas/com.deepin.dde.appearance.gschema.xml
 sed -i 's|adwaita-lock.jpg|adwaita-night.jpg|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
 sed -i 's|python|python3|' Makefile tools/overrides.py
+sed -i 's|org.deepin.browser|firefox|' \
+    overrides/common/desktop/dock.override
+sed -i 's|uos-browser|firefox|' \
+    overrides/common/*.override \
+    overrides/common/*/*.override
 
 %build
 export GOPATH=%go_path
@@ -59,6 +64,9 @@ make test
 %exclude %_datadir/deepin-appstore/
 
 %changelog
+* Wed Dec 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.42-alt1
+- New version (5.8.0.42) with rpmgs script.
+
 * Tue Dec 01 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.32-alt1
 - New version (5.8.0.32) with rpmgs script.
 
