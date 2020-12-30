@@ -1,13 +1,13 @@
 %set_verify_elf_method textrel=relaxed
 Name: cinaps
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: Trivial metaprogramming tool.
 License: Apache-2.0
 Group: Development/ML
-Url: https://github.com/ocaml-ppx/ppxlib
+Url: https://github.com/ocaml-ppx/cinaps
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam  ocaml-re-devel
+BuildRequires: ocaml-findlib-devel dune ocaml-re-devel
 
 %description
 Cinaps is a trivial Metaprogramming tool using the OCaml toplevel. It is based
@@ -19,10 +19,14 @@ the OCaml code.
 %setup
 
 %build
-make
+%dune_build -p %name
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
+
+%check
+# TODO: build ppx_jane
+#dune_check
 
 %files
 %doc README.org
@@ -34,6 +38,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%name/runtime
 
 %changelog
+* Wed Dec 30 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
+- 0.14.0
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 
