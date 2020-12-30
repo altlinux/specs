@@ -1,10 +1,10 @@
 %def_without xen
-%define githash b24b0f7e42d500d3538d7eeffa017ec78d08f918
+%define githash fa9b9d3823b6e1792919e711fcf6164cac629290
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 
 Name: drbd-utils
-Version: 9.13.1
+Version: 9.15.1
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -74,6 +74,7 @@ management utility.
 %prep
 %setup -a1
 tar -xf %SOURCE1 -C drbd-headers
+%__subst 's/(u64)/(__u64)/' drbd-headers/drbd_protocol.h
 %patch0 -p1
 (echo -e "#define GITHASH \"%githash\""; \
  echo -e "#define GITDIFF \"%gitdiff\"") > user/shared/drbd_buildtag.h
@@ -109,6 +110,7 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %config(noreplace) %_sysconfdir/drbd.conf
 %dir %_sysconfdir/drbd.d
 %config(noreplace) %_sysconfdir/drbd.d/global_common.conf
+%config(noreplace) %_sysconfdir/multipath/conf.d/drbd.conf
 %_sysconfdir/ha.d/resource.d/*
 %_initdir/drbd
 %_unitdir/drbd.service
@@ -139,6 +141,7 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %dir /usr/lib/ocf/resource.d/linbit
 /usr/lib/ocf/resource.d/linbit/drbd
 /usr/lib/ocf/resource.d/linbit/drbd.shellfuncs.sh
+/usr/lib/ocf/resource.d/linbit/drbd-attr
 /usr/lib/drbd/crm-*fence-peer.sh
 /usr/lib/drbd/stonith_admin-fence-peer.sh
 
@@ -150,6 +153,9 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %_sysconfdir/bash_completion.d/drbdadm*
 
 %changelog
+* Wed Dec 30 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.15.1-alt1
+- 9.15.1
+
 * Thu May 14 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.13.1-alt1
 - 9.13.1
 
