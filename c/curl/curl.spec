@@ -2,7 +2,7 @@
 %def_with check
 
 Name: curl
-Version: 7.73.0
+Version: 7.74.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -138,7 +138,7 @@ applications that utilize lib%name.
 %files -n lib%name
 %_libdir/*.so.*
 
-%doc CHANGES README* docs/{FAQ,FEATURES}
+%doc CHANGES README* docs/{FAQ,FEATURES.md}
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -154,6 +154,13 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Dec 30 2020 Anton Farygin <rider@altlinux.ru> 7.74.0-alt1
+- 7.74.0
+- Fixes:
+  * CVE-2020-8286 Inferior OCSP verification
+  * CVE-2020-8285 FTP wildcard stack overflow
+  * CVE-2020-8284 trusting FTP PASV responses
+
 * Wed Oct 14 2020 Anton Farygin <rider@altlinux.ru> 7.73.0-alt1
 - 7.73.0
 
