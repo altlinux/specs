@@ -4,12 +4,12 @@
 %def_disable clang
 
 Name: deepin-qt-dbus-factory
-Version: 5.3.0.20
+Version: 5.3.0.34
 Release: alt1
 Summary: A repository stores auto-generated Qt5 dbus code
-# The entire source code is GPLv3+ except
-# libdframeworkdbus/qtdbusextended/ which is LGPLv2+
-License: GPL-3.0-or-later and LGPL-2.0-or-later
+# The entire source code is GPL-3.0+ except
+# libdframeworkdbus/qtdbusextended/ which is LGPL-2.1+
+License: GPL-3.0+ and LGPL-2.1+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-qt-dbus-factory
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -19,7 +19,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %endif
-BuildRequires: python3-devel libglvnd-devel qt5-base-devel dtk5-core-devel
+BuildRequires: python3 libglvnd-devel qt5-base-devel
 
 %description
 A repository stores auto-generated Qt5 dbus code.
@@ -41,31 +41,22 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%__subst 's|python|python3|' libdframeworkdbus/*.{pro,py}
-%__subst 's|#include <QtCore/QObject>|#include <QObject>|; s|#include <QtCore/QString>|#include <QString>|' libdframeworkdbus/types/*.h tools/qdbusxml2cpp/qdbusxml2cpp.cpp
-%__subst 's|<< endl|<< Qt::endl|; s|<< endl;|<< Qt::endl;|' tools/qdbusxml2cpp/qdbusxml2cpp.cpp libdframeworkdbus/types/*.cpp
-%__subst 's|com.trolltech.QtDBus.QtTypeName|org.qtproject.QtDBus.QtTypeName|' xml/org.kde.StatusNotifierItem.xml tools/qdbusxml2cpp/qdbusxml2cpp.cpp
-#%%__subst 's|load(dtk_qmake)|load(%%_qt5_archdatadir/mkspecs/features/dtk_qmake)|' tools/qdbusxml2cpp/qdbusxml2cpp.pro
+sed -i 's|python|python3|' libdframeworkdbus/*.{pro,py}
 
 %build
+%qmake_qt5 \
 %if_enabled clang
-%qmake_qt5 \
-    CONFIG+=nostrip \
-    LIB_INSTALL_DIR=%_libdir \
-    QMAKE_STRIP= -spec linux-clang
-%else
-%qmake_qt5 \
+    QMAKE_STRIP= -spec linux-clang \
+%endif
     CONFIG+=nostrip \
     LIB_INSTALL_DIR=%_libdir
-%endif
-
 %make_build
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
 
 %files -n libdframeworkdbus2
-%doc README.md
+%doc README.md CHANGELOG.md technology-overview.md
 %doc LICENSE
 %_libdir/lib%soname.so.2*
 
@@ -76,6 +67,9 @@ Header files and libraries for %name.
 %_libdir/lib%soname.so
 
 %changelog
+* Wed Dec 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.34-alt1
+- New version (5.3.0.34) with rpmgs script.
+
 * Wed Oct 28 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.20-alt1
 - New version (5.3.0.20) with rpmgs script.
 - Fixed compatibility with qt 5.15.
