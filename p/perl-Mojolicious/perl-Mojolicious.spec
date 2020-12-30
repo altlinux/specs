@@ -1,8 +1,8 @@
-Epoch: 1
 %define _unpackaged_files_terminate_build 1
+Epoch: 1
 Name: perl-Mojolicious
-Version: 8.67
-Release: alt1.1
+Version: 8.69
+Release: alt1
 Summary: Real-time web framework
 
 Group: Development/Perl
@@ -66,6 +66,9 @@ cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 %doc Changes
 
 %changelog
+* Wed Dec 30 2020 Igor Vlasenko <viy@altlinux.ru> 1:8.69-alt1
+- new version
+
 * Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 1:8.67-alt1.1
 - new version
 
