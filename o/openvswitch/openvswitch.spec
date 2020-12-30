@@ -13,7 +13,7 @@
 
 Name: openvswitch
 Version: 2.14.0
-Release: alt3
+Release: alt4
 
 Summary: An open source, production quality, multilayer virtual switch
 # All code is Apache-2.0 except
@@ -126,6 +126,7 @@ Devel files for Open vSwitch.
 Summary: Open vSwitch IPsec tunneling support
 License: Apache-2.0
 Group: Networking/Other
+BuildArch: noarch
 Requires: %name = %EVR
 # libreswan
 Requires: python3-module-%name = %EVR
@@ -415,6 +416,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 30 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt4
+- Build ipsec subpackage as noarch.
+
 * Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt3
 - Fixed post script for update.
 
