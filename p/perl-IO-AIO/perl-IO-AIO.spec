@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.73
+Version: 4.74
 Release: alt1
 
 Summary: Asynchronous Input/Output
@@ -62,6 +62,9 @@ scripts for %name
 
 
 %changelog
+* Wed Dec 30 2020 Igor Vlasenko <viy@altlinux.ru> 2:4.74-alt1
+- automated CPAN update
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2:4.73-alt1
 - automated CPAN update
 
