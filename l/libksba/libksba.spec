@@ -1,6 +1,6 @@
 Name: libksba
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: X.509 library
@@ -11,6 +11,7 @@ Source0: %name-%version.tar
 Patch1: %{name}-info.patch
 Patch2: 0001-Fix-a-possible-segv-in-case-of-an-unknown-CMS-object.patch
 Patch3: 0002-Fix-LFS-on-32-bit-systems.patch
+Patch4: 0003-ALT-version-is-not-beta.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -69,6 +70,9 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Wed Dec 30 2020 Alexey Gladkov <legion@altlinux.ru> 1.5.0-alt2
+- Marked version as not beta.
+
 * Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.5.0-alt1
 - New version (1.5.0).
 - Rebased to upstream git history.

@@ -1,6 +1,6 @@
 Name: libassuan
 Version: 2.5.4.4.g05535d9
-Release: alt1
+Release: alt2
 
 Summary: IPC library used by some GnuPG related software
 License: GPL-3.0-or-later AND LGPL-2.1-or-later
@@ -8,7 +8,8 @@ Group: System/Libraries
 Url: https://www.gnupg.org/
 
 Source: libassuan-%version.tar
-Patch0: 0001-Fix-LFS-on-32-bit-systems.patch
+Patch1: 0001-Fix-LFS-on-32-bit-systems.patch
+Patch2: 0002-ALT-version-is-not-beta.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -32,8 +33,7 @@ This package contains development files for the libassuan library.
 
 %prep
 %setup
-
-%patch0 -p1
+%autopatch -p1
 
 # Rename library: libassuan -> libassuan2.
 sed -i 's/libassuan\(.la\)/libassuan2\1/g' */Makefile.am
@@ -71,6 +71,9 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 30 2020 Alexey Gladkov <legion@altlinux.ru> 2.5.4.4.g05535d9-alt2
+- Marked version as not beta.
+
 * Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 2.5.4.4.g05535d9-alt1
 - Rebased to upstream git history.
 - Updated License tag.

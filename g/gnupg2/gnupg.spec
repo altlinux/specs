@@ -1,6 +1,6 @@
 Name: gnupg2
 Version: 2.2.26
-Release: alt1
+Release: alt2
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -44,6 +44,7 @@ Patch06: 0006-ALT-replace-xloadimage-by-xli.patch
 Patch07: 0007-ALT-replace-gnupg-by-gnupg2-in-texinfo.patch
 Patch08: 0008-SUSE-set-umask-before-open-outfile.patch
 Patch09: 0009-gpg-Prefer-SHA-512-and-SHA-384-in-personal-digest-pr.patch
+Patch10: 0010-ALT-disable-warning-about-development-mode.patch
 
 BuildRequires: libldap-devel
 BuildRequires: libreadline-devel
@@ -176,6 +177,9 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Wed Dec 30 2020 Alexey Gladkov <legion@altlinux.ru> 2.2.26-alt2
+- Disabled warning about development mode.
+
 * Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 2.2.26-alt1
 - New version (2.2.26) (ALT#39307).
 - Rebased to upstream git history.

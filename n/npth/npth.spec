@@ -1,6 +1,6 @@
 Name: npth
 Version: 1.6.0.20.g7e45b50
-Release: alt1
+Release: alt2
 Summary: The New GNU Portable Threads library
 
 Group: System/Libraries
@@ -8,6 +8,7 @@ License: LGPL-2.1-or-later
 Url: https://www.gnupg.org/
 
 Source: npth-%version.tar
+Patch1: 0001-ALT-version-is-not-beta.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -43,6 +44,7 @@ developing applications that use npth.
 
 %prep
 %setup -n npth-%version
+%autopatch -p1
 
 %build
 %autoreconf
@@ -71,6 +73,9 @@ make check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 30 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.20.g7e45b50-alt2
+- Marked version as not beta.
+
 * Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.20.g7e45b50-alt1
 - New version (1.6) and git snapshot.
 - Update License tag.
