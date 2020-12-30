@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2020.11.04
+Version: 2020.12.09
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -82,6 +82,9 @@ before deepin-manual actually comes into ALT to unblock packaging." > %buildroot
 %_datadir/dman
 
 %changelog
+* Wed Dec 30 2020 Leontiy Volodin <lvol@altlinux.org> 2020.12.09-alt1
+- New version (2020.12.09) with rpmgs script.
+
 * Wed Dec 02 2020 Leontiy Volodin <lvol@altlinux.org> 2020.11.04-alt1
 - New version (2020.11.04) with rpmgs script.
 
