@@ -1,6 +1,6 @@
 Name: libgpg-error
 Version: 1.41
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 Patch0: libgpg-error-1.29-multilib.patch
 Patch1: 0001-Fix-LFS-on-32-bit-systems.patch
+Patch2: 0002-ALT-version-is-not-beta.patch
 
 BuildRequires: makeinfo
 
@@ -36,8 +37,7 @@ applications using the GnuPG error library.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 cat > doc/version.texi <<EOF
 @set UPDATED $(LANG=C date -u -r doc/gpgrt.texi +'%%d %%B %%Y')
@@ -87,6 +87,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_datadir/common-lisp/source/gpg-error
 
 %changelog
+* Wed Dec 30 2020 Alexey Gladkov <legion@altlinux.ru> 1.41-alt3
+- Marked version as not beta.
+
 * Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 1.41-alt2
 - Updated Licence tag.
 - Disabled static library.
