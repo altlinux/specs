@@ -1,11 +1,7 @@
-# on i586: ./usr/lib/ocaml/stublibs/dllzarith.so 
-%set_verify_elf_method textrel=relaxed
-
 %global pkgname zarith
 %define ocamlstublib %_ocamldir/stublibs/
-
 Name: ocaml-%pkgname
-Version: 1.10
+Version: 1.11
 Release: alt1
 Summary: OCaml interface to GMP
 Group: Development/ML
@@ -97,6 +93,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %_ocamldir/%pkgname/*.cmxa
 
 %changelog
+* Thu Dec 31 2020 Anton Farygin <rider@altlinux.ru> 1.11-alt1
+- 1.11
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 1.10-alt1
 - 1.10
 
