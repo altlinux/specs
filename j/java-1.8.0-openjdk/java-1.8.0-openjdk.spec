@@ -396,7 +396,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt1_0.3.eajpp8
+Release: alt2_0.3.eajpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1759,7 +1759,7 @@ EOF
 for i in jjs keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  if [ -e %{_jvmdir}/%{jredir}/bin/$i ]; then
+  if [ -e %buildroot%{_jvmdir}/%{jredir}/bin/$i ]; then
     cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
@@ -2198,6 +2198,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.272.b10-alt2_0.3.eajpp8
+- added alternatives for keytool, policytool, etc
+
 * Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.272.b10-alt1_0.3.eajpp8
 - new version
 
