@@ -1,14 +1,13 @@
-%set_verify_elf_method textrel=relaxed
 %define libname ppx_tools
 Name: ocaml-%libname
-Version: 6.2
+Version: 6.3
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
 Group: Development/ML
 Url: https://github.com/alainfrisch/ppx_tools
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib dune
+BuildRequires: ocaml-findlib dune ocaml-cppo
 
 %description
 Tools for authors of syntactic tools (such as ppx rewriters).
@@ -22,7 +21,7 @@ Executables are thus accessible through the ocamlfind driver
 %package devel
 Summary: Development files for %name
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -32,46 +31,24 @@ developing applications that use %name.
 %setup
 
 %build
-dune build @install
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.cmxs
 %_libdir/ocaml/%libname/dumpast
-%_libdir/ocaml/%libname/ast_lifter
 %_libdir/ocaml/%libname/genlifter
 %_libdir/ocaml/%libname/ppx_metaquot
-%_libdir/ocaml/%libname/metaquot
 %_libdir/ocaml/%libname/rewriter
-%exclude %_libdir/ocaml/%libname/*/*.cmx
-%exclude %_libdir/ocaml/%libname/*/*.cmxa
-%exclude %_libdir/ocaml/%libname/*/*.cmt*
-%exclude %_libdir/ocaml/%libname/*/*.a
-%exclude %_libdir/ocaml/%libname/*/*.ml
 
-%files devel
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/*.ml
-%_libdir/ocaml/%libname/*/*.cmx
-%_libdir/ocaml/%libname/*/*.cmxa
-%_libdir/ocaml/%libname/*/*.cmt*
-%_libdir/ocaml/%libname/*/*.a
-%_libdir/ocaml/%libname/*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Dec 31 2020 Anton Farygin <rider@altlinux.ru> 6.3-alt1
+- 6.3
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 6.2-alt1
 - 6.2
 
