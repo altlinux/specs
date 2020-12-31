@@ -37,7 +37,7 @@
 
 Name: uim
 Version: 1.8.8.0.49.git49d1515ce
-Release: alt1
+Release: alt2
 
 Summary: useful input method
 
@@ -626,6 +626,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.49.git49d1515ce-alt2
+- Fixed alternatives weight for uim-pref.
+
 * Sat Sep 26 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.49.git49d1515ce-alt1
 - Updated UIM to 1.8.8-49-g49d1515ce.
 - Updated SigScheme to 0.9.1-2-gccf1f92d6.

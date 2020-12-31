@@ -18,8 +18,8 @@
 %def_disable debug
 
 Name: libgtk+2
-Version: %ver_major.32
-Release: alt5
+Version: %ver_major.33
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: LGPL-2.0
@@ -50,9 +50,6 @@ Patch6: gtk+-2.10.6-fix-drop-gdk_colormap_change.patch
 Patch10: gtk+-2.24.30-icon-padding.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=599618
 Patch12: gtk+-2.24.30-tooltip-positioning.patch
-
-Patch20: gtk+-2.24.10-fixdso.patch
-Patch21: gtk+-2.24.32-up-gtk-builder-convert-python3.patch
 
 %define glib_ver 2.28.0
 %define cairo_ver 1.6
@@ -219,8 +216,6 @@ install -p -m644 %_sourcedir/%name-gtk.lds gtk/compat.lds
 
 %patch10 -p1 -b .icon-padding
 %patch12 -p1 -b .tooltip-positioning
-%patch20 -p1 -b .fixdso
-%patch21 -p1 -b .python3
 
 bzip2 -9k NEWS
 
@@ -371,6 +366,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %endif
 
 %changelog
+* Mon Dec 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.33-alt1
+- 2.24.33
+
 * Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt5
 - disabled introspection
 
