@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-screen-recorder
-Version: 5.8.0.60
+Version: 5.8.0.61
 Release: alt1
 Summary: Default screen recorder application for Deepin
 License: GPL-3.0+
@@ -85,6 +85,9 @@ sed -i '/#include <iostream>/d;1i #include <iostream>' src/screen_shot_event.cpp
 %_datadir/dbus-1/services/com.deepin.Screenshot.service
 
 %changelog
+* Thu Dec 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.61-alt1
+- New version (5.8.0.61) with rpmgs script.
+
 * Thu Dec 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.60-alt1
 - New version (5.8.0.60) with rpmgs script.
 - Fixed build with gcc10 (thanks archlinux).
