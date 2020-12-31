@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt7
+Release:       alt8
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,11 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Tue Dec 29 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt8
+- ! ls-files of git to list proper files
+- * renamed compile to make action
+- ! pre key now to affect only make action
+
 * Thu Dec 17 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt7
 - ! proper detection for requires / provides
 - * sort the uniq requires for combined targets

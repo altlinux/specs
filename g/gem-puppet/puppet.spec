@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       7.1.0
-Release:       alt2
+Release:       alt3
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -21,6 +21,7 @@ Source5:       puppet.conf
 Patch1:        puppet-alt-adjust-default-paths.patch
 Patch2:        puppet-fix-locale-loading.patch
 Patch3:        puppet-alt-aptrpm-osfamily.patch
+Patch4:        fix_yaml.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(yard)
@@ -67,6 +68,7 @@ Documentation files for %gemname gem.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %ruby_build --ignore=full_catalog,acceptance
@@ -113,6 +115,9 @@ install -Dm644 %SOURCE5 %buildroot%_sysconfdir/puppet/puppet.conf
 
 # link to gem library code base
 ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
+
+# TODO fix backward link to a foreman ? from theforeman-foreman
+ln -s %_libexecdir/puppet-modules/theforeman-foreman/files/foreman-report_v2.rb %buildroot%ruby_gemlibdir/lib/puppet/reports/foreman.rb
 
 # Create public subdirectory
 mkdir -p %buildroot%ruby_gemlibdir/public
@@ -165,7 +170,7 @@ sed -e "s,sample.server.name,$(hostname)," \
 %dir %_sysconfdir/puppet/code/environments/production/manifests
 %dir %_sysconfdir/puppet/code
 %_sysconfdir/puppet/code
-%attr(0644,_puppet,puppet) %config(noreplace) %_sysconfdir/puppet/autosign.conf
+%attr(0664,_puppet,puppet) %config(noreplace) %_sysconfdir/puppet/autosign.conf
 %config(noreplace) %_sysconfdir/puppet/auto.conf
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/sysconfig/puppet
@@ -186,6 +191,10 @@ sed -e "s,sample.server.name,$(hostname)," \
 %ruby_gemdocdir
 
 %changelog
+* Mon Dec 28 2020 Pavel Skrylev <majioa@altlinux.org> 7.1.0-alt3
+- + symlink to report for foreman
+- ! owner for the facts folder and yaml reports
+
 * Mon Dec 14 2020 Pavel Skrylev <majioa@altlinux.org> 7.1.0-alt2
 - * default puppet.conf
 - ! spec
