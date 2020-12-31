@@ -1,6 +1,6 @@
 Name: npth
 Version: 1.6.0.20.g7e45b50
-Release: alt2
+Release: alt3
 Summary: The New GNU Portable Threads library
 
 Group: System/Libraries
@@ -73,6 +73,9 @@ make check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Dec 31 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.20.g7e45b50-alt3
+- Removed the suffix from the version completely.
+
 * Wed Dec 30 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.20.g7e45b50-alt2
 - Marked version as not beta.
 

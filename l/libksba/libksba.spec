@@ -1,6 +1,6 @@
 Name: libksba
 Version: 1.5.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: X.509 library
@@ -70,6 +70,9 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 31 2020 Alexey Gladkov <legion@altlinux.ru> 1.5.0-alt3
+- Removed the suffix from the version completely.
+
 * Wed Dec 30 2020 Alexey Gladkov <legion@altlinux.ru> 1.5.0-alt2
 - Marked version as not beta.
 
