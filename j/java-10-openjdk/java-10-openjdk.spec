@@ -125,9 +125,9 @@ BuildRequires: /proc rpm-build-java
 %global rev_build_loop  %{build_loop2} %{build_loop1}
 
 %ifarch %{jit_arches}
-%global bootstrap_build 1
+%global bootstrap_build 0
 %else
-%global bootstrap_build 1
+%global bootstrap_build 0
 %endif
 
 %if %{bootstrap_build}
@@ -233,11 +233,14 @@ BuildRequires: /proc rpm-build-java
 %global top_level_dir_name   %{origin}
 %global minorver        0
 %global buildver        13
+%if %{bootstrap_build}
 # priority must be 7 digits in total
 # setting to 1, so debug ones can have 0
-#global priority        00000%{minorver}1
+%global priority        00000%{minorver}1
+%else
 # normal priority for java 10
 %define priority %(printf '%02d%02d%02d%02d' %{majorver} %{minorver} %{securityver} %{buildver} )
+%endif
 %global newjavaver      %{majorver}.%{minorver}.%{securityver}
 
 %global javaver         %{majorver}
@@ -319,7 +322,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-10-openjdk
 Version: %{newjavaver}.%{buildver}
-Release: alt4_7jpp9
+Release: alt5_7jpp9
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -431,7 +434,11 @@ BuildRequires: libnss-devel libnss-devel-static
 BuildRequires: xorg-proto-devel
 BuildRequires: zip
 BuildRequires: javapackages-filesystem
+%if %{bootstrap_build}
 BuildRequires: java-9-openjdk-devel
+%else
+BuildRequires: java-10-openjdk-devel
+%endif
 # Zero-assembler build requirement
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
@@ -895,7 +902,11 @@ bash ../configure \
     --with-version-build=%{buildver} \
     --with-version-pre="" \
     --with-version-opt="" \
+%if %{bootstrap_build}
     --with-boot-jdk=/usr/lib/jvm/java-9-openjdk \
+%else
+    --with-boot-jdk=/usr/lib/jvm/java-10-openjdk \
+%endif
     --with-debug-level=$debugbuild \
     --with-native-debug-symbols=internal \
     --enable-unlimited-crypto \
@@ -1265,7 +1276,7 @@ EOF
 for i in jjs keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  if [ -e %{_jvmdir}/%{sdkdir}/bin/$i ]; then
+  if [ -e %buildroot%{_jvmdir}/%{sdkdir}/bin/$i ]; then
     cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/java
@@ -1606,6 +1617,10 @@ fi
 
 
 %changelog
+* Thu Dec 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:10.0.2.13-alt5_7jpp9
+- added alternatives for keytool, policytool, etc
+- non-bootstrap build
+
 * Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:10.0.2.13-alt4_7jpp9
 - use zerg@'s hack for armh
 
