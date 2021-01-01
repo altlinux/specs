@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: smartmontools
-Version: 7.1
-Release: alt2
+Version: 7.2
+Release: alt1
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
 License: GPLv2+
@@ -107,6 +107,9 @@ install -pD -m755 %_sourcedir/smartmontools-update-drivedb \
 %_sysconfdir/cron.monthly/smartmontools-update-drivedb
 
 %changelog
+* Fri Jan 01 2021 Michael Shigorin <mike@altlinux.org> 7.2-alt1
+- Updated to 7.2.
+
 * Fri Jul 03 2020 Andrew Savchenko <bircoph@altlinux.org> 7.1-alt2
 - Add package for drivedb update script, data and cronjob.
 
