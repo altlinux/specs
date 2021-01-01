@@ -233,7 +233,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt3_2.6.18.0jpp8
+Release: alt4_2.6.18.0jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -375,6 +375,7 @@ BuildRequires: libpng-devel
 BuildRequires: wget
 BuildRequires: xorg-proto-devel
 BuildRequires: ant1.9
+BuildRequires: xml-commons-apis jaxp_parser_impl
 BuildRequires: libXinerama-devel
 # Provides lsb_release for generating distro id in jdk_generic_profile.sh
 BuildRequires: lsb-release
@@ -464,6 +465,7 @@ Obsoletes:      java-1.7.0-openjdk-javaws < %version
 Obsoletes:      mozilla-plugin-java-1.7.0-openjdk < %version
 Source45: rhino.jar
 Patch33: java-1.7.0-openjdk-alt-no-Werror.patch
+Patch34: java-1.7.0-openjdk-alt-no-sys-sysctl-h.patch 
 
 # Obsolete older 1.6 packages as it cannot use the new bytecode
 # Obsoletes: java-1.6.0-openjdk
@@ -674,8 +676,10 @@ tar xzf %{SOURCE9}
 %patch200
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
+%patch34 -p1
 
 %build
+%add_optflags -fcommon
 # How many cpu's do we have?
 export NUM_PROC=`/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :`
 export NUM_PROC=${NUM_PROC:-1}
@@ -696,7 +700,7 @@ export ARCH_DATA_MODEL=64
 %global ourflags %(echo %optflags | sed -e 's|-Wall|-Wformat=2 -Wno-cpp -Wno-error=format-nonliteral|')
 # Disable RPM CFLAGS for now as the change appears to cause crashes on x86 RHEL 7.5 multilib
 #%global ourcppflags %(echo %ourflags | sed -e 's|-fexceptions||' | sed -r -e 's|-O[0-9]*||')
-%global ourcppflags "-fstack-protector-strong"
+%global ourcppflags -fstack-protector-strong -fcommon
 %global ourldflags %{__global_ldflags}
 
 # Build the re-written rhino jar
@@ -1243,7 +1247,7 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  if [ -e %{_jvmdir}/%{jredir}/bin/$i ]; then
+  if [ -e %buildroot%{_jvmdir}/%{jredir}/bin/$i ]; then
     cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
@@ -1471,6 +1475,10 @@ fi
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Thu Dec 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.221-alt4_2.6.18.0jpp8
+- fixed build
+- added alternatives for keytool,policytool,etc
+
 * Sun Oct 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.221-alt3_2.6.18.0jpp8
 - added obsoletes (closes: #37301)
 
