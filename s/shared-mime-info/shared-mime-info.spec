@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable updatedb
 %define ver_major 2
-%define ver_minor 0
+%define ver_minor 1
 
 Name: shared-mime-info
 Version: %ver_major.%ver_minor
@@ -26,8 +26,11 @@ Patch: %name-2.0-alt-cachedir-param.patch
 Patch1: %name-2.0-alt-swf.patch
 Patch2: %name-2.0-alt-q_option.patch
 
-BuildRequires(pre): meson rpm-build-licenses rpm-build-xdg
-BuildRequires: libgio-devel libxml2-devel
+%define glib_ver 2.6.0
+%define libxml2_ver 2.4.0
+
+BuildRequires(pre): meson rpm-build-xdg
+BuildRequires: libgio-devel >= %glib_ver libxml2-devel >= %libxml2_ver
 BuildRequires: itstool xmllint xmlto
 
 %description
@@ -54,7 +57,7 @@ created by converting the existing KDE and GNOME databases to the new
 format and merging them together.
 
 %prep
-%setup %{?_disable_snapshot:-n xdg-%name-Release-%ver_major-%ver_minor}
+%setup
 cp %SOURCE1 .
 %patch -p1 -b .cachedir
 %patch1 -p1 -b .swf
@@ -113,6 +116,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Fri Jan 01 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
+- 2.1
+
 * Thu May 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - updated to 2.0-1-g6bf9e4f (ported to Meson build system)
 
