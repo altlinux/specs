@@ -1,7 +1,7 @@
 %define beta %nil
 
 Name: wget
-Version: 1.20.3
+Version: 1.21
 Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
@@ -114,7 +114,7 @@ find doc -type f -print0 |
 	xargs -r0 sed -i 's,/usr/local/,/,g' --
 
 %patch1 -p2
-%patch10 -p1
+#patch10 -p1
 
 %build
 %ifarch %e2k
@@ -122,6 +122,10 @@ find doc -type f -print0 |
 %add_optflags -D__ICC -D__STRICT_ANSI__
 %endif
 %configure --with-ssl=openssl
+# TODO: consider some of these:
+#	--enable-fsanitize-ubsan
+#	--enable-fsanitize-asan
+#	--enable-fsanitize-msan
 # https://bugzilla.altlinux.org/show_bug.cgi?id=14239
 (cd po; make update-po)
 %make_build
@@ -129,7 +133,7 @@ find doc -type f -print0 |
 %install
 %makeinstall
 
-%find_lang %name
+%find_lang --output=%name.lang %name %name-gnulib
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/%{name}rc
@@ -139,6 +143,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Fri Jan 01 2021 Michael Shigorin <mike@altlinux.org> 1.21-alt1
+- 1.21
+
 * Fri Apr 05 2019 Michael Shigorin <mike@altlinux.org> 1.20.3-alt1
 - 1.20.3: security update, thx ldv@ for heads-up
 
