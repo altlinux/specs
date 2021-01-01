@@ -1,8 +1,8 @@
 # vim:set ft=spec tw=79:
 
 %define module_name	ipset
-%define module_version	7.6
-%define module_release	alt2
+%define module_version	7.10
+%define module_release	alt1
 
 %define flavour		std-def
 %define karch %ix86 x86_64 aarch64 ppc64le armh e2k e2kv4 e2kv5 e2kv6
@@ -59,8 +59,12 @@ install -p -m644 kernel/net/netfilter/*.ko %buildroot%module_dir
 %module_dir
 
 %changelog
+
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jan 01 2021 Anton Farygin <rider@altlinux.ru> 7.10-alt1
+- 7.6 -> 7.10
 
 * Tue Mar 10 2020 Anton Farygin <rider@altlinux.ru> 7.6-alt1
 - 7.5 -> 7.6

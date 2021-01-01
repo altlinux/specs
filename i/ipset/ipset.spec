@@ -3,8 +3,8 @@
 %define _prefix /
 %define soname 13
 Name: ipset
-Version: 7.6
-Release: alt2
+Version: 7.10
+Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -101,6 +101,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Fri Jan 01 2021 Anton Farygin <rider@altlinux.ru> 7.10-alt1
+- 7.10
+
 * Sun Nov 08 2020 Michael Shigorin <mike@altlinux.org> 7.6-alt2
 - srpm_cleanup related ftbfs fixup
 - minor spec cleanup
