@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	6.1.12a
+%define module_version	6.1.16
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -118,6 +118,12 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Oct 23 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.16-alt1
+- Updated template for virtualbox 6.1.16
+
+* Tue Sep 08 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.14-alt1
+- Updated template for virtualbox 6.1.14
 
 * Tue Jul 21 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.12a-alt1
 - Updated template for virtualbox 6.1.12a
