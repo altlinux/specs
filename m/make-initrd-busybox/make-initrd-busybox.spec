@@ -1,19 +1,23 @@
 Name: make-initrd-busybox
-Version: 1.28.1
-Release: alt2
+Version: 1.32.1
+Release: alt1
 
 Summary: Busybox for make-initrd
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Base
 
 Source0: %name-%version.tar
+
+BuildRequires: libtirpc-devel
 
 %description
 Busybox (%version) for make-initrd.
 
 %prep
 %setup
-cp -f -- busybox-config busybox/.config
+sed -r \
+	-e 's#@includedir@#%{_includedir}#g' \
+	busybox-config > busybox/.config
 
 %build
 cd busybox
@@ -30,10 +34,14 @@ cd %buildroot/lib/initrd
 ln -s ../usr/bin/readlink bin/readlink
 ln -s ../usr/sbin/chroot  sbin/chroot
 
-%files 
+%files
 /lib/initrd/*
 
 %changelog
+* Sat Jan 02 2021 Alexey Gladkov <legion@altlinux.ru> 1.32.1-alt1
+- New busybox version (1.32.1).
+- Update License tag.
+
 * Wed Apr 17 2019 Alexey Gladkov <legion@altlinux.ru> 1.28.1-alt2
 - Add switch_root.
 
