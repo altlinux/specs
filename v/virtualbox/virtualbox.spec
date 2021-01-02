@@ -61,8 +61,8 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 6.1.12a
-Release: alt2
+Version: 6.1.16
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -898,6 +898,12 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Oct 21 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.16-alt1
+- Update to newest version 6.1.16
+
+* Wed Sep 09 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.14-alt1
+- Update to newest version 6.1.14
+
 * Thu Jul 23 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.12a-alt2
 - Add compatibility provides for old kernel modules builds for virtualbox-6.1.8
 
