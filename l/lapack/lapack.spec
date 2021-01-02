@@ -1,6 +1,6 @@
 Name: lapack
 Version: 3.8.0
-Release: alt3
+Release: alt4
 Epoch: 1
 
 %define sover 4
@@ -41,8 +41,6 @@ Requires: libblas-devel
 Requires: libopenblas-devel
 %endif
 Requires: lib%name = %epoch:%version-%release
-Conflicts: lib%name-devel < %epoch:%version-%release
-Obsoletes: lib%name-devel < %epoch:%version-%release
 Conflicts: lib%name-goto-devel
 Obsoletes: lib%name-goto-devel
 
@@ -182,6 +180,9 @@ done >lapack-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Sat Jan 02 2021 Vladislav Zavjalov <slazav@altlinux.org> 1:3.8.0-alt4
+- Remove Conflicts/Obsoletes itself in liblapack-devel
+
 * Thu Feb 14 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.8.0-alt3
 - exclude %%arm from crippled arches
 
