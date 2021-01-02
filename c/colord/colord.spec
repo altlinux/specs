@@ -1,15 +1,19 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %def_enable daemon
 %def_enable session_helper
 %def_enable reverse
 %def_enable introspection
 %def_enable vala
-%def_enable print_profiles
 %def_enable bash_completion
 %def_enable installed_tests
 %def_enable libcolordcompat
 %def_enable systemd
+
+# ArgyllCMS required fot build
+%def_disable argyllcms_sensor
+%def_disable print_profiles
+
 %def_enable docs
 %def_disable check
 
@@ -23,7 +27,7 @@
 
 Name: colord
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 Summary: Color daemon
 License: GPLv2+
@@ -38,7 +42,7 @@ Source: %name-%version.tar
 
 %define colord_group %name
 %define colord_user %name
-%define glib_ver 2.46
+%define glib_ver 2.58
 %define polkit_ver 0.113-alt2
 %define lcms_ver 2.6
 %define gusb_ver 0.2.7
@@ -56,6 +60,7 @@ BuildRequires: libsqlite3-devel libusb-devel libgusb-devel >= %gusb_ver
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_argyllcms_sensor:BuildRequires: argyllcms}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
 %{?_enable_bash_completion:BuildRequires: bash-completion > %bash_completion_ver}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
@@ -148,6 +153,7 @@ This package provides Colord reference manual
 	%{?_disable_reverse:-Denable-reverse=false} \
 	%{?_enable_vala:-Dvapi=true} \
 	-Ddaemon_user=%colord_user \
+	%{?_disable_argyllcms_sensor=-Dargyllcms_sensor=false} \
 	%{?_enable_print_profiles:-Dprint_profiles=true} \
 	%{?_disable_bash_completion:-Dbash_completion=false} \
 	%{?_enable_installed_tests:-Dinstalled_tests=true} \
@@ -313,6 +319,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Jan 02 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt2
+- updated to 1.4.5-4-gdcfe824
+- disabled ArgyllCMS support
+
 * Mon Nov 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 
