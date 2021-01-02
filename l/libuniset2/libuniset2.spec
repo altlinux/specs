@@ -24,7 +24,7 @@
 
 Name: libuniset2
 Version: 2.8.1
-Release: alt2
+Release: alt3
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -544,6 +544,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Jan 02 2021 Pavel Vainerman <pv@altlinux.ru> 2.8.1-alt3
+- make style
+- fixed docs
+
 * Sun Dec 27 2020 Pavel Vainerman <pv@altlinux.ru> 2.8.1-alt2
 - ALT spec: some fixes
 
