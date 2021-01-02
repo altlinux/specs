@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -21,8 +21,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-setuptools
 %if_enabled check
 BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower bluez
-BuildRequires: python3-module-setuptools python3-module-nose python3-module-dbus-gobject
-BuildRequires: python3-module-pyflakes python3-module-pycodestyle
+BuildRequires: python3-module-dbus-gobject python3-module-pycodestyle
 # polkit tests fail since 0.115-alt4
 #BuildRequires: polkit
 %endif
@@ -46,13 +45,16 @@ See %_docdir/%name-%version/README.rst for more information.
 %python3_install
 
 %check
-%__python3 setup.py test
+%__python3 -m unittest
 
 %files
 %python3_sitelibdir_noarch/%modname/
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Sat Jan 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Fri Jan 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
 - 0.21.0
 
