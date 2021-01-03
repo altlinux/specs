@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define svn_release svn312
-%define our_release alt4
+%define our_release alt5
 
 Name: structuresynth
 Version: 1.5.0
@@ -15,7 +15,7 @@ Url: http://structuresynth.sourceforge.net
 
 # Blender doesn't officially support 32-bit build since 2.80. See also:
 # https://developer.blender.org/T67184
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 Source: %name-%version.tar
 
@@ -83,6 +83,9 @@ install -pDm0644 images/fileicons/StructureSynth-256.png %buildroot%_iconsdir/hi
 %_iconsdir/hicolor/128x128/*
 
 %changelog
+* Sun Jan 03 2021 Michael Shigorin <mike@altlinux.org> 1.5.0-alt5.svn312
+- %%e2k is 64-bit and has blender
+
 * Thu Sep 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt4.svn312
 - Disabled build on architectures not supported by blender.
 
