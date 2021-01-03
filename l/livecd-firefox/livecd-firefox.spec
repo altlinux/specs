@@ -1,6 +1,6 @@
 Name: livecd-firefox
 Version: 0.1
-Release: alt6
+Release: alt7
 
 Summary: configure firefox for a livecd environment
 License: Public domain
@@ -8,6 +8,8 @@ Group: System/X11
 
 Url: http://altlinux.org/m-p
 Packager: Michael Shigorin <mike@altlinux.org>
+
+ExcludeArch: armh
 
 # it's *not* noarch, btw
 %define prefix %_libdir/firefox/browser/defaults
@@ -37,6 +39,9 @@ _EOF_
 %files
 
 %changelog
+* Sun Jan 03 2021 Andrey Cherepanov <cas@altlinux.org> 0.1-alt7
+- ExcludeArch: armh.
+
 * Mon Dec 04 2017 Michael Shigorin <mike@altlinux.org> 0.1-alt6
 - dropped prefs.js references
 

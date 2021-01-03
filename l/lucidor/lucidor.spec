@@ -3,7 +3,7 @@
 
 Name:     lucidor
 Version:  0.9.10
-Release:  alt2
+Release:  alt3
 
 Summary: E-book reader application
 
@@ -12,7 +12,7 @@ License:  %gpl3plus
 URL:      http://lucidor.org/lucidor/
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
-BuildArch: noarch
+ExcludeArch: armh
 
 Source0: %name-%version.tar
 
@@ -79,6 +79,9 @@ mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Jan 03 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt3
+- ExcludeArch: armh
+
 * Tue Feb 02 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.10-alt2
 - Removing xulrunner usage
 
