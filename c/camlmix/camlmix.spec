@@ -1,16 +1,12 @@
 Name: camlmix
-Version: 1.3.0
-Release: alt1.qa1
+Version: 1.3.1
+Release: alt1
 Summary: Generic preprocessor for OCaml program with embedded text.
 
 Group: Development/ML
-License: GPL
-Url: http://martin.jambon.free.fr/camlmix/
-Packager: Veaceslav Grecea <slavutich@altlinux.org>
-
-Source: http://martin.jambon.free.fr/camlmix/%name-%version.tar.bz2
-
-# Automatically added by buildreq on Tue Sep 23 2008
+License: BSD
+Url: https://github.com/mjambon/camlmix
+Source: %name-%version.tar
 BuildRequires: ocaml
 
 %description
@@ -26,15 +22,19 @@ extension.
 make
 
 %install
-mkdir -p %buildroot/usr/bin
-make install PREFIX=%buildroot/usr
+mkdir -p %buildroot%_bindir
+%makeinstall PREFIX=%buildroot%_prefix
 
-#install -m755  camlmix %buildroot/usr
 %files
 %doc LICENSE
 %_bindir/*
 
 %changelog
+* Sun Jan 03 2021 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+- fixed License
+- cleanup specfile
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
