@@ -1,9 +1,9 @@
 Name: libmicrohttpd
-Version: 0.9.66
+Version: 0.9.71
 Release: alt1
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
-License: LGPL
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: http://www.gnu.org/software/libmicrohttpd/
 
@@ -29,7 +29,12 @@ This package contains the headers and libraries for libmicrohttpd development.
 
 %build
 %autoreconf
-%configure --disable-static --disable-doc --disable-examples
+%configure \
+	--disable-static \
+	--disable-doc \
+	--disable-examples \
+	--enable-gcc-hardening \
+	--enable-linker-hardening
 %make_build
 
 %install
@@ -45,6 +50,9 @@ This package contains the headers and libraries for libmicrohttpd development.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Jan 03 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.71-alt1
+- new version 0.9.71
+
 * Thu Sep 12 2019 Alexey Shabalin <shaba@altlinux.org> 0.9.66-alt1
 - new version 0.9.66
 
