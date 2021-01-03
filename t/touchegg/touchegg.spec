@@ -1,0 +1,58 @@
+Name:     touchegg
+Version:  2.0.4
+Release:  alt1
+
+Summary:  Linux multi-touch gesture recognizer
+License:  GPL-3.0
+Group:    Other
+Url:      https://github.com/JoseExposito/touchegg
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+Source:   %name-%version.tar
+Patch1:   touchegg-alt-remove-static.patch
+
+BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+BuildRequires: libudev-devel
+BuildRequires: libinput-devel
+BuildRequires: libpugixml-devel
+BuildRequires: libcairo-devel
+BuildRequires: libXtst-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libpcre-devel
+
+%description
+Touchegg is an app that runs in the background and transform the gestures you
+make on your touchpad into visible actions in your desktop.
+
+%prep
+%setup
+%patch1 -p1
+
+%build
+%cmake -GNinja \
+       -Wno-dev
+%ninja_build -C BUILD
+
+%install
+%ninja_install -C BUILD
+
+%preun
+%preun_service %name
+
+%post
+%post_service %name
+
+%files
+%doc *.md
+%_bindir/%name
+%_sysconfdir/xdg/autostart/%name.desktop
+%_datadir/%name
+%_unitdir/%name.service
+
+%changelog
+* Sun Jan 03 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
+- Initial build for Sisyphus
