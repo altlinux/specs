@@ -1,5 +1,5 @@
 Name: xfce4-screensaver
-Version: 0.1.11
+Version: 4.16.0
 Release: alt1
 
 Summary: Screen saver and locker for Xfce
@@ -44,7 +44,6 @@ and the Xfconf configuration backend.
 	--disable-static \
 	--disable-silent-rules \
 	--enable-maintainer-mode \
-	--with-mit-ext \
 	--enable-pam \
 	--with-pam-auth-type=system \
 	--with-systemd \
@@ -74,6 +73,9 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Sun Jan 03 2021 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- 0.1.11 -> 4.16.0.
+
 * Mon Nov 09 2020 Mikhail Efremov <sem@altlinux.org> 0.1.11-alt1
 - Update Vcs tag.
 - Drop exo-csource from BR.
