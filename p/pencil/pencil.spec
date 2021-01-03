@@ -3,7 +3,7 @@
 
 Name:     pencil
 Version:  2.0.5
-Release:  alt2
+Release:  alt3
 
 Summary: GUI prototyping tool
 
@@ -13,7 +13,7 @@ URL:      http://pencil.evolus.vn
 #URL:     http://code.google.com/p/evoluspencil/
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
-BuildArch: noarch
+ExcludeArch: armh
 
 Source0: %name-%version.tar
 
@@ -63,6 +63,9 @@ cp -a ./%_datadir/%name %buildroot%_datadir/
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Jan 03 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt3
+- ExcludeArch: armh
+
 * Tue Feb 02 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.5-alt2
 - Removing xulrunner usage
 
