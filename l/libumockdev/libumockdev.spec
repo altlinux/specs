@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.15.3
+Version: 0.15.4
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -29,7 +29,10 @@ BuildRequires: libudev-devel libgudev-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_check:BuildRequires: /proc,/dev/pts}
+%{?_enable_check:
+BuildRequires: /proc /dev/pts udev valgrind
+BuildRequires: python3-module-pygobject3 libgudev-gir-devel
+BuildRequires: xorg-server xorg-drv-dummy gphoto2}
 
 %description
 umockdev mocks Linux devices for creating integration tests for hardware
@@ -123,6 +126,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Mon Jan 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.4-alt1
+- 0.15.4
+
 * Fri Jan 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.3-alt1
 - 0.15.3
 
