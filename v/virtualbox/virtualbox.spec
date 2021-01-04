@@ -62,7 +62,7 @@
 
 Name: virtualbox
 Version: 6.1.16
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -898,6 +898,10 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Jan 04 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.16-alt2
+- Update build for branch p9 (Closes: 39501)
+- Backport patches with adjustments for Linux 5.10
+
 * Wed Oct 21 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.16-alt1
 - Update to newest version 6.1.16
 
