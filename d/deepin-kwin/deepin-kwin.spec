@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-kwin
-Version: 5.2.0.11
-Release: alt2
+Version: 5.2.0.13
+Release: alt1
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -118,6 +118,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Mon Jan 04 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.13-alt1
+- New version (5.2.0.13) with rpmgs script.
+
 * Tue Dec 15 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.11-alt2
 - Changed default background.
 
