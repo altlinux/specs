@@ -1,8 +1,8 @@
 %global repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.3.0.29
-Release: alt3
+Version: 5.3.0.35
+Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -57,6 +57,9 @@ sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/d
 %_includedir/%repo/
 
 %changelog
+* Thu Dec 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.35-alt1
+- New version (5.3.0.35) with rpmgs script.
+
 * Tue Dec 15 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.29-alt3
 - Changed default background.
 
