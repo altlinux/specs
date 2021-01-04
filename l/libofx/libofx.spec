@@ -1,10 +1,10 @@
 Name: libofx
-Version: 0.9.15
+Version: 0.10.0
 Release: alt1
 
 Summary: The OFX parser library
 Group: System/Libraries
-License: GPLv2
+License: GPL-2.0
 Url: http://libofx.sourceforge.net
 
 Source: http://download.sourceforge.net/%name/%name-%version.tar.gz
@@ -76,6 +76,9 @@ rm -f ofxdump/ofxdump.1
 %_docdir/%name/
 
 %changelog
+* Mon Jan 04 2021 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt1
+- New version.
+
 * Thu May 28 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.15-alt1
 - New version.
 
