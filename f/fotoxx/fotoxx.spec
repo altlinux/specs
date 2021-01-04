@@ -1,10 +1,10 @@
 Name: fotoxx
-Version: 20.19
+Version: 21.32
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
 Group: Graphics
-License: %lgpl3plus
+License: GPL-3.0-or-later
 Url: http://www.kornelix.com/%name/%name.html
 
 # VCS: https://gitlab.com/fotoxx/fotoxx.git
@@ -20,17 +20,17 @@ Requires: exiv2
 # fotoxx uses xdg-open executable to launch HTML docs viewer:
 Requires: xdg-utils
 
+Requires: libwebp-tools openjpeg-tools2.0
+
 # needed to write images to CD/DVD
 Requires: brasero
 
 Provides: fotox
 Obsoletes: fotox
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel libjpeg-devel liblcms2-devel
-BuildRequires: perl-Image-ExifTool xdg-utils
+BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel libjpeg-devel
+BuildRequires: liblcms2-devel libraw-devel perl-Image-ExifTool xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
-BuildRequires: libraw-devel
 
 %description
 Fotox is a program for improving digital photos. Navigate through large image
@@ -53,16 +53,15 @@ This package provides noarch data needed for Fotox to work.
 %prep
 %setup -n %name
 chmod -x doc/*
+sed -i 's/opj_decompress/opj2_decompress/' f.pixmap.cc
 
 %build
 %make_build PREFIX=/usr CXXFLAGS="%optflags %(getconf LFS_CFLAGS)"
 
 %install
-install -d %buildroot%_man1dir
 %make_install install DESTDIR=%buildroot PREFIX=%_prefix
 
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/fotoxx.desktop
-install -pD -m644 doc/fotoxx.man %buildroot%_man1dir/fotoxx.1
 install -pD -m644 images/fotoxx.png %buildroot%_liconsdir/fotoxx.png
 install -pD %_sourcedir/fotoxx32.png %buildroot%_niconsdir/fotoxx.png
 install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
@@ -77,12 +76,15 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_liconsdir/*
 %_datadir/%name/
 %_man1dir/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc doc/README* doc/changelog doc/copyright
 
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sun Jan 03 2021 Yuri N. Sedunov <aris@altlinux.org> 21.32-alt1
+- 21.32
+
 * Thu Oct 29 2020 Yuri N. Sedunov <aris@altlinux.org> 20.19-alt1
 - 20.19
 
