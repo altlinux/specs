@@ -5,7 +5,7 @@
 
 Name: firefox-r-kiosk
 Version: 0.9.0.1
-Release: alt2
+Release: alt3
 
 Summary: Real Kiosk extension for Mozilla Firefox
 
@@ -15,7 +15,7 @@ Url: https://addons.mozilla.org/en/firefox/addon/r-kiosk/
 Source: https://addons.mozilla.org/firefox/downloads/file/132044/%rname-%rver-fx.xpi
 Packager: Michael Shigorin <mike@altlinux.org>
 
-ExcludeArch: ppc64le armh
+ExcludeArch: armh
 
 BuildRequires(pre): rpm-build-firefox
 BuildRequires: unzip
@@ -57,6 +57,9 @@ if [ "$1" = 0 ]; then [ ! -d "%ciddir" ] || rm -rf "%ciddir"; fi
 %ciddir
 
 %changelog
+* Mon Jan 04 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.0.1-alt3
+- ExcludeArch: armh
+
 * Mon Nov 30 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.0.1-alt2
 - ExcludeArch: ppc64le armh
 
