@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Epoch: 1
 Name: perl-ldap
-Version: 0.67
+Version: 0.68
 Release: alt1
 
 Summary: %name - A Client interface to LDAP servers
@@ -56,6 +56,9 @@ mv contrib/tklkup contrib/tklkup.pl
 %_bindir/*
 
 %changelog
+* Wed Jan 06 2021 Igor Vlasenko <viy@altlinux.ru> 1:0.68-alt1
+- automated CPAN update
+
 * Wed Dec 30 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.67-alt1
 - automated CPAN update
 
