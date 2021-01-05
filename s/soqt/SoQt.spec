@@ -1,6 +1,6 @@
 Name: soqt
 Version: 1.6.0
-Release: alt2
+Release: alt3
 Summary: Qt GUI component toolkit library for Coin
 License: BSD-3-Clause
 Group: Development/Tools
@@ -12,6 +12,7 @@ Source1: cpack-src.tar
 Source2: soanydata-src.tar
 Source3: sogui-src.tar
 Patch1:  SoQt-1.6.0-cmake.patch
+Patch2:  soqt-fix-cmake-3.19.patch
 
 Provides: SoQt = %EVR
 Obsoletes: SoQt < %EVR
@@ -78,6 +79,7 @@ This package contains development documentation for SoQt.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 tar xf %SOURCE1
 tar xf %SOURCE2
 tar xf %SOURCE3
@@ -113,6 +115,9 @@ rm -rf %buildroot%_man3dir/misc.3*
 %doc %_defaultdocdir/SoQt
 
 %changelog
+* Tue Jan 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt3
+- FTBFS: fix build with cmake 3.19.
+
 * Fri Oct 16 2020 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt2
 - Remove /usr/share/man/man3/misc.3.xz conflicting with xinetd-devel.
 
