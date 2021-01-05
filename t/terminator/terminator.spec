@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %add_typelib_req_skiplist typelib(Gnome)
-%define ver_major 2.0
+%define ver_major 2.1
 
 Name: terminator
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
@@ -66,6 +66,9 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %exclude %python3_sitelibdir_noarch/%name-%version-py*.egg-info
 
 %changelog
+* Tue Jan 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - updated to v2.0.1-43-gacba6fa3
 
