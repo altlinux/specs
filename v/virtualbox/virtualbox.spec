@@ -62,7 +62,7 @@
 
 Name: virtualbox
 Version: 6.1.16
-Release: alt2
+Release: alt3
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -202,6 +202,10 @@ It allows to share files and sync time with host system.
 Summary: Additions common files for VirtualBox OSE guest systems
 Group: Emulators
 Provides: %name-guest-common = 6.1.8
+Provides: %name-guest-common = 6.1.6
+Provides: %name-guest-common = 6.1.4
+Provides: %name-guest-common = 6.1.2
+Provides: %name-guest-common = 6.1.0
 
 %description guest-common
 This packages contains common files for VirtualBox OSE guest systems.
@@ -211,6 +215,10 @@ It consists modprobe rules to load kernel modules guest on guest system.
 Summary: Additions common files for VirtualBox OSE vboxvideo driver
 Group: Emulators
 Provides: %name-guest-common-vboxvideo = 6.1.8
+Provides: %name-guest-common-vboxvideo = 6.1.6
+Provides: %name-guest-common-vboxvideo = 6.1.4
+Provides: %name-guest-common-vboxvideo = 6.1.2
+Provides: %name-guest-common-vboxvideo = 6.1.0
 
 %description guest-common-vboxvideo
 This packages contains common files for VirtualBox OSE vboxvideo driver.
@@ -220,6 +228,10 @@ It consists modprobe rules to load kernel module vboxvideo on guest system.
 Summary: Additions common files for VirtualBox OSE vboxguest driver
 Group: Emulators
 Provides: %name-guest-common-vboxguest = 6.1.8
+Provides: %name-guest-common-vboxguest = 6.1.6
+Provides: %name-guest-common-vboxguest = 6.1.4
+Provides: %name-guest-common-vboxguest = 6.1.2
+Provides: %name-guest-common-vboxguest = 6.1.0
 
 %description guest-common-vboxguest
 This packages contains common files for VirtualBox OSE vboxguest driver.
@@ -898,6 +910,10 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Jan 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.16-alt3
+- Add compatibility provides for all old kernel modules builds
+  for virtualbox-6.1.x (Closes: 39501)
+
 * Mon Jan 04 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.16-alt2
 - Update build for branch p9 (Closes: 39501)
 - Backport patches with adjustments for Linux 5.10
