@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.18
+Version: %ver_major.19
 Release: alt1
 
 Summary: Media Sharing Server
@@ -36,7 +36,7 @@ Source: https://github.com/PipeWire/pipewire/archive/%version/%name-%version.tar
 Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
-Patch: %name-0.3.14-alt-rpath.patch
+Patch: %name-0.3.19-alt-rpath.patch
 
 Requires: %name-libs = %version-%release
 Requires: rtkit
@@ -46,9 +46,14 @@ Requires: rtkit
 BuildRequires(pre): meson
 BuildRequires: libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
-BuildRequires: libv4l-devel libbluez-devel libsndfile-devel
+BuildRequires: libv4l-devel libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
-BuildRequires: libsbc-devel
+BuildRequires: libbluez-devel
+# BT codecs
+BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
+#BuildRequires: libopenaptx-devel
+# for pw-top
+BuildRequires: libncurses-devel
 %if_enabled gstreamer
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver)
@@ -103,9 +108,10 @@ This package contains command line utilities for the PipeWire media server.
 
 %prep
 %setup
-%patch
+#%%patch
 
 %build
+export LIB=%_lib
 %meson \
 	%{?_enable_docs:-Ddocs=true} \
 	%{?_enable_man:-Dman=true} \
@@ -140,6 +146,8 @@ This package contains command line utilities for the PipeWire media server.
 %dir %_sysconfdir/%name/media-session.d
 %_sysconfdir/%name/media-session.d/with-jack
 %_sysconfdir/%name/media-session.d/with-pulseaudio
+%_sysconfdir/%name/media-session.d/alsa-monitor.conf
+%_sysconfdir/%name/media-session.d/media-session.conf
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
 %if_enabled systemd
@@ -193,6 +201,7 @@ This package contains command line utilities for the PipeWire media server.
 %_bindir/pw-play
 %_bindir/pw-profiler
 %_bindir/pw-record
+%_bindir/pw-top
 %{?_enable_examples:%_bindir/pw-reserve}
 %_bindir/spa-inspect
 %_bindir/spa-monitor
@@ -211,6 +220,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Tue Jan 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.19-alt1
+- updated to 0.3.19-4-g18b5199d
+
 * Tue Dec 15 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.18-alt1
 - updated to 0.3.18-1-g13cb51ef
 
