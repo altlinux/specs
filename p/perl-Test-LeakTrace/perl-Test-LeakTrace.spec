@@ -18,8 +18,8 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(E
 
 Name:		perl-Test-LeakTrace
 Summary:	Trace memory leaks
-Version:	0.16
-Release:	alt4
+Version:	0.17
+Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-LeakTrace/
@@ -122,6 +122,9 @@ mv ./JA.pod lib/Test/LeakTrace/
 %{perl_vendor_archlib}/Test/
 
 %changelog
+* Wed Jan 06 2021 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.16-alt4
 - unbootstrap
 
