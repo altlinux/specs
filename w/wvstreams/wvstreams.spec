@@ -4,10 +4,10 @@
 
 Name: wvstreams
 Version: 4.6.1
-Release: alt5
+Release: alt6
 
 Summary: C++ libraries for rapid application development
-License: LGPL
+License: LGPL-2.0
 Group: Development/C++
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -31,6 +31,7 @@ Patch6: wvstreams-4.6.1-gcc47.patch
 Patch7: wvstreams-4.6.1-magic.patch
 Patch8: 0001-Use-explicit-cast-and-prevent-compiler-error.patch
 Patch9: wvstreams-4.6.1-openssl1.1.patch
+Patch10: wvstreams-4.6.1-gcc10.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: OpenSP /proc
@@ -190,6 +191,7 @@ bzip2 -9fk ChangeLog
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 %autoreconf
@@ -287,6 +289,10 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Tue Jan 05 2021 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt6
+- FTBFS: fix build with GCC 10.
+- Fix License tag.
+
 * Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 4.6.1-alt5
 - Move to rpm-macros-valgrind
 
