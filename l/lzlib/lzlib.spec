@@ -1,5 +1,5 @@
 Name: lzlib
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: The lzlib compression library provides in-memory LZMA compression and decompression functions
@@ -48,6 +48,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Tue Jan 05 2021 Michael Shigorin <mike@altlinux.org> 1.12-alt1
+- new version (watch file uupdate)
+
 * Mon Jan 14 2019 Michael Shigorin <mike@altlinux.org> 1.11-alt1
 - new version (watch file uupdate)
 
