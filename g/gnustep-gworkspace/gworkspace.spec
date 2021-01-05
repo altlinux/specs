@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.4
-Release: alt1
+Release: alt2
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,6 +12,7 @@ Source: gworkspace-%version.tar.gz
 Source1: %name.menu
 Source2: %name.sh
 Patch1: link-libs.patch
+Patch2: gcc-10.patch
 
 BuildPreReq: gnustep-make-devel gnustep-base-devel /proc
 BuildPreReq: libgnustep-pdfkit-devel
@@ -67,10 +68,9 @@ This package contains documentation for GWorkspace.
 %prep
 %setup -n gworkspace-%version
 %patch1 -p2
+%patch2 -p1
 
 %build
-#export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
-#export CC=gcc
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %autoreconf
@@ -150,6 +150,9 @@ sed -i 's,@PATH@,%_libdir/GNUstep/Applications/GWorkspace.app,' %buildroot%_bind
 %doc Documentation/*
 
 %changelog
+* Tue Jan 05 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt2
+- FTBFS: fix build with GCC 10.
+
 * Mon Oct 12 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1
 - New version.
 - Build without libgnustep-objc2-devel.
