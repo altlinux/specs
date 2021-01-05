@@ -1,9 +1,9 @@
 Name: lziprecover
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: LZMA compressed file recovery
-License: GPL v3+
+License: GPLv3+
 Group: Archiving/Compression
 
 Url: http://savannah.nongnu.org/projects/lzip/
@@ -39,6 +39,9 @@ make all info
 %_infodir/%name.info*
 
 %changelog
+* Tue Jan 05 2021 Michael Shigorin <mike@altlinux.org> 1.22-alt1
+- new version (watch file uupdate)
+
 * Sun Jan 06 2019 Michael Shigorin <mike@altlinux.org> 1.21-alt1
 - new version (watch file uupdate)
 
