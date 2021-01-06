@@ -1,5 +1,5 @@
 Name: eepm
-Version: 3.7.6
+Version: 3.8.0
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -21,7 +21,7 @@ Provides: epm = %EVR
 %if %_vendor == "alt"
 # FIXHERE: Replace with target platform package manager
 Requires: apt rpm
-Requires: distro_info >= 1.7
+Requires: distro_info >= 1.8
 %endif
 
 %description
@@ -123,6 +123,9 @@ mkdir -p %buildroot/var/lib/eepm/
 %endif
 
 %changelog
+* Wed Jan 06 2021 Vitaly Lipatov <lav@altlinux.ru> 3.8.0-alt1
+- move package manager detection to distr_info
+
 * Wed Jan 06 2021 Vitaly Lipatov <lav@altlinux.ru> 3.7.6-alt1
 - prescription/chromium-gost.sh: fix removing
 - serv: use systemd by default for any system
