@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 2.2
+%define ver_major 2.3
 # no rules to make shared libudffs now
 %def_disable shared
 
@@ -58,6 +58,7 @@ BuildRequires: libudev-devel libncurses-devel libreadline-devel
 %_bindir/wrudf
 %_sbindir/mkfs.udf
 %_sbindir/mkudffs
+%_sbindir/pktcdvd-check
 %_sbindir/pktsetup
 %_sbindir/udflabel
 %_udevrulesdir/80-pktsetup.rules
@@ -70,6 +71,9 @@ BuildRequires: libudev-devel libncurses-devel libreadline-devel
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Wed Jan 06 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
+- 2.3
+
 * Sun Dec 29 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 
