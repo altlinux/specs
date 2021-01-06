@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        84.0.1
+Version:        84.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -35,6 +35,7 @@ Source9:        firefox-prefs.js
 Source10:       firefox-l10n.txt
 Source11:       l10n.tar
 Source12:       firefox-privacy-prefs.js
+Source13:       firefox-search-provider.ini
 
 ### Start Patches
 Patch001: 0001-SUSE-NonGnome-KDE-integration.patch
@@ -52,6 +53,7 @@ Patch012: 0012-bmo-847568-Support-system-harfbuzz.patch
 Patch013: 0013-bmo-847568-Support-system-graphite2.patch
 Patch014: 0014-bmo-1559213-Support-system-av1.patch
 Patch015: 0015-VAAPI-Add-extra-frames.patch
+Patch016: 0016-Bug-1680505-Ship-WebRender-to-GNOME-Wayland-users-to.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -226,6 +228,7 @@ Most likely you don't need to use this package.
 %patch013 -p1
 %patch014 -p1
 %patch015 -p1
+%patch016 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -430,6 +433,9 @@ cp -- %SOURCE5 ./%firefox_prefix/distribution/distribution.ini
 install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
 install -D -m 644 %SOURCE7 ./%_datadir/applications/firefox-wayland.desktop
 
+# Install Gnome search provider files
+install -D -m 644 %SOURCE13 ./%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
+
 # Add alternatives
 mkdir -p ./%_altdir
 cat >./%_altdir/firefox <<EOF
@@ -473,6 +479,7 @@ rm -rf -- \
 %mozilla_arch_extdir/%firefox_cid
 %mozilla_noarch_extdir/%firefox_cid
 %_datadir/applications/firefox.desktop
+%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
 %_iconsdir/hicolor/16x16/apps/firefox.png
 %_iconsdir/hicolor/22x22/apps/firefox.png
 %_iconsdir/hicolor/24x24/apps/firefox.png
@@ -491,6 +498,13 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Jan 06 2021 Alexey Gladkov <legion@altlinux.ru> 84.0.2-alt1
+- New release (84.0.2).
+- Security fixes:
+  + CVE-2020-16044: Use-after-free write when handling a malicious COOKIE-ECHO SCTP chunk
+- Add firefox GNOME Shell search provider.
+- Enable smooth scrolling option.
+
 * Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 84.0.1-alt1
 - New release (84.0.1).
 - No longer requires autoconf_2.13 to build.
