@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt163
+Release: alt164
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -411,6 +411,13 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Jan 06 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt164
+- ldd.in: fix trace_elf error diagnostics (ldv).
+- rpmio: Workaround another liblzma memory allocation failure on armh.
+- rpmio+pack: Update rpmio_flags 'T' with actual threads used.
+- rpmio: Make xzdio errors more informative.
+- rpmio: Fix lzopen_internal mode parsing when 'Tn' is used.
+
 * Mon Dec 21 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt163
 - Added fixup method: gnuconfig.
 
