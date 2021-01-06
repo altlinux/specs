@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qview
-Version: 3.0
+Version: 4.0
 Release: alt1
 
 Summary: Practical and minimal image viewer
@@ -26,6 +26,7 @@ find -type f -name '*.cpp' -o -name '*.h' -print0 |
 %endif
 
 %build
+export PREFIX=/usr
 qmake-qt5
 %make_build
 
@@ -37,11 +38,15 @@ rm -rf %buildroot%_datadir/licenses/%name
 %files
 %_bindir/%name
 %_desktopdir/qView.desktop
+%_datadir/metainfo/%name.appdata.xml
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %doc LICENSE
 
 %changelog
+* Wed Jan 06 2021 Alexander Makeenkov <amakeenk@altlinux.org> 4.0-alt1
+- Updated to version 4.0
+
 * Thu Jan 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 3.0-alt1
 - New version
 
