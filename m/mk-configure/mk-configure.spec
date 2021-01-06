@@ -1,8 +1,8 @@
 %define clang_arches %ix86 x86_64 aarch64 ppc64el armh mipsel
 
 Name: mk-configure
-Version: 0.34.2
-Release: alt4
+Version: 0.36.0
+Release: alt1
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD-2-Clause and MIT and ISC
@@ -22,8 +22,10 @@ BuildRequires: bmake mk-files binutils
 
 Requires: rpm-macros-%name = %version-%release
 
+%filter_from_requires /xpg4/d
+
 # required for %%check
-BuildRequires: flex bison gcc-c++ glib2-devel groff-base zlib-devel bmkdep
+BuildRequires: flex bison gcc-c++ glib2-devel groff-base zlib-devel libbsd-devel bmkdep
 BuildRequires: perl-podlators perl-devel lua-devel info-install makeinfo m4
 
 %ifarch %clang_arches
@@ -97,8 +99,8 @@ unset MAKEFLAGS
 # lua.pc does not provide INSTALL_{C,L}MOD
 export NOSUBDIR='hello_lua hello_lua2 hello_lua3 lua_dirs'
 bmake test
-bmake cleandir-examples
-bmake cleandir-tests
+bmake -k cleandir-examples
+bmake -k cleandir-tests
 
 %files
 %dir %pkgdocdir
@@ -121,6 +123,9 @@ bmake cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Wed Jan 6 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Thu May 21 2020 Aleksey Cheusov <cheusov@altlinux.org> 0.34.2-alt4
 - Add rpm macro for packages that use mk-configure
 
