@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Future-IO
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Future.pm) perl(Module/Build.pm) perl(Struct/Dumb.pm) perl(Test/Identity.pm) perl(Test/More.pm) perl(Time/HiRes.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
+Version: 0.08
 Release: alt1
 Summary: Future-returning IO methods
 Group: Development/Perl
@@ -40,6 +40,9 @@ these operations.
 %perl_vendor_privlib/F*
 
 %changelog
+* Wed Jan 06 2021 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
