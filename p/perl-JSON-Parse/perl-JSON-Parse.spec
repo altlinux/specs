@@ -6,8 +6,8 @@ BuildRequires: perl(Encode.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.57
-Release: alt2
+Version: 0.59
+Release: alt1
 Summary: Read JSON into a Perl variable
 Group: Development/Perl
 License: perl
@@ -53,7 +53,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc Changes README examples
+%doc Changes README examples CONTRIBUTING.md
 %perl_vendor_archlib/J*
 %perl_vendor_autolib/*
 
@@ -61,6 +61,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Wed Jan 06 2021 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
+- automated CPAN update
+
 * Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.57-alt2
 - fixed warning: scripts should be .noarch
 
