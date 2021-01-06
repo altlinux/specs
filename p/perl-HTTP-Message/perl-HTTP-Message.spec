@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.26
-Release: alt2
+Version: 6.27
+Release: alt1
 
 Summary: HTTP style messages
 License: GPL or Artistic
@@ -36,6 +36,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Jan 06 2021 Igor Vlasenko <viy@altlinux.ru> 6.27-alt1
+- automated CPAN update
+
 * Wed Nov 11 2020 Igor Vlasenko <viy@altlinux.ru> 6.26-alt2
 - cleaned up deprecated provides (closes:#39248)
 
