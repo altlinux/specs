@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 Epoch:3
 
@@ -123,6 +123,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Thu Jan 07 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.0.1-alt1
+- 2.0.1
+
 * Fri Dec 18 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.0.0-alt1
 - 2.0.0
 - built with imlib2 as libgdk_pixbuf_xlib is deprecated
