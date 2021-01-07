@@ -7,13 +7,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-fortisslvpn
-Version: 1.2.8
-Release: alt1.1
+Version: 1.2.10
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Fortinet compatible SSLVPN support for NetworkManager
-Url: https://git.gnome.org/browse/network-manager-fortisslvpn
-# git://git.gnome.org/network-manager-fortisslvpn
+Url: https://gitlab.gnome.org/GNOME/NetworkManager-fortisslvpn.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -98,6 +97,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Jan 07 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.10-alt1
+- 1.2.10.
+
 * Fri Nov 09 2018 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1.1
 - NMU: Disable libnm-glib-* support.
 - NMU: Fix build without libnm-glib-*.
@@ -114,5 +116,3 @@ make check
 
 * Thu Jan 11 2018 L.A. Kostis <lakostis@altlinux.ru> 1.2.6-alt1
 - initial build for ALTLinux.
-
-
