@@ -23,8 +23,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.8.1
-Release: alt3
+Version: 2.8.2
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -544,6 +544,11 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Jan 07 2021 Pavel Vainerman <pv@altlinux.ru> 2.8.2-alt1
+- supported "freeze vaule"
+- modbus master: runtime reload config
+- update docs
+
 * Sat Jan 02 2021 Pavel Vainerman <pv@altlinux.ru> 2.8.1-alt3
 - make style
 - fixed docs
