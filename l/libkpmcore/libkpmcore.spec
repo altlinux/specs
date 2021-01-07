@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 20.12.0
+Version: 20.12.1
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -51,9 +51,10 @@ using %_name.
 
 %install
 %K5install
+%find_lang --all-name %_name
 
-%files
-%_libexecdir/kpmcore_externalcommand
+%files -f %_name.lang
+%_libexecdir/%{_name}_externalcommand
 %_datadir/dbus-1/system-services/%xdg_name.helperinterface.service
 %_datadir/dbus-1/system.d/%xdg_name.helperinterface.conf
 %_K5lib/*.so.*
@@ -67,6 +68,9 @@ using %_name.
 
 
 %changelog
+* Fri Jan 08 2021 Yuri N. Sedunov <aris@altlinux.org> 20.12.1-alt1
+- 20.12.1
+
 * Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 20.12.0-alt1
 - 20.12.0
 
