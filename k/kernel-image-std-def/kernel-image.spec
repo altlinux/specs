@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:2
 %define kernel_base_version	5.4
-%define kernel_sublevel .85
+%define kernel_sublevel .87
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -706,6 +706,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Thu Jan 07 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.4.87-alt1
+- v5.4.87
+
 * Mon Dec 21 2020 Vitaly Chikunov <vt@altlinux.org> 2:5.4.85-alt2
 - spec: Strip vmlinux for installation as vmlinuz on ppc64le.
 - spec: Enable stripping for /boot (for vmlinux).
