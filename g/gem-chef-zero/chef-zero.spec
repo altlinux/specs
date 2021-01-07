@@ -1,7 +1,7 @@
 %define        pkgname chef-zero
 
 Name:          gem-%pkgname
-Version:       15.0.0
+Version:       15.0.4
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
 License:       Apache-2.0
@@ -78,6 +78,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Jan 07 2021 Andrey Cherepanov <cas@altlinux.org> 15.0.4-alt1
+- New version.
+
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 15.0.3-alt1
+- New version.
+
 * Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 15.0.0-alt1
 - ^ 14.0.12 -> 15.0.0
 - ! spec tags and license
