@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: libbpf
-Version: 0.2
+Version: 0.3
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -61,6 +61,9 @@ cd src
 %_libdir/libbpf.a
 
 %changelog
+* Thu Jan 07 2021 Vitaly Chikunov <vt@altlinux.org> 0.3-alt1
+- Update to v0.3 (2021-01-02).
+
 * Sat Dec 05 2020 Vitaly Chikunov <vt@altlinux.org> 0.2-alt1
 - Update to v0.2 (2020-10-28).
 
