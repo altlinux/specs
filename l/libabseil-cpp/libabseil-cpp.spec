@@ -2,11 +2,11 @@
 %def_without test
 Name: libabseil-cpp
 Version: 20200923.2
-Release: alt1
+Release: alt2
 
 Summary: C++ Common Libraries
 
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/C++
 Url: https://abseil.io
 
@@ -47,6 +47,7 @@ Development headers for %name
 %setup
 
 %build
+%add_optflags "-fPIC"
 %cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 %if_with test
     -DABSL_RUN_TESTS=ON -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
@@ -71,6 +72,9 @@ ctest
 %_libdir/cmake/absl/
 
 %changelog
+* Thu Jan 28 2021 Arseny Maslennikov <arseny@altlinux.org> 20200923.2-alt2
+- NMU: enable -fPIC.
+
 * Mon Nov 02 2020 Vitaly Lipatov <lav@altlinux.ru> 20200923.2-alt1
 - new version 20200923.2 (with rpmrb script)
 - temp. disable test (wait for new libgtest)
