@@ -1,8 +1,9 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname nokogiri
 
 Name:          gem-%pkgname
-Version:       1.11.0
-Release:       alt0.2
+Version:       1.11.1
+Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 Group:         Development/Ruby
 License:       MIT
@@ -23,7 +24,7 @@ BuildRequires: gem(rake-compiler)
 BuildRequires: gem(rake-compiler-dock)
 BuildRequires: gem(concourse)
 BuildRequires: gem(rexical)
-BuildRequires: gem-racc
+BuildRequires: gem(racc)
 BuildRequires: gem(mini_portile2)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -35,6 +36,7 @@ Provides:      ruby-%gemname = %EVR
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
 implemented CSS3 selector support as well as XPath support.
 This package contanis Ruby libraries for Nokogiri.
+
 
 %package       -n %pkgname
 Summary:       HTML, XML, SAX, and Reader parser
@@ -87,7 +89,7 @@ Development files for %gemname gem.
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -111,6 +113,10 @@ Development files for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Fri Jan 08 2021 Pavel Skrylev <majioa@altlinux.org> 1.11.1-alt1
+- ^ 1.11.0rc2+ -> 1.11.1
+- ! spec
+
 * Tue Jun 09 2020 Pavel Skrylev <majioa@altlinux.org> 1.11.0-alt0.2
 - ^ 1.11.0rc1 -> 1.11.0rc2+
 
