@@ -1,6 +1,6 @@
 Name: libmaa
 Version: 1.4.7
-Release: alt3
+Release: alt4
 
 Summary: Library providing many low-level data structures
 License: MIT
@@ -27,6 +27,14 @@ Requires: %name = %version-%release
 
 %description devel
 This package contains development files of libmaa.
+
+%package devel-static
+Summary: Static library for libmaa
+Group: Development/C
+Requires: %name-devel = %version-%release
+
+%description devel-static
+This package contains the static version of libmaa.
 
 %package devel-doc
 Summary: Documentation for libmaa
@@ -65,14 +73,19 @@ This package contains development documentation for libmaa.
 %_libdir/*.so.*
 
 %files devel
-%_libdir/*.a
 %_libdir/*.so
 %_includedir/*
 
 %files devel-doc
 %libmaa_docdir/libmaa.600dpi.ps
 
+%files devel-static
+%_libdir/*.a
+
 %changelog
+* Fri Jan 08 2021 Aleksey Cheusov <cheusov@altlinux.org> 1.4.7-alt4
+- 1.4.7-alt4: Split -devel package into -devel and -static-devel packages
+
 * Tue May 26 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.4.7-alt3
 - 1.4.7-alt3: Fix warnings produced by hasher
 
