@@ -2,7 +2,7 @@
 
 Name: SimGear
 Version: %origver
-Release: alt2
+Release: alt3
 
 Summary: Simulator Construction Tools
 
@@ -64,7 +64,9 @@ This package contains header files for SimGear.
 %setup
 %patch0 -p1
 %patch1 -p1
+%ifnarch %e2k
 %patch2 -p2
+%endif
 %patch3 -p2
 %patch4 -p2
 #sed -i "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
@@ -101,6 +103,9 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Fri Jan 08 2021 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt3
+- E2K: revert patch introduced in 2018.2.2-alt2 (ftbfs with lcc 1.25)
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.1.2-alt2
 - Rebuilt with boost-1.73.0.
 
