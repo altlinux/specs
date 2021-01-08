@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: rng-tools
-Version: 6.10
+Version: 6.11
 Release: alt1
 
 Summary: Random number generator related utilities
@@ -66,6 +66,9 @@ make check
 %_man8dir/rngd.8*
 
 %changelog
+* Fri Jan 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 6.11-alt1
+- Version 6.11
+
 * Mon Jun 01 2020 Nikolai Kostrigin <nickel@altlinux.org> 6.10-alt1
 - Version 6.10
 - add new BR: libjansson-devel, rtl-sdr-devel (add rtlsdr radio entropy source)
