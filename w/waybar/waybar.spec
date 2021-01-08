@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.0
+Version: 0.9.5
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -8,7 +8,10 @@ Group: Graphical desktop/Other
 
 Source: %name-%version.tar
 Source1: xkb-layout.py
+Source2: clock.py
+
 Patch0: waybar-config.patch
+Patch1: 0001-Drop-the-clock-module-and-the-date-dependency.patch
 
 BuildRequires(pre): rpm-build-xdg
 
@@ -49,10 +52,13 @@ BuildRequires: libnl-devel
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
-%meson
+%meson \
+	-Drfkill=enabled \
+	-Dgtk-layer-shell=disabled \
+	-Dsystemd=disabled
 %meson_build
 
 %install
@@ -60,16 +66,23 @@ BuildRequires: libnl-devel
 
 mkdir -p -- %buildroot/%helperdir
 install -m 755 -- %SOURCE1 %buildroot/%helperdir/
+install -m 755 -- %SOURCE2 %buildroot/%helperdir/
 
 %check
 %meson_test
 
 %files
 %_bindir/%name
-%_xdgconfigdir/%name
+%dir %_xdgconfigdir/%name
+%config(noreplace) %_xdgconfigdir/%name/config
+%config(noreplace) %_xdgconfigdir/%name/style.css
 %helperdir
 
 %changelog
+* Fri Jan 08 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.5-alt1
+- New version (0.9.5)
+- Replace clock module by custom version.
+
 * Sat Dec 28 2019 Alexey Gladkov <legion@altlinux.ru> 0.9.0-alt1
 - New version (0.9.0)
 - Add xkb-layout module
