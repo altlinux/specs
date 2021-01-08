@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,18 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Jan 08 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt1
+- gitask: allow --test-only for run
+- rpmgs: fix Source-git support, improve commented url detection
+- rpmbsh: add -w support (use tarball for build in hsh)
+- myhsh: add -a for --query-repackage
+- rpmbs: add initial -w support
+- rpmbph: always build src.rpm with -w (correct pack gear repo)
+- rpmbph: use -w more correctly
+- rpmbsh: for -w run myhsh with -a
+- rpmgp: fix src.rpm build
+- rpmbs: use --test-only for build by default (-e is obsoleted now)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1
 - rpmreqs: update
 - rpmgs: big rewrite to improve gear-uupdate and gear-uupdate support
