@@ -5,7 +5,7 @@
 
 Name: SDL2
 Version: 2.0.14
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -20,8 +20,11 @@ Source: %name-%version.tar
 # RH: ptrdiff_t is not the same as khronos defines on 32bit arches
 Patch0: %name-2.0.9-rh-khrplatform.patch
 
-BuildPreReq: libXext-devel
-BuildPreReq: libdbus-devel
+# http://bugzilla.libsdl.org/show_bug.cgi?id=5418
+Patch1: SDL2-e2k.patch
+
+BuildRequires: libXext-devel
+BuildRequires: libdbus-devel
 
 %{?_with_fcitx:BuildRequires: fcitx-devel}
 BuildRequires: gcc-c++
@@ -75,6 +78,9 @@ to develop SDL applications.
 %prep
 %setup
 %patch0 -p1
+%ifarch %e2k
+%patch1 -p1
+%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -105,6 +111,9 @@ rm %buildroot%_libdir/*.a
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Fri Jan 08 2021 Michael Shigorin <mike@altlinux.org> 2.0.14-alt2
+- E2K: add upstream system features detection patch (libsdl#5418)
+
 * Wed Dec 23 2020 Nazarov Denis <nenderus@altlinux.org> 2.0.14-alt1
 - Version 2.0.14
 
