@@ -1,13 +1,12 @@
 Name: supertux2
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPL-3.0-or-later AND CC-BY-SA-3.0 AND GPL-2.0-or-later AND GPL-1.0-only
 Group: Games/Arcade
-Url: https://www.supertux.org/
 
-Packager: Anton Midyukov <antohami@altlinux.org>
+Url: https://www.supertux.org/
 
 # Source-url: https://github.com/SuperTux/supertux/releases/download/v%version/SuperTux-v%version-Source.tar.gz
 Source: SuperTux-v%version-Source.tar.gz
@@ -15,6 +14,8 @@ Source: SuperTux-v%version-Source.tar.gz
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
+
+Packager: Anton Midyukov <antohami@altlinux.org>
 
 Requires: %name-data = %version-%release
 
@@ -51,6 +52,12 @@ This is package contains data files for supertux2.
 %prep
 %setup -n SuperTux-v%version-Source
 
+%ifarch %e2k
+# see also http://github.com/albertodemichelis/squirrel/pull/226/commits
+# (thx Ramil Sattarov for the reference)
+sed -i 's/LINKER_LANGUAGE C/&XX/' external/squirrel/sq/CMakeLists.txt
+%endif
+
 %build
 %cmake_insource \
         -DINSTALL_SUBDIR_BIN=bin \
@@ -63,12 +70,12 @@ This is package contains data files for supertux2.
 %makeinstall_std
 %find_lang %name
 
-install -m644 %SOURCE1 -D %buildroot/%_miconsdir/%name.png
-install -m644 %SOURCE2 -D %buildroot/%_niconsdir/%name.png
-install -m644 %SOURCE3 -D %buildroot/%_liconsdir/%name.png
+install -pDm644 %SOURCE1 %buildroot/%_miconsdir/%name.png
+install -pDm644 %SOURCE2 %buildroot/%_niconsdir/%name.png
+install -pDm644 %SOURCE3 %buildroot/%_liconsdir/%name.png
 
 # install game man file
-install -D -m 644 man/man6/%name.6 %buildroot/%_man6dir/%name.6
+install -pDm644 man/man6/%name.6 %buildroot/%_man6dir/%name.6
 
 rm -rf %buildroot/%_docdir/supertux2/
 
@@ -92,6 +99,10 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Fri Jan 08 2021 Michael Shigorin <mike@altlinux.org> 0.6.2-alt2
+- E2K: ftbfs fixup (patch by Georgy Shepelev, thx Ramil Sattarov)
+- Minor spec cleanup
+
 * Mon May 18 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
 - New version (0.6.2) with rpmgs script.
 
