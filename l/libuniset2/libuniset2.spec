@@ -13,6 +13,7 @@
 %def_enable api
 %def_enable logdb
 %def_enable opentsdb
+%def_enable uresolver
 
 %ifarch %ix86
 %def_enable com485f
@@ -23,7 +24,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.8.2
+Version: 2.9.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -182,6 +183,14 @@ Obsoletes: %name-extentions-devel
 %description extension-common-devel
 Libraries needed to develop for uniset extensions
 
+%if_enabled uresolver
+%package extension-uresolver
+Group: Development/Tools
+Summary: CORBA object reference resolver based on http
+
+%description extension-uresolver
+CORBA object reference resolver based on http
+%endif
 
 %if_enabled mysql
 %package extension-mysql
@@ -521,6 +530,11 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %_includedir/%oname/extensions/mqtt/
 %endif
 
+%if_enabled uresolver
+%files extension-uresolver
+%_bindir/%oname-httpresolver*
+%endif
+
 %files extension-common-devel
 %dir %_includedir/%oname/extensions
 %_includedir/%oname/extensions/*.*
@@ -544,6 +558,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Fri Jan 08 2021 Pavel Vainerman <pv@altlinux.ru> 2.9.1-alt1
+- supported http-resolver (when localIOR=1)
+
 * Thu Jan 07 2021 Pavel Vainerman <pv@altlinux.ru> 2.8.2-alt1
 - supported "freeze vaule"
 - modbus master: runtime reload config
