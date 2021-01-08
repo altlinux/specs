@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.8
-Release:      alt1
+Release:      alt2
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -17,8 +17,13 @@ Source5:      xfig.alt.desktop
 Patch1:       0001-revert-10pt-search-tolerance-back-to-4pt.patch
 Patch2:       0002-w_library.c-fix-error-message.patch
 Patch3:       0003-app-defaults-use-original-Fig.in.patch
+Patch4:       0004-init_font-improve-debug-mode-output.patch
+Patch5:       0005-fix-font-encoding-in-i18n-mode.patch
+Patch6:       0006-init_font-allow-scalable-backup-fonts.patch
+Patch7:       0007-update-backup-font-table.patch
+Patch8:       0008-use-Paratype-fonts.patch
 
-Requires:     transfig = %version fonts-type1-urw /usr/bin/gs netpbm
+Requires:     transfig = %version fonts-ttf-PT /usr/bin/gs netpbm
 
 BuildPreReq:  libXpm-devel libXt-devel libXmu-devel libXaw-devel
 BuildPreReq:  libpng-devel libjpeg-devel libXi-devel libXp-devel
@@ -56,6 +61,11 @@ XFig documentation
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
+%patch5 -p2
+%patch6 -p2
+%patch7 -p2
+%patch8 -p2
 
 %build
 %autoreconf
@@ -90,6 +100,9 @@ install -D -m 644 %SOURCE5 %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Fri Jan 08 2021 Vladislav Zavjalov <slazav@altlinux.org> 3.2.8-alt2
+- Fix scalable fonts support. Use Paratype fonts.
+
 * Mon Dec 21 2020 Vladislav Zavjalov <slazav@altlinux.org> 3.2.8-alt1
 - 3.2.8
 - Keep old modifications as patches:
