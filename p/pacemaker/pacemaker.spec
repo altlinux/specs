@@ -10,8 +10,8 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.0.3
-Release: alt2
+Version: 2.0.5
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -336,6 +336,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/api
 
 %changelog
+* Fri Jan 08 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt1
+- New version.
+
 * Sat Apr 04 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.3-alt2
 - define %%_libexecdir as /usr/libexec
 - move attrd_updater, crm_attribute, crm_master to pacemaker-cli
