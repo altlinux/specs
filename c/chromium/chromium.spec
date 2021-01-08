@@ -10,6 +10,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
+%global llvm_version 11.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -28,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        87.0.4280.88
+Version:        87.0.4280.141
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -83,6 +84,8 @@ Patch018: 0018-FEDORA-remove-noexcept.patch
 Patch019: 0019-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch020: 0020-ALT-Fix-memcpy.patch
 Patch021: 0021-ALT-Fix-build.patch
+Patch022: 0022-Move-offending-function-to-chromeos-only.patch
+Patch023: 0023-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -97,10 +100,10 @@ BuildRequires:  libstdc++-devel
 BuildRequires:  libstdc++-devel-static
 BuildRequires:  glibc-kernheaders
 %if_enabled clang
-BuildRequires:  clang11.0
-BuildRequires:  clang11.0-devel
-BuildRequires:  llvm11.0-devel
-BuildRequires:  lld11.0-devel
+BuildRequires:  clang%{llvm_version}
+BuildRequires:  clang%{llvm_version}-devel
+BuildRequires:  llvm%{llvm_version}-devel
+BuildRequires:  lld%{llvm_version}-devel
 %endif
 BuildRequires:  ninja-build
 BuildRequires:  gperf
@@ -196,6 +199,8 @@ tar -xf %SOURCE1
 %patch019 -p1
 %patch020 -p1
 %patch021 -p1
+%patch022 -p1
+%patch023 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -288,7 +293,7 @@ gn_arg is_component_build=%{is_enabled shared_libraries}
 gn_arg enable_widevine=%{is_enabled widevine}
 
 %if_enabled clang
-gn_arg clang_base_path=\"%_prefix\"
+gn_arg clang_base_path=\"%_prefix/lib/llvm-%{llvm_version}\"
 gn_arg is_clang=true
 gn_arg clang_use_chrome_plugins=false
 gn_arg use_lld=true
@@ -453,6 +458,23 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Jan 08 2021 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.141-alt1
+- New version (87.0.4280.141).
+- Security fixes:
+  - CVE-2020-15995: Out of bounds write in V8.
+  - CVE-2020-16043: Insufficient data validation in networking.
+  - CVE-2021-21106: Use after free in autofill.
+  - CVE-2021-21107: Use after free in drag and drop.
+  - CVE-2021-21108: Use after free in media.
+  - CVE-2021-21109: Use after free in payments.
+  - CVE-2021-21110: Use after free in safe browsing.
+  - CVE-2021-21111: Insufficient policy enforcement in WebUI.
+  - CVE-2021-21112: Use after free in Blink.
+  - CVE-2021-21113: Heap buffer overflow in Skia.
+  - CVE-2021-21114: Use after free in audio.
+  - CVE-2021-21115: Use after free in safe browsing.
+  - CVE-2021-21116: Heap buffer overflow in audio.
+
 * Sun Dec 20 2020 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.88-alt1
 - New version (87.0.4280.88).
 - Security fixes:
