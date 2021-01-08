@@ -3,8 +3,8 @@
 %global _llvm_version 11.0
 
 Name: llvm-common
-Version: 11.0.0
-Release: alt3
+Version: 11.0.1
+Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -18,7 +18,7 @@ Source2: alt-packaging-produce-rpm-macros-llvm-common
 %define _libexecdir /usr/libexec
 
 %package -n rpm-macros-%name
-Summary: Default LLVM major branch
+Summary: Default LLVM major branch and relevant RPM macros
 License: Apache-2.0 with LLVM-exception
 Group: System/Configuration/Packaging
 BuildArch: noarch
@@ -108,6 +108,24 @@ Provides: lld-devel = %EVR
 Requires: lld%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
+%package lldb
+Summary: Common symlinks for lldb
+License: Apache-2.0 with LLVM-exception
+Group: Development/Debuggers
+BuildArch: noarch
+Provides: lldb = %EVR
+Requires: lldb%_llvm_version
+Requires(pre,postun): %name = %version-%release
+
+%package liblldb-devel
+Summary: Provides lldb-devel
+License: Apache-2.0 with LLVM-exception
+Group: Development/Debuggers
+BuildArch: noarch
+Provides: liblldb-devel = %EVR
+Requires: liblldb%_llvm_version-devel
+Requires(pre,postun): %name = %version-%release
+
 %description -n rpm-macros-%name
 This package contains RPM macros related to LLVM packaging.
 
@@ -146,6 +164,12 @@ This package contains common symlinks to wrap LLD.
 
 %description lld-devel
 This package contains lldXXX-devel and provides lld-devel{,-static}.
+
+%description lldb
+This package contains common symlinks to wrap LLDB.
+
+%description liblldb-devel
+This package pulls in liblldbXXX-devel.
 
 %prep
 %setup -cT
@@ -282,6 +306,12 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %install_tool_link wasm-ld
 %install_tool_link yaml2obj
 
+%install_tool_link lldb
+%install_tool_link lldb-argdumper
+%install_tool_link lldb-instr
+%install_tool_link lldb-server
+%install_tool_link lldb-vscode
+
 # Wrap the CMake configs useful to external users to respect %%_llvm_version.
 %define wrap_cmake_script() RPM_LLVM_VERSION=%_llvm_version %_sourcedir/alt-packaging-wrap-cmake-script %*
 %wrap_cmake_script %_libdir/cmake/llvm/LLVMConfig.cmake
@@ -344,10 +374,19 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %files clang-devel-static
 
 %files lld
-%_bindir/*lld*
-%_bindir/wasm-ld*
+%_bindir/ld*.lld
+%_bindir/lld
+%_bindir/lld-link
+%_bindir/wasm-ld
 
 %files lld-devel
+
+%files lldb
+%_bindir/lldb
+%_bindir/lldb-argdumper
+%_bindir/lldb-instr
+%_bindir/lldb-server
+%_bindir/lldb-vscode
 
 %package checkinstall
 Summary: Installing me immediately runs the test for llvm-alt-tool-wrapper
@@ -371,6 +410,15 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Sat Jan 16 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt1
+- Introduced wrappers for the following utilities:
+  lldb
+  lldb-argdumper
+  lldb-instr
+  lldb-server
+  lldb-vscode
+- Introduced liblldb-devel to pull in the default liblldbN-devel.
+
 * Sun Jan 10 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt3
 - Added new helper RPM macros for use in packaging of LLVM/Clang-reliant
   software.
