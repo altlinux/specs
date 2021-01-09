@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mackup
-Version: 0.8.29
+Version: 0.8.32
 Release: alt1
 Summary: Keep your application settings in sync
 License: GPL-3.0
@@ -50,6 +50,9 @@ This package contains python module for %name
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Jan 09 2021 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.32-alt1
+- Updated to version 0.8.32
+
 * Sat Jun 06 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.29-alt1
 - Updated to version 0.8.29
 
