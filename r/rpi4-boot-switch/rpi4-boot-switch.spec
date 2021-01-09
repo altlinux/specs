@@ -11,7 +11,7 @@
 %define rpicmd cmdline.txt
 
 Name: rpi4-boot-switch
-Version: 0.11
+Version: 0.12
 Release: alt1
 Summary: Switch of boot mode for Raspberry Pi 4
 License: GPL-2.0-or-later
@@ -129,6 +129,11 @@ sed -i 's/^arm_64bit=/# arm_64bit=/ ; s/.bin/_32b.bin/g' \
 %_rpmlibdir/%ftrigger2
 
 %changelog
+* Sat Jan 09 2021 Dmitry Terekhin <jqt4@altlinux.org> 0.12-alt1
+- Bugs fixed:
+- rpi4-boot-common: the lack of overlays is normal
+- rpi4-boot-nouboot: restore default config.txt
+
 * Thu Oct 15 2020 Dmitry Terekhin <jqt4@altlinux.org> 0.11-alt1
 - Added aarch64 ang GRUB-EFI support.
 - Added experimental support for RPi3 booting in firmware
