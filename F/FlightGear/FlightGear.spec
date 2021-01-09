@@ -3,7 +3,7 @@
 
 Name: FlightGear
 Version: %origver
-Release: alt2
+Release: alt3
 
 Summary: open-source flight simulator
 License: GPLv2+
@@ -52,6 +52,11 @@ BuildPreReq: libXxf86vm-devel libXxf86vm-devel libapr1-devel
 # disables screensaver; requires running messagebus service
 BuildRequires: libdbus-devel
 Requires: dbus
+%endif
+
+%ifarch %e2k
+# had to disable in OpenSceneGraph => unmets followed up
+%global __find_debuginfo_files %nil
 %endif
 
 %description
@@ -118,6 +123,9 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_desktopdir/org.flightgear.FlightGear.desktop
 
 %changelog
+* Sat Jan 09 2021 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt3
+- E2K: disable debuginfo following OpenSceneGraph (avoid unmets)
+
 * Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.1.2-alt2
 - Rebuilt with boost-1.73.0.
 

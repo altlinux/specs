@@ -2,7 +2,7 @@
 
 Name: SimGear
 Version: %origver
-Release: alt3
+Release: alt4
 
 Summary: Simulator Construction Tools
 
@@ -26,6 +26,11 @@ BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-
 
 BuildRequires: cmake libapr1-devel
 BuildRequires: libexpat-devel
+
+%ifarch %e2k
+# had to disable in OpenSceneGraph => unmets followed up
+%global __find_debuginfo_files %nil
+%endif
 
 %description
 SimGear is a set of open-source libraries designed to be used
@@ -103,6 +108,9 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Sat Jan 09 2021 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt4
+- E2K: disable debuginfo following OpenSceneGraph (avoid unmets)
+
 * Fri Jan 08 2021 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt3
 - E2K: revert patch introduced in 2018.2.2-alt2 (ftbfs with lcc 1.25)
 
