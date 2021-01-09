@@ -24,7 +24,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.9.1
+Version: 2.9.2
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -558,6 +558,11 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Jan 09 2021 Pavel Vainerman <pv@altlinux.ru> 2.9.2-alt1
+- admin: added 'sinfo' function
+- admin: freezeValue -> freeze/unfreeze
+- globally updated help
+
 * Fri Jan 08 2021 Pavel Vainerman <pv@altlinux.ru> 2.9.1-alt1
 - supported http-resolver (when localIOR=1)
 
