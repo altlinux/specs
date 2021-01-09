@@ -3,7 +3,7 @@
 
 Name: dwz
 Version: 0.13
-Release: alt2
+Release: alt3
 
 Summary: DWARF optimization and duplicate removal tool
 License: GPLv2+
@@ -43,6 +43,9 @@ make check || { grep FAIL dwz.log; exit 1; }
 %_man1dir/dwz.1*
 
 %changelog
+* Sat Jan 09 2021 Vitaly Chikunov <vt@altlinux.org> 0.13-alt3
+- Fix devel-ignore-size.sh test.
+
 * Wed Dec 02 2020 Vitaly Chikunov <vt@altlinux.org> 0.13-alt2
 - Fix pr24468.sh test.
 
