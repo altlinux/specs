@@ -1,6 +1,6 @@
 Name: bat
-Version: 0.15.4
-Release: alt2
+Version: 0.17.1
+Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT and Apache-2.0
 Group: File tools
@@ -42,6 +42,9 @@ install -m 0644 target/release/build/%name-*/out/assets/manual/%name.1 %buildroo
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Sat Jan 09 2021 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.1-alt1
+- Updated to version 0.17.1
+
 * Wed Jun 24 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.4-alt2
 - Added conflict with bacula9-bat package
 
