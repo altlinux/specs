@@ -1,14 +1,14 @@
-%define git_ver 11151
-%define git_commit 09a9d08466583df18925c59c8fec74f956ff0b1a
+%define git_ver 11506
+%define git_commit 2b8eb8deb6e86deca9c677c8b300da3762532075
 
 %define glslang_commit 3ee5f2f1d3316e228916788b300d786bb574d337
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
-%define hidapi_commit 9220f5e77c27b8b3717b277ec8d3121deeb50242
+%define hidapi_commit 8961cf86ebc4756992a7cd65c219c743e94bab19
 %define libusb_commit c33990a300674e24f47ff0f172f7efb10b63b88a
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
 %define xx_hash_version 0.8.0
-%define llvm_commit 8c02f52a12550c2044fef262c9864ca2e3cc193e
+%define llvm_commit cb7748dfa0d615e9f5ea9f31e0ce40fe9aeac595
 %define cereal_commit 60c69df968d1c72c998cd5f23ba34e2e3718a84b
 %define faudio_commit 9c7d2d1430c9dbe4e67c871dfe003b331f165412
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
@@ -17,8 +17,8 @@
 %define wolfssl_commit 39b5448601271b8d1deabde8a0d33dc64d2a94bd
 
 Name: rpcs3
-Version: 0.0.13
-Release: alt2
+Version: 0.0.14
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -61,6 +61,8 @@ Source13: SPIRV-Tools-%spirv_tools_version.tar
 Source14: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
+Patch1: %name-alt-qt5.patch
+Patch2: %name-alt-string.patch
 
 BuildRequires: cmake >= 3.14.1
 BuildRequires: cvs
@@ -87,7 +89,7 @@ BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-dev
 BuildRequires: python3-module-yaml
-BuildRequires: qt5-base-devel >= 5.14.2
+BuildRequires: qt5-base-devel >= 5.15.1
 BuildRequires: subversion
 
 BuildPreReq: libswresample-devel
@@ -100,6 +102,8 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
 
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %__mv -Tf ../glslang-%glslang_commit Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
@@ -163,6 +167,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat Jan 09 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt1
+- Version 0.0.14
+
 * Wed Nov 04 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.13-alt2
 - Update build and build requires
 
