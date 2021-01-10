@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 11.0.0
-Release: alt2
+Release: alt3
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -13,6 +13,7 @@ Url: http://git.altlinux.org/gears/l/llvm-common.git
 
 Source: llvm-alt-tool-wrapper.c
 Source1: alt-packaging-wrap-cmake-script
+Source2: alt-packaging-produce-rpm-macros-llvm-common
 
 %define _libexecdir /usr/libexec
 
@@ -287,12 +288,7 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %wrap_cmake_script %_libdir/cmake/clang/ClangConfig.cmake
 
 mkdir -p %buildroot%_rpmmacrosdir
-cat >%buildroot%_rpmmacrosdir/%name <<EOMacros
-# The default LLVM version in this repository.
-# It is assumed by llvm-alt-tool-wrapper and other wrappers in the absence of
-# explicit directions.
-%%_llvm_version %_llvm_version
-EOMacros
+RPM_LLVM_VERSION=%_llvm_version %_sourcedir/alt-packaging-produce-rpm-macros-llvm-common > %buildroot%_rpmmacrosdir/%name
 
 %check
 which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'; exit 0; }
@@ -375,6 +371,10 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Sun Jan 10 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt3
+- Added new helper RPM macros for use in packaging of LLVM/Clang-reliant
+  software.
+
 * Mon Nov 22 2020 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt2
 - Specified requirements for llvm%%_llvm_version in the -common packages.
 - Introduced wrappers for clang-tools-extra and clangd.
