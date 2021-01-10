@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: neofetch
-Version: 7.0.0
+Version: 7.1.0
 Release: alt1
 Summary: A command-line system information tool
 License: MIT
@@ -30,6 +30,9 @@ hardware in an aesthetic and visually pleasing way.
 %_man1dir/%name.1.xz
 
 %changelog
+* Sat Jan 09 2021 Alexander Makeenkov <amakeenk@altlinux.org> 7.1.0-alt1
+- Updated to version 7.1.0
+
 * Sun Mar 08 2020 Alexander Makeenkov <amakeenk@altlinux.org> 7.0.0-alt1
 - New version
 
