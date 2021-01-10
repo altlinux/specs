@@ -1,9 +1,9 @@
 Name: pipestatus
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: UNIX/POSIX shell helper for running pipes safely
-License: public domain
+License: Unlicense
 Group: Development/Other
 
 Url: http://pipestatus.sourceforge.net/
@@ -41,6 +41,9 @@ to obtain an exit status of every program in a pipe.
 %_bindir/*
 
 %changelog
+* Sun Jan 10 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.7.0-alt2
+- Fix License
+
 * Fri Jan 08 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
