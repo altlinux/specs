@@ -1,7 +1,7 @@
 %global srcname qutebrowser
 
 Name: %srcname
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
 License: GPLv3
@@ -91,6 +91,9 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Mon Jan 11 2021 Ilya Mashkin <oddity@altlinux.ru> 1.14.1-alt1
+- 1.14.1
+
 * Thu Oct 29 2020 Ilya Mashkin <oddity@altlinux.ru> 1.14.0-alt1
 - 1.14.0
 
