@@ -1,7 +1,7 @@
 %define rname krunner
 
 Name: kf5-%rname
-Version: 5.77.0
+Version: 5.78.0
 Release: alt1
 %K5init altplace
 
@@ -22,7 +22,7 @@ BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-de
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel kf5-kactivities-devel
 
 %description
 The Plasma workspace provides an application called KRunner which, among other
@@ -84,6 +84,9 @@ KF5 library
 %_K5qml/org/kde/runnermodel/
 
 %changelog
+* Sun Jan 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.78.0-alt1
+- new version
+
 * Mon Dec 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.77.0-alt1
 - new version
 
