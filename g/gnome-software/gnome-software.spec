@@ -9,7 +9,7 @@
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
-%ifarch armh
+%ifarch armh mipsel e2k
 %def_disable fwupd
 %else
 %def_enable fwupd
@@ -29,12 +29,17 @@
 %else
 %def_disable valgrind
 %endif
+%ifarch e2k
+%def_disable sysprof
+%else
+%def_enable sysprof
+%endif
 %def_enable tests
 %def_disable check
 
 Name: gnome-software
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -75,7 +80,7 @@ BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
 BuildRequires: libgnome-online-accounts-devel
 BuildRequires: libxmlb-devel >= %xmlb_ver
-BuildRequires: pkgconfig(sysprof-capture-4)
+%{?_enable sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gspell:BuildRequires: libgspell-devel}
 %{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
@@ -130,6 +135,7 @@ GNOME Software.
 	%{?_disable_valgrind:-Dvalgrind=false} \
 	%{?_disable_tests:-Dtests=false} \
 	%{?_disable_external_appstream:-Dexternal_appstream=false} \
+	%{?_disable_sysprof:-Dsysprof=disabled} \
 	%{?_disable_malcontent:-Dmalcontent=false}
 %meson_build
 
@@ -175,6 +181,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sun Jan 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1.1
+- e2k: disabled fwupd and sysprof
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
