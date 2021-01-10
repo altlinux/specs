@@ -1,6 +1,6 @@
 Name:     bup
-Version:  0.31
-Release:  alt2
+Version:  0.32
+Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
 # all of the code is licensed as GNU Lesser General Public License v2, except:
@@ -14,9 +14,6 @@ URL:      https://bup.github.io/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-#ExclusiveArch: %ix86 x86_64
-%add_findreq_skiplist %_libexecdir/%name/cmd/bup*
-
 Source:   %name-%version.tar
 # VCS:    https://github.com/bup/bup
 Source1:  bup-web.service
@@ -25,7 +22,8 @@ Patch1:   bup-disable-test_from_path_error.patch
 Patch2:   bup-python.patch
 Patch3:   bup-fix_uint32.patch
 
-BuildPreReq:   python3-dev
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 BuildRequires: git-core
 BuildRequires: pandoc
 BuildRequires: python3-module-fuse
@@ -33,7 +31,11 @@ BuildRequires: python3-module-pyxattr
 BuildRequires: python3-module-libacl
 BuildRequires: python3-module-tornado
 
-Requires: git-core python3-module-pyxattr python3-module-libacl python3-module-fuse
+%add_findreq_skiplist %_libexecdir/%name/cmd/bup*
+%add_python3_path %_libexecdir/%name/
+%py3_requires xattr posix1e fuse
+
+Requires: git-core
 
 %description
 Very efficient backup system based on the git packfile format, providing fast
@@ -73,7 +75,7 @@ bup repositories.
 %prep
 %setup -q
 #patch1 -p1
-%patch2 -p1
+#patch2 -p1
 %patch3 -p1
 
 %build
@@ -94,6 +96,7 @@ popd
 rm -f %buildroot%_bindir/%name
 ln -s ../lib/bup/cmd/bup %buildroot%_bindir/%name
 install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
+rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 
 %check
 #make test
@@ -121,6 +124,9 @@ install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 %_man1dir/bup-web.1*
 
 %changelog
+* Sun Jan 10 2021 Andrey Cherepanov <cas@altlinux.org> 0.32-alt1
+- New version.
+
 * Sat Nov 14 2020 Grigory Ustinov <grenka@altlinux.org> 0.31-alt2
 - Transfer on python3.
 
