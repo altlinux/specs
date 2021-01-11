@@ -7,7 +7,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.4.13
+Version: 7.4.14
 Release: alt1
 
 %define php7_name      %name
@@ -32,7 +32,6 @@ Patch2: php-shared-1.patch
 Patch3: php-cli-build.patch
 Patch5: php-5.3.3-sapi-scandir.patch
 Patch6: php-devel-scripts-alternatives.patch
-Patch7: php-4.3.11-libtool.patch
 Patch8: php7-source-7.4-cxx.patch
 Patch9: php-7.4-no-static-program.patch
 Patch10: php-set-session-save-path.patch
@@ -61,9 +60,6 @@ BuildRequires: /proc
 
 BuildRequires(pre): rpm-build-php7 rpm-macros-alternatives
 BuildRequires(pre): rpm-build-ubt
-
-BuildRequires: libtool_1.5 chrpath
-%set_libtool_version 1.5
 
 %description
 PHP7 is a widely-used general-purpose scripting language that is
@@ -162,7 +158,6 @@ in use by other PHP7-related packages.
 %patch3 -p2
 %patch5 -p1 -b .scandir
 %patch6 -p2 -b .alternatives
-%patch7 -p0
 %patch8 -p1
 %patch9 -p1
 %patch10 -p2
@@ -191,7 +186,10 @@ export LIBS CFLAGS
 sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((visibility("default"))) \2,;' ext/*/*.c
 
 %build
-%autoreconf -I build
+# use system libtool
+libtoolize --force --copy
+cat %_datadir/libtool-2.4/aclocal/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m4 >build/libtool.m4
+touch configure.ac
 ./buildconf --force
 
 %php7_env
@@ -442,6 +440,10 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 7.4.14-alt1
+- 7.4.14
+- built with system libtool
+
 * Fri Nov 27 2020 Anton Farygin <rider@altlinux.ru> 7.4.13-alt1
 - 7.4.13
 
