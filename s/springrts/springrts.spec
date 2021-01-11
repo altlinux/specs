@@ -3,7 +3,7 @@
 
 Name: springrts
 Version: 104.0
-Release: alt2
+Release: alt3
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
@@ -40,6 +40,7 @@ Source: %name-%version.tar
 Patch1: %name-alt-linking.patch
 Patch2: %name-alt-gcc8.patch
 Patch3: %name-alt-unbundle-libs.patch
+Patch4: %name-alt-gcc10.patch
 
 %description
 Spring is an open source RTS (Real time Strategy) engine originally
@@ -63,6 +64,7 @@ data files for Spring RTS engine
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 # TODO: remove remaining bundled libraries. They're either missing or patched.
 rm -rf tools/pr-downloader/src/lib/{jsoncpp,minizip}
@@ -121,6 +123,9 @@ sed -i -e '/NoDisplay=true/d' \
 %_man6dir/*
 
 %changelog
+* Mon Jan 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt3
+- Fixed build with gcc-10.
+
 * Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt2
 - Fixed build with new toolchain.
 
