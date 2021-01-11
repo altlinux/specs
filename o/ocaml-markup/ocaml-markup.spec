@@ -1,8 +1,8 @@
-%set_verify_elf_method textrel=relaxed
+%def_with check
 %define libname markup
 %define libnamelwt %libname-lwt
 Name: ocaml-%libname
-Version: 0.8.2
+Version: 1.0.0
 Release: alt1
 Summary: Error-recovering streaming HTML5 and XML parsers.
 License: MIT
@@ -13,6 +13,10 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml >= 4.07.1 opam dune >= 1.4.0
 BuildRequires: ocaml-uutf-devel ocaml-lwt-devel ocaml-bisect_ppx-devel ocaml-migrate-parsetree-devel ocaml-result-devel
+
+%if_with check
+BuildRequires: ocaml-ounit-devel libev-devel
+%endif
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -52,10 +56,13 @@ programs which use %name-lwt
 %patch0 -p1
 
 %build
-%make
+%dune_build -p markup,markup-lwt
 
 %install
-dune install --destdir=%buildroot
+%dune_install
+
+%check
+%dune_check
 
 %files
 %doc LICENSE.md README.md
@@ -85,6 +92,10 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%libnamelwt/*.mli
 
 %changelog
+* Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+- testing enabled
+
 * Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 
