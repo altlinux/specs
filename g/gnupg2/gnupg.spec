@@ -1,6 +1,6 @@
 Name: gnupg2
-Version: 2.2.26
-Release: alt3
+Version: 2.2.27
+Release: alt1
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -177,6 +177,9 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Mon Jan 11 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.27-alt1
+- New version (2.2.27).
+
 * Thu Dec 31 2020 Alexey Gladkov <legion@altlinux.ru> 2.2.26-alt3
 - Removed the suffix from the version completely.
 
