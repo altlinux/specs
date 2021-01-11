@@ -10,15 +10,12 @@
 %def_disable isbc
 %endif
 
-%ifarch %ix86 x86_64
-%def_enable jacarta
-%else
+# libjcpkcs11 is not available in Sisyphus any more!
 %def_disable jacarta
-%endif
 
 Name: pkcs11-profiles
-Version: 0.1.10
-Release: alt3
+Version: 0.1.11
+Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -170,6 +167,10 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Mon Jan 11 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.11-alt1
+- Disable JaCarta profile: libjcpkcs11 is not available in Sisyphus
+  any more!
+
 * Fri Nov 13 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1.10-alt3
 - ppc64el fixed to ppc64le
 
