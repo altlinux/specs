@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: deepin-calculator
-Version: 5.6.0.7
+Version: 5.6.0.10
 Release: alt1
 Summary: An easy to use calculator for ordinary users
 License: GPL-3.0+
@@ -9,8 +11,13 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
+%if_enabled clang
+BuildRequires(pre): clang11.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: gcc-c++ cmake qt5-linguist qt5-base-devel qt5-svg-devel dtk5-widget-devel deepin-qt-dbus-factory-devel
+BuildRequires: cmake qt5-linguist qt5-base-devel qt5-svg-devel dtk5-widget-devel deepin-qt-dbus-factory-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -22,11 +29,18 @@ Requires: icon-theme-hicolor
 %__subst '1i#include <QPainterPath>' src/views/simplelistdelegate.cpp
 
 %build
-%cmake -GNinja
-%ninja_build -C BUILD
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
+%cmake_insource -GNinja
+%ninja_build
 
 %install
-%ninja_install -C BUILD
+%ninja_install
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
@@ -40,6 +54,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.0.10-alt1
+- New version (5.6.0.10) with rpmgs script.
+
 * Tue Dec 29 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.7-alt1
 - New version (5.6.0.7) with rpmgs script.
 
