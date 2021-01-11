@@ -1,21 +1,18 @@
-# on i586: /usr/lib/ocaml/site-lib/cryptokit/cryptokit.cmxs
-%set_verify_elf_method textrel=relaxed
-
 %global pkgname cryptokit
 %define ocamlsitelib %_libdir/ocaml
 %define pkgsitelib %ocamlsitelib/%pkgname
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.15
+Version: 1.16.1
 Release: alt1
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with exceptions
 Url: http://forge.ocamlcore.org/projects/cryptokit/
 Source0: %name-%version.tar
-BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-zarith-devel ocaml-findlib zlib-devel chrpath
-BuildRequires: ocaml-oasis-devel
+BuildRequires: ocaml ocaml-ocamldoc ocaml-zarith-devel ocaml-findlib zlib-devel
+BuildRequires: dune ocaml-dune-devel
 Provides: ocaml-cryptokit-runtime = %version-%release
 Obsoletes: ocaml-cryptokit-runtime
 
@@ -54,30 +51,24 @@ developing applications that use %name.
 %setup
 
 %build
-./configure --destdir %buildroot
-# Some sort of circular dependency, so sometimes the first make fails.
-# Just run make twice.
-make ||:
-make
-
-chrpath --delete _build/src/dllcryptokit_stubs.so
+%dune_build -p %pkgname @install
 
 %install
-mkdir -p %buildroot%ocamlstublib
-export OCAMLFIND_DESTDIR=%buildroot%ocamlsitelib
-make install
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc LICENSE
-%pkgsitelib
-%exclude %pkgsitelib/*.mli
-%ocamlstublib/*.so*
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc README.md Changes
-%pkgsitelib/*.mli
 
 %changelog
+* Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 1.16.1-alt1
+- 1.16.1
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.15-alt1
 - 1.15
 
