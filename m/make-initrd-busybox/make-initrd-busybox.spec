@@ -1,6 +1,6 @@
 Name: make-initrd-busybox
 Version: 1.32.1
-Release: alt1
+Release: alt2
 
 Summary: Busybox for make-initrd
 License: GPL-2.0-or-later
@@ -15,11 +15,11 @@ Busybox (%version) for make-initrd.
 
 %prep
 %setup
+
+%build
 sed -r \
 	-e 's#@includedir@#%{_includedir}#g' \
 	busybox-config > busybox/.config
-
-%build
 cd busybox
 %make_build
 
@@ -38,6 +38,9 @@ ln -s ../usr/sbin/chroot  sbin/chroot
 /lib/initrd/*
 
 %changelog
+* Mon Jan 11 2021 Alexey Gladkov <legion@altlinux.ru> 1.32.1-alt2
+- Fix build under srpm_cleanup (mike@).
+
 * Sat Jan 02 2021 Alexey Gladkov <legion@altlinux.ru> 1.32.1-alt1
 - New busybox version (1.32.1).
 - Update License tag.
