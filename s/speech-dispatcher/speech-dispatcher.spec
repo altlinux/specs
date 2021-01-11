@@ -1,6 +1,6 @@
 Name: speech-dispatcher
-Version: 0.8.8
-Release: alt2
+Version: 0.10.2
+Release: alt1
 
 Summary: A speech output processing service
 License: %gpl2plus
@@ -100,7 +100,11 @@ This python module allows programmsaccess speech-dispatcher service.
 	   --with-pulse \
 	   --with-alsa \
 	   --with-libao \
-	   --with-oss
+	   --with-oss \
+	   --without-voxin \
+	   --without-kali \
+	   --without-ibmtts \
+	   --without-baratinoo
 %make_build
 
 %install
@@ -112,8 +116,7 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %find_lang %name
 
 %files -f %name.lang
-%doc ANNOUNCE AUTHORS BUGS doc FAQ NEWS README
-%doc README.packagers README.style README.translators TODO
+%doc FAQ NEWS README.md README.overview.md
 %_bindir/speech-dispatcher
 %config %_sysconfdir/%name
 %_unitdir/%{name}d.service
@@ -156,6 +159,11 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Jan 11 2021 Paul Wolneykien <manowar@altlinux.org> 0.10.2-alt1
+- Fixed doc/ files.
+- Build without voxin, kali, ibmtts and baratinoo (to avoid "shims").
+- New upstream release 0.10.2.
+
 * Wed Nov 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.8.8-alt2
 - requires fixed
 
