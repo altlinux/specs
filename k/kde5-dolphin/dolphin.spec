@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 20.12.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: File tools
@@ -78,7 +78,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p2
+%patch4 -p2
 
 %build
 %K5build \
@@ -136,6 +136,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Mon Jan 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 20.12.0-alt2
+- Restored stopping of preview generation jobs on unmount request.
+
 * Fri Dec 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 
