@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-movie
-Version: 5.7.6.164
+Version: 5.7.6.165
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
@@ -73,13 +73,13 @@ export CXX="clang++"
 export AR="llvm-ar"
 %endif
 
-%cmake \
+%cmake_insource \
     -GNinja \
     -DCMAKE_BUILD_TYPE=Release
-%ninja_build -C BUILD
+%ninja_build
 
 %install
-%ninja_install -C BUILD
+%ninja_install
 %find_lang %name
 
 %files -f %name.lang
@@ -100,6 +100,9 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.6.165-alt1
+- New version (5.7.6.165) with rpmgs script.
+
 * Thu Dec 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.164-alt1
 - New version (5.7.6.164) with rpmgs script.
 - Fixed build with mpv (thanks archlinux for the patches).
