@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20201216
+Version: 20210108
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,21 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Jan 11 2021 Cronbuild Service <cronbuild@altlinux.org> 20210108-alt1
+- upstream changes (GIT d528862):
+  + brcm: Add NVRAM for Vamrs 96boards Rock960 (thx Peter Robinson)
+  + brcm: Update Raspberry Pi 3B+/4B NVRAM for downstream changes (thx Peter Robinson)
+  + cypress: Fix link direction (thx Jeremy Linton)
+  + cypress: Link the new cypress firmware to the old brcm files (thx Peter Robinson)
+  + brcm: remove old brcm firmwares that have newer cypress variants (thx Peter Robinson)
+
+* Mon Jan 04 2021 Cronbuild Service <cronbuild@altlinux.org> 20201116-alt1
+- upstream changes (GIT f580dc2):
+  + rtl_bt: Update RTL8822C BT(UART I/F) FW to 0x059A_25CB (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT(USB I/F) FW to 0x099a_7253 (thx Max Chou)
+  + rtl_bt: Add firmware and config files for RTL8852A BT USB chip (thx Max Chou)
+  + rtl_bt: Update RTL8821C BT(USB I/F) FW to 0x829a_7644 (thx Max Chou)
+
 * Mon Dec 21 2020 Cronbuild Service <cronbuild@altlinux.org> 20201216-alt1
 - upstream changes (GIT 646f159):
   + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
