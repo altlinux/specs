@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable introspection
 %def_enable vala
 %def_enable docs
@@ -8,7 +8,7 @@
 %define unicode_ver 13.0.0
 
 Name: gucharmap
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -131,6 +131,9 @@ character map library.
 %endif
 
 %changelog
+* Mon Jan 11 2021 Yuri N. Sedunov <aris@altlinux.org> 13.0.5-alt1
+- 13.0.5
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 13.0.4-alt1
 - 13.0.4
 

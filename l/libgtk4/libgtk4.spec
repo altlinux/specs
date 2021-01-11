@@ -28,7 +28,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -44,7 +44,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.65.0
+%define glib_ver 2.66.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
 %define pango_ver 1.47.0
@@ -356,6 +356,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Jan 09 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Wed Dec 16 2020 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 

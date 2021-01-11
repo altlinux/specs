@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.56
 %define libname mesonbuild
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: High productivity build system
@@ -90,6 +90,13 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Mon Jan 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.56.2-alt1
+- 0.56.2
+
+* Wed Jan 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.56.1-alt1
+- 0.56.1
+- meson.macros: added --no-rebuild to %%__meson_test
+
 * Wed Nov 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
 - updated to 0.56.0-2-gf478ffa66
 - meson.macros: added %%__meson_test for builtin "meson test" command
