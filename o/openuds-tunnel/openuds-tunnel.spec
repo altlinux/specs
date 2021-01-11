@@ -3,7 +3,7 @@
 
 Name: openuds-tunnel
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
 Group: Networking/Remote access
@@ -160,5 +160,8 @@ update_chrooted all
 %appdir/%name
 
 %changelog
+* Mon Jan 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.5.0-alt2
+- Fixed sshd_uds.service
+
 * Mon Dec 07 2020 Alexey Shabalin <shaba@altlinux.org> 2.5.0-alt1
 - Initial build
