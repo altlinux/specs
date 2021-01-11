@@ -1,5 +1,5 @@
 Name: parole
-Version: 4.15.0
+Version: 4.16.0
 Release: alt1
 
 %def_enable clutter
@@ -78,6 +78,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jan 11 2021 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Sun Dec 27 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
 - Added Vcs tag.
 - Updated Url tag.
