@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma5-integration
-Version: 5.20.4
+Version: 5.20.5
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -45,6 +45,9 @@ Qt applications when running on a KDE Plasma workspace.
     -DCMAKE_DISABLE_FIND_PACKAGE_FontHack=ON \
     #
 
+# cleanup
+rm -f %_K5data/kconf_update/fonts_*
+
 %install
 %K5install
 %K5install_move data kconf_update
@@ -55,6 +58,9 @@ Qt applications when running on a KDE Plasma workspace.
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme.so
 
 %changelog
+* Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.20.5-alt1
+- new version
+
 * Wed Dec 02 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.4-alt1
 - new version
 
