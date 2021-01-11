@@ -1,9 +1,9 @@
 %define		php7_extension	pdo_sqlsrv
-%define		real_version	5.8.0
+%define		real_version	5.8.1
 
 Name:	 	php7-%php7_extension
 Version:	%php7_version
-Release:	%php7_release.1
+Release:	%php7_release
 
 Summary:	Microsoft Drivers for PHP PDO for SQL Server
 
@@ -15,7 +15,6 @@ URL:		https://pecl.php.net/package/pdo_sqlsrv
 
 # This extension can't be used on 32bit or ARM systems - there are no support for 32bit or ARM systems from Microsoft.
 ExclusiveArch: x86_64
-#BuildArch: x86_64
 
 Packager:	Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -24,11 +23,7 @@ Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
 Source3:	README.ALT
 Patch0: php7-pdo_sqlsrv-5.2.0-alt-gcc8.patch
-
 BuildRequires(pre): rpm-build-php7 rpm-build-licenses
-
-# Automatically added by buildreq on Tue Sep 26 2017
-# optimized out: gnu-config libstdc++-devel libunixODBC-devel-compat perl php7-libs python-base python-modules python3 python3-base
 BuildRequires: gcc-c++ glibc-devel-static libunixODBC-devel php7-devel
 
 BuildRequires: php7-devel = %php7_version
@@ -55,6 +50,7 @@ phpize
 BUILD_HAVE=`echo %php7_extension | tr '[:lower:]-' '[:upper:]_'`
 %add_optflags -fPIC -L%_libdir
 export LDFLAGS=-lphp-%_php7_version
+export CXX=c++
 %configure \
 	--with-%php7_extension \
 	--with-libdir=%_lib \
@@ -83,6 +79,9 @@ install -D -m 644 -- %SOURCE3 README.ALT
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%version-%release
+
+* Mon Jan 11 2021 Anton Farygin <rider@altlinux.org> 7.4.13-alt1
+- update to 5.8.1
 
 * Thu Feb 13 2020 Anton Farygin <rider@altlinux.org> 7.3.14-alt1
 - update to 5.8.0

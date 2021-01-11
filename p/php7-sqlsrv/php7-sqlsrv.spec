@@ -1,9 +1,9 @@
 %define		php7_extension	sqlsrv
-%define		real_version	5.8.0
+%define		real_version	5.8.1
 
 Name:	 	php7-%php7_extension
 Version:	%php7_version
-Release:	%php7_release.1
+Release:	%php7_release
 
 Summary:	Microsoft Drivers for PHP for SQL Server
 
@@ -54,6 +54,7 @@ phpize
 BUILD_HAVE=`echo %php7_extension | tr '[:lower:]-' '[:upper:]_'`
 %add_optflags -fPIC -L%_libdir
 export LDFLAGS=-lphp-%_php7_version
+export CXX=c++
 %configure \
 	--with-%php7_extension \
 	--with-libdir=%_lib \
@@ -80,8 +81,12 @@ install -D -m 644 -- %SOURCE3  README.ALT
 %php7_extension_preun
 
 %changelog
+
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%version-%release
+
+* Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 7.4.14-alt1
+- update to 5.8.1
 
 * Thu Feb 13 2020 Anton Farygin <rider@altlinux.org> 7.3.14-alt1
 - update to 5.8.0
