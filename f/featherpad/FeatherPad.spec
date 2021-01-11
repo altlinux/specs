@@ -1,5 +1,5 @@
 Name: featherpad
-Version: 0.16.0
+Version: 0.17.1
 Release: alt1
 
 Summary: A lightweight Qt5 plain-text editor for Linux
@@ -40,7 +40,7 @@ FeatherPad is a lightweight Qt5 plain-text editor for Linux.
 %define _PX 128 16 192 24 256 32 48 64 72 96
 
 %build
-%qmake_qt5
+%qmake_qt5 CONFIG+=nostrip
 %make_build
 for n in %_PX; do
 	convert featherpad/data/icons/featherpad.svg $n.png
@@ -59,6 +59,9 @@ done
 %_iconsdir/*/*/*/*
 
 %changelog
+* Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 0.17.1-alt1
+- new version 0.17.1
+
 * Thu Nov 05 2020 Leontiy Volodin <lvol@altlinux.org> 0.16.0-alt1
 - new version 0.16.0
 
