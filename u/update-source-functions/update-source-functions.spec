@@ -1,6 +1,6 @@
 Name: update-source-functions
-Version: 0.1.10
-Release: alt2
+Version: 0.1.11
+Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
 License: GPLv3
@@ -36,6 +36,10 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Mon Jan 11 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.11-alt1
+- Support add_changelog.lite.
+- Make get_available_github_versions() to list release tarballs.
+
 * Mon Dec 16 2019 Paul Wolneykien <manowar@altlinux.org> 0.1.10-alt2
 - Switch to Python 3.
 
