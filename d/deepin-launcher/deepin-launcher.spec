@@ -1,7 +1,7 @@
 %global repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.3.0.35
+Version: 5.3.0.41
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -35,6 +35,9 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 # Fixed background for the launcher.
 sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' \
     src/boxframe/{backgroundmanager.cpp,boxframe.cpp}
+sed -i '1i#include <QPainterPath>' \
+    src/windowedframe.h \
+    src/widgets/modetogglebutton.cpp
 
 %build
 %cmake_insource \
@@ -57,6 +60,9 @@ sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/d
 %_includedir/%repo/
 
 %changelog
+* Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.41-alt1
+- New version (5.3.0.41) with rpmgs script.
+
 * Thu Dec 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.35-alt1
 - New version (5.3.0.35) with rpmgs script.
 
