@@ -3,21 +3,21 @@
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
-Group: Networking/Mail
 Summary: Evolution extension for Exchange Web Services
+Group: Networking/Mail
 License: LGPL-2.1
 Url: https://wiki.gnome.org/Apps/Evolution
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define ver_base 3.28
+%define ver_base 3.38
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.38.2
-%define eds_ver 3.38.2
+%define evolution_ver 3.38.3
+%define eds_ver 3.38.3
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
@@ -27,8 +27,8 @@ Requires: evolution >= %evolution_ver
 Requires: evolution-data-server >= %eds_ver
 Requires: libmspack >= %libmspack_ver
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ intltool
-BuildRequires: gnome-common rpm-build-gnome gtk-doc
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: evolution-devel >= %evolution_ver
 BuildRequires: libmspack-devel >= %libmspack_ver
@@ -77,6 +77,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Jan 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
+- 3.38.3
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

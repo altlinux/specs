@@ -16,7 +16,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -44,7 +44,7 @@ BuildRequires: gsettings-desktop-schemas-devel >= 3.28.0
 BuildRequires: iso-codes-devel
 BuildRequires: xkeyboard-config-devel
 BuildRequires: libXrandr-devel >= 1.3 libXext-devel >= 1.1
-BuildRequires: libudev-devel
+BuildRequires: libudev-devel pkgconfig(systemd)
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_libseccomp:BuildRequires: libseccomp-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
@@ -187,6 +187,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jan 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
+- 3.38.3
+
 * Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
