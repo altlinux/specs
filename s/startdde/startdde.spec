@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.6.0.34
+Version: 5.6.0.35
 Release: alt1
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
@@ -79,6 +79,9 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/xsessions/deepin.desktop
 
 %changelog
+* Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.0.35-alt1
+- New version (5.6.0.35) with rpmgs script.
+
 * Tue Dec 29 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.34-alt1
 - New version (5.6.0.34) with rpmgs script.
 - Fixed paths.
