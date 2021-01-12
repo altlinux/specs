@@ -3,7 +3,7 @@
 
 Name:    gdesklets
 Version: 0.36.3
-Release: alt5
+Release: alt6
 
 Summary: gDesklets - an advanced architecture for desktop applets
 License: GPL-2.0
@@ -44,6 +44,7 @@ BuildPreReq: GConf2
 # to avoid rpm-build-python/hasher/apt bug (#4795)
 BuildPreReq: python-module-pygnome
 
+BuildRequires: python-dev
 BuildRequires: GConf2 ORBit2-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel gnome-vfs2-devel libGConf2-devel 
 BuildRequires: libart_lgpl-devel libatk-devel libbonobo2-devel libbonoboui-devel libcairo-devel libglitz-devel libgnome-devel 
 BuildRequires: libgnome-keyring-devel libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libgtop2-devel libpango-devel libpng-devel libpopt-devel 
@@ -72,12 +73,12 @@ candy and usefulness.
 %patch2 -p1
 %patch3 -p0
 
-# Set correct python2 executable in shebang
+# Set correct python2 executable in shebang and configure
 subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+subst 's|python -c|%__python -c|' configure
 
 %build
-%configure \
-	--disable-schemas-install
+%configure
 %make_build
 
 %install
@@ -91,6 +92,7 @@ install -m 0644 %SOURCE1 %buildroot%_miconsdir/%name.png
 install -m 0644 %SOURCE2 %buildroot%_niconsdir/%name.png
 
 %find_lang --with-gnome %name
+echo "%_datadir/locale/sr@Latn/LC_MESSAGES/gdesklets.mo" >> %name.lang
 
 %define schemas gdesklets-display-thumbnail
 
@@ -119,6 +121,9 @@ fi
 #%_pkgconfigdir/*
 
 %changelog
+* Tue Jan 12 2021 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt6
+- FTBFS: set correct python2 executable in configure.
+
 * Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt5
 - Set correct python2 executable in shebang.
 
