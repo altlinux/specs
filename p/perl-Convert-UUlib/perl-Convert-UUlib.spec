@@ -2,9 +2,9 @@
 %define module	Convert-UUlib
 
 Name: perl-%module
-Version: 1.71
+Version: 1.8
 Release: alt1
-Epoch: 2
+Epoch: 3
 Summary: Perl interface to the uulib library (a.k.a. uudeview/uuenview)
 
 License: GPL or Artistic
@@ -16,6 +16,7 @@ Packager: Alexey Shabalin <shaba@altlinux.ru>
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.gz
 Patch1: Convert-UUlib-1.5-alt-system-libuu.patch
 Patch2: Convert-UUlib-1.71-alt_strip_stuff_not_in_libuu.patch
+Patch3: Convert-UUlib-1.8-alt-system-libuu.patch
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: libuu-devel perl-devel perl(Canary/Stability.pm) perl(common/sense.pm)
@@ -30,6 +31,7 @@ binary files into all of these representations except BinHex.
 %setup -q -n %{module}-%{version}
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %perl_vendor_build
@@ -43,6 +45,9 @@ binary files into all of these representations except BinHex.
 %perl_vendor_autolib/Convert
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 3:1.8-alt1
+- automated CPAN update
+
 * Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 2:1.71-alt1
 - automated CPAN update
 
