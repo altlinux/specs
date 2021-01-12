@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Gtk2-GladeXML
 Name: perl-%dist
-Version: 1.007
-Release: alt3.2
+Version: 1.008
+Release: alt1
 
 Summary: Create user interfaces directly from Glade XML files
 License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: fonts-ttf-dejavu libglade-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel xvfb-run
@@ -20,7 +21,7 @@ XML file.  libglade  is a library which knows how to build and hook up the
 user interface described in the Glade XML file at application run time.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,7 +31,7 @@ xvfb-run -a make test
 %perl_vendor_install
 
 %files
-%doc	AUTHORS NEWS README examples
+%doc	AUTHORS README examples ChangeLog
 %dir	%perl_vendor_archlib/Gtk2
 	%perl_vendor_archlib/Gtk2/GladeXML.pm
 	%perl_vendor_autolib/Gtk2
@@ -39,6 +40,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gtk2/GladeXML/Install
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 1.008-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.007-alt3.2
 - rebuild with new perl 5.28.1
 
