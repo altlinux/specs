@@ -1,5 +1,5 @@
 Name: patchage
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 
 Summary: A modular patch bay for JACK and LASH audio systems
@@ -9,6 +9,7 @@ Url: https://drobilla.net/software/patchage
 
 Source0: %name-%version.tar
 Source1: waf.tar
+Patch1: patchage-1.0.4-fix-compilation.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
@@ -23,6 +24,7 @@ Jack, Lash, and Alsa.
 
 %prep
 %setup
+%patch1 -p1
 tar xf %SOURCE1
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
@@ -33,7 +35,6 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 	--configdir=%_sysconfdir \
 	--libdir=%_libdir \
 	--jack-dbus \
-	--jack-session-manage \
 	--docs \
 	--debug
 ./waf build -j %__nprocs
@@ -59,6 +60,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/%name.1*
 
 %changelog
+* Fri Jan 08 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
+- New version.
+
 * Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
 - New version.
 
