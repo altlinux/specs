@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blockdev
-%define ver_major 2.24
+%define ver_major 2.25
 %define rev 1
 
 %ifnarch %ix86 x86_64
@@ -17,7 +17,7 @@
 
 Name: lib%_name
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: A library for low-level manipulation with block devices
 Group: System/Libraries
@@ -643,6 +643,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Tue Jan 12 2021 Yuri N. Sedunov <aris@altlinux.org> 2.25-alt1
+- 2.25
+
 * Fri Jan 01 2021 Yuri N. Sedunov <aris@altlinux.org> 2.24-alt2
 - more fixes for dosfstools without compatibility symlinks (ALT #39495)
 - %%name-{fs,part}: removed obsolete multipath-tools dependency (ALT #39482)
