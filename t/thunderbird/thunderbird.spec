@@ -12,7 +12,7 @@
 %define llvm_version      11.0
 
 Name: 	 thunderbird
-Version: 78.6.0
+Version: 78.6.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -35,7 +35,6 @@ Source8: thunderbird-wayland.desktop
 
 Patch11: thunderbird-alt-allow-send-in-windows-1251.patch
 Patch12: alt-use-vorbis-on-arm-too.patch
-Patch13: thunderbird-fix-guess-timezone-in-calendar.patch
 
 Patch21: mozilla-1353817.patch
 Patch23: build-aarch64-skia.patch
@@ -265,7 +264,6 @@ tar -xf %SOURCE6
 
 %patch11 -p2
 %patch12 -p2
-%patch13 -p2
 %patch21 -p2
 %patch23 -p2
 %ifarch %arm
@@ -659,6 +657,11 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Jan 12 2021 Andrey Cherepanov <cas@altlinux.org> 78.6.1-alt1
+- New version (78.6.1).
+- Security fixes:
+  + CVE-2020-16044 Use-after-free write when handling a malicious COOKIE-ECHO SCTP chunk
+
 * Tue Dec 15 2020 Andrey Cherepanov <cas@altlinux.org> 78.6.0-alt1
 - New version (78.6.0).
 - Security fixes:
