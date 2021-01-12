@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module Gnome2-Wnck
 
 Name: perl-%module
-Version: 0.16
-Release: alt3.2
+Version: 0.18
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +12,7 @@ License: LGPL
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Gnome2/%module-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: libwnck-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel perl-podlators
@@ -21,7 +22,7 @@ This module allows a Perl developer to use the Window Navigator Construction Kit
 library (libwnck for short) to write tasklists and pagers.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,7 +31,7 @@ library (libwnck for short) to write tasklists and pagers.
 %perl_vendor_install
 
 %files
-%doc	NEWS README
+%doc	README ChangeLog copyright.pod
 %dir	%perl_vendor_archlib/Gnome2
 	%perl_vendor_archlib/Gnome2/Wnck.pm
 	%perl_vendor_autolib/Gnome2
@@ -40,6 +41,9 @@ library (libwnck for short) to write tasklists and pagers.
 	%perl_vendor_archlib/Gnome2/Wnck/Install
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt3.2
 - rebuild with new perl 5.28.1
 
