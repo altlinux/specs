@@ -15,7 +15,7 @@
 
 Name: pkcs11-profiles
 Version: 0.1.11
-Release: alt1
+Release: alt2
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -167,15 +167,18 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Tue Jan 12 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.11-alt2
+- Fixed %%changelog glitches.
+
 * Mon Jan 11 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.11-alt1
 - Disable JaCarta profile: libjcpkcs11 is not available in Sisyphus
   any more!
 
-* Fri Nov 13 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1.10-alt3
+* Fri Nov 13 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1.9-alt4
 - ppc64el fixed to ppc64le
 
-* Wed Nov 11 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1.10-alt2
-- Enable rutokenecp on ppc64el supported by 2.0.9.0 release.
+* Wed Nov 11 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1.9-alt3
+- Enable rutokenecp on ppc64el.
 
 * Mon Aug 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.1.10-alt1
 - Use "ask_pin_later" instead of "ask_pin" (requires pam_pkcs11 >= 0.6.11).
