@@ -2,8 +2,8 @@
 %define dist Gnome2-VFS
 
 Name: perl-%dist
-Version: 1.083
-Release: alt1.2
+Version: 1.084
+Release: alt1
 
 Summary: Gnome2-VFS Perl module
 License: LGPLv2.1+
@@ -45,7 +45,7 @@ for developers (overview of internals and internal API reference).
 %perl_vendor_install
 
 %files
-%doc	NEWS README examples ChangeLog.pre-git copyright.pod
+%doc	README examples ChangeLog.pre-git copyright.pod
 %dir	%perl_vendor_archlib/Gnome2
 	%perl_vendor_archlib/Gnome2/VFS.pm
 	%perl_vendor_autolib/Gnome2/VFS
@@ -64,6 +64,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/VFS/Resolve
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 1.084-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.083-alt1.2
 - rebuild with new perl 5.28.1
 
