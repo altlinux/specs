@@ -6,7 +6,7 @@
 
 Name: opentoonz
 Version: 1.4.0
-Release: alt2
+Release: alt3
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -31,6 +31,8 @@ Patch3: %name-%version-alt-data-location.patch
 Patch4: opensuse-0001-Fix-linker-errors-on-Linux.patch
 Patch5: opensuse-0001-Use-the-system-mypaint-brushes.patch
 Patch6: %name-%version-alt-qt5-compat.patch
+Patch7: %name-%version-upstream-gcc10-compat.patch
+Patch8: %name-%version-upstream-glibc-compat.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -88,6 +90,8 @@ This package contains documentation and samples for OpenToonz.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 # prevent using unbundled libraries
 # don't unbundle libtiff because it's patched. See: https://github.com/opentoonz/opentoonz/blob/master/doc/how_to_build_linux.md#building-libtiff
@@ -155,6 +159,9 @@ done
 %doc additional/sample
 
 %changelog
+* Tue Jan 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt3
+- Fixed build with new toolchain.
+
 * Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt2
 - Fixed build with qt-5.15.0.
 
