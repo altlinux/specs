@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.3.0.26
+Version: 5.3.0.30
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -35,6 +35,8 @@ BuildRequires: libXtst-devel
 BuildRequires: libpam0-devel
 BuildRequires: qt5-linguist
 BuildRequires: deepin-dock-devel
+BuildRequires: libgio-qt-devel
+BuildRequires: libgtest-devel
 
 %description
 This project include those sub-project:
@@ -48,10 +50,10 @@ This project include those sub-project:
 %prep
 %setup -n %repo-%version
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i 's|default_background.jpg|deepin/default.png|' \
-    widgets/fullscreenbackground.cpp \
-    lightdm-deepin-greeter/logintheme.qrc \
-    dde-lock/logintheme.qrc
+#sed -i 's|default_background.jpg|deepin/desktop.jpg|' \
+#    widgets/fullscreenbackground.cpp \
+#    lightdm-deepin-greeter/logintheme.qrc \
+#    dde-lock/logintheme.qrc
 sed -i 's|lib|libexec|' \
     misc/applications/deepin-toggle-desktop.desktop* \
     dde-osd/dde-osd_autostart.desktop \
@@ -109,6 +111,9 @@ sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifica
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Tue Jan 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.30-alt1
+- New version (5.3.0.30) with rpmgs script.
+
 * Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.26-alt1
 - New version (5.3.0.26) with rpmgs script.
 
