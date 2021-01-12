@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.3.0.49
+Version: 5.3.0.54
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -17,7 +17,23 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 BuildRequires(pre): clang11.0-devel
 %endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake libdbusmenu-qt5-devel deepin-network-utils-devel dtk5-widget-devel deepin-qt-dbus-factory-devel >= 2.0 gsettings-qt-devel libgtk+2-devel qt5-base-devel qt5-x11extras-devel qt5-svg-devel libX11-devel libXtst-devel libXext-devel libxcb-devel libxcbutil-icccm-devel libxcbutil-image-devel qt5-linguist
+BuildRequires: cmake
+BuildRequires: deepin-network-utils-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: gsettings-qt-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: libdbusmenu-qt5-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-linguist
+BuildRequires: libX11-devel
+BuildRequires: libXtst-devel
+BuildRequires: libXext-devel
+BuildRequires: libxcb-devel
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: libxcbutil-image-devel
 Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
 
 %description
@@ -34,17 +50,16 @@ Header files and libraries for %name.
 %setup -n %repo-%version
 
 sed -i '/TARGETS/s|lib|%_lib|' plugins/*/CMakeLists.txt
-sed -E '35d;/dpkg-architecture|EXIT/d' CMakeLists.txt
+sed -E '35d;/dpkg-architecture|EXIT/d;44d' CMakeLists.txt
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i 's|/usr/lib/deepin-daemon|/usr/libexec/deepin-daemon|' unittest/dock_unit_test.cpp \
-                                                              plugins/show-desktop/showdesktopplugin.cpp \
-                                                              frame/panel/mainpanelcontrol.cpp
-sed -i 's|/lib|/%_lib|' frame/controller/dockpluginscontroller.cpp \
-                        plugins/tray/system-trays/systemtrayscontroller.cpp \
-                        plugins/plugin-guide/plugins-developer-guide.md
-
-sed -i 's|/usr/lib/dde-dock/plugins|%{_libdir}/dde-dock/plugins|' plugins/plugin-guide/plugins-developer-guide.md
-sed -i 's|local/lib/dde-dock/plugins|local/%{_lib}/dde-dock/plugins|' plugins/plugin-guide/plugins-developer-guide.md
+sed -i 's|/usr/lib/deepin-daemon|/usr/libexec/deepin-daemon|' \
+    unittest/dock_unit_test.cpp \
+    plugins/show-desktop/showdesktopplugin.cpp \
+    frame/panel/mainpanelcontrol.cpp
+sed -i 's|/lib|/%_lib|' \
+    frame/controller/dockpluginscontroller.cpp \
+    plugins/tray/system-trays/systemtrayscontroller.cpp \
+    plugins/plugin-guide/plugins-developer-guide.md
 
 %build
 %if_enabled clang
@@ -53,14 +68,14 @@ export CXX="clang++"
 export AR="llvm-ar"
 %endif
 
-%cmake \
+%cmake_insource \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DARCHITECTURE=%_arch
-%ninja_build -C BUILD
+%ninja_build
 
 %install
-%ninja_install -C BUILD
+%ninja_install
 
 %files
 %doc LICENSE
@@ -77,6 +92,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Tue Jan 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.54-alt1
+- New version (5.3.0.54) with rpmgs script.
+
 * Mon Nov 09 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.49-alt1
 - New version (5.3.0.49) with rpmgs script.
 - Fixed panel plugins.
