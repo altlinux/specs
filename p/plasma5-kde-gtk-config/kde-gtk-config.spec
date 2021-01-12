@@ -1,7 +1,7 @@
 %define rname kde-gtk-config
 
 Name: plasma5-%rname
-Version: 5.20.4
+Version: 5.20.5
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -90,10 +90,13 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 %_K5conf_bin/*gtk*
 %_K5plug/kf5/kded/*gtk*.so
 %_libdir/gtk-*/modules/*.so
-%_K5conf_up/*gtk*.upd
+%_K5conf_up/*gtk*.*
 %_datadir/themes/Breeze/window_decorations.css
 
 %changelog
+* Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.20.5-alt1
+- new version
+
 * Wed Dec 02 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.20.4-alt1
 - new version
 
