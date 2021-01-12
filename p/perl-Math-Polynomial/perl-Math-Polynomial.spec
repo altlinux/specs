@@ -6,7 +6,7 @@ BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(FindBin.pm) perl(Math/BigI
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.018
+Version: 1.019
 Release: alt1
 Summary: Perl class for polynomials in one variable
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/M*
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 1.019-alt1
+- automated CPAN update
+
 * Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.018-alt1
 - automated CPAN update
 
