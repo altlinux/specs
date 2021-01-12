@@ -1,7 +1,7 @@
 %global repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.3.0.68
+Version: 5.3.0.82
 Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
@@ -84,6 +84,7 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %doc README.md
 %doc LICENSE
 %_bindir/%repo
+%_bindir/%repo-wapper
 %_bindir/abrecovery
 %_desktopdir/%repo.desktop
 %_datadir/dbus-1/services/*.service
@@ -99,6 +100,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Tue Jan 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.82-alt1
+- New version (5.3.0.82) with rpmgs script.
+
 * Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.68-alt1
 - New version (5.3.0.68) with rpmgs script.
 
