@@ -3,7 +3,7 @@
 
 Name:    x2goserver
 Version: 4.1.0.3
-Release: alt2
+Release: alt3
 Summary: X2Go Server
 
 Group:   System/Servers
@@ -18,6 +18,7 @@ Patch1:  %name-fix-autoreq.patch
 Patch2:  %name-alt-Xsession.patch
 Patch3:  alt-startkde.patch
 Patch4:  %name-fix-tmpfiles.patch
+Patch5: fix-versions.patch
 
 BuildRequires(pre): rpm-build-perl
 BuildRequires: desktop-file-utils
@@ -242,6 +243,7 @@ of a system-wide manageable desktop sharing setup.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # Set path
 find -type f | xargs sed -i -r -e '/^LIBDIR=/s,/lib/,/%{_lib}/,'
@@ -443,6 +445,9 @@ exit 0
 %config(noreplace) %_sysconfdir/x2go/desktopsharing/settings
 
 %changelog
+* Tue Jan 12 2021 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.3-alt3
+- Fix x2goversion (Closes: 39535)
+
 * Wed Mar 04 2020 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.3-alt2
 - Add x2goserver-desktopsharing package
 
