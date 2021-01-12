@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.48.0
+Version: 1.49.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -13,14 +13,15 @@ Source: rustc-src.tar
 
 Patch1: rust-gdb.patch
 Patch2: rust-disable-lint-tests.patch
+Patch3: rust-pr-80122.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
+%global llvm_version 11.0
 
 BuildPreReq: /proc
 
-BuildRequires: gcc-c++
 BuildRequires: libstdc++-devel
 BuildRequires: curl
 BuildRequires: cmake
@@ -35,9 +36,12 @@ BuildRequires: pkgconfig(libssh2)
 BuildRequires: pkgconfig(tinfo)
 %if_without bundled_llvm
 BuildRequires: pkgconfig(libffi)
-BuildRequires: llvm11.0-devel
-BuildRequires: llvm11.0-devel-static
+BuildRequires: clang%{llvm_version}
+BuildRequires: clang%{llvm_version}-devel
+BuildRequires: llvm%{llvm_version}-devel
+BuildRequires: llvm%{llvm_version}-devel-static
 %else
+BuildRequires: gcc-c++
 BuildRequires: ninja-build
 %endif
 %ifarch aarch64
@@ -52,7 +56,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.47.0
+%define r_ver 1.48.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
@@ -205,6 +209,7 @@ data to provide information about the Rust standard library.
 
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 
 %if_with bootstrap
 tar xf %r_src
@@ -265,7 +270,7 @@ find vendor \
 %build
 cat >env.sh <<EOF
 export RUST_BACKTRACE=1
-export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC"
+export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC -Copt-level=2"
 export LIBGIT2_SYS_USE_PKG_CONFIG=1
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
 export DESTDIR="%buildroot"
@@ -310,6 +315,10 @@ use-libcxx = false
 link-shared = true
 
 [target.%rust_triple]
+cc = "clang"
+cxx = "clang++"
+ar = "llvm-ar"
+ranlib = "llvm-ranlib"
 llvm-config = "/usr/bin/llvm-config"
 %endif
 EOF
@@ -427,11 +436,12 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Thu Jan 07 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.49.0-alt1
+- New version (1.49.0).
+- Use clang.
+
 * Wed Nov 25 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.48.0-alt1
 - New version (1.48.0).
-
-* Sat Oct 17 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.47.0-alt2
-- rebuild
 
 * Wed Oct 14 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.47.0-alt1
 - New version (1.47.0).
