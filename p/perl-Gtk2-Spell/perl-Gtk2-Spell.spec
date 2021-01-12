@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Gtk2-Spell
 Name: perl-%dist
-Version: 1.04
-Release: alt2.2
+Version: 1.05
+Release: alt1
 
 Summary: Perl bindings for GtkSpell with Gtk2
 License: LGPL 2.1
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: libgtkspell-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel xvfb-run
@@ -19,7 +20,7 @@ library.  This module allows you to write perl applications that utilize
 the GtkSpell library for mis-spelled word highlighting.
 
 %prep
-%setup  -n %dist-%version
+%setup -q -n %{dist}-%{version}
 sed -i- 's@1.00rc2@1.0@g' Makefile.PL
 
 %build
@@ -38,6 +39,9 @@ sed -i- 's@1.00rc2@1.0@g' Makefile.PL
 	%perl_vendor_archlib/Gtk2/Spell/Install
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt2.2
 - rebuild with new perl 5.28.1
 
