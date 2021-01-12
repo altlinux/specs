@@ -3,8 +3,8 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.3.0.41
-Release: alt2
+Version: 5.3.0.45
+Release: alt1
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -89,6 +89,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 
 %changelog
+* Tue Jan 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.45-alt1
+- New version (5.3.0.45) with rpmgs script.
+
 * Fri Dec 25 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.41-alt2
 - Fixed background.
 - Fixed qdbus generations.
