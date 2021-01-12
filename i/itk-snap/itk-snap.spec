@@ -4,7 +4,7 @@
 
 Name: itk-snap
 Version: 3.8.0
-Release: alt2
+Release: alt3
 Summary: Software application used to segment structures in 3D medical images
 Group: Sciences/Medicine
 License: GPLv3
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Patch1: %name-alt-no-git.patch
 Patch2: %name-alt-build.patch
 Patch3: %name-alt-unbundle.patch
+Patch4: %name-alt-glibc-compat.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: libitk%itkver-devel
@@ -64,14 +65,14 @@ and extraneous or unrelated features are kept to a minimum. \
 The design also emphasizes interaction and ease of use, \
 with the bulk of the development effort dedicated to the user interface.
 
-%description 
-%_description
+%description %_description
 
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # remove unbundled libraries
 rm -rf Common/JSon
@@ -106,6 +107,9 @@ rm -rf Common/JSon
 %_libdir/lib*.so*
 
 %changelog
+* Tue Jan 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt3
+- Fixed build with new glibc.
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt2
 - rebuild with new gbcm
 
