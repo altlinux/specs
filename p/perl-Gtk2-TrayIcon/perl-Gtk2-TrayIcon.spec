@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Gtk2-TrayIcon
 Name: perl-Gtk2-TrayIcon
-Version: 0.06
-Release: alt4.2
+Version: 0.07
+Release: alt1
 
 Summary: %dist Perl module
 License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel xvfb-run
@@ -18,7 +19,7 @@ This module allows a Perl developer to embed an arbitrary widget in a
 System Tray like the Gnome notification area.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifndef _build_display
 %def_without test
@@ -41,6 +42,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gtk2/TrayIcon/Install
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4.2
 - rebuild with new perl 5.28.1
 
