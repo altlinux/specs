@@ -1,13 +1,13 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CPAN/Meta.pm) perl(Test/CleanNamespaces.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/MinimumVersion.pm) perl(Test/NoBreakpoints.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Spelling.pm) perl(Test/Synopsis.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-JavaScript-Minifier-XS
-Version:        0.11
-Release:        alt4_17
+Version:        0.13
+Release:        alt1_1
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/JavaScript-Minifier-XS
@@ -46,23 +46,28 @@ files without breaking the JavaScript.
 %setup -q -n JavaScript-Minifier-XS-%{version}
 
 %build
-perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
-./Build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1 OPTIMIZE="%{optflags}"
+%{make_build}
 
 %install
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
+%{makeinstall_std}
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-./Build test --test_files="xt/*.t"
+unset AUTHOR_TESTING AUTOMATED_TESTING RELEASE_TESTING
+make test
 
 %files
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt4_17
 - update to new release by fcimport
 
