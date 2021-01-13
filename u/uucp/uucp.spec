@@ -1,9 +1,9 @@
 Name: uucp
 Version: 1.07
-Release: alt4
+Release: alt5
 
 Summary: The %name utility for copying files between systems
-License: GPL
+License: GPLv2
 Group: Networking/File transfer
 Url: http://www.airs.com/ian/uucp.html
 
@@ -17,7 +17,7 @@ PreReq: coreutils, /var/lock/serial
 Requires: syslog-common >= 1.4.1-alt1
 Requires: cu = %version-%release
 
-BuildRequires: autoconf_2.13 makeinfo
+BuildRequires: makeinfo
 
 %description
 The %name command copies files between systems. Uucp is primarily used
@@ -42,17 +42,7 @@ This package contains only cu(1) utility.
 %prep
 %setup
 %patch1 -p1
-
-%set_autoconf_version 2.13
-
-# Fix wrong paths.
-#find -type f |
-#	xargs fgrep -l /usr/local/conf |
-#	xargs -r perl -pi -e 's,/usr/local/conf,%_sysconfdir,g'
-#
-#find -type f |
-#	xargs fgrep -l /usr/local |
-#	xargs -r perl -pi -e 's,/usr/local,%prefix,g'
+rm -f aclocal.m4
 
 # Fix manpages.
 find -type f |
@@ -60,7 +50,7 @@ find -type f |
 	xargs -r perl -pi -e "s/^''' /"'.\\" /'
 
 %build
-autoconf
+%autoreconf
 %configure --with-user=%name --with-newconfigdir=/etc/uucp \
 	   --with-oldconfigdir=/etc/uucp/old
 # SMP-incompatible
@@ -140,6 +130,9 @@ chmod go-rwx %_logdir/%name/Debug
 %_man1dir/cu.1*
 
 %changelog
+* Wed Jan 13 2021 Fr. Br. George <george@altlinux.ru> 1.07-alt5
+- Rebuild with new autoconf
+
 * Tue Feb 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.07-alt4
 - cu(1) subpackaged
 
