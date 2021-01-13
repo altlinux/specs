@@ -2,8 +2,8 @@
 %define libchromaprint libchromaprint%sover
 
 Name: chromaprint
-Version: 1.4.3
-Release: alt3
+Version: 1.5.0
+Release: alt1
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
@@ -78,19 +78,22 @@ applications which will use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jan 13 2021 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt1
+- new version
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.4.3-alt1%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.4.3-alt1
 - new version
 
-* Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 1.4.2-alt1%ubt
+* Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 1.4.2-alt1
 - new version
 
-* Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 1.2-alt2%ubt
+* Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 1.2-alt2
 - rebuild with ffmpeg
 
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
