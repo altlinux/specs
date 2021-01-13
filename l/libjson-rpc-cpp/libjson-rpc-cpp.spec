@@ -5,18 +5,19 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define jsoncpp_major 1
-%define libname   libjsonrpccpp%{jsoncpp_major}
-%define develname libjsonrpccpp-devel
+%define libname       libjsonrpccpp%{jsoncpp_major}
+%define develname     libjsonrpccpp-devel
 
 Name:           libjson-rpc-cpp
 Version:        1.3.0
-Release:        alt1_2
+Release:        alt1_5
 Summary:        C++ JSON Library
 License:        Public Domain
 Group:          System/Libraries
 #Url:           http://jsoncpp.sourceforge.net/
 URL:            https://github.com/cinemast/libjson-rpc-cpp
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+Patch0:         libjson-rpc-cpp-1.3.0-compatibility-with-libmicrohttpd-0.9.71.patch
 #To generate docs
 BuildRequires:  ccmake cmake ctest
 BuildRequires:  doxygen
@@ -47,7 +48,7 @@ Requires:       %{libname} = %{version}-%{release}
 Provides:       json-rpc-cpp-devel = %{version}-%{release}
 Provides:       libjson-rpc-cpp-devel = %{version}-%{release}
 Obsoletes:      %{_lib}libjson-rpc-cpp-devel >= 1.0.0
-Conflicts:      libjsonrpccpp-devel libjsonrpccpp0.6-devel
+Conflicts:      libjsonrpccpp0.6-devel < 1.0.0
 
 %description -n    %{develname}
 It can also preserve existing comment in unserialization/serialization steps,
@@ -57,6 +58,8 @@ Files for building applications with %{name} support.
 
 %prep
 %setup -q
+%patch0 -p1
+
 
 %build
 %{mageia_cmake} \
@@ -84,6 +87,9 @@ Files for building applications with %{name} support.
 
 
 %changelog
+* Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_5
+- update by mgaimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_2
 - fixed build
 
