@@ -1,7 +1,7 @@
 Summary: Squid proxy server plugin for the SASL/GSSAPI authentication to an ldap server
 Name: squid-kerberos-ldap-helper
 Version: 1.2.2
-Release: alt1.1
+Release: alt2
 License: GPLv2
 Group: System/Servers
 URL: http://squidkerbauth.sourceforge.net/
@@ -11,6 +11,7 @@ Source0: %{name}-%{version}.tar.gz
 #Patch0: support_resolv.format.patch
 Patch1: fix-kerb-nolib-rpath.patch
 Patch2: squid-kerberos-ldap-helper-1.2.2-alt-DSO.patch
+Patch3: squid-kerberos-ldap-helper-1.2.2-alt-fix-multiple-kparam.patch
 
 # Automatically added by buildreq on Tue Apr 28 2009
 BuildRequires: libkrb5-devel libldap-devel rpm-macros-alterator rpm-macros-fillup
@@ -25,6 +26,7 @@ to connect to Active Directory or Openldap based ldap servers.
 #%patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 autoreconf -fi
@@ -47,6 +49,9 @@ install -D -m 644 README %buildroot%_docdir/%name-%version/README
 %dir %_docdir/squid-kerberos-ldap-helper-%version 
 
 %changelog
+* Wed Jan 13 2021 Paul Wolneykien <manowar@altlinux.org> 1.2.2-alt2
+- Fixed multiple definition of 'kparam' (patch).
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.1
 - Fixed build
 
