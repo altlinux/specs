@@ -1,11 +1,9 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-num
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: Legacy Num library for arbitrary-precision integer and rational arithmetic
 Group: Development/ML
 License: LGPLv2+ with exceptions
-
 Url: https://github.com/ocaml/num
 Source0: %name-%version.tar
 BuildRequires: ocaml
@@ -36,37 +34,25 @@ developing applications that use %name.
 %setup
 
 %build
-dune build @install
+%dune_build --release @install
 
 %check
-dune runtest
+%dune_check
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc Changelog README.md
 %doc LICENSE
-%_libdir/ocaml/num
-%_libdir/ocaml/num_top
-%_libdir/ocaml/stublibs/dll*.so
-%exclude %_libdir/ocaml/num/*.a
-%exclude %_libdir/ocaml/num/*.cmxa
-%exclude %_libdir/ocaml/num/*/*.a
-%exclude %_libdir/ocaml/num/*/*.cmxa
-%exclude %_libdir/ocaml/num/*/*.cmx
-%exclude %_libdir/ocaml/num/*/*.mli
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc LICENSE
-%_libdir/ocaml/num/*/*.a
-%_libdir/ocaml/num/*/*.cmxa
-%_libdir/ocaml/num/*/*.cmx
-%_libdir/ocaml/num/*/*.mli
-%_libdir/ocaml/num/*.a
-%_libdir/ocaml/num/*.cmxa
 
 %changelog
+* Wed Jan 13 2021 Anton Farygin <rider@altlinux.ru> 1.4-alt1
+- 1.4
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.3-alt1
 - 1.3
 
