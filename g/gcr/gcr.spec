@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: gcr
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -187,6 +187,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Wed Jan 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Mon Sep 28 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0 (ported to Meson build system)
 
