@@ -1,3 +1,4 @@
+BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(IPC/Cmd.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
@@ -10,7 +11,7 @@ BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(IPC/Cmd.pm) perl(T
 
 Name:		libstatgrab
 Version:	0.92
-Release:	alt1_1
+Release:	alt1_3
 Summary:	Make system statistics
 License:	LGPLv2+ and GPLv2+
 Group:		Monitoring
@@ -89,9 +90,6 @@ applications which will use %{name}.
 
 
 %build
-# fix build on aarch64
-autoreconf -vfi
-
 %configure --disable-static
 %make_build
 
@@ -102,6 +100,10 @@ autoreconf -vfi
 find %{buildroot} -name '*.la' -delete
 
 rm -rf %{buildroot}%{_docdir}/%{name}
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
 %files -n %{shortname}-tools
 %doc AUTHORS README ChangeLog NEWS
@@ -123,6 +125,9 @@ rm -rf %{buildroot}%{_docdir}/%{name}
 
 
 %changelog
+* Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_3
+- update by mgaimport
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_1
 - update by mgaimport
 
