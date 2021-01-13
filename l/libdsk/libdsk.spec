@@ -11,8 +11,8 @@ BuildRequires: gcc-c++
 
 Name:           lib%sname
 Summary:        A library for accessing floppy drives and disk images transparently
-Version:        1.5.12
-Release:        alt1_2
+Version:        1.5.14
+Release:        alt1_1
 License:        LGPLv2+
 Group:          System/Libraries
 URL:            http://www.seasip.info/Unix/LibDsk/index.html
@@ -103,6 +103,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 1.5.14-alt1_1
+- update by mgaimport
+
 * Thu Nov 05 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_2
 - picked up from orphaned
 
