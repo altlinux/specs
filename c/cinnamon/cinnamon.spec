@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.8.3
-Release: alt3
+Version: 4.8.5
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -183,6 +183,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Tue Jan 12 2021 Vladimir Didenko <cow@altlinux.org> 4.8.5-alt1
+- 4.8.5
+
 * Fri Dec 22 2020 Vladimir Didenko <cow@altlinux.org> 4.8.3-alt3
 - Another try to fix parallel build
 
