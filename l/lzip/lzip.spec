@@ -1,9 +1,9 @@
 Name: lzip
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: LZMA file compressor
-License: GPL v3+
+License: GPLv3+
 Group: Archiving/Compression
 
 Url: http://savannah.nongnu.org/projects/lzip/
@@ -57,6 +57,9 @@ make all info
 %_infodir/lzip.info*
 
 %changelog
+* Mon Jan 11 2021 Michael Shigorin <mike@altlinux.org> 1.22-alt1
+- new version (watch file uupdate)
+
 * Mon Jan 14 2019 Michael Shigorin <mike@altlinux.org> 1.21-alt1
 - new version (watch file uupdate)
 
