@@ -5,7 +5,7 @@
 
 Name: rpm-build-vm
 Version: 1.19
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -167,10 +167,16 @@ chmod go-rwx /dev/kvm
 
 %pre checkinstall
 set -ex
-vm-run --verbose uname -a
-vm-run --verbose --overlay=ext4 uname -a
+# qemu in tcb mode can hang un-def-5.10 kernel on ppc64 if smp>1 on "smp:
+# Bringing up secondary CPUs" message.
+ls -l /dev/kvm
+timeout 300 vm-run --verbose uname -a
+timeout 300 vm-run --verbose --overlay=ext4 uname -a
 
 %changelog
+* Wed Jan 13 2021 Vitaly Chikunov <vt@altlinux.org> 1.19-alt2
+- spec: Add timeout to checkinstall tests.
+
 * Sun Jan 10 2021 Vitaly Chikunov <vt@altlinux.org> 1.19-alt1
 - Avoid 9p warning about msize being too low.
 
