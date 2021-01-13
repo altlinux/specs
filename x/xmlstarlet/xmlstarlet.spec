@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: xmlstarlet
 Summary: Command Line XML Toolkit
-Version: 1.0.1
-Release: alt3
+Version: 1.6.1
+Release: alt1
 License: MIT
 Group: Text tools
 URL: http://xmlstar.sourceforge.net/
-Packager: Alexey Sidorov <alexsid@altlinux.ru>
 
-Source0: http://xmlstar.sourceforge.net/downloads/xmlstarlet-%{version}.tar.gz
-Patch0: xmlstarlet-1.0.1-nostatic.patch
-Patch1: xmlstarlet-1.0.1-cmdname.patch
-Patch2: xmlstarlet-1.0.1-docs.patch
-Patch3: xmlstarlet-1.0.1-html.patch
-Patch4: xmlstarlet-1.0.1-txt.patch
+# http://xmlstar.sourceforge.net/downloads/xmlstarlet-%{version}.tar.gz
+Source: %name-%version.tar
 
+Patch1: xmlstarlet-1.6.1-nogit.patch
+
+BuildRequires: xmlto
 BuildRequires: libxml2-devel libxslt-devel zlib-devel
+BuildRequires: docbook5-schemas
 
 %description
 XMLStarlet is a set of command line utilities which can be used
@@ -24,34 +25,35 @@ plain text files using UNIX grep, sed, awk, diff, patch, join, etc
 commands.
 
 %prep
-%setup -q
-#patch0 -p1
+%setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-%__subst "s|.a |.so |g" configure.in
-%__subst "s|.a |.so |g" configure
 
 %build
-%configure	--with-libxml-libs-prefix=%_libdir \
-			--with-libxslt-libs-prefix=%_libdir
-# --program-transform-name=%name
+%autoreconf
+%configure \
+	--disable-static-libs \
+	--with-libxml-include-prefix=%_includedir/libxml2 \
+	%nil
+
 %make_build
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
 mv %buildroot%_bindir/xml %buildroot%_bindir/%name
 
-%files
+# remove duplicate documentation
+rm -rf %buildroot%_defaultdocdir/%name
 
-%doc AUTHORS ChangeLog NEWS README Copyright TODO doc/xmlstarlet.txt doc/xmlstarlet-ug.html
-#doc examples
-%doc %{_mandir}/man1/xmlstarlet.1*
+%files
+%doc AUTHORS ChangeLog NEWS README Copyright TODO
+%doc doc/xmlstarlet.txt doc/xmlstarlet-ug.html doc/html.css
 %_bindir/%name
+%_man1dir/%{name}.1*
 
 %changelog
+* Wed Jan 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1
+- Updated to upstream version 1.6.1.
+
 * Tue May 03 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt3
 - fix build
 
