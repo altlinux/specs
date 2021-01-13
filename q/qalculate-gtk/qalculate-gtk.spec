@@ -3,7 +3,7 @@
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 3.13.0
+Version: 3.16.0
 Release: alt1
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
@@ -14,7 +14,7 @@ Url: https://qalculate.github.io/
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libcln-devel libdbus-glib libglade-devel libgmp-devel libgnome-devel
-BuildRequires: libqalculate-devel = %version
+BuildRequires: libqalculate-devel >= %version
 BuildRequires: perl-XML-Parser scrollkeeper yelp intltool
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(gtk+-3.0)
@@ -55,6 +55,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/search-providers/io.github.Qalculate.search-provider.ini
 
 %changelog
+* Wed Jan 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.16.0-alt1
+- Updated to upstream version 3.16.0.
+
 * Mon Sep 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt1
 - Updated to upstream version 3.13.0.
 
