@@ -4,8 +4,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.18
-Release: alt2
+Version: 1.19
+Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -171,6 +171,9 @@ vm-run --verbose uname -a
 vm-run --verbose --overlay=ext4 uname -a
 
 %changelog
+* Sun Jan 10 2021 Vitaly Chikunov <vt@altlinux.org> 1.19-alt1
+- Avoid 9p warning about msize being too low.
+
 * Fri Dec 04 2020 Vitaly Chikunov <vt@altlinux.org> 1.18-alt2
 - Warning if there is attempt to install rpm-build-vm-run outside of hasher.
 
