@@ -1,6 +1,6 @@
 Name: trafshow
 Version: 5.2.3
-Release: alt2
+Release: alt3
 
 Summary: A tool for real-time network traffic visualization
 License: BSD
@@ -10,6 +10,8 @@ Url: http://soft.risp.ru/trafshow/index.shtml
 # real source: Source: ftp://ftp.nsk.su/pub/RinetSoftware/%name-%version.tgz
 # is dead in time of 5.2.3-alt2
 Source: ftp://ftp.nsk.su/pub/RinetSoftware/%name-%version.tar.gz
+Source1: config.h
+Source2: Makefile
 Patch1: %name-5-makefile.patch
 Patch2: %name-3.1-alt-without-termcap.patch
 Patch3:	%name-gcc44.patch
@@ -32,16 +34,16 @@ interface.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-# this is from PLD. What for?
-#sed -i 's/static//' screen.c
+cp %SOURCE1 .
+cp %SOURCE2 .
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
 
 %build
-%set_autoconf_version 2.13
-autoconf
-%configure
+#set_autoconf_version 2.13
+#autoconf
+#configure
 %make_build CCOPT="%optflags"
 
 %install
@@ -54,6 +56,9 @@ autoconf
 %_mandir/man?/*
 
 %changelog
+* Wed Jan 13 2021 Fr. Br. George <george@altlinux.ru> 5.2.3-alt3
+- No upstream for now, so freeze Makefile/config.h
+
 * Mon May 25 2009 Fr. Br. George <george@altlinux.ru> 5.2.3-alt2
 - GCC44 fixup build
 
