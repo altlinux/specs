@@ -17,7 +17,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -136,11 +136,11 @@ Data files for installed tests.
 %endif
     -Dplugin_thunderbolt=true \
 %if_enabled uefi
-    -Dplugin_uefi=true \
+    -Dplugin_uefi_capsule=true \
     -Dplugin_redfish=true \
     -Dplugin_nvme=true \
 %else
-    -Dplugin_uefi=false \
+    -Dplugin_uefi_capsule=false \
     -Dplugin_redfish=false \
     -Dplugin_nvme=false \
 %endif
@@ -169,7 +169,6 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 
 %files -f %name.lang
 %doc README.md AUTHORS COPYING
-%config(noreplace)%_sysconfdir/fwupd/ata.conf
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
 %config(noreplace)%_sysconfdir/fwupd/thunderbolt.conf
 %config(noreplace)%_sysconfdir/fwupd/upower.conf
@@ -279,6 +278,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_pci_bcr.so
 %_libdir/fwupd-plugins-3/libfu_plugin_pci_mei.so
+%_libdir/fwupd-plugins-3/libfu_plugin_pixart_rf.so
 %_libdir/fwupd-plugins-3/libfu_plugin_optionrom.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_rmi.so
 %_libdir/fwupd-plugins-3/libfu_plugin_vli.so
@@ -297,11 +297,12 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %if_enabled uefi
 %_libdir/fwupd-plugins-3/libfu_plugin_bios.so
 %_libdir/fwupd-plugins-3/libfu_plugin_nvme.so
-%_libdir/fwupd-plugins-3/libfu_plugin_uefi.so
+%_libdir/fwupd-plugins-3/libfu_plugin_uefi_capsule.so
+%_libdir/fwupd-plugins-3/libfu_plugin_uefi_pk.so
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi_recovery.so
 %_libdir/fwupd-plugins-3/libfu_plugin_redfish.so
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi_dbx.so
-%config(noreplace)%_sysconfdir/fwupd/uefi.conf
+%config(noreplace)%_sysconfdir/fwupd/uefi_capsule.conf
 %config(noreplace)%_sysconfdir/fwupd/redfish.conf
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
@@ -334,6 +335,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Wed Jan 13 2021 Anton Farygin <rider@altlinux.ru> 1.5.5-alt1
+- 1.5.5
+
 * Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1
 - 1.5.4
 
