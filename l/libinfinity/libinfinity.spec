@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(libdaemon)
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel pkgconfig(gio-2.0) pkgconfig(libdaemon) pkgconfig(libsystemd)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define rel 2
+%define rel 1
 %define libversion 0.7
 
 Name:           libinfinity
-Version:        0.7.1
-Release:        alt1_2
+Version:        0.7.2
+Release:        alt1_1
 Summary:        Library implementing the infinote protocol
 Group:          System/Libraries
 License:        LGPLv2+
@@ -29,8 +29,7 @@ Source44: import.info
 
 %description
 libinfinity is an implementation of the Infinote protocol written in
-GObject-based C. 
-
+GObject-based C.
 
 #--------------------------------------------------------------------
 
@@ -57,7 +56,7 @@ Summary: Library providing gtk bindings for %{name}
 Group:   System/Libraries
 
 %description   -n %{libinfinity}
-This package provides the gtk bindings for %{name}
+This package provides the gtk bindings for %{name}.
 
 %files -n %{libinfinity}
 %{_libdir}/libinfinity-%{libversion}.so.%{libinfinity_major}
@@ -73,7 +72,7 @@ Summary: Library providing gtk bindings for %{name}
 Group:   System/Libraries
 
 %description   -n %{libinftext}
-This package provides the gtk bindings for %{name}
+This package provides the gtk bindings for %{name}.
 
 %files -n %{libinftext}
 %{_libdir}/libinftext-%{libversion}.so.%{libinftext_major}
@@ -90,7 +89,7 @@ Summary: Library providing gtk bindings for %{name}
 Group:   System/Libraries
 
 %description  -n %{libinfgtk}
-This package provides the gtk bindings for %{name}
+This package provides the gtk bindings for %{name}.
 
 %files -n %{libinfgtk}
 %{_libdir}/libinfgtk-%{libversion}.so.%{libinfgtk_major}
@@ -106,7 +105,7 @@ Summary: Library providing gtk bindings for %{name}
 Group:   System/Libraries
 
 %description   -n %{libinftextgtk}
-This package provides the gtk bindings for %{name}
+This package provides the gtk bindings for %{name}.
 
 %files -n %{libinftextgtk}
 %{_libdir}/libinftextgtk-%{libversion}.so.%{libinftextgtk_major}
@@ -139,7 +138,7 @@ Group: Development/C
 Requires: %{libinfinity} = %{version}-%{release}
 
 %description -n %{libinfinity_devel}
-This package provides the devel files for libinfinity
+This package provides the devel files for libinfinity.
 
 %files -n %{libinfinity_devel}
 %{_includedir}/libinfinity-%{libversion}/
@@ -157,7 +156,7 @@ Group: Development/C
 Requires: %{libinftext} = %{version}-%{release}
 
 %description -n %{libinftext_devel}
-This package provides the devel files for libinftext
+This package provides the devel files for libinftext.
 
 %files -n %{libinftext_devel}
 %{_includedir}/libinftext-%{libversion}/
@@ -175,7 +174,7 @@ Group: Development/GNOME and GTK+
 Requires: %{libinfgtk} = %{version}-%{release}
 
 %description -n %{libinfgtk_devel}
-This package provides the devel files for libinfgtk
+This package provides the devel files for libinfgtk.
 
 %files -n %{libinfgtk_devel}
 %{_includedir}/libinfgtk-%{libversion}/
@@ -193,7 +192,7 @@ Group: Development/GNOME and GTK+
 Requires: %{libinftextgtk} = %{version}-%{release}
 
 %description -n %{libinftextgtk_devel}
-This package provides the devel files for libinftextgtk
+This package provides the devel files for libinftextgtk.
 
 %files -n %{libinftextgtk_devel}
 %{_includedir}/libinftextgtk-%{libversion}/
@@ -226,14 +225,15 @@ This package provides the devel files for libinfinoted-plugin-manager.
 
 %build
 %configure --with-gtk3
-%make 
+%make_build
 
 %install
-%makeinstall 
+%makeinstall_std
+
 rm -f %{buildroot}%{_iconsdir}/*/icon-theme.cache
 %find_lang %{name}-%{libversion}
-find %{buildroot} -name '*.la' -exec rm -f {} ';'
-find %{buildroot} -name '*.a' -exec rm -f {} ';'
+find %{buildroot} -name '*.la' -delete
+find %{buildroot} -name '*.a' -delete
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
@@ -242,6 +242,9 @@ done
 
 
 %changelog
+* Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1_1
+- update by mgaimport
+
 * Wed Dec 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_2
 - raised from the dead as mga import
 
