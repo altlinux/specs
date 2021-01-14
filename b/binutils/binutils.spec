@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.35.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -32,6 +32,9 @@ Patch09: 0009-Drop-redundant-and-misleading-test-headers.patch
 Patch10: 0010-Dropped-unused-test-file.patch
 Patch11: 0011-Use-wide-output-of-readelf-and-objdump-in-tests.patch
 Patch12: 0012-Load-libdebuginfod-library-on-demand.patch
+Patch13: 0013-ld-testsuite-ld-cdtest-cdtest.exp-disable-Wstringop-.patch
+Patch14: 0014-gold-testsuite-disable-PIE.patch
+Patch15: 0015-ld-testsuite-ld-i386-use-z-lazy-binding-for-tests-fa.patch
 
 %def_with debuginfod
 
@@ -110,6 +113,9 @@ chmod +x gold/testsuite/plugin_pr22868.sh
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 # Replay libtool commits
 # a042d335197ac7afb824ab54c3aab91f3e79a2d0
@@ -303,6 +309,11 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Mon Jan 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.1-alt3
+- Updated to 2.35.1 20210104.
+- Fixed FTBFS with gcc10.
+- Cleaned up /usr/bin/ld wrapper (ldv@).
+
 * Sun Dec 06 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.35.1-alt2
 - binutils-devel: removed libctf.a and libctf-nobfd.a files.
 
