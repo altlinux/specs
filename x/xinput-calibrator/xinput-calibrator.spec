@@ -1,13 +1,17 @@
 Name: xinput-calibrator
 Version: 0.7.5
-Release: alt2
+Release: alt3
 
 Summary: A generic touchscreen calibration program for X.Org
 License: MIT
 Group: System/X11 
 Url: http://www.freedesktop.org/wiki/Software/xinput_calibrator
+# Additional source url https://packages.debian.org/source/sid/xinput-calibrator
 
 Source: %name-%version-%release.tar
+Patch1: do_not_install_tester.patch
+Patch2: typo_in_man.patch
+Patch3: typo_in_src.patch
 
 BuildRequires: gcc-c++ libXi-devel libgtkmm2-devel
 
@@ -16,6 +20,9 @@ BuildRequires: gcc-c++ libXi-devel libgtkmm2-devel
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags -std=c++11
@@ -29,7 +36,6 @@ make
 %files
 %doc COPYING README
 
-%_bindir/tester
 %_bindir/xinput_calibrator
 
 %_desktopdir/xinput_calibrator.desktop
@@ -38,6 +44,9 @@ make
 %_man1dir/xinput_calibrator.*
 
 %changelog
+* Thu Jan 14 2021 Pavel Vasenkov <pav@altlinux.org> 0.7.5-alt3
+- Rebuild from newer source with patches
+
 * Mon Apr 11 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.5-alt2
 - fix FTBFS with gcc5
 
