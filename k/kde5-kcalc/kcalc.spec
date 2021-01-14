@@ -1,7 +1,7 @@
 %define rname kcalc
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.1
 Release: alt1
 %K5init altplace
 
@@ -71,6 +71,9 @@ KF5 library
 %_K5cfg/kcalc*
 
 %changelog
+* Thu Jan 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Fri Dec 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 
