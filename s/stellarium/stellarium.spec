@@ -1,5 +1,5 @@
 Name: stellarium
-Version: 0.20.3
+Version: 0.20.4
 Release: alt1
 
 Summary: Astronomical Sky Simulator
@@ -54,10 +54,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %_bindir/%name
 %_datadir/%name
 %_mandir/man1/%name.1.xz
-%_datadir/applications/%name.desktop
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/applications/*.desktop
+%_datadir/metainfo/*.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/pixmaps/%name.xpm
 %_datadir/mime/packages/stellarium.xml
 # Fix of post-install unowned files
 %dir %_iconsdir/hicolor/128x128
@@ -71,6 +70,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %dir %_datadir/metainfo
 
 %changelog
+* Thu Jan 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.20.4-alt1
+- Build new version.
+
 * Mon Sep 28 2020 Grigory Ustinov <grenka@altlinux.org> 0.20.3-alt1
 - Build new version.
 
