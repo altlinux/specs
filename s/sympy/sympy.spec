@@ -3,8 +3,8 @@
 %def_without doc
 
 Name: sympy
-Version: 1.6.1
-Release: alt3
+Version: 1.7.1
+Release: alt1
 Epoch: 1
 
 Summary: A Python library for symbolic mathematics
@@ -27,6 +27,7 @@ BuildRequires: python3-module-mpmath
 BuildRequires: dvipng ImageMagick-tools graphviz librsvg-utils
 %if_with doc
 BuildRequires(pre): python3-module-sphinx-devel
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-docutils
 BuildRequires: python3-module-Pygments
 BuildRequires: python3-module-sphinx-math-dollar
@@ -165,6 +166,9 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.7.1-alt1
+- Updated to upstream version 1.7.1.
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.1-alt3
 - NMU: drop tests subpackage
 
