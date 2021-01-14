@@ -3,7 +3,7 @@
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
-Version: 8.6.10
+Version: 8.6.11
 Release: alt1
 
 Summary: The Tk toolkit fot Tcl scripting language
@@ -19,15 +19,19 @@ Patch3: 0003-ALT-norpath.patch
 Patch4: 0004-ALT-libpath.patch
 Patch5: 0005-ALT-Fedora-configure.in-fix-xft-detection-RH-677692.patch
 Patch6: 0006-Fedora-make.patch
-Patch7: 0007-Fedora-no-fonts-fix.patch
-Patch8: 0008-ALT-removed-XFT_LIBS-from-the-definition-of-TK_LIBS.patch
-Patch9: 0009-ALT-pkgIndex.tcl-location.patch
+Patch7: 0007-ALT-removed-XFT_LIBS-from-the-definition-of-TK_LIBS.patch
+Patch8: 0008-ALT-pkgIndex.tcl-location.patch
+Patch9: 0009-Fedora-font-sizes-fix.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
 BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
+# tests
+BuildRequires: xvfb-run fonts-bitmap-75dpi fonts-bitmap-100dpi fonts-bitmap-misc
+
 Requires: tcl = %version lib%name
 
-Provides: tcl(Ttk) = %version
+Provides: tcl(Ttk)
+Provides: tcl(Ttk)-8 = %version
 Obsoletes: tcl-tile <= 0.8.2
 
 %package -n lib%name
@@ -108,12 +112,34 @@ mkdir -p %buildroot%docdir
 xz changes ChangeLog
 install -pm0644 README.md license.terms changes.xz ChangeLog.xz %buildroot%docdir
 
+%check
+cleanup_check()
+{
+        for p in $(jobs -p); do
+                kill "$p"
+        done
+
+        exit "$@"
+}
+
+trap 'cleanup_check $?' EXIT
+
+LD_LIBRARY_PATH=%buildroot%_libdir; export LD_LIBRARY_PATH
+TCL_LIBRARY="%buildroot%_tcldatadir/tcl%major %buildroot%_tcldatadir/%name%major"; export TCL_LIBRARY
+
+Xvfb :0 &
+export DISPLAY=:0
+pushd unix
+make test
+popd
+
 %files
 %dir %docdir
 %docdir/README.md
 %docdir/license.terms
 %docdir/changes.*
 
+%dir %_tcllibdir/tk%major
 %_bindir/wish*
 %dir %_tcldatadir/%name%major
 %_tcldatadir/%name%major/*
@@ -140,6 +166,12 @@ install -pm0644 README.md license.terms changes.xz ChangeLog.xz %buildroot%docdi
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Fri Jan 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11-alt1
+- Updated to 8.6.11.
+- Fixed font sizes.
+- Initially enabled test.
+- Fixed directory owning.
+
 * Fri Nov 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt1
 - Updated to 8.6.10.
 - Made tk obsolete tcl-tile.
