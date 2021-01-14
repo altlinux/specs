@@ -16,8 +16,8 @@
 %def_with gtkmm3
 
 %global majorversion    11.2
-%global minorversion    0
-%global toolsbuild      16938113
+%global minorversion    5
+%global toolsbuild      17337674
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -58,6 +58,8 @@ BuildRequires: libgtk+3-devel >= 2.4.0
 BuildRequires: libgtkmm3-devel libsigc++2-devel
 BuildRequires: libpam-devel
 BuildRequires: libtirpc-devel
+BuildRequires: rpcgen
+BuildRequires: libgdk-pixbuf-xlib-devel
 %{?_with_dnet:BuildRequires: libdnet-devel}
 %{?_enable_multimon:BuildRequires: libX11-devel libXext-devel libXinerama-devel libXi-devel libXrender-devel libXrandr-devel libXtst-devel libICE-devel libSM-devel libXcomposite-devel}
 %{?_enable_deploypkg:BuildRequires: libmspack-devel}
@@ -291,6 +293,9 @@ fi
 
 
 %changelog
+* Thu Jan 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.2.5-alt1
+- 11.2.5
+
 * Fri Nov 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 11.2.0-alt1
 - 11.2.0
 
