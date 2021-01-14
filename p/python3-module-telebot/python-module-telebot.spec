@@ -1,8 +1,8 @@
 %define modulename telebot
 
 Name: python3-module-%modulename
-Version: 3.6.6
-Release: alt2
+Version: 3.7.5
+Release: alt1
 
 Summary: Python Telegram bot api
 License: GPL2
@@ -39,6 +39,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Thu Jan 14 2021 Grigory Ustinov <grenka@altlinux.org> 3.7.5-alt1
+- Build new version (Closes: #39533).
+
 * Mon Nov 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.6.6-alt2
 - python2 disabled
 
