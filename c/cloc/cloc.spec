@@ -1,11 +1,12 @@
 Name:           cloc
-Version:        1.82
-Release:        alt2
+Version:        1.88
+Release:        alt1
 Summary:        Count lines of code
-License:        GPLv2+
-Group: Development/Tools
+License:        GPL-2.0+
+Group:          Development/Tools
 URL:            https://github.com/AlDanial/cloc
-Source0:        https://github.com/AlDanial/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %name-%version.tar
+
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -39,22 +40,25 @@ BuildRequires:  perl(Test/More.pm)
 A tool to count lines of code in various languages from a given directory.
 
 %prep
-%setup -q -n %{name}-%{version}/Unix
+%setup -q -n %name-%version/Unix
 
 %build
 # Nothing to do but run make anyway, in case anything ever changes
 %make_build
 
 %install
-make install DESTDIR="%{buildroot}"
+make install DESTDIR="%buildroot"
 
 %files
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS README
-%{_bindir}/%{name}
-%{_mandir}/man1/%{name}.1*
+%_bindir/%name
+%_mandir/man1/%name.1*
 
 %changelog
+* Thu Jan 14 2021 Andrey Cherepanov <cas@altlinux.org> 1.88-alt1
+- New version.
+
 * Tue Nov 17 2020 Andrey Cherepanov <cas@altlinux.org> 1.82-alt2
 - Initial build for Sisyphus.
 
