@@ -11,7 +11,7 @@
 %define libkpimgapitasks libkpimgapitasks%sover
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.1
 Release: alt1
 %K5init altplace
 
@@ -169,6 +169,9 @@ done
 %_K5lib/libKPimGAPITasks.so.*
 
 %changelog
+* Tue Jan 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 

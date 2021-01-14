@@ -16,7 +16,7 @@
 %define libfolderconfiguresettings libfolderconfiguresettings%sover
 
 Name: kde5-pim-addons
-Version: 20.12.0
+Version: 20.12.1
 Release: alt1
 %K5init
 
@@ -283,6 +283,9 @@ KF5 library
 %_K5lib/libfolderconfiguresettings.so.*
 
 %changelog
+* Tue Jan 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kalarm
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -85,10 +85,14 @@ KF5 library
 #%doc %_K5doc/en/kalarm/
 %_K5dbus_sys_srv/org.kde.kalarm.rtcwake.service
 %_K5dbus/system.d/org.kde.kalarm.rtcwake.conf
+%_K5notif/kalarm.notifyrc
 %_datadir/polkit-1/actions/org.kde.kalarm.rtcwake.policy
 
 
 %changelog
+* Tue Jan 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 

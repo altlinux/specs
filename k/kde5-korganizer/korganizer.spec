@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -145,6 +145,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Tue Jan 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Wed Dec 16 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 
