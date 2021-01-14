@@ -23,8 +23,8 @@
 # Mesa builds radeon and nouveau support as megadrivers
 %define dri_megadriver_arches %radeon_arches %nouveau_arches
 %define gallium_megadriver_arches %radeon_arches %nouveau_arches
-# Building xa requires at least one non swrast gallium driver.
-%define xa_arches %radeon_arches %nouveau_arches %virgl_arches %armsoc_arches
+# XA state tracker requires at least one of the following gallium drivers: nouveau, freedreno, i915, svga
+%define xa_arches %nouveau_arches %virgl_arches %armsoc_arches
 
 %gallium_drivers_add swrast
 %ifarch %radeon_arches
@@ -68,7 +68,7 @@
 %endif
 
 Name: Mesa
-Version: 20.3.2
+Version: 20.3.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -474,6 +474,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jan 14 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:20.3.3-alt1
+- 20.3.3
+
 * Thu Dec 31 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.3.2-alt1
 - 20.3.2
 
