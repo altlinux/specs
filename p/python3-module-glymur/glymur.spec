@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images.
@@ -52,5 +52,8 @@ py.test3
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt1
+- Automatically updated to 0.9.3.
+
 * Wed Sep 09 2020 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus.
