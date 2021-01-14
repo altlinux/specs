@@ -1,5 +1,5 @@
 Name: python3-module-pykcs11
-Version: 1.5.9
+Version: 1.5.10
 Release: alt1
 Summary: A complete PKCS#11 wrapper for Python
 Group: Development/Python3
@@ -47,6 +47,9 @@ This package contains documentation.
 %doc README.md samples/
 
 %changelog
+* Fri Jan 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.10-alt1
+- Automatically updated to 1.5.10.
+
 * Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.9-alt1
 - Automatically updated to 1.5.9.
 - Drop python2 support.
