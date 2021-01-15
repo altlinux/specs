@@ -1,8 +1,8 @@
-%define ver_major 0.12
+%define ver_major 0.21
 %define gegl_ver_major 0.4
 
 Name: dibuja
-Version: %ver_major.0
+Version: %ver_major.12
 Release: alt1
 
 Summary: Gtk based basic paint program
@@ -43,6 +43,9 @@ Dibuja is a program for quick small editing and drawing.
 
 
 %changelog
+* Fri Jan 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.21.12-alt1
+- 0.21.12
+
 * Mon Jun 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
