@@ -1,11 +1,12 @@
 Name: unnethack
 Version: 5.2.0
-Release: alt2
+Release: alt3
 Summary: An enhancement to the dungeon exploration game NetHack
-Source: %version.tar.gz
 Group: Games/Adventure
 Url: https://unnethack.wordpress.com
-License: NethackGPL
+License: NGPL
+Source: %version.tar.gz
+Patch: extern.patch
 
 # Automatically added by buildreq on Sat Nov 26 2011
 # optimized out: libtinfo-devel
@@ -19,16 +20,20 @@ than vanilla NetHack.
 
 %prep
 %setup
-sed -i 's/[$](LFLAGS) \(.*\)[$](LIBS)/\1 $(LFLAGS) $(LIBS)/' sys/autoconf/Makefile.src
+%patch -p1
+##sed -i 's/[$](LFLAGS) \(.*\)[$](LIBS)/\1 $(LFLAGS) $(LIBS)/' sys/autoconf/Makefile.src
+# XXX
+#sed -i 's@^.(GAME): include/autoconf_paths.h@$(GAME):@' sys/autoconf/Makefile.top
 
 %build
 LIBS=-lgsl %configure --enable-curses-graphics
 make include/autoconf_paths.h
-make -C util recover
-%make_build
+#make_build
+make
+make -C util recover lev_comp
 
 %install
-make install DESTDIR=%buildroot CHOWN=echo CHGRP=echo CHMOD=echo
+%make install DESTDIR=%buildroot CHOWN=echo CHGRP=echo CHMOD=echo
 mv %buildroot%_datadir/unnethack/recover %buildroot%_bindir/recover.bin && ln -s %_bindir/recover.bin %buildroot%_datadir/unnethack/recover
 mv %buildroot%_datadir/unnethack/unnethack %buildroot%_bindir/unnethack.bin && ln -s %_bindir/unnethack.bin %buildroot%_datadir/unnethack/unnethack
 
@@ -43,6 +48,10 @@ mv %buildroot%_datadir/unnethack/unnethack %buildroot%_bindir/unnethack.bin && l
 %attr(664,root,games) %_localstatedir/%name/[^sbl]*
 
 %changelog
+* Fri Jan 15 2021 Fr. Br. George <george@altlinux.ru> 5.2.0-alt3
+- Fix build with gcc10, eliminate build in install section
+- Disable parallel build due to races
+
 * Thu Dec 19 2019 Fr. Br. George <george@altlinux.ru> 5.2.0-alt2
 - Fix parallel build
 
