@@ -3,7 +3,7 @@
 
 %define teaname readline
 %define srcname tclreadline
-%define srcver 2.3.7
+%define srcver 2.3.8
 
 Name: tcl-%teaname
 Version: %srcver
@@ -20,7 +20,7 @@ Source1: tcl-readline.watch
 
 Patch1: DEBIAN-functions.patch
 Patch2: 0001-ALT-init.patch
-Patch3: 0002-ALT-x86_64.patch
+Patch3: 0002-ALT-lib64.patch
 Patch4: 0003-ALT-DEBIAN-man-page.patch
 
 BuildRequires: libreadline-devel libtinfo-devel rpm-build >= 4.0.4-alt41 tcl-devel >= 8.4.0-alt1 tk-devel
@@ -62,6 +62,9 @@ autoreconf -fisv -Iaux
 %_mandir/mann/%srcname.n.*
 
 %changelog
+* Thu Jan 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.8-alt1
+- Updated to 2.3.8.
+
 * Fri Nov 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.7-alt1
 - Updated to 2.3.7.
 - Built according ALT TCL extension policy (archdep extentsions should hold

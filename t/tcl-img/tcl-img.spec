@@ -3,7 +3,7 @@
 
 Name: tcl-img
 Version: 1.4.11
-Release: alt1
+Release: alt2
 
 Summary: Tcl Image Formats (Img)
 License: TCL
@@ -21,14 +21,16 @@ Patch1: 0001-ALT-TEA.patch
 Patch2: 0002-DEBIAN-libz.patch
 Patch3: 0003-DEBIAN-libjpeg.patch
 Patch4: 0004-DEBIAN-libpng.patch
-Patch5: 0005-DEBIAN-libtiff.patch
 Patch6: 0006-DEBIAN-pixmap.patch
 Patch7: 0007-DEBIAN-window.patch
+Patch8: 0001-ALT-tests-TCLLIBPATH.patch
 
 BuildRequires: rpm-build-tcl >= 0.5-alt1
 BuildRequires: libjpeg-devel libpng-devel tk-devel zlib-devel
 BuildRequires: libtiff-devel
 BuildRequires: tcllib
+# tests
+BuildRequires: xvfb-run
 
 %description
 %name is a Tk enhancement, adding support for many other Image formats:
@@ -55,6 +57,31 @@ xz ChangeLog
 %install
 %make_install DESTDIR=%buildroot install
 
+%check
+log="$(mktemp)"
+cleanup_check()
+{
+	for p in $(jobs -p); do
+		kill "$p"
+	done
+
+	rm "$log"
+	exit "$@"
+}
+
+trap 'cleanup_check $?' EXIT
+
+Xvfb :0 &
+export DISPLAY=:0
+
+# broken
+rm tests/jpeg.test
+
+# tcltest always retuns 0
+set -eo pipefail
+make test 2>&1 |tee "$log"
+! grep -q FAILED "$log" ||exit 1
+
 %files
 %doc ANNOUNCE ChangeLog* README doc/*.css doc/*.htm license.terms
 %_tcllibdir/Img%version/*.so
@@ -62,6 +89,10 @@ xz ChangeLog
 %_mandir/mann/*
 
 %changelog
+* Tue Jan 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.11-alt2
+- Built against internal libtiff (ALT#39407).
+- Enabled tests.
+
 * Sun May 17 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.11-alt1
 - Updated to 1.4.11.
 - Built against system libtiff.

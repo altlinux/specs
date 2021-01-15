@@ -1,11 +1,11 @@
 %def_with test
 %define major 8.6
-%define itcl 4.2.0
-%define tdbc 1.1.1
-%define thread 2.8.5
+%define itcl 4.2.1
+%define tdbc 1.1.2
+%define thread 2.8.6
 
 Name: tcl
-Version: 8.6.10
+Version: 8.6.11
 Release: alt1
 
 Summary: The Tool Command Language (TCL)
@@ -29,6 +29,7 @@ Patch10: 0010-ALT-itcl-TCL_INCLUDES.patch
 Patch11: 0011-ALT-pkgs-test.patch
 Patch12: 0012-ALT-pkgs-LDFLAGS.patch
 Patch13: 0013-ALT-pkgs-soname.patch
+Patch14: 0014-ALT-pkgs-tclstub-linkage.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
 %{?_with_test:BuildConflicts: tcl-vfs}
@@ -224,22 +225,23 @@ popd
 %_mandir/mann/*
 
 %files pkgs -f pkgsmans
-%_tcllibdir/libtdbc%tdbc.so
-%_tcllibdir/libtdbcmysql%tdbc.so
-%_tcllibdir/libtdbcodbc%tdbc.so
-%_tcllibdir/libtdbcpostgres%tdbc.so
-%_tcllibdir/libthread%thread.so
-
 %_tcllibdir/tdbc%tdbc
 %_tcllibdir/tdbcmysql%tdbc
 %_tcllibdir/tdbcodbc%tdbc
 %_tcllibdir/tdbcpostgres%tdbc
 %_tcllibdir/thread%thread
+
+%dir %_libdir/tcl8
+%dir %_libdir/tcl8/%major
+%dir %_libdir/tcl8/%major/tdbc
 %_libdir/tcl8/%major/tdbc/sqlite3-%tdbc.tm
 
+%exclude %_tcllibdir/tdbc%tdbc/libtdbcstub%tdbc.a
+
 %files pkg-incrtcl4 -f itclmans
-%_tcllibdir/libitcl%itcl.so
 %_tcllibdir/itcl%itcl
+
+%exclude %_tcllibdir/itcl%itcl/libitclstub%itcl.a
 
 %files -n lib%name
 %dir %_tcllibdir
@@ -257,8 +259,8 @@ popd
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
 %_libdir/lib%{name}stub%{major}.a
-%_tcllibdir/libitclstub%itcl.a
-%_tcllibdir/libtdbcstub%tdbc.a
+%_tcllibdir/itcl%itcl/libitclstub%itcl.a
+%_tcllibdir/tdbc%tdbc/libtdbcstub%tdbc.a
 %_libdir/%{name}Config.sh
 %_libdir/%{name}ooConfig.sh
 %_libdir/itclConfig.sh
@@ -267,9 +269,17 @@ popd
 %_datadir/aclocal/*.m4
 %_man3dir/*
 
+%dir %_tcllibdir/itcl%itcl
+%dir %_tcllibdir/tdbc%tdbc
+
 %files pkgs-devel
 
 %changelog
+* Thu Jan 07 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11-alt1
+- Updated to 8.6.11.
+- Revised patches.
+- tcl-pkgs: fixed directories owning.
+
 * Fri Nov 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt1
 - Updated to 8.6.10.
 - Revised patches.
