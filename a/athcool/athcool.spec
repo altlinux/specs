@@ -1,13 +1,16 @@
 Summary: Enabling/disabling Powersaving mode for AMD processors
 Name: athcool
 Version: 0.3.12
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 URL: http://members.jcom.home.ne.jp/jacobi/linux/softwares.html
 Packager: Mikhail Pokidko <pma@altlinux.ru>
 Source0: %name-%version.tar.gz
 Source1: athcool.init
+Patch: athcool_0.3.12-gcc10.patch
+
+ExclusiveArch: i586 x86_64
 
 # Automatically added by buildreq on Mon Apr 28 2008
 BuildRequires: libpci-devel
@@ -40,6 +43,7 @@ Please use athcool AT YOUR OWN RISK.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %make
@@ -68,6 +72,9 @@ fi
 %_sbindir/%name
 
 %changelog
+* Fri Jan 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.12-alt2
+- Fixed build with gcc10
+
 * Mon Apr 28 2008 Mikhail Pokidko <pma@altlinux.org> 0.3.12-alt1
 - Version up
 
