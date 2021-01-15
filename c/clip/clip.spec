@@ -3,37 +3,32 @@
 #    /usr/lib/libclip-codb.so
 #    /usr/lib/libclip.so
 #    /usr/lib64/clip/cliprc/.notrm
-			
-
 %define FCLIPDIR %_libdir/clip
 %define VCLIPDIR %_localstatedir/clip
 
 Name: clip
 Version: 1.2.0cvs
-Release: alt5
+Release: alt6
 
 Summary: XBASE/Clipper compatible program compiler
 Summary(ru_RU.UTF-8): Совместимый с XBASE/Clipper компилятор программ
 
-License: GPL
+License: GPL-2.0+
 Group: Development/Other
 Url: http://www.itk.ru
 
-ExcludeArch: aarch64
+ExcludeArch: aarch64 armh
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar.bz2
-#Source10: %name-%version-2005-02-03.tar.bz2
-#Patch: %name-%version.patch
 Patch1: clip-1.2.0-alt-io.patch
+Patch2: clip-alt-gcc-10.patch
 
 %add_findreq_skiplist %FCLIPDIR/bin/tconv
 #set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %FCLIPDIR/lib
 
-# manually removed: libclip-devel libclip-gtk libclip-gtk2 wget
-# Automatically added by buildreq on Wed May 24 2006
 BuildRequires: cvs flex imake libgpm-devel libncurses-devel libreadline-devel libXmu-devel openssh-clients wget xorg-cf-files zlib-devel libpth-devel
 
 Requires: lib%name-devel = %version-%release
@@ -44,7 +39,6 @@ This package includes the clip compiler and supplimentary libraries
 %description -l ru_RU.UTF-8
 Данный пакет содержит компилятор clip и необходимые библиотеки
 
-###################################################################################
 %package -n lib%name
 Summary: XBASE/Clipper compatible program compiler - runtime library
 Summary(ru_RU.UTF-8): Совместимый с XBASE/Clipper компилятор программ -- библиотеки времени выполнения
@@ -56,7 +50,6 @@ This package provides runtime shared libraries for CLIP package
 %description -n lib%name -l ru_RU.UTF-8
 Данный пакет предоставляет заголовочные файлы для CLIP
 
-###################################################################################
 %package -n lib%name-devel
 Summary: XBASE/Clipper compatible program compiler - headers
 Summary(ru_RU.UTF-8): Совместимый с XBASE/Clipper компилятор программ -- заголовочные файлы
@@ -66,13 +59,15 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 This package provides headers files for CLIP package
 
-%description -n lib%name -l ru_RU.UTF-8
+%description -n lib%name-devel -l ru_RU.UTF-8
 Данный пакет предоставляет заголовочные файлы для CLIP
 
 %prep
 %setup -q
-#%patch
 %patch1 -p1
+%patch2 -p2
+# update timestamps of sources after patch apply
+touch *.c
 
 %build
 export OPTFLAGS="%optflags_shared -std=gnu89"
@@ -84,20 +79,13 @@ export CLIP_LOCALE_ROOT=`pwd`
 
 %install
 %makeinstall_std BINDIR=%_bindir CLIPROOT=%_libdir/clip
-#%(cd doc ; make install DOCDIR=%buildroot%_docdir/%name-%version)
-#%__mkdir -p %buildroot%FCLIPDIR
-#%__cp -rf locale.pot %buildroot%FCLIPDIR/
 
 echo "-v0
 -O
 -r
 -l" > %buildroot%FCLIPDIR/cliprc/clipflags
 
-# fix broken installer in source
-#mkdir -p %buildroot%_docdir
-#mv %buildroot%FCLIPDIR/doc %buildroot%_docdir/%name-%version
 rm -f %buildroot%_libdir/libclip*
-#ln -s %FCLIPDIR/clip/libclip.so %buildroot%_libdir/
 
 # move locale from read only usr dir to /var/lib
 mkdir -p %buildroot%VCLIPDIR
@@ -113,16 +101,15 @@ echo "%FCLIPDIR/lib" >%buildroot%_sysconfdir/ld.so.conf.d/%name.conf
 rm -f %buildroot%_bindir/*
 
 # remove unneeded broken symlink
-rm -f %buildroot%_libdir/libcodb-query.so
-rm -f %buildroot%_libdir/libcodb-codb.so
+rm -f %buildroot%_libdir/*.so
 # don't pack static
-rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%FCLIPDIR/lib/*.a
 
 # FIXME: _libdir using
-rm -f %buildroot/usr/lib/libcodb-query.so
-rm -f %buildroot/usr/lib/libcodb-codb.so
+rm -f %buildroot/usr/lib/*.so
 rm -f %buildroot/usr/lib/*.a
+
+rm -f %buildroot%_libdir/clip/cliprc/.notrm
 
 %pre -n lib%name
 /usr/sbin/groupadd -r -f %name || :
@@ -131,22 +118,18 @@ rm -f %buildroot/usr/lib/*.a
 subst "s,%FCLIPDIR/lib,," /etc/ld.so.conf
 
 %files
-#%_bindir/*
 %FCLIPDIR/bin/
 
 %files -n lib%name
-#%_docdir/%name-%version
 %dir %FCLIPDIR
 %dir %FCLIPDIR/lib
 %_sysconfdir/ld.so.conf.d/%name.conf
 %FCLIPDIR/lib/lib*.so
-#%_libdir/libcodb-query.so
 
 %FCLIPDIR/locale.pot
 %FCLIPDIR/locale.po
 %FCLIPDIR/locale.mo
 %dir %VCLIPDIR/locale.pot
-#%%VCLIPDIR/locale.pot/*
 %dir %VCLIPDIR/locale.po
 %VCLIPDIR/locale.po/*
 %dir %VCLIPDIR/locale.mo
@@ -154,27 +137,23 @@ subst "s,%FCLIPDIR/lib,," /etc/ld.so.conf
 
 %dir %FCLIPDIR/cliprc
 %config %FCLIPDIR/cliprc/*
-#%config %FCLIPDIR/cliprc/.notrm
 %FCLIPDIR/charsets
 %dir %FCLIPDIR/etc
-#%config %FCLIPDIR/etc/*
-#%attr (0664, root, clip) %config %VCLIPDIR/etc/*
-#%attr (0755, root, clip) %dir %VCLIPDIR/etc/terminfo
 %VCLIPDIR/etc
 %FCLIPDIR/keymaps
 %FCLIPDIR/lang
 %FCLIPDIR/term
 
-
 %files -n lib%name-devel
 %FCLIPDIR/include/
-#%_docdir/%name-%version/rus/
-
-#%files -n libclip
-#%FCLIPDIR/lib/*.a
-
 
 %changelog
+* Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt6
+- Fix build by GCC 10.
+- Clarify License tag.
+- Spec cleanup.
+- ExcludeArch: armh.
+
 * Wed Oct 02 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.0cvs-alt5
 - Use ExcludeArch instead of ExclusiveArch for skip build on aarch64.
 
