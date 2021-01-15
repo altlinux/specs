@@ -1,6 +1,6 @@
 Name: bk
 Version: 20050826
-Release: alt3
+Release: alt4
 
 Summary: BK0010, BK0011M and Terak Emulator
 License: BSD
@@ -15,6 +15,7 @@ Source3: User.txt
 Source4: System.txt
 Source5: bk.desktop
 Patch: bk-terak-emu.2005.08.26-linuxsound.diff
+Patch1: bk-2005.08.26-gcc10.patch
 
 BuildRequires: esound libSDL-devel
 BuildRequires: gcc >= 3.2
@@ -31,6 +32,7 @@ BK0010, BK0011M and Terak Emulator by Leonid Broukhis.
 %prep
 %setup -n bk-terak-emu.2005.08.26
 %patch -p1
+%patch1 -p2
 sed -i 's,/usr/lib,`getconf LIBDIR`,' Makefile
 cat %SOURCE3 > User.txt
 cat %SOURCE4 > System.txt
@@ -60,6 +62,9 @@ install -m644 -D %SOURCE5 %buildroot%_datadir/applications/bk.desktop
 %doc README* System.txt User.txt
 
 %changelog
+* Fri Jan 15 2021 Leontiy Volodin <lvol@altlinux.org> 20050826-alt4
+- fixed build with gcc10
+
 * Fri Aug 04 2017 Michael Shigorin <mike@altlinux.org> 20050826-alt3
 - allow build on 64-bit platforms
 - minor spec cleanup
