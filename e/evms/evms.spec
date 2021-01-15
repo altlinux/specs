@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt47
+Release: alt48
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -183,6 +183,10 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Fri Jan 15 2021 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt48
+- build with new glibc (thx ptrnine@)
+- add FAT32 to available partition types
+
 * Tue Oct 20 2020 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt47
 - Revert "Fix LVM2 logical volume deactivation"
   Fix not ready yet and was sent by mistake
