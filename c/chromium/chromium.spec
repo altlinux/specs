@@ -30,7 +30,7 @@
 
 Name:           chromium
 Version:        87.0.4280.141
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -86,6 +86,7 @@ Patch020: 0020-ALT-Fix-memcpy.patch
 Patch021: 0021-ALT-Fix-build.patch
 Patch022: 0022-Move-offending-function-to-chromeos-only.patch
 Patch023: 0023-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
+Patch024: 0024-GENTOO-ServiceWorkerRegistrationObjectHost-is-delete.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -201,6 +202,7 @@ tar -xf %SOURCE1
 %patch021 -p1
 %patch022 -p1
 %patch023 -p1
+%patch024 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -458,6 +460,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Jan 15 2021 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.141-alt2
+- Fix ServiceWorkerRegistrationObjectHost double free
+
 * Fri Jan 08 2021 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.141-alt1
 - New version (87.0.4280.141).
 - Security fixes:
