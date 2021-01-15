@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname bisect_ppx
 Name: ocaml-%libname
-Version: 1.4.2
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Summary: Code coverage for OCaml
 Group: Development/ML
 License: MPL-2.0
@@ -16,7 +16,7 @@ BuildRequires: dune
 BuildRequires: ocaml-ppx_tools_versioned-devel
 BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: ocaml-cmdliner-devel
 
 %description
 Bisect_ppx helps you test thoroughly. It is a small preprocessor that inserts
@@ -39,19 +39,22 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-%dune_build --release @install
+%dune_build -p %libname
 
 %install
 %dune_install
 
 %files -f ocaml-files.runtime
-%doc README.md LICENSE
+%doc README.md LICENSE.md
 %_bindir/bisect-ppx-report
 
 
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 15 2021 Anton Farygin <rider@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Mon Sep 21 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt2
 - migrated to rpm-build-ocaml 1.4
 
