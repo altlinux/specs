@@ -2,7 +2,7 @@
 
 Name: grub
 Version: 2.04
-Release: alt1
+Release: alt2
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -46,6 +46,9 @@ Patch13: grub-2.02-check_writes-alt.patch
 Patch14: grub-2.04-alt-luks-use-uuid.patch
 Patch20: grub-2.02-alt-os-prober-compat.patch
 Patch21: grub-2.04-alt-set-default-bootloader_id.patch
+Patch22: grub-2.02-debian-grub-install-extra-removable.patch
+Patch23: grub-2.02-debian-grub-install-removable-shim.patch
+Patch24: grub-2.04-alt-grub-install-no-fallback-for-removable.patch
 
 # add a rhboot/grub-2.02-sb set of patches to ensure SecureBoot safe operation
 # refer to url:  https://github.com/rhboot/grub2/commits/grub-2.02-sb
@@ -228,6 +231,9 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch14 -p2
 %patch20 -p2
 %patch21 -p2
+%patch22 -p1
+%patch23 -p1
+%patch24 -p2
 
 #SB patches
 %patch101 -p1
@@ -514,6 +520,14 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Fri Dec 25 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.04-alt2
+- grub-install: add workaround for malformed EFI-firmware implementations
+  (closes: #39432)
+  + add debian-grub-install-removable-shim patch
+  + add debian-grub-install-extra-removable patch
+  + add alt-grub-install-no-fallback-for-removable patch
+- grub-efi-autoupdate: use grub-install --force-extra-removable by default
+
 * Fri Nov 13 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.04-alt1
 - new version
   + update and thin out ALT patches
