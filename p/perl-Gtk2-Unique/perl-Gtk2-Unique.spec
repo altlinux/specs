@@ -1,15 +1,15 @@
 %define dist Gtk2-Unique
 
 Name: perl-%dist
-Version: 0.05
-Release: alt3.2
+Version: 0.07
+Release: alt1
 
 Summary: Use single instance applications
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://search.cpan.org/CPAN/authors/id/P/PO/POTYL/Gtk2-Unique-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: libunique-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel perl-podlators xvfb-run
@@ -21,7 +21,7 @@ instance application twice, the second instance will either just quit or
 will send a message to the running instance.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -42,6 +42,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gtk2/Unique/Install
 
 %changelog
+* Fri Jan 15 2021 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.05-alt3.2
 - rebuild with new perl 5.28.1
 
