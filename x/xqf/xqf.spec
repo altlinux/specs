@@ -1,6 +1,6 @@
 Name:    xqf
 Version: 1.0.6.2
-Release: alt2
+Release: alt3
 Summary: X11 QStat Frontend
 Packager: Andrey Cherepanov <cas@altlinux.org>
 License: GPL
@@ -19,6 +19,7 @@ BuildRequires: fontconfig-devel freetype2-devel glib2-devel libGeoIP-devel
 BuildRequires: libatk-devel libcairo-devel libglitz-devel libgtk+2-devel
 BuildRequires: libpango-devel libpng-devel perl-XML-Parser pkg-config qstat
 BuildRequires: zlib-devel intltool
+BuildRequires: libgdk-pixbuf-xlib-devel
 
 %description
 XQF is a 3D action game (such as Quake, sequels and derivatives) server
@@ -34,12 +35,12 @@ retrieve server info.
 sh autogen.sh
 %autoreconf
 %configure \
-		--enable-bzip2 \
-		--disable-gtk \
-		--enable-gtk2 \
-		--enable-geoip \
-		--with-qstat=/usr/bin/qstat \
-		%{subst_enable debug}
+    --enable-bzip2 \
+    --disable-gtk \
+    --enable-gtk2 \
+    --enable-geoip \
+    --with-qstat=/usr/bin/qstat \
+    %{subst_enable debug}
 
 %make_build
 
@@ -56,6 +57,10 @@ sh autogen.sh
 %_man6dir/%name.6*
 
 %changelog
+* Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.6.2-alt3
+- Fix build with libgdk-pixbuf-xlib-devel.
+- Fix build by gcc10.
+
 * Thu Feb 07 2019 Konstantin Rybakov <kastet@altlinux.org> 1.0.6.2-alt2
 - NMU: update runtime dependencies
 
