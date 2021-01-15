@@ -1,18 +1,19 @@
-%define gitrev 8de633e
+%define gitrev 62e2120
 
 Name: 	  streebog
-Version:  0.11
-Release:  alt3.git%gitrev
+Version:  0.13
+Release:  alt1.git%gitrev
 
 Summary:  GOST R 34.11-2012: Streebog Hash Function
-License:  BSD
+License:  BSD-2-Clause or GPL-2.0+
 Group:    Other
 Url: 	  https://www.streebog.net/
 #VCS:	  https://github.com/degtyarevalexey/streebog
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:   %name-%version.tar
+Source: %name-%version.tar
+Patch: %name-gcc-10.patch
 
 BuildRequires: help2man
 
@@ -26,6 +27,7 @@ Systems" (InfoTeCS JSC).
 
 %prep
 %setup
+%patch -p1
 rm -f auto/header/{mmx,sse2,sse41} auto/mk/{mmx,sse2,sse41}
 touch auto/{header,mk}/empty
 
@@ -33,15 +35,19 @@ touch auto/{header,mk}/empty
 %make_build gost3411-2012-config.h all man
 
 %install
-install -Dm 0755 gost3411-2012 %buildroot%_bindir/gost3411-2012
-install -Dm 0644 gost3411-2012.1 %buildroot%_man1dir/gost3411-2012.1
+install -Dpm 0755 gost3411-2012 %buildroot%_bindir/gost3411-2012
+install -Dpm 0644 gost3411-2012.1 %buildroot%_man1dir/gost3411-2012.1
 
 %files
-%doc README LICENSE
+%doc README.md
 %_bindir/gost3411-2012
 %_man1dir/gost3411-2012.1*
 
 %changelog
+* Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 0.13-alt1.git62e2120
+- New version.
+- Fix build by GCC 10.
+
 * Mon Oct 16 2017 Andrey Cherepanov <cas@altlinux.org> 0.11-alt3.git8de633e
 - Completely fix for AMD CPUs (ALT #33592)
 - Package man page
