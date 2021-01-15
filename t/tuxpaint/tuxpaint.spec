@@ -1,5 +1,5 @@
 Name: tuxpaint
-Version: 0.9.24
+Version: 0.9.25
 Release: alt1
 
 Summary: A drawing program for young children
@@ -17,6 +17,7 @@ Patch1: tuxpaint-0.23-e2k-fix_bad_elf_symbol.patch
 BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel
 BuildRequires: libSDL_pango-devel libSDL_ttf-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
+BuildRequires: libimagequant-devel
 BuildPreReq: gperf
 
 %description
@@ -41,7 +42,7 @@ such as sound effects.
 намного более простой интерфейс, и имеет интересные, ориентированные на 
 ребенка дополнения, типа звуковых эффектов.
 
-Входит в состав GCompris. Также может использываться отдельно
+Входит в состав GCompris. Также может использоваться отдельно
 
 %package devel
 Summary: Development shared library for %name
@@ -109,6 +110,9 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Fri Jan 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt1
+- Build new version.
+
 * Tue Jun 02 2020 Grigory Ustinov <grenka@altlinux.org> 0.9.24-alt1
 - Build new version.
 - Fix license.
