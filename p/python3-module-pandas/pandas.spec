@@ -6,8 +6,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.1.1
-Release: alt5
+Version: 1.2.0
+Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -138,6 +138,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Fri Jan 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
+- Updated to upstream version 1.2.0.
+
 * Mon Nov 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt5
 - Removed dependency from python3-module-pandas to python3-module-pandas-tests (Closes: #39222).
 
