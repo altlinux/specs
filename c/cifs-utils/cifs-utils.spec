@@ -1,7 +1,7 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 6.11
+Version: 6.12
 Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -10,9 +10,6 @@ Group: System/Kernel and hardware
 
 Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 Source: %name-%version.tar
-
-# Patch from Fedora
-Patch1: cifs-utils-destdir.patch
 
 Patch2: cifs-utils-alt-python3.patch
 
@@ -53,7 +50,6 @@ provide these credentials to the kernel automatically at login.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
 
 %build
@@ -112,6 +108,12 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Thu Jan 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.12-alt1
+- Update to latest release 6.12
+- Add use SUDO_UID env variable for cruid
+- Fix cifs.upcall and mount.cifs with drop bounding capabilities and
+  update the cap bounding set only when CAP_SETPCAP is given
+
 * Thu Nov 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.11-alt1
 - Updated to upstream version 6.11 (Fixes: CVE-2020-14342).
 
