@@ -2,7 +2,7 @@
 %define _name mda-lv2
 
 Name: lv2-mda-plugins
-Version: 1.2.4
+Version: 1.2.6
 Release: alt1
 
 Summary: A port of the MDA VST plugins to LV2
@@ -43,6 +43,9 @@ export CXXFLAGS="$CXXFLAGS %optflags"
 %doc NEWS README*
 
 %changelog
+* Fri Jan 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 - fixed License tag
