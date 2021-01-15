@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.8.0
+Version: 4.16.1
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -214,6 +214,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Fri Jan 15 2021 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt1
+- Updated to 4.16.1.
+
 * Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - devel-doc: Fixed License tag.
 - Updated to 0.8.0.
