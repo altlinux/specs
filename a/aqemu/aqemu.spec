@@ -1,18 +1,17 @@
 Summary: QEMU GUI written in Qt5
 Name: aqemu
-Version: 0.9.2
-Release: alt0.1
-License: GPL2
+Version: 0.9.6
+Release: alt0.1.git34ca8ce
+License: GPL-2.0 and Zlib and MIT
 Group: Emulators
 Packager: Boris Savelev <boris@altlinux.org>
 Url: https://github.com/tobimensch/aqemu
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Wed Mar 04 2009
-BuildRequires(pre): cmake
+BuildRequires(pre): meson rpm-build-ninja
 BuildRequires: gcc-c++ libvncserver-devel ImageMagick
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools
 
 %description
 AQEMU is a QEMU GUI written in Qt5.
@@ -22,18 +21,17 @@ The program have user-friendly interface and allows to set up the majority of QE
 %setup
 
 %build
-%cmake
-PATH=%{_datadir}/qt5/bin:$PATH; export PATH
-%make_build -C BUILD
+PATH=%_datadir/qt5/bin:$PATH; export PATH
+%meson
+%meson_build
 
 %install
-%makeinstall_std -C BUILD
+%meson_install
 mkdir -p %buildroot%_desktopdir
 install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
-install -m644 ./menu_data/%name.desktop %buildroot%_desktopdir/
-convert -size 16x16 ./menu_data/aqemu_64x64.png %buildroot%_miconsdir/%name.png
-convert -size 32x32 ./menu_data/aqemu_64x64.png %buildroot%_niconsdir/%name.png
-convert -size 48x48 ./menu_data/aqemu_64x64.png %buildroot%_liconsdir/%name.png
+convert -size 16x16 ./resources/icons/aqemu.png %buildroot%_miconsdir/%name.png
+convert -size 32x32 ./resources/icons/aqemu.png %buildroot%_niconsdir/%name.png
+convert -size 48x48 ./resources/icons/aqemu.png %buildroot%_liconsdir/%name.png
 rm -rf %buildroot%_datadir/doc/%name
 
 %files
@@ -41,6 +39,7 @@ rm -rf %buildroot%_datadir/doc/%name
 %_bindir/%name
 %dir %_datadir/%name
 %_datadir/%name/*
+%_datadir/appdata/aqemu.appdata.xml
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 %_miconsdir/%name.png
@@ -49,6 +48,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Fri Jan 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.6-alt0.1.git34ca8ce
+- 0.9.6 development version.
+- Built with meson instead cmake.
+
 * Sat Oct 22 2016 L.A. Kostis <lakostis@altlinux.ru> 0.9.2-alt0.1
 - 0.9.2 release.
 
