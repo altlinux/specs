@@ -6,13 +6,15 @@
 %define major 2.2
 
 %def_with python3
+%ifnarch riscv64
 %def_with qt4
+%endif
 %def_with qt5
 %def_with wx
 
 Name: python-module-%oname
 Version: %major.3
-Release: alt7
+Release: alt8
 
 Summary: Matlab(TM) style python plotting package
 
@@ -475,16 +477,20 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/tk*
 %python3_sitelibdir/matplotlib/backends/_tkagg*
 
+%if_with qt5
 %files -n python3-module-%oname-qt5
 %python3_sitelibdir/matplotlib/backends/backend_qt5*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5*
 %python3_sitelibdir/matplotlib/backends/qt*_compat.*
 %python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
 %python3_sitelibdir/matplotlib/backends/qt_editor
+%endif
 
+%if_with qt4
 %files -n python3-module-%oname-qt4
 %python3_sitelibdir/matplotlib/backends/backend_qt4*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
+%endif
 
 %files -n python3-module-%oname-sphinxext
 %python3_sitelibdir/%oname/sphinxext
@@ -495,6 +501,11 @@ done
 %endif
 
 %changelog
+* Thu Jan 14 2021 Nikita Ermakov <arei@altlinux.org> 2.2.3-alt8
+- Disable Qt4 for riscv64.
+- Do not package python3-module-%%oname-qt{4,5} when building without qt{4,5}
+  respectively.
+
 * Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt7
 - disable python-module-matplotlib-nbagg subpackage (required ipython)
 
