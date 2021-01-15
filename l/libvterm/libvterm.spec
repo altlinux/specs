@@ -1,5 +1,5 @@
 Name: libvterm
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 Epoch: 1
 
@@ -68,6 +68,9 @@ make test
 %_bindir/*
 
 %changelog
+* Fri Jan 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.4-alt1
+- Updated to 0.1.4.
+
 * Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.3-alt1
 - Updated to 0.1.3.
 - Fixed watch file.
