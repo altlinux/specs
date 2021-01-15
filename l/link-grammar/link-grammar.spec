@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_disable java
 # don't use aspell as Abiword uses hanspell via libenchant
@@ -10,8 +10,8 @@
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 5.8.0
-Release: alt2
+Version: 5.8.1
+Release: alt1
 
 Summary: The link grammar parsing system for Unix
 License: BSD-3-Clause and LGPL-2.1
@@ -62,7 +62,7 @@ Requires: lib%name = %version-%release
 Perl bindings for %name library.
 
 %prep
-%setup
+%setup %{?_disable_snapshot:-n %name-%name-%version}
 
 %build
 %autoreconf
@@ -100,6 +100,9 @@ Perl bindings for %name library.
 %endif
 
 %changelog
+* Fri Jan 15 2021 Yuri N. Sedunov <aris@altlinux.org> 5.8.1-alt1
+- 5.8.1
+
 * Sat Sep 05 2020 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt2
 - rebuilt with bundled minisat
 
