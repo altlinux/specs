@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 20.12.0
-Release: alt2
+Version: 20.12.1
+Release: alt1
 %K5init
 
 Group: File tools
@@ -136,6 +136,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Jan 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Mon Jan 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 20.12.0-alt2
 - Restored stopping of preview generation jobs on unmount request.
 

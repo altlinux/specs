@@ -2,8 +2,8 @@
 %define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 20.12.0
-Release: alt2
+Version: 20.12.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -63,6 +63,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Thu Jan 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Mon Dec 28 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt2
 - translate "Everyone" user name
 
