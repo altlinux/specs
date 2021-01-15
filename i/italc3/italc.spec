@@ -33,7 +33,7 @@
 
 Name: italc3
 Version: 3.0.3
-Release: alt2
+Release: alt3
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -53,6 +53,25 @@ Source33: italc-master.desktop
 
 Patch12: italc3-additional-de-support.patch
 Patch13: italc3-fix-library-path.patch
+
+# Patches from Debian
+Patch20: 1005_gcc47-ftbfs.patch
+Patch21: 2001_inject-buildtype-from-outside.patch
+Patch22: libvnc_server+client_CVE-2018-15127-CVE-2018-20019.patch
+Patch23: libvncclient_CVE-2018-20020.patch
+Patch24: libvncclient_CVE-2018-20021.patch
+Patch25: libvncclient_CVE-2018-20022.patch
+Patch26: libvncclient_CVE-2018-20023.patch
+Patch27: libvncclient_CVE-2018-20024.patch
+Patch28: libvncclient_CVE-2018-20748-1.patch
+Patch29: libvncclient_CVE-2018-20748-2.patch
+Patch30: libvncclient_CVE-2018-20748-3.patch
+Patch31: libvncclient_CVE-2018-20748-4.patch
+Patch32: libvncserver_CVE-2018-20749.patch
+Patch33: libvncserver_CVE-2018-20750.patch
+Patch34: libvncserver_CVE-2018-7225.patch
+Patch35: libvncserver_CVE-2019-15681.patch
+Patch36: italc3-gcc-10.patch
 
 Conflicts: %program_name < 3.0.0
 Conflicts: italc2 < 3.0.0
@@ -207,6 +226,23 @@ Netzwerk finden Sie in /usr/share/italc/doc/INSTALL.
 tar xf %SOURCE1
 %patch12 -p1
 %patch13 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch34 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch35 -p1
+%patch36 -p1
 
 %build
 %cmake -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
@@ -324,6 +360,9 @@ cp imc/imc.1 ica/ica.1 ima/italc.1 %buildroot%_man1dir
 %_iconsdir/hicolor/*x*/apps/italc.png
 
 %changelog
+* Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt3
+- Apply patches from Debian (fixes CVE-2018-15127, CVE-2018-20019, CVE-2018-20020, CVE-2018-20021, CVE-2018-20022, CVE-2018-20023, CVE-2018-20024, CVE-2018-20748, CVE-2018-20748, CVE-2018-20748, CVE-2018-20748, CVE-2018-20749, CVE-2018-20750, CVE-2018-7225, CVE-2019-15681).
+
 * Mon May 27 2019 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt2
 - Complete Russian localization of desktop files.
 - Fix Russian package descriptions.
