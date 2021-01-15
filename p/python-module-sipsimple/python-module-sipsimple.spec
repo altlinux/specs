@@ -3,15 +3,16 @@
 
 Name:    python-module-%modulename
 Version: 3.5.0
-Release: alt1
+Release: alt2
 
 Summary: SIP SIMPLE implementation for Python
-License: GPLv3
+License: GPL-3.0+
 Group:   Development/Python
 
 Url:     https://github.com/AGProjects/python-sipsimple
 Source: python-%modulename-%version.tar
 Patch: python-module-sipsimple-alt-add-arch-webrtc-defines.patch
+Patch1: pj-attr-gcc10.patch
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python
@@ -40,6 +41,7 @@ types can be easily added by using an extensible high-level API.
 %prep
 %setup -n python-%modulename-%version
 %patch -p1
+%patch1 -p2
 cp -at deps/pjsip/ -- /usr/share/gnu-config/config.*
 chmod +x deps/pjsip/*configure
 %ifarch %e2k
@@ -59,6 +61,10 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt2
+- Fix build by gcc10.
+- Fix License tag.
+
 * Wed Jun 10 2020 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
 - New version.
 
