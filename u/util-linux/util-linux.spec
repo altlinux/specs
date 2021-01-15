@@ -5,7 +5,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.36.1
-Release: alt1
+Release: alt2
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -100,6 +100,7 @@ Patch07: 0007-ALT-some-tests-use-bash4.patch
 Patch08: 0008-ALT-Allow-to-display-altlinux-release-in-the-message.patch
 Patch09: 0009-ALT-Drop-documentation-about-journald-option-since-w.patch
 Patch10: 0010-ALT-use-the-O_NOFOLLOW-flag-when-compare-files.patch
+Patch11: 0011-libmount-don-t-use-symfollow-for-helpers-on-user-mou.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -475,6 +476,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %endif
 
 %patch10 -p2
+%patch11 -p2
 
 echo %version > .tarball-version
 
@@ -970,6 +972,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Fri Jan 15 2021 Alexey Gladkov <legion@altlinux.ru> 2.36.1-alt2
+- libmount: don't use "symfollow" for helpers on user mounts.
+
 * Sun Dec 20 2020 Alexey Gladkov <legion@altlinux.ru> 2.36.1-alt1
 - New version (2.36.1).
 
