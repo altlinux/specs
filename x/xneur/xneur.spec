@@ -1,22 +1,21 @@
 Name: xneur
 Version: 0.20.0
-Release: alt3
+Release: alt4
 
 Summary: X Neural Switcher
-
-License: GPL
+License: GPL-2.0
 Group: Office
 Url: http://xneur.ru/
 
 Source: %{name}_%version.orig.tar.gz
 Patch0: xneur-memset.patch
 Patch1: xneur-unnest-function.patch
+Patch2: xneur-enchant2.patch
+Patch3: xneur-fix-arg-parsing.patch
+Patch4: xneur-gcc-10.patch
 
-# Automatically added by buildreq on Mon May 29 2017
-# optimized out: glib2-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libxml2-devel perl perl-XML-Parser pkg-config python-base python-modules xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: glibc-devel-static gstreamer1.0-devel intltool libXinerama-devel libXtst-devel libaspell-devel libgtk+3-devel libnotify-devel libpcre-devel libxosd-devel
-
-BuildPreReq: zlib-devel
+BuildRequires: zlib-devel
 
 Requires: lib%name = %version-%release
 
@@ -44,6 +43,9 @@ applications which will use %name.
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 # Stupid unhack
 sed -i 's/loKg_message/log_message/' lib/main/program.c
 
@@ -51,10 +53,6 @@ sed -i 's/loKg_message/log_message/' lib/main/program.c
 %autoreconf
 %configure --disable-static --with-spell=aspell
 %make_build
-
-# Hack for X-linking
-##make -C lib/lib clean
-##sed -i 's@^libxneur_la_LIBADD = ../misc/libxnmisc.la@libxneur_la_LIBADD = -L../config/.libs ../misc/libxnmisc.la ../config/libxnconfig.la@' lib/lib/Makefile
 %make
 
 %install
@@ -80,11 +78,15 @@ rm -f %buildroot%_libdir/%name/*.so %buildroot%_libdir/%name/*.la
 %files -n lib%name-devel
 %_includedir/%name/
 %_libdir/libxneur.so
-#_libdir/libxneur.a
 %_libdir/libxnconfig.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt4
+- Apply patches from Debian.
+- Clarify License tag.
+- Spec cleanup.
+
 * Mon Jul 13 2020 Andrew Savchenko <bircoph@altlinux.org> 0.20.0-alt3
 - Get rid of nested function in Levenshtein distance calculation:
   this allows build on non-gcc compilers.
