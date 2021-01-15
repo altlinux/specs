@@ -10,6 +10,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
+%global llvm_version 11.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -28,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        86.0.4240.111
+Version:        87.0.4280.141
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -46,8 +47,9 @@ Source101:      chromium.desktop
 Source102:      chromium.xml
 Source200:      chromium.default
 # git clone --recurse-submodules https://github.com/deemru/chromium-gost.git
-# git checkout -b version commit_id
-# git submodule update --recursive
+#   git checkout -b version commit_id
+#   git submodule update --recursive
+# tar cvf ~/RPM/SOURCES/chromium-gost.tar --exclude='.git*' chromium-gost
 Source300:	chromium-gost.tar
 
 Obsoletes:      chromium-GOST
@@ -61,23 +63,24 @@ Patch002: 0002-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
 Patch003: 0003-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
 Patch004: 0004-DEBIAN-manpage-fixes.patch
 Patch005: 0005-ALT-gcc6-fixes.patch
-Patch006: 0006-DEBIAN-disable-third-party-cookies-by-default.patch
-Patch007: 0007-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch008: 0008-ALT-fix-shrank-by-one-character.patch
-Patch009: 0009-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch010: 0010-ALT-Fix-last-commit-position-issue.patch
-Patch011: 0011-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch012: 0012-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch013: 0013-FEDORA-Fix-gcc-round.patch
-Patch014: 0014-ALT-openh264-always-pic-on-x86.patch
-Patch015: 0015-ALT-allow-to-override-clang-through-env-variables.patch
-Patch016: 0016-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch017: 0017-ALT-Add-missing-header-on-aarch64.patch
-Patch018: 0018-FEDORA-vtable-symbol-undefined.patch
-Patch019: 0019-FEDORA-remove-noexcept.patch
-Patch020: 0020-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch021: 0021-ALT-Disable-unknown-ld-flags.patch
-Patch022: 0022-ALT-Fix-memcpy.patch
+Patch006: 0006-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch007: 0007-ALT-fix-shrank-by-one-character.patch
+Patch008: 0008-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
+Patch009: 0009-ALT-Fix-last-commit-position-issue.patch
+Patch010: 0010-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch011: 0011-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch012: 0012-FEDORA-Fix-gcc-round.patch
+Patch013: 0013-ALT-openh264-always-pic-on-x86.patch
+Patch014: 0014-ALT-allow-to-override-clang-through-env-variables.patch
+Patch015: 0015-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch016: 0016-ALT-Add-missing-header-on-aarch64.patch
+Patch017: 0017-FEDORA-vtable-symbol-undefined.patch
+Patch018: 0018-FEDORA-remove-noexcept.patch
+Patch019: 0019-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch020: 0020-ALT-Fix-memcpy.patch
+Patch021: 0021-ALT-Fix-build.patch
+Patch022: 0022-Move-offending-function-to-chromeos-only.patch
+Patch023: 0023-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -92,10 +95,10 @@ BuildRequires:  libstdc++-devel
 BuildRequires:  libstdc++-devel-static
 BuildRequires:  glibc-kernheaders
 %if_enabled clang
-BuildRequires:  clang10.0
-BuildRequires:  clang10.0-devel
-BuildRequires:  llvm10.0-devel
-BuildRequires:  lld10.0-devel
+BuildRequires:  clang%{llvm_version}
+BuildRequires:  clang%{llvm_version}-devel
+BuildRequires:  llvm%{llvm_version}-devel
+BuildRequires:  lld%{llvm_version}-devel
 %endif
 BuildRequires:  ninja-build
 BuildRequires:  gperf
@@ -148,6 +151,9 @@ BuildRequires:  pkgconfig(xt)
 BuildRequires:  pkgconfig(xcb-proto)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(gbm)
+BuildRequires:  pkgconfig(wayland-client)
+BuildRequires:  pkgconfig(wayland-server)
+BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  python
 BuildRequires:  python-modules-json
 BuildRequires:  python-modules-distutils
@@ -155,8 +161,6 @@ BuildRequires:  python-module-pkg_resources
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
-
-Provides:       webclient, /usr/bin/xbrowser
 
 Requires: libva
 
@@ -203,7 +207,6 @@ to Gnome's Keyring.
 %prep
 %setup -q -n chromium -a 300
 tar -xf %SOURCE1
-#tar -xf %%SOURCE2
 
 ### Begin to apply patches
 %patch001 -p1
@@ -228,6 +231,7 @@ tar -xf %SOURCE1
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
+%patch023 -p1
 ### Finish apply patches
 
 sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/boringssl.patch | patch -p1
@@ -320,8 +324,8 @@ gn_arg fatal_linker_warnings=false
 gn_arg system_libdir=\"%_lib\"
 gn_arg use_allocator=\"none\"
 gn_arg use_icf=false
-gn_arg closure_compile=false
 gn_arg enable_js_type_check=false
+gn_arg use_system_libwayland=true
 
 # Remove debug
 gn_arg is_debug=false
@@ -333,7 +337,7 @@ gn_arg is_component_build=%{is_enabled shared_libraries}
 gn_arg enable_widevine=%{is_enabled widevine}
 
 %if_enabled clang
-gn_arg clang_base_path=\"%_prefix\"
+gn_arg clang_base_path=\"%_prefix/lib/llvm-%{llvm_version}\"
 gn_arg is_clang=true
 gn_arg clang_use_chrome_plugins=false
 gn_arg use_lld=true
@@ -352,7 +356,7 @@ gn_arg is_clang=false
 gn_arg icu_use_data_file=false
 %endif
 
-%ifnarch %{ix86} x86_64
+%ifnarch %{ix86} x86_64 aarch64
 gn_arg enable_vulkan=false
 %else
 gn_arg enable_vulkan=true
@@ -404,8 +408,7 @@ mkdir -p -- \
 	%buildroot/%_libdir/%name \
 	%buildroot/%_sysconfdir/%name \
 #
-install -m 755 %SOURCE100 %buildroot%_libdir/%name/%name-generic
-sed -i 's/APPNAME=chromium$/APPNAME=chromium-gost/' %buildroot%_libdir/%name/%name-generic
+install -m 755 %SOURCE100 %buildroot%_bindir/%name
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
 # add directories for policy management
@@ -420,9 +423,7 @@ mkdir -p %buildroot%_sysconfdir/%name/policies/recommended
 #ln -s %name.1  %buildroot/%_man1dir/chrome.1
 
 # x86_64 capable systems need this
-sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_libdir/%name/%name-generic
-ln -s %name-generic %buildroot%_libdir/%name/%name-kde
-ln -s %name-generic %buildroot%_libdir/%name/%name-gnome
+sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_bindir/%name
 
 pushd %target
 cp -a chrome         %buildroot%_libdir/%name/%name
@@ -470,10 +471,10 @@ install -m 0644 %SOURCE31 %buildroot%_sysconfdir/%name
 
 # Set alternative to xbrowser
 mkdir -p -- %buildroot%_altdir
-printf '%_bindir/xbrowser\t%_bindir/%name\t50\n'            > %buildroot%_altdir/%name
-printf '%_bindir/%name\t%_libdir/%name/%name-generic\t10\n' > %buildroot%_altdir/%name-generic
-printf '%_bindir/%name\t%_libdir/%name/%name-kde\t15\n'     > %buildroot%_altdir/%name-kde
-printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir/%name-gnome
+cat >%buildroot%_altdir/%name <<EOF
+%_bindir/xbrowser	%_bindir/%name	60
+%_bindir/x-www-browser	%_bindir/%name	60
+EOF
 
 (set +x;
 	find %buildroot/%_libdir/%name -type f |
@@ -507,19 +508,65 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_datadir/gnome-control-center/default-apps/*.xml
 %_iconsdir/hicolor/*/apps/*.png
 %_altdir/%name
-%_altdir/%name-generic
-%exclude %_libdir/%name/%name-kde
-%exclude %_libdir/%name/%name-gnome
-
-%files kde
-%attr(755, root, root) %_libdir/%name/%name-kde
-%_altdir/%name-kde
-
-%files gnome
-%attr(755, root, root) %_libdir/%name/%name-gnome
-%_altdir/%name-gnome
 
 %changelog
+* Thu Jan 14 2021 Fr. Br. George <george@altlinux.ru> 87.0.4280.141-alt1
+- Buiild GOST version
+
+* Fri Jan 08 2021 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.141-alt0
+- New version (87.0.4280.141).
+- Security fixes:
+  - CVE-2020-15995: Out of bounds write in V8.
+  - CVE-2020-16043: Insufficient data validation in networking.
+  - CVE-2021-21106: Use after free in autofill.
+  - CVE-2021-21107: Use after free in drag and drop.
+  - CVE-2021-21108: Use after free in media.
+  - CVE-2021-21109: Use after free in payments.
+  - CVE-2021-21110: Use after free in safe browsing.
+  - CVE-2021-21111: Insufficient policy enforcement in WebUI.
+  - CVE-2021-21112: Use after free in Blink.
+  - CVE-2021-21113: Heap buffer overflow in Skia.
+  - CVE-2021-21114: Use after free in audio.
+  - CVE-2021-21115: Use after free in safe browsing.
+  - CVE-2021-21116: Heap buffer overflow in audio.
+
+* Sun Dec 20 2020 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.88-alt1
+- New version (87.0.4280.88).
+- Security fixes:
+  - CVE-2020-16037: Use after free in clipboard.
+  - CVE-2020-16038: Use after free in media.
+  - CVE-2020-16039: Use after free in extensions.
+  - CVE-2020-16040: Insufficient data validation in V8.
+  - CVE-2020-16041: Out of bounds read in networking.
+  - CVE-2020-16042: Uninitialized Use in V8.
+
+* Sat Nov 21 2020 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.66-alt1
+- New version (87.0.4280.66).
+- Security fixes:
+  - CVE-2019-8075: Insufficient data validation in Flash.
+  - CVE-2020-16012: Side-channel information leakage in graphics.
+  - CVE-2020-16014: Use after free in PPAPI.
+  - CVE-2020-16015: Insufficient data validation in WASM.
+  - CVE-2020-16018: Use after free in payments.
+  - CVE-2020-16019: Inappropriate implementation in filesystem.
+  - CVE-2020-16020: Inappropriate implementation in cryptohome.
+  - CVE-2020-16021: Race in ImageBurner.
+  - CVE-2020-16022: Insufficient policy enforcement in networking.
+  - CVE-2020-16023: Use after free in WebCodecs.
+  - CVE-2020-16024: Heap buffer overflow in UI.
+  - CVE-2020-16025: Heap buffer overflow in clipboard.
+  - CVE-2020-16026: Use after free in WebRTC.
+  - CVE-2020-16027: Insufficient policy enforcement in developer tools.
+  - CVE-2020-16028: Heap buffer overflow in WebRTC.
+  - CVE-2020-16029: Inappropriate implementation in PDFium.
+  - CVE-2020-16030: Insufficient data validation in Blink.
+  - CVE-2020-16031: Incorrect security UI in tab preview.
+  - CVE-2020-16032: Incorrect security UI in sharing.
+  - CVE-2020-16033: Incorrect security UI in WebUSB.
+  - CVE-2020-16034: Inappropriate implementation in WebRTC.
+  - CVE-2020-16035: Insufficient data validation in cros-disks.
+  - CVE-2020-16036: Inappropriate implementation in cookies.
+
 * Tue Oct 27 2020 Fr. Br. George <george@altlinux.ru> 86.0.4240.111-alt1
 - Buiild GOST version
 
@@ -594,9 +641,6 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
   - CVE-2020-6539: Use after free in CSS.
   - CVE-2020-6540: Heap buffer overflow in Skia.
   - CVE-2020-6541: Use after free in WebUSB.
-
-* Wed Jul 22 2020 Fr. Br. George <george@altlinux.ru> 83.0.4103.61-alt4
-- Fix typo in start script
 
 * Wed Jul 15 2020 Alexey Gladkov <legion@altlinux.ru> 84.0.4147.89-alt1
 - New version (84.0.4147.89).
