@@ -1,19 +1,16 @@
 %global import_path github.com/etcd-io/etcd
-%global commit 54ba9589114fc3fa5cc36c313550b3c0c0938c91
+%global commit 8a03d2e9614b8192ebaa5a25ef92f6ff62e3593c
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %define etcd_group etcd
 %define etcd_user  etcd
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
 %set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %_bindir
-%brp_strip_none %_bindir/*
 
 Name:    etcd
-Version: 3.4.13
+Version: 3.4.14
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
@@ -106,6 +103,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Fri Jan 15 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.14-alt1
+- 3.4.14
+
 * Sat Sep 05 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.13-alt1
 - 3.4.13
 
