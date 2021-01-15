@@ -1,7 +1,7 @@
 
 Name: corosync-qdevice
 Summary: The Corosync Cluster Engine Qdevice
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 Group: System/Base
 License: BSD
@@ -9,6 +9,7 @@ Url: https://github.com/corosync/corosync-qdevice
 Source: %name-%version.tar
 Source2: corosync-qdevice-init
 Source3: corosync-qnetd-init
+Patch: %name-%version.patch
 
 # Runtime bits
 Requires: corosync >= 2.4.0
@@ -17,7 +18,6 @@ Requires: nss-utils
 
 BuildRequires: systemd-devel
 BuildRequires: libcorosync-devel
-BuildRequires: libqb-devel
 BuildRequires: libnss-devel
 
 
@@ -38,6 +38,7 @@ script for creating NSS certificates and an init script.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -45,6 +46,7 @@ script for creating NSS certificates and an init script.
 	--enable-systemd \
 	--enable-qdevices \
 	--enable-qnetd \
+	--enable-user-flags \
 	--with-initddir=%_initdir \
 	--with-systemddir=%_unitdir \
 	--docdir=%_docdir
@@ -59,10 +61,10 @@ script for creating NSS certificates and an init script.
 rm -rf %buildroot%_docdir/*
 mkdir -p %buildroot%_sysconfdir/sysconfig
 # /etc/sysconfig/corosync-qdevice
-install -m 644 init/corosync-qdevice.sysconfig.example \
+install -p -m 644 init/corosync-qdevice.sysconfig.example \
    %buildroot%_sysconfdir/sysconfig/corosync-qdevice
 # /etc/sysconfig/corosync-qnetd
-install -m 644 init/corosync-qnetd.sysconfig.example \
+install -p -m 644 init/corosync-qnetd.sysconfig.example \
    %buildroot%_sysconfdir/sysconfig/corosync-qnetd
 
 mkdir -p %buildroot%_initdir
@@ -95,7 +97,6 @@ sed -i -e 's/^#User=/User=/' \
 %files
 %dir %_sysconfdir/corosync/qdevice
 %dir %config(noreplace) %_sysconfdir/corosync/qdevice/net
-%dir %_localstatedir/run/corosync-qdevice
 %_sbindir/corosync-qdevice*
 %config(noreplace) %_sysconfdir/sysconfig/corosync-qdevice
 %_unitdir/corosync-qdevice.service
@@ -104,7 +105,6 @@ sed -i -e 's/^#User=/User=/' \
 
 %files -n corosync-qnetd
 %dir %config(noreplace) %attr(770, root, coroqnetd) %_sysconfdir/corosync/qnetd
-%dir %attr(770, root, coroqnetd) %_localstatedir/run/corosync-qnetd
 %_bindir/corosync-qnetd*
 %config(noreplace) %_sysconfdir/sysconfig/corosync-qnetd
 %_unitdir/corosync-qnetd.service
@@ -112,5 +112,8 @@ sed -i -e 's/^#User=/User=/' \
 %_man8dir/*qnetd*
 
 %changelog
+* Fri Jan 15 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.1-alt1
+- new version 3.0.1
+
 * Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - initial build as separated package
