@@ -1,20 +1,24 @@
 %define _libexecdir %_prefix/libexec
 
 Name: rtkit
-Version: 0.11
-Release: alt2
+Version: 0.13
+Release: alt1
 Summary: Realtime Policy and Watchdog Daemon
 Group: System/Servers
 License: GPLv3+ and BSD
-Url: http://git.0pointer.de/?p=rtkit.git
+Url: https://github.com/heftig/rtkit
 
 Requires: dbus polkit
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: libcap-devel libdbus-devel
+BuildRequires(pre): meson >= 0.49
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(libcap)
+BuildRequires: pkgconfig(polkit-gobject-1)
+BuildRequires: pkgconfig(libsystemd)
+BuildRequires: /usr/bin/xxd
 
 %description
 RealtimeKit is a D-Bus system service that changes the
@@ -28,20 +32,22 @@ processes.
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--with-systemdsystemunitdir=%_unitdir
+%meson \
+	-Dsystemd_systemunitdir=%_unitdir \
+	-Dinstalled_tests=false
 
-%make_build
-./rtkit-daemon --introspect > org.freedesktop.RealtimeKit1.xml
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
-install -Dm0644 org.freedesktop.RealtimeKit1.xml %buildroot%_datadir/dbus-1/interfaces/org.freedesktop.RealtimeKit1.xml
+%meson_install
+
+%check
+export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
+%meson_test
 
 %pre
-%_sbindir/groupadd -r -f rtkit >/dev/null 2>&1 || :
-%_sbindir/useradd -r -g rtkit -d '/' -s /sbin/nologin -c "RealtimeKit" rtkit >/dev/null 2>&1 ||:
+groupadd -r -f rtkit >/dev/null 2>&1 || :
+useradd -r -g rtkit -d '/proc' -M -s /sbin/nologin -c "RealtimeKit" rtkit >/dev/null 2>&1 ||:
 
 %post
 %post_service rtkit-daemon
@@ -52,16 +58,19 @@ dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesk
 
 %files
 %doc README
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.RealtimeKit1.conf
 %_sbindir/%{name}*
 %_libexecdir/%name-daemon
 %_datadir/dbus-1/system-services/org.freedesktop.RealtimeKit1.service
 %_datadir/dbus-1/interfaces/org.freedesktop.RealtimeKit1.xml
+%_datadir/dbus-1/system.d/org.freedesktop.RealtimeKit1.conf
 %_datadir/polkit-1/actions/org.freedesktop.RealtimeKit1.policy
 %_unitdir/rtkit-daemon.service
 %_man8dir/*.8*
 
 %changelog
+* Sat Jan 16 2021 Alexey Shabalin <shaba@altlinux.org> 0.13-alt1
+- new version 0.13
+
 * Thu Dec 17 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11-alt2
 - Bumped release to drop ubt suffix.
 
