@@ -1,27 +1,20 @@
 %define modname evdev
-# asyncio required
-%def_disable python2
 
-Name: python-module-%modname
-Version: 1.3.0
+Name: python3-module-%modname
+Version: 1.4.0
 Release: alt1
 
-Summary: Python bindings to the generic input event interface
-Group: Development/Python
+Summary: Python3 bindings to the generic input event interface
+Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/%modname
+Vcs: https://github.com/gvalkov/python-evdev.git
 
 Source: https://pypi.io/packages/source/e/%modname/%modname-%version.tar.gz
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-kernheaders
-
-%if_enabled python2
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-%endif
-
-BuildRequires: python3-devel rpm-build-python3
-BuildRequires: python3-module-distribute
+BuildRequires: python3-devel python3-module-distribute
 
 %description
 This package provides bindings to the generic input event interface in
@@ -29,49 +22,24 @@ Linux. The evdev interface serves the purpose of passing events generated
 in the kernel directly to userspace through character devices that are
 typically located in /dev/input/
 
-%package -n python3-module-%modname
-Summary: Python3 bindings to the generic input event interface
-Group: Development/Python3
-
-%description -n python3-module-%modname
-This package provides bindings to the generic input event interface in
-Linux. The evdev interface serves the purpose of passing events generated
-in the kernel directly to userspace through character devices that are
-typically located in /dev/input/
-
 %prep
-%setup -n %modname-%version %{?_enable_python2:-a0
-cp -a %modname-%version py2build}
+%setup -n %modname-%version
 
 %build
 %python3_build
 
-%{?_enable_python2:
-pushd py2build
-%python_build
-popd}
-
 %install
 %python3_install
 
-%{?_enable_python2:
-pushd py2build
-%python_install
-popd}
-
-%if_enabled python2
 %files
-%python_sitelibdir/%modname/
-%exclude %python_sitelibdir/*.egg-info
-%doc README*
-%endif
-
-%files -n python3-module-%modname
 %python3_sitelibdir/%modname/
 %exclude %python3_sitelibdir/*.egg-info
 %doc README*
 
 %changelog
+* Sat Jan 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0 (python3-only)
+
 * Sun Jan 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
