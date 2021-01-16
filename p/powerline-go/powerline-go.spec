@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path https://github.com/justjanne/powerline-go
-%global commit 79e78b1e0890801eff0cefbddb939e198521efa3
+%global commit de5ff711de96787dbbc4837edc00954e8f035b9f
 
 Name: powerline-go
-Version: 1.18.0
+Version: 1.20.0
 Release: alt1
 Summary: A beautiful and useful low-latency prompt for your shell, written in go
 
@@ -51,6 +51,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sat Jan 16 2021 Alexey Shabalin <shaba@altlinux.org> 1.20.0-alt1
+- new version 1.20.0
+
 * Tue Oct 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.18.0-alt1
 - new version 1.18.0
 
