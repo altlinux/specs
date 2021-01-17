@@ -1,5 +1,5 @@
 %define kernel_base_version	5.10
-%define kernel_sublevel        .4
+%define kernel_sublevel        .8
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -261,6 +261,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Sun Jan 17 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.10.8-alt1
+- 5.10.8
+
 * Wed Dec 30 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.10.4-alt1
 - 5.10.4
 
