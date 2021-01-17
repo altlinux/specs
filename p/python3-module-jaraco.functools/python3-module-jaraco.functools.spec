@@ -1,7 +1,7 @@
 %define  modulename jaraco.functools
 
 Name:    python3-module-%modulename
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Additional functools in the spirit of stdlib's functools
@@ -18,6 +18,10 @@ BuildRequires: python3-module-toml
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+
+# According to PEP 420 module can import without __init__.py, but autoprov does not support this behaviour.
+# See https://bugzilla.altlinux.org/show_bug.cgi?id=39556
+%py3_provides jaraco.functools
 
 %description
 %summary
@@ -36,11 +40,11 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %files
 %python3_sitelibdir/jaraco/*
 %python3_sitelibdir/%{modulename}*
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/jaraco/__init__*
-%exclude %python3_sitelibdir/jaraco/__pycache__/__init__*
 
 %changelog
+* Sun Jan 17 2021 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
+- New version.
+
 * Tue Dec 29 2020 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
 - New version.
 
