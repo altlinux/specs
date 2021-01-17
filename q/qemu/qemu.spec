@@ -124,12 +124,13 @@
 %global rulenum 90
 %global _libexecdir /usr/libexec
 %global _localstatedir /var
+%global firmwarepath /usr/share/qemu:/usr/share/seabios:/usr/share/seavgabios:/usr/share/ipxe:/usr/share/ipxe.efi
 
 # }}}
 
 Name: qemu
 Version: 5.2.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -163,16 +164,15 @@ Requires: %name-user = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: meson
-BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
+BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre-devel-static libattr-devel-static
 BuildRequires: glib2-devel >= 2.48 libgio-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx
-BuildRequires: libattr-devel-static libcap-ng-devel
+BuildRequires: libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: python3-devel
-BuildRequires: libpcre-devel-static
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -698,12 +698,11 @@ run_configure() {
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_localstatedir \
 	--with-pkgversion=%name-%version-%release \
-	--extra-ldflags="$extraldflags -Wl,-z,relro -Wl,-z,now" \
-	--extra-cflags="%optflags" \
 	--disable-werror \
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
+	--firmwarepath=%firmwarepath \
 	 "$@"
 }
 
@@ -716,10 +715,8 @@ run_configure \
 	--enable-user \
 	--enable-linux-user \
 	--enable-attr \
-	--audio-drv-list= \
-	--disable-kvm \
-	--disable-pie \
-	--disable-system \
+	--enable-tcg \
+	--audio-drv-list="" \
 	--disable-auth-pam \
 	--disable-avx2 \
 	--disable-avx512f \
@@ -732,7 +729,6 @@ run_configure \
 	--disable-capstone \
 	--disable-cloop \
 	--disable-cocoa \
-	--disable-coroutine-pool \
 	--disable-crypto-afalg \
 	--disable-curl \
 	--disable-curses \
@@ -753,11 +749,13 @@ run_configure \
 	--disable-iconv \
 	--disable-jemalloc \
 	--disable-keyring \
+	--disable-kvm \
 	--disable-libdaxctl \
 	--disable-libiscsi \
 	--disable-libnfs \
 	--disable-libpmem \
 	--disable-libssh \
+	--disable-libudev \
 	--disable-libusb \
 	--disable-libxml2 \
 	--disable-linux-aio \
@@ -773,6 +771,7 @@ run_configure \
 	--disable-numa \
 	--disable-opengl \
 	--disable-parallels \
+	--disable-pie \
 	--disable-pvrdma \
 	--disable-qcow1 \
 	--disable-qed \
@@ -783,7 +782,6 @@ run_configure \
 	--disable-rng-none \
 	--disable-sdl \
 	--disable-sdl-image \
-	--disable-zstd \
 	--disable-seccomp \
 	--disable-sheepdog \
 	--disable-slirp \
@@ -791,13 +789,13 @@ run_configure \
 	--disable-snappy \
 	--disable-sparse \
 	--disable-spice \
+	--disable-system \
 	--disable-tcmalloc \
 	--disable-tools \
 	--disable-tpm \
 	--disable-usb-redir \
 	--disable-vde \
 	--disable-vdi \
-	--disable-vte \
 	--disable-vhost-crypto \
 	--disable-vhost-kernel \
 	--disable-vhost-net \
@@ -818,6 +816,8 @@ run_configure \
 	--disable-xen \
 	--disable-xen-pci-passthrough \
 	--disable-xfsctl \
+	--disable-xkbcommon \
+	--disable-zstd \
 	--without-default-devices
 
 # Please do not touch this
@@ -997,13 +997,14 @@ rm -f %buildroot%_datadir/%name/vgabios*bin
 # Provided by package seabios
 rm -f %buildroot%_datadir/%name/bios.bin
 rm -f %buildroot%_datadir/%name/bios-256k.bin
+rm -f %buildroot%_datadir/%name/bios-microvm.bin
 # Provided by package sgabios
 #rm -f %buildroot%_datadir/%name/sgabios.bin
 # Provided by package qboot
-rm -f %buildroot%_datadir/%name/bios-microvm.bin
+rm -f %buildroot%_datadir/%name/qboot.rom
 # Provided by package edk2
 rm %buildroot%_datadir/%name/edk2-*
-rm -r %buildroot%_datadir/%name/firmware/*edk2*.json
+rm %buildroot%_datadir/%name/firmware/*
 
 rm %buildroot%_datadir/%name/qemu-nsis.bmp
 
@@ -1021,8 +1022,8 @@ for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware vga
   ln -r -s %buildroot%_datadir/seavgabios/${bios}.bin %buildroot%_datadir/%name/${bios}.bin
 done
 
-ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%name/
-ln -r -s %buildroot%_datadir/qboot/bios-microvm.bin %buildroot%_datadir/%name/
+ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k,bios-microvm}.bin %buildroot%_datadir/%name/
+ln -r -s %buildroot%_datadir/qboot/bios.bin %buildroot%_datadir/%name/qboot.rom
 
 mkdir -p %buildroot%_binfmtdir
 ./scripts/qemu-binfmt-conf.sh --systemd ALL --exportdir %buildroot%_binfmtdir --qemu-path %_bindir
@@ -1112,6 +1113,7 @@ fi
 %_datadir/%name/trace-events-all
 %_datadir/%name/*.rom
 %_datadir/%name/vgabios*.bin
+%dir %_datadir/%name/firmware
 %_man1dir/%name.1*
 %_sysconfdir/udev/rules.d/%rulenum-%name-kvm.rules
 %_controldir/*
@@ -1214,6 +1216,11 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt3
+- Switch bios-microvm.bin from qboot to seabios
+- Package /usr/share/qemu/firmware dir
+- Define firmware path as --firmwarepath for configure
+
 * Thu Jan 14 2021 Ivan A. Melnikov <iv@altlinux.org> 5.2.0-alt2
 - fix elf loading in qemu-user (altbug #39141)
 - restore special CPU selection for ARM qemu-user-static

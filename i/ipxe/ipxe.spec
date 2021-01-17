@@ -1,5 +1,9 @@
 
-%def_enable efi_ia32
+# With the addition of HTTPS support, we need to drop
+# efi_ia32 so qemu roms still stay in the expected size
+# range. If no one complains we can drop the efi_ia32
+# infrastructure in 2021 IMO
+%def_disable efi_ia32
 
 %define formats rom
 # PCI IDs (vendor,product) of the ROMS we want for QEMU
@@ -14,8 +18,8 @@
 #    vmxnet3: 0x15ad 0x07b0
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
-%define date 20190817
-%define hash 0b3000bb
+%define date 20201218
+%define hash 47098d7c
 
 Name: ipxe
 Version: %date
@@ -23,7 +27,7 @@ Release: alt1.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
-License: GPLv2 with additional permissions and BSD
+License: GPL-2.0-only
 Group: Networking/Other
 Url: http://ipxe.org/
 #Vcs-Git: git://git.ipxe.org/ipxe.git
@@ -113,8 +117,7 @@ rm -rf drivers/net/ath/ath9k
 
 make_ipxe() {
     %make_build \
-	NO_WERROR=1 \
-	V=1 \
+	NO_WERROR=1 V=1 \
 	GITVERSION=%hash \
         "$@"
 }
@@ -159,13 +162,11 @@ pushd src/bin/
 
 install -pm0644 undionly.kpxe ipxe.{iso,usb,dsk,lkrn}  %buildroot%_datadir/%name
 
-for fmt in %formats; do
- for img in *.${fmt}; do
-      if [ -e $img ]; then
+for img in *.rom; do
+  if [ -e $img ]; then
    cp -a $img %buildroot%_datadir/%name/
-   echo %_datadir/%name/$img >> ../../${fmt}.list
+   echo %_datadir/%name/$img >> ../../rom.list
   fi
- done
 done
 popd
 
@@ -174,15 +175,12 @@ cp -a src/bin-x86_64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-x86_64.efi
 
 # the roms supported by qemu will be packaged separatedly
 # remove from the main rom list and add them to qemu.list
-for fmt in rom ; do
- for rom in %qemuroms ; do
-  sed -i -e "/\/${rom}.${fmt}/d" ${fmt}.list
-  echo %_datadir/%name/${rom}.${fmt} >> qemu.${fmt}.list
- done
-done
 for rom in %qemuroms; do
+  sed -i -e "/\/${rom}.rom/d" rom.list
+  echo %_datadir/%name/${rom}.rom >> qemu.rom.list
+
   cp src/bin-combined/${rom}.rom %buildroot/%_datadir/%name.efi/
-  echo %_datadir/%name.efi/${rom}.rom >> qemu.${fmt}.list
+  echo %_datadir/%name.efi/${rom}.rom >> qemu.rom.list
 done
 
 pxe_link() {
@@ -220,6 +218,11 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Sat Dec 26 2020 Alexey Shabalin <shaba@altlinux.org> 1:20201218-alt1.git47098d7c
+- Update to latest upstream snapshot.
+- Enable HTTPS support.
+- Disable support efi_ia32.
+
 * Thu Sep 12 2019 Alexey Shabalin <shaba@altlinux.org> 1:20190817-alt1.git0b3000bb
 - update to latest upstream snapshot
 
@@ -229,13 +232,13 @@ pxe_link 15ad07b0 vmxnet3
 * Tue Nov 27 2018 Alexey Shabalin <shaba@altlinux.org> 1:20180825-alt1.git133f4c47
 - update to latest upstream snapshot
 
-* Fri Apr 27 2018 Alexey Shabalin <shaba@altlinux.ru> 1:20180420-alt1.git960d1e36%ubt
+* Fri Apr 27 2018 Alexey Shabalin <shaba@altlinux.ru> 1:20180420-alt1.git960d1e36
 - update to latest upstream snapshot
 
-* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:20170830-alt1.git75acb3c7%ubt
+* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:20170830-alt1.git75acb3c7
 - update to latest upstream snapshot
 
-* Thu Apr 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:20161208-alt1.git26050fd%ubt
+* Thu Apr 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:20161208-alt1.git26050fd
 - rebuild with ubt macros
 
 * Wed Dec 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:20161208-alt1.git26050fd
