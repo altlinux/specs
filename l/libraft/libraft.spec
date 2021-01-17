@@ -1,12 +1,13 @@
 Name: libraft
-Version: 0.9.17
+Version: 0.9.25
 Release: alt1
 Summary: Fully asynchronous C implementation of the Raft consensus protocol.
 License: Apache-2.0
 Group: Development/C
 URL: https://github.com/canonical/raft
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
 BuildRequires: libuv-devel
 BuildRequires: btrfs-progs xfsprogs zfs-utils
@@ -34,6 +35,7 @@ RPC messages) and disk persistence (store log entries and snapshots).
 
 %prep
 %setup -q -n %name-%version
+%patch -p1
 
 %build
 %autoreconf
@@ -56,6 +58,9 @@ RPC messages) and disk persistence (store log entries and snapshots).
 %_pkgconfigdir/raft.pc
 
 %changelog
+* Fri Jan 15 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.25-alt1
+- new version 0.9.25
+
 * Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 0.9.17-alt1
 - Update to 0.9.17
 

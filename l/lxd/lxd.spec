@@ -1,16 +1,12 @@
 %global import_path github.com/lxc/lxd
-
-#global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-
 %set_verify_elf_method unresolved=no
-#add_debuginfo_skiplist %go_root %_bindir
 
 %define lxdgroup lxd
 %define lxduser lxd
 
 Name:		lxd
-Version:	4.0.1
+Version:	4.10
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -40,7 +36,6 @@ Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
 Requires:	squashfs-tools
-Requires:	liblxd_sqlite3
 Requires:	rsync
 Requires:	iptables
 Requires:	dnsmasq
@@ -48,10 +43,9 @@ Requires:	dnsmasq
 BuildRequires: libcap-devel
 BuildRequires: libuv-devel
 
-BuildRequires: liblxd_sqlite3-devel
+BuildRequires: libsqlite3-devel
 BuildRequires: libdqlite-devel
 BuildRequires: libraft-devel
-BuildRequires: libco-devel
 BuildRequires: libudev-devel
 BuildRequires: help2man
 # Needed for manpages generation. Accessing to '/proc/self/...'
@@ -82,18 +76,20 @@ which use the supplementary Go tools libraries with %import_path imports.
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export GOPATH="%go_path:$BUILDDIR"
-export CGO_ENABLED=1
+export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 
-cd .build/src/%import_path
+pushd .build/src/%import_path
 
-# Need to use a patched version of libsqlite
-export TAGS="libsqlite3"
-export CGO_CPPFLAGS="$(pkg-config --cflags lxd_sqlite3)"
-export CGO_LDFLAGS="$(pkg-config --libs lxd_sqlite3)"
-%golang_build lxd lxc fuidshift lxd-benchmark lxd-p2c lxc-to-lxd lxd/db
+#export TAGS="libsqlite3"
+#go install -v -tags "libsqlite3" ./...
+TAGS="libsqlite3" %golang_build lxc fuidshift lxd-benchmark lxc-to-lxd lxd/db lxd
+CGO_ENABLED=0 TAGS="netgo" %golang_build lxd-p2c
+CGO_ENABLED=0 TAGS="agent,netgo" %golang_build lxd-agent
+
+#%golang_build lxd lxc fuidshift lxd-benchmark lxd-p2c lxc-to-lxd lxd/db
+popd
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -113,9 +109,9 @@ done
 mkdir -p -- %buildroot%_libexecdir/lxd
 
 # configuration
-%__install -D %SOURCE3 %buildroot%_sysconfdir/sysconfig/lxd
+install -D %SOURCE3 %buildroot%_sysconfdir/sysconfig/lxd
 # configuration for dnsmasq called in lxd-bridge
-%__install -D %SOURCE4 %buildroot%_sysconfdir/lxd/dnsmasq.conf
+install -D %SOURCE4 %buildroot%_sysconfdir/lxd/dnsmasq.conf
 
 #services
 # systemd
@@ -171,6 +167,9 @@ help2man %buildroot%_bindir/lxd-benchmark -n "The container lightervisor - bench
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Sat Jan 16 2021 Alexey Shabalin <shaba@altlinux.org> 4.10-alt1
+- New version.
+
 * Sun May 17 2020 Alexey Shabalin <shaba@altlinux.org> 4.0.1-alt1
 - New LTS version.
 
