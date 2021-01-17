@@ -1,6 +1,6 @@
 Name: flowblade
 Version: 2.6.0
-Release: alt2
+Release: alt3
 
 Summary: non-linear video editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа
@@ -55,6 +55,9 @@ To use Blender projects in Flowblade you should install Blender.
 %_datadir/mime/packages/io.github.jliljebl.Flowblade.xml
 
 %changelog
+* Sun Jan 17 2021 Andrey Sokolov <keremet@altlinux.ru> 2.6.0-alt3
+- Remove unusable files which add dependency on Java
+
 * Sat Oct 17 2020 Andrey Sokolov <keremet@altlinux.ru> 2.6.0-alt2
 - Updated to v2.2-719-g56b8b6da.
 
