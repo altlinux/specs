@@ -13,7 +13,7 @@
 %def_without rocksdb_lite
 
 Name: rocksdb
-Version: 6.14.5
+Version: 6.14.6
 Release: alt1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
@@ -138,6 +138,9 @@ install -D -p -m755 BUILD/tools/sst_dump %buildroot/%_bindir/sst_dump
 %_libdir/*.a
 
 %changelog
+* Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 6.14.6-alt1
+- 6.14.6
+
 * Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 6.14.5-alt1
 - 6.14.5
 
