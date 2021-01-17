@@ -1,5 +1,5 @@
 Name: openxcom
-Version: 1.0_2020.10.10
+Version: 1.0_2021.01.11
 Release: alt1
 Summary: OpenXcom is an open-source clone of the original X-COM
 License: GPLv3+
@@ -9,6 +9,7 @@ Url: http://openxcom.org/
 Source: https://github.com/SupSuper/OpenXcom/%name-%version.tar
 Source2: openxcom16.png
 Source3: openxcom32.png
+Patch: openxcom-man6.patch
 
 # Automatically added by buildreq on Sat May 31 2014
 # optimized out: boost-devel-headers cmake-modules libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libstdc++-devel libyaml-cpp0 pkg-config xorg-kbproto-devel xorg-xproto-devel
@@ -24,6 +25,7 @@ under the GPL and written in C++ / SDL.
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 cmake --debug-output -D CMAKE_INSTALL_PREFIX="/usr" -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags" CMakeLists.txt
@@ -44,10 +46,14 @@ install -pm 644 -D res/linux/openxcom.desktop %buildroot%_desktopdir/%name.deskt
 %doc CHANGELOG.txt README.* LICENSE.txt
 %_bindir/%name
 %_datadir/%name
+%_man6dir/%{name}.6*
 %_iconsdir/hicolor/*/apps/%name.*
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Jan 17 2021 Igor Vlasenko <viy@altlinux.ru> 1.0_2021.01.11-alt1
+- nightly 2021.01.11
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.0_2020.10.10-alt1
 - nightly 2020.10.10
 
