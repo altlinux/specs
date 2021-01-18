@@ -1,51 +1,76 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: java-devel-default perl(Class/Struct.pm) perl(Compress/Zlib.pm) perl(Config.pm) perl(English.pm) perl(Exporter.pm) perl(FindBin.pm) perl(IO/File.pm) perl(JSON/PP.pm) perl(List/Util.pm) perl(Term/ANSIColor.pm) perl(Text/ParseWords.pm) zip
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: java-devel-default perl(Compress/Zlib.pm) perl(JSON/PP.pm) perl(Term/ANSIColor.pm)
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name openjfx
 %global openjfxdir %{_jvmdir}/%{name}
+%global rtdir rt-11.0.9+2
 
 Name:           openjfx
-Version:        8.0.202
-Release:        alt1_8.b07jpp8
+Epoch:          3
+Version:        11.0.9.2
+Release:        alt1_3jpp11
 Summary:        Rich client application platform for Java
 
-#fxpackager is BSD
 License:        GPL v2 with exceptions and BSD
 URL:            http://openjdk.java.net/projects/openjfx/
 
-Source0:        http://hg.openjdk.java.net/openjfx/8u-dev/rt/archive/8u202-b07.tar.bz2
-Source1:        README.fedora
+Source0:        hg.openjdk.java.net/openjfx/11-dev/rt/archive/rt-11.0.9+2.tar.bz2
+Source1:        pom-base.xml
+Source2:        pom-controls.xml
+Source3:        pom-fxml.xml
+Source4:        pom-graphics.xml
+Source5:        pom-graphics_antlr.xml
+Source6:        pom-graphics_decora.xml
+Source7:        pom-graphics_compileJava.xml
+Source8:        pom-graphics_compileJava-decora.xml
+Source9:        pom-graphics_compileJava-java.xml
+Source10:       pom-graphics_compileJava-prism.xml
+Source11:       pom-graphics_graphics.xml
+Source12:       pom-graphics_libdecora.xml
+Source13:       pom-graphics_libglass.xml
+Source14:       pom-graphics_libglassgtk2.xml
+Source15:       pom-graphics_libglassgtk3.xml
+Source16:       pom-graphics_libjavafx_font.xml
+Source17:       pom-graphics_libjavafx_font_freetype.xml
+Source18:       pom-graphics_libjavafx_font_pango.xml
+Source19:       pom-graphics_libjavafx_iio.xml
+Source20:       pom-graphics_libprism_common.xml
+Source21:       pom-graphics_libprism_es2.xml
+Source22:       pom-graphics_libprism_sw.xml
+Source23:       pom-graphics_prism.xml
+Source24:       pom-media.xml
+Source25:       pom-openjfx.xml
+Source26:       pom-swing.xml
+Source27:       pom-swt.xml
+Source28:       pom-web.xml
+Source29:       build.xml
 
-Patch0:         0000-Fix-wait-call-in-PosixPlatform.patch
-Patch1:         0001-Change-SWT-and-Lucene.patch
-Patch2:         0002-Allow-build-to-work-on-newer-gradles.patch
-Patch3:         0003-fix-cast-between-incompatible-function-types.patch
-Patch4:         0004-Fix-Compilation-Flags.patch
-Patch5:         0005-fxpackager-extract-jre-accept-symlink.patch
-Patch6:         0006-Drop-SWT-32bits-and-Lucene.patch
+ExclusiveArch:  x86_64
 
-ExclusiveArch:  %{ix86} x86_64
+Requires:       java-11-openjdk
 
-Requires:       java
-
-BuildRequires:  gradle-local
+BuildRequires:  javapackages-tools
+BuildRequires:  java-11-openjdk-devel
+BuildRequires:  maven-local
+BuildRequires:  ant
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  libstdc++-devel-static
-BuildRequires:  mvn(antlr:antlr)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.antlr:antlr:3.1.3)
+BuildRequires:  mvn(org.eclipse.swt:swt)
+BuildRequires:  mvn(org.antlr:antlr)
+BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
 BuildRequires:  mvn(org.antlr:stringtemplate)
 BuildRequires:  mvn(org.apache.ant:ant)
-%ifarch s390x x86_64 aarch64 ppc64le
-BuildRequires:  mvn(org.eclipse.swt:swt)
-%endif
+BuildRequires:  mvn(org.codehaus.mojo:native-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 
 BuildRequires:  pkgconfig(gtk+-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0)
@@ -55,9 +80,12 @@ BuildRequires:  pkgconfig(libjpeg)
 BuildRequires:  pkgconfig(xxf86vm)
 BuildRequires:  pkgconfig(gl)
 
-BuildRequires:  bison
-BuildRequires:  flex
+BuildRequires:  ctest cmake
 BuildRequires:  gperf
+BuildRequires:  perl
+BuildRequires:  python3
+BuildRequires:  libruby-devel
+BuildRequires:  gem-json
 Source44: import.info
 
 %description
@@ -65,127 +93,104 @@ JavaFX/OpenJFX is a set of graphics and media APIs that enables Java
 developers to design, create, test, debug, and deploy rich client
 applications that operate consistently across diverse platforms.
 
-The media and web module have been removed due to missing dependencies.
+The media module have been removed due to missing dependencies.
 
 %package devel
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 Summary: OpenJFX development tools and libraries
 
 %description devel
 %{summary}.
 
-%package src
-Group: Development/Java
-Requires: %{name} = %{version}-%{release}
-Summary: OpenJFX Source Bundle
-
-%description src
-%{summary}.
-
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-#BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+%global debug_package %{nil}
 
 %prep
-%setup -q -n rt-8u202-b07
-%patch0 -p1
-%ifarch s390 %{arm} %{ix86}
-%patch -P 6 -p1
-%else
-%patch1 -p1
-%endif
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
- 
-cp %{SOURCE1} .
+%setup -q -n %{rtdir}
 
-cat > gradle.properties << EOF
-COMPILE_WEBKIT = false
-COMPILE_MEDIA = false
-%ifarch s390 %{arm} %{ix86}
-COMPILE_SWT = false
-%endif 
-BUILD_JAVADOC = true
-BUILD_SRC_ZIP = true
-GRADLE_VERSION_CHECK = false
-CONF = DebugNative
-EOF
+#Drop *src/test folders
+rm -rf modules/javafx.{base,controls,fxml,graphics,media,swing,swt,web}/src/test/
+rm -rf modules/jdk.packager/src/test/
+
+#prep for javafx.graphics
+cp -a modules/javafx.graphics/src/jslc/antlr modules/javafx.graphics/src/main/antlr3
+cp -a modules/javafx.graphics/src/main/resources/com/sun/javafx/tk/quantum/*.properties modules/javafx.graphics/src/main/java/com/sun/javafx/tk/quantum
 
 find -name '*.class' -delete
 find -name '*.jar' -delete
 
-#Bundled libraries
-rm -rf modules/media/src/main/native/gstreamer/3rd_party/glib
-rm -rf modules/media/src/main/native/gstreamer/gstreamer-lite
+#copy maven files
+cp -a %{_sourcedir}/pom-*.xml .
+mv pom-openjfx.xml pom.xml
 
-#Drop SWT for 32 bits build
-%ifarch s390 %{arm} %{ix86}
-rm -rf modules/swt
-rm -rf modules/graphics/src/main/java/com/sun/glass/ui/swt
-rm -rf modules/builders/src/main/java/javafx/embed/swt
-%endif 
+for MODULE in base controls fxml graphics media swing swt web
+do
+	mv pom-$MODULE.xml ./modules/javafx.$MODULE/pom.xml
+done
 
-sed -i 's,"-Werror","-Wsized-deallocation",' buildSrc/*.gradle
+mkdir ./modules/javafx.graphics/mvn-{antlr,decora,compileJava,graphics,libdecora,libglass,libglassgtk2,libglassgtk3,libjavafx_font,libjavafx_font_freetype,libjavafx_font_pango,libjavafx_iio,libprism_common,libprism_es2,libprism_sw,prism}
+for GRAPHMOD in antlr decora compileJava graphics libdecora libglass libglassgtk2 libglassgtk3 libjavafx_font libjavafx_font_freetype libjavafx_font_pango libjavafx_iio libprism_common libprism_es2 libprism_sw prism
+do
+	mv pom-graphics_$GRAPHMOD.xml ./modules/javafx.graphics/mvn-$GRAPHMOD/pom.xml
+done
+
+mkdir ./modules/javafx.graphics/mvn-compileJava/mvn-{decora,java,prism}
+for SUBMOD in decora java prism
+do
+	mv pom-graphics_compileJava-$SUBMOD.xml ./modules/javafx.graphics/mvn-compileJava/mvn-$SUBMOD/pom.xml
+done
+
+#set VersionInfo
+cp -a %{_sourcedir}/build.xml .
+ant -f build.xml
+
+cp -a ./modules/javafx.swing/src/main/module-info/module-info.java ./modules/javafx.swing/src/main/java
+
+#sed -i '1s,/usr/bin/env python,/usr/bin/python3,' modules/javafx.web/src/main/native/Source/JavaScriptCore/Scripts/*.py modules/javafx.web/src/main/native/Source/JavaScriptCore/Scripts/wkbuiltins/*.py
+#sed -i 's,PYTHON = python,PYTHON = python3,' modules/javafx.web/src/main/native/Source/JavaScriptCore/DerivedSources.make
+
+sed -i '/PythonInterp/s,2.7.0,3,' modules/javafx.web/src/main/native/Source/cmake/WebKitCommon.cmake
 
 %build
-#Tests do not run by default, tests in web fails and one test in graphics fail:
-#UnsatisfiedLinkError: libjavafx_iio.so: undefined symbol: jpeg_resync_to_restart
-gradle-local --no-daemon --offline --info
+
+#set openjdk11 for build
+export JAVA_HOME=%{_jvmdir}/java-11-openjdk
+export CFLAGS="${RPM_OPT_FLAGS}"
+export CXXFLAGS="${RPM_OPT_FLAGS}" 
+
+%mvn_build --skip-javadoc
+
+%{fedora_v2_cmake} -DPython_EXECUTABLE=/usr/bin/python3 -DPORT="Java" --icu-unicode --64-bit --cmakeargs= -DENABLE_TOOLS=1 -DCMAKE_C_COMPILER='gcc' -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DCMAKE_C_FLAGS='-fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS' -DCMAKE_CXX_FLAGS='-fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS' -DCMAKE_SHARED_LINKER_FLAGS='-static-libgcc -static-libstdc++ -shared -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS -z relro -Wl,--gc-sections' -DCMAKE_EXE_LINKER_FLAGS='-static-libgcc -static-libstdc++  -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS -z relro -Wl,--gc-sections' -DJAVAFX_RELEASE_VERSION=11 ./modules/javafx.web/src/main/native
+%fedora_v2_cmake_build
+strip -g %{_builddir}/%{rtdir}/%_target_platform/lib/libjfxwebkit.so
 
 %install
+
 install -d -m 755 %{buildroot}%{openjfxdir}
-cp -a build/sdk/{bin,lib,rt} %{buildroot}%{openjfxdir}
-
-install -d -m 755 %{buildroot}%{_mandir}/man1
-install -m 644 build/sdk/man/man1/* %{buildroot}%{_mandir}/man1
-
-install -d -m 755 %{buildroot}%{_mandir}/ja_JP/man1
-install -m 644 build/sdk/man/ja_JP.UTF-8/man1/* %{buildroot}%{_mandir}/ja_JP/man1
-
-install -m 644 build/sdk/javafx-src.zip %{buildroot}%{openjfxdir}/javafx-src.zip
-
-install -d 755 %{buildroot}%{_javadocdir}/%{name}
-cp -a build/sdk/docs/api/. %{buildroot}%{_javadocdir}/%{name}
-
-mkdir -p %{buildroot}%{_bindir}
-ln -s %{openjfxdir}/bin/javafxpackager %{buildroot}%{_bindir}
-ln -s %{openjfxdir}/bin/javapackager %{buildroot}%{_bindir}
+cp -a modules/javafx.{base,controls,fxml,media,swing,swt,web}/target/*.jar %{buildroot}%{openjfxdir}
+cp -a modules/javafx.graphics/mvn-compileJava/mvn-java/target/*.jar %{buildroot}%{openjfxdir}
+cp -a modules/javafx.graphics/mvn-lib{decora,javafx_font,javafx_font_freetype,javafx_font_pango,glass,glassgtk2,glassgtk3,javafx_iio,prism_common,prism_es2,prism_sw}/target/*.so %{buildroot}%{openjfxdir}
+cp -a %_target_platform/lib/libjfxwebkit.so %{buildroot}%{openjfxdir}
 
 %files
 %dir %{openjfxdir}
-%{openjfxdir}/rt
+%{openjfxdir}/
 %doc --no-dereference LICENSE
+%doc --no-dereference ADDITIONAL_LICENSE_INFO
+%doc --no-dereference ASSEMBLY_EXCEPTION
 %doc README
-%doc README.fedora
 
 %files devel
-%{openjfxdir}/lib
-%{openjfxdir}/bin
-%{_bindir}/javafxpackager
-%{_bindir}/javapackager
-%{_mandir}/man1/javafxpackager.1*
-%{_mandir}/man1/javapackager.1*
-%{_mandir}/ja_JP/man1/javafxpackager.1*
-%{_mandir}/ja_JP/man1/javapackager.1*
+%{openjfxdir}/
 %doc --no-dereference LICENSE
+%doc --no-dereference ADDITIONAL_LICENSE_INFO
+%doc --no-dereference ASSEMBLY_EXCEPTION
 %doc README
-%doc README.fedora
-
-%files src
-%{openjfxdir}/javafx-src.zip
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc --no-dereference LICENSE
 
 %changelog
+* Mon Jan 18 2021 Igor Vlasenko <viy@altlinux.ru> 3:11.0.9.2-alt1_3jpp11
+- new version
+
 * Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 8.0.202-alt1_8.b07jpp8
 - fixed build
 
