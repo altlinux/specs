@@ -19,7 +19,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.42.0
-Release: alt3
+Release: alt4
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -136,6 +136,7 @@ License: GPLv2+
 Requires: %name = %EVR
 Provides: %name-tools = %EVR
 Obsoletes: %name-tools < %EVR
+Requires: db4-utils
 %if_enabled bash_completion
 Provides: bash-completion-libguestfs = %EVR
 Obsoletes: bash-completion-libguestfs < %EVR
@@ -575,6 +576,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Tue Dec 26 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.42.0-alt4
+- Add requires to db4-utils (Closes: 39365)
+
 * Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 1.42.0-alt3
 - added rpcgen to build requires against glibc 2.32
 
