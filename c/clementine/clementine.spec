@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.4.0
-Release: alt2.rc1
+Release: alt3.gitf1678fd33
 Summary: A music player and library organiser
 
 Group: Sound
@@ -10,8 +10,6 @@ License: %lgpl3only
 Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
-
-Patch1: clementine-1.4.0.rc1-alt-fix-missed-includes.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake cmake
@@ -45,7 +43,6 @@ Clementine is a modern music player and library organizer
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %cmake
@@ -68,6 +65,9 @@ Clementine is a modern music player and library organizer
 
 
 %changelog
+* Mon Jan 18 2021 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt3.gitf1678fd33
+- Update upstream source to 1.4.0rc1-429-gf1678fd33
+
 * Fri Aug 14 2020 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt2.rc1
 - Add missed includes to fix build
 
