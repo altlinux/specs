@@ -6,7 +6,7 @@ BuildRequires: makeinfo texinfo
 Epoch: 1
 Name: octave-%octpkg
 Version: 2.4.0
-Release: alt4
+Release: alt5
 Summary: Quaternion
 
 Group: Sciences/Mathematics
@@ -14,6 +14,7 @@ License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Patch: build-against-octave-6.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -32,6 +33,7 @@ Quaternion package for GNU Octave, includes a quaternion class with overloaded o
 
 %prep
 %setup -q -n %{octpkg}
+%patch -p1
 
 %build
 %octave_build
@@ -47,6 +49,9 @@ Quaternion package for GNU Octave, includes a quaternion class with overloaded o
 %endif
 
 %changelog
+* Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.4.0-alt5
+- FTBFS: fix build with Octave 6.x.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt4
 - rebuild with octave 5
 
