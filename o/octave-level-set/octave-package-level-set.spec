@@ -5,7 +5,7 @@ BuildRequires: makeinfo
 %define octpkg level-set
 Name: octave-%octpkg
 Version: 0.3.0
-Release: alt4
+Release: alt5
 Summary: Level Set
 
 Group: Sciences/Mathematics
@@ -13,6 +13,7 @@ License: GPLv3+
 Url: http://octave.sourceforge.net/
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Patch: octave-6.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -27,10 +28,12 @@ Requires: octave >= 3.6.0
 
 
 %description
-Routines for calculating the time-evolution of the level-set equation and extracting geometric information from the level-set function.
+Routines for calculating the time-evolution of the level-set equation and
+extracting geometric information from the level-set function.
 
 %prep
 %setup -q -n %{octpkg}
+%patch -p2
 
 %build
 %octave_build
@@ -46,6 +49,9 @@ Routines for calculating the time-evolution of the level-set equation and extrac
 %endif
 
 %changelog
+* Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt5
+- FTBFS: fix build with Octave 6.x.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt4
 - rebuild with octave 5
 
