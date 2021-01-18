@@ -13,7 +13,7 @@
 # the generic RPC driver, and test driver and no libvirtd
 # Default to a full server + client build
 
-%ifarch %ix86 x86_64 armh aarch64 ppc64le
+%ifarch %ix86 x86_64 armh aarch64 ppc64le riscv64
 %def_enable server_drivers
 %else
 %def_disable server_drivers
@@ -169,8 +169,8 @@
 %endif
 
 Name: libvirt
-Version: 6.10.0
-Release: alt2
+Version: 7.0.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1342,6 +1342,12 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Jan 18 2021 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
+- 7.0.0
+
+* Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 6.10.0-alt3
+- Drop obsoleted nvram option in qemu.conf.
+
 * Mon Dec 21 2020 Alexey Shabalin <shaba@altlinux.org> 6.10.0-alt2
 - fixed rebuild
 

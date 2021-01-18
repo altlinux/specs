@@ -2,7 +2,7 @@
 
 Name: seabios
 Version: 1.14.0
-Release: alt3
+Release: alt4
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -13,6 +13,7 @@ Url: http://www.seabios.org
 
 Vcs: https://git.seabios.org/seabios.git
 Source: %name-%version.tar
+Source2: 30-seabios-256k.json
 Patch: %name-%version-snapshot.patch
 
 Patch0001: 0001-Workaround-for-a-win8.1-32-S4-resume-bug.patch
@@ -108,16 +109,29 @@ mkdir -p %buildroot%_datadir/seavgabios
 install -m 0644 binaries/vgabios*.bin %buildroot%_datadir/seavgabios
 ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/seavgabios/vgabios.bin
 
+# For distro-provided firmware packages, the specification
+# (https://git.qemu.org/?p=qemu.git;a=blob;f=docs/interop/firmware.json)
+# says the JSON "descriptor files" to be searched in this directory:
+# `/usr/share/firmware/`.  Create it.
+mkdir -p %buildroot%_datadir/qemu/firmware
+for f in %_sourcedir/*seabios*.json; do
+    install -pm 644 $f %buildroot%_datadir/qemu/firmware
+done
+
 %files
 %doc COPYING COPYING.LESSER README
 %dir %_datadir/%name
 %_datadir/%name/bios*.bin
+%_datadir/qemu/firmware/*seabios*.json
 
 %files -n seavgabios
 %dir %_datadir/seavgabios
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt4
+- Add firmware descriptor file 30-seabios-256k.json
+
 * Sat Dec 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt3
 - add microvm bios
 

@@ -1,33 +1,41 @@
-%define TOOL_CHAIN_TAG GCC49
-%define openssl_ver 1.1.1d
+%define TOOL_CHAIN_TAG GCC5
+%define openssl_ver 1.1.1g
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20191122
+Version: 20201127
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
+License: BSD-2-Clause-Patent
+Group: Emulators
+Url: http://www.tianocore.org
+
 #Vcs-Git: https://github.com/tianocore/edk2.git
 Source: %name-%version.tar
-
+#Vcs-Git: https://github.com/openssl/openssl
 Source2: openssl.tar
+#Vcs-Git: https://github.com/ucb-bar/berkeley-softfloat-3.git
 Source3: berkeley-softfloat-3.tar
 Source4: Logo.bmp
 
+# ALT-specific JSON "descriptor files"
+Source20: 70-edk2-aarch64-verbose.json
+
 Patch1: %name-%version.patch
 
-License: BSD-2-Clause and OpenSSL
-Group: Emulators
-Url: http://www.tianocore.org
 ExclusiveArch: aarch64
 BuildArch: noarch
 
 Provides: edk2-ovmf-aarch64 = %EVR
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: iasl nasm gcc-c++
 BuildRequires: python3-devel python3-modules-sqlite3
 BuildRequires: libuuid-devel
 BuildRequires: bc
+
+Requires: ipxe-roms-qemu
 
 %description
 EFI Development Kit II
@@ -64,7 +72,7 @@ rm -rf ShellBinPkg
 mkdir -p CryptoPkg/Library/OpensslLib/openssl
 tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/openssl
 
-# add /berkeley-softfloat-3
+# add berkeley-softfloat-3
 mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 
@@ -81,13 +89,12 @@ CC_FLAGS="${CC_FLAGS} -b RELEASE"
 #CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D TPM_ENABLE"
 
 # ovmf features
 OVMF_FLAGS="${CC_FLAGS}"
-OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_TLS_ENABLE"
-OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
-OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_IP6_ENABLE"
 OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
 
 # ovmf + secure boot features
@@ -99,7 +106,6 @@ OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
 # arm firmware features
 #ARM_FLAGS="-t %TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
 ARM_FLAGS="${CC_FLAGS}"
-ARM_FLAGS="${ARM_FLAGS} -D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
 
 
 unset MAKEFLAGS
@@ -119,22 +125,41 @@ unset MAKEFLAGS
 
 # build aarch64 firmware
 mkdir -p AAVMF
+gcc -c -fpic ArmPkg/Library/GccLto/liblto-aarch64.s -o ArmPkg/Library/GccLto/liblto-aarch64.a
 build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
 cp Build/ArmVirtQemu-AARCH64/*/FV/*.fd AAVMF
-dd of="AAVMF/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
-dd of="AAVMF/QEMU_EFI-pflash.raw" if="AAVMF/QEMU_EFI.fd" conv=notrunc
-dd of="AAVMF/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
+dd of="AAVMF/AAVMF_CODE.fd" if="/dev/zero" bs=1M count=64
+dd of="AAVMF/AAVMF_CODE.fd" if="AAVMF/QEMU_EFI.fd" conv=notrunc
+dd of="AAVMF/AAVMF_VARS.fd" if="/dev/zero" bs=1M count=64
 
 %install
+# For distro-provided firmware packages, the specification
+# (https://git.qemu.org/?p=qemu.git;a=blob;f=docs/interop/firmware.json)
+# says the JSON "descriptor files" to be searched in this directory:
+# `/usr/share/firmware/`.  Create it.
+mkdir -p %buildroot%_datadir/qemu/firmware
+
 mkdir -p %buildroot%_datadir/edk2
 cp -a AAVMF %buildroot%_datadir/
 ln -r -s %buildroot%_datadir/AAVMF %buildroot%_datadir/edk2/aarch64
 
+for f in %_sourcedir/*edk2-aarch64*.json; do
+    install -pm 644 $f %buildroot%_datadir/qemu/firmware
+done
+
+# add symlinks for compat
+ln -r -s %buildroot%_datadir/AAVMF/AAVMF_CODE.fd %buildroot%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw
+ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch64/vars-template-pflash.raw
+
 %files
 %_datadir/AAVMF
 %_datadir/edk2/aarch64
+%_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 20201127-alt1
+- edk2-stable202011 (Fixes: CVE-2019-14584, CVE-2019-11098)
+
 * Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 20191122-alt1
 - edk2-stable201911
 
