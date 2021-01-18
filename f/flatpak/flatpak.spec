@@ -6,22 +6,22 @@
 %define xdg_name org.freedesktop.Flatpak
 %define api_ver 1.0
 
-# peer to peer support requires ostree >= 2018.2 with experimental/P2P API
-%def_disable p2p
+%def_enable p2p
 %def_enable docs
+%def_enable gtk_doc
 %def_with system_dbus_proxy
-%def_enable systemd
+%def_with systemd
 # cannot run bwrap in hasher
 %def_disable check
 
 Name: flatpak
-Version: 1.8.5
+Version: 1.10.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
 License: LGPLv2.1+
-Url: http://flatpak.org/
+Url: https://flatpak.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -33,16 +33,18 @@ Source: %name-%version.tar
 %define flatpak_user %name
 
 %define glib_ver 2.44
-%define ostree_ver 2018.9
+%define ostree_ver 2020.8
 %define bwrap_ver 0.4.1
 %define libarchive_ver 2.8.0
+%define zstd_ver 0.8.1
+%define malcontent_ver 0.4.0
 
 Requires: lib%name = %version-%release
 Requires: %_bindir/fusermount
 Requires: %_bindir/bwrap
 Requires: bubblewrap >= %bwrap_ver
 %{?_with_system_dbus_proxy:Requires: xdg-dbus-proxy}
-Requires: ostree
+Requires: ostree >= %ostree_ver
 Requires: dconf
 Requires: fuse
 
@@ -67,11 +69,14 @@ BuildRequires: udev-rules
 BuildRequires: %_bindir/bwrap
 BuildRequires: bubblewrap >= %bwrap_ver
 %{?_with_system_dbus_proxy:BuildRequires: xdg-dbus-proxy}
-%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
+%{?_with_systemd:BuildRequires: pkgconfig(systemd)}
 BuildRequires: %_bindir/xsltproc
 %{?_enable_docs:BuildRequires: %_bindir/xmlto docbook-dtds docbook-style-xsl}
 BuildRequires: /proc
 %{?_enable_check:BuildRequires: dbus %_bindir/fusermount %_bindir/ostree}
+# since 1.10.0 (optional  dependencies)
+BuildRequires: pkgconfig(libzstd) >= %zstd_ver
+BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver
 
 %description
 Flatpak is a system for building, distributing and running sandboxed desktop
@@ -96,16 +101,26 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 This package contains the pkg-config file and development headers for %name.
 
+%package -n lib%name-devel-doc
+Summary: Development package for lib%name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: lib%name < %version
+
+%description -n lib%name-devel-doc
+This package contains developer documentation for lib%name.
 
 %prep
 %setup
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure --with-priv-mode=none \
            --with-system-bubblewrap \
            %{?_enable_docs:--enable-docbook-docs} \
-           %{subst_enable systemd} \
-           %if_enabled systemd
+           %{?_enable_gtk_doc:--enable-gtk-doc} \
+           %{subst_with systemd} \
+           %if_with systemd
            --with-systemdsystemunitdir=%_unitdir \
            --with-systemduserunitdir=%_userunitdir \
            --with-sysusersdir=%_sysusersdir \
@@ -159,12 +174,13 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
 %_datadir/dbus-1/services/org.flatpak.Authenticator.Oci.service
 
-%if_enabled systemd
+%if_with systemd
 %_unitdir/%name-system-helper.service
 %_userunitdir/%name-portal.service
 %_userunitdir/%name-session-helper.service
 %_sysusersdir/%name.conf
 %_prefix/lib/systemd/user-environment-generators/60-%name
+%_prefix/lib/systemd/system-environment-generators/60-%name-system-only
 %_userunitdir/%name-oci-authenticator.service
 %endif
 
@@ -185,10 +201,17 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_pkgconfigdir/%name.pc
 %_datadir/dbus-1/interfaces/%xdg_name.xml
 %_girdir/Flatpak-%api_ver.gir
-%doc %_datadir/gtk-doc/html/%name
+
+%if_enabled gtk_doc
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/%name
+%endif
 
 
 %changelog
+* Sun Jan 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Fri Jan 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
 - 1.8.5
 
