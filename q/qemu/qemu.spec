@@ -129,7 +129,7 @@
 
 Name: qemu
 Version: 5.2.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -821,21 +821,24 @@ run_configure \
 	--without-default-devices
 
 # Please do not touch this
-sed -i "/TARGET_ARM/ {
+sed -i "/cpu_get_model/ {
 N
-/cpu_model/ s,any,cortex-a8,
-}" ../linux-user/main.c
+N
+/return / s,any,cortex-a8,
+}" ../linux-user/arm/target_elf.h
 
 %make_build V=1 $buildldflags
 
 %if_with arm
 mv qemu-arm qemu-armh
 
-sed -i '/cpu_model =/ s,cortex-a8,cortex-a53,' ../linux-user/main.c
+sed -i '/return / s,cortex-a8,cortex-a53,' ../linux-user/arm/target_elf.h
 %make_build V=1 $buildldflags
 mv qemu-arm qemu-aarch64
 
-sed -i '/cpu_model =/ s,cortex-a53,any,' ../linux-user/main.c
+exit 0
+
+sed -i '/return / s,cortex-a53,any,' ../linux-user/arm/target_elf.h
 %make_build V=1 $buildldflags
 %endif
 
@@ -1211,6 +1214,10 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Thu Jan 14 2021 Ivan A. Melnikov <iv@altlinux.org> 5.2.0-alt2
+- fix elf loading in qemu-user (altbug #39141)
+- restore special CPU selection for ARM qemu-user-static
+
 * Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt1
 - 5.2.0
 - Drop ivshmem-tools package
