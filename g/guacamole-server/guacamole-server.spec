@@ -2,8 +2,8 @@
 %def_with ffmpeg
 
 Name: guacamole-server
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -240,6 +240,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd
 
 %changelog
+* Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Tue Dec 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt2
 - Add virtual package guacamole-server with depends on:
   + guacd
