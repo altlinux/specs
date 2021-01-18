@@ -3,7 +3,7 @@
 
 Name: sparskit
 Version: 2.0.20190610
-Release: alt2
+Release: alt3
 Summary: A basic tool-kit for sparse matrix computations (Version 2)
 License: LGPL
 Group: Sciences/Mathematics
@@ -12,6 +12,7 @@ Url: http://www-users.cs.umn.edu/~saad/software/SPARSKIT/
 Source: %name-%version.tar
 Source1: funcs.f
 Patch1:  0001-makefile.patch
+Patch2:  0002-skip-ccn.patch
 
 Requires: lib%name = %version-%release
 BuildPreReq: gcc-fortran liblapack-devel
@@ -62,6 +63,7 @@ This package contains development documentation for SPARSKIT.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 sed -i 's|@SOMVER@|%somver|g' makefile
 sed -i 's|@SOVER@|%sover|g' makefile
 #tar -cf src.tar $(find ./ -type f|egrep -v 'DOC\/')
@@ -95,6 +97,10 @@ install -p -m644 DOC/* %buildroot%_docdir/lib%name-devel
 
 
 %changelog
+* Mon Jan 18 2021 Vladislav Zavjalov <slazav@altlinux.org> 2.0.20190610-alt3
+- 0002-skip-ccn.patch: skip ORDERINGS/ccn.f (fix build with GCC10,
+  recommendation by Yousef Saad, upstream).
+
 * Fri Oct 16 2020 Vladislav Zavjalov <slazav@altlinux.org> 2.0.20190610-alt2
 - 0001-makefile.patch: fix dependencies for parallel build
 
