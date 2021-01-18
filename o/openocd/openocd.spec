@@ -1,6 +1,6 @@
 Name: openocd
-Version: 0.10.0
-Release: alt1.git.930.g09eb941cb
+Version: 0.11.0
+Release: alt1.rc1
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 
 Group: Development/Tools
@@ -8,8 +8,9 @@ License: GPLv2
 Url: http://sourceforge.net/projects/openocd
 Source: %name.tar
 Source10: libjaylink.tar
+Source44: %name.watch
 
-BuildRequires: chrpath libftdi1-devel jimtcl-devel libhidapi-devel libusb-compat-devel texinfo
+BuildRequires: chrpath libftdi1-devel jimtcl-devel libgpiod-devel libhidapi-devel libusb-compat-devel texinfo
 
 %description
 The Open On-Chip Debugger (OpenOCD) provides debugging, in-system
@@ -88,6 +89,9 @@ install -m644 \
 %_mandir/man1/*
 
 %changelog
+* Thu Dec 10 2020 Ildar Mulyukov <ildar@altlinux.ru> 0.11.0-alt1.rc1
+- new version (git HEAD)
+
 * Wed Sep 11 2019 Ildar Mulyukov <ildar@altlinux.ru> 0.10.0-alt1.git.930.g09eb941cb
 - new version (git HEAD)
 
