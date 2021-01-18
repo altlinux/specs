@@ -1,10 +1,10 @@
 Name:		cqrlog
-Version:	2.4.0
+Version:	2.5.0
 Release:	alt1
 Summary:	An amateur radio contact logging program
 
 Group:		Communications
-License:	GPLv2
+License:	GPL-2.0
 URL:		http://www.cqrlog.com/
 Source0:	%name-%version.tar
 # VCS:		https://github.com/ok2cqr/cqrlog
@@ -70,6 +70,9 @@ rm -rf %buildroot%_iconsdir/%{name}*
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Jan 17 2021 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+
 * Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
 - New version.
 
