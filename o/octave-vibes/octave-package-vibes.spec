@@ -5,7 +5,7 @@ BuildRequires: makeinfo
 %define octpkg vibes
 Name: octave-%octpkg
 Version: 0.2.0
-Release: alt4
+Release: alt5
 Summary: Interface to VIBes, Visualizer for Intervals and Boxes
 
 Group: Sciences/Mathematics
@@ -13,6 +13,7 @@ License: GPL-3.0+, MIT
 Url: http://octave.sourceforge.net/
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Patch: build-against-octave-6.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -25,12 +26,12 @@ Provides: octave(vibes) = %version
 # Depends: octave (>= 4.0.0)
 Requires: octave >= 4.0.0
 
-
 %description
 The VIBes API allows one to easily display results (boxes, pavings)
 
 %prep
 %setup -q -n %{octpkg}-%{version}
+%patch -p1
 
 %build
 %octave_build
@@ -46,6 +47,9 @@ The VIBes API allows one to easily display results (boxes, pavings)
 %endif
 
 %changelog
+* Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt5
+- FTBFS: fix build with Octave 6.x.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt4
 - rebuild with octave 5
 
