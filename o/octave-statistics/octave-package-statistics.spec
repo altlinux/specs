@@ -6,12 +6,12 @@ BuildRequires: /usr/bin/octave-cli makeinfo
 %define octave_pkg_name statistics
 Epoch: 1
 Name: octave-%octave_pkg_name
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Additional statistics functions for Octave
 
 Group: Sciences/Mathematics
-License: GPLv3+, public domain
+License: GPL-3.0 and ALT-Public-Domain
 URL: http://octave.sf.net
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octave_pkg_name}-%{version}.tar.gz
@@ -53,6 +53,10 @@ octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_da
 %endif
 
 %changelog
+* Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.4.2-alt1
+- New version.
+- Fix License tag.
+
 * Wed Feb 19 2020 Andrey Cherepanov <cas@altlinux.org> 1:1.4.1-alt1
 - New version.
 
