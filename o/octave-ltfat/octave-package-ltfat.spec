@@ -5,7 +5,7 @@ BuildRequires: libportaudio2-devel makeinfo
 %define octpkg ltfat
 Name: octave-%octpkg
 Version: 2.3.1
-Release: alt2
+Release: alt3
 Summary: The Large Time-Frequency Analysis Toolbox
 
 Group: Sciences/Mathematics
@@ -13,6 +13,7 @@ License: GPLv3+
 URL: http://ltfat.github.io/
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Patch: build-against-octave-6.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -34,6 +35,7 @@ The Large Time/Frequency Analysis Toolbox (LTFAT) is a
 
 %prep
 %setup -q -n %{octpkg}
+%patch -p1
 
 %build
 %octave_build
@@ -49,6 +51,9 @@ The Large Time/Frequency Analysis Toolbox (LTFAT) is a
 %endif
 
 %changelog
+* Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt3
+- FTBFS: fix build with Octave 6.x.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2
 - rebuild with octave 5
 
