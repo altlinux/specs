@@ -2,7 +2,7 @@
 
 Name: gnustep-opal
 Version: r37181
-Release: alt5
+Release: alt6
 
 Summary: Vector drawing library with an API similar to Quartz 2D
 
@@ -15,6 +15,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/opal/trunk/
 Source: %name-%version.tar
 Patch1: link-libs.patch
+Patch2: build-against-gcc-10.patch
 
 ExcludeArch: aarch64
 
@@ -67,6 +68,7 @@ This package contains development files of Opal.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 subst "s|png_sizeof|sizeof|" Source/OpalGraphics/image/OPImageCodecPNG.m
 
 %build
@@ -96,6 +98,9 @@ subst "s|png_sizeof|sizeof|" Source/OpalGraphics/image/OPImageCodecPNG.m
 %_libdir/*.so
 
 %changelog
+* Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> r37181-alt6
+- FTBFS: fix build by GCC 10.
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r37181-alt5
 - Build without libgnustep-objc2-devel.
 
