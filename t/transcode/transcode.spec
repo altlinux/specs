@@ -31,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt13
+Release: alt14
 
 Summary: A linux video stream processing utility
 
@@ -66,6 +66,7 @@ Patch96: transcode-1.1.7-libav-10.patch
 Patch98: transcode-1.1.5-textrel.patch
 Patch99: subtitleripper-0.3-4-alt-makefile.patch
 Patch100: transcode-1.1.7-alt-fix-plugin-import_ac3-undefined-symbol.patch
+Patch101: alt-ftbfs.patch
 
 %define ffmpeg_ver 0.6
 %define avifile_ver 0.737
@@ -158,12 +159,13 @@ sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 %patch98 -p2
 %patch99 -p1
 %patch100 -p1
+%patch101 -p1
 install -m644 %SOURCE2 filter/
 
 %build
 sed -i 's,strtof ,,' configure.in
 %autoreconf
-%add_optflags -fpie -D_LARGEFILE_SOURCE -D__USE_LARGEFILE -D_FILE_OFFSET_BITS=64
+%add_optflags -fcommon -fpie -D_LARGEFILE_SOURCE -D__USE_LARGEFILE -D_FILE_OFFSET_BITS=64
 export LDFLAGS=-pie
 %configure \
 --enable-experimental \
@@ -268,6 +270,9 @@ export RPM_FILES_TO_LD_PRELOAD_transcode="$(find %buildroot/%_libdir/%name -type
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Tue Jan 19 2021 Sergey V Turchin <zerg@altlinux.org> 1.1.7-alt14
+- fixed build
+
 * Tue Apr 21 2020 Anton Farygin <rider@altlinux.ru> 1.1.7-alt13
 - fixed build (by Gleb F-Malinovskiy)
 - license changed in accordance with SPDX
