@@ -21,6 +21,11 @@
 %def_enable cloudproviders
 %def_disable tracker3
 %def_enable vulkan
+# media backends
+%def_enable gstreamer
+# not ready
+#%%def_enable ffmpeg
+
 %def_disable sysprof
 %def_enable tests
 # File box-packing.ltr.nodes does not exist
@@ -28,7 +33,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -105,8 +110,9 @@ BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_tests:BuildRequires: librsvg-devel >= %rsvg_ver}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
-# since 3.94.0 for media backend
-BuildRequires: pkgconfig(gstreamer-player-1.0)
+# since 3.94.0 for media backends
+%{?_enable_gstreamer:BuildRequires: pkgconfig(gstreamer-player-1.0)}
+#%%{?_enable_ffmpeg:BuildRequires: pkgconfig()}
 
 %description
 GTK is a multi-platform toolkit for creating graphical user interfaces.
@@ -214,7 +220,9 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_sysprof:-Dsysprof=enabled} \
     %{?_disable_tests:-Dbuild-tests=false} \
     %{?_enable_install_tests:-Dinstall-tests=true} \
-    %{?_disable_vulkan:-Dvulkan=disabled}
+    %{?_disable_vulkan:-Dvulkan=disabled} \
+    %{?_disable_gstreamer:-Dmedia-gstreamer=disabled} \
+    %{?_disable_ffmpeg:-Dmedia-ffmpeg=disabled}
 %nil
 %meson_build
 
@@ -251,7 +259,8 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %dir %fulllibpath/printbackends
 %dir %fulllibpath/media
 %fulllibpath/printbackends/libprintbackend-*.so
-%fulllibpath/media/libmedia-gstreamer.so
+%{?_enable_gstreamer:%fulllibpath/media/libmedia-gstreamer.so}
+%{?_enable_ffmpeg:%fulllibpath/media/libmedia-ffmpeg.so}
 %dir %_datadir/gtk-%api_ver/
 %_datadir/gtk-%api_ver/emoji/
 %dir %_sysconfdir/gtk-%api_ver
@@ -356,6 +365,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Tue Jan 19 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Sat Jan 09 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
