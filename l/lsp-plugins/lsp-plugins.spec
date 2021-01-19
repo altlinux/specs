@@ -2,7 +2,7 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.1.28
+Version: 1.1.29
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -110,6 +110,9 @@ export VERSION=%version
 
 
 %changelog
+* Tue Jan 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.29-alt1
+- 1.1.29
+
 * Mon Dec 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.28-alt1
 - 1.1.28
 
