@@ -1,7 +1,7 @@
 Summary:	Clips language for expert systems
 Name:		clips
 Version:	6.23
-Release:	alt1.2
+Release:	alt2
 License:	BSD style
 Group:		Development/Other
 Url:		http://www.ghg.net/clips/download/source/
@@ -15,9 +15,7 @@ Source6:	http://www.ghg.net/clips/download/documentation/arch5-1.pdf
 Source7:	http://www.ghg.net/clips/download/documentation/bpg.pdf
 Source8:	http://www.ghg.net/clips/download/documentation/ig.pdf
 Source9:	http://www.ghg.net/clips/download/documentation/usrguide.pdf
-#Patch0:	clips-setup.patch.bz2
-#Patch1:	clips-6.21-lib64.patch.bz2
-Patch2:        clips-6.21-gcc4.patch.bz2
+Patch:      clips-6.23-gcc10.patch
 
 BuildRequires: libX11-devel libXaw-devel libXext-devel libXmu-devel libXt-devel libtinfo-devel linux-libc-headers xorg-x11-bitmaps
 
@@ -45,10 +43,7 @@ X interface to Clips.
 %setup -q -a 1 -c
 mv x-prjct/makefile/makefile.x clipssrc/clipssrc
 mv x-prjct/xinterface/* clipssrc/clipssrc
-#%patch0 -p0 -b .setup
-#%patch1 -p1 -b .lib64
-%patch2 -p1 -b .gcc4
-#%patch3 -p0 -b .Xaw3d
+%patch -p1 -b .gcc10
 bzcat %SOURCE2 > clipssrc/clipssrc/makefile
 
 %build
@@ -78,6 +73,9 @@ done
 %doc clips.hlp
  
 %changelog 
+* Tue Jan 19 2021 Leontiy Volodin <lvol@altlinux.org> 6.23-alt2
+- fixed build with gcc10
+
 * Wed Mar 16 2011 Igor Vlasenko <viy@altlinux.ru> 6.23-alt1.2
 - NMU: spec cleanup; removed robot-unfriendly recurrent release
 
