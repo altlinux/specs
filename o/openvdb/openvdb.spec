@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define soname 7.1
+%define soname 8.0
 
 Name: openvdb
-Version: 7.1.0
+Version: 8.0.0
 Release: alt1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
@@ -81,12 +81,13 @@ This package contains the Python module.
 # Hardcoded values
 sed -i \
 	-e 's|lib$|%_lib|g' \
-	%name/CMakeLists.txt %name/python/CMakeLists.txt
+	%name/%name/CMakeLists.txt %name/%name/python/CMakeLists.txt
 
 %build
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
 	-DOPENVDB_CORE_SHARED=ON \
+	-DOPENVDB_CORE_STATIC=OFF \
 	-DOPENVDB_ENABLE_RPATH=OFF \
 	-DUSE_EXR=ON \
 	-DUSE_LOG4CPLUS=ON \
@@ -105,13 +106,11 @@ sed -i \
 mv %buildroot%_prefix/doc/html .
 rm -fr %buildroot%_datadir/doc
 
-find %buildroot -name '*.a' -delete
-
 %files
 %_bindir/vdb_print
 
 %files -n lib%name%soname
-%doc %name/LICENSE %name/COPYRIGHT
+%doc %name/%name/LICENSE %name/%name/COPYRIGHT
 %doc README.md CHANGES
 %_libdir/lib%{name}.so.%{soname}
 %_libdir/lib%{name}.so.%{soname}.*
@@ -126,6 +125,9 @@ find %buildroot -name '*.a' -delete
 %_libdir/cmake/*
 
 %changelog
+* Tue Jan 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.0-alt1
+- Updated to upstream version 8.0.0.
+
 * Tue Sep 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.1.0-alt1
 - Initial build for ALT.
 
