@@ -1,6 +1,6 @@
 Name:     hyperfine
 Version:  1.11.0
-Release:  alt1
+Release:  alt2
 
 Summary:  A command-line benchmarking tool
 License:  Apache-2.0
@@ -25,6 +25,7 @@ BuildRequires: /proc
 %patch -p1
 
 %build
+export RUSTFLAGS="-g"
 cargo build \
     --release \
     %{?_smp_mflags} \
@@ -45,5 +46,8 @@ cargo test \
 %doc *.md
 
 %changelog
+* Tue Jan 19 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.0-alt2
+- Add generation of debuginfo
+
 * Mon Nov 09 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.0-alt1
 - Initial build for Sisyphus
