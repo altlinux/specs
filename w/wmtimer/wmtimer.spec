@@ -1,14 +1,16 @@
 Name: wmtimer
 Version: 2.92
-Release: alt3
+Release: alt4
 
 Summary: Run command at specified time
 License: GPL
 Group: Graphical desktop/Window Maker
 
+Url: https://github.com/bbidulock/wmtimer
 Source0: wmtimer-%version.tar.gz
 Source1: wmtimer.1
-Patch: wmtimer-2.92-InitialTimerBeep.patch
+Patch1: wmtimer-2.92-InitialTimerBeep.patch
+Patch2: wmtimer-2.92-GlobalVarDefinition.patch
 
 # Automatically added by buildreq on Fri Oct 20 2006
 BuildRequires: libgtk+2-devel libXext-devel libXpm-devel
@@ -21,6 +23,8 @@ main part of the window (anywhere except the buttons).
 %prep
 %setup
 sed -i 's,^CFLAGS.*,& -std=gnu89,' wmtimer/Makefile
+
+%patch2 -p2
 
 %build
 cd wmtimer
@@ -36,6 +40,11 @@ install -pDm644 %_sourcedir/wmtimer.1 %buildroot%_man1dir/wmtimer.1
 %_man1dir/*
 
 %changelog
+* Tue Jan 19 2021 Pavel Vasenkov <pav@altlinux.org> 2.92-alt4
+- FTBFS workaround
+- changed global variables definitions
+- set source Url:
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 2.92-alt3
 - gcc5 FTBFS workaround (-std=gnu89)
 - minor spec cleanup
