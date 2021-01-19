@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(libpcre)
-# END SourceDeps(oneline)
 %def_without gnome
 %def_with gnome3
 %def_with kde
 %def_with networkmanager
-%def_with mozjs
+%def_without mozjs
 %def_without webkit
 %def_with webkit3
 %def_without dotnet
@@ -14,21 +11,20 @@ BuildRequires: pkgconfig(libpcre)
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.15
-Release: alt5
+Version: 0.4.17
+Release: alt1
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
-License: %gpllgpl2plus
+License:  GPL-2.0-or-later AND LGPL-2.1-or-later
 Url: http://libproxy.github.io/libproxy
-
-# https://github.com/libproxy/libproxy
+Vcs: https://github.com/libproxy/libproxy.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-licenses
-BuildPreReq: cmake ctest gcc-c++ zlib-devel
+BuildRequires: cmake ctest gcc-c++ zlib-devel
 
+BuildRequires: pkgconfig(libpcre)
 %{?_with_python2:BuildRequires: python-devel}
 %{?_with_python3:BuildRequires: python3-devel}
 # gnome
@@ -36,16 +32,16 @@ BuildPreReq: cmake ctest gcc-c++ zlib-devel
 # gnome3
 %{?_with_gnome3:BuildRequires: pkgconfig(gio-2.0) >= 2.26 pkgconfig(gobject-2.0)}
 # kde4
-%{?_with_kde:BuildPreReq: /usr/bin/kreadconfig5}
+%{?_with_kde:BuildRequires: /usr/bin/kreadconfig5}
 # libmozjs
-%{?_with_mozjs:BuildRequires: pkgconfig(mozjs-60)}
+%{?_with_mozjs:BuildRequires: pkgconfig(mozjs-68)}
 # webkit (gtk)
 %{?_with_webkit:BuildRequires: pkgconfig(webkit-1.0)}
 %{?_with_webkit3:BuildRequires: pkgconfig(javascriptcoregtk-4.0)}
 # NetworkManager
 %{?_with_networkmanager:BuildRequires: pkgconfig(libnm) pkgconfig(dbus-1)}
 # dotnet
-%{?_with_dotnet:BuildPreReq: mono-devel >= 2.0.0 /proc rpm-build-mono mono-mcs}
+%{?_with_dotnet:BuildRequires: mono-devel >= 2.0.0 /proc rpm-build-mono mono-mcs}
 
 %define modilesdir %_libdir/%name/%version/modules/
 %description
@@ -169,8 +165,12 @@ developing applications that use %name.
 
 %build
 %cmake \
+	-DBIPR=OFF \
 	-DLIBEXEC_INSTALL_DIR=%_libexecdir \
 	-DMODULE_INSTALL_DIR=%modilesdir \
+%if_without mozjs
+	-DWITH_MOZJS=OFF \
+%endif
 %if_without gnome
 	-DWITH_GNOME2=OFF \
 %endif
@@ -266,6 +266,10 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 0.4.17-alt1
+- 0.4.17
+- Build withot pacrunner mozjs.
+
 * Wed Nov 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.15-alt5
 - Fixed python2 and python3 switches.
 
