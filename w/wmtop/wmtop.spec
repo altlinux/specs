@@ -1,6 +1,6 @@
 Name: wmtop
 Version: 0.84
-Release: alt7
+Release: alt8
 
 Summary: Dock-app that is a mini graphical version of the cpu monitoring utility top
 License: GPL
@@ -10,6 +10,8 @@ Url: http://wmtop.sourceforge.net/
 Source0: http://dl.sf.net/wmtop/%name-%version.tar.bz2
 Source1: wmtop.menu
 Packager: Victor Forsyuk <force@altlinux.org>
+
+Patch1: wmtop-0.84-GlobalVarDefinition.patch
 
 # Automatically added by buildreq on Wed Dec 17 2008
 BuildRequires: libXext-devel libXpm-devel
@@ -22,6 +24,8 @@ It's a kind of mini 'top'.
 %prep
 %setup
 sed -i 's,^FLAGS.*,& -std=gnu89,' Makefile
+
+%patch1 -p2
 
 %build
 %make_build CC="gcc %optflags" linux
@@ -36,6 +40,10 @@ install -pDm644 %SOURCE1 %buildroot%_menudir/wmtop
 %_menudir/*
 
 %changelog
+* Tue Jan 19 2021 Pavel Vasenkov <pav@altlinux.org> 0.84-alt8
+- FTBFS workaround
+- changed global variables definitions
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.84-alt7
 - gcc5 FTBFS workaround (-std=gnu89)
 
