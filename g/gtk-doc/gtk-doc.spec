@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 1.33
 
 %def_with mkpdf
 %def_enable check
 
 Name: gtk-doc
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
@@ -50,7 +50,7 @@ BuildRequires: docbook-style-xsl bc
 # for SGML
 BuildRequires: docbook-style-dsssl
 BuildRequires: openjade >= 1.3.1
-%{?_enable_check:BuildRequires: glib2-devel python3-module-mock python3-module-parameterized python3-module-anytree}
+%{?_enable_check:BuildRequires: glib2-devel python3-module-mock python3-module-parameterized}
 
 %description
 %name is a tool for generating API reference documentation.
@@ -139,7 +139,7 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/README*
 %pkgdocdir/TODO
 %pkgdocdir/*.txt
-#%pkgdocdir/*.dot
+%pkgdocdir/*.dot
 %pkgdocdir/examples
 
 %if_with mkpdf
@@ -152,6 +152,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Tue Jan 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.33.2-alt1
+- 1.33.2
+
 * Tue Nov 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.33.1-alt1
 - 1.33.1
 
