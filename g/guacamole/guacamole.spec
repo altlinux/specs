@@ -1,7 +1,7 @@
 %define appdir %_var/lib/tomcat/webapps
 
 Name: guacamole
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
@@ -14,7 +14,8 @@ Source3: guacamole.properties
 Source4: user-mapping.xml
 Source10: https://www.apache.org/dist/%name/%version/binary/%name-auth-cas-%version.tar.gz
 Source11: https://www.apache.org/dist/%name/%version/binary/%name-auth-duo-%version.tar.gz
-Source12: https://www.apache.org/dist/%name/%version/binary/%name-auth-header-%version.tar.gz
+#Source12: https://www.apache.org/dist/%name/%version/binary/%name-auth-header-%version.tar.gz
+Source12: https://www.apache.org/dist/%name/%version/binary/%name-auth-header-1.2.0.tar.gz
 Source13: https://www.apache.org/dist/%name/%version/binary/%name-auth-jdbc-%version.tar.gz
 Source14: https://www.apache.org/dist/%name/%version/binary/%name-auth-ldap-%version.tar.gz
 Source15: https://www.apache.org/dist/%name/%version/binary/%name-auth-openid-%version.tar.gz
@@ -203,7 +204,8 @@ of their authentication device.
 #%setup -T -D -b 1  -n %name-client-%version
 %setup -T -D -b 10 -n %name-auth-cas-%version
 %setup -T -D -b 11 -n %name-auth-duo-%version
-%setup -T -D -b 12 -n %name-auth-header-%version
+#%setup -T -D -b 12 -n %name-auth-header-%version
+%setup -T -D -b 12 -n %name-auth-header-1.2.0
 %setup -T -D -b 13 -n %name-auth-jdbc-%version
 %setup -T -D -b 14 -n %name-auth-ldap-%version
 %setup -T -D -b 15 -n %name-auth-openid-%version
@@ -225,13 +227,22 @@ pushd %buildroot%appdir/%name
 %jar -xf %SOURCE2
 popd
 
-for prov in cas duo header ldap openid quickconnect saml totp; do
+#for prov in cas duo header ldap openid quickconnect saml totp; do
+for prov in cas duo ldap openid quickconnect saml totp; do
 	mkdir -p %buildroot%_docdir/%name/auth-${prov}
 	pushd %_builddir/%name-auth-${prov}-%version
 	mv %name-auth-${prov}-%version.jar %buildroot%_sysconfdir/%name/extensions
 	cp -r * %buildroot%_docdir/%name/auth-${prov}/
 	popd
 done
+
+# header 1.3.0 not released
+	mkdir -p %buildroot%_docdir/%name/auth-header
+	pushd %_builddir/%name-auth-header-1.2.0
+	mv %name-auth-header-1.2.0.jar %buildroot%_sysconfdir/%name/extensions
+	cp -r * %buildroot%_docdir/%name/auth-header/
+	popd
+
 
 pushd %_builddir/%name-auth-jdbc-%version
 for db in mysql postgresql sqlserver; do
@@ -268,7 +279,7 @@ ln -s %_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%name/lib/postgr
 %doc %_docdir/%name/auth-duo
 
 %files auth-header
-%_sysconfdir/%name/extensions/%name-auth-header-%version.jar
+%_sysconfdir/%name/extensions/%name-auth-header-*.jar
 %doc %_docdir/%name/auth-header
 
 %files auth-jdbc-mysql
@@ -306,6 +317,9 @@ ln -s %_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%name/lib/postgr
 %doc %_docdir/%name/auth-totp
 
 %changelog
+* Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Thu Nov 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - Initial build
 
