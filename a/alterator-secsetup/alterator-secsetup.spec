@@ -1,6 +1,6 @@
 Name: alterator-secsetup
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -42,6 +42,9 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %_datadir/alterator-secsetup/*
 
 %changelog
+* Tue Jan 19 2021 Danil Shein <dshein@altlinux.org> 2.0-alt2
+- fixed secsetup-macrosblocker script failure if VLC files not found
+
 * Fri Jan 15 2021 Danil Shein <dshein@altlinux.org> 2.0-alt1
 - new macros blocker helper executable (Closes: #37893)
   + helper executable modifies LibreOffice menu xml files
