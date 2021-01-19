@@ -1,3 +1,4 @@
+%def_disable snapshot
 %define ver_major 78
 
 %def_disable optimize
@@ -16,17 +17,20 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.0.1
-Release: alt1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
 License: MPL-2.0 and GPL-2.0-or-later LGPL-2.1-or-later and BSD
 Url: https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Releases/
 
-#Source: %name-%version.tar
-# probably generated from https://github.com/ptomato/mozjs.git
+%if_disabled snapshot
 Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}gnome.tar.xz
 #Source: https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
+%else
+Vcs: https://github.com/ptomato/mozjs.git
+Source: %name-%version.tar
+%endif
 
 # fc armv7 fix
 Patch17: mozjs78-armv7_disable_WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS.patch
@@ -40,9 +44,6 @@ BuildRequires: libffi-devel libffi-devel-static
 BuildRequires: rust-cargo clang-devel llvm-devel
 BuildRequires: zlib-devel
 %{?_with_system_icu:BuildRequires: libicu-devel}
-
-BuildRequires: autoconf_2.13
-%set_autoconf_version 2.13
 
 %description
 JavaScript is the Netscape-developed object scripting language used in millions
@@ -104,6 +105,7 @@ cd _build
 export CC=gcc
 export CXX=g++
 
+export AUTOCONF=%_bindir/autoconf
 export CFLAGS="%optflags"
 export CXXFLAGS="$CFLAGS"
 export SHELL=/bin/sh
@@ -174,6 +176,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Sat Dec 26 2020 Yuri N. Sedunov <aris@altlinux.org> 78.0.1-alt2
+- rebuilt with newer autoconf
+
 * Wed Aug 26 2020 Yuri N. Sedunov <aris@altlinux.org> 78.0.1-alt1
 - first build for Sisyphus
 
