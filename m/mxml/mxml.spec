@@ -1,133 +1,126 @@
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-%def_enable shared
-%def_disable static
-%def_enable threads
-%def_disable debug
+%define _unpackaged_files_terminate_build 1
 
-%define Name Mini-XML
 Name: mxml
-%define lname lib%name
-Version: 2.8
+Version: 3.2
 Release: alt1
-Summary: %Name documentation generator
-Group: Text tools
-License: %lgpl2plus with exceptions
-Url: http://www.minixml.org/
-Source: %name-%version.tar
-Provides: %{name}doc = %version-%release
-Obsoletes: %{name}doc < %version-%release
-Requires: %lname = %version-%release
 
-# Automatically added by buildreq on Sun Jul 27 2008
-BuildRequires: gcc-c++
-BuildRequires: rpm-build-licenses
+Summary: Small XML file parsing library
+License: Apache-2.0
+Group: Development/C
+URL: https://www.msweet.org/mxml/
+Source: %name-%version.tar
+
+Patch0: %name-%version-%release.patch
+
+BuildRequires: gcc
+BuildRequires: make
 
 %description
-mxmldoc scans the specified C and C++ source files to produce an XML
-representation of globally accessible classes, constants, enumerations,
-functions, structures, typedefs, unions, and variables. The XML file is
-updated as necessary and a HTML representation of the XML file is
-written to the standard output. If no source files are specified then
-the current XML file is converted to HTML on the standard output.
+Mini-XML is a small XML parsing library that you can use to read XML data files
+or strings in your application without requiring large non-standard libraries.
+Mini-XML provides the following functionality:
 
+- Reading of UTF-8 and UTF-16 and writing of UTF-8 encoded XML files and
+  strings.
+- Data is stored in a linked-list tree structure, preserving the XML data
+  hierarchy.
+- SAX (streamed) reading of XML files and strings to minimize memory usage.
+- Supports arbitrary element names, attributes, and attribute values with no
+  preset limits, just available memory.
+- Supports integer, real, opaque ("cdata"), and text data types in "leaf" nodes.
+- Functions for creating and managing trees of data.
+- "Find" and "walk" functions for easily locating and navigating trees of data.
 
-%if_enabled shared
-%package -n %lname
-Summary: %Name library
+Mini-XML doesn't do validation or other types of processing on the data
+based upon schema files or other sources of definition information.
+
+%package -n lib%name
+Summary: Small XML file parsing library
 Group: System/Libraries
 
-%description -n %lname
-%Name is a small XML parsing library that you can use to read XML
-and XML-like data files in your application without requiring large
-non-standard libraries.
-%endif
+%description -n lib%name
+Mini-XML is a small XML parsing library that you can use to read XML data files
+or strings in your application without requiring large non-standard libraries.
+Mini-XML provides the following functionality:
 
+- Reading of UTF-8 and UTF-16 and writing of UTF-8 encoded XML files and
+  strings.
+- Data is stored in a linked-list tree structure, preserving the XML data
+  hierarchy.
+- SAX (streamed) reading of XML files and strings to minimize memory usage.
+- Supports arbitrary element names, attributes, and attribute values with no
+  preset limits, just available memory.
+- Supports integer, real, opaque ("cdata"), and text data types in "leaf" nodes.
+- Functions for creating and managing trees of data.
+- "Find" and "walk" functions for easily locating and navigating trees of data.
 
-%package -n %lname-devel
-Summary: %Name library header
+Mini-XML doesn't do validation or other types of processing on the data
+based upon schema files or other sources of definition information.
+
+%package -n lib%name-devel
+Summary: Mini-XML library header
 Group: Development/C
-Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
+Requires: lib%name = %EVR
 
-%description -n %lname-devel
-%Name is a small XML parsing library that you can use to read XML
-and XML-like data files in your application without requiring large
-non-standard libraries.
+%description -n lib%name-devel
+Mini-XML is a small XML parsing library that you can use to read XML data files
+or strings in your application without requiring large non-standard libraries.
 This package includes headers and other files necessary to build
-applications that use %Name.
-
-
-%if_enabled static
-%package -n %lname-devel-static
-Summary: %Name library
-Group: Development/C
-Requires: %lname-devel = %version-%release
-
-%description -n %lname-devel-static
-%Name is a small XML parsing library that you can use to read XML
-and XML-like data files in your application without requiring large
-non-standard libraries.
-This package includes %Name static library.
-%endif
-
+applications that use Mini-XML.
 
 %package doc
-Summary: %Name documentation
+Summary: Mini-XML documentation
 Group: Documentation
 BuildArch: noarch
 
 %description doc
-%Name is a small XML parsing library that you can use to read XML
-and XML-like data files in your application without requiring large
-non-standard libraries.
-This package includes %Name documentation.
+Mini-XML is a small XML parsing library that you can use to read XML data files
+or strings in your application without requiring large non-standard libraries.
+This package includes Mini-XML documentation.
 
+%package -n lib%name-devel-static
+Summary: Mini-XML library
+Group: Development/C
+Requires: lib%name-devel = %EVR
+
+%description -n lib%name-devel-static
+Mini-XML is a small XML parsing library that you can use to read XML data files
+or strings in your application without requiring large non-standard libraries.
+This package includes Mini-XML static library.
 
 %prep
 %setup
-
+%patch0 -p1
 
 %build
 %configure \
-    %{subst_enable debug} \
-    %{subst_enable shared} \
-    %{subst_enable threads} \
+    --enable-shared \
+    --enable-threads \
     --with-docdir=%_docdir/%name-%version
 %make_build
-
 
 %install
 %make_install BUILDROOT=%buildroot install
 
-
-%files
-%_bindir/*
-%_man1dir/*
-
-
-%if_enabled shared
-%files -n %lname
+%files -n lib%name
 %_libdir/*.so.*
-%endif
 
-
-%files -n %lname-devel
-%_pkgconfigdir/*
+%files -n lib%name-devel
 %_includedir/*
-%{?_enable_shared:%_libdir/*.so}
+%_libdir/*.so
+%_pkgconfigdir/*
 %_man3dir/*
-
-
-%if_enabled static
-%files -n %lname-devel-static
-%_libdir/*.a
-%endif
-
 
 %files doc
 %_docdir/%name-%version
 
+%files -n lib%name-devel-static
+%_libdir/*.a
 
 %changelog
+* Tue Jan 19 2021 Danil Shein <dshein@altlinux.org> 3.2-alt1
+- Version 3.2
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1
 - Version 2.8
 
@@ -162,4 +155,5 @@ This package includes %Name documentation.
 - 2.1
 
 * Fri Sep 17 2004 Yuri N. Sedunov <aris@altlinux.ru> 2.0-alt1
-- First build for Sisyphus. 
+- First build for Sisyphus.
+
