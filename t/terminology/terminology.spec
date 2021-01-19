@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 1.8
+%define ver_major 1.9
 
 %def_enable check
 
 Name: terminology
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -67,6 +67,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Tue Jan 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Fri Aug 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
