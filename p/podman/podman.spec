@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/containers/podman
-%global commit db1d2ff111ee9b012779ff3a5279a982520ccda4
+%global commit a0d478edea7f775b7ce32f8eb1a01e75374486cb
 
 Name:     podman
-Version:  2.2.0
+Version:  2.2.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -136,6 +136,9 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.1-alt1
+- new version 2.2.1
+
 * Tue Dec 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.0-alt1
 - new version 2.2.0
 
