@@ -2,8 +2,8 @@
 
 %define rname konversation
 Name: kde5-%rname
-Version: 1.7.5
-Release: alt6
+Version: 20.12.1
+Release: alt1
 %define beta %nil
 %K5init no_altplace
 
@@ -25,7 +25,6 @@ Provides: kde4-konversation = %version-%release
 Obsoletes: kde4-konversation < %version-%release
 
 Source0: %rname-%version.tar
-Patch1: alt-ftbfs.patch
 
 # Automatically added by buildreq on Tue Jun 30 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel xml-common xml-utils
@@ -38,6 +37,7 @@ BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support k
 BuildRequires: kf5-kglobalaccel-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel
+BuildRequires:  kf5-knewstuff-devel
 
 %description
 Konversation is a simple and easy-to-use IRC client for KDE with support for 
@@ -48,7 +48,6 @@ and much more.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -71,13 +70,18 @@ sed -i \
 %_K5xdgapp/org.kde.%rname.desktop
 %_K5icon/hicolor/*/*/*.*
 %_datadir/kconf_update/*
+%_datadir/qlogging-categories5/*.*categories
 %_datadir/%rname/
+%_datadir/knsrcfiles/konversation*.*
 #%_K5srv/*
 %_K5notif/*
-%_K5xmlgui/*
+#%_K5xmlgui/*
 
 
 %changelog
+* Tue Jan 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt6
 - fix compile with Qt 5.15
 

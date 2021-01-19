@@ -6,8 +6,8 @@
 %add_findreq_skiplist %_K5data/%rname/scripts/*.py
 
 Name: kde5-%rname
-Version: 5.2.0
-Release: alt2
+Version: 20.12.1
+Release: alt1
 %K5init
 
 Group:     Networking/File transfer
@@ -87,6 +87,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Tue Jan 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
+- new version
+
 * Wed Sep 02 2020 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt2
 - fix find taglib
 
