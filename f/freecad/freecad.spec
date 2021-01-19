@@ -13,7 +13,7 @@
 
 Name:    freecad
 Version: 0.18.5
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -160,6 +160,7 @@ rm -rf src/3rdParty
 export PATH=$PATH:%_qt5_bindir
 %add_optflags -Wl,-rpath,%ldir/lib
 %cmake_insource -GNinja \
+	-DBUILD_ENABLE_CXX_STD:STRING="C++14" \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_DATADIR=%ldir \
 	-DCMAKE_INSTALL_DOCDIR=%ldir/doc \
@@ -242,6 +243,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.18.5-alt2
+- Rebuilt with boost-1.75.0 and enabled c++14 by default.
+
 * Fri Nov 27 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.5-alt1
 - New version.
 - Add requirements of openscad and GitPython.
