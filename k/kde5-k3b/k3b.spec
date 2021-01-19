@@ -16,15 +16,15 @@
 
 %define req_std_burning cdrkit cdrdao dvd+rw-tools cdrskin
 %define req_std_common kde5-runtime %req_permhelper
-%define req_multimedia sox-play libsox-fmt-pulseaudio transcode vcdimager normalize lame flac mpc
-#req_multimedia transcode
+#define req_multimedia sox-play libsox-fmt-pulseaudio transcode vcdimager normalize lame flac mpc
+%define req_multimedia sox-play libsox-fmt-pulseaudio normalize lame flac mpc
 %define req_mini %req_std_burning %req_std_common
 %define req_all %req_mini %req_multimedia
 
 %define rname k3b
 Name: kde5-%rname
 Version: 20.12.1
-Release: alt1
+Release: alt3
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -183,6 +183,12 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Tue Jan 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt3
+- bump release
+
+* Tue Jan 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt2
+- remove transcode and vcdimager from requires
+
 * Thu Jan 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
 - new version
 
