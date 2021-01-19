@@ -1,5 +1,5 @@
 Name: xfce4-stopwatch-plugin
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Stopwatch plugin for the Xfce panel
@@ -49,6 +49,9 @@ automatically.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Tue Jan 19 2021 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
+- Updated to 0.5.0.
+
 * Wed Jun 03 2020 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Added Vcs tag.
 - Updated url.
