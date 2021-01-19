@@ -12,8 +12,8 @@
 %endif
 
 Name: openvswitch
-Version: 2.14.0
-Release: alt4
+Version: 2.14.1
+Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
 # All code is Apache-2.0 except
@@ -279,7 +279,7 @@ LC_CTYPE=en_US.UTF-8 LC_COLLATE=en_US.UTF-8 make check
 
 %pre
 %_sbindir/groupadd -r -f %name
-%_sbindir/useradd -r -n -g %name -d / -s /sbin/nologin -c 'openvswitch server daemon' %name >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -g %name -d %_localstatedir/%name -M -s /sbin/nologin -c "Open vSwitch Daemons" %name >/dev/null 2>&1 ||:
 
 %post
 if [ $1 -eq 2 ] && [ -f %_sysconfdir/openvswitch/system-id.conf ] ; then
@@ -416,6 +416,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.1-alt1
+- 2.14.1 (Fixes: CVE-2015-8011, CVE-2020-27827)
+
 * Wed Dec 30 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt4
 - Build ipsec subpackage as noarch.
 
