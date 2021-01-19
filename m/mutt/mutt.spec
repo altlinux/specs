@@ -4,27 +4,20 @@
 %define branch %nil
 Name: %oname%branch
 
-# hg log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'
-Version: 1.10.1
-Release: alt2
+Version: 2.0.4.0.4.gd6732de7d
+Release: alt1
 Epoch: 3
 
 %def_disable debug
-
-# patches
-%def_enable nntp
-
-%def_without dotlock
 
 %define docdir %_docdir/%name-%version
 
 Summary: A text mode mail and news user agent
 Group: Networking/Mail
-License: GPL
+License: GPL-2.0-or-later
 Url: http://www.mutt.org/
 
-# hg clone http://dev.mutt.org/hg/mutt
-Source: %oname%branch-%version.tar
+Source: %oname%branch-%version-%release.tar
 
 # http://jblosser.firinn.org/pub/config/mutt/ (DEAD)
 Source1: %oname-16.xpm
@@ -41,8 +34,6 @@ Source7: %oname-gnupg-howto.txt
 Source8: Mutt-and-IMAP.html
 
 Source9: mutt-apply.sh
-
-Patch: %name-%version-%release.patch
 
 BuildRequires: patchutils docbook-style-xsl xsltproc elinks
 BuildRequires: libgpgme-devel libncursesw-devel libkrb5-devel libssl-devel
@@ -121,8 +112,7 @@ headers, key remapping, colors, and more.
 (maxi version)
 
 %prep
-%setup
-%patch -p1
+%setup -n %name-%version-%release
 
 mutt_apply()
 {
@@ -130,22 +120,15 @@ mutt_apply()
 	%SOURCE9 $1
 }
 
-mutt_apply altlinux/patch-1.10.0.vvv.quote
-mutt_apply altlinux/patch-1.10.0.vvv.nntp
-mutt_apply altlinux/patch-1.10.0.vvv.nntp_ru
+mutt_apply altlinux/patch-2.0.4.vvv.quote
 mutt_apply altlinux/patch-1.10.0.vvv.initials
-mutt_apply altlinux/patch-nntp-CVE-2018-14360
-mutt_apply altlinux/patch-nntp-CVE-2018-14361
-mutt_apply altlinux/patch-nntp-CVE-2018-14363
 
 %build
 export ac_cv_path_GDB=/usr/bin/gdb
 export ac_cv_path_ISPELL=/usr/bin/ispell
 export ac_cv_path_SENDMAIL=/usr/sbin/sendmail
-%if_without dotlock
 export mutt_cv_worldwrite=no
 export mutt_cv_groupwrite=no
-%endif
 
 %{expand:%%add_optflags %(getconf LFS_CFLAGS) -D_GNU_SOURCE}
 
@@ -177,7 +160,6 @@ build 'Nano' \
 	--disable-pop \
 	--disable-imap \
 	--disable-smtp \
-	--disable-nntp \
 	--enable-compressed \
 	--disable-hcache \
 	--without-gss \
@@ -194,7 +176,6 @@ build 'default' \
 	--enable-pop \
 	--enable-imap \
 	--disable-smtp \
-	--enable-nntp \
 	--enable-compressed \
 	--disable-hcache \
 	--without-gss \
@@ -211,7 +192,6 @@ build 'Mini' \
 	--enable-pop \
 	--enable-imap \
 	--disable-smtp \
-	--enable-nntp \
 	--enable-compressed \
 	--enable-hcache \
 	--without-gss \
@@ -228,7 +208,6 @@ build 'Maxi' \
 	--enable-pop \
 	--enable-imap \
 	--enable-smtp \
-	--enable-nntp \
 	--enable-compressed \
 	--enable-hcache \
 	--with-gss \
@@ -276,7 +255,7 @@ install -pD -m644 %_sourcedir/%oname-48.xpm %buildroot%_liconsdir/%oname.xpm
 install -pD -m644 %_sourcedir/%oname.desktop %buildroot%_desktopdir/%oname.desktop
 
 # More docs.
-install -p -m644 %_sourcedir/{faq.html,mutt-FAQ.ru.html,%oname-gnupg-howto.txt,Mutt-and-IMAP.html} *.nntp \
+install -p -m644 %_sourcedir/{faq.html,mutt-FAQ.ru.html,%oname-gnupg-howto.txt,Mutt-and-IMAP.html} \
 	%buildroot%docdir/
 
 find %buildroot%docdir/ \( -name \*.txt -o -name ChangeLog\* \) -size +8k -print0 |
@@ -292,9 +271,6 @@ find %buildroot%_sysconfdir -type f -print0 |
 %find_lang %oname
 
 %files -f %oname.lang
-%if_with dotlock
-%attr(2711,root,mail) %_bindir/mutt_dotlock
-%endif
 %config(noreplace) %_sysconfdir/Muttrc
 %_bindir/flea
 %_bindir/mutt
@@ -321,6 +297,10 @@ find %buildroot%_sysconfdir -type f -print0 |
 %_bindir/mutt-Maxi
 
 %changelog
+* Tue Jan 19 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:2.0.4.0.4.gd6732de7d-alt1
+- Updated to mutt-2-0-4-rel-4-g4a2becbd.
+- Disabled nntp support (vvv patch is no longer supported).
+
 * Wed Oct 31 2018 Grigory Ustinov <grenka@altlinux.org> 3:1.10.1-alt2
 - NMU: Rebuild with libidn2.
 
