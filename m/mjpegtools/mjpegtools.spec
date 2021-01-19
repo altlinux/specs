@@ -1,16 +1,18 @@
 %define shver 2.1
 
 Name: mjpegtools
-Version: 2.1.0
-Release: alt3
+Version: 2.2.0
+Release: alt1
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
-License: GPL
+License: GPLv2
 Group: Video
 Url: http://mjpeg.sourceforge.net
 
 Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar
-Patch: mjpegtools-2.1.0-debian-disable-sse2.patch
+Patch0: mjpegtools-2.1.0-debian-disable-sse2.patch
+Patch1: mjpegtools-2.2.0-debian-mplex-ftbfs.patch
+Patch2: mjpegtools-2.2.0-lavtools-ftbfs.patch
 
 %define libdv_ver 0.9
 
@@ -87,6 +89,8 @@ This binaries does ***NOT*** compatible with a K5/K6 or Pentium CPU
 %ifnarch %ix86 x86_64
 %patch0 -p1
 %endif
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -106,6 +110,8 @@ export LD_LIBRARY_PATH=$PWD/utils/.libs
 
 %install
 %makeinstall
+
+sed -i 's,local/bin/,/bin/,' %buildroot%_bindir/*.sh
 
 # remove non-packaged files
 rm -f %buildroot%_infodir/dir
@@ -128,10 +134,11 @@ rm -f %buildroot%_infodir/dir
 %files -n lib%name-devel-static
 %_libdir/*.a
 
-# TODO:
-# - consider a few more debian patches
-
 %changelog
+* Sat Apr 10 2021 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
+- 2.2.0
+- added patches for explicit linking against FTBFS
+
 * Sun Apr 21 2019 Michael Shigorin <mike@altlinux.org> 2.1.0-alt3
 - disable SSE on non-x86 (by conditionally applying debian patch)
 - enable SSE on x86_64
