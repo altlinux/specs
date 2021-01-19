@@ -6,7 +6,7 @@
 
 Name:           python3-module-%oname
 Epoch:          2
-Version:        2.4
+Version:        2.5
 Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
@@ -181,6 +181,11 @@ rm -rf %buildroot%_defaultdocdir
 %endif
 
 %changelog
+* Mon Jan 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.5-alt1
+- Updated to upstream version 2.5.
+- Removed dependency from python3-module-networkx-core
+  to python3-module-networkx-drawing (Closes: 39559).
+
 * Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.4-alt1
 - Updated to upstream version 2.4.
 - Disabled build for python-2.
