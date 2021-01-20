@@ -1,13 +1,13 @@
 Name: dvdisaster
-Version: 0.72.3
-Release: alt3
+Version: 0.79.5
+Release: alt1
 
 Summary: Additional error protection for CD/DVD media
-License: GPLv2+
+License: GPL-3.0+
 Group: File tools
 
 URL: http://www.dvdisaster.com/
-Source: http://dvdisaster.net/downloads/dvdisaster-%version.tar.bz2
+Source: http://deb.debian.org/debian/pool/main/d/dvdisaster/dvdisaster-%version.tar.bz2
 Source1: dvdisaster.desktop
 Patch: dvdisaster-0.72.3-alt-libpng15.patch
 
@@ -32,7 +32,7 @@ Help files for %name.
 
 %prep
 %setup
-%patch -p2
+#%patch -p2
 
 subst 's/\@\$/\$/' GNUmakefile.template
 subst 's/-O2/%optflags/' configure
@@ -40,6 +40,7 @@ subst 's/-O2/%optflags/' configure
 subst 's~glib/gstrfuncs.h~glib.h~' memtrack.c dvdisaster.h
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 ./configure --prefix=/usr --with-embedded-src-path=no --docdir=%_docdir --with-nls=yes
 # parallel builds fail randomly (sometimes), therefore:
 NPROCS=1
@@ -74,8 +75,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 %_man1dir/*
 %lang(de) %_mandir/de/man1/*
-%lang(it) %_mandir/it/man1/*
-%lang(cs) %_mandir/cs/man1/*
+#%lang(it) %_mandir/it/man1/*
+#%lang(cs) %_mandir/cs/man1/*
 
 %files help
 # Do not remove docs below - documentation accessed from GUI!
@@ -85,6 +86,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_defaultdocdir/dvdisaster-%version
 
 %changelog
+* Wed Jan 20 2021 Leontiy Volodin <lvol@altlinux.org> 0.79.5-alt1
+- 0.79.5
+- Fixed build with gcc10.
+
 * Thu Apr  7 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.72.3-alt3
 - (.spec) parallel builds fail randomly (sometimes), therefore: NPROCS=1
 
