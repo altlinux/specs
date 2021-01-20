@@ -1,5 +1,5 @@
 Name:    netplan
-Version: 0.98
+Version: 0.101
 Release: alt1
 
 Summary: Backend-agnostic network configuration in YAML
@@ -24,29 +24,24 @@ Requires:       iproute2
 
 Source:  %name-%version.tar
 
-Patch1: alt-wpa_supplicant-path.patch
-Patch2: alt-make-echo-expand-metachars.patch
-
 %description
 %summary
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
-%patch2 -p1
 
 %build
 %make_build
 
 %install
-%makeinstall_std DOCDIR=%_docdir/%name-%version
+%makeinstall_std DOCDIR=%_docdir/%name-%version LIBDIR=%_libdir
 mkdir -p %buildroot%_sysconfdir/%name
 
 %files
 %_sbindir/%name
 /lib/systemd/system-generators/%name
 /lib/%name
-%_unitdir/%{name}*
+%_libdir/libnetplan.so.0.0
 %_datadir/bash-completion/completions/%name
 %_datadir/%name
 %dir %_sysconfdir/%name
@@ -55,6 +50,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Thu Jan 14 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.101-alt1
+- new version 0.101
+
 * Thu Mar 19 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.98-alt1
 - new version 0.98
 - (ALT#37740) fix path to wpa_supplicant
