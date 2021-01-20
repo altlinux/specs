@@ -1,5 +1,5 @@
 Name: libgcrypt
-Version: 1.8.7
+Version: 1.9.0
 Release: alt1
 
 Group: System/Libraries
@@ -10,6 +10,8 @@ Url: http://www.gnupg.org/
 Source: %name-%version.tar
 
 Patch0: 0001-Fix-LFS-on-32-bit-systems.patch
+Patch1: 0002-kdf-add-missing-null-terminator-for-self-test-test-v.patch
+Patch2: 0003-tests-basic-fix-build-on-ARM32-when-NEON-disabled.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -120,6 +122,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/*.info*
 
 %changelog
+* Wed Jan 20 2021 Alexey Gladkov <legion@altlinux.ru> 1.9.0-alt1
+- New version (1.9.0).
+
 * Sun Dec 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.8.7-alt1
 - New version (1.8.7).
 - Update License tag.
