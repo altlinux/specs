@@ -1,18 +1,18 @@
 %define _name lucene++
 
 Name: lib%_name
-Version: 3.0.7
-Release: alt5
+Version: 3.0.8
+Release: alt1
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
-License: ASL 2.0 or LGPLv3+
+License: Apache-2.0 or LGPL-3.0-or-later
 Url: https://github.com/luceneplusplus/LucenePlusPlus
 
 Source: https://github.com/luceneplusplus/LucenePlusPlus/archive/rel_%version.tar.gz#/%name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: cmake gcc-c++
+BuildRequires: cmake gcc-c++ zlib-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-asio-devel boost-interprocess-devel
 
 %description
@@ -51,8 +51,13 @@ search engine written in C++
 %_libdir/%name-contrib.so
 %_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name-contrib.pc
+%_libdir/cmake/%{name}*
 
 %changelog
+* Tue Jan 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
+- updated to rel_3.0.8-8-g8c2ce8d
+- fixed License tag
+
 * Fri Jun 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt5
 - rebuilt with boost-1.67
 
