@@ -13,7 +13,7 @@
 
 Name: vztt
 Version: 7.0.73
-Release: alt1
+Release: alt2
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -102,6 +102,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Wed Jan 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.73-alt2
+- add simfs template creation
+
 * Mon Aug 03 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.73-alt1
 - 7.0.73
 
