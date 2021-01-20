@@ -1,6 +1,6 @@
 Name: alterator-secsetup
 Version: 2.0
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -42,6 +42,9 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %_datadir/alterator-secsetup/*
 
 %changelog
+* Tue Jan 19 2021 Danil Shein <dshein@altlinux.org> 2.0-alt3
+- fixed LibreOffice extension installer path
+
 * Tue Jan 19 2021 Danil Shein <dshein@altlinux.org> 2.0-alt2
 - fixed secsetup-macrosblocker script failure if VLC files not found
 
