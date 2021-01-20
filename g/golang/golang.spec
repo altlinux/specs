@@ -38,8 +38,8 @@
 %def_disable check
 
 Name:    golang
-Version: 1.15.6
-Release: alt2
+Version: 1.15.7
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -337,6 +337,12 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Wed Jan 20 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.7-alt1
+- New version (1.15.7).
+- Fixes:
+  + CVE-2021-3114
+  + CVE-2021-3115
+
 * Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.15.6-alt2
 - Disable AutoReqProv for misc package
 
