@@ -1,5 +1,5 @@
 Name: eepm
-Version: 3.8.1
+Version: 3.8.3
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -46,7 +46,15 @@ This package has requirements needed for using epm repack on ALT
 See https://bugzilla.altlinux.org/show_bug.cgi?id=34308 for
 a discussion about extra requirements.
 
-Requires: fakeroot alien rpm-build dpkg
+%package yum
+Summary: yum like frontend for Etersoft EPM package manager
+Group: System/Configuration/Packaging
+Requires: %name = %EVR
+Conflicts: yum
+
+%description yum
+This package contains yum like frontend for Etersoft EPM package manager.
+
 
 %prep
 %setup
@@ -109,6 +117,7 @@ mkdir -p %buildroot/var/lib/eepm/
 %_bindir/eepm
 %_bindir/serv
 %_bindir/cerv
+%exclude %_bindir/yum
 %dir /var/lib/eepm/
 %if %_vendor != "alt"
 %_bindir/distr_info
@@ -122,7 +131,23 @@ mkdir -p %buildroot/var/lib/eepm/
 %files repack
 %endif
 
+%files yum
+%_bindir/yum
+
 %changelog
+* Wed Jan 20 2021 Vitaly Lipatov <lav@altlinux.ru> 3.8.3-alt1
+- add reception.d/yandex-disk.sh
+- small fixes for yum command
+
+* Wed Jan 20 2021 Vitaly Lipatov <lav@altlinux.ru> 3.8.2-alt1
+- serv: fix help
+- repack.d/anydesk.sh: preinstall needed packages
+- epm: add --assumeyes alias for --auto
+- add and pack yum command in eepm-yum subpackage
+- repack.d/yandex-browser-beta.sh: add missed yandex-browser while repack rpm package (ALT bug 39564)
+- repack.d/yandex-browser-beta.sh: install all requires packages before repacking
+- repack.d/ICAClient.sh: filterout libc.so.6(GLIBC_PRIVATE) (ALT bug 39565)
+
 * Wed Jan 06 2021 Vitaly Lipatov <lav@altlinux.ru> 3.8.1-alt1
 - repack.d/tamtam-app.sh: set SUID for chromium-sandbox
 - epm-download: force download before install if wildcard is used in URL
