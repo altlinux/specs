@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -43,17 +43,15 @@
 %endif
 
 %define ver_maj 1
-%define ver_min 75
+%define ver_min 74
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
 
-%define _unpackaged_files_terminate_build 1
-
-Name: boost
+Name: boost%ver_maj.%ver_min.%ver_rel
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -81,10 +79,6 @@ Patch83: boost-1.73.0-fedora-b2-build-flags.patch
 
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1899888
-# https://github.com/boostorg/locale/issues/52
-Patch94: boost-1.73-fedora-locale-empty-vector.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
 
@@ -159,7 +153,6 @@ Requires: libboost_contract%version = %EVR
 Requires: libboost_date_time%version = %EVR
 Requires: libboost_graph%version = %EVR
 Requires: libboost_iostreams%version = %EVR
-Requires: libboost_json%version = %EVR
 Requires: libboost_random%version = %EVR
 Requires: libboost_regex%version = %EVR
 Requires: libboost_serialization%version = %EVR
@@ -893,13 +886,6 @@ BGL.
 This package contains shared libraries.
 %endif
 
-%package -n libboost_json%version
-Summary: Json Library
-Group: Development/C++
-
-%description -n libboost_json%version
-The Boost Json Library is a library for parsing and serializing JSON
-to and from a DOM container in memory.
 
 %package -n libboost_locale%version
 Summary: Boost.Locale Library
@@ -1323,7 +1309,6 @@ applications. This package contains python module.
 %patch82 -p1
 %patch83 -p1
 %patch88 -p1
-%patch94 -p1
 %patch1000 -p1
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
@@ -1853,9 +1838,6 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_iostreams%version
 %_libdir/*_iostreams*.so.*
 
-%files -n libboost_json%version
-%_libdir/*_json*.so.*
-
 %files -n libboost_locale%version
 %_libdir/*_locale*.so.*
 
@@ -1994,8 +1976,8 @@ done
 
 
 %changelog
-* Wed Jan 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.75.0-alt1
-- Updated to upstream version 1.75.0.
+* Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.74.0-alt2
+- Built boost-1.74.0 legacy libraries package.
 
 * Fri Aug 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.74.0-alt1
 - Updated to upstream version 1.74.0.
