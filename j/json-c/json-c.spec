@@ -1,15 +1,15 @@
 %define soversion 5
 
 Name: json-c
-Version: 0.14
-Release: alt2
+Version: 0.15
+Release: alt1
 
 Summary: JSON implementation in C
 License: MIT
 Group: System/Libraries
 Url: https://github.com/json-c/json-c/wiki
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 # git://github.com/json-c/json-c.git
 
 BuildRequires(pre): rpm-macros-cmake
@@ -51,6 +51,7 @@ This package contains development part of JSON-C
 
 %build
 %cmake \
+  -DBUILD_STATIC_LIBS:BOOL=OFF 	\
   -DCMAKE_BUILD_TYPE:STRING=RELEASE \
   -DCMAKE_C_FLAGS_RELEASE:STRING="" \
   -DDISABLE_BSYMBOLIC:BOOL=OFF \
@@ -87,6 +88,9 @@ popd
 %_libdir/cmake/%name
 
 %changelog
+* Wed Jan 20 2021 Alexey Shabalin <shaba@altlinux.org> 0.15-alt1
+- Updated to 0.15.
+
 * Sat Jul 04 2020 Alexey Shabalin <shaba@altlinux.org> 0.14-alt2
 - Fixes: CVE-2020-12762
 
