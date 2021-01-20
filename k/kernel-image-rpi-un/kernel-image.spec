@@ -1,12 +1,12 @@
 %def_disable check
 
 Name: kernel-image-rpi-un
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_need_version	5.10
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.10
-%define kernel_sublevel .2
+%define kernel_sublevel .7
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -490,6 +490,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed Jan 20 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.7-alt1
+- Updated to 5.10.7 (still RPi-specific)
+- https://github.com/raspberrypi/linux.git rpi-5.10.y
+- commit 839c811efeb43c92345dd47d1e3d3bbac4474024
+
 * Fri Dec 25 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.2-alt2
 - add ZRam support
 - CONFIG_ZSMALLOC=m
