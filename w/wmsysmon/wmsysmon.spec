@@ -1,11 +1,10 @@
 Name: wmsysmon
-Version: 0.7.7
-Release: alt2
+Version: 0.7.8
+Release: alt1
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
 Summary: WindowMaker dockapp to show system information
-Summary(ru_RU.KOI8-R): Dockapp для WindowMaker. Показывает системную информацию
 License: GPL
 Group: Graphical desktop/Window Maker
 Url:   http://gnugeneration.com/software/wmsysmon/
@@ -13,8 +12,7 @@ Url:   http://gnugeneration.com/software/wmsysmon/
 Source0: %name-%version.tar.bz2
 Source1: %name.menu
 
-Patch0: %name-0.7.6-alt-gcc34.patch
-Patch1: %name-%version-alt-linux26.patch
+Patch0: wmsysmon-0.7.8-GlobalVarDefinition.patch
 
 # Automatically added by buildreq on Thu Jan 04 2007
 BuildRequires: libXext-devel libXpm-devel
@@ -24,15 +22,11 @@ wmsysmon, a small dock application for use with
 WindowMaker (www.windowmaker.org) to show system information on interrupt
 activity, memory use, swap use, and IO.
 
-%description -l ru_RU.KOI8-R
-wmsysmon - это маленькое приложение для WindowMaker, которое показывает информацию
-о прерываниях, памяти и операциях ввода/вывода.
-
 %prep
 %setup -q
 %__subst 's/\+=/=/' src/Makefile
-%patch0 -p1
-%patch1 -p1
+
+%patch0 -p2
 
 %build
 %make_build -C src CFLAGS="$RPM_OPT_FLAGS"
@@ -47,6 +41,9 @@ install -D -pm644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 20 2021 Pavel Vasenkov <pav@altlinux.org> 0.7.8-alt1
+- new version 0.7.8
+
 * Fri Nov 06 2009 Alexey Voinov <voins@altlinux.ru> 0.7.7-alt2
 - update_menus removed
 
