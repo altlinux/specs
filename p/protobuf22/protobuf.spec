@@ -1,8 +1,8 @@
 %define oname protobuf
-%define soversion 25
+%define soversion 22
 
 # set 'enable' to build legacy package
-%def_disable legacy
+%def_enable legacy
 
 %if_disabled legacy
 %define _unpackaged_files_terminate_build 1
@@ -14,12 +14,10 @@
 
 # normal package may include python3 or java support
 %def_with python3
-%def_without python
 %def_with java
 %else
 # for legacy package python3 and java should always be disabled since it's not packed anyway
 %def_without python3
-%def_without python
 %def_without java
 %endif
 
@@ -28,8 +26,8 @@ Name: %oname
 %else
 Name: %oname%soversion
 %endif
-Version: 3.14.0
-Release: alt1
+Version: 3.11.4
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -48,12 +46,10 @@ Obsoletes: libprotobuf <= 2.0.0-alt1
 # Automatically added by buildreq on Wed Nov 19 2008
 BuildRequires: gcc-c++ python-devel libnumpy-devel zlib-devel
 
-%if_with python
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-google-apputils
 BuildRequires: python-module-mox python-module-mox python-module-dateutil
 BuildRequires: python-module-pytz python-module-gflags
-%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
@@ -167,7 +163,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires(pre):  rpm-build-java
-BuildRequires:  java-devel
+BuildRequires:  java-devel-default
 BuildRequires:  libgmock-devel libgtest-devel
 Conflicts: %name-compiler > %version
 Conflicts: %name-compiler < %version
@@ -248,7 +244,6 @@ rm java/core/src/test/java/com/google/protobuf/LiteralByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/BoundedByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/RopeByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/RopeByteStringSubstringTest.java
-rm java/core/src/test/java/com/google/protobuf/TextFormatTest.java
 rm -r java/util/src/test/java/com/google/protobuf/util
 rm -r java/util/src/main/java/com/google/protobuf/util
  
@@ -304,11 +299,9 @@ popd
 %install
 %makeinstall_std
 
-%if_with python
 pushd python
 %python_install --cpp_implementation
 popd
-%endif
 
 %if_with python3
 pushd python3
@@ -347,15 +340,11 @@ popd
 %_libdir/libprotobuf-lite.so
 %_pkgconfigdir/protobuf-lite.pc
 
-%if_with python
 %files -n python-module-%oname
 %python_sitelibdir/*
-%endif
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
 
 %if_with java
 %files java -f .mfiles-protobuf-java
@@ -380,9 +369,8 @@ popd
 %endif
 
 %changelog
-* Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.14.0-alt1
-- 3.14.0
-- build without python2 module
+* Wed Jan 20 2021 Alexey Shabalin <shaba@altlinux.org> 3.11.4-alt2
+- build as compat legacy library
 
 * Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 3.11.4-alt1
 - 3.11.4
