@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.8.6
-Release: alt1
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -183,6 +183,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Wed Jan 20 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt2
+- Another fix for parallel build
+
 * Mon Jan 18 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt1
 - 4.8.6
 
