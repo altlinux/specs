@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.10
 %define kernel_sublevel .9
@@ -702,6 +702,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed Jan 20 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.9-alt2
+- CONFIG_RMI4_* enabled
+
 * Wed Jan 20 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.9-alt1
 - v5.10.9
 
