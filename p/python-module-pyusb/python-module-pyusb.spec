@@ -1,5 +1,5 @@
 Name: python-module-pyusb
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Python module which provides easy USB access
@@ -65,6 +65,9 @@ popd
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Wed Jan 20 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- New version.
+
 * Mon Sep 14 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 - Fix license.
