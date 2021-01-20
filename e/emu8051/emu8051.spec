@@ -1,11 +1,20 @@
 Name: emu8051
-Version: 0.71
-Release: alt1.qa1
-License: MIT
-Group: Emulators
-BuildPreReq: libncurses-devel gcc-c++
-Source0: %name.tar
+Version: 2.0.1
+Release: alt1
 Summary: 8051 emulator
+License: GPL-2.0+
+Group: Emulators
+Url: http://www.hugovil.com/projet.php?proj=emu8051
+
+Source: http://www.hugovil.com/repository/emu8051/emu8051-%version.tar.gz
+Patch: emu8051-2.0.1-alt-gcc10.patch
+
+BuildPreReq: libncurses-devel gcc-c++
+BuildRequires: glib2-devel
+BuildRequires: zlib-devel
+BuildRequires: libreadline-devel
+BuildRequires: libgtk+2-devel
+
 %description
 This is a simulator of the 8051/8052 microcontrollers. For sake of simplicity, 
 I'm only referring to 8051, although the emulator can emulate either one. For 
@@ -38,9 +47,6 @@ wasted on pipeline trashing when branching to the opcode functions. This could
 possibly be helped by JITing the code, but that is considered unneccessary at 
 this point. Also, CPUs with shorter pipelines are not harmed by this behavior as badly.
 
-The emulator is written completely in ANSI C for portability, and the sources 
-are available under the MIT license.
-
 Current features include:
 
     * Full 8051 instruction set.
@@ -62,17 +68,29 @@ Current features include:
     * Timer 0 and 1 modes 0, 1, 2 and 3, as well as interrupt priorities.
 
 %prep
-%setup -q -n %name
-%build
-bash build.sh
-%install 
-bash install.sh %buildroot
-%files
-/usr/bin/emu8051
-%_datadir/doc/%name-%version
+%setup
+%patch -p2 -b .gcc10
 
+%build
+%configure
+%make_build
+
+%install 
+%makeinstall_std
+
+%files
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README TODO
+%_bindir/emu8051-cli
+%_bindir/emu8051-gtk
+%config(noreplace) %_sysconfdir/xdg/emu8051/default/%name.conf
+%_man1dir/%name.1.xz
 
 %changelog
+* Wed Jan 20 2021 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
+- New version (2.0.1).
+- Changed url and license.
+- Fixed build with gcc10.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.71-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
