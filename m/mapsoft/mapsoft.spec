@@ -1,5 +1,5 @@
 Name: mapsoft
-Version: 20201212
+Version: 20210121
 Release: alt1
 License: GPL3.0
 
@@ -9,6 +9,7 @@ Url: http://github.org/ushakov/mapsoft
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: 0001-skip-convs_gtiles.patch
 
 BuildRequires: boost-devel gcc-c++ libcurl-devel libzip-devel zlib-devel
 BuildRequires: libcairomm-devel libpixman-devel libgtkmm2-devel
@@ -40,6 +41,7 @@ mapsoft-vmap - programs for working with vector maps
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 # boost::spirit crashes with -O2 on 32-bit systems
@@ -82,6 +84,14 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_bindir/mapsoft_wp_parse
 
 %changelog
+* Thu Jan 21 2021 Vladislav Zavjalov <slazav@altlinux.org> 20210121-alt1
+- scripts/mapsoft_wp_parse: fix name conversions
+- skip convs_gtiles program in Altlinux build (build problem with new boost)
+- vector/data: add new types: point 0x650B, 0x650C (glacier names)
+- vector/vmap3/vmap_mmb_filter: convert glacier names to points
+- vector/vmap3: add vmap_put_track and vmap_get_track programs
+- programs/mapsoft_map2fig: put images into compound object; add 50px margins
+
 * Sat Dec 12 2020 Vladislav Zavjalov <slazav@altlinux.org> 20201212-alt1
 - img_io/gobj_vmap: draw pattens with solid color at small scales (A.Kazantsev)
 - fix for gcc-10
