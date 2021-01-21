@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -328,6 +328,15 @@ export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g1"
 export CXXFLAGS="$CFLAGS"
 %endif
 
+PARALLEL=$(nproc)
+
+%ifarch ppc64le
+# reduce excessive resource use
+if [ "$PARALLEL" -gt 24 ] ; then
+	PARALLEL=24
+fi
+%endif
+
 ./autogen.sh \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
@@ -373,7 +382,7 @@ export CXXFLAGS="$CFLAGS"
   	--enable-lto \
 %endif
 %if_with parallelism
-	--with-parallelism=`nproc` \
+	--with-parallelism="$PARALLEL" \
 %else   
         --without-parallelism \
 %endif
@@ -564,6 +573,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.1.2-alt3
+- Reduced build workers count for ppc64le.
+
 * Wed Oct 14 2020 Ivan A. Melnikov <iv@altlinux.org> 7.0.1.2-alt2
 - Drop LanguageTool dependency for java-less build
 
