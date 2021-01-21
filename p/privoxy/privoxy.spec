@@ -1,6 +1,6 @@
 Name: privoxy
-Version: 3.0.28
-Release: alt2
+Version: 3.0.29
+Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
 
@@ -143,6 +143,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.29-alt1
+- new version 3.0.29 (with rpmrb script)
+
 * Sat May 04 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.28-alt2
 - update chroot configs (ALT bug 36469)
 
