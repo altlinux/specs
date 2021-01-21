@@ -3,7 +3,7 @@
 %global goipath github.com/jinzhu/gorm
 
 Name: golang-github-jinzhu-gorm
-Version: 1.9.15
+Version: 1.9.16
 Release: alt1
 Summary: The fantastic ORM library for Golang, aims to be developer friendly
 Group: Development/Other
@@ -60,6 +60,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Thu Jan 21 2021 Leontiy Volodin <lvol@altlinux.org> 1.9.16-alt1
+- New version.
+
 * Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.9.15-alt1
 - New version.
 
