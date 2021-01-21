@@ -1,8 +1,8 @@
 %define  modulename h11
 
 Name:    python3-module-%modulename
-Version: 0.10.0
-Release: alt2
+Version: 0.12.0
+Release: alt1
 
 Summary: A pure-Python, bring-your-own-I/O implementation of HTTP/1.1
 
@@ -44,6 +44,9 @@ or your own implementation of RFC 6214 -- h11 won't judge you.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
+- new version 0.12.0 (with rpmrb script)
+
 * Fri Nov 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.0-alt2
 - exclude tests from package due to excessive reqs
 
