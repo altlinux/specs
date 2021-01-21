@@ -1,5 +1,5 @@
 Name:    libmaxminddb
-Version: 1.4.3
+Version: 1.5.0
 Release: alt1
 
 Summary: C library for the MaxMind DB file format
@@ -60,6 +60,9 @@ LD_PRELOAD=%{buildroot}%{_libdir}/libmaxminddb.so make check
 %_man3dir/*
 
 %changelog
+* Thu Jan 21 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Build new version.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
 - Build new version.
 
