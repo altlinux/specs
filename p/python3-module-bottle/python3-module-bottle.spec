@@ -1,8 +1,8 @@
 %define oname bottle
 
 Name: python3-module-%oname
-Version: 0.12.18
-Release: alt2
+Version: 0.12.19
+Release: alt1
 Epoch: 1
 
 Summary: Fast and simple WSGI-framework for small web-applications
@@ -64,6 +64,9 @@ This package contains documentation for %oname.
 
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:0.12.19-alt1
+- new version 0.12.19 (with rpmrb script)
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.12.18-alt2
 - add conflicts/obsoletes against python-module-bottle (due bindir/bottle.py)
 
