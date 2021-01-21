@@ -1,6 +1,6 @@
 Name: fachoda
 Version: 2.1
-Release: alt3
+Release: alt4
 
 Summary: Flight simulator/arcade game
 License: GPLv3
@@ -28,6 +28,7 @@ tailored for small hardware configs.
 %patch1 -p2
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 %make_build PREFIX=%_prefix -C src
 
 %install
@@ -42,6 +43,9 @@ install -m0644 %SOURCE1 %buildroot%_desktopdir/
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Jan 21 2021 Leontiy Volodin <lvol@altlinux.org> 2.1-alt4
+- Fixed build with gcc10.
+
 * Thu Oct 12 2017 Alexey Appolonov <alexey@altlinux.org> 2.1-alt3
 - Converted nested function to external (e2k).
 - Added desktop file.
