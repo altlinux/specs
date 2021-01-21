@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 1.2.9
-Release: alt4
+Version: 1.5.5.1
+Release: alt1
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python3
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/netCDF4/
 # https://github.com/Unidata/netcdf4-python.git
 Source: %name-%version.tar
 Source1: setup.cfg
-Patch1: %oname-%version-alt-docs.patch
+Patch1: %oname-1.2.9-alt-docs.patch
 
 BuildRequires: libnetcdf-devel zlib-devel libjpeg-devel libcurl-devel
 BuildRequires(pre): rpm-build-python3
@@ -21,6 +21,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-notebook python3-module-numpy-testing
+BuildRequires: python3-module-cftime
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
@@ -105,6 +106,9 @@ popd
 #doc docs/html examples
 
 %changelog
+* Thu Jan 21 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.5.1-alt1
+- Build new version.
+
 * Fri Sep 04 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.9-alt4
 - Drop python2 support.
 
