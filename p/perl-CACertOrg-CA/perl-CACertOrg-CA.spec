@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define upstream_version 20110724.004
 
 Name:       perl-%{upstream_name}
-Version:    20110724.005
+Version:    20210114.001
 Release:    alt1
 
 Summary:    CACert.org's CA root certificate in PEM format
@@ -43,10 +43,13 @@ md5 A6:1B:37:5E:39:0D:9C:36:54:EE:BD:20:31:46:1F:6B
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml README.pod
+%doc Changes META.json META.yml README.pod
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 20210114.001-alt1
+- automated CPAN update
+
 * Tue Jun 12 2018 Igor Vlasenko <viy@altlinux.ru> 20110724.005-alt1
 - automated CPAN update
 
