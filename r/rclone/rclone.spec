@@ -4,7 +4,7 @@
 
 %global import_path github.com/ncw/rclone
 Name:     rclone
-Version:  1.53.0
+Version:  1.53.4
 Release:  alt1
 
 Summary:  rsync for cloud storage
@@ -77,6 +77,9 @@ trap - EXIT
 %doc *.md
 
 %changelog
+* Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.53.4-alt1
+- New version 1.53.4 (Fixes: CVE-2020-28924).
+
 * Wed Sep 09 2020 Vitaly Chikunov <vt@altlinux.org> 1.53.0-alt1
 - Update v1.53.0 (2020-09-02).
 
