@@ -7,7 +7,7 @@
 %def_with check
 
 Name: gssproxy
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 Summary: GSSAPI Proxy
 
@@ -47,7 +47,7 @@ BuildRequires: openldap-clients
 BuildRequires: openldap-servers
 
 # https://pagure.io/gssproxy/issue/227
-%ifnarch %ix86 mipsel ppc64le
+%ifnarch %ix86 mipsel ppc64le armh
 BuildRequires: valgrind
 %endif
 
@@ -96,7 +96,7 @@ GSSAPI Proxy configuration for NFS client
 
 # https://pagure.io/gssproxy/issue/227
 %make check \
-%ifarch %ix86 mipsel ppc64le
+%ifarch %ix86 mipsel ppc64le armh
 	CHECKARGS="--valgrind-cmd=" \
 %endif
 	%nil
@@ -170,6 +170,9 @@ echo 'run_as_user = %gssproxy_user' >> %buildroot%_sysconfdir/gssproxy/gssproxy.
 %attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/99-nfs-client.conf
 
 %changelog
+* Thu Jan 21 2021 Stanislav Levin <slev@altlinux.org> 0.8.4-alt1
+- 0.8.3 -> 0.8.4.
+
 * Mon Apr 20 2020 Stanislav Levin <slev@altlinux.org> 0.8.3-alt1
 - 0.8.2 -> 0.8.3.
 
