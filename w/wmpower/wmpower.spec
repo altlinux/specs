@@ -2,7 +2,7 @@
 
 Name: wmpower
 Version: 0.4.3
-Release: alt1.qa1
+Release: alt2
 
 Summary: ACPI power status monitor for Window Maker
 Group: Graphical desktop/Window Maker
@@ -10,7 +10,7 @@ License: GPL
 Url: http://wmpower.sourceforge.net/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Jul 08 2005
 BuildRequires: libXext-devel libXpm-devel
@@ -21,7 +21,7 @@ graphically see (and set) the power management status of his laptop.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p2
 
 %build
 %autoreconf
@@ -36,6 +36,10 @@ graphically see (and set) the power management status of his laptop.
 %_bindir/*
 
 %changelog
+* Thu Jan 21 2021 Pavel Vasenkov <pav@altlinux.org> 0.4.3-alt2
+- FTBFS workaround
+- changed global variables definitions
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
