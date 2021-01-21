@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.19
+Version: %ver_major.20
 Release: alt1
 
 Summary: Media Sharing Server
@@ -144,10 +144,12 @@ export LIB=%_lib
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
 %dir %_sysconfdir/%name/media-session.d
+%_sysconfdir/%name/media-session.d/alsa-monitor.conf
+%_sysconfdir/%name/media-session.d/bluez-monitor.conf
+%_sysconfdir/%name/media-session.d/media-session.conf
+%_sysconfdir/%name/media-session.d/v4l2-monitor.conf
 %_sysconfdir/%name/media-session.d/with-jack
 %_sysconfdir/%name/media-session.d/with-pulseaudio
-%_sysconfdir/%name/media-session.d/alsa-monitor.conf
-%_sysconfdir/%name/media-session.d/media-session.conf
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
 %if_enabled systemd
@@ -220,6 +222,9 @@ export LIB=%_lib
 
 
 %changelog
+* Thu Jan 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.20-alt1
+- 0.3.20
+
 * Tue Jan 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.19-alt1
 - updated to 0.3.19-4-g18b5199d
 
