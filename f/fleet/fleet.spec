@@ -1,6 +1,6 @@
 %global import_path github.com/fleetdm/fleet
 Name:     fleet
-Version:  3.4.0
+Version:  3.6.0
 Release:  alt1
 
 Summary:  The premier osquery fleet manager.
@@ -43,5 +43,8 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt1
+- Updated to upstream version 3.6.0 (Fixes: CVE-2020-26276).
+
 * Tue Nov 24 2020 Mikhail Gordeev <obirvalger@altlinux.org> 3.4.0-alt1
 - Initial build for Sisyphus
