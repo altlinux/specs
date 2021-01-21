@@ -1,7 +1,7 @@
 %define fname wingdings
 
 Name: fonts-ttf-%fname
-Version: 1.000
+Version: 1.001
 Release: alt1
 
 Summary: TrueType font WingDings
@@ -19,7 +19,8 @@ BuildArch: noarch
 
 BuildRequires: fontforge
 BuildRequires: rpm-build-fonts >= 0.4
-PreReq: fontconfig >= 2.4.2
+
+Requires(pre): fontconfig >= 2.4.2
 
 %description
 WingDings font from the Wine project.
@@ -36,5 +37,9 @@ WingDings font from the Wine project.
 %files -f %fname.files
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.001-alt1
+- update to the latest version from wine sources
+- replace PreReq with Requires(pre)
+
 * Tue Oct 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1.000-alt1
 - initial build for ALT Linux Sisyphus (ALT bug #29429)
