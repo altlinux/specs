@@ -1,5 +1,5 @@
 Name:    blueman
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Blueman is a GTK+ Bluetooth Manager
@@ -100,6 +100,9 @@ fi
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.4-alt1
+- new version 2.1.4 (Fixes CVE-2020-15238).
+
 * Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 2.1.3-alt1
 - new version 2.1.3
 
