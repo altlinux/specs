@@ -3,7 +3,7 @@
 %define geckodir %_datadir/wine/gecko
 
 Name: wine-gecko
-Version: 2.47.1
+Version: 2.47.2
 Release: alt1
 
 Summary: Custom version of Mozilla's Gecko Layout Engine for Wine
@@ -14,9 +14,9 @@ Url: http://wiki.winehq.org/Gecko
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source1-url: http://dl.winehq.org/wine/wine-gecko/%version/wine-gecko-%version-x86.tar.bz2
+# Source1-url: http://dl.winehq.org/wine/wine-gecko/%version/wine-gecko-%version-x86.tar.xz
 Source1: %name-x86-%version.tar
-# Source2-url: http://dl.winehq.org/wine/wine-gecko/%version/wine-gecko-%version-x86_64.tar.bz2
+# Source2-url: http://dl.winehq.org/wine/wine-gecko/%version/wine-gecko-%version-x86_64.tar.xz
 Source2: %name-x86_64-%version.tar
 
 # TODO: it is impossible build arch packages with files in noarch
@@ -48,6 +48,9 @@ cp -a $(basename %SOURCE2 .tar) %buildroot%geckodir/wine-gecko-%version-x86_64/
 %geckodir/wine-gecko-%version-x86_64/
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 2.47.2-alt1
+- new version 2.47.2 (with rpmrb script)
+
 * Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 2.47.1-alt1
 - new version 2.47.1
 - unpack to global wine location (supported since wine 5.0)
