@@ -5,7 +5,7 @@
 %def_with gtk
 
 Name: spice-vdagent
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 Epoch: 1
 Summary: Agent for Spice guests
@@ -21,7 +21,7 @@ Patch: %name-%version.patch
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.50
 %{?_with_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= 3.22}
 BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr) >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
-BuildRequires: pkgconfig(spice-protocol) >= 0.14.1
+BuildRequires: pkgconfig(spice-protocol) >= 0.14.3
 BuildRequires: pkgconfig(alsa) >= 1.0.22
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(libdrm)
@@ -79,6 +79,9 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_man1dir/*
 
 %changelog
+* Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.21.0-alt1
+- new version 0.21.0 (Fixes CVE-2020-25650, CVE-2020-25651, CVE-2020-25652, CVE-2020-25653).
+
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.20.0-alt1
 - new version 0.20.0
 
