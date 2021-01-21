@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name: twiggy
-Version: 0.1025
-Release: alt1.1
+Version: 0.1026
+Release: alt1
 Summary: Twiggy - AnyEvent HTTP server for PSGI (like Thin)
 
 Group: Development/Perl
@@ -24,14 +25,18 @@ BuildRequires: perl-Test-TCP perl-devel perl-Plack perl-Try-Tiny perl-Test-Requi
 %perl_vendor_install
 
 %files
+%doc README* LICENSE Changes
 %_bindir/%name
 %_man1dir/%name.*
 %perl_vendor_privlib/Twiggy*
 %perl_vendor_privlib/Plack/Handler/Twiggy.pm
 %perl_vendor_privlib/AnyEvent/Server/PSGI.pm
-%doc Changes README.md
+%doc Changes
 
 %changelog
+* Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 0.1026-alt1
+- new version
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.1025-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
