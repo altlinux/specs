@@ -2,7 +2,7 @@
 
 Name: owfs
 Version: 3.2p2
-Release: alt2
+Release: alt3
 
 Summary: 1-Wire Virtual File System
 License: GPLv2
@@ -15,7 +15,7 @@ Patch0: owfs-tcl-req.patch
 Patch1: owfs-initscript.patch
 Patch2: owfs-0002-include-sys-sysmacros.h-for-major.patch
 Patch3: owfs-3.2p2-alt-systemd-fix-broken-paths.patch
-
+Patch4: owfs-multiple_definition.patch
 
 BuildRequires: chrpath
 BuildRequires: service
@@ -176,6 +176,7 @@ owserver, owftpd, owshell, owperl, owtcl) and also all the supported
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p1
 sed -i- 's/) Makefile.PL/& INSTALLDIRS=vendor/' module/*/perl5/Makefile.am
 
 %build
@@ -341,6 +342,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Thu Jan 21 2021 Grigory Milev <week@altlinux.ru> 3.2p2-alt3
+- multiple definition fix
+
 * Tue Sep 22 2020 Igor Vlasenko <viy@altlinux.ru> 3.2p2-alt2
 - NMU: fixed broken paths in systemd files
 
