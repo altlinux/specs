@@ -1,7 +1,7 @@
 %def_without check
 
 Name: python3-module-signedjson
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Sign JSON with Ed25519 signatures
@@ -18,7 +18,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-base python3-module-setuptools
+BuildRequires(pre): rpm-build-intro
+BuildRequires: python3-base python3-module-setuptools python3-module-setuptools_scm
+
+%add_python3_req_skip importlib_metadata
+
+%py3_use canonicaljson >= 1.0.0
+%py3_use unpaddedbase64 >= 1.0.1
+%py3_use pynacl >= 0.3.0
+%py3_use typing-extensions >= 3.5
+# As of Python 3.8, this functionality has been added to the Python standard library.
+#py3_use importlib-metadata
 
 %description
 Features:
@@ -32,9 +42,11 @@ Features:
 %setup
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build_debug
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %files
@@ -42,6 +54,9 @@ Features:
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0 (with rpmrb script)
 
