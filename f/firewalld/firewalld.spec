@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -141,6 +141,9 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %python3_sitelibdir_noarch/firewall
 
 %changelog
+* Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 0.9.3-alt1
+- Updated to 0.9.3.
+
 * Wed Oct 14 2020 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
 - Updated to 0.9.1.
 
