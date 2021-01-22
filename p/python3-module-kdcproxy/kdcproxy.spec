@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 0.4.2
+Version: 1.0.0
 Release: alt1
 
 Summary: A kerberos KDC HTTP proxy WSGI module
@@ -21,8 +21,6 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: libkrb5
-BuildRequires: python3(asn1crypto)
-BuildRequires: python3(coverage)
 BuildRequires: python3(dns)
 BuildRequires: python3(pyasn1)
 BuildRequires: python3(tox)
@@ -39,9 +37,6 @@ to deploy, with minimal configuration.
 %prep
 %setup
 %patch -p1
-# there is no package with provided name dnspython3
-# both python and python3 version have dnspython
-sed -i 's/"dnspython3"/"dnspython"/g' setup.py
 
 %build
 %python3_build
@@ -51,18 +46,18 @@ sed -i 's/"dnspython3"/"dnspython"/g' setup.py
 
 %check
 export PIP_NO_INDEX=YES
-%define py3_nodot py%{python_version_nodots python3}
-export TOXENV=%py3_nodot-asn1crypto,%py3_nodot-pyasn1
-
-%_bindir/tox.py3 --sitepackages -p auto -o -v
-
+export TOXENV=py3
+%_bindir/tox.py3 --sitepackages -vvr
 
 %files
 %doc COPYING README
 %python3_sitelibdir/%mname/
-%python3_sitelibdir/%mname-*.egg-info
+%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Jan 22 2021 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- 0.4.2 -> 1.0.0.
+
 * Fri Oct 04 2019 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
 - 0.4.1 -> 0.4.2.
 - Dropped Python2 package.
