@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 20.12.1
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxslt-devel python-module-google qt5-svg-devel rpm-build-python3 rpm-build-ruby xsltproc
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-svg-devel qt5-webkit-devel qt5-tools
-BuildRequires: llvm-devel llvm-devel-static clang-devel clang-devel-static
+#BuildRequires: llvm-devel llvm-devel-static clang-devel clang-devel-static
 BuildRequires: libxslt-devel xsltproc
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
@@ -59,6 +59,9 @@ standard language.
 
 
 %changelog
+* Fri Jan 22 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt2
+- remove buildrequires to llvm, so don't build tests
+
 * Fri Jan 15 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
 - new version
 
