@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.9
+Version: 5.10
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -10,7 +10,19 @@ Url: http://btrfs.wiki.kernel.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto libzstd-devel libudev-devel
+BuildRequires: libacl-devel
+BuildRequires: libe2fs-devel
+BuildRequires: libuuid-devel
+BuildRequires: zlib-devel
+BuildRequires: libblkid-devel
+BuildRequires: libattr-devel
+BuildRequires: liblzo2-devel
+BuildRequires: asciidoc
+BuildRequires: xmlto
+BuildRequires: libzstd-devel
+BuildRequires: libudev-devel
+BuildRequires: libmount-devel
+BuildRequires: libselinux-devel
 
 %description
 Btrfs (B-tree FS or usually pronounced "Butter FS") is a copy-on-write
@@ -86,6 +98,9 @@ rm -f %buildroot/%{_lib}/libbtrfsutil.so
 %_includedir/*
 
 %changelog
+* Fri Jan 22 2021 Anton Farygin <rider@altlinux.org> 5.10-alt1
+- 5.10
+
 * Mon Nov 02 2020 Anton Farygin <rider@altlinux.ru> 5.9-alt1
 - 5.9
 
