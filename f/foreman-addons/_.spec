@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 Name:          foreman-addons
 Version:       0.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Default addons for Foreman
 License:       GPLv3
 Group:         Development/Ruby
@@ -11,6 +11,8 @@ BuildArch:     noarch
 Source:        modules.tar
 Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
+
+Conflicts:     smart-proxy-dynflow-core
 
 %description
 %summary.
@@ -49,7 +51,18 @@ ln -s %ruby_gemslibdir/smart_proxy_dynflow_core-0.2.2/Gemfile %buildroot%_shared
 %attr(770,_smartforeman,foreman) /run/smart-proxy-dynflow-core
 %config(noreplace) %_sysconfdir/smart_proxy_dynflow_core/*
 
+%post
+%post_service smart-proxy-dynflow-core
+
+%preun
+railsctl cleanup %name
+%preun_service smart-proxy-dynflow-core
+
+
 %changelog
+* Thu Jan 28 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.3-alt1.1
+- ! post and preus scripts
+
 * Fri Jan 22 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.3-alt1
 - + supplement files (service and init) for "smart_proxy_dynflow_core" gem
 - + 3 modules for old foreman
