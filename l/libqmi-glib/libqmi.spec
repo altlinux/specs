@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.26.6
+Version: 1.26.8
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -136,6 +136,9 @@ make check
 
 
 %changelog
+* Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 1.26.8-alt1
+- Updated to 1.26.8.
+
 * Fri Oct 16 2020 Mikhail Efremov <sem@altlinux.org> 1.26.6-alt1
 - Updated to 1.26.6.
 
