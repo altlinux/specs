@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 1.6.10
+Version: 1.6.12
 Release: alt1
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
@@ -64,6 +64,9 @@ tox.py3 --sitepackages -r -vv
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Thu Jan 21 2021 Stanislav Levin <slev@altlinux.org> 1.6.12-alt1
+- 1.6.10 -> 1.6.12.
+
 * Mon Nov 16 2020 Stanislav Levin <slev@altlinux.org> 1.6.10-alt1
 - 1.6.5 -> 1.6.10.
 - Applied upstream fixes(closes: #39167).
