@@ -1,11 +1,11 @@
 Name: firestarter
 Version: 1.0.3
-Release: alt4
+Release: alt5
 Summary: The Firestarter firewall GUI tool
 Packager:       Mikhail Pokidko <pma@altlinux.ru>
 Group: Security/Networking
 License: GPL2+
-Url: http://www.fs-security.com
+Url: https://sourceforge.net/projects/firestarter
 Source0: %name-%version.tar.gz
 Source1: %name.README.ALT
 Patch0: %name.patch
@@ -28,6 +28,7 @@ firewall scripts.
 %patch0 -p1 
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 %configure
 make %{?_smp_mflags}
 
@@ -80,6 +81,7 @@ install -p -D -m0644 %name.console  %buildroot%_sysconfdir/security/console.apps
 install -p -D -m0755 fedora.init %buildroot%_initdir/%name
 install -p -D -m0644 %SOURCE1 ./README.ALT
 
+rm -f %buildroot%_datadir/gnome/apps/Internet/firestarter.desktop
 
 %post
 export GCONF_CONFIG_SOURCE="$(gconftool-2 --get-default-source)"
@@ -120,8 +122,13 @@ fi
 %_datadir/applications/firestarter.desktop
 %_datadir/pixmaps/%name.png
 %_datadir/firestarter/*
+%_datadir/locale/sr@Latn/LC_MESSAGES/%name.mo
 
 %changelog
+* Fri Jan 22 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt5
+- Fixed build with gcc10
+- Changed url
+
 * Wed May 23 2012 Mikhail Pokidko <pma@altlinux.org> 1.0.3-alt4
 - Fixed build error
 
