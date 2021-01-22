@@ -1,7 +1,7 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -84,7 +84,9 @@ Requires: libwebp
 
 Requires: xorg-xvfb setxkbmap
 
-Requires: python3-module-pyinotify python3-module-rencode python3-module-lz4
+Requires: python3-module-pyinotify python3-module-rencode python3-module-lz4 python3-module-netifaces
+
+Requires: libgtk+3-gir
 
 %description
 Xpra is 'screen for X': it allows you to run X programs,
@@ -178,6 +180,9 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.6-alt1
+- new version 4.0.6 (with rpmrb script)
+
 * Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
 - new version 4.0.5 (with rpmrb script)
 
