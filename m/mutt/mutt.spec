@@ -5,7 +5,7 @@
 Name: %oname%branch
 
 Version: 2.0.4.0.4.gd6732de7d
-Release: alt1
+Release: alt2
 Epoch: 3
 
 %def_disable debug
@@ -297,6 +297,10 @@ find %buildroot%_sysconfdir -type f -print0 |
 %_bindir/mutt-Maxi
 
 %changelog
+* Thu Jan 21 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:2.0.4.0.4.gd6732de7d-alt2
+- Disabled $pgp_use_gpg_agent by default (this option works only
+  with GnuPG 2).
+
 * Tue Jan 19 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:2.0.4.0.4.gd6732de7d-alt1
 - Updated to mutt-2-0-4-rel-4-g4a2becbd.
 - Disabled nntp support (vvv patch is no longer supported).
