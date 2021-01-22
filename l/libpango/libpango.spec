@@ -18,17 +18,18 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
 License: LGPL-2.0
 Group: System/Libraries
-Url: http://www.pango.org/
+Url: https://www.pango.org/
 
 %if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %else
+Vcs: https://gitlab.gnome.org/GNOME/pango.git
 Source: %_name-%version.tar
 %endif
 
@@ -46,8 +47,8 @@ Obsoletes: %_name < %version
 Obsoletes: gscript
 
 # From meson.build
-%define meson_ver 0.54
-%define glib_ver 2.60
+%define meson_ver 0.55.3
+%define glib_ver 2.62
 %define cairo_ver 1.12.10
 %define gtk_doc_ver 1.0
 %define xft_ver 2.0.0
@@ -211,6 +212,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jan 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.1-alt1
+- 1.48.1
+
 * Sun Nov 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt1
 - 1.48.0
 
