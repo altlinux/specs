@@ -1,6 +1,6 @@
 Name: sleuthkit
-Version: 4.6.7
-Release: alt2
+Version: 4.10.1
+Release: alt1
 
 Summary: The Sleuth Kit
 
@@ -149,6 +149,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk/
 
 %changelog
+* Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 4.10.1-alt1
+- new version 4.10.1 (with rpmrb script)
+
 * Mon Sep 16 2019 Grigory Ustinov <grenka@altlinux.org> 4.6.7-alt2
 - NMU: Rebuild with new libewf with a patch.
 
