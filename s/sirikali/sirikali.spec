@@ -1,6 +1,6 @@
 # TODO: build with external lxqt_wallet, with kwallet support
 Name: sirikali
-Version: 1.4.7
+Version: 1.4.8
 Release: alt1
 
 Summary: A Qt/C++ GUI front end to ecryptfs-simple,cryfs,gocryptfs,securefs and encfs
@@ -85,6 +85,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.h' |
 %_datadir/metainfo/sirikali.appdata.xml
 
 %changelog
+* Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.8-alt1
+- new version 1.4.8 (with rpmrb script)
+
 * Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.7-alt1
 - new version 1.4.7 (with rpmrb script)
 
