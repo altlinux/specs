@@ -1,7 +1,7 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.10.0
+Version: 3.12.0
 Release: alt1
 
 Summary: A framework for managing DNS information 
@@ -10,6 +10,7 @@ Group: System/Configuration/Networking
 
 URL: https://roy.marples.name/projects/%name
 Source: %name-%version.tar
+Vcs: git://roy.marples.name/openresolv.git
 Source1: test
 Patch0: %name-%version-%release.patch
 BuildArch: noarch
@@ -113,6 +114,9 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %subscribers_dir/libc
 %config(noreplace) %_sysconfdir/resolvconf.conf
 
+%exclude %_sysconfdir/hooks/resolv.conf.d/avahi-daemon
+%exclude %_sysconfdir/hooks/resolv.conf.d/mdnsd
+
 %files bind
 %subscribers_dir/named
 %ghost %_localstatedir/bind/etc/resolvconf-zones.conf
@@ -141,6 +145,12 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt1
+- Added Vcs tag.
+- Don't package avahi-daemon and mdnsd libc subscribers.
+- Makefile: Use ALT-specific libc subscriber path.
+- Updated to 3.12.0.
+
 * Tue Feb 04 2020 Mikhail Efremov <sem@altlinux.org> 3.10.0-alt1
 - resolvconf.conf: Update dynamic_order option.
 - Update url.
