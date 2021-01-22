@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: tpm2-tss
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -119,6 +119,9 @@ mkdir -p %buildroot%_sharedstatedir/%name/system/keystore
 %_man7dir/*
 
 %changelog
+* Fri Jan 22 2021 Danil Shein <dshein@altlinux.org> 3.0.3-alt1
+- 3.0.3
+
 * Tue Dec 01 2020 Danil Shein <dshein@altlinux.org> 3.0.2-alt1
 - update version to 3.0.2
 - enable unit tests
