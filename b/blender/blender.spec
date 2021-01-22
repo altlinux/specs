@@ -9,8 +9,8 @@
 %endif
 
 Name: blender
-Version: 2.91.0
-Release: alt2
+Version: 2.91.2
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -283,6 +283,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Jan 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.2-alt1
+- Updated to upstream version 2.91.2.
+
 * Fri Jan 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.0-alt2
 - Circumvented build issues on aarch64 caused by gcc-10 consuming more resources.
 
