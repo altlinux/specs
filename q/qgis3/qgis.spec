@@ -8,7 +8,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.16.2
+Version: 3.16.3
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -305,6 +305,7 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %_libdir/lib%{rname}_native.so.*
 %_libdir/%rname
 %_bindir/%rname
+%_bindir/%{rname}_process
 %doc %_man1dir/*
 %dir %_datadir/%rname/
 %_datadir/mime/packages/%rname.xml
@@ -365,6 +366,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Fri Jan 22 2021 Andrey Cherepanov <cas@altlinux.org> 3.16.3-alt1
+- New version.
+
 * Thu Dec 24 2020 Andrey Cherepanov <cas@altlinux.org> 3.16.2-alt1
 - New version.
 
