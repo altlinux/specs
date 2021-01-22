@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 20.12.1
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -35,6 +35,9 @@ standard language.
 %prep
 %setup -n %rname-%version
 
+# disable unittests
+sed -i 's|\(.*add_subdirectory.*unittests.*\)|#\1|' CMakeLists.txt
+
 %build
 %add_optflags -I%_K5inc/KWindowSystem
 %K5build \
@@ -59,6 +62,9 @@ standard language.
 
 
 %changelog
+* Fri Jan 22 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt3
+- disable unittests
+
 * Fri Jan 22 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt2
 - remove buildrequires to llvm, so don't build tests
 
