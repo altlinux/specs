@@ -53,7 +53,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -87,6 +87,7 @@ Patch88: boost-1.73.0-fedora-cmakedir.patch
 Patch94: boost-1.73-fedora-locale-empty-vector.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
+Patch1001: boost-1.75.0-alt-jam-fix-mips32-detection.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -1325,6 +1326,7 @@ applications. This package contains python module.
 %patch88 -p1
 %patch94 -p1
 %patch1000 -p1
+%patch1001 -p2
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -1559,6 +1561,8 @@ find . \( -name \*.htm      \
         \) \
         \( -not -name CMakeLists.txt \) \
         -exec install -Dm644 {} %buildroot%boost_doc/{} \;
+
+rm -rf %buildroot%boost_doc/libs/beast/test/extern
 
 if [ -d %buildroot%boost_doc/boost ] ; then
     cp -Rdpf %buildroot%boost_doc/boost/* %buildroot%_includedir/%name/
@@ -1994,6 +1998,10 @@ done
 
 
 %changelog
+* Thu Jan 21 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.75.0-alt2
+- Fix build on %%mips32
+- Don't package external parts of Boost.Beast into boost-doc
+
 * Wed Jan 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.75.0-alt1
 - Updated to upstream version 1.75.0.
 
