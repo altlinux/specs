@@ -1,7 +1,7 @@
 %def_with libidn2
 
 Name: dnsmasq
-Version: 2.82
+Version: 2.83
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -112,7 +112,7 @@ fi
 fi
 # Create dnsmasq user
 groupadd -r -f _dnsmasq ||:
-useradd -r -g _dnsmasq -d /dev/null -s /dev/null -n _dnsmasq >/dev/null 2>&1 ||:
+useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 
 %post
 %post_service %name
@@ -138,6 +138,11 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -n _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 2.83-alt1
+- Use useradd -N instead of -n.
+- Updated to 2.83 (fixes: CVE-2020-25681, CVE-2020-25682, CVE-2020-25683,
+    CVE-2020-25684, CVE-2020-25685, CVE-2020-25686, CVE-2020-25687).
+
 * Mon Jul 27 2020 Mikhail Efremov <sem@altlinux.org> 2.82-alt1
 - Updated to 2.82.
 
