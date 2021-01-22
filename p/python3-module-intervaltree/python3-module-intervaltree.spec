@@ -1,5 +1,5 @@
 Name: python3-module-intervaltree
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1
 
 License: MIT
@@ -34,5 +34,8 @@ Queries may be by point, by range overlap, or by range containment.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0 (with rpmrb script)
+
 * Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt1
 - initial build for ALT Sisyphus
