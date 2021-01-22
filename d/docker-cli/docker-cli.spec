@@ -6,12 +6,12 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      7287ab389066e1e8eefa94e240d013fd93d37ea0
+%global commit      2291f610ae73533e6e0749d4ef1e360149b1e46b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    20.10.0
-Release: alt2
+Version:    20.10.2
+Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -21,7 +21,7 @@ ExclusiveArch: %go_arches
 Conflicts: docker
 
 Source0: %name-%version.tar
-Patch1: docker-cli-20.10.0-alt-fix-man-page-gen.patch
+Patch1: docker-cli-20.10.2-alt-fix-man-page-gen.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.3 libseccomp-devel
@@ -88,6 +88,9 @@ install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/f
 %{_datadir}/fish/completions/docker.fish
 
 %changelog
+* Fri Jan 22 2021 Vladimir Didenko <cow@altlinux.org> 20.10.2-alt1
+- new release
+
 * Wed Dec 9 2020 Vladimir Didenko <cow@altlinux.org> 20.10.0-alt2
 - 20.10.0 release
 
