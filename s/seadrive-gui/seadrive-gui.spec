@@ -1,5 +1,5 @@
 Name: seadrive-gui
-Version: 2.0.7
+Version: 2.0.10
 Release: alt1
 
 Summary: Seafile Drive client
@@ -53,8 +53,10 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
-* Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.7-alt1
+* Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
+- new version 2.0.10 (with rpmrb script)
 
+* Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.7-alt1
 - new version 2.0.7 (with rpmrb script)
 
 * Wed Jun 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
