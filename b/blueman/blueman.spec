@@ -1,6 +1,6 @@
 Name:    blueman
 Version: 2.1.4
-Release: alt1
+Release: alt2
 
 Summary: Blueman is a GTK+ Bluetooth Manager
 License: GPL-3.0-or-later
@@ -32,6 +32,9 @@ Requires: bluez
 %setup
 
 %build
+# on P9 cython is python-2 executable, use cython3 explicitly
+export CYTHONEXEC=cython3
+
 %autoreconf
 %configure \
 	--with-dhcp-config=%_sysconfdir/dhcp/dhcpd.conf \
@@ -100,6 +103,9 @@ fi
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Fri Jan 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.4-alt2
+- Added changes for P9 compatibility.
+
 * Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.4-alt1
 - new version 2.1.4 (Fixes CVE-2020-15238).
 
