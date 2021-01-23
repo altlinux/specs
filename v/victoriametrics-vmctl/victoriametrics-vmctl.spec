@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics-vmctl
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 Summary: Victoria metrics command-line tool
 
@@ -46,6 +46,9 @@ install -m 0755 bin/vmctl %buildroot%_bindir/vmctl
 %_bindir/vmctl
 
 %changelog
+* Sat Jan 23 2021 Alexey Shabalin <shaba@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 0.3.0-alt1
 - new version 0.3.0
 
