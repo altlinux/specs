@@ -1,18 +1,11 @@
 %global import_path github.com/grafana/grafana
-%global commit 5723d951af094204ecbc7087fd0082cbc717fd01
+%global commit 1e261642f4bff28093de2c30093198fcd231c8a6
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-
 %define _runtimedir /run
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
-
 Name:		grafana
-Version:	7.1.3
+Version:	7.3.7
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -50,7 +43,7 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 # $ rm -rf node_modules/node-sass
 # $ rm -rf node_modules/node-gyp
 # $ git add -f node_modules
-# $ git add -f packages/grafana-*/node_modules
+# $ git add -f packages/*/node_modules
 # $ git add -f plugins-bundled/internal/input-datasource/node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 #
@@ -79,13 +72,18 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 export npm_config_devdir="$PWD/node_modules/.node-gyp"
-%golang_prepare
-
-cd .gopath/src/%import_path
-
 export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
+
+#%golang_prepare
+#cd .gopath/src/%import_path
+mkdir -p $BUILDDIR/src/github.com/grafana
+ln -s %_builddir/%name-%version \
+    $BUILDDIR/src/%import_path
+
+pushd $BUILDDIR/src/%import_path
+
 
 %ifarch %arm %ix86 %mips32 %mipsn32
 export NODE_OPTIONS=--max_old_space_size=2048
@@ -108,13 +106,15 @@ CGO_ENABLED=1 go install -ldflags " -s -w  \
     -X main.buildBranch=$BRANCH \
     " -a ./pkg/cmd/grafana-cli
 
+popd
+
 %install
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path:$PWD"
 export GOFLAGS="-mod=vendor"
 
-pushd .gopath/src/%import_path
+pushd $BUILDDIR/src/%import_path
 # Install Front-end Assets
 install -d -m 755 %buildroot%_datadir/%name
 cp -pr conf %buildroot%_datadir/%name/
@@ -201,6 +201,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Sat Jan 23 2021 Alexey Shabalin <shaba@altlinux.org> 7.3.7-alt1
+- 7.3.7
+
 * Wed Aug 19 2020 Alexey Shabalin <shaba@altlinux.org> 7.1.3-alt1
 - 7.1.3
 
