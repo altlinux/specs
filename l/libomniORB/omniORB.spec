@@ -2,12 +2,13 @@ Name:    libomniORB
 License: LGPL
 URL:     http://omniorb.sourceforge.net/
 
-Version: 4.2.3
-Release: alt1
+Version: 4.2.4
+Release: alt2
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: %name-%version.tar
+# Source-url: https://sourceforge.net/projects/omniorb/files/omniORB/omniORB-%{version}/omniORB-%{version}.tar.bz2
+Source: %name-%version.tar
 Source1: omniORB.cfg
 Source2: omninames
 Source3: omninames.sysconfig
@@ -219,6 +220,12 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 4.2.4-alt2
+- update spec
+
+* Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 4.2.4-alt1
+- new version (4.2.4) with rpmgs script
+
 * Sun Dec 16 2018 Pavel Vainerman <pv@altlinux.ru> 4.2.3-alt1
 - new release
 
