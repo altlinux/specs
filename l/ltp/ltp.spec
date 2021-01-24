@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20200930
+Version: 20210121
 Release: alt1
 
 Summary: Linux Test Project
@@ -76,7 +76,6 @@ chmod a+x %buildroot/%_bindir/runltp
 PATH=%buildroot/usr/lib/ltp/testcases/bin:$PATH
 uname01
 uname02
-uname03
 uname04
 
 %post
@@ -93,6 +92,9 @@ fi
 %_man3dir/*.3.*
 
 %changelog
+* Sun Jan 24 2021 Vitaly Chikunov <vt@altlinux.org> 20210121-alt1
+- Update to 20210121.
+
 * Thu Oct 29 2020 Vitaly Chikunov <vt@altlinux.org> 20200930-alt1
 - Update to 20200930.
 - spec: Pre-create output directories.
