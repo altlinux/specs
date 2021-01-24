@@ -2,8 +2,8 @@
 
 %define oname comedilib
 Name: libcomedi
-Version: 0.11.0
-Release: alt3
+Version: 0.12.0
+Release: alt1
 %define oversion %(echo "%version" | sed -e "s|\\.|_|g")
 
 Summary: Data Acquisition library for the Comedi DAQ driver
@@ -153,6 +153,9 @@ for developing applications with %name
 #_libdir/_comedi.la
 
 %changelog
+* Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 0.12.0-alt1
+- new version (0.12.0) with rpmgs script
+
 * Fri May 25 2018 Pavel Vainerman <pv@altlinux.ru> 0.11.0-alt3
 - disabled build documentations (man3)
 
