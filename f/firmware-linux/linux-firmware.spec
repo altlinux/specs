@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210108
+Version: 20210111
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Jan 24 2021 Cronbuild Service <cronbuild@altlinux.org> 20210111-alt1
+- upstream changes (GIT 0578970):
+  + brcm: Link RPi4's WiFi firmware with DMI machine name. (thx Jeremy Linton)
+
 * Mon Jan 11 2021 Cronbuild Service <cronbuild@altlinux.org> 20210108-alt1
 - upstream changes (GIT d528862):
   + brcm: Add NVRAM for Vamrs 96boards Rock960 (thx Peter Robinson)
