@@ -1,8 +1,8 @@
-%define git_commit 5a939ccfaf79c4a3b451e25d7550f663f0845314
+%define git_commit caff472dbf27fbcc5b3d28cbf5b1789592a9f857
 
 Name: dolphin-emu
 Version: 5.0
-Release: alt15.git5a939cc
+Release: alt16.gitcaff472
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -16,6 +16,7 @@ ExclusiveArch: x86_64 aarch64
 # https://github.com/%name/dolphin/archive/%git_commit/dolphin-%git_commit.tar.gz
 Source: dolphin-%git_commit.tar
 Patch0: %name-alt-git.patch
+Patch1: %name-alt-minizip.patch
 
 BuildPreReq: libbrotli-devel
 BuildPreReq: libexpat-devel
@@ -47,7 +48,7 @@ BuildRequires: liblzma-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libmbedtls-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libminizip2-devel
+BuildRequires: libminizip-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libpulseaudio-devel
@@ -66,6 +67,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %prep
 %setup -n dolphin-%git_commit
 %patch0 -p1
+%patch1 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -97,6 +99,10 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Sun Jan 24 2021 Nazarov Denis <nenderus@altlinux.org> 5.0-alt16.gitcaff472
+- Update to git commit caff472dbf27fbcc5b3d28cbf5b1789592a9f857
+- Use minizip from zlib
+
 * Mon Oct 12 2020 Nazarov Denis <nenderus@altlinux.org> 5.0-alt15.git5a939cc
 - Rebuit with minizip
 
