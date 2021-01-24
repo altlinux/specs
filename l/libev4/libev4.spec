@@ -1,16 +1,17 @@
 %set_automake_version 1.11
 
 Name:		libev4
-Version:	4.24
-Release:	alt2
+Version:	4.33
+Release:	alt1
 Summary:	libev - an event notification library
 License:	BSD or GPL v2+
 URL:		http://software.schmorp.de/pkg/libev
 Group:		System/Libraries
+
+# Source-url: http://dist.schmorp.de/libev/libev-%version.tar.gz
 Source:		%name-%version.tar
 Source1:	libev.pc.in
 Source2:	%name.watch
-Patch0:		c++-deprecated.patch
 
 %description
 The libev API provides a mechanism to execute a callback function when
@@ -36,7 +37,6 @@ Static libev library.
 
 %prep
 %setup
-%patch0 -p 0
 # Add pkgconfig support
 cp -p %{SOURCE1} .
 sed -i.pkgconfig -e 's|Makefile|Makefile libev.pc|' configure.ac configure
@@ -76,6 +76,9 @@ popd
 %_libdir/libev.a
 
 %changelog
+* Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 4.33-alt1
+- new version (4.33) with rpmgs script
+
 * Sun Jan 26 2020 Pavel Vainerman <pv@altlinux.ru> 4.24-alt2
 - added patch for c++11 ot higher
 
