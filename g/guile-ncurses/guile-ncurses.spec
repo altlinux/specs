@@ -1,5 +1,5 @@
 Name: guile-ncurses
-Version: 2.2
+Version: 3.0
 Release: alt1
 
 Summary: GNU Guile-Ncurses is a library for the Guile Scheme interpreter
@@ -65,6 +65,9 @@ make check
 %_bindir/guile-ncurses-shell
 
 %changelog
+* Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0-alt1
+- 3.0 released
+
 * Mon Aug 13 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt1
 - 2.2
 
