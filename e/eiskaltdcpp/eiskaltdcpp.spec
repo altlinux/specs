@@ -1,29 +1,26 @@
 Name: eiskaltdcpp
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: EiskaltDC++ - Direct Connect client
 
 License: GPLv3
 Group: Networking/File transfer
-Url: http://code.google.com/p/eiskaltdc/
+Url: https://sourceforge.net/projects/eiskaltdcpp
 
 Source: %name-%version.tar
 Patch: eiskaltdcpp-use_libidn2.patch
 
-BuildRequires: boost-interprocess-devel bzlib-devel cmake gcc-c++
+BuildRequires: bzlib-devel cmake gcc-c++
 BuildRequires: libaspell-devel libgtk+2-devel libidn2-devel liblua-devel
 BuildRequires: libnotify-devel libpcrecpp-devel qt5-phonon-devel
 BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-script-devel
 BuildRequires: libssl-devel perl-JSON-RPC perl-Term-ShellUI libminiupnpc-devel
 
-%add_findreq_skiplist *xmms2_audacious2.ru_RU.UTF-8.php
-%add_findreq_skiplist *commands.ru_RU.UTF-8.php
-
 %description
 EiskaltDC++ is a cross-platform program that uses the Direct Connect and
-ADC protocol. It is compatible with other DC clients, such as the original DC
-from Neomodus, DC++ and derivatives. EiskaltDC++ also interoperates
+Advanced Direct Connect (ADC) protocols. It is compatible with DC++,
+AirDC++, FlylinkDC++ and other DC clients. EiskaltDC++ also interoperates
 with all common DC hub software.
 
 %package common
@@ -172,6 +169,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt2
+- Minor fixes of spec file (thx for Boris Pek).
+
 * Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
 - Build new version.
 
