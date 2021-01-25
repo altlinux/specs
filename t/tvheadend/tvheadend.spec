@@ -1,6 +1,6 @@
 Name: tvheadend
 Version: 4.2.8
-Release: alt2
+Release: alt3
 
 Summary: Tvheadend TV streaming server
 License: GPLv3
@@ -27,7 +27,7 @@ through a modern web interface.
 
 %build
 export TVHEADEND_FILE_CACHE=${PWD}/.gear
-PYTHON=%__python \
+CFLAGS="%optflags -fcommon -Wno-format-truncation" PYTHON=%__python \
 sh configure --bindir=%_sbindir --libdir=%_libdir \
 	     --mandir=%_mandir --datadir=%_datadir \
 	     --enable-libav --disable-ffmpeg_static
@@ -72,6 +72,9 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.8-alt3
+- fix build with gcc10
+
 * Thu Dec 12 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.8-alt2
 - fix build with python-base splitted
 
