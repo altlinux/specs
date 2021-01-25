@@ -2,7 +2,7 @@
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.77
+Version: 0.78
 Release: alt1
 
 Summary: Asynchronous event-driven programming
@@ -12,7 +12,6 @@ License: perl
 Url: %CPAN %oname
 # https://cpan.metacpan.org/authors/id/P/PE/PEVANS/%oname-%version.tar.gz
 Source: %oname-%version.tar
-Patch1: %oname-0.71-alt-build.patch
 
 BuildArch: noarch
 BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Future.pm) perl(Test/Fatal.pm) perl(Future/Utils.pm) perl-devel perl(Test/Identity.pm) perl(Struct/Dumb.pm) perl(Future/IO.pm) perl(Test/Metrics/Any.pm)
@@ -32,10 +31,10 @@ Future::IO Implementation using IO::Async
 
 %prep
 %setup -q -n %oname-%version
-%patch1 -p2
+
 # on ppc64le, but ifarch did not expand here :(
 #ifarch ppc64le
-[ %version = 0.77 ] && rm -f t/70future-io.t
+[ %version = 0.78 ] && rm -f t/70future-io.t
 #endif
 
 %build
@@ -52,6 +51,9 @@ Future::IO Implementation using IO::Async
 %perl_vendor_privlib/Future/IO/Impl/IOAsync.pm
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
+- new version
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1
 - new version
 
