@@ -3,7 +3,7 @@
 %global goipath github.com/rickb777/plural
 
 Name: golang-github-rickb777-plural
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 Summary: Support for localising plurals in a flexible range of different styles
 Group: Development/Other
@@ -55,6 +55,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 1.3.0-alt1
+- New version (1.3.0).
+
 * Fri Oct 16 2020 Leontiy Volodin <lvol@altlinux.org> 1.2.2-alt1
 - New version.
 
