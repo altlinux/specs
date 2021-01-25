@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt8
+Release: alt9
 
 Summary: Digital satellite receiver box with advanced features
 License: GPLv2
@@ -545,6 +545,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt9
+- fixed build with recent glibc
+
 * Sun May 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt8
 - drop unmaintained upnp plugin
 
