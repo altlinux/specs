@@ -4,7 +4,7 @@
 %global goaltipaths     gopkg.in/stretchr/testify.v1
 
 Name: golang-github-stretchr-testify
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 Summary: Toolkit with common assertions and mocks
 Group: Development/Other
@@ -72,6 +72,9 @@ export GOPATH="%go_path"
 %exclude %go_path/src/%goipath/_codegen
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.0-alt1
+- New version (1.7.0).
+
 * Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.6.1-alt1
 - New version.
 
