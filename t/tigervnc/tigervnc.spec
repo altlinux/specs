@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.10.1
-Release: alt4
+Release: alt5
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -280,6 +280,9 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Mon Jan 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.1-alt5
+- Fixed desktop file (Closes: 39595).
+
 * Tue Nov 17 2020 Fr. Br. George <george@altlinux.ru> 1.10.1-alt4
 - Fix CVE-2020-26117
 
