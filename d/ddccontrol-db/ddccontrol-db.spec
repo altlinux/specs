@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/perl
 %define _localstatedir %{_var}
 Name:             ddccontrol-db
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20190825
+Version:          20201221
 Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
@@ -43,6 +43,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 20201221-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 20190825-alt1_1
 - update to new release by fcimport
 
