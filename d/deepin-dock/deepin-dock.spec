@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.3.0.54
+Version: 5.3.64
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -12,6 +12,7 @@ Url: https://github.com/linuxdeepin/dde-dock
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: deepin-dock-5.3.64-alt-fix-underlinked.patch
 
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
@@ -34,6 +35,7 @@ BuildRequires: libXext-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libxcbutil-image-devel
+BuildRequires: libgtest-devel
 Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
 
 %description
@@ -48,6 +50,7 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
+%patch -p2
 
 sed -i '/TARGETS/s|lib|%_lib|' plugins/*/CMakeLists.txt
 sed -E '35d;/dpkg-architecture|EXIT/d;44d' CMakeLists.txt
@@ -87,11 +90,15 @@ export AR="llvm-ar"
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.gschema.xml
 
 %files devel
+%doc plugins/plugin-guide
 %_includedir/%repo/
 %_pkgconfigdir/%repo.pc
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.64-alt1
+- New version (5.3.64) with rpmgs script.
+
 * Tue Jan 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.54-alt1
 - New version (5.3.0.54) with rpmgs script.
 
