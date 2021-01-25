@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel libqt4-devel libre
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		android-file-transfer
-Version:	4.1
+Version:	4.2
 Release:	alt1_1
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
@@ -75,6 +75,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1_1
+- new version
+
 * Mon Dec 28 2020 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_1
 - new version
 
