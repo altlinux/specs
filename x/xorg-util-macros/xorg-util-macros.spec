@@ -1,5 +1,5 @@
 Name: xorg-util-macros
-Version: 1.19.2
+Version: 1.19.3
 Release: alt1
 Summary: X.Org X11 Autotools macros
 License: MIT/X11
@@ -35,6 +35,9 @@ comprise the X Window System
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Jan 25 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.19.3-alt1
+- 1.19.3
+
 * Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.19.2-alt1
 - 1.19.2
 
