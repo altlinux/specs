@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.88
+Version: 1.90
 Release: alt1
 
 Summary: Perl extension for using OpenSSL
@@ -31,11 +31,14 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_install
 
 %files
-%doc Changes Credits README examples QuickRef README.OSX README.VMS README.Win32
+%doc Changes Credits README examples QuickRef README.OSX README.VMS README.Win32 CONTRIBUTING.md
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Net
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 1.90-alt1
+- new version
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.88-alt1
 - new version 1.88
 
