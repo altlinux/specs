@@ -1,5 +1,5 @@
 Name: autofs
-Version: 5.1.6
+Version: 5.1.7
 Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
@@ -13,6 +13,7 @@ BuildRequires: bison flex
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel
 BuildRequires: libssl-devel libxml2-devel libtirpc-devel >= 1.0.1-alt1
 BuildRequires: libsss_autofs libsystemd-devel
+BuildRequires: rpcgen rpcsvc-proto-devel
 
 %package ldap
 Summary: A tool for automatically mounting and unmounting filesystems
@@ -134,6 +135,9 @@ fi
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.7-alt1
+- 5.1.7 released
+
 * Mon Oct 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.6-alt1
 - 5.1.6 released
 
