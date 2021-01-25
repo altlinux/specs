@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module Test-Inline
 %define m_distro Test-Inline
 %define m_name Test-Inline
@@ -5,7 +6,7 @@
 %define _enable_test 1
 
 Name: perl-Test-Inline
-Version: 2.213
+Version: 2.214
 Release: alt1
 
 Summary: Test-Inline - Inlining your tests next to the code being tested
@@ -17,10 +18,10 @@ Url: http://search.cpan.org/~adamk/%m_distro-%version
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/Test-Inline-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 24 2005
-BuildRequires: perl-Algorithm-Dependency perl-Class-Autouse perl-Config-Tiny perl-File-Find-Rule perl-File-Flat perl-File-Slurp perl-Number-Compare perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Pod-Tests perl-Test-Pod perl-Text-Glob perl-devel perl-prefork
+BuildRequires: perl-Algorithm-Dependency perl-Class-Autouse perl-Config-Tiny perl-File-Find-Rule perl-File-Flat perl-File-Slurp perl-Number-Compare perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Pod-Tests perl-Test-Pod perl-Text-Glob perl-devel perl-prefork perl(Path/Tiny.pm)
 
 BuildRequires: perl-Algorithm-Dependency perl-Class-Autouse perl-devel perl-prefork perl-Pod-Tests perl-Test-ClassAPI perl-File-chmod perl-Test-Script
 
@@ -37,7 +38,7 @@ A test is denoted using either "=for testing" or a "=begin/end testing"
 block.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 #%__subst "s|VCS { \$self|CVS { my \$self = shift; \$self|" lib/Test/Inline/IO/File/VCS.pm
 
 %build
@@ -47,12 +48,15 @@ block.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %_bindir/*
 %perl_vendor_privlib/Test/*
 %_man1dir/*
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 2.214-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.213-alt1
 - automated CPAN update
 
