@@ -3,7 +3,7 @@ Group: System/Fonts/True type
 %define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit0 d5e261484286d33a1fe8a02676f5907ecc02106f
+%global commit0 aac7ccaa4d1dea4543453b96f7d6fc47066a57ff
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %global fontname google-noto-emoji
@@ -16,8 +16,8 @@ Group: System/Fonts/True type
 
 
 Name:           fonts-ttf-google-noto-emoji
-Version:        20200723
-Release:        alt1_2
+Version:        20200916
+Release:        alt1_1
 Summary:        Google a.'Noto Emojia.' Black-and-White emoji font
 
 # In noto-emoji-fonts source
@@ -37,7 +37,6 @@ Source3:        %{fontname}-color.metainfo.xml
 Patch0:         noto-emoji-build-all-flags.patch
 Patch1:         noto-emoji-use-gm.patch
 Patch2:         noto-emoji-use-system-pngquant.patch
-Patch3:         noto-emoji-check-sequence.patch
 
 BuildArch:      noarch
 BuildRequires:  gcc
@@ -76,7 +75,6 @@ This package provides the Google a.'Noto Color Emojia.' colored emoji font.
 %patch0 -p1 -b .noto-emoji-build-all-flags
 %patch1 -p1 -b .noto-emoji-use-gm.patch
 %patch2 -p1 -b .noto-emoji-use-system-pngquant
-%patch3 -p1 -b .noto-emoji-check-sequence
 
 rm -rf third_party/pngquant
 
@@ -156,6 +154,9 @@ fi
 
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 20200916-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 20200723-alt1_2
 - update to new release by fcimport
 
