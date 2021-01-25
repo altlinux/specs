@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.2.0.85
+Version: 5.2.0.87
 Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
@@ -216,6 +216,9 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt1
+- New version (5.2.0.87) with rpmgs script.
+
 * Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.85-alt1
 - New version (5.2.0.85) with rpmgs script.
 
