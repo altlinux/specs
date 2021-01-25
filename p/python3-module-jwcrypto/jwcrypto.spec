@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 0.7
+Version: 0.8
 Release: alt1
 Summary: JWCrypto is an implementation of the Javascript Object Signing and Encryption (JOSE) Web Standards
 
@@ -23,7 +23,6 @@ BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-tox
-BuildRequires: python3-module-coverage
 BuildRequires: python3-module-cryptography
 %endif
 
@@ -39,6 +38,7 @@ RFC 7520 - Examples of Protecting Content Using JSON Object Signing and
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build_debug
@@ -58,6 +58,9 @@ rm -rfv %buildroot%python3_sitelibdir/%mname/tests*
 %python3_sitelibdir/%mname-%version-py*.egg-info
 
 %changelog
+* Mon Jan 25 2021 Stanislav Levin <slev@altlinux.org> 0.8-alt1
+- 0.7 -> 0.8.
+
 * Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 0.7-alt1
 - 0.6.0 -> 0.7.
 
