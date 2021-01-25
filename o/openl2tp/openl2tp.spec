@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt7
+Release: alt8
 
 Summary: L2TP (RFC2661) server/client
 License: GPLv2
@@ -12,7 +12,10 @@ Source1: %name.service
 Source2: %name.init
 Patch0: openl2tp-1.8-socket.patch
 Patch1: openl2tp-1.8-cleanup-alt.patch
+Patch2: openl2tp-1.8-tirpc.patch
+
 BuildRequires: flex libreadline-devel
+BuildRequires: libtirpc-devel rpcgen
 
 %description
 OpenL2TP is a complete implementation of RFC2661 - Layer Two Tunneling
@@ -35,11 +38,12 @@ or applications that use the OpenL2TP APIs.
 %prep
 %setup
 %patch0 -p1
+%patch2 -p1
 
 %build
 %add_optflags -Wno-strict-aliasing -Wno-unused-but-set-variable
-%add_optflags -Wno-error=address-of-packed-member -Wno-error=stringop-overflow
-make OPT_CFLAGS='%optflags' SYS_LIBDIR=%_libdir
+%add_optflags -Wno-error=address-of-packed-member -Wno-error=stringop-overflow -Wno-error=array-bounds
+make OPT_CFLAGS='%optflags -I%_includedir/tirpc' SYS_LIBDIR=%_libdir
 
 %install
 %makeinstall_std SYS_LIBDIR=%_libdir
@@ -81,6 +85,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt8
+- rebuilt with libtirpc
+
 * Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt7
 - fix FTBFS with gcc9
 
