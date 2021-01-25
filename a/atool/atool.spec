@@ -1,3 +1,4 @@
+Group: Archiving/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/perl perl(Encode.pm)
 # END SourceDeps(oneline)
@@ -5,10 +6,9 @@ BuildRequires: /usr/bin/perl perl(Encode.pm)
 %define _localstatedir %{_var}
 Name:		atool
 Version:	0.39.0
-Release:	alt1_9
+Release:	alt1_16
 Summary:	A perl script for managing file archives of various types
 
-Group:		Archiving/Other
 License:	GPLv2+
 URL:		http://www.nongnu.org/atool/
 Source0:	http://savannah.nongnu.org/download/%{name}/%{name}-%{version}.tar.gz
@@ -34,6 +34,7 @@ ace, arj, rpm, cpio, arc, 7z, alzip.
 %prep
 %setup -q
 
+
 # Convert to UTF-8 while keeping the original timestamp
 iconv -f iso8859-1 -t utf-8 NEWS -o tmp
 touch -r NEWS tmp
@@ -47,7 +48,7 @@ chmod 0644 NEWS
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 %files
 %{_bindir}/*
@@ -55,6 +56,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_9
 - update to new release by fcimport
 
