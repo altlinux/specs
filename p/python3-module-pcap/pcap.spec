@@ -2,8 +2,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 
 Summary: Simplified object-oriented Python extension module for libpcap
 License: BSD
@@ -13,7 +13,7 @@ Url: https://github.com/hellais/pypcap
 # https://github.com/hellais/pypcap.git
 Source: %name-%version.tar.gz
 
-Patch: eed8796.patch
+Patch: e22f5d25f0d581d19ef337493434e72cd3a6ae71.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libpcap-devel
@@ -42,6 +42,9 @@ of the BSD operating systems
 
 
 %changelog
+* Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.2.3-alt1
+- Automatically updated to 1.2.3.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1:1.2.2-alt2
 - Build for python2 disabled.
 
