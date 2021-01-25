@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SQL-Abstract
 Name: perl-%dist
-Version: 1.87
+Version: 2.000001
 Release: alt1
 
 Summary: Generate SQL from Perl data structures
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/SQL-Abstract/
-Source0: http://www.cpan.org/authors/id/I/IL/ILMARI/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MS/MSTROUT/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ create an abstract SQL generation module.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 2.000001-alt1
+- automated CPAN update
+
 * Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.87-alt1
 - automated CPAN update
 
