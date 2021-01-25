@@ -1,6 +1,6 @@
 %global appid net.lutris.Lutris
 Name: lutris
-Version: 0.5.8.2
+Version: 0.5.8.3
 Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
@@ -59,6 +59,9 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %_man1dir/%name.1.xz
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.8.3-alt1
+- New version (0.5.8.3) with rpmgs script.
+
 * Wed Jan 06 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.8.2-alt1
 - New version (0.5.8.2) with rpmgs script.
 
