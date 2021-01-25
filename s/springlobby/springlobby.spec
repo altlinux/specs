@@ -1,7 +1,7 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/wx-config-3.0 libX11-devel libminizip-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libnotify) zlib-devel
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-ninja-build
+BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck /usr/bin/desktop-file-validate /usr/bin/doxygen /usr/bin/wx-config-3.0 libX11-devel libpcre-devel pkgconfig(glib-2.0) python-devel rpm-build-python zlib-devel
 # END SourceDeps(oneline)
 # undefined symbol: L_*, LOG_*, parse32 in libFileSystem
 # those are from static libUtil, in main binary
@@ -9,83 +9,98 @@ BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck /usr/bin/desktop-file-ins
 BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:			springlobby
-Version:		0.267
-Release:		alt2_5
-Summary:		A lobby client for the spring RTS game engine
+# Colorize terminal output. Helps to find problems during build process.
+%global optflags %{optflags} -fdiagnostics-color=always
+
+Name:           springlobby
+Version:        0.271
+Release:        alt1_1
+Summary:        Free cross-platform lobby client for the Spring RTS project
 
 # License clarification: http://springlobby.info/issues/show/810
-License:		GPLv2
-URL:			http://springlobby.info
-Source0:		http://www.springlobby.info/tarballs/springlobby-%{version}.tar.bz2
-Patch0:			gcc10.patch
+License:        GPLv2
+URL:            https://springlobby.springrts.com/
+Source0:        https://springlobby.springrts.com/dl/stable/springlobby-%{version}.tar.bz2
+ExclusiveArch:  %{ix86} x86_64
 
-BuildRequires:  libSDL-devel
-BuildRequires:  libSDL_mixer-devel
-BuildRequires:  libSDL_sound-devel
 BuildRequires:  libalure-devel
 BuildRequires:  boost-complete
 BuildRequires:  ctest cmake
 BuildRequires:  desktop-file-utils
 BuildRequires:  dumb-devel
-BuildRequires:  gcc-c++
+BuildRequires:  gcc-c++ >= 8
 BuildRequires:  gettext gettext-tools
+BuildRequires:  libappstream-glib
 BuildRequires:  libcurl-devel
+BuildRequires:  libnotify-devel libnotify-gir-devel
+BuildRequires:  libminizip-devel
+BuildRequires:  ninja-build python3-module-ninja_syntax
 BuildRequires:  libopenal-devel
 BuildRequires:  libtorrent-rasterbar-devel
+BuildRequires:  libSDL_mixer-devel
+BuildRequires:  libSDL_sound-devel
+BuildRequires:  libSDL-devel
 BuildRequires:  libwxGTK3.0-devel
 
+# https://github.com/springlobby/springlobby/issues/709
+BuildRequires:  jsoncpp-devel
+
+Requires:       icon-theme-hicolor
+Requires:       libGLU
+
+Requires:     libfluidsynth
+Requires:     springrts
+
 # There are other "lobbies" for spring, make a virtual-provides
-Provides:		spring-lobby = %{version}-%{release}
-
-Requires:		icon-theme-hicolor
-
-Requires:		springrts
-
-ExclusiveArch:	%{ix86} x86_64
+Provides:       spring-lobby = %{version}-%{release}
 Source44: import.info
-Patch33: springlobby-0.195-alt-linkage.patch
-Patch34: springlobby-0.267-alt-curl-compat.patch
+Patch33: springlobby-0.270-alt-linkage.patch
 
 %description
 SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 
+
 %prep
 %setup -q
-%patch0 -p1
-#patch33 -p1
-%patch34 -p2
+
+
+# Unbunle libs
+rm -rf \
+    src/downloader/lib/src/lib/minizip
+%patch33 -p1
 
 
 %build
-%{fedora_cmake}
-%make_build
+%{fedora_v2_cmake} \
+    -B $PWD/%{_vpath_builddir} \
+    -G Ninja
+
 
 %install
-%makeinstall_std
-
-# Useless file
-rm -f $RPM_BUILD_ROOT%{_prefix}/config.h
-
-# Fix Icon entry
-sed -i -e 's/^Icon=\(.*\).svg/Icon=\1/g' \
-		$RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
-desktop-file-install	\
-	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
-	--remove-category Application \
-	--delete-original \
-	$RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
-
+%ninja_install -C %{_vpath_builddir}
 %find_lang %{name}
+rm -rf %{buildroot}%{_docdir}/%{name}/COPYING
+
+
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+
 
 %files -f %{name}.lang
-%{_docdir}/%{name}
-%{_bindir}/*
-%{_metainfodir}/*.appdata.xml
+%doc --no-dereference COPYING
+%doc ChangeLog
+%{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
+%{_docdir}/%{name}/
+%{_metainfodir}/*.xml
+
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.271-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.267-alt2_5
 - NMU: rebuilt with boost-1.74.0.
 
