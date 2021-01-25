@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.0
-Release: alt2
+Release: alt3
 
 Summary: Python libev interface
 License: GPLv3
@@ -10,6 +10,7 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyev/
 
 Source: %name-%version.tar
+Patch: python3.9.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -31,6 +32,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build_debug
@@ -47,6 +49,9 @@ This package contains documentation for %oname.
 
 
 %changelog
+* Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt3
+- Fixed build with python3.9.
+
 * Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt2
 - python2 disabled
 
