@@ -1,7 +1,7 @@
 %define oname guppy
 
 Name: python3-module-%oname
-Version: 3.0.9
+Version: 3.1.0
 Release: alt1
 
 Summary: Guppy-PE -- A Python Programming Environment
@@ -9,7 +9,7 @@ License: MIT
 Group: Development/Python3
 Url: https://github.com/zhuyifei1999/guppy3
 
-Source: %name-%version.tar
+Source: %{oname}3-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -37,23 +37,8 @@ and generate tests and documentation from a common source.
 
 This package contains tests for guppy.
 
-%package docs
-Summary: Docs for guppy
-Group: Development/Documentation
-Requires: %name = %version-%release
-
-%description docs
-Guppy-PE is a library and programming environment for Python, currently
-providing in particular the Heapy subsystem, which supports object and
-heap memory sizing, profiling and debugging. It also includes a
-prototypical specification language, the Guppy Specification Language
-(GSL), which can be used to formally specify aspects of Python programs
-and generate tests and documentation from a common source.
-
-This package contains documentation for guppy.
-
 %prep
-%setup
+%setup -n %{oname}3-%version
 
 %build
 %python3_build
@@ -62,7 +47,7 @@ This package contains documentation for guppy.
 %python3_install
 
 %files
-%doc LICENSE README.md
+%doc README.md
 %python3_sitelibdir/*
 
 %exclude %python3_sitelibdir/%oname/sets/test.py
@@ -72,11 +57,10 @@ This package contains documentation for guppy.
 %python3_sitelibdir/%oname/sets/test.py
 %python3_sitelibdir/%oname/heapy/test/
 
-%files docs
-%doc docs/
-
-
 %changelog
+* Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Build new version for python3.9.
+
 * Tue Jan 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.0.9-alt1
 - Initial build
 
