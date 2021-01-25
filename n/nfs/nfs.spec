@@ -1,6 +1,6 @@
 Name: nfs
 Version: 2.5.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -13,6 +13,7 @@ Source0: %name-%version-%release.tar
 BuildRequires: libblkid-devel libevent-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
+BuildRequires: rpcgen rpcsvc-proto-devel
 
 %package -n libnfsidmap
 Summary: Name to user id mapping library
@@ -303,6 +304,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.5.2-alt2
+- rebuilt with standalone rpcsvc-proto
+
 * Fri Oct 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.5.2-alt1
 - 2.5.2 released
 
