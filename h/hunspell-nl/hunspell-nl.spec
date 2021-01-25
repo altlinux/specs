@@ -1,17 +1,12 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-nl
 Summary: Dutch hunspell dictionaries
-Version: 2.10
-Release: alt1_11
-#http://www.opentaal.org/bestanden/doc_download/20-woordenlijst-v-210g-voor-openofficeorg-3
-#annoying click through makes direct link apparently impossible
-Source: OpenTaal-210G-LO.oxt
-URL: http://www.opentaal.org/english.php
+Version: 2.20.19
+Release: alt1_2
+Source: https://github.com/OpenTaal/opentaal-hunspell/archive/2.20.19.tar.gz
+URL: https://opentaal.org/
 License: BSD or CC-BY
 BuildArch: noarch
 
@@ -22,14 +17,14 @@ Source44: import.info
 Dutch hunspell dictionaries.
 
 %prep
-%setup -q -c
+%setup -q -n opentaal-hunspell-%{version}
 
 %build
-chmod -x nl_NL.*
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p nl_NL.aff nl_NL.dic $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p nl.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/nl_NL.dic
+cp -p nl.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/nl_NL.aff
 
 pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
 nl_NL_aliases="nl_AW nl_BE"
@@ -40,10 +35,13 @@ done
 
 
 %files
-%doc description/desc_en_US.txt description/desc_nl_NL.txt README_nl_NL.txt license_en_EN.txt licentie_nl_NL.txt
+%doc LICENSE.txt README.md
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 2.20.19-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_11
 - update to new release by fcimport
 
