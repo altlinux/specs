@@ -13,7 +13,7 @@
 %global forgeurl https://github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 5.3.0.14
+Version: 5.3.2
 Release: alt1
 Summary: Go-lang bingding for dde-daemon
 License: GPL-3.0+
@@ -27,6 +27,17 @@ Source: %url/archive/%version/dde-api-%version.tar.gz
 BuildRequires(pre): rpm-build-golang
 BuildRequires: libalsa-devel libcairo-devel libgio-devel libgtk+3-devel libgdk-pixbuf-devel libgudev-devel libcanberra-devel libpulseaudio-devel librsvg-devel libpoppler-glib-devel libpolkitqt5-qt5-devel libsystemd-devel libXfixes-devel libXcursor-devel libX11-devel libXi-devel deepin-gettext-tools deepin-gir-generator libgdk-pixbuf-xlib-devel
 BuildRequires: golang-github-linuxdeepin-dbus-factory-devel golang-deepin-go-lib-devel golang-deepin-go-x11-client-devel golang-github-burntsushi-xgbutil-devel golang-github-burntsushi-xgbutil-devel golang-github-disintegration-imaging-devel golang-github-cryptix-wav-devel golang-github-fogleman-gg-devel golang-github-nfnt-resize-devel golang-gopkg-alecthomas-kingpin-2-devel golang-x-image-devel golang-golang-x-net-devel golang-github-rickb777-date-devel golang-github-rickb777-plural-devel golang-github-alecthomas-template-devel golang-github-alecthomas-units-devel golang-github-freetype-devel golang-github-mattn-sqlite3-devel go-xgettext-devel golang-github-fsnotify-devel golang-github-go-dbus-devel golang-golang-x-sys-devel
+%if_with check
+BuildRequires: golang-github-jinzhu-gorm-devel
+BuildRequires: golang-github-jinzhu-inflection-devel
+BuildRequires: golang-gopkg-check-1-devel
+BuildRequires: golang-github-stretchr-testify-devel
+BuildRequires: golang-github-kr-pretty-devel
+BuildRequires: golang-github-kr-text-devel
+BuildRequires: golang-github-davecgh-spew-devel
+BuildRequires: golang-github-pmezard-difflib-devel
+BuildRequires: golang-github-goconvey-devel
+%endif
 Requires: deepin-desktop-base rfkill
 Requires(pre): shadow-utils dbus-tools
 
@@ -50,9 +61,14 @@ building other packages which use import path with
 # Remove debian build files.
 rm -rf debian/
 # Fix unmets.
-sed -i 's|/usr/bin/true|/bin/true|' misc/systemd/system/deepin-shutdown-sound.service
+sed -i 's|/usr/bin/true|/bin/true|' \
+    misc/systemd/system/deepin-shutdown-sound.service
 # Fixed build for i586.
 sed -i 's|gobuild|.build|' Makefile
+# Fixed paths.
+sed -i 's|/etc/default/locale|%_datadir/locale|' \
+    adjust-grub-theme/util.go \
+    locale-helper/ifc.go
 
 %build
 export BUILDDIR=$PWD/.build
@@ -83,7 +99,9 @@ mkdir -p %buildroot%_sharedstatedir/deepin-sound-player
 %if_with check
 %check
 export GOPATH="%go_path"
-%gotest
+#go get github.com/smartystreets/goconvey/convey
+make test ||:
+make test-coverage
 %endif
 
 %files
@@ -103,6 +121,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.2-alt1
+- New version (5.3.2) with rpmgs script.
+
 * Thu Dec 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.14-alt1
 - New version (5.3.0.14) with rpmgs script.
 
