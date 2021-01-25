@@ -1,7 +1,7 @@
 %global repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.3.0.41
+Version: 5.3.0.45
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -12,7 +12,18 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake qt5-tools-devel dtk5-core-devel dtk5-widget-devel deepin-qt-dbus-factory-devel gsettings-qt-devel libxcbutil-icccm-devel qt5-base-devel qt5-svg-devel qt5-x11extras-devel
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: qt5-tools-devel
+BuildRequires: dtk5-core-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: gsettings-qt-devel
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: libgtest-devel
 # Requires: deepin-menu deepin-daemon startdde icon-theme-hicolor
 
 %description
@@ -52,14 +63,19 @@ sed -i '1i#include <QPainterPath>' \
 %files
 %doc LICENSE
 %_bindir/%repo
+%_bindir/%repo-wapper
 %_datadir/%repo/
 %_datadir/dbus-1/services/*.service
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%_desktopdir/%repo.desktop
 
 %files devel
 %_includedir/%repo/
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.45-alt1
+- New version (5.3.0.45) with rpmgs script.
+
 * Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.41-alt1
 - New version (5.3.0.41) with rpmgs script.
 
