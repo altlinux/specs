@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.33.0
-Release: alt1.1
+Release: alt2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -29,6 +29,8 @@ BuildRequires: libsmbclient-devel libswresample-devel libxkbcommon-devel libdrm-
 BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-devel libwayland-cursor-devel libwayland-client-devel wayland-protocols python3-base
 
 BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libspirv-cross-devel libavdevice-devel
+
+BuildRequires: libzimg-devel vapoursynth-devel
 
 %if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
@@ -99,6 +101,8 @@ chmod ugo+rx waf
 --enable-jack \
 --enable-vulkan \
 --enable-sdl2 \
+--enable-vapoursynth \
+--enable-libmpv-shared \
 #
 
 %build
@@ -118,6 +122,7 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
+%_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
 %doc Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/mpv.conf etc/restore-old-bindings.conf
@@ -137,6 +142,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 0.33.0-alt2
+- Added vapoursynth and libzimg support.
+
 * Tue Nov 24 2020 L.A. Kostis <lakostis@altlinux.ru> 0.33.0-alt1.1
 - Add libspirv-cross-devel to BR.
 - Add missing libavdevice-devel to BR (should fix v4l).
