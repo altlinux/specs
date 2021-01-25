@@ -1,7 +1,7 @@
 %global repo dde-network-utils
 
 Name: deepin-network-utils
-Version: 5.3.0.5
+Version: 5.3.0.8
 Release: alt1
 Summary: Deepin desktop-environment - network utils
 License: GPL-3.0-or-later
@@ -11,7 +11,13 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: gcc-c++ deepin-qt-dbus-factory-devel qt5-base-devel qt5-linguist gsettings-qt-devel
+BuildRequires: gcc-c++
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-linguist
+BuildRequires: gsettings-qt-devel
+BuildRequires: libgio-qt-devel
+BuildRequires: libgtest-devel
 
 %description
 Deepin desktop-environment - network utils.
@@ -33,8 +39,8 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
-%__subst 's|/lib$|/%_lib|' dde-network-utils.pro
+sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
+sed -i 's|/lib$|/%_lib|' dde-network-utils/dde-network-utils.pro
 
 %build
 %qmake_qt5 \
@@ -47,16 +53,19 @@ Header files and libraries for %name.
 
 %files -n libddenetworkutils
 %doc README.md
-%_libdir/lib*.so.1
-%_libdir/lib*.so.1.*
+%_libdir/lib%{repo}.so.1
+%_libdir/lib%{repo}.so.1.*
 %_datadir/%repo/
 
 %files devel
 %_includedir/libddenetworkutils/
-%_pkgconfigdir/*.pc
-%_libdir/lib*.so
+%_pkgconfigdir/%repo.pc
+%_libdir/lib%{repo}.so
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.8-alt1
+- New version (5.3.0.8) with rpmgs script.
+
 * Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.5-alt1
 - New version (5.3.0.5) with rpmgs script.
 
