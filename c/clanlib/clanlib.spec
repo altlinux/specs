@@ -11,27 +11,29 @@ BuildRequires: /usr/bin/perl gcc-c++ imake libX11-devel libXt-devel libalsa-deve
 Name:		clanlib
 Summary:	The ClanLib Game SDK series 2.3
 Version:	2.3.7
-Release:	alt2_7
+Release:	alt2_11
 License:	BSD-like
 Group:		System/Libraries
+URL:		http://www.clanlib.org/
 Source0:	http://www.clanlib.org/download/releases-2.0/ClanLib-%version.tgz
 Patch0:		ClanLib-2.3.6-link.patch
 Patch1:		ClanLib-2.3.4-gcc47.patch
 # from fedora
-Patch2:		ClanLib-2.3.4-non-x86.patch
-Patch3:         ClanLib-2.3.7-no-wm_type-in-fs.patch
-Patch4:         ClanLib-2.3.7-no-ldflags-for-conftest.patch
-Patch5:         ClanLib-2.3.7-gcc7.patch
+Patch3:		ClanLib-2.3.4-non-x86.patch
+Patch6:		ClanLib-2.3.7-ftbfs.patch
 
-Patch8:		ClanLib-2.3.7-alt-i586.patch
+Patch13:         ClanLib-2.3.7-no-wm_type-in-fs.patch
+Patch14:         ClanLib-2.3.7-no-ldflags-for-conftest.patch
+Patch15:         ClanLib-2.3.7-gcc7.patch
+
+Patch8:                ClanLib-2.3.7-alt-i586.patch
 # suse
 Patch9:         ClanLib-2.3.6-fix-opengl.patch
 
-URL:		http://www.clanlib.org/
 BuildRequires:	pkgconfig(libmikmod)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	libfreeglut-devel libGL-devel libGLU-devel libGLES-devel
-BuildRequires:	autoconf_2.60
+BuildRequires:	autoconf
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	bzip2-devel
 BuildRequires:	libvorbis-devel
@@ -87,43 +89,35 @@ work for game developers. This package contains the documentation.
 %setup -q -n ClanLib-%{version}
 %patch0 -p0 -b .link
 %patch1 -p1 -b .gcc
-%patch2 -p1 -b .non-x86
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch3 -p1 -b .non-x86
+%patch6 -p1
+
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 %ifarch %ix86
-%patch8 -p0
+# no need; see patch6
+#patch8 -p0
 %endif
 %patch9 -p1
 
 %build
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.20
-%add_optflags -std=c++11
-%endif
 export CXXFLAGS="%{optflags} -fno-stack-protector"
+
+%ifarch aarch64
+export CXXFLAGS="$CXXFLAGS -mno-outline-atomics"
+%endif
+
 autoreconf -fi
 %configure \
-  --enable-clanDisplay   \
-  --enable-clanGL        \
-  --enable-clanGL1       \
-  --enable-clanSound     \
-  --enable-clanDatabase  \
-  --enable-clanSqlite    \
-  --enable-clanRegExp    \
-  --enable-clanNetwork   \
-  --enable-clanGUI       \
-  --enable-clanCSSLayout \
-  --enable-clanSWRender  \
-  --enable-clanMikMod    \
-  --enable-clanVorbis    \
 	--disable-static \
 	--enable-docs
 %make_build
 
 %install
 %makeinstall_std
-rm -rf %{buildroot}%{_libdir}/*.la
+
+find %{buildroot} -name '*.la' -delete
 
 %files -n %{libname}
 %doc README COPYING CREDITS
@@ -140,6 +134,9 @@ rm -rf %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt2_11
+- update by mgaimport
+
 * Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 2.3.7-alt2_7
 - E2K: explicit -std=c++11
 - enable parallel build
