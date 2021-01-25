@@ -1,40 +1,39 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		libtelnet
-Version:	0.21
-Release:	alt1_12
-Summary:	TELNET protocol parsing framework
+Name:       libtelnet
+Version:    0.23
+Release:    alt1_1
+Summary:    TELNET protocol parsing framework
+License:    Public Domain
+URL:        http://github.com/seanmiddleditch/libtelnet
 
-Group:		System/Libraries
-License:	Public Domain
-URL:		http://github.com/elanthis/libtelnet
-Source0:	http://cloud.github.com/downloads/seanmiddleditch/libtelnet/libtelnet-%{version}.tar.gz
+Source0:    %{url}/releases/download/%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: zlib-devel
-BuildRequires: doxygen
+BuildRequires:  doxygen
+BuildRequires:  gcc
+BuildRequires:  zlib-devel
 Source44: import.info
 
 %description
-Small library for parsing the TELNET protocol, responding to TELNET
-commands via an event interface, and generating valid TELNET commands.
+Small library for parsing the TELNET protocol, responding to TELNET commands via
+an event interface, and generating valid TELNET commands.
 
-libtelnet includes support for the non-official MCCP, MCCP2, ZMP, and
-MSSP protocols used by MUD servers and clients.
+libtelnet includes support for the non-official MCCP, MCCP2, ZMP, and MSSP
+protocols used by MUD servers and clients.
 
 %package devel
-Summary: Header files for libtelnet
 Group: Development/Other
-Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Summary:    Header files for libtelnet
+Requires:   pkgconfig
 
 %description devel
-Header files for developing applications making use of libtelnet.
+Header files for developing applications making use of %{name}.
 
 %package utils
-Summary: TELNET utility programs from libtelnet
 Group: Networking/WWW
-Requires: %{name} = %{version}-%{release}
+Summary:    TELNET utility programs from libtelnet
 
 %description utils
 Provides three utilities based on the libtelnet library.
@@ -45,30 +44,40 @@ Provides three utilities based on the libtelnet library.
 %prep
 %setup -q
 
+
 %build
-%configure --disable-static
+%configure \
+  --disable-static
 %make_build
 
 %install
-rm -rf "$RPM_BUILD_ROOT"
-make install INSTALL="install -p" DESTDIR="$RPM_BUILD_ROOT"
-rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
+%makeinstall_std
+find %{buildroot} -name "*.la" -delete
+
+
 
 %files
-%doc README COPYING NEWS
-%{_libdir}/*.so.*
+%doc --no-dereference COPYING
+%doc AUTHORS NEWS
+%{_libdir}/%{name}.so.2
+%{_libdir}/%{name}.so.2.0.0
 
 %files devel
-%doc %{_mandir}/man1/*.1*
-%doc %{_mandir}/man3/*.3*
-%{_libdir}/*.so
+%doc %{_datadir}/man/man1/*
+%doc %{_datadir}/man/man3/*
+%{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/*
 
 %files utils 
-%{_bindir}/*
+%{_bindir}/telnet-chatd
+%{_bindir}/telnet-client
+%{_bindir}/telnet-proxy
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_12
 - update to new release by fcimport
 
