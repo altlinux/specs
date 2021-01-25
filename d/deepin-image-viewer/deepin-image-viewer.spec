@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-image-viewer
-Version: 5.6.3.69
+Version: 5.6.3.73
 Release: alt1
 Summary: Image viewer for Deepin
 License: GPL-3.0+
@@ -72,6 +72,9 @@ sed -i '/FIF_FAXG3/d' viewer/utils/unionimage.cpp
 %_datadir/dbus-1/services/com.deepin.ImageViewer.service
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.3.73-alt1
+- New version (5.6.3.73) with rpmgs script.
+
 * Fri Dec 11 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.3.69-alt1
 - Initial build for ALT Sisyphus.
 
