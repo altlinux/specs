@@ -3,7 +3,7 @@
 %global goipath golang.org/x/text
 
 Name: golang-x-text
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 Summary: Go text processing support
 Group: Development/Other
@@ -67,6 +67,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.5-alt1
+- New version (0.3.5).
+
 * Mon Dec 28 2020 Leontiy Volodin <lvol@altlinux.org> 0.3.4-alt1
 - New version.
 
