@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-build-python3 rpm-build-ruby
-BuildRequires: /usr/bin/pcre-config /usr/bin/perl libruby-devel lua-devel perl(DynaLoader.pm) perl(Exporter.pm) perl(base.pm) perl(overload.pm) perl-podlators
+BuildRequires: /usr/bin/pcre-config /usr/bin/perl libruby-devel perl(DynaLoader.pm) perl(Exporter.pm) perl(base.pm) perl(overload.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: libltdl7-devel
 Group: System/Libraries
@@ -16,7 +16,7 @@ Group: System/Libraries
 
 Name:           libprelude
 Version:        5.2.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 License:        LGPL-2.1+
 URL:            https://www.prelude-siem.org/
@@ -306,6 +306,9 @@ find %{buildroot} -name '.packlist' -delete
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 5.2.0-alt1_3
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 5.2.0-alt1_2
 - update to new release by fcimport
 
