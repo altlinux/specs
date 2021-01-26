@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2020.10
+Version: 2021.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -15,13 +15,14 @@ Provides: u-boot-sunxi64 = %version-%release
 Obsoletes: u-boot-sunxi64
 
 %ifarch aarch64
-%define ATF atf-sunxi >= 2.0
+%define ATF atf-sunxi >= 2.4
 %else
 %define ATF %nil
 %endif
 
 BuildRequires: %ATF bc ccache dtc >= 1.4 flex
 BuildRequires: python3-dev swig
+BuildRequires: python3(pkg_resources)
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -63,6 +64,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Jan 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.01-alt1
+- 2021.01 released
+
 * Tue Oct 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.10-alt1
 - 2020.10 released
 
