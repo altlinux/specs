@@ -4,7 +4,7 @@
 
 Name: stress-ng
 Version: 0.12.02
-Release: alt1
+Release: alt2
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -56,7 +56,7 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 sed -i '/STRESSORS/s/getrandom //g' debian/tests/lite-test
 
 banner lite-test
-SEGFAULT_SIGNALS="segv abrt" time catchsegv timeout -s6 300 make lite-test
+SEGFAULT_SIGNALS="segv abrt" LD_PRELOAD=libSegFault.so time timeout -s6 300 make lite-test
 banner done
 
 %files
@@ -68,6 +68,9 @@ banner done
 %_mandir/man1/stress-ng.1.*
 
 %changelog
+* Tue Jan 26 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.02-alt2
+- spec: Use libSegFault directly instead of catchsegv.
+
 * Mon Jan 25 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.02-alt1
 - spec: Timeout and catchsegv for %%check.
 - Update to V0.12.02 (2021-01-21).
