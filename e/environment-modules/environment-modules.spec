@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-alternatives
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        4.5.3
+Version:        4.6.1
 Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
@@ -82,6 +82,8 @@ Install this package if you want to create RPM packages that use GNAT.
            --libexecdir=%{_libdir}/Modules/libexec \
            --docdir=%{_docdir}/%{name}-%version \
            --vimdatadir=%{vimdatadir} \
+           --enable-multilib-support \
+           --enable-compat-version \
            --enable-dotmodulespath \
            --disable-set-shell-startup \
            --with-python=/usr/bin/python3 \
@@ -191,11 +193,14 @@ fi
 %{_mandir}/man4/modulefile-compat.4*
 
 %files -n rpm-macros-%name
-%_rpmmacrosdir/%name
+%_rpmmacrosdir/*
 
 
 
 %changelog
+* Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 4.6.1-alt1_1
+- update to new release by fcimport
+
 * Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 4.5.3-alt1_1
 - new version
 
