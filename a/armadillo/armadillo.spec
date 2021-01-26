@@ -8,8 +8,8 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-generic
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           armadillo
-Version:        9.900.3
-Release:        alt2_2
+Version:        10.1.2
+Release:        alt1_1
 Summary:        Fast C++ matrix library with syntax similar to MATLAB and Octave
 
 License:        ASL 2.0
@@ -28,7 +28,8 @@ BuildRequires:  flexiblas-devel
 %endif
 
 BuildRequires:  gcc-c++
-BuildRequires:  ctest cmake, liblapack-devel, libarpack-ng-devel
+BuildRequires:  ctest cmake
+BuildRequires:  liblapack-devel, libarpack-ng-devel
 BuildRequires:  libhdf5-devel
 %{!?openblas_arches:%global openblas_arches x86_64 %{ix86} armv7hl %{power64} aarch64}
 %ifarch %{openblas_arches}
@@ -53,11 +54,11 @@ This library is useful if C++ has been decided as the language
 of choice (due to speed and/or integration capabilities), rather
 than another language like Matlab or Octave.
 
-%package -n libarmadillo9
+%package -n libarmadillo10
 Summary:        Shared library for the %name library
 Group:          System/Libraries
 
-%description -n libarmadillo9
+%description -n libarmadillo10
 Armadillo is a C++ linear algebra library (matrix maths)
 aiming towards a good balance between speed and ease of use.
 Integer, floating point and complex numbers are supported,
@@ -78,7 +79,7 @@ This package contains the shared library.
 %package -n libarmadillo-devel
 Group: Sciences/Mathematics
 Summary:        Development headers and documentation for the Armadillo C++ library
-Requires:       libarmadillo9 = %EVR
+Requires:       libarmadillo10 = %EVR
 %ifarch %{openblas_arches}
 %endif
 Provides: %name-devel = %EVR
@@ -112,10 +113,10 @@ make -C "%{_vpath_builddir}"
 %fedora_v2_ctest
 
 
-%files -n libarmadillo9
+%files -n libarmadillo10
 %doc --no-dereference LICENSE.txt NOTICE.txt
-%_libdir/libarmadillo.so.9
-%_libdir/libarmadillo.so.9.*
+%_libdir/libarmadillo.so.10
+%_libdir/libarmadillo.so.10.*
 
 %files -n libarmadillo-devel
 %{_libdir}/libarmadillo.so
@@ -138,6 +139,9 @@ make -C "%{_vpath_builddir}"
 
 
 %changelog
+* Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 10.1.2-alt1_1
+- new version
+
 * Mon Nov 09 2020 Igor Vlasenko <viy@altlinux.ru> 9.900.3-alt2_2
 - restored to Sisyphus
 
