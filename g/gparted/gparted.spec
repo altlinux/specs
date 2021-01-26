@@ -1,11 +1,13 @@
+%def_disable snapshot
 %define Name GParted
 
 %def_with pic
 %def_disable usermode
 %def_enable xhost_root
+%def_disable check
 
 Name: gparted
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -15,8 +17,12 @@ Group: System/Configuration/Hardware
 License: %gpl2plus
 Url: http://%name.sourceforge.net/
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
+%else
+Vcs: https://gitlab.gnome.org/GNOME/gparted.git
+Source: %name-%version.tar
+%endif
 Source1: %name-pam
 Source2: %name-security
 
@@ -28,12 +34,15 @@ Requires: yelp
 Requires: polkit >= %polkit_ver
 %{?_enable_usermode:Requires: consolehelper}
 Requires: hdparm
-Requires: dosfstools ntfs-3g btrfs-progs >= 4.1
+Requires: dosfstools >= 3.0.18 ntfs-3g btrfs-progs >= 4.1
 Requires: cryptsetup
 # for raid support
 Requires: mdadm dmraid dmsetup lvm2
 # for UDF filesystems support
 Requires: udftools >= 2.0
+# since 1.2.0 (optional)
+# exfatprogs conflicts with exfat-utils
+#Requires: exfatprogs
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
@@ -41,6 +50,7 @@ BuildRequires: libglibmm-devel >= 2.32 libgtkmm3-devel >= 3.4.0
 BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel
 BuildRequires: intltool yelp-tools
 BuildRequires: polkit >= %polkit_ver
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
 %Name stands for %Name Partition Editor. It uses libparted to detect
@@ -78,7 +88,7 @@ subst 's/pkexec --version/pkaction --version/' configure*
 
 %build
 #NOCONFIGURE=1 ./autogen.sh
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %configure %{subst_with pic} \
 	%{?_enable_usermode:--bindir=%_sbindir} \
 	%{?_enable_xhost_root:--enable-xhost-root} \
@@ -89,6 +99,7 @@ bzip2 --best --keep --force ChangeLog
 
 %install
 %makeinstall_std
+%find_lang --with-gnome %name
 
 %if_enabled usermode
 install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
@@ -98,7 +109,8 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
-%find_lang --with-gnome %name
+%check
+xvfb-run %make check
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog.* README NEWS
@@ -117,6 +129,9 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Tue Jan 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Tue Jan 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
