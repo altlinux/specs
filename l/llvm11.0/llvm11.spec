@@ -2,12 +2,13 @@
 
 %global v_major 11
 %global v_majmin %v_major.0
-%global v_full %v_majmin.0
+%global v_full %v_majmin.1
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
 %global clangd_name clangd%v_majmin
 %global lld_name lld%v_majmin
+%global lldb_name lldb%v_majmin
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -31,6 +32,7 @@
 %endif
 
 %define hwasan_symbolize_arches x86_64 aarch64
+%define lldb_arches x86_64 %arm
 
 %def_disable tests
 %ifarch x86_64 aarch64
@@ -43,7 +45,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -54,6 +56,7 @@ Source1: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarvers
 Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/clang-tools-extra-%tarversion.src.tar.xz
 Source3: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/lld-%tarversion.src.tar.xz
 Source4: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/compiler-rt-%tarversion.src.tar.xz
+Source5: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/lldb-%tarversion.src.tar.xz
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-11-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
@@ -243,6 +246,7 @@ Summary: Various clang-based tools
 Group: Development/C
 %requires_filesystem
 Requires: %clang_name = %EVR
+Requires: clang-tools >= %_llvm_version
 
 %description -n %clang_name-tools
 This package contains various code analysis and manipulation tools based on
@@ -261,6 +265,7 @@ Documentation for the Clang compiler front-end.
 Summary: A clang-based language server
 Group: Development/C
 %requires_filesystem
+Requires: clangd >= %_llvm_version
 
 %description -n %clangd_name
 This package contains clangd, a Clang-based language server for C and C++.
@@ -295,13 +300,51 @@ BuildArch: noarch
 %description -n %lld_name-doc
 Documentation for the LLD linker.
 
+%package -n %lldb_name
+Summary: A next-level high-performance debugger
+Group: Development/Debuggers
+%requires_filesystem
+
+%description -n %lldb_name
+LLDB is a next generation, high-performance debugger. It is built as a set of
+reusable components which highly leverage existing libraries in the larger LLVM
+project, such as the Clang expression parser and the LLVM disassembler.
+
+%package -n lib%lldb_name
+Summary: Shared library for LLDB
+Group: Development/Debuggers
+%requires_filesystem
+
+%description -n lib%lldb_name
+This package contains the LLDB runtime library.
+
+%package -n lib%lldb_name-devel
+Summary: Development files for liblldb
+Group: Development/Debuggers
+%requires_filesystem
+
+%description -n lib%lldb_name-devel
+This package contains header files to build extensions over lldb, as well as
+development symlinks for liblldb.
+
+%package -n %lldb_name-doc
+Summary: Documentation for LLDB
+Group: Documentation
+BuildArch: noarch
+%requires_filesystem
+
+%description -n %lldb_name-doc
+Documentation for the LLDB debugger.
+
 %prep
-%setup -n llvm-%tarversion.src -a1 -a2 -a3 -a4
-for pkg in clang lld; do
+%setup -n llvm-%tarversion.src -a1 -a2 -a3 -a4 -a5
+for pkg in clang lld lldb; do
    mv $pkg-%tarversion.src tools/$pkg
 done
 mv clang-tools-extra-%tarversion.src tools/clang/tools/extra
-mv compiler-rt-%tarversion.src projects/compiler-rt
+for pkg in compiler-rt; do
+   mv $pkg-%tarversion.src projects/$pkg
+done
 %patch -p1 -b .alt-i586-fallback
 %patch1 -p1 -b .alt-triple
 %patch2 -p1
@@ -371,6 +414,13 @@ subst '/^#!.*python$/s|python$|python2|' $(grep -Rl '#!.*python$' *)
 	%if_enabled tests
 	-DLLVM_INCLUDE_TESTS:BOOL=ON \
 	-DLLVM_BUILD_TESTS:BOOL=ON \
+	-DLLDB_INCLUDE_TESTS:BOOL=ON \
+	%else
+		%if_with clang
+		-DLLDB_TEST_COMPILER:PATH=%_bindir/clang \
+		%else
+		-DLLDB_TEST_COMPILER:PATH=%_bindir/gcc \
+		%endif
 	%endif
 	\
 	-DLLVM_INCLUDE_EXAMPLES:BOOL=ON \
@@ -475,6 +525,89 @@ sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.so/' > %_tmppath/l
 sed < %_tmppath/libclang-support-shared-runtimes 's/^/%%exclude /' > %_tmppath/dyn-files-libclang-support
 echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-files-libclang-support
 
+# Emit executable list for %name.
+# A tool can be accompanied by a man page or not.
+awk -F'\t' '
+$1 ~ "bin" { print "%llvm_bindir/" $2; print "%_bindir/" $2 "-%v_major"; }
+$1 ~ "man" { print "%llvm_man1dir/" $2 ".1*"; print "%_man1dir/" $2 "-%v_major.1*"; }
+' >%_tmppath/dyn-files-%name <<EOExecutableList
+bin,man	bugpoint
+bin,man	diagtool
+bin,man	dsymutil
+bin,man	llc
+bin,man	lli
+bin,man	llvm-addr2line
+bin,man	llvm-ar
+bin,man	llvm-as
+bin,man	llvm-bcanalyzer
+bin	llvm-cat
+bin	llvm-cfi-verify
+bin,man	llvm-cov
+bin	llvm-c-test
+bin	llvm-cvtres
+bin	llvm-cxxdump
+bin,man	llvm-cxxfilt
+bin,man	llvm-cxxmap
+bin,man	llvm-diff
+bin,man	llvm-dis
+bin	llvm-dlltool
+bin,man	llvm-dwarfdump
+bin	llvm-dwp
+bin	llvm-elfabi
+bin,man	llvm-exegesis
+bin,man	llvm-extract
+bin	llvm-gsymutil
+bin	llvm-ifs
+bin	llvm-install-name-tool
+bin	llvm-jitlink
+bin,man	llvm-lib
+bin,man	llvm-link
+bin,man	llvm-lipo
+bin	llvm-lto
+bin	llvm-lto2
+bin	llvm-mc
+bin,man	llvm-mca
+bin	llvm-ml
+bin	llvm-modextract
+bin	llvm-mt
+bin,man	llvm-nm
+bin,man	llvm-objcopy
+bin,man	llvm-objdump
+bin	llvm-opt-report
+bin,man	llvm-pdbutil
+bin,man	llvm-profdata
+bin,man	llvm-ranlib
+bin	llvm-rc
+bin,man	llvm-readelf
+bin,man	llvm-readobj
+bin	llvm-reduce
+bin	llvm-rtdyld
+bin,man	llvm-size
+bin	llvm-split
+bin,man	llvm-stress
+bin,man	llvm-strings
+bin,man	llvm-strip
+bin,man	llvm-symbolizer
+bin	llvm-tblgen
+man	tblgen
+bin	llvm-undname
+bin	llvm-xray
+bin	modularize
+bin	obj2yaml
+bin,man	opt
+bin	pp-trace
+bin	sancov
+bin	sanstats
+bin	verify-uselistorder
+bin	yaml2obj
+
+man	FileCheck
+man	extraclangtools
+man	lit
+man	llvm-build
+man	llvm-locstats
+EOExecutableList
+
 %check
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%llvm_libdir:$LD_LIBRARY_PATH
@@ -497,36 +630,8 @@ ninja -C BUILD check-all || :
 %dir %llvm_man1dir
 %dir %llvm_docdir
 
-%files
+%files -f %_tmppath/dyn-files-%name
 %doc CREDITS.TXT LICENSE.TXT README.txt
-%llvm_bindir/*
-%_bindir/*
-%llvm_man1dir/*
-%_man1dir/*
-%exclude %llvm_bindir/llvm-config*
-%exclude %_bindir/llvm-config*
-%exclude %llvm_bindir/*clang*
-%exclude %_bindir/*clang*
-%exclude %llvm_bindir/*clangd*
-%exclude %_bindir/*clangd*
-%exclude %llvm_bindir/c-index-test
-%exclude %_bindir/c-index-test-%v_major
-%exclude %llvm_bindir/find-all-symbols
-%exclude %_bindir/find-all-symbols-%v_major
-%exclude %llvm_bindir/scan-*
-%exclude %_bindir/scan-*
-%exclude %llvm_man1dir/llvm-config.1.*
-%exclude %_man1dir/llvm-config-%v_major.1.*
-%exclude %llvm_man1dir/clang.1*
-%exclude %_man1dir/clang-%v_major.1*
-%exclude %llvm_man1dir/scan-build.1*
-%exclude %_man1dir/scan-build-%v_major.1*
-%exclude %llvm_bindir/lld*
-%exclude %_bindir/lld*
-%exclude %llvm_bindir/ld*.lld
-%exclude %_bindir/ld*.lld-%v_major
-%exclude %llvm_bindir/wasm-ld
-%exclude %_bindir/wasm-ld-%v_major
 
 %files libs
 %llvm_libdir/libLLVM-*.so
@@ -644,6 +749,8 @@ ninja -C BUILD check-all || :
 %exclude %_bindir/clang-cpp-%v_major
 %llvm_bindir/find-all-symbols
 %_bindir/find-all-symbols-%v_major
+%llvm_bindir/hmaptool
+%_bindir/hmaptool-%v_major
 %llvm_datadir/clang
 %exclude %llvm_datadir/clang/bash-autocomplete.sh
 %ifarch %hwasan_symbolize_arches
@@ -655,8 +762,10 @@ ninja -C BUILD check-all || :
 %_bindir/clangd-%v_major
 
 %files -n %lld_name
-%llvm_bindir/lld*
-%_bindir/lld*
+%llvm_bindir/lld
+%_bindir/lld-%v_major
+%llvm_bindir/lld-link
+%_bindir/lld-link-%v_major
 %llvm_bindir/ld*.lld
 %_bindir/ld*.lld-%v_major
 %llvm_bindir/wasm-ld
@@ -668,6 +777,29 @@ ninja -C BUILD check-all || :
 %dir %llvm_libdir/cmake
 %llvm_libdir/cmake/lld
 
+%files -n %lldb_name
+%llvm_bindir/lldb
+%_bindir/lldb-%v_major
+%llvm_man1dir/lldb.1*
+%_man1dir/lldb-%v_major.1*
+%llvm_bindir/lldb-argdumper
+%_bindir/lldb-argdumper-%v_major
+%llvm_bindir/lldb-instr
+%_bindir/lldb-instr-%v_major
+%llvm_bindir/lldb-server
+%_bindir/lldb-server-%v_major
+%llvm_bindir/lldb-vscode
+%_bindir/lldb-vscode-%v_major
+
+%files -n lib%lldb_name
+%llvm_libdir/liblldb*.so.*
+%_libdir/liblldb*.so.*
+
+%files -n lib%lldb_name-devel
+%llvm_includedir/lldb
+%llvm_libdir/liblldb*.so
+# %_libdir/liblldb*.so
+
 %files doc
 %doc %llvm_docdir/llvm
 
@@ -678,7 +810,14 @@ ninja -C BUILD check-all || :
 %files -n %lld_name-doc
 %doc %llvm_docdir/lld
 
+%files -n %lldb_name-doc
+%doc %llvm_docdir/lldb
+
 %changelog
+* Fri Jan 08 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt1
+- 11.0.0 -> 11.0.1.
+- New LLVM subproject: lldb.
+
 * Fri Dec 11 2020 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt2
 - Installed to /usr/lib/llvm-11.0 to ensure peaceful co-existence with other
   LLVM versions.
