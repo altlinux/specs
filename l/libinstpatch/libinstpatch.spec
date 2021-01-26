@@ -4,22 +4,21 @@
 # disabled by default
 %def_disable gtk_doc
 %def_disable introspection
-# no tests specified
 %def_disable check
 
 Name: libinstpatch
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: MIDI instrument patch library
 Group: System/Libraries
-Url: http://www.swamiproject.org/
 License: LGPL-2.1-only
+Url: https://www.swamiproject.org/
 
-#VCS: https://github.com/swami/libinstpatch
 %if_disabled snapshot
 Source: https://github.com/swami/%name/archive/v%version/%name-%version.tar.gz
 %else
+Vcs: https://github.com/swami/libinstpatch
 Source: %name-%version.tar
 %endif
 
@@ -52,8 +51,8 @@ This package includes the development libraries and header files for
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake \
 -DCMAKE_BUILD_TYPE="Release" \
-%{?_enable_gtk_doc:-DGTKDOC_ENABLED=ON} \
-%{?_enable_introspection:-DINTROSPECTION_ENABLED=ON}
+%{?_enable_gtk_doc:-DGTKDOC_ENABLED=TRUE} \
+%{?_enable_introspection:-DINTROSPECTION_ENABLED=TRUE}
 %nil
 %cmake_build
 
@@ -74,6 +73,9 @@ This package includes the development libraries and header files for
 %doc examples/*.c
 
 %changelog
+* Tue Jan 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
+- 1.1.6
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt1
 - 1.1.5
 
