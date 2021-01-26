@@ -1,7 +1,7 @@
 
 Name: vzctl
-Version: 7.0.236
-Release: alt2
+Version: 7.0.240
+Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPLv2
@@ -21,7 +21,7 @@ Requires: libvzctl >= 7.0.596
 
 BuildRequires: glibc-devel libuuid-devel
 BuildRequires: systemd-devel libudev-devel
-BuildRequires: libvzctl-devel >= 7.0.596
+BuildRequires: libvzctl-devel >= 7.0.639
 BuildRequires: libploop-devel >= 7.0.199
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 
@@ -121,6 +121,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Tue Jan 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.240-alt1
+- 7.0.240
+
 * Tue Dec 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.236-alt2
 - add binfmt_misc kernel module for criu functioning
 - fix -fno-common default in GCC 10.0
