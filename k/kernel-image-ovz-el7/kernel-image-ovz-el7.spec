@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.11.1.vz7.172.8
-%define orelease 1160.11.1.vz7.172.8
+#     rh7-3.10.0-1160.11.1.vz7.172.9
+%define orelease 1160.11.1.vz7.172.9
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -586,6 +586,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Jan 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.11.1.vz7.172.9
+- Build rh7-3.10.0-1160.11.1.vz7.172.9
+
 * Wed Jan 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.11.1.vz7.172.8
 - Build rh7-3.10.0-1160.11.1.vz7.172.8
 - update config to reduce the difference with OVZ7 one
