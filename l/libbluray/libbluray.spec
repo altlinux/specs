@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 Summary: BD library
 
@@ -53,6 +53,9 @@ This package contains various utilities using libbluray library.
 %_bindir/*
 
 %changelog
+* Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
+- 1.2. released
+
 * Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
