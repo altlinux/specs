@@ -1,5 +1,5 @@
 Name: libflatbuffers
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: Memory Efficient Serialization Library
@@ -29,6 +29,7 @@ This package contains development part of FlatBuffers.
 
 %prep
 %setup
+%add_optflags -Wno-class-memaccess -Wno-stringop-overflow
 %ifarch %e2k
 %add_optflags -std=c++11
 # include/flatbuffers/base.h:250
@@ -63,6 +64,9 @@ make test
 %_libdir/*.so
 
 %changelog
+* Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.0-alt1
+- 1.12.0 released
+
 * Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.11.0-alt1
 - 1.11.0 released
 
