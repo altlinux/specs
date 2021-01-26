@@ -4,8 +4,8 @@ Group: Development/C
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libimagequant
-Version:        2.12.6
-Release:        alt1_2
+Version:        2.13.1
+Release:        alt1_1
 Summary:        Palette quantization library
 
 License:        GPLv3+ and MIT
@@ -66,6 +66,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.a
 
 
 %changelog
+* Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 2.13.1-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 2.12.6-alt1_2
 - update
 
