@@ -2,7 +2,7 @@
 
 Name: libxine2
 Version: 1.2.9
-Release: alt2
+Release: alt3
 
 Summary: Free libraries for play video and audio
 License: GPLv2+
@@ -10,6 +10,7 @@ Group: System/Libraries
 Url: http://xinehq.de/
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
@@ -60,8 +61,10 @@ samba input plugin for xine.
 
 %prep
 %setup
+%patch -p1
 
 %build
+%add_optflags -fcommon
 %autoreconf
 %configure \
 	--enable-ipv6 \
@@ -103,6 +106,9 @@ mv %buildroot%_man5dir/xine.5 %buildroot%_man5dir/xine2.5
 %_libdir/xine/plugins/%plugin_version/xineplug_inp_smb.so
 
 %changelog
+* Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.9-alt3
+- fixed build with gcc10
+
 * Mon Feb 25 2019 Anton Farygin <rider@altlinux.ru> 1.2.9-alt2
 - rebuild with libvpx-1.8.0
 
