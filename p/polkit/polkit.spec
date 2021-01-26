@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.118
-Release: alt1
+Release: alt2
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -142,6 +142,12 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Mon Dec 07 2020 Ivan Savin <svn17@altlinux.org> 0.118-alt2
+- Add the ability to add user_of_subject to user_identities list
+  if user_of_subject is a member of the group with administrator
+  rights but it is not in /etc/groups (If a privileged group is
+  assigned through the NSS). (closes: 39420)
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.118-alt1
 - 0.118 (ported to mozjs78)
 
