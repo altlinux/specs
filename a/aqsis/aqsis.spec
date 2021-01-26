@@ -1,14 +1,16 @@
 Group: Video
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig boost-devel boost-filesystem-devel boost-program_options-devel boost-wave-devel gcc-c++ ilmbase-devel libGLU-devel libglvnd-devel python-devel rpm-build-python swig
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# force out-of-tree build for spec compatibility with older releases
+%undefine __cmake_in_source_build
 
 Name:		aqsis
 Version:	1.8.2
-Release:	alt4_39
+Release:	alt4_41
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 
 License:	GPLv2+ and LGPLv2+
@@ -25,6 +27,7 @@ Patch2: aqsis-1.8.2-boost-1.59.patch
 # https://sourceforge.net/p/aqsis/bugs/433/
 Patch3: aqsis-1.8.2-gcc6.patch
 Patch4: aqsis-1.8.2-shared_ptr.patch
+Patch5: aqsis-gcc11.patch
 
 BuildRequires:  desktop-file-utils
 
@@ -127,16 +130,13 @@ integration with third-party applications.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 
 %build
-rm -rf build
-mkdir -p build
-pushd build
-
 ## Do not Enable pdiff=yes Because it will conflict with Printdiff :
 ## /usr/bin/pdiff  from package	a2ps
-%{fedora_cmake} \
+%{fedora_v2_cmake} \
   -DSYSCONFDIR:STRING=%{_sysconfdir}/%{name} \
   -DAQSIS_MAIN_CONFIG_NAME=aqsisrc-%{_lib} \
   -DLIBDIR=%{_lib} \
@@ -150,19 +150,13 @@ pushd build
   -DAQSIS_BOOST_WAVE_LIBRARY_NAME=boost_wave-mt \
   -DAQSIS_ENABLE_THREADING:BOOL=ON \
   -DCMAKE_CXX_FLAGS="$CXXFLAGS -DBOOST_FILESYSTEM_VERSION=3 -pthread" \
-  -DAQSIS_USE_EXTERNAL_TINYXML:BOOL=OFF ..
+  -DAQSIS_USE_EXTERNAL_TINYXML:BOOL=OFF
 
-%make_build VERBOSE=1
-
-popd
-#cmake_build
+%fedora_v2_cmake_build
 
 
 %install
-#cmake_install
-pushd build
-make install DESTDIR=$RPM_BUILD_ROOT
-popd
+%fedora_v2_cmake_install
 
 # Move aqsisrc
 mv $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/aqsisrc \
@@ -248,6 +242,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt4_41
+- update to new release by fcimport
+
 * Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt4_39
 - rebuild with new boost
 
