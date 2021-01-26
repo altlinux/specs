@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2020.10
+Version: 2021.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -37,6 +37,9 @@ install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,mkimage,mkenvimage} %{?_wi
 %_bindir/*
 
 %changelog
+* Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.01-alt1
+- 2021.01 released
+
 * Tue Oct 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.10-alt1
 - 2020.10 released
 
