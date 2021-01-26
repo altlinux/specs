@@ -1,9 +1,9 @@
 Group: System/Fonts/True type
 %define oldname google-noto-cjk-fonts
-%define fedora 30
+%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit0 be6c059ac1587e556e2412b27f5155c8eb3ddbe6
+%global commit0 782eab531e724779772302b835661b7b12a6b3a8
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %global fontname google-noto-cjk
@@ -18,8 +18,8 @@ supported for compatibility with CJK standards. \
 %{nil}
 
 Name:           fonts-otf-google-noto-cjk
-Version:        20190416
-Release:        alt1_5
+Version:        20201206
+Release:        alt1_1
 Summary:        Google Noto Sans CJK Fonts
 
 License:        OFL
@@ -445,7 +445,7 @@ Noto font Traditional Chinese Region-specific Sans OTF.
 %config(noreplace) %{_fontconfig_confdir}/66-%{fontconf}-sans-hk.conf
 
 %prep
-%setup -q -n noto-cjk-%{commit0}
+%setup -q -n noto-cjk-%{version}-cjk
 cp -p %{SOURCE1} %{SOURCE2} .
 # generate the font conf files
 bash -x ./genfontconf.sh
@@ -511,13 +511,16 @@ ln -s %{_fontconfig_templatedir}/%{fontconf2} \
 
 
 %files -n fonts-otf-google-noto-cjk-common
-%doc NEWS HISTORY README.formats README.third_party
+%doc NEWS.md HISTORY.md README-formats.md README-third_party.md
 %doc --no-dereference LICENSE
 %{_fontconfig_templatedir}/%{fontconf2}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf2}
 
 
 %changelog
+* Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 20201206-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 20190416-alt1_5
 - update to new release by fcimport
 
