@@ -1,20 +1,15 @@
 %global import_path github.com/prometheus/promu
-%global commit 3e43dfdc9726cee3f7c21476d9add8f13bebb645  
+%global commit b17dc4f71c810678db907367b392a3e7a14c4038
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name: promu
-Version: 0.5.0
-Release: alt2
+Version: 0.7.0
+Release: alt1
 Summary: Prometheus Utility Tool
 
 Group: Development/Other
-License: ASL 2.0
+License: Apache-2.0
 Url: https://%import_path
 Source: %name-%version.tar
 
@@ -55,6 +50,9 @@ rm -rf -- %buildroot%_datadir
 %_bindir/*
 
 %changelog
+* Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Mon Sep 23 2019 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt2
 - fixed build with golang-1.13
 

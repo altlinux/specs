@@ -1,16 +1,11 @@
 
 %define oname alertmanager
 %global import_path github.com/prometheus/alertmanager
-%global commit f74be0400a6243d10bb53812d6fa408ad71ff32d
-%global __find_debuginfo_files %nil
+%global commit 4c6c03ebfe21009c546e4d1e9b92c371d67c021d
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name: prometheus-%oname
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 Summary: Prometheus Alertmanager
 
@@ -82,6 +77,9 @@ install -m0644 template/default.tmpl %buildroot%_sysconfdir/prometheus/alertmana
 %dir %attr(775, root, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.21.0-alt1
+- 0.21.0.
+
 * Sat Apr 18 2020 Alexey Shabalin <shaba@altlinux.org> 0.20.0-alt1
 - 0.20.0
 

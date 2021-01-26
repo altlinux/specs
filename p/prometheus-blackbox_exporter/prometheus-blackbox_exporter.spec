@@ -1,17 +1,12 @@
 
 %define oname blackbox_exporter
 %global import_path github.com/prometheus/blackbox_exporter
-%global commit 991f89846ae10db22a3933356a7d196642fcb9a9
+%global commit 60c86e6ce5a1111f7958b06ae7a08222bb6ec839
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name: prometheus-%oname
-Version: 0.16.0
+Version: 0.18.0
 Release: alt1
 Summary: Prometheus blackbox prober exporter
 
@@ -72,6 +67,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Wed Mar 18 2020 Alexey Shabalin <shaba@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
@@ -84,8 +82,8 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 * Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
-* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt2%ubt
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt2
 - fix typo in option
 
-* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt1%ubt
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt1
 - Initial build for ALT.

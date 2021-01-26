@@ -1,15 +1,10 @@
 %global import_path github.com/prometheus/prometheus
-%global commit ecee9c8abfd118f139014cb1b174b08db3f342cf
-%global __find_debuginfo_files %nil
+%global commit e4487274853c587717006eeda8804e597d120340
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name: prometheus
-Version: 2.18.1
-Release: alt2
+Version: 2.24.1
+Release: alt1
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
@@ -122,6 +117,9 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 2.24.1-alt1
+- 2.24.1.
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 2.18.1-alt2
 - add user prometheus to proc group
 

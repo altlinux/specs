@@ -1,17 +1,12 @@
 
 %define oname node_exporter
 %global import_path github.com/prometheus/node_exporter
-%global commit b9c96706a7425383902b6143d097cf6d7cfd1960
+%global commit 3715be6ae899f2a9b9dbfd9c39f3e09a7bd4559f
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name: prometheus-%oname
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
@@ -71,6 +66,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.1-alt1
+- 1.0.1.
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt1
 - 1.0.0
 

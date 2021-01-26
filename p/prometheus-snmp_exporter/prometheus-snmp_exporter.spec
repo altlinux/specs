@@ -1,17 +1,12 @@
 
 %define oname snmp_exporter
 %global import_path github.com/prometheus/snmp_exporter
-%global commit 9a2ff257dd2e8cdb2a4c88b18df668e2008c2cd6
+%global commit 9dcbc02f59648b21fcf632de1b62a30df70f4649
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name: prometheus-%oname
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 Summary: Prometheus snmp exporter
 
@@ -84,6 +79,9 @@ install -m0755 .gopath/src/%import_path/generator/generator %buildroot%_bindir/%
 %config(noreplace) %_sysconfdir/prometheus/snmp.yml
 
 %changelog
+* Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.19.0-alt1
+- 0.19.0.
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 0.18.0-alt1
 - 0.18.0
 
