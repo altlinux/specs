@@ -10,7 +10,7 @@
 
 Name: blender
 Version: 2.91.2
-Release: alt1
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -94,6 +94,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink 
 %add_python3_req_skip io_scene_gltf2.blender.exp
 %add_python3_req_skip io_scene_gltf2.io.com
 %add_python3_req_skip io_scene_gltf2.io.exp
+%add_python3_req_skip mathutils
 %add_python3_req_skip mathutils.bvhtree
 %add_python3_req_skip mathutils.geometry
 %add_python3_req_skip mathutils.noise
@@ -283,6 +284,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Jan 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.2-alt2
+- Updated runtime dependencies.
+
 * Fri Jan 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.2-alt1
 - Updated to upstream version 2.91.2.
 
