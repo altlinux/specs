@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.33
+Version: 0.34
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -65,6 +65,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Wed Jan 27 2021 Alexey Gladkov <legion@altlinux.ru> 0.34-alt1
+- Use systemd-modules-load directly
+
 * Wed Dec 16 2020 Anton Midyukov <antohami@altlinux.org> 0.33-alt1
 - Create /dev/{core,fd,stdin,stdout,stderr} symlinks if needed
 

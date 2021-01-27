@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.10
+Version: 0.9.9.11
 Release: alt1
 
 Summary: The system startup scripts
@@ -16,8 +16,8 @@ PreReq: sed >= 1:4.1.1
 # Who could remind me where these dependencies came from?
 Requires: findutils >= 0:4.0.33, mount >= 0:2.10q-ipl1mdk
 Requires: procps >= 0:2.0.7-ipl5mdk, psmisc >= 0:19-ipl2mdk, util-linux >= 0:2.10q-ipl1mdk
-# due to bootsplash functions
-PreReq: service >= 0.5.8
+# due to functions to resolve standalone systemd utilities
+PreReq: service >= 0.5.32
 # due to /sys
 Requires: filesystem >= 0:2.1.7-alt1
 # due to /bin/clock_unsynced
@@ -26,8 +26,13 @@ Requires: hwclock >= 1:2.14-alt1
 Requires: sysvinit-utils
 # due to fsck in rc.sysinit (ALT#22410)
 Requires: /sbin/fsck
+
 # due to systemd-sysctl, systemd-tmpfiles, and systemd-modules-load (see ALT#29537).
-Requires: systemd-utils >= 209
+# We need a separate version of the utilities because they have less
+# dependencies (see ALT#39444).
+Requires: systemd-modules-load-standalone
+Requires: systemd-sysctl-standalone
+Requires: systemd-tmpfiles-standalone
 
 # due to update_wms
 Conflicts: xinitrc < 0:2.4.13-alt1
@@ -147,6 +152,9 @@ done
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Wed Jan 27 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.9.11-alt1
+- Use standalone versions of systemd utilities.
+
 * Tue Dec 15 2020 Alexey Gladkov <legion@altlinux.ru> 0.9.9.10-alt1
 - rc.sysinit:
   + Create /dev/{core,fd,stdin,stdout,stderr} symlinks if needed (ALT#39423).
