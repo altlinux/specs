@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: A library for working with sizes in bytes
@@ -14,7 +14,7 @@ Url: https://github.com/storaged-project/%name
 %if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.gz
 %else
-#VCS: https://github.com/rhinstaller/libbytesize.git
+Vcs: https://github.com/rhinstaller/libbytesize.git
 Source: %name-%version.tar
 %endif
 
@@ -22,7 +22,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel libgmp-devel libmpfr-devel libpcre2-devel
-%{?_enable_check:BuildRequires: python3-module-polib python3-module-pocketlint}
+%{?_enable_check:
+BuildRequires: python3-module-polib python3-module-pocketlint
+BuildRequires:python3-module-pylint python3-module-pycodestyle}
 
 %description
 The %name is a C library that facilitates work with sizes in bytes.
@@ -82,6 +84,9 @@ the library from Python 3 easier and more convenient.
 
 
 %changelog
+* Wed Jan 27 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
+- 2.5
+
 * Sat Aug 01 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
 - 2.4
 
