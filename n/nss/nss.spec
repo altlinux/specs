@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.59.1
+Version:	3.61.0
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -226,6 +226,21 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed Jan 27 2021 Alexey Gladkov <legion@altlinux.ru> 3.61.0-alt1
+- New version (3.61).
+- Certificate Authority Changes:
+  + Add CN=NAVER Global Root Certification Authority
+  + Remove CN=GeoTrust Global CA
+  + Remove CN=GeoTrust Primary Certification Authority
+  + Remove CN=GeoTrust Primary Certification Authority - G3
+  + Remove CN=GeoTrust Universal CA
+  + Remove CN=GeoTrust Universal CA 2
+  + Remove CN=VeriSign Class 3 Public Primary Certification Authority - G4
+  + Remove CN=VeriSign Class 3 Public Primary Certification Authority - G5
+  + Remove CN=thawte Primary Root CA
+  + Remove CN=thawte Primary Root CA - G2
+  + Remove CN=thawte Primary Root CA - G3
+
 * Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 3.59.1-alt1
 - New version (3.59.1).
 
