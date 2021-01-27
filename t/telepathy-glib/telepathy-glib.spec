@@ -2,40 +2,43 @@
 %define _libexecdir %_prefix/libexec
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
-%def_disable check
+%def_enable check
+# not ready for python3 yet
 %def_disable installed_tests
 
 Name: telepathy-glib
-Version: 0.24.1
-Release: alt3.2
+Version: 0.24.2
+Release: alt1
 
 Summary: Telepathy framework - GLib connection manager library
-License: LGPL
+License: LGPL-2.1
 Group: System/Libraries
-Url: http://telepathy.freedesktop.org/wiki/TelepathyGLib
+Url: https://telepathy.freedesktop.org/wiki/TelepathyGLib
 
 %if_disabled snapshot
-Source: http://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.tar.gz
+Source: https://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.tar.gz
 %else
+Vcs: https://github.com/TelepathyIM/telepathy-glib.git
+#Vcs: https://anongit.freedesktop.org/git/telepathy/telepathy-glib.git
 Source: %name-%version.tar
 %endif
-Patch: telepathy-glib-0.24.1-fc-duplicate_testcase_path.patch
 
 %define glib_ver 2.36.0
 %define dbus_ver 0.90
 %define gir_ver 0.10.3
 %define vala_ver 0.16.0
 
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libdbus-glib-devel >= %dbus_ver
+BuildRequires(pre): rpm-build-python3
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libdbus-glib-devel >= %dbus_ver
 BuildRequires: gtk-doc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver}
 %{?_enable_vala:BuildPreReq: vala >= %vala_ver vala-tools >= %vala_ver}
-%{?_enable_check:BuildRequires: /proc dbus-tools-gui python-module-PyXML}
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
 This package contains telepathy-glib, a GLib-based library for Telepathy
@@ -109,17 +112,19 @@ the functionality of the installed %name library package.
 
 %prep
 %setup
-%patch -p1
+sed -i 's;\(\/bin\/python\)$;\13;' tests/*.py
+sed -i 's;\(env python\)$;\13;' examples/client/python/*.py
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection} \
 	%{?_enable_vala:--enable-vala-bindings} \
-	%{?_enable_installed_tests:--enable-installed-tests}
-
+	%{?_enable_installed_tests:--enable-installed-tests} \
+	PYTHON=%__python3
 %make_build
 
 %install
@@ -168,6 +173,11 @@ export TP_TESTS_NO_TIMEOUT=1
 %endif
 
 %changelog
+* Wed Jan 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt1
+- 0.24.2
+- enabled %%check, gtk-doc
+- fixed License tag
+
 * Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt3.2
 - disabled %%check
 
