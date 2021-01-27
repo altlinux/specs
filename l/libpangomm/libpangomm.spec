@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define rname pangomm
-%define major 2.42
+%define major 2.46
 %define api_ver 1.4
 
 %def_enable docs
 %def_enable check
 
 Name: lib%rname
-Version: %major.2
+Version: %major.0
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -26,7 +26,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.
 
 %define glib_ver 2.48.0
 %define cairo_ver 1.2.2
-%define pango_ver 1.41.0
+%define pango_ver 1.46
 
 BuildRequires(pre): meson
 BuildRequires: mm-common gcc-c++
@@ -94,6 +94,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Jan 27 2021 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
+- 2.46.0
+
 * Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.2-alt1
 - 2.42.2 (ported to Meson build system)
 

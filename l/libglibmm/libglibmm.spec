@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define major 2.64
-%define ver_base 2.64
+%define major 2.66
+%define ver_base 2.66
 %define api_ver 2.4
 
 %def_enable docs
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libglibmm
-Version: %major.5
+Version: %major.0
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -105,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Jan 27 2021 Yuri N. Sedunov <aris@altlinux.org> 2.66.0-alt1
+- 2.66.0
+
 * Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.5-alt1
 - 2.64.5
 
