@@ -1,15 +1,13 @@
 %define _upstream pyparted
 %define oname parted
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 3.11.1
-Release: alt1.1
+Name: python3-module-%oname
+Version: 3.11.7
+Release: alt1
 
 Summary: Python bindings for libparted
 
-Group: Development/Python
+Group: Development/Python3
 License: GPL v2 or later
 URL: https://github.com/rhinstaller/pyparted
 
@@ -19,11 +17,8 @@ Source: %name-%version.tar
 Provides: %_upstream
 
 BuildRequires: libparted-devel
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-%endif
 
 %description
 pyparted is a set of native Python bindings for libparted.  libparted is the
@@ -36,64 +31,27 @@ mapping of externally accessible libparted functions was written.  This
 mapping is provided in the _ped Python module.  You can use that module if
 you want to, but it's really just meant for the larger parted module.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python bindings for libparted
-Group: Development/Python3
-
-%description -n python3-module-%oname
-pyparted is a set of native Python bindings for libparted.  libparted is the
-library portion of the GNU parted project.  With pyparted, you can write
-applications that interact with disk partition tables and filesystems.
-
-The Python bindings are implemented in two layers.  Since libparted itself
-is written in C without any real implementation of objects, a simple 1:1
-mapping of externally accessible libparted functions was written.  This
-mapping is provided in the _ped Python module.  You can use that module if
-you want to, but it's really just meant for the larger parted module.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc AUTHORS NEWS README TODO
-%python_sitelibdir/parted
-%python_sitelibdir/*.so
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
 %doc AUTHORS NEWS README TODO
 %python3_sitelibdir/parted
 %python3_sitelibdir/*.so
 %python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
+* Wed Jan 27 2021 Grigory Ustinov <grenka@altlinux.org> 3.11.7-alt1
+- Automatically updated to 3.11.7.
+- Drop python2 support.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.1-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
