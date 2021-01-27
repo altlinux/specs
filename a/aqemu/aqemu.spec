@@ -1,14 +1,16 @@
 Summary: QEMU GUI written in Qt5
 Name: aqemu
-Version: 0.9.6
-Release: alt0.1.git34ca8ce
+Version: 0.9.4
+Release: alt1
+Epoch: 1
 License: GPL-2.0 and Zlib and MIT
 Group: Emulators
 Packager: Boris Savelev <boris@altlinux.org>
 Url: https://github.com/tobimensch/aqemu
 Source: %name-%version.tar
+# Source-url: https://github.com/tobimensch/aqemu/archive/%version/aqemu-%version.tar.gz
 
-BuildRequires(pre): meson rpm-build-ninja
+BuildRequires(pre): cmake rpm-build-ninja
 BuildRequires: gcc-c++ libvncserver-devel ImageMagick
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
@@ -19,14 +21,20 @@ The program have user-friendly interface and allows to set up the majority of QE
 
 %prep
 %setup
+# gcc10
+sed -i 's|#include <vector>|#include <vector>\n#include <stdexcept>|' src/docopt/docopt_value.h
 
 %build
 PATH=%_datadir/qt5/bin:$PATH; export PATH
-%meson
-%meson_build
+%cmake_insource \
+    -GNinja \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+#    -DQT_QMAKE_EXECUTABLE=qmake4 \
+#
+%ninja_build
 
 %install
-%meson_install
+%ninja_install
 mkdir -p %buildroot%_desktopdir
 install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
 convert -size 16x16 ./resources/icons/aqemu.png %buildroot%_miconsdir/%name.png
@@ -48,6 +56,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Wed Jan 27 2021 Leontiy Volodin <lvol@altlinux.org> 1:0.9.4-alt1
+- 0.9.4 version (more stable).
+
 * Fri Jan 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.6-alt0.1.git34ca8ce
 - 0.9.6 development version.
 - Built with meson instead cmake.
