@@ -6,7 +6,7 @@
 
 %define gst_version   1.0
 %define nspr_version  4.29
-%define nss_version   3.59.0
+%define nss_version   3.61.0
 %define rust_version  1.48.0
 %define cargo_version 1.48.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        84.0.2
+Version:        85.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -53,7 +53,8 @@ Patch012: 0012-bmo-847568-Support-system-harfbuzz.patch
 Patch013: 0013-bmo-847568-Support-system-graphite2.patch
 Patch014: 0014-bmo-1559213-Support-system-av1.patch
 Patch015: 0015-VAAPI-Add-extra-frames.patch
-Patch016: 0016-Bug-1680505-Ship-WebRender-to-GNOME-Wayland-users-to.patch
+Patch016: 0016-Bug-1678247-Use-nsWindow-scale-factor-for-the-conten.patch
+Patch017: 0017-Bug-1679933-Call-EnsureNSSInitializedChromeOrContent.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -229,6 +230,7 @@ Most likely you don't need to use this package.
 %patch014 -p1
 %patch015 -p1
 %patch016 -p1
+%patch017 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -498,6 +500,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Jan 26 2021 Alexey Gladkov <legion@altlinux.ru> 85.0-alt1
+- New release (85.0).
+- Security fixes:
+  + CVE-2021-23953: Cross-origin information leakage via redirected PDF requests
+  + CVE-2021-23954: Type confusion when using logical assignment operators in JavaScript switch statements
+  + CVE-2021-23955: Clickjacking across tabs through misusing requestPointerLock
+  + CVE-2021-23956: File picker dialog could have been used to disclose a complete directory
+  + CVE-2021-23957: Iframe sandbox could have been bypassed on Android via the intent URL scheme
+  + CVE-2021-23958: Screen sharing permission leaked across tabs
+  + CVE-2021-23959: Cross-Site Scripting in error pages on Firefox for Android
+  + CVE-2021-23960: Use-after-poison for incorrectly redeclared JavaScript variables during GC
+  + CVE-2021-23961: More internal network hosts could have been probed by a malicious webpage
+  + CVE-2021-23962: Use-after-poison in <code>nsTreeBodyFrame::RowCountChanged</code>
+  + CVE-2021-23963: Permission prompt inaccessible after asking for additional permissions
+  + CVE-2021-23964: Memory safety bugs fixed in Firefox 85 and Firefox ESR 78.7
+  + CVE-2021-23965: Memory safety bugs fixed in Firefox 85
+
 * Wed Jan 06 2021 Alexey Gladkov <legion@altlinux.ru> 84.0.2-alt1
 - New release (84.0.2).
 - Security fixes:
