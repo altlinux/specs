@@ -1,7 +1,8 @@
 %def_disable snapshot
-%def_disable doc
+%def_enable doc
+%def_enable check
 # since mesa-18.0 wayland-egl moved to this wayland package
-%define main_ver 1.18.0
+%define main_ver 1.19.0
 %define egl_ver 18.1.0
 %define mesa_epoch 4
 
@@ -17,12 +18,14 @@ Url: http://%name.freedesktop.org/
 %if_disabled snapshot
 Source: http://%name.freedesktop.org/releases/%name-%version.tar.xz
 %else
-# git://anongit.freedesktop.org/wayland/wayland
+Vcs: https://anongit.freedesktop.org/wayland/wayland
 Source: %name-%version.tar
 %endif
 
-BuildRequires: /proc doxygen libexpat-devel libffi-devel libxml2-devel xsltproc docbook-style-xsl
-%{?_enable_doc:BuildRequires: /proc graphviz xmlto}
+BuildRequires(pre): meson >= 0.52.1
+BuildRequires: /proc gcc-c++ doxygen libexpat-devel libffi-devel
+BuildRequires: libxml2-devel xsltproc docbook-style-xsl
+%{?_enable_doc:BuildRequires: graphviz >= 2.26 xmlto}
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -40,6 +43,14 @@ Group: Development/C
 
 %description devel
 Common headers for Wayland.
+
+%package devel-doc
+Summary: Common headers for Wayland
+Group: Development/Documentation
+Conflicts: %name-devel < %version
+
+%description devel-doc
+This package provides development documentation for Wayland.
 
 %package -n lib%name-client
 Summary: Wayland client library
@@ -115,31 +126,35 @@ Wayland-EGL development package
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure --disable-static \
-	%{?_disable_doc:--disable-documentation}
-%make_build
+%meson \
+    %{?_disable_doc:-Ddocumentation=false}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files devel
-#%doc %_docdir/%name-devel
 %_bindir/%name-scanner
 %_includedir/%name-util.h
 %_includedir/%name-version.h
 %_datadir/aclocal/%name-scanner.*
-%_libdir/pkgconfig/%name-scanner.pc
+%_pkgconfigdir/%name-scanner.pc
 %dir %_datadir/%name
 %_datadir/%name/%name-scanner.mk
 %_datadir/%name/%name.xml
 %_datadir/%name/wayland.dtd
-# too many broken links
-%{?_enable_doc:%_man3dir/*}
+
+%if_enabled doc
+%files devel-doc
+%_man3dir/*
+%dir %_datadir/doc/%name
+%_datadir/doc/%name/Wayland/
+%endif
 
 %files -n lib%name-client
 %_libdir/lib%name-client.so.*
@@ -179,6 +194,10 @@ Wayland-EGL development package
 
 
 %changelog
+* Thu Jan 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0 (ported to Meson build system)
+- new devel-doc subpackage
+
 * Wed Feb 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
