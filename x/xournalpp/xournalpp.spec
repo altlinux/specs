@@ -1,7 +1,7 @@
 %def_with cppunit
 
 Name: xournalpp
-Version: 1.0.16
+Version: 1.0.20
 Release: alt1
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
@@ -84,6 +84,9 @@ make -C BUILD test
 %_datadir/%name/ui
 
 %changelog
+* Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 1.0.20-alt1
+- Autobuild version bump to 1.0.20
+
 * Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 1.0.16-alt1
 - Autobuild version bump to 1.0.16
 
