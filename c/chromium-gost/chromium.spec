@@ -8,6 +8,10 @@
 %global build_parallel_jobs %__nprocs
 %endif
 
+%ifndef max_parallel_jobs
+%global max_parallel_jobs 16
+%endif
+
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
 %global llvm_version 11.0
@@ -29,7 +33,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        87.0.4280.141
+Version:        88.0.4324.96
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -65,22 +69,22 @@ Patch004: 0004-DEBIAN-manpage-fixes.patch
 Patch005: 0005-ALT-gcc6-fixes.patch
 Patch006: 0006-DEBIAN-add-ps-printing-capability-gtk2.patch
 Patch007: 0007-ALT-fix-shrank-by-one-character.patch
-Patch008: 0008-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch009: 0009-ALT-Fix-last-commit-position-issue.patch
-Patch010: 0010-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch011: 0011-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch012: 0012-FEDORA-Fix-gcc-round.patch
-Patch013: 0013-ALT-openh264-always-pic-on-x86.patch
-Patch014: 0014-ALT-allow-to-override-clang-through-env-variables.patch
-Patch015: 0015-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch016: 0016-ALT-Add-missing-header-on-aarch64.patch
-Patch017: 0017-FEDORA-vtable-symbol-undefined.patch
-Patch018: 0018-FEDORA-remove-noexcept.patch
-Patch019: 0019-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch020: 0020-ALT-Fix-memcpy.patch
-Patch021: 0021-ALT-Fix-build.patch
-Patch022: 0022-Move-offending-function-to-chromeos-only.patch
-Patch023: 0023-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
+Patch008: 0008-ALT-Fix-last-commit-position-issue.patch
+Patch009: 0009-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch010: 0010-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch011: 0011-FEDORA-Fix-gcc-round.patch
+Patch012: 0012-ALT-openh264-always-pic-on-x86.patch
+Patch013: 0013-ALT-allow-to-override-clang-through-env-variables.patch
+Patch014: 0014-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch015: 0015-ALT-Add-missing-header-on-aarch64.patch
+Patch016: 0016-FEDORA-vtable-symbol-undefined.patch
+Patch017: 0017-FEDORA-remove-noexcept.patch
+Patch018: 0018-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch019: 0019-ALT-Fix-build.patch
+Patch020: 0020-Move-offending-function-to-chromeos-only.patch
+Patch021: 0021-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
+Patch022: 0022-GCC-do-not-pass-unique_ptr-to-DCHECK_NE-but-the-actu.patch
+Patch023: 0023-IWYU-include-headers-for-std-vector-and-std-unique_p.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -167,42 +171,6 @@ Requires: libva
 %description
 Chromium is an open-source browser project that aims to build a safer,
 faster, and more stable way for all Internet users to experience the web.
-
-%package kde
-Summary:        Update to chromium to use KDE's kwallet to store passwords
-License:        BSD-3-Clause and LGPL-2.1+
-Group:          Networking/WWW
-Conflicts:      chromium-gnome
-Conflicts:      chromium-desktop-gnome
-Provides:       chromium-password = %version
-Provides:       chromium-desktop-kde = %version
-Obsoletes:      chromium-desktop-kde < %version
-Requires:       %name = %version
-Requires:       kde4base-runtime-core
-
-%description kde
-By using the update-alternatives the password store for Chromium is
-changed to utilize KDE's kwallet. Please be aware that by this change
-the old password are no longer accessible and are also not converted
-to kwallet.
-
-%package gnome
-Summary:        Update to chromium to use Gnome keyring to store passwords
-License:        BSD-3-Clause and LGPL-2.1+
-Group:          Networking/WWW
-Conflicts:      chromium-desktop-kde
-Conflicts:      chromium-kde
-Provides:       chromium-password = %version
-Provides:       chromium-desktop-gnome = %version
-Obsoletes:      chromium-desktop-gnome < %version
-Requires:       %name = %version
-Requires:       gnome-keyring
-
-%description gnome
-By using the update-alternatives the password store for Chromium is
-changed to utilize Gnome's Keyring. Please be aware that by this change
-the old password are no longer accessible and are also not converted
-to Gnome's Keyring.
 
 %prep
 %setup -q -n chromium -a 300
@@ -384,7 +352,7 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-pat
 %target/gn gen --args="$CHROMIUM_GN_DEFINES" %target
 
 n=%build_parallel_jobs
-[ "$n" -lt 16 ] || n=16
+[ "$n" -lt %max_parallel_jobs ] || n=%max_parallel_jobs
 
 %ifnarch %{ix86} x86_64
 %define GOSTCFLAGS -DPROCESSOR_TYPE=-1 -O2 -g
@@ -409,6 +377,7 @@ mkdir -p -- \
 	%buildroot/%_sysconfdir/%name \
 #
 install -m 755 %SOURCE100 %buildroot%_bindir/%name
+ln -s %name %buildroot%_libdir/%name/chromium
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
 # add directories for policy management
@@ -510,6 +479,43 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 88.0.4324.96-alt1
+- Build GOST version
+- Add missing symlink (closes: #39572)
+
+* Sun Jan 24 2021 Alexey Gladkov <legion@altlinux.ru> 88.0.4324.96-alt0
+- New version (88.0.4324.96).
+- Security fixes:
+  - CVE-2020-16044: Use after free in WebRTC.
+  - CVE-2021-21117: Insufficient policy enforcement in Cryptohome.
+  - CVE-2021-21118: Insufficient data validation in V8.
+  - CVE-2021-21119: Use after free in Media.
+  - CVE-2021-21120: Use after free in WebSQL.
+  - CVE-2021-21121: Use after free in Omnibox.
+  - CVE-2021-21122: Use after free in Blink.
+  - CVE-2021-21123: Insufficient data validation in File System API.
+  - CVE-2021-21124: Potential user after free in Speech Recognizer.
+  - CVE-2021-21125: Insufficient policy enforcement in File System API.
+  - CVE-2021-21126: Insufficient policy enforcement in extensions.
+  - CVE-2021-21127: Insufficient policy enforcement in extensions.
+  - CVE-2021-21128: Heap buffer overflow in Blink.
+  - CVE-2021-21129: Insufficient policy enforcement in File System API.
+  - CVE-2021-21130: Insufficient policy enforcement in File System API.
+  - CVE-2021-21131: Insufficient policy enforcement in File System API.
+  - CVE-2021-21132: Inappropriate implementation in DevTools.
+  - CVE-2021-21133: Insufficient policy enforcement in Downloads.
+  - CVE-2021-21134: Incorrect security UI in Page Info.
+  - CVE-2021-21135: Inappropriate implementation in Performance API.
+  - CVE-2021-21136: Insufficient policy enforcement in WebView.
+  - CVE-2021-21137: Inappropriate implementation in DevTools.
+  - CVE-2021-21138: Use after free in DevTools.
+  - CVE-2021-21139: Inappropriate implementation in iframe sandbox.
+  - CVE-2021-21140: Uninitialized Use in USB.
+  - CVE-2021-21141: Insufficient policy enforcement in File System API.
+
+* Fri Jan 15 2021 Alexey Gladkov <legion@altlinux.ru> 87.0.4280.141-alt2
+- Fix ServiceWorkerRegistrationObjectHost double free
+
 * Thu Jan 14 2021 Fr. Br. George <george@altlinux.ru> 87.0.4280.141-alt1
 - Buiild GOST version
 
@@ -567,10 +573,7 @@ EOF
   - CVE-2020-16035: Insufficient data validation in cros-disks.
   - CVE-2020-16036: Inappropriate implementation in cookies.
 
-* Tue Oct 27 2020 Fr. Br. George <george@altlinux.ru> 86.0.4240.111-alt1
-- Buiild GOST version
-
-* Sat Oct 24 2020 Alexey Gladkov <legion@altlinux.ru> 86.0.4240.111-alt0
+* Sat Oct 24 2020 Alexey Gladkov <legion@altlinux.ru> 86.0.4240.111-alt1
 - New version (86.0.4240.111).
 - Enable vulkan support on x86/x86_64 platforms (thx Konstantin A. Lepikhov).
 - Security fixes:
