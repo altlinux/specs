@@ -1,6 +1,6 @@
 %define module_name     drbd9
 %define module_version  9.0.27
-%define module_release  alt1
+%define module_release  alt1.1
 %define flavour         std-def
 %define karch x86_64 aarch64 ppc64le
 
@@ -11,7 +11,7 @@
 Summary: Kernel driver for DRBD
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Epoch: 1
+Epoch: 2
 Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2+
 Group: System/Kernel and hardware
