@@ -2,7 +2,7 @@
 
 Name: clean-lib-platform
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Summary: Clean platform libraries
 Summary(ru_RU.UTF-8): Библиотеки платформы языка Clean (дополнительные к StdEnv)
 License: BSD license
@@ -79,5 +79,8 @@ find /usr/lib64/clean/Platform -name "*.o" -exec touch {} \;
 %_libdir/*
 
 %changelog
+* Thu Jan 28 2021 Andrey Bergman <vkni@altlinux.org> 3.0.0-alt2
+- Update to a new version
+
 * Thu Oct 29 2020 Andrey Bergman <vkni@altlinux.org> 3.0.0-alt1
 - Initial release for Sisyphus
