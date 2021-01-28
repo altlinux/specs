@@ -1,5 +1,5 @@
 Name: ncurses
-Version: 6.2.20201107
+Version: 6.2.20210123
 Release: alt1
 
 %define rootdatadir /lib
@@ -680,6 +680,10 @@ done
 %endif # with_utf8
 
 %changelog
+* Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 6.2.20210123-alt1
+- Autobuild version bump to 6.2.20210123
+- Add screen kcbt (shift+tab) field
+
 * Fri Nov 13 2020 Fr. Br. George <george@altlinux.ru> 6.2.20201107-alt1
 - Autobuild version bump to 6.2.20201107
 - (Closes: #39129)
