@@ -1,5 +1,5 @@
 Name:     girar-utils
-Version:  1.5.11
+Version:  1.5.12
 Release:  alt1
 
 Summary:  git.alt client utilities
@@ -30,6 +30,9 @@ This package contains client utilities for git.alt.
 %_mandir/man?/*
 
 %changelog
+* Thu Jan 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.12-alt1
+- girar-show: show task content built for x86_64 instead of i586
+
 * Thu Jan 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.11-alt1
 - girar-show: highlight missing package error in build log
 
