@@ -2,7 +2,7 @@
 
 Name: clean-lib-gast
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Summary: GAST: A Generic Automatic Software Test-system for Clean
 Summary(ru_RU.UTF-8): Библиотека автоматического тестирования для языка Clean
 License: BSD license
@@ -52,6 +52,9 @@ find /usr/lib64/clean/Gast -name "*.o" -exec touch {} \;
 %_libdir/*
 
 %changelog
+* Thu Jan 28 2021 Andrey Bergman <vkni@altlinux.org> 1.0.0-alt3
+- Update Gast to a new version.
+
 * Fri Oct 30 2020 Andrey Bergman <vkni@altlinux.org> 1.0.0-alt2
 - Correct location of internal files.
 
