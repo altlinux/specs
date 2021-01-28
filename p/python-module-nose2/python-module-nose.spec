@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
@@ -83,6 +83,9 @@ rm -f %buildroot%_bindir/nosetests
 %endif
 
 %changelog
+* Thu Jan 28 2021 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt1
+- New version.
+
 * Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
 - New version.
 
