@@ -1,5 +1,5 @@
 Name: xarchiver
-Version: 0.5.4.14.0.35.g47ca4c0
+Version: 0.5.4.17
 Release: alt1
 
 Summary: A GTK+2 only archive manager
@@ -48,6 +48,9 @@ touch AUTHORS NEWS # XXX
 %doc %_docdir/%name
 
 %changelog
+* Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 0.5.4.17-alt1
+- Autobuild version bump to 0.5.4.17
+
 * Thu Dec 19 2019 Fr. Br. George <george@altlinux.ru> 0.5.4.14.0.35.g47ca4c0-alt1
 - Update to git g47ca4c0 (zstd support)
 
