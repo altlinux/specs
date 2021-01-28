@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: Get CPU info with pure Python 2 & 3
 License: MIT
@@ -12,6 +12,7 @@ BuildArch: noarch
 Url: https://pypi.python.org/pypi/py-cpuinfo
 
 Source: py-%oname-%version.tar
+Patch1: py-cpuinfo-7.0.0-alt-mips-support.patch
 
 BuildRequires(pre): rpm-build-python3
 # /proc is needed for tests
@@ -27,6 +28,8 @@ It does not require any compilation(C/C++, assembly, et cetera) to use.
 
 %prep
 %setup -n py-%oname-%version
+
+%patch1 -p1
 
 %build
 %python3_build_debug
@@ -44,6 +47,9 @@ It does not require any compilation(C/C++, assembly, et cetera) to use.
 
 
 %changelog
+* Thu Jan 28 2021 Ivan A. Melnikov <iv@altlinux.org> 7.0.0-alt2
+- MIPS support (https://github.com/workhorsy/py-cpuinfo/pull/160)
+
 * Wed Aug 12 2020 Ivan A. Melnikov <iv@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
