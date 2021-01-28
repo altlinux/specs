@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sdkversion 3.1.106
-%define coreversion 3.1.6
+%define sdkversion 3.1.405
+%define coreversion 3.1.11
 
 Name: dotnet-bootstrap
-Version: 3.1.6
+Version: 3.1.11
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -18,10 +18,10 @@ Group: Development/Other
 #%define downloadversion 2.1.403
 # from https://www.microsoft.com/net/download/dotnet-core/3.1
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/03bf81cd-0275-4998-8a24-dc359fc5fed3/7450f821f9cd33c205378e1a0a5b2cb2/dotnet-sdk-3.1.106-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/5de23f6d-648c-455b-a7a9-d11c9a5bca40/4836262466f2d288e8ad8647944d062f/dotnet-sdk-3.1.405-linux-x64.tar.gz
 Source: %name-%version.tar
 
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/026fec12-345b-4c61-8731-1c0184594fc3/1738a6c43d2739dc6c2a9ec5caf0c41f/dotnet-sdk-3.1.106-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/ebb398e7-06d1-48f9-94e7-ddae049b704f/6bb78627f0337b980ece2a3181963fbd/dotnet-sdk-3.1.405-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -105,10 +105,10 @@ strip \
 %files
 %dir %_libdir/%name/
 %dir %_libdir/%name/templates/
-%_libdir/%name/templates/3.1.7/
+%_libdir/%name/templates/3.1.12/
 %dir %_libdir/%name/packs/
 %dir %_libdir/%name/packs/Microsoft.AspNetCore.App.Ref
-%_libdir/%name/packs/Microsoft.AspNetCore.App.Ref/3.1.3/
+%_libdir/%name/packs/Microsoft.AspNetCore.App.Ref/3.1.10/
 %ifarch aarch64
 %dir %_libdir/%name/packs/Microsoft.NETCore.App.Host.linux-arm64/
 %_libdir/%name/packs/Microsoft.NETCore.App.Host.linux-arm64/%coreversion/
@@ -139,6 +139,13 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Thu Jan 28 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.11-alt1
+- new version (3.1.11) with rpmgs script
+- .NET Core 3.1.11 - January 12, 2021
+- CVE-2021-1723: ASP.NET Core Denial of Service Vulnerability
+- CVE-2020-1045: Microsoft ASP.NET Core Security Feature Bypass Vulnerability
+- CVE-2020-1597: NET Core Remote Code Execution Vulnerability
+
 * Sun Aug 02 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
 - new version 3.1.6 (with rpmrb script) (ALT bug 38744)
 - .NET Core 3.1.6 - July 14, 2020
