@@ -1,6 +1,6 @@
 Name: imapfilter
 Version: 2.7.5
-Release: alt1
+Release: alt2
 
 Summary: mail filtering utility
 License: BSD
@@ -38,6 +38,9 @@ make BINDIR=%buildroot%_bindir SHAREDIR=%buildroot%_datadir/%name MANDIR=%buildr
 %_mandir/*/*
 
 %changelog
+* Fri Jan 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.5-alt2
+- Updated certificate paths to ALT-specific values.
+
 * Fri Jan 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.5-alt1
 - 2.7.5 (Fixes CVE-2016-10937).
 
