@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.3.2
-Release:       alt2
+Release:       alt3
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -14,11 +14,10 @@ Source2:       %name.sysconfig
 Source3:       %name.logrotate
 Source4:       %name.cron.d
 Source5:       %name.tmpfiles
-# Source6:       dynflowd.sysconfig
-# Source7:       dynflowd.service
-Source8:       %name.service
-Source9:       %name-production-%version.tar
-Source10:      manifest.js
+Source6:       %name.service
+Source7:       settings.yml
+Source9:       manifest.js
+Source10:      %name-production-%version.tar
 Patch:         patch.patch
 Patch1:        sass.patch
 Patch2:        1.22.2.patch
@@ -105,7 +104,7 @@ Foreman code documentation.
 
 
 %prep
-%setup -a 9
+%setup -a 10
 %patch -p1
 # TODO remove when patternfly-sass gem will be upgraded to new font-awesome-sass v5
 %patch1 -p1
@@ -114,7 +113,7 @@ Foreman code documentation.
 sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
 sed "s,gem 'turbolinks'.*,gem 'gitlab-turbolinks-classic'," -i Gemfile
 rm -rf ./node_modules/node-sass/ ./node_modules/.bin/node-sass
-install -Dm0755 %SOURCE10 app/assets/config/manifest.js
+install -Dm0755 %SOURCE9 app/assets/config/manifest.js
 
 %build
 %ruby_build --ignore=font-awesome-sass --use=foreman --join=lib:bin --srcexedirs= --srcconfdirs= --srclibdirs=
@@ -124,6 +123,12 @@ install -Dm0755 %SOURCE10 app/assets/config/manifest.js
 make -C locale all-mo
 
 %install
+# public www TODO
+mkdir -p %buildroot%webserver_datadir \
+         %buildroot/run/%name \
+         %buildroot%_sysconfdir/%name/plugins
+mv config/foreman-debug.conf %buildroot%_sysconfdir/%name/foreman-debug.conf
+
 %ruby_install
 rm -rf %buildroot%_libexecdir/%name/extras/{jumpstart,spec}
 
@@ -131,21 +136,21 @@ rm -rf %buildroot%_libexecdir/%name/extras/{jumpstart,spec}
 install -pm0644 VERSION %buildroot%_libexecdir/%name/VERSION
 cp -r node_modules/.bin %buildroot%_libexecdir/%name/node_modules/
 
-install -Dm0755 %SOURCE1 %buildroot%_libexecdir/%name/config/database.yml
+install -Dm0755 %SOURCE1 %buildroot%_sysconfdir/%name/database.yml
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -Dm0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -Dm0644 %SOURCE4 %buildroot%_sysconfdir/cron.d/%name
 install -Dm0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
-# install -Dm0644 %%SOURCE6 %buildroot%_sysconfdir/sysconfig/dynflowd
-# install -Dm0644 %%SOURCE7 %buildroot%_unitdir/dynflowd.service
-install -Dm0755 %SOURCE8 %buildroot%_unitdir/%name.service
+install -Dm0755 %SOURCE6 %buildroot%_unitdir/%name.service
+install -Dm0755 %SOURCE7 %buildroot%_sysconfdir/%name/settings.yml
 install -Dm0750 %buildroot%_libexecdir/%name/Gemfile %buildroot%_localstatedir/%name/Gemfile
 
-# public www TODO
-mkdir -p %buildroot%webserver_datadir
 mv %buildroot%_libexecdir/%name/public %buildroot%webserver_datadir/%name
 ln -svr %webserver_datadir/%name %buildroot%_libexecdir/%name/public
-
+ln -svr %_sysconfdir/%name/plugins %buildroot%_libexecdir/%name/config/settings.plugins.d
+ln -svr %_sysconfdir/%name/settings.yml %buildroot%_libexecdir/%name/config/settings.yaml
+ln -svr %_sysconfdir/%name/database.yml %buildroot%_libexecdir/%name/config/database.yml
+ln -svr %_sysconfdir/%name/foreman-debug.conf %buildroot%_libexecdir/%name/config/foreman-debug.conf
 install -d %buildroot%_logdir/%name
 
 %pre
@@ -153,42 +158,47 @@ install -d %buildroot%_logdir/%name
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent passwd _foreman >/dev/null || \
    %_sbindir/useradd -r -g foreman -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
+getent passwd _foreman >/dev/null || \
+   %_sbindir/usermod -a -G foreman _dynflow
 exit 0
 
 %post
 %post_service foreman
-# %post_service dynflowd
 
 %preun
 railsctl cleanup %name
 %preun_service foreman
-# %preun_service dynflowd
 
 
 %files
 %doc README* CONTRIBUTING.md LICENSE
-# %_sbindir/dynflowd
-# %config(noreplace) %_sysconfdir/%name/logging.yaml
-# %config(noreplace) %_sysconfdir/%name/settings.yaml
-# %dir %_sysconfdir/%name/plugins
 %_libexecdir/%name
-# %exclude %_datadir/%name/bundler.d/*
+%config(noreplace) %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/%name/plugins
+%config(noreplace) %_sysconfdir/%name/settings.yml
+%config(noreplace) %_sysconfdir/%name/database.yml
+%config(noreplace) %_sysconfdir/%name/foreman-debug.conf
 %config(noreplace) %_logrotatedir/%name
 %_sysconfdir/cron.d/%name
 %_tmpfilesdir/%name.conf
-# %config(noreplace) %_sysconfdir/sysconfig/dynflowd
-# %_unitdir/dynflowd.service
 %_unitdir/*
 %webserver_datadir/%name
-%attr(750,_foreman,foreman) %_logdir/%name
-%attr(750,_foreman,foreman) %_localstatedir/%name
+%attr(770,_foreman,foreman) %_logdir/%name
+%attr(770,_foreman,foreman) %_localstatedir/%name
+%attr(770,_foreman,foreman) /run/%name
 # %_man8dir/*.8*
 
 %files         doc
 %ruby_ridir/*
 
 %changelog
+* Fri Jan 22 2021 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt3
+- + deps to 4 module gems
+- * right for some folders
+- + _dynflow user to foreman group
+- + foreman config
+
 * Thu Dec 17 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt2
 - ! to add modules
 
