@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: Cython/lxml based binding for the XML security library -- for lxml 3.x
 License: BSD
@@ -44,7 +44,7 @@ This package contains tests for %oname.
 %package -n python3-module-%mname
 Summary: Core files of %mname
 Group: Development/Python3
-%py_provides %mname
+%py3_provides %mname
 Requires: python3-module-dm = %EVR
 
 %description -n python3-module-%mname
@@ -99,6 +99,9 @@ install -p -m644 dm/xmlsec/__init__.py \
 
 
 %changelog
+* Wed Dec 02 2020 Grigory Ustinov <grenka@altlinux.org> 2.0-alt2
+- Fix provides.
+
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt1
 - Version updated to 2.0
 - porting on python3.
