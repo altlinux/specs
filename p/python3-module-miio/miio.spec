@@ -1,6 +1,6 @@
 Name: python3-module-miio
-Version: 0.5.3
-Release: alt2
+Version: 0.5.4
+Release: alt1
 
 Summary: Python miIO library
 License: BSD
@@ -43,6 +43,9 @@ with devices using Xiaomi's miIO and miOT protocols.
 %_bindir/*
 
 %changelog
+* Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.4-alt1
+- 0.5.4 released
+
 * Fri Nov 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.3-alt2
 - exclude tests from package due to excessive reqs
 
