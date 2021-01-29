@@ -1,5 +1,5 @@
 Name: python3-module-voluptuous
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Voluptuous is a Python data validation library
@@ -37,6 +37,9 @@ It has three goals:
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt1
+- 0.12.1 released
+
 * Fri Oct 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt1
 - 0.12.0 released
 
