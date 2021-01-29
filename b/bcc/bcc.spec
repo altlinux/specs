@@ -20,7 +20,7 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.17.0
+Version:	0.18.0
 Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
@@ -35,12 +35,15 @@ Vcs:		https://github.com/iovisor/bcc.git
 Source:		%name-%version.tar
 Source1:	libbpf.tar
 
+# bcc does not support 32-bit arches
+# See https://github.com/iovisor/bcc/issues/3241
 ExclusiveArch:	x86_64 aarch64 ppc64le
 
 %define clang_version 10.0
 
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: banner
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: libstdc++-devel
@@ -187,6 +190,7 @@ rm -rf %buildroot/usr/share/bcc/man
 rm -rf %buildroot%_bindir/libbcc-loader-static.a
 
 %check
+banner test
 # Simple smoke test, only if KVM is enabled
 # (Will fail on ppc64le w/o KVM).
 if [ -w /dev/kvm ]; then
@@ -222,6 +226,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Fri Jan 29 2021 Vitaly Chikunov <vt@altlinux.org> 0.18.0-alt1
+- Update to bcc v0.18.0 (2021-01-04), libbpf v0.3 (2021-01-02).
+
 * Fri Dec 25 2020 Vitaly Chikunov <vt@altlinux.org> 0.17.0-alt1
 - Update to v0.17.0 (2020-10-29).
 
