@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.7
+%define ver_major 1.8
 %def_disable docs
 
 %ifnarch %valgrind_arches
@@ -13,7 +13,7 @@
 
 Name: libwacom
 Version: %ver_major
-Release: alt1.1
+Release: alt1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -115,6 +115,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Jan 29 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
+- 1.8
+
 * Sat Dec 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1.1
 - fixed BR with disabled %%check
 
