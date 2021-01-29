@@ -4,7 +4,7 @@
 %def_with maxmind
 
 Name: ocserv
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: OpenConnect SSL VPN server
 Group: System/Servers
@@ -130,6 +130,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Fri Jan 29 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt1
+- new version 1.1.2
+
 * Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
 - new version 1.1.1
 
