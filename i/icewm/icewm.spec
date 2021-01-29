@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.0.1
+Version: 2.1.1
 Release: alt1
 Epoch:3
 
@@ -123,6 +123,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Fri Jan 29 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.1.1-alt1
+- 2.1.1
+
 * Thu Jan 07 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.0.1-alt1
 - 2.0.1
 
