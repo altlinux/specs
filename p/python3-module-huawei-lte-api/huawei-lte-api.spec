@@ -1,5 +1,5 @@
 Name: python3-module-huawei-lte-api
-Version: 1.4.12
+Version: 1.4.17
 Release: alt1
 
 Summary: Python API For huawei LAN/WAN LTE Modems
@@ -29,6 +29,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools python3-module-pytest
 %python3_sitelibdir/huawei_lte_api-%version-*-info
 
 %changelog
+* Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.17-alt1
+- 1.4.17 released
+
 * Tue Jul 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.12-alt1
 - 1.4.12 released
 
