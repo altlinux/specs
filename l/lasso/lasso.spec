@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.6.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -230,10 +230,13 @@ make check
 %files -n python3-module-%name
 %python3_sitelibdir/lasso.py*
 %python3_sitelibdir/_lasso.so
-%python3_sitelibdir/__pycache__/lasso.cpython-38*.pyc
+%python3_sitelibdir/__pycache__/*
 %endif
 
 %changelog
+* Fri Jan 29 2021 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2
+- Respect all versions of python3.
+
 * Fri Apr 24 2020 Leontiy Volodin <lvol@altlinux.org> 2.6.1-alt1
 - New version.
 - Built with PHP7 support.
