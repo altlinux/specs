@@ -1,13 +1,14 @@
 Name: gadmin-proftpd
 Version: 0.2.8
-Release: alt2.qa1
+Release: alt3
 
 Summary: Gadmin-ProFTPD -- A GTK+ administation tool for the ProFTPD server.
 Group: System/Configuration/Other
 Source: %name-%version.tar.gz
 Source1: %name.pam
 Patch1: alt-%name-desktop.patch
-License: GPL
+Patch2: gadmin-0.2.8-alt-gcc10.patch
+License: GPL-3.0+
 Packager: Eugene Ostapets <eostapets@altlinux.org>
 
 # Automatically added by buildreq on Mon Apr 30 2007
@@ -19,6 +20,7 @@ GADMIN-ProFTPD is a fast and easy to use GTK+ administration tool for the proftp
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 %configure SYSINIT_START_CMD="chkconfig proftpd on" SYSINIT_STOP_CMD="chkconfig proftpd off"
@@ -69,6 +71,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Fri Jan 29 2021 Leontiy Volodin <lvol@altlinux.org> 0.2.8-alt3
+- Fixed build with gcc10.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.8-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
