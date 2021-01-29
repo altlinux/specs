@@ -21,7 +21,7 @@
 
 Name:		bcc
 Version:	0.18.0
-Release:	alt1
+Release:	alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -44,6 +44,7 @@ ExclusiveArch:	x86_64 aarch64 ppc64le
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: banner
+BuildRequires: bpftool
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: libstdc++-devel
@@ -61,6 +62,8 @@ BuildRequires: libncurses-devel
 BuildRequires: luajit
 BuildRequires: libluajit-devel
 %endif
+# Prevent copying into repos with too old pahole.
+BuildRequires: dwarves >= 1.16
 
 # Adding `BuildRequires: /proc' improves lld speed:
 #    USER     %%CPU  %%MEM  COMMAND
@@ -128,6 +131,21 @@ Requires:	python3-module-bcc = %EVR
 %description -n bcc-tools
 Command line tools for BPF Compiler Collection (BCC)
 
+%package -n libbpf-tools
+Summary:	Compile-once run-everywhere (CO-RE) libbpf based tools
+Group:		Development/Debuggers
+Url:		https://github.com/iovisor/bcc/tree/master/libbpf-tools
+# PR: http://www.brendangregg.com/blog/2020-11-04/bpf-co-re-btf-libbpf.html
+# PR: https://nakryiko.com/posts/libbpf-bootstrap/
+Requires:	python3-module-bcc = %EVR
+%description -n libbpf-tools
+Compile-once run-everywhere (CO-RE) libbpf based tools.
+These tools are experimental! All the tools prefixed with 'bpf-'.
+Kernel should be compiled with 'CONFIG_DEBUG_INFO_BTF=y'.
+
+Installing of libbpf is not required due to it being statically
+linked (and built in bcc package).
+
 %if_with luajit
 %global lua_include `pkg-config --variable=includedir luajit`
 %global lua_libs `pkg-config --variable=libdir luajit`/lib`pkg-config --variable=libname luajit`.so
@@ -166,6 +184,10 @@ export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 	%{?lua_config}
 %cmake_build VERBOSE=1
 
+%ifarch x86_64
+%make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool
+%endif
+
 %install
 %set_verify_elf_method relaxed
 pathfix.py -pni %__python3 tools
@@ -189,6 +211,12 @@ rm -rf %buildroot/usr/share/bcc/man
 # Lib with unknown purpose.
 rm -rf %buildroot%_bindir/libbcc-loader-static.a
 
+%ifarch x86_64
+cd libbpf-tools
+make -p | sed -n /^APPS/s/APPS.=//p | tr ' ' '\n' \
+	| xargs -i install -v -Dp {} %buildroot%_sbindir/bpf-{}
+%endif
+
 %check
 banner test
 # Simple smoke test, only if KVM is enabled
@@ -197,6 +225,13 @@ if [ -w /dev/kvm ]; then
 	LD_LIBRARY_PATH=%buildroot%_libdir \
 	PYTHONPATH=%buildroot%python3_sitelibdir \
 	vm-run %buildroot%_datadir/bcc/tools/cpudist 1 1
+fi
+
+%post -n libbpf-tools
+kver=$(uname -r)
+if ! grep -qs CONFIG_DEBUG_INFO_BTF=y /boot/config-$kver; then
+	echo >&2 "Your running kernel ($kver) does not have 'CONFIG_DEBUG_INFO_BTF=y'"
+	echo >&2 "option enabled, because of this libbpf-tools will not work."
 fi
 
 %files -n libbcc
@@ -225,7 +260,15 @@ fi
 %_datadir/bcc
 %_man8dir/*
 
+%ifarch x86_64
+%files -n libbpf-tools
+%_sbindir/bpf-*
+%endif
+
 %changelog
+* Fri Jan 29 2021 Vitaly Chikunov <vt@altlinux.org> 0.18.0-alt2
+- spec: Build libbpf-tools (CO-RE eBPF tools) on x86_64.
+
 * Fri Jan 29 2021 Vitaly Chikunov <vt@altlinux.org> 0.18.0-alt1
 - Update to bcc v0.18.0 (2021-01-04), libbpf v0.3 (2021-01-02).
 
