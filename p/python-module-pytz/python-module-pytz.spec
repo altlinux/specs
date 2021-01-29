@@ -5,13 +5,13 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2020.1
+Version: 2020.5
 Release: alt1
 
 %setup_python_module %oname
 
 Summary: World timezone definitions, modern and historical
-Source0: https://files.pythonhosted.org/packages/f4/f6/94fee50f4d54f58637d4b9987a1b862aeb6cd969e73623e02c5c00755577/pytz-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/70/44/404ec10dca553032900a65bcded8b8280cf7c64cc3b723324e2181bf93c9/pytz-%{version}.tar.gz
 License: MIT
 Group: Development/Python
 BuildArch: noarch
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2020.5-alt1
+- 2020.5 released
+
 * Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2020.1-alt1
 - 2020.1 released
 
