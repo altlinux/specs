@@ -2,13 +2,14 @@
 
 Name: ggz-gtk-games
 Version: 0.0.14.1
-Release: alt2.qa1
+Release: alt3
 
 Summary: GGZ Games for GTK+ user interface
-License: GPL
+License: GPL-2.0+
 Group: Games/Other
 URL: http://www.ggzgamingzone.org/
 Source0: http://ftp.belnet.be/packages/ggzgamingzone/ggz/%version/%name-%version.tar.gz
+Patch0: ggz-gtk-games-0.0.14.1-alt-gcc10.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -31,6 +32,7 @@ Tic-Tac-Toe
 
 %prep
 %setup -q
+%patch0 -p2
 
 %build
 %configure \
@@ -89,6 +91,9 @@ fi
 %_datadir/ggz/
 
 %changelog
+* Fri Jan 29 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.14.1-alt3
+- Fixed build with gcc10.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.14.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
