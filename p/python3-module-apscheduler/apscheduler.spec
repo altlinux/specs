@@ -1,30 +1,16 @@
-%define oname apscheduler
-
-%def_disable check
-
-Name: python3-module-%oname
-Version: 3.1.0
-Release: alt2
+Name: python3-module-apscheduler
+Version: 3.7.0
+Release: alt1
 
 Summary: In-process task scheduler with Cron-like capabilities
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/APScheduler/
-# https://bitbucket.org/agronholm/apscheduler.git
-BuildArch: noarch
+Url: https://pypi.org/project/APScheduler/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
-
-%py3_provides %oname
-%py3_requires twisted.internet asyncio
-
-BuildRequires: python3-module-html5lib python3-module-pbr
-BuildRequires: python3-module-pycares python3-module-pygobject3
-BuildRequires: python3-module-pytz python3-module-serial
-BuildRequires: python3-module-unittest2 python3-module-zope
-
+BuildArch: noarch
+BuildRequires: rpm-build-python3 python3-module-setuptools python3(setuptools_scm)
 
 %description
 Advanced Python Scheduler (APScheduler) is a Python library that lets
@@ -44,70 +30,25 @@ existing applications. That said, APScheduler does provide some building
 blocks for you to build a scheduler service or to run a dedicated
 scheduler process.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Advanced Python Scheduler (APScheduler) is a Python library that lets
-you schedule your Python code to be executed later, either just once or
-periodically. You can add new jobs or remove old ones on the fly as you
-please. If you store your jobs in a database, they will also survive
-scheduler restarts and maintain their state. When the scheduler is
-restarted, it will then run all the jobs it should have run while it was
-offline.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Advanced Python Scheduler (APScheduler) is a Python library that lets
-you schedule your Python code to be executed later, either just once or
-periodically. You can add new jobs or remove old ones on the fly as you
-please. If you store your jobs in a database, they will also survive
-scheduler restarts and maintain their state. When the scheduler is
-restarted, it will then run all the jobs it should have run while it was
-offline.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
 
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%python3_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
-export PYTHONPATH=$PWD
-pushd docs
-sphinx-build-3 -b pickle -d build/doctrees . build/pickle
-sphinx-build-3 -b html -d build/doctrees . build/html
-popd
-
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
-
-%check
-python3 setup.py test
-
 %files
-%doc *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc examples docs/build/html
-
+%python3_sitelibdir/apscheduler
+%python3_sitelibdir/APScheduler-%version-*-info
 
 %changelog
+* Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.0-alt1
+- 3.7.0 released
+
 * Wed Oct 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.1.0-alt2
 - disable python2, enable python3
 
