@@ -11,7 +11,7 @@
 
 Name: nagios-%realname
 Version: 3.2.1
-Release: alt6
+Release: alt7
 
 Summary: NRPE -- Nagios(R) Remote Plug-ins Execution daemon.
 Summary(ru_RU.UTF-8): NRPE -- Сервер выполнения команд Nagios(R) на удаленном хосте.
@@ -99,7 +99,8 @@ as host or service state.
     --with-nrpe-port=65534 \
     --enable-ssl \
     --disable-command-args \
-    --with-pluginsdir="%_libexecdir/nagios/plugins"
+    --with-pluginsdir="%_libexecdir/nagios/plugins" \
+    --with-piddir=/run
 
 %make_build all
 #pushd contrib
@@ -159,6 +160,9 @@ mkdir -p %buildroot%nagios_confdir/nrpe-commands
 %doc %plugin_docdir/*
 
 %changelog
+* Fri Jan 29 2021 Paul Wolneykien <manowar@altlinux.org> 3.2.1-alt7
+- Fixed daemon configuration: set PID file to /run/nrpe.pid.
+
 * Tue Jul 21 2020 Paul Wolneykien <manowar@altlinux.org> 3.2.1-alt6
 - Fix: Add missing %nagios_grp group and %nagios_usr user.
 
