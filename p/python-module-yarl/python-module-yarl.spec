@@ -1,7 +1,7 @@
 %define oname yarl
 
 Name: python-module-%oname
-Version: 1.4.2
+Version: 1.6.3
 Release: alt1
 Summary: Yet another URL library http://yarl.readthedocs.io
 License: Apache-2.0
@@ -28,7 +28,7 @@ The module provides handy URL class for url parsing and changing.
 %setup -n %oname-%version
 
 %build
-make yarl/_quoting.c
+python3 -mcython -3 -o yarl/_quoting_c.c yarl/_quoting_c.pyx
 %python3_build
 
 %install
@@ -39,6 +39,9 @@ make yarl/_quoting.c
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.3-alt1
+- 1.6.3 released
+
 * Tue Aug 18 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
 - 1.4.2 released
 
