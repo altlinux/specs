@@ -6,10 +6,10 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.7.1
+Version: 3.7.3
 Release: alt1
 Summary: http client/server for asyncio
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/KeepSafe/aiohttp.git
 Source: %name-%version.tar
@@ -88,6 +88,9 @@ python3 setup.py test
 %python3_sitelibdir/*/*/*test*
 
 %changelog
+* Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.3-alt1
+- 3.7.3 released
+
 * Mon Nov 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.1-alt1
 - 3.7.1 released
 
