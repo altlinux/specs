@@ -10,7 +10,7 @@
 # %%endif
 
 Name: golang-deepin-go-lib
-Version: 5.6.0.2
+Version: 5.6.0.9
 Release: alt1
 Summary: Go bindings for Deepin Desktop Environment development
 
@@ -82,6 +82,9 @@ export GOPATH="%go_path"
 %go_path/src/%import_path
 
 %changelog
+* Fri Jan 29 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.0.9-alt1
+- New version (5.6.0.9) with rpmgs script.
+
 * Thu Dec 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.2-alt1
 - New version (5.6.0.2) with rpmgs script.
 
