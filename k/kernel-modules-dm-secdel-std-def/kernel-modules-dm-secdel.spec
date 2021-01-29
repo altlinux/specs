@@ -1,6 +1,6 @@
 %define module_name     dm-secdel
 %define module_version  1.0.7
-%define module_release  alt5
+%define module_release  alt5.1
 %define flavour         std-def
 %define karch %ix86 x86_64 aarch64 ppc64le armh e2k e2kv4 e2kv5 e2kv6
 
@@ -11,7 +11,7 @@
 Summary: dm-linear with secure deletion on discard
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Epoch: 1
+Epoch: 2
 Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2
 Group: System/Kernel and hardware
