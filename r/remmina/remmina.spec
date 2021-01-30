@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: remmina
-Version: 1.4.7
+Version: 1.4.10
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -13,14 +13,13 @@ Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
 #Source1: ru.po
 Patch0: %name-%version.patch
-Patch1: fix_plugins_search_v1.2.32.1.patch
 
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
-BuildRequires: gettext pkgconfig(libpcre)
+BuildRequires: gettext pkgconfig(libpcre) libpcre2-devel
 BuildRequires: intltool
 BuildRequires: libappstream-glib
 BuildRequires: libgcrypt-devel libssl-devel
@@ -202,7 +201,6 @@ that shows up under the display manager session menu.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 #cp -f %%SOURCE1 po/
 
@@ -304,6 +302,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Sat Jan 30 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.10-alt1
+- new version 1.4.10
+- drop fix_plugins_search_v1.2.32.1.patch
+
 * Thu Jul 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.7-alt1
 - new version 1.4.7
 
@@ -355,20 +357,20 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 - split plugins package
 - add gnome-session package for kiosk mode
 
-* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt5.rc21%ubt
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt5.rc21
 - fix to build with new libssh
 
-* Wed Jun 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt4.rc21%ubt
+* Wed Jun 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt4.rc21
 - fix plugins search in version 1.2.0-rc21
 
-* Tue Jun 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt3.rc21%ubt
+* Tue Jun 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt3.rc21
 - increase release number for allow backport to p8
 
-* Wed Jun 13 2018 Oleg Gadelshin <olegeg@altlinux.ru> 1.2.0-alt2.rc20%ubt
+* Wed Jun 13 2018 Oleg Gadelshin <olegeg@altlinux.ru> 1.2.0-alt2.rc20
 - increase release number to alt2
 - add remmina-1.2.0-rdp-passwordispin_option.patch for use of smartcard pin as password
 
-* Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1.rc20%ubt
+* Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1.rc20
 - 1.2.0-rcgit.20
 - increase release number for allow backport to p8
 
