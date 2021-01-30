@@ -5,7 +5,7 @@
 %def_without check
 
 Name: cmake
-Version: 3.19.3
+Version: 3.19.4
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -297,6 +297,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu Jan 28 2021 Vitaly Lipatov <lav@altlinux.ru> 3.19.4-alt1
+- new version 3.19.4 (with rpmrb script)
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.19.3-alt1
 - new version 3.19.3 (with rpmrb script)
 
