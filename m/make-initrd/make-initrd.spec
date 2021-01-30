@@ -1,8 +1,8 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.11.0
-Release: alt3
+Version: 2.12.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -219,6 +219,13 @@ fi
 %endif
 
 %changelog
+* Sat Jan 30 2021 Alexey Gladkov <legion@altlinux.ru> 2.12.0-alt1
+- Feature lkrg:
+  + Respect kernel version when we check for a kernel module (thx Vladimir D. Seleznev).
+- Misc:
+  + initrd-put: Properly handle the situation when the copy_file_range is not
+    implemented.
+
 * Wed Oct 07 2020 Alexey Gladkov <legion@altlinux.ru> 2.11.0-alt3
 - Utilities:
   + initrd-put: Properly handle the situation when the copy_file_range is not implemented
