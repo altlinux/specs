@@ -1,9 +1,9 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20201210
+%define module_version 0.8.1+git20210130
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt2
+Release: alt1
 
 Summary:  Linux Kernel Runtime Guard module sources
 
@@ -13,7 +13,6 @@ Url:  https://www.openwall.com/lkrg/
 
 VCS: https://github.com/openwall/lkrg.git
 Source: %module_name-%version.tar
-Patch: %module_name-%version-%release.patch
 
 ExclusiveArch: i586 x86_64 aarch64
 BuildRequires(pre): rpm-build-kernel
@@ -35,9 +34,6 @@ This package contains the LKRG sources.
 
 %prep
 %setup -q -c
-pushd %module_name-%version
-%patch -p1
-popd
 
 %install
 mkdir -p %kernel_srcdir
@@ -54,6 +50,9 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sat Jan 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210130-alt1
+- Updated to commit e43d2dd525f014388c1f8cc0eb8a23f2ef07f415 (closes #39626).
+
 * Sat Dec 26 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201210-alt2
 - Fixed BR: kernel-build-tools -> rpm-build-kernel.
 
