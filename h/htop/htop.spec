@@ -3,7 +3,7 @@
 %def_enable taskstats
 
 Name: htop
-Version: 3.0.0
+Version: 3.0.5
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
@@ -13,7 +13,7 @@ Group: Monitoring
 Url: http://hisham.hm/htop/
 Source0: %name-%version.tar
 Source1: %name.ru.1
-Patch: htop-2.1.0-alt-colorscheme.patch
+Patch: htop-3.0.5-alt-colorscheme.patch
 
 BuildRequires: libncursesw-devel
 BuildRequires: python3
@@ -82,6 +82,9 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sat Jan 30 2021 Anton Midyukov <antohami@altlinux.org> 3.0.5-alt1
+- new version 3.0.5
+
 * Wed Sep 02 2020 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - New version
 
