@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.31
+Version: 0.5.32
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -119,6 +119,9 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Tue Jan 26 2021 Alexey Gladkov <legion@altlinux.ru> 0.5.32-alt1
+- added function to resolve systemd utilities.
+
 * Thu Dec 26 2019 Dmitry V. Levin <ldv@altlinux.org> 0.5.31-alt1
 - {post,preun}_service: added support of non-service systemd units (closes: #35388).
 
