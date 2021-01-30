@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20201210
+%define module_version	0.8.1+git20210130
 %define module_release	alt1
 
 %define flavour		std-debug
@@ -75,6 +75,9 @@ install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Jan 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210130-alt1
+- Updated to commit e43d2dd525f014388c1f8cc0eb8a23f2ef07f415 (fixes #39626).
 
 * Wed Dec 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20201210-alt1
 - Updated to 47d6aca4d424f21044f2b890c245fccfad3a40f3.
