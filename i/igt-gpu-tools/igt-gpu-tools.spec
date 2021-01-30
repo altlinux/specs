@@ -1,5 +1,5 @@
 Name: igt-gpu-tools
-Version: 1.24
+Version: 1.25
 Release: alt1
 
 Summary: tools for debugging the Intel graphics driver
@@ -8,7 +8,7 @@ Group: Development/Debug
 
 # http://cgit.freedesktop.org/xorg/app/intel-gpu-tools/
 Url: http://01.org/linuxgraphics/
-Source: igt-gpu-tools-%version.tar.xz
+Source: %name-%version.tar.xz
 
 Provides: intel-gpu-tools-@version@
 Obsoletes: intel-gpu-tools
@@ -65,6 +65,14 @@ intel-gen4asm is a program to compile an assembly language for the Intel 965
 Express Chipset.  It has been used to construct programs for textured video
 in the 2d driver.
 
+%package devel
+Summary: GTK development suite for %name
+License: MIT
+Group: Development/C
+
+%description devel
+%summary
+
 %package devel-doc
 Summary: GTK development documentation for %name
 License: MIT
@@ -81,26 +89,25 @@ sed -i 's/NOT-GIT/%release/g' lib/Makefile.sources
 %build
 %meson
 %meson_build
-
-#exit 1 
-#autoreconf
-#configure
-#make_build
+%meson_build igt-gpu-tools-doc
 
 %install
 %meson_install
-#makeinstall_std
 
 %files
 %_bindir/*
-%_libdir/*.so*
+%_libdir/*.so.*
 %_usr/lib/%name/
 %_datadir/%name/
-#_datadir/gtk-doc/html/%name/
 #_mandir/*/*
 %exclude %_bindir/intel-gen4asm
 %exclude %_bindir/intel-gen4disasm
 %exclude %_pkgconfigdir/intel-gen4asm.pc
+
+%files devel
+%_libdir/*.so
+%_includedir/i915-perf
+%_pkgconfigdir/i915-perf.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name
@@ -112,6 +119,9 @@ sed -i 's/NOT-GIT/%release/g' lib/Makefile.sources
 %doc assembler/README assembler/TODO assembler/doc/examples/
 
 %changelog
+* Sat Jan 30 2021 Fr. Br. George <george@altlinux.ru> 1.25-alt1
+- Autobuild version bump to 1.25
+
 * Wed Dec 11 2019 Fr. Br. George <george@altlinux.ru> 1.24-alt1
 - Autobuild version bump to 1.24
 - Rename to igt-gpu-tools
