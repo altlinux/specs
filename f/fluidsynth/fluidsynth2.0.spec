@@ -13,10 +13,11 @@
 %def_enable sdl2
 %def_enable libinstpatch
 %def_enable dbus
+%def_enable systemd
 %def_enable check
 
 Name: fluidsynth
-Version: 2.1.6
+Version: 2.1.7
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -28,11 +29,11 @@ License: LGPL-2.1-or-later
 %if_disabled snapshot
 Source: https://github.com/FluidSynth/%name/archive/v%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/FluidSynth/fluidsynth.git
+Vcs: https://github.com/FluidSynth/fluidsynth.git
 Source: %name-%version.tar
 %endif
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %define cmake_ver 3.0.2
 %define glib_ver 2.30
@@ -42,17 +43,19 @@ Requires: lib%name = %version-%release
 %define instpatch_ver 1.1.0
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= %cmake_ver gcc-c++
+BuildRequires: cmake >= %cmake_ver gcc-c++ libgomp-devel
 BuildRequires: doxygen graphviz xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: glib2-devel >= %glib_ver libsndfile-devel libalsa-devel >= %alsa_ver
 BuildRequires: libalsa-devel >= %alsa_ver libe2fs-devel
 BuildRequires: libncurses-devel libreadline-devel
+%{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_enable_ladcca:BuildRequires: libladcca-devel >= %ladcca_ver}
 %{?_enable_lash:BuildRequires: liblash-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk}
 %{?_enable_jack:BuildRequires: libjack-devel >= %jack_ver}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
 %{?_enable_dbus:BuildRequires: libdbus-devel}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_portaudio:BuildRequires: libportaudio-devel}
 %{?_enable_sdl2:BuildRequires: libSDL2-devel}
 %{?_enable_libinstpatch:BuildRequires: libinstpatch-devel >= %instpatch_ver}
@@ -105,6 +108,7 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 Summary: Development environment for %name
 Summary(ru_RU.UTF-8): Среда разработки для %name
 Group: Development/C
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 FluidSynth is a software real-time synthesizer based on the
@@ -133,8 +137,8 @@ Summary: Static %name library
 Summary(ru_RU.UTF-8): Статические библиотеки для %name
 Group: Development/C
 Obsoletes: libiiwusynth-devel-static
-Provides: libiiwusynth-devel-static = %version-%release
-Requires: lib%name-devel = %version-%release
+Provides: libiiwusynth-devel-static = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 FluidSynth is a software real-time synthesizer based on the
@@ -161,6 +165,7 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake \
     -DLIB_INSTALL_DIR:PATH=%_lib \
     -DINCLUDE_INSTALL_DIR:PATH=include \
@@ -172,6 +177,7 @@ MIDI-синтезатора. FluidSynth также может воспроизв
     %{?_enable_jack:-Denable-jack:bool=true} \
     %{?_enable_pulseaudio:-Denable-pulseaudio:bool=true} \
     %{?_enable_dbus:-Denable-dbus:bool=true} \
+    %{?_disable_systemd:-Denable-systemd:bool=false} \
     %{?_enable_portaudio:-Denable-portaudio:bool=true} \
     %{?_enable_sdl2:-Denable-sdl2:bool=true}
 %nil
@@ -206,6 +212,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Sat Jan 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1.7-alt1
+- 2.1.7
+
 * Mon Jan 04 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
 - 2.1.6
 
