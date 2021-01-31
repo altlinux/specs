@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.0
+%define ver_major 4.1
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -19,12 +19,11 @@
 %def_enable broadway
 %def_enable cloudprint
 %def_enable cloudproviders
-%def_disable tracker3
+%def_enable tracker3
 %def_enable vulkan
 # media backends
 %def_enable gstreamer
-# not ready
-#%%def_enable ffmpeg
+%def_enable ffmpeg
 
 %def_disable sysprof
 %def_enable tests
@@ -33,7 +32,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -112,7 +111,9 @@ BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
 # since 3.94.0 for media backends
 %{?_enable_gstreamer:BuildRequires: pkgconfig(gstreamer-player-1.0)}
-#%%{?_enable_ffmpeg:BuildRequires: pkgconfig()}
+%{?_enable_ffmpeg:
+BuildRequires: libavfilter-devel libavformat-devel
+BuildRequires: libavcodec-devel libavutil-devel libswscale-devel}
 
 %description
 GTK is a multi-platform toolkit for creating graphical user interfaces.
@@ -365,6 +366,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sun Jan 31 2021 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Tue Jan 19 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
 - 4.0.2
 
