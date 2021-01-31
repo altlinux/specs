@@ -2,10 +2,13 @@
 %def_enable libwebpmux
 %def_enable libwebpdemux
 %def_enable libwebpdecoder
+# https://chromium.googlesource.com/webm/libwebp-test-data required
+# see tests/README
+%def_disable check
 %define soversion 7
 
 Name: libwebp
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -14,8 +17,8 @@ Group: System/Libraries
 Url: http://webmproject.org/
 Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%name-%version.tar.gz
 
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel libgif-devel
-BuildRequires: libfreeglut-devel
+BuildRequires: libgomp-devel libjpeg-devel libpng-devel libtiff-devel
+BuildRequires: libgif-devel libfreeglut-devel libSDL2-devel
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -27,7 +30,7 @@ images more efficiently.
 %package -n %name%soversion
 Summary: Libraries for the WebP graphics format
 Group: System/Libraries
-Provides: %name = %version-%release
+Provides: %name = %EVR
 Obsoletes: libwebp = 0.4.0-alt1
 
 %description -n %name%soversion
@@ -40,7 +43,7 @@ images more efficiently.
 %package devel
 Summary: Development files for libwebp, a library for the WebP format
 Group: Development/C
-Requires: %name%soversion = %version-%release
+Requires: %name%soversion = %EVR
 
 %description devel
 WebP is an image format that does lossy compression of digital
@@ -52,7 +55,7 @@ images more efficiently.
 %package tools
 Summary: The WebP command line tools
 Group: System/Libraries
-Requires: %name%soversion = %version-%release
+Requires: %name%soversion = %EVR
 
 %description tools
 WebP is an image format that does lossy compression of digital
@@ -75,6 +78,9 @@ images more efficiently.
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files -n %name%soversion
 %_libdir/%name.so.*
@@ -121,6 +127,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Sat Jan 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Tue Jan 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
