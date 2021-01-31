@@ -1,6 +1,6 @@
 Name: memtest86+
-Version: 5.01
-Release: alt2
+Version: 5.31b
+Release: alt1
 
 Summary: Memory test for x86 architecture
 License: GPL
@@ -9,21 +9,23 @@ Group: System/Kernel and hardware
 Url: http://www.memtest.org
 Source: %url/download/%version/%name-%version.tar.gz
 # reported upstream
-Patch0:   memtest86+-5.01-no-scp.patch
+#Patch0:   memtest86+-5.01-no-scp.patch
 # patches to get memtest86+ working with gcc-4.7.2 or later + PCI scan fix
 # these patches were taken from Mageia
 # upstream report containing link to the patches:
 # http://forum.canardpc.com/threads/83443-Memtest86-V5.01-crashes-with-gcc-4.7.2-or-later
-Patch1:   memtest86+-5.01-no-optimization.patch
-Patch2:   memtest86+-5.01-compile-fix.patch
-Patch3:   memtest86+-5.01-array-size-fix.patch
+#Patch1:   memtest86+-5.01-no-optimization.patch
+#Patch2:   memtest86+-5.01-compile-fix.patch
+#Patch3:   memtest86+-5.01-array-size-fix.patch
+Patch4:   memtest86+-5.31b-serial-console-fix.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64
 Requires(post,preun): bootloader-utils >= 0.3
 BuildRequires: dev86
 
-%set_gcc_version 4.9
+#set_gcc_version 4.9
 
 %description
 Memtest86 is thorough, standalone memory test for x86 systems. It is
@@ -65,10 +67,12 @@ and avoids the following errors:
 
 %prep
 %setup
-%patch0 -p1 -b .no-scp
-%patch1 -p1 -b .no-optimization
-%patch2 -p1 -b .compile-fix
-%patch3 -p1 -b .array-size-fix
+#patch0 -p1 -b .no-scp
+#patch1 -p1 -b .no-optimization
+#patch2 -p1 -b .compile-fix
+#patch3 -p1 -b .array-size-fix
+%patch4 -p1 -b .serial-console-fix
+
 
 sed -i -e's,0x5000,0x100000,' memtest.lds
 %ifarch x86_64
@@ -98,6 +102,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README* FAQ
 
 %changelog
+* Sun Jan 31 2021 Ilya Mashkin <oddity@altlinux.ru> 5.31b-alt1
+- 5.31b
+
 * Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 5.01-alt2
 - "fixed" FTBFS (by downgrading to gcc4)
 
