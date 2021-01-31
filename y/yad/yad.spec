@@ -1,5 +1,5 @@
 Name: yad
-Version: 6.0
+Version: 7.3
 Release: alt1
 Summary: Display graphical dialogs from shell scripts or command line
 
@@ -58,6 +58,9 @@ desktop-file-install --remove-key Encoding     \
 %_datadir/glib-2.0/schemas/yad.gschema.xml
 
 %changelog
+* Sun Jan 31 2021 Fr. Br. George <george@altlinux.ru> 7.3-alt1
+- Autobuild version bump to 7.3
+
 * Mon Jun 08 2020 Fr. Br. George <george@altlinux.ru> 6.0-alt1
 - Autobuild version bump to 6.0
 
