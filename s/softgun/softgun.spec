@@ -1,6 +1,6 @@
 Name: softgun
 Version: 0.22
-Release: alt2
+Release: alt3
 
 Summary: ARM Board Emulator
 License: GPL
@@ -9,6 +9,7 @@ Group: Emulators
 Url: http://softgun.sourceforge.net/
 Source: %name-%version.tgz
 Patch: softgun-0.22-alt-DSO.patch
+Patch1: softgun-0.22-alt-GCC10.patch
 
 # Automatically added by buildreq on Sun Jul 29 2012
 BuildRequires: libalsa-devel zlib-devel
@@ -21,6 +22,7 @@ Emulates three ARM9-based development boards and a wide range of peripherals.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 %ifarch %e2k
 sed -i 's,-O9,-O%_optlevel,g' config.mk testapps/Makefile
 %endif
@@ -38,6 +40,9 @@ make install bindir=%buildroot%_bindir libdir=%buildroot%_libdir/%name
 %_libdir/%name
 
 %changelog
+* Sun Jan 31 2021 Fr. Br. George <george@altlinux.ru> 0.22-alt3
+- Fix GCC10 build
+
 * Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 0.22-alt2
 - E2K: fix superfluous optimization level
 - Add Url:
