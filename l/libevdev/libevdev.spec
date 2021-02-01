@@ -3,18 +3,23 @@
 %def_enable check
 
 Name: libevdev
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: kernel evdev device wrapper library
 Group: System/Libraries
-License: MIT
-Url: http://www.freedesktop.org/wiki/Software/libevdev
+License: MIT and GPL-2.0
+Url: https://www.freedesktop.org/wiki/Software/libevdev
+Vcs: https://gitlab.freedesktop.org/libevdev/libevdev.git
 
-Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
+Source: https://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
+BuildRequires(pre): meson rpm-macros-valgrind
 BuildRequires: glibc-kernheaders libcheck-devel python3-module-setuptools
-%{?_enabled_doc:BuildRequires: doxygen}
+%{?_enable_doc:BuildRequires: doxygen}
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
 
 %description
 %name is a wrapper library for evdev devices.
@@ -32,17 +37,18 @@ that are needed to write applications that use %name.
 %setup
 
 %build
-%autoreconf
-%configure --disable-static \
-	--disable-gcov \
-	PYTHON=%__python3
-%make_build
+%meson \
+    %{?_disable_doc:-Ddocumentation=disabled} \
+    %{?_disable_check:-Dtests=disabled}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_bindir/mouse-dpi-tool
@@ -60,6 +66,12 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Mon Feb 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0 (ported to Meson build system)
+
+* Mon Jan 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
+- 1.10.1
+
 * Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
