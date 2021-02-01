@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Pod/POM.pm) perl(base.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.000002
+Version: 1.000003
 Release: alt1
 Summary: View for Pod::POM that outputs reStructuredText
 Group: Development/Perl
@@ -37,7 +37,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc ChangeLog LICENSE README
+%doc ChangeLog README
 %perl_vendor_privlib/P*
 
 %files scripts
@@ -45,6 +45,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 1.000003-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.000002-alt1
 - automated CPAN update
 
