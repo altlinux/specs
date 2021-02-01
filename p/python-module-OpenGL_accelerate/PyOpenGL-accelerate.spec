@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname OpenGL_accelerate
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.3b1
-Release: alt2
+Version: 3.1.5
+Release: alt1
 Summary: Acceleration code for PyOpenGL
 License: BSD
 Group: Development/Python
@@ -68,6 +70,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.5-alt1
+- Updated to upstream version 3.1.5.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.3b1-alt2
 - NMU: remove rpm-build-ubt from BR:
 

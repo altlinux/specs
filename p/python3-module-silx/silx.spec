@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname silx
-%def_without  check
 
 Name: python3-module-%oname
-Version: 0.10.1
-Release: alt2
+Version: 0.14.0
+Release: alt1
 Summary: Software library for X-Ray data analysis
 License: MIT
 Group: Development/Python3
@@ -13,9 +12,6 @@ Url: https://pypi.python.org/pypi/silx
 
 # https://github.com/silx-kit/silx.git
 Source: %name-%version.tar
-
-# Until upstream issue is fixed: https://github.com/silx-kit/silx/issues/2029
-Patch1: silx-alt-skip-broken-test.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libgomp-devel
@@ -25,9 +21,13 @@ BuildRequires: python3-module-Cython
 BuildRequires: python3(scipy)
 # for tests
 BuildRequires: python3(fabio)
+BuildRequires: python3(numpy.testing)
 
-%add_python3_req_skip pyopencl pyopencl.array pyopencl.elementwise
+%add_python3_req_skip pyopencl pyopencl.array pyopencl.elementwise pyopencl.scan pyopencl.tools
+%add_python3_req_skip PySide.QtCore PySide.QtGui
 %py3_requires scipy.spatial
+%py3_requires PyQt5 OpenGL
+%py3_requires matplotlib.backends.backend_qt5agg
 
 %description
 The silx project aims at providing a collection of Python packages
@@ -66,7 +66,6 @@ This package contains examples for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 # remove some third-party bundled stuff
 rm -rf silx/third_party/_local
@@ -110,6 +109,10 @@ python3 setup.py test
 %python3_sitelibdir/%oname/examples
 
 %changelog
+* Mon Feb 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14.0-alt1
+- Updated to upstream version 0.14.0.
+- Re-enabled check.
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt2
 - remove libnumpy-devel (it is python2 only package)
 - disable check (need review)
