@@ -6,7 +6,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-PasswdMD5
-Version: 1.40
+Version: 1.41
 Release: alt1
 
 Summary: Perl Crypt-PasswdMD5
@@ -16,7 +16,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Crypt-PasswdMD5-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/R/RS/RSAVAGE/%{module}-%{version}.tgz
 
 BuildRequires: perl-devel perl(Module/Build.pm)
 
@@ -24,7 +24,7 @@ BuildRequires: perl-devel perl(Module/Build.pm)
 the unix_md5_crypt() provides a crypt()-compatible interface to the rather new MD5-based crypt() function found in modern operating systems.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -32,11 +32,14 @@ the unix_md5_crypt() provides a crypt()-compatible interface to the rather new M
 %perl_vendor_install
 
 %files
-%doc README
+%doc README Changelog.ini Changes
 %dir %perl_vendor_privlib/Crypt
 %perl_vendor_privlib/Crypt/*.pm
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
 - automated CPAN update
 
