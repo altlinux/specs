@@ -7,7 +7,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.4.5
+Version: 2.5.8
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -69,10 +69,11 @@ BuildRequires: libxxhash-devel
 BuildRequires: liblz4-devel
 
 BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
-#BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
-#BuildRequires: libXi-devel libSM-devel libICE-devel libdbus-devel libXfixes-devel
+BuildRequires: libxcbutil-keysyms-devel
+
 # TODO:
 BuildRequires: libX11-devel
+BuildRequires: kf5-kwayland-devel
 
 # GTK 3.0 integration
 BuildRequires: libgtk+3-devel libappindicator-gtk3-devel
@@ -85,12 +86,15 @@ BuildRequires: libopenal-devel >= 1.17.2
 BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel
+BuildRequires: libowt-tg-devel >= 4.3.0.4
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
 #BuildRequires: libopenh264-devel
 # obsoleted in the repo
 #BuildRequires: libyuv-devel
+
+# Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
+BuildRequires: libffi-devel
 
 # legacy tgvoip
 BuildRequires: libtgvoip-devel >= 2.4.4-alt5
@@ -222,6 +226,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Mon Feb 01 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt1
+- new version 2.5.8 (with rpmrb script)
+
 * Sat Oct 31 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
 - new version 2.4.5 (with rpmrb script)
 - drop BR: libvariant-devel
