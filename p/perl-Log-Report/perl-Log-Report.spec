@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod perl(Devel/GlobalDestruction.pm) perl-Log-Report-Optional perl(Mojo/Base.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(Dancer/Logger/Abstract.pm) perl(Dancer2/Core/Types.pm)
+BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod perl(Devel/GlobalDestruction.pm) perl-Log-Report-Optional perl(Mojo/Base.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(Dancer/Logger/Abstract.pm) perl(Dancer2/Core/Types.pm) perl(Template/Tiny.pm)
 
 %description
 Handling messages to users can be a hassle, certainly when the same
@@ -73,6 +73,9 @@ Summary: %dist plugin for Dancer2
 %perl_vendor_privlib/Dancer2/Plugin/LogReport/Message.pod
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 
