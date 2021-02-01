@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 14.0
+Version: 14.2
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -192,7 +192,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-14.0
+%define pulselibdir %_libdir/pulse-14.2
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -227,7 +227,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-14.0.so
+%_libdir/pulseaudio/libpulsecore-14.2.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio.socket
@@ -311,7 +311,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-14.0.so
+%_libdir/pulseaudio/libpulsecommon-14.2.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -322,6 +322,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/vala/vapi/*
 
 %changelog
+* Mon Feb 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt1
+- 14.2 released
+
 * Tue Nov 24 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.0-alt1
 - 14.0 released
 
