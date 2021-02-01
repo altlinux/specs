@@ -8,7 +8,11 @@
 %def_enable docs
 %def_enable eve
 %def_enable hddtemp
+%ifarch %ix86 armh
+%def_disable http
+%else
 %def_enable http
+%endif
 %def_enable ibm
 %def_enable ical
 %def_enable iconv
@@ -42,7 +46,7 @@
 
 Name: conky
 Version: 1.11.6
-Release: alt1
+Release: alt2
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
@@ -57,6 +61,7 @@ Source99: conky.watch
 
 Patch1: 0001-ALT-compiler-flags.patch
 Patch2: 0002-ALT-convert.lua-explicitly-uses-lua5.3.patch
+Patch3: 0003-UPSTREAM-Build-fix-for-libmicrohttpd.patch
 
 BuildRequires(pre): cmake gcc-c++ rpm-build-vim
 
@@ -197,6 +202,11 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Mon Feb 01 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.11.6-alt2
+- Fixed FTBFS against libmicrohttpd, do not build against libmicrohttpd on
+  %%ix86 and armh.
+- Fixed conky window crawling (thx george@).
+
 * Tue Dec 15 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.11.6-alt1
 - Updated to 1.11.6.
 - Packed converter to new config format.
