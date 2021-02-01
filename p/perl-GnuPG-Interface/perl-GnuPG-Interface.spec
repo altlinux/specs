@@ -2,7 +2,7 @@
 %define module GnuPG-Interface
 
 Name: perl-%module
-Version: 1.00
+Version: 1.01
 Release: alt1
 
 Summary: Supply object methods for interacting with GnuPG
@@ -10,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/J/JE/JESSE/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BP/BPS/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -42,6 +42,9 @@ rm -f t/get_secret_keys.t
 %perl_vendor_privlib/GnuPG
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
