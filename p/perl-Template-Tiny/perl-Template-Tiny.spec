@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro Template-Tiny
 Name: perl-Template-Tiny
-Version: 1.12
+Version: 1.13
 Release: alt1
 Summary: Template::Tiny - Template Toolkit reimplemented in as little code as possible
 
@@ -27,10 +28,14 @@ BuildRequires: perl-devel perl-Capture-Tiny
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes CONTRIBUTING README
 %perl_vendor_privlib/Template/Tiny*
-%doc Changes README LICENSE
+%doc Changes README
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- new version
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
