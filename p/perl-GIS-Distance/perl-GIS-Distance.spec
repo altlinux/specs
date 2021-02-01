@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Class/Measure/Length.pm) perl(Const/Fast.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.18
+Version: 0.19
 Release: alt1
 Summary: Calculate geographic distances.
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README.md
+%doc Changes README.md
 %perl_vendor_privlib/G*
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
