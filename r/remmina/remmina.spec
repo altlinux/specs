@@ -4,7 +4,7 @@
 
 Name: remmina
 Version: 1.4.10
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -217,6 +217,7 @@ that shows up under the display manager session menu.
     -DWITH_VTE=ON \
     -DWITH_KIOSK_SESSION=ON \
     -DWITH_NEWS=OFF \
+    -DREMMINA_RUNTIME_PLUGINDIR=%_libdir/remmina/plugins \
     -DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
 
 %cmake_build
@@ -302,6 +303,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Mon Feb 01 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.10-alt2
+- fixed load plugins (ALT #39628) (thx iv@)
+
 * Sat Jan 30 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.10-alt1
 - new version 1.4.10
 - drop fix_plugins_search_v1.2.32.1.patch
