@@ -3,7 +3,7 @@
 %global goipath github.com/mattn/go-sqlite3
 
 Name: golang-github-mattn-sqlite3
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 Summary: Sqlite3 driver for go using database/sql
 Group: Graphical desktop/Other
@@ -69,6 +69,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/_example
 
 %changelog
+* Mon Feb 01 2021 Leontiy Volodin <lvol@altlinux.org> 2.0.6-alt1
+- New version (2.0.6).
+
 * Tue May 19 2020 Leontiy Volodin <lvol@altlinux.org> 2.0.5-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
