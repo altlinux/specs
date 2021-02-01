@@ -1,11 +1,12 @@
 Name: halibut
 Version: 1.2
-Release: alt1
-License: BSD-like
+Release: alt2
+License: MIT
 Group: Text tools
 Summary: Yet another free document preparation system
 Source: %name-%version.tar.gz
 Url: http://www.chiark.greenend.org.uk/~sgtatham/halibut/
+Patch: gcc10.patch
 
 %description
 Halibut is a documentation production system, with elements similar to
@@ -14,6 +15,7 @@ people producing software manuals.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %make_build
@@ -28,6 +30,10 @@ mkdir -p %buildroot%_bindir %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Sat Jan 30 2021 Fr. Br. George <george@altlinux.ru> 1.2-alt2
+- Fix gcc10 build
+- Fix license field
+
 * Mon Sep 25 2017 Fr. Br. George <george@altlinux.ru> 1.2-alt1
 - Autobuild version bump to 1.2
 
