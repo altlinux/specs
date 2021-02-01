@@ -5,7 +5,7 @@
 
 Name: nautilus-python
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for Nautilus
 Group: Development/Python3
@@ -20,6 +20,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+
+Patch: gcc10.patch
 
 %add_python3_path %nautilus_extdir
 
@@ -57,6 +59,7 @@ Development documentation for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -87,6 +90,9 @@ rm -f examples/{Makefile*,README.in}
 %exclude %_docdir/%name
 
 %changelog
+* Mon Feb 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.3-alt2
+- Fixed build with gcc10.
+
 * Thu Jul 18 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
