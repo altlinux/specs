@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Module/Build/Tiny.pm) perl(Sub/Exporter.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
+Version: 0.09
 Release: alt1
 Summary: Create, compare, and convert units of measurement.
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/C*
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
