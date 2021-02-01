@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2020.09
+%define ver_major 2021
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %define gst_ver 1.18.0
@@ -11,7 +11,7 @@
 %define xdg_name org.pitivi.Pitivi
 
 Name: pitivi
-Version: %ver_major.2
+Version: %ver_major.01
 Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
@@ -66,6 +66,7 @@ newbies and professionals alike.
 
 %build
 %meson
+%meson_build %name-pot %name-update-po
 %meson_build
 
 %install
@@ -84,6 +85,9 @@ newbies and professionals alike.
 
 
 %changelog
+* Mon Feb 01 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.01-alt1
+- 2021.01
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2020.09.2-alt1
 - 2020.09.2
 
