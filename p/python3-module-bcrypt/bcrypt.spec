@@ -1,8 +1,7 @@
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
-Version: 3.1.7
-Release: alt4
-%setup_python_module bcrypt
-Name: python-module-bcrypt
+Version: 3.2.0
+Release: alt1
+Name: python3-module-bcrypt
 Source0: %version.tar.gz
 Source1: bfhash
 Source2: bfhash.1
@@ -10,11 +9,10 @@ License: BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/bcrypt
 
-BuildPreReq: python-devel python-module-setuptools
-BuildRequires: python-module-pytest
-BuildPreReq: python-module-six python-module-cffi
-
-%py_requires cffi
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytest
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-six python3-module-cffi
 
 %description
 py-bcrypt is an implementation the OpenBSD Blowfish password hashing
@@ -27,24 +25,29 @@ off-line password cracking. The computation cost of the algorithm is
 parametised, so it can be increased as computers get faster.
 
 %prep
-%setup -n %modulename-%version
+%setup -n bcrypt-%version
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
+install -D %SOURCE2  %buildroot%_man1dir/bfhash.1
+install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+%_bindir/*
+%_man1dir/*
 
 %check
-PYTHONPATH=%buildroot%python_sitelibdir py.test
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3
+test `PYTHONPATH=%buildroot%python3_sitelibdir %buildroot%_bindir/bfhash Password '$2a$08$saltsaltsaltsaltsaltsalt'` = '$2a$08$saltsaltsaltsaltsaltsOP5qmOWTOOR/q1xZLey.J4jBko3nSImS'
 
 %changelog
-* Mon Feb 01 2021 Fr. Br. George <george@altlinux.ru> 3.1.7-alt4
-- Build python2-only version
+* Mon Feb 01 2021 Fr. Br. George <george@altlinux.ru> 3.2.0-alt1
+- Autobuild version bump to 3.2.0
 
 * Wed Jul 22 2020 Stanislav Levin <slev@altlinux.org> 3.1.7-alt3
 - Added missing runtime requirement.
