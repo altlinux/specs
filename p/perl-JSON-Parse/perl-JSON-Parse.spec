@@ -6,7 +6,7 @@ BuildRequires: perl(Encode.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.59
+Version: 0.60
 Release: alt1
 Summary: Read JSON into a Perl variable
 Group: Development/Perl
@@ -61,6 +61,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- automated CPAN update
+
 * Wed Jan 06 2021 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
 - automated CPAN update
 
