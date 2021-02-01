@@ -1,5 +1,5 @@
 Name: hydra
-Version: 8.9.1
+Version: 9.0
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
@@ -18,12 +18,24 @@ Patch0: hydra-5.4-open-fix.patch
 Patch1:         hydra-use-system-libpq-fe.patch
 Patch2:         hydra-fix-dpl4hydra-dir.patch
 
+# APR used in libsvn needs inclusion of the linux limits.h first
+# already implemented upstream
+# https://github.com/vanhauser-thc/thc-hydra/commit/db9025bf86e79f1af1e1d70bdc6ea133e486c781.patch
+Patch3:         hydra-fix-apr-svn.patch
+# In Fedora the firebird includes are not in /include but /include/firebird
+# Reported upstream: https://github.com/vanhauser-thc/thc-hydra/pull/500
+Patch4:         hydra-fix-firebird-includes.patch
+
+%set_gcc_version 8
+
+
 Provides: hydra = %version-%release
 Requires: hydra-common hydra-gtk hydra-pwinspector 
 
 # Automatically added by buildreq on Wed Jun 08 2005
-BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils
+BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils gcc8
 #libpq-devel
+
 
 %description
 A very fast network logon cracker which support many different services
@@ -78,8 +90,8 @@ PW-Inspector считывает пароли и отображает соответствующие требованиям
 
 #patch0 -p1
 
-%patch1 -p0
-%patch2 -p0
+#patch1 -p0
+#patch2 -p0
 
 #fix permissions - already fixed upstream in 8.3-dev
 chmod -x *.csv hydra-gtk/src/*.c hydra-gtk/src/*.h
@@ -147,6 +159,9 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Mon Feb 01 2021 Ilya Mashkin <oddity@altlinux.ru> 9.0-alt1
+- 9.0
+
 * Fri Apr 05 2019 Ilya Mashkin <oddity@altlinux.ru> 8.9.1-alt1
 - 8.9.1
 - update url
