@@ -3,8 +3,8 @@
 %define oname jsonobject
 
 Name: python3-module-%oname
-Version: 0.9.8
-Release: alt3
+Version: 0.9.9.0.11.git91aa99b
+Release: alt1
 
 Summary: A library for dealing with JSON as python objects
 License: BSD
@@ -41,6 +41,9 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/*
 
 %changelog
+* Mon Feb 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.9.0.11.git91aa99b-alt1
+- Build from last commit for python3.9 support.
+
 * Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.8-alt3
 - Build for python2 disabled.
 
