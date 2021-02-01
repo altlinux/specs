@@ -12,6 +12,7 @@
 %define vulkan_intel_arches %ix86 x86_64
 %define virgl_arches %ix86 x86_64 aarch64 ppc64le mipsel
 %define armsoc_arches %arm aarch64
+%define svga_arches %ix86 x86_64
 
 %define opencl_arches %ix86 x86_64 aarch64
 %define gallium_pipe_arches %ix86 x86_64 aarch64 mipsel
@@ -56,6 +57,9 @@
 %gallium_drivers_add tegra
 %gallium_drivers_add v3d
 %endif
+%ifarch %svga_arches
+%gallium_drivers_add svga
+%endif
 %ifarch %vulkan_intel_arches
 %vulkan_drivers_add intel
 %endif
@@ -68,7 +72,7 @@
 %endif
 
 Name: Mesa
-Version: 20.3.3
+Version: 20.3.4
 Release: alt1
 Epoch: 4
 License: MIT
@@ -204,6 +208,13 @@ Requires: libvdpau
 %description -n xorg-dri-nouveau
 DRI driver for nVidia
 
+%package -n xorg-dri-vmwgfx
+Summary: VMWare DRI driver
+Group: System/X11
+
+%description -n xorg-dri-vmwgfx
+DRI driver for VMWare
+
 %package -n xorg-dri-armsoc
 Summary: SoC DRI drivers
 Group: System/X11
@@ -232,6 +243,9 @@ Requires: xorg-dri-intel = %epoch:%version-%release
 %endif
 %ifarch %armsoc_arches
 Requires: xorg-dri-armsoc = %epoch:%version-%release
+%endif
+%ifarch %svga_arches
+Requires: xorg-dri-vmwgfx = %epoch:%version-%release
 %endif
 
 %description -n mesa-dri-drivers
@@ -429,6 +443,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/intel_icd*.json
+%ifarch %gallium_pipe_arches
+%_libdir/gallium-pipe/pipe_iris.so
+%endif
 %endif
 %endif
 
@@ -461,6 +478,12 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 %endif
 
+%ifarch %svga_arches
+%files -n xorg-dri-vmwgfx
+%_libdir/X11/modules/dri/vmwgfx_dri.so
+%_libdir/gallium-pipe/pipe_vmwgfx.so
+%endif
+
 %ifarch %armsoc_arches
 %files -n xorg-dri-armsoc -f xorg-dri-armsoc.list
 %_libdir/libvulkan_freedreno.so
@@ -474,6 +497,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Feb 01 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:20.3.4-alt1
+- 20.3.4
+
 * Thu Jan 14 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:20.3.3-alt1
 - 20.3.3
 
