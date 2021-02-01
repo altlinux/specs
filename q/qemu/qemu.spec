@@ -130,7 +130,7 @@
 
 Name: qemu
 Version: 5.2.0
-Release: alt3
+Release: alt4
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1216,6 +1216,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Mon Feb 01 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt4
+- Add the Kunpeng-920 CPU model.
+
 * Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt3
 - Switch bios-microvm.bin from qboot to seabios
 - Package /usr/share/qemu/firmware dir
