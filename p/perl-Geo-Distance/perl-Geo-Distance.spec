@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Geo-Distance
 Name: perl-%dist
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: Calculate Distances and Closest Locations
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/B/BL/BLUEFEET/Geo-Distance-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BL/BLUEFEET/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ number of points to a specified point, and to do basic point-to-point
 distance calculations.
 
 %prep
-%setup -q -n Geo-Distance-%{version}
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ distance calculations.
 %perl_vendor_privlib/Geo
 
 %changelog
+* Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Tue Mar 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
