@@ -19,7 +19,7 @@
 %def_without rls
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -233,6 +233,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Tue Feb 02 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
+- 3.38.2
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
