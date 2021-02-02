@@ -2,7 +2,7 @@
 
 Name: openssl1.1
 Version: 1.1.1i
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -468,6 +468,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Mon Feb 01 2021 Andrew Savchenko <bircoph@altlinux.org> 1.1.1i-alt3
+- E2K: Fixed makecontext handling.
+
 * Mon Jan 18 2021 Stanislav Levin <slev@altlinux.org> 1.1.1i-alt2
 - Backported upstream fix for GH#13739.
 
