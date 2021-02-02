@@ -3,7 +3,7 @@
 %define real_name zim
 
 Name: zim-wiki
-Version: 0.73.4
+Version: 0.73.5
 Release: alt1
 
 Summary: A desktop wiki and outliner
@@ -66,6 +66,9 @@ control.
 %doc README.md CHANGELOG.md
 
 %changelog
+* Tue Feb 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.73.5-alt1
+- 0.73.5
+
 * Thu Dec 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.73.4-alt1
 - 0.73.4 (ported to Python 3)
 
