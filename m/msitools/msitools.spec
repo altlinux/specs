@@ -1,6 +1,8 @@
-%define ver_major 0.100
+%define ver_major 0.101
 %define libname libmsi
 %define api_ver 1.0
+
+%def_enable check
 
 Name: msitools
 Version: %ver_major
@@ -9,16 +11,16 @@ Release: alt1
 Summary: Windows Installer tools
 Group: File tools
 License: GPLv2+
-Url: http://ftp.gnome.org/
+Url: https://ftp.gnome.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define gcab_ver 0.2
 %define vala_ver 0.16
 
-BuildRequires: intltool
+BuildRequires(pre): meson
 BuildRequires: libgcab-devel >= %gcab_ver
-BuildRequires: libgio-devel libgsf-devel libuuid-devel
+BuildRequires: libgio-devel libgsf-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools >= %vala_ver
 
@@ -73,21 +75,16 @@ This package provides GObject introspection devel data for the %libname.
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-fast-install
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %check
-# check failed on i586
-#%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_bindir/msibuild
@@ -109,6 +106,7 @@ This package provides GObject introspection devel data for the %libname.
 %_libdir/%libname.so
 %_pkgconfigdir/%libname-%api_ver.pc
 %_vapidir/%libname-%api_ver.vapi
+%_vapidir/%libname-%api_ver.deps
 
 %files -n %libname-gir
 %_typelibdir/Libmsi-%api_ver.typelib
@@ -117,6 +115,9 @@ This package provides GObject introspection devel data for the %libname.
 %_girdir/Libmsi-%api_ver.gir
 
 %changelog
+* Tue Feb 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.101-alt1
+- 0.101 (ported to Meson build system)
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 0.100-alt1
 - 0.100
 
