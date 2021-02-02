@@ -19,7 +19,7 @@
 
 Name: plasma5-%rname
 Version: 5.20.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -208,6 +208,9 @@ KF5 library
 
 
 %changelog
+* Tue Feb 02 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt2
+- fix to xrender renderer defaults
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt1
 - new version
 
