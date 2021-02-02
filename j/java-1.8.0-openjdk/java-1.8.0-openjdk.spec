@@ -396,7 +396,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt2_0.3.eajpp8
+Release: alt3_0.3.eajpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1151,10 +1151,10 @@ sh %{SOURCE12}
 
 # RPM-only fixes
 %patch1000
-%patch1001
-%patch1002
-%patch1003
-%patch1004
+#patch1001
+#patch1002
+#patch1003
+#patch1004
 
 # RHEL-only patches
 %if ! 0%{?fedora} && 0%{?rhel} <= 7
@@ -2198,6 +2198,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 02 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.272.b10-alt3_0.3.eajpp8
+- Remove crypto policy support that disable TLS1.3 (ALT #38170)
+
 * Thu Dec 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.272.b10-alt2_0.3.eajpp8
 - added alternatives for keytool, policytool, etc
 
