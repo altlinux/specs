@@ -1,5 +1,5 @@
 Name: onedrive
-Version: 2.4.7
+Version: 2.4.9
 Release: alt1
 
 Summary: OneDrive Free Client written in D
@@ -43,9 +43,9 @@ Free CLI client for Microsoft OneDrive written in D.
 echo %version > version
 
 %build
-%configure
-export DFLAGS="%dmd_optflags"
+export DCFLAGS="%dmd_optflags"
 export PREFIX="%prefix"
+%configure
 %make_build
 
 %install
@@ -66,6 +66,10 @@ chmod a-x %buildroot/%_man1dir/%{name}*
 %config %_logrotatedir/onedrive
 
 %changelog
+* Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.9-alt1
+- new version 2.4.9 (with rpmrb script)
+- set DCFLAGS, not DFLAGS
+
 * Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.7-alt1
 - new version 2.4.7 (with rpmrb script)
 
