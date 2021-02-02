@@ -5,7 +5,7 @@
 %def_with    python3
 
 Name: breezy
-Version: 3.1.0
+Version: 3.1.0.8
 Release: alt1
 
 Summary: Breezy is a fork of decentralized revision control system Bazaar
@@ -201,6 +201,9 @@ cp -a breezy/locale %buildroot%_datadir
 %breezy_docdir/contrib
 
 %changelog
+* Tue Feb 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 3.1.0.8-alt1
+- Release 3.1.0-8 (debian)
+
 * Fri Jul 10 2020 Anatoly Kitaikin <cetus@altlinux.org> 3.1.0-alt1
 - Release 3.1.0
 

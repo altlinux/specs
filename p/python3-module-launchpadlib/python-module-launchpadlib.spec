@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-launchpadlib
-Version: 1.10.7
-Release: alt3
+Version: 1.10.13
+Release: alt1
 Summary: Script Launchpad through its web services interfaces.  Officially supported.
 License: gpl3
 Group: Development/Python3
@@ -46,7 +46,7 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_install
 
 %files
-%doc HACKING.txt README.txt
+%doc HACKING.rst README.rst NEWS.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/launchpadlib/tests
 
@@ -54,6 +54,9 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_sitelibdir/launchpadlib/tests
 
 %changelog
+* Tue Feb 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 1.10.13-alt1
+- Release 1.10.13
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.10.7-alt3
 - Drop python2 support.
 

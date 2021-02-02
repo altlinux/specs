@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-lazr.restfulclient
-Version: 0.14.2
-Release: alt5
+Version: 0.14.3
+Release: alt1
 Summary: A programmable lazr.restful client library
-License: lgpl3
+License: LGPLv3
 Group: Development/Python3
 Url: https://launchpad.net/lazr.restfulclient
 Packager: Anatoly Kitaikin <cetus@altlinux.ru>
@@ -51,6 +51,9 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_sitelibdir/lazr/restfulclient/tests
 
 %changelog
+* Tue Feb 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 0.14.3-alt1
+- Release 0.14.3
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 0.14.2-alt5
 - Drop python2 support.
 

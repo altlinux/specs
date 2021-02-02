@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-patiencediff
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: This package contains the implementation of the patiencediff algorithm, as first described by Bram Cohen.
@@ -13,6 +13,8 @@ Url: https://github.com/breezy-team/patiencediff
 Packager: Anatoly Kitaikin <cetus@altlinux.org>
 
 Source: patiencediff-%version.tar
+
+Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -46,6 +48,7 @@ This package contains tools and test suites for testing patiencediff python modu
 
 %prep
 %setup -n patiencediff-%version
+%patch0 -p1
 
 %build
 %python3_build
@@ -63,6 +66,9 @@ This package contains tools and test suites for testing patiencediff python modu
 %python3_sitelibdir/patiencediff/test*
 
 %changelog
+* Tue Feb 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 0.2.1-alt1
+- Release 0.2.1
+
 * Fri Jul 10 2020 Anatoly Kitaikin <cetus@altlinux.org> 0.2.0-alt1
 - First build
 
