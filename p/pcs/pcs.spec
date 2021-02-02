@@ -2,7 +2,7 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.10.7
+Version:       0.10.8
 Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
@@ -137,6 +137,9 @@ install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Tue Feb 02 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.10.8-alt1
+- New version.
+
 * Fri Oct 02 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.10.7-alt1
 - New version.
 
