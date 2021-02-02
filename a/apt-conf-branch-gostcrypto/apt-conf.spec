@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro-gostcrypto
 Version: 9.0
-Release: alt1
+Release: alt6
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Tue Feb 02 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.0-alt6
+- release bump for c9f1
+
 * Fri Dec 13 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.0-alt1
 - gostcrypto fork
 
