@@ -1,8 +1,8 @@
 %def_without static
 
 Name: pstoedit
-Version: 3.70
-Release: alt4
+Version: 3.75
+Release: alt1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
 Summary(ru_RU.UTF-8): преобразует файлы Postscript(TM) и PDF в другие векторные форматы
@@ -13,6 +13,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source0: %name-%version.tar.gz
 
+
 Patch0: pstoedit-3.40-alt3.3-makefile-ldl.patch
 Patch1: pstoedit-3.44-alt2-pkg-config.patch
 
@@ -22,6 +23,9 @@ Patch12: pstoedit-3.45-gcc43.patch
 
 Patch13: pstoedit-3.45-asy.patch
 Patch14: pstoedit-3.45-elif.patch
+
+# Fix cflags of the pkg-config file
+Patch15:         pstoedit-pkglibdir.patch
 
 
 Requires: lib%name = %version-%release
@@ -100,13 +104,13 @@ Static libraries for developing pstoedit addons
 %prep
 %setup -q %name-%version
 #patch0 -p1
-%patch1 -p1
+#patch1 -p1
 #patch10 -p1 -b .cxxflags
 #patch11 -p1 -b .quiet
 %patch12 -p1 -b .gcc43
 #patch13 -p1 -b .asy
 #patch14 -p1 -b .elif
-
+%patch15 -p1
 
 %__chmod 644 doc/*
 %__chmod 644 examples/*
@@ -125,6 +129,8 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %__install -d $RPM_BUILD_ROOT%_man1dir
 %__install -m 664 doc/pstoedit.1 $RPM_BUILD_ROOT%_man1dir
 
+
+
 # remove non-packaged files
 %__rm -f %buildroot%_libdir/*.la
 %__rm -f %buildroot%_libdir/pstoedit/*.la
@@ -136,7 +142,7 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %files
 %_bindir/pstoedit
 %_man1dir/*
-%doc doc/changelog.htm doc/readme.txt doc/pstoedit.tex doc/pstoedit.htm doc/pstoedit.trans examples contrib/java
+%doc doc/changelog.htm doc/readme.txt doc/pstoedit.tex doc/pstoedit.pdf doc/pstoedit.htm doc/pstoedit.trans examples contrib/java
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -159,6 +165,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Tue Feb 02 2021 Ilya Mashkin <oddity@altlinux.ru> 3.75-alt1
+- 3.75
+
 * Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 3.70-alt4
 - Rebuilt for new ImageMagick.
 
