@@ -1,17 +1,23 @@
 Summary: Graphical network viewer modeled after etherman.
 Name: etherape
-Version: 0.9.13
+Version: 0.9.19
 Release: alt1
 License: GPL
 Group: Networking/Other
 Packager: Ilya Mashkin <oddity at altlinux.ru>
 Source: etherape-%version.tar.gz
 
+Source1:        etherape.pam
+Source2:        etherape.console
+
 URL: http://etherape.sourceforge.net
 
 # Automatically added by buildreq on Tue Aug 16 2005
 BuildRequires: ORBit2-devel esound fontconfig freetype2 glib2-devel gnome-vfs2-devel libGConf2-devel libart_lgpl-devel libatk-devel libbonobo2-devel libbonoboui-devel libglade2-devel libgnome-devel libgnome-keyring libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libpango-devel libpcap-devel libpopt-devel libxml2-devel pkgconfig librarian gnome-doc-utils
 BuildRequires: desktop-file-utils
+BuildRequires:  libpcap-devel libgoocanvas2-devel  gettext itstool
+
+
 
 %description
 Etherape is a graphical network monitor for Unix modeled after
@@ -32,6 +38,15 @@ from a file as well as live from the network.
 %install
 %makeinstall
 
+
+mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/pam.d
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_sysconfdir}/pam.d/etherape
+mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/security/console.apps
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_sysconfdir}/security/console.apps/etherape
+mkdir -p $RPM_BUILD_ROOT/%{_bindir}
+#ln -s consolehelper $RPM_BUILD_ROOT/%{_bindir}/etherape
+
+
 %find_lang --with-gnome %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Monitor \
@@ -40,7 +55,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog NEWS README FAQ README.bugs
-%config %_sysconfdir/%name/*
+#config %_sysconfdir/%name/*
+%config(noreplace) %{_sysconfdir}/pam.d/etherape
+%config(noreplace) %{_sysconfdir}/security/console.apps/etherape
+
 %_bindir/*
 %_datadir/locale/*/*/*
 %_datadir/%name/*/*
@@ -51,6 +69,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 #_var/lib/scrollkeeper/*
 
 %changelog
+* Tue Feb 02 2021 Ilya Mashkin <oddity@altlinux.ru> 0.9.19-alt1
+- 0.9.19
+
 * Tue May 28 2013 Ilya Mashkin <oddity@altlinux.ru> 0.9.13-alt1
 - 0.9.13
 
