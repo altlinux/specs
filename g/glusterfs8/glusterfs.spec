@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 8.2
+%define major 8.3
 %define somajor 8
 #define _localstatedir /var
 %def_enable epoll
@@ -12,10 +12,12 @@
 %def_without ocf
 # rdma package
 %def_enable ibverbs
+# build devel subpackages
+%def_enable devel
 
 Name: glusterfs8
 Version: %major
-Release: alt3
+Release: alt1
 
 Summary: Cluster File System
 
@@ -67,7 +69,8 @@ BuildRequires: python3-dev
 # liblvm2-devel: disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
-BuildRequires: libssl-devel libcurl-devel zlib-devel libtirpc-devel
+BuildRequires: libssl-devel libcurl-devel zlib-devel
+BuildRequires: libtirpc-devel rpcgen
 BuildRequires: libcmocka-devel
 BuildRequires: systemd
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
@@ -597,10 +600,12 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 %_libdir/libgfapi.so.*
 %glusterlibdir/xlator/mount/api.so
 
+%if_enabled devel
 %files -n lib%name-api-devel
 %_pkgconfigdir/glusterfs-api.pc
 %_libdir/libgfapi.so
 %_includedir/glusterfs/api/
+%endif
 
 %files thin-arbiter
 %glusterlibdir/xlator/features/thin-arbiter.so
@@ -689,6 +694,7 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 %doc COPYING-GPLV2 COPYING-LGPLV3
 %_datadir/vim/vimfiles/syntax/glusterfs.vim
 
+%if_enabled devel
 %files -n lib%name-devel
 %_includedir/glusterfs/
 %exclude %_includedir/glusterfs/api/
@@ -702,6 +708,7 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 %_pkgconfigdir/libgfchangelog.pc
 # pkgconfiglib.req: WARNING: /tmp/.private/lav/glusterfs3-buildroot/usr/lib64/pkgconfig/libgfdb.pc: cannot find -lgfchangedb library path (skip)
 #_pkgconfigdir/libgfdb.pc
+%endif
 
 %files -n libglusterd%somajor
 %_libdir/libglusterd.so.*
@@ -735,6 +742,10 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 #files checkinstall
 
 %changelog
+* Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 8.3-alt1
+- new version 8.3 (with rpmrb script)
+- add BR: rpcgen
+
 * Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 8.2-alt3
 - disable python module provides from non module packages
 
