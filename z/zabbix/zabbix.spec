@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		93895db26b
+%define svnrev		d3c78f993a
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 
 
 Name: zabbix
-Version: 5.0.6
+Version: 5.0.8
 Release: alt1
 Epoch: 1
 
@@ -638,6 +638,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Feb 02 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.8-alt1
+- 5.0.8
+
 * Thu Dec 03 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.6-alt1
 - 5.0.6
 - Edit Apache config file (ALT #37494)
