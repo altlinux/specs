@@ -1,7 +1,7 @@
 %def_with doc
 
 Name: jansson
-Version: 2.12
+Version: 2.13.1
 Release: alt1
 
 Summary: C library for encoding, decoding and manipulating JSON data
@@ -12,7 +12,7 @@ Url: http://www.digip.org/jansson/
 Source: %name-%version.tar
 
 %if_with doc
-BuildRequires: python-module-sphinx
+BuildRequires: python3-module-sphinx
 %endif
 
 %description
@@ -57,7 +57,7 @@ It features:
 
 %build
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 %if_with doc
 %make html
@@ -82,6 +82,9 @@ It features:
 %endif
 
 %changelog
+* Tue Feb 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.13.1-alt1
+- 2.13.1 released
+
 * Thu Jun 27 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.12-alt1
 - 2.12
 
