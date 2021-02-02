@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.6.2
-Release: alt2
+Release: alt3
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPL-3.0-or-later AND CC-BY-SA-3.0 AND GPL-2.0-or-later AND GPL-1.0-only
@@ -86,7 +86,6 @@ rm -rf %buildroot/%_docdir/supertux2/
 
 %files data
 %_datadir/supertux2
-%dir %_datadir/metainfo
 %_datadir/metainfo/*
 %_miconsdir/*.png
 %_niconsdir/*.png
@@ -99,6 +98,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Tue Feb 02 2021 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt3
+- Fixed sisyphus_check error.
+
 * Fri Jan 08 2021 Michael Shigorin <mike@altlinux.org> 0.6.2-alt2
 - E2K: ftbfs fixup (patch by Georgy Shepelev, thx Ramil Sattarov)
 - Minor spec cleanup
