@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 9.0
-Release: alt5
+Release: alt6
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Fri Oct 02 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.0-alt6
+- release bump for building custom version into c9f1 branch
+
 * Fri Jul 19 2019 Alexey Shabalin <shaba@altlinux.org> 9.0-alt5
 - cleanup and update pkgpriorities
 
