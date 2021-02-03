@@ -1,7 +1,7 @@
 %define sover 24
 
 Name: wolfssl
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: Embedded SSL/TLS Library
@@ -59,5 +59,8 @@ This package contains the header files and development libraries for %name.
 %_libdir/lib%name.so
 
 %changelog
+* Wed Feb 03 2021 Nazarov Denis <nenderus@altlinux.org> 4.6.0-alt1
+- Version 4.6.0
+
 * Fri Nov 06 2020 Nazarov Denis <nenderus@altlinux.org> 4.5.0-alt1
 - Initial build for ALT Linux
