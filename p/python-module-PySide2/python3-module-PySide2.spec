@@ -1,6 +1,6 @@
 Name: python-module-PySide2
 Version: 5.15.0
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python
@@ -58,6 +58,7 @@ since the previous versions (without the 2) refer to Qt 4.
 %package devel
 Summary: Development files related to %name
 Group: Development/Python
+Conflicts: python3-module-PySide2-devel
 
 %description devel
 %{summary}.
@@ -109,6 +110,7 @@ Summary: Python/C++ bindings helper module for PySide2
 Group: Development/Python
 Requires: shiboken2-python2
 Requires: python-module-shiboken2
+Conflicts: python3-module-shiboken2-devel
  
 %description -n python-module-shiboken2-devel
 Shiboken is the Python binding generator that Qt for Python uses to create the
@@ -139,6 +141,9 @@ for name in PySide2 shiboken2 shiboken2_generator; do
 done
 
 
+# Remove pkgconfig files
+rm -f %buildroot%_libdir/pkgconfig/*.pc
+
 %files
 %doc README.md
 %_libdir/libpyside2*.so.*
@@ -151,7 +156,6 @@ done
 %_includedir/PySide2/
 %_libdir/libpyside2*.so
 %_libdir/cmake/PySide2*
-%_libdir/pkgconfig/pyside2.pc
 
 %files -n pyside2-tools-python2
 %doc README.pyside2.md
@@ -173,11 +177,13 @@ done
 %_includedir/shiboken2/
 %_libdir/cmake/Shiboken2-%version/
 %_libdir/libshiboken2*.so
-%_libdir/pkgconfig/shiboken2.pc
 %python_sitelibdir/shiboken2_generator/
 %python_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Wed Feb 03 2021 Andrey Cherepanov <cas@altlinux.org> 5.15.0-alt3
+- Remove pkgconfig files to prevent duplicate pkgconfig provides.
+
 * Wed Sep 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
 - update requires
 
