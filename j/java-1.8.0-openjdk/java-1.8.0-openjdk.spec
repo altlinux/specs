@@ -27,8 +27,8 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.272.b10
-%define release 0.3.ea
+%define version 1.8.0.282.b08
+%define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
 # http://rpm.org/user_doc/conditional_builds.html
@@ -172,14 +172,12 @@ BuildRequires: /proc rpm-build-java
 %global NSSSOFTOKN_BUILDTIME_VERSION %(if [ "x%{NSSSOFTOKN_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSSSOFTOKN_BUILDTIME_NUMBER}" ;fi)
 %global NSS_BUILDTIME_VERSION %(if [ "x%{NSS_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSS_BUILDTIME_NUMBER}" ;fi)
 
-
 # Fix for https://bugzilla.redhat.com/show_bug.cgi?id=1111349.
 # See also https://bugzilla.redhat.com/show_bug.cgi?id=1590796
 # as to why some libraries *cannot* be excluded. In particular,
 # these are:
 # libjsig.so, libjava.so, libjawt.so, libjvm.so and libverify.so
 #%global _privatelibs libatk-wrapper[.]so.*|libattach[.]so.*|libawt_headless[.]so.*|libawt[.]so.*|libawt_xawt[.]so.*|libdt_socket[.]so.*|libfontmanager[.]so.*|libhprof[.]so.*|libinstrument[.]so.*|libj2gss[.]so.*|libj2pcsc[.]so.*|libj2pkcs11[.]so.*|libjaas_unix[.]so.*|libjava_crw_demo[.]so.*|libjavajpeg[.]so.*|libjdwp[.]so.*|libjli[.]so.*|libjsdt[.]so.*|libjsoundalsa[.]so.*|libjsound[.]so.*|liblcms[.]so.*|libmanagement[.]so.*|libmlib_image[.]so.*|libnet[.]so.*|libnio[.]so.*|libnpt[.]so.*|libsaproc[.]so.*|libsctp[.]so.*|libsplashscreen[.]so.*|libsunec[.]so.*|libunpack[.]so.*|libzip[.]so.*|lib[.]so\\(SUNWprivate_.*
-
 
 # In some cases, the arch used by the JDK does
 # not match _arch.
@@ -278,7 +276,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project	aarch64-port
 %global shenandoah_repo		jdk8u-shenandoah
-%global shenandoah_revision    	aarch64-shenandoah-jdk8u272-b10
+%global shenandoah_revision    	aarch64-shenandoah-jdk8u282-b08
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -358,45 +356,12 @@ BuildRequires: /proc rpm-build-java
 # not-duplicated scriptlets for normal/debug packages
 %global update_desktop_icons /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# not-duplicated requires/provides/obsoletes for normal/debug packages
-
-
-
-
-
-
-
-
 # Prevent brp-java-repack-jars from being run
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt3_0.3.eajpp8
+Release: alt1_0jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -518,8 +483,6 @@ Patch512: rh1649664-awt2dlibraries_compiled_with_no_strict_overflow.patch
 Patch523: pr2974-rh1337583-add_systemlineendings_option_to_keytool_and_use_line_separator_instead_of_crlf_in_pkcs10.patch
 # PR3083, RH1346460: Regression in SSL debug output without an ECC provider
 Patch528: pr3083-rh1346460-for_ssl_debug_return_null_instead_of_exception_when_theres_no_ecc_provider.patch
-# PR3601: Fix additional -Wreturn-type issues introduced by 8061651
-Patch530: pr3601-fix_additional_Wreturn_type_issues_introduced_by_8061651_for_prims_jvm_cpp.patch
 # PR2888: OpenJDK should check for system cacerts database (e.g. /etc/pki/java/cacerts)
 # PR3575, RH1567204: System cacerts database handling should not affect jssecacerts
 Patch539: pr2888-openjdk_should_check_for_system_cacerts_database_eg_etc_pki_java_cacerts.patch
@@ -527,11 +490,11 @@ Patch539: pr2888-openjdk_should_check_for_system_cacerts_database_eg_etc_pki_jav
 Patch400: pr3183-rh1340845-support_fedora_rhel_system_crypto_policy.patch
 # PR3655: Allow use of system crypto policy to be disabled by the user
 Patch401: pr3655-toggle_system_crypto_policy.patch
-# RH1566890: CVE-2018-3639
-Patch529: rh1566890-CVE_2018_3639-speculative_store_bypass.patch
-Patch531: rh1566890-CVE_2018_3639-speculative_store_bypass_toggle.patch
-# RH1868759: FIPS: Ciphers remain in broken state (unusable), after being supplied with wrongly sized buffer
-Patch540: rh1868759-pkcs11_cancel_on_failure.patch
+# enable build of speculative store bypass hardened alt-java
+Patch600: rh1750419-redhat_alt_java.patch
+# JDK-8218811: replace open by os::open in hotspot coding
+# This fixes a GCC 10 build issue
+Patch111: jdk8218811-perfMemory_linux.patch
 
 #############################################
 #
@@ -548,8 +511,6 @@ Patch540: rh1868759-pkcs11_cancel_on_failure.patch
 Patch103: pr3593-s390_use_z_format_specifier_for_size_t_arguments_as_size_t_not_equals_to_int.patch
 # x86: S8199936, PR3533: HotSpot generates code with unaligned stack, crashes on SSE operations (-mstackrealign workaround)
 Patch105: jdk8199936-pr3533-enable_mstackrealign_on_x86_linux_as_well_as_x86_mac_os_x.patch
-# AArch64: PR3519: Fix further functions with a missing return value (AArch64)
-Patch106: pr3519-fix_further_functions_with_a_missing_return_value.patch
 # S390 ambiguous log2_intptr calls
 Patch107: s390-8214206_fix.patch
 
@@ -569,10 +530,6 @@ Patch502: pr2462-resolve_disabled_warnings_for_libunpack_and_the_unpack200_binar
 Patch571: jdk8199936-pr3591-enable_mstackrealign_on_x86_linux_as_well_as_x86_mac_os_x_jdk.patch
 # 8143245, PR3548: Zero build requires disabled warnings
 Patch574: jdk8143245-pr3548-zero_build_requires_disabled_warnings.patch
-# 8197981, PR3548: Missing return statement in __sync_val_compare_and_swap_8
-Patch575: jdk8197981-pr3548-missing_return_statement_in_sync_val_compare_and_swap_8.patch
-# 8062808, PR3548: Turn on the -Wreturn-type warning
-Patch577: jdk8062808-pr3548-turn_on_the_wreturn_type_warning.patch
 # s390: JDK-8203030, Type fixing for s390
 Patch102: jdk8203030-zero_s390_31_bit_size_t_type_conflicts_in_shared_code.patch
 # 8035341: Allow using a system installed libpng
@@ -580,24 +537,6 @@ Patch202: jdk8035341-allow_using_system_installed_libpng.patch
 # 8042159: Allow using a system-installed lcms2
 Patch203: jdk8042159-allow_using_system_installed_lcms2-root.patch
 Patch204: jdk8042159-allow_using_system_installed_lcms2-jdk.patch
-# JDK-8195607, PR3776, RH1760437: sun/security/pkcs11/Secmod/TestNssDbSqlite.java failed with "NSS initialization failed" on NSS 3.34.1
-Patch580: jdk8195607-pr3776-rh1760437-nss_sqlite_db_config.patch
-
-#############################################
-#
-# Patches appearing in 8u282
-#
-# This section includes patches which are present
-# in the listed OpenJDK 8u release and should be
-# able to be removed once that release is out
-# and used by this RPM.
-#############################################
-# JDK-8254177: (tz) Upgrade time-zone data to tzdata2020b
-Patch13: jdk8254177-tzdata2020b.patch
-# JDK-8215727, RH1889532: Restore JFR thread sampler loop to old / previous behavior
-Patch14: jdk8215727-rh1889532-restore_jfr_thread_sampler_loop.patch
-# JDK-8236512, RH1889414: PKCS11 Connection closed after Cipher.doFinal and NoPadding
-Patch15: jdk8236512-rh1889414-pkcs11_incorrrect_session_closure.patch
 
 #############################################
 #
@@ -757,7 +696,7 @@ Summary: %{origin_nice} Headless Runtime Environment %{majorver}
 Group:   Development/Other
 
 # Require /etc/pki/java/cacerts
-Requires: ca-trust
+Requires: ca-trust-java
 # Require javapackages-filesystem for ownership of /usr/lib/jvm/
 Requires: javapackages-filesystem
 # Require zoneinfo data provided by tzdata-java subpackage.
@@ -797,7 +736,6 @@ Requires(post): /proc
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1312019
 
-
 %description headless
 The %{origin_nice} runtime environment %{majorver} without audio and video support.
 %endif
@@ -806,7 +744,6 @@ The %{origin_nice} runtime environment %{majorver} without audio and video suppo
 %package headless-slowdebug
 Summary: %{origin_nice} Runtime Environment %{majorver} %{debug_on}
 Group:   Development/Other
-
 
 %description headless-slowdebug
 The %{origin_nice} runtime environment %{majorver} without audio and video support.
@@ -817,7 +754,6 @@ The %{origin_nice} runtime environment %{majorver} without audio and video suppo
 %package headless-fastdebug
 Summary: %{origin_nice} Runtime Environment %{fastdebug_on}
 Group:   Development/Other
-
 
 %description headless-fastdebug
 The %{origin_nice} runtime environment %{majorver} without audio and video support.
@@ -847,7 +783,6 @@ Provides: java-%{javaver}-%{origin}-devel = %{epoch}:%{version}
 Provides: java-devel-%{origin} = %{epoch}:%{version}
 Provides: java-devel = %{epoch}:%{javaver}
 
-
 %description devel
 The %{origin_nice} development tools %{majorver}.
 %endif
@@ -856,7 +791,6 @@ The %{origin_nice} development tools %{majorver}.
 %package devel-slowdebug
 Summary: %{origin_nice} Development Environment %{majorver} %{debug_on}
 Group:   Development/Java
-
 
 %description devel-slowdebug
 The %{origin_nice} development tools %{majorver}.
@@ -867,7 +801,6 @@ The %{origin_nice} development tools %{majorver}.
 %package devel-fastdebug
 Summary: %{origin_nice} Development Environment %{majorver} %{fastdebug_on}
 Group:   Development/Java
-
 
 %description devel-fastdebug
 The %{origin_nice} development tools %{majorver}.
@@ -886,7 +819,6 @@ Provides: java-demo = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-demo = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-%{origin}-demo = %{epoch}:%{version}-%{release}
 
-
 %description demo
 The %{origin_nice} demos %{majorver}.
 %endif
@@ -895,7 +827,6 @@ The %{origin_nice} demos %{majorver}.
 %package demo-slowdebug
 Summary: %{origin_nice} Demos %{majorver} %{debug_on}
 Group:   Development/Other
-
 
 %description demo-slowdebug
 The %{origin_nice} demos %{majorver}.
@@ -906,7 +837,6 @@ The %{origin_nice} demos %{majorver}.
 %package demo-fastdebug
 Summary: %{origin_nice} Demos %{majorver} %{fastdebug_on}
 Group:   Development/Other
-
 
 %description demo-fastdebug
 The %{origin_nice} demos %{majorver}.
@@ -935,7 +865,6 @@ class library source code for use by IDE indexers and debuggers.
 Summary: %{origin_nice} Source Bundle %{majorver} %{for_debug}
 Group:   Development/Other
 
-
 %description src-slowdebug
 The java-%{origin}-src-slowdebug sub-package contains the complete %{origin_nice} %{majorver}
  class library source code for use by IDE indexers and debuggers. Debugging %{for_debug}.
@@ -945,7 +874,6 @@ The java-%{origin}-src-slowdebug sub-package contains the complete %{origin_nice
 %package src-fastdebug
 Summary: %{origin_nice} Source Bundle %{majorver} %{for_fastdebug}
 Group:   Development/Other
-
 
 %description src-fastdebug
 The java-%{origin}-src-fastdebug sub-package contains the complete %{origin_nice} %{majorver}
@@ -1123,9 +1051,6 @@ sh %{SOURCE12}
 %patch103
 %patch107
 
-# AArch64 fixes
-%patch106
-
 # x86 fixes
 %patch105
 
@@ -1135,22 +1060,14 @@ sh %{SOURCE12}
 %patch512
 %patch523
 %patch528
-%patch530
-%patch529
-%patch531
 %patch571
 %patch574
-%patch575
-%patch577
-%patch580
+%patch111
 %patch539
-%patch540
-%patch13
-%patch14
-%patch15
+%patch600
 
 # RPM-only fixes
-%patch1000
+#patch1000
 #patch1001
 #patch1002
 #patch1003
@@ -1211,7 +1128,7 @@ done
 done
 
 # Setup nss.cfg
-#sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
+sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
 
 # Setup nss.fips.cfg
 sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE15} > nss.fips.cfg
@@ -1219,7 +1136,7 @@ sed -i -e "s:@NSS_SECMOD@:/etc/pki/nssdb:g" nss.fips.cfg
 sed -i -e 's, -m32, -m32 %optflags_shared -fpic -D_BLA_BLA_BLA1,' openjdk/hotspot/make/linux/makefiles/gcc.make
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
-%patch34 -p1
+%patch34 -p0
 
 %build
 # zerg's girar armh hack:
@@ -1367,7 +1284,7 @@ buildjdk ${builddir} ${systemjdk} "${maketargets}" ${debugbuild}
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/images/%{jdkimage}
 
 # Install nss.cfg right away as we will be using the JRE above
-#install -m 644 nss.cfg $JAVA_HOME/jre/lib/security/
+install -m 644 nss.cfg $JAVA_HOME/jre/lib/security/
 
 # Install nss.fips.cfg: NSS configuration for global FIPS mode (crypto-policies)
 install -m 644 nss.fips.cfg $JAVA_HOME/jre/lib/security/
@@ -1389,7 +1306,6 @@ popd
 done
 
 %check
-
 # We test debug first as it will give better diagnostics on a crash
 for suffix in %{rev_build_loop} ; do
 
@@ -1628,7 +1544,6 @@ find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
     echo "" >> accessibility.properties
   popd
 
-
 bash %{SOURCE20} $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir} %{javaver}
 # https://bugzilla.redhat.com/show_bug.cgi?id=1183793
 touch -t 201401010000 $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/security/java.security
@@ -1655,7 +1570,6 @@ do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
 done
-
 
 %if %{include_normal_build}
 # intentionally only for non-debug
@@ -1685,7 +1599,6 @@ install -m644 java-javadoc-buildreq-substitute \
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%altname-javadoc<<EOF
 %{_javadocdir}/java	%{_javadocdir}/%{uniquejavadocdir}/api	%{priority}
 EOF
-
 
 ##################################################
 # --- alt linux specific, shared with openjdk ---#
@@ -1863,7 +1776,6 @@ fi
 # placeholder
 %endif
 
-
 %if %{include_normal_build}
 %files headless
 %_altdir/%altname-java-headless
@@ -1927,7 +1839,7 @@ fi
 %{_mandir}/man1/tnameserv-%{uniquesuffix}.1*
 %{_mandir}/man1/unpack200-%{uniquesuffix}.1*
 %{_mandir}/man1/policytool-%{uniquesuffix}.1*
-#%{_jvmdir}/%{jredir}/lib/security/nss.cfg
+%{_jvmdir}/%{jredir}/lib/security/nss.cfg
 #%{_jvmdir}/%{jredir}/lib/security/nss.fips.cfg
 #%config(noreplace) %{etcjavadir}/lib/security/nss.cfg
 #%config(noreplace) %{etcjavadir}/lib/security/nss.fips.cfg
@@ -2198,6 +2110,72 @@ fi
 %endif
 
 %changelog
+* Wed Feb 03 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.282.b08-alt1_0jpp8
+- New version (ALT #39635)
+- Require ca-trust-java instead of ca-trust (ALT #35690)
+- Package nss.cfg
+- Security fixes since 1.8.0.212.b04-alt2_0jpp8:
+  + JDK-8247619 Improve Direct Buffering of Characters
+  + CVE-2020-14779 Enhance support of Proxy class.
+  + CVE-2020-14781 Enhanced LDAP contexts.
+  + CVE-2020-14782 Enhance certificate processing.
+  + CVE-2020-14792 Better range handling.
+  + CVE-2020-14796 Improved URI Support.
+  + CVE-2020-14797 Better Path Validation.
+  + CVE-2020-14798 Enhanced buffer support.
+  + CVE-2020-14803 Improved Buffer supports.
+  + CVE-2020-14779 Enhance support of Proxy class
+  + CVE-2020-14781 Enhanced LDAP contexts
+  + CVE-2020-14782 Enhance certificate processing
+  + CVE-2020-14792 Better range handling
+  + CVE-2020-14796 Improved URI Support
+  + CVE-2020-14797 Better Path Validation
+  + CVE-2020-14798 Enhanced buffer support
+  + CVE-2020-14803 Improved Buffer supports
+  + CVE-2020-14579 NullPointerException in DerValue.equals(DerValue)
+  + CVE-2020-14578 NegativeArraySizeException in sun.security.util.DerInputStream.getUnalignedBitString()
+  + CVE-2020-14556 Better ForkJoinPool behavior
+  + CVE-2020-14577 Enhance certificate verification
+  + CVE-2020-14581 Better matrix operations
+  + CVE-2020-14583 Better Buffer support
+  + CVE-2020-14593 Less Affine Transformations
+  + CVE-2020-14621 Better XML namespace handling
+  + CVE-2020-2754 Forward references to Nashorn
+  + CVE-2020-2755 Improve Nashorn matching
+  + CVE-2020-2756 Better mapping of serial ENUMs
+  + CVE-2020-2757 Less Blocking Array Queues
+  + CVE-2020-2773 Better signatures in XML
+  + CVE-2020-2781 Improve TLS session handling
+  + CVE-2020-2800 Better Headings for HTTP Servers
+  + CVE-2020-2803 Enhance buffering of byte buffers
+  + CVE-2020-2805 Enhance typing of methods
+  + CVE-2020-2830 Better Scanner conversions
+  + CVE-2019-2933 Windows file handling redux.
+  + CVE-2019-2945 Better socket support.
+  + CVE-2019-2949 Better Kerberos ccache handling.
+  + CVE-2019-2958 Build Better Processes.
+  + CVE-2019-2964 Better support for patterns.
+  + CVE-2019-2962 Better Glyph Images.
+  + CVE-2019-2973 Better pattern compilation.
+  + CVE-2019-2975 Unexpected exception in jjs.
+  + CVE-2019-2978 Improved handling of jar files.
+  + CVE-2019-2981 Better Path supports.
+  + CVE-2019-2983 Better serial attributes.
+  + CVE-2019-2987 Better rendering of native glyphs.
+  + CVE-2019-2988 Better Graphics2D drawing.
+  + CVE-2019-2989 Improve TLS connection support.
+  + CVE-2019-2992 Enhance font glyph mapping.
+  + CVE-2019-2999 Commentary on Javadoc comments.
+  + CVE-2019-2894 Enhance ECDSA operations.
+  + CVE-2019-2745 Improved ECC Implementation.
+  + CVE-2019-2762 Exceptional throw cases.
+  + CVE-2019-2766 Improve file protocol handling.
+  + CVE-2019-2769 Better copies of CopiesList.
+  + CVE-2019-2786 More limited privilege usage.
+  + CVE-2019-7317 Improve PNG support options.
+  + CVE-2019-2816 Normalize normalization.
+  + CVE-2019-2842 Extended AES support.
+
 * Tue Feb 02 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.272.b10-alt3_0.3.eajpp8
 - Remove crypto policy support that disable TLS1.3 (ALT #38170)
 
