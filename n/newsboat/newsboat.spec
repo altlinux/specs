@@ -1,5 +1,5 @@
 Name:	 newsboat
-Version: 2.21
+Version: 2.22.1
 Release: alt1
 
 Summary: an RSS/Atom feed reader for the text console
@@ -81,6 +81,9 @@ cargo test
 %_iconsdir/hicolor/scalable/apps/newsboat.svg
 
 %changelog
+* Wed Feb 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.22.1-alt1
+- Updated to 2.22.1.
+
 * Thu Sep 24 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.21-alt1
 - Updated to 2.21.
 
