@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-wadllib
-Version: 1.3.3
-Release: alt5
+Version: 1.3.5
+Release: alt1
 Summary: Python library for navigating WADL files
 License: LGPLv3
 Group: Development/Python3
@@ -55,6 +55,9 @@ Requires: %name = %version-%release
 %python3_sitelibdir/wadllib/tests
 
 %changelog
+* Tue Feb 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 1.3.5-alt1
+- Release 1.3.5
+
 * Tue Dec 08 2020 Anatoly Kitaykin <cetus@altlinux.org> 1.3.3-alt5
 - Drop python 2 support
 
