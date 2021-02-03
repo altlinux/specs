@@ -1,9 +1,8 @@
-%define oname jedi
 %def_disable check
 
-Name: python-module-%oname
-Version: 0.12.1
-Release: alt2
+Name: python3-module-jedi
+Version: 0.18.0
+Release: alt1
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
@@ -14,11 +13,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: jedi-%version.tar.gz
 BuildArch: noarch
 
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
+# Automatically added by buildreq on Mon Feb 01 2021
+# optimized out: ca-trust python-modules python-sphinx-objects.inv python2-base python3 python3-base python3-dev python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-openssl python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
+BuildRequires: ctags python3-module-setuptools python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
 
-BuildRequires: ctags python-module-alabaster python-module-docopt python-module-html5lib python-module-setuptools python-module-sphinxcontrib-websupport time
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires:	python-module-parso
+BuildRequires: python3-module-parso
 
 %description
 Jedi is an autocompletion tool for Python that can be used in
@@ -29,7 +30,7 @@ Additionaly, Jedi suports two different goto functions and has support
 for renaming as well as Pydoc support and some other IDE features.
 
 %package pickles
-Summary: Pickles for %oname
+Summary: Pickles for jedi
 Group: Development/Python
 
 %description pickles
@@ -40,10 +41,10 @@ Python syntax elements including many builtin functions.
 Additionaly, Jedi suports two different goto functions and has support
 for renaming as well as Pydoc support and some other IDE features.
 
-This package contains pickles for %oname.
+This package contains pickles for jedi.
 
 %package docs
-Summary: Documentation for %oname
+Summary: Documentation for jedi
 Group: Development/Documentation
 BuildArch: noarch
 
@@ -55,51 +56,50 @@ Python syntax elements including many builtin functions.
 Additionaly, Jedi suports two different goto functions and has support
 for renaming as well as Pydoc support and some other IDE features.
 
-This package contains documentation for %oname.
+This package contains documentation for jedi.
 
 %prep
-%setup -n %oname-%version
+%setup -n jedi-%version
 
-sed 's|env python|env python3|' < sith.py > sith.py3
-subst 's|^#!.*python$|#!%__python|' sith.py
+sed -i 's|env python|env python3|' sith.py
 
 ln -s ../objects.inv docs/
 
 %build
-%python_build_debug
+%python3_build_debug
 
-%prepare_sphinx .
-%make -C docs pickle
-%make -C docs html
+%prepare_sphinx3 .
+%make -C docs pickle SPHINXBUILD=py3_sphinx-build BUILDDIR=_build3
+%make -C docs html SPHINXBUILD=py3_sphinx-build BUILDDIR=_build3
 
 %install
 install -D -m755 sith.py %buildroot%_bindir/sith.py
 
-%python_install
+%python3_install
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build3/pickle %buildroot%python3_sitelibdir/jedi/
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test
+python3 setup.py test
 rm -fR build
-py.test -vv
+py.test-%_python3_version -vv
 
 %files
 %doc *.txt *.rst
 %_bindir/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
-%doc docs/_build/html/*
+%doc docs/_build3/html/*
 
 %changelog
-* Mon Feb 01 2021 Fr. Br. George <george@altlinux.ru> 0.12.1-alt2
-- Build python2-nly version
+* Mon Feb 01 2021 Fr. Br. George <george@altlinux.ru> 0.18.0-alt1
+- Autobuild version bump to 0.18.0
 
 * Tue Apr 28 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.1-alt1.1
 - Set versioned Python2 interpreter in shebang.
