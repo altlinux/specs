@@ -2,7 +2,7 @@
 # lxc: linux Container library
 #
 # (C) Copyright IBM Corp. 2007, 2008
-# (C) ALT Linux Team 2009-2020
+# (C) ALT Linux Team 2009-2021
 #
 # Authors:
 # Daniel Lezcano <dlezcano at fr.ibm.com>
@@ -39,7 +39,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 
 Summary: Linux Containers
@@ -322,6 +322,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Wed Feb 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.6-alt1
+- Updated to lxc-4.0.6.
+
 * Fri Oct 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.5-alt1
 - Updated to lxc-4.0.5.
 - lxc-core: %%dir'ed %%_datadir/bash-completion.
