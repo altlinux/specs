@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -307,8 +307,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %find_lang glib20
 
 %check
-# g_mapped_file_new fails on /dev/null in hasher
-# GLib:ERROR:mappedfile.c:52:test_device: assertion failed (error == (g-file-error-quark, 17)): Failed to map /dev/null' /dev/null': mmap() failed: No such device (g-file-error-quark, 7)
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -441,6 +440,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Feb 03 2021 Yuri N. Sedunov <aris@altlinux.org> 2.66.5-alt1
+- 2.66.5
+
 * Thu Dec 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.66.4-alt1
 - 2.66.4
 
