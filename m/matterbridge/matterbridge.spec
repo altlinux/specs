@@ -1,7 +1,7 @@
 %global import_path github.com/42wim/matterbridge
 
 Name: matterbridge
-Version: 1.19.0
+Version: 1.22.0
 Release: alt1
 
 Summary: A simple chat bridge
@@ -48,6 +48,8 @@ Natively supported:
 * Steam
 * Telegram
 * Twitch
+* Vintage Story
+* VK
 * WhatsApp
 * XMPP
 * Zulip
@@ -101,6 +103,9 @@ popd
 %_unitdir/matterbridge.service
 
 %changelog
+* Wed Feb 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.22.0-alt1
+- Updated to 1.22.0.
+
 * Wed Nov 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1
 - Updated to 1.19.0.
 
