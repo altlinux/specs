@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	4.0.6
+Version:	4.0.7
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -63,6 +63,9 @@ find %buildroot -name '*.la' -delete
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Wed Feb 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.7-alt1
+- Updated to lxcfs-4.0.7.
+
 * Sun Oct 25 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.6-alt1
 - Updated to lxcfs-4.0.6.
 - Built against libfuse3.
