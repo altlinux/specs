@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: A library that implements the EBU R 128 standard for loudness normalization
@@ -10,9 +10,11 @@ Group: Sound
 License: MIT
 Url: https://github.com/jiixyj/%name
 
-Source: https://github.com/jiixyj/%name/archive/v%version.tar.gz#/%name-%version.tar.gz
+Source: https://github.com/jiixyj/%name/archive/v%version/%name-%version.tar.gz
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
+%{?_enable_check:BuildRequires: libsndfile-devel}
 
 %description
 A library that implements the EBU R 128 standard for loudness
@@ -35,7 +37,11 @@ developing applications that use %name.
 %setup
 
 %build
-%cmake
+%cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_STATIC_LIBS=OFF \
+    %{?_enable_check:-DENABLE_TESTS=ON}
+%nil
 %cmake_build
 
 %install
@@ -53,9 +59,11 @@ developing applications that use %name.
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
-%exclude %_libdir/%name.a
 
 %changelog
+* Wed Feb 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Sun Jul 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - first build for Sisyphus
 
