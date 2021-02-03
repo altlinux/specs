@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -160,6 +160,9 @@ in notification area.
 
 
 %changelog
+* Wed Feb 03 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.5-alt1
+- 3.38.5
+
 * Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4 (ported to Meson build system)
 
