@@ -5,7 +5,7 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.11
+Version: 0.79.13
 Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 
@@ -27,7 +27,7 @@ BuildRequires: libssl-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
 BuildRequires: libxml2-devel
-BuildRequires: libxmlrpc-devel
+BuildRequires: libjansson-devel
 BuildRequires: libsystemd-devel
 
 %if_with check
@@ -79,6 +79,11 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %post
 %post_service %name
 
+# certmaster is no longer supported
+if [ "$1" -ge 2 ]; then
+    %_bindir/getcert remove-ca -c certmaster 2>&1 ||:
+fi
+
 %preun
 %preun_service %name
 
@@ -129,14 +134,12 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_datadir/dbus-1/system-services/org.fedorahosted.certmonger.service
 %_unitdir/certmonger.service
 %dir %_sysconfdir/certmonger
-%_bindir/certmaster-getcert
 %_bindir/getcert
 %_bindir/ipa-getcert
 %_bindir/local-getcert
 %_bindir/selfsign-getcert
 %_sbindir/certmonger
 %dir %_libexecdir/certmonger
-%_libexecdir/certmonger/certmaster-submit
 %_libexecdir/certmonger/certmonger-session
 %_libexecdir/certmonger/dogtag-ipa-renew-agent-submit
 %_libexecdir/certmonger/dogtag-submit
@@ -147,7 +150,6 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_sharedstatedir/certmonger/cas/
 %_sharedstatedir/certmonger/local/
 %_sharedstatedir/certmonger/requests/
-%_man1dir/certmaster-getcert.1.*
 %_man1dir/getcert-*.1.*
 %_man1dir/getcert.1.*
 %_man1dir/ipa-getcert.1.*
@@ -158,6 +160,12 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Wed Oct 21 2020 Stanislav Levin <slev@altlinux.org> 0.79.13-alt1
+- 0.79.12 -> 0.79.13.
+
+* Wed Oct 07 2020 Stanislav Levin <slev@altlinux.org> 0.79.12-alt1
+- 0.79.11 -> 0.79.12.
+
 * Mon Sep 28 2020 Stanislav Levin <slev@altlinux.org> 0.79.11-alt1
 - 0.79.9 -> 0.79.11.
 
