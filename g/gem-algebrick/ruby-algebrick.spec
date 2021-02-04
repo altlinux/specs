@@ -1,8 +1,8 @@
 %define        pkgname algebrick
 
 Name:          gem-%pkgname
-Version:       0.7.5
-Release:       alt2
+Version:       0.7.5.1
+Release:       alt0.1
 Summary:       Typed structs on steroids based on algebraic types and pattern matching.
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         %version.patch
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -39,9 +40,10 @@ Documentation files for %gemname gem.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -59,6 +61,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Feb 04 2021 Pavel Skrylev <majioa@altlinux.org> 0.7.5.1-alt0.1
+- ! fake class matching when it uses changed or mimic name
+- ^ 0.7.5 -> 0.7.5[1]
+
 * Tue Feb 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.7.5-alt2
 - > Ruby Policy 2.0
 - * policify name
