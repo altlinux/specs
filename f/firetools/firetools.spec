@@ -1,13 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: Firejail graphical user interface
 Name: firetools
-Version: 0.9.52
+Version: 0.9.64
 Release: alt1
 License: GPLv2+
 Group: Development/Tools
-Source: %name-%version.tar
 Url: https://github.com/netblue30/firetools
 
-Packager: Anton Midyukov <antohami@altlinux.org>
+# https://github.com/netblue30/firetools.git
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
@@ -44,6 +46,9 @@ Control Groups.
 %_pixmapsdir/*.png
 
 %changelog
+* Thu Feb 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64-alt1
+- Updated to upstream version 0.9.64.
+
 * Wed Apr 11 2018 Anton Midyukov <antohami@altlinux.org> 0.9.52-alt1
 - new version 0.9.52
 
