@@ -1,5 +1,5 @@
 Name: libcamera
-Version: 0.0.20201028
+Version: 0.0.20210204
 Release: alt1
 
 Summary: A complex camera support library for Linux
@@ -9,17 +9,19 @@ Url: https://libcamera.org/
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ meson >= 0.51 openssl qt5-tools-devel
+BuildRequires: gcc-c++ meson >= 0.51 openssl boost-devel qt5-tools-devel
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-video-1.0)
 BuildRequires: pkgconfig(gstreamer-allocators-1.0)
+BuildRequires: pkgconfig(libevent_pthreads)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(udev)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(yaml)
+BuildRequires: python3(ply)
 
 %package -n gst-plugins-libcamera1.0
 Summary: A complex camera support library for Linux
@@ -51,14 +53,17 @@ This package contains development part of libcamera.
 %prep
 %setup
 
+%ifarch armh
+%define platdefs simple,raspberrypi,uvcvideo
+%endif
 %ifarch aarch64
-%define platdefs simple,uvcvideo,rkisp1
+%define platdefs simple,raspberrypi,rkisp1,uvcvideo
 %endif
 %ifarch %ix86 x86_64
-%define platdefs simple,uvcvideo,ipu3
+%define platdefs ipu3,uvcvideo
 %endif
-%ifnarch aarch64 %ix86 x86_64
-%define platdefs simple,uvcvideo
+%ifnarch armh aarch64 %ix86 x86_64
+%define platdefs uvcvideo
 %endif
 
 %build
@@ -67,12 +72,15 @@ This package contains development part of libcamera.
 
 %install
 %meson_install
+mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 
 %files
 %_bindir/cam
 %_libexecdir/libcamera/ipa_proxy_linux
+%_libdir/libcamera
 %_libdir/libcamera.so
 %_libdir/v4l2-compat.so
+%_datadir/libcamera
 
 %files -n gst-plugins-libcamera1.0
 %_libdir/gstreamer-1.0/*
@@ -85,5 +93,8 @@ This package contains development part of libcamera.
 %_pkgconfigdir/camera.pc
 
 %changelog
+* Thu Feb 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210204-alt1
+- updated from git.336de7af
+
 * Tue Nov 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20201028-alt1
 - initial
