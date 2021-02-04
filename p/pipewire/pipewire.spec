@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.20
+Version: %ver_major.21
 Release: alt1
 
 Summary: Media Sharing Server
@@ -222,6 +222,9 @@ export LIB=%_lib
 
 
 %changelog
+* Thu Feb 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.21-alt1
+- 0.3.21
+
 * Thu Jan 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.20-alt1
 - 0.3.20
 
