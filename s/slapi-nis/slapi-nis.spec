@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: slapi-nis
-Version: 0.56.3
+Version: 0.56.6
 Release: alt1
 
 Summary: NIS Server and Schema Compatibility plugins for Directory Server
@@ -20,6 +20,7 @@ BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libsss_nss_idmap-devel
 BuildRequires: pam-devel
+BuildRequires: rpcgen
 
 ExcludeArch: %ix86
 
@@ -70,6 +71,9 @@ sed -i -e 's,%_libdir/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
 %exclude %_libdir/dirsrv/plugins/*.la
 
 %changelog
+* Thu Feb 04 2021 Stanislav Levin <slev@altlinux.org> 0.56.6-alt1
+- 0.56.3 -> 0.56.6.
+
 * Tue Jun 11 2019 Stanislav Levin <slev@altlinux.org> 0.56.3-alt1
 - 0.56.1 -> 0.56.3.
 - Built without tcp-wrappers.
