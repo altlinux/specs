@@ -3,7 +3,7 @@
 %def_enable    doc
 
 Name:          denemo
-Version:       2.4.0
+Version:       2.4.5
 Release:       alt1
 
 Summary:       WYSIWYG musical score editor, and frontend for Lilypond
@@ -15,7 +15,6 @@ Vcs:           https://github.com/denemo/denemo.git
 Packager:      Ildar Mulyukov <ildar@altlinux.ru>
 
 Source:        %name-%version.tar
-Source1:       %name.conf
 
 BuildRequires: convert
 BuildRequires: gtk-doc
@@ -23,7 +22,7 @@ BuildRequires: intltool
 BuildRequires: flex
 BuildRequires: guile
 BuildRequires: glib2-devel
-BuildRequires: guile18-devel
+BuildRequires: guile-devel
 BuildRequires: libxml2-devel
 BuildRequires: librsvg-devel
 BuildRequires: libsndfile-devel
@@ -90,7 +89,7 @@ Csound воспроизвести ее. Об этих и других продв
 %install
 %make_install DESTDIR=%buildroot install
 mkdir -p %buildroot%_sysconfdir/%name
-install -m644 %SOURCE1 %buildroot%_sysconfdir/%name
+install -m644 denemo.conf %buildroot%_sysconfdir/%name
 
 find %buildroot -name 'Makefile*' -exec rm -f {} \;
 mv %buildroot%_datadir/fonts/{truetype,ttf}
@@ -116,6 +115,9 @@ fc-cache %_datadir/fonts/ttf/%name ||:
 %doc AUTHORS ChangeLog* LICENSE_OFL.txt NEWS README*
 
 %changelog
+* Thu Feb 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.5-alt1
+- 2.4.5 released
+
 * Fri Dec 11 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
 - ^ 2.3.0 -> 2.4.0
 
