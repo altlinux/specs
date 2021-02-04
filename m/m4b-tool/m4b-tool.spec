@@ -1,6 +1,6 @@
 Name: m4b-tool
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: m4b-tool is a command line utility to merge, split and chapterize audiobook files such as mp3, ogg, flac, m4a or m4b
 
@@ -53,5 +53,8 @@ install -m755 dist/m4b-tool.phar %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt2
+- fix vendor dir packing
+
 * Wed Jan 20 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - initial build for ALT Sisyphus
