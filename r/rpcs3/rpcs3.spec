@@ -5,7 +5,6 @@
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
 %define hidapi_commit 8961cf86ebc4756992a7cd65c219c743e94bab19
-%define libusb_commit c33990a300674e24f47ff0f172f7efb10b63b88a
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
 %define xx_hash_version 0.8.0
 %define llvm_commit cb7748dfa0d615e9f5ea9f31e0ce40fe9aeac595
@@ -18,7 +17,7 @@
 
 Name: rpcs3
 Version: 0.0.14
-Release: alt1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -39,26 +38,24 @@ Source2: asmjit-%asmjit_commit.tar
 Source3: pugixml-%pugixml_commit.tar
 # https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
 Source4: hidapi-%hidapi_commit.tar
-# https://github.com/libusb/libusb/archive/$libusb_commit/libusb-%libusb_commit.tar.gz
-Source5: libusb-%libusb_commit.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
-Source6: yaml-cpp-%yaml_cpp_commit.tar
+Source5: yaml-cpp-%yaml_cpp_commit.tar
 # https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
-Source7: xxHash-%xx_hash_version.tar
+Source6: xxHash-%xx_hash_version.tar
 # https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-mirror-%llvm_commit.tar.gz
-Source8: llvm-mirror-%llvm_commit.tar
+Source7: llvm-mirror-%llvm_commit.tar
 # https://github.com/RPCS3/cereal/archive/%cereal_commit/cereal-%cereal_commit.tar.gz
-Source9: cereal-%cereal_commit.tar
+Source8: cereal-%cereal_commit.tar
 # https://github.com/FNA-XNA/FAudio/archive/%faudio_commit/FAudio-%faudio_commit.tar.gz
-Source10: FAudio-%faudio_commit.tar
+Source9: FAudio-%faudio_commit.tar
 # https://github.com/tcbrindle/span/archive/%span_commit/span-%span_commit.tar.gz
-Source11: span-%span_commit.tar
+Source10: span-%span_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
-Source12: SPIRV-Headers-%spirv_headers_version.tar
+Source11: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
-Source13: SPIRV-Tools-%spirv_tools_version.tar
+Source12: SPIRV-Tools-%spirv_tools_version.tar
 # https://github.com/RipleyTom/wolfssl/archive/%wolfssl_commit/wolfssl-%wolfssl_commit.tar.gz
-Source14: wolfssl-%wolfssl_commit.tar
+Source13: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
 Patch1: %name-alt-qt5.patch
@@ -74,6 +71,7 @@ BuildRequires: libavformat-devel
 BuildRequires: libcurl-devel
 BuildRequires: libevdev-devel
 BuildRequires: libfaudio-devel
+BuildRequires: libffi-devel
 BuildRequires: libflatbuffers-devel
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
@@ -93,13 +91,12 @@ BuildRequires: qt5-base-devel >= 5.15.1
 BuildRequires: subversion
 
 BuildPreReq: libswresample-devel
-BuildPreReq: python3-module-Pygments
 
 %description
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
 
 %patch0 -p1
 %patch1 -p1
@@ -109,7 +106,6 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
 %__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi
-%__mv -Tf ../libusb-%libusb_commit 3rdparty/libusb
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
 %__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
@@ -148,6 +144,7 @@ cmake .. \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
 	-DUSE_SYSTEM_CURL:BOOL=TRUE \
+	-DUSE_SYS_LIBUSB:BOOL=TRUE \
 	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
 popd
@@ -167,6 +164,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Feb 04 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt2
+- Build with system libusb
+
 * Sat Jan 09 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt1
 - Version 0.0.14
 
