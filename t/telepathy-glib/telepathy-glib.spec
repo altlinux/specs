@@ -11,7 +11,7 @@
 
 Name: telepathy-glib
 Version: 0.24.2
-Release: alt1
+Release: alt2
 
 Summary: Telepathy framework - GLib connection manager library
 License: LGPL-2.1
@@ -173,6 +173,9 @@ export TP_TESTS_NO_TIMEOUT=1
 %endif
 
 %changelog
+* Thu Feb 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt2
+- updated sources to actual telepathy-glib-0.24.2 tarball
+
 * Wed Jan 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt1
 - 0.24.2
 - enabled %%check, gtk-doc
