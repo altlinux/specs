@@ -1,28 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 2.20
+%define ver_major 2.22
 %define ver_minor 0
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt4
+Release: alt1
 Group: Publishing
 Summary: A program for printing sheet music
-License: GPLv3
-Url: http://www.lilypond.org
+License: GPLv3+ with Font-exception-2.0 and GFDL-1.3 and MIT and OFL-1.1
+Url: https://lilypond.org
 
 Source: %name-%version.tar
 Source1: russian-lirycs-test.ly
-Patch1: lilypond-2.20.0-fix-CVE-2020-17353.patch
 
 BuildRequires(pre): rpm-build-vim
-BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile18-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile-devel
 BuildRequires: help2man libfreetype-devel libpango-devel makeinfo python-devel texlive
 BuildRequires: texlive-collection-basic
 
 Requires: texlive-collection-basic
+
+%add_python3_lib_path %_datadir/%name
+%add_python3_req_skip __main__
 
 %package -n emacs-mode-%name
 Summary: Major mode for editing GNU LilyPond music scores
@@ -64,12 +68,10 @@ vim-plugin-%name provides syntax coloring, completion and compilation.
 
 %prep
 %setup
-%patch1 -p1
 subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' config.make.in
 
 %build
 %configure \
-	PYTHON=python2 \
 	--with-texgyre-dir=/usr/share/texmf-dist/fonts/opentype/public/tex-gyre/ \
 	--disable-documentation \
 	%nil
@@ -103,13 +105,13 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %find_lang %name
 
 %files -f %name.lang
+%doc COPYING COPYING.FDL LICENSE LICENSE.DOCUMENTATION LICENSE.OFL
+%doc DEDICATION HACKING INSTALL.txt NEWS.txt README.md ROADMAP
+%doc russian-lirycs-test.ly
 %_bindir/*
-%_libdir/%name
 %_datadir/%name
 #%_infodir/*
 %_man1dir/*
-%doc AUTHORS.txt COPYING DEDICATION HACKING INSTALL.txt LICENSE LICENSE.DOCUMENTATION LICENSE.OFL NEWS.txt README.txt ROADMAP
-%doc russian-lirycs-test.ly
 
 %files -n emacs-mode-%name
 %config(noreplace) %_emacs_sitestart_dir/%name-init.el
@@ -126,6 +128,9 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %vim_runtime_dir/syntax/*
 
 %changelog
+* Thu Feb 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.22.0-alt1
+- Updated to stable upstream version 2.22.0.
+
 * Thu Sep 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.20.0-alt4
 - Fixed changelog according to vulnerability policy.
 
