@@ -4,8 +4,8 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.639
-Release: alt2
+Version: 7.0.640
+Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
 Url: https://openvz.org/
@@ -72,6 +72,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Thu Feb 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.640-alt1
+- 7.0.640
+
 * Sun Jan 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.639-alt2
 - change resolver configuration for systemd
 - remove default NS from systemd-networkd config
