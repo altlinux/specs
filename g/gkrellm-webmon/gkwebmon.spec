@@ -3,7 +3,7 @@
 
 Name: gkrellm-%plugin
 Version: 0.2
-Release: alt2.1.qa1
+Release: alt3
 
 Summary: GKrellM webmon plugin
 Summary(ru_RU.CP1251): Плагин webmon для GKrellM
@@ -15,6 +15,7 @@ Source: http://prdownloads.sourceforge.net/%sourcename/%sourcename-%version.tgz
 Patch0: gkwebmon-0.2-alt-i18n.patch.gz
 Patch1: gkwebmon-0.2-alt-ru.patch.gz
 Patch2: gkwebmon-0.2-alt-install.patch.gz
+Patch3: gkwebmon-0.2-alt-gcc10.patch.gz
 
 Provides: %sourcename = %version
 Obsoletes: %sourcename <= %version
@@ -41,8 +42,10 @@ md5 суммы с предыдущими. Если страница изменилась, изменится цвет плагина
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+#%patch3 -p2
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 %make_build enable_nls=1 LOCALEDIR=%_datadir/locale
 
 %install
@@ -55,6 +58,9 @@ md5 суммы с предыдущими. Если страница изменилась, изменится цвет плагина
 %_libdir/gkrellm2/plugins/*.so
 
 %changelog
+* Thu Feb 04 2021 Leontiy Volodin <lvol@altlinux.org> 0.2-alt3
+- Fixed build with gcc10.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt2.1.qa1
 - NMU: rebuilt for debuginfo.
 
