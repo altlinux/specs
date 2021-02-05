@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        85.0
+Version:        85.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -500,6 +500,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Feb 05 2021 Alexey Gladkov <legion@altlinux.ru> 85.0.1-alt1
+- New release (85.0.1).
+- Security fixes:
+  + MOZ-2021-0001: Buffer overflow in depth pitch calculations for compressed textures
+
 * Tue Jan 26 2021 Alexey Gladkov <legion@altlinux.ru> 85.0-alt1
 - New release (85.0).
 - Security fixes:
