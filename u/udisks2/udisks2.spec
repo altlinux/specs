@@ -26,7 +26,7 @@
 %endif
 
 Name: %{_name}2
-Version: 2.9.1
+Version: 2.9.2
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -203,7 +203,8 @@ This package contains UDisks module for VDO management.
 %prep
 %setup -n %_name-%version
 sed -i 's/mkfs\.vfat/mkfs.fat/
-       s/dosfslabel/fatlabel/' src/udiskslinuxfsinfo.c
+        s/fsck\.vfat/fsck.fat/
+        s/dosfslabel/fatlabel/' src/udiskslinuxfsinfo.c src/tests/dbus-tests/*.py
 
 %build
 %autoreconf
@@ -348,6 +349,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri Feb 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.2-alt1
+- 2.9.2
+
 * Sat Aug 22 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
 - 2.9.1
 
