@@ -1,5 +1,5 @@
 # check deps/npm/package.json for it
-%define npmver 6.14.8
+%define npmver 6.14.10
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -19,9 +19,8 @@
 %global v8_abi 7.9
 %def_without systemv8
 
-# supports only openssl >= 1.0.2
-# see https://github.com/nodejs/node/issues/2783
-%define openssl_version 1.0.2n
+
+%define openssl_version 1.1.1i
 %def_with systemssl
 
 %global libuv_abi 1.40.0
@@ -50,7 +49,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.1
+Version: %major.4
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -380,6 +379,12 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 14.15.4-alt1
+- new version 14.15.4 (with rpmrb script)
+- CVE-2020-1971: OpenSSL - EDIPARTYNAME NULL pointer de-reference (High)
+- CVE-2020-8265: use-after-free in TLSWrap (High)
+- CVE-2020-8287: HTTP Request Smuggling in nodejs (Low)
+
 * Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 14.15.1-alt1
 - new version 14.15.1 (with rpmrb script)
 - set c-ares >= 1.16.1-alt2
