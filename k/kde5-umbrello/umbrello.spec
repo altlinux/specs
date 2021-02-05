@@ -1,8 +1,8 @@
 %define rname umbrello
 
 Name: kde5-%rname
-Version: 20.12.1
-Release: alt3
+Version: 20.12.2
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -62,6 +62,9 @@ sed -i 's|\(.*add_subdirectory.*unittests.*\)|#\1|' CMakeLists.txt
 
 
 %changelog
+* Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Fri Jan 22 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt3
 - disable unittests
 

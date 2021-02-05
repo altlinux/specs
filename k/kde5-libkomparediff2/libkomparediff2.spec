@@ -4,7 +4,7 @@
 %define libkomparediff2 libkomparediff2%sover
 
 Name: kde5-%rname
-Version: 20.12.1
+Version: 20.12.2
 Release: alt1
 %K5init altplace
 
@@ -80,6 +80,9 @@ KF5 library
 %_K5lib/libkomparediff2.so.*
 
 %changelog
+* Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Fri Jan 15 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
 - new version
 
