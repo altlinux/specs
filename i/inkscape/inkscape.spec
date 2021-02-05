@@ -1,5 +1,4 @@
 %define major 1.0
-%define pre beta1
 
 %def_with shared
 %def_without gnome_vfs
@@ -10,8 +9,8 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major.1
-Release: alt7
+Version: %major.2
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -30,7 +29,7 @@ Patch7: 0001-CMakeLists.txt-move-GNUInstallDirs-after-project-NAM.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
-BuildPreReq: desktop-file-utils
+BuildRequires: desktop-file-utils
 
 AutoProv:yes,nopython3
 BuildRequires(pre): rpm-build-python3
@@ -134,7 +133,7 @@ Run checkinstall tests for %name.
 
 %prep
 %setup
-%patch6 -p1
+#patch6 -p1
 %patch7 -p1
 
 %build
@@ -209,6 +208,9 @@ true
 %files checkinstall
 
 %changelog
+* Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2 (with rpmrb script)
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt7
 - add Requires: /proc (ALT bug 39230)
 
