@@ -1,11 +1,11 @@
 Summary: eudev - an userspace implementation of devfs
 Name: eudev
 Version: 3.2.9
-Release: alt2
+Release: alt3
 
 Url: https://github.com/gentoo/eudev
 Group: System/Configuration/Hardware
-License: GPLv2+
+License: GPL-2
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -14,7 +14,7 @@ Source1: udev.filetrigger
 Source2: udev-hwdb.filetrigger
 Source3: udevd.init
 
-Patch0: 0001-Rename-eudev-to-eudev.patch
+Patch0: 0001-Rename-udev-to-eudev.patch
 
 Buildrequires: gperf
 Buildrequires: util-linux
@@ -23,6 +23,10 @@ Buildrequires: libkmod-devel
 Buildrequires: libblkid-devel
 
 %define _unpackaged_files_terminate_build 1
+
+# We need a separate version of the utilities because they have less
+# dependencies (see ALT#39444).
+Requires: systemd-tmpfiles-standalone
 
 %description
 Starting with the 2.5 kernel, all physical and virtual devices in a
@@ -155,6 +159,11 @@ rm -rf -- \
 %_pkgconfigdir/libeudev.pc
 
 %changelog
+* Fri Feb 05 2021 Alexey Gladkov <legion@altlinux.ru> 3.2.9-alt3
+- Pull upstream fixes.
+- Use standalone variant of systemd-tmpfiles.
+- Update License tag.
+
 * Sat Nov 28 2020 Alexey Gladkov <legion@altlinux.ru> 3.2.9-alt2
 - Rename pkg-config file.
 
