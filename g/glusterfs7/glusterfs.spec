@@ -15,7 +15,7 @@
 
 Name: glusterfs7
 Version: %major
-Release: alt3
+Release: alt4
 
 Summary: Cluster File System
 
@@ -67,7 +67,8 @@ BuildRequires: python3-dev
 # liblvm2-devel: disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
-BuildRequires: libssl-devel libcurl-devel zlib-devel libtirpc-devel
+BuildRequires: libssl-devel libcurl-devel zlib-devel
+BuildRequires: libtirpc-devel rpcgen
 BuildRequires: libcmocka-devel
 BuildRequires: systemd
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
@@ -547,7 +548,7 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %glusterlibdir/xlator/mount/api.so
 
 %files -n lib%name-api-devel
-%_pkgconfigdir/glusterfs-api.pc
+#%_pkgconfigdir/glusterfs-api.pc
 %_libdir/libgfapi.so
 %_includedir/glusterfs/api/
 
@@ -643,7 +644,7 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %_libdir/libgfxdr.so
 #%_libdir/libgfdb.so
 %_libdir/libglusterfs.so
-%_pkgconfigdir/libgfchangelog.pc
+#%_pkgconfigdir/libgfchangelog.pc
 # pkgconfiglib.req: WARNING: /tmp/.private/lav/glusterfs3-buildroot/usr/lib64/pkgconfig/libgfdb.pc: cannot find -lgfchangedb library path (skip)
 #_pkgconfigdir/libgfdb.pc
 
@@ -674,6 +675,10 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %endif
 
 %changelog
+* Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt4
+- add BR: rpcgen
+- drop pkgconfig provides from devel packages
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt3
 - pack python3-module-glusterfs7 again, but disable provides
 
