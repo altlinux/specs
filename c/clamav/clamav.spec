@@ -15,7 +15,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.103.0
+Version: 0.103.1
 Release: alt1
 %define abiversion 9
 
@@ -378,6 +378,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Fri Feb 05 2021 Sergey Y. Afonin <asy@altlinux.org> 0.103.1-alt1
+- 0.103.1
+
 * Wed Sep 30 2020 Sergey Y. Afonin <asy@altlinux.org> 0.103.0-alt1
 - 0.103.0
 - added clamonacc subpackage
