@@ -1,10 +1,8 @@
 # Get Source0-3 from http://download.documentfoundation.org/libreoffice/src/$ver/
 # Get Source10 (with selected components) from https://dev-www.libreoffice.org/src/
-
 %def_without forky
 %def_without python
 %def_with parallelism
-%define num_proc 8
 %def_without fetch
 %def_without lto
 %def_with dconf
@@ -25,15 +23,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 6.4
-%define urelease 7.2
+%define hversion 7.0
+%define urelease 4.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-
-Release: alt3
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -52,7 +49,7 @@ Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
 Conflicts: LibreOffice
 
-%define with_lang ru be de fr uk pt-BR es kk tt
+%define with_lang ru be de fr uk pt-BR es kk tt el
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
@@ -69,9 +66,11 @@ Source300:	libreoffice.unused
 Source400:	images_oxygen.zip
 
 ## FC patches
-Patch1: FC-0001-don-t-suppress-crashes.patch
-
-## Long-term FC patches
+Patch1: FC-0001-disable-libe-book-support.patch
+Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
+Patch3: FC-0001-don-t-suppress-crashes.patch
+Patch4: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+Patch5: FC-0001-rhbz-1870501-crash-on-reexport-of-odg.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
@@ -95,7 +94,7 @@ BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
 BuildRequires: libe-book-devel
 # 5.1
 %if_with java
-BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
+BuildRequires: junit xsltproc
 BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh
 BuildRequires: pentaho-reporting-flow-engine
 %endif
@@ -136,6 +135,8 @@ BuildRequires: libqrcodegen-cpp-devel
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libeot-devel
 BuildRequires: libgraphite2-devel
+# 7.0.4.2
+BuildRequires:  java-9-openjdk-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -302,8 +303,10 @@ echo Direct build
 
 ## FC apply patches
 %patch1 -p1
-
-## Long-term FC patches applying
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 ## ALT apply patches
 %patch401 -p0
@@ -358,7 +361,19 @@ export CXX=%_target_platform-g++
 %ifarch mipsel
 export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g0"
 export CXXFLAGS="$CFLAGS"
+%else
+export CFLAGS="-fPIC"
+export CXXFLAGS="$CFLAGS"
 %endif
+
+PARALLEL=$(nproc)
+%ifarch ppc64le
+# reduce excessive resource use
+if [ "$PARALLEL" -gt 24 ] ; then
+        PARALLEL=24
+fi
+%endif
+
 ./autogen.sh \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
@@ -404,7 +419,7 @@ export CXXFLAGS="$CFLAGS"
   	--enable-lto \
 %endif
 %if_with parallelism
-	--with-parallelism=%num_proc \
+	--with-parallelism="$PARALLEL" \
 %else   
         --without-parallelism \
 %endif
@@ -618,14 +633,15 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_datadir/application-registry/*
 
 %langpack -m -h -l ru -n Russian
-%langpack -h -l be -n Belorussian
+%langpack    -h -l be -n Belorussian
 %langpack -m -h -l de -n German
 %langpack -m -h -l fr -n French
 %langpack -m -h -l uk -n Ukrainian
-%langpack -l pt-BR -n Brazilian Portuguese
-%langpack -h -m -l es -n Espanian
-%langpack -l kk -n Kazakh
-%langpack -h -l tt -n Tatar
+%langpack       -l pt-BR -n Brazilian Portuguese
+%langpack -m -h -l es -n Espanian
+%langpack       -l kk -n Kazakh
+%langpack    -h -l tt -n Tatar
+%langpack -m -h -l el -n Greek
 
 %files -n libreofficekit-still
 #_typelibdir/LOKDocView-*.typelib
@@ -636,6 +652,11 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Feb 05 2021 Andrey Cherepanov <cas@altlinux.org> 7.0.4.2-alt1
+- New version.
+- Add Greek languagepack (ALT #39636).
+- Use all available processors for build.
+
 * Mon Nov 09 2020 Ivan A. Melnikov <iv@altlinux.org> 6.4.7.2-alt3
 - Get rid of java-related BRs in non-java builds.
 - Fix build on mipsel.
