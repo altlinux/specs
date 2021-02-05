@@ -10,8 +10,8 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.4.6
-Release: alt2
+Version: 0.4.4.7
+Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -146,6 +146,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Thu Feb 4 2021 Vladimir Didenko <cow@altlinux.ru> 0.4.4.7-alt1
+- new version
+
 * Sat Nov 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.4.4.6-alt2
 - fix SysVinit service startup: place pidfile to /run/tor
 
