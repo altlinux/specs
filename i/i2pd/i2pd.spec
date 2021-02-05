@@ -2,7 +2,7 @@
 %define _i2pd_root %_sharedstatedir/%name
 
 Name: i2pd
-Version: 2.33.0
+Version: 2.35.0
 Release: alt1
 
 Summary: Full C++ implementation of I2P router
@@ -14,6 +14,9 @@ Url: https://github.com/PurpleI2P/i2pd
 # Source0-git: https://github.com/PurpleI2P/i2pd.git
 Source0: %name-%version.tar
 Patch: %name-%version-upstream.patch
+
+ExcludeArch: %ix86
+
 Source1: %name.service
 Source2: %name.logrotate
 Source3: i2p.conf
@@ -115,6 +118,9 @@ touch %buildroot%_logdir/%name/%name.log
 %dir %_logdir/%name/
 
 %changelog
+* Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.35.0-alt1
+- new version 2.35.0 (with rpmrb script)
+
 * Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 2.33.0-alt1
 - new version 2.33.0 (with rpmrb script)
 
