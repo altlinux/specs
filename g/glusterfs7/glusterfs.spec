@@ -12,10 +12,12 @@
 %def_without ocf
 # rdma package
 %def_enable ibverbs
+# build devel subpackages
+%def_disable devel
 
 Name: glusterfs7
 Version: %major
-Release: alt4
+Release: alt5
 
 Summary: Cluster File System
 
@@ -547,10 +549,12 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %_libdir/libgfapi.so.*
 %glusterlibdir/xlator/mount/api.so
 
+%if_enabled devel
 %files -n lib%name-api-devel
-#%_pkgconfigdir/glusterfs-api.pc
+%_pkgconfigdir/glusterfs-api.pc
 %_libdir/libgfapi.so
 %_includedir/glusterfs/api/
+%endif
 
 %files thin-arbiter
 %glusterlibdir/xlator/features/thin-arbiter.so
@@ -635,6 +639,7 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %doc COPYING-GPLV2 COPYING-LGPLV3
 %_datadir/vim/vimfiles/syntax/glusterfs.vim
 
+%if_enabled devel
 %files -n lib%name-devel
 %_includedir/glusterfs/
 %exclude %_includedir/glusterfs/api/
@@ -644,9 +649,11 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %_libdir/libgfxdr.so
 #%_libdir/libgfdb.so
 %_libdir/libglusterfs.so
-#%_pkgconfigdir/libgfchangelog.pc
+%_pkgconfigdir/libgfchangelog.pc
 # pkgconfiglib.req: WARNING: /tmp/.private/lav/glusterfs3-buildroot/usr/lib64/pkgconfig/libgfdb.pc: cannot find -lgfchangedb library path (skip)
 #_pkgconfigdir/libgfdb.pc
+%endif
+
 
 %files -n lib%name
 # until we got -common subpackage
@@ -675,6 +682,9 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %endif
 
 %changelog
+* Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt5
+- disable devel subpackages
+
 * Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt4
 - add BR: rpcgen
 - drop pkgconfig provides from devel packages
