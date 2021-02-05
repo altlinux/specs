@@ -18,14 +18,14 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.5.5
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
 Source0: %name-%version.tar
 Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
-ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
+ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
 BuildRequires: bash-completion
 BuildRequires: cmake
 BuildRequires: gcab
@@ -35,7 +35,6 @@ BuildRequires: libappstream-glib-devel
 BuildRequires: libarchive-devel
 BuildRequires: libcolord-devel
 BuildRequires: libcurl-devel
-BuildRequires: libefivar-devel
 BuildRequires: libelf-devel
 BuildRequires: libgcab-devel
 BuildRequires: libgnutls-devel
@@ -335,6 +334,10 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Thu Feb 04 2021 Nikita Ermakov <arei@altlinux.org> 1.5.5-alt2
+- Added riscv64 to ExclusiveArch tag
+- Removed extra libefivar-devel BR
+
 * Wed Jan 13 2021 Anton Farygin <rider@altlinux.ru> 1.5.5-alt1
 - 1.5.5
 
