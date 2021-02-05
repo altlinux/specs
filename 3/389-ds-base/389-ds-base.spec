@@ -6,13 +6,12 @@
 
 %def_without selinux
 %def_with check
-%def_without perl
 %def_without debug
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.1.18
-Release: alt5
+Version: 1.4.3.18
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -51,8 +50,8 @@ BuildRequires: libsystemd-devel
 
 BuildRequires: python3(build_manpages)
 BuildRequires: python3(argcomplete)
+BuildRequires: python3(dateutil)
 BuildRequires: python3(ldap)
-BuildRequires: python3(packaging)
 BuildRequires: python3(six)
 
 BuildRequires: rsync
@@ -66,23 +65,13 @@ BuildRequires: /proc
 BuildRequires: libcmocka-devel
 %endif
 
-%if_with perl
-BuildRequires: perl-bignum
-BuildRequires: perl-devel
-BuildRequires: perl-Archive-Tar
-BuildRequires: perl-DBM
-BuildRequires: perl-Mozilla-LDAP
-BuildRequires: perl-NetAddr-IP
-%endif
-# AutoReq: yes, noperl
-%add_perl_lib_path %_libdir/%pkgname/perl
 %add_findprov_skiplist %_datadir/%pkgname/script-templates/*
 %add_findreq_skiplist %_datadir/%pkgname/script-templates/* %_sbindir/*-%pkgname
 
-%if_without perl
+# still packaged Perl script, which requires perl-devel
+# Perl is linked against libdb4.8 for now, but 389-ds requires 5.3
 %add_findprov_skiplist %_bindir/logconv.pl
 %add_findreq_skiplist %_bindir/logconv.pl
-%endif
 
 # use Python3 everywhere
 %add_python3_path %_datadir/gdb/auto-load/
@@ -129,17 +118,6 @@ Conflicts: libsvrcore-devel
 
 %description devel
 Development Libraries and headers for 389 Directory Server.
-
-%package legacy-tools
-Summary: Legacy utilities for 389 Directory Server
-Group: System/Base
-Obsoletes: %name <= 1.4.0.9
-Requires: %name = %EVR
-
-%description legacy-tools
-Legacy (and deprecated) utilities for 389 Directory Server. This includes
-the old account management and task scripts. These are deprecated in favour of
-the dscreate, dsctl, dsconf and dsidm tools.
 
 %package -n python3-module-lib389
 Summary: A library for accessing, testing, and configuring the 389 Directory Server
@@ -228,8 +206,9 @@ export LDFLAGS='-latomic'
         --enable-asan \
         --enable-debug \
 %endif
-        %{?_with_perl:--enable-perl } \
         %{?_with_check:--enable-cmocka } \
+        --disable-legacy \
+        --disable-perl \
         %nil
 
 %make_build
@@ -271,12 +250,6 @@ mkdir -p %buildroot%_sysconfdir/systemd/system/%groupname.wants
 # remove libtool and static libs
 find %buildroot -type f \( -name "*.la" -o -name "*.a" \) -delete
 
-%if_with perl
-# make sure perl scripts have a proper shebang
-sed -i 's|#{{PERL-EXEC}}|#!%_bindir/perl|' %buildroot%_datadir/%pkgname/script-templates/template-*.pl
-sed -i 's|File::Spec->tmpdir|"/tmp"|g' %buildroot%_libdir/%pkgname/perl/DSCreate.pm
-%endif
-
 # move main libraries to common directory
 mv %buildroot%_libdir/%pkgname/*.so* %buildroot%_libdir/
 
@@ -284,19 +257,9 @@ mv %buildroot%_libdir/%pkgname/*.so* %buildroot%_libdir/
 mkdir -p %buildroot%_man3dir
 cp man/man3/* %buildroot%_man3dir
 
-# Fix path to systemctl in scripts
-%if_with perl
-sed -i 's|%_bindir/systemctl|/bin/systemctl|' %buildroot%_sbindir/*-dirsrv
-%endif
-
 %if_without cockpit
 # ends up unpackaged otherwise thus breaking build
 rm -f %buildroot%_datadir/metainfo/389-console/org.port389.cockpit_console.metainfo.xml
-%endif
-
-%if_without perl
-# repl-monitor depends on repl-monitor.pl which is not installed without perl
-rm -f %buildroot%_bindir/repl-monitor
 %endif
 
 %pre
@@ -310,57 +273,6 @@ rm -f %buildroot%_bindir/repl-monitor
 
 %post
 sysctl --system &> /dev/null ||:
-
-%post legacy-tools
-%if_with perl
-# Upgrade
-echo "389-ds: Checking for upgrade"
-if ! ( sd_booted && /bin/systemctl --version >/dev/null 2>&1 ); then
-    echo "Likely, you are not using systemd. Please, stop all the dirsrv instances."
-    echo "Then run an upgrade by %_sbindir/setup-ds.pl -u -s General.UpdateMode=offline"
-    exit 0
-fi
-
-/bin/systemctl daemon-reload >/dev/null 2>&1 ||:
-instances=""
-num_inst=0
-echo "Looking for Instances in %_sysconfdir/%pkgname"
-for dir in %_sysconfdir/%pkgname/slapd-* ; do
-    if [ ! -d "$dir" ] ; then continue ; fi
-    case "$dir" in *.removed) continue ;; esac
-    inst="%pkgname@$(echo $(basename $dir) | sed -e 's/slapd-//')"
-    echo "Found Instance $inst"
-    if /bin/systemctl -q is-active "$inst"; then
-        echo "Instance $inst is running, stopping it"
-        if ! /bin/systemctl stop "$inst"; then
-            echo "Cannot stop Instance. Please check it and run an upgrade by %_sbindir/setup-ds.pl -u -s General.UpdateMode=offline"
-            exit 0
-        fi
-        instances="$instances $inst"
-    else
-        echo "Instance $inst is not running"
-    fi
-    let "num_inst++"
-done
-if [ "$num_inst" -eq 0 ]; then
-    echo "389-ds: There are no Instances to upgrade"
-    exit 0
-fi
-echo "389-ds: Upgrading Instances"
-if ! %_sbindir/setup-ds.pl -u -d -l %_logdir/%pkgname/upgrade.log -s \
-General.UpdateMode=offline >%_logdir/%pkgname/upgrade.log 2>&1; then
-    echo "Upgrade has not been completed successfully. Please check log file %_logdir/%pkgname/upgrade.log and run an upgrade by %_sbindir/setup-ds.pl -u -s General.UpdateMode=offline"
-    exit 0
-fi
-
-for inst in $instances; do
-    echo "Restarting Instance $inst"
-    /bin/systemctl start "$inst" ||:
-done
-
-echo "389-ds: Upgrade has been completed successfully"
-%endif
-%post_service %pkgname-snmp
 
 %preun
 # Removal
@@ -406,22 +318,6 @@ fi
 %_sbindir/ldap-agent
 %_sbindir/ns-slapd
 
-%if_with perl
-%_sbindir/bak2db
-%_sbindir/db2bak
-%_sbindir/db2index
-%_sbindir/db2ldif
-%_sbindir/dbverify
-%_sbindir/ldif2db
-%_sbindir/ldif2ldap
-%_sbindir/restart-dirsrv
-%_sbindir/start-dirsrv
-%_sbindir/status-dirsrv
-%_sbindir/stop-dirsrv
-%_sbindir/upgradedb
-%_sbindir/vlvindex
-%endif
-
 %dir %_libexecdir/%pkgname
 %_libexecdir/%pkgname/ds_systemd_ask_password_acl
 %dir %_libdir/%pkgname/python
@@ -441,20 +337,7 @@ fi
 %_man1dir/pwdhash.1.*
 %_man1dir/readnsstate.1.*
 %_man1dir/ldap-agent.1.*
-%_man8dir/ldif2ldap.8.*
 %_man8dir/ns-slapd.8.*
-%_man8dir/bak2db.8.*
-%_man8dir/db2bak.8.*
-%_man8dir/db2index.8.*
-%_man8dir/db2ldif.8.*
-%_man8dir/dbverify.8.*
-%_man8dir/ldif2db.8.*
-%_man8dir/restart-dirsrv.8.*
-%_man8dir/start-dirsrv.8.*
-%_man8dir/status-dirsrv.8.*
-%_man8dir/stop-dirsrv.8.*
-%_man8dir/upgradedb.8.*
-%_man8dir/vlvindex.8.*
 %_man5dir/99user.ldif.5.*
 %_man5dir/certmap.conf.5.*
 %_man5dir/slapd-collations.conf.5.*
@@ -467,125 +350,29 @@ fi
 %_libdir/libsvrcore.so
 %_libdir/libslapd.so
 %_libdir/libns-dshttpd.so
-%_libdir/libnunc-stans.so
 %_libdir/libsds.so
 %_libdir/libldaputil.so
+%_libdir/librewriters.so
 %_pkgconfigdir/dirsrv.pc
 %_pkgconfigdir/libsds.pc
 %_pkgconfigdir/svrcore.pc
-%_pkgconfigdir/nunc-stans.pc
 %_man3dir/*.3.*
 
 %files libs
 %dir %_libdir/%pkgname
 %_libdir/libsvrcore.so.*
 %_libdir/libns-dshttpd-*.so
-%_libdir/libnunc-stans.so.*
 %_libdir/libsds.so.*
 %_libdir/libslapd.so.*
 %_libdir/libldaputil.so.*
-
-%files legacy-tools
-%config(noreplace)%_sysconfdir/%pkgname/config/template-initconfig
-%_bindir/infadd
-%_bindir/ldif
-%_bindir/migratecred
-%_bindir/mmldif
-%_bindir/rsearch
-
-%if_with perl
-%_sbindir/dbmon.sh
-%_sbindir/dn2rdn
-%_sbindir/monitor
-%_sbindir/restoreconfig
-%_sbindir/saveconfig
-%_sbindir/suffix2instance
-%_sbindir/upgradednformat
-%endif
-
-%_libexecdir/%pkgname/ds_selinux_enabled
-%_libexecdir/%pkgname/ds_selinux_port_query
-
-%_man1dir/cl-dump.1.*
-%_man1dir/cl-dump.pl.1.*
-%_man1dir/dbgen.pl.1.*
-%_man1dir/repl-monitor.1.*
-%_man1dir/repl-monitor.pl.1.*
-%_man1dir/infadd.1.*
-%_man1dir/ldif.1.*
-%_man1dir/migratecred.1.*
-%_man1dir/mmldif.1.*
-%_man1dir/rsearch.1.*
-%_man5dir/template-initconfig.5.*
-%_man8dir/dbmon.sh.8.*
-%_man8dir/dn2rdn.8.*
-%_man8dir/monitor.8.*
-%_man8dir/restoreconfig.8.*
-%_man8dir/saveconfig.8.*
-%_man8dir/suffix2instance.8.*
-%_man8dir/upgradednformat.8.*
-%_man8dir/bak2db.pl.8.*
-%_man8dir/cleanallruv.pl.8.*
-%_man8dir/db2bak.pl.8.*
-%_man8dir/db2index.pl.8.*
-%_man8dir/db2ldif.pl.8.*
-%_man8dir/fixup-linkedattrs.pl.8.*
-%_man8dir/fixup-memberof.pl.8.*
-%_man8dir/ldif2db.pl.8.*
-%_man8dir/migrate-ds.pl.8.*
-%_man8dir/ns-accountstatus.pl.8.*
-%_man8dir/ns-activate.pl.8.*
-%_man8dir/ns-inactivate.pl.8.*
-%_man8dir/ns-newpwpolicy.pl.8.*
-%_man8dir/remove-ds.pl.8.*
-%_man8dir/schema-reload.pl.8.*
-%_man8dir/setup-ds.pl.8.*
-%_man8dir/syntax-validate.pl.8.*
-%_man8dir/usn-tombstone-cleanup.pl.8.*
-%_man8dir/verify-db.pl.8.*
-
-%if_with perl
-%dir %_datadir/%pkgname/properties
-%_datadir/%pkgname/properties/ns-slapd.properties
-%_datadir/%pkgname/properties/*.res
-%_datadir/%pkgname/script-templates
-%_datadir/%pkgname/updates
-
-%_bindir/cl-dump
-%_bindir/cl-dump.pl
-%_bindir/dbgen.pl
-%_bindir/repl-monitor
-%_bindir/repl-monitor.pl
-
-%_sbindir/bak2db.pl
-%_sbindir/cleanallruv.pl
-%_sbindir/db2bak.pl
-%_sbindir/db2index.pl
-%_sbindir/db2ldif.pl
-%_sbindir/fixup-linkedattrs.pl
-%_sbindir/fixup-memberof.pl
-%_sbindir/ldif2db.pl
-%_sbindir/migrate-ds.pl
-%_sbindir/ns-accountstatus.pl
-%_sbindir/ns-activate.pl
-%_sbindir/ns-inactivate.pl
-%_sbindir/ns-newpwpolicy.pl
-%_sbindir/remove-ds.pl
-%_sbindir/schema-reload.pl
-%_sbindir/setup-ds.pl
-%_sbindir/syntax-validate.pl
-%_sbindir/usn-tombstone-cleanup.pl
-%_sbindir/verify-db.pl
-
-%_libdir/%pkgname/perl/
-%endif
+%_libdir/librewriters.so.*
 
 %files -n python3-module-lib389
 %_sbindir/dsconf
-%_sbindir/dscontainer
 %_sbindir/dscreate
 %_sbindir/dsctl
 %_sbindir/dsidm
+%_libexecdir/%pkgname/dscontainer
 %_man8dir/dsconf.8.*
 %_man8dir/dscreate.8.*
 %_man8dir/dsctl.8.*
@@ -606,6 +393,9 @@ fi
 %endif
 
 %changelog
+* Fri Feb 05 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.18-alt1
+- 1.4.1.18 -> 1.4.3.18.
+
 * Tue Dec 15 2020 Stanislav Levin <slev@altlinux.org> 1.4.1.18-alt5
 - Added support for gost-yescrypt for hashing passwords.
 
