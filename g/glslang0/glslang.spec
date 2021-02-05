@@ -1,28 +1,28 @@
-%define sover 11
+%define rname glslang
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
-Name: glslang
-Version: 11.1.0
-Release: alt1
+Name: %{rname}0
+Version: 8.13.3743
+Release: alt2
 
 Summary: OpenGL and OpenGL ES shader front end and validator
-Group: Development/C++
+Group: System/Legacy libraries
 License: BSD
 
 Url: https://www.khronos.org/opengles/sdk/tools/Reference-Compiler/
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-Source: https://github.com/KhronosGroup/%name/archive/%version/%name-%version.tar.gz
-Patch0: %{name}-alt-soname.patch
-Patch1: %{name}-alt-shared-opt.patch
+Source: https://github.com/KhronosGroup/%rname/archive/%version/%rname-%version.tar.gz
+Patch0: %{rname}-alt-soname.patch
+Patch1: %{rname}-alt-shared-opt.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2020.6
+BuildRequires: python3-devel libspirv-tools-devel >= 2020.3
 
 %description
-glslang is the official reference compiler front end for the OpenGL
+$rname is the official reference compiler front end for the OpenGL
 ES and OpenGL shading languages. It implements a strict
 interpretation of the specifications for these languages.
 
@@ -34,25 +34,17 @@ range (IDs are not as tightly packed around zero), but will compress
 better when multiple modules are compressed together, since
 compressor's dictionary can find better cross module commonality.
 
-%package -n lib%name%sover
-Summary: %{name} shared libraries
-Group: Development/C++
+%package -n lib%name
+Summary: %rname shared libraries
+Group: System/Legacy libraries
 
-%description -n lib%name%sover
-Contains shared libraries used by %{name}.
-
-%package devel
-Summary: %name development headers and libraries
-Group: Development/C++
-Requires: %name = %EVR
-
-%description devel
-%name development headers and libraries.
+%description -n lib%name
+Contains shared libraries used by %rname.
 
 %prep
-%setup
+%setup -n %rname-%version
 %patch0 -p2
-#%patch1 -p2
+%patch1 -p2
 
 %build
 %_cmake \
@@ -62,26 +54,15 @@ Requires: %name = %EVR
 %cmakeinstall_std
 pushd %buildroot%_includedir
 rm -rf SPIRV
-ln -s glslang/SPIRV SPIRV
+ln -s $rname/SPIRV SPIRV
 popd
 
-%files
-%doc README-spirv-remap.txt
-%_bindir/*
-
-%files -n lib%name%sover
+%files -n lib%name
 %_libdir/*.so.*
 
-%files devel
-%doc README.md
-%_libdir/lib*.so
-%_libdir/cmake/*
-%_includedir/%name
-%_includedir/SPIRV
-
 %changelog
-* Fri Feb 05 2021 Nazarov Denis <nenderus@altlinux.org> 11.1.0-alt1
-- Version 11.1.0
+* Fri Feb 05 2021 Nazarov Denis <nenderus@altlinux.org> 8.13.3743-alt2
+- Build as legacy library
 
 * Sat Sep 12 2020 L.A. Kostis <lakostis@altlinux.ru> 8.13.3743-alt1.1
 - Fix dependencies.
