@@ -1,5 +1,5 @@
 %def_disable static
-%define gecko_version 2.47.1
+%define gecko_version 2.47.2
 %define mono_version 5.1.1
 
 # rpm-build-info gives _distro_version
@@ -11,8 +11,8 @@
 %endif
 
 Name: wine-vanilla
-Version: 5.22
-Release: alt2
+Version: 6.0
+Release: alt1
 
 Summary: Wine - environment for running Windows applications
 
@@ -43,6 +43,8 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %add_verify_elf_skiplist %_libdir/wine/*.so
     # TODO: use -fPIC for libwine.so.1
     %add_verify_elf_skiplist %_libdir/*.so.*
+    # -fPIC is totally disabled for i586
+    %add_verify_elf_skiplist %_bindir/*
 %endif
 %else
    %def_without build64
@@ -384,7 +386,9 @@ done
 
 %files -n lib%name
 %doc LICENSE AUTHORS COPYING.LIB
-%_libdir/libwine*.so.*
+# for compatibility only
+%_libdir/libwine.so.1
+%_libdir/libwine.so.1.0
 %dir %_libdir/wine/
 %_libdir/wine/fakedlls/
 
@@ -400,6 +404,7 @@ done
 %_libdir/wine/gdi32.so
 %_libdir/wine/user32.so
 %_libdir/wine/bcrypt.so
+%_libdir/wine/qcap.so
 %_libdir/wine/odbc32.so
 %_libdir/wine/windowscodecs.so
 %_libdir/wine/crtdll.so
@@ -483,7 +488,6 @@ done
 %_bindir/msidb
 
 %_includedir/wine/
-%_libdir/lib*.so
 %_libdir/wine/lib*.def
 %_libdir/wine/libwinecrt0.a
 #%_aclocaldir/wine.m4
@@ -505,6 +509,10 @@ done
 %endif
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0-alt1
+- new version 6.0
+- set strict require wine-gecko 2.47.2
+
 * Sun Nov 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.22-alt2
 - don't provide libwine.so.1 from libwine-vanilla subpackage
 

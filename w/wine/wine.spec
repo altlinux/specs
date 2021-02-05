@@ -1,7 +1,7 @@
 %def_disable static
-%define gecko_version 2.47.1
+%define gecko_version 2.47.2
 %define mono_version 5.1.1
-%define major 5.22
+%define major 6.0
 %define rel %nil
 
 %def_with gtk3
@@ -29,7 +29,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/5.x/wine-%major%rel.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/6.0/wine-%major%rel.tar.xz
 Source: %name-%version.tar
 # Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%rel.tar.gz
 Source1: %name-staging-%version.tar
@@ -57,6 +57,8 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %add_verify_elf_skiplist %_libdir/wine/*.so
     # TODO: use -fPIC for libwine.so.1
     %add_verify_elf_skiplist %_libdir/*.so.*
+    # -fPIC is totally disabled for i586
+    %add_verify_elf_skiplist %_bindir/*
 %endif
 %else
    %def_without build64
@@ -457,7 +459,9 @@ done
 
 %files -n lib%name
 %doc LICENSE AUTHORS COPYING.LIB
-%libdir/libwine*.so.*
+# for compatibility only
+%libdir/libwine.so.1
+%libdir/libwine.so.1.0
 %dir %libwinedir/
 %libwinedir/fakedlls/
 
@@ -473,6 +477,7 @@ done
 %libwinedir/gdi32.so
 %libwinedir/user32.so
 %libwinedir/bcrypt.so
+%libwinedir/qcap.so
 %libwinedir/odbc32.so
 %libwinedir/windowscodecs.so
 %libwinedir/crtdll.so
@@ -556,7 +561,6 @@ done
 %_bindir/msidb
 
 %_includedir/wine/
-%libdir/lib*.so
 %libwinedir/lib*.def
 %libwinedir/libwinecrt0.a
 #%_aclocaldir/wine.m4
@@ -578,6 +582,10 @@ done
 %endif
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.0.1-alt1
+- new version 6.0.1 (with rpmrb script)
+- set strict require wine-gecko 2.47.2
+
 * Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.22.1-alt1
 - new version 5.22.1 (with rpmrb script)
 
