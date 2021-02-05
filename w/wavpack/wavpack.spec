@@ -1,5 +1,5 @@
 Name: wavpack
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Open audio compression codec
@@ -64,6 +64,9 @@ This package contains development files for WavPack library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt1
+- new version 5.4.0 (with rpmrb script)
+
 * Wed May 06 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt1
 - new version 5.3.0 (with rpmrb script)
 
