@@ -6,7 +6,7 @@
 %define nss_version 3.44
 
 Name: jss
-Version: 4.8.0
+Version: 4.8.1
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -94,7 +94,7 @@ set(CTEST_CUSTOM_TESTS_IGNORE
    Enable_FipsMODE
 )
 EOF
-%cmake_build test
+%cmake_build ARGS=--output-on-failure test
 
 %install
 install -d -m 0755 %buildroot%_jnidir
@@ -124,6 +124,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Fri Feb 05 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt1
+- 4.8.0 -> 4.8.1.
+
 * Tue Nov 03 2020 Stanislav Levin <slev@altlinux.org> 4.8.0-alt1
 - 4.7.3 -> 4.8.0.
 

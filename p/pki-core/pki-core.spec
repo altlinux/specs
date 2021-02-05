@@ -7,12 +7,12 @@
 %define resteasy_lib        %_javadir/resteasy
 %define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
-%define tomcatjss_version   7.6.0
-%define jss_version         4.8.0
+%define tomcatjss_version   7.6.1
+%define jss_version         4.8.1
 %define ldapjdk_version     4.22.0
 
 Name: pki-core
-Version: 10.10.0
+Version: 10.10.3
 Release: alt1
 
 Summary: Certificate System - PKI Core Components
@@ -561,7 +561,6 @@ fi
 %_bindir/setpin
 %_bindir/sslget
 %_bindir/tkstool
-%_datadir/pki/tools/
 %_bindir/AtoB
 %_bindir/AuditVerify
 %_bindir/BtoA
@@ -677,6 +676,8 @@ fi
 %_datadir/pki/server/etc/
 %_datadir/pki/server/lib/
 %_datadir/pki/server/upgrade/
+%_datadir/pki/server/certs/
+%_datadir/pki/server/examples/
 
 %files -n pki-acme
 %_javadir/pki/pki-acme.jar
@@ -751,6 +752,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Fri Feb 05 2021 Stanislav Levin <slev@altlinux.org> 10.10.3-alt1
+- 10.10.0 -> 10.10.3.
+
 * Tue Nov 03 2020 Stanislav Levin <slev@altlinux.org> 10.10.0-alt1
 - 10.9.4 -> 10.10.0.
 
