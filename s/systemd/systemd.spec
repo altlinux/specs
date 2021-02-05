@@ -78,7 +78,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -758,7 +758,7 @@ rm -f %buildroot/usr/lib/rpm/macros.d/macros.systemd
 %find_lang %name
 
 # Make sure these directories are properly owned
-mkdir -p %buildroot%_unitdir/{basic,default,dbus,graphical,poweroff,rescue,reboot}.target.wants
+mkdir -p %buildroot%_unitdir/{basic,dbus,default,graphical,poweroff,rescue,reboot,sysinit}.target.wants
 
 install -m755 %SOURCE2 %buildroot/lib/systemd/systemd-sysv-install
 
@@ -812,6 +812,9 @@ ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.tar
 ln -r -s %buildroot%_unitdir/machines.target %buildroot%_unitdir/multi-user.target.wants
 ln -r -s %buildroot%_unitdir/systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
 ln -r -s %buildroot%_unitdir/quotaon.service %buildroot%_unitdir/local-fs.target.wants
+%if_enabled pstore
+ln -r -s %buildroot%_unitdir/systemd-pstore.service %buildroot%_unitdir/sysinit.target.wants
+%endif
 
 # create drop-in to prevent tty1 to be cleared
 mkdir -p %buildroot%_unitdir/getty@tty1.service.d
@@ -1078,13 +1081,6 @@ useradd -g systemd-timesync -c 'systemd Time Synchronization' \
 
 
 %post timesyncd
-if [ $1 -eq 1 ] ; then
-        # Enable the services we install by default
-        systemctl preset \
-                systemd-timesyncd.service \
-                 >/dev/null 2>&1 || :
-fi
-
 if [ -L %_localstatedir/lib/systemd/timesync ]; then
     rm %_localstatedir/lib/systemd/timesync
     mv %_localstatedir/lib/private/systemd/timesync %_localstatedir/lib/systemd/timesync
@@ -1094,24 +1090,18 @@ if [ -f %_localstatedir/lib/systemd/clock ] ; then
     mv %_localstatedir/lib/systemd/clock %_localstatedir/lib/systemd/timesync/
 fi
 
+%post_service systemd-timesyncd.service
+
 %preun timesyncd
-if [ $1 -eq 0 ] ; then
-        systemctl disable --quiet \
-                systemd-timesyncd.service \
-                 >/dev/null 2>&1 || :
-fi
+%preun_service systemd-timesyncd.service
 
 %endif
 
 %post homed
-if [ $1 -eq 1 ] ; then
-        systemctl preset systemd-homed.service >/dev/null 2>&1 || :
-fi
+%post_service systemd-homed.service
 
 %preun homed
-if [ $1 -eq 0 ] ; then
-        systemctl disable --quiet systemd-homed.service >/dev/null 2>&1 || :
-fi
+%preun_service systemd-homed.service
 
 %post -n libnss-systemd
 if [ -f /etc/nsswitch.conf ] ; then
@@ -2029,6 +2019,10 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Feb 03 2021 Alexey Shabalin <shaba@altlinux.org> 1:247.3-alt1
+- 247.3
+- Enable systemd-pstore.service by default.
+
 * Wed Dec 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:247.2-alt1
 - 247.2
 - Move 80-container-host0.network to networkd subpackage.
