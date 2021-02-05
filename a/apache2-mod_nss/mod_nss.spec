@@ -8,10 +8,10 @@
 
 Name: apache2-%modname
 Version: 1.0.18
-Release: alt1
+Release: alt2
 
 Summary: Apache 2.0 module for implementing crypto using the Mozilla NSS crypto libraries
-License: ASL 2.0
+License: Apache-2.0
 Group: System/Servers
 Url: https://pagure.io/mod_nss
 
@@ -25,10 +25,11 @@ BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
 
 %if_with check
+BuildRequires: iputils
 BuildRequires: nss-utils
 BuildRequires: openssl
-BuildRequires: python-module-nose
-BuildRequires: python-module-requests
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-requests
 BuildRequires: flex
 %endif
 
@@ -130,6 +131,9 @@ fi
 %ghost %config(noreplace) %apache_nssdb_dir/install.log
 
 %changelog
+* Fri Feb 05 2021 Stanislav Levin <slev@altlinux.org> 1.0.18-alt2
+- Applied upstream fixes.
+
 * Fri Jan 11 2019 Stanislav Levin <slev@altlinux.org> 1.0.18-alt1
 - 1.0.17 -> 1.0.18.
 
