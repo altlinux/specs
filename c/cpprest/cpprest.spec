@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: cpprest
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: C++ REST library
@@ -105,6 +105,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %doc README.md
 
 %changelog
+* Fri Feb 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.10.18-alt1
+- 2.10.18
+
 * Tue Jan 12 2021 Yuri N. Sedunov <aris@altlinux.org> 2.10.17-alt1
 - 2.10.17
 
