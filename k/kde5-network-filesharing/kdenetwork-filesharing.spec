@@ -2,7 +2,7 @@
 %define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 20.12.1
+Version: 20.12.2
 Release: alt1
 %K5init
 
@@ -63,6 +63,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Thu Jan 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
 - new version
 

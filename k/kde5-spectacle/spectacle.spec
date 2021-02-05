@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 20.12.1
+Version: 20.12.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -24,14 +24,15 @@ Patch2: alt-desktop-exec.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-x11extras-devel qt5-svg-devel
 BuildRequires: libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel
-BuildRequires: kde5-libkipi-devel
-BuildRequires: plasma5-libkscreen-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-knewstuff-devel kf5-kglobalaccel-devel kf5-kwayland-devel
 #BuildRequires: kf5-purpose-devel
+BuildRequires: kde5-libkipi-devel
+BuildRequires: plasma5-libkscreen-devel
+BuildRequires: kde5-kcolorpicker-devel kde5-kimageannotator-devel
 
 %description
 Spectacle is screenshot taking utility for the KDE desktop. Spectacle
@@ -85,6 +86,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Thu Jan 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
 - new version
 
