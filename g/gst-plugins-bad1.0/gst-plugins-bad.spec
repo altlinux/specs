@@ -9,6 +9,7 @@
 %def_enable vulkan
 %def_enable wayland
 %def_enable zbar
+%def_disable faad
 %def_disable rtmp
 
 %ifarch x86_64
@@ -36,7 +37,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -61,7 +62,7 @@ BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gst-plugins%api_ver-devel >= %version gst-plugins%api_ver-gir-devel
 BuildRequires: bzlib-devel gcc-c++ libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
-BuildRequires: libfaad-devel libgio-devel libgsm-devel libjasper-devel libmms-devel
+BuildRequires: libgio-devel libgsm-devel libjasper-devel libmms-devel
 %{?_enable_mjpegtools:BuildRequires: libmjpegtools-devel}
 BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel libssl-devel libmodplug-devel
 BuildRequires: libcelt-devel libxvid-devel
@@ -82,6 +83,7 @@ BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
 #BuildRequires: pkgconfig(wpe-webkit-1.0) pkgconfig(wpebackend-fdo-1.0)
 BuildRequires: liborc-test-devel
+%{?_enable_faad:BuildRequires: libfaad-devel}
 %{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
@@ -188,6 +190,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sat Feb 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt1.1
+- disabled faad plugin
+
 * Thu Jan 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt1
 - 1.18.3
 
