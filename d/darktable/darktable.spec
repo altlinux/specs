@@ -1,4 +1,4 @@
-%define ver_major 3.2
+%define ver_major 3.4
 %define beta %nil
 %def_enable noise_tools
 %def_disable libavif
@@ -12,16 +12,14 @@ License: GPL-3.0
 Group: Graphics
 Url: http://%name.org/
 
-#VCS: https://github.com/darktable-org/darktable.git
+Vcs: https://github.com/darktable-org/darktable.git
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
-#Source: https://github.com/darktable-org/darktable/archive/release-%version/%name-%version.tar.gz
-#Source: https://github.com/darktable-org/darktable/releases/download/release-3.2.1/darktable-3.2.1.tar.xz
 # required for llvm-7.0
 Patch: darktable-3.0.0-is_supported_platform.patch
 #See https://bugzilla.altlinux.org/38215
-# https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
+# based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
-Patch1: darktable-3.2.1-alt-disable-use-of-gcc-graphite.patch
+Patch1: darktable-3.4.0-alt-disable-use-of-gcc-graphite.patch
 
 ExcludeArch: %ix86 armh
 
@@ -32,14 +30,13 @@ ExcludeArch: %ix86 armh
 %define exiv2_ver 0.24
 %define iso_codes_ver 3.66
 %define pugixml_ver 1.8
-%define libavif_ver 0.7.2
+%define libavif_ver 0.8.2
 
 Requires: iso-codes >= %iso_codes_ver
 Requires: icon-theme-adwaita
 
-BuildRequires(pre): cmake >= %cmake_ver
-BuildRequires: gcc-c++ libgomp-devel
-BuildRequires: /proc
+BuildRequires(pre):rpm-macros-cmake
+BuildRequires: /proc cmake >= %cmake_ver gcc-c++ libgomp-devel
 BuildRequires: intltool desktop-file-utils libappstream-glib-devel po4a
 BuildRequires: perl-Pod-Parser xsltproc exiftool
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libxml2-devel
@@ -70,7 +67,6 @@ light table. It also enables you to develop raw images and enhance them.
 
 %prep
 %setup -n %name-%version
-#%%patch
 %patch1 -p1
 
 %build
@@ -82,7 +78,7 @@ light table. It also enables you to develop raw images and enhance them.
 -DRAWSPEED_ENABLE_LTO=ON \
 %{?_enable noise_tools:-DBUILD_NOISE_TOOLS=ON} \
 %ifarch ppc64le
--DUSE_OPENCL=OFF \
+-DUSE_OPENCL=OFF
 %endif
 %nil
 %cmake_build
@@ -96,7 +92,7 @@ install -pD -m644 data/pixmaps/16x16/darktable.png %buildroot%_miconsdir/darktab
 install -pD -m644 data/pixmaps/32x32/darktable.png %buildroot%_niconsdir/darktable.png
 install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktable.png
 
-%find_lang --with-man %name
+%find_lang --with-man --all-name --output=%name.lang %name
 
 %files -f %name.lang
 %_bindir/*
@@ -115,6 +111,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Sat Feb 06 2021 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Wed Aug 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 - ExcludeArch: +armh
