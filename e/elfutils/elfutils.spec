@@ -1,6 +1,6 @@
 Name: elfutils
-Version: 0.182
-Release: alt3
+Version: 0.183
+Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -367,6 +367,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Feb 05 2021 Dmitry V. Levin <ldv@altlinux.org> 0.183-alt1
+- elfutils-0.182 -> elfutils-0.183.
+
 * Tue Dec 01 2020 Dmitry V. Levin <ldv@altlinux.org> 0.182-alt3
 - Added libelf to libdebuginfod requirements.
 - Packaged debuginfod-find tool into a separate subpackage.
