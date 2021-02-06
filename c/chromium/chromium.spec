@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        88.0.4324.146
+Version:        88.0.4324.150
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -458,6 +458,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Feb 06 2021 Alexey Gladkov <legion@altlinux.ru> 88.0.4324.150-alt1
+- New version (88.0.4324.150).
+- Security fixes:
+  - CVE-2021-21148: Heap buffer overflow in V8.
+
 * Wed Feb 03 2021 Alexey Gladkov <legion@altlinux.ru> 88.0.4324.146-alt1
 - New version (88.0.4324.146).
 - Security fixes:
