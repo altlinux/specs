@@ -1,61 +1,31 @@
-%define     pgb_runtimedir   /var/run/pgbouncer
+%define _unpackaged_files_terminate_build 1
+
 Name:       pgbouncer
-Version:    1.13.0
+Version:    1.15.0
 Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
-License:    BSD
+License:    ISC
 Group:      Databases
 Url:        https://github.com/pgbouncer/pgbouncer
 Source:     %name-%version.tar
+Source100:  libusual.tar
 Source1:    pgbouncer.init
 Source2:    pgbouncer.ini
 Source3:    users.txt
-Source4:    pgbouncer.conf
+Source4:    pgbouncer.tmpfiles
+Source5:    pgbouncer.service
+Source6:    pgbouncer.logrotate
+Source7:    pgbouncer.pam
 
-BuildRequires: libevent-devel libssl-devel
-# Need /usr/bin/rst2man for building
-BuildRequires: python-module-docutils
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libssl-devel
+BuildRequires: pkgconfig(libevent)
+BuildRequires: pkgconfig(libcares) >= 1.6.0
+BuildRequires: libpam-devel
+BuildRequires: libsystemd-devel
 BuildRequires: pandoc
 # That was a pkg with an ugly temporary name:
 Obsoletes: pgbouncer17
-
-%prep
-%setup -q
-%build
-touch lib/mk/install-sh
-./autogen.sh
-%configure
-
-%make
-
-%install
-%make DESTDIR=%buildroot install
-
-%__install -d -m 1770 %buildroot/var/log/pgbouncer
-%__install -d -m 1770 %buildroot%pgb_runtimedir
-
-%__install -p -m755 -D %SOURCE1 %buildroot%_initdir/pgbouncer
-%__install -p -m755 -D %SOURCE2 %buildroot%_sysconfdir/pgbouncer.ini
-%__install -d -m750             %buildroot%_sysconfdir/pgbouncer
-%__install -p -m750 -D %SOURCE3 %buildroot%_sysconfdir/pgbouncer/users.txt
-%__install -p -m750 -D %SOURCE4 %buildroot%_sysconfdir/tmpfiles.d/pgbouncer.conf
-
-%files
-%_bindir/pgbouncer
-%_man1dir/*
-%_man5dir/*
-%config(noreplace) %_sysconfdir/pgbouncer.ini
-%attr(750,root,postgres) %dir %_sysconfdir/pgbouncer
-%attr(750,root,postgres) %config(noreplace) %_sysconfdir/pgbouncer/users.txt
-%_initdir/pgbouncer
-
-%attr(1770,root,postgres) %dir /var/log/pgbouncer
-%attr(1770,root,postgres) %dir %pgb_runtimedir
-
-%doc doc/*
-%_defaultdocdir/*
-/etc/tmpfiles.d/pgbouncer.conf
-
 
 %description
 Several levels of brutality when rotating connections:
@@ -77,7 +47,76 @@ pooling with a twist - multi-statement transactions are disallowed.
 This is meant to enforce "autocommit" mode on client, mostly targeted
 for PL/Proxy.
 
+%prep
+%setup -q
+tar -xf %SOURCE100 -C lib
+sed -i -e 's|/usr/bin/env python|%__python3|g' etc/mkauth.py
+
+%build
+touch lib/mk/install-sh
+./autogen.sh
+%configure \
+	--with-systemd \
+	--with-pam \
+	--with-root-ca-file=/etc/pki/tls/certs/ca-bundle.crt
+
+%make_build
+
+%install
+%makeinstall_std
+
+mkdir -p %buildroot{%_sysconfdir,%_logdir}/%name
+mkdir -p %buildroot{%_logrotatedir,%_unitdir,%_initdir,%_tmpfilesdir}
+
+install -p -m755 %SOURCE1 %buildroot%_initdir/%name
+install -p -m640 %SOURCE2 %buildroot%_sysconfdir/%name/%name.ini
+install -p -m640 %SOURCE3 %buildroot%_sysconfdir/%name/users.txt
+install -p -m644 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
+install -p -m644 %SOURCE5 %buildroot%_unitdir/%name.service
+install -p -m644 %SOURCE6 %buildroot%_logrotatedir/%name
+install -p -m644 -D %SOURCE7 %buildroot%_sysconfdir/pam.d/%name
+
+# Let RPM pick up docs in the files section
+rm -fr %buildroot%_defaultdocdir
+
+%pre
+groupadd -r -f %name 2>/dev/null ||:
+useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %name 2>/dev/null ||:
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
+%files
+%doc NEWS.md README.md doc/*.md
+%_bindir/%name
+%_man1dir/*
+%_man5dir/*
+%attr(750,root,%name) %dir %_sysconfdir/%name
+%config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/%name.ini
+%config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/users.txt
+%config(noreplace) %_sysconfdir/pam.d/%name
+%config(noreplace) %_logrotatedir/%name
+%_tmpfilesdir/%name.conf
+%_initdir/%name
+%_unitdir/%name.service
+%attr(1770,root,%name) %dir %_logdir/%name
+
 %changelog
+* Fri Feb 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
+- Build new version.
+- Build with libcares, pam, systemd support.
+- Define root ca file.
+- Add %%pre, %%post, %%preun.
+- Add systemd unit.
+- Update sysv init script.
+- Add logrotate config.
+- Update pgbouncer config.
+- Add pam config.
+- Execute service as pgbouncer system user.
+
 * Wed Apr 29 2020 Grigory Ustinov <grenka@altlinux.org> 1.13.0-alt1
 - Build new version.
 
