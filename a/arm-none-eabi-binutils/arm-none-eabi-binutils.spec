@@ -3,7 +3,7 @@
 %define _libexecdir /usr/libexec
 
 Name: arm-none-eabi-binutils
-Version: 2.32
+Version: 2.35
 Release: alt1
 Summary: GNU Binutils for cross-compilation for %target target
 Group: Development/Tools
@@ -78,6 +78,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Sat Feb 06 2021 Anton Midyukov <antohami@altlinux.org> 2.35-alt1
+- New version 2.35
+
 * Sun Feb 10 2019 Anton Midyukov <antohami@altlinux.org> 2.32-alt1
 - New version 2.32
 

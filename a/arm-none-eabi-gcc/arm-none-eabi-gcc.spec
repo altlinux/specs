@@ -1,16 +1,16 @@
 %global processor_arch arm
 %global target         %processor_arch-none-eabi
-%global gcc_ver        8.3.1
-%global gcc_short_ver  8.3
+%global gcc_ver        10.2.0
+%global gcc_short_ver  10.2
 %define _libexecdir /usr/libexec
 
 # we need newlib to compile complete gcc, but we need gcc to compile newlib,
 # so compile minimal gcc first
-%def_without bootstrap
+%def_with bootstrap
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt2
+Release: alt1
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -33,6 +33,8 @@ Source: %name-%version.tar
 
 Source1: README.alt
 Source2: bootstrapexplain
+
+Patch: gcc-config.patch
 
 #BuildRequires: rpm-build-python
 BuildRequires: gcc-c++ flex zlib-devel libgmp-devel libmpc-devel autogen 
@@ -67,6 +69,7 @@ compile c++ code for the %target platform, instead of for the native
 
 %prep
 %setup
+%patch -p2
 
 contrib/gcc_update --touch
 cp -a %SOURCE1 .
@@ -275,6 +278,12 @@ popd
 %endif
 
 %changelog
+* Sat Feb 06 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt1
+- New version 10.2.0 (bootstrap build)
+
+* Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 8.3.1-alt3
+- Fix build with gcc10 -fno-common
+
 * Thu Apr 25 2019 Anton Midyukov <antohami@altlinux.org> 8.3.1-alt2
 - build with parallelization (Closes: 36680)
 
