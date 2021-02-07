@@ -1,7 +1,7 @@
 %def_enable qt5
 
 Name: qsynth
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -41,6 +41,8 @@ QSynth -- это графическая надстройка над FluidSynth. 
 
 %prep
 %setup
+# don't compress man pages
+sed -i '/@gzip/d' Makefile*
 
 %build
 %if_disabled qt5
@@ -56,7 +58,7 @@ export PATH=%qtdir/bin:$PATH
 %install
 %makeinstall_std
 
-%find_lang --with-qt %name
+%find_lang --with-qt --with-man --all-name --output=%name.lang %name
 
 %files -f %name.lang
 %_bindir/%name
@@ -69,6 +71,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Sun Feb 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Fri Dec 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
