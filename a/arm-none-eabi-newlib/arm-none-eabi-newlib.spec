@@ -4,7 +4,7 @@
 #define _binaries_in_noarch_packages_terminate_build 0
 
 %define target arm-none-eabi
-%define pkg_version 3.1.0
+%define pkg_version 3.3.0
 %define _libexecdir /usr/libexec
 %add_verify_elf_skiplist %_libexecdir/%target/lib/*
 
@@ -114,6 +114,9 @@ rm -rf $NANO_ROOT
 %_libexecdir/%target/lib/*
 
 %changelog
+* Sat Feb 06 2021 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1
+- New version 3.3.0
+
 * Tue Apr 09 2019 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - New version 3.1.0
 
