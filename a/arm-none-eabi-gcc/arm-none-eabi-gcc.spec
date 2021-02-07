@@ -6,11 +6,11 @@
 
 # we need newlib to compile complete gcc, but we need gcc to compile newlib,
 # so compile minimal gcc first
-%def_with bootstrap
+%def_without bootstrap
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt1
+Release: alt2
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -244,7 +244,7 @@ exit 0
 %endif
 pushd gcc-%target
 #BuildRequires: autoge may be needed
-%make_build -k check
+%make_build check || :
 popd
 
 %files
@@ -278,6 +278,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 07 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt2
+- Rebuild with newlib 3.3.0 (without bootstrap)
+
 * Sat Feb 06 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt1
 - New version 10.2.0 (bootstrap build)
 
