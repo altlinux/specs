@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -47,6 +47,10 @@ cp -dp license-exception/* %buildroot%_licensedir-exception
 %_licensedir-exception
 
 %changelog
+* Sun Feb 07 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12-alt1
+- Add licenses:
+  + Add the Z Shell license (ALT-Zsh)
+
 * Mon Aug 24 2020 Fr. Br. George <george@altlinux.ru> 1.11-alt1
 - Add licenses:
   + Add ParaType Open Font license
