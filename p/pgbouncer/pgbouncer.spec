@@ -2,7 +2,7 @@
 
 Name:       pgbouncer
 Version:    1.15.0
-Release:    alt1
+Release:    alt2
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
 Group:      Databases
@@ -16,6 +16,7 @@ Source4:    pgbouncer.tmpfiles
 Source5:    pgbouncer.service
 Source6:    pgbouncer.logrotate
 Source7:    pgbouncer.pam
+Source8:    pgbouncer.sysconfig
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
@@ -75,6 +76,7 @@ install -p -m644 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 install -p -m644 %SOURCE5 %buildroot%_unitdir/%name.service
 install -p -m644 %SOURCE6 %buildroot%_logrotatedir/%name
 install -p -m644 -D %SOURCE7 %buildroot%_sysconfdir/pam.d/%name
+install -p -m644 -D %SOURCE8 %buildroot%_sysconfdir/sysconfig/%name
 
 # Let RPM pick up docs in the files section
 rm -fr %buildroot%_defaultdocdir
@@ -99,12 +101,16 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/users.txt
 %config(noreplace) %_sysconfdir/pam.d/%name
 %config(noreplace) %_logrotatedir/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %_tmpfilesdir/%name.conf
 %_initdir/%name
 %_unitdir/%name.service
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Sun Feb 07 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt2
+- add /etc/sysconfig/pgbouncer
+
 * Fri Feb 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
 - Build new version.
 - Build with libcares, pam, systemd support.
