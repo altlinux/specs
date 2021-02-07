@@ -9,8 +9,8 @@
 
 Name: unit
 Summary: NGINX Unit - Web Application Server
-Version: 1.21.0
-Release: alt4
+Version: 1.22.0
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://unit.nginx.org/
@@ -95,10 +95,6 @@ CFLAGS="%optflags" \
 %endif
 %make_build -s tests
 
-sed -i -e s/daemon/start_daemon/ \
-       -e s/killproc/stop_daemon/ \
-	  pkg/rpm/rpmbuild/SOURCES/unit.init
-
 sed -i -e 's!Environment=.*!EnvironmentFile=/etc/sysconfig/unit!' pkg/rpm/rpmbuild/SOURCES/unit.service
 
 %install
@@ -115,8 +111,8 @@ sed -i -e 's!Environment=.*!EnvironmentFile=/etc/sysconfig/unit!' pkg/rpm/rpmbui
 
 install -pD -m644 pkg/rpm/rpmbuild/SOURCES/unit.logrotate %buildroot%_sysconfdir/logrotate.d/unit
 install -pD -m644 pkg/rpm/rpmbuild/SOURCES/unit.service   %buildroot%systemd_unitdir/unit.service
-install -pD -m755 pkg/rpm/rpmbuild/SOURCES/unit.init      %buildroot%_initdir/unit
-install -pD -m755 pkg/rpm/rpmbuild/SOURCES/unit.sysconf   %buildroot%_sysconfdir/sysconfig/unit
+install -pD -m755 .gear/unit.init    %buildroot%_initdir/unit
+install -pD -m755 .gear/unit.sysconf %buildroot%_sysconfdir/sysconfig/unit
 mkdir -p %buildroot%_localstatedir/unit
 mkdir -p %buildroot%_runtimedir/unit
 mkdir -p %buildroot%_logdir/unit
@@ -179,6 +175,9 @@ build/tests
 %endif
 
 %changelog
+* Sun Feb 07 2021 Vitaly Chikunov <vt@altlinux.org> 1.22.0-alt1
+- Update to 1.22.0 (2021-02-04).
+
 * Sun Nov 29 2020 Vitaly Chikunov <vt@altlinux.org> 1.21.0-alt4
 - Do not build unit-debug binaries and debug-modules.
 
