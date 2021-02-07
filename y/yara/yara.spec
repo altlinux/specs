@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: yara
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
@@ -82,6 +82,9 @@ rm -f %buildroot%_libdir/libyara.a
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Sun Feb 07 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.5-alt1
+- Update to v4.0.5 (2021-02-05).
+
 * Thu Jan 28 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt1
 - Update to v4.0.4 (2021-01-27), security fixes.
 
