@@ -1,15 +1,19 @@
 Name: zsh
-Version: 5.6.2
+Version: 5.8
 Release: alt1
 Epoch: 1
 
 Summary: A shell with lots of features
-License: BSD-like
+License: ALT-Zsh
 Group: Shells
 
 Url: http://www.zsh.org
 Source: %name-%version.tar
 Patch: zsh-%version-%release.patch
+Patch1: 47867-promptinit-typo-RPOMPT-RPROMPT.patch
+Patch2: 47868-promptinit-Fix-prompt-cleanups.patch
+# present on master branch
+Patch3: 47918-completions-for-nsenter-and-unshare.patch
 
 Provides: zsh-doc = %epoch:%version
 Obsoletes: zsh-doc < %epoch:%version
@@ -32,6 +36,9 @@ mechanism, and a lots of other features.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 rm config.guess config.sub
 
 %build
@@ -51,6 +58,7 @@ export LDFLAGS=
 export zsh_cv_use_getcwd=yes
 
 %configure \
+	--enable-cflags="%optflags" \
 	--enable-etcdir=%_sysconfdir \
 	--enable-fndir=%_datadir/zsh \
 	--enable-scriptdir=%_datadir/zsh/scripts \
@@ -75,6 +83,9 @@ grep '^#define.*BROKEN' config.h && exit 1
 %make_build MODDIR=%_libdir -C Etc
 
 %install
+# That script hardcodes the locale for col(1). Sad!
+sed -i "/LANG/s/'C'/'C.UTF-8'/" Util/helpfiles
+
 %makeinstall_std MODDIR=%_libdir install.info
 
 # Relocate to /bin.
@@ -111,6 +122,14 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Sun Feb 07 2021 Arseny Maslennikov <arseny@altlinux.org> 1:5.8-alt1
+- 5.6.2 -> 5.8.
+- Applied posted patches:
+ + zsh-workers/47867
+ + zsh-workers/47868
+ + zsh-workers/47918
+- Completion/ALT: updated _hasher.
+
 * Thu Nov 15 2018 Fr. Br. George <george@altlinux.ru> 1:5.6.2-alt1
 - Autobuild version bump to 5.6.2
 - Provide /etc/zshrc.d
