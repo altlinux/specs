@@ -3,7 +3,7 @@
 %def_enable	gtk3
 
 Name: opencpn
-Version: 5.2.0
+Version: 5.2.4
 Release: alt1
 Summary: A free and open source software for marine navigation
 
@@ -15,12 +15,11 @@ Source1: %name.desktop
 
 ExcludeArch: ppc64le
 
-Patch1: opencpn-5.0.0-mga-missing_glx_include.patch
-
 Requires: %name-data
 
 #Errara
-#Patch100:
+Patch100: opencpn-5.0.0-mga-missing_glx_include.patch
+Patch101: opencpn-5.2.4-dashboard.cpp.patch
 
 # Automatically added by buildreq on Mon Mar 25 2013
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -71,9 +70,8 @@ Architecture independent files for OpenCPN.
 %prep
 %setup -n OpenCPN-%version
 
-%patch1 -p1
-
-#patch100 -p1
+%patch100 -p1
+%patch101 -p2
 
 #rm -f src/tinyxml*.cpp include/tinyxml.h
 #rm -rf plugins/grib_pi/src/zlib-1.2.3
@@ -122,7 +120,7 @@ rm -rf %buildroot/%_datadir/doc
 %doc data/doc/*
 %_man1dir/opencpn.*
 
-%_datadir/metainfo/opencpn.appdata.xml
+%_datadir/metainfo/opencpn.metainfo.xml
 
 %dir %_datadir/%name
 %dir %_datadir/%name/sounds
@@ -163,6 +161,10 @@ rm -rf %buildroot/%_datadir/doc
 %_datadir/%name/license.html
 
 %changelog
+* Sun Feb 07 2021 Sergey Y. Afonin <asy@altlinux.org> 5.2.4-alt1
+- New version
+- added opencpn-5.2.4-dashboard.cpp.patch
+
 * Wed Feb 03 2021 Sergey Y. Afonin <asy@altlinux.org> 5.2.0-alt1
 - New version
 - added icon-theme-hicolor to Requires of data subpackage
