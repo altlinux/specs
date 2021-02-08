@@ -1,6 +1,6 @@
 Name: pyside-qt4
 Version: 1.2.2
-Release: alt3.git20140501
+Release: alt4.git20140501
 Summary: Python bindings for the Qt cross-platform application and UI framework
 License: LGPLv2.1
 Group: Development/Tools
@@ -42,6 +42,7 @@ This package contains shared libraries of PySide.
 Summary: Development files of PySide
 Group: Development/C++
 Requires: lib%name = %version-%release
+Conflicts: lib%name-py3-devel
 
 %description -n lib%name-devel
 The PySide project provides LGPL-licensed Python bindings for the Qt
@@ -118,6 +119,9 @@ cmake -DCMAKE_INSTALL_PREFIX:PATH=%buildroot%prefix .
 mv %buildroot%_docdir/PySide- %buildroot%_docdir/PySide
 popd
 
+# Remove pkgconfig files
+rm -f %buildroot%_libdir/pkgconfig/*.pc
+
 %files -n lib%name
 %doc COPYING
 %_libdir/*.so.*
@@ -127,7 +131,6 @@ popd
 %_includedir/*
 %_libdir/*.so
 %_libdir/cmake/*
-%_pkgconfigdir/*
 
 %files -n lib%name-devel-doc
 %_docdir/PySide
@@ -136,6 +139,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt4.git20140501
+- Remove pkgconfig files to prevent duplicate pkgconfig provides.
+
 * Fri Apr 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt3.git20140501
 - fix packaging on 64bit arches other than x86_64
 
