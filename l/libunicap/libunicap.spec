@@ -1,7 +1,7 @@
 Summary: Library to access different kinds of (video) capture devices
 Name: libunicap
 Version: 0.9.12
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Development/C
 Url: http://www.unicap-imaging.org/
@@ -19,6 +19,7 @@ Patch5:	libunicap-0.9.12-warnings.patch
 Patch6:	libunicap-bz641623.patch
 Patch7:	libunicap-bz642118.patch
 Patch8:	libunicap-0.9.12-udevrules-dir.patch
+Patch9: alt-ftbfs-structs.patch
 
 BuildRequires: gtk-doc intltool libraw1394-devel libv4l-devel
 
@@ -49,6 +50,7 @@ contains the API documentation of the library, too.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p0
+%patch9 -p1
 
 sed -i -e 's/\(SYSFS\|ATTRS\)/ATTRS/g' data/50-euvccam.rules
 
@@ -81,6 +83,9 @@ rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 0.9.12-alt2
+- fix build
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.12-alt1
 - new version
 
