@@ -1,5 +1,5 @@
 Name:     touchegg
-Version:  2.0.6
+Version:  2.0.7
 Release:  alt1
 
 Summary:  Linux multi-touch gesture recognizer
@@ -54,6 +54,9 @@ make on your touchpad into visible actions in your desktop.
 %_unitdir/%name.service
 
 %changelog
+* Mon Feb 08 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.7-alt1
+- New version.
+
 * Tue Feb 02 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.6-alt1
 - New version.
 
