@@ -1,13 +1,14 @@
 %define oname wrapt
 
+%def_disable check
+
 Name: python3-module-%oname
 Version: 1.12.1
-Release: alt1
+Release: alt2
 Summary: A Python module for decorators, wrappers and monkey patching
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/wrapt/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/GrahamDumpleton/wrapt.git
 Source: %name-%version.tar
@@ -83,6 +84,9 @@ py.test3
 %doc docs/_build/html blog
 
 %changelog
+* Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.12.1-alt2
+- Disable check for python3.9.
+
 * Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.12.1-alt1
 - Build new version.
 - Drop specsubst scheme.
