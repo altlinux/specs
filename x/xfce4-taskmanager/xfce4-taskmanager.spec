@@ -1,5 +1,5 @@
 Name: xfce4-taskmanager
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
@@ -48,6 +48,9 @@ mkdir m4/
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Mon Feb 08 2021 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1
+- Updated to 1.4.1.
+
 * Tue Dec 29 2020 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Updated Vcs tag.
 - Dropped exo-csource from BR.
