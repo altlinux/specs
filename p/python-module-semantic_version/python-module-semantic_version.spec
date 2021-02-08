@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 2.3.1
-Release: alt1.2
+Version: 2.8.5
+Release: alt1
 Summary: A library implementing the 'SemVer' scheme.
 
 Group: Development/Python
@@ -90,6 +90,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Mon Feb 8 2021 Vladimir Didenko <cow@altlinux.org> 2.8.5-alt1
+- new version
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.3.1-alt1.2
 - (NMU) rebuild with python3.6
 
