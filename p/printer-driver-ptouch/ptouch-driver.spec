@@ -4,7 +4,7 @@ Summary: CUPS driver for Brother P-touch label printers
 
 Name: printer-driver-ptouch
 Version: 1.4.2
-Release: alt2
+Release: alt3
 
 Provides: %orig_name = %version
 Obsoletes: %orig_name
@@ -18,6 +18,7 @@ URL: https://bitbucket.org/philpem/printer-driver-ptouch
 #Source: https://bitbucket.org/philpem/printer-driver-ptouch/get/%version.tar.gz
 Source: %orig_name-%version.tar
 Patch: ptouch-%version-alt-fix-build.patch
+Patch1: alt-fix-ftbfs.patch
 
 Requires: cups
 
@@ -32,6 +33,7 @@ the foomatic package.
 %prep
 %setup -q -n %orig_name-%version
 %patch -p2
+%patch1 -p1
 
 %build
 %configure
@@ -49,6 +51,9 @@ rm -rf %buildroot%_datadir/foomatic/db/source/printer/
 %_prefix/lib/cups/filter/*
 
 %changelog
+* Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1.4.2-alt3
+- fix build
+
 * Mon Jul 17 2018 Oleg Solovyov <mcpain@altlinux.org> 1.4.2-alt2
 - fix files (conflicts with foomatic-db)
 
