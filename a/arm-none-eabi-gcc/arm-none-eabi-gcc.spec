@@ -10,7 +10,7 @@
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt2
+Release: alt3
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -60,6 +60,7 @@ ARM target support compared to the corresponding GNU GCC release.
 %package c++
 Summary: Cross Compiling GNU GCC targeted at %target
 Group: Development/Tools
+AutoReq: yes, nopython
 Requires: %name = %version-%release
 
 %description c++
@@ -230,11 +231,14 @@ rmdir %buildroot%_libexecdir/%target/share ||:
 # and these aren't usefull for embedded targets
 rm -r %buildroot%prefix/lib*/gcc/%target/%gcc_ver/install-tools ||:
 rm -r %buildroot%_libexecdir/gcc/%target/%gcc_ver/install-tools ||:
-rm -f %buildroot%_libexecdir/gcc/%target/%gcc_ver/*.la
+find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 
 mkdir -p %buildroot%_libexecdir/%target/share/gcc-%gcc_ver/
 mv %buildroot%_datadir/gcc-%gcc_ver/* %buildroot%_libexecdir/%target/share/gcc-%gcc_ver/ ||:
 rm -rf %buildroot%_datadir/gcc-%gcc_ver ||:
+
+find %buildroot%_libexecdir/%target -name libstdc++\* |sed -re 's,%buildroot,,' > c++.files
+sed -re 's,^,%exclude ,' < c++.files > c.files
 
 #global __os_install_post . ./os_install_post
 
@@ -247,7 +251,7 @@ pushd gcc-%target
 %make_build check || :
 popd
 
-%files
+%files -f c.files
 %doc COPYING* README README.alt
 %_bindir/%target-*
 %exclude %_bindir/%target-?++
@@ -266,7 +270,7 @@ popd
 %exclude %_libexecdir/%target/share/gcc-%gcc_ver/python/libstdcxx/
 %endif
 
-%files c++
+%files c++ -f c++.files
 %_bindir/%target-?++
 %if_with bootstrap
 
@@ -278,6 +282,10 @@ popd
 %endif
 
 %changelog
+* Mon Feb 08 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt3
+- relocate libstdc++ to c++ subpackage (Thanks Sergey Bolshakov)
+- while at it, suppress python autoreqs on *gdb.py (Thanks Sergey Bolshakov)
+
 * Sun Feb 07 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt2
 - Rebuild with newlib 3.3.0 (without bootstrap)
 
