@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 20.12.1
+Version: 20.12.2
 Release: alt1
 %K5init no_appdata
 
@@ -198,6 +198,9 @@ done
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Fri Jan 15 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
 - new version
 

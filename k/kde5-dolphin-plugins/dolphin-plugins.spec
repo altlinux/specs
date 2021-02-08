@@ -1,7 +1,7 @@
 %define rname dolphin-plugins
 
 Name: kde5-%rname
-Version: 20.12.1
+Version: 20.12.2
 Release: alt1
 %K5init altplace
 
@@ -57,6 +57,9 @@ Requires: kf5-filesystem
 %_K5srv/fileview*plugin.desktop
 
 %changelog
+* Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Fri Jan 15 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.1-alt1
 - new version
 
