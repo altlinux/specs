@@ -1,25 +1,27 @@
+%def_enable snapshot
 %define _name tap-plugins
 
 Name: ladspa-%_name
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Tom's Audio Processing plugins for LADSPA
-License: GPL
+License: GPL-2.0
 Group: Sound
-Url: http://%_name.sourceforge.net
-Packager: Yuri N. Sedunov <aris@altlinux.ru>
+Url: https://tomscii.sig7.se/tap-plugins
 
-Source: http://prdownloads.sourceforge.net/%name/%_name-%version.tar.gz
+%if_disabled snapshot
+Source: https://github.com/tomszilagyi/tap-plugins/archive/v%version/%_name-%version.tar.gz
+%else
+Vcs: https://github.com/tomszilagyi/tap-plugins.git
+Source: %_name-%version.tar
+%endif
 
 %define ladspa_ver 1.12-alt2
 
-PreReq: ladspa_sdk >= %ladspa_ver
+Requires(pre): ladspa_sdk >= %ladspa_ver
 
-BuildPreReq: ladspa_sdk >= %ladspa_ver  
-
-# Automatically added by buildreq on Tue Sep 21 2004
-BuildRequires: ladspa_sdk
+BuildRequires: ladspa_sdk >= %ladspa_ver
 
 %description
 TAP-plugins is short for Tom's Audio Processing plugins. It is a bunch
@@ -44,19 +46,13 @@ TAP Vibrato,
 %prep
 %setup -n %_name-%version
 
-# use system ladspa.h
-%__rm -f ladspa.h
-find . -type f -print0|xargs -r0 %__subst 's,"ladspa\.h",<ladspa.h>,' --
-%__subst 's,ladspa\.h,,
-	  s,mkdirhier,mkdir -p,' Makefile
-
 %build
-%remove_optflags %optflags_optimization
+%define _optlevel 3
 %make_build CC="%__cc $RPM_OPT_FLAGS"
 
 %install
 %make_install INSTALL_PLUGINS_DIR=%buildroot%_ladspa_path \
-	      INSTALL_LRDF_DIR=%buildroot%_ladspa_datadir/rdf install
+    INSTALL_LRDF_DIR=%buildroot%_ladspa_datadir/rdf install
 
 %files
 %_ladspa_path/*.so
@@ -64,6 +60,10 @@ find . -type f -print0|xargs -r0 %__subst 's,"ladspa\.h",<ladspa.h>,' --
 %doc README CREDITS
 
 %changelog
+* Sat Feb 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- updated to v1.0.1-1-g5d88279
+- updated Url and License tags
+
 * Tue May 08 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Build new version (Closes: #21359).
 
