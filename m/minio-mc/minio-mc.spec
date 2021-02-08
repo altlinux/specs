@@ -1,15 +1,10 @@
 %global import_path github.com/minio/mc
-%global commit f11ae85566fea61b998cd7c168d5a4dbefe831ba
+%global commit c44387cb3203700425fa0c576bf574798245d0d1
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2020-10-03T02-54-56Z
-%define version 2020.10.03
+%global tag RELEASE.2021-02-07T02-02-05Z
+%define version 2021.02.07
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
 
 Name: minio-mc
 Version: %version
@@ -71,6 +66,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Feb 08 2021 Alexey Shabalin <shaba@altlinux.org> 2021.02.07-alt1
+- Update to RELEASE.2021-02-07T02-02-05Z
+
 * Sun Oct 25 2020 Alexey Shabalin <shaba@altlinux.org> 2020.10.03-alt1
 - Update to RELEASE.2020-10-03T02-54-56Z
 
