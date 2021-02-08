@@ -3,7 +3,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -19,6 +19,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3 python3-devel python3-module-cffi python3-module-setuptools rpm-build-licenses
 BuildRequires: libssl-devel
+BuildRequires: /proc
+BuildRequires: rust rust-cargo python3-module-setuptools_rust
+BuildRequires: python3-module-toml python3-module-semantic_version
 BuildRequires: python3-module-asn1crypto >= 0.21.0
 %if_enabled test
 BuildRequires: python3-module-cryptography-vectors
@@ -38,8 +41,17 @@ digests and key derivation functions.
 
 %prep
 %setup
+mkdir -p .cargo
+cat >> .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "src/rust/vendor"
+EOF
 
 %build
+export CARGO_NET_OFFLINE=true
 %python3_build
 
 %install
@@ -61,6 +73,9 @@ py.test3
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Feb 8 2021 Vladimir Didenko <cow@altlinux.ru> 3.4.1-alt1
+- new version (3.4.1)
+
 * Wed Dec 9 2020 Vladimir Didenko <cow@altlinux.ru> 3.3.0-alt1
 - new version (3.3.0)
 
