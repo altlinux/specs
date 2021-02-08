@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2021.1.12
+Version: 2021.1.25
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -23,13 +23,13 @@ This package provides some components for Deepin desktop environment.
 - login screen background image
 - language information
 
-%package -n deepin-manual-directory
-Summary: Package that owns the Deepin manual directory
-Group: Graphical desktop/Other
+#%package -n deepin-manual-directory
+#Summary: Package that owns the Deepin manual directory
+#Group: Graphical desktop/Other
 
-%description -n deepin-manual-directory
-This package owns the Deepin manual directory. This is a workaround
-before deepin-manual actually comes into ALT to unblock packaging.
+#%description -n deepin-manual-directory
+#This package owns the Deepin manual directory. This is a workaround
+#before deepin-manual actually comes into ALT to unblock packaging.
 
 %prep
 %setup
@@ -58,9 +58,9 @@ sed -i 's|/etc/systemd/|/lib/systemd/|' Makefile
 mkdir -p %buildroot/etc/
 ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
 
-mkdir -p %buildroot%_datadir/dman
-echo "This package owns the Deepin manual directory. This is a workaround
-before deepin-manual actually comes into ALT to unblock packaging." > %buildroot%_datadir/dman/README.ALT
+#mkdir -p %buildroot%_datadir/dman
+#echo "This package owns the Deepin manual directory. This is a workaround
+#before deepin-manual actually comes into ALT to unblock packaging." > %buildroot%_datadir/dman/README.ALT
 
 %files
 %doc LICENSE
@@ -78,10 +78,14 @@ before deepin-manual actually comes into ALT to unblock packaging." > %buildroot
 %exclude %_datadir/python-apt/templates/Deepin.info
 %exclude %_datadir/python-apt/templates/Deepin.mirrors
 
-%files -n deepin-manual-directory
-%_datadir/dman
+#%files -n deepin-manual-directory
+#%_datadir/dman
 
 %changelog
+* Mon Feb 08 2021 Leontiy Volodin <lvol@altlinux.org> 2021.1.25-alt1
+- New version (2021.1.25) with rpmgs script.
+- Removed subpackage deepin-manual-directory.
+
 * Wed Feb 03 2021 Leontiy Volodin <lvol@altlinux.org> 2021.1.12-alt1
 - New version (2021.1.12) with rpmgs script.
 
