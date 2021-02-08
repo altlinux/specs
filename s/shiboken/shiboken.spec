@@ -1,6 +1,6 @@
 Name: shiboken
 Version: 1.2.2
-Release: alt4.git20140422
+Release: alt5.git20140422
 
 Summary: Generates bindings for C++ libraries using CPython source code
 License: GPLv2, LGPLv2.1
@@ -36,6 +36,7 @@ This package contains shared libraries of Shiboken.
 Summary: Development files of Shiboken
 Group: Development/C++
 Requires: lib%name = %EVR
+Conflicts: lib%name-py3-devel
 
 %description -n lib%name-devel
 Shiboken is a plugin (front-end) for Generator Runner. It generates
@@ -93,6 +94,9 @@ popd
 %install
 %makeinstall_std -C BUILD
 
+# Remove pkgconfig files
+rm -f %buildroot%_libdir/pkgconfig/*.pc
+
 %files
 %doc COPYING* AUTHORS
 %doc BUILD/doc/html
@@ -106,12 +110,14 @@ popd
 %_includedir/*
 %_libdir/*.so
 %_libdir/cmake
-%_pkgconfigdir/*
 
 %files -n python-module-%name
 %python_sitelibdir/*
 
 %changelog
+* Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt5.git20140422
+- Remove pkgconfig files to prevent duplicate pkgconfig provides.
+
 * Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt4.git20140422
 - Updated build dependencies.
 
