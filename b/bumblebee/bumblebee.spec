@@ -11,7 +11,7 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt11
+Release: alt12
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -70,6 +70,7 @@ kernel-modules-bbswitch package for your running kernel.
 cp %SOURCE1 scripts/sysvinit/
 
 %build
+%add_optflags -fcommon
 %autoreconf
 %configure CONF_GID=%bumblebeed_group \
 	CONF_DRIVER=nvidia \
@@ -118,6 +119,9 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Mon Feb 08 2021 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt12
+- compile with new gcc
+
 * Tue Dec 11 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt11
 - disable service if Optimus not found
 
