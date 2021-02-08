@@ -1,5 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%define _unpackaged_files_terminate_build 1
+
 %def_disable debug
 
 %define platform %(%_datadir/automake/config.sub %_target_platform | sed -e 's,-%_vendor,,')
@@ -8,7 +10,7 @@
 
 Name: sawfish
 Version: 1.12.90
-Release: alt3
+Release: alt4
 
 Summary: An extensible window manager for the X Window System
 Group: Graphical desktop/Sawfish
@@ -157,6 +159,22 @@ cat <<EOF >%buildroot%_rpmlibdir/sawfish-files.req.list
 %_datadir/sawfish/themes sawfish
 EOF
 
+# remove unpackaged files
+rm -fv %buildroot%_bindir/sawfish-about
+rm -fv %buildroot%_bindir/sawfish-kde4-session
+rm -fv %buildroot%_bindir/sawfish-kde5-session
+rm -fv %buildroot%_bindir/sawfish-lumina-session
+rm -fv %buildroot%_bindir/sawfish-mate-session
+rm -fv %buildroot%_bindir/sawfish-xfce-session
+rm -fvr %buildroot%_datadir/kde4
+rm -fvr %buildroot%_datadir/ksmserver
+rm -fv %buildroot%_datadir/locale/sr@Latn/LC_MESSAGES/sawfish.mo
+rm -fv %buildroot%_datadir/xsessions/sawfish-kde4.desktop
+rm -fv %buildroot%_datadir/xsessions/sawfish-kde5.desktop
+rm -fv %buildroot%_datadir/xsessions/sawfish-lumina.desktop
+rm -fv %buildroot%_datadir/xsessions/sawfish-mate.desktop
+rm -fv %buildroot%_datadir/xsessions/sawfish-xfce.desktop
+
 %find_lang %name
 
 %files -f %name.lang
@@ -178,14 +196,18 @@ EOF
 %dir %_datadir/sawfish/themes
 %dir %_datadir/sawfish/sounds
 %_datadir/sawfish/sawfish.png
+%_datadir/sawfish/images
 %_datadir/sawfish/lisp
 %_datadir/sawfish/themes/*
 %_datadir/sawfish/sounds/*
+%_datadir/xsessions/%name.desktop
 %_man1dir/sawfish.1*
 %_man1dir/sawfish-client.1*
 %_man1dir/sawfish-config.1*
 %_desktopdir/sawfish.desktop
+%_desktopdir/sawfish-config.desktop
 %_pixmapsdir/*
+%_niconsdir/sawfish-config.png
 %_infodir/sawfish.info*
 %_rpmlibdir/sawfish-files.req.list
 
@@ -206,6 +228,9 @@ EOF
 %_rpmmacrosdir/sawfish
 
 %changelog
+* Mon Feb 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt4
+- Fixed build with gcc-10.
+
 * Wed Dec 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt3
 - Updated build dependencies.
 - Explicitly disabled build on armh architecture due to insufficient dependencies.
