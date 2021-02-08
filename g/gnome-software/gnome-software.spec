@@ -38,8 +38,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -181,6 +181,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Feb 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Sun Jan 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1.1
 - e2k: disabled fwupd and sysprof
 
