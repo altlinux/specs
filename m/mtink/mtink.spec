@@ -1,6 +1,6 @@
 Name: mtink
 Version: 1.0.16
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Printing
 
@@ -20,6 +20,7 @@ Patch1: mtink-fhs_fixes.patch
 Patch2: mtink-path_to_printer.desc.patch
 Patch3: mtink-1.0.16-link.patch
 Patch4: mtink-1.0.16-mga-www-browser.patch
+Patch5: alt-fix-ftbfs.patch
 
 BuildRequires: libgimp-devel ImageMagick-tools lesstif-devel libX11-devel libXt-devel
 BuildRequires: xorg-printproto-devel
@@ -36,6 +37,7 @@ printing of test patterns, changing and cleaning cartridges.
 %patch2 -p0
 %patch3 -p0
 %patch4 -p1
+%patch5 -p1
 
 cp %SOURCE1 mtinkd.init
 cp %SOURCE2 mtinkd.sysconfig
@@ -145,6 +147,9 @@ cp %SOURCE6 %buildroot%_tmpfilesdir/
 %attr(0750,lp,sys) %dir %_localstatedir/mtink
 
 %changelog
+* Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1.0.16-alt2
+- fix build
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 1.0.16-alt1
 - Initial build for ALT
 
