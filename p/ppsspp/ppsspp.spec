@@ -7,7 +7,7 @@
 
 Name: ppsspp
 Version: 1.11
-Release: alt2
+Release: alt3
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -16,7 +16,7 @@ Group: Emulators
 Url: https://www.%name.org
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExcludeArch: ppc64le armh
+ExcludeArch: ppc64le
 
 # https://github.com/hrydgard/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
@@ -146,7 +146,11 @@ cmake .. \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 	-DPNG_LIBRARY=%_libdir/libpng.so \
 	-DPNG_PNG_INCLUDE_DIR=%_includedir \
+%ifarch armh
+	-DUSING_GLES2:BOOL=TRUE \
+%else
 	-DOpenGL_GL_PREFERENCE:STRING=GLVND \
+%endif
 	-Wno-dev
 popd
 
@@ -190,6 +194,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Mon Feb 08 2021 Nazarov Denis <nenderus@altlinux.org> 1.11-alt3
+- Build on ARMv7
+
 * Mon Feb 08 2021 Nazarov Denis <nenderus@altlinux.org> 1.11-alt2
 - Add workaround ffmpeg 3.1 or later
 
