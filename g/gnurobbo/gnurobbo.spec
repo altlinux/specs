@@ -1,14 +1,14 @@
 Name:    gnurobbo
 Version: 0.66
-Release: alt2
+Release: alt3
 
 Summary: GNU Robbo - It's popular Atari XE/XL game ported to Linux
-License: GPL
+License: GPL-2.0+
 URL: http://gnurobbo.sourceforge.net
 
 Group: Games/Arcade
 
-Source: %name-%version-source.tar.gz
+Source: http://sourceforge.net/projects/gnurobbo/files/gnurobbo/gnurobbo%20%version/%name-%version-source.tar.gz
 Source1: %name.16.png
 Source2: %name.32.png
 Source3: %name.48.png
@@ -34,24 +34,26 @@ GNU Robbo - ATARI XE / XL игра портированеая на Linux. Эта
 %prep
 %setup -n %name-%version
 %patch1 -p1
-%__subst 's,PACKAGE_DATA_DIR?=./data,PACKAGE_DATA_DIR?=%buildroot%_gamesdatadir/$(TARGET),' Makefile
-%__subst 's,-DPACKAGE_DATA_DIR=\\"$(PACKAGE_DATA_DIR)\\",-DPACKAGE_DATA_DIR=\\"%_gamesdatadir/$(TARGET)\\",' Makefile
-%__subst 's,#define DEFAULT_LOCALE\ \"en_GB\",#define DEFAULT_LOCALE\ \"ru_RU\",' locales.h
+subst 's,PACKAGE_DATA_DIR?=./data,PACKAGE_DATA_DIR?=%buildroot%_gamesdatadir/$(TARGET),' Makefile
+subst 's,-DPACKAGE_DATA_DIR=\\"$(PACKAGE_DATA_DIR)\\",-DPACKAGE_DATA_DIR=\\"%_gamesdatadir/$(TARGET)\\",' Makefile
+subst 's,#define DEFAULT_LOCALE\ \"en_GB\",#define DEFAULT_LOCALE\ \"ru_RU\",' locales.h
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 %make_build
 
 %install
-
 %makeinstall BINDIR=%buildroot%_gamesbindir \
 DOCDIR=%buildroot%_docdir/%name
 
 #PACKAGE_DATA_DIR=%buildroot%_gamesdatadir/%name \
 
-%__install -pD -m644 %SOURCE1 %buildroot%_miconsdir/%name.png
-%__install -pD -m644 %SOURCE2 %buildroot%_niconsdir/%name.png
-%__install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
-%__install -pD -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
+install -pD -m644 %SOURCE1 %buildroot%_miconsdir/%name.png
+install -pD -m644 %SOURCE2 %buildroot%_niconsdir/%name.png
+install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
+install -pD -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
+# packed to %%doc
+rm -rf %buildroot%_defaultdocdir/%name
 
 %files
 %defattr(-, root, root)
@@ -64,6 +66,9 @@ DOCDIR=%buildroot%_docdir/%name
 %_liconsdir/%name.png
 
 %changelog
+* Mon Feb 08 2021 Leontiy Volodin <lvol@altlinux.org> 0.66-alt3
+- fix build with gcc10
+
 * Wed May 30 2012 Evgeny V Shishkov <shev@altlinux.org> 0.66-alt2
 - add Makefile.patch
 
