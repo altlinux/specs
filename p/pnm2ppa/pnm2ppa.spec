@@ -2,7 +2,7 @@ Summary: Drivers for printing to HP PPA printers
 
 Name: pnm2ppa
 Version: 1.13
-Release: alt1
+Release: alt2
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -10,6 +10,7 @@ URL: http://sourceforge.net/projects/pnm2ppa
 
 Source: http://download.sourceforge.net/pnm2ppa/pnm2ppa-%{version}.tar.gz
 Patch: pnm2ppa-1.11-rh-build.patch
+Patch1: alt-fix-ftbfs.patch
 
 License: GPL
 Group: Publishing
@@ -25,6 +26,7 @@ Install pnm2ppa if you need to print to a PPA printer.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 %build
 %configure
@@ -55,6 +57,9 @@ chmod 644 docs/en/LICENSE
 %config(noreplace) /etc/pnm2ppa.conf
 
 %changelog
+* Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1.13-alt2
+- fix ftbfs
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 1.13-alt1
 - Build version 1.13 from mageia package
 
