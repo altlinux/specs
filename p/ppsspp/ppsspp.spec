@@ -7,7 +7,7 @@
 
 Name: ppsspp
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -35,7 +35,8 @@ Source6: SPIRV-Cross-%spirv_cross_commit.tar
 Source7: %name.desktop
 Source8: %name-qt.desktop
 
-Patch0: %name-alt-git.patch
+Patch0: %name-alt-ffmpeg.patch
+Patch1: %name-alt-git.patch
 
 BuildRequires: cmake
 BuildRequires: libGLEW-devel
@@ -93,6 +94,7 @@ This build using the Qt frontend.
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit ext/SPIRV-Cross
 
 %patch0 -p1
+%patch1 -p1
 
 echo "// This is a generated file.
 
@@ -188,6 +190,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Mon Feb 08 2021 Nazarov Denis <nenderus@altlinux.org> 1.11-alt2
+- Add workaround ffmpeg 3.1 or later
+
 * Mon Feb 08 2021 Nazarov Denis <nenderus@altlinux.org> 1.11-alt1
 - Version 1.11
 
