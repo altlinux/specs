@@ -8,7 +8,7 @@
 %define soname 2.2
 
 Name:           lib%oname
-Version:        2.2.10.1
+Version:        2.2.11.1
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -177,7 +177,7 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_libdir/libOpenImageIO_Util.so.%{soname}.*
 
 %files -n python3-module-%oname
-%python3_sitelibdir/OpenImageIO.so
+%python3_sitelibdir/OpenImageIO*.so
 
 %files -n %oname-utils
 %_bindir/*
@@ -200,6 +200,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Mon Feb 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.11.1-alt1
+- Updated to upstream version 2.2.11.1.
+
 * Tue Jan 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.10.1-alt1
 - Updated to upstream version 2.2.10.1.
 
