@@ -1,9 +1,10 @@
 
-%def_enable exiv2
+%def_disable exiv2
+%def_disable clucene
 
 Name: strigi
 Version: 0.7.8
-Release: alt8
+Release: alt9
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -27,7 +28,10 @@ Patch103: libstreams-0003-Build-fix-for-gcc-4.8.patch
 
 
 BuildRequires: boost-devel bzlib-devel cmake cppunit-devel dbus-tools-gui gcc-c++ libattr-devel
-BuildRequires: libclucene-core-devel libqt4-devel phonon-devel xml-utils libxml2-devel
+BuildRequires: libqt4-devel phonon-devel xml-utils libxml2-devel
+%if_enabled clucene
+BuildRequires: libclucene-core-devel
+%endif
 %if_enabled exiv2
 BuildRequires: libexiv2-devel
 %endif
@@ -84,8 +88,13 @@ popd
 %Kcmake \
     -DCMAKE_SKIP_RPATH=YES \
     -DENABLE_FFMPEG:BOOL=OFF \
+%if_enabled clucene
     -DENABLE_CLUCENE:BOOL=ON \
     -DENABLE_CLUCENE_NG:BOOL=ON \
+%else
+    -DENABLE_CLUCENE:BOOL=OFF \
+    -DENABLE_CLUCENE_NG:BOOL=OFF \
+%endif
     -DENABLE_INOTIFY:BOOL=ON \
     -DENABLE_FAM=OFF \
     -DENABLE_DBUS:BOOL=ON \
@@ -94,6 +103,7 @@ popd
 %else
     -DENABLE_EXIV2:BOOL=OFF \
 %endif
+    -DENABLE_REGENERATEXSD:BOOL=OFF \
     #
 %Kmake
 
@@ -128,9 +138,11 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 %_libdir/cmake/LibStreams/
 %_libdir/cmake/Strigi/
 
-
-
 %changelog
+* Mon Feb 08 2021 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt9
+- fix to build with new gcc
+- reduce build requries
+
 * Fri Jun 22 2018 Michael Shigorin <mike@altlinux.org> 0.7.8-alt8
 - updated ALT patch for gcc7+
 
