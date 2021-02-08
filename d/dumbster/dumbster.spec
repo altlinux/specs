@@ -36,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Fake SMTP Server
 Name:           dumbster
 Version:        1.6
-Release:        alt4_20jpp8
+Release:        alt5_20jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://quintanasoft.com/dumbster/
@@ -50,7 +50,7 @@ BuildRequires:  ant
 BuildRequires: javapackages-local rpm-build-java
 BuildRequires:  javamail
 BuildRequires:  junit
-Requires:       java-sasl
+Requires:       java
 Requires:       javamail
 
 BuildArch:      noarch
@@ -106,6 +106,9 @@ cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 08 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.6-alt5_20jpp8
+- replace requirement of java-sasl for java
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt4_20jpp8
 - fixed build
 
