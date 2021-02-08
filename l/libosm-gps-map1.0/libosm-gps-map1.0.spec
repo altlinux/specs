@@ -1,19 +1,21 @@
 %define _name osm-gps-map
 %define api_ver 1.0
 
+%def_enable gtk_doc
+
 Name: lib%_name%api_ver
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Gtk+3 widget for displaying map tiles
-
 Group: System/Libraries
 License: GPLv2+
 Url: https://github.com/nzjrs/%_name/
 
+Vcs: https://github.com/nzjrs/osm-gps-map.git
 Source: %url/releases/download/%version/%_name-%version.tar.gz
 
-BuildRequires: gnome-common gtk-doc libgtk+3-devel libcairo-devel libsoup-devel
+BuildRequires: gtk-doc libgtk+3-devel libcairo-devel libsoup-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
 %description
@@ -71,8 +73,10 @@ This package provides development documentation for %_name library.
 %install
 %makeinstall_std
 
+%if_enabled gtk_doc
 # move documentation to avoid conflict with gtk+2 version
 mv %buildroot%_datadir/gtk-doc/html/libosmgpsmap{,-%api_ver}
+%endif
 
 %files
 %doc AUTHORS README NEWS
@@ -89,13 +93,18 @@ mv %buildroot%_datadir/gtk-doc/html/libosmgpsmap{,-%api_ver}
 %files gir-devel
 %_girdir/OsmGpsMap-%api_ver.gir
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/libosmgpsmap-%api_ver/
+%endif
 
 %exclude %_datadir/doc/%_name
 
 
 %changelog
+* Mon Feb 08 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
