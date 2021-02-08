@@ -2,13 +2,12 @@
 %define discord_rpc_commit 3d3ae7129d17643bc706da0a2eea85aafd10ab3a
 %define glslang_commit d0850f875ec392a130ccf00018dab458b546f27c
 %define miniupnp_commit 7e229ddd635933239583ab190d9b614bde018157
-%define ppsspp_commit 5d97f3c72fe43acf436e1eecc23044417412c1c5
-%define ppsspp_lang_commit 17516d229eb31e08d2029b225d4d831dc497376f
+%define ppsspp_lang_commit 567b22525b115751ee3ae2ed2c8b046034c9dd8d
 %define spirv_cross_commit a1f7c8dc8ea2f94443951ee27003bffa562c1f13
 
 Name: ppsspp
-Version: 1.10.3
-Release: alt2.git5d97f3c
+Version: 1.11
+Release: alt1
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -19,8 +18,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExcludeArch: ppc64le armh
 
-# https://github.com/hrydgard/%name/archive/%ppsspp_commit/%name-%ppsspp_commit.tar.gz
-Source0: %name-%ppsspp_commit.tar
+# https://github.com/hrydgard/%name/archive/v%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 # https://github.com/Kingcom/armips/archive/%armips_commit/armips-%armips_commit.tar.gz
 Source1: armips-%armips_commit.tar
 # https://github.com/discord/discord-rpc/archive/%discord_rpc_commit/discord-rpc-%discord_rpc_commit.tar.gz
@@ -84,7 +83,7 @@ PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions dir
 This build using the Qt frontend.
 
 %prep
-%setup -n %name-%ppsspp_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 
 %__mv -Tf ../armips-%armips_commit ext/armips
 %__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
@@ -189,6 +188,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Mon Feb 08 2021 Nazarov Denis <nenderus@altlinux.org> 1.11-alt1
+- Version 1.11
+
 * Sun Feb 07 2021 Nazarov Denis <nenderus@altlinux.org> 1.10.3-alt2.git5d97f3c
 - Update to git d97f3c
 - Use system ffmpeg
