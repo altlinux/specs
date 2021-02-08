@@ -3,10 +3,10 @@
 
 Name: jsl
 Version: 0.3.0
-Release: alt3
+Release: alt4
 
 Summary: Check JavaScript code for common mistakes
-License: MPLv1.1
+License: MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group: Development/Tools
 
 Url: http://javascriptlint.com
@@ -16,6 +16,7 @@ Patch0: jsl-0.3.0-smash.patch
 Patch1: jsl-0.3.0-tests.patch
 Patch2: 0001-Disable-support-for-READLINE-and-EDITLINE.patch
 Patch3: 0002-Fix-build-for-aarch64.patch
+Patch4: 0003-Fix-build-against-GCC10.patch
 
 BuildRequires: perl-devel
 
@@ -39,6 +40,7 @@ practices.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 
@@ -56,6 +58,9 @@ perl run_tests.pl ../BUILD/jsl
 %_bindir/jsl
 
 %changelog
+* Mon Feb 08 2021 Stanislav Levin <slev@altlinux.org> 0.3.0-alt4
+- Fixed FTBFS(GCC10).
+
 * Wed Mar 13 2019 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt3
 - Fix build on mipsel.
 
