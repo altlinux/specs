@@ -1,6 +1,6 @@
 Name: mtink
 Version: 1.0.16
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: System/Configuration/Printing
 
@@ -147,6 +147,9 @@ cp %SOURCE6 %buildroot%_tmpfilesdir/
 %attr(0750,lp,sys) %dir %_localstatedir/mtink
 
 %changelog
+* Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1.0.16-alt3
+- fix patch
+
 * Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1.0.16-alt2
 - fix build
 
