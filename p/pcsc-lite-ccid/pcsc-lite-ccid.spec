@@ -1,10 +1,10 @@
 Name: pcsc-lite-ccid
-Version: 1.4.33
+Version: 1.4.34
 Release: alt1
 
 Summary: USB CCID IFD Handler
 Group: System/Libraries
-License: LGPL
+License: LGPL-2.1
 URL: https://pcsclite.apdu.fr/
 
 Requires: pcsc-lite
@@ -51,6 +51,10 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Tue Feb 09 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.34-alt1
+- New version.
+- Clatify license name and version.
+
 * Fri Jun 26 2020 Andrey Cherepanov <cas@altlinux.org> 1.4.33-alt1
 - New version.
 
