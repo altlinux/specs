@@ -1,32 +1,42 @@
 %global _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 
+# nftables or iptables
+%define firewall_type iptables
+#internal or systemd-resolved
+%define dns_backend_type internal
+
 Name: connman
-Version: 1.37
+Version: 1.39
 Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
-License: %gpl2only
+License: GPL-2.0-only
 Group: Networking/Other
 Url: http://connman.net/
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: connmand.init
 Source4: connman-openresolv.path
 Source5: connman-openresolv.service
 
-Patch0: add-options-file.patch
-Patch1: connman-add-libs.patch
-Patch2: connman-main-conf.patch
+Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: gcc-c++ glib2-devel iptables iptables-devel libdbus-devel wpa_supplicant
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(glib-2.0) >= 2.40
+BuildRequires: pkgconfig(dbus-1) >= 1.4
+BuildRequires: openconnect openvpn vpnc xl2tpd pptp-client ppp-devel
+%if %firewall_type == iptables
+BuildRequires: pkgconfig(xtables) >= 1.4.11
+%else
+BuildRequires: pkgconfig(libnftnl) >= 1.0.4
+%endif
+BuildRequires: pkgconfig(libmnl) >= 1.0.0
+BuildRequires: pkgconfig(polkit-gobject-1)
+BuildRequires: iptables
+BuildRequires: wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
-BuildRequires: openconnect openvpn vpnc xl2tpd
-BuildRequires: ppp-devel
-BuildRequires: libpolkit-devel libselinux-devel
+BuildRequires: libselinux-devel
 BuildRequires: systemd-devel libsystemd-devel
 
 Provides: network-config-subsystem
@@ -62,14 +72,13 @@ This package contains include files required for development %name-based softwar
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
-%patch2 -p2
+%patch -p1
 
 %build
 %autoreconf
 %configure \
 	--enable-pie \
+	--enable-debug \
 	--with-systemdunitdir=%_unitdir \
 	--with-tmpfilesdir=%_tmpfilesdir \
 	--enable-datafiles \
@@ -82,8 +91,11 @@ This package contains include files required for development %name-based softwar
 	--enable-vpnc \
 	--enable-l2tp \
 	--enable-pptp \
-    --with-dns-backend=internal \
-#
+	--enable-wireguard \
+	--with-firewall=%firewall_type \
+	--with-dns-backend=%dns_backend_type
+
+
 %make_build runstatedir=/run
 
 %install
@@ -156,19 +168,22 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %_includedir/*
 
 %changelog
+* Tue Feb 09 2021 Alexey Shabalin <shaba@altlinux.org> 1.39-alt1
+- new version 1.39
+
 * Tue Sep 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.37-alt1
 - 1.37
 
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 1.36-alt1
 - 1.36
 
-* Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.35-alt3%ubt
+* Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.35-alt3
 - Fixed build with new kernel headers.
 
-* Mon Sep 11 2017 Paul Wolneykien <manowar@altlinux.org> 1.35-alt2%ubt
+* Mon Sep 11 2017 Paul Wolneykien <manowar@altlinux.org> 1.35-alt2
 - Fix: Explicitly set runstatedir=/run (closes: #33848).
 
-* Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.35-alt1%ubt
+* Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.35-alt1
 - 1.35
 
 * Wed Feb 15 2017 Alexey Shabalin <shaba@altlinux.ru> 1.33-alt1
