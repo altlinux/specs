@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.23b
-Release: alt5
+Release: alt6
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -11,6 +11,7 @@ Requires: %name-data = %epoch:%version
 Source: %name-%version.tar
 Patch0: mozjs38-jit-none.patch
 Patch1: 0ad-ppc64le.patch
+Patch2: 0ad-gcc10-compat.patch
 
 ExcludeArch: %arm
 
@@ -45,6 +46,7 @@ educational celebration of game development and ancient history.
 cp -p %{P:0} libraries/source/spidermonkey/FixJitNone.diff
 echo "patch -p0 <../FixJitNone.diff" >>libraries/source/spidermonkey/patch.sh
 %patch1 -p1
+%patch2 -p2
 
 # update shebangs from python to python2
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
@@ -92,6 +94,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Tue Feb 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.23b-alt6
+- Fixed build with gcc-10 and rebuilt with new boost libraries.
+
 * Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.23b-alt5
 - Explicitly disabled build for armh and rebuilt with new boost libraries.
 
