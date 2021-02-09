@@ -1,8 +1,9 @@
-%define git_commit caff472dbf27fbcc5b3d28cbf5b1789592a9f857
+%define git_version 13614
+%define git_commit 3e4bf57c696ed1e4f465075ae311653de2cd33b0
 
 Name: dolphin-emu
-Version: 5.0
-Release: alt16.gitcaff472
+Version: 5.0.%git_version
+Release: alt1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -80,6 +81,9 @@ cmake .. \
 	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
 	-DCMAKE_BUILD_TYPE:STRING="Release" \
 	-DUSE_SHARED_ENET:BOOL=TRUE \
+	-DDOLPHIN_WC_DESCRIBE:STRING="%(sed 's|\.|-|2' <<< %version)" \
+	-DDOLPHIN_WC_REVISION:STRING="%git_commit" \
+	-DDOLPHIN_WC_BRANCH:STRING="master" \
 	-Wno-dev
 
 popd
@@ -99,6 +103,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Tue Feb 09 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13614-alt1
+- Version 5.0-13614
+
 * Sun Jan 24 2021 Nazarov Denis <nenderus@altlinux.org> 5.0-alt16.gitcaff472
 - Update to git commit caff472dbf27fbcc5b3d28cbf5b1789592a9f857
 - Use minizip from zlib
