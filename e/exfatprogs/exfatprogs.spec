@@ -1,5 +1,5 @@
 Name: exfatprogs
-Version: 1.0.4
+Version: 1.1.0
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
@@ -35,6 +35,8 @@ at the level of exfat utilities in windows.
 %makeinstall_std
 
 %files
+%_sbindir/dump.exfat
+%_sbindir/exfatlabel
 %_sbindir/fsck.exfat
 %_sbindir/mkfs.exfat
 %_sbindir/tune.exfat
@@ -42,6 +44,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Tue Feb 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Tue Jan 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
