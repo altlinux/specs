@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.4.1
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -794,6 +794,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Tue Feb 09 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.4.1-alt2
+- Fixate that upstream fixed the memory leak in the
+  simple access provider (fixes: OVE-20210209-0001)
+
 * Fri Feb 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.4.1-alt1
 - Update to 2.4.1
 - Add PAM module pam_sss_gss for authentication using GSSAPI
