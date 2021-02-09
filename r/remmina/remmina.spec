@@ -3,8 +3,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: remmina
-Version: 1.4.10
-Release: alt2
+Version: 1.4.11
+Release: alt1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -303,6 +303,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Feb 09 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.11-alt1
+- new version 1.4.11
+
 * Mon Feb 01 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.10-alt2
 - fixed load plugins (ALT #39628) (thx iv@)
 
