@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        85.0.1
+Version:        85.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -54,7 +54,6 @@ Patch013: 0013-bmo-847568-Support-system-graphite2.patch
 Patch014: 0014-bmo-1559213-Support-system-av1.patch
 Patch015: 0015-VAAPI-Add-extra-frames.patch
 Patch016: 0016-Bug-1678247-Use-nsWindow-scale-factor-for-the-conten.patch
-Patch017: 0017-Bug-1679933-Call-EnsureNSSInitializedChromeOrContent.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -230,7 +229,6 @@ Most likely you don't need to use this package.
 %patch014 -p1
 %patch015 -p1
 %patch016 -p1
-%patch017 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -500,6 +498,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Feb 09 2021 Alexey Gladkov <legion@altlinux.ru> 85.0.2-alt1
+- New release (85.0.2).
+
 * Fri Feb 05 2021 Alexey Gladkov <legion@altlinux.ru> 85.0.1-alt1
 - New release (85.0.1).
 - Security fixes:
