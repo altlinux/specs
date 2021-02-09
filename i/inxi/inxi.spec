@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.00
+Version: 3.3.01
 Release: alt1
 
 Summary: A full featured system information script
@@ -52,6 +52,9 @@ install -p -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Tue Feb 09 2021 Leontiy Volodin <lvol@altlinux.org> 3.3.01-alt1
+- New version (3.3.01)
+
 * Wed Feb 03 2021 Leontiy Volodin <lvol@altlinux.org> 3.3.00-alt1
 - New version (3.3.00)
 
