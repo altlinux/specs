@@ -8,7 +8,7 @@
 
 Name: pve-%rname
 Version: 5.1.0
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -89,6 +89,7 @@ Patch65: 0053-PVE-fix-and-clean-up-error-handling-for-create_backu.patch
 Patch66: 0054-migration-block-dirty-bitmap-fix-larger-granularity-.patch
 Patch67: 0055-PVE-Migrate-dirty-bitmap-state-via-savevm.patch
 Patch68: 0056-migration-block-dirty-bitmap-migrate-other-bitmaps-e.patch
+Patch69: 0057-cpu-add-Kunpeng-920-cpu-support.patch
 
 ExclusiveArch: x86_64 aarch64
 BuildRequires: acpica bzlib-devel glib2-devel flex libaio-devel libalsa-devel libcap-devel
@@ -221,6 +222,7 @@ This package provides a command line tool for manipulating disk images
 %patch66 -p1
 %patch67 -p1
 %patch68 -p1
+%patch69 -p1
 
 %patch100 -p1
 %patch101 -p1 -b .-lpbs
@@ -392,6 +394,9 @@ fi
 %_bindir/qemu-nbd
 
 %changelog
+* Mon Feb 01 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:5.1.0-alt4
+- add Kunpeng 920 cpu support
+
 * Tue Dec 08 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:5.1.0-alt3
 - 5.1.0-7
 
