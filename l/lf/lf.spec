@@ -1,6 +1,7 @@
 %global import_path github.com/gokcehan/lf
+%define lf_ver 20
 Name:     lf
-Version:  r19
+Version:  r%lf_ver
 Release:  alt1
 
 Summary:  Terminal file manager
@@ -28,6 +29,7 @@ external tools.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export LDFLAGS="${LDFLAGS:-} -X main.gVersion=%lf_ver"
 
 %golang_prepare
 
@@ -45,5 +47,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Tue Feb 09 2021 Nikita Ermakov <arei@altlinux.org> r20-alt1
+- Update to r20
+- Fix a '-version' option
+
 * Tue Jan 26 2021 Nikita Ermakov <arei@altlinux.org> r19-alt1
 - Initial build for Sisyphus
