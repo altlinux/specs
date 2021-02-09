@@ -1,6 +1,6 @@
 Name: asc
 Version: 2.6.1.0
-Release: alt3
+Release: alt4
 
 Summary: ASC - a battle isle clone
 License: GPLv2+
@@ -14,6 +14,7 @@ Source2: machine_wars.ogg
 Source3: time_to_strike.ogg
 Source10: %name.desktop
 Source11: %name.png
+Patch1: asc-upstream-gcc10-compat.patch
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildRequires: boost-program_options-devel bzlib-devel gcc-c++
@@ -27,6 +28,7 @@ ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series.
 
 %prep
 %setup
+%patch1 -p1
 cp -a %SOURCE1 %SOURCE2 %SOURCE3 data/music/
 # see https://slackbuilds.org/slackbuilds/14.2/games/d2x-rebirth/libphysfs-3.0.1.patch
 sed -i "s|__EXPORT__|PHYSFS_DECL|" source/libs/paragui/src/core/physfsrwops.h
@@ -63,6 +65,9 @@ install -p -m 644 %SOURCE11 \
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Tue Feb 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1.0-alt4
+- Fixed build with gcc-10 and rebuilt with new boost libraries.
+
 * Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 2.6.1.0-alt3
 - E2K: explicit -std=c++11
 - minor spec cleanup
