@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          d736ef14f0288d6993a1845745d6756cfc9ddd5a
+%global commit          12644e614e25b05da6fd08a38ffa0cfe1903fdec
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt14.rc92
+Release:        alt15.rc93
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -65,6 +65,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Tue Feb 9 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt15.rc93
+- New version
+
 * Tue Sep 29 2020 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt14.rc92
 - New version
 
