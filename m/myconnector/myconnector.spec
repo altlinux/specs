@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.0.rc1
+Version:  2.0.rc2
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -99,6 +99,8 @@ Type=Application
 Name=MyConnector
 Exec=/usr/bin/myconnector
 EOF
+mkdir -p %buildroot%_datadir/locale/ru/LC_MESSAGES
+msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %find_lang --with-man %name
 %find_lang --with-man %name-kiosk
 
@@ -134,6 +136,9 @@ EOF
 %doc docs/*
 
 %changelog
+* Mon Feb 08 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.rc2-alt1
+- Added i18n (ALT #37287)
+
 * Tue Feb 02 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.rc1-alt1
 - Initial build for Sisyphus
 
