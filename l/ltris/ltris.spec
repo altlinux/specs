@@ -1,6 +1,6 @@
 Name: ltris
-Version: 1.0.19
-Release: alt2
+Version: 1.2.2
+Release: alt1
 Serial: 1
 
 Group: Games/Arcade
@@ -12,11 +12,15 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://download.sourceforge.net/lgames/ltris-%version.tar.gz
 Patch1: ltris-1.0.19-inlines.patch
 
+Patch2: fix_sdl_test.patch
+Patch3: icon_fix.patch
+
 #BuildRequires: XFree86-libs aalib esound libSDL-devel libSDL_mixer-devel
 #BuildRequires: libalsa libarts libaudiofile libogg libslang libsmpeg libvorbis
+%set_gcc_version 8
 
 # Automatically added by buildreq on Wed Jun 30 2004 (-bi)
-BuildRequires: esound libSDL-devel libSDL_mixer-devel desktop-file-utils
+BuildRequires: esound libSDL-devel libSDL_mixer-devel desktop-file-utils automake sysconftool gcc8 ImageMagick
 
 %description
 o Tetris clone using SDL
@@ -35,9 +39,13 @@ o Two game modes
 
 %prep
 %setup -q
-%patch1 -p1
+#patch1 -p1
+%patch2 -p1
+%patch3 -p1
+convert ltris48.gif ltris.png
 
 %build
+autoreconf -f -i
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir --localstatedir=%{_localstatedir}/games
 %make_build
 
@@ -70,6 +78,9 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %_liconsdir/%name.xpm
 
 %changelog
+* Wed Feb 10 2021 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.2-alt1
+- 1.2.2
+
 * Fri Feb 26 2016 Ilya Mashkin <oddity@altlinux.ru> 1:1.0.19-alt2
 - fix build
 
