@@ -34,8 +34,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.1
-Release: alt3
+Version: 5.15.2
+Release: alt1
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -81,15 +81,15 @@ Patch1013: alt-QTBUG-88599.patch
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): libharfbuzz-devel
-BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel
+BuildRequires: gcc-c++ glibc-devel libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel
 BuildRequires: libproxy-devel libssl-devel liblksctp-devel
-BuildRequires: libpcre2-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+3-devel
+BuildRequires: libpcre2-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libzstd-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
-BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
+BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl) libGL-devel libEGL-devel
 %{?_enable_vulkan:BuildRequires: pkgconfig(vulkan)}
 BuildRequires: libSM-devel libICE-devel
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
-BuildRequires: libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
+BuildRequires: libxcbutil-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
 BuildRequires: libalsa-devel
 BuildRequires: libat-spi2-core-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
@@ -557,7 +557,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.15.1
+Version: 5.15.2
 __EOF__
 
 # rpm macros
@@ -825,6 +825,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
+- new version
+
 * Thu Nov 19 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt3
 - add fix against QTBUG-88599 (closes: 37756)
 

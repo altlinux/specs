@@ -5,8 +5,8 @@
 %def_enable pulse
 
 Name: qt5-multimedia
-Version: 5.15.1
-Release: alt2
+Version: 5.15.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -138,6 +138,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
+- new version
+
 * Fri Nov 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt2
 - add compatibility provides
 
