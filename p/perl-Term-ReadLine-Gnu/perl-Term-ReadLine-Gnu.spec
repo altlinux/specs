@@ -1,7 +1,10 @@
+# we use custom %%check
+%define _without_test 1
+%define _unpackaged_files_terminate_build 1
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.35
-Release: alt1.1
+Version: 1.37
+Release: alt1
 
 Summary: Perl interface to the GNU Readline library
 License: GPL or Artistic
@@ -12,21 +15,23 @@ Source0: %dist-%version.tar
 Source1: Term-ReadLine.tar
 Source2: Makefile.PL
 
-Patch1: perl-Term-ReadLine-Gnu-at-Gnu.pm-use-XSLoader.patch
+Patch1: perl-Term-ReadLine-Gnu-1.37-at-Gnu.pm-use-XSLoader.patch
 # two merged in one Patch3 file
 # hist/perl-Term-ReadLine-Gnu-at-Gnu.xs-use-curses.patch
 # hist/perl-Term-ReadLine-Gnu-at-dont-use-xmalloc.patch
-Patch3: perl-Term-ReadLine-Gnu-1.35-at-xmalloc-at-curses.patch
+Patch3: perl-Term-ReadLine-Gnu-1.37-at-xmalloc-at-curses.patch
 Patch6: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-pass-syntax-check.patch
 Patch7: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-debian-10term.patch
 Patch8: perl-Term-ReadLine-Gnu-at-add-Term-Readline-to-MANIFEST.patch
 Patch9: perl-Term-ReadLine-Gnu-at-perlsh-dont-import-POSIX.patch
 Patch10: perl-Term-ReadLine-Gnu-at-disable-Tk-test.patch
 Patch11: Term-ReadLine-1.15-at.patch
+Patch12: perl-Term-ReadLine-Gnu-1.37-viy-buildroot.patch
 
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libncurses-devel libreadline-devel perl-devel perl-Encode
+BuildRequires: expect
 
 %description
 Term::ReadLine::Gnu is an implementation of the interface to the GNU
@@ -46,6 +51,7 @@ cp -f %{SOURCE2} Makefile.PL
 %patch9 -p1
 %patch10 -p1
 %patch11 -p0
+%patch12 -p1
 
 %build
 %perl_vendor_build
@@ -54,12 +60,24 @@ cp -f %{SOURCE2} Makefile.PL
 %install
 %perl_vendor_install
 
+%check
+# Expect is used so that we get a PTY, as if we were
+# in a real terminal, where readline works
+expect -c '
+        spawn make test
+        expect eof
+        exit [lindex [wait] 3]
+'
+
 %files
 %doc README eg Changes
 %perl_vendor_archlib/Term
 %perl_vendor_autolib/Term
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1.1
 - rebuild with new perl 5.28.1
 
