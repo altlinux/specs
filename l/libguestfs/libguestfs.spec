@@ -18,8 +18,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.42.0
-Release: alt4
+Version: 1.44.0
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -304,7 +304,6 @@ export PYTHON=%__python3
 	%{subst_enable rust} \\\
 	%{subst_enable static} \\\
 	--with-default-backend=libvirt \\\
-	--with-distro=ALT \\\
 	--with-extra="ALTLinux,release=%version-%release,libvirt" \\\
 	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \\\
 	--disable-silent-rules \\\
@@ -576,6 +575,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Wed Feb 10 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.0-alt1
+- 1.44.0
+
 * Tue Dec 26 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.42.0-alt4
 - Add requires to db4-utils (Closes: 39365)
 
