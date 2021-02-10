@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Graphics-TIFF
 
 Name: perl-Graphics-TIFF
-Version: 7
-Release: alt2
+Version: 8
+Release: alt1
 
 Summary: Perl extension for the libtiff library
 
@@ -16,7 +17,7 @@ Source: http://mirror.yandex.ru/mirrors/cpan/authors/id/R/RA/RATCLIFFE/%module_n
 
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
-BuildRequires: libtiff-devel perl(English.pm) perl(Exporter.pm) perl(ExtUtils/Depends.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/PkgConfig.pm) perl(Readonly.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Test/Requires.pm) perl(XSLoader.pm) perl(base.pm)
+BuildRequires: libtiff-devel perl(English.pm) perl(Exporter.pm) perl(ExtUtils/Depends.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/PkgConfig.pm) perl(Readonly.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Test/Requires.pm) perl(XSLoader.pm) perl(base.pm) perl(IPC/Cmd.pm)
 
 %description
 The Graphics::TIFF module allows a Perl developer to access TIFF images.
@@ -38,6 +39,9 @@ Find out more about libtiff at http://www.libtiff.org.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 8-alt1
+- new version
+
 * Wed Dec 02 2020 Vitaly Lipatov <lav@altlinux.ru> 7-alt2
 - human build for ALT Sisyphus
 
