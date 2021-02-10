@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-JavaScript-Minifier
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: JavaScript::Minifier - Perl extension for minifying JavaScript code
@@ -25,10 +26,14 @@ BuildRequires: perl-devel
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README.md README examples
 %perl_vendor_privlib/JavaScript/Minifier*
 %doc Changes README
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- new version
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
