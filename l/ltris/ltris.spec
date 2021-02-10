@@ -1,6 +1,6 @@
 Name: ltris
 Version: 1.2.2
-Release: alt1
+Release: alt2
 Serial: 1
 
 Group: Games/Arcade
@@ -17,10 +17,10 @@ Patch3: icon_fix.patch
 
 #BuildRequires: XFree86-libs aalib esound libSDL-devel libSDL_mixer-devel
 #BuildRequires: libalsa libarts libaudiofile libogg libslang libsmpeg libvorbis
-%set_gcc_version 8
+#set_gcc_version 8
 
 # Automatically added by buildreq on Wed Jun 30 2004 (-bi)
-BuildRequires: esound libSDL-devel libSDL_mixer-devel desktop-file-utils automake sysconftool gcc8 ImageMagick
+BuildRequires: esound libSDL-devel libSDL_mixer-devel desktop-file-utils automake sysconftool ImageMagick
 
 %description
 o Tetris clone using SDL
@@ -72,12 +72,18 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %attr(2711, root, games) %_gamesbindir/*
 %attr(-, games, games) %_localstatedir/games/%name.hscr
 %_gamesdatadir/%name
+%_datadir/games/icons/ltris.png
 %_desktopdir/%name.desktop
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+
+* Wed Feb 10 2021 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.2-alt2
+- add ltris.png
+- build with gcc10
+
 * Wed Feb 10 2021 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.2-alt1
 - 1.2.2
 
