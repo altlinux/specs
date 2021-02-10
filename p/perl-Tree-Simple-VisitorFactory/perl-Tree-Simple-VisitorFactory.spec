@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Tree-Simple-VisitorFactory
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: %m_name - A factory object for dispensing Visitor objects
@@ -24,7 +24,7 @@ Url: http://search.cpan.org/dist/Tree-Simple-VisitorFactory/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Tree-Simple-VisitorFactory-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/R/RS/RSAVAGE/%{module}-%{version}.tgz
 
 # Automatically added by buildreq on Sat Sep 06 2008 (-bi)
 BuildRequires: perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Tree-Simple perl(Module/Build.pm)
@@ -36,7 +36,7 @@ package in order to use all the Visitors, it is just a somewhat
 convienient way to avoid having to type thier long class names.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -45,10 +45,14 @@ convienient way to avoid having to type thier long class names.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changelog.ini README Changes
 %perl_vendor_privlib/Tree*
 %doc Changes README
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
