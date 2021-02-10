@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Tree-Simple
-Version: 1.33
+Version: 1.34
 Release: alt1
 
 Summary: Tree-Simple - A simple tree object
@@ -80,10 +80,13 @@ one of the modules listed in the "OTHER TREE MODULES" section below.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc LICENSE Changes README Changelog.ini
+%doc Changes README Changelog.ini
 %perl_vendor_privlib/Tree/*
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1
+- automated CPAN update
+
 * Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 
