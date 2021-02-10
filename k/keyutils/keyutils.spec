@@ -1,5 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %define vermajor 1
-%define verminor 6.1
+%define verminor 6.3
 %define version %vermajor.%verminor
 
 Name: keyutils
@@ -7,13 +11,14 @@ Version: %version
 Release: alt1
 
 Summary: Linux Key Management Utilities
-License: GPL/LGPL
+License: GPL-2.0-only and LGPL-2.1
 Group: System/Base
 Url: http://people.redhat.com/~dhowells/keyutils/
+Vcs: https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 
-BuildRequires: glibc-kernheaders
+BuildRequires: gcc-c++
 
 %description
 Utilities to control the kernel key management facility and to provide
@@ -40,7 +45,7 @@ This package provides headers and libraries for building key utilities.
 %setup
 
 %build
-make \
+%make_build \
     NO_ARLIB=1 \
     LIBDIR=/%_lib \
     USRLIBDIR=%_libdir \
@@ -49,11 +54,12 @@ make \
     CFLAGS="-Wall $RPM_OPT_FLAGS -Werror"
 
 %install
-make \
+%make_build \
     NO_ARLIB=1 \
     DESTDIR=%buildroot \
     LIBDIR=/%_lib \
     USRLIBDIR=%_libdir \
+    PKGCONFIG_DIR=../%_pkgconfigdir \
     install
 ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 
@@ -73,12 +79,16 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 /%_lib/lib%name.so.*
 
 %files -n lib%name-devel
+%doc LICENCE.LGPL
 %_libdir/lib%name.so
 %_includedir/*
 %_man3dir/*
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 10 2021 Vitaly Chikunov <vt@altlinux.org> 1.6.3-alt1
+- Update to v1.6.3 (2020-07-07).
+
 * Fri Aug 07 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
 - 1.6.1 released
 
