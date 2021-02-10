@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Locale-Maketext-Gettext
 Name: perl-%dist
-Version: 1.30
+Version: 1.32
 Release: alt1
 
 Summary: Joins the gettext and Maketext frameworks
@@ -52,12 +53,15 @@ all.
 %perl_vendor_install
 
 %files
-%doc BUGS Changes README Artistic
+%doc Changes Artistic README.md
 %_bindir/*
 %perl_vendor_privlib/Locale/
 %_man1dir/*
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
 - automated CPAN update
 
