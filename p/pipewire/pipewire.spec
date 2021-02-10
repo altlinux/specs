@@ -22,7 +22,7 @@
 
 Name: pipewire
 Version: %ver_major.21
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -51,7 +51,8 @@ BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
-#BuildRequires: libopenaptx-devel
+#https://github.com/pali/libopenaptx
+BuildRequires: libopenaptx-devel
 # for pw-top
 BuildRequires: libncurses-devel
 %if_enabled gstreamer
@@ -222,6 +223,9 @@ export LIB=%_lib
 
 
 %changelog
+* Wed Feb 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.21-alt1.1
+- enabled aptX BT codec support
+
 * Thu Feb 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.21-alt1
 - 0.3.21
 
