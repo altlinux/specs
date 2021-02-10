@@ -1,6 +1,6 @@
 Name: ogre
 Version: 1.9.0
-Release: alt2
+Release: alt3
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -9,6 +9,7 @@ Url: http://www.ogre3d.org/
 Source: %name-%version.tar
 Patch: %name-%version-alt-changes.patch
 Patch10: ogre-aarch64.patch
+Patch11: ogre-1.9.0-armh-no-sysctl-compat.patch
 
 BuildRequires: gcc-c++ cmake zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen graphviz texi2html libtbb-devel boost-devel
 BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXinerama-devel libXi-devel libXpm-devel libXv-devel libXxf86misc-devel xorg-xf86miscproto-devel libXxf86vm-devel libXext-devel libGLU-devel libfreeimage-devel tinyxml-devel
@@ -71,6 +72,7 @@ samples.
 %setup -n ogre
 %patch -p1
 %patch10 -p1
+%patch11 -p2
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
@@ -150,6 +152,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Wed Feb 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt3
+- Fixed build on armh and rebuilt with new boost libraries.
+
 * Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 1.9.0-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24; explicit -std=c++11
 
