@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CP
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-JavaScript-Minifier-XS
-Version:        0.13
-Release:        alt1_1
+Version:        0.14
+Release:        alt1
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/JavaScript-Minifier-XS
-Source0:        https://cpan.metacpan.org/authors/id/G/GT/GTERMARS/JavaScript-Minifier-XS-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/G/GT/GTERMARS/JavaScript-Minifier-XS-%{version}.tar.gz
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  perl-devel
@@ -59,12 +60,14 @@ unset AUTHOR_TESTING AUTOMATED_TESTING RELEASE_TESTING
 make test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
 - update to new release by fcimport
 
