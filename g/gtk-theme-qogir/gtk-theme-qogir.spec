@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2020.11.16
+Version: 2021.02.09
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -34,6 +34,11 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Wed Feb 10 2021 Leontiy Volodin <lvol@altlinux.org> 1:2021.02.09-alt1
+- New version.
+- Upstream:
+  + Fixed gnome 3.38 issues.
+
 * Tue Nov 17 2020 Leontiy Volodin <lvol@altlinux.org> 1:2020.11.16-alt1
 - New version.
 - Upstream:
