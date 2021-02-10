@@ -2,7 +2,7 @@
 
 Name: ripgrep
 Version: 12.1.1
-Release: alt1
+Release: alt2
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
 Group: File tools
@@ -30,7 +30,7 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --offline --release
+cargo build --offline --release --features=pcre2
 
 %install
 mkdir -p %buildroot%_bindir
@@ -47,6 +47,9 @@ install -m 0644 target/release/build/%name-*/out/%bname.bash %buildroot%_datadir
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Wed Feb 10 2021 Alexander Makeenkov <amakeenk@altlinux.org> 12.1.1-alt2
+- Build with pcre2 support (closes: #39668)
+
 * Fri Jun 12 2020 Alexander Makeenkov <amakeenk@altlinux.org> 12.1.1-alt1
 - Initial build for ALT
 
