@@ -5,7 +5,7 @@
 
 Name: pdns
 Version: 4.2.2
-Release: alt2
+Release: alt3
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -13,6 +13,8 @@ Url: http://powerdns.com
 Source0: %name-%version.tar
 Patch0: pdns-disable-secpoll.patch
 Patch1: %name-%version-alt-boost-1.73.0-compat.patch
+Patch2: %name-%version-upstream-gcc10-compat-1.patch
+Patch3: %name-%version-upstream-gcc10-compat-2.patch
 
 BuildRequires: gcc-c++ boost-program_options-devel curl libcurl-devel libsqlite3-devel
 BuildRequires: systemd-devel /bin/systemctl
@@ -168,6 +170,8 @@ This package contains the ixfrdist program.
 %setup
 %patch0 -p1 -b .disable-secpoll
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
 
 %build
 export CPPFLAGS="-DLDAP_DEPRECATED"
@@ -353,6 +357,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Wed Feb 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.2-alt3
+- Fixed build with gcc-10 and rebuilt with new boost libraries.
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.2-alt2
 - Rebuilt with boost-1.73.0.
 
