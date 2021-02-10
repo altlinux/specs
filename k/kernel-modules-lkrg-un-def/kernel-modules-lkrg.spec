@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20210130
+%define module_version	0.8.1+git20210207.993be4b
 %define module_release	alt1
 
 %define flavour		un-def
@@ -7,6 +7,11 @@
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
+
+# FIXME
+%if "%flavour" != "std-def"
+%def_without check
+%endif
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
@@ -24,8 +29,18 @@ URL: https://www.openwall.com/lkrg/
 
 Source1: lkrg.init
 
+%define qemu_pkg %_arch
+%ifarch %ix86 x86_64
+%define qemu_pkg x86
+%endif
+%ifarch %arm
+%define qemu_pkg arm
+%endif
+
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
+%{?!_without_check:%{?!_disable_check:BuildRequires(pre): rpm-build-kernel-perms}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static kernel-image-%flavour}}
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -60,6 +75,106 @@ install -D -p -m0755 lkrg.init %buildroot%_initdir/lkrg
 install -D -p -m0644 scripts/bootup/systemd/lkrg.service %buildroot%_unitdir/lkrg.service
 install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 
+%check
+# based on %%check of kernel-image-%%flavour.spec
+KernelVer=%kversion-%flavour-%krelease
+mkdir -p test
+cd test
+lkrg_trigger=/proc/sys/lkrg/trigger
+failmsg="LKRG test failed"
+%__cc %optflags -s -static -xc -o init - <<__EOF__
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <linux/module.h>
+#include <sys/mount.h>
+#include <sys/reboot.h>
+#include <sys/syscall.h>
+#define finit_module(fd, param_values, flags) syscall(__NR_finit_module, fd, param_values, flags)
+#define delete_module(name, flags) syscall(__NR_delete_module, name, flags)
+int main()
+{
+	int fd = open("p_lkrg.ko", O_RDONLY);
+
+	if (fd == -1) {
+		perror("$failmsg p_lkrg.ko");
+		goto exit;
+	}
+
+	/* always returns -1 caused module verification */
+	finit_module(fd, "log_level=3", MODULE_INIT_IGNORE_MODVERSIONS|MODULE_INIT_IGNORE_VERMAGIC);
+	close(fd);
+
+	sleep(2);
+
+	if (mount("proc", "/proc", "proc", 0, NULL) == -1) {
+		perror("$failmsg mount");
+		goto exit;
+	}
+
+	fd = open("$lkrg_trigger", O_WRONLY);
+	if (fd == -1) {
+		perror("$failmsg $lkrg_trigger");
+		goto exit;
+	}
+
+	int r = write(fd, "1\n", sizeof("1\n"));
+	close(fd);
+
+	if (r == -1) {
+		perror("$failmsg write");
+		goto exit;
+	}
+
+	fd = open("fuse.ko", O_RDONLY);
+	if (fd == -1) {
+		perror("$failmsg fuse.ko");
+		goto exit;
+	}
+
+	finit_module(fd, NULL, MODULE_INIT_IGNORE_MODVERSIONS|MODULE_INIT_IGNORE_VERMAGIC);
+	close(fd);
+
+	sleep(2);
+
+exit:
+	delete_module("fuse", 0);
+	delete_module("p_lkrg", 0);
+
+	reboot(RB_POWER_OFF);
+	pause();
+}
+__EOF__
+mkdir proc
+cp -a %buildroot%module_dir/p_lkrg.ko p_lkrg.ko
+cp -a /lib/modules/%kversion-%kflavour-%krelease/kernel/fs/fuse/fuse.ko fuse.ko
+find init fuse.ko p_lkrg.ko proc -print -depth | cpio -H newc -o | gzip -8n > initrd.img
+qemu_arch=%_arch
+qemu_opts=""
+console=ttyS0
+%ifarch %ix86
+qemu_arch=i386
+%endif
+%ifarch aarch64
+qemu_opts="-machine accel=tcg,type=virt -cpu cortex-a57 -drive if=pflash,unit=0,format=raw,readonly,file=%_datadir/AAVMF/QEMU_EFI-pflash.raw"
+%endif
+%ifarch %arm
+qemu_arch=arm
+qemu_opts="-machine virt"
+console=ttyAMA0
+%endif
+timeout --foreground 600 qemu-system-"$qemu_arch" $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img > boot.log &&
+grep -qF "LKRG initialized successfully!" boot.log &&
+grep -qF "LKRG unloaded!" boot.log &&
+grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
+! grep -qF "$failmsg" &&
+! grep -qF 'Kernel panic' || {
+	cat >&2 boot.log
+	exit 1
+}
+
 %post
 %post_service lkrg
 
@@ -75,6 +190,10 @@ install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Mon Feb 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210207.993be4b-alt1
+- Updated to 993be4b6249849abdc33e18d959c29cc6a8aba9e.
+- Added tests (enabled only for std-def for now).
 
 * Fri Jan 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210130-alt1
 - Updated to commit e43d2dd525f014388c1f8cc0eb8a23f2ef07f415 (fixes #39626).

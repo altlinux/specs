@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20210130
+%define module_version 0.8.1+git20210207.993be4b
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -50,6 +50,9 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Feb 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210207.993be4b-alt1
+- Updated to commit 993be4b6249849abdc33e18d959c29cc6a8aba9e.
+
 * Sat Jan 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210130-alt1
 - Updated to commit e43d2dd525f014388c1f8cc0eb8a23f2ef07f415 (closes #39626).
 
