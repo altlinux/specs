@@ -2,8 +2,8 @@ BuildRequires: chrpath
 %def_disable static
 %define suff sp1
 Name: xforms
-Version: 1.0.93
-Release: alt5
+Version: 1.2.4
+Release: alt1
 
 Summary: A GUI toolkit based on Xlib for the X Window System
 
@@ -17,6 +17,7 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildConflicts: lib%name
 
 Source: http://download.savannah.nongnu.org/releases/xforms/%name-%version%suff.tar.gz
+Patch: xforms-1.2.4-alt-gcc10.patch
 
 # manually removed: libxforms-devel 
 # Automatically added by buildreq on Sun Feb 05 2006
@@ -78,6 +79,7 @@ Static Libraries for lib%name
 
 %prep
 %setup -q -n %name-%version%suff
+%patch -p2
 
 %build
 ./autogen.sh
@@ -104,12 +106,12 @@ pushd demos
     done
 popd
 
-for i in /usr/bin/fd2ps /usr/bin/fdesign %_libdir/libformsGL.so.2.0.0 %_libdir/libflimage.so.2.0.0; do
+for i in /usr/bin/fd2ps /usr/bin/fdesign %_libdir/libformsGL.so.2.1.3 %_libdir/libforms.so.2.1.3 %_libdir/libflimage.so.2.1.3; do
 	chrpath -d $RPM_BUILD_ROOT$i
 done
 
 %files -n lib%name
-%doc  ChangeLog *README* NEWS COPYING.LIB
+%doc ChangeLog *README* COPYING.LIB
 %_bindir/fd2ps
 %_libdir/*.so.*
 %_man1dir/fd2ps.*
@@ -133,6 +135,9 @@ done
 %endif
 
 %changelog
+* Wed Feb 10 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.4-alt1
+- new version
+
 * Wed Feb 10 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.93-alt5
 - fixed conflict with openimageio-utils (ALT #39670)
 
