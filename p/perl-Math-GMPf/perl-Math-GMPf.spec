@@ -8,8 +8,8 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUti
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.43
-Release: alt1.2
+Version: 0.44
+Release: alt1
 Summary: perl interface to the GMP library's floating point (mpf) functions..
 Group: Development/Perl
 License: perl
@@ -42,6 +42,9 @@ A bigfloat module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1.2
 - rebuild with new perl 5.28.1
 
