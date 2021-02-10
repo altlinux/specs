@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name BibTeX-Parser
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/File.pm) perl(IO/String.pm) perl(LaTeX/ToUnicode.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.02
+Version: 1.03
 Release: alt1
 Summary: A pure perl BibTeX parser
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README
+%doc Changes README
 %perl_vendor_privlib/B*
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
