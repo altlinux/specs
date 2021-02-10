@@ -3,13 +3,13 @@
 
 Name: dolphin-emu
 Version: 5.0.%git_version
-Release: alt1
+Release: alt2
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
 Group: Emulators
 
-Url: https://ru.%name.org/
+Url: https://%name.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64 aarch64
@@ -40,6 +40,7 @@ BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
 BuildRequires: libbluez-devel
+BuildRequires: libcubeb-devel
 BuildRequires: libcurl-devel
 BuildRequires: libenet-devel
 BuildRequires: libevdev-devel
@@ -103,6 +104,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Wed Feb 10 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13614-alt2
+- Build with cubeb
+
 * Tue Feb 09 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13614-alt1
 - Version 5.0-13614
 
