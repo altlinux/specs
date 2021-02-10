@@ -1,6 +1,6 @@
 Name: SDL2_image
-Version: 2.0.4
-Release: alt3
+Version: 2.0.5
+Release: alt1
 
 Summary: Simple DirectMedia Layer - Image library
 License: zlib
@@ -65,6 +65,9 @@ to develop SDL applications.
 %_libdir/lib%name.so
 
 %changelog
+* Wed Feb 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1
+- Versioon 2.0.5
+
 * Mon Apr 08 2019 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt3
 - Remove libpng15 from build requires (ALT #36560)
 
