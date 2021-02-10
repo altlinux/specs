@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libnet
 Name: perl-%dist
-Version: 3.11
+Version: 3.13
 Release: alt1
 Epoch: 1
 
@@ -11,7 +11,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHAY/%{dist}-%{version}.tar.gz
-Patch: %name-3.04-alt.patch
+Patch: %name-3.13-alt.patch
 
 BuildArch: noarch
 Requires: /etc/perl5
@@ -58,6 +58,9 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 1:3.13-alt1
+- automated CPAN update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.11-alt1
 - automated CPAN update
 
