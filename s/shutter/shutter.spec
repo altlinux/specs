@@ -1,6 +1,13 @@
+%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%_datadir/shutter/resources/modules'
+# run "buildreq-src --update --spec shutter.spec ." to update BuildRequires below
+# note: remove perl(Furl/HTTP.pm) as it is optional dependency from autoimports
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Digest/MD5.pm) perl(Encode.pm) perl(Encode/Locale.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(File/stat.pm) perl(FindBin.pm) perl(Glib.pm) perl(Glib/Object/Introspection.pm) perl(Gnome2/Canvas.pm) perl(Gnome2/Wnck.pm) perl(Goo/Canvas.pm) perl(Gtk2.pm) perl(Gtk2/ImageView.pm) perl(Gtk2/Pango.pm) perl(Gtk2/TrayIcon.pm) perl(HTTP/Request.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/File.pm) perl(IO/Socket/SSL.pm) perl(Image/Magick.pm) perl(JSON/MaybeXS.pm) perl(LWP/UserAgent.pm) perl(List/Util.pm) perl(Locale/gettext.pm) perl(MIME/Base64.pm) perl(Net/DBus.pm) perl(Net/FTP.pm) perl(Net/OAuth.pm) perl(Number/Bytes/Human.pm) perl(Path/Class.pm) perl(Pod/Usage.pm) perl(Proc/Killfam.pm) perl(Proc/Simple.pm) perl(Sort/Naturally.pm)
+BuildRequires: perl(Time/HiRes.pm) perl(URI.pm) perl(URI/Escape.pm) perl(URI/Split.pm) perl(WWW/Mechanize.pm) perl(WebService/Gyazo/B.pm) perl(X11/Protocol.pm) perl(XML/Simple.pm) perl(lib.pm)
+# END SourceDeps(oneline)
 Name: shutter
 Version: 0.95
-Release: alt1
+Release: alt2
 
 Summary: Shutter is a feature-rich screenshot program
 License: GPLv3+
@@ -12,6 +19,7 @@ Source: shutter-%version.tar
 BuildArch: noarch
 BuildRequires(pre): rpm-build-perl
 BuildRequires:	perl-Gtk2-Unique
+BuildRequires: perl(X11/Protocol/Ext/XFIXES.pm)
 Requires: ImageMagick-tools libgtkimageview
 Requires: perl-Sort-Naturally
 Requires: perl-Glib perl-File-Which perl-File-Copy-Recursive perl-File-BaseDir perl-IO-stringy
@@ -38,6 +46,7 @@ Requires: procps
 
 # not autodetected:
 Requires: xdg-utils
+Requires: perl(X11/Protocol/Ext/XFIXES.pm)
 
 %description
 Shutter is a feature-rich screenshot program. You can take a screenshot of a
@@ -50,6 +59,8 @@ hosting site, all within one window.
 
 subst 's/Application;/Graphics;2DGraphics;RasterGraphics;/' share/applications/shutter.desktop
 
+# in external library
+rm share/shutter/resources/modules/X11/Protocol/Ext/XFIXES.pm
 %build
 ./po2mo.sh
 
@@ -63,8 +74,6 @@ cp -a share %buildroot/usr
 
 %find_lang shutter
 %find_lang --append --output=shutter.lang shutter-plugins shutter-upload-plugins
-
-%set_perl_req_method relaxed
 
 %files -f shutter.lang
 %doc COPYING README
@@ -90,6 +99,9 @@ cp -a share %buildroot/usr
 %_iconsdir/HighContrast/scalable/apps/shutter*
 
 %changelog
+* Tue Feb 09 2021 Igor Vlasenko <viy@altlinux.ru> 0.95-alt2
+- added perl magic
+
 * Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.95-alt1
 - Build new version (Closes: #39323).
 
