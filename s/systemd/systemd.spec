@@ -79,7 +79,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -2019,6 +2019,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Feb 10 2021 Alexey Shabalin <shaba@altlinux.org> 1:247.3-alt2
+- Add efi_pstore kernel module requires to systemd-pstore.service
+
 * Wed Feb 03 2021 Alexey Shabalin <shaba@altlinux.org> 1:247.3-alt1
 - 247.3
 - Enable systemd-pstore.service by default.
