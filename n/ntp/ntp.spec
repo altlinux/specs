@@ -2,7 +2,7 @@
 
 Name: ntp
 Version: 4.2.8p15
-Release: alt1
+Release: alt2
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -27,6 +27,7 @@ Source23: chrooted-ntpd.lib
 
 Patch1: %name-4.2.6p5-alt-compile-dirty-hack-NANO.patch
 Patch2: %name-4.2.8p14-MD5-to-SHA1-default.patch
+Patch3: NTP_4_2_8P15+4@0x5fe43ce5.patch
 
 Requires: ntp-doc = %version-%release
 Requires: ntp-utils = %version-%release
@@ -153,6 +154,7 @@ sed -i 's,-Wnormalized=id,,' sntp/libevent/configure*
 
 #patch1 -p1
 %patch2 -p2
+%patch3 -p1
 
 # Fix progname initialization when argc==0.
 fgrep -rl --include='*.c' 'progname = argv[0];' . |
@@ -164,12 +166,12 @@ fgrep -rl --include='*.c' 'progname = argv[0];' . |
 		subst "s/PROGNAME/$n/" "$f"
 	done
 
-%__install -p -m644 %SOURCE2 ntpd.sysconfig
-%__install -p -m644 $RPM_SOURCE_DIR/{ntp.1,{ntpd,ntpdate,ntpsweep}.8} .
+install -p -m644 %SOURCE2 ntpd.sysconfig
+install -p -m644 $RPM_SOURCE_DIR/{ntp.1,{ntpd,ntpdate,ntpsweep}.8} .
 
 find -type f -print0 |
-	xargs -r0 %__grep -FZl '@ROOT@' -- |
-	xargs -r0 %__subst -p 's,@ROOT@,%ROOT,g' --
+	xargs -r0 grep -FZl '@ROOT@' -- |
+	xargs -r0 sed -i 's,@ROOT@,%ROOT,g' --
 
 %build
 %add_optflags -D_GNU_SOURCE
@@ -193,43 +195,43 @@ make check
 %install
 make DESTDIR=$RPM_BUILD_ROOT perllibdir=%perl_vendor_privlib install
 
-%__install -p -m755 scripts/ntpsweep/ntpsweep $RPM_BUILD_ROOT%_sbindir/
+install -p -m755 scripts/ntpsweep/ntpsweep $RPM_BUILD_ROOT%_sbindir/
 
 # Manpages.
 %set_compress_method skip
-%__mkdir_p $RPM_BUILD_ROOT{%_man1dir,%_man8dir}
+mkdir -p $RPM_BUILD_ROOT{%_man1dir,%_man8dir}
 #__install -p -m644 ntp.1 $RPM_BUILD_ROOT%_man1dir/
 sed "s|@VERSION@|%version|" < ntp.1 > $RPM_BUILD_ROOT%_man1dir/ntp.1
-%__install -p -m644 {ntpd,ntpdate,ntpsweep}.8 $RPM_BUILD_ROOT%_man8dir/
+install -p -m644 {ntpd,ntpdate,ntpsweep}.8 $RPM_BUILD_ROOT%_man8dir/
 find $RPM_BUILD_ROOT%_mandir -type f -regex '.*\.[1-8]$' -print0 | xargs -r0 bzip2 -9
 for f in $RPM_BUILD_ROOT%_sbindir/*; do
 	t="$RPM_BUILD_ROOT%_man8dir/${f##*/}.8.bz2"
-	[ -f "$t" ] || %__ln_s ../man1/ntp.1.bz2 "$t"
+	[ -f "$t" ] || ln -s ../man1/ntp.1.bz2 "$t"
 done
 
 # Docs.
 %define docdir %_docdir/%name-%version
-%__mkdir_p $RPM_BUILD_ROOT%docdir
+mkdir -p $RPM_BUILD_ROOT%docdir
 mv $RPM_BUILD_ROOT%_docdir/ntp  $RPM_BUILD_ROOT%docdir
 mv $RPM_BUILD_ROOT%_docdir/sntp $RPM_BUILD_ROOT%docdir
-%__cp -a COPYRIGHT NEWS TODO WHERE-TO-START README.bk README.hackers README.refclocks README.versions \
+cp -a COPYRIGHT NEWS TODO WHERE-TO-START README.bk README.hackers README.refclocks README.versions \
 	$RPM_BUILD_ROOT%docdir/
 
-%__install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_initdir/ntpd
-%__install -pD -m644 ntpd.sysconfig $RPM_BUILD_ROOT%_sysconfdir/sysconfig/ntpd
-%__install -pD -m600 %SOURCE3 $RPM_BUILD_ROOT%_sysconfdir/%name.conf
+install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_initdir/ntpd
+install -pD -m644 ntpd.sysconfig $RPM_BUILD_ROOT%_sysconfdir/sysconfig/ntpd
+install -pD -m600 %SOURCE3 $RPM_BUILD_ROOT%_sysconfdir/%name.conf
 
 # Prepare for chroot
-%__mkdir_p $RPM_BUILD_ROOT%ROOT/tmp
-%__mkdir_p $RPM_BUILD_ROOT%ROOT/%_lib
-%__install -pD -m600 %SOURCE4 $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/keys
+mkdir -p $RPM_BUILD_ROOT%ROOT/tmp
+mkdir -p $RPM_BUILD_ROOT%ROOT/%_lib
+install -pD -m600 %SOURCE4 $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/keys
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/{drift,step-tickers}
-%__ln_s ..%ROOT%_sysconfdir/%name $RPM_BUILD_ROOT%_sysconfdir/
+ln -s ..%ROOT%_sysconfdir/%name $RPM_BUILD_ROOT%_sysconfdir/
 # scripts for update_chrooted
-%__mkdir_p $RPM_BUILD_ROOT%_sysconfdir/chroot.d
-%__install -pD -m700 %SOURCE21 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.all
-%__install -pD -m700 %SOURCE22 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.conf
-%__install -pD -m700 %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.lib
+mkdir -p $RPM_BUILD_ROOT%_sysconfdir/chroot.d
+install -pD -m700 %SOURCE21 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.all
+install -pD -m700 %SOURCE22 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.conf
+install -pD -m700 %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.lib
 # ghost files from update_chrooted
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/host.conf
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/hosts
@@ -247,11 +249,11 @@ touch $RPM_BUILD_ROOT%ROOT/%_lib/libresolv.so.2
 
 %pre -n ntpdate
 /usr/sbin/groupadd -r -f ntpd
-/usr/sbin/useradd -r -g ntpd -d /dev/null -s /dev/null -n ntpd >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -g ntpd -d /dev/null -s /dev/null -N ntpd >/dev/null 2>&1 ||:
 
 %pre -n ntpd
 /usr/sbin/groupadd -r -f ntpd
-/usr/sbin/useradd -r -g ntpd -d /dev/null -s /dev/null -n ntpd >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -g ntpd -d /dev/null -s /dev/null -N ntpd >/dev/null 2>&1 ||:
 f=%r_link
 if [ -d "$f" -a ! -L "$f" ]; then
 	%__rm -rf "$f"
@@ -350,6 +352,13 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Thu Feb 11 2021 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p15-alt2
+- fixed FTBFS (applied patch from https://bugs.ntp.org/show_bug.cgi?id=3688)
+- applied Repocop's patches for specfile
+- ntp.conf
+  + updated URL with descriptions of VNIIFTRI servers
+  + added fd00::/8 to restrictions (commented out)
+
 * Wed Aug 19 2020 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p15-alt1
 - 4.2.8p15
 
