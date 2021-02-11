@@ -17,7 +17,7 @@
 
 Name: rpcs3
 Version: 0.0.14
-Release: alt3
+Release: alt4
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -90,6 +90,7 @@ BuildRequires: qt5-base-devel >= 5.15.2
 BuildRequires: subversion
 
 BuildPreReq: libswresample-devel
+BuildPreReq: python3-module-Pygments
 
 %description
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
@@ -162,6 +163,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Feb 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt4
+- Build with python3-module-Pygments
+
 * Thu Feb 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt3
 - Remove qt5 required version patch
 
