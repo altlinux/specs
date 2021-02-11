@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.0.rc2
+Version:  2.0.rc3
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -136,6 +136,10 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Thu Feb 11 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.rc3-alt1
+- Added connection autostart
+- vncviewer: added listenning mode
+
 * Mon Feb 08 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.rc2-alt1
 - Added i18n (ALT #37287)
 
