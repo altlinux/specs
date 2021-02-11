@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: evisum
-Version: 0.5.10
+Version: 0.5.11
 Release: alt1
 
 Summary: The Enlightenment system and process monitor
@@ -17,7 +17,7 @@ Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define efl_ver 1.22
+%define efl_ver 1.25.1
 
 BuildRequires(pre): meson
 BuildRequires: libelementary-devel >= %efl_ver
@@ -46,6 +46,9 @@ System and process monitor for Enlightenment
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Feb 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.11-alt1
+- 0.5.11
+
 * Mon Feb 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.10-alt1
 - 0.5.10
 

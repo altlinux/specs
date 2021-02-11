@@ -1,47 +1,27 @@
+%def_disable snapshot
 %define _name python-efl
-%define efl_ver 1.24.0
-%def_enable python2
+%define efl_ver 1.25.0
 
-Name: python-module-efl
-Version: 1.24.0
+Name: python3-module-efl
+Version: 1.25.0
 Release: alt1
 
-Summary: Python bindings for EFL libraries
-Group: Development/Python
+Summary: Python 3 bindings for EFL libraries
+Group: Development/Python3
 License: LGPLv2+
 Url: http://trac.enlightenment.org/e/wiki/Python
 
+%if_disabled snapshot
 Source: http://download.enlightenment.org/rel/bindings/python/%_name-%version.tar.xz
-#Source: %_name-%version.tar
+%else
+Vcs: https://git.enlightenment.org/bindings/python/python-efl.git
+Source: %_name-%version.tar
+%endif
 
-%setup_python_module ecore
-%setup_python_module edbus
-%setup_python_module edje
-%setup_python_module elementary
-%setup_python_module emotion
-%setup_python_module ethumb
-%setup_python_module evas
-
-Obsoletes: python-module-ecore < 1.8.0
-Provides: python-module-ecore = %version-%release
-Obsoletes: python-module-eldbus < 1.8.0
-Provides: python-module-eldbus = %version-%release
-Obsoletes: python-module-edje < 1.8.0
-Provides: python-module-edje = %version-%release
-Obsoletes: python-module-elementary < 1.8.0
-Provides: python-module-elementary = %version-%release
-Obsoletes: python-module-emotion < 1.8.0
-Provides: python-module-emotion = %version-%release
-Obsoletes: python-module-ethumb < 1.8.0
-Provides: python-module-ethumb = %version-%release
-Obsoletes: python-module-evas < 1.8.0
-Provides: python-module-evas = %version-%release
-
-BuildPreReq: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
-BuildRequires: python-module-Cython python-module-dbus-devel
-BuildRequires: rpm-build-python3 python3-devel python3-module-Cython
-# for check
-BuildRequires: python-modules-unittest
+BuildRequires(pre): rpm-build-python3
+BuildRequires: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
+BuildRequires: python3-module-dbus-devel
+BuildRequires: python3-devel python3-module-Cython
 
 %description
 EFL is a collection of libraries for handling many common tasks a
@@ -49,23 +29,10 @@ developer may have such as data structures, communication, rendering,
 widgets and more.
 
 This package provides Enlightenment Foundation Libraries bindings for use
-with Python programms.
-
-%package -n python3-module-efl
-Summary: Python3 bindings for EFL libraries
-Group: Development/Python3
-
-%description -n python3-module-efl
-EFL is a collection of libraries for handling many common tasks a
-developer may have such as data structures, communication, rendering,
-widgets and more.
-
-This package provides Enlightenment Foundation Libraries bindings for use
-with Python3 programms.
+with Python 3 programms.
 
 %prep
-%setup -n %_name-%version %{?_enable_python2:-a0
-mv %_name-%version py2build}
+%setup -n %_name-%version
 
 %build
 %ifarch %ix86
@@ -75,29 +42,11 @@ mv %_name-%version py2build}
 %endif
 
 %python3_build
-%if_enabled python2
-pushd py2build
-%python_build
-popd
-%endif
 
 %install
 %python3_install
-%if_enabled python2
-pushd py2build
-%python_install
-popd
-%endif
 
 %files
-%if_enabled python2
-%python_sitelibdir/efl/
-%python_sitelibdir/python_efl-*.egg-info
-%doc AUTHORS README* ChangeLog
-%exclude %python_sitelibdir/efl/utils/setup.py*
-%endif
-
-%files -n python3-module-efl
 %python3_sitelibdir/efl/
 %python3_sitelibdir/python_efl-*.egg-info
 %doc AUTHORS README* ChangeLog
@@ -105,6 +54,9 @@ popd
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.25.0-alt1
+- 1.25.0 (python3-only)
+
 * Tue May 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
 - 1.24.0
 
