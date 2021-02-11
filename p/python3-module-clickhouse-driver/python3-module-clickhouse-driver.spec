@@ -1,18 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define oname clickhouse-driver
 
-
 Name:       python3-module-%oname
-Version:    0.1.4
+Version:    0.2.0
 Release:    alt1
-
 License:    %mit
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
-
 Url:        https://github.com/mymarilyn/clickhouse-driver
 Source:     %name-%version.tar
-
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
@@ -60,6 +56,12 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Thu Feb 11 2021 Anton Farygin <rider@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
+* Fri Oct 02 2020 Anton Farygin <rider@altlinux.ru> 0.1.5-alt1
+- 0.1.5
+
 * Fri Jun 19 2020 Anton Farygin <rider@altlinux.ru> 0.1.4-alt1
 - 0.1.4
 
