@@ -1,13 +1,11 @@
-%define  modulename secretstorage
-
-Name:    python3-module-%modulename
-Version: 2.3.1
-Release: alt2
+Name: python3-module-secretstorage
+Version: 3.3.1
+Release: alt1
 
 Summary: Python bindings to Freedesktop.org Secret Service API
 License: BSD-3-Clause
-Group:   Development/Python3
-URL:     https://github.com/mitya57/secretstorage
+Group: Development/Python3
+Url: https://github.com/mitya57/secretstorage
 
 Packager: Gordeev Mikhail <obirvalger@altlinux.org>
 
@@ -19,7 +17,7 @@ BuildRequires: python3-dev
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source: SecretStorage-%version.tar.gz
 
 %description
 This module provides a way for securely storing passwords and other secrets.
@@ -38,7 +36,7 @@ and unlocking collections (asynchronous unlocking is also supported).
 The documentation can be found on secretstorage.readthedocs.io.
 
 %prep
-%setup -n %modulename-%version
+%setup -n SecretStorage-%version
 
 %build
 %python3_build
@@ -47,10 +45,13 @@ The documentation can be found on secretstorage.readthedocs.io.
 %python3_install
 
 %files
-%python3_sitelibdir_noarch/%modulename/
+%python3_sitelibdir_noarch/secretstorage/
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Thu Feb 11 2021 Fr. Br. George <george@altlinux.ru> 3.3.1-alt1
+- Autobuild version bump to 3.3.1
+
 * Wed Jun 28 2017 Gordeev Mikhail <obirvalger@altlinux.org> 2.3.1-alt2
 - Add rpm-build-python3 to BuildRequires(pre)
 
