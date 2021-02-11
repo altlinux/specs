@@ -1,13 +1,14 @@
 Name: procps
-Version: 3.3.16
+Version: 3.3.17
 Release: alt1
 
 Summary: System and process monitoring utilities
-License: GPLv2+, LGPLv2+
+License: GPLv2+ and LGPLv2+
 Group: Monitoring
 URL: https://gitlab.com/procps-ng/procps
 
 # git://git.altlinux.org/gears/p/procps.git
+Vcs: https://gitlab.com/procps-ng/procps.git
 Source: %name-%version-%release.tar
 
 # it is actually procps-ng
@@ -85,6 +86,7 @@ mv %buildroot%_bindir/ps %buildroot/bin/
 
 # reduce redundancy
 ln -snf pgrep %buildroot%_bindir/pkill
+ln -snf pgrep %buildroot%_bindir/pwait
 ln -snf skill %buildroot%_bindir/snice
 
 # relocate shared libraries from %_libdir/ to /%_lib/
@@ -113,6 +115,15 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Thu Feb 11 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt1
+- Fixed License tag.
+- Make pwait symlink to pgrep.
+- pgrep: Fixed program name.
+- top: Updated Qualys patch for scat().
+- watch: Dropped unused variable.
+- Added Vcs tag.
+- Updated to v3.3.17.
+
 * Mon Dec 09 2019 Mikhail Efremov <sem@altlinux.org> 3.3.16-alt1
 - Updated url.
 - Updated to v3.3.16.
