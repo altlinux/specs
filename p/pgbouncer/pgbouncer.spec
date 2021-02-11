@@ -2,7 +2,7 @@
 
 Name:       pgbouncer
 Version:    1.15.0
-Release:    alt2
+Release:    alt3
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
 Group:      Databases
@@ -54,6 +54,7 @@ tar -xf %SOURCE100 -C lib
 sed -i -e 's|/usr/bin/env python|%__python3|g' etc/mkauth.py
 
 %build
+export PYTHON=%__python3
 touch lib/mk/install-sh
 ./autogen.sh
 %configure \
@@ -108,6 +109,9 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Thu Feb 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt3
+- Use python3 for build.
+
 * Sun Feb 07 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt2
 - add /etc/sysconfig/pgbouncer
 
