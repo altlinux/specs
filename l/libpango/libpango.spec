@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -212,6 +212,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Feb 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.2-alt1
+- 1.48.2
+
 * Fri Jan 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.1-alt1
 - 1.48.1
 
