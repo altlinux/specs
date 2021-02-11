@@ -16,7 +16,7 @@
 
 Name: clamav
 Version: 0.103.1
-Release: alt1
+Release: alt2
 %define abiversion 9
 
 Summary: Clam Antivirus scanner
@@ -37,12 +37,14 @@ Source3: clamav.sysconfig
 Source4: freshclam.cron
 Source5: freshclam.logrotate
 Source6: clamav.logrotate
+Source7: clamav.tmpfiles
 
 Source10: clamav-milter.init
 Source11: clamav-milter.sysconfig
 Source12: clamav-milter.msg
 Source13: clamav-milter.whitelist
 Source14: clamav-milter.conf
+Source15: clamav-milter.service
 
 Source20: virusstat-perIP
 Source21: virusstat-perIP-PrevHour
@@ -212,12 +214,14 @@ sed "s|@clamconfdir@|%clamconfdir|" < %_sourcedir/clamav.init > %buildroot/etc/r
 sed "s|@clamconfdir@|%clamconfdir|" < %_sourcedir/clamonacc.init > %buildroot/etc/rc.d/init.d/clamonacc
 
 install -pD %_sourcedir/clamav.sysconfig %buildroot/etc/sysconfig/clamd
+install -pD -m 644 %_sourcedir/clamav.tmpfiles %buildroot%_tmpfilesdir/clamav.conf
 
 %if_with milter
 sed -e 's|@@CLAMAVCONFDIR@@|%clamconfdir|' < %_sourcedir/clamav-milter.sysconfig > %buildroot/etc/sysconfig/clamav-milter
 install -m644 %_sourcedir/clamav-milter.conf %buildroot%clamconfdir/
 rm -f %buildroot%clamconfdir/clamav-milter.conf.sample
 install -m755 %_sourcedir/clamav-milter.init %buildroot/etc/rc.d/init.d/clamav-milter
+install -m644 %_sourcedir/clamav-milter.service %buildroot%_unitdir/clamav-milter.service
 #install -m644 %_sourcedir/clamav-milter.whitelist %buildroot%clamconfdir/
 #install -m644 %_sourcedir/clamav-milter.msg %buildroot%clamconfdir/
 %endif
@@ -259,6 +263,9 @@ rm -f %buildroot/%_man8dir/clamav-milter.*
 
 %if_with systemd
 sed -i "s|@APP_CONFIG_DIRECTORY@|%clamconfdir|" %buildroot%_unitdir/clamav-clamonacc.service
+# Aliases for systemd
+ln -s clamav-daemon.service %buildroot%_unitdir/clamd.service
+ln -s clamav-clamonacc.service %buildroot%_unitdir/clamonacc.service
 %endif
 
 %pre
@@ -307,6 +314,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %config(noreplace) %verify(not md5 size mtime) %clamconfdir/clamd.conf
 %config(noreplace) %_sysconfdir/logrotate.d/clamav
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/clamd
+%_tmpfilesdir/clamav.conf
 %_man1dir/clamdscan*
 %_man1dir/clamscan*
 %_man1dir/clamsubmit*
@@ -322,6 +330,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 
 %if_with systemd
 %_unitdir/clamav-daemon.*
+%_unitdir/clamd.service
 %endif
 
 %files -n lib%{name}%{abiversion}
@@ -345,7 +354,8 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %attr(644,mail,mail) %ghost %_logdir/clamav/freshclam.log
 
 %if_with systemd
-%_unitdir/clamav-freshclam.service
+# If %_sysconfdir/cron.d/clamav-freshclam packaged, then the clamav-freshclam.service not started
+%exclude %_unitdir/clamav-freshclam.service
 %endif
 
 %files clamonacc
@@ -355,6 +365,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 
 %if_with systemd
 %_unitdir/clamav-clamonacc.*
+%_unitdir/clamonacc.service
 %endif
 
 %files -n lib%{name}-devel
@@ -375,9 +386,22 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %_man8dir/clamav-milter.*
 #config(noreplace) #verify(not md5 size mtime) %clamconfdir/clamav-milter.whitelist
 #config(noreplace) #verify(not md5 size mtime) %clamconfdir/*.msg
+
+%if_with systemd
+%_unitdir/clamav-milter.service
+%endif
+
 %endif
 
 %changelog
+* Thu Feb 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.103.1-alt2
+- Do not add clamav-freshclam.service to package (conflict with crond).
+- Sync User and socket path in clamav-daemon.socket with clamav-config.patch.
+- Add clamav-milter.service.
+- Add tmpfiles config
+- Add alias clamd.service for clamav-daemon.service
+- Add alias clamonacc.service for clamav-clamonacc.service
+
 * Fri Feb 05 2021 Sergey Y. Afonin <asy@altlinux.org> 0.103.1-alt1
 - 0.103.1
 
