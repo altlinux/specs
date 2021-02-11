@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 9.1
-Release: alt3
+Release: alt4
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -56,7 +56,7 @@ License: GPLv2+
 
 Requires(pre):    coreutils
 Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
+Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme
 %branding_add_conflicts %flavour bootloader
 
 %define grub_normal white/light-blue
@@ -98,7 +98,6 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
-Obsoletes:  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt 
 
 %branding_add_conflicts %flavour alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
@@ -118,7 +117,7 @@ License: Different licenses
 Group: Graphics
 BuildArch: noarch
 Provides: design-graphics-%theme  branding-alt-%theme-graphics
-Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme
+Obsoletes:  design-graphics-%theme
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 
 Requires(post,preun): alternatives >= 0.2
@@ -141,7 +140,7 @@ Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
 License:  GPL
 Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
-Obsoletes: %obsolete_list  branding-alt-%theme-release
+Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 
 %description release
@@ -317,6 +316,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Feb 11 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.1-alt4
+- alternatives priorities changed
+
 * Thu Jul  9 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.1-alt3
 - product version fixed
 
