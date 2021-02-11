@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -142,6 +142,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Tue Feb 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 - new devel-doc subpackage
