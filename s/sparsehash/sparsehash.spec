@@ -1,5 +1,5 @@
 Name: sparsehash
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Google's extremely memory-efficient C++ hash_map implementation
@@ -9,8 +9,8 @@ Group: Development/C++
 URL: https://github.com/%name/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/%name/%name/archive/%name-%version.tar.gz
-Source: %name-%name-%version.tar.gz
+# https://github.com/%name/%name/archive/%name-%version/%name-%name-%version.tar.gz
+Source: %name-%name-%version.tar
 
 BuildRequires: gcc-c++
 
@@ -20,27 +20,15 @@ implementations in use at Google, with different performance
 characteristics, including an implementation that optimizes for space
 and one that optimizes for speed.
 
-%package -n lib%name
+%package devel
 Summary: Google's extremely memory-efficient C++ hash_map implementation
 Group: Development/C++
-BuildArch: noarch
-Provides: libgoogle-%name = %version-%release
+Provides: libgoogle-%name = %EVR
+Provides: lib%name-devel = %EVR
 Obsoletes: libgoogle-%name <= 1.5.2
+Obsoletes: lib%name-devel <= 2.0.3
 
-%description -n lib%name
-The Google SparseHash project contains several C++ template hash-map
-implementations in use at Google, with different performance
-characteristics, including an implementation that optimizes for space
-and one that optimizes for speed.
-
-%package -n lib%name-devel
-Summary: Google's extremely memory-efficient C++ hash_map implementation
-Group: Development/C++
-Requires: lib%name
-Provides: libgoogle-%name = %version-%release
-Obsoletes: libgoogle-%name <= 1.5.2
-
-%description -n lib%name-devel
+%description devel
 The Google SparseHash project contains several C++ template hash-map
 implementations in use at Google, with different performance
 characteristics, including an implementation that optimizes for space
@@ -56,15 +44,16 @@ and one that optimizes for speed.
 %install
 %makeinstall_std
 
-%files -n lib%name
+%files devel
 %doc %_docdir/%name-2.0.2
-
-%files -n lib%name-devel
 %_includedir/google
 %_includedir/%name
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Thu Feb 11 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1
+- Version 2.0.4
+
 * Sun Nov 08 2015 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
