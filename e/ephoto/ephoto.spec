@@ -1,19 +1,25 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define beta %nil
 
 Name: ephoto
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
 License: GPLv3+
-Url: http://www.smhouston.us/%name/
+Url: https://www.smhouston.us/%name/
 
-# VCS: git://git.enlightenment.org/apps/ephoto.git
-Source: http://www.smhouston.us/stuff/%name-%version%beta.tar.xz
+%if_disabled snapshot
+Source: https://www.smhouston.us/stuff/%name-%version%beta.tar.xz
+%else
+Vcs: https://git.enlightenment.org/apps/ephoto.git
+Source: %name-%version%beta.tar
+%endif
 
-BuildRequires: libelementary-devel >= 1.18.0 libcheck-devel
+BuildRequires(pre): meson
+BuildRequires: libelementary-devel >= 1.19.0 libcheck-devel libexif-devel
 
 %description
 Photo Viewer for Enlightenment desktop.
@@ -22,14 +28,11 @@ Photo Viewer for Enlightenment desktop.
 %setup -n %name-%version%beta
 
 %build
-%autoreconf
-%configure
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -37,10 +40,13 @@ Photo Viewer for Enlightenment desktop.
 %_libdir/%name/%{name}_thumbnail
 %_datadir/%name/
 %_desktopdir/%name.desktop
-%_datadir/pixmaps/%name.png
-%doc AUTHORS ChangeLog NEWS README TODO
+%_iconsdir/%name.png
+%doc AUTHORS README TODO
 
 %changelog
+* Thu Feb 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt2
+- updated to 09873c6 (ported to Meson build system)
+
 * Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
 - 1.5
 

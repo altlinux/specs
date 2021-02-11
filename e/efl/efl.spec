@@ -2,7 +2,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.24
+%define ver_major 1.25
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -22,6 +22,7 @@
 
 %def_enable wayland
 
+# elua disabled by default
 %ifarch %luajit_arches
 %def_enable elua
 %else
@@ -34,7 +35,7 @@
 %endif
 
 Name: efl
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -232,7 +233,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %build
 %meson \
 	%{?_enable_elogind:-Delogind=true} \
-	%{?_disable_elua:-Delua=false} \
+	%{?_enable_elua:-Delua=true} \
 	%{?_enable_tslib:-Dtslib=true} \
 	%{?_enable_wayland:-Dwl=true} \
 	%{?_enable_fb:-Dfb=true} \
@@ -419,6 +420,9 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt1
+- 1.25.1
+
 * Mon Sep 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.4-alt1
 - 1.24.4
 
