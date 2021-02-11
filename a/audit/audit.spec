@@ -5,8 +5,8 @@
 %def_without prelude
 
 Name: audit
-Version: 2.8.5
-Release: alt5.git.e4021a9
+Version: 3.0
+Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -117,7 +117,6 @@ sed -i 's@RETVAL=1@&\nstart-stop-daemon -p "/var/run/auditd.pid" -u root -K -n a
 %makeinstall_std
 
 install -d %buildroot%_logdir/%name
-install -d %buildroot%_sysconfdir/audispd/plugins.d
 install -d %buildroot/%_libdir/%name
 
 #move shared library to %_lib
@@ -156,7 +155,7 @@ if [ $1 -eq 0 ]; then
 fi
 
 %files
-%doc README ChangeLog contrib rules
+%doc README ChangeLog contrib
 %config(noreplace) %_sysconfdir/cron.weekly/%{name}d
 %_initdir/%{name}d
 %attr(700,root,root) %_logdir/%name
@@ -169,8 +168,8 @@ fi
 %attr(750,root,root) /sbin/augenrules
 %attr(750,root,root) /sbin/auditd
 %attr(750,root,root) /sbin/autrace
-%attr(750,root,root) /sbin/audispd
 %attr(750,root,root) /sbin/audisp-remote
+%attr(750,root,root) /sbin/audisp-syslog
 %if_with prelude
 %attr(750,root,root) /sbin/audisp-prelude
 %endif
@@ -186,6 +185,8 @@ fi
 %_man8dir/*
 %_man7dir/*
 
+%_datadir/%name/
+
 %exclude %_sysconfdir/sysconfig/%{name}d
 %attr(700,root,root) %dir %_sysconfdir/%name
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/auditd.conf
@@ -193,13 +194,11 @@ fi
 %attr(700,root,root) %dir %_sysconfdir/%name/rules.d
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/rules.d/*.rules
 
-%attr(700,root,root) %dir %_sysconfdir/audispd
-%attr(700,root,root) %dir %_sysconfdir/audisp
-%attr(700,root,root) %dir %_sysconfdir/audisp/plugins.d
-%config(noreplace) %attr(640,root,root) /etc/audisp/*.conf
+%attr(700,root,root) %dir %_sysconfdir/audit/plugins.d
+%config(noreplace) %attr(640,root,root) /etc/audit/plugins.d/*.conf
 
-%attr(700,root,root) %dir %_sysconfdir/audispd/plugins.d
-%config(noreplace) %attr(640,root,root) /etc/audisp/plugins.d/*.conf
+%config(noreplace) %attr(640,root,root) /etc/audit/audisp-remote.conf
+%config(noreplace) %attr(640,root,root) /etc/audit/zos-remote.conf
 
 %attr(700,root,root) %dir %_libdir/audit
 /usr/libexec/service/legacy-actions/%{name}d
@@ -228,6 +227,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 11 2021 Egor Ignatov <egori@altlinux.org> 3.0-alt1
+- Update to version 3.0
+
 * Tue Oct 06 2020 Anton Farygin <rider@altlinux.ru> 2.8.5-alt5.git.e4021a9
 - enabled ELF mapping for arm and aarch64 processors
 
