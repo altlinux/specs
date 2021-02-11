@@ -17,7 +17,7 @@
 
 Name: rpcs3
 Version: 0.0.14
-Release: alt2
+Release: alt3
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -58,8 +58,7 @@ Source12: SPIRV-Tools-%spirv_tools_version.tar
 Source13: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
-Patch1: %name-alt-qt5.patch
-Patch2: %name-alt-string.patch
+Patch1: %name-alt-string.patch
 
 BuildRequires: cmake >= 3.14.1
 BuildRequires: cvs
@@ -87,7 +86,7 @@ BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-dev
 BuildRequires: python3-module-yaml
-BuildRequires: qt5-base-devel >= 5.15.1
+BuildRequires: qt5-base-devel >= 5.15.2
 BuildRequires: subversion
 
 BuildPreReq: libswresample-devel
@@ -100,7 +99,6 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %__mv -Tf ../glslang-%glslang_commit Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
@@ -164,6 +162,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Feb 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt3
+- Remove qt5 required version patch
+
 * Thu Feb 04 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt2
 - Build with system libusb
 
