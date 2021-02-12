@@ -7,7 +7,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.4.14
+Version: 7.4.15
 Release: alt1
 
 %define php7_name      %name
@@ -186,9 +186,11 @@ export LIBS CFLAGS
 sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((visibility("default"))) \2,;' ext/*/*.c
 
 %build
-# use system libtool
+# Force use of system libtool:
 libtoolize --force --copy
-cat %_datadir/libtool-2.4/aclocal/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m4 >build/libtool.m4
+cat %_datadir/libtool/aclocal/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m4 >build/libtool.m4
+
+# Regenerate configure scripts (patches change config.m4's)
 touch configure.ac
 ./buildconf --force
 
@@ -440,6 +442,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Tue Feb 09 2021 Anton Farygin <rider@altlinux.org> 7.4.15-alt1
+- 7.4.15 (Fixes: CVE-2021-21702)
+
 * Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 7.4.14-alt1
 - 7.4.14
 - built with system libtool
