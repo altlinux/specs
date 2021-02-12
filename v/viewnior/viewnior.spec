@@ -5,8 +5,8 @@
 %def_without gnome
 
 Name: viewnior
-Version: 1.6
-Release: alt2
+Version: 1.7
+Release: alt1
 
 Summary: Elegant image viewer
 License: GPLv3+
@@ -15,11 +15,14 @@ Group: Graphics
 Url: http://xsisqox.github.com/Viewnior
 Source0: %name-%version.tar.gz
 Source1: %name.watch
+Patch0:         fix-appdata.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config
 BuildRequires: gcc-c++ intltool libexiv2-devel libgtk+2-devel
+BuildRequires:  meson
 
 %if_with gnome
 BuildRequires: libGConf-devel
@@ -39,31 +42,36 @@ space for your images. Among its features are:
 
 %prep
 %setup -n Viewnior-%name-%version
+%patch0 -p1
 # fix spurious executable perms
-chmod 644 AUTHORS COPYING NEWS README TODO src/*
+chmod 644 AUTHORS COPYING NEWS README.md TODO src/*
+
 
 %build
-%autoreconf
-%configure \
-%if_with gnome
-   --enable-wallpaper
-%endif
-# this line intentionally left in
-%make_build V=1
+%meson
+
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+
+
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README.md TODO
 %_bindir/%name
 %_man1dir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_datadir/%name/
+%{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Fri Feb 12 2021 Ilya Mashkin <oddity@altlinux.ru> 1.7-alt1
+- 1.7
+
 * Mon Oct 23 2017 Michael Shigorin <mike@altlinux.org> 1.6-alt2
 - rebuilt against current libexiv2
 
