@@ -1,5 +1,5 @@
 Name: dbh
-Version: 5.0.16
+Version: 5.0.22
 Release: alt1
 
 Summary: Disk based hash library
@@ -12,7 +12,7 @@ Source: libdbh2-%version.tar.gz
 Patch0: %name-5.0.13-bigendian.patch
 
 # Automatically added by buildreq on Tue Nov 07 2006
-BuildRequires: gcc-c++ glib2-devel
+BuildRequires: gcc-c++ glib2-devel gtk-doc
 
 %description
 Disk based hashes is a method to create multidimensional binary trees on disk.
@@ -34,7 +34,7 @@ libdbh-based software.
 %package -n lib%name-devel
 Summary: Development files for libdbh
 Group: Development/C
-PreReq: lib%name = %version-%release
+#PreReq: lib%name = %version-%release
 
 %description -n lib%name-devel
 This package contains development files required for packaging
@@ -45,17 +45,19 @@ libdbh-based software.
 %patch0 -p1 -b .bigendian
 
 %build
-#autoreconf -vifs
+autoreconf -vifs
 export LDFLAGS="$LDFLAGS -lm"
 %configure \
 	--enable-debug=no \
 	--disable-rpath
+
 %make_build
 
 %install
-%makeinstall
-#mv %buildroot%_pkgconfigdir/%name.pc %buildroot%_pkgconfigdir/%name-1.0.pc
 
+#mv %buildroot%_pkgconfigdir/%{name}2.pc %buildroot%_pkgconfigdir/%name-2.0.pc
+#makeinstall
+%makeinstall_std
 mv $RPM_BUILD_ROOT/usr/share/gtk-doc .
 rm -rf $RPM_BUILD_ROOT/usr/share/dbh
 
@@ -72,6 +74,10 @@ rm -rf $RPM_BUILD_ROOT/usr/share/dbh
 %_man3dir/dbh*
 
 %changelog
+
+* Fri Feb 12 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0.22-alt1
+- 5.0.22
+
 * Sun Jan 11 2015 Ilya Mashkin <oddity@altlinux.ru> 5.0.16-alt1
 - 5.0.16
 
