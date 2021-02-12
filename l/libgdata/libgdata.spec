@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name gdata
-%define ver_major 0.17
+%define ver_major 0.18
 %define api_ver 0.0
 
 %def_enable gnome
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.13
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -145,6 +145,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.17.13-alt1
 - 0.17.13
 
