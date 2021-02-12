@@ -1,8 +1,8 @@
-Summary: Enabling/disabling Powersaving mode for AMD processors
 Name: athcool
 Version: 0.3.12
-Release: alt2
-License: GPL
+Release: alt3
+Summary: Enabling/disabling Powersaving mode for AMD processors
+License: GPL-2.0+
 Group: System/Base
 URL: http://members.jcom.home.ne.jp/jacobi/linux/softwares.html
 Packager: Mikhail Pokidko <pma@altlinux.ru>
@@ -72,6 +72,10 @@ fi
 %_sbindir/%name
 
 %changelog
+* Fri Feb 12 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.12-alt3
+- Fixed init script (ALT #17801)
+- Fixed license tag
+
 * Fri Jan 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.12-alt2
 - Fixed build with gcc10
 
