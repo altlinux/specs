@@ -2,7 +2,7 @@
 
 Name:    castxml
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
 License: Apache-2.0
@@ -19,6 +19,8 @@ BuildRequires: llvm-devel-static
 BuildRequires: clang-devel
 # Required clang libraries are built statically at the moment
 BuildRequires: clang-devel-static
+# Required clang tools are packaged separately
+BuildRequires: clang-tools clangd
 BuildRequires: libedit-devel
 BuildRequires: zlib-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
@@ -84,6 +86,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Fri Feb 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2
+- Fixed build with llvm-11.
+
 * Mon Jan 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt1
 - Updated to upstream release version 0.4.2.
 
