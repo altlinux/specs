@@ -1,9 +1,9 @@
-%def_enable clang
+%def_disable clang
 
 Summary: colorized df
 Name: cdf
 Version: 0.2
-Release: alt2
+Release: alt3
 Source0: %{name}-%{version}.tar.gz
 URL: http://bmp-plugins.berlios.de/misc/cdf/cdf.html
 License: GPL-2.0+
@@ -22,6 +22,7 @@ BuildRequires(pre): clang-devel
 %setup -q
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -41,6 +42,9 @@ export READELF="llvm-readelf"
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Fri Feb 12 2021 Leontiy Volodin <lvol@altlinux.org> 0.2-alt3
+- Built with gcc10.
+
 * Mon Jan 18 2021 Leontiy Volodin <lvol@altlinux.org> 0.2-alt2
 - Built with clang.
 
