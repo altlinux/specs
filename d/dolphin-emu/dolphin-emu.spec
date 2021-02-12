@@ -1,9 +1,9 @@
-%define git_version 13614
-%define git_commit 3e4bf57c696ed1e4f465075ae311653de2cd33b0
+%define git_version 13633
+%define git_commit 38935f2e4e93a91acebd08c51e4811e0bc487670
 
 Name: dolphin-emu
 Version: 5.0.%git_version
-Release: alt2
+Release: alt1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -18,6 +18,7 @@ ExclusiveArch: x86_64 aarch64
 Source: dolphin-%git_commit.tar
 Patch0: %name-alt-git.patch
 Patch1: %name-alt-minizip.patch
+Patch2: %name-alt-vulkan.patch
 
 BuildPreReq: libbrotli-devel
 BuildPreReq: libexpat-devel
@@ -26,6 +27,7 @@ BuildPreReq: libuuid-devel
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
+BuildRequires: glslang-devel
 BuildRequires: libSFML-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
@@ -54,6 +56,7 @@ BuildRequires: libminizip-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libspirv-tools-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libsystemd-devel
@@ -70,6 +73,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %setup -n dolphin-%git_commit
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -104,6 +108,10 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Fri Feb 12 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13633-alt1
+- Version 5.0-13633
+- Use system headers for Vulkan
+
 * Wed Feb 10 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13614-alt2
 - Build with cubeb
 
