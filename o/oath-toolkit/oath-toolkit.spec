@@ -1,9 +1,9 @@
-%def_disable pskc
+%def_enable pskc
 %def_enable pam
 
 Name: oath-toolkit
-Version: 2.6.2
-Release: alt5
+Version: 2.6.6
+Release: alt1
 Summary: Toolkit for one-time password authentication systems
 License: GPLv3+
 Group: Security/Networking
@@ -16,7 +16,7 @@ BuildRequires: libgcrypt-devel
 BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: help2man gengetopt
-%{?_enable_pskc:BuildRequires: pkgconfig(xmlsec1)}
+%{?_enable_pskc:BuildRequires: pkgconfig(xmlsec1) pkgconfig(xmlsec1-openssl)}
 %{?_enable_pam:BuildRequires: libpam-devel}
 
 %description
@@ -133,7 +133,7 @@ touch ChangeLog
   %{subst_enable pskc} \
   --disable-static
 
-# parallel build error
+# parallel build error ?
 %make
 
 %install
@@ -175,10 +175,14 @@ touch ChangeLog
 %_includedir/pskc
 %_pkgconfigdir/libpskc.pc
 #%doc %_datadir/gtk-doc/html/libpskc
-%_mani3dir/pskc_*
+%_man3dir/pskc_*
 %endif
 
 %changelog
+* Fri Feb 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.6.6-alt1
+- 2.6.6
+- enable build libpskc
+
 * Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.6.2-alt5
 - gnulib: fix fseeko with glibc 2.28
 
