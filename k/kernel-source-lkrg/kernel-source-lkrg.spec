@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20210207.993be4b
+%define module_version 0.8.1+git20210211.da571d3
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -14,7 +14,7 @@ Url:  https://www.openwall.com/lkrg/
 VCS: https://github.com/openwall/lkrg.git
 Source: %module_name-%version.tar
 
-ExclusiveArch: i586 x86_64 aarch64
+ExclusiveArch: aarch64 armh %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 %{?!_without_check:%{?!_disable_check:BuildRequires: kernel-headers-modules-un-def}}
 BuildArch: noarch
@@ -50,6 +50,10 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Feb 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210211.da571d3-alt1
+- Updated to commit da571d3e8a35b2d6ea45e760d2da27aaada5eafb.
+- Built for armh.
+
 * Mon Feb 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210207.993be4b-alt1
 - Updated to commit 993be4b6249849abdc33e18d959c29cc6a8aba9e.
 

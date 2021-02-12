@@ -1,16 +1,18 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20210207.993be4b
+%define module_version	0.8.1+git20210211.da571d3
 %define module_release	alt1
 
 %define flavour		un-def
-%define karch		%ix86 x86_64 aarch64 armh
+%define karch		aarch64 %arm %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
 # FIXME
-%if "%flavour" != "std-def"
+%if "%flavour" == "un-def" || "%flavour" == "std-debug"
+%ifarch %ix86
 %def_without check
+%endif
 %endif
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
@@ -154,18 +156,21 @@ find init fuse.ko p_lkrg.ko proc -print -depth | cpio -H newc -o | gzip -8n > in
 qemu_arch=%_arch
 qemu_opts=""
 console=ttyS0
+timeout=600
 %ifarch %ix86
 qemu_arch=i386
 %endif
 %ifarch aarch64
-qemu_opts="-machine accel=tcg,type=virt -cpu cortex-a57 -drive if=pflash,unit=0,format=raw,readonly,file=%_datadir/AAVMF/QEMU_EFI-pflash.raw"
+qemu_opts="-machine accel=tcg,type=virt -cpu cortex-a57"
+console=ttyAMA0
 %endif
 %ifarch %arm
 qemu_arch=arm
-qemu_opts="-machine virt"
+qemu_opts="-machine accel=tcg,type=virt"
 console=ttyAMA0
+timeout=1800
 %endif
-timeout --foreground 600 qemu-system-"$qemu_arch" $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img > boot.log &&
+timeout --foreground "$timeout" qemu-system-"$qemu_arch" $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img > boot.log &&
 grep -qF "LKRG initialized successfully!" boot.log &&
 grep -qF "LKRG unloaded!" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
@@ -190,6 +195,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Feb 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210207.da571d3-alt1
+- Updated to da571d3e8a35b2d6ea45e760d2da27aaada5eafb.
+- Enabled armh build (was lack of kernel-source-lkrg armh build).
+- Enable tests for all flavours but %%ix86 arch on std-debug and un-def.
+- Adjusted tests.
 
 * Mon Feb 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210207.993be4b-alt1
 - Updated to 993be4b6249849abdc33e18d959c29cc6a8aba9e.
