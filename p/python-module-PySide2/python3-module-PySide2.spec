@@ -1,6 +1,6 @@
 Name: python-module-PySide2
 Version: 5.15.0
-Release: alt3
+Release: alt4
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python
@@ -144,6 +144,9 @@ done
 # Remove pkgconfig files
 rm -f %buildroot%_libdir/pkgconfig/*.pc
 
+# Remove pkgconfig files
+rm -f %buildroot%_libdir/pkgconfig/*.pc
+
 %files
 %doc README.md
 %_libdir/libpyside2*.so.*
@@ -181,8 +184,15 @@ rm -f %buildroot%_libdir/pkgconfig/*.pc
 %python_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Fri Feb 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt4
+- merge with p9
+
 * Wed Feb 03 2021 Andrey Cherepanov <cas@altlinux.org> 5.15.0-alt3
 - Remove pkgconfig files to prevent duplicate pkgconfig provides.
+
+* Thu Jan 21 2021 Andrey Cherepanov <cas@altlinux.org> 5.12.6-alt1.1.p9
+- FTBFS: build with llvm7.0.
+- Remove pkgconfig files.
 
 * Wed Sep 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
 - update requires
