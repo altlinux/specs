@@ -1,5 +1,5 @@
 Name: xfce4-weather-plugin
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 
 Summary: Weather plugin for the Xfce panel
@@ -11,8 +11,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
+BuildRequires: libxfconf-devel
 
 BuildRequires: intltool libxml2-devel libsoup-devel libupower-devel
 
@@ -53,6 +54,9 @@ mkdir m4
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Feb 12 2021 Mikhail Efremov <sem@altlinux.org> 0.11.0-alt1
+- Updated to 0.11.0.
+
 * Tue Nov 10 2020 Mikhail Efremov <sem@altlinux.org> 0.10.2-alt1
 - Dropped exo-csource from BR.
 - Fixed sunset/sunrise time.
