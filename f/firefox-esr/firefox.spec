@@ -10,13 +10,14 @@
 %define nss_version   3.54.0
 %define rust_version  1.42.0
 %define cargo_version 1.42.0
+%define llvm_version  11.0
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox-esr
 Version: 78.7.1
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -61,10 +62,10 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: clang10.0
-BuildRequires: clang10.0-devel
-BuildRequires: llvm10.0-devel
-BuildRequires: lld10.0-devel
+BuildRequires: clang%llvm_version
+BuildRequires: clang%llvm_version-devel
+BuildRequires: llvm%llvm_version-devel
+BuildRequires: lld%llvm_version-devel
 %ifarch armh %{ix86}
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -456,6 +457,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Feb 12 2021 Andrey Cherepanov <cas@altlinux.org> 78.7.1-alt2
+- Rebuild with llvm11.0.
+
 * Fri Feb 05 2021 Andrey Cherepanov <cas@altlinux.org> 78.7.1-alt1
 - New version (78.7.1).
 - Security fixes:
