@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gnome-autoar
-%define ver_major 0.2
+%define ver_major 0.3
 %define api_ver_base 0
 %define api_ver %api_ver_base.1
 %def_disable static
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -125,6 +125,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0 (fixed CVE-2020-36241)
+
 * Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
 - 0.2.4
 
