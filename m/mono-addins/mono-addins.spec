@@ -2,7 +2,7 @@
 
 Name: mono-addins
 Version: 1.3.3
-Release: alt1
+Release: alt2
 License: MIT
 URL: http://www.go-mono.com
 Group: Development/Other
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Patch1: mono-addins-alt-build-1.patch
 Patch2: mono-addins-alt-build-2.patch
 Patch3: mono-addins-opensuse-fix-delay-sign.patch
+Patch4: mono-addins-alt-fix-mautil.patch
 
 BuildRequires(pre): rpm-build-mono
 BuildRequires: libgcc libgtk-sharp2-devel mono-devel
@@ -35,6 +36,7 @@ Development files for Mono Addin
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 ./autogen.sh
@@ -54,6 +56,9 @@ Development files for Mono Addin
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Feb 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt2
+- Fixed mautil path.
+
 * Fri Feb 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt1
 - Updated to upstream version 1.3.3 (Closes: #39460).
 
