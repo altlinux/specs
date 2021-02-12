@@ -1,12 +1,12 @@
 %define  modulename starlette
 
 Name:    python3-module-%modulename
-Version: 0.13.4
+Version: 0.14.2
 Release: alt1
 
 Summary: The little ASGI framework that shines
 
-License: BSD 3-Clause License
+License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://www.starlette.io/
 
@@ -53,5 +53,8 @@ Zero hard dependencies.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Thu Feb 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.2-alt1
+- 0.14.2
+
 * Thu May 28 2020 Vitaly Lipatov <lav@altlinux.ru> 0.13.4-alt1
 - initial build for Sisyphus

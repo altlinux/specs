@@ -1,7 +1,7 @@
 %define  modulename aiofiles
 
 Name:    python-module-%modulename
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1
 
 Summary: File support for asyncio
@@ -43,5 +43,8 @@ BuildRequires: python3-devel python3-module-setuptools
 %doc *.rst LICENSE
 
 %changelog
+* Fri Feb 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt1
+- 0.6.0
+
 * Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus

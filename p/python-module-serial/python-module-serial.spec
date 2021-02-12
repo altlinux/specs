@@ -6,7 +6,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4
+Version: 3.5
 Release: alt1
 Summary: Serial port access for python
 Summary(ru_RU.UTF-8): Доступ к последовательному порту из python
@@ -171,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.5-alt1
+- 3.5 released
+
 * Fri Oct 20 2017 Anton Midyukov <antohami@altlinux.org> 3.4-alt1
 - New version 3.4
 
