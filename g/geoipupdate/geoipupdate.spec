@@ -1,42 +1,53 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 2.5.0
+Version: 4.6.0
 Release: alt1
 
-Summary: GeoIP Database Update program
+Summary: GeoIP update client code
 Group: Networking/Other
-License: GPLv2+
+License: Apache-2.0
 URL: https://github.com/maxmind/geoipupdate
 
-Source: %url/releases/download/v%version/%name-%version.tar.gz
+Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
 
-BuildRequires: libcurl-devel zlib-devel
+BuildRequires(pre): rpm-build-golang rpm-macros-golang
+BuildRequires: pandoc
 
 %description
-The GeoIP Update program performs automatic updates of GeoIP2 and GeoIP Legacy
-binary databases.
+The GeoIP Update program performs automatic updates of GeoIP2 and
+GeoIP Legacy binary databases. CSV databases are not supported.
 
 %prep
 %setup
+%setup -a 1
 
 %build
-%configure
-%make_build
+
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="github.com/gofrs"
+export GOPATH="%go_path"
+export GOFLAGS="-mod=vendor"
+
+%golang_prepare
+
+%golang_build cmd/%name
+rm -rf $BUILDDIR/src
 
 %install
-%makeinstall_std
+export BUILDDIR="$PWD/.build"
+export GOPATH="%go_path"
+
+%golang_install
 
 %files
-%config %_sysconfdir/GeoIP.conf
-%_man5dir/GeoIP.conf.5.*
 %_bindir/%name
-%_man1dir/%name.1.*
-%doc README.* ChangeLog.* conf/GeoIP.conf.default
-
-%exclude %_datadir/doc/%name/
 
 %changelog
+* Fri Feb 12 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt1
+- Update to version 4.6.0
+
 * Fri Nov 03 2017 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
