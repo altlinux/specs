@@ -1,19 +1,23 @@
 Name: vidalia
-Version: 0.2.9
-Release: alt2.qa1
+Version: 0.3.1
+Release: alt1
 Summary: GUI controller for the Tor Onion Routing Network
 Group: Networking/Other
 License: GPLv2+
 Url: https://www.torproject.org/vidalia/
-Packager: Mykola Grechukh <gns@altlinux.ru>
 
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: https://www.torproject.org/%name/dist/%name-%version.tar
 Source1: %name.desktop
+Patch0:         vidalia-0.3.1-fix-paths.patch
+Patch1:         vidalia-0.3.1-gcc-4.7.patch
+Patch2:         vidalia-0.3.1-TorSettings.h.patch
+%set_gcc_version 5
 
 BuildRequires(pre): rpm-macros-qt4
 
 # Automatically added by buildreq on Mon Sep 27 2010 (-bb)
-BuildRequires: cmake desktop-file-utils gcc-c++ qt4-designer
+BuildRequires: cmake desktop-file-utils gcc5-c++ qt4-designer doxygen qt4-devel
 
 Requires: tor
 Requires: icon-theme-hicolor
@@ -27,8 +31,12 @@ server, if you wish.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
+
 export PATH=%_qt4dir/bin:$PATH
 # fix DSOLinking
 %__subst '/torcontrol/a \ \ z' src/vidalia/CMakeLists.txt
@@ -55,6 +63,9 @@ chmod -x contrib/*
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Feb 12 2021 Ilya Mashkin <oddity@altlinux.ru> 0.3.1-alt1
+- 0.3.1
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.9-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
