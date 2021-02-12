@@ -6,7 +6,7 @@
 
 %define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %define wpa_supplicant_version 0.7.3-alt3
-%define dhcpcd_version 9.0.0
+%define dhcpcd_version 9.3.3
 %define openresolv_version 3.5.4-alt3
 
 %def_enable systemd
@@ -55,8 +55,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.28.0
-Release: alt2%git_hash
+Version: 1.29.90
+Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -616,6 +616,14 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Feb 12 2021 Mikhail Efremov <sem@altlinux.org> 1.29.90-alt1
+- Avoid "maybe-uninitialized" warning on 32bit arches.
+- etcnet-alt: Use nm-default-daemon.h.
+- Add conflict with dhcpcd < 9.3.3.
+- etcnet-alt: Include linux/if_ether.h in tests.
+- etcnet-alt: Move to src/core/settings/ directory.
+- Updated to 1.29.90 (1.30-rc1).
+
 * Wed Dec 16 2020 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt2
 - etcnet-alt: Add test for unknown type with NM_CONTROLLED=yes.
 - etcnet-alt: Fix tests with bad type.
