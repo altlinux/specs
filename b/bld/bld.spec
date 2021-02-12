@@ -2,11 +2,11 @@
 %define bld_group bld
 %define bld_home %_localstatedir/%name
 
-%def_enable clang
+%def_disable clang
 
 Name: bld
 Version: 0.3.4.1
-Release: alt3
+Release: alt4
 
 Summary: BLD stands for "blacklist daemon" and is intended to serve a blacklist.
 Group: System/Servers
@@ -16,7 +16,9 @@ Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.conf
 # patch from debian
-Patch0: 01-fix_potential_core_dump 
+Patch0: 01-fix_potential_core_dump
+# patch from ALT
+Patch1: bld-0.3.4.1-gcc10.patch
 Packager: Alexey Morsov <swi@altlinux.ru>
 
 %if_enabled clang
@@ -40,6 +42,7 @@ See %_defaultdocdir/%name-%version/COPYRIGHT for license.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p2
 
 %build
 %if_enabled clang
@@ -95,6 +98,9 @@ rm -f %buildroot%_sbindir/bld-mrtg.pl # it's broken
 %_man8dir/*
 
 %changelog
+* Fri Feb 12 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.4.1-alt4
+- built with gcc10
+
 * Mon Jan 18 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.4.1-alt3
 - built with clang
 
