@@ -2,10 +2,12 @@
 
 # Original package name cqueues
 %define oname cqueues
-%define oversion 20190813.51-0
-%define rockspec cqueues-20190813.51-0.rockspec
+%define ver 20200726
+%define oversion %ver.51-0
+%define rockspec cqueues-%oversion.rockspec
+
 Name: lua%target_lua_version-module-%oname
-Version: 20190813
+Version: %ver
 Release: alt1
 Summary: Continuation Queues
 License: MIT
@@ -21,8 +23,8 @@ Obsoletes: lua5-%oname < %EVR
 Provides: lua5-%oname = %version
 %endif
 
-Source: https://github.com/wahern/cqueues/archive/rel-20190813.tar.gz
-Source1: https://luarocks.org/manifests/luarocks/cqueues-20190813.51-0.rockspec
+Source: https://github.com/wahern/cqueues/archive/cqueues-rel-%ver.tar.gz
+Source1: https://luarocks.org/manifests/daurnimator/%rockspec
 
 BuildRequires(pre): rpm-macros-lua >= 1.4
 BuildRequires: liblua%target_lua_version-devel lua%target_lua_version-luarocks
@@ -49,6 +51,8 @@ Embeddable asynchronous networking, threading, and notification framework for Lu
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Fri Feb 12 2021 Alexey Shabalin <shaba@altlinux.org> 20200726-alt1
+- Update to 20200726
+
 * Sat Mar 28 2020 Alexey Shabalin <shaba@altlinux.org> 20190813-alt1
 - Initial build
-
