@@ -23,7 +23,7 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.24
+Version: %ver_major.25
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -59,11 +59,13 @@ Patch1: gtk+-3.24.9-alt-build.patch
 %define cloudproviders_ver 0.2.5
 %define fribidi_ver 0.19.7
 
-Provides: libgtk3-engine-adwaita = %version-%release
+Provides: libgtk3-engine-adwaita = %EVR
 Obsoletes: libgtk3-engine-adwaita < 3.13.0
+#https://bugzilla.altlinux.org/39393
+Provides: gtk3 = %EVR
 
-Requires: %name-schemas = %version-%release
-Requires: gtk-update-icon-cache = %version-%release
+Requires: %name-schemas = %EVR
+Requires: gtk-update-icon-cache = %EVR
 Requires: icon-theme-adwaita
 # ALT #32028
 Requires: gtk+3-themes-incompatible
@@ -107,14 +109,13 @@ This package contains X11 part of GTK+. It is required for GNOME 3 desktop
 and programs.
 
 %package schemas
-Summary: GSettings schemas used by GTK+3/4
+Summary: GSettings schemas used by GTK+3
 Group: System/Libraries
 Requires: dconf
 BuildArch: noarch
 
 %description schemas
-This package provides a set of GSettings schemas for settings shared by
-GTK+3 and GTK+4.
+This package provides a set of GTK+3 GSettings schemas.
 
 %package -n gtk-update-icon-cache
 Summary: Icon theme caching utility for GTK+
@@ -128,7 +129,7 @@ a lot of system call and disk seek overhead when the application starts.
 %package devel
 Summary: Development files and tools for GTK+ applications
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gtk-builder-convert
 
 %description devel
@@ -138,7 +139,7 @@ build programs that use GTK+.
 %package -n gtk3-demo
 Summary: GTK+ widgets demonstration program
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gtk3-demo
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -168,7 +169,7 @@ This package contains sources for example programs.
 %package -n %name-devel-static
 Summary: Static libraries for GTK+ (GIMP ToolKit) applications
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n %name-devel-static
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -177,7 +178,7 @@ This package contains the static libraries for GTK+.
 %package gir
 Summary: GObject introspection data for the GTK+ library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GTK+ library
@@ -186,8 +187,8 @@ GObject introspection data for the GTK+ library
 Summary: GObject introspection devel data for the GTK+ library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GTK+ library
@@ -195,7 +196,7 @@ GObject introspection devel data for the GTK+ library
 %package -n libgail3
 Summary: Accessibility implementation for GTK+ and GNOME libraries
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n libgail3
 GAIL implements the abstract interfaces found in ATK for GTK+ and GNOME libraries,
@@ -204,8 +205,8 @@ enabling accessibility technologies such as at-spi to access those GUIs.
 %package -n libgail3-devel
 Summary: Files to compile applications that use GAIL
 Group: Development/GNOME and GTK+
-Requires: libgail3 = %version-%release
-Requires: %name-devel = %version-%release
+Requires: libgail3 = %EVR
+Requires: %name-devel = %EVR
 
 %description -n libgail3-devel
 This package contains the files required to develop applications against
@@ -214,7 +215,7 @@ the GAIL libraries.
 %package -n libgail3-devel-static
 Summary: Static libraries of GAIL
 Group: Development/GNOME and GTK+
-Requires: libgail3-devel = %version-%release
+Requires: libgail3-devel = %EVR
 
 %description -n libgail3-devel-static
 This package contains the libraries required to compile applications
@@ -236,7 +237,7 @@ This package contains development documentation for GAIL.
 %package tests
 Summary: Tests for the GTK+3 packages
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -464,6 +465,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.25-alt1
+- 3.24.25
+
 * Sun Dec 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.24-alt1
 - 3.24.24
 
