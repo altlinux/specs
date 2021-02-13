@@ -1,6 +1,6 @@
 Name: grive2
-Version: 0.5.0
-Release: alt2.1
+Version: 0.5.1
+Release: alt1
 License: GPLv2
 Group: Networking/File transfer
 Url: http://yourcmc.ru/wiki/Grive2
@@ -30,6 +30,9 @@ Grive can be considered still beta or pre-beta quality. It simply downloads all 
 %_man1dir/*
 
 %changelog
+* Sat Feb 13 2021 Fr. Br. George <george@altlinux.ru> 0.5.1-alt1
+- Autobuild version bump to 0.5.1
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
