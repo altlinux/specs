@@ -4,7 +4,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
 Version: 20201127
-Release: alt1
+Release: alt2
 Summary: AARCH64 Virtual Machine Firmware
 
 License: BSD-2-Clause-Patent
@@ -85,8 +85,8 @@ CC_FLAGS="-t %TOOL_CHAIN_TAG"
 
 # common features
 #CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
-CC_FLAGS="${CC_FLAGS} -b RELEASE"
-#CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
+#CC_FLAGS="${CC_FLAGS} -b RELEASE"
+CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
@@ -157,6 +157,9 @@ ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch6
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Sat Feb 13 2021 Alexey Shabalin <shaba@altlinux.org> 20201127-alt2
+- build with -b DEBUG
+
 * Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 20201127-alt1
 - edk2-stable202011 (Fixes: CVE-2019-14584, CVE-2019-11098)
 
