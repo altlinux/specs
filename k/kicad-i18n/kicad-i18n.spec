@@ -1,13 +1,13 @@
 Summary: Translations for kicad
 Name: kicad-i18n
-Version: 5.1.4
+Version: 5.1.9
 Release: alt1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 License: GPLv2+
 Group: Engineering
-Url: https://github.com/KiCad/kicad-i18n
+Url: https://gitlab.com/kicad/code/kicad-i18n
 BuildArch: noarch
 BuildRequires(pre): cmake rpm-macros-cmake
 
@@ -28,6 +28,10 @@ Translations for kicad
 %files -f kicad.lang
 
 %changelog
+* Sat Feb 13 2021 Anton Midyukov <antohami@altlinux.org> 5.1.9-alt1
+- new version 5.1.9
+- Update URL tag
+
 * Fri Aug 16 2019 Anton Midyukov <antohami@altlinux.org> 5.1.4-alt1
 - new version 5.1.4
 
