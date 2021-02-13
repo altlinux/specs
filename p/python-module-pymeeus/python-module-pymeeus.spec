@@ -1,9 +1,10 @@
 %define modname pymeeus
 %define _name PyMeeus
 %def_enable python2
+%def_enable check
 
 Name: python-module-%modname
-Version: 0.3.7
+Version: 0.3.13
 Release: alt1
 
 Summary: Library of astronomical algorithms in Python
@@ -17,10 +18,12 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
+%{?_enable_check:BuildRequires: python3-module-pytest}
 
 %if_enabled python2
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel python-module-setuptools
+%{?_enable_check:BuildRequires: python-module-pytest}
 %endif
 
 %description
@@ -39,7 +42,7 @@ in the classical book
 
 %prep
 %setup -n %_name-%version %{?_enable_python2:-a0
-cp -a %_name-%version py2build}
+mv %_name-%version py2build}
 
 %build
 %python3_build
@@ -59,6 +62,18 @@ pushd py2build
 popd
 %endif
 
+%check
+export PYTHONPATH=%buildroot/%python3_sitelibdir_noarch
+py.test3 tests
+
+%if_enabled python2
+pushd py2build
+export PYTHONPATH=%buildroot/%python_sitelibdir_noarch
+py.test tests
+popd
+%endif
+
+
 %if_enabled python2
 %files
 %python_sitelibdir_noarch/%modname/
@@ -72,6 +87,10 @@ popd
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Sun Feb 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
+- 0.3.13
+- enabled %%check
+
 * Thu Apr 02 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
 - 0.3.7
 - fixed License tag
