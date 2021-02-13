@@ -6,14 +6,13 @@
 Name: kicad
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Version: 5.1.6
-Release: alt1.rc1
+Version: 5.1.9
+Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 License: AGPL-3-or-later
 Group: Engineering
-Url: https://code.launchpad.net/kicad
-#Url: https://github.com/KiCad/kicad-source-mirror.git
+Url: https://gitlab.com/kicad/code/kicad.git
 
 Source: %name-%version.tar
 Source1: pcbnew.py
@@ -119,7 +118,7 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 %patch1 -p1
 %patch2 -p1
 
-%build    
+%build
 %cmake \
     -DKICAD_SCRIPTING=ON \
     -DKICAD_SCRIPTING_MODULES=ON \
@@ -171,6 +170,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/mime/packages/*
 
 %changelog
+* Sat Feb 13 2021 Anton Midyukov <antohami@altlinux.org> 1:5.1.9-alt1
+- new version 5.1.9
+
+* Mon Oct 12 2020 Anton Midyukov <antohami@altlinux.org> 1:5.1.7-alt1
+- new version 5.1.7
+
 * Mon Apr 20 2020 Anton Midyukov <antohami@altlinux.org> 1:5.1.6-alt1.rc1
 - new version 5.1.6-rc1
 - enable wxpython scripts support
