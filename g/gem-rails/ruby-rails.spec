@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.2.4.4
-Release:       alt1
+Release:       alt2
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -369,6 +369,9 @@ install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 
 
 %changelog
+* Mon Feb 15 2021 Pavel Skrylev <majioa@altlinux.org> 5.2.4.4-alt2
+- * refactoring railsctl conforming to rails foreman installation
+
 * Mon Nov 30 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.4-alt1
 - ^ 5.2.4.1 -> 5.2.4.3
 - ! CVE-2020-15169

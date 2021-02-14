@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname-compat
 Version:       1.24.3
-Release:       alt1
+Release:       alt2
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet. Compatible package
 License:       MIT
 Group:         Development/Ruby
@@ -99,7 +99,9 @@ install -dm750 %buildroot%_logdir/%pkgname \
 install -m644 %SOURCE1 %buildroot%_sysconfdir/%pkgname/config/
 install -Dm644 %SOURCE2 %buildroot%_unitdir/%pkgname.service
 install -Dm644 %SOURCE3 %buildroot%_tmpfilesdir/%pkgname.conf
-install -Dm750 %buildroot%ruby_gemlibdir/Gemfile %buildroot%_localstatedir/%pkgname/Gemfile
+#install -Dm750 %buildroot%ruby_gemlibdir/Gemfile %buildroot%_localstatedir/%pkgname/Gemfile
+install -Dm750 Gemfile %buildroot%_localstatedir/%pkgname/Gemfile
+sed "s/gemspec/gem '%gemname'/" -i %buildroot%_localstatedir/%pkgname/Gemfile
 #TODO move to setup.rb
 cp -p config/settings.d/*.yml %buildroot%_sysconfdir/%pkgname/config/settings.d
 install -Dm644 %SOURCE4 %buildroot%_sysconfdir/%pkgname/config/settings.d/puppetca_http_api.yml
@@ -142,6 +144,9 @@ rm -rf %_localstatedir/%pkgname/Gemfile.lock
 
 
 %changelog
+* Mon Feb 15 2021 Pavel Skrylev <majioa@altlinux.org> 1.24.3-alt2
+- + Gemfile to put the service up
+
 * Wed Nov 25 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.3-alt1
 - + packaged compatible gem with usage Ruby Policy 2.0
 - + explicitly the facter and other required gems to Gemfile as a patch

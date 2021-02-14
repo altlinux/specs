@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       1.4.7
-Release:       alt1
+Release:       alt2
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
 Group:         Development/Ruby
@@ -24,7 +24,27 @@ Obsoletes:     ruby-%gemname < %EVR
 Provides:      ruby-%gemname = %EVR
 
 %description
-%summary
+Dynflow [DYN(amic work)FLOW] is a workflow engine written in Ruby that allows to
+
+* keep track of the progress of running process
+* run the code asynchronously
+* resume the process when something goes wrong, skip some steps when needed
+* detect independent parts and run them concurrently
+* compose simple actions into more complex scenarios
+* extend the workflows from third-party libraries
+* keep consistency between local transactional database and external services
+* suspend the long-running steps, not blocking the thread pool
+* cancel steps when possible
+* extend the actions behavior with middlewares
+* define the input/output interface between the building blocks (planned)
+* define rollback for the workflow (planned)
+* have multiple workers for distributing the load (planned)
+
+Dynflow doesn't try to choose the best tool for the jobs, as the right tool
+depends on the context. Instead, it provides interfaces for persistence,
+transaction layer or executor implementation, giving you the last word in
+choosing the right one (providing default implementations as well).
+
 
 %description -l ru_RU.UTF8
 Движок для управления динамическим рабочим потоком.
@@ -78,7 +98,7 @@ mkdir -p %buildroot%_sharedstatedir/%pkgname %buildroot%_logdir/%pkgname %buildr
 # Add the "dynflow" user and group
 getent group dynflow >/dev/null || %_sbindir/groupadd -r dynflow
 getent passwd _dynflow >/dev/null || \
-   %_sbindir/useradd -r -g dynflow -d %_var/empty -s /bin/bash -c "Dynflow service" _dynflow
+   %_sbindir/useradd -r -g dynflow -d %_sharedstatedir/%{pkgname} -s /bin/bash -c "Dynflow service" _dynflow
 exit 0
 
 %post          -n %{pkgname}
@@ -106,6 +126,10 @@ exit 0
 
 
 %changelog
+* Wed Feb 10 2021 Pavel Skrylev <majioa@altlinux.org> 1.4.7-alt2
+- ! dynflow service to support change of uid during run
+- ! spec
+
 * Wed Dec 16 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.7-alt1
 - ^ 1.4.2 -> 1.4.7
 - * policify name
