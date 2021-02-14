@@ -1,11 +1,12 @@
-%define sover 19
+%define sover 0
 %define git %nil
 %define build_type RelWithDebInfo
 %define _cmake %cmake -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: spirv-tools
-Version: 2020.6
-Release: alt1
+Version: 2020.4
+Release: alt2
+Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
 Group: Development/C++
@@ -21,7 +22,7 @@ Patch1: %name-alt-cmake-path.patch
 BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
-BuildRequires: spirv-headers >= 1.5.4
+BuildRequires: spirv-headers >= 1.5.3
 
 %description
 The package includes an assembler, binary module parser,
@@ -61,8 +62,7 @@ integration into other code bases directly.
   -DSPIRV_WERROR=OFF \
 %endif
   -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-  -DBUILD_SHARED_LIBS:BOOL=TRUE \
-  -DSPIRV_TOOLS_BUILD_STATIC:BOOL=OFF
+  -DBUILD_SHARED_LIBS:BOOL=TRUE
 
 ninja \
   -vvv \
@@ -92,6 +92,9 @@ ninja -C BUILD install
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 1:2020.4-alt2
+- Rollback to 2020.4-alt1 (ALT #39672)
+
 * Fri Feb 05 2021 Nazarov Denis <nenderus@altlinux.org> 2020.6-alt1
 - Updated to v2020.6.
 
