@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%define lvm2version 2.03.10
-%define dmversion 1.02.173
+%define lvm2version 2.03.11
+%define dmversion 1.02.175
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -291,7 +291,7 @@ mv libdm/ioctl/libdevmapper.a .
 	%{?_enable_lvmdbusd:--enable-dbus-service} \
 	%{?_enable_vdo:--with-vdo=internal --with-vdo-format=%_bindir/vdoformat} \
 	%{?_enable_writecache:--with-writecache=internal} \
-    --with-integrity=internal \
+	--with-integrity=internal \
 	--with-dmeventd-path="%_sbindir/dmeventd" \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-tmpfilesdir=%_tmpfilesdir \
@@ -493,6 +493,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Sun Feb 14 2021 Alexey Shabalin <shaba@altlinux.org> 2.03.11-alt1
+- 2.03.11
+
 * Wed Oct 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.03.10-alt1
 - 2.03.10
 - Add provides device-mapper-* packages for RH compat.
