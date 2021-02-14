@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210111
+Version: 20210211
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,24 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Feb 14 2021 Cronbuild Service <cronbuild@altlinux.org> 20210211-alt1
+- upstream changes (GIT f7915a0):
+  + amdgpu: add initial firmware for green sardine (thx Alex Deucher)
+  + rtw88: RTL8822C: Update normal firmware to v9.9.5 (thx Zong-Zhe Yang)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2008.2304 (thx Petr Machata)
+  + add firmware for MT7921 (thx Sean Wang)
+  + rtw88: RTL8821C: Update firmware to v24.8 (thx Guo-Feng Fan)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + i915: Add DMC v2.01 for ADL-S (thx Anusha Srivatsa)
+  + i915: Add HuC v7.7.1 for DG1 (thx Anusha Srivatsa)
+  + i915: Add GuC v49.0.1 for DG1 (thx Anusha Srivatsa)
+  + qcom: Add venus firmware files for VPU-1.0 (thx Dmitry Baryshkov)
+  + qcom: Add SM8250 Compute DSP firmware (thx Dmitry Baryshkov)
+  + qcom: Add SM8250 Audio DSP firmware (thx Dmitry Baryshkov)
+  + qcom: add firmware files for Adreno a650 (thx Dmitry Baryshkov)
+
 * Sun Jan 24 2021 Cronbuild Service <cronbuild@altlinux.org> 20210111-alt1
 - upstream changes (GIT 0578970):
   + brcm: Link RPi4's WiFi firmware with DMI machine name. (thx Jeremy Linton)
