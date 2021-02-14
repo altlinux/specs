@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: A library that implements the EBU R 128 standard for loudness normalization
@@ -61,6 +61,9 @@ developing applications that use %name.
 
 
 %changelog
+* Sun Feb 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Wed Feb 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
 - 1.2.5
 
