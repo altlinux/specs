@@ -3,8 +3,9 @@
 %define git %nil
 
 Name: spirv-headers
-Version: 1.5.4
-Release: alt0.1
+Version: 1.5.3
+Release: alt0.3
+Epoch: 1
 
 Summary: machine-readable files for the SPIR-V Registry
 Group: Development/C++
@@ -44,6 +45,9 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/cmake/SPIRV-Headers/*
 
 %changelog
+* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 1:1.5.3-alt0.3
+- Rollback to 1.5.3-alt0.2 (ALT #39671)
+
 * Fri Feb 05 2021 Nazarov Denis <nenderus@altlinux.org> 1.5.4-alt0.1
 - Update to 1.5.4.raytracing.fixed
 
