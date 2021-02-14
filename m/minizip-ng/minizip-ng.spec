@@ -1,8 +1,11 @@
+%define rname minizip
 %define sover 3.0
 
-Name: minizip-ng
+%filter_from_provides /^pkgconfig(%rname)/d
+
+Name: %rname-ng
 Version: %sover.0
-Release: alt1
+Release: alt2
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
 License: Zlib
@@ -50,11 +53,11 @@ Features:
  * Recover the central directory if it is corrupt or missing.
  * Example minizip command line tool.
 
-%package -n lib%name%sover
+%package -n lib%rname%sover
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
 Group: System/Libraries
 
-%description -n lib%name%sover
+%description -n lib%rname%sover
 Fork of the popular zip manipulation library found in the zlib distribution.
 
 Features:
@@ -86,7 +89,9 @@ Features:
 Summary: Development files for %name
 Group: Development/C
 Provides: libminizip2-devel = %EVR
+Provides: pkgconfig(%name) = %version
 Obsoletes: libminizip2-devel <= 2.10.2
+Conflicts: lib%rname-devel
 
 %description -n lib%name-devel
 The package contains libraries and header files for
@@ -104,8 +109,7 @@ cmake .. \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DCMAKE_BUILD_TYPE:STRING="Release" \
-    -DBUILD_SHARED_LIBS:BOOL=TRUE \
-    -DMZ_PROJECT_SUFFIX:STRING="-ng"
+	-DBUILD_SHARED_LIBS:BOOL=TRUE
 
 popd
 
@@ -114,18 +118,22 @@ popd
 %install
 %makeinstall_std -C %_target_platform
 
-%files -n lib%name%sover
+%files -n lib%rname%sover
 %doc LICENSE README.md
-%_libdir/lib%name.so.*
+%_libdir/lib%rname.so.*
 
 %files -n lib%name-devel
 %_includedir/*.h
-%dir %_libdir/cmake/%name
-%_libdir/cmake/%name/*.cmake
-%_pkgconfigdir/%name.pc
-%_libdir/lib%name.so
+%dir %_libdir/cmake/%rname
+%_libdir/cmake/%rname/*.cmake
+%_pkgconfigdir/%rname.pc
+%_libdir/lib%rname.so
 
 %changelog
+* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt2
+- Remove library suffix from cmake
+- Remove pkgconfig(%rname) from provides in devel package
+
 * Sun Jan 24 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
 - Change name to %name
 - Version 3.0.0
