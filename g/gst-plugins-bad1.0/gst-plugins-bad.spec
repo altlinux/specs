@@ -9,7 +9,8 @@
 %def_enable vulkan
 %def_enable wayland
 %def_enable zbar
-%def_disable faad
+%def_enable faad
+%def_enable srtp
 %def_disable rtmp
 
 %ifarch x86_64
@@ -37,7 +38,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.3
-Release: alt1.1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -81,6 +82,7 @@ BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
+%{?_enable_srtp:BuildRequires: libsrtp2-devel >= 2.1.0}
 #BuildRequires: pkgconfig(wpe-webkit-1.0) pkgconfig(wpebackend-fdo-1.0)
 BuildRequires: liborc-test-devel
 %{?_enable_faad:BuildRequires: libfaad-devel}
@@ -190,6 +192,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sun Feb 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt2
+- enabled srtp plugin
+- enabled faad plugin again
+
 * Sat Feb 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt1.1
 - disabled faad plugin
 
