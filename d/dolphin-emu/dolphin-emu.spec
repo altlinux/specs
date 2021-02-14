@@ -1,5 +1,5 @@
-%define git_version 13633
-%define git_commit 38935f2e4e93a91acebd08c51e4811e0bc487670
+%define git_version 13653
+%define git_commit 8f25b0426e3663f0f5f5299f056dec682caa1763
 
 Name: dolphin-emu
 Version: 5.0.%git_version
@@ -17,8 +17,6 @@ ExclusiveArch: x86_64 aarch64
 # https://github.com/%name/dolphin/archive/%git_commit/dolphin-%git_commit.tar.gz
 Source: dolphin-%git_commit.tar
 Patch0: %name-alt-git.patch
-Patch1: %name-alt-minizip.patch
-Patch2: %name-alt-vulkan.patch
 
 BuildPreReq: libbrotli-devel
 BuildPreReq: libexpat-devel
@@ -27,7 +25,6 @@ BuildPreReq: libuuid-devel
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
-BuildRequires: glslang-devel
 BuildRequires: libSFML-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
@@ -52,11 +49,10 @@ BuildRequires: liblzma-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libmbedtls-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libminizip-devel
+BuildRequires: libminizip-ng-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libspirv-tools-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libsystemd-devel
@@ -72,8 +68,6 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %prep
 %setup -n dolphin-%git_commit
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -108,6 +102,10 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13653-alt1
+- Version 5.0.13653
+- Build with minizip-ng
+
 * Fri Feb 12 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13633-alt1
 - Version 5.0-13633
 - Use system headers for Vulkan
