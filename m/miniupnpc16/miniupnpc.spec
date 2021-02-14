@@ -1,18 +1,18 @@
-%define soversion 17
+%define rname miniupnpc
+%define soversion 16
 
-Name: miniupnpc
-Version: 2.2.1
-Release: alt1
+Name: %rname%soversion
+Version: 2.0
+Release: alt3
 
 Summary: UPnP client library
 License: BSD
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: http://miniupnp.free.fr/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# http://miniupnp.free.fr/files/%name-%version.tar.gz
-Source: %name-%version.tar
+Source: http://miniupnp.free.fr/files/%rname-%version.tar.gz
 
 BuildRequires: cmake
 
@@ -20,24 +20,16 @@ BuildRequires: cmake
 The miniupnpc library implement the UPnP protocol defined
 to dialog with Internet Gateway Devices.
 
-%package -n lib%name%soversion
+%package -n lib%rname%soversion
 Summary: UPnP client library
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%description -n lib%name%soversion
+%description -n lib%rname%soversion
 The miniupnpc library implement the UPnP protocol defined
 to dialog with Internet Gateway Devices.
 
-%package -n lib%name-devel
-Summary: Development files for %name
-Group: Development/C
-
-%description -n lib%name-devel
-Contains libraries and header files for
-developing applications that use %name.
-
 %prep
-%setup
+%setup -n %rname-%version
 
 %build
 
@@ -48,7 +40,10 @@ cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_BUILD_TYPE:STRING='Release' \
-	-DUPNPC_BUILD_STATIC:BOOL=FALSE
+	-DUPNPC_BUILD_STATIC:BOOL=FALSE \
+%if "%_lib" == "lib64"
+	-DLIB_SUFFIX=64
+%endif
 
 popd
 
@@ -56,24 +51,14 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__xz man3/%name.3
-%__install -Dp -m0644 man3/%name.3.xz %buildroot%_man3dir/%name.3.xz
 
-%files -n lib%name%soversion
+%files -n lib%rname%soversion
 %doc Changelog.txt LICENSE README VERSION
-%_libdir/lib%name.so.*
-
-%files -n lib%name-devel
-%dir %_includedir/%name
-%_includedir/%name/*.h
-%dir %_libdir/cmake/%name
-%_libdir/cmake/%name/*.cmake
-%_libdir/lib%name.so
-%_man3dir/%name.3.*
+%_libdir/lib%rname.so.*
 
 %changelog
-* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt1
-- Version 2.2.1
+* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 2.0-alt3
+- Build as legacy library
 
 * Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt2
 - fixed packaging on 64bit arches other than x86_64
