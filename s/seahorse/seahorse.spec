@@ -18,7 +18,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -108,6 +108,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Mon Feb 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Sat Nov 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0.1-alt1
 - 3.38.0.1
 
