@@ -1,11 +1,11 @@
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-%define git 65b787f
+%define git %nil
 %define sovers 0
 %def_disable static
 
 Name: libfaudio
-Version: 20.09
+Version: 21.02
 Release: alt0.1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
@@ -16,8 +16,9 @@ Url: https://github.com/FNA-XNA/FAudio
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): cmake pkgconfig
 BuildRequires: libSDL2-devel
-BuildRequires: gcc-c++ cmake chrpath
+BuildRequires: gcc-c++ chrpath
 
 Packager: L.A. Kostis <lakostis@altlinux.ru>
 
@@ -72,6 +73,7 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %_includedir/*
 %_libdir/*.so
 %_libdir/cmake/FAudio
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files -n %name-devel-static
@@ -79,6 +81,10 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Mon Feb 15 2021 L.A. Kostis <lakostis@altlinux.ru> 21.02-alt0.1
+- 21.02.
+- Add pkgconfig support.
+
 * Wed Sep 09 2020 L.A. Kostis <lakostis@altlinux.ru> 20.09-alt0.1
 - 20.09.
 - Update license tag.
