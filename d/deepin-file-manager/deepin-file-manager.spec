@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.2.0.87
-Release: alt1
+Release: alt1.1
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -216,6 +216,9 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Feb 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt1.1
+- Rebuilt with Qt 5.15.2.
+
 * Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt1
 - New version (5.2.0.87) with rpmgs script.
 
