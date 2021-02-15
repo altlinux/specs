@@ -5,7 +5,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2
 Version: 20201127
-Release: alt1
+Release: alt2
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -140,8 +140,8 @@ CC_FLAGS="-t %TOOL_CHAIN_TAG"
 
 # common features
 #CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
-CC_FLAGS="${CC_FLAGS} -b RELEASE"
-#CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
+#CC_FLAGS="${CC_FLAGS} -b RELEASE"
+CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
@@ -232,8 +232,9 @@ sh %_sourcedir/build-iso.sh ovmf-ia32/
 mkdir -p %buildroot%_datadir/qemu/firmware
 
 # shell
-install -pm0644 -D Build/Shell/RELEASE_%TOOL_CHAIN_TAG/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi \
-	%buildroot%_libdir/efi/shell.efi
+mkdir -p %buildroot%_prefix/lib64/efi
+cp Build/Shell/*/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi \
+	%buildroot%_prefix/lib64/efi/shell.efi
 
 #install OVMF
 mkdir -p %buildroot%_datadir/edk2
@@ -259,9 +260,12 @@ done
 %_datadir/qemu/firmware/*edk2-ovmf-ia32*.json
 
 %files efi-shell
-%_libdir/efi/shell.efi
+%_prefix/lib64/efi/shell.efi
 
 %changelog
+* Sat Feb 13 2021 Alexey Shabalin <shaba@altlinux.org> 20201127-alt2
+- build with -b DEBUG
+
 * Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 20201127-alt1
 - edk2-stable202011 (Fixes: CVE-2019-14584, CVE-2019-11098)
 
