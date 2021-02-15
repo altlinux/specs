@@ -1,12 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Music playing application for GNOME3
 Group: Sound
@@ -14,7 +15,7 @@ License: GPLv2+
 Url: http://wiki.gnome.org/Apps/Music
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -61,7 +62,7 @@ BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 Music playing application for GNOME3.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -84,6 +85,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Fri Mar 26 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Mar 26 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 

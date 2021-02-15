@@ -1,14 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Contacts manager for GNOME
 License: GPL-2.0-or-later
@@ -16,7 +17,7 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Contacts
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -29,10 +30,10 @@ Source: %name-%version.tar
 %define eds_ver 3.34
 %define cheese_ver 3.5.90
 %define geocode_ver 3.15.3
-%define handy_ver 1.0
+%define handy_ver 1.1.0
 
 BuildRequires(pre): meson
-BuildRequires: yelp-tools docbook-dtds docbook-style-xsl libappstream-glib-devel valadoc
+BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl libappstream-glib-devel valadoc
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libgnome-desktop3-devel
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
@@ -48,7 +49,7 @@ BuildRequires: libfolks-vala
 %name is a standalone contacts manager for GNOME desktop.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson %{?_without_cheese:-Dcheese=false}
@@ -70,9 +71,12 @@ BuildRequires: libfolks-vala
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%name.1.*
 %_datadir/metainfo/%_name.appdata.xml
-%doc AUTHORS NEWS README*
+%doc NEWS README*
 
 %changelog
+* Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Nov 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

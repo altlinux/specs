@@ -3,7 +3,8 @@
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define xdg_name org.gnome.Shell
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define gst_api_ver 1.0
 %def_disable gtk_doc
 %def_disable check
@@ -11,8 +12,8 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -20,7 +21,7 @@ License: GPL-2.0
 Url: https://wiki.gnome.org/Projects/GnomeShell
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -34,7 +35,7 @@ AutoReqProv: nopython
 
 %define session_ver 3.26
 %define clutter_ver 1.21.5
-%define gjs_ver 1.65.0
+%define gjs_ver 1.65.1
 %define mutter_ver %version
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
@@ -50,11 +51,11 @@ AutoReqProv: nopython
 %define gcr_ver 3.8
 %define atspi_ver 2.5.91
 %define menus_ver 3.5.3
-%define desktop_ver 3.8
+%define desktop_ver 3.35.90
 %define json_glib_ver 0.13.2
 %define nm_ver 1.10.4
 %define ibus_ver 1.5.2
-%define gsds_ver 3.34.0
+%define gsds_ver 40
 %define libsecret_ver 0.18
 %define croco_ver 0.6.8
 
@@ -97,7 +98,7 @@ Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
 Requires: typelib(Gst)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(Gvc)
 Requires: typelib(GWeather)
 Requires: typelib(IBus)
@@ -120,6 +121,7 @@ Requires: typelib(WebKit2)
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-build-xdg
 BuildRequires: gcc-c++ gtk-doc xsltproc asciidoc-a2x sassc
+BuildRequires: %_bindir/appstream-util desktop-file-utils
 BuildRequires: bash-completion
 BuildRequires: python3-devel
 BuildRequires: libX11-devel libXfixes-devel
@@ -127,6 +129,8 @@ BuildRequires: libmutter-devel >= %mutter_ver libmutter-gir-devel
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libgio-devel >= %gio_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
+# for Shew
+BuildRequires: libgtk4-devel libgtk4-gir-devel
 BuildRequires: at-spi2-atk-devel >= %atspi_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libxml2-devel
@@ -188,7 +192,7 @@ GNOME Shell.
 %set_typelibdir %_libdir/%name
 
 %prep
-%setup
+%setup -n %name-%version%beta
 %patch3 -b .shells
 # set full path to gsettings
 sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.service
@@ -254,6 +258,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/dbus-1/services/%xdg_name.Screencast.service
+%_datadir/dbus-1/services/org.gnome.ScreenSaver.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
 %_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
@@ -275,6 +280,12 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
+* Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 

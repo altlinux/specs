@@ -1,15 +1,19 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
+%define ver_major 40
+%define beta .alpha
 %define xdg_name org.gnome.Geary
+# see meson_options.txt
+%define profile release
+
 # Elementary OS-specific
 %def_disable contractor
 %def_enable valadoc
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major
+Release: alt0.1%beta
 
 Summary: Email client
 License: LGPL-2.1-or-later
@@ -17,17 +21,17 @@ Group: Networking/Mail
 Url: https://wiki.gnome.org/Apps/Geary
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.64
-%define vala_ver 0.48.6
-%define gtk_ver 3.24.7
+%define glib_ver 2.66
+%define vala_ver 0.48.11
+%define gtk_ver 3.24.23
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
-%define webkit_ver 2.26
+%define webkit_ver 2.30
 %define gmime_ver 3.2.4
 %define peas_ver 1.24
 
@@ -50,7 +54,7 @@ BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
 BuildRequires: libfolks-devel  libfolks-vala libenchant2-devel
 BuildRequires: libytnef-devel libdbus-devel libgspell-devel
 BuildRequires: pkgconfig(libhandy-1)
-BuildRequires: libgsound-devel
+BuildRequires: libgsound-devel libstemmer-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_valadoc:BuildRequires: valadoc}
 
@@ -62,12 +66,14 @@ Visit http://www.yorba.org to read about the current state of.
 Geary's development.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %add_optflags -I%_includedir/libytnef
-%meson %{?_enable_contractor:-Dcontractor=true} \
-	%{?_disable_libunwind:-Dlibunwind_optional=true}
+%meson  -Dprofile=%profile \
+    %{?_enable_contractor:-Dcontractor=true} \
+    %{?_disable_libunwind:-Dlibunwind_optional=true}
+%nil
 %meson_build
 
 %install
@@ -90,6 +96,9 @@ Geary's development.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.1.alpha
+- 40.alpha
+
 * Sun Feb 07 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

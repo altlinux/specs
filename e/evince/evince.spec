@@ -2,8 +2,9 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
-%define api_ver 3
+%define ver_major 40
+%define api_ver_major 3
+%define api_ver %api_ver_major.0
 %define so_ver 4
 
 %def_enable xps
@@ -17,7 +18,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: A document viewer
@@ -37,8 +38,9 @@ Requires: gvfs-backend-recent-files
 Requires: dconf
 %{?_enable_multimedia:Requires: gst-plugins-base1.0 gst-libav}
 
-%define poppler_ver 0.24.0
+%define poppler_ver 0.33
 %define gtk_ver 3.22
+%define handy_ver 1.0.0
 %define spectre_ver 0.2.0
 
 BuildRequires(pre): meson
@@ -50,6 +52,7 @@ BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
 BuildRequires: zlib-devel libsecret-devel libarchive-devel libgspell-devel
 BuildRequires: libgnome-desktop3-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_xps:BuildRequires: libgxps-devel}
 %{?_enable_t1lib:BuildRequires: t1lib-devel}
 %{?_enable_dbus:BuildRequires: libdbus-devel}
@@ -180,8 +183,8 @@ via the Evince.
 %_man1dir/*.1*
 
 %files -n lib%name
-%_libdir/libevdocument%{api_ver}.so.%{so_ver}*
-%_libdir/libevview%{api_ver}.so.3*
+%_libdir/libevdocument%{api_ver_major}.so.%{so_ver}*
+%_libdir/libevview%{api_ver_major}.so.*
 
 %files dvi
 %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
@@ -190,20 +193,20 @@ via the Evince.
 
 %files -n lib%name-devel
 %_includedir/evince
-%_libdir/libevdocument%{api_ver}.so
-%_libdir/libevview%{api_ver}.so
+%_libdir/libevdocument%{api_ver_major}.so
+%_libdir/libevview%{api_ver_major}.so
 %_pkgconfigdir/*.pc
 %_datadir/gtk-doc/html/%name
 %_datadir/gtk-doc/html/libev*
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_libdir/girepository-1.0/EvinceDocument-3.0.typelib
-%_libdir/girepository-1.0/EvinceView-3.0.typelib
+%_libdir/girepository-1.0/EvinceDocument-%api_ver.typelib
+%_libdir/girepository-1.0/EvinceView-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/EvinceDocument-3.0.gir
-%_datadir/gir-1.0/EvinceView-3.0.gir
+%_datadir/gir-1.0/EvinceDocument-%api_ver.gir
+%_datadir/gir-1.0/EvinceView-%api_ver.gir
 %endif
 
 %if_enabled browser_plugin
@@ -213,6 +216,9 @@ via the Evince.
 
 
 %changelog
+* Fri Mar 26 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Sun Feb 14 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

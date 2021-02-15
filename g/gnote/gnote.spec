@@ -1,13 +1,16 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define rdn_name org.gnome.Gnote
+%define _rdn_name org.gnome.gnote
+%define ver_major 40
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without x11_support
 %def_disable check
 
 Name: gnote
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -15,12 +18,12 @@ License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Gnote
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.20
+%define gtk_ver 3.22.20
 %define gtkmm_ver 3.18
 %define glibmm_ver 2.32
 %define gspell_ver 1.6
@@ -47,7 +50,7 @@ ideas together with Wiki style interconnects. It is a port of Tomboy to C++
 and consumes fewer resources.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %configure \
@@ -67,21 +70,27 @@ and consumes fewer resources.
 %_bindir/%name
 %_libdir/libgnote-*.so.*
 %_man1dir/%name.*
-%_desktopdir/%name.desktop
-%_datadir/%name
+%_desktopdir/%_rdn_name.desktop
+%_datadir/%name/
 %_iconsdir/hicolor/*/apps/%name.??g
-%_libdir/gnote/
-%exclude %_libdir/gnote/addins/*/*.la
-%_datadir/dbus-1/services/org.gnome.Gnote.service
-%_datadir/glib-2.0/schemas/*.xml
-%_datadir/metainfo/gnote.appdata.xml
-%_datadir/gnome-shell/search-providers/gnote-search-provider.ini
+%_libdir/%name/
+%exclude %_libdir/%name/addins/*/*.la
+%_datadir/dbus-1/services/%rdn_name.service
+%_datadir/glib-2.0/schemas/%_rdn_name.gschema.xml
+%_datadir/metainfo/%_rdn_name.appdata.xml
+%_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
 %doc README TODO NEWS AUTHORS
 
-%exclude %_libdir/libgnote.so
+%exclude %_libdir/lib%name.so
 %exclude %_libdir/%name/*/*/*.la
 
 %changelog
+* Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
+* Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Sat Jan 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

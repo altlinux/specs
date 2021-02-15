@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.34
+%define ver_major 40
 %define xdg_name org.gnome.font-viewer
 
 Name: gnome-font-viewer
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: The GNOME Font Viewer
 Group: Graphical desktop/GNOME
@@ -19,12 +19,15 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.38.0
-%define gtk_ver 3.12.0
+%define glib_ver 2.56.0
+%define gtk_ver 3.24.1
+%define handy_ver 1.0.0
 
 BuildRequires(pre): meson rpm-build-gnome
-BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libfreetype-devel libharfbuzz-devel libgnome-desktop3-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: fontconfig-devel libfreetype-devel libharfbuzz-devel
+BuildRequires: libgnome-desktop3-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 GNOME Font Viewer is a simple application to preview fonts.
@@ -51,6 +54,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
 - rebuilt against libgnome-desktop-so.19
 

@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.34
+%define ver_major 40
 %define xdg_name org.gnome.Books
 
 Name: gnome-books
 Version: %ver_major.0
-Release: alt4
+Release: alt1
 
 Summary: An e-book manager application for GNOME
 License: GPL-2.0
@@ -28,8 +28,8 @@ Source: %name-%version.tar
 %define soup_ver 2.41.3
 %define webkit_ver 2.6.0
 %define evince_ver 3.13.3
-%define tracker_api_ver 2.0
-%define tracker_ver 2.0
+%define tracker_api_ver 3.0
+%define tracker_ver 3.0
 
 Conflicts: gnome-documents < 3.31
 Requires: libgjs >= %gjs_ver
@@ -45,10 +45,9 @@ Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(Pango)
 Requires: typelib(Tracker) = %tracker_api_ver
-Requires: typelib(TrackerControl) = %tracker_api_ver
 Requires: typelib(WebKit2)
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
@@ -61,8 +60,7 @@ BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= %gi_ver
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(libsoup-2.4) >= %soup_ver
-BuildRequires: pkgconfig(tracker-control-2.0) >= %tracker_ver
-BuildRequires: pkgconfig(tracker-sparql-2.0)
+BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= %webkit_ver
 BuildRequires: pkgconfig(libgepub-0.6)
 BuildRequires: libgtk+3-gir-devel libgnome-desktop3-gir-devel libgepub-gir-devel
@@ -98,6 +96,9 @@ A simple application to access, organize and read your e-books on GNOME.
 
 
 %changelog
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt4
 - removed self-satisfied typelib(Gd/GdPrivate) from Provides/Requires
 

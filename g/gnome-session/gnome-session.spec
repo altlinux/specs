@@ -1,7 +1,8 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta .beta
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
@@ -10,8 +11,8 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major
+Release: alt0.2%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
@@ -19,7 +20,7 @@ License: GPL-2.0
 Url: https://wiki.gnome.org/Projects/SessionManagement
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -94,7 +95,7 @@ Requires: xorg-xwayland
 This package permits to log into GNOME using Wayland.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 %patch11 -p1 -b .nv30
 
 %build
@@ -111,7 +112,7 @@ export PATH=$PATH:/sbin
 %install
 %meson_install
 
-%find_lang --with-gnome --output=%name.lang %name-3.0
+%find_lang --with-gnome --output=%name.lang %name-%ver_major
 
 %check
 %meson_test
@@ -179,6 +180,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.2.beta
+- 40.beta
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

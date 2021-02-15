@@ -1,14 +1,15 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Calendar application for GNOME
 License: %gpl2plus
@@ -16,7 +17,7 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Calendar
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -30,6 +31,7 @@ BuildRequires(pre): rpm-build-licenses rpm-build-gnome meson
 %define gsds_ver 3.21.2
 %define gweather_ver 3.27.2
 %define dazzle_ver 3.33.1
+%define handy_ver 1.0.0
 
 BuildPreReq: yelp-tools libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
@@ -40,7 +42,7 @@ BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libdazzle-devel >= %dazzle_ver libgweather-devel >= %gweather_ver
 BuildRequires: libgeoclue2-devel libgeocode-glib-devel
-BuildRequires: libhandy-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
@@ -57,7 +59,7 @@ This package provides Calendar reference manual.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -88,6 +90,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Mon Mar 22 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Thu Dec 17 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

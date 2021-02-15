@@ -1,8 +1,9 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 5.0
-%define api_ver 5
+%define ver_major 5.99
+%define api_ver 6
 
 %def_enable gtk_doc
 %def_enable introspection
@@ -11,7 +12,7 @@
 %def_disable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -19,7 +20,11 @@ License: LGPL-3.0-or-later
 Group: System/Libraries
 Url:  https://wiki.gnome.org/Projects/Tepl
 
+%if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.64
 %define gtk_doc_ver 1.0
@@ -107,7 +112,7 @@ the functionality of the installed Tepl library.
 
 %files -f %_name.lang
 %_libdir/%name-%api_ver.so.*
-%doc AUTHORS NEWS README
+%doc NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -136,6 +141,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 5.99.0-alt1
+- 5.99.0 (tepl-5 -> tepl-6)
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.1-alt1
 - 5.0.1
 

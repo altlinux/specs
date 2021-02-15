@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 3.38
+%define ver_major 40
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
@@ -18,11 +18,13 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 Provides: baobab = %version-%release
 
-%define gtk_ver 3.20.0
+%define gtk_ver 3.24.1
 %define vala_ver 0.23.3
+%define handy_ver 1.0.0
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: yelp-tools xmllint libappstream-glib-devel
 BuildRequires: vala-tools >= %vala_ver gobject-introspection-devel libgtk+3-gir-devel
 
@@ -58,6 +60,9 @@ popd
 %doc README* NEWS
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

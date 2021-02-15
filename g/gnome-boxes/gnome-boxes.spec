@@ -3,13 +3,13 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
+%define ver_major 40
 %define xdg_name org.gnome.Boxes
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 %define glib_ver 2.50.0
 %define gtk_ver 3.22.20
 %define gtk_vnc_ver 0.4.4
-%define libvirt_glib_ver 3.0.0
+%define libvirt_glib_ver 4.0.0
 %define libxml2_ver 2.7.8
 %define libusb_ver 1.0.9
 %define spice_gtk_ver 0.32
@@ -76,7 +76,7 @@ BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libfreerdp-devel
 BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: pkgconfig(gtksourceview-4)
-BuildRequires: pkgconfig(libhandy-0.0)
+BuildRequires: pkgconfig(libhandy-1)
 
 %description
 gnome-boxes lets you easily create, setup, access, and use:
@@ -133,6 +133,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

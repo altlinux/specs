@@ -2,7 +2,8 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define api_ver 2.0
 
 %def_disable debug
@@ -13,8 +14,8 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.5
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -24,18 +25,18 @@ Url: https://www.gnome.org
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 
 %define gtk_ver 3.22.0
-%define glib_ver 2.54.0
-%define desktop_ver 3.30.1
+%define glib_ver 2.56.0
+%define desktop_ver 3.33.4
 %define fontconfig_ver 1.0.0
 %define gsds_ver 3.37.1
 # nm_client_get_permissions_state()
 %define nm_ver 1.24
-%define goa_ver 3.21.5
-%define acc_ver 0.6.33
+%define goa_ver 3.25.3
+%define acc_ver 0.6.39
 %define sett_daemon_ver 3.33.90
 %define cheese_ver 3.9.5
 %define bt_ver 3.18.2
@@ -44,13 +45,16 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define ibus_ver 1.5.2
 %define colord_ver 1.0
 %define pwq_ver 1.2.2
-%define upower_ver 0.99.0
+%define upower_ver 0.99.8
 %define grilo_ver 0.3.0
-%define polkit_ver 0.103
+%define polkit_ver 0.114
 %define snapd_ver 1.49
-%define malcontent_ver 0.7.0
+%define malcontent_ver 0.10.0
+%define gudev_ver 232
+%define pulse_ver 2.0
+%define nahdy_ver 1.0
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 # For /usr/share/gnome
 Requires: gnome-filesystem
@@ -77,7 +81,7 @@ BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel >= %polkit_ver
 BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
 BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
-BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel iso-codes-devel
+BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel >= %pulse_ver iso-codes-devel
 BuildRequires: libpwquality-devel >= %pwq_ver  libkrb5-devel libsmbclient-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 # for test-endianess
@@ -95,8 +99,8 @@ BuildRequires: libudisks2-devel
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
 %{?_with_snap:BuildRequires: lisnapd-glib-devel >= %snapd_ver}
 %{?_with_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
-BuildRequires: libgudev-devel libgsound-devel
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
+BuildRequires: pkgconfig(libhandy-1) >= %nahdy_ver
 BuildRequires: libepoxy-devel
 
 %description
@@ -121,7 +125,7 @@ This package provides noarch data needed for GNOME Control Center to work.
 Summary: GNOME Control Center development files
 Group: Development/GNOME and GTK+
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 If you're interested in developing panels for the GNOME control center,
@@ -130,7 +134,7 @@ you'll want to install this package.
 %name-devel helps you create the panels for the control center.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -181,6 +185,12 @@ you'll want to install this package.
 
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.5-alt1
 - 3.38.5
 

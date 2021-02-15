@@ -1,18 +1,24 @@
+%def_disable snapshot
+
 %define xdg_name org.gnome.Weather
-%define ver_major 3.36
+%define ver_major 40
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Access current weather conditions and forecasts
 Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: https://wiki.gnome.org/Apps/Weather
 
-#Source: %name-%version.tar
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -23,6 +29,7 @@ Provides:  %name-data = %version-%release
 %define gi_ver 1.36.0
 %define gjs_ver 1.50.0
 %define gweather_ver 3.28.0
+%define handy_ver 1.1.90
 
 Requires: libgweather-gir >= %gweather_ver
 Requires: geoclue2
@@ -34,13 +41,15 @@ Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(GWeather)
+Requires: typelib(Handy) = 1
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel >= %gjs_ver
 BuildRequires: libgweather-devel >= %gweather_ver pkgconfig(geoclue-2.0)
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel libgweather-gir-devel
 
 %description
@@ -50,7 +59,7 @@ access updated forecasts provided by various internet services.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -69,11 +78,16 @@ access updated forecasts provided by various internet services.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/scalable/status/*.svg
+
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Apr 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 

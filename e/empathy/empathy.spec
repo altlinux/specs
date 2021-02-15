@@ -18,10 +18,10 @@
 
 Name: empathy
 Version: %ver_major.90
-Release: alt3
+Release: alt5
 
 Summary: Instant Messaging Client for GNOME
-License: GPL/LGPL
+License: GPL-2.0 and LGPL-2.1 and GFDL-1.3 and CCPL
 Group: Networking/Instant messaging
 Url: https://live.gnome.org/Empathy
 
@@ -192,6 +192,14 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt5
+- rebuilt against folks-0.15.1 libraries
+
+* Thu Jul 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt4
+- updated to 3.25.90-79-ge6cb4c2d8
+- built against folks-0.14.0
+- fixed License tag
+
 * Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt3
 - updated to 3.25.90-67-g93588c809
 - built against folks-0.12.1

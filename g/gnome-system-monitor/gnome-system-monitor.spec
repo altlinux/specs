@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %def_enable systemd
 %def_disable wnck
 
@@ -8,14 +9,14 @@
 
 Name: gnome-system-monitor
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Simple process monitor
 License: GPL-2.0
 Group: Monitoring
 Url: https://wiki.gnome.org/Apps/SystemMonitor
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define glib_ver 2.56.0
 %define gtk_ver 3.22
@@ -39,6 +40,7 @@ BuildRequires: libgtop-devel >= %libgtop_ver
 BuildRequires: libxml2-devel >= %libxml_ver
 BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libpolkit-devel
+BuildRequires: pkgconfig(libhandy-1)
 %{?_enable_wnck:BuildRequires: libwnck3-devel >= %libwnck_ver}
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 
@@ -46,7 +48,7 @@ BuildRequires: libpolkit-devel
 Gnome-system-monitor is a simple process and system monitor.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -64,6 +66,7 @@ Gnome-system-monitor is a simple process and system monitor.
 %dir %_libexecdir/%name
 %_libexecdir/%name/gsm-kill
 %_libexecdir/%name/gsm-renice
+%_libexecdir/%name/gsm-taskset
 %_desktopdir/*
 %_datadir/%name/
 %_datadir/polkit-1/actions/org.gnome.%name.policy
@@ -74,6 +77,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

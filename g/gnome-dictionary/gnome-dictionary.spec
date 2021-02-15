@@ -1,9 +1,11 @@
-%define ver_major 3.26
+%define ver_major 40
 %define xdg_name org.gnome.Dictionary
 %define api_ver 1.0
 
+%def_enable man
+
 Name: gnome-dictionary
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome client for MIT dictionary server
@@ -18,11 +20,10 @@ Obsoletes: libgdict < %version
 %define glib_ver 2.42.0
 %define gtk_ver 3.22.7
 
-BuildPreReq: meson rpm-build-gnome yelp-tools
-BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): meson rpm-build-gnome
+BuildRequires: libappstream-glib-devel desktop-file-utils yelp-tools
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-# for man
-BuildRequires: xsltproc docbook-dtds docbook-style-xsl
+%{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
 %description
 GNOME Dictionary - look up an online dictionary for definitions and
@@ -32,7 +33,9 @@ correct spelling of words.
 %setup
 
 %build
-%meson -Denable-ipv6=true
+%meson -Denable-ipv6=true \
+    %{?_disable_man:-Dbuild_man=false}
+%nil
 %meson_build
 
 %install
@@ -46,11 +49,15 @@ correct spelling of words.
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.dictionary.gschema.xml
 %_datadir/gdict-%api_ver/
-%_datadir/appdata/%xdg_name.appdata.xml
-%_man1dir/%name.*
+%_iconsdir/hicolor/*/apps/*.svg
+%_datadir/metainfo/%xdg_name.appdata.xml
+%{?_enable_man:%_man1dir/%name.*}
 %doc NEWS README*
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sun Oct 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

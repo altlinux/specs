@@ -1,6 +1,7 @@
 %def_disable snapshot
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 0.38
+%define ver_major 0.40
 %def_disable introspection
 %def_enable gtk_doc
 %def_enable man
@@ -27,7 +28,7 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson pkgconfig(systemd)
 BuildRequires: libgio-devel >= 2.44.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.18.0}
@@ -130,6 +131,7 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_bindir/dconf
 %_libdir/gio/modules/libdconfsettings.so
 %_libexecdir/dconf-service
+%_userunitdir/%name.service
 %_datadir/dbus-1/services/ca.desrt.dconf.service
 %_rpmlibdir/update-dconf-database.filetrigger
 %dir %_sysconfdir/%name
@@ -174,6 +176,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %changelog
+* Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
+- 0.40.0
+
 * Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
 - 0.38.0
 

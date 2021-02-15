@@ -1,12 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 40
+%define beta %nil
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
 
 Name: gnome-tweaks
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
@@ -16,20 +17,23 @@ Url: https://wiki.gnome.org/Apps/Tweaks
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 Patch: %name-3.27.4-alt-desktop.patch
 
 BuildArch: noarch
+
+%define gsds_ver 40
+
 Requires: gnome-shell >= %ver_major nautilus
-Requires: gsettings-desktop-schemas-devel >= 3.27.90
-Requires: typelib(Gtk) = 3.0 typelib(Handy) = 0.0
+Requires: gsettings-desktop-schemas-devel >= %gsds_ver
+Requires: typelib(Gtk) = 3.0 typelib(Handy) = 1
 
 Provides: %old_name = %version-%release
 Obsoletes: %old_name < 3.27.4
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: gsettings-desktop-schemas-devel >= 3.27.2
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: python3-module-pygobject3-devel >= 3.10.0
 
 %description
@@ -52,7 +56,7 @@ Features:
   - Font anti-aliasing
 
 %prep
-%setup
+%setup -n %name-%version%beta
 %patch -b .desktop
 
 %build
@@ -69,11 +73,18 @@ Features:
 %python3_sitelibdir_noarch/gtweak/
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
+* Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.2.beta
+- 40.beta
+
 * Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

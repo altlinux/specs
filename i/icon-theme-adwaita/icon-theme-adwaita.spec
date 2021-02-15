@@ -1,9 +1,10 @@
 %define _name adwaita-icon-theme
-%define ver_major 3.38
+%define ver_major 40
+%define beta .rc
 
 Name: icon-theme-adwaita
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major
+Release: alt0.8%beta
 
 Summary: Adwaita icon theme
 License: CC-BY-SA-3.0 and LGPL-3.0
@@ -12,7 +13,7 @@ Url: http://www.gnome.org
 
 BuildArch: noarch
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 
 Provides: %_name = %version-%release
 Conflicts: gnome-theme-standard < 3.13.0
@@ -24,7 +25,7 @@ BuildRequires: intltool icon-naming-utils gtk-update-icon-cache
 Adwaita icon theme for GTK+.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 
 %build
 %autoreconf
@@ -42,6 +43,9 @@ Adwaita icon theme for GTK+.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Wed Mar 17 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

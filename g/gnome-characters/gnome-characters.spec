@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 3.34
+%define ver_major 40
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
 
@@ -23,8 +23,9 @@ Source: %name-%version.tar
 
 %set_typelibdir %_libdir/%xdg_name/girepository-1.0
 
-%define gjs_ver 1.44.0
+%define gjs_ver 1.50.0
 %define unistring_ver 0.9.5
+%define handy_ver 1.1
 
 Requires: libgjs >= %gjs_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -34,7 +35,8 @@ Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
+Requires: typelib(Handy) = 1
 Requires: typelib(IBus)
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
@@ -43,6 +45,7 @@ BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libappstream-glib-devel
 BuildRequires: libgtk+3-devel libgjs-devel >= %gjs_ver libdbus-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_without_included_libunistring:BuildRequires: libunistring-devel >= %unistring_ver}
 BuildRequires: gperf
 
@@ -77,6 +80,9 @@ characters.
 
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

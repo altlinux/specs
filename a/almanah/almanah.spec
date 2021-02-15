@@ -3,7 +3,7 @@
 
 Name: almanah
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Diary editor for GNOME
 License: LGPLv3+
@@ -48,6 +48,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README* AUTHORS NEWS
 
 %changelog
+* Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt2
+- rebuild against libedataserver-1.2.so.26
+
 * Fri Mar 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt1
 - 0.12.3
 

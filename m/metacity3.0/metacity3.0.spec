@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name metacity
-%define ver_major 3.38
+%define ver_major 3.40
 %define api_ver 3.0
 %def_disable static
 %def_enable vulkan
 
 Name: %_name%api_ver
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Metacity window manager
 License: GPL-2.0-or-later
@@ -90,6 +90,7 @@ This package contains the lib%name static library.
 %setup -n %_name-%version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -134,6 +135,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Fri Dec 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
 - updated to 3.38.0-3-g7e3f13a4
 

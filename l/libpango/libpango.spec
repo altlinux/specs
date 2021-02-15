@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -217,6 +217,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.4-alt1
+- 1.48.4
+
 * Fri Mar 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.3-alt1
 - updated to 1.48.3-2-gdf366de8
 

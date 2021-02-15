@@ -1,10 +1,11 @@
 %def_disable snapshot
 
 %define _name folks
-%define ver_major 0.14
-%define api_ver 0.6
+%define ver_major 0.15
+%define api_ver 0.7
 
 %def_disable libsocialweb
+# tracker support removed since 1.15.1
 %def_disable tracker
 %def_enable eds
 %def_enable bluez
@@ -12,8 +13,8 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.0
-Release: alt1.2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -26,10 +27,10 @@ Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.44.0
+%define glib_ver 2.58.0
 %define tp_glib_ver 0.19.9
 %define vala_ver 0.22.1
-%define eds_ver 3.33.2
+%define eds_ver 3.38
 %define tracker_ver 0.15.2
 %define gee_ver 0.8.4
 %define zeitgeist_ver 0.9.15
@@ -170,6 +171,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Mon Feb 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.2-alt1
+- 0.15.2
+
 * Wed Nov 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1.2
 - removed unnecessary "Provides" from -gir subpackage.
 

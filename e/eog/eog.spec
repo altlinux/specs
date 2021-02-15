@@ -1,6 +1,7 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
@@ -10,15 +11,15 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Eye Of Gnome
 License: %gpl2plus
 Group: Graphics
 Url: https://wiki.gnome.org/Apps/EyeOfGnome
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 Provides: %oldname = %version-%release
 Obsoletes: %oldname < 2.14.2-alt1
@@ -104,7 +105,7 @@ the functionality of the EOG GUI.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -139,7 +140,7 @@ the functionality of the EOG GUI.
 %_datadir/GConf/gsettings/eog.convert
 %_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS HACKING MAINTAINERS NEWS
-%doc README THANKS TODO
+%doc README* THANKS TODO
 
 %files devel
 %dir %_includedir/%name-%api_ver/%name
@@ -167,6 +168,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Feb 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

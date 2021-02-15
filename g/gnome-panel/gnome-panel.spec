@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 3.40
 %define api_ver 3.0
 %define applet_api_ver 6.0
 %define xdg_name org.gnome.gnome-panel
@@ -35,7 +35,7 @@ Source: %name-%version.tar
 %define eds_ver 3.34.0
 %define cairo_ver 1.0
 %define tp_glib_ver 0.14
-%define gweather_ver 3.28
+%define gweather_ver 3.40
 %define rsvg_ver 2.36.2
 %define gtk_doc_ver 1.24.1
 %define systemd_ver 230
@@ -209,6 +209,12 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
+* Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
+- rebuild against libedataserver-1.2.so.26
+
 * Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

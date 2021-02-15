@@ -1,22 +1,23 @@
 %set_verify_elf_method unresolved=relaxed
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _name tracker-miners
-%define ver_major 3.0
+%define ver_major 3.1
+%define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
 %define xdg_name org.freedesktop.Tracker%api_ver_major
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0 and LGPL-2.1-or-later
 Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 
 %add_findprov_lib_path %_libdir/%_name-%api_ver_major/
 
@@ -61,6 +62,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define rest_ver 0.7
 %define libosinfo_ver 0.2.9
 %define libpng_ver 0.89
+%define libcue_ver 2.0.0
 %define gst_ver 1.10
 
 Provides: tracker%api_ver_major-miners = %EVR
@@ -75,6 +77,8 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libupower-devel libstemmer-devel libicu-devel
 BuildRequires: libenca-devel libseccomp-devel libdbus-devel pkgconfig(systemd)
 BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
+# discoverer
+BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_xml:BuildRequires: libxml2-devel >= %libxml2_ver}
 %{?_enable_rss:BuildRequires: libgrss-devel >= %libgrss_ver}
 %{?_enable_libpng:BuildRequires: libpng-devel >= %libpng_ver}
@@ -91,7 +95,7 @@ BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
 %{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
 %{?_enable_docs:BuildRequires: gtk-doc docbook-utils graphviz}
 %{?_enable_libgif:BuildRequires: libgif-devel}
-%{?_enable_libcue:BuildRequires: libcue-devel}
+%{?_enable_libcue:BuildRequires: libcue-devel >= %libcue_ver }
 %{?_enable_libosinfo:BuildRequires: libosinfo-devel >= %libosinfo_ver}
 %{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel}
 %{?_enable_network_manager:BuildRequires: libnm-devel}
@@ -104,7 +108,7 @@ database, tag/metadata database, search tool and indexer.
 This package provides miners for TRacker.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 
 #fixed install_rpath for modules
 find src/ -name "meson.build" -print0 | xargs -r0 \
@@ -196,6 +200,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Mon Jan 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
 - 3.0.4
 

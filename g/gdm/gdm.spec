@@ -1,6 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta .rc
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -25,8 +26,8 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.2.1
-Release: alt1
+Version: %ver_major
+Release: alt0.8%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -34,7 +35,7 @@ URL: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -51,8 +52,8 @@ Source13: gdm-launch-environment.pam
 Source14: gdm-smartcard.pam
 Source15: gdm-fingerprint.pam
 
-Patch2: gdm-3.19.4-alt-Xsession.patch
-Patch7: gdm-3.1.92-alt-Init.patch
+Patch2: gdm-40.beta-alt-Xsession.patch
+Patch7: gdm-40.beta-alt-Init.patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %version-%release
@@ -169,10 +170,7 @@ several different X sessions on your local machine at the same time.
 This package contains user documentation for Gdm.
 
 %prep
-%setup
-# fix typo
-sed -i 's|XSession\.in|Xsession\.in|' data/meson.build
-
+%setup -n %name-%version%beta
 %patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
 
@@ -181,7 +179,7 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 
 %build
 %meson \
-	%{?_enable ipv6:-Dipv6=true} \
+	%{?_enable_ipv6:-Dipv6=true} \
 	-Dinitial-vt='%vt_nr' \
 	-Ddefault-path='/bin:/usr/bin:/usr/local/bin' \
 	-Dsysconfsubdir='X11/gdm' \
@@ -240,14 +238,13 @@ dbus-run-session %meson_test
 %_libexecdir/gdm-simple-chooser
 %_libexecdir/gdm-wayland-session
 %_libexecdir/gdm-x-session
-%_libexecdir/gdm-disable-wayland
+%_libexecdir/gdm-runtime-config
 %_pam_modules_dir/pam_gdm.so
 %_unitdir/gdm.service
 %_userunitdir/gnome-session@gnome-login.target.d/session.conf
 %doc AUTHORS NEWS README*
 
 %files data -f %name.lang
-#%config %_sysconfdir/pam.d/gdm
 %config %_sysconfdir/pam.d/gdm-autologin
 %config %_sysconfdir/pam.d/gdm-password
 %config %_sysconfdir/pam.d/gdm-launch-environment
@@ -269,12 +266,7 @@ dbus-run-session %meson_test
 %_datadir/%name/greeter-dconf-defaults
 %_datadir/gnome-session/sessions/gnome-login.session
 %_datadir/dconf/profile/%name
-#%dir %_localstatedir/log/gdm
-#%attr(775, gdm, gdm) %dir %_localstatedir/cache/gdm
 %attr(1770, gdm, gdm) %dir %_localstatedir/lib/gdm
-#%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local
-#%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
-#%attr(1777, root, gdm) %dir %_localstatedir/run/gdm
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config/pulse
 %attr(0600, gdm, gdm) %_localstatedir/lib/gdm/.config/pulse/default.pa
@@ -303,6 +295,9 @@ dbus-run-session %meson_test
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Tue Dec 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2.1-alt1
 - 3.38.2.1 (fixed CVE-2020-27837)
 

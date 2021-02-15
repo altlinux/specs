@@ -1,9 +1,9 @@
 %set_verify_elf_method rpath=relaxed
-%define ver_major 3.38
+%define ver_major 3.40
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution extension for Exchange Web Services
@@ -13,7 +13,7 @@ Url: https://wiki.gnome.org/Apps/Evolution
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define ver_base 3.38
+%define ver_base 3.40
 %define evo_ver_base %ver_base
 
 %define evolution_ver %version
@@ -77,6 +77,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 

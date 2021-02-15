@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.46
+%define ver_major 1.48
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -29,10 +29,11 @@
 %def_enable libusb
 %def_enable dnssd
 %def_enable man
+%def_enable devel_utils
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -126,96 +127,98 @@ BuildRequires:  openssh-server apache2 samba genisoimage
 Summary: Libraries and include files for developing gvfs applications
 Group: Development/GNOME and GTK+
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n fuse-%name
 Summary: gvfs fuse gateway
 Group: System/Kernel and hardware
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: %{get_dep fuse3}
 
 %package backend-smb
 Summary: Samba backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: samba-client
 
 %package backend-obexftp
 Summary: Obexftp backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package backend-dnssd
 Summary: Dnssd(avahi) backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package backend-cdda
 Summary: Music CD-ROM backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package backend-afc
 Summary: i{Phone,Pod} backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: usbmuxd
 
 %package backend-afp
 Summary: Apple Filing Protocol backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package backend-recent-files
 Summary: Recent files backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package backend-goa
 Summary: gnome-online-accounts backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gnome-online-accounts
 
 %package backend-mtp
 Summary: MTP support for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package backend-nfs
 Summary: NFS backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: nfs-clients
 Requires(post): libcap-utils
 
 %package backend-google
 Summary: Google drive backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gnome-online-accounts
 
 %package backend-admin
 Summary: Admin backend for gvfs
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: polkit
 
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
 BuildArch: noarch
-Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
-Requires: gvfs-backend-recent-files
-%{?_enable_cdda:Requires: gvfs-backend-cdda}
-%{?_enable_obexftp:Requires: gvfs-backend-obexftp}
-%{?_enable_afc:Requires: gvfs-backend-afc}
-%{?_enable_afp:Requires: gvfs-backend-afp}
-%{?_enable_goa:Requires: gvfs-backend-goa}
-%{?_enable_libmtp:Requires: gvfs-backend-mtp}
-%{?_enable_nfs:Requires: gvfs-backend-nfs}
-%{?_enable_google:Requires: gvfs-backend-google}
-%{?_enable_admin:Requires: gvfs-backend-admin}
+Requires: gvfs  = %EVR
+Requires: gvfs-backend-smb = %EVR
+Requires: gvfs-backend-dnssd = %EVR
+Requires: gvfs-backend-recent-files = %EVR
+%{?_enable_cdda:Requires: gvfs-backend-cdda = %EVR}
+%{?_enable_obexftp:Requires: gvfs-backend-obexftp = %EVR}
+%{?_enable_afc:Requires: gvfs-backend-afc = %EVR}
+%{?_enable_afp:Requires: gvfs-backend-afp = %EVR}
+%{?_enable_goa:Requires: gvfs-backend-goa = %EVR}
+%{?_enable_libmtp:Requires: gvfs-backend-mtp = %EVR}
+%{?_enable_nfs:Requires: gvfs-backend-nfs = %EVR}
+%{?_enable_google:Requires: gvfs-backend-google = %EVR}
+%{?_enable_admin:Requires: gvfs-backend-admin = %EVR}
 
 %description
 gvfs is a userspace virtual filesystem where mount runs as a separate
@@ -285,7 +288,7 @@ This virtual package contains the all backends for gvfs.
 Summary: GVFS test programms
 Group: Development/GNOME and GTK+
 BuildArch: noarch
-Requires: %name-backends = %version-%release fuse-%name
+Requires: %name-backends = %EVR fuse-%name
 
 %description tests
 The %name-tests package provides programms for testing GVFS.
@@ -318,7 +321,9 @@ The %name-tests package provides programms for testing GVFS.
         %{?_enable_systemd_login:-Dlogind=true} \
         %{?_enable_gtk_doc:-Dgtk_doc=true} \
         %{?_enable_man:-Dman=true} \
-        %{?_enable_installed_tests:-Dinstalled_tests=true}
+        %{?_enable_installed_tests:-Dinstalled_tests=true} \
+        %{?_enable_devel_utils:-Ddevel_utils=true}
+%nil
 %meson_build
 
 %install
@@ -534,6 +539,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt1
+- 1.48.0
+
 * Fri Jan 08 2021 Yuri N. Sedunov <aris@altlinux.org> 1.46.2-alt1
 - 1.46.2
 

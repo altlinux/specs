@@ -1,10 +1,11 @@
 %def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 
 Name: gnome-clocks
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Clock application designed for GNOME 3
 Group: Graphical desktop/GNOME
@@ -12,7 +13,7 @@ License: GPL-2.0
 Url: https://wiki.gnome.org/Apps/Clocks
 
 %if_disabled snapshot
-Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -22,24 +23,25 @@ Source: %name-%version.tar
 %define geocode_ver 3.18.0
 %define geoclue_ver 2.4
 %define gtk_ver 3.22.0
+%define handy_ver 1.0.0
 
 Requires: geoclue2
 
-BuildRequires(pre): meson yelp-tools
+BuildRequires(pre): meson
 BuildRequires: vala-tools glib2-devel >= %glib_ver
-BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires: libappstream-glib-devel desktop-file-utils yelp-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver libnotify-devel
 BuildRequires: libgsound-devel libgnome-desktop3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgweather-vala
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 Clock application designed for GNOME 3
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -60,6 +62,9 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Wed Sep 16 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

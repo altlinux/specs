@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.38
+%define ver_major 3.40
 %define api_ver 4
 %define xdg_name org.gnome.Sysprof%api_ver
 %define _libexecdir %_prefix/libexec
@@ -25,14 +25,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.56.0
+%define glib_ver 2.67.4
 %define gtk_ver 3.22.0
 %define systemd_ver 222
-%define dazzle_ver 3.30.0
+%define dazzle_ver 3.40
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ libappstream-glib-devel yelp-tools
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: glib2-devel >= %glib_ver libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel >= %dazzle_ver}
 %{?_with_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel}
@@ -105,6 +105,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
+- 3.40.1
+
 * Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

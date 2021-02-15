@@ -1,11 +1,11 @@
-%define ver_major 3.38
+%define ver_major 3.40
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.62.1
+%define vte_ver 0.64.0
 
 Provides: xvt
 
@@ -27,12 +27,12 @@ Requires: dconf gnome-icon-theme
 
 BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: rpm-build-gnome gnome-common intltool
-BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel docbook-style-xsl
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel docbook-style-xsl xsltproc
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libvte3-devel >= %vte_ver
-BuildRequires: libvala-devel vala-tools
-BuildRequires: gsettings-desktop-schemas-devel gnome-doc-utils-xslt libgio-devel libSM-devel
+BuildRequires: vala-tools
+BuildRequires: gsettings-desktop-schemas-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
 BuildRequires: libpcre2-devel
 %{?_with_nautilus:BuildRequires: libnautilus-devel}
@@ -105,6 +105,9 @@ EOF
 %endif
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Sat Feb 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 

@@ -4,18 +4,19 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %define _name vte
-%define ver_major 0.62
+%define ver_major 0.64
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
+%def_enable glade
 %def_enable check
-%def_enable sixel
+%def_disable sixel
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL-2.0
@@ -131,6 +132,7 @@ GObject introspection devel data for the %name library
 %meson \
 	%{?_disable introspection:-Dgir=false} \
 	%{?_enable_gtk_doc:-Ddocs=true} \
+	%{?_disable_glade:-Dglade=false} \
 	%{?_enable_sixel:-Dsixel=true}
 %nil
 %meson_build
@@ -194,6 +196,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.64.0-alt1
+- 0.64.0
+
 * Tue Feb 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.62.3-alt1
 - 0.62.3
 

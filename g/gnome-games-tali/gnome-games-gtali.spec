@@ -2,11 +2,11 @@
 
 %define _name tali
 %define xdg_name org.gnome.Tali
-%define ver_major 3.38
+%define ver_major 40
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of Yahtzee Dice Game
@@ -24,7 +24,7 @@ Provides:  gnome-games-gtali = %version-%release
 %define gtk_ver 3.16.0
 
 BuildRequires(pre): meson
-BuildRequires: vala-tools yelp-tools desktop-file-utils
+BuildRequires: yelp-tools desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 BuildRequires: libgnome-games-support-devel
@@ -55,6 +55,9 @@ include any or all of your dice.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sun Jan 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 

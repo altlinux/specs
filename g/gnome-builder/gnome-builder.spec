@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.38
+%define ver_major 3.40
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
@@ -19,7 +19,7 @@
 %def_without rls
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -35,7 +35,7 @@ Source: %name-%version.tar
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.65.0
+%define glib_ver 2.67.0
 %define gtk_ver 3.22.26
 %define gtksourceview_ver 4.6.1
 %define git2_ver 0.28.0.1
@@ -72,6 +72,7 @@ Requires: libpeas-python3-loader
 BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
 BuildRequires: ctags
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: llvm-devel clang-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
@@ -178,9 +179,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/python_gi_imports_completion.py
 %{?_with_rls:%_libdir/%name/plugins/rls.plugin
 %_libdir/%name/plugins/rls_plugin.py}
-%_libdir/%name/plugins/rustup.plugin
-%_libdir/%name/plugins/rustup_plugin.gresource
-%_libdir/%name/plugins/rustup_plugin.py
+#%_libdir/%name/plugins/rustup.plugin
+#%_libdir/%name/plugins/rustup_plugin.gresource
+#%_libdir/%name/plugins/rustup_plugin.py
 %_libdir/%name/plugins/stylelint.plugin
 %_libdir/%name/plugins/stylelint_plugin.py
 %{?_with_vala:%_libdir/%name/plugins/vala-pack.plugin
@@ -233,6 +234,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Tue Feb 02 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
