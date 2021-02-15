@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.3.1
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: AD editor
-License: GPLv2+
+License: GPLv3+
 Group: Other
 Url: https://github.com/altlinuxteam/admc
 
@@ -17,16 +17,30 @@ BuildRequires(pre): qt5-tools-devel
 BuildRequires(pre): catch2-devel
 BuildRequires(pre): cmake-modules
 
-BuildRequires: openldap-devel
+BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
+BuildRequires: libsmbclient-devel
 BuildRequires: libcmocka-devel
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
+BuildRequires: libuuid-devel
+BuildRequires: glib2-devel
+BuildRequires: libpcre-devel
+BuildRequires: libkrb5-devel
 
+Requires: libldap
 Requires: libsasl2
+Requires: libsmbclient
+Requires: libuuid
 Requires: qt5-base-common
+Requires: glib2
+Requires: libkrb5
 
 Source0: %name-%version.tar
+
+%package test
+Summary: Tests for ADMC
+Group: Other
 
 %package gpgui
 Summary: Group Policy Template Editor
@@ -34,6 +48,9 @@ Group: Other
 
 %description
 AD editor
+
+%description test
+Tests for ADMC
 
 %description gpgui
 Group Policy Template editor GUI
@@ -52,14 +69,18 @@ cd BUILD
 %files
 %doc README.md
 %_bindir/admc
-%_libdir/libadldap.so
-%_libdir/libadldap++.so
+
+%files test
+%_bindir/admc-test
 
 %files gpgui
 %_bindir/gpgui
 %_libdir/libgptbackend.so
 
 %changelog
+* Mon Feb 15 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Sun Dec 27 2020 Alexey Shabalin <shaba@altlinux.org> 0.3.1-alt2
 - Delete openldap package from requires.
 
