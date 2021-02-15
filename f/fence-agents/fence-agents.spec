@@ -6,11 +6,12 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.7.0
+Version: 4.7.1
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
 Url: http://sourceware.org/cluster/wiki/
+# Source-url: https://github.com/ClusterLabs/fence-agents/archive/v%version.tar.gz
 
 Source0: %name-%version.tar.xz
 
@@ -831,6 +832,8 @@ xz  %buildroot%_man8dir/*.8
 %_man8dir/fence_ilo4.8*
 %_sbindir/fence_ilo5
 %_man8dir/fence_ilo5.8*
+%_sbindir/fence_ipmilanplus
+%_man8dir/fence_ipmilanplus.8*
 %_sbindir/fence_imm
 %_man8dir/fence_imm.8*
 
@@ -954,6 +957,9 @@ xz  %buildroot%_man8dir/*.8
 %_man8dir/fence_zvmip.8*
 
 %changelog
+* Mon Feb 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.7.1-alt1
+- 4.7.1
+
 * Wed Dec 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.7.0-alt1
 - 4.7.0
 
