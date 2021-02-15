@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,18 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Feb 15 2021 Anton Midyukov <antohami@altlinux.org> 1.4.7-alt1
+- Add kernel modules for support Raspberry Pi 4 (mainline kernel)
+- grub: Markup configuration files for translation (thanks Ivan Razzhivin)
+- grub: Use META_VOL_ID for @distro@ instead RELNAME if available
+  (ALT bug 39611, 39612)
+- tar2fs: Enable secure-boot support for x86_64, add riscv64 support
+- Add initrd features for rootfs: kbd rdshell rootfs
+- desktop+mate: list is fixed,  as removed metapackage mate-default
+- grub: use single boot/grub/grub.cfg in ISO
+- Add support grub-pc for bootloading ISO (experimentall)
+- Removed kernel modules that haven't been built for a long time
+
 * Mon Jan 25 2021 Anton Midyukov <antohami@altlinux.org> 1.4.6-alt1
 - deepin: add Network Manager applet
 - engineering: initial as distributiv
