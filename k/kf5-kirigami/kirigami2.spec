@@ -1,7 +1,7 @@
 %define rname kirigami2
 
 Name: kf5-kirigami
-Version: 5.78.0
+Version: 5.79.0
 Release: alt1
 %K5init
 
@@ -14,7 +14,6 @@ Requires: %name-common = %version-%release
 Requires: qt5-quickcontrols2 qt5-graphicaleffects
 
 Source0: %rname-%version.tar
-Patch: alt-fix-systemsettings-crash.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-quickcontrols2-devel
@@ -61,7 +60,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch -p1
 
 %build
 %K5build
@@ -88,6 +86,9 @@ KF5 library
 %_K5lib/libKF5Kirigami2.so.*
 
 %changelog
+* Mon Feb 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.79.0-alt1
+- new version
+
 * Sun Jan 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.78.0-alt1
 - new version
 
