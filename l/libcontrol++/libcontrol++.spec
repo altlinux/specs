@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.24.1
+Version: 0.25.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,18 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Feb 15 2021 Alexey Appolonov <alexey@altlinux.org> 0.25.0-alt1
+- New function 'Join' that joins elements of an iterable;
+- New function 'Split' that splits given string into a vector of substrings;
+- New functions 'Keys' and 'KeysV' that get a set or a vector (respectively)
+  of keys of a given map;
+- New function 'GetVal' that returns a value of a given map or an empty value
+  (constructed fith a default constructor) if specified key is not found;
+- Improved capabilities of escaping of special characters;
+- Ability to pass a vector of error/warning messages to a TPrinter object;
+- Ability to handle an iterable of subpaths with the 'JoinFilePaths' function;
+- Lots of minor improvements (the code is heavily refactored, so be aware!).
+
 * Wed Jul 15 2020 Alexey Appolonov <alexey@altlinux.org> 0.24.1-alt1
 - Corrected functions 'StripPath' and 'GetWordFromLine';
 - Corrected behaviour of 'TPrinter' class in case when winsize cannot be

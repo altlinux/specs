@@ -1,4 +1,4 @@
-%define libcontrolppver 0.24
+%define libcontrolppver 0.25
 %define confdir %{_sysconfdir}/%{name}
 %define statedir %{_localstatedir}/%{name}
 %define ulim_statedir %{statedir}/ulimits
@@ -6,8 +6,8 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.20.3
-Release: alt3
+Version: 0.20.4
+Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
@@ -111,6 +111,10 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Jan 21 2021 Alexey Appolonov <alexey@altlinux.org> 0.20.4-alt1
+- Build with new version of libcontrol++ (the code was heavily refactored,
+  so be aware!).
+
 * Wed Oct 07 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.3-alt3
 - Modified script of whitelist-formation that enables an ability to exclude
   certain directories from a search of system executable files by listing
