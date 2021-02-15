@@ -1,6 +1,6 @@
 Name: procps
 Version: 3.3.17
-Release: alt1
+Release: alt2
 
 Summary: System and process monitoring utilities
 License: GPLv2+ and LGPLv2+
@@ -86,7 +86,7 @@ mv %buildroot%_bindir/ps %buildroot/bin/
 
 # reduce redundancy
 ln -snf pgrep %buildroot%_bindir/pkill
-ln -snf pgrep %buildroot%_bindir/pwait
+ln -snf pgrep %buildroot%_bindir/pidwait
 ln -snf skill %buildroot%_bindir/snice
 
 # relocate shared libraries from %_libdir/ to /%_lib/
@@ -115,6 +115,10 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Mon Feb 15 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt2
+- Patch from upstream:
+  + pidwait: Rename from pwait.
+
 * Thu Feb 11 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt1
 - Fixed License tag.
 - Make pwait symlink to pgrep.
