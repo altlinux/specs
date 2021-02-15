@@ -12,8 +12,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.22
-Release: alt2
+Version: 8.0.23
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -790,6 +790,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Tue Feb 09 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.23-alt1
+- new version
+
 * Thu Dec 24 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.22-alt2
 - fix FTBFS against glibc 2.32 (Sun RPC is removed from glibc)
   + spec: add libtirpc-devel and rpcgen to BR:
