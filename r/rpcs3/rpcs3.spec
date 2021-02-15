@@ -1,3 +1,5 @@
+%def_enable clang
+
 %define git_ver 11506
 %define git_commit 2b8eb8deb6e86deca9c677c8b300da3762532075
 
@@ -17,7 +19,7 @@
 
 Name: rpcs3
 Version: 0.0.14
-Release: alt4
+Release: alt5
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -82,6 +84,11 @@ BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libxml2-devel
+%if_enabled clang
+BuildRequires: llvm-common-clang >= 11.0.0
+BuildRequires: llvm-common-lld >= 11.0.0
+BuildRequires: llvm-common-util >= 11.0.0
+%endif
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-dev
@@ -130,28 +137,39 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export LINKER="lld"
+export AR="llvm-ar"
+export RANLIB="llvm-ranlib"
+%else
+export CC="gcc"
+export CXX="g++"
+export LINKER="ld"
+export AR="ar"
+export RANLIB="ranlib"
+%endif
 
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING=Release \
-	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
+%cmake \
+	-DCMAKE_LINKER:STRING="$LINKER" \
+	-DCMAKE_AR:STRING="$AR" \
+	-DCMAKE_RANLIB:STRING="$RANLIB" \
 	-DUSE_NATIVE_INSTRUCTIONS:BOOL=FALSE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
 	-DUSE_SYSTEM_CURL:BOOL=TRUE \
 	-DUSE_SYS_LIBUSB:BOOL=TRUE \
+%if_enabled clang
+	-DLLVM_USE_LINKER:STRING="$LINKER" \
+%endif
 	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
-popd
 
-%make_build -C %_target_platform
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 
 %files
 %doc LICENSE README.md
@@ -163,6 +181,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Feb 15 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt5
+- Build with clang
+
 * Thu Feb 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt4
 - Build with python3-module-Pygments
 
