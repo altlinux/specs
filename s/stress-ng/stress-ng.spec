@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: stress-ng
-Version: 0.12.02
-Release: alt2
+Version: 0.12.03
+Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -27,14 +27,14 @@ BuildRequires: libseccomp-devel
 BuildRequires: zlib-devel
 
 %description
-Stress-ng will stress test a computer system in various selectable ways. It was
+stress-ng will stress test a computer system in various selectable ways. It was
 designed to exercise various physical subsystems of a computer as well as the
 various operating system kernel interfaces. Stress-ng features:
 
-* over 240 stress tests;
-* 78 CPU specific stress tests that exercise floating point, integer,
-  bit manipulation and control flow;
-* over 20 virtual memory stress tests;
+* 250 stress tests
+* 80+ CPU specific stress tests that exercise floating point, integer,
+  bit manipulation and control flow
+* over 20 virtual memory stress tests
 * portable: builds on Linux, etc.
 
 %prep
@@ -60,14 +60,16 @@ SEGFAULT_SIGNALS="segv abrt" LD_PRELOAD=libSegFault.so time timeout -s6 300 make
 banner done
 
 %files
-%doc COPYING
-%doc README
+%doc COPYING README
 %_bindir/stress-ng
 %_datadir/bash-completion/completions/stress-ng
-%_datadir/stress-ng/
-%_mandir/man1/stress-ng.1.*
+%_datadir/stress-ng
+%_mandir/man1/stress-ng.1*
 
 %changelog
+* Mon Feb 15 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.03-alt1
+- Update to V0.12.03 (2021-02-13).
+
 * Tue Jan 26 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.02-alt2
 - spec: Use libSegFault directly instead of catchsegv.
 
