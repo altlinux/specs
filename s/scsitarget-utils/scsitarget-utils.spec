@@ -8,7 +8,7 @@
 %endif
 
 Name: scsitarget-utils
-Version: 1.0.79
+Version: 1.0.80
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
@@ -81,6 +81,8 @@ Adds support for the Gluster glfs backstore to scsi-target-utils.
 
 %build
 %__subst 's|-g -O2 -Wall|%optflags|' Makefile
+# to prevent race with mkdir() in xsltproc:
+%__mkdir -p doc/htmlpages
 %make_build \
 	%{?_with_rdma:ISCSI_RDMA=1} \
 	%{?_with_rbd:CEPH_RBD=1} \
@@ -155,6 +157,9 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Mon Feb 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.80-alt1
+- 1.0.80
+
 * Thu Sep 17 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.0.79-alt1
 - 1.0.79
 - enable build with glusterfs
