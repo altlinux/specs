@@ -1,7 +1,7 @@
 %define rname kmediaplayer
 
 Name: kf5-%rname
-Version: 5.78.0
+Version: 5.79.0
 Release: alt1
 %K5init altplace
 
@@ -78,6 +78,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Feb 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.79.0-alt1
+- new version
+
 * Sun Jan 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.78.0-alt1
 - new version
 
