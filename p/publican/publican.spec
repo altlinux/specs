@@ -31,7 +31,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt3_13
+Release:        alt3_13.1
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -47,9 +47,6 @@ Obsoletes:      perl-Publican-WebSite
 Obsoletes:      publican-WebSite-obsoletes
 Conflicts:      perl-Publican-WebSite
 Conflicts:      publican-WebSite-obsoletes
-
-## work around arch -> noarch bug in yum
-Obsoletes:      publican < 3
 
 BuildRequires:  perl(Devel/Cover.pm)
 BuildRequires:  perl(Module/Build.pm)
@@ -194,7 +191,6 @@ your XML is up to publishable standard.
 Group: Documentation
 Summary:        Documentation for the Publican package
 Requires:       xdg-utils
-Obsoletes:      publican-doc < 3
 BuildArch: noarch
 
 %description doc
@@ -337,6 +333,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Sun Feb 14 2021 Ivan A. Melnikov <iv@altlinux.org> 4.3.2-alt3_13.1
+- drop self-obsoletes
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt3_13
 - update to new release by fcimport
 
