@@ -3,7 +3,7 @@
 
 Name: python3-module-PySide2
 Version: 5.15.0
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -189,6 +189,12 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Fri Feb 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt3
+- merge with p9
+
+* Thu Jan 21 2021 Andrey Cherepanov <cas@altlinux.org> 5.12.6-alt0.2.p9
+- FTBFS: build with llvm7.0.
+
 * Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
 - use g++ on p9
 
