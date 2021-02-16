@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Tk
 Name: perl-%dist
-Version: 804.035
+Version: 804.036
 Release: alt1
 
 Summary: Perl modules providing the Tk graphics library
@@ -119,6 +119,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Tk/demos/widtrib/
 
 %changelog
+* Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 804.036-alt1
+- new version
+
 * Wed Sep 02 2020 Igor Vlasenko <viy@altlinux.ru> 804.035-alt1
 - new version
 
