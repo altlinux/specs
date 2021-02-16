@@ -2,7 +2,7 @@
 %define module DateTime-Format-ISO8601
 
 Name: perl-%module
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Perl module that parses ISO8601 formats
@@ -34,6 +34,9 @@ Perl module that parses almost all ISO8601 date and time formats.
 %perl_vendor_privlib/DateTime/*
 
 %changelog
+* Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Sun Nov 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
