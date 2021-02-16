@@ -2,7 +2,7 @@
 %define module_name Graphics-TIFF
 
 Name: perl-Graphics-TIFF
-Version: 8
+Version: 9
 Release: alt1
 
 Summary: Perl extension for the libtiff library
@@ -39,6 +39,9 @@ Find out more about libtiff at http://www.libtiff.org.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 9-alt1
+- new version
+
 * Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 8-alt1
 - new version
 
