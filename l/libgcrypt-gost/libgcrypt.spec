@@ -6,7 +6,7 @@
 
 Name: libgcrypt-gost
 Version: 1.8.5
-Release: alt5
+Release: alt6
 
 %define soname %{name}%{soversion}
 
@@ -47,7 +47,7 @@ based on the code from GNU Privacy Guard.
 Summary: The GNU crypto library
 Group: System/Libraries
 Requires: libgpg-error >= %req_gpgerror_ver
-Conflicts: libgcrypt%{soversion}
+#Conflicts: libgcrypt%{soversion}
 Provides: libgcrypt = %version-%release
 # GOST provides
 Provides: libgcrypt(vko) = %vko_ver
@@ -60,7 +60,7 @@ based on the code from GNU Privacy Guard.
 %package -n %soname-pth
 Summary: GNU Crypto library with GNU Pth user-space thread support
 Group: System/Libraries
-Conflicts: libgcrypt%{soversion}-pth
+#Conflicts: libgcrypt%{soversion}-pth
 Requires: libgpg-error >= %req_gpgerror_ver
 %description -n %soname-pth
 This is a portion of Libgcrypt supporting user-space
@@ -192,6 +192,10 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Tue Feb 16 2021 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt6
+- Removed explicit conflict with libgcrypt20 and libgcrypt20-pth
+  (closes: 39694).
+
 * Mon Dec 28 2020 Alexey Gladkov <legion@altlinux.ru> 1.8.5-alt5
 - NMU.
 - Renamed to libgcrypt-gost.
