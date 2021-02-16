@@ -1,6 +1,6 @@
 Name: alsa-plugins
 Version: 1.2.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -53,6 +53,10 @@ ALSA pulseaudio plugin
 # drop unneeded files
 find %buildroot%_libdir/alsa-lib/ -name '*.la' -delete
 
+# install configs from Debian
+install -D pulse-alsa.conf %buildroot%_datadir/alsa/pulse-alsa.conf
+install -D pulse.conf %buildroot%_datadir/alsa/alsa.conf.d/99-pulse.conf
+
 # turn symlinks into relative ones
 find %buildroot%_sysconfdir/alsa/conf.d/ -type l -delete
 for i in %buildroot%_datadir/alsa/alsa.conf.d/*.conf; do
@@ -73,9 +77,16 @@ done
 %_libdir/alsa-lib/*pulse*.so
 %_sysconfdir/alsa/conf.d/99-pulseaudio-default.conf.example
 %_sysconfdir/alsa/conf.d/50-pulseaudio.conf
+%_sysconfdir/alsa/conf.d/99-pulse.conf
+%_datadir/alsa/pulse-alsa.conf
 %_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
+%_datadir/alsa/alsa.conf.d/99-pulse.conf
 
 %changelog
+* Mon Feb 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.2.2-alt2
+- Imported config files from Debian for alsa-plugins-pulse.
+  Upstream config 50-pulseaudio.conf alone sometimes isn't enough.
+
 * Thu Feb 20 2020 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt1
 - 1.2.2
 
