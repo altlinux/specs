@@ -1,11 +1,12 @@
 Name: lldpd
-Version: 1.0.5
+Version: 1.0.8
 Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
 License: ICS
-Url: https://vincentbernat.github.io/lldpd/
+Url: https://lldpd.github.io/
+Vcs: https://github.com/lldpd/lldpd.git
 
 Source1: lldpd.init
 Source2: lldpd.sysconfig
@@ -28,7 +29,11 @@ Patch12: lldpd-fix-build-system-libevent.patch
 %def_with snmp
 %def_with xml
 %def_with readline
+%ifarch x86_64
+%def_with seccomp
+%else
 %def_without seccomp
+%endif
 
 BuildRequires: libssl-devel
 BuildRequires: doxygen
@@ -70,25 +75,6 @@ Summary: Link Layer Discovery Protocol Daemon
 
 %description devel
 Header files for LLDP Daemon
-
-%package -n bash-completion-lldpd
-Summary: Bash completion for lldpd
-Group: Shells
-BuildArch: noarch
-Requires: bash-completion
-Requires: %name = %version-%release
-
-%description -n bash-completion-lldpd
-Bash completion for lldpd.
-
-%package -n zsh-completion-lldpd
-Summary: Zsh completion for lldpd
-Group: Shells
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description -n zsh-completion-lldpd
-Zsh completion for lldpd.
 
 %prep
 %setup
@@ -165,6 +151,10 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Tue Feb 16 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.8-alt1
+- new version 1.0.8 (Fixes: CVE-2020-27827)
+- enable seccomp for x86_64
+
 * Tue Jul 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
 - new version 1.0.5
 
