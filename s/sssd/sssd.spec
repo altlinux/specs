@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.4.1
-Release: alt2
+Release: alt3
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -794,6 +794,11 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Tue Feb 16 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.4.1-alt3
+- Update authentication features:
+  + pam_sss: Don't fail on deskprofiles phase for AD users
+  + pam_sss_gss: support authentication indicators
+
 * Tue Feb 09 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.4.1-alt2
 - Fixate that upstream fixed the memory leak in the
   simple access provider (fixes: OVE-20210209-0001)
