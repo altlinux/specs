@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 4.23.0
-Release: alt1
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -25,6 +25,8 @@ Requires: xkeyboard-config
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 1.9.19
+
+AutoReq:yes,nopython
 
 # FIXME: hack
 %add_python3_req_skip calibre.ebooks.markdown.__main__
@@ -162,7 +164,7 @@ TXT, PDF, LRS и FB2.
 # don't check for new upstream version
 #patch -p1
 #patch1 -p1
-find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python2*$|#!/usr/bin/python3|"
+find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env *python2*$|#!/usr/bin/python3|"
 find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/python2$|#!/usr/bin/python3|"
 
 # we put sip for python3 to sip3 dir
@@ -210,6 +212,9 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Tue Feb 16 2021 Vitaly Lipatov <lav@altlinux.ru> 4.23.0-alt2
+- drop python2 requires
+
 * Fri Aug 21 2020 Vitaly Lipatov <lav@altlinux.ru> 4.23.0-alt1
 - new version 4.23.0 (with rpmrb script)
 - replace fonts-ttf-liberation requires with fonts-ttf-core (ALT bug 38831)
