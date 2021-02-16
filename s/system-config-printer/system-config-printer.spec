@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.11
-Release: alt7
+Release: alt8
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -114,6 +114,9 @@ exit 0
 
 
 %changelog
+* Tue Feb 16 2021 Paul Wolneykien <manowar@altlinux.org> 1.5.11-alt8
+- Maintenance release.
+
 * Thu Jun 25 2020 Sergey V Turchin <zerg@altlinux.org> 1.5.11-alt7
 - fix requires python-packagekit to work install-printerdriver (Closes: 38638)
 - package bin/scp-dbus-service to -lib subpackage (Closes: 38639)
