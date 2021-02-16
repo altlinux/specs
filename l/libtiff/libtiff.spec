@@ -1,5 +1,5 @@
 Name: libtiff
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
@@ -98,6 +98,14 @@ _TIFFDataSize
 _TIFFFax3fillruns
 _TIFFMultiply32
 _TIFFRewriteField
+_TIFFGetExifFields
+_TIFFClampDoubleToFloat
+_TIFFFillStriles
+TIFFFlushData1
+_TIFFGetFields
+_TIFFMergeFields
+_TIFFSeekOK
+_TIFFSetGetFieldSize
 display_sRGB
 EOF
 sed -n 's/^extern[^)]\+[[:space:]]\*\?\([^[:space:]*()]\+\)[[:space:]]*(.*/\1/p' \
@@ -166,6 +174,9 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Fri Dec 25 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.2.0-alt1
+- Updated to v4.2.0.
+
 * Thu Nov 14 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.0-alt1
 - Updated to 4.1.0.
 - Dropped tiff-CVE-2018-12900.patch.
