@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Business-ISMN
-Version: 1.201
+Version: 1.202
 Release: alt1
 
 Summary: Work with International Standard Music Numbers
@@ -43,10 +43,13 @@ None.
 %perl_vendor_install
 
 %files
-%doc README.pod LICENSE Changes ismns.txt examples
+%doc README.pod Changes ismns.txt examples
 %perl_vendor_privlib/Business/*
 
 %changelog
+* Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 1.202-alt1
+- automated CPAN update
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 1.201-alt1
 - automated CPAN update
 
