@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.20.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -197,6 +197,9 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue Feb 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt2
+- fix taskmanager group mouseclick action to show apps list
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt1
 - new version
 
