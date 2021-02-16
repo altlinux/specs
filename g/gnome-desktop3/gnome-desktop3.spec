@@ -16,7 +16,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -187,6 +187,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Feb 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
+- 3.38.4
+
 * Fri Jan 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 
