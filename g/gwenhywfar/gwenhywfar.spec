@@ -1,7 +1,7 @@
 %def_with qt5
 
 Name:     gwenhywfar
-Version:  5.5.1
+Version:  5.6.0
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -173,6 +173,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Tue Feb 16 2021 Andrey Cherepanov <cas@altlinux.org> 5.6.0-alt1
+- New version.
+
 * Sun Feb 14 2021 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt1
 - New version.
 
