@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt1.git20150619.1.1.1
+Version: 1.4.0
+Release: alt1
 Summary: Python interface for libuv
 License: MIT
 Group: Development/Python
@@ -14,9 +14,6 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/saghul/pyuv.git
 # branch: v1.x
 Source: %name-%version.tar
-# https://github.com/libuv/libuv.git
-# branch: v1.x
-Source1: libuv.tar
 
 BuildRequires(pre): /dev/pts /proc
 BuildPreReq: python-devel python-module-setuptools
@@ -68,11 +65,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-
-mkdir deps
-pushd deps
-tar -xf %SOURCE1
-popd
 
 %if_with python3
 cp -fR . ../python3
@@ -131,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 16 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Build new version for python3.9.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1.git20150619.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
