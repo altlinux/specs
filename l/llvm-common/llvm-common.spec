@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 11.0.1
-Release: alt1
+Release: alt2
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -14,6 +14,20 @@ Url: http://git.altlinux.org/gears/l/llvm-common.git
 Source: llvm-alt-tool-wrapper.c
 Source1: alt-packaging-wrap-cmake-script
 Source2: alt-packaging-produce-rpm-macros-llvm-common
+
+# We want to have these obsoletions to win apt's generic provider selection
+# against pre-wrapped llvm packages.
+Obsoletes: clang              <= 11.0.0-alt1
+Obsoletes: clang-devel        <= 11.0.0-alt1
+Obsoletes: clang-devel-static <= 11.0.0-alt1
+Obsoletes: clang-doc          <= 11.0.0-alt1
+Obsoletes: lld                <= 11.0.0-alt1
+Obsoletes: lld-devel          <= 11.0.0-alt1
+Obsoletes: lld-doc            <= 11.0.0-alt1
+Obsoletes: llvm               <= 11.0.0-alt1
+Obsoletes: llvm-devel         <= 11.0.0-alt1
+Obsoletes: llvm-devel-static  <= 11.0.0-alt1
+Obsoletes: llvm-doc           <= 11.0.0-alt1
 
 %define _libexecdir /usr/libexec
 
@@ -410,6 +424,9 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Sun Feb 14 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt2
+- Obsolete the Sisyphus LLVM packages that do not use llvm-alt-tool-wrappers.
+
 * Sat Jan 16 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt1
 - Introduced wrappers for the following utilities:
   lldb
