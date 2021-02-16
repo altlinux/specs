@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name graphene
@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Graphene is a library of data types commonly used to implement 2D-in-3D or full 3D canvases
@@ -30,15 +30,14 @@ Url: https://ebassi.github.io/%_name
 %if_disabled snapshot
 Source: https://github.com/ebassi/%_name/releases/download/%version/%_name-%version.tar.xz
 %else
-# VCS: https://github.com/ebassi/graphene.git
+Vcs: https://github.com/ebassi/graphene.git
 Source: %_name-%version.tar
 %endif
 
 BuildRequires(pre): meson
-
-%define __python %nil
 BuildRequires: /proc
 BuildRequires: python3 gobject-introspection-devel gtk-doc
+%{?_enable_check:BuildRequires: python3-module-pygobject3}
 
 %description
 Graphene library provides a small set of mathematical types needed to
@@ -108,6 +107,7 @@ the functionality of the installed Graphene library.
 %meson_install
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -142,6 +142,9 @@ the functionality of the installed Graphene library.
 
 
 %changelog
+* Tue Feb 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt1
+- updated to 1.10.4-4-gbf34e46
+
 * Mon Jun 22 2020 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
 - 1.10.2
 - fixed License tag
