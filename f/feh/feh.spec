@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: feh
-Version: 3.5
+Version: 3.6.3
 Release: alt1
 Summary: Image viewer using Imlib 2
 Group: Graphics
@@ -9,8 +9,10 @@ License: BSD
 
 Url: https://feh.finalrewind.org/
 
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 # git://github.com/derf/feh.git refs/tags/v%%version
 Source: %name-%version.tar
+Patch0:         feh-1.10.1-dejavu.patch
 
 # Automatically added by buildreq on Thu Sep 08 2011
 # optimized out: imlib2 imlib2-devel libX11-devel xorg-xproto-devel zlib-devel
@@ -25,6 +27,7 @@ montages as index prints with many user-configurable options.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 export VERSION="%version"
@@ -54,6 +57,9 @@ export PREFIX="%_prefix"
 %doc COPYING
 
 %changelog
+* Mon Feb 15 2021 Ilya Mashkin <oddity@altlinux.ru> 3.6.3-alt1
+- 3.6.3
+
 * Mon Oct 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5-alt1
 - Updated to upstream version 3.5 (Fixes: CVE-2017-7875).
 
