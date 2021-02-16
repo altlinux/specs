@@ -1,8 +1,8 @@
 %define sover 24
 
 Name: wolfssl
-Version: 4.6.0
-Release: alt2
+Version: 4.7.0
+Release: alt1
 
 Summary: Embedded SSL/TLS Library
 License: GPL-2.0
@@ -38,28 +38,21 @@ This package contains the header files and development libraries for %name.
 %setup -n %name-%version-stable
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
+%cmake \
+	-DBUILD_SHARED_LIBS:BOOL=TRUE \
+	-DWOLFSSL_CRYPT_TESTS:BOOL=FALSE
 
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DBUILD_SHARED_LIBS:BOOL=TRUE
-
-popd
-
-%make_build -C %_target_platform
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 
 %files -n lib%name%sover
 %_libdir/lib%name.so.*
-%dir %_defaultdocdir/%name
-%_defaultdocdir/%name/*
 
 %files -n lib%name-devel
+%dir %_defaultdocdir/%name
+%_defaultdocdir/%name/*
 %dir %_includedir/%name
 %_includedir/%name/*
 %dir %_libdir/cmake/%name
@@ -67,6 +60,9 @@ popd
 %_libdir/lib%name.so
 
 %changelog
+* Tue Feb 16 2021 Nazarov Denis <nenderus@altlinux.org> 4.7.0-alt1
+- Version 4.7.0
+
 * Thu Feb 04 2021 Nazarov Denis <nenderus@altlinux.org> 4.6.0-alt2
 - Build with cmake
 
