@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 19.12.4
+Version: 20.12.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -60,9 +60,9 @@ Requires: gtk3-theme-breeze
 Requires: gtk2-theme-breeze
 Requires: kf5-qqc2-desktop-style
 Requires: kde5-plasma-applet-places-widget
-Requires: plasma5-kde-gtk-config kf5-baloo plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass kde5-krdc kde5-kgpg
-Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-integration
-Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd
+Requires: plasma5-kde-gtk-config kf5-baloo plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass
+Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-integration plasma5-disks
+Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd kde5-kgpg
 Requires: plasma5-kmenuedit plasma5-kgamma plasma5-thunderbolt
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
@@ -82,8 +82,9 @@ Requires: plasma5-xdg-desktop-portal-kde
 Requires: plasma5-workspace-wallpapers
 Requires: plasma5-kwrited
 Requires: plasma5-user-manager kde5-ksystemlog
-Requires: kde5-konversation kde5-kate
+Requires: kde5-konversation kde5-kate kde5-krdc
 Requires: kde5-pim kde5-pim-addons kde5-kcron kde5-kruler kde5-ffmpegthumbs
+Requires: kde5-connect
 Requires: kde5-krfb
 Requires: kde5-kdf
 Requires: kid3-ui-kde5
@@ -107,7 +108,7 @@ Requires: kde5-kfloppy
 Requires: kde5-dragon
 Requires: kde5-kmousetool kde5-kmag
 Requires: kde5-juk kde5-kmouth
-Requires: kdenlive kde5-connect
+Requires: kdenlive
 Requires: kde5-k3b kde5-kwave
 Requires: kde5-digikam kde5-kipi-plugins
 %description -n kde5-maxi
@@ -197,6 +198,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Tue Feb 16 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
+- add plasma5-disks
+
 * Mon Jul 06 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.4-alt1
 - use xsane for scanning
 
