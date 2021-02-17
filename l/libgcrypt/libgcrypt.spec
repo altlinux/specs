@@ -1,5 +1,5 @@
 Name: libgcrypt
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Group: System/Libraries
@@ -120,6 +120,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/*.info*
 
 %changelog
+* Wed Feb 17 2021 Alexey Gladkov <legion@altlinux.ru> 1.9.2-alt1
+- New version (1.9.2).
+
 * Fri Jan 29 2021 Alexey Gladkov <legion@altlinux.ru> 1.9.1-alt1
 - New version (1.9.1).
 - Security fixes:
