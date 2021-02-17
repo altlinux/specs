@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 20.12.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -25,7 +25,7 @@ BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-stati
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-syntax-highlighting-devel
 
 %description
 %summary.
@@ -57,6 +57,9 @@ Requires: kf5-filesystem
 %_K5srv/fileview*plugin.desktop
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
+- update build requries
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
