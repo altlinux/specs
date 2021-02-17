@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 20.12.2
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Networking/News
@@ -29,7 +29,7 @@ BuildRequires: kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-de
 BuildRequires: kf5-kcmutils-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel
 BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-syndication-devel
+BuildRequires: kf5-syndication-devel kf5-syntax-highlighting-devel
 
 %description
 RSS/Atom feed reader for KDE.
@@ -115,6 +115,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
+- update build requries
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
