@@ -146,7 +146,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.3.1
-Release:	alt4
+Release:	alt5
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -863,6 +863,9 @@ xz Changelog
 %endif
 
 %changelog
+* Wed Feb 17 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:4.3.1-alt5
+- fixed build on arm arches
+
 * Wed Jan 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:4.3.1-alt4
 - Applied security fixes from upstream (Fixes: CVE-2020-35964, CVE-2020-35965).
 
