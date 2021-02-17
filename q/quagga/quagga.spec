@@ -12,7 +12,7 @@
 Name: quagga
 
 %define baseversion 1.2.4
-Release: alt4
+Release: alt5
 
 %if %cvs
 %define cvsdate 20060505
@@ -159,6 +159,9 @@ Quagga documentation
 
 %build
 
+# gcc10 hack, should be removed when will be possible
+%add_optflags -fcommon
+
 #undefine __libtoolize
 
 # fixed libraries path in RPATH (on x86_64)
@@ -304,6 +307,9 @@ install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Mon Feb 15 2021 Sergey Y. Afonin <asy@altlinux.org> 1.2.4-alt5
+- fixed FTBFS with gcc 10: added %%add_optflags -fcommon
+
 * Mon Mar 18 2019 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt4
 - changed "chkconfig: - 56 56" to "chkconfig: - 12 88" in init
   scripts of route daemons for immediately start after network
