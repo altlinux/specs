@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 5.0
-%define _dotnet_corerelease 5.0.2
-%define _dotnet_sdkrelease 5.0.102
+%define _dotnet_corerelease 5.0.3
+%define _dotnet_sdkrelease 5.0.103
 %define commithash %version-%release
-#define artifacts artifacts/bin/coreclr/Linux.%_dotnet_arch.Release
 
 %def_with bootstrap
 # TODO:
@@ -12,7 +11,7 @@
 %def_with libunwind
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -23,9 +22,6 @@ Group: Development/Other
 
 # Source-url: https://github.com/dotnet/runtime/archive/v%version.tar.gz
 Source: %name-%version.tar
-#Patch1: 0001-Add-support-for-building-under-glibc-2.26-13785.patch
-#Patch2: 0001-fix-build-with-clang6.0.patch
-#Patch3: dotnet-coreclr-alt-not-supported.patch
 
 ExclusiveArch: aarch64 x86_64
 
@@ -40,15 +36,17 @@ BuildRequires: /proc
 BuildRequires: clang llvm
 BuildRequires: python3 >= 3.7.1
 
+# cmake_minimum_required for Native and mono
 BuildRequires: cmake >= 3.14.5
+
 BuildRequires: libstdc++-devel
 %if_with libunwind
 BuildRequires: libunwind-devel
 %endif
 BuildRequires: liblttng-ust-devel liblwp-devel
+
 #BuildRequires: lldb-devel
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel libssl-devel
-#BuildRequires: python-modules-xml
 
 # it is not linked directly (the same like in libicu-devel)
 # there are icu detection in a version range
@@ -125,11 +123,11 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 %package -n dotnet-hostfxr-%_dotnet_major
 Version: %_dotnet_corerelease
 Group: Development/Other
-Summary: .NET command line host resolver
+Summary: Microsoft .NET Host FX Resolver
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
-Requires: dotnet-host >= %version-%release
+Requires: dotnet-host >= %version
 
 %description -n dotnet-hostfxr-%_dotnet_major
 The .NET host resolver contains the logic to resolve and select
@@ -144,7 +142,7 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 %package -n dotnet-apphost-pack-%_dotnet_major
 Version: %_dotnet_corerelease
 Group: Development/Other
-Summary: .NET App.Host
+Summary: Microsoft.NETCore.App.Host
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
@@ -158,15 +156,10 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 
 %prep
 %setup
-#patch1 -p1
-#patch2 -p1
-#patch3 -p2
 
-# make strange error if uncomment due isMSBuildOnNETCoreSupported initialized
-#find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
-
-# TODO: CMake Error: CMake can not determine linker language for target: System.Globalization.Native
-#__subst "s|__isMSBuildOnNETCoreSupported=0|__isMSBuildOnNETCoreSupported=1|" build.sh
+# replace obsoleted FindPythonInterp with FindPython3
+sed -i -e 's|FindPythonInterp|FindPython3|' -e 's|PYTHON_EXECUTABLE|Python3_EXECUTABLE|' \
+    src/coreclr/src/pal/src/eventprovider/*/CMakeLists.txt src/coreclr/src/vm/eventing/CMakeLists.txt src/coreclr/src/vm/eventing/*/CMakeLists.txt
 
 %if_with libunwind
 rm -rfv src/coreclr/src/pal/src/libunwind/
@@ -186,14 +179,7 @@ cat <<EOF >.version
 %_dotnet_corerelease
 EOF
 
-# build host
-#dir=$(pwd)/eng/native
-#cd src/installer/corehost
-#cmake . -DCLR_ENG_NATIVE_DIR=$dir -DCMAKE_CURRENT_LIST_DIR=$dir
-#cd -
-
-
-# build CLR separately
+# build CLR
 cd src/coreclr/
 bash -x ./build-runtime.sh -release -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
     -cmakeargs -DENABLE_LLDBPLUGIN=0 -cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 \
@@ -203,11 +189,12 @@ bash -x ./build-runtime.sh -release -verbose -skipmanaged -ignorewarnings -skipr
     %nil
 cd -
 
+# build Native libraries
 cd src/libraries/Native/
 bash -x ./build-native.sh -release -skipgenerateversion
 cd -
 
-# build host
+# build host commands
 export artifacts=$(pwd)/artifacts
 cd src/installer/corehost/
 sh -x ./build.sh \
@@ -227,8 +214,7 @@ sh -x ./build.sh \
     %nil
 cd -
 
-
-
+# TODO: run via common build.sh file
 #echo ""> artifacts/toolset/%version.txt
 # TODO: --build
 #sh -x ./build.sh clr+libs --configuration Checked --clang --verbosity normal --cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 --cmakeargs -DENABLE_LLDBPLUGIN=0
@@ -259,9 +245,9 @@ install -m755 artifacts/bin/linux-%_dotnet_arch.Release/corehost/dotnet %buildro
 mkdir -p %buildroot%_bindir/
 ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 
-
 install -D -m644 .version %buildroot%_dotnet_shared/.version
 
+# copy managed libraries as is
 %if_with bootstrap
 # managed
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/*.dll %buildroot%_dotnet_shared/
@@ -273,16 +259,7 @@ cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/Microsoft.
 #cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Native.a %buildroot%_dotnet_shared/
 %endif
 
-
-# superpmi mcs
-# https://github.com/dotnet/coreclr/tree/master/src/ToolBox/superpmi
-
-# createdump
-# verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/2.0.0/createdump: RPATH contains illegal entry "/tmp/.private/lav/RPM/BUILD": /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac
-# ldd: libmscordaccore.so => /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac/libmscordaccore.so
-#rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%_dotnet_corerelease/createdump
-
-# TODO
+# missed in the official package
 rm -f %buildroot%_dotnet_shared/libsuperpmi-shim-*.so
 rm -f %buildroot%_dotnet_shared/libprotononjit.so
 
@@ -342,6 +319,7 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 
 %files -n dotnet-host
 %doc LICENSE.TXT
+%dir %_dotnetdir/
 %_dotnetdir/dotnet
 %_bindir/dotnet
 %dir %_dotnetdir/host/
@@ -352,7 +330,7 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_hostfxr/libhostfxr.so
 
 %files -n dotnet-apphost-pack-%_dotnet_major
-# TODO: common?
+%dir %_dotnetdir/packs/
 %dir %_dotnetdir/packs/Microsoft.NETCore.App.Host.%_dotnet_rid/
 %dir %_dotnet_apphostdir/
 %dir %_dotnet_apphostdir/runtimes/
@@ -366,8 +344,12 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/nethost.h
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
-
-
 %changelog
+* Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.3-alt1
+- new version (5.0.3) with rpmgs script
+- .NET 5.0.3
+- CVE-2021-1721: .NET Core Denial of Service Vulnerability
+- CVE-2021-24112: .NET 5 and .NET Core Remote Code Execution Vulnerability
+
 * Tue Feb 16 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt1
 - .NET 5 Runtime

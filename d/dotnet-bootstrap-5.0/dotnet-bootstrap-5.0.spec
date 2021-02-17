@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sdkversion 5.0.102
-%define coreversion 5.0.2
+%define sdkversion 5.0.103
+%define coreversion 5.0.3
+%define apprefversion 5.0.0
+%define netstandartversion 2.1.0
 
 Name: dotnet-bootstrap-5.0
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -16,10 +18,10 @@ Group: Development/Other
 # To check we manually update download url
 # from https://github.com/dotnet/core/blob/master/release-notes/5.0/5.0.2/5.0.2.md
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/7f736160-9f34-4595-8d72-13630c437aef/b9c4513afb0f8872eb95793c70ac52f6/dotnet-sdk-5.0.102-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/a2052604-de46-4cd4-8256-9bc222537d32/a798771950904eaf91c0c37c58f516e1/dotnet-sdk-5.0.103-linux-x64.tar.gz
 Source: %name-%version.tar
 
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/4fdd4708-8990-42db-998d-36ccfa593070/d67cb90c382e4eedbca8af1aebcbbe19/dotnet-sdk-5.0.102-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/5c2e5668-d7f9-4705-acb0-04ceeda6dadf/4eca3d1ffd92cb2b5f9152155a5529b4/dotnet-sdk-5.0.103-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -99,7 +101,7 @@ strip \
 %files
 %dir %_libdir/%name/
 %dir %_libdir/%name/templates/
-%_libdir/%name/templates/5.0.2/
+%_libdir/%name/templates/%coreversion/
 %dir %_libdir/%name/packs/
 %dir %_libdir/%name/packs/Microsoft.AspNetCore.App.Ref
 %_libdir/%name/packs/Microsoft.AspNetCore.App.Ref/5.0.0/
@@ -111,9 +113,9 @@ strip \
 %_libdir/%name/packs/Microsoft.NETCore.App.Host.linux-x64/%coreversion/
 %endif
 %dir %_libdir/%name/packs/Microsoft.NETCore.App.Ref/
-%_libdir/%name/packs/Microsoft.NETCore.App.Ref/5.0.0/
+%_libdir/%name/packs/Microsoft.NETCore.App.Ref/%apprefversion/
 %dir %_libdir/%name/packs/NETStandard.Library.Ref/
-%_libdir/%name/packs/NETStandard.Library.Ref/2.1.0/
+%_libdir/%name/packs/NETStandard.Library.Ref/%netstandartversion/
 %dir %_libdir/%name/host/
 %dir %_libdir/%name/host/fxr/
 %_libdir/%name/host/fxr/%coreversion/
@@ -133,6 +135,11 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.3-alt1
+- .NET 5.0.3 and .NET SDK 5.0.103
+- CVE-2021-1721: .NET Core Denial of Service Vulnerability
+- CVE-2021-24112: .NET 5 and .NET Core Remote Code Execution Vulnerability
+
 * Thu Jan 14 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt1
 - .NET 5.0.2 and .NET SDK 5.0.102
 
