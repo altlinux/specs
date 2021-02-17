@@ -1,12 +1,12 @@
 %def_without docs
 
 Name:    appstream
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
-License: GPLv2+ and LGPLv2+
+License: GPL-2.0+ and LGPL-2.0+
 Group:   System/Configuration/Packaging
 URL:     http://www.freedesktop.org/wiki/Distributions/AppStream/Software
 Source0: appstream-%{version}.tar
@@ -20,6 +20,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: gperf
 BuildRequires: intltool
 BuildRequires: itstool
+BuildRequires: libcurl-devel
 BuildRequires: liblmdb-devel
 BuildRequires: libprotobuf-lite-devel
 BuildRequires: libstemmer-devel
@@ -136,6 +137,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Feb 17 2021 Andrey Cherepanov <cas@altlinux.org> 0.14.1-alt1
+- New version.
+
 * Wed Feb 03 2021 Andrey Cherepanov <cas@altlinux.org> 0.14.0-alt1
 - New version.
 
