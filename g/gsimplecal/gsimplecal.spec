@@ -1,9 +1,9 @@
 Name: gsimplecal
-Version: 2.0
-Release: alt1.git20140809
+Version: 2.2
+Release: alt1
 
 Summary: Simple and lightweight GTK calendar
-License: BSD-Style
+License: BSD-3-Clause
 Group: Office
 Url: https://github.com/dmedvinsky/gsimplecal/
 
@@ -35,6 +35,9 @@ without it.
 %_man1dir/*
 
 %changelog
+* Wed Feb 17 2021 Leontiy Volodin <lvol@altlinux.org> 2.2-alt1
+- Version 2.2
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20140809
 - Version 2.0
 
