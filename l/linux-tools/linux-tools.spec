@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.10
+%define kernel_base_version 5.11
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -544,8 +544,11 @@ fi
 %_man8dir/bpftool*
 
 %changelog
+* Wed Feb 17 2021 Vitaly Chikunov <vt@altlinux.org> 5.11-alt1
+- Update to v5.11 (2021-02-14).
+
 * Mon Dec 21 2020 Vitaly Chikunov <vt@altlinux.org> 5.10-alt1
-- Updae to v5.10 (2020-12-13).
+- Update to v5.10 (2020-12-13).
 
 * Thu Nov 12 2020 Vitaly Chikunov <vt@altlinux.org> 5.9-alt3
 - spec: Fix make acpi race appeared on armh.
