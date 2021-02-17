@@ -4,9 +4,9 @@
 %define libkiten libkiten%soname
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.2
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Japanese reference/learning tool
@@ -97,6 +97,9 @@ Requires: %name-common
 %_K5lib/libkiten.so.*
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 

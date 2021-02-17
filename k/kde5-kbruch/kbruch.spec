@@ -1,9 +1,9 @@
 %define rname kbruch
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.2
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Education
 Summary: Exercise Fractions
@@ -81,6 +81,9 @@ KF5 library
 #%_K5lib/libKF5Bruch.so.*
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 

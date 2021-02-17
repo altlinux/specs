@@ -1,9 +1,9 @@
 %define rname kwordquiz
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.2
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Education
 Summary: A general purpose flash card program
@@ -58,6 +58,9 @@ language learning features, please try KVocTrain.
 %_K5data/knsrcfiles/*kwordquiz*.knsrc
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 

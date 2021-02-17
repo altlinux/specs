@@ -1,9 +1,9 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.2
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Common KDE EDU data
@@ -41,6 +41,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel kf5-ki18n-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 
