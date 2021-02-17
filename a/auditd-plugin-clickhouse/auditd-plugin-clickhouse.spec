@@ -8,8 +8,8 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20200911.4.1
-Release: alt2
+Version: 20210217.4.1
+Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
 License: GPLv3+
@@ -22,6 +22,9 @@ BuildRequires: boost-complete
 BuildRequires: libclickhouse-cpp-devel
 BuildRequires: libaudit-devel
 BuildRequires: /usr/bin/ctest libgtest-devel
+
+# audit 3.0 moved to new config location
+Requires: audit >= 3.0-alt1
 
 %description
 Plugin for Auditd daemon for sending data into Clickhouse database
@@ -44,14 +47,17 @@ ctest
 popd
 
 %files
-%config(noreplace) %_sysconfdir/audisp/auditd-clickhouse-datatypes.json
-%config(noreplace) %attr(600,root,root) %_sysconfdir/audisp/auditd-clickhouse.conf
-%config(noreplace) %_sysconfdir/audisp/plugins.d/auditd-plugin-clickhouse.conf
+%config(noreplace) %_sysconfdir/audit/auditd-clickhouse-datatypes.json
+%config(noreplace) %attr(600,root,root) %_sysconfdir/audit/auditd-clickhouse.conf
+%config(noreplace) %_sysconfdir/audit/plugins.d/auditd-plugin-clickhouse.conf
 %config(noreplace) %_sysconfdir/logrotate.d/auditd-plugin-clickhouse-logrotate.conf
 %_prefix/libexec/auditd-plugin-clickhouse
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Wed Feb 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 20210217.4.1-alt1
+- Updated config file locations for audit-3.0 compatibility.
+
 * Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200911.4.1-alt2
 - Updated supported architectures.
 
