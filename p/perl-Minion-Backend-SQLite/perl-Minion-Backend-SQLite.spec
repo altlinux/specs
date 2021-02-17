@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-Minion-Backend-SQLite
-Version:        5.0.3
+Version:        5.0.4
 Release:        alt1
 Summary:        SQLite backend for Minion job queue
 License:        Artistic 2.0
@@ -51,6 +51,9 @@ will be created in a temporary directory.
 %{perl_vendorlib}/Minion*
 
 %changelog
+* Wed Feb 17 2021 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1
 - automated CPAN update
 
