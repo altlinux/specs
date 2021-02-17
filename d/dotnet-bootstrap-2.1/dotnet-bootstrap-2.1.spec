@@ -2,11 +2,11 @@
 
 %global __find_debuginfo_files %nil
 
-%define sdkversion 2.1.812
-%define coreversion 2.1.24
+%define sdkversion 2.1.813
+%define coreversion 2.1.25
 
 Name: dotnet-bootstrap-2.1
-Version: 2.1.24
+Version: 2.1.25
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -20,10 +20,10 @@ Group: Development/Other
 #%define downloadversion 2.1.403
 # from https://www.microsoft.com/net/download/dotnet-core/2.1
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/98903dda-7825-47af-9699-ac44f7f92cb6/7b5b7d7498bd2bc104510c14cb03342d/dotnet-sdk-2.1.812-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/e1883c23-aad6-4658-a0bf-cdfb3d430d26/a2b8bdd775b9f5b1ff3424463955001c/dotnet-sdk-2.1.813-linux-x64.tar.gz
 Source: %name-%version.tar
 
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/8cc13c0a-9ffb-4ad9-9e45-7815c322fe2f/d14b918a64a08f51892cc3513d855a80/dotnet-sdk-2.1.812-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/0c96a1ac-ea01-42bf-b889-f07566ffe031/2b74d411c54506f9913ca21f5df5f9a8/dotnet-sdk-2.1.813-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64
@@ -122,6 +122,11 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt1
+- new version (2.1.25) with rpmgs script
+- CVE-2021-1721: .NET Core Denial of Service Vulnerability
+- CVE-2021-24112: .NET 5 and .NET Core Remote Code Execution Vulnerability
+
 * Thu Jan 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.24-alt1
 - new version (2.1.24) with rpmgs script
 - CVE-2020-1045: Microsoft ASP.NET Core Security Feature Bypass Vulnerability
