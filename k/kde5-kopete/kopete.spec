@@ -31,7 +31,7 @@
 
 Name: kde5-kopete
 Version: 20.12.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Networking/Instant messaging
@@ -72,7 +72,7 @@ BuildRequires: kf5-kcmutils-devel kf5-khtml-devel kf5-knotifyconfig-devel kf5-kp
 BuildRequires: kf5-ktextwidgets-devel kf5-ktexteditor-devel kf5-kwallet-devel kf5-kio-devel
 BuildRequires: kf5-kxmlgui-devel kf5-kjs-devel kf5-kcodecs-devel kde5-kcontacts-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kpimtextedit-devel kde5-libkleo-devel
-BuildRequires: kf5-kdnssd-devel
+BuildRequires: kf5-kdnssd-devel kf5-syntax-highlighting-devel
 
 %description
 Kopete is an Instant Messaging client
@@ -323,6 +323,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
+- update build requries
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
