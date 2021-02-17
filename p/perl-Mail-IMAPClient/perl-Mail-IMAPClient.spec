@@ -2,7 +2,7 @@
 %define module Mail-IMAPClient
 
 Name: perl-%module
-Version: 3.42
+Version: 3.43
 Release: alt1
 
 Summary: This module provides methods implementing the IMAP protocol
@@ -10,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/P/PL/PLOBBES/Mail-IMAPClient-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLOBBES/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ This module provides methods implementing the IMAP protocol. It allows perl
 scripts to interact with IMAP message stores.
 
 %prep
-%setup -q -n Mail-IMAPClient-%{version}
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ scripts to interact with IMAP message stores.
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Wed Feb 17 2021 Igor Vlasenko <viy@altlinux.ru> 3.43-alt1
+- automated CPAN update
+
 * Mon Feb 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.42-alt1
 - automated CPAN update
 
