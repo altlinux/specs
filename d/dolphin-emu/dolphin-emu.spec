@@ -3,7 +3,7 @@
 
 Name: dolphin-emu
 Version: 5.0.%git_version
-Release: alt1
+Release: alt2
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -31,7 +31,7 @@ BuildRequires: pkgconfig(Qt5)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bzip2)
 BuildRequires: pkgconfig(bluez)
-BuildRequires: pkgconfig(fmt)
+BuildRequires: pkgconfig(fmt) >= 7.1
 BuildRequires: pkgconfig(hidapi-libusb)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libcurl)
@@ -71,6 +71,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %build
 %cmake .. \
+	-DENABLE_LTO:BOOL=TRUE \
 	-DUSE_SHARED_ENET:BOOL=TRUE \
 	-DDOLPHIN_WC_DESCRIBE:STRING="%(sed 's|\.|-|2' <<< %version)" \
 	-DDOLPHIN_WC_REVISION:STRING="%git_commit" \
@@ -82,6 +83,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %install
 %cmakeinstall_std
+%__install -Dp -m0644 Data/51-usb-device.rules %buildroot%_udevrulesdir/51-%name-usb-device.rules
 %find_lang %name
 
 %files -f %name.lang
@@ -91,8 +93,13 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %_iconsdir/hicolor/256x256/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_man6dir/%{name}*
+%config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13671-alt2
+- Enable Link Time Optimization
+- Install udev rules for GameCube Controller Adapter, Wiimotes and DolphinBar
+
 * Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13671-alt1
 - Version 5.0-13671
 - Add distributor option
