@@ -1,15 +1,15 @@
 Name: gtick
-Version: 0.5.1
+Version: 0.5.5
 Release: alt1
 
 Summary: GTick is a GTK+ 2 metronome
-License: GPLv3
+License: GPL-3.0+ and LGPL-2.1+
 Group: Sound
 Url: http://www.antcom.de/%name
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: http://savannah.nongnu.org/download/%name/default.pkg/%version/%name-%version.tar.gz
+Source: https://www.antcom.de/%name/download/%name-%version.tar.gz
 Source1: %name-48x48.xpm
 Source2: %name-32x32.xpm
 Source3: %name-16x16.xpm
@@ -49,9 +49,9 @@ Terminal=false
 Categories=AudioVideo;Audio;Music;
 EOF
 
-%__install -pD -m644 %SOURCE1 %buildroot%_liconsdir/%name.xpm
-%__install -pD -m644 %SOURCE2 %buildroot%_niconsdir/%name.xpm
-%__install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%name.xpm
+install -pD -m644 %SOURCE1 %buildroot%_liconsdir/%name.xpm
+install -pD -m644 %SOURCE2 %buildroot%_niconsdir/%name.xpm
+install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%name.xpm
 
 %find_lang %name
 
@@ -61,11 +61,17 @@ EOF
 %_liconsdir/*.xpm
 %_niconsdir/*.xpm
 %_miconsdir/*.xpm
+%_iconsdir/hicolor/64x64/apps/*.xpm
+%_pixmapsdir/*.xpm
+%_datadir/appdata/%{name}.appdata.xml
 %_desktopdir/%{name}.desktop
 
 %doc AUTHORS ChangeLog NEWS THANKS README TODO
 
 %changelog
+* Wed Feb 17 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt1
+- 0.5.5
+
 * Thu Apr 12 2012 Ilya Mashkin <oddity@altlinux.ru> 0.5.1-alt1
 - 0.5.1
 
