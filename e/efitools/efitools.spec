@@ -4,7 +4,7 @@
 
 Name: efitools
 Version: 1.9.2
-Release: alt1
+Release: alt2
 Summary: UEFI secure boot toolkit
 Group: Development/Other
 License: GPL-2.0-only
@@ -40,5 +40,8 @@ Useful tools for manipulating UEFI secure boot platforms.
 %_man1dir/*.1*
 
 %changelog
+* Wed Feb 17 2021 Vitaly Chikunov <vt@altlinux.org> 1.9.2-alt2
+- Fix ALT beekeeper rebuild failures.
+
 * Sat Feb 13 2021 Vitaly Chikunov <vt@altlinux.org> 1.9.2-alt1
 - First import of v1.9.2 (2019-01-08).
