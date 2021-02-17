@@ -3,7 +3,7 @@
 
 Name: libpng
 Version: 1.7.0
-Release: alt1.beta%betaver
+Release: alt2.beta%betaver
 
 Summary: A library of functions for manipulating PNG image format files
 License: %name-2.0
@@ -61,6 +61,7 @@ programs and packages using %name.
 %install
 %makeinstall_std
 rm %buildroot%_libdir/lib*.la
+rm -rf %buildroot%_man5dir
 
 %define docdir %_docdir/%name-%version
 rm -rf %buildroot%docdir
@@ -85,11 +86,13 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %_includedir/*
 %_pkgconfigdir/*.pc
 %_man3dir/*
-%_man5dir/*
 %docdir
 %exclude %docdir/[CLR]*
 
 %changelog
+* Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.0-alt2.beta89
+- Don't pack man(5) in devel package
+
 * Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.0-alt1.beta89
 - 1.7.0beta89
 
