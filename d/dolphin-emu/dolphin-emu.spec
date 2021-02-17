@@ -1,5 +1,5 @@
-%define git_version 13653
-%define git_commit 8f25b0426e3663f0f5f5299f056dec682caa1763
+%define git_version 13671
+%define git_commit 9d94a31eaea8ba5fee1f27816162fe1a291a0a4c
 
 Name: dolphin-emu
 Version: 5.0.%git_version
@@ -18,48 +18,48 @@ ExclusiveArch: x86_64 aarch64
 Source: dolphin-%git_commit.tar
 Patch0: %name-alt-git.patch
 
-BuildPreReq: libbrotli-devel
-BuildPreReq: libexpat-devel
-BuildPreReq: libpcre-devel
-BuildPreReq: libuuid-devel
+BuildPreReq: pkgconfig(expat)
+BuildPreReq: pkgconfig(libbrotlicommon)
+BuildPreReq: pkgconfig(libpcre)
+BuildPreReq: pkgconfig(uuid)
 
-BuildRequires: bzlib-devel
 BuildRequires: cmake
-BuildRequires: libSFML-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libXdmcp-devel
-BuildRequires: libXft-devel
-BuildRequires: libXi-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXmu-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libXxf86vm-devel
-BuildRequires: libalsa-devel
-BuildRequires: libavformat-devel
-BuildRequires: libbluez-devel
 BuildRequires: libcubeb-devel
-BuildRequires: libcurl-devel
-BuildRequires: libenet-devel
-BuildRequires: libevdev-devel
-BuildRequires: libfmt-devel
-BuildRequires: libhidapi-devel
-BuildRequires: liblzma-devel
-BuildRequires: liblzo2-devel
 BuildRequires: libmbedtls-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libminizip-ng-devel
-BuildRequires: libpng-devel
-BuildRequires: libpugixml-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libswresample-devel
-BuildRequires: libswscale-devel
-BuildRequires: libsystemd-devel
-BuildRequires: libudev-devel
-BuildRequires: libusb-devel
-BuildRequires: libzstd-devel
-BuildRequires: qt5-base-devel
+BuildRequires: pkgconfig(Qt5)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(bluez)
+BuildRequires: pkgconfig(fmt)
+BuildRequires: pkgconfig(hidapi-libusb)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libenet)
+BuildRequires: pkgconfig(libevdev)
+BuildRequires: pkgconfig(liblzma)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libswresample)
+BuildRequires: pkgconfig(libswscale)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(lzo2)
+BuildRequires: pkgconfig(minizip-ng)
+BuildRequires: pkgconfig(pugixml)
+BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(sfml-all)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xdmcp)
+BuildRequires: pkgconfig(xft)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(xmu)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: pkgconfig(udev)
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
@@ -70,27 +70,18 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %patch0 -p1
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
-	-DCMAKE_BUILD_TYPE:STRING="Release" \
+%cmake .. \
 	-DUSE_SHARED_ENET:BOOL=TRUE \
 	-DDOLPHIN_WC_DESCRIBE:STRING="%(sed 's|\.|-|2' <<< %version)" \
 	-DDOLPHIN_WC_REVISION:STRING="%git_commit" \
 	-DDOLPHIN_WC_BRANCH:STRING="master" \
+	-DDISTRIBUTOR:STRING="ALT Linux Team" \
 	-Wno-dev
 
-popd
-
-%make_build -C %_target_platform
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 %find_lang %name
 
 %files -f %name.lang
@@ -102,6 +93,10 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13671-alt1
+- Version 5.0-13671
+- Add distributor option
+
 * Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13653-alt1
 - Version 5.0.13653
 - Build with minizip-ng
