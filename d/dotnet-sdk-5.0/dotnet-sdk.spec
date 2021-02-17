@@ -3,13 +3,16 @@
 
 %define _dotnet_major 5.0
 # CHECKME
-%define _dotnet_templatesrelease 5.0.2
-%define _dotnet_corerelease 5.0.2
+%define _dotnet_templatesrelease 5.0.3
+%define _dotnet_apprefrelease 5.0.0
+%define _dotnet_corerelease 5.0.3
+%define _dotnet_sdkrelease 5.0.103
+%define _dotnet_netstandartrelease 2.1.0
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 5.0.102
+Version: 5.0.103
 Release: alt1
 
 Summary: SDK for the .NET
@@ -43,8 +46,8 @@ Requires: dotnet-common
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
-Provides: netstandard-targeting-pack-2.1 = 2.1.0
-Provides: dotnet-targeting-pack-%_dotnet_major = 5.0.0
+Provides: netstandard-targeting-pack-2.1 = %_dotnet_netstandartrelease
+Provides: dotnet-targeting-pack-%_dotnet_major = %_dotnet_apprefrelease
 
 
 %description
@@ -103,6 +106,11 @@ ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet
 %attr(2775,root,dotnet) %dir %_cachedir/dotnet/NuGetFallbackFolder/
 
 %changelog
+* Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.103-alt1
+- .NET SDK 5.0.103
+- CVE-2021-1721: .NET Core Denial of Service Vulnerability
+- CVE-2021-24112: .NET 5 and .NET Core Remote Code Execution Vulnerability
+
 * Tue Feb 16 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.102-alt1
 - .NET 5 SDK
 
