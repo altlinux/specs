@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Mojolicious-Plugin-OAuth2
-Version: 1.58
+Version: 1.59
 Release: alt1
 Summary: A Mojolicious plugin that allows OAuth2 authentication
 License: Artistic-2.0
 Group: Development/Perl
 Url: https://github.com/marcusramberg/Mojolicious-Plugin-OAuth2
-Source: %name-%version.tar
+Source0: http://www.cpan.org/authors/id/J/JH/JHTHORSEN/Mojolicious-Plugin-OAuth2-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm) 
@@ -25,7 +25,7 @@ provider. It includes configurations for a few popular providers, but you can
 add your own easily as well.
 
 %prep
-%setup
+%setup -q -n Mojolicious-Plugin-OAuth2-%{version}
 
 %build
 %perl_vendor_build
@@ -35,9 +35,12 @@ add your own easily as well.
 rm -f %buildroot%perl_vendorlib/Mojolicious/Plugin/README.pod
 
 %files
-%doc Changes
+%doc Changes README README.md
 %perl_vendorlib/Mojolicious/Plugin*
 
 %changelog
+* Wed Feb 17 2021 Igor Vlasenko <viy@altlinux.ru> 1.59-alt1
+- automated CPAN update
+
 * Wed Jul 15 2020 Alexandr Antonov <aas@altlinux.org> 1.58-alt1
 - initial build for ALT
