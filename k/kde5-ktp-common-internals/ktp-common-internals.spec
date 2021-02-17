@@ -8,7 +8,7 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 20.12.0
+Version: 20.12.2
 Release: alt1
 %K5init altplace
 
@@ -31,7 +31,7 @@ BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcode
 BuildRequires: kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kservice-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
-BuildRequires: kf5-sonnet-devel
+BuildRequires: kf5-sonnet-devel kf5-syntax-highlighting-devel
 BuildRequires: telepathy-qt5-devel telepathy-logger-qt5-devel
 BuildRequires: accounts-qt5-devel signon-devel kde5-kaccounts-integration-devel
 
@@ -162,6 +162,9 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
+- new version
+
 * Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 
