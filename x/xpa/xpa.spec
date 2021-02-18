@@ -1,17 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: xpa
-Version: 2.1.15
+Version: 2.1.20
 Release: alt1
 Summary: The XPA Messaging System
-License: LGPLv2.1
+License: MIT
 Group: Development/Tools
 Url: http://hea-www.harvard.edu/RD/xpa/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
+#Use install path from configure instead of hardcoded
+Patch0: xpa-2.1.20-alt-makefile-path-fix.patch
+
 BuildPreReq: libX11-devel libgtk+2-devel libXt-devel tcl-devel
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description
 The XPA messaging system provides seamless communication between many
@@ -46,9 +50,28 @@ This package contains shared libraries of the XPA messaging system.
 %package -n lib%name-devel
 Summary: Development files of the XPA messaging system
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
+The XPA messaging system provides seamless communication between many
+kinds of Unix programs, including X programs and Tcl/Tk programs. It
+also provides an easy way for users to communicate with these
+XPA-enabled programs by executing XPA client commands in the shell or by
+utilizing such commands in scripts. Because XPA works both at the
+programming level and the shell level, it is a powerful tool for
+unifying any analysis environment: users and programmers have great
+flexibility in choosing the best level or levels at which to access XPA
+services, and client access can be extended or modified easily at any
+time.
+
+This package contains development files of the XPA messaging system.
+
+%package -n lib%name-devel-static
+Summary: Development files of the XPA messaging system
+Group: Development/C
+Requires: lib%name-devel = %EVR
+
+%description -n lib%name-devel-static
 The XPA messaging system provides seamless communication between many
 kinds of Unix programs, including X programs and Tcl/Tk programs. It
 also provides an easy way for users to communicate with these
@@ -83,6 +106,7 @@ This package contains documentation for the XPA messaging system.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -94,17 +118,7 @@ This package contains documentation for the XPA messaging system.
 %make_build
 
 %install
-%makeinstall_std
-
-install -d %buildroot%_libdir
-cp -P *.so* %buildroot%_libdir/
-
-install -d %buildroot%_man1dir
-install -p -m644 man/man1/* %buildroot%_man1dir
-install -d %buildroot%_man3dir
-install -p -m644 man/man3/* %buildroot%_man3dir
-install -d %buildroot%_mandir/mann
-install -p -m644 man/mann/* %buildroot%_mandir/mann
+%makeinstall_std INSTALL_ROOT=%buildroot
 
 rm -f doc/Makefile
 
@@ -122,11 +136,18 @@ rm -f doc/Makefile
 %_libdir/*.so
 %_man3dir/*
 %_mandir/mann/*
+%_pkgconfigdir/%name.pc
+
+%files -n lib%name-devel-static
+%_libdir/*.a
 
 %files docs
 %doc doc/*
 
 %changelog
+* Tue Feb 16 2021 Egor Ignatov <egori@altlinux.org> 2.1.20-alt1
+- Version 2.1.20
+
 * Mon Nov 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.15-alt1
 - Version 2.1.15
 
