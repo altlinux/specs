@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
 
 Name:    drgn
-Version: 0.0.8
+Version: 0.0.9
 Release: alt1
 Summary: Scriptable debugger library
 License: GPL-3.0-or-later
@@ -17,13 +18,13 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: git-core
-BuildRequires: flex
-BuildRequires: zlib-devel
 BuildRequires: bzip2-devel
-BuildRequires: liblzma-devel
+BuildRequires: flex
+BuildRequires: git-core
 BuildRequires: libgomp-devel
+BuildRequires: liblzma-devel
 BuildRequires: libstdc++-devel
+BuildRequires: zlib-devel
 # BuildRequires: libkdumpfile
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 # Note: Bundled with own version of elfutils.
@@ -53,12 +54,16 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %buildroot%_bindir/drgn --version
 
 %files
+%doc COPYING README.rst
 %_bindir/drgn
 %python3_sitelibdir/drgn*.egg-info
 %python3_sitelibdir/drgn
 %python3_sitelibdir/_drgn.*
 
 %changelog
+* Thu Feb 18 2021 Vitaly Chikunov <vt@altlinux.org> 0.0.9-alt1
+- Update to v0.0.9 (2021-02-17).
+
 * Thu Dec 10 2020 Vitaly Chikunov <vt@altlinux.org> 0.0.8-alt1
 - Update to v0.0.8 (2020-11-11) -3-g5975d19 (2020-10-28).
 
