@@ -3,7 +3,7 @@
 
 Name: libpng
 Version: 1.7.0
-Release: alt2.beta%betaver
+Release: alt3.beta%betaver
 
 Summary: A library of functions for manipulating PNG image format files
 License: %name-2.0
@@ -38,8 +38,8 @@ using %name.
 %package -n %name%sover-devel
 Summary: PNG development library
 Group: Development/C
+Requires: pkgconfig(zlib)
 Conflicts: %name-devel
-Conflicts: %{name}10-devel
 Conflicts: %{name}12-devel
 Conflicts: %{name}15-devel
 
@@ -49,6 +49,14 @@ PNG (Portable Network Graphics) format files.
 
 This package contains the header and development files needed to build
 programs and packages using %name.
+
+%package -n %name%sover-tools
+Summary: Tools for Manipulating PNG Images
+Group: Development/Tools
+
+%description -n %name%sover-tools
+Package consists of low level tools for manipulating and fixing particular
+PNG files.
 
 %prep
 %setup -n %name-%{version}beta%betaver
@@ -63,13 +71,6 @@ programs and packages using %name.
 rm %buildroot%_libdir/lib*.la
 rm -rf %buildroot%_man5dir
 
-%define docdir %_docdir/%name-%version
-rm -rf %buildroot%docdir
-mkdir -p %buildroot%docdir
-install -p -m644 CHANGES LICENSE README TODO example.c libpng*.txt \
-	%buildroot%docdir/
-xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
-
 %filter_from_provides /^pkgconfig(%name)/d
 
 %check
@@ -77,19 +78,25 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 
 %files -n %name%sover
 %_libdir/*.so.*
-%dir %docdir
-%docdir/[CLR]*
 
 %files -n %name%sover-devel
-%_bindir/*
+%doc ANNOUNCE CHANGES LICENSE README TODO %name-*.txt
+%_bindir/%name%sover-config
+%_bindir/%name-config
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
 %_man3dir/*
-%docdir
-%exclude %docdir/[CLR]*
+
+%files -n %name%sover-tools
+%_bindir/png-fix-itxt
+%_bindir/pngfix
 
 %changelog
+* Thu Feb 18 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.0-alt3.beta89
+- Add tools subpackage
+- Add requires on devel subpackage
+
 * Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.0-alt2.beta89
 - Don't pack man(5) in devel package
 
