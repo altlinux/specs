@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Test-Script
 Name: perl-Test-Script
-Version: 1.26
+Version: 1.27
 Release: alt1
 Summary: Test::Script - Basic cross-platform tests for scripts
 
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl-IPC-Run3 perl-Probe-Perl perl(Test/Tester.pm) per
 %doc Changes README
 
 %changelog
+* Thu Feb 18 2021 Igor Vlasenko <viy@altlinux.org> 1.27-alt1
+- new version
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - new version
 
