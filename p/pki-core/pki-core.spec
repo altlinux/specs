@@ -12,7 +12,7 @@
 %define ldapjdk_version     4.22.0
 
 Name: pki-core
-Version: 10.10.3
+Version: 10.10.4
 Release: alt1
 
 Summary: Certificate System - PKI Core Components
@@ -184,6 +184,7 @@ Group: System/Base
 Requires: pki-symkey = %EVR
 Requires: pki-tools = %EVR
 Requires: openssl
+Requires: tomcatjss >= %tomcatjss_version
 
 Provides: pki-deploy = %EVR
 Provides: pki-setup = %EVR
@@ -752,6 +753,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Mon Feb 15 2021 Stanislav Levin <slev@altlinux.org> 10.10.4-alt1
+- 10.10.3 -> 10.10.4.
+
 * Fri Feb 05 2021 Stanislav Levin <slev@altlinux.org> 10.10.3-alt1
 - 10.10.0 -> 10.10.3.
 
