@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 Name: perl-Log-Any
-Version: 1.708
-Release: alt1.1
+Version: 1.709
+Release: alt1
 
 Summary: Log::Any - bringing loggers and listeners together
 
@@ -44,6 +44,9 @@ The application, in turn, may choose one or more logging mechanisms via Log::Any
 %perl_vendor_privlib/Log/Any*
 
 %changelog
+* Thu Feb 18 2021 Igor Vlasenko <viy@altlinux.org> 1.709-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.708-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
