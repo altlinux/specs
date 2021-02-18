@@ -1,10 +1,9 @@
-
-%def_disable check
+%def_enable check
 
 Name: bash-completion
 Epoch: 1
-Version: 2.9
-Release: alt1
+Version: 2.11
+Release: alt1.git.157.g59d2322e
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -18,15 +17,16 @@ Source: %name-%version.tar
 Source1: rpm-cache.filetrigger
 Patch1: %name-alt-iptables.patch
 Patch9: %name-alt-specific.patch
+Source44: %name.watch
 
 %if_enabled check
-BuildRequires: dejagnu tcllib screen
+BuildRequires: pytest3 python3-module-pexpect
 %endif
 
 Requires: bash >= 4.1
 BuildArch: noarch
 
-%add_findreq_skiplist %_datadir/%name/completions/*.py
+%add_findreq_skiplist %_datadir/%name/completions/*
 %add_findreq_skiplist %_datadir/%name/helpers/*
 %add_findreq_skiplist %_datadir/pkgconfig/bash-completion.pc
 
@@ -45,7 +45,9 @@ of the programmable completion feature of bash 2.04 and later.
 %make
 
 %check
-make -C test check
+# Currently fails
+#= 20 failed, 1222 passed, 423 skipped, 16 xfailed, 4 xpassed in 941.69s (0:15:41) =
+make -C test check ||:
 
 %install
 %makeinstall_std
@@ -62,6 +64,11 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %_datadir/pkgconfig/bash-completion.pc
 
 %changelog
+* Thu Feb 18 2021 Ildar Mulyukov <ildar@altlinux.ru> 1:2.11-alt1.git.157.g59d2322e
+- new version
+- check is enabled but still failing
+- rpm: add --changes-since --lastchange modifiers to the -q option (closes: #32143)
+
 * Wed Aug 21 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.9-alt1
 - 2.9
 
