@@ -30,7 +30,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -135,8 +135,10 @@ BuildRequires: libqrcodegen-cpp-devel
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libeot-devel
 BuildRequires: libgraphite2-devel
+%if_with java
 # 7.0.4.2
 BuildRequires:  java-9-openjdk-devel
+%endif
 
 %if_without python
 BuildRequires: python3-dev
@@ -652,6 +654,9 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Feb 18 2021 Ivan A. Melnikov <iv@altlinux.org> 7.0.4.2-alt2
+- Remove BR: openjdk-devel from non-java builds.
+
 * Fri Feb 05 2021 Andrey Cherepanov <cas@altlinux.org> 7.0.4.2-alt1
 - New version.
 - Add Greek languagepack (ALT #39636).
