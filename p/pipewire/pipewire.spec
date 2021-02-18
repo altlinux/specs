@@ -21,8 +21,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.21
-Release: alt1.1
+Version: %ver_major.22
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -139,16 +139,19 @@ export LIB=%_lib
 %_bindir/%name
 %_bindir/pw-jack
 %_bindir/%name-pulse
-
 %{?_enable_examples:%_bindir/%name-media-session}
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
 %dir %_sysconfdir/%name/media-session.d
-%_sysconfdir/%name/media-session.d/alsa-monitor.conf
-%_sysconfdir/%name/media-session.d/bluez-monitor.conf
-%_sysconfdir/%name/media-session.d/media-session.conf
-%_sysconfdir/%name/media-session.d/v4l2-monitor.conf
+%config(noreplace) %_sysconfdir/%name/client.conf
+%config(noreplace) %_sysconfdir/%name/client-rt.conf
+%config(noreplace) %_sysconfdir/%name/jack.conf
+%config(noreplace) %_sysconfdir/%name/media-session.d/alsa-monitor.conf
+%config(noreplace) %_sysconfdir/%name/media-session.d/bluez-monitor.conf
+%config(noreplace) %_sysconfdir/%name/media-session.d/media-session.conf
+%config(noreplace) %_sysconfdir/%name/media-session.d/v4l2-monitor.conf
+%config(noreplace) %_sysconfdir/%name/pipewire-pulse.conf
 %_sysconfdir/%name/media-session.d/with-jack
 %_sysconfdir/%name/media-session.d/with-pulseaudio
 %_udevrulesdir/90-%name-alsa.rules
@@ -188,7 +191,8 @@ export LIB=%_lib
 
 %if_enabled docs
 %files libs-devel-doc
-%_datadir/doc/%name/html
+%dir %_datadir/doc/%name
+%_datadir/doc/%name/html/
 %endif
 
 %files utils
@@ -207,6 +211,7 @@ export LIB=%_lib
 %_bindir/pw-top
 %{?_enable_examples:%_bindir/pw-reserve}
 %_bindir/spa-inspect
+%_bindir/spa-json-dump
 %_bindir/spa-monitor
 %_bindir/spa-resample
 %_bindir/spa-acp-tool
@@ -223,6 +228,11 @@ export LIB=%_lib
 
 
 %changelog
+* Thu Feb 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.22-alt1
+- 0.3.22
+- lakostis@: Don't overwrite configs in /etc/pipewire
+             add unowned doc dir
+
 * Wed Feb 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.21-alt1.1
 - enabled aptX BT codec support
 
