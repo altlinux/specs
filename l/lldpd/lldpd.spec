@@ -1,6 +1,6 @@
 Name: lldpd
 Version: 1.0.8
-Release: alt1
+Release: alt2
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -29,11 +29,7 @@ Patch12: lldpd-fix-build-system-libevent.patch
 %def_with snmp
 %def_with xml
 %def_with readline
-%ifarch x86_64
-%def_with seccomp
-%else
 %def_without seccomp
-%endif
 
 BuildRequires: libssl-devel
 BuildRequires: doxygen
@@ -151,6 +147,9 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Thu Feb 18 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.8-alt2
+- disable seccomp
+
 * Tue Feb 16 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.8-alt1
 - new version 1.0.8 (Fixes: CVE-2020-27827)
 - enable seccomp for x86_64
