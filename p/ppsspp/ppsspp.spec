@@ -7,7 +7,7 @@
 
 Name: ppsspp
 Version: 1.11.2
-Release: alt1
+Release: alt2
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -51,7 +51,6 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libzip)
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(snappy)
-BuildRequires: pkgconfig(zlib)
 
 Requires: %name-common = %EVR
 
@@ -195,6 +194,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Thu Feb 18 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.2-alt2
+- Fix buildrequires
+
 * Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.2-alt1
 - Version 1.11.2
 
