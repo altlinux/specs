@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm) perl(DateTime.pm) perl(Term/ReadKey.pm)
+BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm) perl(DateTime.pm) perl(Term/ReadKey.pm) perl(Time/Piece.pm)
 # END SourceDeps(oneline)
 %define module_name Module-Release
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.125
+Version: 2.127
 Release: alt1
 Summary: Automate Perl distribution releases
 Group: Development/Perl
@@ -45,6 +45,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Wed Feb 17 2021 Igor Vlasenko <viy@altlinux.ru> 2.127-alt1
+- automated CPAN update
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.125-alt1
 - automated CPAN update
 
