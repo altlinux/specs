@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.6.2
+Version: 4.6.3
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -71,6 +71,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Thu Feb 18 2021 Sergey V Turchin <zerg@altlinux.org> 4.6.3-alt1
+- don't hardcode installer popup dialog size
+
 * Mon Oct 26 2020 Ivan Razzhivin <underwit@altlinux.org> 4.6.2-alt1
 - fix regular expression (closes: 39050)
 
