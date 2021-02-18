@@ -3,10 +3,10 @@
 %define _libexecdir %_prefix/libexec
 %def_disable docs
 #ERROR: test-portals - Bail out! xdg-desktop-portal:ERROR:tests/camera.c:74:camera_cb: 'ret' should be FALSE
-%def_disable check
+%def_enable check
 
 Name: xdg-desktop-portal
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -20,6 +20,7 @@ Source: %url/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
+%define glib_ver 2.60
 %define geoclue_ver 2.5.2
 %define portal_ver 0.2
 
@@ -31,9 +32,8 @@ Requires: geoclue2 >= %geoclue_ver
 
 BuildRequires: pkgconfig(flatpak)
 BuildRequires: pkgconfig(fuse)
-BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
 BuildRequires: pkgconfig(libpipewire-0.3)
-BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(json-glib-1.0)
@@ -95,6 +95,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Thu Feb 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
