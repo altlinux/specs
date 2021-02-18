@@ -1,7 +1,7 @@
 Name: bind
-Version: 9.11.25
-%define src_version 9.11.25
-Release: alt2
+Version: 9.11.28
+%define src_version 9.11.28
+Release: alt1
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -427,6 +427,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Feb 18 2021 Stanislav Levin <slev@altlinux.org> 9.11.28-alt1
+- 9.11.25 -> 9.11.28 (fixes: CVE-2020-8625).
+
 * Mon Nov 30 2020 Stanislav Levin <slev@altlinux.org> 9.11.25-alt2
 - Backported fix for man pages (closes: #39350).
 
