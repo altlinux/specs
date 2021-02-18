@@ -1,6 +1,6 @@
 %def_disable static
 %define gecko_version 2.47.2
-%define mono_version 5.1.1
+%define mono_version 6.0.0
 
 # rpm-build-info gives _distro_version
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
@@ -11,7 +11,7 @@
 %endif
 
 Name: wine-vanilla
-Version: 6.0
+Version: 6.2
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -420,6 +420,7 @@ done
 %_libdir/wine/msvcrt.so
 %_libdir/wine/msvcrtd.so
 %_libdir/wine/ucrtbase.so
+%_libdir/wine/wmphoto.so
 %_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
@@ -509,6 +510,10 @@ done
 %endif
 
 %changelog
+* Thu Feb 18 2021 Vitaly Lipatov <lav@altlinux.ru> 6.2-alt1
+- new version 6.2
+- set strict require wine-mono 6.0.0
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0-alt1
 - new version 6.0
 - set strict require wine-gecko 2.47.2
