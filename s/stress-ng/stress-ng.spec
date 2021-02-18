@@ -4,7 +4,7 @@
 
 Name: stress-ng
 Version: 0.12.03
-Release: alt1
+Release: alt2
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -54,6 +54,8 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 # getrandom test does not work in sborotschnitza:
 #   getrandom using flags GRND_INSECURE failed, errno=22 (Invalid argument)
 sed -i '/STRESSORS/s/getrandom //g' debian/tests/lite-test
+# Cache test for a long time hanging ALT beekeeper for a unknown reason.
+sed -i '/STRESSORS/s/ cache / /g' debian/tests/lite-test
 
 banner lite-test
 SEGFAULT_SIGNALS="segv abrt" LD_PRELOAD=libSegFault.so time timeout -s6 300 make lite-test
@@ -67,6 +69,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Thu Feb 18 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.03-alt2
+- spec: Disable cache test in %%check for ALT beekeeper.
+
 * Mon Feb 15 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.03-alt1
 - Update to V0.12.03 (2021-02-13).
 
