@@ -5,7 +5,7 @@
 %def_without prelude
 
 Name: audit
-Version: 3.0
+Version: 3.0.1
 Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
@@ -227,6 +227,10 @@ fi
 %endif
 
 %changelog
+* Fri Feb 19 2021 Egor Ignatov <egori@altlinux.org> 3.0.1-alt1
+- Update to version 3.0.1
+- Exclude libpthread dependency from libaudit
+
 * Thu Feb 11 2021 Egor Ignatov <egori@altlinux.org> 3.0-alt1
 - Update to version 3.0
 
