@@ -55,7 +55,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.29.90
+Version: 1.30.0
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -340,6 +340,7 @@ export LDFLAGS=-pie
 %endif
 	--with-udev-dir=/lib/udev \
 	--enable-polkit=yes \
+	--with-polkit-agent-helper-1=/usr/libexec/polkit-1/polkit-agent-helper-1 \
 	--enable-modify-system=no \
 	--enable-etcnet-alt \
 	--disable-ifcfg-rh \
@@ -616,6 +617,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Feb 19 2021 Mikhail Efremov <sem@altlinux.org> 1.30.0-alt1
+- Explicitly set path to polkit-agent-helper-1.
+- Updated to 1.30.0.
+
 * Fri Feb 12 2021 Mikhail Efremov <sem@altlinux.org> 1.29.90-alt1
 - Avoid "maybe-uninitialized" warning on 32bit arches.
 - etcnet-alt: Use nm-default-daemon.h.
