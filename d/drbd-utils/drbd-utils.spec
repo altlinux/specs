@@ -4,7 +4,7 @@
 %define _localstatedir %_var
 
 Name: drbd-utils
-Version: 9.15.1
+Version: 9.16.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -74,7 +74,6 @@ management utility.
 %prep
 %setup -a1
 tar -xf %SOURCE1 -C drbd-headers
-%__subst 's/(u64)/(__u64)/' drbd-headers/drbd_protocol.h
 %patch0 -p1
 (echo -e "#define GITHASH \"%githash\""; \
  echo -e "#define GITDIFF \"%gitdiff\"") > user/shared/drbd_buildtag.h
@@ -153,6 +152,9 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %_sysconfdir/bash_completion.d/drbdadm*
 
 %changelog
+* Fri Feb 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.16.0-alt1
+- 9.16.0
+
 * Wed Dec 30 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.15.1-alt1
 - 9.15.1
 
