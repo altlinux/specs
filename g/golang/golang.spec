@@ -1,16 +1,10 @@
-# build ids are not currently generated:
-# https://code.google.com/p/go/issues/detail?id=5238
-#
-# also, debuginfo extraction currently fails with
-# "Failed to write file: invalid section alignment"
-%global __find_debuginfo_files %nil
-
 # we are shipping the full contents of src in the data subpackage, which
 # contains binary-like things (ELF data for tests, etc)
 %global _unpackaged_files_terminate_build 1
 
 %global go_arches %ix86 x86_64 aarch64 %arm mipsel ppc64le riscv64
 %global go_root %_prefix/lib/golang
+%global golibdir %_libdir/golang
 
 %ifarch x86_64
 %global go_hostarch  amd64
@@ -34,11 +28,17 @@
 %global go_hostarch  riscv64
 %endif
 
+# Build golang shared objects for stdlib
+%ifarch %ix86 x86_64 ppc64le %arm aarch64
+%def_enable shared
+%else
+%def_disable shared
+%endif
 
 %def_disable check
 
 Name:    golang
-Version: 1.15.8
+Version: 1.16
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -103,14 +103,12 @@ AutoReq: nopython
 The Go Runtime support for GDB.
 
 
-%ifarch x86_64
 %package shared
 Summary: Golang shared object libraries
 Group:   Development/Other
 
 %description shared
 %summary.
-%endif
 
 
 %package docs
@@ -180,13 +178,8 @@ cd src
 ./make.bash --no-clean
 cd ..
 
-%ifarch x86_64
-export GOROOT=$PWD
-export PATH="$GOROOT/bin:$PATH"
-
-# TODO get linux/386 support for shared objects.
-# golang shared objects for stdlib
-go install -v -buildmode=shared std
+%if_enabled shared
+GOROOT=$PWD PATH="$GOROOT/bin:$PATH" go install -v -buildmode=shared -v -x std
 %endif
 
 
@@ -245,6 +238,16 @@ find \
 # remove the unnecessary zoneinfo file (Go will always use the system one first)
 rm -rfv -- \
 	%buildroot/%go_root/lib/time
+
+%if_enabled shared
+mkdir -p %buildroot%golibdir
+for file in $(find %buildroot/%go_root/pkg/linux_%{go_hostarch}_dynlink  -iname "*.so" ); do
+    mv  $file %buildroot/%golibdir
+    pushd $(dirname $file)
+    ln -fs %golibdir/$(basename $file) $(basename $file)
+    popd
+done
+%endif
 
 # add symlinks for binaries.
 for z in %buildroot%go_root/bin/*; do
@@ -307,11 +310,12 @@ mkdir -p -- \
 %exclude %go_root/src
 %exclude %go_root/test
 
-%ifarch x86_64
+%if_enabled shared
 %exclude %go_root/pkg/linux_%{go_hostarch}_dynlink
 
 %files shared
 %go_root/pkg/linux_%{go_hostarch}_dynlink
+%golibdir/*.so
 %endif
 
 
@@ -337,6 +341,11 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri Feb 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.16-alt1
+- New version (1.16).
+- Build shared package for x86, x86_64, ppc64le, arm, aarch64.
+- find debuginfo files for shared for shared libs.
+
 * Fri Feb 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.8-alt1
 - New version (1.15.8).
 
