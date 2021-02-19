@@ -1,19 +1,20 @@
-%def_with largefile
-%def_with manpages
+%define _unpackaged_files_terminate_build 1
 
 Name: zziplib
-Version: 0.13.69
-Release: alt3
+Version: 0.13.72
+Release: alt1
 
 Summary: Lightweight library to easily extract data from zip files
 License: LGPL/MPL
 Group: System/Libraries
 
-URL: http://zziplib.sourceforge.net/
-Source: http://downloads.sourceforge.net/zziplib/zziplib-%version.tar
+URL: https://github.com/gdraheim/zziplib
+Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libSDL-devel python-modules xmlto zip zlib-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake python3
+BuildRequires: libSDL-devel xmlto zip zlib-devel
 
 %description
 The zziplib provides read access to zipped files in a zip-archive, using
@@ -24,7 +25,7 @@ operating system environment.
 %package devel
 Summary: Files needed to develop programs using zziplib
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The zziplib provides read access to zipped files in a zip-archive, using
@@ -37,7 +38,7 @@ This package contains files needed to develop programs using zziplib.
 %package utils
 Summary: ZZipLib utilites
 Group: Archiving/Compression
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description utils
 The zziplib provides read access to zipped files in a zip-archive, using
@@ -50,20 +51,13 @@ This package contains some useful ZZipLib utilites.
 %prep
 %setup
 %patch0 -p1
-sed -i 's|^\(CFLAGS.*\)|\1 -g|' $(find ./ -name Makefile.in)
 
 %build
-export PYTHON=/usr/bin/python2
-find . -name '*.py' | xargs sed -i 's@#! /usr/bin/python@#! %__python@g;s@#! /usr/bin/env python@#! %__python@g'
-autoconf
-%configure --enable-sdl --disable-static %{subst_with largefile}
-# strip rpath
-subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' */libtool
-subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' */libtool
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std %{?_with_manpages: install-man3}
+%cmakeinstall_std
 
 %files
 %_libdir/lib*.so.*
@@ -74,14 +68,15 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' */libtool
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*.m4
 %_includedir/*
-%if_with manpages
 %_man3dir/*
-%endif
 
 %files utils
 %_bindir/*
 
 %changelog
+* Wed Feb 17 2021 Egor Ignatov <egori@altlinux.org> 0.13.72-alt1
+- 0.13.72
+
 * Mon Nov 18 2019 Anton Farygin <rider@altlinux.ru> 0.13.69-alt3
 - force python-2.7 to build documentation
 
