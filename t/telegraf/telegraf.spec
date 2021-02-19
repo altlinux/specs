@@ -1,15 +1,10 @@
 %global import_path github.com/influxdata/telegraf
-%global commit 292e285a09c82697d1e5314fe3a092e489bc6b85
+%global commit 24a552b90ba06d278cbe0639290a9bee1d7791b6
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name:		telegraf
-Version:	1.16.1
+Version:	1.17.3
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -119,6 +114,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Feb 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.17.3-alt1
+- 1.17.3
+
 * Thu Nov 12 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
 - 1.16.1
 
