@@ -1,7 +1,7 @@
 %def_disable static
 %define gecko_version 2.47.2
-%define mono_version 5.1.1
-%define major 6.0
+%define mono_version 6.0.0
+%define major 6.2
 %define rel %nil
 
 %def_with gtk3
@@ -29,7 +29,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/6.0/wine-%major%rel.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/6.x/wine-%major%rel.tar.xz
 Source: %name-%version.tar
 # Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%rel.tar.gz
 Source1: %name-staging-%version.tar
@@ -493,6 +493,7 @@ done
 %libwinedir/msvcrt.so
 %libwinedir/msvcrtd.so
 %libwinedir/ucrtbase.so
+%libwinedir/wmphoto.so
 %libwinedir/*.com.so
 %libwinedir/*.cpl.so
 %libwinedir/*.drv.so
@@ -582,6 +583,10 @@ done
 %endif
 
 %changelog
+* Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.2.1-alt1
+- new version 6.2.1 (with rpmrb script)
+- set strict require wine-mono 6.0.0
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.0.1-alt1
 - new version 6.0.1 (with rpmrb script)
 - set strict require wine-gecko 2.47.2
