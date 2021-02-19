@@ -1,7 +1,7 @@
 %define soversion 0
 
 Name: gamemode
-Version: 1.6
+Version: 1.6.1
 Release: alt1
 
 Summary: Optimise Linux system performance on demand 
@@ -17,7 +17,7 @@ Requires: lib%name%soversion = %EVR
 
 BuildRequires: cmake
 BuildRequires: libdbus-devel
-BuildRequires: libinih-devel
+BuildRequires: libinih-devel >= r53
 BuildRequires: libstdc++-devel
 BuildRequires: libsystemd-devel
 BuildRequires: meson
@@ -75,7 +75,8 @@ Development files for GameMode
 %_libexecdir/cpugovctl
 %_libexecdir/gpuclockctl
 %_libexecdir/systemd/user/gamemoded.service
-%_mandir/*
+%_man1dir/*
+%_man8dir/*
 
 %files -n lib%name%soversion
 %_libdir/lib%name.so.*
@@ -89,6 +90,9 @@ Development files for GameMode
 %_libdir/lib%{name}auto.so
 
 %changelog
+* Fri Feb 19 2021 Nazarov Denis <nenderus@altlinux.org> 1.6.1-alt1
+- Version 1.6.1
+
 * Fri Sep 11 2020 Nazarov Denis <nenderus@altlinux.org> 1.6-alt1
 - Version 1.6
 
