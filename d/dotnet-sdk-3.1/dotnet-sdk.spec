@@ -6,13 +6,13 @@
 %define _dotnet_apprefrelease 3.1.12
 %define _dotnet_corerelease 3.1.12
 %define _dotnet_sdkrelease %version
-%define _dotnet_netstandartrelease 2.1.0
+#define _dotnet_netstandartrelease 2.1.0
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
 Version: 3.1.406
-Release: alt1
+Release: alt2
 
 Summary: SDK for the .NET Core 3.1
 
@@ -35,15 +35,15 @@ BuildRequires: dotnet-bootstrap-%_dotnet_major = %_dotnet_corerelease
 BuildRequires: dotnet-hostfxr-%_dotnet_major = %_dotnet_corerelease
 
 # SDK unusable without dotnet CLI
-#Requires: dotnet = %_dotnet_corerelease
+Requires: dotnet-%_dotnet_major = %_dotnet_corerelease
+Requires: netstandard-targeting-pack-2.1
 
 Requires: dotnet-common
-# = %_dotnet_corerelease
 
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
-Provides: netstandard-targeting-pack-2.1 = %_dotnet_netstandartrelease
+# TODO: move to separate packages?
 Provides: dotnet-targeting-pack-%_dotnet_major = %_dotnet_apprefrelease
 
 Conflicts: dotnet-sdk
@@ -66,7 +66,7 @@ cp -a %bootstrapdir/sdk/%_dotnet_sdkrelease/.toolsetversion %buildroot%_dotnet_s
 
 # TODO: standalone package
 mkdir -p %buildroot%_dotnetdir/packs/
-cp -a %bootstrapdir/packs/NETStandard.Library.Ref/ %buildroot%_dotnetdir/packs/
+#cp -a %bootstrapdir/packs/NETStandard.Library.Ref/ %buildroot%_dotnetdir/packs/
 cp -a %bootstrapdir/packs/Microsoft.NETCore.App.Ref/ %buildroot%_dotnetdir/packs/
 
 mkdir -p %buildroot%_dotnetdir/templates/%_dotnet_templatesrelease/
@@ -79,18 +79,12 @@ rm -f %buildroot%_dotnet_sdk/AppHostTemplate/apphost
 #ln -sr %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_sdk/AppHostTemplate/apphost
 cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_sdk/AppHostTemplate/apphost
 
-mkdir -p %buildroot%_cachedir/dotnet/NuGetFallbackFolder/
-ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet/sdk/NuGetFallbackFolder
-
-%pre
-%groupadd dotnet || :
-
 %files
 %dir %_dotnetdir/sdk/
 %_dotnet_sdk/
 
 # TODO: standalone package netstandard-targeting-pack-2.1.0
-%_dotnetdir/packs/NETStandard.Library.Ref/
+#_dotnetdir/packs/NETStandard.Library.Ref/
 # TODO: dotnet-targeting-pack
 %_dotnetdir/packs/Microsoft.NETCore.App.Ref/
 
@@ -99,11 +93,12 @@ ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet
 %dir %_dotnetdir/templates/%_dotnet_templatesrelease/
 %_dotnetdir/templates/%_dotnet_templatesrelease/*.nupkg
 
-%_libdir/dotnet/sdk/NuGetFallbackFolder/
-%dir %_cachedir/dotnet/
-%attr(2775,root,dotnet) %dir %_cachedir/dotnet/NuGetFallbackFolder/
-
 %changelog
+* Sat Feb 20 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.406-alt2
+- don't pack netstandard-targeting-pack-2.1.0
+- add require dotnet-3.1
+- don't create dotnet group anymore
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.406-alt1
 - .NET Core SDK 3.1.406
 - CVE-2021-1721: .NET Core Denial of Service Vulnerability

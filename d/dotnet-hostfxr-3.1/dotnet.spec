@@ -13,7 +13,7 @@
 
 Name: dotnet-hostfxr-%_dotnet_major
 Version: 3.1.12
-Release: alt1
+Release: alt2
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -42,12 +42,38 @@ BuildRequires: dotnet-bootstrap-%_dotnet_major = %_dotnet_corerelease
 
 Conflicts: dotnet <= 3.1.6-alt1
 
+Requires: dotnet-common
+
 %description
 This repo contains the code to build the .NET Core runtime,
 libraries and shared host (dotnet) installers for all supported platforms.
 It does not contain the actual sources to .NET Core runtime;
 this source is split across the dotnet/coreclr repo (runtime)
 and dotnet/corefx repo (libraries).
+
+# common for current version
+%package -n dotnet-%_dotnet_major
+Version: %_dotnet_corerelease
+Group: Development/Other
+Summary: .NET %_dotnet_major full installation
+
+Requires: dotnet-host
+Requires: dotnet-coreclr-%_dotnet_major = %_dotnet_corerelease
+Requires: dotnet-corefx-%_dotnet_major = %_dotnet_corerelease
+Requires: dotnet-hostfxr-%_dotnet_major = %EVR
+#Requires: dotnet-apphost-pack-%_dotnet_major = %EVR
+
+%description -n dotnet-%_dotnet_major
+The .NET %_dotnet_major.
+
+This is a virtual package to provide full installation of .NET %_dotnet_major.
+
+.NET is a development platform that you can use to build command-line
+applications, microservices and modern websites. It is open source,
+cross-platform and is supported by Microsoft. We hope you enjoy using it!
+If you do, please consider joining the active community of developers that are
+contributing to the project on GitHub (https://github.com/dotnet/core).
+
 
 %prep
 %setup
@@ -97,9 +123,8 @@ install -m644 %exedir/nethost.h %buildroot%_dotnet_shared/
 %_dotnet_hostfxr/libhostfxr.so
 %_dotnet_shared/libhostpolicy.so
 
-# some doubles
+# some duplicate
 %_dotnet_shared/nethost.h
-
 
 %dir %_dotnetdir/packs/Microsoft.NETCore.App.Host.%_dotnet_rid/
 %dir %_dotnet_apphostdir/
@@ -110,7 +135,12 @@ install -m644 %exedir/nethost.h %buildroot%_dotnet_shared/
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/libnethost.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/nethost.h
 
+%files -n dotnet-%_dotnet_major
+
 %changelog
+* Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt2
+- add dotnet-3.1 virtual package
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt1
 - .NET Core 3.1.12
 

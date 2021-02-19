@@ -13,7 +13,7 @@
 
 Name: dotnet-coreclr-%_dotnet_major
 Version: 3.1.12
-Release: alt1
+Release: alt2
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -59,6 +59,8 @@ BuildRequires: dotnet
 
 Requires: dotnet-common
 
+Conflicts: dotnet-coreclr
+
 %description
 This package contains the .NET Core runtime, called CoreCLR,
 and the base library, called mscorlib.
@@ -77,7 +79,8 @@ cross platform applications that work on Linux, Mac and Windows.
 
 # replace obsoleted FindPythonInterp with FindPython3
 sed -i -e 's|FindPythonInterp|FindPython3|' -e 's|PYTHON_EXECUTABLE|Python3_EXECUTABLE|' \
-    src/pal/src/eventprovider/*/CMakeLists.txt src/vm/eventing/CMakeLists.txt src/vm/eventing/*/CMakeLists.txt
+    src/pal/src/eventprovider/*/CMakeLists.txt src/vm/eventing/CMakeLists.txt \
+    src/pal/tests/palsuite/eventprovider/CMakeLists.txt src/vm/eventing/*/CMakeLists.txt
 
 %if_with libunwind
 rm -rfv src/pal/src/libunwind/
@@ -162,6 +165,9 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_rpmlibdir/%name.filetrigger
 
 %changelog
+* Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt2
+- fix python3 using, add conflicts to dotnet-coreclr
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt1
 - .NET Core 3.1.12
 - CVE-2021-1721: .NET Core Denial of Service Vulnerability
