@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20210211.da571d3
+%define module_version	0.8.1+git20210219.8a3aaa6
 %define module_release	alt1
 
 %define flavour		std-def
@@ -7,13 +7,6 @@
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
-
-# FIXME
-%if "%flavour" == "un-def" || "%flavour" == "std-debug"
-%ifarch %ix86
-%def_without check
-%endif
-%endif
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
@@ -149,10 +142,10 @@ exit:
 	pause();
 }
 __EOF__
-mkdir proc
+mkdir -p proc
 cp -a %buildroot%module_dir/p_lkrg.ko p_lkrg.ko
 cp -a /lib/modules/%kversion-%kflavour-%krelease/kernel/fs/fuse/fuse.ko fuse.ko
-find init fuse.ko p_lkrg.ko proc -print -depth | cpio -H newc -o | gzip -8n > initrd.img
+find init fuse.ko p_lkrg.ko proc -print | cpio -H newc -o | gzip -8n > initrd.img.gz
 qemu_arch=%_arch
 qemu_opts=""
 console=ttyS0
@@ -170,7 +163,7 @@ qemu_opts="-machine accel=tcg,type=virt"
 console=ttyAMA0
 timeout=1800
 %endif
-timeout --foreground "$timeout" qemu-system-"$qemu_arch" $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img > boot.log &&
+timeout --foreground "$timeout" qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img.gz > boot.log &&
 grep -qF "LKRG initialized successfully!" boot.log &&
 grep -qF "LKRG unloaded!" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
@@ -195,6 +188,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Feb 19 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210219.8a3aaa6-alt1
+- Updated to commit 8a3aaa65c0fb97064139d2f361ad82ab6e28a377 (fixes work on
+  IA-32).
+- Enabled tests for all architectures on all flavours.
+- std-debug: built for aarch64 and %%arm.
 
 * Fri Feb 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210207.da571d3-alt1
 - Updated to da571d3e8a35b2d6ea45e760d2da27aaada5eafb.
