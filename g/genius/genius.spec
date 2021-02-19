@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.25
+Version: %ver_major.26
 Release: alt1
 
 Summary: Genius Calculator
@@ -18,16 +18,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 2.18.0
-%define glib_ver 2.16.0
-%define vte_ver 0.26.0
-%define gtksourceview_ver 2.0.2
+%define gtk_ver 3.21.4
+%define glib_ver 2.41.1
+%define vte_ver 0.50.0
+%define gtksourceview_ver 3.99.7
 %define mpfr_ver 2.3.0
 
-BuildPreReq: libgio-devel >= %glib_ver libgtk+2-devel >= %gtk_ver
-BuildRequires: libgtksourceview-devel >= %gtksourceview_ver
-BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= %mpfr_ver
 BuildRequires: autoconf-archive intltool xsltproc bison flex
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
+BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= %mpfr_ver
 BuildRequires: pkgconfig(amtk-5)
 BuildRequires: libvte3-devel >= %vte_ver
 # for non-UTF korean trnslation
@@ -54,7 +54,7 @@ This package provides headers needed to develop Genius plugins.
 %prep
 %setup
 # stuff from newer (2.4.6) libtool
-rm -f m4/*
+#rm -f m4/*
 
 subst '/GTK_UPDATE_ICON_CACHE/d' pixmaps/Makefile.am
 
@@ -97,6 +97,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Fri Feb 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.26-alt1
+- 1.0.26
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.25-alt1
 - 1.0.25
 
