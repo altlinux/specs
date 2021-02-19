@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 20.12.2
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -29,7 +29,7 @@ BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-deve
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-knewstuff-devel kf5-kglobalaccel-devel kf5-kwayland-devel
-#BuildRequires: kf5-purpose-devel
+BuildRequires: kf5-purpose-devel
 BuildRequires: kde5-libkipi-devel
 BuildRequires: plasma5-libkscreen-devel
 BuildRequires: kde5-kcolorpicker-devel kde5-kimageannotator-devel
@@ -86,6 +86,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Fri Feb 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
+- build with kf5-purpose
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
