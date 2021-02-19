@@ -16,7 +16,7 @@
 
 Name: clamav
 Version: 0.103.1
-Release: alt3
+Release: alt4
 %define abiversion 9
 
 Summary: Clam Antivirus scanner
@@ -396,8 +396,11 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Fri Feb 19 2021 Alexey Shabalin <shaba@altlinux.org> 0.103.1-alt4
+- Fix clamav-clamonacc.service
+
 * Thu Feb 18 2021 Alexey Shabalin <shaba@altlinux.org> 0.103.1-alt3
-- apply patch for clamav-config.patch.
+- Apply clamav-config-systemd.patch.
 
 * Thu Feb 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.103.1-alt2
 - Do not add clamav-freshclam.service to package (conflict with crond).
