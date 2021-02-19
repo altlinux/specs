@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20210211.da571d3
+%define module_version 0.8.1+git20210219.8a3aaa6
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -50,6 +50,10 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Feb 19 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210219.8a3aaa6-alt1
+- Updated to commit 8a3aaa65c0fb97064139d2f361ad82ab6e28a377 (fixes work on
+  IA-32).
+
 * Fri Feb 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210211.da571d3-alt1
 - Updated to commit da571d3e8a35b2d6ea45e760d2da27aaada5eafb.
 - Built for armh.
