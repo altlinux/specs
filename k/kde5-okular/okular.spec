@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 20.12.2
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -48,7 +48,7 @@ BuildRequires: zlib-devel libdiscount-devel
 BuildRequires: ebook-tools-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel
 BuildRequires: kde5-libkexiv2-devel
 BuildRequires: plasma5-libkscreen-devel
-#BuildRequires: kf5-purpose-devel
+BuildRequires: kf5-purpose-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel
@@ -202,6 +202,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Fri Feb 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
+- build with kf5-purpose
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
