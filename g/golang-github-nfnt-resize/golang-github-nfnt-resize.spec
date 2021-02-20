@@ -1,11 +1,11 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/nfnt/resize
 %global commit          83c6a9932646f83e3267f353373d47347b6036b2
 
 Name: golang-github-nfnt-resize
 Version: 0
-Release: alt1.git83c6a99
+Release: alt2.git83c6a99
 Summary: Pure golang image resizing
 Group: Graphical desktop/Other
 License: ISC
@@ -57,6 +57,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Sat Feb 20 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.git83c6a99
+- Disabled tests.
+
 * Tue May 12 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git83c6a99
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
