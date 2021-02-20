@@ -11,7 +11,7 @@
 
 Name:		fzf
 Version:	0.25.1
-Release:	alt1
+Release:	alt2
 Summary:	A general-purpose command-line fuzzy finder.
 
 Group:		Development/Tools
@@ -76,16 +76,11 @@ Vim plugin for %name
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
 
-# Don't try to download dependencies from network
-rm -f go.mod
 %golang_prepare
-rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
-cp -alv -- vendor/* "$BUILDDIR/src"
 
-cd .build/src/%import_path
-%golang_build .
+cd .build/src
+%golang_build %import_path
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -134,6 +129,9 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 0.25.1-alt2
+- Fix build with golang 1.16
+
 * Mon Feb 8 2021 Vladimir Didenko <cow@altlinux.org> 0.25.1-alt1
 - New version
 
