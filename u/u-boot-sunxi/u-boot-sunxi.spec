@@ -1,6 +1,6 @@
 Name: u-boot-sunxi
 Version: 2021.01
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -64,6 +64,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Sat Feb 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.01-alt2
+- always set fdtfile env var to bare dtb filename (closes: 39705)
+
 * Wed Jan 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.01-alt1
 - 2021.01 released
 
