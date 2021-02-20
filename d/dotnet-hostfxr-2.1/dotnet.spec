@@ -1,15 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without bootstrap
 %define pre %nil
-
 %define _dotnet_major 2.1
 %define _dotnet_corerelease 2.1.25
 #define _dotnet_sdkrelease 5.0.103
 
 Name: dotnet-hostfxr-%_dotnet_major
 Version: 2.1.25
-Release: alt1
+Release: alt2
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -28,16 +26,7 @@ BuildRequires: cmake libstdc++-devel
 
 BuildRequires(pre): rpm-macros-dotnet
 
-BuildRequires: dotnet-common
-
-%if_with bootstrap
-BuildRequires: dotnet-bootstrap
-%define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
-%else
-#BuildRequires: dotnet
-%define bootstrapdir %_dotnetdir
-%endif
-
+Requires: dotnet-common
 
 %description
 This repo contains the code to build the .NET Core runtime,
@@ -46,17 +35,40 @@ It does not contain the actual sources to .NET Core runtime;
 this source is split across the dotnet/coreclr repo (runtime)
 and dotnet/corefx repo (libraries).
 
+# common for current version
+%package -n dotnet-%_dotnet_major
+Version: %_dotnet_corerelease
+Group: Development/Other
+Summary: .NET %_dotnet_major full installation
+
+Requires: dotnet-host
+Requires: dotnet-coreclr-%_dotnet_major = %_dotnet_corerelease
+Requires: dotnet-corefx-%_dotnet_major = %_dotnet_corerelease
+Requires: dotnet-hostfxr-%_dotnet_major = %EVR
+#Requires: dotnet-apphost-pack-%_dotnet_major = %EVR
+
+%description -n dotnet-%_dotnet_major
+The .NET %_dotnet_major.
+
+This is a virtual package to provide full installation of .NET %_dotnet_major.
+
+.NET is a development platform that you can use to build command-line
+applications, microservices and modern websites. It is open source,
+cross-platform and is supported by Microsoft. We hope you enjoy using it!
+If you do, please consider joining the active community of developers that are
+contributing to the project on GitHub (https://github.com/dotnet/core).
+
+
 %prep
 %setup
 # since glibc 2.26 xlocale.h is removed
 #__subst "s|xlocale.h|locale.h|" src/corehost/cli/json/casablanca/include/cpprest/asyncrt_utils.h
 
-#find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_dotnetdir/fake-os-release|g"
+# set global runtime location
+%__subst "s|/usr/share/dotnet|%_dotnetdir|" src/corehost/common/pal.unix.cpp
 
 %build
-#DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build.sh x64 release verbose
 cd src/corehost
-#DOTNET_TOOL_DIR=%bootstrapdir
 sh -x ./build.sh \
     --arch %_dotnet_arch \
     --hostver %_dotnet_corerelease \
@@ -68,26 +80,28 @@ sh -x ./build.sh \
 # (parallel generation fail workaround)
 
 %install
-mkdir -p %buildroot%_dotnetdir/
-#install -m755 src/corehost/cli/exe/dotnet/dotnet %buildroot%_dotnetdir/
+#mkdir -p %buildroot%_dotnetdir/
 #install -m755 src/corehost/cli/exe/apphost/apphost %buildroot%_dotnetdir/
 
 mkdir -p %buildroot%_dotnet_shared/
 install -m755 src/corehost/cli/dll/libhostpolicy.so %buildroot%_dotnet_shared/
-#install -m755 src/corehost/cli/fxr/libhostfxr.so %buildroot%_dotnet_shared/
 mkdir -p %buildroot%_dotnet_hostfxr/
 install -m755 src/corehost/cli/fxr/libhostfxr.so %buildroot%_dotnet_hostfxr/
-
-#mkdir -p %buildroot%_bindir/
-#ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 
 %files
 %doc THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md LICENSE.TXT
 %dir %_dotnet_hostfxr/
 %_dotnet_hostfxr/libhostfxr.so
+%dir %_dotnet_shared/
 %_dotnet_shared/libhostpolicy.so
 
+%files -n dotnet-%_dotnet_major
+
+
 %changelog
+* Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt2
+- add dotnet-2.1 virtual package, cleanup spec
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt1
 - .NET Core 2.1
 
