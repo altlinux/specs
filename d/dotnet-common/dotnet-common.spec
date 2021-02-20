@@ -1,7 +1,6 @@
-%define dotnetmajor 3.1
-%define corerelease 3.1.6
-%define sdkrelease 3.1.106
+# TODO: dropout dotnet-common package with dirs
 %define _dotnet_archlist aarch64 x86_64
+
 %ifarch x86_64
 %define _dotnet_arch x64
 %else
@@ -14,7 +13,7 @@
 %define _dotnet_rid linux-%_dotnet_arch
 
 Name: dotnet-common
-Version: 3.1.6
+Version: 5.0
 Release: alt1
 
 Summary: Common dir and files for the .NET Core runtime and libraries
@@ -27,7 +26,7 @@ Source: %name-%version.tar
 #ExclusiveArch: %_dotnet_archlist
 
 %description
-Common dir and files for the .NET Core runtime and libraries.
+Common dir and files for the .NET runtime and libraries.
 
 %package -n rpm-macros-dotnet
 Summary: RPM macros for build dotnet packages
@@ -39,35 +38,20 @@ RPM macros for build dotnet packages.
 %prep
 %setup
 
-# make scripts happy
-cat <<EOF >fake-os-release
-NAME="GNU/Linux"
-VERSION=""
-ID=linux
-VERSION_ID=""
-EOF
-
-cat <<EOF >fake-os-release-fedora
-NAME="Fedora"
-VERSION="28"
-ID=fedora
-VERSION_ID="28"
-EOF
-
 cat <<EOF >macros
-%%_dotnet_major %dotnetmajor
-%%_dotnet_corerelease %corerelease
-%%_dotnet_sdkrelease %sdkrelease
+# define in your spec:
+#_dotnet_major
+#_dotnet_corerelease
+#_dotnet_sdkrelease
+
 %%_dotnet_archlist %_dotnet_archlist
-# remove me
-%%_dotnet_linuxrid %_dotnet_rid
 %%_dotnet_rid %_dotnet_rid
 %%_dotnet_arch %_dotnet_arch
 %%_dotnetdir %_libdir/dotnet
 %%_dotnet_hostfxr %%_dotnetdir/host/fxr/%%_dotnet_corerelease/
 %%_dotnet_shared %%_dotnetdir/shared/Microsoft.NETCore.App/%%_dotnet_corerelease/
 %%_dotnet_sdk %%_dotnetdir/sdk/%%_dotnet_sdkrelease/
-%%_dotnet_apphostdir %_dotnetdir/packs/Microsoft.NETCore.App.Host.%%_dotnet_linuxrid/%%_dotnet_corerelease
+%%_dotnet_apphostdir %_dotnetdir/packs/Microsoft.NETCore.App.Host.%%_dotnet_rid/%%_dotnet_corerelease
 EOF
 
 
@@ -78,17 +62,10 @@ mkdir -p %buildroot%_libdir/dotnet/host/fxr/
 mkdir -p %buildroot%_libdir/dotnet/packs/
 mkdir -p %buildroot%_libdir/dotnet/templates/
 
-install -m644 fake-os-release %buildroot%_libdir/dotnet/fake-os-release
-install -m644 fake-os-release-fedora %buildroot%_libdir/dotnet/fake-os-release-fedora
-
-
 install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
-
 
 %files
 %dir %_libdir/dotnet/
-%_libdir/dotnet/fake-os-release
-%_libdir/dotnet/fake-os-release-fedora
 
 %dir %_libdir/dotnet/host/
 %dir %_libdir/dotnet/host/fxr/
@@ -103,6 +80,9 @@ install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Sat Feb 20 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt1
+- cleanup to .NET 5
+
 * Mon Aug 03 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
 - .NET Core 3.1.6 release
 
