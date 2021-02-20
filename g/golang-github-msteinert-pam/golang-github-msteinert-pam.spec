@@ -1,11 +1,11 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/msteinert/pam
 %global commit          e61372126161db56aa15734b7575714920c274ac
 
 Name: golang-github-msteinert-pam
 Version: 0
-Release: alt2.gite613721
+Release: alt3.gite613721
 Summary: Go wrapper module for the Pluggable Authentication Modules (PAM) API
 Group: Development/Other
 License: BSD-2-Clause
@@ -65,6 +65,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Sat Feb 20 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt3.gite613721
+- Disabled tests.
+
 * Mon Feb 01 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.gite613721
 - Built from git.
 
