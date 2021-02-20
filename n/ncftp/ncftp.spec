@@ -1,6 +1,6 @@
 Name: ncftp
 Version: 3.2.4
-Release: alt1.qa1
+Release: alt2
 Serial: 1
 
 Packager: Ilya Mashkin <oddity at altlinux dot ru>
@@ -30,7 +30,7 @@ Patch4: ncftp-3.1.5-ncursesw.patch
 Patch5: ncftp-3.2.2-no_lfs64_source.patch
 
 # Automatically added by buildreq on Sun Feb 06 2005
-BuildRequires: libncurses-devel libtinfo-devel
+BuildRequires: libncurses-devel libtinfo-devel gcc8
 
 %description
 Ncftp is an improved FTP client.  Ncftp's improvements include support
@@ -57,6 +57,7 @@ NcFTP - это улучшенный консольный FTP клиент. Улучшения включают в себя
 #patch5 -p0 -b .no_lfs64_source
 
 %build
+%set_gcc_version 8
 %configure --enable-signals
 %make_build
 
@@ -99,6 +100,9 @@ find doc -type f -exec chmod 0644 {} \;
 %_liconsdir/%name.png
 
 %changelog
+* Sat Feb 20 2021 Ilya Mashkin <oddity@altlinux.ru> 1:3.2.4-alt2
+- fix build 
+
 * Sun Apr 17 2011 Igor Vlasenko <viy@altlinux.ru> 1:3.2.4-alt1.qa1
 - NMU: converted menu to desktop file
 
