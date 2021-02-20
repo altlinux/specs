@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 Name:          foreman-addons
 Version:       0.0.3
-Release:       alt1.1
+Release:       alt2
 Summary:       Default addons for Foreman
 License:       GPLv3
 Group:         Development/Ruby
@@ -9,10 +9,13 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        modules.tar
+Source1:       Gemfile
 Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
 
 Conflicts:     smart-proxy-dynflow-core
+Requires:      gem-ed25519
+Requires:      gem-bcrypt-pbkdf
 
 %description
 %summary.
@@ -40,7 +43,9 @@ install -Dm0644 smart_proxy_dynflow_core-0.2.2/deploy/smart_proxy_dynflow_core.s
 install -Dm0644 smart_proxy_dynflow_core-0.2.2/config/settings.yml.example %buildroot%_sysconfdir/smart_proxy_dynflow_core/settings.yml
 mkdir -p %buildroot%_sharedstatedir/smart-proxy-dynflow-core \
          %buildroot/run/smart-proxy-dynflow-core
-ln -s %ruby_gemslibdir/smart_proxy_dynflow_core-0.2.2/Gemfile %buildroot%_sharedstatedir/smart-proxy-dynflow-core/
+#TODO move to setup.rb
+install -Dm0644 %SOURCE1 %buildroot%_sharedstatedir/smart-proxy-dynflow-core/Gemfile
+
 
 %files
 %_bindir/*
@@ -60,6 +65,10 @@ railsctl cleanup %name
 
 
 %changelog
+* Tue Feb 09 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.3-alt2
+- + requires to ed25519 and bcrypt_pbkdf for smart_proxy_dynflow_core gem
+- ! smart_proxy_dynflow_core gem to support new ssh option
+
 * Thu Jan 28 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.3-alt1.1
 - ! post and preus scripts
 

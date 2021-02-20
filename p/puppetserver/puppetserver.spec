@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.13.0
-Release:    alt3
+Release:    alt3.1
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -161,7 +161,7 @@ fi
 
 %files
 %_datadir/%name
-%_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name
 %_var/log/%name
 %_var/lib/%name
 %_var/run/%name
@@ -172,6 +172,9 @@ fi
 %_sysconfdir/default/%name
 
 %changelog
+* Tue Feb 09 2021 Pavel Skrylev <majioa@altlinux.org> 6.13.0-alt3.1
+- ! keeping sysconfig data from an old releases
+
 * Wed Dec 23 2020 Pavel Skrylev <majioa@altlinux.org> 6.13.0-alt3
 - + environment_classes to ''auth.conf''
 - + replacings for the log folder, removing puppetlabs from it

@@ -1,12 +1,13 @@
 Name:          foreman
 Version:       1.24.3.2
-Release:       alt3
+Release:       alt4
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
 Url:           https://theforeman.org
 Vcs:           https://github.com/theforeman/foreman.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
 Source:        %name-%version.tar
 Source1:       database.yml
@@ -18,6 +19,8 @@ Source6:       %name.service
 Source7:       settings.yml
 Source9:       manifest.js
 Source10:      %name-production-%version.tar
+Source11:      %name-jobs.service
+Source12:      %name-jobs.sysconfig
 Patch:         patch.patch
 Patch1:        sass.patch
 Patch2:        1.22.2.patch
@@ -59,6 +62,7 @@ Requires:      gem-ovirt-engine-sdk
 Requires:      gem-rails-dom-testing
 Requires:      gem-spice-html5-rails >= 0.1.5-alt1
 Requires:      gem-gridster-rails >= 0.5.6.1-alt1
+Requires:      dynflow
 
 %gem_replace_version rails ~> 5.2
 %gem_replace_version graphql ~> 1.9
@@ -125,7 +129,12 @@ make -C locale all-mo
 %install
 # public www TODO
 mkdir -p %buildroot%webserver_datadir \
+         %buildroot%_sbindir \
          %buildroot/run/%name \
+         %buildroot%_spooldir/%name/tmp \
+         %buildroot%_cachedir/%name/_ \
+         %buildroot%_localstatedir/%name \
+         %buildroot%_cachedir/%name/openid-store \
          %buildroot%_sysconfdir/%name/plugins
 mv config/foreman-debug.conf %buildroot%_sysconfdir/%name/foreman-debug.conf
 
@@ -143,7 +152,11 @@ install -Dm0644 %SOURCE4 %buildroot%_sysconfdir/cron.d/%name
 install -Dm0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 install -Dm0755 %SOURCE6 %buildroot%_unitdir/%name.service
 install -Dm0755 %SOURCE7 %buildroot%_sysconfdir/%name/settings.yml
-install -Dm0750 %buildroot%_libexecdir/%name/Gemfile %buildroot%_localstatedir/%name/Gemfile
+install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/encryption_key.rb
+install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/local_secret_token.rb
+install -Dm0644 %SOURCE11 %buildroot%_unitdir/%{name}-jobs.service
+install -Dm0644 %SOURCE12 %buildroot%_sysconfdir/sysconfig/%{name}-jobs
+
 
 mv %buildroot%_libexecdir/%name/public %buildroot%webserver_datadir/%name
 ln -svr %webserver_datadir/%name %buildroot%_libexecdir/%name/public
@@ -151,48 +164,71 @@ ln -svr %_sysconfdir/%name/plugins %buildroot%_libexecdir/%name/config/settings.
 ln -svr %_sysconfdir/%name/settings.yml %buildroot%_libexecdir/%name/config/settings.yaml
 ln -svr %_sysconfdir/%name/database.yml %buildroot%_libexecdir/%name/config/database.yml
 ln -svr %_sysconfdir/%name/foreman-debug.conf %buildroot%_libexecdir/%name/config/foreman-debug.conf
+ln -svr %_sysconfdir/%name/encryption_key.rb %buildroot%_libexecdir/%name/config/initializers/encryption_key.rb
+ln -svr %_sysconfdir/%name/local_secret_token.rb %buildroot%_libexecdir/%name/config/initializers/local_secret_token.rb
+ln -svr %_spooldir/%name/tmp %buildroot%_libexecdir/%name/tmp
+ln -svr %_cachedir/%name/_ %buildroot%_spooldir/%name/tmp/cache
+ln -svr %_cachedir/%name/openid-store %buildroot%_libexecdir/%name/db/openid-store
+ln -svr %_libexecdir/%name/script/foreman-rake %buildroot%_sbindir/foreman-rake
 install -d %buildroot%_logdir/%name
 
 %pre
 # Add the "foreman" user and group
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent passwd _foreman >/dev/null || \
-   %_sbindir/useradd -r -g foreman -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
-getent passwd _foreman >/dev/null || \
-   %_sbindir/usermod -a -G foreman _dynflow
+   %_sbindir/useradd -r -g foreman -G foreman -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
+getent group puppet >/dev/null || \
+   %_sbindir/usermod -a -G puppet _foreman
+rm -rf %_libexecdir/%name/db/openid-store
 exit 0
 
 %post
 %post_service foreman
+%post_service foreman-jobs
 
 %preun
 railsctl cleanup %name
 %preun_service foreman
+%preun_service foreman-jobs
 
 
 %files
 %doc README* CONTRIBUTING.md LICENSE
+%_sbindir/*
 %_libexecdir/%name
+%config(noreplace) %_logrotatedir/%name
 %config(noreplace) %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name-jobs
 %config(noreplace) %_sysconfdir/%name/plugins
 %config(noreplace) %_sysconfdir/%name/settings.yml
 %config(noreplace) %_sysconfdir/%name/database.yml
 %config(noreplace) %_sysconfdir/%name/foreman-debug.conf
-%config(noreplace) %_logrotatedir/%name
-%_sysconfdir/cron.d/%name
+%attr(640,_foreman,foreman) %config(noreplace) %_sysconfdir/%name/encryption_key.rb
+%attr(640,_foreman,foreman) %config(noreplace) %_sysconfdir/%name/local_secret_token.rb
+%attr(770,_foreman,foreman) %_sysconfdir/cron.d/%name
 %_tmpfilesdir/%name.conf
 %_unitdir/*
-%webserver_datadir/%name
-%attr(770,_foreman,foreman) %_logdir/%name
-%attr(770,_foreman,foreman) %_localstatedir/%name
-%attr(770,_foreman,foreman) /run/%name
+%attr(770,_foreman,foreman) %webserver_datadir/%name
+%attr(770,_foreman,foreman) %_spooldir/%name/tmp
+%attr(770,_foreman,foreman) %_cachedir/%name
+%dir %attr(770,_foreman,foreman) %_cachedir/%name/openid-store
+%dir %attr(770,_foreman,foreman) %_cachedir/%name/_
+%dir %attr(770,_foreman,foreman) /run/%name
+%dir %attr(770,_foreman,foreman) %_logdir/%name
+%dir %attr(770,_foreman,foreman) %_localstatedir/%name
+%dir %attr(770,_foreman,foreman) %_spooldir/%name
 # %_man8dir/*.8*
 
 %files         doc
 %ruby_ridir/*
 
 %changelog
+* Sun Feb 14 2021 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt4
+- ! spec folders to include
+- ! default database config
+- + foreman-jobs sysconfig and service
+
 * Fri Jan 22 2021 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt3
 - + deps to 4 module gems
 - * right for some folders
