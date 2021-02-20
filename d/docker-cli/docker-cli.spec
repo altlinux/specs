@@ -11,7 +11,7 @@
 
 Name:       docker-cli
 Version:    20.10.3
-Release: alt1
+Release: alt2
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -42,6 +42,9 @@ CLI for Docker Engine
 %patch1 -p1
 
 %build
+# Temporary workaround to build with golang 1.16. Waiting for upstream to
+# add go modules support.
+export GO111MODULE=off
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="%go_path:$BUILDDIR"
@@ -88,6 +91,9 @@ install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/f
 %{_datadir}/fish/completions/docker.fish
 
 %changelog
+* Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 20.10.3-alt2
+- fix build with golang 1.16
+
 * Tue Feb 09 2021 Vladimir Didenko <cow@altlinux.org> 20.10.3-alt1
 - new release
 

@@ -11,7 +11,7 @@
 
 Name:		containerd
 Version:	1.4.3
-Release:	alt1
+Release:	alt2
 Summary:	A daemon to control runC
 
 Group:		Development/Other
@@ -45,6 +45,9 @@ support as well as checkpoint and restore for cloning and live migration of cont
 %setup -q
 
 %build
+# Temporary workaround to build with golang 1.16. Containerd 1.5 (beta is already
+# available) supports go modules
+export GO111MODULE=off
 export IMPORT_PATH="%import_path"
 export GOPATH="%go_path:$PWD"
 
@@ -87,6 +90,9 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %_unitdir/%name.service
 
 %changelog
+* Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 1.4.3-alt2
+- Fix build with golang 1.16
+
 * Fri Jan 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.3-alt1
 - 1.4.3 (Fixes: CVE-2020-15257)
 

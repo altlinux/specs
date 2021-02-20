@@ -16,7 +16,7 @@
 
 Name:           libnetwork
 Version:        19.03.13
-Release:        alt1.git%shortcommit
+Release:        alt2.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -48,6 +48,9 @@ This package provides docker-proxy util.
 %setup -q
 
 %build
+# Temporary workaround to build with golang 1.16. Waiting for upstream to
+# add go modules support.
+export GO111MODULE=off
 export GOPATH="%go_path:$PWD/vendor:$PWD"
 # TODO: restore dnet build
 go build -o "bin/docker-proxy" ./cmd/proxy
@@ -61,6 +64,9 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 19.03.13-alt2.git026aaba
+- Fix build with golang 1.16
+
 * Wed Sep 30 2020 Vladimir Didenko <cow@altlinux.org> 19.03.13-alt1.git026aaba
 - New version for docker 19.03.13-ce
 

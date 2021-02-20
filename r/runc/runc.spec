@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt15.rc93
+Release:        alt16.rc93
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -42,12 +42,8 @@ and to manage containers running under runc.
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export GOPATH="%go_path:$BUILDDIR"
 
 %golang_prepare
-# TODO: Looks ugly. Definetly should be fixed.
-rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
-cp -alv -- vendor/* "$BUILDDIR/src"
 make COMMIT=%commit
 
 %install
@@ -65,6 +61,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt16.rc93
+- Fix build with golang 1.16
+
 * Tue Feb 9 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt15.rc93
 - New version
 
