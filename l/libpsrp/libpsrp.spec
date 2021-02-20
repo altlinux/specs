@@ -1,8 +1,10 @@
-%define post -2
+%define targetdir %_libdir/powershell/runtimes/%_dotnet_rid/native
+
+%define post -0
 # nuget psrp module
 Name: 	  libpsrp
-Version:  1.4.2
-Release:  alt2
+Version:  1.4.4
+Release:  alt1
 
 Summary:  PowerShell WS-Man PSRP Client for Linux
 License:  MIT
@@ -18,7 +20,9 @@ ExclusiveArch: aarch64 x86_64
 Source:  %name-%version.tar
 Source1: .gear/CMakeLists.txt
 
-BuildRequires: cmake rpm-macros-cmake gcc-c++
+BuildRequires(pre): rpm-macros-cmake rpm-macros-dotnet
+
+BuildRequires: cmake gcc-c++
 BuildRequires: libssl-devel libpam0-devel
 BuildRequires: libomi-devel >= 1.6.2 libomi-internal-devel
 
@@ -38,13 +42,16 @@ cd src
 
 %install
 cd src
-mkdir -p %buildroot%_libdir/
-cp libpsrpclient.so %buildroot%_libdir/
+mkdir -p %buildroot%targetdir/
+cp libpsrpclient.so %buildroot%targetdir/
 
 %files
-%_libdir/libpsrpclient.so
+%targetdir/libpsrpclient.so
 
 %changelog
+* Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt1
+- new version 1.4.4 (with rpmrb script)
+
 * Sun Dec 29 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt2
 - build at aarch64
 
