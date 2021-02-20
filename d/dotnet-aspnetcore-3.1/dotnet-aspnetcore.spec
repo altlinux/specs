@@ -5,7 +5,6 @@
 
 %define _dotnet_asppackrelease 3.1.10
 %define _dotnet_aspnetcore_app %_dotnetdir/shared/Microsoft.AspNetCore.App/%_dotnet_corerelease/
-%define _dotnet_aspnetcore_all %_dotnetdir/shared/Microsoft.AspNetCore.All/%_dotnet_corerelease/
 
 # FIXME: build from sources
 %def_with bootstrap
@@ -13,7 +12,7 @@
 
 Name: dotnet-aspnetcore-%_dotnet_major
 Version: 3.1.12
-Release: alt1
+Release: alt2
 
 Summary: ASP.NET Core is a cross-platform .NET framework for building modern cloud-based web application
 
@@ -43,6 +42,7 @@ BuildRequires: dotnet
 
 Requires: dotnet-common
 
+Conflicts: dotnet-aspnetcore <= 3.1.6-alt1
 
 %description
 ASP.NET Core is an open-source and cross-platform framework
@@ -62,16 +62,8 @@ Just copied managed binaries now.
 
 %install
 mkdir -p %buildroot%_dotnet_aspnetcore_app
-#%buildroot%_dotnet_aspnetcore_all
+
 %if_with bootstrap
-# managed
-#cp -a %bootstrapdir/shared/Microsoft.AspNetCore.All/%_dotnet_corerelease/.version %buildroot%_dotnet_aspnetcore_all
-#cp -a %bootstrapdir/shared/Microsoft.AspNetCore.All/%_dotnet_corerelease/*.dll %buildroot%_dotnet_aspnetcore_all
-#cp -a %bootstrapdir/shared/Microsoft.AspNetCore.All/%_dotnet_corerelease/*.json %buildroot%_dotnet_aspnetcore_all
-
-# TODO:
-#ln -s %_libdir/libuv.so.1.0.0 %buildroot%_dotnet_aspnetcore_app/libuv.so
-
 cp -a %bootstrapdir/shared/Microsoft.AspNetCore.App/%_dotnet_corerelease/.version %buildroot%_dotnet_aspnetcore_app
 cp -a %bootstrapdir/shared/Microsoft.AspNetCore.App/%_dotnet_corerelease/*.dll %buildroot%_dotnet_aspnetcore_app
 cp -a %bootstrapdir/shared/Microsoft.AspNetCore.App/%_dotnet_corerelease/*.json %buildroot%_dotnet_aspnetcore_app
@@ -79,7 +71,6 @@ cp -a %bootstrapdir/shared/Microsoft.AspNetCore.App/%_dotnet_corerelease/*.json 
 # TODO: subpackage targeting-packs
 mkdir -p %buildroot%_dotnetdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/
 cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/* %buildroot%_dotnetdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/
-
 %endif
 
 %files
@@ -88,21 +79,17 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/*
 %_dotnet_aspnetcore_app/.version
 %_dotnet_aspnetcore_app/Microsoft.AspNetCore.App.deps.json
 %_dotnet_aspnetcore_app/Microsoft.AspNetCore.App.runtimeconfig.json
-# managed code
+
 %_dotnet_aspnetcore_app/*.dll
-# native code
-#%_dotnet_aspnetcore_app/
-#%dir %_dotnet_aspnetcore_all/
-#%_dotnet_aspnetcore_all/.version
-#%_dotnet_aspnetcore_all/Microsoft.AspNetCore.All.deps.json
-#%_dotnet_aspnetcore_all/Microsoft.AspNetCore.All.runtimeconfig.json
-#%_dotnet_aspnetcore_all/*.dll
 
 %dir %_dotnetdir/packs/
 %dir %_dotnetdir/packs/Microsoft.AspNetCore.App.Ref/
 %_dotnetdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/
 
 %changelog
+* Sat Feb 20 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt2
+- cleanup spec, add Conflicts: dotnet-aspnetcore
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt1
 - ASP.NET Core 3.1.12
 - CVE-2021-1721: .NET Core Denial of Service Vulnerability
