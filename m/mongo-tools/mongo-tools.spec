@@ -20,7 +20,7 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 4.2.8
+Version: 4.2.12
 Release: alt1
 
 Summary: mongo client shell and tools
@@ -45,6 +45,9 @@ The MongoDB tools provides import, export, and diagnostic capabilities.
 %setup
 
 %build
+# Temporary workaround to build with golang 1.16. Waiting for upstream to
+# add go modules support.
+export GO111MODULE=off
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="%go_path:$BUILDDIR"
@@ -73,6 +76,10 @@ install -p -m 644 man/* %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/*
 
 %changelog
+* Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 4.2.12-alt1
+- 4.2.12
+- fix build with golang 1.16
+
 * Mon Jun 29 2020 Vladimir Didenko <cow@altlinux.org> 4.2.8-alt1
 - 4.2.8
 
