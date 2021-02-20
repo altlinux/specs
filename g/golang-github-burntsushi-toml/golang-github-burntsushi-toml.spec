@@ -4,7 +4,7 @@
 
 Name: golang-github-burntsushi-toml
 Version: 0.3.1
-Release: alt1
+Release: alt2
 Summary: Toml parser with reflection for Golang
 
 License: MIT and BSD
@@ -48,6 +48,7 @@ export GOPATH="%go_path"
 
 %golang_prepare
 
+go mod init github.com/BurntSushi/toml
 cd .build/src/%goipath
 for cmd in cmd/* ; do
 %golang_build $cmd ||:
@@ -72,5 +73,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Sat Feb 20 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.1-alt2
+- Fixed build.
+
 * Tue Apr 28 2020 Leontiy Volodin <lvol@altlinux.org> 0.3.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
