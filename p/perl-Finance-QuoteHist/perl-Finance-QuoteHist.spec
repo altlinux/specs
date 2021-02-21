@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Finance-QuoteHist
 Name: perl-%dist
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: Perl module for fetching historical stock quotes
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/M/MS/MSISK/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Dec 22 2010
-BuildRequires: perl-Date-Manip perl-HTML-TableExtract perl-Regexp-Common perl-Text-CSV perl-Text-CSV_XS perl-devel perl-libwww
+BuildRequires: perl-Date-Manip perl-HTML-TableExtract perl-Regexp-Common perl-Text-CSV perl-Text-CSV_XS perl-devel perl-libwww perl(JSON.pm)
 
 %description
 Finance::QuoteHist is a top level interface for fetching historical
@@ -34,6 +34,9 @@ stock quotes from the web.
 %perl_vendor_privlib/Finance
 
 %changelog
+* Sun Feb 21 2021 Igor Vlasenko <viy@altlinux.org> 1.30-alt1
+- automated CPAN update
+
 * Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
