@@ -4,7 +4,7 @@
 %def_with python2
 
 Name: python-module-%modname
-Version: 0.29.21
+Version: 0.29.22
 Release: alt1
 
 Summary: C-extensions for Python
@@ -12,7 +12,7 @@ Group: Development/Python
 License: Apache-2.0
 Url: http://www.cython.org
 
-#VCS: https://github.com/cython/cython.git
+Vcs: https://github.com/cython/cython.git
 Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
 #Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
 
@@ -229,6 +229,9 @@ done
 %endif
 
 %changelog
+* Sat Feb 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.22-alt1
+- 0.29.22
+
 * Thu Jul 09 2020 Yuri N. Sedunov <aris@altlinux.org> 0.29.21-alt1
 - 0.29.21
 

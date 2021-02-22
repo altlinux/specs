@@ -2,7 +2,7 @@
 
 Name: meld
 %define xdg_name org.gnome.%name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -56,6 +56,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS
 
 %changelog
+* Sat Feb 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
+- 3.20.3
+
 * Sun Feb 16 2020 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
 Group: System/Libraries
@@ -134,6 +134,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Feb 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.2-alt1
+- 0.12.2
+
 * Sat Nov 14 2020 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt2
 - disabled Python 2 support
 

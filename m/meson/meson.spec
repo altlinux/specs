@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 0.56
+%define ver_major 0.57
 %define libname mesonbuild
 # pkexec may be used to "gain elevated privileges" during install
 %def_without polkit
 %def_disable check
 
 Name: meson
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
@@ -33,6 +33,8 @@ Requires: ninja-build >= 1.7
 #grep -n "from __main__" -r *
 #mesonbuild/minstall.py:23:from __main__ import __file__ as main_file
 %add_python3_req_skip __main__
+# M$ VC++ runtime
+%add_python3_req_skip msvcrt
 %{?_with_polkit:Requires: polkit}
 
 BuildRequires(pre): rpm-build-python3
@@ -90,6 +92,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Sat Feb 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.57.1-alt1
+- 0.57.1
+
 * Mon Jan 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.56.2-alt1
 - 0.56.2
 

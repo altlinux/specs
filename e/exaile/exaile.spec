@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define beta %nil
 %define gst_api_ver 1.0
 
@@ -7,7 +7,7 @@
 %def_disable ipod
 
 Name: exaile
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
@@ -20,26 +20,27 @@ BuildArch: noarch
 %if_disabled snapshot
 Source: https://github.com/exaile/%name/releases/download/%version/%name-%version%beta.tar.gz
 %else
+Vcs: https://github.com/exaile.git
 Source: %name-%version.tar
 %endif
-#Patch: %name-%version-%release.patch
 
-# python-2.x supported only
-#%%define __python %nil
-#BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 
+%add_python3_path %_prefix/lib/%name %_datadir/%name
 # remove ubuntu and Mac-specific dependency
 %add_typelib_req_skiplist typelib(GtkosxApplication)
-
-BuildRequires(pre): rpm-build-gir rpm-build-python
-BuildRequires: python-devel python-module-pygobject3
-BuildRequires: help2man bash-completion
+# https://pypi.org/project/spydaap/
+%filter_from_requires /spydaap/d
 
 # explicitly required gtk+3
 Requires: typelib(Gtk) = 3.0
 Requires: dbus dconf
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
+
+BuildRequires(pre): rpm-build-gir
+BuildRequires: python3-devel python3-module-pygobject3
+BuildRequires: help2man bash-completion
 
 %description
 Exaile is a music player with a simple interface and powerful music
@@ -75,7 +76,6 @@ Requires: %name = %version-%release
 
 %prep
 %setup
-#%patch -p1
 subst 's@\(\$(DATADIR)\/\)appdata@\1metainfo@' Makefile
 
 %build
@@ -104,6 +104,7 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %_liconsdir/%name.png
 %_niconsdir/%name.png
 %_miconsdir/%name.png
+%_pixmapsdir/%name.png
 %_man1dir/%name.*
 %_datadir/bash-completion/completions/%name
 %doc README.md
@@ -119,6 +120,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Sun Feb 14 2021 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0 (ported to Python 3)
+
 * Tue Jan 14 2020 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
 - 4.0.2 release
 
