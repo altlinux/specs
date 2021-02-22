@@ -1,6 +1,6 @@
 %global import_path github.com/tianon/gosu
 Name:     gosu
-Version:  1.11
+Version:  1.12
 Release:  alt1
 
 Summary:  Simple Go-based setuid+setgid+setgroups+exec
@@ -46,5 +46,8 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Tue Feb 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.12-alt1
+- update to 1.12
+
 * Fri Feb 15 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.11-alt1
 - Initial build for Sisyphus
