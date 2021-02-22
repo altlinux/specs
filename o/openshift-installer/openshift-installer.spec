@@ -1,7 +1,7 @@
 %global import_path github.com/openshift/installer
 Name:     openshift-installer
 Version:  0.16.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Install an OpenShift 4.x cluster
 License:  Apache-2.0
@@ -24,6 +24,7 @@ ExcludeArch: %ix86 armh
 %setup
 
 %build
+export GO111MODULE=auto
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -51,5 +52,8 @@ install -Dm644 completion-bash %buildroot/%_datadir/bash-completion/completions/
 %doc *.md
 
 %changelog
+* Tue Feb 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.16.1-alt2
+- Set GO111MODULE=auto to fix build with go 1.16
+
 * Thu Sep 24 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.16.1-alt1
 - Initial build for Sisyphus
