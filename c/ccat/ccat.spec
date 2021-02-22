@@ -1,7 +1,7 @@
 %global import_path github.com/jingweno/ccat
 Name:     ccat
 Version:  1.1.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Colorizing cat
 License:  MIT
@@ -22,6 +22,7 @@ It works similar to cat but displays content with syntax highlighting.
 %setup
 
 %build
+export GO111MODULE=auto
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -41,5 +42,8 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Feb 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt2
+- set GO111MODULE=auto to fix build with go 1.16
+
 * Mon Jan 08 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
