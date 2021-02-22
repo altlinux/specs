@@ -1,6 +1,6 @@
 Name: ncftp
-Version: 3.2.4
-Release: alt2
+Version: 3.2.6
+Release: alt1
 Serial: 1
 
 Packager: Ilya Mashkin <oddity at altlinux dot ru>
@@ -11,7 +11,7 @@ License: Artistic
 Group: Networking/File transfer
 Url: http://www.NcFTP.com/
 
-Source0: %name-%version-src.tar.bz2
+Source0: %name-%version-src.tar.xz
 Source2: %name-16.png.bz2
 Source3: %name-32.png.bz2
 Source4: %name-48.png.bz2
@@ -29,8 +29,12 @@ Patch3: ncftp-3.1.5-pmeter.patch
 Patch4: ncftp-3.1.5-ncursesw.patch
 Patch5: ncftp-3.2.2-no_lfs64_source.patch
 
+Patch7:		ncftp-3.2.6-EPLF.diff
+Patch8:		ncftp-3.2.3-fix-help-cmd.patch
+Patch9:         ncftp-3.2.6-gcc10.patch
+
 # Automatically added by buildreq on Sun Feb 06 2005
-BuildRequires: libncurses-devel libtinfo-devel gcc8
+BuildRequires: libncurses-devel libtinfo-devel gcc
 
 %description
 Ncftp is an improved FTP client.  Ncftp's improvements include support
@@ -50,14 +54,18 @@ NcFTP - это улучшенный консольный FTP клиент. Улучшения включают в себя
 ##patch3 -p1 -b .suspend
 #patch4 -p1 -b .eplf
 
-%patch1 -p0 -b .pref
+#patch1 -p0 -b .pref
 %patch2 -p1 -b .res
 %patch3 -p1 -b .pmeter
 #patch4 -p1 -b .ncursesw
 #patch5 -p0 -b .no_lfs64_source
+%patch7 -p0 -b .eplf
+%patch8 -p1 -b .help
+%patch9 -p1 -b .gcc10
+
 
 %build
-%set_gcc_version 8
+#set_gcc_version 8
 %configure --enable-signals
 %make_build
 
@@ -100,6 +108,9 @@ find doc -type f -exec chmod 0644 {} \;
 %_liconsdir/%name.png
 
 %changelog
+* Mon Feb 22 2021 Ilya Mashkin <oddity@altlinux.ru> 1:3.2.6-alt1
+- 3.2.6
+
 * Sat Feb 20 2021 Ilya Mashkin <oddity@altlinux.ru> 1:3.2.4-alt2
 - fix build 
 
