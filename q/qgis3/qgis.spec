@@ -8,7 +8,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.16.3
+Version: 3.18.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -99,6 +99,7 @@ BuildRequires: libhdf5-devel
 BuildRequires: libnetcdf-devel
 BuildRequires: libxml2-devel
 BuildRequires: /proc
+BuildRequires: libzstd-devel
 
 #Requires: libqt4-sql-sqlite
 Requires: qca-qt5-ossl
@@ -366,6 +367,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Mon Feb 22 2021 Andrey Cherepanov <cas@altlinux.org> 3.18.0-alt1
+- New version.
+
 * Fri Jan 22 2021 Andrey Cherepanov <cas@altlinux.org> 3.16.3-alt1
 - New version.
 
