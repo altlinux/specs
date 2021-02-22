@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.interface
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 5.1.0
-Release: alt2
+Release: alt3
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -144,6 +144,9 @@ popd
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt3
+- Bootstrap for python3.9.
+
 * Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 5.1.0-alt2
 - Disabled testing against Python2.
 

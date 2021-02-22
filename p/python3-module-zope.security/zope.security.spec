@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.security
 
-%def_with check
-%def_with docs
+%def_without check
+%def_without docs
 
 Name: python3-module-%oname
 Version: 5.1.1
-Release: alt1
+Release: alt2
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
@@ -159,6 +159,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %endif
 
 %changelog
+* Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt2
+- Bootstrap for python3.9.
+
 * Wed Apr 01 2020 Nikolai Kostrigin <nickel@altlinux.org> 5.1.1-alt1
 - 5.1.0 -> 5.1.1
 - Reenable check and docs sections; switch back to uniform def_with macro

@@ -1,23 +1,22 @@
 %define oname zmq
 
-%def_with python3
+%def_with bootstrap
 
-Name: python-module-%oname
-Version: 17.0.0
+Name: python3-module-%oname
+Version: 20.0.0
 Release: alt1
 Summary: Software library for fast, message-based applications
 
-Group: Development/Python
+Group: Development/Python3
 License: LGPLv3+ and ASL 2.0
-Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ python-devel libzeromq-devel python-module-nose python-modules-json python-module-Cython python-module-numpy
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-nose python3-module-Cython
+BuildRequires: libzeromq-devel
+%if_without bootstrap
 BuildPreReq: python3-module-numpy
 %endif
 
@@ -33,7 +32,7 @@ This package contains the python bindings.
 
 %package tests
 Summary: Software library for fast, message-based applications
-Group: Development/Python
+Group: Development/Python3
 License: LGPLv3+
 
 %description tests
@@ -48,54 +47,10 @@ This package contains the testsuite for the python bindings.
 
 %package devel
 Summary: Software library for fast, message-based applications
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description devel
-The 0MQ lightweight messaging kernel is a library which extends the
-standard socket interfaces with features traditionally provided by
-specialized messaging middle-ware products. 0MQ sockets provide an
-abstraction of asynchronous message queues, multiple messaging
-patterns, message filtering (subscriptions), seamless access to
-multiple transport protocols and more.
-
-This package contains the headers for the python bindings.
-
-%package -n python3-module-%oname
-Summary: Software library for fast, message-based applications
-Group: Development/Python3
-
-%description -n python3-module-%oname
-The 0MQ lightweight messaging kernel is a library which extends the
-standard socket interfaces with features traditionally provided by
-specialized messaging middle-ware products. 0MQ sockets provide an
-abstraction of asynchronous message queues, multiple messaging
-patterns, message filtering (subscriptions), seamless access to
-multiple transport protocols and more.
-
-This package contains the python bindings.
-
-%package -n python3-module-%oname-tests
-Summary: Software library for fast, message-based applications
-Group: Development/Python3
-License: LGPLv3+
-
-%description -n python3-module-%oname-tests
-The 0MQ lightweight messaging kernel is a library which extends the
-standard socket interfaces with features traditionally provided by
-specialized messaging middle-ware products. 0MQ sockets provide an
-abstraction of asynchronous message queues, multiple messaging
-patterns, message filtering (subscriptions), seamless access to
-multiple transport protocols and more.
-
-This package contains the testsuite for the python bindings.
-
-%package -n python3-module-%oname-devel
-Summary: Software library for fast, message-based applications
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-devel
 The 0MQ lightweight messaging kernel is a library which extends the
 standard socket interfaces with features traditionally provided by
 specialized messaging middle-ware products. 0MQ sockets provide an
@@ -111,73 +66,38 @@ cp setup.cfg.template setup.cfg
 subst "s|/usr/local/lib|%_libdir|" setup.cfg
 subst "s|/usr/local/include|%_includedir|" setup.cfg
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 #check
-#rm %oname/__*
-#PYTHONPATH=%buildroot%python_sitelibdir python setup.py test
-#rm -rf %python_sitelibdir/%oname/backend/cffi/__*
-#rm -rf %buildroot%python_sitelibdir/%oname/backend/cffi/__*
-#
-#if_with python3
-#pushd ../python3
 #rm %oname/__*
 #PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
 #rm -rf %python3_sitelibdir/%oname/backend/cffi/__*
 #rm -rf %buildroot%python3_sitelibdir/%oname/backend/cffi/__*
-#popd
-#endif
 
 %files
-%doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/%oname
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/*/*.h
-
-%files devel
-%python_sitelibdir/%oname/*/*.h
-
-%files tests
-%python_sitelibdir/%oname/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/*.h
 
-%files -n python3-module-%oname-devel
+%files devel
 %python3_sitelibdir/%oname/*/*.h
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/%oname/tests
-%endif
 
 %changelog
+* Thu Dec 03 2020 Grigory Ustinov <grenka@altlinux.org> 20.0.0-alt1
+- Automatically updated to 20.0.0.
+- Transfer to python3.
+- Add bootstrap knob.
+
 * Thu Jun 07 2018 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt1
 - Build new version.
 

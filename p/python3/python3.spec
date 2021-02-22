@@ -8,12 +8,9 @@
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.8
-
-%global with_rewheel 0
-
+%global pybasever 3.9
 # pybasever without the dot:
-%global pyshortver 38
+%global pyshortver 39
 
 %global pyabi %nil
 
@@ -38,19 +35,11 @@
 %global tool_dir %__python3_tooldir
 %global pylibdir_noarch %__python3_libdir_noarch
 
-%ifarch armh
-%global pyarch arm-linux-gnueabi
-%else
-%ifarch i586
-%global pyarch i386-linux-gnu
-%else
-%ifarch %e2k
-%global pyarch e2k-linux-gnu
-%else
-%global pyarch %_arch-linux-gnu
-%endif
-%endif
-%endif
+%global pyarch %{expand:%(echo %{_arch}-linux-gnu | \
+sed -E -e 's/^i586-linux-gnu$/i386-linux-gnu/' | \
+sed -E -e 's/^armh-linux-gnu$/arm-linux-gnueabihf/' | \
+sed -E -e 's/^mips64(el)?-linux-gnu$/mips64\\1-linux-gnuabi64/' | \
+sed -E -e 's/^ppc(64)?(le)?-linux-gnu$/powerpc\\1\\2-linux-gnu/')}
 
 # All bytecode files are now in a __pycache__ subdirectory, with a name
 # reflecting the version of the bytecode (to permit sharing of python libraries
@@ -84,8 +73,6 @@
 
 %global _optlevel 3
 
-%def_disable test_posix_fadvise
-
 %def_with gdbm
 %def_with bluez
 %def_with x11
@@ -99,12 +86,14 @@
 %endif
 
 Name: python3
-Version: %{pybasever}.6
+Version: %{pybasever}.1
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
+
 License: Python
 Group: Development/Python3
+Url: http://www.python.org/
 
 # New common location for site-packages is supported since 0.1.9.
 # %%python3_ABI_dep is defined since 0.1.9.1.
@@ -126,7 +115,6 @@ BuildRequires: desktop-file-utils
 %{?_with_gl:BuildRequires: libGL-devel}
 %{?_with_gdbm:BuildRequires: gdbm-devel}
 %{?_with_valgrind:BuildRequires: valgrind-devel}
-%{?_with_rewheel:BuildRequires: python3-module-setuptools python3-module-pip}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
 
 # Fix find-requires
@@ -149,12 +137,6 @@ Source10: idle3.desktop
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1: 00001-rpath.patch
 
-# The lib64 patch
-# Change the various install paths to use /usr/lib64/ instead or /usr/lib
-# Only used when "%%{_lib}" == "lib64"
-# Not yet sent upstream.
-Patch102: 00102-lib64.patch
-
 # 00111 #
 # Patch the Makefile.pre.in so that the generated Makefile doesn't try to build
 # a libpythonMAJOR.MINOR.a
@@ -162,53 +144,19 @@ Patch102: 00102-lib64.patch
 # Downstream only: not appropriate for upstream
 Patch111: 00111-no-static-lib.patch
 
-# 00189 #
-#
-# Add the rewheel module, allowing to recreate wheels from already installed
-# ones
-# https://github.com/bkabrda/rewheel
-%if 0%{with_rewheel}
-Patch189: 00189-add-rewheel-module.patch
-%endif
-
-# 00251
+# 00251 #
 # Set values of prefix and exec_prefix in distutils install command
 # to /usr/local if executable is /usr/bin/python* and RPM build
 # is not detected to make pip and distutils install into separate location
 # Fedora Change: https://fedoraproject.org/wiki/Changes/Making_sudo_pip_safe
 Patch251: 00251-change-user-install-location.patch
 
-# 00274 #
-# Upstream uses Debian-style architecture naming. Change to match Fedora.
-Patch274: 00274-fix-arch-names.patch
-
-# (New patches go here ^^^)
-#
-# When adding new patches to "python" and "python3" in Fedora 17 onwards,
-# please try to keep the patch numbers in-sync between the two specfiles:
-#
-#   - use the same patch number across both specfiles for conceptually-equivalent
-#     fixes, ideally with the same name
-#
-#   - when a patch is relevant to both specfiles, use the same introductory
-#     comment in both specfiles where possible (to improve "diff" output when
-#     comparing them)
-#
-#   - when a patch is only relevant for one of the two specfiles, leave a gap
-#     in the patch numbering in the other specfile, adding a comment when
-#     omitting a patch, both in the manifest section here, and in the "prep"
-#     phase below
-#
-# Hopefully this will make it easier to ensure that all relevant fixes are
-# applied to both versions.
+# 00353 #
+# Original names for architectures with different names downstream
+# https://fedoraproject.org/wiki/Changes/Python_Upstream_Architecture_Names
+Patch353: 00353-architecture-names-upstream-downstream.patch
 
 #ALT Linux patches
-
-# Under some kernels not working on tmpfs,
-# see http://comments.gmane.org/gmane.linux.suse.kernel/3182
-%if_enabled test_posix_fadvise
-Patch1002: python-3.3.0-skip-test_posix_fadvise-alt.patch
-%endif
 
 # RLIMIT 1000000 unavailable in hasher
 Patch1003: python-3.8.0-skip-test_setrusage_refcount-alt.patch
@@ -238,8 +186,6 @@ Patch1012: python3-alt-2to3-python-version.patch
 # Additional metadata, and subpackages
 # ======================================================
 
-Url: http://www.python.org/
-
 # Like in Fedora:
 Provides: python(abi) = %pybasever
 
@@ -251,11 +197,6 @@ Provides: python(abi) = %pybasever
 Provides: %python3_ABI_dep
 
 Requires: %name-base = %EVR
-
-%if 0%{with_rewheel}
-Requires: python3-setuptools
-Requires: python3-pip
-%endif
 
 %description
 Python 3 is a new version of the language that is incompatible with the 2.x
@@ -331,9 +272,9 @@ Group: Development/Python3
 Requires: %name = %EVR
 Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
-Requires: %name-modules-nis = %EVR
 # No real need in python-base in this package
 %filter_from_requires /^python-base/d
+%filter_from_requires /^python2-base/d
 
 %description tools
 This package contains several tools included with Python 3
@@ -371,16 +312,6 @@ handling. The Curses module provides an interface to the curses library, the
 de-facto standard for portable advanced terminal handling.
 This extension module is designed to match the API of ncurses, an
 open-source curses library hosted on Linux and the BSD variants of UNIX.
-
-%package modules-nis
-Summary: NIS module from Python3
-Group: Development/Python3
-
-%description modules-nis
-This package contains the "nis" module from Python3.
-
-It used to be in %name-modules, but since NIS is deprecated in glibc,
-this separate package was made because of extra library dependencies.
 
 %package test
 Summary: The test modules from the main python 3 package
@@ -424,38 +355,25 @@ done
 #    rm Modules/$f
 #done
 
-%if 0%{with_rewheel}
-%global pip_version 9.0.3
-sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/ensurepip/__init__.py
-%endif
-
 #
 # Apply patches:
 #
 %patch1 -p1
 
-< %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p1
-< %PATCH1005 sed -e 's:lib64:%_lib:g' | patch -p2
-
 %patch111 -p1
 
-%if 0%{with_rewheel}
-%patch189 -p1
-%endif
-
 %patch251 -p1
-%patch274 -p1
+%patch353 -p1
 
 # ALT Linux patches
-%if_enabled test_posix_fadvise
-%patch1002 -p2
-%endif
 %patch1003 -p2
 %patch1004 -p1
 
+%patch1005 -p2
+
 %patch1007 -p2
 
-%patch1011 -p1
+%patch1011 -p2
 %patch1012 -p2
 
 %ifarch %e2k
@@ -488,6 +406,7 @@ topdir=$(pwd)
 
 build() {
 %configure \
+  --with-platlibdir=%{_lib} \
   --enable-ipv6 \
   --enable-shared \
   --with-computed-gotos=%with_computed_gotos \
@@ -769,9 +688,6 @@ LD_LIBRARY_PATH="$(pwd)" \
 $(pwd)/python -m test.regrtest \
     --verbose  %_smp_mflags \
     -x test_distutils \
-    -x test_gdb \
-    -x test_socket \
-    -x test_embed \
 %ifarch %ix86
     -x test_math
 %endif
@@ -851,6 +767,7 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_uuid.cpython-%pyshortver%pyabi.so
 %dynload_dir/_xxsubinterpreters.cpython-%pyshortver%pyabi.so
 %dynload_dir/_xxtestfuzz.cpython-%pyshortver%pyabi.so
+%dynload_dir/_zoneinfo.cpython-%pyshortver%pyabi.so
 %dynload_dir/array.cpython-%pyshortver%pyabi.so
 %dynload_dir/audioop.cpython-%pyshortver%pyabi.so
 %dynload_dir/binascii.cpython-%pyshortver%pyabi.so
@@ -933,13 +850,6 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/ensurepip/__pycache__/*%bytecode_suffixes
 %pylibdir/ensurepip/_bundled
 
-%if 0%{?with_rewheel}
-%dir %pylibdir/ensurepip/rewheel/
-%dir %pylibdir/ensurepip/rewheel/__pycache__/
-%pylibdir/ensurepip/rewheel/*.py
-%pylibdir/ensurepip/rewheel/__pycache__/*%bytecode_suffixes
-%endif
-
 %pylibdir/html
 %pylibdir/http
 
@@ -981,6 +891,11 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/xml
 %pylibdir/xmlrpc
 
+%dir %pylibdir/zoneinfo/
+%dir %pylibdir/zoneinfo/__pycache__/
+%pylibdir/zoneinfo/*.py
+%pylibdir/zoneinfo/__pycache__/*%bytecode_suffixes
+
 # "Makefile" and the config-32/64.h file are needed by
 # distutils/sysconfig.py:_init_posix(), so we include them in the core
 # package, along with their parent directories (bug 531901):
@@ -1010,7 +925,7 @@ $(pwd)/python -m test.regrtest \
 %_libdir/pkgconfig/python3.pc
 %_libdir/pkgconfig/python-%pybasever.pc
 %_libdir/pkgconfig/python-%pybasever%pyabi.pc
-%_libdir/pkgconfig/python-3.8-embed.pc
+%_libdir/pkgconfig/python-%pybasever-embed.pc
 %_libdir/pkgconfig/python3-embed.pc
 
 %files tools
@@ -1055,9 +970,6 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_curses.cpython-%pyshortver%pyabi.so
 %dynload_dir/_curses_panel.cpython-%pyshortver%pyabi.so
 
-%files modules-nis
-%dynload_dir/nis.cpython-%pyshortver%pyabi.so
-
 %if_with tk
 %files test
 %pylibdir/ctypes/test
@@ -1076,6 +988,12 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Tue Jan 19 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.1-alt1
+- Updated to upstream version 3.9.1.
+- Removed python3-tools dependency on python3-modules-nis (Closes: #39308).
+- Removed python3-modules-nis.
+- Filtered python2-base from requires (Closes: #39246).
+
 * Thu Oct 01 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.6-alt1
 - Updated to upstream version 3.8.6.
 

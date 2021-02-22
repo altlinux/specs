@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.location
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 4.2
-Release: alt5
+Release: alt6
 
 Summary: Zope Location
 License: ZPL-2.1
@@ -31,7 +31,9 @@ BuildRequires: python3-module-zope.configuration
 %endif
 
 %py3_requires zope.configuration
+%if_with check
 %py3_requires zope.component
+%endif
 
 %description
 In Zope3, location are special objects that has a structural location.
@@ -72,6 +74,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/location/tests
 
 %changelog
+* Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 4.2-alt6
+- Bootstrap for python3.9.
+
 * Wed Apr 01 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.2-alt5
 - Enable tests
 - Add zope.component back to requires

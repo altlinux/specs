@@ -1,10 +1,10 @@
 %define oname zope.configuration
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
 Summary: Zope Configuration Markup Language (ZCML) (Python 3)
 License: ZPL
@@ -123,6 +123,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Fri Jan 29 2021 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt2
+- Bootstrap for python3.9.
+
 * Tue Nov 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.4.0-alt1
 - 4.3.1 -> 4.4.0
 

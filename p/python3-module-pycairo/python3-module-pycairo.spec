@@ -1,6 +1,6 @@
 %def_disable snapshot
 %def_with doc
-%def_enable check
+%def_disable check
 
 %define modname cairo
 %define oname py%modname
@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
 Group: Development/Python
@@ -153,6 +153,9 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Thu Dec 03 2020 Grigory Ustinov <grenka@altlinux.org> 1.20.0-alt2
+- Bootstrap for python3.9.
+
 * Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 

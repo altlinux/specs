@@ -1,8 +1,10 @@
 %define oname blist
 
+%def_disable check
+
 Name: python3-module-%oname
 Version: 1.3.6
-Release: alt3
+Release: alt4
 
 Summary: A list-like type with better asymptotic performance and similar performance on small lists
 License: BSD
@@ -11,6 +13,7 @@ Url: https://pypi.python.org/pypi/blist/
 
 Source: blist-%version.tar.gz
 Patch: 0001-Fix-compatibility-for-Python-3.7.patch
+Patch2: python3.9.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
@@ -25,6 +28,7 @@ sorteddict, and btuple types.
 %prep
 %setup -n %oname-%version
 %patch -p1
+%patch2 -p1
 
 sed -i '/ez_setup/d' setup.py
 
@@ -43,6 +47,10 @@ sed -i '/ez_setup/d' setup.py
 
 
 %changelog
+* Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt4
+- Disable check for python3.9.
+- Add patch for building with python3.9.
+
 * Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.6-alt3
 - python2 disabled
 

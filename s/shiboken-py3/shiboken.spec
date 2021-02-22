@@ -1,7 +1,7 @@
 %define oname shiboken
 Name: %oname-py3
 Version: 1.2.2
-Release: alt4.git20140422
+Release: alt5.git20140422
 Summary: Generates bindings for C++ libraries using CPython source code (Python 3)
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
@@ -10,6 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 Patch1: %name-%version-alt-gcc6.patch
+Patch2: python3.9.patch
 
 # Updated build system %%__*python3* macros are in 0.1.9.2.
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2
@@ -63,6 +64,7 @@ This package contains python module of Shiboken.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 sed -i 's|sphinx\-build|py3_sphinx-build|g' \
 	ApiExtractor/doc/CMakeLists.txt doc/CMakeLists.txt
@@ -124,6 +126,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Mon Feb 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt5.git20140422
+- Fixed build with python3.9.
+
 * Tue May 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt4.git20140422
 - fixed packaging on 64bit arches other than x86_64
 
