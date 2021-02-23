@@ -1,10 +1,10 @@
-%define git gfc530dc
+%define git %nil
 %define _libexec %_prefix/libexec
 %def_enable test
 
 Name: bolt
-Version: 0.8
-Release: alt0.211.%git
+Version: 0.9.1
+Release: alt1
 Summary: Thunderbolt device manager
 Group: System/Libraries
 License: LGPLv2+
@@ -74,6 +74,9 @@ mentioned tasks.
 %ghost %dir %_localstatedir/boltd
 
 %changelog
+* Tue Feb 23 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.1-alt1
+- 0.9.1.
+
 * Tue Jun 02 2020 L.A. Kostis <lakostis@altlinux.ru> 0.8-alt0.211.gfc530dc
 - 0.8-211-gfc530dc.
 
