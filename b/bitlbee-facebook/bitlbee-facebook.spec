@@ -1,6 +1,6 @@
 Name: bitlbee-facebook
-Version: 1.1.2
-Release: alt3.7682a35
+Version: 1.2.2
+Release: alt1
 Group: Networking/IRC
 License: GPLv2
 Url: https://wiki.bitlbee.org/HowtoFacebookMQTT
@@ -36,6 +36,9 @@ make
 %_libdir/bitlbee/facebook.so
 
 %changelog
+* Tue Feb 23 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.2-alt1
+- 1.2.2.
+
 * Sat Jan 12 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt3.7682a35
 - Fix smp build.
 
