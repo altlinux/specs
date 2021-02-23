@@ -1,7 +1,7 @@
 %global import_path github.com/docker/distribution
 Name:     docker-registry
 Version:  2.7.1
-Release:  alt1
+Release:  alt2
 
 Summary:  The Docker toolset to pack, ship, store, and deliver content
 License:  Apache-2.0
@@ -25,6 +25,7 @@ BuildRequires: golang
 %setup
 
 %build
+export GO111MODULE=auto
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -56,6 +57,9 @@ mkdir -p %buildroot/%_localstatedir/%name
 %dir %_localstatedir/%name
 
 %changelog
+* Tue Feb 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.1-alt2
+- Set GO111MODULE=auto to build with go 1.16
+
 * Thu Apr 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.1-alt1
 - new version 2.7.1
 
