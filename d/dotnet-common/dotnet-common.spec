@@ -13,7 +13,7 @@
 %define _dotnet_rid linux-%_dotnet_arch
 
 Name: dotnet-common
-Version: 5.0
+Version: 6.0
 Release: alt1
 
 Summary: Common dir and files for the .NET Core runtime and libraries
@@ -49,9 +49,19 @@ cat <<EOF >macros
 %%_dotnet_arch %_dotnet_arch
 %%_dotnetdir %_libdir/dotnet
 %%_dotnet_hostfxr %%_dotnetdir/host/fxr/%%_dotnet_corerelease/
-%%_dotnet_shared %%_dotnetdir/shared/Microsoft.NETCore.App/%%_dotnet_corerelease/
-%%_dotnet_sdk %%_dotnetdir/sdk/%%_dotnet_sdkrelease/
-%%_dotnet_apphostdir %_dotnetdir/packs/Microsoft.NETCore.App.Host.%%_dotnet_rid/%%_dotnet_corerelease
+%%_dotnet_coreapp %%_dotnetdir/shared/Microsoft.NETCore.App/%%_dotnet_corerelease
+%%_dotnet_coreapphost %%_dotnetdir/packs/Microsoft.NETCore.App.Host.%%_dotnet_rid/%%_dotnet_corerelease
+%%_dotnet_coreappref %%_dotnetdir/packs/Microsoft.NETCore.App.Ref/%%_dotnet_coreapprefrelease
+%%_dotnet_aspnetcoreapp %%_dotnetdir/shared/Microsoft.AspNetCore.App/%%_dotnet_aspnetcorerelease
+%%_dotnet_aspnetcoreappref %%_dotnetdir/packs/Microsoft.AspNetCore.App.Ref/%%_dotnet_aspnetcoreapprefrelease
+%%_dotnet_templates %%_dotnetdir/templates/%%_dotnet_templatesrelease
+%%_dotnet_netstandart %%_dotnetdir/packs/NETStandard.Library.Ref/%%_dotnet_netstandartrelease
+%%_dotnet_sdk %%_dotnetdir/sdk/%%_dotnet_sdkrelease
+
+# for compatibility
+%%_dotnet_apphostdir %%_dotnetdir/packs/Microsoft.NETCore.App.Host.%%_dotnet_rid/%%_dotnet_corerelease
+%%_dotnet_shared %%_dotnetdir/shared/Microsoft.NETCore.App/%%_dotnet_corerelease
+%%_dotnet_appref %%_dotnetdir/packs/Microsoft.NETCore.App.Ref/%%_dotnet_apprefrelease
 EOF
 
 
@@ -80,6 +90,9 @@ install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0-alt1
+- improve _dotnet_ macros
+
 * Sat Feb 20 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt1
 - cleanup to .NET 5
 
