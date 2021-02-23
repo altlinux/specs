@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-webpack-cli
-Version: 3.3.9
+Version: 4.5.0
 Release: alt1
 
 Summary: Webpack's Command Line Interface
@@ -15,10 +15,9 @@ Url: https://webpack.js.org/api/cli
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/webpack/webpack-cli/archive/v%version.tar.gz
+# Source-url: https://github.com/webpack/webpack-cli/archive/webpack-cli@%version.tar.gz
 Source: %name-%version.tar
 
-#Source1: %name-preloaded-%version.tar
 Source2: %name-production-%version.tar
 
 BuildArch: noarch
@@ -29,12 +28,15 @@ BuildRequires: rpm-build-nodejs node
 BuildRequires(pre): rpm-macros-nodejs
 
 # /usr/bin/tsc
-BuildRequires: node-typescript >= 3.5.2
+#BuildRequires: node-typescript >= 4.1.3
+
+# FIXME: yarn needs /proc: https://github.com/yarnpkg/yarn/issues/7251
+#BuildRequires: yarn /proc
 
 # PeerDependencies
-Requires: node-webpack >= 4.41.2
+Requires: node-webpack >= 5.18.0
 
-Requires: node >= 8
+#Requires: node >= 10.13.0
 # rpm-build-nodejs
 
 Provides: nodejs-%node_module = %version-%release
@@ -59,9 +61,13 @@ Through "loaders", modules can be CommonJs, AMD, ES6 modules, CSS, Images,
 JSON, Coffeescript, LESS, ... and your custom stuff. 
 
 %prep
-%setup -a 2
+%setup -a2
+#ln -s %nodejs_sitelib/webpack node_modules/
+# only yarn install does it
+#ln -s ../packages/webpack-cli node_modules/
 
 %build
+#npm run-script build
 
 # do not work without development requires
 # and needs xvfb-maybe
@@ -75,22 +81,36 @@ JSON, Coffeescript, LESS, ... and your custom stuff.
 
 #npm install --prefix %buildroot
 mkdir -p %buildroot%nodejs_sitelib/%node_module/
-chmod a+x bin/*
+#chmod a+x bin/*
 #cp -rp bin node_modules package.json %buildroot/%nodejs_sitelib/%node_module
-cp -a * %buildroot/%nodejs_sitelib/%node_module/
-rm -rf %buildroot/%nodejs_sitelib/%node_module/test/
+cp -a packages/webpack-cli/* %buildroot/%nodejs_sitelib/%node_module/
+cp -v packages/webpack-cli/package.json ./
+cp -a node_modules/ %buildroot/%nodejs_sitelib/%node_module/
 
 mkdir -p %buildroot%_bindir/
 #ln -s %nodejs_sitelib/%node_module/bin/webpack.js %buildroot%_bindir/webpack
 %_ln_sr %buildroot%nodejs_sitelib/%node_module/bin/cli.js %buildroot%_bindir/webpack
+%_ln_sr %buildroot%nodejs_sitelib/%node_module/bin/cli.js %buildroot%_bindir/webpack-cli
 
 #nodejs_symlink_deps
+%npm_prune
+
+#check
+#npm_test
 
 %files
 %doc LICENSE README.md
 %_bindir/webpack
+%_bindir/webpack-cli
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 4.5.0-alt1
+- new version 4.5.0 (with rpmrb script)
+- pack only packages/webpack-cli
+
+* Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version 4.0.0 (with rpmrb script)
+
 * Tue Oct 29 2019 Vitaly Lipatov <lav@altlinux.ru> 3.3.9-alt1
 - initial build for ALT Sisyphus

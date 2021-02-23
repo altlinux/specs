@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-webpack
-Version: 4.41.2
+Version: 5.24.0
 Release: alt1
 
 Summary: A bundler for javascript and friends
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-intro >= 1.9.18
 BuildRequires: rpm-build-nodejs node
 BuildRequires(pre): rpm-macros-nodejs
 
-Requires: node >= 8
+Requires: node >= 10.13.0
 # rpm-build-nodejs
 
 Provides: nodejs-%node_module = %version-%release
@@ -44,7 +44,7 @@ Requires: node
 A bundler for javascript and friends. Packs many modules into a few bundled assets.
 Code Splitting allows for loading parts of the application on demand.
 Through "loaders", modules can be CommonJs, AMD, ES6 modules, CSS, Images,
-JSON, Coffeescript, LESS, ... and your custom stuff. 
+JSON, Coffeescript, LESS, ... and your custom stuff.
 
 %prep
 %setup -a 2
@@ -70,5 +70,11 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/test/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 5.24.0-alt1
+- new version 5.24.0 (with rpmrb script)
+
+* Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (with rpmrb script)
+
 * Tue Oct 29 2019 Vitaly Lipatov <lav@altlinux.ru> 4.41.2-alt1
 - initial build for ALT Sisyphus
