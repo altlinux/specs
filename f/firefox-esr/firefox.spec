@@ -16,8 +16,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox-esr
-Version: 78.7.1
-Release: alt2
+Version: 78.8.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -310,14 +310,6 @@ export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
 python3 ./mach python --exec-file /dev/null
-
-# Fix virtualenv
-pyver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_info))')"
-
-find objdir/_virtualenvs/init_py3/lib/python3/site-packages \
-	-mindepth 1 -maxdepth 1 \
-	-exec mv -t "objdir/_virtualenvs/init_py3/lib/$pyver/site-packages" -- '{}' '+'
-
 python3 ./mach build
 
 while read -r loc; do
@@ -457,6 +449,14 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Feb 23 2021 Andrey Cherepanov <cas@altlinux.org> 78.8.0-alt1
+- New version (78.8.0).
+- Security fixes:
+  + CVE-2021-23969 Content Security Policy violation report could have contained the destination of a redirect
+  + CVE-2021-23968 Content Security Policy violation report could have contained the destination of a redirect
+  + CVE-2021-23973 MediaError message property could have leaked information about cross-origin resources
+  + CVE-2021-23978 Memory safety bugs fixed in Firefox 86 and Firefox ESR 78.8
+
 * Fri Feb 12 2021 Andrey Cherepanov <cas@altlinux.org> 78.7.1-alt2
 - Rebuild with llvm11.0.
 
