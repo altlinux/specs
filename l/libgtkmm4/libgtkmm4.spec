@@ -8,7 +8,7 @@
 %def_enable docs
 
 Name: lib%{rname}4
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A C++ interface for GTK4 library
@@ -114,6 +114,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Feb 23 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Sun Dec 20 2020 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - first build for Sisyphus
 

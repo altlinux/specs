@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.8
+%define ver_major 1.9
 %def_disable docs
 
 %ifnarch %valgrind_arches
@@ -87,13 +87,16 @@ developing applications that use %name.
 
 %install
 %meson_install
+mkdir -p %buildroot%_sysconfdir/%name
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
+%dir %_sysconfdir/%name
 %_bindir/%name-list-local-devices
+%_bindir/%name-show-stylus
 %_libdir/*.so.*
 %_udevrulesdir/65-libwacom.rules
 %_man1dir/libwacom-list-local-devices.1*
@@ -115,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
+- 1.9
+
 * Fri Jan 29 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
 - 1.8
 
