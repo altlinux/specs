@@ -5,7 +5,7 @@
 
 Name: golang-github-axgle-mahonia
 Version: 0
-Release: alt1.git3358181
+Release: alt2.git3358181
 Summary: Character-set conversion library implemented in Go
 Group: Development/Other
 License: BSD
@@ -31,7 +31,7 @@ compiled into the executable; it doesn't need any external data files.
 
 %prep
 %setup -n mahonia-%version
-sed -i "s|github.com/axgle/mahonia|..|" mahoniconv/mahoniconv.go
+#sed -i "s|github.com/axgle/mahonia|..|" mahoniconv/mahoniconv.go
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -40,7 +40,7 @@ export GOPATH="%go_path"
 
 %golang_prepare
 
-cd .build/src/%goipath
+go mod init github.com/axgle/mahonia
 for cmd in mahoniconv; do
 %golang_build $cmd ||:
 done
@@ -64,5 +64,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Wed Feb 24 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.git3358181
+- Fixed build.
+
 * Fri May 29 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git3358181
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
