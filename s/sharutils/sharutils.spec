@@ -1,27 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: sharutils
-Version: 4.6.3
-Release: alt1.1.qa2.1
+Version: 4.15.2
+Release: alt1
 
 Summary: The GNU shar utilities for packaging and unpackaging shell archives
-License: GPL
-Group: Archiving/Backup
-
-URL: ftp://ftp.gnu.org/gnu/%name/REL-%version
-Source: %url/%name-%version.tar.bz2
-Patch0: %name-4.3.78-alt-tmpfile.patch
-Patch8: %name-4.3.77-alt-tmp.patch
-
-BuildPreReq: help2man
-
 Summary(ru_RU.KOI8-R): Утилиты GNU для создания и распаковки текстовых архивов
-# explicitly added texinfo for info files
-BuildRequires: texinfo
-
-%package -n remsync
-Summary: Remote synchronization of directories
-Summary(ru_RU.KOI8-R): Утилита синхронизации двух каталогов
+License: GPL-3
 Group: Archiving/Backup
-Requires: %name = %version-%release, perl-base, tar, findutils, gzip-utils
+
+URL: ftp://ftp.gnu.org/gnu/%name
+Source: %name-%version.tar
+Patch0: %name-%version-fflush-adjust-to-glibc-2.28-libio.h-removal.patch
+Patch1: %name-%version-Fix-building-with-GCC-10.patch
+Patch2: %name-%version-Fix-a-heap-buffer-overflow-in-find_archive.patch
+Patch3: %name-%version-Do-not-include-lib-md5.c-into-src-shar.c.patch
+
+BuildRequires: makeinfo
 
 %description
 The %name package contains the GNU shar utilities, a set of tools
@@ -51,79 +46,33 @@ shar расшифровывается как shell archive, т.е. сценарий интерпретатора команд,
 шелл-архивами, включая сжатие, нарезание на куски, подсчёт контрольной суммы,
 автоматическое извлечение из почтовых сообщений и т.д.
 
-%description -n remsync
-The remsync program tries to maintain up-to-date copies of whole
-hierarchy of files over many loosely connected sites,
-provided there is at least some slow electronic mail between them.
-
-It prepares and sends out specially packaged files called
-"synchronization packages", and is able to processes them after reception.
-There is no _master_ site, each site has an equal opportunity
-to modify files, and modified files are propagated.
-
-People deciding to cooperate in keeping a synchronized set of files
-must have trust each other, as each participant has the power
-of modifying the contents of files at other sites. 
-
-%description -n remsync -l ru_RU.KOI8-R
-Утилита Remsync служит для синхронизации содержимого каталогов
-на разных компьютерах через почтовые сообщения.
-
-С её помощью производится как подготовка т.н. пакетов синхронизации
-на отправляющей почту стороне, так и их обработка на приёмной.
-Отметки синхронизации сохраняются в служебных файлах с именем '.remsync'
-внутри синхронизируемых каталогов.
-
-Все узлы, обменивающиеся файлами посредством remsync,
-являются равноправными и полноправными,
-т.е. пользователь-получатель должен проверять полномочия отправителя вручную.
-Вместе с тем, Remsync отслеживает конфликты, связанные с получением
-нескольких независимо изменённых вариантов одного файла.
 
 %prep
 %setup -q
-#patch0
-%patch8 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-export ac_cv_lib_intl_main=no
-export ac_cv_path_MAILER=/bin/mail
-%configure
+%autoreconf
+%configure 
 %make_build
 
 %install
-%makeinstall install-man
-
-# fix japanese catalog file
-
-%define old_jpdir %buildroot%_datadir/locale/ja_JP.EUC/LC_MESSAGES
-%define new_jpdir %buildroot%_datadir/locale/ja/LC_MESSAGES
-
-if [ -d %old_jpdir ]; then
-	%__mkdir_p %new_jpdir
-	mv %old_jpdir/*.mo %new_jpdir
-	rm -rf %old_jpdir
-fi
+%makeinstall_std install-man
 
 %find_lang %name
 
-# Manual page for remsync
-cd %buildroot%_man1dir
-help2man %buildroot%_bindir/remsync > remsync.1
-subst 's,info remsync,info sharutils,' remsync.1
-
 %files -f %name.lang
-%exclude %_bindir/remsync*
-%exclude %_mandir/man?/remsync*
 %_bindir/*
 %_infodir/*.info*
 %_mandir/man?/*
 
-%files -n remsync
-%_bindir/remsync
-%_mandir/man?/remsync*
-
 %changelog
+* Fri Feb 19 2021 Egor Ignatov <egori@altlinux.org> 4.15.2-alt1
+- updated to new version 4.15.2
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.6.3-alt1.1.qa2.1
 - NMU: added BR: texinfo
 
