@@ -14,7 +14,7 @@
 
 Name: vulkan-amdgpu
 Version: 2021.Q1.3
-Release: alt1
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -29,6 +29,7 @@ BuildRequires: gcc9-c++ cmake python3-devel curl libstdc++9-devel libxcb-devel l
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel spirv-headers libspirv-tools-devel glslang-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: libffi-devel
 %endif
 
 Source0: xgl.tar.xz
@@ -92,6 +93,9 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Wed Feb 24 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q1.3-alt2
+- Fix wayland client BR.
+
 * Wed Feb 24 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q1.3-alt1
 - 2021-2-8 update:
   + icd: bump vulkan API version to 1.2.168
