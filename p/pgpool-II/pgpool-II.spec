@@ -3,7 +3,7 @@
 %define sname pgpool
 
 Name: pgpool-II
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
@@ -25,9 +25,9 @@ BuildRequires: libmemcached-devel
 BuildRequires: libssl-devel
 BuildRequires: setproctitle-devel
 
-Requires: libpcp = %EVR
-Requires: postgresql%pg_ver-%name = %EVR
 Provides: pgpool2 = %EVR
+
+Requires: postgresql-common
 
 %description
 pgpool-II is a inherited project of pgpool (to classify from
@@ -111,11 +111,14 @@ cp doc/src/sgml/man8/* %buildroot%_man8dir/
 
 rm -f %buildroot%_libdir/*.{a,la}
 
-%pre
-groupadd -r -f %sname 2>/dev/null ||:
-useradd  -r -g %sname -s /sbin/nologin -c "Pgpool Daemon" -M -d /var/run/%sname %sname 2>/dev/null ||:
-
 %post
+# Migrate configs from pgpool < 4.2.1
+if [ $1 -eq 2 ]; then
+    [ ! -f %_sysconfdir/pcp.conf ] || mv -f %_sysconfdir/pcp.conf %_sysconfdir/%sname/pcp.conf
+    [ ! -f %_sysconfdir/pgpool.conf ] || mv -f %_sysconfdir/pgpool.conf %_sysconfdir/%sname/pgpool.conf
+    [ ! -f %_sysconfdir/pool_hba.conf ] || mv -f %_sysconfdir/pool_hba.conf %_sysconfdir/%sname/pool_hba.conf
+fi
+
 %post_service %sname
 
 %preun
@@ -149,6 +152,11 @@ useradd  -r -g %sname -s /sbin/nologin -c "Pgpool Daemon" -M -d /var/run/%sname 
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Feb 24 2021 Alexey Shabalin <shaba@altlinux.org> 4.2.2-alt1
+- 4.2.2
+- Execute service as postgres system user.
+- Move old configs to /etc/pgpool dir.
+
 * Sun Feb 07 2021 Alexey Shabalin <shaba@altlinux.org> 4.2.1-alt1
 - 4.2.1
 - Execute service as pgpool system user.
