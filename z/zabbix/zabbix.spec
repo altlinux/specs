@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		d3c78f993a
+%define svnrev		4d07aaafe2
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 
 
 Name: zabbix
-Version: 5.0.8
+Version: 5.0.9
 Release: alt1
 Epoch: 1
 
@@ -638,6 +638,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Feb 24 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.9-alt1
+- 5.0.9
+
 * Tue Feb 02 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.8-alt1
 - 5.0.8
 
