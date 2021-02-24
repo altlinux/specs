@@ -1,5 +1,5 @@
 Name: sysklogd
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 %define ROOT %_localstatedir/klogd
@@ -142,6 +142,13 @@ fi
 %doc README* NEWS
 
 %changelog
+* Wed Feb 24 2021 Alexey Gladkov <legion@altlinux.ru> 1.8.0-alt1
+- New version (1.8.0)
+- syslogd: Incoming messages are processed without memory allocation.
+- syslogd: Messages can be forwarded to unix domain socket.
+- syslogd: Further source code cleanup.
+- Added documentation for log_format.
+
 * Sat Dec 26 2020 Alexey Gladkov <legion@altlinux.ru> 1.7.0-alt1
 - New version (1.7.0)
 - syslogd: Implement customization of log file records without extra memory
