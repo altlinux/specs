@@ -3,8 +3,8 @@
 %define oname py%modname
 
 Name: python3-module-%modname
-Version: 2.8.3
-Release: alt2
+Version: 2.9.1
+Release: alt1
 
 Summary: Pyhon3 interface for Sane
 Group: Development/Python3
@@ -14,7 +14,7 @@ Url: https://github.com/python-pillow/Sane
 %if_disabled sanpshot
 Source: %url/archive/v%version/Sane-%version.tar.gz
 %else
-#VCS: https://github.com/python-pillow/Sane.git
+Vcs: https://github.com/python-pillow/Sane.git
 Source: %oname-%version.tar
 %endif
 
@@ -26,7 +26,7 @@ BuildRequires: libsane-devel python3-module-Pillow
 BuildRequires: python3-module-numpy
 
 %description
-Python3 interface for Sane
+Python3 interface for Sane.
 
 %prep
 %setup -n %oname-%version
@@ -45,6 +45,9 @@ Python3 interface for Sane
 
 
 %changelog
+* Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
+- updated to v2.9.1-3-g4155cda
+
 * Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt2
 - NUM: fix build (drop BR: python3-module-Pillow-devel)
 
