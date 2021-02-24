@@ -1,6 +1,7 @@
 # TODO: issue about dash in version: https://github.com/Microsoft/omi/issues/532
+%define build_number -0
 Name:     omi
-Version:  1.6.2
+Version:  1.6.8
 Release:  alt1
 
 Summary:  Open Management Infrastructure
@@ -10,7 +11,7 @@ Url:      https://github.com/Microsoft/omi
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/Microsoft/omi/archive/v%version.tar.gz
+# Source-url: https://github.com/Microsoft/omi/archive/v%version%build_number.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Jun 02 2017
@@ -79,6 +80,10 @@ Internal development files for %name.
 # instead of lsb_release
 %__subst "s|distro=.*|distro=ALT|g" Unix/buildtool
 %__subst "s|distro_version=.*|distro_version=Sisyphus|g" Unix/buildtool
+
+# https://github.com/microsoft/omi/issues/682
+%__subst "s|\(MI_Server\* __mi_server;\)|//\1|" Unix/provmgr/indicationSchema.c
+
 
 %build
 # FIXME: version
@@ -159,6 +164,9 @@ cp output/lib/*.a %buildroot%_libdir/%name/lib/
 %_includedir/omi/nits/
 
 %changelog
+* Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
+- new version 1.6.8 (with rpmrb script)
+
 * Sun Dec 29 2019 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - new version (1.6.2) with rpmgs script
 
