@@ -1,8 +1,8 @@
 %define oname SQLAlchemy
 
 Name: python3-module-sqlalchemy
-Version: 1.3.20
-Release: alt2
+Version: 1.3.23
+Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 
@@ -68,6 +68,9 @@ This package contains tests for SQLAlchemy.
 %python3_sitelibdir/*/testing
 
 %changelog
+* Fri Feb 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.23-alt1
+- 1.3.23
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.20-alt2
 - build python3 package separately
 

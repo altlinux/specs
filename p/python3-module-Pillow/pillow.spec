@@ -1,6 +1,6 @@
 Name: python3-module-Pillow
-Version: 7.2.0
-Release: alt2
+Version: 8.1.0
+Release: alt1
 
 Summary: Python Imaging Library
 License: MIT
@@ -44,6 +44,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 selftest.py
 %python3_sitelibdir/Pillow-%version-*-info
 
 %changelog
+* Fri Feb 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.1.0-alt1
+- 8.1.0 released
+
 * Tue Sep 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2.0-alt2
 - avoid tkinter dependency
 

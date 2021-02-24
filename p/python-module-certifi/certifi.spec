@@ -4,14 +4,14 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2020.6.20
+Version: 2020.12.5
 Release: alt1
 Summary: Python package for providing Mozilla's CA Bundle
 License: MPL-2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/certifi/
 
-Source0: https://files.pythonhosted.org/packages/40/a7/ded59fa294b85ca206082306bba75469a38ea1c7d44ea7e1d64f5443d67a/certifi-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.12.5-alt1
+- 2020.12.5 released
+
 * Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.6.20-alt1
 - 2020.6.20 released
 
