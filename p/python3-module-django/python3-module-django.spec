@@ -1,7 +1,6 @@
 %define branch 2.2
 %define origname Django
 %define oname django
-%define pkg_name python3-module-%oname
 
 %def_disable check
 
@@ -10,17 +9,19 @@
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/gis/db/backends/*/*
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
-Name: %pkg_name%branch
-Version: %branch.17
-Release: alt2
+Name: python3-module-%oname
+Version: %branch.19
+Release: alt1
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python3
 BuildArch: noarch
 URL: http://www.djangoproject.com/
 Provides: Django = %EVR
-Provides: %pkg_name = %EVR
-Provides: %pkg_name-tests = %EVR
+Provides: %name%branch = %EVR
+Provides: %name%branch-tests = %EVR
+Obsoletes: %name%branch < %EVR
+Obsoletes: %name%branch-tests < %EVR
 Provides: %name-tests = %EVR
 Obsoletes: %name-tests < %EVR
 
@@ -58,7 +59,8 @@ BuildRequires: python3(selenium)
 Summary: MySQLSQL support for Django (Python 3)
 Group: Development/Python3
 Requires: %name = %EVR
-Provides: %pkg_name-dbbackend-mysql = %EVR
+Provides: %name%branch-dbbackend-mysql = %EVR
+Obsoletes: %name%branch-dbbackend-mysql < %EVR
 Conflicts: python3-module-django1.11-dbbackend-mysql
 %py3_requires MySQLdb
 
@@ -69,7 +71,8 @@ Conflicts: python3-module-django1.11-dbbackend-mysql
 Summary: PostgreSQL support for Django. (via psycopg) (Python 3)
 Group: Development/Python3
 Requires: %name = %EVR
-Provides: %pkg_name-dbbackend-psycopg = %EVR
+Provides: %name%branch-dbbackend-psycopg = %EVR
+Obsoletes: %name%branch-dbbackend-psycopg < %EVR
 Conflicts: python3-module-django1.11-dbbackend-psycopg
 %py3_requires psycopg
 
@@ -80,7 +83,8 @@ Conflicts: python3-module-django1.11-dbbackend-psycopg
 Summary: PostgreSQL support for Django. (via psycopg2) (Python 3)
 Group: Development/Python3
 Requires: %name = %EVR
-Provides: %pkg_name-dbbackend-psycopg2 = %EVR
+Provides: %name%branch-dbbackend-psycopg2 = %EVR
+Obsoletes: %name%branch-dbbackend-psycopg2 < %EVR
 Conflicts: python3-module-django1.11-dbbackend-psycopg2
 %py3_requires psycopg2
 
@@ -91,7 +95,8 @@ Conflicts: python3-module-django1.11-dbbackend-psycopg2
 Summary: SQLite3 support for Django (Python 3)
 Group: Development/Python3
 Requires: %name = %EVR
-Provides: %pkg_name-dbbackend-sqlite3 = %EVR
+Provides: %name%branch-dbbackend-sqlite3 = %EVR
+Obsoletes: %name%branch-dbbackend-sqlite3 < %EVR
 Conflicts: python3-module-django1.11-dbbackend-sqlite3
 %py3_requires sqlite3
 
@@ -101,7 +106,8 @@ Conflicts: python3-module-django1.11-dbbackend-sqlite3
 %package doc
 Summary: Django documentation
 Group: Development/Python3
-Provides: %pkg_name-doc = %EVR
+Provides: %name%branch-doc = %EVR
+Obsoletes: %name%branch-doc < %EVR
 Conflicts: python3-module-django1.11-doc
 
 %description doc
@@ -177,6 +183,13 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Feb 24 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.19-alt1
+- 2.2.19
+- rename package to python3-module-django back
+- Fixes for the following security vulnerabilities:
+  + CVE-2021-3281 Potential directory-traversal via archive.extract()
+  + CVE-2021-23336 Web cache poisoning via django.utils.http.limited_parse_qsl()
+
 * Tue Feb 09 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.17-alt2
 - Disable check for bootstrap of python3.9.
 
