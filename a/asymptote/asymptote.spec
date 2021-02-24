@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 2.68
+Version: 2.69
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -26,9 +26,10 @@ BuildRequires: libgc-devel >= 7.4.2
 
 BuildRequires(pre): rpm-build-tex rpm-build-python3
 BuildRequires: /proc
-BuildRequires: texlive-collection-latexrecommended ghostscript-utils
+BuildRequires: texlive-collection-latexrecommended
+BuildRequires: ghostscript-utils >= 9.53
 BuildRequires: python3-module-PyQt5
-BuildRequires: python3-module-mpl_toolkits python3-module-yieldfrom
+#BuildRequires: python3-module-mpl_toolkits python3-module-yieldfrom
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 BuildRequires: texi2dvi
@@ -93,6 +94,9 @@ mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 %_infodir/%name/*.info*
 
 %changelog
+* Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.69-alt1
+- new version 2.69 (with rpmrb script)
+
 * Sat Feb 06 2021 Anton Midyukov <antohami@altlinux.org> 2.68-alt1
 - new version 2.68 (with rpmrb script)
 - update buildrequires
