@@ -2,7 +2,7 @@
 %define sname mojo-pg
 
 Name: perl-Mojo-Pg
-Version: 4.24
+Version: 4.25
 Release: alt1
 Summary: Mojolicious PostgreSQL
 License: Artistic-2.0
@@ -11,7 +11,7 @@ Url: http://search.cpan.org/dist/Mojo-Pg/
 Source0: http://www.cpan.org/authors/id/S/SR/SRI/Mojo-Pg-%{version}.tar.gz
 BuildArch: noarch
 
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(SQL/Abstract/Pg.pm)
 BuildRequires: perl(DBD/Pg.pm)
 BuildRequires: perl(Mojolicious.pm)
 BuildRequires: perl(SQL/Abstract.pm)
@@ -41,10 +41,13 @@ the publish/subscribe pattern.
 %files
 %doc Changes README.md examples
 %perl_vendorlib/Mojo*
-%perl_vendorlib/SQL/Abstract/Pg.pm
+#%perl_vendorlib/SQL/Abstract/Pg.pm
 %doc Changes README.md
 
 %changelog
+* Sun Feb 21 2021 Igor Vlasenko <viy@altlinux.org> 4.25-alt1
+- automated CPAN update
+
 * Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 4.24-alt1
 - automated CPAN update
 
