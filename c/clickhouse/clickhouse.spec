@@ -1,5 +1,5 @@
 Name: clickhouse
-Version: 20.3.19.4
+Version: 20.8.11.17
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -9,49 +9,44 @@ Url: https://clickhouse.yandex/
 # https://github.com/ClickHouse/ClickHouse.git
 Source: %name-%version.tar
 
-Source1:  %name-%version-contrib-avro.tar
-Source2:  %name-%version-contrib-aws.tar
-Source3:  %name-%version-contrib-aws-c-common.tar
-Source4:  %name-%version-contrib-aws-c-event-stream.tar
-Source5:  %name-%version-contrib-aws-checksums.tar
-Source6:  %name-%version-contrib-base64.tar
-Source7:  %name-%version-contrib-grpc.tar
-Source8:  %name-%version-contrib-grpc-third_party-abseil-cpp.tar
-Source9:  %name-%version-contrib-grpc-third_party-benchmark.tar
-Source10: %name-%version-contrib-grpc-third_party-bloaty.tar
-Source11: %name-%version-contrib-grpc-third_party-bloaty-third_party-googletest.tar
-Source12: %name-%version-contrib-grpc-third_party-bloaty-third_party-libFuzzer.tar
-Source13: %name-%version-contrib-grpc-third_party-bloaty-third_party-re2.tar
-Source14: %name-%version-contrib-grpc-third_party-boringssl.tar
-Source15: %name-%version-contrib-grpc-third_party-boringssl-with-bazel.tar
-Source16: %name-%version-contrib-grpc-third_party-cares-cares.tar
-Source17: %name-%version-contrib-grpc-third_party-envoy-api.tar
-Source18: %name-%version-contrib-grpc-third_party-gflags.tar
-Source19: %name-%version-contrib-grpc-third_party-gflags-doc.tar
-Source20: %name-%version-contrib-grpc-third_party-googleapis.tar
-Source21: %name-%version-contrib-grpc-third_party-googletest.tar
-Source22: %name-%version-contrib-grpc-third_party-protobuf.tar
-Source23: %name-%version-contrib-grpc-third_party-protobuf-third_party-benchmark.tar
-Source24: %name-%version-contrib-grpc-third_party-protobuf-third_party-googletest.tar
-Source25: %name-%version-contrib-grpc-third_party-protoc-gen-validate.tar
-Source26: %name-%version-contrib-grpc-third_party-udpa.tar
-Source27: %name-%version-contrib-grpc-third_party-zlib.tar
-Source28: %name-%version-contrib-replxx.tar
-Source29: %name-%version-contrib-ryu.tar
-Source30: %name-%version-contrib-simdjson.tar
-Source31: %name-%version-contrib-zlib-ng.tar
+Source1:  %name-%version-contrib-AMQP-CPP.tar
+Source2:  %name-%version-contrib-avro.tar
+Source3:  %name-%version-contrib-aws.tar
+Source4:  %name-%version-contrib-aws-c-common.tar
+Source5:  %name-%version-contrib-aws-c-event-stream.tar
+Source6:  %name-%version-contrib-aws-checksums.tar
+Source7:  %name-%version-contrib-base64.tar
+Source8:  %name-%version-contrib-cassandra.tar
+Source9:  %name-%version-contrib-fastops.tar
+Source10: %name-%version-contrib-gcem.tar
+Source11: %name-%version-contrib-googletest.tar
+Source12: %name-%version-contrib-grpc.tar
+Source13: %name-%version-contrib-grpc-third_party-cares-cares.tar
+Source14: %name-%version-contrib-h3.tar
+Source15: %name-%version-contrib-libhdfs3.tar
+Source16: %name-%version-contrib-llvm.tar
+Source17: %name-%version-contrib-replxx.tar
+Source18: %name-%version-contrib-ryu.tar
+Source19: %name-%version-contrib-sentry-native.tar
+Source20: %name-%version-contrib-simdjson.tar
+Source21: %name-%version-contrib-simdjson-dependencies-cxxopts.tar
+Source22: %name-%version-contrib-stats.tar
+Source23: %name-%version-contrib-thrift.tar
+Source24: %name-%version-contrib-zlib-ng.tar
 
 Patch0: %name-%version-%release.patch
 Patch1: %name-base64-ppc64le.patch
+Patch2: %name-llvm-gcc10-compat.patch
+Patch3: %name-avro-gcc10-compat.patch
 
 BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata,  cctz-devel
 BuildRequires: rpm-macros-cmake, liblz4-devel, /proc, libzstd-devel, libmariadb-devel
 BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, librdkafka-devel, libssl-devel, libre2-devel
 BuildRequires: libgsasl-devel, libcap-ng-devel, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
-BuildRequires: libpoco-devel, libbrotli-devel, capnproto-devel, libxml2-devel, libcppkafka-devel
+BuildRequires: libpoco-devel, libbrotli-devel, capnproto-devel, libxml2-devel liblzma-devel, libcppkafka-devel
 BuildRequires: libtinfo-devel, boost-filesystem-devel, boost-program_options-devel, boost-geometry-devel
-BuildRequires: llvm-devel, gcc-c++, perl-JSON-XS, libb64-devel libasan-devel-static, boost-lockfree-devel
-BuildRequires: libprotobuf-devel
+BuildRequires: gcc-c++, perl-JSON-XS, libb64-devel libasan-devel-static, boost-lockfree-devel
+BuildRequires: libprotobuf-devel protobuf-compiler protobuf-c-compiler
 BuildRequires: libstdc++-devel-static
 BuildRequires: libsparsehash-devel
 BuildRequires: rapidjson-devel
@@ -61,14 +56,20 @@ BuildRequires: libhyperscan-devel
 %endif
 BuildRequires: libcurl-devel
 BuildRequires: libflatbuffers-devel
-BuildRequires: libgtest-devel
+# TODO: try unbundling googletest when new version is released
+#BuildRequires: libgtest-devel
 BuildRequires: libfmt-devel
 %ifnarch aarch64
 BuildRequires: libunwind-devel
 %endif
-%ifnarch ppc64le
+%ifarch x86_64
 BuildRequires: libcpuid-devel
 %endif
+BuildRequires: libuv-devel
+BuildRequires: libmsgpack-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libsnappy-devel
+BuildRequires: libltdl-devel
 
 ExclusiveArch: aarch64 x86_64 ppc64le
 
@@ -111,38 +112,71 @@ Requires: %name-client = %EVR
 ClickHouse tests
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24
 %patch0 -p1
 
 pushd contrib/base64
 %patch1 -p1
 popd
 
-rm -rf contrib/libcpuid
+pushd contrib/llvm
+%patch2 -p1
+popd
+
+pushd contrib/avro
+%patch3 -p1
+popd
 
 %build
-if [ %__nprocs -gt 8 ] ; then
-	export NPROCS=8
+if [ %__nprocs -gt 6 ] ; then
+	export NPROCS=6
 else
 	export NPROCS=%__nprocs
 fi
 
+# strip debuginfo: with bundled llvm debuginfo takes too much space
+%remove_optflags -g
+%add_optflags -g0
+
 %cmake \
+	-DCLICKHOUSE_SPLIT_BINARY:BOOL=OFF \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
-	-DENABLE_UTILS=0 \
-	-DCMAKE_VERBOSE_MAKEFILE=0 \
-	-DUNBUNDLED=1 \
-	-DUSE_STATIC_LIBRARIES=1 \
-%ifnarch aarch64
-	-DUSE_UNWIND:BOOL=yes \
+	-DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF \
+%ifarch x86_64
+	-DENABLE_CPUID:BOOL=ON \
 %else
-	-DUSE_UNWIND:BOOL=no \
+	-DENABLE_CPUID:BOOL=OFF \
+	-DENABLE_FASTOPS:BOOL=OFF \
+	-DENABLE_HDFS:BOOL=OFF \
+	-DUSE_INTERNAL_HDFS3_LIBRARY:BOOL=OFF \
 %endif
-	-DCLICKHOUSE_SPLIT_BINARY=0 \
-	-DENABLE_JEMALLOC=0 \
-	-DUSE_INTERNAL_REPLXX:BOOL=ON \
+	-DENABLE_JEMALLOC:BOOL=OFF \
+	-DENABLE_PARQUET:BOOL=OFF \
+	-DENABLE_S3:BOOL=OFF \
+	-DENABLE_UTILS:BOOL=OFF \
 	-DPARALLEL_COMPILE_JOBS=$NPROCS \
 	-DPARALLEL_LINK_JOBS=$NPROCS \
+	-DUNBUNDLED:BOOL=ON \
+	-DUSE_INTERNAL_AWS_S3_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_BROTLI_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_GRPC_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_GTEST_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_LIBGSASL_LIBRARY:BOOL=OFF \
+%ifarch x86_64
+	-DUSE_INTERNAL_LLVM_LIBRARY:BOOL=ON \
+%else
+	-DUSE_INTERNAL_LLVM_LIBRARY:BOOL=OFF \
+%endif
+	-DUSE_INTERNAL_POCO_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_PROTOBUF_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_RDKAFKA_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_REPLXX:BOOL=ON \
+	-DUSE_STATIC_LIBRARIES:BOOL=ON \
+%ifnarch aarch64
+	-DUSE_UNWIND:BOOL=ON \
+%else
+	-DUSE_UNWIND:BOOL=OFF \
+%endif
 	%nil
 
 %cmake_build VERBOSE=1
@@ -197,12 +231,14 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %files test
 %_bindir/clickhouse-test
 %_bindir/clickhouse-test-server
-%_bindir/clickhouse-performance-test
 %_datadir/clickhouse-test
 %config(noreplace) %_sysconfdir/clickhouse-client/client-test.xml
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Wed Jan 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 20.8.11.17-alt1
+- Updated to lts upstream version 20.8.11.17.
+
 * Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.19.4-alt1
 - Updated to lts upstream version 20.3.19.4.
 
