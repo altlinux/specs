@@ -1,9 +1,8 @@
 %define branch 1.11
 %define version %branch.29
-%define release alt1
+%define release alt2
 %define origname Django
 %define oname django
-%define pkg_name python-module-%oname
 
 %def_disable check
 
@@ -12,7 +11,7 @@
 %add_findreq_skiplist %python_sitelibdir/%modulename/contrib/gis/db/backends/*/*
 
 Summary: A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
-Name: %pkg_name%branch
+Name: python-module-%oname
 Version: %version
 Release: %release
 Source0: %origname-%version.tar
@@ -21,15 +20,15 @@ Group: Development/Python
 BuildArch: noarch
 URL: http://www.djangoproject.com/
 Provides: Django = %EVR
-Provides: %pkg_name = %EVR
-Obsoletes: python-module-django <= 1.11.29-alt1
-Obsoletes: python-module-django1.5 <= 1.5.0-alt3
+Provides: %name%branch = %EVR
+Obsoletes: python-module-django2.2 < %EVR
+Obsoletes: python-module-django1.5 < %EVR
 Conflicts: python-module-django1.0 python-module-django1.1
 Conflicts: python-module-django1.2
+Provides: %name-tests = %EVR
 Provides: %name%branch-tests = %EVR
-Provides: %pkg_name-tests = %EVR
-Obsoletes: %pkg_name-tests < 1.11.29-alt1
-Obsoletes: python-module-django1.5-tests <= 1.5.0-alt3
+Obsoletes: %name%branch-tests < %EVR
+Obsoletes: python-module-django1.5-tests < %EVR
 Conflicts: python-module-django1.0-tests
 Conflicts: python-module-django1.1-tests
 Conflicts: python-module-django1.2-tests
@@ -61,8 +60,8 @@ Summary: MySQLSQL support for Django.
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires MySQLdb
-Provides: %pkg_name-mysql = %EVR
-Obsoletes: %pkg_name-mysql < 1.11.29-alt1
+Provides: %name%branch-tests-mysql = %EVR
+Obsoletes: %name%branch-tests-mysql < %EVR
 Obsoletes: python-module-django1.5-dbbackend-mysql <= 1.5.0-alt3
 Conflicts: python-module-django1.0-dbbackend-mysql
 Conflicts: python-module-django1.1-dbbackend-mysql
@@ -76,8 +75,8 @@ Summary: PostgreSQL support for Django. (via psycopg)
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires psycopg
-Provides: %pkg_name-psycopg = %EVR
-Obsoletes: %pkg_name-psycopg < 1.11.29-alt1
+Provides: %name%branch-psycopg = %EVR
+Obsoletes: %name%branch-psycopg < %EVR
 Obsoletes: python-module-django1.5-dbbackend-psycopg <= 1.5.0-alt3
 Conflicts: python-module-django1.0-dbbackend-psycopg
 Conflicts: python-module-django1.1-dbbackend-psycopg
@@ -91,8 +90,8 @@ Summary: PostgreSQL support for Django. (via psycopg2)
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires psycopg2
-Provides: %pkg_name-psycopg2 = %EVR
-Obsoletes: %pkg_name-psycopg2 < 1.11.29-alt1
+Provides: %name%branch-psycopg2 = %EVR
+Obsoletes: %name%branch-psycopg2 < %EVR
 Obsoletes: python-module-django1.5-dbbackend-psycopg2 <= 1.5.0-alt3
 Conflicts: python-module-django1.0-dbbackend-psycopg2
 Conflicts: python-module-django1.1-dbbackend-psycopg2
@@ -106,8 +105,8 @@ Summary: SQLite3 support for Django.
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires sqlite3
-Provides: %pkg_name-sqlite3 = %EVR
-Obsoletes: %pkg_name-sqlite3 < 1.11.29-alt1
+Provides: %name%branch-sqlite3 = %EVR
+Obsoletes: %name%branch-sqlite3 < %EVR
 Obsoletes: python-module-django1.5-dbbackend-sqlite3 <= 1.5.0-alt3
 Conflicts: python-module-django1.0-dbbackend-sqlite3
 Conflicts: python-module-django1.1-dbbackend-sqlite3
@@ -119,8 +118,8 @@ Conflicts: python-module-django1.2-dbbackend-sqlite3
 %package doc
 Summary: Django documentation
 Group: Development/Documentation
-Provides: %pkg_name-doc = %EVR
-Obsoletes: %pkg_name-doc < 1.11.29-alt1
+Provides: %name%branch-doc = %EVR
+Obsoletes: %name%branch-doc < %EVR
 Obsoletes: python-module-django1.5-doc <= 1.5.0-alt3
 Obsoletes: python3-module-django-doc <= 1.5.0-alt1.alpha
 Conflicts: python-module-django1.0-doc
@@ -181,6 +180,9 @@ LANG="en_US.UTF-8" python runtests.py --settings=test_sqlite --verbosity=2 --par
 %python_sitelibdir/%modulename/db/backends/sqlite3/
 
 %changelog
+* Wed Feb 24 2021 Alexey Shabalin <shaba@altlinux.org> 1.11.29-alt2
+- rename package to python-module-django back
+
 * Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.29-alt1
 - 1.11.29
 - build only for python2
