@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.34
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
 
 Name: gnome-tweaks
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
@@ -19,12 +19,11 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 Patch: %name-3.27.4-alt-desktop.patch
-Patch1: %name-3.34.0-alt-Handy_req_version.patch
 
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major nautilus
 Requires: gsettings-desktop-schemas-devel >= 3.27.90
-Requires: typelib(Handy) = 0.0
+Requires: typelib(Gtk) = 3.0 typelib(Handy) = 0.0
 
 Provides: %old_name = %version-%release
 Obsoletes: %old_name < 3.27.4
@@ -55,7 +54,6 @@ Features:
 %prep
 %setup
 %patch -b .desktop
-%patch1 -b .handy
 
 %build
 %meson
@@ -76,6 +74,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
 - updated to 3.34.0
 - explicitly required typelib(Handy) = 0.0
