@@ -1,5 +1,5 @@
 Name: btfs
-Version: 2.23
+Version: 2.24
 Release: alt1
 
 Summary: A bittorrent filesystem based on FUSE
@@ -42,6 +42,9 @@ Applications like vlc and mplayer can also work without changes.
 %_man1dir/*
 
 %changelog
+* Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.24-alt1
+- new version 2.24 (with rpmrb script)
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 2.23-alt1
 - new version 2.23 (with rpmrb script)
 
