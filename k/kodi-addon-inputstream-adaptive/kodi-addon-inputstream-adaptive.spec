@@ -1,6 +1,6 @@
 Name: kodi-addon-inputstream-adaptive
 Version: 19.0
-Release: alt2
+Release: alt3
 
 Summary: Adaptive stream addon for Kodi
 License: GPLv2
@@ -33,6 +33,9 @@ cmake . -DCMAKE_CXX_FLAGS='%optflags -Wno-error=return-type' \
 %_datadir/kodi/addons/*
 
 %changelog
+* Wed Feb 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt3
+- updated up to 2.6.7-Matrix
+
 * Thu Nov 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt2
 - updated up to 2.6.4-Matrix
 

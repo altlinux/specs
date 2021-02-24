@@ -1,6 +1,6 @@
 Name: kodi-addon-pvr-vdr-vnsi
 Version: 19.0
-Release: alt3
+Release: alt4
 
 Summary: PVR VDR addon for Kodi
 License: GPL
@@ -32,6 +32,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.vdr.vnsi
 
 %changelog
+* Wed Feb 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt4
+- updated up to 8.2.2-Matrix
+
 * Thu Nov 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt3
 - updated up to 8.1.0-Matrix
 
