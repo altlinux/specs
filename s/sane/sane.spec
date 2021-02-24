@@ -1,8 +1,8 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.0.31
-Release: alt4
+Version: 1.0.32
+Release: alt1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -168,8 +168,8 @@ This package contains SANE static libraries.
 %setup -n %oname-%version
 %patch3
 %patch4
-%patch5 -p2
-%patch6 -p1
+#patch5 -p2
+#patch6 -p1
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -190,9 +190,11 @@ find -type f -print0 -name '*.cpp' -o -name '*.cc' -o -name '*.h' |
 	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
+sed -i "s|m4_esyscmd_s(\[.*git.*\])|%version-%release|" configure.ac
+#sed -i "s|python |%__python3 |" backend/Makefile.am
+sed -i "s|AM_PATH_PYTHON(2.7)|AM_PATH_PYTHON(3.3)|" configure.ac
+
 %build
-sed -i "s|m4_esyscmd_s(\[git describe --dirty\])|%version|" configure.ac
-sed -i "s|python |%__python3 |" backend/Makefile.am
 %autoreconf
 %configure --enable-translations --with-gphoto2 \
 	--with-usb \
@@ -283,6 +285,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.32-alt1
+- new version 1.0.32 (with rpmrb script)
+
 * Mon Oct 05 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.31-alt4
 - replace the patch for gt68xx with upstream version which introduces
   a solid fix for the issue and compatible with Mustek 1200 UB as well
