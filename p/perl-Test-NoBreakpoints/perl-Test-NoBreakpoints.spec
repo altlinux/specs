@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-NoBreakpoints
-Version:        0.15
-Release:        alt2_25
+Version:        0.17
+Release:        alt1
 Summary:        Test that files do not contain soft breakpoints
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-NoBreakpoints
-Source0:        https://cpan.metacpan.org/authors/id/J/JF/JFITZ/Test-NoBreakpoints-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/B/BL/BLAINEM/Test-NoBreakpoints-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -51,10 +52,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Feb 24 2021 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- automated CPAN update
+
 * Tue Jan 12 2021 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_25
 - to Sisyphus as perl-JavaScript-Minifier-XS dep
 
