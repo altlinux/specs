@@ -1,9 +1,9 @@
 %define git %nil
 
 Name: libsmbios
-Version: 2.4.1
-Release: alt2
-License: GPLv2+ or OSL 2.1
+Version: 2.4.3
+Release: alt1
+License: GPLv2+ or OSL-2.1
 Summary: Libsmbios C/C++ shared libraries
 Group: System/Libraries
 Source: %name-%version.tar
@@ -117,6 +117,10 @@ rm -rf %buildroot%_libdir/*.a
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Feb 24 2021 L.A. Kostis <lakostis@altlinux.ru> 2.4.3-alt1
+- Updated to 2.4.3.
+- .spec: fix license.
+
 * Wed Mar 28 2018 L.A. Kostis <lakostis@altlinux.ru> 2.4.1-alt2
 - Skip python req for -utils package.
 
