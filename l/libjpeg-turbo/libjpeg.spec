@@ -1,10 +1,10 @@
 Name: libjpeg-turbo
-Version: 2.0.2
+Version: 2.0.6
 Release: alt1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
-License: wxWidgets
+License: BSD-3-Clause
 Group: System/Libraries
 Url: http://sourceforge.net/projects/%name/
 
@@ -99,7 +99,7 @@ This package contains development files for the turbojpeg library.
 %setup -n %name-%version-%release
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%patch2 -p2
 
 install -pm644 %_sourcedir/{jpegexiforient,jpeginfo}.c .
 install -pm755 %_sourcedir/exifautotran .
@@ -173,6 +173,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Wed Feb 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.0.6-alt1
+- 2.0.6 released (fixes: CVE-2020-13790)
+
 * Wed Apr 10 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.0.2-alt1
 - 2.0.2 released
 
