@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.8.0.1
+Version: 5.8.0.8
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -20,6 +20,8 @@ BuildRequires: dtk5-widget-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: libgtest-devel
+BuildRequires: qt5-tools-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -27,26 +29,11 @@ Calendar for Deepin Desktop Environment.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|g' assets/translate_generation.sh
-
-sed -i '/<QQueue>/a #include <QMouseEvent>' src/widget/dayWidget/daymonthview.cpp
-sed -i '/include <QPainter>/a #include <QMouseEvent>' src/widget/schedulesearchview.cpp
-sed -i '/include <QJsonObject>/a #include <QMouseEvent>' src/view/draginfographicsview.cpp
-sed -i '/include <QPainter>/a #include <QMouseEvent>' schedule-plugin/src/widget/itemwidget.h
-sed -i '1i#include <QPainterPath>' schedule-plugin/src/widget/itemwidget.cpp
-sed -i '1i#include <QMouseEvent>' schedule-plugin/src/widget/modifyscheduleitem.cpp
-sed -i 's|/usr/lib|%_libdir|' schedule-plugin/CMakeLists.txt
-
-# Not included in https://github.com/linuxdeepin/dde-calendar/pull/30 yet
-sed -i '/include <QPainter>/a #include <QPainterPath>' \
-    src/widget/schedulesearchview.cpp \
-    src/widget/dayWidget/daymonthview.cpp \
-    src/widget/weekWidget/weekheadview.cpp \
-    src/customWidget/customframe.cpp \
-    src/widget/yearWidget/yearview.cpp
-sed -i '/include <QMessageBox>/a #include <QWheelEvent>' \
-    src/widget/yearWidget/yearwindow.cpp \
-    src/widget/weekWidget/weekheadview.cpp
+sed -i 's|/usr/lib/deepin-aiassistant|%_libdir/deepin-aiassistant|' schedule-plugin/CMakeLists.txt
+sed -i 's|lib/deepin-daemon/|libexec/deepin-daemon/|' \
+    calendar-service/CMakeLists.txt \
+    calendar-service/assets/dde-calendar-service.desktop \
+    calendar-service/assets/data/com.deepin.dataserver.Calendar.service
 
 %build
 %cmake_insource \
@@ -68,12 +55,18 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_bindir/%repo
 %_datadir/%repo/
 %_datadir/dbus-1/services/com.deepin.Calendar.service
+%_datadir/dbus-1/services/com.deepin.dataserver.Calendar.service
 %_desktopdir/%repo.desktop
+%_sysconfdir/xdg/autostart/dde-calendar-service.desktop
+%_prefix/libexec/deepin-daemon/dde-calendar-service
 %dir %_libdir/deepin-aiassistant/
 %dir %_libdir/deepin-aiassistant/serivce-plugins/
 %_libdir/deepin-aiassistant/serivce-plugins/libuosschedulex-plugin.so
 
 %changelog
+* Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.0.8-alt1
+- New version (5.8.0.8) with rpmgs script.
+
 * Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.1-alt1
 - New version (5.8.0.1) with rpmgs script.
 
