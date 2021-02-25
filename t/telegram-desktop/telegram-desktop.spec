@@ -4,11 +4,12 @@
 %define buildmode Release
 
 %define ffmpeg_version 3.4
+%define tg_qt5_version 5.15
 %def_without ffmpeg_static
 
 Name: telegram-desktop
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -44,7 +45,8 @@ BuildRequires: gcc-c++ libstdc++-devel python3
 # cmake 3.16 as in CMakeLists.txt
 BuildRequires: cmake >= 3.16
 
-BuildRequires: qt5-base-devel libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-wayland-devel
+BuildRequires: qt5-base-devel
+BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-wayland-devel
 # needs for smiles and emojicons
 Requires: qt5-imageformats
 
@@ -191,10 +193,10 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
     -DTDESKTOP_FORCE_GTK_FILE_DIALOG:BOOL=ON \
+%if "%_qt5_version" < "%tg_qt5_version"
+    -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=ON \
+%endif
     %nil
-
-# Can't use, see https://github.com/telegramdesktop/tdesktop/issues/8483
-#    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=TRUE \
 
 %make_build
 
@@ -226,6 +228,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt2
+- disable WAYLAND_INTEGRATION for Qt < 5.15
+
 * Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
 - new version 2.6.0 (with rpmrb script)
 - disable WEBRTC_INTEGRATION (still segfaults)
