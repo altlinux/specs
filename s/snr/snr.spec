@@ -4,7 +4,7 @@ License: MIT
 Group: System/Base
 Url: https://github.com/mikhailnov/snr
 Version: 1.7
-Release: alt1
+Release: alt2
 Source0: %name-%version.tar
 BuildArch: noarch
 BuildRequires: md2man
@@ -36,6 +36,9 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 
 
 %changelog
+
+* Thu Feb 25 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.7-alt2
+- Regenerate man page with md2man 1.0-alt2 which produces better result
 
 * Wed Jul 15 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.7-alt1
 - Version 1.7:
