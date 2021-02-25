@@ -1,59 +1,57 @@
-%define major 1.4
-Name: libcue
-Version: %major.0
-Release: alt3
+Name: libcue2
+Version: 2.2.1
+Release: alt1
 
 Summary: Cue sheet parser library
 
-Group: System/Libraries
 # Files libcue/rem.{c,h} contains a BSD header
 License: GPLv2 and BSD
-Url: http://libcue.sourceforge.net/
+Group: System/Libraries
+Url: https://github.com/lipnitsk/libcue
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
+# Source-url: https://github.com/lipnitsk/libcue/archive/v%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Sat Dec 05 2009
-BuildRequires: flex gcc-c++
+BuildRequires: flex gcc-c++ cmake
 
 %description
 Libcue is intended for parsing a so-called cue sheet from a char string or
 a file pointer. For handling of the parsed data a convenient API is available.
 
-%package devel
+%package -n libcue-devel
 Summary: Development files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
-%description devel
+%description -n libcue-devel
 Development files for %name.
 
 %prep
 %setup
+subst "s|\(ADD_LIBRARY(cue \)|\1 SHARED |" CMakeLists.txt
 
 %build
-%configure --disable-static
+%cmake_insource
 %make_build
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/libcue.la
 
 %files
-%_libdir/%name.so.*
-%doc AUTHORS COPYING NEWS
+%_libdir/libcue.so.*
+%doc README.md ChangeLog LICENSE
 
-%if 0
-%files devel
-%_includedir/%name-%major/
-%_libdir/%name.so
-%_pkgconfigdir/%name.pc
-%endif
+%files -n libcue-devel
+%_includedir/libcue/
+%_includedir/libcue.h
+%_libdir/libcue.so
+%_pkgconfigdir/libcue.pc
 
 %changelog
-* Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt3
-- don't pack devel subpackage
+* Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
+- new version 2.2.1 (with rpmrb script) (closes: #39700)
 
 * Sun Aug 05 2012 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
 - rebuild for enable debuginfo

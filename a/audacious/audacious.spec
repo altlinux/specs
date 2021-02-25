@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 4.0.5
+Version: 4.1
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -29,7 +29,11 @@ BuildRequires: glib2-devel libgio-devel
 
 BuildRequires: qt5-base-devel
 
+BuildRequires: libgtk+2-devel
+
 BuildRequires: libguess-devel >= 1.2
+
+BuildRequires: libarchive-devel
 
 Requires: %name-plugins
 
@@ -69,6 +73,7 @@ Development files required to develop plugins for audacious.
 %configure \
     --with-buildstamp="ALT Linux package"  \
     --disable-rpath \
+    --enable-libarchive \
     --disable-dependency-tracking \
 %ifnarch x86_64
     --disable-sse2 \
@@ -98,17 +103,22 @@ Development files required to develop plugins for audacious.
 #%_libdir/libSAD.so.*
 %_libdir/libaudcore.so.*
 %_libdir/libaudqt.so.*
+%_libdir/libaudgui.so.*
 
 %files -n lib%name-devel
 %_includedir/%name/
 #%_includedir/libSAD/
 %_includedir/libaudcore/
 %_includedir/libaudqt/
-#%_includedir/libaudtag/
+%_includedir/libaudgui/
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 
 %changelog
+* Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
+- new version 4.1 (with rpmrb script)
+- enable build with libarchive
+
 * Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
 - new version 4.0.5 (with rpmrb script)
 

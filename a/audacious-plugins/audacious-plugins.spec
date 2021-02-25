@@ -6,7 +6,7 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.0.5
+Version: 4.1
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -19,7 +19,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Requires: %oname = %version
 
-BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel libalsa-devel
+BuildRequires: gcc-c++ libSDL2-devel libXcomposite-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel libalsa-devel
 
 BuildRequires: lib%oname-devel = %version
 
@@ -77,6 +77,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
+- new version 4.1 (with rpmrb script)
+
 * Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
 - new version 4.0.5 (with rpmrb script)
 
