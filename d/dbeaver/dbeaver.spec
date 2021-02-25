@@ -2,7 +2,7 @@
 
 Name: dbeaver
 Version: 7.3.5
-Release: alt1
+Release: alt2
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -14,12 +14,17 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-# https://download.%name.com/community/%version/%name-ce-%version-linux.gtk.x86_64-nojdk.tar.gz
-Source: %name-ce-%version-linux.gtk.x86_64-nojdk.tar
+# https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
+Source1: %name.desktop
+Source2: maven-local-repository.tar
 
-Requires: java
-
+BuildRequires: /proc
+BuildRequires: java-11-openjdk-headless
 BuildRequires: libsecret
+BuildRequires: maven-lib
+BuildRequires: rpm-build-java
+BuildRequires: xmvn-resolve
 
 %description
 DBeaver is free and open source universal database tool for developers and database administrators.
@@ -34,15 +39,20 @@ DBeaver is free and open source universal database tool for developers and datab
 *  It has a great number of features.
 
 %prep
-%setup -n %name
+%setup -b 2
+
+%__rm -rf ~/.m2
+%__mv -Tf ../.m2 ~/.m2
+
+%build
+mvn -o package
 
 %install
 %__mkdir_p %buildroot%_bindir
-%__mkdir_p %buildroot%_datadir/%name
+%__mkdir_p %buildroot%_datadir
 %__mkdir_p %buildroot%_desktopdir
-%__cp -r . %buildroot%_datadir/%name/
-%__rm %buildroot%_datadir/%name/%name.desktop
-%__install -m 0755 %name.desktop %buildroot%_desktopdir/%name.desktop
+%__cp -r product/standalone/target/products/org.jkiss.dbeaver.core.product/linux/gtk/x86_64/%name %buildroot%_datadir
+%__install -m 0755 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %__ln_s %_datadir/%name/%name %buildroot%_bindir/%name
 
 %files
@@ -52,5 +62,8 @@ DBeaver is free and open source universal database tool for developers and datab
 %config %_datadir/%name/%name.ini
 
 %changelog
+* Thu Feb 25 2021 Nazarov Denis <nenderus@altlinux.org> 7.3.5-alt2
+- Build with maven
+
 * Fri Feb 19 2021 Nazarov Denis <nenderus@altlinux.org> 7.3.5-alt1
 - Initial build for ALT Linux
