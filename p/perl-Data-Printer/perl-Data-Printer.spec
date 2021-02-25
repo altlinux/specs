@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Data-Printer
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Capture/Tiny.pm) perl(Carp.pm) perl(Clone/PP.pm) perl(DBIx/Class/Core.pm) perl(DBIx/Class/Schema.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/HomeDir.pm) perl(File/HomeDir/Test.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(MRO/Compat.pm) perl(Package/Stash.pm) perl(Scalar/Util.pm) perl(Sort/Naturally.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(base.pm) perl(if.pm) perl(mro.pm) perl(version.pm)
+BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Capture/Tiny.pm) perl(Carp.pm) perl(Clone/PP.pm) perl(DBIx/Class/Core.pm) perl(DBIx/Class/Schema.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/HomeDir.pm) perl(File/HomeDir/Test.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(MRO/Compat.pm) perl(Package/Stash.pm) perl(Scalar/Util.pm) perl(Sort/Naturally.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(base.pm) perl(if.pm) perl(mro.pm) perl(version.pm) perl(charnames.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.40
+Version: 1.000001
 Release: alt1
 Summary: colored pretty-print of Perl data structures and objects
 Group: Development/Perl
@@ -97,10 +97,13 @@ if it makes things easier to read:
 %perl_vendor_install
 
 %files
-%doc Changes README* examples
+%doc Changes README* examples CONTRIBUTING.md
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Feb 25 2021 Igor Vlasenko <viy@altlinux.org> 1.000001-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
