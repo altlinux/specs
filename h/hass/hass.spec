@@ -1,6 +1,6 @@
 Name: hass
 Version: 2021.2.3
-Release: alt2
+Release: alt3
 
 Summary: Home automation platform
 License: APL
@@ -73,6 +73,8 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %add_python3_req_skip custom_components
 %add_python3_req_skip hbmqtt.broker
 %add_python3_req_skip importlib_metadata
+# deprecated
+%add_python3_req_skip homeassistant.components.zwave
 
 %files core -f core.files
 %_sysconfdir/sysconfig/hass
@@ -87,6 +89,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Thu Feb 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.2.3-alt3
+- get rid of deprecated zwave dependency
+
 * Thu Feb 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.2.3-alt2
 - interdependencies corrected
 
