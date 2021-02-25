@@ -7,7 +7,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.14.0
+Version: 4.14.1
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -164,6 +164,9 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Feb 25 2021 Andrey Cherepanov <cas@altlinux.org> 4.14.1-alt1
+- New version.
+
 * Mon Dec 21 2020 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt1
 - New version.
 - Add qt5-base-doc to qt-creator-doc requirements.
