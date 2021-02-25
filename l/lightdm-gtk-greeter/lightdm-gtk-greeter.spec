@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.7
-Release: alt1
+Release: alt2
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -72,6 +72,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Thu Feb 25 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt2
+- Added "enter-username" config param to explicitly ask for a
+  username before authentication starts (closes: 38544).
+
 * Mon Mar 16 2020 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt1
 - Fresh up to v2.0.7.
 
