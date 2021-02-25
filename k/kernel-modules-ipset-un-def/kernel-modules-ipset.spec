@@ -1,7 +1,7 @@
 # vim:set ft=spec tw=79:
 
 %define module_name	ipset
-%define module_version	7.10
+%define module_version	7.11
 %define module_release	alt1
 
 %define flavour		un-def
@@ -59,9 +59,11 @@ install -p -m644 kernel/net/netfilter/*.ko %buildroot%module_dir
 %module_dir
 
 %changelog
-
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Feb 25 2021 Anton Farygin <rider@altlinux.org> 7.11-alt1
+- 7.10 -> 7.11
 
 * Fri Jan 01 2021 Anton Farygin <rider@altlinux.ru> 7.10-alt1
 - 7.6 -> 7.10
