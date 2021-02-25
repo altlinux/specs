@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt3
+Release: alt4
 
 %define package_name		%real_name
 %define weight			1001
@@ -457,8 +457,6 @@ Requires: %name = %version-%release
 Provides: %real_name-devel = %require_ver
 Obsoletes: %python_name-modules-dev <= %noversion_from
 Provides: lib%name-devel = %version-%release
-# require libnsl2-devel, otherwise arch-specific modules may fail to link.
-Requires: libnsl2-devel
 
 %description dev
 The Python programming language's interpreter can be extended with
@@ -741,7 +739,6 @@ autoconf
 build () {
 _Target="$1"
 shift
-export LDFLAGS="$(pkg-config --libs libnsl)" CPPFLAGS="$(pkg-config --cflags libnsl)"
 %ifarch %e2k
 cc --version | grep -q '^lcc:1.21' && export LIBS+="-lcxa"
 %endif
@@ -1161,6 +1158,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Thu Feb 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt4
+- python-dev: Removed dependency to libnsl2-devel (close #39727).
+- Built without libnsl LDFLAGS.
+
 * Mon Dec 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt3
 - Fixed FTBFS:
   + Removed python-modules-nis subpackages (NIS is obsoleted by glibc) and
