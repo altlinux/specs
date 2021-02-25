@@ -1,10 +1,10 @@
 %def_with check
 
-%global goipath         github.com/bgentry/speakeasy
+%define goipath github.com/bgentry/speakeasy
 
 Name: golang-github-bgentry-speakeasy
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: Cross-platform golang helpers for reading password input without cgo
 Group: Development/Other
 License: MIT
@@ -41,11 +41,11 @@ cp %SOURCE1 %SOURCE2 .
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%goipath"
-export GOPATH="%go_path:$BUILDDIR"
+export GOPATH="%go_path"
 
 %golang_prepare
 
-cd .build/src/%goipath
+go mod init github.com/bgentry/speakeasy
 %golang_build
 
 %install
@@ -64,5 +64,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 0.1.0-alt2
+- Fixed build with golang 1.16.
+
 * Mon Jun 01 2020 Leontiy Volodin <lvol@altlinux.org> 0.1.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
