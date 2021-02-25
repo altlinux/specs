@@ -41,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 15.2.8
+Version: 15.2.9
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -182,6 +182,7 @@ Comprised of files that are common to Ceph clients and servers.
 Summary: Utility to bootstrap Ceph clusters
 Group: System/Base
 #Requires: podman
+BuildArch: noarch
 Requires: lvm2
 %description -n cephadm
 Utility to bootstrap a Ceph cluster and manage Ceph daemons deployed
@@ -1497,6 +1498,9 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Thu Feb 25 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.9-alt1
+- 15.2.9
+
 * Thu Dec 24 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.8-alt1
 - 15.2.8
 - Fixes for the following security vulnerabilities:
