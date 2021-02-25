@@ -1,6 +1,6 @@
 Name: git-cola
-Version: 3.8
-Release: alt2
+Version: 3.9
+Release: alt1
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -60,6 +60,9 @@ chmod +x %buildroot%_datadir/git-cola/lib/cola/widgets/spellcheck.py
 %python3_sitelibdir/*
 
 %changelog
+* Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 3.9-alt1
+- New version 3.9.
+
 * Mon Nov 16 2020 Leontiy Volodin <lvol@altlinux.org> 3.8-alt2
 - Disabled AutoReq.
 
