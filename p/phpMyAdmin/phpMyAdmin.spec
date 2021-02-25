@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 5.0.4
+Version: 5.1.0
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -87,14 +87,21 @@ Install this package if you need phpMyAdmin for apache 2.x and php5.
 Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php7)
 Group: System/Servers
 Requires: %name = %version-%release
-Requires: apache2-mod_php7 >= 7.0.0
+Requires: apache2-mod_php7 >= 7.1.3
 Requires: apache2-base
-# needed MYSQLI_TYPE_JSON exists only in mysqlnd
+
+# from composer.json
 Requires: php7-mysqlnd-mysqli
-Requires: php7-mcrypt
-Requires: php7-mbstring
-Requires: php7-gd2
+Requires: php7-openssl
+Requires: php7-curl
+Requires: php7-opcache
+#Requires: php7-zlib
+Requires: php7-bz2
 Requires: php7-zip
+Requires: php7-gd2
+Requires: php7-mbstring
+Requires: php7-mcrypt
+
 Conflicts: %name-apache2
 
 %description apache2-php7
@@ -178,6 +185,12 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
+- new version 5.1.0 (with rpmrb script)
+- set requires: php7 >= 7.1.3
+- add requires: php7-openssl, php7-curl, php7-opcache, php7-bz2
+
+
 * Thu Oct 29 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.4-alt1
 - new version 5.0.4 (with rpmrb script)
 
