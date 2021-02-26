@@ -1,6 +1,6 @@
 Name: cvise
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -14,7 +14,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires: astyle
-BuildRequires: clang-devel >= 10
+BuildRequires: clang-devel
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39734
+
+# rpm-build-info gives _distro_version
+%if %_vendor == "alt" && %_distro_version == "Sisyphus"
+BuildRequires: clang11.0-tools clangd11.0
+%endif
 # FIXME
 BuildRequires: clang-devel-static >= 10
 BuildRequires: cmake ctest
@@ -66,7 +72,7 @@ and report bugs in compilers and other tools that process C/C++ or OpenCL code.
 %prep
 %setup
 # TODO: https://bugzilla.altlinux.org/show_bug.cgi?id=38660
-%__subst '14ilist(APPEND CMAKE_PREFIX_PATH "/usr/share/cmake/Modules")' CMakeLists.txt
+#__subst '14ilist(APPEND CMAKE_PREFIX_PATH "/usr/share/cmake/Modules")' CMakeLists.txt
 
 %build
 %cmake -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir
@@ -89,11 +95,13 @@ rm -rfv %buildroot%_datadir/cvise/tests/
 %dir %_libexecdir/cvise/
 %_libexecdir/cvise/clex
 %_libexecdir/cvise/clang_delta
-%_libexecdir/cvise/clex
 %_libexecdir/cvise/strlex
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2
+- add temp. BR to build with clang 11
+
 * Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0 (with rpmrb script)
 - temp. disable tests (need rewrite run)
