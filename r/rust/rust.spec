@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.49.0
+Version: 1.50.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -13,7 +13,6 @@ Source: rustc-src.tar
 
 Patch1: rust-gdb.patch
 Patch2: rust-disable-lint-tests.patch
-Patch3: rust-pr-80122.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -56,7 +55,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.48.0
+%define r_ver 1.49.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
@@ -209,7 +208,6 @@ data to provide information about the Rust standard library.
 
 %patch1 -p2
 %patch2 -p2
-%patch3 -p1
 
 %if_with bootstrap
 tar xf %r_src
@@ -325,8 +323,8 @@ EOF
 
 . ./env.sh
 
-python3 x.py build --verbose
-python3 x.py doc
+python3 x.py build --verbose --stage 2
+python3 x.py doc --stage 2
 
 
 %install
@@ -436,6 +434,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Fri Feb 26 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.50.0-alt1
+- New version (1.50.0).
+
 * Thu Jan 07 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.49.0-alt1
 - New version (1.49.0).
 - Use clang.
