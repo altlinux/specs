@@ -2,7 +2,7 @@
 
 Name: dbeaver
 Version: 7.3.5
-Release: alt2
+Release: alt3
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -25,6 +25,8 @@ BuildRequires: libsecret
 BuildRequires: maven-lib
 BuildRequires: rpm-build-java
 BuildRequires: xmvn-resolve
+
+Requires: java-11-openjdk-headless
 
 %description
 DBeaver is free and open source universal database tool for developers and database administrators.
@@ -62,6 +64,9 @@ mvn -o package
 %config %_datadir/%name/%name.ini
 
 %changelog
+* Fri Feb 26 2021 Nazarov Denis <nenderus@altlinux.org> 7.3.5-alt3
+- Add requires on java-openjdk-headless
+
 * Thu Feb 25 2021 Nazarov Denis <nenderus@altlinux.org> 7.3.5-alt2
 - Build with maven
 
