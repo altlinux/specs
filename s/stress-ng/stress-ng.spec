@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: stress-ng
-Version: 0.12.03
-Release: alt2
+Version: 0.12.04
+Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -69,6 +69,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Fri Feb 26 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.04-alt1
+- Update to V0.12.04 (2021-02-25) with update (2021-02-26).
+
 * Thu Feb 18 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.03-alt2
 - spec: Disable cache test in %%check for ALT beekeeper.
 
