@@ -1,6 +1,6 @@
 Name: hfsprogs
 Version: 540.1.linux3
-Release: alt1.1
+Release: alt2
 
 Summary: mkfs and fsck for Apple HFS and HFS+ file systems
 Summary(ru_RU.UTF-8): Утилиты для работы с файловыми системами Linux
@@ -24,8 +24,11 @@ Conflicts: hfsplusutils
 
 Patch0: hfsplus-tools-no-blocks.patch
 Patch1: hfsplus-tools-learn-to-stdarg.patch
+Patch2: hfsplus-tools-sysctl.patch
 
 BuildRequires: libuuid-devel libssl-devel
+
+Provides: hfsplus-tools = %version-%release
 
 # we want this to end up with the other mkfs.*'s, in /sbin
 %define _exec_prefix /
@@ -51,6 +54,7 @@ commit.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # remove errant execute bits
 find . -type f -name '*.[ch]' -exec chmod -c -x {} +
@@ -95,6 +99,9 @@ ln -s fsck.hfsplus.8 fsck.hfs.8
 %_man8dir/fsck.hfs.*
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 540.1.linux3-alt2
+- update fixes from Fedora
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 540.1.linux3-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
