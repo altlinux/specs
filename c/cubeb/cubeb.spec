@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=relaxed
 
 %define sover 0
-%define cubeb_commit 8d53747d4adc3b0b03ebf79b05f1fff08c5ae8ef
+%define cubeb_commit 8942382280721117900072945767cece14eef046
 %define sanitizers_cmake_commit aab6948fa863bc1cbe5d0850bc46b9ef02ed4c1a
 
 Name: cubeb
 Version: 0.2
-Release: alt1.git8d53747
+Release: alt2.git8942382
 
 Summary: A cross platform audio library
 License: ISC
@@ -20,8 +20,7 @@ Source0: %name-%cubeb_commit.tar
 # https://github.com/arsenm/sanitizers-cmake/archive/%sanitizers_cmake_commit/sanitizers-cmake-%sanitizers_cmake_commit.tar.gz
 Source1: sanitizers-cmake-%sanitizers_cmake_commit.tar
 
-Patch0: %name-alt-pthread.patch
-Patch1: %name-alt-soname.patch
+Patch0: %name-alt-soname.patch
 
 BuildRequires: cmake
 BuildRequires: doxygen
@@ -55,7 +54,6 @@ Development files for %name
 %setup -n %name-%cubeb_commit -b 1
 
 %patch0 -p1
-%patch1 -p1
 
 %__mv -Tf ../sanitizers-cmake-%sanitizers_cmake_commit cmake/sanitizers-cmake
 
@@ -70,6 +68,7 @@ cmake .. \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DBUILD_SHARED_LIBS:BOOL=TRUE \
 	-DBUILD_TESTS:BOOL=FALSE \
+	-DBUILD_TOOLS:BOOL=FALSE \
 	-Wno-dev
 popd
 
@@ -78,14 +77,11 @@ popd
 %install
 %makeinstall_std -C %_target_platform
 
-%files
-%doc AUTHORS LICENSE
-%_bindir/%name-test
-
 %files -n lib%name%sover
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
+%doc AUTHORS LICENSE
 %_libdir/lib%name.so
 %dir %_libdir/cmake/%name
 %_libdir/cmake/%name/%{name}*.cmake
@@ -93,5 +89,9 @@ popd
 %_includedir/%name/%{name}*.h
 
 %changelog
+* Fri Feb 26 2021 Nazarov Denis <nenderus@altlinux.org> 0.2-alt2.git8942382
+- Update to git 8942382
+- Do not build tool
+
 * Wed Feb 10 2021 Nazarov Denis <nenderus@altlinux.org> 0.2-alt1.git8d53747
 - Initial build for ALT Linux
