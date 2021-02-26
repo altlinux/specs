@@ -1,5 +1,5 @@
 Name: oregano
-Version: 0.84.41
+Version: 0.84.43
 Release: alt1
 
 Summary: A GUI to simulate electronic circuit
@@ -16,9 +16,7 @@ Source: %name-%version.tar
 Patch: oregano-0.70-sfmt.patch
 Patch1: oregano-0.70-linkage.patch
 
-# Automatically added by buildreq on Tue Jul 10 2018
-# optimized out: at-spi2-atk fontconfig gdb glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfribidi-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+3-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode perl-XML-Parser perl-parent pkg-config python-base python-modules python3 python3-base sssd-client
-BuildRequires: groff-base intltool libgoocanvas2-devel libgtksourceview3-devel libxml2-devel nemiver perl-Encode-JP python3
+BuildRequires: groff-base intltool libgoocanvas2-devel libgtksourceview3-devel libxml2-devel perl-Encode-JP python3
 
 
 %description
@@ -56,6 +54,9 @@ rm -f %buildroot%_bindir/microtests/
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 0.84.43-alt1
+- new version 0.84.43 (with rpmrb script)
+
 * Sat Apr 27 2019 Vitaly Lipatov <lav@altlinux.ru> 0.84.41-alt1
 - new version 0.84.41 (with rpmrb script)
 
