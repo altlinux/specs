@@ -1,11 +1,11 @@
-%def_without check
+%def_with check
 
 %global goipath         github.com/BurntSushi/xgb
-%global commit          27f122750802c950b2c869a5b63dafcf590ced95
+%global commit          deaf085860bc2ec870e50cacc83c467b3501a404
 
 Name: golang-github-burntsushi-xgb
 Version: 0
-Release: alt1.git27f1227
+Release: alt2.gitdeaf085
 Summary: Low-level api to communicate with the X server
 Group: Graphical desktop/Other
 License: WTFPL
@@ -49,7 +49,7 @@ export GOPATH="%go_path"
 
 %golang_prepare
 
-cd .build/src/%goipath
+go mod init github.com/BurntSushi/xgb
 for cmd in xgbgen; do
 %golang_build $cmd ||:
 done
@@ -77,6 +77,10 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/examples
 
 %changelog
+* Fri Feb 26 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.gitdeaf085
+- Updated from git.
+- Fixed build with golang 1.16.
+
 * Fri May 8 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git27f1227
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
