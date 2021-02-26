@@ -1,6 +1,6 @@
 Name: eresi
 Version: 0.83
-Release: alt3
+Release: alt4
 
 Summary: The ERESI Reverse Engineering Software Interface
 
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 Patch: 0001-fix-underlinking-when-linking-with-Wl-as-needed.patch
 Patch1: eresi-fix-glibc-2.28.patch
+Patch2: eresi-fix-gcc10.patch
 
 BuildRequires: libssl-devel
 
@@ -43,6 +44,7 @@ The ERESI Reverse Engineering Software Interface
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 
 %__subst "s|termcap|tinfo|g" ./configure
 
@@ -95,6 +97,9 @@ rm -fv %buildroot%_bindir/kedbg*
 %_man1dir/eresi.*
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 0.83-alt4
+- fix build with gcc10
+
 * Thu Dec 12 2019 Vitaly Lipatov <lav@altlinux.ru> 0.83-alt3
 - fix build
 
