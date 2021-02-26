@@ -1,12 +1,10 @@
-%set_verify_elf_method unresolved=relaxed
-
 %define sover 0
 %define cubeb_commit 8942382280721117900072945767cece14eef046
 %define sanitizers_cmake_commit aab6948fa863bc1cbe5d0850bc46b9ef02ed4c1a
 
 Name: cubeb
 Version: 0.2
-Release: alt2.git8942382
+Release: alt3.git8942382
 
 Summary: A cross platform audio library
 License: ISC
@@ -26,6 +24,9 @@ BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: gcc-c++
 BuildRequires: graphviz
+BuildRequires: libalsa-devel
+BuildRequires: libjack-devel
+BuildRequires: libpulseaudio-devel
 
 %description
 Cubeb is a cross-platform library, written in C/C++, that was created and has
@@ -58,30 +59,24 @@ Development files for %name
 %__mv -Tf ../sanitizers-cmake-%sanitizers_cmake_commit cmake/sanitizers-cmake
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING=Release \
+%cmake \
 	-DBUILD_SHARED_LIBS:BOOL=TRUE \
 	-DBUILD_TESTS:BOOL=FALSE \
-	-DBUILD_TOOLS:BOOL=FALSE \
 	-Wno-dev
-popd
 
-%make_build -C %_target_platform
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
+
+%files
+%doc AUTHORS LICENSE
+%_bindir/%name-test
 
 %files -n lib%name%sover
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
-%doc AUTHORS LICENSE
 %_libdir/lib%name.so
 %dir %_libdir/cmake/%name
 %_libdir/cmake/%name/%{name}*.cmake
@@ -89,6 +84,9 @@ popd
 %_includedir/%name/%{name}*.h
 
 %changelog
+* Fri Feb 26 2021 Nazarov Denis <nenderus@altlinux.org> 0.2-alt3.git8942382
+- Build with alsa, jack and pulseaudio
+
 * Fri Feb 26 2021 Nazarov Denis <nenderus@altlinux.org> 0.2-alt2.git8942382
 - Update to git 8942382
 - Do not build tool
