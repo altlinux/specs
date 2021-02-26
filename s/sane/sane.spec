@@ -2,7 +2,7 @@
 
 Name: sane
 Version: 1.0.32
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -20,8 +20,7 @@ Source2: %name.xinetd
 
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
-Patch5: sane-backends-1.0.30-avision-av186plus-av188.patch
-Patch6: sane-backends-1.0.31-upstream-gt68xx-flag-to-fix-stop-scan-bug.patch
+Patch5: sane-backends-1.0.32-xerox-blacklist-workcentre-322x.patch
 
 # Mandriva patches
 Patch201: sane-backends-1.0.18-plustek-s12.patch
@@ -168,8 +167,7 @@ This package contains SANE static libraries.
 %setup -n %oname-%version
 %patch3
 %patch4
-#patch5 -p2
-#patch6 -p1
+%patch5 -p2
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -190,7 +188,7 @@ find -type f -print0 -name '*.cpp' -o -name '*.cc' -o -name '*.h' |
 	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
-sed -i "s|m4_esyscmd_s(\[.*git.*\])|%version-%release|" configure.ac
+sed -i "s|m4_esyscmd_s(\[.*git.*\])|%version|" configure.ac
 #sed -i "s|python |%__python3 |" backend/Makefile.am
 sed -i "s|AM_PATH_PYTHON(2.7)|AM_PATH_PYTHON(3.3)|" configure.ac
 
@@ -285,6 +283,12 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Fri Feb 26 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.0.32-alt2
+- add xerox-blacklist-workcentre-322x patch (closes: #39729)
+- remove upstreamed avision-av186plus-av188 patch
+- remove upstream-gt68xx-flag-to-fix-stop-scan-bug patch
+- fix pkgconfig generation (lav@) (closes: #39743)
+
 * Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.32-alt1
 - new version 1.0.32 (with rpmrb script)
 
