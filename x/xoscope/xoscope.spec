@@ -1,17 +1,21 @@
+# TODO: see https://github.com/imrehg/xoscope
+
 Name: xoscope
 Version: 2.2
-Release: alt2
+Release: alt3
 
 Summary: xoscope: digital oscilloscope
+
+Url: http://xoscope.sourceforge.net/
+Group: Engineering
+License: GPL
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://prdownloads.sourceforge.net/project/xoscope/xoscope/%version/xoscope-%version.tar.gz
 Source: %name-%version.tar
 
-Url: http://xoscope.sourceforge.net/
-Group: Engineering
-License: GPL
+Patch1: %name-gcc10.patch
 
 BuildRequires: libICE-devel libalsa-devel libcomedi-devel libfftw3-devel libgtkdatabox-devel
 
@@ -20,6 +24,7 @@ xoscope: digital oscilloscope
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %configure
@@ -38,6 +43,9 @@ xoscope: digital oscilloscope
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt3
+- fix build with gcc10
+
 * Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt2
 - rebuild without esound support (libesd-devel)
 
