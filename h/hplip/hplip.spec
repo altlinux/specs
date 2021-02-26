@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.21.2
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -179,6 +179,7 @@ Patch14: hplip-alt-use-l10n.patch
 Patch15: hplip-alt-use-python3-in-service.patch
 # Fix undefined _GDB() function
 Patch17: hplip-alt-fix-undefined-_GDB-call.patch
+Patch18: hplip-alt-add-M125ra-model.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -645,6 +646,7 @@ tar -xf %SOURCE6
 %endif
 %patch15 -p2
 %patch17 -p2
+%patch18 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1187,6 +1189,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Feb 26 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.2-alt2
+- Add M125ra model.
+
 * Fri Feb 19 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.2-alt1
 - New version.
 - Added support for the following new printers:
