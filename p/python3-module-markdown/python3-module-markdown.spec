@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define modname markdown
 
 %def_enable check
 
 Name: python3-module-%modname
-Version: 3.3.3
+Version: 3.3.4
 Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
@@ -68,6 +68,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Fri Feb 26 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3.4-alt1
+- 3.3.4
+
 * Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
 - updated to 3.3.3-4-g8e7528f
 
