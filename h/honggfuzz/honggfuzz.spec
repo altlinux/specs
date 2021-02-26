@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: honggfuzz
-Version: 2.3.1
+Version: 2.4
 Release: alt1
 Summary: Security oriented software fuzzer
 License: Apache-2.0
@@ -52,6 +53,9 @@ honggfuzz -v -i examples/openssl/corpus_client -N 1 --run_time 1 -n 1 -P -- /bin
 %docdir
 
 %changelog
+* Fri Feb 26 2021 Vitaly Chikunov <vt@altlinux.org> 2.4-alt1
+- Update to 2.4 (2021-02-24).
+
 * Sun Jul 26 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.1-alt1
 - Update to 2.3.1 (2020-07-22).
 
