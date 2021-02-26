@@ -1,5 +1,5 @@
 Name: uftp
-Version: 4.9.8
+Version: 5.0
 Release: alt1
 
 Summary: A multicast FTP
@@ -69,6 +69,9 @@ mv %buildroot%_bindir/{uftpd,uftpproxyd} %buildroot%_sbindir/
 %doc ReadMe.txt
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt1
+- new version 5.0 (with rpmrb script)
+
 * Thu Sep 13 2018 Vitaly Lipatov <lav@altlinux.ru> 4.9.8-alt1
 - new version 4.9.8 (with rpmrb script)
 
