@@ -12,15 +12,17 @@
 %define tmp_vztt_conf %vztmp/tmp_vztt_conf
 
 Name: vztt
-Version: 7.0.73
-Release: alt2
+Version: 7.0.76
+Release: alt1
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
 License: GPLv2
 Group: System/Configuration/Other
-# git-vsc https://src.openvz.org/scm/ovzl/vztt.git
 Url: https://openvz.org/
+Vcs: https://src.openvz.org/scm/ovzl/vztt.git
+
+Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 ExclusiveArch: x86_64
 
@@ -102,6 +104,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Fri Feb 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.76-alt1
+- 7.0.76
+
 * Wed Jan 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.73-alt2
 - add simfs template creation
 
