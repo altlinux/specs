@@ -1,26 +1,27 @@
 %define ver_major 0.3
 %define api_ver 0.1
 %def_enable introspection
+%def_enable gtk_doc
 %def_enable man
 %def_enable check
 %def_enable test
 
 Name: libgxps
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GObject based library for handling and rendering XPS documents
 Group: System/Libraries
-License: LGPLv2+
-Url: http://live.gnome.org/libgxps
+License: LGPL-2.1-or-later
+Url: https://live.gnome.org/libgxps
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires(pre): meson
-BuildRequires: gtk-doc
 BuildRequires: libgio-devel libcairo-devel libcairo-gobject-devel libfreetype-devel
 BuildRequires: libarchive-devel libjpeg-devel libtiff-devel libpng-devel liblcms2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_test:BuildRequires: libgtk+3-devel}
 %{?_enable_man:BuildRequires: xsltproc}
 
@@ -81,14 +82,15 @@ This package contains development documentation for %name
 	%{?_disable_introspection:-Ddisable-introspection=true} \
 	%{?_enable_man:-Denable-man=true} \
 	%{?_disable_test:-Denable-test=false} \
-	-Denable-gtk-doc=true
-
+	%{?_enable_gtk_doc:-Denable-gtk-doc=true}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -116,10 +118,15 @@ This package contains development documentation for %name
 %_bindir/xpstosvg
 %{?_enable_man:%_man1dir/*}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%name/
+%endif
 
 %changelog
+* Fri Feb 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Sat Jan 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
