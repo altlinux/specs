@@ -9,8 +9,8 @@
 %endif
 
 Name: blender
-Version: 2.91.2
-Release: alt2
+Version: 2.92.0
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -38,7 +38,7 @@ Patch13: 0004-do_not_use_version_number_in_system_path.patch
 
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
-Patch24: blender-2.80-alt-include-deduplication-check-skip.patch
+Patch24: blender-2.92-alt-include-deduplication-check-skip.patch
 Patch25: blender-2.80-alt-use-system-glog.patch
 Patch26: blender-2.83.1-alt-remove-python2-dependency.patch
 Patch27: blender-2.90.0-alt-embree-components.patch
@@ -70,6 +70,7 @@ BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
 BuildRequires: llvm-devel
 BuildRequires: libgomp-devel
+BuildRequires: libgmp-devel libgmpxx-devel
 
 %if_with embree
 BuildRequires: embree-devel
@@ -102,6 +103,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink 
 %add_python3_req_skip oscurart_tools.mesh
 %add_python3_req_skip oscurart_tools.object
 %add_python3_req_skip oscurart_tools.render
+%add_python3_req_skip setuptools
 
 %py3_provides BPyMesh
 %py3_provides Blender
@@ -284,6 +286,10 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Feb 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.92.0-alt1
+- Updated to upstream version 2.92.0.
+- Updated build and runtime dependencies.
+
 * Wed Jan 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.2-alt2
 - Updated runtime dependencies.
 
