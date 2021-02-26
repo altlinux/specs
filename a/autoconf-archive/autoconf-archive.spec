@@ -1,6 +1,6 @@
 Name: autoconf-archive
-Version: 2019.01.06
-Release: alt2
+Version: 2021.02.19
+Release: alt1
 Summary: The Autoconf Macro Archive
 
 Group: Development/Other
@@ -61,6 +61,10 @@ rm -rf %buildroot%_datadir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Fri Feb 26 2021 Alexey Shabalin <shaba@altlinux.org> 2021.02.19-alt1
+- 2021.02.19
+- Do not add --no-as-needed to LDFLAGS
+
 * Tue Mar 03 2020 Alexey Shabalin <shaba@altlinux.org> 2019.01.06-alt2
 - use python3 for build
 
