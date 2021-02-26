@@ -1,6 +1,6 @@
 Name: rkdeveloptool
 Version: 1.3
-Release: alt2
+Release: alt3
 
 Summary: rkdeveloptool gives you a simple way to read/write rockusb device
 
@@ -21,6 +21,7 @@ rkdeveloptool gives you a simple way to read/write rockusb device.
 
 %prep
 %setup
+subst "s|-Werror||" Makefile.am
 
 %build
 %autoreconf
@@ -38,6 +39,9 @@ install -D -m 644 %{SOURCE1} %buildroot%_udevrulesdir/99-rkdeveloptool.rules
 %_bindir/%name
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt3
+- drop -Werror
+
 * Mon Apr 06 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2
 - NMU:
 - bumped relase to override autoimports
