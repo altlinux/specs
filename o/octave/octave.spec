@@ -6,7 +6,7 @@
 %endif
 
 Name: octave
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -224,6 +224,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Fri Feb 26 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.0-alt1
+- New version.
+
 * Mon Nov 30 2020 Andrey Cherepanov <cas@altlinux.org> 6.1.0-alt1
 - New version.
 
