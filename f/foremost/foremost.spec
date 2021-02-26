@@ -1,6 +1,6 @@
 Name: foremost
 Version: 1.5.7
-Release: alt1
+Release: alt2
 
 Summary: Recover files by "carving" them from a raw disk
 
@@ -11,7 +11,11 @@ Url: http://foremost.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://foremost.sourceforge.net/pkg/%name-%version.tar
-Patch0: %name-sysconfdir.patch
+Patch0: foremost-broken-jpeg.patch
+Patch1: foremost-fix-permission-timestamp.patch
+Patch2: foremost-1.5.7-format-security.patch
+Patch3: foremost-1.5.7-gcc10.patch
+Patch10: %name-sysconfdir.patch
 
 %description
 Foremost recovers files files based on their headers, footers, and
@@ -26,7 +30,11 @@ See use case in russian: http://mydebianblog.blogspot.com/2007/01/1-foremost.htm
 
 %prep
 %setup
-%patch0 -p2
+%patch10 -p2
+%patch0
+%patch1 -p2
+%patch2 -p1
+%patch3 -p1
 
 %build
 %make_build \
@@ -51,6 +59,9 @@ install -d %buildroot{%_bindir,%_man1dir,%_sysconfdir}
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt2
+- add fixes from Fedora
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt1
 - new version 1.5.7 (with rpmrb script)
 
