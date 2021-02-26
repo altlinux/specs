@@ -1,6 +1,6 @@
 Name:     procdump
 Version:  1.1.1
-Release:  alt1
+Release:  alt2
 
 Summary:  A Linux version of the ProcDump Sysinternals tool
 
@@ -13,11 +13,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/Microsoft/ProcDump-for-Linux/archive/%version.tar.gz
 Source:   %name-%version.tar
 
-#BuildRequires:
+BuildRequires: zlib-devel
+
+# Fix for GCC 10 (Fedora 32) builds
+# https://github.com/microsoft/ProcDump-for-Linux/pull/79
+Patch0:         0001-Fix-for-build-on-GCC-10.patch
 
 Requires: gdb >= 7.7.1
-
-BuildRequires: zlib-devel
 
 %description
 ProcDump is a Linux reimagining of the classic ProcDump tool from the Sysinternals suite of tools for Windows.
@@ -25,6 +27,7 @@ ProcDump provides a convenient way for Linux developers to create core dumps of 
 
 %prep
 %setup
+%patch0 -p1
 
 #__subst "s|^INSTALLDIR=.*|INSTALLDIR=%buildroot%_bindir|g" Makefile
 #__subst "s|^MANDIR=.*|MANDIR=%buildroot%_man1dir|g" Makefile
@@ -47,6 +50,9 @@ ProcDump provides a convenient way for Linux developers to create core dumps of 
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt2
+- fix build (thanks, Fedora!)
+
 * Mon May 11 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
