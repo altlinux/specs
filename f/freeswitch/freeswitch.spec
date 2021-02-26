@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.10.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -539,6 +539,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Feb 26 2021 Anton Farygin <rider@altlinux.org> 1:1.10.5-alt3
+- fixed build with gcc-9
+
 * Sun Nov 08 2020 Anton Farygin <rider@altlinux.ru> 1:1.10.5-alt2
 - built ImageMagick support (closes: #39215)
 
