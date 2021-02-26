@@ -5,7 +5,7 @@
 
 Name: golang-github-erikstmartin-testdb
 Version: 0
-Release: alt1.git8d10e4a
+Release: alt2.git8d10e4a
 Summary: Framework for stubbing responses from Go's driver.Driver interface
 Group: Development/Other
 License: BSD-2-Clause
@@ -43,7 +43,7 @@ export GOPATH="%go_path"
 
 %golang_prepare
 
-cd .build/src/%goipath
+go mod init github.com/erikstmartin/go-testdb
 %golang_build
 
 %install
@@ -62,5 +62,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Fri Feb 26 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.git8d10e4a
+- Fixed build with golang 1.16.
+
 * Tue Jun 02 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git8d10e4a
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
