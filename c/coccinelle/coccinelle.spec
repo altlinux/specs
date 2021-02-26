@@ -3,15 +3,15 @@
 
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt8
+Release:	alt9
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
 License:	GPL-2.0-only
 Url:		http://coccinelle.lip6.fr/
+Vcs:		https://github.com/coccinelle/coccinelle.git
 
 Source:		%name-%version.tar
-Patch0:		%name-menhir-20200525.patch
 Provides:	spatch
 
 BuildRequires(pre): rpm-build-ocaml
@@ -94,7 +94,6 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1
 sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 
 %build
@@ -102,10 +101,10 @@ sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 %configure \
 	--with-python=%_bindir/python3 \
 
-make EXTLIBDIR=`ocamlc -where`/extlib
+%make_build EXTLIBDIR=`ocamlc -where`/extlib
 
 %install
-make DESTDIR=%buildroot install
+%make_build DESTDIR=%buildroot install
 
 # relocate python module
 install -d %buildroot%python3_sitelibdir
@@ -131,6 +130,17 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %global spatch %buildroot%_bindir/spatch
 %run_tests
 
+# tests/SCORE_expected.sexp should be generated with previous version
+# of coccinelle by `spatch --testall`.
+if yes | ./spatch.opt -macro_file standard.h --iso-file standard.iso --testall > log 2>&1; then
+	echo :: SCORE TEST SUCCESS
+	tail log
+else
+	echo :: SCORE TEST FAILURE $?
+	tail log
+	exit 1
+fi
+
 %pre checkinstall -p %_sbindir/sh-safely
 cd %_docdir/%name-demos-%version
 %global spatch spatch
@@ -154,6 +164,10 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Thu Feb 25 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt9
+- Update to 0e1f2b1f (2021-02-19).
+- Add score tests in %%check.
+
 * Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 1.0.8-alt8
 - added patch for build with new menhir, based on upstream commit 4bffe71
 
