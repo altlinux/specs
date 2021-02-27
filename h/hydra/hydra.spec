@@ -1,11 +1,11 @@
 Name: hydra
-Version: 9.0
+Version: 9.1
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
 Summary(ru_RU.KOI8-R): Очень быстрый сетевой взломщик с поддержкой множства сервисов
 Group: Networking/Other
-License: AGPLv3
+License: AGPL-3.0
 #Url: http://thc.org/thc-hydra/
 URL:            https://github.com/vanhauser-thc/thc-hydra
 #Source0:        https://github.com/vanhauser-thc/thc-hydra/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -138,7 +138,7 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %find_lang %name
 
 %files  -f %name.lang
-%doc CHANGES README LICENSE
+%doc CHANGES README.md LICENSE
 
 %files common
 %_bindir/%name
@@ -159,6 +159,9 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Sat Feb 27 2021 Ilya Mashkin <oddity@altlinux.ru> 9.1-alt1
+- 9.1
+
 * Mon Feb 01 2021 Ilya Mashkin <oddity@altlinux.ru> 9.0-alt1
 - 9.0
 
