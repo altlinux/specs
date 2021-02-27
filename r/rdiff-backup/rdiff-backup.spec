@@ -1,5 +1,5 @@
 Name: rdiff-backup
-Version: 1.3.3
+Version: 2.0.5
 Release: alt1
 
 Summary: Backup software
@@ -10,26 +10,15 @@ Url: http://www.nongnu.org/rdiff-backup/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://savannah.nongnu.org/download/%name/%name-%version.tar
+# Source-url: https://github.com/rdiff-backup/rdiff-backup/archive/v%version.tar.gz
+Source: %name-%version.tar
 
 # from http://wiki.rdiff-backup.org/wiki/index.php/BashCompletion
 Source1: rdiff-backup.bash_completion
 
-# docs are already installed by doc macro
-Patch1: rdiff-backup-1.2.0-dont-install-docs.patch
+BuildRequires(pre): rpm-build-python3
 
-# Workaround to build with librsync >= 1.0.0
-Patch2: rdiff-backup-1.2.8-librsync-1.0.0.patch
-
-# Upstream bug: https://savannah.nongnu.org/bugs/?26064
-#
-Patch3: http://dev.sgu.ru/rpm/rdiff-backup--popen2.patch
-
-
-BuildPreReq: rpm-build-python
-
-# Automatically added by buildreq on Thu Mar 29 2007
-BuildRequires: python-devel python-modules-compiler
+BuildRequires: python3-module-setuptools_scm
 BuildRequires: librsync-devel >= 0.9.6
 
 %description
@@ -46,30 +35,35 @@ from the previous backup will be transmitted.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
 
 %build
-%python_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%python3_build
 
 %install
-%python_install
-# install bash_completion
-mkdir -p -m 0755 %buildroot/%_sysconfdir/bash_completion.d
-install -m 0644 %SOURCE1 %buildroot/%_sysconfdir/bash_completion.d/%name
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%python3_install
+rm -rfv %_docdir/%name/Windows-*.md
 
 %files
-%doc CHANGELOG README FAQ.html examples.html
+%_docdir/%name/
 %_bindir/rdiff-backup
 %_bindir/rdiff-backup-statistics
+%_bindir/rdiff-backup-delete
 %_man1dir/rdiff-backup.1*
 %_man1dir/rdiff-backup-statistics.1*
-%python_sitelibdir/rdiff_backup/
-%python_sitelibdir/*.egg-info
-%config(noreplace) %_sysconfdir/bash_completion.d/%name
+%python3_sitelibdir/rdiff_backup/
+%python3_sitelibdir/*.egg-info
+%_datadir/bash-completion/completions/%name
 
 %changelog
+* Sat Feb 27 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- build 2.0.5 (network incompatible with 1.x.x, see migration.md)
+- switch to python3
+
 * Fri Aug 14 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt1
 - new version 1.3.3 (with rpmrb script)
 - add patches from Fedora and ROSA
