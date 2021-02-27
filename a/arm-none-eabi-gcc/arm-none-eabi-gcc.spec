@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %global processor_arch arm
 %global target         %processor_arch-none-eabi
 %global gcc_ver        10.2.0
@@ -10,7 +13,7 @@
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt3
+Release: alt4
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -215,6 +218,7 @@ popd
 # put the "non-nano + picked nano bits" destdir back at the
 # One True DESTDIR location.  Even though it has bits from two different
 # builds, all the bits feel they were installed to DESTDIR
+rm -fR %buildroot
 mv %buildroot-non-nano %buildroot
 
 %endif
@@ -223,8 +227,8 @@ mv %buildroot-non-nano %buildroot
 # we don't want these as we are a cross version
 rm -r %buildroot%_infodir
 rm -r %buildroot%_man7dir
-rm -f %buildroot%_libdir/libiberty.a
 rm -f %buildroot%_libdir/libcc1* ||:
+rm -f %buildroot%_libexecdir/libcc1* ||:
 # these directories are often empty
 rmdir %buildroot%_libexecdir/%target/share/gcc-%gcc_ver ||:
 rmdir %buildroot%_libexecdir/%target/share ||:
@@ -282,6 +286,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 27 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt4
+- Fix unpackaged files (ALT bug 39740)
+
 * Mon Feb 08 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt3
 - relocate libstdc++ to c++ subpackage (Thanks Sergey Bolshakov)
 - while at it, suppress python autoreqs on *gdb.py (Thanks Sergey Bolshakov)
