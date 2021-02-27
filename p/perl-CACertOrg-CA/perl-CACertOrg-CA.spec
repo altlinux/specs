@@ -1,22 +1,27 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    CACertOrg-CA
-%define upstream_version 20110724.004
+%define upstream_version 20210114.001
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    20210114.001
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    CACert.org's CA root certificate in PEM format
 License:    GPL+ or Artistic
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/B/BD/BDFOY/%{upstream_name}-%{version}.tar.gz
+Url:        https://metacpan.org/release/%{upstream_name}
+Source0:    https://cpan.metacpan.org/modules/by-module/CACertOrg/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(File/Spec/Functions.pm)
+BuildRequires: perl(Test/More.pm)
 BuildArch:  noarch
 Source44: import.info
 
@@ -29,24 +34,27 @@ sha1 13:5C:EC:36:F4:9C:B8:E9:3B:1A:B2:70:CD:80:88:46:76:CE:8F:33
 md5 A6:1B:37:5E:39:0D:9C:36:54:EE:BD:20:31:46:1F:6B
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
-%make
+%make_build
 
 %check
-%make test
+%make_build test
 
 %install
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README.pod
+%doc Changes LICENSE META.json META.yml 
 %perl_vendor_privlib/*
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 20210114.001-alt1_1
+- update by mgaimport
+
 * Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 20210114.001-alt1
 - automated CPAN update
 
