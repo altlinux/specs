@@ -1,7 +1,7 @@
 %global soname   2
 Name: cctz
 Version: 2.3
-Release: alt1
+Release: alt2
 License: ASL 2.0
 Summary: Translating between absolute and civil times using time zone rules
 Group: Development/C++
@@ -9,7 +9,6 @@ Url: https://github.com/google/cctz
 Source0: %name-%version.tar
 # https://sources.debian.org/patches/cctz/2.2+dfsg1-1/0001-Compile-shared-lib-and-install-it.patch/
 Patch0: cctz-2.3-debian-compile-library-as-shared.patch
-Patch1: cctz-2.3-debian-use_system_zoneinfo.patch
 BuildRequires: tzdata
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -43,7 +42,6 @@ Development files for %name library.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 rm -f BUILD
@@ -70,5 +68,8 @@ LD_LIBRARY_PATH=./ ctest -V
 %_libdir/cmake/cctz
 
 %changelog
+* Sat Feb 27 2021 Anton Farygin <rider@altlinux.org> 2.3-alt2
+- run tests with tzdata, distributed with cctz
+
 * Thu Jun 20 2019 Anton Farygin <rider@altlinux.ru> 2.3-alt1
 - first build for ALT
