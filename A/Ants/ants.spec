@@ -1,5 +1,6 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: liballegro-devel
 %define oldname ants
@@ -7,9 +8,8 @@ BuildRequires: liballegro-devel
 %define _localstatedir %{_var}
 Name:           Ants
 Version:        1.4
-Release:        alt2_22
+Release:        alt2_31
 Summary:        Guide the insects safely home before they drop of the cliff
-Group:          Games/Other
 License:        Public Domain
 URL:            http://www.allegro.cc/depot/Ants
 Source0:        http://games.linux.sk/files/ants-1.4.tar.gz
@@ -18,6 +18,7 @@ Source2:        ants-level-editor.desktop
 Source3:        ants.png
 Source4:        license-info
 Patch0:         ants-1.4-fixes.patch
+BuildRequires:  gcc-c++
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -32,8 +33,8 @@ The game is presented in a 2D side view.
 
 
 %package        level-editor
+Group: Games/Other
 Summary:        Ants level editor
-Group:          Games/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    level-editor
@@ -48,7 +49,7 @@ sed -i 's/\r//g' ants.txt
 cp %{SOURCE4} .
 
 %build
-%make_build EXTRACFLAGS="$RPM_OPT_FLAGS"
+%make_build EXTRA_CFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 
 %install
 #no make install target, DIY
@@ -77,6 +78,9 @@ install -p -m 644 %{SOURCE3} \
 %{_datadir}/applications/%{oldname}-level-editor.desktop
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt2_31
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_22
 - update to new release by fcimport
 
