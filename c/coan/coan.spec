@@ -3,35 +3,24 @@ Group: Development/Other
 BuildRequires: /usr/bin/time
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
-%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		coan
 Version:	6.0.1
-Release:	alt2_20
+Release:	alt2_25
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 License:	BSD
 URL:		http://coan2.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/coan2/%{name}-%{version}.tar.gz
-
 # https://sourceforge.net/p/coan2/bugs/92/
 Patch0:         expression_parser.patch
 
 BuildRequires:  gcc-c++
-BuildRequires:	python
-# Python 2 is needed for running the test suite. From Fedora 29, the
-# python package no longer provides /usr/bin/python, and so we need
-# this extra package for the unversioned binary.
-%if 0%{fedora} >= 29
-#BuildRequires:  python-base
-%endif
-# For pod2man:
 BuildRequires:  perl-podlators
-# On Fedora 23 pod2html is included in the perl package, whereas in 24
-# and later it's split out into perl-Pod-Html.
-%if 0%{fedora} > 23
 BuildRequires:  perl-devel
-%endif
+
+# removed python2 dependencies and asked upstream to port tests to python3
+# https://sourceforge.net/p/coan2/bugs/93/
 
 # Regression on other arches with F26 mass rebuild (big endian systems)
 # Temporarily exclude them
@@ -67,6 +56,7 @@ for i in AUTHORS LICENSE.BSD README ChangeLog ; do
 done
 
 %build
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 %configure
 %make_build
 
@@ -93,6 +83,9 @@ done
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 6.0.1-alt2_25
+- update to new release by fcimport
+
 * Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt2_20
 - fixed build
 
