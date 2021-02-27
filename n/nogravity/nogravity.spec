@@ -1,13 +1,13 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           nogravity
 Version:        2.00
-Release:        alt2_29
+Release:        alt2_37
 Summary:        Space shooter in 3D
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://www.realtech-vr.com/nogravity/
 Source0:        http://downloads.sourceforge.net/%{name}/rt-%{name}-src.zip
@@ -35,9 +35,10 @@ Patch12:        0002-rlx32-Stop-using-MaxExtentableObjet.patch
 Patch13:        nogravity-2.00-stdint_h.patch
 Patch14:        nogravity--gcc6.patch
 Requires:       %{name}-data = %{version}
-BuildRequires:  libSDL_mixer-devel libopenal-devel libopenal1 libpng-devel libvorbis-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libvorbis-devel
 BuildRequires:  automake desktop-file-utils libappstream-glib
-Requires:       icon-theme-hicolor glxgears glxinfo xdriinfo
+Requires:       icon-theme-hicolor glxgears glxinfo
 Source44: import.info
 Patch33: nogravity-2.00-alt-libpng15.patch
 
@@ -76,6 +77,7 @@ popd
 
 
 %build
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 pushd src/Linux
 
 %configure --enable-sound=sdl_mixer --disable-opengl
@@ -115,6 +117,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.00-alt2_37
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_29
 - update to new release by fcimport
 
