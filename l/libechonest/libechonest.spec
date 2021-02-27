@@ -1,8 +1,9 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
@@ -11,7 +12,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 
 Name:		libechonest
 Version: 	2.3.0
-Release:	alt1_15
+Release:	alt1_17
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
@@ -61,6 +62,7 @@ Requires: libechonest-qt5 = %{version}-%{release}
 
 
 %build
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 %global _vpath_builddir %{_target_platform}
 %{fedora_v2_cmake} .. \
   -DBUILD_WITH_QT4:BOOL=ON \
@@ -122,6 +124,9 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.3.0-alt1_17
+- update to new release by fcimport
+
 * Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_15
 - regenerated to fix build
 
