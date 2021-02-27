@@ -1,6 +1,6 @@
 Group: Development/C
 %add_optflags %optflags_shared
-%define fedora 30
+%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # -*- rpm-spec -*-
@@ -13,7 +13,7 @@ Group: Development/C
 
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1_1
 License: LGPLv2+
 Source0: http://download.gnome.org/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
@@ -95,6 +95,9 @@ make check
 %endif
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.3.8-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1_1
 - update to new release by fcimport
 
