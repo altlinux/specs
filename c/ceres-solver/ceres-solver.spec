@@ -8,9 +8,9 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 Name:           ceres-solver
 Version:        2.0.0
 # Release candidate versions are messy. Give them a release of
-# e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
+# e.g. "0.1.0%%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt1_2
+Release:        alt1_4
 Summary:        A non-linear least squares minimizer
 
 License:        BSD
@@ -116,7 +116,7 @@ developing applications that use %{name}.
 
 %check
 # FIXME: Some tests fail on these arches
-%ifarch aarch64 ppc64le
+%ifarch aarch64 ppc64le s390x
 %fedora_v2_ctest || :
 %else
 %fedora_v2_ctest
@@ -142,6 +142,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_4
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2
 - update to new release by fcimport
 
