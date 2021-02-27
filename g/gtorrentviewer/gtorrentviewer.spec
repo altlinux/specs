@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_43
+Release:	alt4_45
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
 License:	GPL+
 URL:		http://gtorrentviewer.sourceforge.net/
@@ -21,7 +21,7 @@ Patch5:		GTorrentViewer-0.2b-format.patch
 Patch6:		GTorrentViewer-0.2b-missing-tracker.patch
 BuildRequires:	coreutils
 BuildRequires:	gcc
-BuildRequires:	libgtk+2-devel >= 2.4
+BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext gettext-tools
 BuildRequires:	intltool
@@ -70,6 +70,11 @@ download.
 sed -i 's,#include <curl/types.h>,,' src/main.c
 
 %build
+# This package includes its own implementation of SHA1, but with LTO
+# on it wants to use openssl's version instead, which we don't link against
+# and isn't the same as the local version
+%define _lto_cflags %{nil}
+
 %configure
 %make_build
 
@@ -89,11 +94,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 # Scriptlets replaced by File Triggers from Fedora 26 onwards
 %files
-%if 0%{?_licensedir:1}
 %doc --no-dereference COPYING
-%else
-%doc COPYING
-%endif
 %doc AUTHORS ChangeLog README
 %{_bindir}/gtorrentviewer
 %{_datadir}/GTorrentViewer
@@ -103,6 +104,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.2b-alt4_45
+- update to new release by fcimport
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_43
 - updated buildrequires
 
