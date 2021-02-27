@@ -4,7 +4,7 @@ Group: System/Base
 Summary:        AES-based encryption tool for tar/cpio and loop-aes imagemore 
 Name:           aespipe
 Version:        2.4f
-Release:        alt1_1
+Release:        alt1_3
 License:        GPLv2+
 URL:            http://loop-aes.sourceforge.net/
 Source:         http://loop-aes.sourceforge.net/aespipe/aespipe-v%{version}.tar.bz2
@@ -29,7 +29,9 @@ kernel module.
 %setup -q -n %{name}-v%{version}
 
 %build
-# Package calls CC to link
+# Package calls CC to link, and violates strict-aliasing C rules
+
+CFLAGS="$CFLAGS -fno-strict-aliasing"
 %configure LDFLAGS="${CFLAGS}"
 
 %global make_target %{nil}
@@ -59,6 +61,9 @@ install -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
 %{_bindir}/aespipe
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.4f-alt1_3
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2.4f-alt1_1
 - update to new release by fcimport
 
