@@ -1,9 +1,12 @@
 Group: Development/Tools
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atasm
 Version:        1.08
-Release:        alt1_6
+Release:        alt1_8
 Summary:        6502 cross-assembler
 
 License:        GPLv2+
@@ -19,7 +22,7 @@ Source44: import.info
 
 %description
 ATasm is a 6502 command-line cross-assembler that is compatible with the
-original Mac/65 macroassembler released by OSS software.  Code
+original Mac/65 macro-assembler released by OSS software.  Code
 development can now be performed using "modern" editors and compiles
 with lightning speed.
 
@@ -30,18 +33,18 @@ with lightning speed.
 
 %build
 pushd src
-%make_build CFLAGS="$RPM_OPT_FLAGS -DZLIB_CAPABLE -DUNIX"
+%make_build CFLAGS="%{optflags} -DZLIB_CAPABLE -DUNIX" L="%{build_ldflags} -lz"
 sed -e 's|%%DOCDIR%%|%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}|g' %{name}.1.in > %{name}.1
 popd
 
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
+mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_mandir}/man1
 
 pushd src
-install -p -m 755 %{name} $RPM_BUILD_ROOT%{_bindir}
-install -p -m 644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install -p -m 755 %{name} %{buildroot}%{_bindir}
+install -p -m 644 %{name}.1 %{buildroot}%{_mandir}/man1
 popd
 
 
@@ -58,6 +61,9 @@ popd
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.08-alt1_8
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1_6
 - update to new release by fcimport
 
