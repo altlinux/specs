@@ -39,7 +39,8 @@
 sed -E -e 's/^i586-linux-gnu$/i386-linux-gnu/' | \
 sed -E -e 's/^armh-linux-gnu$/arm-linux-gnueabihf/' | \
 sed -E -e 's/^mips64(el)?-linux-gnu$/mips64\\1-linux-gnuabi64/' | \
-sed -E -e 's/^ppc(64)?(le)?-linux-gnu$/powerpc\\1\\2-linux-gnu/')}
+sed -E -e 's/^ppc(64)?(le)?-linux-gnu$/powerpc\\1\\2-linux-gnu/' | \
+sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 # All bytecode files are now in a __pycache__ subdirectory, with a name
 # reflecting the version of the bytecode (to permit sharing of python libraries
@@ -86,7 +87,7 @@ sed -E -e 's/^ppc(64)?(le)?-linux-gnu$/powerpc\\1\\2-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.1
+Version: %{pybasever}.2
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -179,8 +180,11 @@ Patch1007: python3-sslv2-compat.patch
 # 'Trust mode': optional modules loading paths restriction
 Patch1011: python3-ignore-env-trust-security.patch
 
-#set shebang to explicit python2
+# set shebang to explicit python2
 Patch1012: python3-alt-2to3-python-version.patch
+
+# make configure to detect e2k arch
+Patch1013: python3-e2k-support.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -375,6 +379,7 @@ done
 
 %patch1011 -p2
 %patch1012 -p2
+%patch1013 -p2
 
 %ifarch %e2k
 # unsupported as of lcc 1.23.12
@@ -654,6 +659,11 @@ desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE10
 #h We want to have clean bindir
 rm -rf %buildroot%_bindir/__pycache__
 
+# Force remove nis on e2k
+%ifarch %e2k
+rm -f %buildroot%dynload_dir/nis.cpython-%pyshortver%pyabi.so
+%endif
+
 %check
 # ALT#32008:
 if head -1 %buildroot%_bindir/python3-config | fgrep -q python; then
@@ -919,12 +929,12 @@ $(pwd)/python -m test.regrtest \
 %doc Misc/README.valgrind Misc/valgrind-python.supp Misc/gdbinit
 %_bindir/python3-config
 %_bindir/python%pybasever-config
-%_bindir/python%pybasever%pyabi-config
+#_bindir/python%%pybasever%%pyabi-config
 %_libdir/libpython3.so
 %_libdir/libpython%pybasever%pyabi.so
 %_libdir/pkgconfig/python3.pc
 %_libdir/pkgconfig/python-%pybasever.pc
-%_libdir/pkgconfig/python-%pybasever%pyabi.pc
+#_libdir/pkgconfig/python-%%pybasever%%pyabi.pc
 %_libdir/pkgconfig/python-%pybasever-embed.pc
 %_libdir/pkgconfig/python3-embed.pc
 
@@ -988,6 +998,10 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Thu Feb 25 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.2-alt1
+- Updated to upstream version 3.9.2.
+- Fixed building on e2k arch.
+
 * Tue Jan 19 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.1-alt1
 - Updated to upstream version 3.9.1.
 - Removed python3-tools dependency on python3-modules-nis (Closes: #39308).
