@@ -22,8 +22,8 @@ O.U.U.O.O. O.U. U.O.O.O.O. O.U.U.O.U. U.U.O. O.U.O.O.U. O.U.U.O.U. O.U.O.O.O.U.U
 O.U.O.U.O. O.O.U.U.O.O.O.O. O.U.O.U.U.O.U.O.O. U.U.U. U.U.O. O.O.O. O.U.O.O. O.O.U.U..
 
 Name: fonts-ttf-amiri
-Version: 0.112
-Release: alt1_2
+Version: 0.113
+Release: alt1_1
 License: OFL
 
 Source0: https://github.com/alif-type/amiri/releases/download/%{version}/Amiri-%{version}.zip
@@ -161,6 +161,9 @@ fi
 %doc NEWS README README-Arabic NEWS-Arabic Documentation-Arabic.pdf
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.113-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.112-alt1_2
 - update to new release by fcimport
 
