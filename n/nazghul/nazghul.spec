@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(SDL/Surface.pm)
 # END SourceDeps(oneline)
@@ -5,12 +6,11 @@ BuildRequires: /usr/bin/desktop-file-install libSDL-devel perl(FileHandle.pm) pe
 %define _localstatedir %{_var}
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_23.20120228gitb0a402a
+Release:        alt2_29.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/nazghul/
-Group:          Games/Other
 
 # Occasionally upstream names things with an underscore.
 %global         version_us %(echo %{version} | sed -e 's/\\./_/g')
@@ -40,12 +40,12 @@ after Ultima V.
 
 
 %package -n haxima
+Group: Games/Other
 Summary:        A full-featured role-playing game for the Nazghul engine
 # The music files installed in /usr/share/nazghul/haxima/music have been
 # relicensed as CC-BY-SA (specifically version 2).   See the
 # haxima-music-license file for details. The rest of the package is GPLv2+.
 License:        GPLv2+ and CC-BY-SA
-Group:          Games/Other
 Requires:       nazghul = %{version}
 Provides:       nazghul-haxima = %{version}-%{release}
 Obsoletes:      nazghul-haxima < 0.6.0-8
@@ -63,6 +63,7 @@ You must install Nazghul in order to play Haxima.
 %patch1 -p1
 %patch2 -p1
 
+
 # clean up CVS directories left in the source tarball
 find . -depth -type d -name CVS -exec rm -rf {} \;
 
@@ -75,6 +76,7 @@ cp %SOURCE1 .
 
 
 %build
+export CFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 ./autogen.sh
 %configure
 %make_build
@@ -142,6 +144,9 @@ EOF
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.7.1-alt2_29.20120228gitb0a402a
+- update to new release by fcimport
+
 * Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_23.20120228gitb0a402a
 - update to new release by fcimport
 
