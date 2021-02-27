@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -14,6 +14,8 @@ Patch1: 47867-promptinit-typo-RPOMPT-RPROMPT.patch
 Patch2: 47868-promptinit-Fix-prompt-cleanups.patch
 # present on master branch
 Patch3: 47918-completions-for-nsenter-and-unshare.patch
+# present on master branch
+Patch4: 47323-_rpmbuild-Complete-file-arguments-after-r-b-t.patch
 
 Provides: zsh-doc = %epoch:%version
 Obsoletes: zsh-doc < %epoch:%version
@@ -39,6 +41,7 @@ mechanism, and a lots of other features.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 rm config.guess config.sub
 
 %build
@@ -122,6 +125,10 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Sat Feb 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1:5.8-alt2
+- Applied zsh-workers/47323 to fix Completion/Redhat/Command/_rpm.
+- /etc/zlogout now only clears the screen on Linux VTs.
+
 * Sun Feb 07 2021 Arseny Maslennikov <arseny@altlinux.org> 1:5.8-alt1
 - 5.6.2 -> 5.8.
 - Applied posted patches:
