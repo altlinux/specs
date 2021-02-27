@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           scorchwentbonkers
 Version:        1.3
-Release:        alt1_12
+Release:        alt1_16
 Summary:        Realtime remake of Scorched Earth
 License:        zlib
 URL:            http://wasyl.eu/games/scorch-went-bonkers.html
@@ -18,6 +18,7 @@ Patch0:         %{name}-no-fmod.patch
 Patch1:         %{name}-support-16bpp.patch
 Patch2:         %{name}-unixify.patch
 Patch3:         %{name}-gcc6.patch
+Patch4:         %{name}-gcc11.patch
 BuildRequires:  gcc-c++
 BuildRequires:  liballegro-devel liballegro-devel dumb-devel libAllegroOGG-devel 
 BuildRequires:  libGLU-devel desktop-file-utils libappstream-glib
@@ -38,10 +39,12 @@ for controlling your tank. The game is real-time instead of turn based.
 %patch1 -p1 -z .16bpp
 %patch2 -p1 -z .unix
 %patch3 -p1
+%patch4 -p1
 mv src/menu/Splashscreen.h src/menu/SplashScreen.h
-%add_optflags -DALLEGRO_NO_FIX_ALIASES
+
 
 %build
+%add_optflags -DALLEGRO_NO_FIX_ALIASES
 %make_build PREFIX=%{_prefix} OPTFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 
 
@@ -69,6 +72,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.3-alt1_16
+- update to new release by fcimport
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_12
 - fixed build
 
