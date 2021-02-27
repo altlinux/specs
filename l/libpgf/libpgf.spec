@@ -7,7 +7,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libpgf
 Version:        6.14.12
-Release:        alt1_10
+Release:        alt1_17
 Summary:        PGF (Progressive Graphics File) library
 
 License:        LGPLv2+
@@ -59,7 +59,7 @@ sh autogen.sh
 # commit 52c998909401f404f1c7029b537ec900f3f780d0 doesn't say why, but
 # I *think* it's related to digikam -- rex
 export CFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
-export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
+export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP -std=c++14"
 
 %configure --disable-static
 
@@ -89,6 +89,9 @@ rm -fv %{buildroot}%{_libdir}/libpgf.la
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 6.14.12-alt1_17
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_10
 - update to new release by fcimport
 
