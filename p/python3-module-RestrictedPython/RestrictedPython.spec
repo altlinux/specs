@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
+Version: 5.1
 Release: alt1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
@@ -75,6 +75,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 28 2021 Nikolai Kostrigin <nickel@altlinux.org> 5.1-alt1
+- 5.0 -> 5.1
+
 * Thu Jan 16 2020 Nikolai Kostrigin <nickel@altlinux.org> 5.0-alt1
 - NMU: 4.0 -> 5.0
 - Remove python2 module build
