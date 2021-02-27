@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ openmpi-devel
+# END SourceDeps(oneline)
 BuildRequires: libgomp-devel /proc
 Group: Development/C
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libimagequant
-Version:        2.13.1
+Version:        2.14.0
 Release:        alt1_1
 Summary:        Palette quantization library
 
@@ -14,6 +17,8 @@ Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 # Fix shared library permissions
 Patch0:         libimagequant_solibperm.patch
+# Mark additional variable as shared in omp for loop
+Patch1:         libimagequant_omp.patch
 
 BuildRequires:  gcc
 Source44: import.info
@@ -36,6 +41,7 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 
 
@@ -66,6 +72,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.a
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.14.0-alt1_1
+- update to new release by fcimport
+
 * Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 2.13.1-alt1_1
 - update to new release by fcimport
 
