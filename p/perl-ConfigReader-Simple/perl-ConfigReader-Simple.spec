@@ -5,19 +5,19 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    ConfigReader-Simple
-%define upstream_version 1.293
+%define upstream_version 1.294
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.294
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Read simple configuration file formats
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/B/BD/BDFOY/%{upstream_name}-%{version}.tar.gz
+Url:        https://metacpan.org/release/%{upstream_name}
+Source0:    https://cpan.metacpan.org/modules/by-module/ConfigReader/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -51,11 +51,11 @@ The configuration file format
     line, including any other whitespace.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
-%make
+%make_build
 
 %check
 make test
@@ -64,10 +64,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml eg examples README.pod
+%doc Changes LICENSE META.json META.yml  eg examples
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.294-alt1_1
+- update by mgaimport
+
 * Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 1.294-alt1
 - automated CPAN update
 
