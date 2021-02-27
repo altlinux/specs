@@ -1,25 +1,27 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Math/Complex.pm) perl(Math/Trig.pm) perl(Module/Signature.pm) perl-podlators
+BuildRequires: perl(Module/Signature.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Math-Matrix
-%define upstream_version 0.92
+%define upstream_version 0.94
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.94
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Matrix data type (transpose, multiply etc)
 License:    GPL or Artistic
 Group:      Development/Perl
-Source0:    http://www.cpan.org/authors/id/P/PJ/PJACKLAM/%{upstream_name}-%{version}.tar.gz
+Source0:    https://cpan.metacpan.org/modules/by-module/Math/%{upstream_name}-%{upstream_version}.tar.gz
 Url:        https://metacpan.org/release/%{upstream_name}
 
+BuildRequires: perl(Carp.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(Math/Trig.pm)
 BuildRequires: perl(Scalar/Util.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl-devel
@@ -30,7 +32,7 @@ Source44: import.info
 The following methods are available: concat, transpose, etc.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -43,10 +45,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README SIGNATURE README.md
+%doc Changes META.json META.yml  README SIGNATURE
 %perl_vendor_privlib/*
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.94-alt1_1
+- update by mgaimport
+
 * Fri Jan 15 2021 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
 - automated CPAN update
 
