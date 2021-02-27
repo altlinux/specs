@@ -4,12 +4,13 @@ Group: Sciences/Mathematics
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-generic-compat
 # END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
 %define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           armadillo
-Version:        10.1.2
-Release:        alt1_1
+Version:        10.2.0
+Release:        alt1_2
 Summary:        Fast C++ matrix library with syntax similar to MATLAB and Octave
 
 License:        ASL 2.0
@@ -139,6 +140,9 @@ make -C "%{_vpath_builddir}"
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 10.2.0-alt1_2
+- update to new release by fcimport
+
 * Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 10.1.2-alt1_1
 - new version
 
