@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/doxygen
 
 Name:          liblscp
 Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
-Version:       0.9.0
+Version:       0.9.1
 Release:       alt1_1
 License:       GPLv2
 Group:         System/Libraries
@@ -69,6 +69,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt1_1
+- update by mgaimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_1
 - update by mgaimport
 
