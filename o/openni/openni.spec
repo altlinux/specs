@@ -1,5 +1,4 @@
 Group: System/Libraries
-BuildRequires: python-modules-xml python-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit 1e9524ffd759841789dadb4ca19fb5d4ac5820e7
@@ -17,7 +16,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt2_21
+Release:        alt2_23
 Summary:        Library for human-machine Natural Interaction
 
 License:        ASL 2.0 and BSD
@@ -44,11 +43,13 @@ Patch8:         openni-freeglut.patch
 # https://github.com/OpenNI/OpenNI/commit/ca99f6181234c682bba42a6ba988cc10cee894d7
 Patch9:         openni-ansi.patch
 
+Patch10:        python3.patch
+
 ExclusiveArch:  %{ix86} x86_64 %{arm}
 
 BuildRequires:  gcc-c++
 BuildRequires:  libfreeglut-devel, tinyxml-devel, libjpeg-devel, dos2unix, libusb-devel
-BuildRequires:  python, doxygen graphviz libgraphviz
+BuildRequires:  python3, doxygen graphviz libgraphviz
 Source44: import.info
 Patch33: openni-1.5.7.10-alt-armh.patch
 
@@ -116,6 +117,8 @@ The %{name}-examples package contains example programs for OpenNI.
 %patch7 -p1 -b .rename-equivalent-for-gcc6
 %patch8 -p0 -b .freeglut
 %patch9 -p1 -b .ansi
+dos2unix Platform/Linux/CreateRedist/Redist_OpenNi.py
+%patch10 -p1 -b python3
 rm -rf Source/External
 rm -rf Platform/Linux/Build/Prerequisites/*
 find Samples -name GL -prune -exec rm -rf {} \;
@@ -126,12 +129,11 @@ for ext in c cpp; do
     sed -i -e 's|#define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"|#define SAMPLE_XML_PATH "%{_sysconfdir}/%{name}/SamplesConfig.xml"|' {} \;
 done
 
-sed -i 's|python|python2|' Platform/Linux/CreateRedist/RedistMaker
+sed -i 's|python|python3|' Platform/Linux/CreateRedist/RedistMaker
 sed -i 's|if (os.path.exists("/usr/bin/gmcs"))|if (0)|' Platform/Linux/CreateRedist/Redist_OpenNi.py
 
 dos2unix README
 dos2unix LICENSE
-
 %patch33 -p1
 
 %build
@@ -240,6 +242,9 @@ fi
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.5.7.10-alt2_23
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_21
 - update to new release by fcimport
 
