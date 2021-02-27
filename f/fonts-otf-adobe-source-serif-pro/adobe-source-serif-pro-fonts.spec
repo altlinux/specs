@@ -2,18 +2,18 @@ Group: System/Fonts/True type
 %define oldname adobe-source-serif-pro-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname source-serif-pro
+%global fontname source-serif
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-adobe-source-serif-pro
-Version:        3.001
+Version:        4.004
 Release:        alt1_1
-Summary:        A set of OpenType fonts designed to complement Source Sans Pro
+Summary:        Typeface for setting text in many sizes, weights, and languages
 
 License:        OFL
-URL:            https://github.com/adobe-fonts/source-serif-pro
-Source0:        https://github.com/adobe-fonts/source-serif-pro/archive/%{version}R.tar.gz##/%{oldname}-%{version}.tar.gz
-Source1:        %{oldname}-fontconfig.conf
+URL:            https://github.com/adobe-fonts/source-serif
+Source0:        https://github.com/adobe-fonts/source-serif/archive/%{version}R.tar.gz#/%{oldname}-%{version}.tar.gz
+Source1:        %{fontname}.fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
@@ -22,11 +22,10 @@ BuildRequires:  libappstream-glib
 Source44: import.info
 
 %description
-Source Serif Pro is a set of OpenType fonts to complement the Source Sans Pro
-family.
+Source Serif is an open-source typeface to complement the Source Sans family.
 
 %prep
-%setup -q -n source-serif-pro-%{version}R
+%setup -q -n source-serif-%{version}R
 sed -i 's/\r//' LICENSE.md
 
 %build
@@ -96,6 +95,9 @@ appstream-util --nonet validate-relax \
 %doc --no-dereference LICENSE.md
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 4.004-alt1_1
+- update to new release by fcimport
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_1
 - update to new release by fcimport
 
