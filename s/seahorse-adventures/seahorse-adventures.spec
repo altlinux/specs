@@ -1,24 +1,41 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           seahorse-adventures
-Version:        1.1
-Release:        alt1_1
-Summary:        Help barbie the seahorse float on bubbles to the moon
-License:        GPL+
-URL:            http://www.imitationpickles.org/barbie/
-Source0:        http://www.imitationpickles.org/barbie/files/barbie-%{version}.tgz
-Source1:        %{name}.desktop
-Source2:        %{name}.appdata.xml
-Patch0:         seahorse-adventures-1.0-symlink.patch
-Patch1:         seahorse-adventures-1.0-build.patch
-BuildRequires:  desktop-file-utils libappstream-glib
-BuildArch:      noarch
-Requires:       icon-theme-hicolor python-module-pygame fonts-ttf-dejavu
+Name: seahorse-adventures
+Summary: Help barbie the seahorse float on bubbles to the moon
+License: GPLv2+
+
+Version: 1.2
+Release: alt1_4
+
+URL: http://www.imitationpickles.org/barbie/
+
+%global git_tag release-%{version}
+Source0: https://github.com/dulsi/seahorse-adventures/archive/%{git_tag}/%{name}-%{git_tag}.tar.gz
+Source1: %{name}.desktop
+Source2: %{name}.appdata.xml
+
+Patch0: seahorse-adventures-1.2--symlink.patch
+Patch1: seahorse-adventures-1.2--build.patch
+
+BuildArch: noarch
+
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+
+Requires: icon-theme-hicolor
+Requires: python3-module-pygame
+
+%global fontlist font(bitstreamverasans)
+BuildRequires: fontconfig
+BuildRequires: fonts-ttf-vera
+Requires: fonts-ttf-vera
 Source44: import.info
+
 
 %description
 Help barbie the seahorse float on bubbles to the moon. This is a retro-side
@@ -27,12 +44,14 @@ soundtrack, graphics, and 15 levels!
 
 
 %prep
-%setup -q -n barbie-%{version}
+%setup -q -n %{name}-%{git_tag}
 %patch0 -p1
 %patch1 -p1
-sed -i 's:/usr/bin/python:/usr/bin/python2:' leveledit.py tileedit.py
-sed -i 's:/usr/bin/env python:/usr/bin/python2:' run_game.py
-rm data/themes/*/Vera.ttf
+
+sed \
+	-e 's|#![ ]*/usr/bin/python|#!%{_bindir}/python3|' \
+	-e 's|#![ ]*/usr/bin/env python|#!%{_bindir}/python3|' \
+	-i create-upload.py leveledit.py run_game.py tileedit.py
 
 
 %build
@@ -40,34 +59,34 @@ rm data/themes/*/Vera.ttf
 
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -a data lib leveledit.py run_game.py tileedit.py \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}
-ln -s ../../../../fonts/ttf/dejavu/DejaVuSans.ttf \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/data/themes/default/Vera.ttf
-ln -s ../../../../fonts/ttf/dejavu/DejaVuSans.ttf \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/data/themes/gray/Vera.ttf
+install -m 755 -d %{buildroot}%{_datadir}/%{name}
+install -m 755 -p leveledit.py run_game.py tileedit.py %{buildroot}%{_datadir}/%{name}/
+cp -a data/ lib/ %{buildroot}%{_datadir}/%{name}
 
-chmod +x $RPM_BUILD_ROOT%{_datadir}/%{name}/run_game.py
-ln -s ../share/%{name}/run_game.py $RPM_BUILD_ROOT%{_bindir}/%{name}
+VERA_PATH="$(fc-match -f "%%{file}" "Bitstream Vera Sans")"
+for FONT_FILE in $(find %{buildroot}%{_datadir}/%{name}/ -name 'Vera.ttf'); do
+	ln -sf "${VERA_PATH}" "${FONT_FILE}"
+done
 
-# below is the desktop file and icon stuff.
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
-install -p -m 644 icon32.png \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
-install -p -m 644 icon64.png \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-install -p -m 644 icon128.png \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
-appstream-util validate-relax --nonet \
-  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
+install -m 755 -d %{buildroot}%{_bindir}
+ln -s %{_datadir}/%{name}/run_game.py %{buildroot}%{_bindir}/%{name}
+
+install -m 755 -d %{buildroot}%{_datadir}/applications
+install -m 644 -p %{SOURCE1} %{buildroot}%{_datadir}/applications/%{name}.desktop
+
+install -m 755 -d %{buildroot}%{_metainfodir}
+install -m 644 -p %{SOURCE2} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
+
+for ICON_SIZE in 32 64 128; do
+	ICON_DIR="%{buildroot}%{_datadir}/icons/hicolor/${ICON_SIZE}x${ICON_SIZE}/apps"
+	install -m 755 -d "${ICON_DIR}"
+	install -m 644 -p "icon${ICON_SIZE}.png" "${ICON_DIR}/%{name}.png"
+done
+
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 
 %files
@@ -75,12 +94,15 @@ appstream-util validate-relax --nonet \
 %doc --no-dereference LICENSE.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_metainfodir}/%{name}.appdata.xml
 
 
 %changelog
+* Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt1_4
+- update to new release by fcimport
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
 - update to new release by fcimport
 
