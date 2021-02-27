@@ -1,6 +1,6 @@
 Name: nickle
 Version: 2.90
-Release: alt1
+Release: alt2
 Summary: A programming language-based prototyping environment
 
 Group: Development/Other
@@ -9,7 +9,7 @@ Url: http://nickle.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://nickle.org/release/nickle-%version.tar.gz
 
-BuildRequires: libncurses-devel, libreadline-devel gcc8 bison
+BuildRequires: libncurses-devel libreadline-devel bison
 
 # for documentation
 #BuildRequires(pre): rpm-build-ruby
@@ -44,7 +44,7 @@ function interface) libraries (e.g. the Cairo interface for Nickle).
 
 %prep
 %setup
-%set_gcc_version 8
+#set_gcc_version 8
 
 %build
 
@@ -77,6 +77,9 @@ chmod a-x examples/turtle/snowflake.5c
 %_includedir/nickle
 
 %changelog
+* Sat Feb 27 2021 Ilya Mashkin <oddity@altlinux.ru> 2.90-alt2
+- rebuild with gcc10
+
 * Sat Feb 20 2021 Ilya Mashkin <oddity@altlinux.ru> 2.90-alt1
 - 2.90
 
