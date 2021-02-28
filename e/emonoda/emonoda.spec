@@ -1,7 +1,7 @@
 %define modulename emonoda
 
 Name: emonoda
-Version: 2.1.29
+Version: 2.1.32
 Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
@@ -28,7 +28,7 @@ BuildRequires: python3-module-chardet python3-module-nose python3-module-setupto
 
 BuildRequires: python3-dev python3-module-Cython 
 
-# do not requires by findreq...
+# do not require by findreq...
 Requires: python3-module-yaml
 
 %description
@@ -60,6 +60,9 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.32-alt1
+- new version 2.1.32 (with rpmrb script)
+
 * Wed Jan 15 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.29-alt1
 - new version 2.1.29 (with rpmrb script)
 
