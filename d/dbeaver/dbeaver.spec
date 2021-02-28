@@ -1,8 +1,8 @@
 %set_verify_elf_method fhs=relaxed
 
 Name: dbeaver
-Version: 7.3.5
-Release: alt3
+Version: 21.0.0
+Release: alt1
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -64,6 +64,9 @@ mvn -o package
 %config %_datadir/%name/%name.ini
 
 %changelog
+* Sun Feb 28 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.0-alt1
+- Version 21.0.0
+
 * Fri Feb 26 2021 Nazarov Denis <nenderus@altlinux.org> 7.3.5-alt3
 - Add requires on java-openjdk-headless
 
