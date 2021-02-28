@@ -1,16 +1,19 @@
+# build judy
+# wait for or drop armh: https://bugzilla.altlinux.org/show_bug.cgi?id=39152
 # TODO: pyyaml3, urllib3
 # TODO: use cmake?
 
 %def_disable cloud
 %def_with prometeus
 %def_without nfacct
+%def_without pyod
 
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 1a09f7fb810b0afd55c1659f3c135f9a122c960f
+%define release_commit 9580ed4d13125adac01483bac14a18c952afd13e
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.26.0
+Version: 1.29.3
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -143,6 +146,11 @@ for i in plugins.d/*.plugin plugins.d/*.sh charts.d/*.sh ; do
 done
 %endif
 
+# TODO: fix in the upstream
+%__subst "s|^#!/usr/bin/env python$|#!/usr/bin/env python3|" collectors/python.d.plugin/python_modules/third_party/boinc_client.py
+
+%__subst "s|^pybinary=.*|pybinary=python3|" collectors/python.d.plugin/python.d.plugin.in
+
 %build
 %autoreconf
 %configure \
@@ -255,6 +263,8 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 %exclude %_libexecdir/%name/python.d/postgres.chart.py
 %exclude %_libexecdir/%name/plugins.d/cups.plugin
+%exclude %_libexecdir/%name/python.d/anomalies.chart.py
+%exclude %_libexecdir/%name/python.d/__pycache__/anomalies.*
 
 %files web
 # override defattr for web files (see netdata.conf for web access user/group)
@@ -264,11 +274,21 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %files postgres
 %attr(0750,root,%netdatauser) %_libexecdir/%name/python.d/postgres.chart.py
 
+%if_with pyod
+%files plugin-anomalies
+%attr(0750,root,%netdatauser) %_libexecdir/%name/python.d/anomalies.chart.py
+%_libexecdir/%name/python.d/__pycache__/anomalies.*
+%endif
+
 %files plugin-cups
 %attr(0750,root,%netdatauser) %_libexecdir/%name/plugins.d/cups.plugin
 
 
 %changelog
+* Sat Feb 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1.29.3-alt1
+- new version 1.29.3 (with rpmrb script)
+- build without new anomalies plugin (wait for pyod module)
+
 * Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.26.0-alt1
 - new version 1.26.0 (with rpmrb script)
 
