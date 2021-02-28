@@ -1,18 +1,18 @@
 %define dnum 814
 
 Name: ocl-icd
-Version: 2.2.12
+Version: 2.2.14
 Release: alt1
 
 Summary: OpenCL ICD Bindings
 
 License: BSD
 Group: Development/C
-Url: https://forge.imag.fr/projects/ocl-icd/
+Url: https://github.com/OCL-dev/ocl-icd
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://forge.imag.fr/frs/download.php/%dnum/%name-%version.tar.gz
+# Source-url: https://github.com/OCL-dev/ocl-icd/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: opencl-headers
@@ -68,6 +68,10 @@ make check
 %_man7dir/*
 
 %changelog
+* Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.14-alt1
+- new version 2.2.14 (with rpmrb script)
+- change source url and url
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt1
 - new version 2.2.12 (with rpmrb script)
 
