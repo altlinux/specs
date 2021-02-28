@@ -1,10 +1,10 @@
 Name: ElectricFence
 Version: 2.2.2
-Release: alt3.qa1
+Release: alt4
 
 Summary: A debugger which detects memory allocation violations
 
-License: GPL
+License: GPLv2
 Group: Development/Other
 Url: http://perens.com/FreeSoftware/%name
 
@@ -52,6 +52,7 @@ violations.
 mkdir -p %buildroot{%_bindir,%_libdir,%_man3dir}
 %makeinstall MAN_INSTALL_DIR=%buildroot%_man3dir
 echo ".so man3/efence.3" > %buildroot%_mandir/man3/libefence.3
+rm -fv %buildroot%_libdir/libefence.a
 
 %files
 %_bindir/ef
@@ -60,6 +61,9 @@ echo ".so man3/efence.3" > %buildroot%_mandir/man3/libefence.3
 %doc README CHANGES
 
 %changelog
+* Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt4
+- fix packing
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.2-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
