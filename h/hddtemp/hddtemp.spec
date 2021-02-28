@@ -1,5 +1,5 @@
 Name: hddtemp
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 Epoch: 20110629
 
@@ -9,7 +9,7 @@ License: GPLv2+
 Group: Monitoring
 Url: https://github.com/vitlav/hddtemp
 
-# Source-url: https://github.com/vitlav/hddtemp/archive/%version.tar.gz
+# Source-url: https://github.com/vitlav/hddtemp/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 Source2: hddtemp.control
@@ -65,6 +65,9 @@ install -d %buildroot%_man8dir
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 20110629:0.4.2-alt1
+- new version 0.4.2 (with rpmrb script)
+
 * Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 20110629:0.4.1-alt1
 - new version 0.4.1 (with rpmrb script)
 
