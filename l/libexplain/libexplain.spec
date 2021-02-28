@@ -1,6 +1,6 @@
 Name: libexplain
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: Library functions to explain system call errors
 
@@ -9,9 +9,13 @@ Url: http://libexplain.sourceforge.net
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar
-Patch: libexplain-1.4-syscall.patch
+Patch0: libexplain-1.4-syscall.patch
 Patch1: libexplain-1.4-largefile.patch
 Patch2: libexplain-1.4-missed-defines.patch
+Patch3: libexplain-1.4-gcc-10.patch
+Patch4: libexplain-1.4-nettstamp-needs-types.patch
+Patch5: libexplain-1.4-sanitize-bison.patch
+Patch6: libexplain-1.4-typos.patch
 
 License: LGPLv3+
 Group: System/Libraries
@@ -35,6 +39,7 @@ includes 159 system calls and 444 ioctl requests.
 Summary: Explains system call error reports
 License: GPLv3+
 Group: Development/Tools
+Requires: libexplain = %EVR
 
 %description -n explain
 The explain command is used to decode an error return read from an
@@ -46,7 +51,7 @@ than if the program itself were to use libexplain(3).
 Summary: Development files for libexplain
 License: LGPLv3+ and GPLv3+
 Group: Development/C
-Requires: libexplain = %version-%release
+Requires: libexplain = %EVR
 Requires: pkg-config
 
 %description devel
@@ -57,29 +62,14 @@ Development files for the libexplain library.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
-# In some releases of libexplain, some tests fail in a way that does
-# not indicate a fault in libexplain. Skip those tests.  Note that
-# Makefile.in is automatically generated upstream, and if we use a
-# patch against it, the patch will usually break with each new
-# upstream release.  Instead we use sed to patch it.
-
-# t0524a fails for mock/koji builds, but succeeds for normal builds.
-# This may be due to the use of a chroot environment.  I reported this
-# problem on the libexplain mailing list on 22-JAN-2012 and 11-MAR-2012,
-# but as of 8-JUL-2012 there has been no response.  It appears to be
-# fixed as of version 1.4.
-
-# t0555a failure observed in version 1.2 on Fedora 19.  I reported this
-# problem on the libexplain mailing list on 4-JUN-2013.  It was fixed in
-# version 1.3.
-
-#%define skiptests t0524a t0555a
-#
-#for t in %skiptests
-#do
-#  sed -i "s/\([ \t]\)$t\([ \t]\)/\1/g" Makefile.in
-#done
+# hack against missed dlci_add struct
+%__subst "s|#ifdef SIOCADDDLCI|#ifdef IGNORE_SIOCADDDLCI|" libexplain/iocontrol/siocadddlci.c
+%__subst "s|#ifdef SIOCDELDLCI|#ifdef IGNORE_SIOCDELDLCI|" libexplain/iocontrol/siocdeldlci.c
 
 # Propagate %%{_pkgdocdir} into Makefile.in
 case "%_pkgdocdir" in
@@ -91,7 +81,6 @@ esac
 %build
 # formerly used --disable-static, but configure says it is unrecognized
 %configure
-
 %make_build
 
 %check
@@ -139,6 +128,9 @@ install -m 0664 README LICENSE %buildroot%_pkgdocdir
 # provides a wrapper for mktemp, not because it is used.
 
 %changelog
+* Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt2
+- fix build, add patches from Debian
+
 * Wed Mar 27 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
 - initial build for ALT Sisyphus
 
