@@ -1,41 +1,28 @@
-%define beta 15
-%define fullver %version-beta%beta
-
 Name: hddtemp
-Version: 0.3
-Release: alt15.beta%beta
+Version: 0.4
+Release: alt1
 Epoch: 20110629
 
 Summary: Hard Drive Temperature Monitoring
+
 License: GPLv2+
 Group: Monitoring
+Url: https://github.com/vitlav/hddtemp
 
-Url: http://www.guzu.net/linux/hddtemp.php
-Source0: http://download.savannah.nongnu.org/releases/hddtemp/hddtemp-%fullver.tar
-Source1: http://download.savannah.nongnu.org/releases/hddtemp/hddtemp.db
+# Source-url: https://github.com/vitlav/hddtemp/archive/%version.tar.gz
+Source: %name-%version.tar
+
 Source2: hddtemp.control
 Source3: hddtemp.init
 Source4: hddtemp.sysconfig
-Source5: hddtemp.db-alt
 Source6: hddtemp.service
 
-Patch1: hddtemp-0.3beta15-guessedvalue.patch
-Patch2: hddtemp-0.3beta15-compile.patch
-Patch3: hddtemp-fedora-user-context-type.patch
-Patch4: hddtemp-0.3beta15-doublefork.patch
-Patch5: 0001-Prevent-crash-on-numeric-unit-conversion-when-disk-i.patch
-
 %description
-hddtemp is a tool that gives you the temperature of your IDE,
+hddtemp is a tool that gives you the temperature of your IDE, NVME,
 SATA or SCSI hard drive by reading S.M.A.R.T. information.
 
 %prep
-%setup -n %name-%fullver
-%patch1 -p1
-%patch2 -p2
-%patch3 -p1
-%patch4 -p2
-%patch5 -p1
+%setup
 
 %build
 %autoreconf
@@ -43,7 +30,7 @@ SATA or SCSI hard drive by reading S.M.A.R.T. information.
 %make_build
 
 %install
-install -pDm644 %SOURCE1 %buildroot%_datadir/misc/hddtemp.db
+install -pDm644 data/hddtemp.db %buildroot%_datadir/misc/hddtemp.db
 install -pDm755 %SOURCE2 %buildroot%_controldir/hddtemp
 install -pDm755 %SOURCE3 %buildroot%_initdir/hddtemp
 install -pDm755 %SOURCE4 %buildroot%_sysconfdir/sysconfig/hddtemp
@@ -53,7 +40,6 @@ install -d %buildroot%_man8dir
 %makeinstall_std
 
 %find_lang %name
-cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 
 %pre
 %pre_control %name
@@ -79,6 +65,14 @@ cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 20110629:0.4-alt1
+- cleanup spec, build 0.4 from the new upstream (closes: #28054)
+ + use minimal database for drives not covered by defaults
+ + first try S.M.A.R.T. attribute 194, otherwise try attribute 190
+ + add support for NVME bus
+ + allow binding to a listen address that doesn't exist yet
+ + implement drives auto-detection
+
 * Tue Jun 16 2020 Vitaly Chikunov <vt@altlinux.org> 20110629:0.3-alt15.beta15
 - fix crash on numeric output if disk is not in db (closes: #38616)
 
