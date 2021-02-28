@@ -1,5 +1,5 @@
 Name: hddtemp
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 Epoch: 20110629
 
@@ -65,6 +65,9 @@ install -d %buildroot%_man8dir
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 20110629:0.4.1-alt1
+- new version 0.4.1 (with rpmrb script)
+
 * Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 20110629:0.4-alt1
 - cleanup spec, build 0.4 from the new upstream (closes: #28054)
  + use minimal database for drives not covered by defaults
