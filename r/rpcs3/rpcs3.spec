@@ -1,15 +1,15 @@
 %def_enable clang
 
-%define git_ver 11506
-%define git_commit 2b8eb8deb6e86deca9c677c8b300da3762532075
+%define git_ver 11838
+%define git_commit 8e4451d1ab2f973240a1547623a955a2fc3d6611
 
 %define glslang_commit 3ee5f2f1d3316e228916788b300d786bb574d337
-%define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
+%define asmjit_commit 723f58581afc0f4cb16ba13396ff77e425896847
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
 %define hidapi_commit 8961cf86ebc4756992a7cd65c219c743e94bab19
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
 %define xx_hash_version 0.8.0
-%define llvm_commit cb7748dfa0d615e9f5ea9f31e0ce40fe9aeac595
+%define llvm_commit 716bb292ba3b4e5c0ceff72fee911ed2b53232cf
 %define cereal_commit 60c69df968d1c72c998cd5f23ba34e2e3718a84b
 %define faudio_commit 9c7d2d1430c9dbe4e67c871dfe003b331f165412
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
@@ -18,8 +18,8 @@
 %define wolfssl_commit 39b5448601271b8d1deabde8a0d33dc64d2a94bd
 
 Name: rpcs3
-Version: 0.0.14
-Release: alt5
+Version: 0.0.15
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -60,30 +60,31 @@ Source12: SPIRV-Tools-%spirv_tools_version.tar
 Source13: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
-Patch1: %name-alt-string.patch
 
 BuildRequires: cmake >= 3.14.1
 BuildRequires: cvs
 BuildRequires: git-core
-BuildRequires: libGLEW-devel
-BuildRequires: libSDL2-devel
-BuildRequires: libalsa-devel
-BuildRequires: libavformat-devel
-BuildRequires: libcurl-devel
-BuildRequires: libevdev-devel
-BuildRequires: libfaudio-devel
-BuildRequires: libffi-devel
 BuildRequires: libflatbuffers-devel
-BuildRequires: libopenal-devel
-BuildRequires: libpng-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libswscale-devel
-BuildRequires: libudev-devel
-BuildRequires: libusb-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: libwayland-egl-devel
-BuildRequires: libwayland-server-devel
-BuildRequires: libxml2-devel
+BuildRequires: pkgconfig(FAudio)
+BuildRequires: pkgconfig(Qt5) >= 5.15.2
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(glew)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libevdev)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libswscale)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(openal)
+BuildRequires: pkgconfig(python3)
+BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(wayland-server)
 %if_enabled clang
 BuildRequires: llvm-common-clang >= 11.0.0
 BuildRequires: llvm-common-lld >= 11.0.0
@@ -91,12 +92,10 @@ BuildRequires: llvm-common-util >= 11.0.0
 %endif
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
-BuildRequires: python3-dev
 BuildRequires: python3-module-yaml
-BuildRequires: qt5-base-devel >= 5.15.2
 BuildRequires: subversion
 
-BuildPreReq: libswresample-devel
+BuildPreReq: pkgconfig(libswresample)
 BuildPreReq: python3-module-Pygments
 
 %description
@@ -106,7 +105,6 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
 
 %patch0 -p1
-%patch1 -p1
 
 %__mv -Tf ../glslang-%glslang_commit Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
@@ -181,6 +179,9 @@ export RANLIB="ranlib"
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Mar 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.15-alt1
+- Version 0.0.15
+
 * Mon Feb 15 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.14-alt5
 - Build with clang
 
