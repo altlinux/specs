@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%def_enable snapshot
 
 %define _name org.gnome.taquin
 %define __name gnome-taquin
@@ -8,14 +9,18 @@
 
 Name: gnome-games-taquin
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Gnome tiles game
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Taquin
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+%else
+Source: %__name-%version.tar
+%endif
 
 Provides:  %_name = %version-%release
 
@@ -54,6 +59,9 @@ Move tiles so that they reach their places.
 %doc AUTHORS NEWS COPYING*
 
 %changelog
+* Mon Mar 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt2
+- updated to 3.38.1-6-gd23660c (fixed build with vala-0.50.4)
+
 * Sat Oct 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
