@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt16
+Release: alt17
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -105,6 +105,10 @@ make -k check
 %endif
 
 %changelog
+* Wed Feb 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.26-alt17
+- Removed weak magic for Infocom game data (to fix detection of
+  zstd-compressed files).
+
 * Wed Dec 02 2020 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt16
 - Fixed build with gcc 10.x.
 
