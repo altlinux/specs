@@ -2,11 +2,11 @@
 
 Name: bird
 Version: 1.6.8
-Release: alt2
+Release: alt3
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
-License: GPL
+License: GPLv2
 URL: http://bird.network.cz
 
 # Cloned from git://git.nic.cz/bird.git
@@ -124,6 +124,10 @@ install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 %_sbindir/%{name}cl6
 
 %changelog
+* Mon Mar 01 2021 Anton Farygin <rider@altlinux.org> 1.6.8-alt3
+- added patch from upstream to fix compilation with GCC 10
+- fixed information about license of the package according to SPDX
+
 * Fri Jun 26 2020 Slava Aseev <ptrnine@altlinux.org> 1.6.8-alt2
 - fixed bad header length test in OSPF (adapted from bird2)
 
