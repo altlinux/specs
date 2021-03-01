@@ -4,14 +4,14 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.26.8
+Version: 1.28.2
 Release: alt1
 
 Summary: QMI modem protocol helper library
 License: LGPLv2+
 Group: System/Libraries
-URL: https://cgit.freedesktop.org/libqmi
-Vcs: git://anongit.freedesktop.org/libqmi
+URL: https://gitlab.freedesktop.org/mobile-broadband/libqmi
+Vcs: https://gitlab.freedesktop.org/mobile-broadband/libqmi.git
 Source: %name-%version.tar
 
 Patch: %_name-%version-%release.patch
@@ -19,9 +19,10 @@ Patch: %_name-%version-%release.patch
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: libmbim-glib-devel >= 1.18.0
 BuildRequires: libgudev-devel
+BuildRequires: libqrtr-glib-devel
 BuildRequires: python-modules-json
-BuildRequires: autoconf-archive
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+BuildRequires: autoconf-archive >= 2021.02.19-alt1
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libqrtr-glib-gir-devel}
 BuildRequires: gtk-doc help2man
 
 %define _unpackaged_files_terminate_build 1
@@ -94,9 +95,10 @@ touch README ChangeLog
 	--enable-mbim-qmux \
 	--enable-firmware-update \
 	--with-udev \
+	--enable-qrtr \
 	%{subst_enable introspection} \
 	--enable-gtk-doc \
-	--enable-more-warnings=%more_warnings
+	--enable-compile-warnings=%more_warnings
 %make_build
 
 # Fix names in the man pages
@@ -136,6 +138,19 @@ make check
 
 
 %changelog
+* Mon Mar 01 2021 Mikhail Efremov <sem@altlinux.org> 1.28.2-alt1
+- Fixed build on armh.
+- BR: requre autoconf-archive >= 2021.02.19-alt1.
+- Dropped workaround for --no-as-needed.
+- Updated to 1.28.2.
+
+* Thu Feb 25 2021 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt1
+- Dropped --no-as-needed from LD_FLAGS.
+- Fixed configure option.
+- Updated Vcs and Url tags.
+- Enabled libqrtr-glib support.
+- Updated to 1.28.0.
+
 * Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 1.26.8-alt1
 - Updated to 1.26.8.
 

@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.14.10
+Version: 1.16.0
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -25,7 +25,7 @@ Requires: dbus >= %dbus_version
 BuildRequires: autoconf-archive
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
-%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.24.0}
+%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.28.0}
 %{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.18.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
@@ -37,6 +37,7 @@ BuildRequires: gtk-doc
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dbus}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python3-module-dbus}}
 
 # Because of starting from the init script
 Conflicts: NetworkManager < 0.9.8.9
@@ -131,6 +132,7 @@ Requires: libmm-glib-devel = %version-%release
 %define more_warnings yes
 %endif
 %autoreconf
+sed -i 's/ax_compiler_flags_as_needed_option="-Wl,--no-as-needed"/ax_compiler_flags_as_needed_option=""/' configure
 %configure \
 	--disable-static \
 	--with-udev-base-dir=/lib/udev \
@@ -145,7 +147,7 @@ Requires: libmm-glib-devel = %version-%release
 	%{subst_enable vala} \
 	--enable-gtk-doc \
 	--disable-silent-rules \
-	--enable-more-warnings=%more_warnings
+	--enable-compile-warnings=%more_warnings
 
 %make_build
 
@@ -233,6 +235,12 @@ fi
 %endif
 
 %changelog
+* Wed Feb 24 2021 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
+- Dropped --no-as-needed from LD_FLAGS.
+- Added python3 modules to BR for tests.
+- Fixed configure option.
+- Updated to 1.16.0.
+
 * Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 1.14.10-alt1
 - Updated to 1.14.10.
 
