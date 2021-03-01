@@ -1,26 +1,33 @@
 Name: gerbv
-Version: 2.6.2
-Release: alt2
+Version: 2.7.0
+Release: alt1
 
 Summary: Gerber file viewer
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Url: http://gerbv.sourceforge.net
+Url: http://gerbv.gpleda.org/
 License: GPL
 Group: Graphics
 
-# Source-git: http://git.geda-project.org/gerbv/
+# Source-url: http://downloads.sourceforge.net/gerbv/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch2: %name-2.1.0-alt-DSO.patch
+
+Patch1: %name-2.7.0-Fix-Werror-format-security-problem.patch
+Patch3: gerbv-2.7.0-gcc10.patch
 
 # Automatically added by buildreq on Wed Nov 12 2008
-BuildRequires: ImageMagick desktop-file-utils gcc-c++ libgtk+2-devel libpng-devel
-
+BuildRequires: desktop-file-utils gcc-c++ libgtk+2-devel libpng-devel
 
 %description
-Gerbv is a viewer for Gerber files. Gerber files are generated from PCB CAD
-system and sent to PCB manufacturers as basis for the manufacturing process.
+Gerber Viewer (gerbv) is a viewer for Gerber files. Gerber files
+are generated from PCB CAD system and sent to PCB manufacturers
+as basis for the manufacturing process. The standard supported
+by gerbv is RS-274X.
+
+gerbv also supports drill files. The format supported are known
+under names as NC-drill or Excellon. The format is a bit undefined
+and different EDA-vendors implement it different.
 
 %package examples
 Summary: Gerber file examples for gerbv
@@ -50,7 +57,8 @@ Header files for lib%name library.
 
 %prep
 %setup
-#patch2 -p2
+%patch1 -p1
+%patch3 -p2
 
 %build
 %autoreconf
@@ -94,6 +102,9 @@ rm -f %buildroot%_desktopdir/*.cache
 %_datadir/gerbv/example/*
 
 %changelog
+* Mon Mar 01 2021 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
+- new version 2.7.0 (with rpmrb script)
+
 * Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt2
 - make examples subpackage noarch
 
