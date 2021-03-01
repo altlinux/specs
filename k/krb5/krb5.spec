@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: krb5
-Version: 1.18.3
+Version: 1.19.1
 Release: alt1
 
 %if_without bootstrap
@@ -40,7 +40,6 @@ Patch60: krb5-1.18-fedora-pam.patch
 Patch63: krb5-1.18-fedora-selinux-label.patch
 Patch86: krb5-1.9-fedora-debuginfo.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
-Patch134: krb5-1.11-fedora-kpasswdtest.patch
 
 # alt patches:
 Patch200: krb5-1.18-alt-default_keytab_group.patch
@@ -67,7 +66,6 @@ BuildRequires: texlive-latex-base texlive-base-bin texlive-latex-recommended lat
 %if_enabled check
 # for tests
 BuildRequires: libverto-libev python-modules gcc-c++
-BuildRequires: nss_wrapper socket_wrapper
 # dejagnu tests disabled
 # BuildRequires: dejagnu tcl-devel
 %endif
@@ -206,7 +204,6 @@ MIT Kerberos.
 # Apply when the hard-wired or configured default location is
 # DIR:/run/user/%%{uid}/krb5cc.
 %patch129 -p1 -b .run_user_0
-%patch134 -p1 -b .kpasswdtest
 
 %patch200 -p2 -b .default_keytab_group
 
@@ -296,23 +293,12 @@ done
 %__cc -fPIC -shared -o noport.so -Wall -Wextra %SOURCE100
 
 %check
-mkdir nss_wrapper
-
-# Set things up to use the test wrappers.
-export NSS_WRAPPER_HOSTNAME=test.example.com
-export NSS_WRAPPER_HOSTS="$PWD/nss_wrapper/fakehosts"
-echo "127.0.0.1 $NSS_WRAPPER_HOSTNAME localhost" > $NSS_WRAPPER_HOSTS
-export NOPORT='53,111'
-export SOCKET_WRAPPER_DIR="$PWD/sockets" ; mkdir -p $SOCKET_WRAPPER_DIR
-export LD_PRELOAD="$PWD/noport.so:libnss_wrapper.so:libsocket_wrapper.so"
-
 # NOTE(iv@): this test hangs for too long, look at this later
 echo > src/tests/t_iprop.py
 
 # skip this test, because getaddrinfo with flag AI_ADDRCONFIG return error in hasher
 echo > src/tests/t_kprop.py
 
-make -C src runenv.py
 make -C src check TMPDIR=%_tmppath OFFLINE=yes PYTESTFLAGS="-v"
 
 %install
@@ -542,6 +528,12 @@ fi
 # {{{ changelog
 
 %changelog
+* Fri Feb 19 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19.1-alt1
+- 1.19.1
+
+* Mon Feb 08 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19-alt1
+- 1.19
+
 * Thu Nov 19 2020 Ivan A. Melnikov <iv@altlinux.org> 1.18.3-alt1
 - 1.18.3 (Fixes: CVE-2020-28196)
 
