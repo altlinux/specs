@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define ver_major 3.38
@@ -6,7 +6,7 @@
 
 Name: dconf-editor
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: dconf confuguration editor
 Group: Graphical desktop/GNOME
@@ -67,6 +67,9 @@ This package provides graphical dconf configuration editor.
 %doc README*
 
 %changelog
+* Mon Mar 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
+- updated to 3.38.2-9-g49d445f9 (fixed build with vala-0.50.4)
+
 * Sun Nov 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
