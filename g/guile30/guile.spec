@@ -1,5 +1,5 @@
 Name: guile30
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: A GNU implementation of Scheme
@@ -79,6 +79,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Mon Mar 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.5-alt1
+- 3.0.5 released
+
 * Wed Sep 09 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.4-alt1
 - 3.0.4 released
 
