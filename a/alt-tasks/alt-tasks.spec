@@ -1,6 +1,6 @@
 Name: alt-tasks
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Utility for observing ALT Linux tasks
 License: GPLv3
@@ -38,6 +38,9 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Mar 01 2021 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt2
+- Fixed build after new release of the "golang" package ("1.16-alt1").
+
 * Fri Jul 03 2020 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt1
 - Ability to format the output according to a given format string;
 - Ability to choose between verbose and not verbose output mode.
