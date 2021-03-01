@@ -3,7 +3,7 @@
 
 Name: mate-text-editor
 Version: 1.24.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Text editor for the MATE desktop
 License: GPLv3+
@@ -17,6 +17,7 @@ Obsoletes: %name-data
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
+BuildPreReq: rpm-build-python3
 BuildRequires: mate-common gtk-doc iso-codes-devel libSM-devel libenchant-devel libgtksourceview3-devel
 BuildRequires: libgtksourceview3-gir-devel libpeas-devel libxml2-devel yelp-tools python3-devel
 
@@ -37,6 +38,8 @@ Group: Development/Other
 
 %description devel
 Development files for pluma
+
+%add_python3_path %_libdir/%rname/plugins
 
 %prep
 %setup -q -n %rname-%version
@@ -79,6 +82,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Pluma-1.0.gir
 
 %changelog
+* Mon Mar 01 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt2
+- rebuild with python 3 (closes: #39730)
+
 * Wed Aug 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 
