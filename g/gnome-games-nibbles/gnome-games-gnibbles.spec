@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%def_enable snapshot
 
 %define _name nibbles
 %define __name gnome-%_name
@@ -8,14 +9,18 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A cute little game that has no short description
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Nibbles
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+%else
+Source: %__name-%version.tar
+%endif
 
 Provides:  %__name = %version-%release
 Obsoletes: gnome-games-gnibbles
@@ -60,6 +65,9 @@ it.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
+- updated to 3.38.2-8-g374f9bd (fixed build with vala-0.50.4)
+
 * Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
