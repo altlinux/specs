@@ -1,18 +1,18 @@
-%def_disable snapshot
-
+%def_enable snapshot
+%define _libexecdir %_prefix/libexec
 %define api_ver 3.0
 
 %def_with bdb
 %def_enable ical_glib
 %def_enable introspection
 %def_enable vala
-%def_enable check
+%def_disable check
 %def_enable docs
 %def_with cxx
 %def_with system_tzdata
 
 Name: libical
-Version: 3.0.8
+Version: 3.0.9
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %endif
 Patch: %name-1.0.1-alt-libdir.patch
 
-%define tzdata_ver 2019c
+%define tzdata_ver 2020d
 %define glib_ver 2.38
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
@@ -126,6 +126,7 @@ library.
 %patch -p1
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 	-DSHARED_ONLY:BOOL=ON \
 	%{?_with_cxx:-DWITH_CXX_BINDINGS:BOOL=ON} \
@@ -144,7 +145,6 @@ library.
 LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 %files
-%doc TODO TEST THANKS
 %_libdir/libical.so.*
 %_libdir/libicalss.so.*
 %_libdir/libicalvcal.so.*
@@ -152,9 +152,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %_libdir/libical_cxx.so.*
 %_libdir/libicalss_cxx.so.*
 %endif
+%doc TODO TEST THANKS ReleaseNotes.txt ReadMe.txt
 
 %files devel
-%doc doc/UsingLibical*
 %_includedir/%name/
 %_libdir/libical.so
 %_libdir/libicalss.so
@@ -165,11 +165,13 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %endif
 %_pkgconfigdir/%name.pc
 %_libdir/cmake/LibIcal/
+%doc doc/UsingLibical*
 
 %files -n %name-glib
 %_libdir/%name-glib.so.*
 
 %files -n %name-glib-devel
+%_libexecdir/%name/ical-glib-src-generator
 %_includedir/%name-glib/
 %_libdir/%name-glib.so
 %_pkgconfigdir/%name-glib.pc
@@ -196,6 +198,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Sat Feb 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt1
+- updated to v3.0.9-8-g66b2fe2d
+
 * Sun Mar 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
 - 3.0.8
 
