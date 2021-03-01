@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -7,14 +9,18 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Gnome version of Othello (Reversi) board game
 Group: Games/Boards
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Iagno
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 Provides:  %_name = %version-%release
 
@@ -54,6 +60,9 @@ Othello.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt2
+- updated to 3.38.1-16-gd7b2ed1 (fixed build with vala-0.50.4)
+
 * Sat Oct 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
