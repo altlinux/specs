@@ -1,7 +1,7 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 3.4.3
+Version: 3.5.2
 Release: alt1
 Epoch: 1
 %K5init
@@ -41,7 +41,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DOpenGL_GL_PREFERENCE="GLVND" \
+    #
 
 %install
 %K5install
@@ -67,6 +69,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Mon Mar 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:3.5.2-alt1
+- new version
+
 * Thu Sep 03 2020 Sergey V Turchin <zerg@altlinux.org> 1:3.4.3-alt1
 - new version
 
