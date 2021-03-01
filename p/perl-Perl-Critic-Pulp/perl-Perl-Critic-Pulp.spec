@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm) perl(Digest/MD5.pm) perl(Encode.pm) perl(Fcntl.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-Critic-Pulp
-Version:        98
+Version:        99
 Release:        alt1
 Summary:        Some add-on perlcritic policies
 License:        GPLv3+
@@ -113,6 +113,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 01 2021 Igor Vlasenko <viy@altlinux.org> 99-alt1
+- automated CPAN update
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 98-alt1
 - automated CPAN update
 
