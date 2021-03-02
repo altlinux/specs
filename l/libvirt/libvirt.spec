@@ -170,7 +170,7 @@
 
 Name: libvirt
 Version: 7.0.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1342,6 +1342,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Feb 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.0-alt2
+- add more Kunpeng920 features and tests
+
 * Mon Jan 18 2021 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
