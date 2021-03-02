@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20210219.8a3aaa6
+%define module_version	0.8.1+git20210222.abaca2f
 %define module_release	alt1
 
 %define flavour		std-def
@@ -188,6 +188,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Tue Mar 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210222.abaca2f-alt1
+- Updated to commit abaca2fc7218fb992a2836d005db5c035851b4a6.
+- Fixed FTBFS with kernel 5.11 on aarch64.
 
 * Fri Feb 19 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210219.8a3aaa6-alt1
 - Updated to commit 8a3aaa65c0fb97064139d2f361ad82ab6e28a377 (fixes work on
