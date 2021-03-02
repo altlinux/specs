@@ -1,5 +1,5 @@
 Name: refind
-Version: 0.12.0
+Version: 0.13.1
 Release: alt1
 
 Summary: EFI boot manager software
@@ -82,6 +82,9 @@ install -pDm644 %SOURCE4 %buildroot%refind_data/icons/os_altlinux.png
 %refind_data
 
 %changelog
+* Tue Mar 02 2021 Nikolai Kostrigin <nickel@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Tue Sep 15 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
