@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.1.10
+Version: 5.1.11
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Tue Mar 02 2021 Sergey V Turchin <zerg@altlinux.org> 5.1.11-alt1
+- don't hardcode popup dialog size
+
 * Mon Mar 01 2021 Ivan Razzhivin <underwit@altlinux.org> 5.1.10-alt1
 - Fix oem_wifi_first_start remove rpm call
 
