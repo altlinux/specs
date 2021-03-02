@@ -14,7 +14,7 @@
 %endif
 
 Name: lib%{_name}4
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -156,6 +156,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Tue Mar 02 2021 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1
+- 4.8.1
+
 * Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
