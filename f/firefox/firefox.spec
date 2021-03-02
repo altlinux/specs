@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        85.0.2
+Version:        86.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -53,7 +53,6 @@ Patch012: 0012-bmo-847568-Support-system-harfbuzz.patch
 Patch013: 0013-bmo-847568-Support-system-graphite2.patch
 Patch014: 0014-bmo-1559213-Support-system-av1.patch
 Patch015: 0015-VAAPI-Add-extra-frames.patch
-Patch016: 0016-Bug-1678247-Use-nsWindow-scale-factor-for-the-conten.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -228,7 +227,6 @@ Most likely you don't need to use this package.
 %patch013 -p1
 %patch014 -p1
 %patch015 -p1
-%patch016 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -498,6 +496,22 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Mar 01 2021 Alexey Gladkov <legion@altlinux.ru> 86.0-alt1
+- New release (86.0).
+- Security fixes:
+  + CVE-2021-23969: Content Security Policy violation report could have contained the destination of a redirect
+  + CVE-2021-23970: Multithreaded WASM triggered assertions validating separation of script domains
+  + CVE-2021-23968: Content Security Policy violation report could have contained the destination of a redirect
+  + CVE-2021-23974: noscript elements could have led to an HTML Sanitizer bypass
+  + CVE-2021-23971: A website's Referrer-Policy could have been be overridden, potentially resulting in the full URL being sent as a Referrer
+  + CVE-2021-23976: Local spoofing of web manifests for arbitrary pages in Firefox for Android
+  + CVE-2021-23977: Malicious application could read sensitive data from Firefox for Android's application directories
+  + CVE-2021-23972: HTTP Auth phishing warning was omitted when a redirect is cached
+  + CVE-2021-23975: about:memory Measure function caused an incorrect pointer operation
+  + CVE-2021-23973: MediaError message property could have leaked information about cross-origin resources
+  + CVE-2021-23978: Memory safety bugs fixed in Firefox 86 and Firefox ESR 78.8
+  + CVE-2021-23979: Memory safety bugs fixed in Firefox 86
+
 * Tue Feb 09 2021 Alexey Gladkov <legion@altlinux.ru> 85.0.2-alt1
 - New release (85.0.2).
 
