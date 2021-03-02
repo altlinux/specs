@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.16.0
+Version: 1.16.2
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -22,7 +22,7 @@ Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
 
-BuildRequires: autoconf-archive
+BuildRequires: autoconf-archive >= 2021.02.19-alt1
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
 %{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.28.0}
@@ -132,7 +132,6 @@ Requires: libmm-glib-devel = %version-%release
 %define more_warnings yes
 %endif
 %autoreconf
-sed -i 's/ax_compiler_flags_as_needed_option="-Wl,--no-as-needed"/ax_compiler_flags_as_needed_option=""/' configure
 %configure \
 	--disable-static \
 	--with-udev-base-dir=/lib/udev \
@@ -235,6 +234,11 @@ fi
 %endif
 
 %changelog
+* Tue Mar 02 2021 Mikhail Efremov <sem@altlinux.org> 1.16.2-alt1
+- BR: require autoconf-archive >= 2021.02.19-alt1.
+- Dropped workaround for --no-as-needed.
+- Updated to 1.16.2.
+
 * Wed Feb 24 2021 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
 - Dropped --no-as-needed from LD_FLAGS.
 - Added python3 modules to BR for tests.
