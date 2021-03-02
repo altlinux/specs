@@ -4,7 +4,7 @@
 %define rdn_name_ef io.github.quodlibet.ExFalso
 
 Name: quodlibet
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 
 Summary: audio library tagger, manager, and player for GTK+
@@ -21,9 +21,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Requires(pre): exfalso = %version-%release
+Requires: python3 >= 3.7
 # explicitly required gtk+3
 Requires: typelib(Gtk) = 3.0
 Requires: dbus dconf
+Requires: python3-module-musicbrainzngs >= 0.6
 
 # required GStreamer plugins
 Requires: gst-plugins-base%gst_api_ver
@@ -82,9 +84,10 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 %_datadir/metainfo/%rdn_name.appdata.xml
 %_datadir/bash-completion/completions/%name
 %_datadir/bash-completion/completions/operon
+%_datadir/zsh/site-functions/_quodlibet
 %_man1dir/%name.*
 %_man1dir/operon.*
-%doc NEWS README
+%doc NEWS* README*
 
 %files -n exfalso -f %name.lang
 %_bindir/exfalso
@@ -96,6 +99,9 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 %python3_sitelibdir_noarch/%name-%version-py*
 
 %changelog
+* Tue Mar 02 2021 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
 - 4.3.0
 
