@@ -1,11 +1,11 @@
 Name: waypipe
-Version: 0.6.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Network transparency agent for Wayland
 
 Group: Networking/Remote access
-License: MIT/X11
+License: X11
 URL: https://gitlab.freedesktop.org/mstoeckl/waypipe/
 
 Source: %name-%version-%release.tar
@@ -20,6 +20,7 @@ Source: %name-%version-%release.tar
 %def_with with_lz4
 %def_with with_zstd
 %def_with with_vaapi
+%def_disable with_systemtap
 
 %define meson_subst_bool() %{expand:%%{?_enable_%{1}:-D%{1}=true}%%{?_disable_%{1}:-D%{1}=false}}
 %define meson_subst_feature() %{expand:%%{?_with_%{1}:-D%{1}=enabled}%%{?_without_%{1}:-D%{1}=disabled}}
@@ -57,6 +58,7 @@ export CFLAGS="%optflags -Wno-error=unused-result"
     %{meson_subst_feature with_lz4}      \
     %{meson_subst_feature with_zstd}     \
     %{meson_subst_feature with_vaapi}    \
+    %{meson_subst_bool with_systemtap}   \
     #
 %meson_build
 
@@ -73,6 +75,9 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Tue Mar 02 2021 Arseny Maslennikov <arseny@altlinux.org> 0.7.2-alt1
+- 0.6.1 -> 0.7.2.
+
 * Sun Sep 01 2019 Arseny Maslennikov <arseny@altlinux.org> 0.6.1-alt1
 - 0.6.0 -> 0.6.1.
 
