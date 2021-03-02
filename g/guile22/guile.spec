@@ -1,6 +1,6 @@
 Name: guile22
-Version: 2.2.4
-Release: alt3
+Version: 2.2.7
+Release: alt1
 
 Summary: A GNU implementation of Scheme
 License: GPL
@@ -12,6 +12,7 @@ Source: %name-%version-%release.tar
 BuildRequires: libltdl-devel libgmp-devel libunistring-devel
 BuildRequires: libffi-devel libgc-devel libreadline-devel
 BuildRequires: flex makeinfo
+BuildRequires: /proc /dev/pts
 
 %description
 Guile is an implementation of the Scheme programming language, packaged
@@ -58,6 +59,9 @@ mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile22.1
 
 %add_findreq_skiplist %_bindir/guile22-config
 
+%check
+make check
+
 %files
 %_bindir/guile22
 %_libdir/libguile-2.2.so.*
@@ -77,6 +81,9 @@ mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile22.1
 %_infodir/*.info*
 
 %changelog
+* Wed Sep 09 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.7-alt1
+- 2.2.7 released
+
 * Fri Aug 10 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.4-alt3
 - guile22-devel should not be included as direct BR, use guile-devel
 
