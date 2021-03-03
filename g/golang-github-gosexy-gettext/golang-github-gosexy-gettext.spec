@@ -4,7 +4,7 @@
 
 Name: golang-github-gosexy-gettext
 Version: 0.9
-Release: alt1
+Release: alt2
 Summary: Go bindings for GNU's gettext
 Group: Graphical desktop/Other
 License: MIT
@@ -59,9 +59,11 @@ This package provides examples for go-xgettext utility.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%goipath"
 export GOPATH="%go_path"
+export GO111MODULE="auto"
 
 %golang_prepare
 
+#go mod init github.com/gosexy/gettext
 cd .build/src/%goipath
 for cmd in go-xgettext; do
 %golang_build $cmd ||:
@@ -90,6 +92,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/_examples
 
 %changelog
+* Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 0.9-alt2
+- Fixed build with golang 1.16.
+
 * Tue May 12 2020 Leontiy Volodin <lvol@altlinux.org> 0.9-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
