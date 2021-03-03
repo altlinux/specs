@@ -12,7 +12,7 @@
 %define ldapjdk_version     4.22.0
 
 Name: pki-core
-Version: 10.10.4
+Version: 10.10.5
 Release: alt1
 
 Summary: Certificate System - PKI Core Components
@@ -753,6 +753,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Wed Mar 03 2021 Stanislav Levin <slev@altlinux.org> 10.10.5-alt1
+- 10.10.4 -> 10.10.5.
+
 * Mon Feb 15 2021 Stanislav Levin <slev@altlinux.org> 10.10.4-alt1
 - 10.10.3 -> 10.10.4.
 
