@@ -1,7 +1,7 @@
 %define oname cvxopt
 
 Name: python3-module-%oname
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Python Software for Convex Optimization
@@ -126,6 +126,8 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/%oname
+# doesnt work=(
+#python3_sitelibdir/*.egg-info
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
 
@@ -143,6 +145,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Mar 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.6-alt1
+- Automatically updated to 1.2.6.
+
 * Wed Jan 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.5-alt1
 - Automatically updated to 1.2.5.
 - Drop python2 support.
