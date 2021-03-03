@@ -5,7 +5,7 @@
 
 Name: golang-gopkg-alecthomas-kingpin-2
 Version: 2.2.6
-Release: alt2
+Release: alt3
 Summary: Go command line and flag parser
 Group: Development/Other
 License: MIT
@@ -53,10 +53,11 @@ This package provides examples for %name.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%goipath"
 export GOPATH="%go_path"
+export GO111MODULE="auto"
 
 %golang_prepare
 
-cd .build/src/%goipath
+#go mod init gopkg.in/alecthomas/kingpin.v2
 for cmd in cmd/* ; do
 %golang_build $cmd ||:
 done
@@ -69,6 +70,7 @@ export GOPATH="%go_path"
 %if_with check
 %check
 export GOPATH="%go_path"
+export GO111MODULE="auto"
 %gotest
 %endif
 
@@ -84,6 +86,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/_examples
 
 %changelog
+* Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.6-alt3
+- Fixed build with golang 1.16.
+
 * Sat Aug 08 2020 Leontiy Volodin <lvol@altlinux.org> 2.2.6-alt2
 - Disabled tests.
 
