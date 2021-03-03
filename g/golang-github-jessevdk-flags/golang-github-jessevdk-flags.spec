@@ -1,11 +1,11 @@
-%def_without check
+%def_with check
 
 %global goipath         github.com/jessevdk/go-flags
-%global commit          c0795c8afcf41dd1d786bebce68636c199b3bb45
+%global commit          c17162fe8fd74f119ff938c5c67af63e3bac5ded
 
 Name: golang-github-jessevdk-flags
 Version: 1.4.0
-Release: alt1.gitc0795c8
+Release: alt2.gitc17162f
 Summary: Go command line option parser
 License: BSD-3-Clause
 Group: Graphical desktop/Other
@@ -15,6 +15,9 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/go-flags-%version.tar.gz
 
 BuildRequires(pre): rpm-build-golang
+%if_with check
+BuildRequires: golang-golang-x-sys-devel
+%endif
 
 %description
 Package Flags provides an extensive command line option parser. The flags
@@ -48,9 +51,11 @@ This package provides examples for %name package.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%goipath"
 export GOPATH="%go_path"
+export GO111MODULE="auto"
 
 %golang_prepare
 
+#go mod init github.com/jessevdk/go-flags
 cd .build/src/%goipath
 %golang_build
 
@@ -61,6 +66,8 @@ export GOPATH="%go_path"
 
 %if_with check
 %check
+export GOPATH="%go_path"
+export GO111MODULE="auto"
 %gotest
 %endif
 
@@ -73,6 +80,10 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/examples
 
 %changelog
+* Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 1.4.0-alt2.gitc17162f
+- Updated from git.
+- Enabled tests.
+
 * Wed May 13 2020 Leontiy Volodin <lvol@altlinux.org> 1.4.0-alt1.gitc0795c8
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
