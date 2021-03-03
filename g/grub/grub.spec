@@ -1,8 +1,8 @@
-%define efi_arches %ix86 x86_64 aarch64
+%define efi_arches %ix86 x86_64 aarch64 riscv64
 
 Name: grub
 Version: 2.04
-Release: alt2
+Release: alt3
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -10,7 +10,7 @@ Group: System/Kernel and hardware
 
 Url: http://www.gnu.org/software/grub
 
-ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
+ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
 
 Source0: %name-%version.tar
 Source1: grub2-sysconfig
@@ -31,6 +31,8 @@ Source11: embedded_grub.cfg
 Source12: grub-entries
 Source13: grub-entries.8
 
+Source14: grub-efi.filetrigger
+
 Patch0: grub-2.04-os-alt.patch
 Patch1: grub-2.00-sysconfig-path-alt.patch
 Patch2: grub-2.02-altlinux-theme.patch
@@ -49,6 +51,8 @@ Patch21: grub-2.04-alt-set-default-bootloader_id.patch
 Patch22: grub-2.02-debian-grub-install-extra-removable.patch
 Patch23: grub-2.02-debian-grub-install-removable-shim.patch
 Patch24: grub-2.04-alt-grub-install-no-fallback-for-removable.patch
+Patch25: grub-2.04-alt-add-file-with-Russian-translation.patch
+Patch26: grub-2.04-alt-add-strings-and-translation-for-OS-ALT.patch
 
 # add a rhboot/grub-2.02-sb set of patches to ensure SecureBoot safe operation
 # refer to url:  https://github.com/rhboot/grub2/commits/grub-2.02-sb
@@ -133,7 +137,12 @@ Requires: gettext
 %ifarch aarch64
 %global grubefiarch arm64-efi
 %global linux_module_name linux
-%global efi_suff x64
+%global efi_suff aa64
+%endif
+%ifarch riscv64
+%global grubefiarch riscv64-efi
+%global linux_module_name linux
+%global efi_suff riscv64
 %endif
 
 %package common
@@ -234,6 +243,8 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p2
+%patch25 -p2
+%patch26 -p2
 
 #SB patches
 %patch101 -p1
@@ -382,6 +393,7 @@ install -pDm755 %SOURCE4  %buildroot%_rpmlibdir/grub.filetrigger
 install -pDm755 %SOURCE6  %buildroot%_sbindir/grub-autoupdate
 %ifarch %efi_arches
 install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
+install -pDm755 %SOURCE14 %buildroot%_rpmlibdir/grub-efi.filetrigger
 %endif
 install -pDm755 %SOURCE12 %buildroot%_sbindir/grub-entries
 
@@ -488,6 +500,7 @@ rm %buildroot%_sysconfdir/grub.d/41_custom
 %endif
 %_sbindir/grub-efi-autoupdate
 %_libdir/grub/%grubefiarch
+%_rpmlibdir/%name-efi.filetrigger
 %endif
 
 %ifarch %ix86 x86_64 ppc64le
@@ -520,6 +533,16 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Feb 16 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.04-alt3
+- grub-efi-autoupdate: fix grub update rendering system unbootable
+- grub-efi.filetrigger: add to ensure grub reinstall during shim-signed update
+- provide OS ALT installer messages Russian translation
+  + add add-strings-and-translation-for-OS-ALT patch (underwit@, antohami@)
+- update grub messages Russian translation
+  + add alt-update-russian-translation patch (underwit@)
+- spec: prepare grub-efi to be buildable on RISCV64 (arei@)
+- spec: fix AARCH64 EFI binary suffix
+
 * Fri Dec 25 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.04-alt2
 - grub-install: add workaround for malformed EFI-firmware implementations
   (closes: #39432)
