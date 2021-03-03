@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
-Version: 2.4.1
-Release: alt2
+Version: 2.4.2
+Release: alt1
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -169,6 +169,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Wed Mar 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt1
+- Build new version.
+
 * Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt2
 - Minor fixes of spec file (thx for Boris Pek).
 
