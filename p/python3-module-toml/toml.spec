@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname toml
 
-%def_without check
+%def_with check
+%def_without bootstrap
 
 Name: python3-module-%oname
-Version: 0.10.1
-Release: alt2
+Version: 0.10.2
+Release: alt1
 
 Summary: A Python library for parsing and creating TOML.
 License: MIT
@@ -22,6 +23,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: golang-github-burntsushi-toml-test
 BuildRequires: python3(numpy)
 BuildRequires: python3(tox)
+%endif
+%if_without bootstrap
 %py3_requires numpy
 %endif
 
@@ -63,6 +66,11 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/toml-*.egg-info/
 
 %changelog
+* Tue Mar 02 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
+- Automatically updated to 0.10.2.
+- Added bootstrap knob.
+- Enabled check.
+
 * Sun Jan 31 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt2
 - Bootstrap for python3.9.
 
