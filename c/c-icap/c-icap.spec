@@ -1,5 +1,5 @@
 Name: 	 c-icap
-Version: 0.5.7
+Version: 0.5.8
 Release: alt1
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -132,6 +132,9 @@ chmod -x %buildroot/%_sysconfdir/%name.magic*
 %_libdir/libicapapi.so
 
 %changelog
+* Wed Mar 03 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.5.8-alt1
+- New version.
+
 * Tue Oct 27 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.5.7-alt1
 - New version.
 
