@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2021.1.25
+Version: 2021.2.20
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -82,6 +82,9 @@ ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
 #%_datadir/dman
 
 %changelog
+* Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 2021.2.20-alt1
+- New version (2021.2.20) with rpmgs script.
+
 * Mon Feb 08 2021 Leontiy Volodin <lvol@altlinux.org> 2021.1.25-alt1
 - New version (2021.1.25) with rpmgs script.
 - Removed subpackage deepin-manual-directory.
