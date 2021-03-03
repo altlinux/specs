@@ -1,5 +1,5 @@
 Name:    shc
-Version: 4.0.1
+Version: 4.0.3
 Release: alt1
 Summary: Shell Script Compiler
 
@@ -8,7 +8,7 @@ License: GPLv3
 URL:     https://github.com/neurobin/shc
 
 # Source0-url: https://github.com/neurobin/shc/archive/3.9.6.tar.gz
-Source0: %name-%version.tar
+Source0: %name-%version.tar.gz
 Patch1: compatibility.patch
 
 BuildRequires: gcc
@@ -20,7 +20,7 @@ The generated source code is then compiled and linked to produce a stripped bina
 
 %prep
 %setup -q
-%patch1 -p0
+#patch1 -p0
 
 %build
 %autoreconf || :
@@ -36,6 +36,9 @@ The generated source code is then compiled and linked to produce a stripped bina
 %_man1dir/*
 
 %changelog
+* Wed Mar 03 2021 Ilya Mashkin <oddity at altlinux.ru> 4.0.3-alt1
+- 4.0.3 
+
 * Sun Nov 25 2018 Pavel Vainerman <pv@altlinux.ru> 4.0.1-alt1
 - new version (4.0.1) with rpmgs script
 
