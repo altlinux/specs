@@ -1,7 +1,7 @@
 # TODO: check .gear/predownloaded-preinstall-hook
 
 Name: element-web
-Version: 1.7.21
+Version: 1.7.22
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -12,7 +12,7 @@ Group: Networking/Instant messaging
 
 BuildArch: noarch
 
-# Source-url: https://github.com/vector-im/riot-web/archive/v%version.tar.gz
+# Source-url: https://github.com/vector-im/element-web/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
@@ -56,6 +56,9 @@ cp -a webapp %buildroot/var/www/html/%name/
 /var/www/html/%name/
 
 %changelog
+* Wed Mar 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.22-alt1
+- new version 1.7.22 (with rpmrb script)
+
 * Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.21-alt1
 - new version 1.7.21 (with rpmrb script)
 
