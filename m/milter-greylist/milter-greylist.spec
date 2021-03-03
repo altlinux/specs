@@ -1,10 +1,10 @@
 %define user grmilter
 
 Name: milter-greylist
-Version: 4.6.1
+Version: 4.6.4
 Release: alt1
 Group: System/Servers
-License: 3-clause BSD license
+License: BSD-3-Clause
 Summary: GreyList milter for milter-capable MTA
 Source0: ftp://ftp.espci.fr/pub/milter-greylist/%name-%version.tar
 Source1: %name.init.alt
@@ -17,7 +17,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 %def_enable dnsrbl
 %def_disable p0f
 %def_with libspf2
-%def_with libGeoIP
+%def_with libGeoIP2
 %def_with libcurl
 
 %if_enabled postfix
@@ -144,6 +144,10 @@ fi
 %attr(0600,%user,root) %ghost %_localstatedir/milter-greylist/greylist.db
 
 %changelog
+* Wed Mar 03 2021 L.A. Kostis <lakostis@altlinux.ru> 4.6.4-alt1
+- Updated to 4.6.4.
+- .spec: fix License field.
+
 * Sun Sep 25 2016 L.A. Kostis <lakostis@altlinux.ru> 4.6.1-alt1
 - Updated to 4.6.1.
 - Build fixes:
