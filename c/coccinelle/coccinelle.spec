@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:		coccinelle
-Version:	1.0.8
-Release:	alt9
+Version:	1.1.0
+Release:	alt1
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
@@ -164,6 +164,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Wed Mar 03 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt1
+- Update to 1.1.0 (2021-02-24).
+
 * Thu Feb 25 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt9
 - Update to 0e1f2b1f (2021-02-19).
 - Add score tests in %%check.
