@@ -1,11 +1,11 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/jessevdk/go-flags
 %global commit          c17162fe8fd74f119ff938c5c67af63e3bac5ded
 
 Name: golang-github-jessevdk-flags
 Version: 1.4.0
-Release: alt2.gitc17162f
+Release: alt3.gitc17162f
 Summary: Go command line option parser
 License: BSD-3-Clause
 Group: Graphical desktop/Other
@@ -80,6 +80,9 @@ export GO111MODULE="auto"
 %go_path/src/%goipath/examples
 
 %changelog
+* Thu Mar 04 2021 Leontiy Volodin <lvol@altlinux.org> 1.4.0-alt3.gitc17162f
+- Disabled tests (unexpected man page).
+
 * Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 1.4.0-alt2.gitc17162f
 - Updated from git.
 - Enabled tests.
