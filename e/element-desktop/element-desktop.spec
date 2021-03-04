@@ -1,16 +1,16 @@
 Name: element-desktop
-Version: 1.7.21
+Version: 1.7.22
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
 
 License: Apache 2.0
-Url: https://element.io/desktop.html
+Url: https://element.io/
 Group: Networking/Instant messaging
 
 BuildArch: noarch
 
-# Source-url: https://github.com/vector-im/riot-desktop/archive/v%version.tar.gz
+# Source-url: https://github.com/vector-im/element-desktop/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
@@ -88,6 +88,9 @@ install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Mar 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.22-alt1
+- new version 1.7.22 (with rpmrb script)
+
 * Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.21-alt1
 - new version 1.7.21 (with rpmrb script)
 
