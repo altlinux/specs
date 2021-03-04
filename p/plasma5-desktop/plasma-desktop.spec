@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.20.5
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -103,7 +103,7 @@ Common polkit files for %name
 
 %prep
 %setup -n %rname-%version
-###%patch2 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -197,6 +197,9 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Mar 04 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt3
+- set default main menu button icon
+
 * Tue Feb 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt2
 - fix taskmanager group mouseclick action to show apps list
 
