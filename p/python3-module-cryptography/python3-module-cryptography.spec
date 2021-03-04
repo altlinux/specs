@@ -3,8 +3,8 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 3.4.3
-Release: alt3
+Version: 3.4.6
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -16,7 +16,6 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 
 # Source-url: https://pypi.python.org/packages/source/c/cryptography/%oname-%version.tar.gz
 Source: %name-%version.tar
-Patch1: cryptography-3.4.3-upstream-break-cyclic-import.patch
 
 BuildRequires(pre): rpm-build-python3 python3-devel python3-module-cffi python3-module-setuptools rpm-build-licenses
 BuildRequires: libssl-devel
@@ -42,7 +41,6 @@ digests and key derivation functions.
 
 %prep
 %setup
-%patch1 -p1
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -76,6 +74,9 @@ py.test3
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Thu Mar 4 2021 Vladimir Didenko <cow@altlinux.ru> 3.4.6-alt1
+- new version (3.4.6)
+
 * Tue Feb 9 2021 Vladimir Didenko <cow@altlinux.ru> 3.4.3-alt3
 - use upstream fix for cyclic import error
 
