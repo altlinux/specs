@@ -1,7 +1,7 @@
 %define soversion 17
 
 Name: miniupnpc
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: UPnP client library
@@ -40,22 +40,11 @@ developing applications that use %name.
 %setup
 
 %build
-
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING='Release' \
-	-DUPNPC_BUILD_STATIC:BOOL=FALSE
-
-popd
-
-%make_build -C %_target_platform
+%cmake -DUPNPC_BUILD_STATIC:BOOL=FALSE
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 %__xz man3/%name.3
 %__install -Dp -m0644 man3/%name.3.xz %buildroot%_man3dir/%name.3.xz
 
@@ -72,6 +61,9 @@ popd
 %_man3dir/%name.3.*
 
 %changelog
+* Thu Mar 04 2021 Nazarov Denis <nenderus@altlinux.org> 2.2.2-alt1
+- Version 2.2.2
+
 * Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt1
 - Version 2.2.1
 
