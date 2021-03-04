@@ -1,10 +1,10 @@
 %define mversion	6
-%define dversion	%mversion.9.11
-%define drelease	53
+%define dversion	%mversion.9.12
+%define drelease	1
 %define qlev		Q16
 %define mgkdir		ImageMagick
-%define soname		6
-%define sonamepp	8
+%define soname		7
+%define sonamepp	9
 
 %def_with rsvg
 %ifarch %e2k
@@ -32,7 +32,7 @@ Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
 Source5: %name.watch
-Patch0: ImageMagick-6.9.11.34-modules-path.patch
+Patch0: ImageMagick-6.9.12.1-modules-path.patch
 
 Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
 
@@ -263,6 +263,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Feb 25 2021 Anton Farygin <rider@altlinux.org> 6.9.12.1-alt1
+- new version 6.9.12.1
+
 * Sat Jan 02 2021 Anton Farygin <rider@altlinux.ru> 6.9.11.53-alt1
 - new version 6.9.11.53
 
@@ -411,13 +414,13 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 * Wed Aug 23 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.9-alt1
 - new version 
 
-* Tue Aug 15 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.7-alt1%ubt
+* Tue Aug 15 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.7-alt1
 - new version
 
-* Mon Apr 03 2017 Anton Farygin <rider@altlinux.ru> 6.9.8.3-alt1%ubt
+* Mon Apr 03 2017 Anton Farygin <rider@altlinux.ru> 6.9.8.3-alt1
 - new version
 
-* Thu Feb 09 2017 Anton Farygin <rider@altlinux.ru> 6.9.7.6-alt1%ubt
+* Thu Feb 09 2017 Anton Farygin <rider@altlinux.ru> 6.9.7.6-alt1
 - new version
 
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 6.9.6.2-alt1.1
