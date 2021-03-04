@@ -4,7 +4,7 @@
 
 Name: golang-github-gosexy-gettext
 Version: 0.9
-Release: alt2
+Release: alt3
 Summary: Go bindings for GNU's gettext
 Group: Graphical desktop/Other
 License: MIT
@@ -15,7 +15,7 @@ Source: %url/archive/%version/gettext-%version.tar.gz
 
 BuildRequires(pre): rpm-build-golang
 # BuildRequires: golang(github.com/jessevdk/go-flags) gettext-tools
-BuildRequires: gettext-tools golang-github-jessevdk-flags-devel
+BuildRequires: gettext-tools golang-github-jessevdk-flags-devel golang-golang-x-sys-devel
 
 %if_with check
 # Tests
@@ -92,6 +92,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/_examples
 
 %changelog
+* Thu Mar 04 2021 Leontiy Volodin <lvol@altlinux.org> 0.9-alt3
+- Added buildrequires.
+
 * Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 0.9-alt2
 - Fixed build with golang 1.16.
 
