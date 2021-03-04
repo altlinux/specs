@@ -1,6 +1,6 @@
 Name:       opencc
-Version:    1.1.1
-Release:    alt2
+Version:    1.1.2
+Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    Apache-2.0
@@ -86,6 +86,9 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+- New version.
+
 * Mon May 25 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt2
 - Use rpm-build-ninja for build.
 - Really use four threads to build by ninja-build.
