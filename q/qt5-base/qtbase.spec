@@ -35,7 +35,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt1
+Release: alt2
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -470,11 +470,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 %ifarch %ix86
     -no-sse2 \
 %endif
-%ifarch %ix86 x86_64
-    -reduce-relocations \
-%else
     -no-reduce-relocations \
-%endif
     -opengl %opengl_type -egl -eglfs -kms \
     -system-sqlite \
     %{?_enable_sql_tds:-plugin-sql-tds}%{!?_enable_sql_tds:-no-sql-tds} \
@@ -825,6 +821,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Mar 04 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
+- -no-reduce-relocations
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 
