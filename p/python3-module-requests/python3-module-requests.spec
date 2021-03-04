@@ -5,7 +5,7 @@
 
 Name:           python3-module-%pkgname
 Version:        2.25.1
-Release:        alt1
+Release:        alt2
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
 
@@ -29,6 +29,9 @@ Patch3:         requests-2.12.4-tests_nonet.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1653223
 Patch5:         requests-2.20.0-no-py2-httpbin.patch
 
+# https://github.com/psf/requests/issues/5710
+Patch6:         requests-2.25.1-fix-build-with-new-idna.patch
+
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -51,6 +54,7 @@ designed to make HTTP requests easy for developers.
 %patch2 -p1
 %patch3 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -66,6 +70,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 4 2021 Vladimir Didenko <cow@altlinux.org> 2.25.1-alt2
+- fix build with idna >= 3.0
+
 * Fri Feb 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.25.1-alt1
 - 2.25.1
 
