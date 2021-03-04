@@ -2,7 +2,7 @@
 
 Name: dbeaver
 Version: 21.0.0
-Release: alt2
+Release: alt3
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -12,16 +12,14 @@ Group: Databases
 URL: https://%name.io/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 ppc64le
 
 # https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
 Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: maven-local-repository.tar
 
-%ifarch aarch64
-Patch0: %name-alt-aarch64.patch
-%endif
+Patch0: %name-alt-arch.patch
 
 BuildRequires: /proc
 BuildRequires: java-11-openjdk-headless
@@ -46,10 +44,7 @@ DBeaver is free and open source universal database tool for developers and datab
 
 %prep
 %setup -b 2
-
-%ifarch aarch64
 %patch0 -p1
-%endif
 
 %__rm -rf ~/.m2
 %__mv -Tf ../.m2 ~/.m2
@@ -72,6 +67,9 @@ mvn -o package
 %config %_datadir/%name/%name.ini
 
 %changelog
+* Thu Mar 04 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.0-alt3
+- Build on ppc64le
+
 * Mon Mar 01 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.0-alt2
 - Build on AArch64
 
