@@ -13,7 +13,7 @@
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt4
+Release: alt5
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -241,8 +241,8 @@ mkdir -p %buildroot%_libexecdir/%target/share/gcc-%gcc_ver/
 mv %buildroot%_datadir/gcc-%gcc_ver/* %buildroot%_libexecdir/%target/share/gcc-%gcc_ver/ ||:
 rm -rf %buildroot%_datadir/gcc-%gcc_ver ||:
 
-find %buildroot%_libexecdir/%target -name libstdc++\* |sed -re 's,%buildroot,,' > c++.files
-sed -re 's,^,%exclude ,' < c++.files > c.files
+#find %buildroot%_libexecdir/%target -name libstdc++\* |sed -re 's,%buildroot,,' > c++.files
+#sed -re 's,^,%exclude ,' < c++.files > c.files
 
 #global __os_install_post . ./os_install_post
 
@@ -255,37 +255,33 @@ pushd gcc-%target
 %make_build check || :
 popd
 
-%files -f c.files
+%files
 %doc COPYING* README README.alt
 %_bindir/%target-*
 %exclude %_bindir/%target-?++
 %dir %_libexecdir/gcc
 %dir %_libexecdir/gcc/%target
 %_libexecdir/gcc/%target/%gcc_ver
-%_libexecdir/%target
 %_man1dir/%target-*.1*
-
 %if_with bootstrap
-
 %else
 %exclude %_man1dir/%target-?++.1*
 %exclude %_libexecdir/gcc/%target/%gcc_ver/cc1plus
-%exclude %_libexecdir/%target/include/c++/
-%exclude %_libexecdir/%target/share/gcc-%gcc_ver/python/libstdcxx/
 %endif
 
-%files c++ -f c++.files
+%files c++
 %_bindir/%target-?++
+%_libexecdir/%target
 %if_with bootstrap
-
 %else
 %_man1dir/%target-g++.1*
 %_libexecdir/gcc/%target/%gcc_ver/cc1plus
-%_libexecdir/%target/include/c++/
-%_libexecdir/%target/share/gcc-%gcc_ver/python/libstdcxx/
 %endif
 
 %changelog
+* Sun Feb 28 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt5
+- Fix twice packaged files
+
 * Sat Feb 27 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt4
 - Fix unpackaged files (ALT bug 39740)
 
