@@ -1,6 +1,6 @@
 Name: cbi-plugins
 Version: 1.1.7
-Release: alt1
+Release: alt2
 
 Summary: A set of helpers for Eclipse CBI
 License: EPL-1.0
@@ -36,33 +36,20 @@ API documentation for %name.
 
 %pom_disable_module eclipse-macsigner-plugin maven-plugins
 %pom_disable_module eclipse-winsigner-plugin maven-plugins
+%pom_disable_module eclipse-jarsigner-plugin maven-plugins
 %pom_disable_module eclipse-dmg-packager maven-plugins
 %pom_disable_module eclipse-flatpak-packager maven-plugins
+%pom_disable_module common maven-plugins
+
+%pom_remove_parent maven-plugins
 
 # Disable plugins not needed for RPM builds
 %pom_remove_plugin :spotbugs-maven-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 
-# Build the common module
-%pom_xpath_inject pom:modules "<module>../common/</module>" maven-plugins
-%pom_remove_dep org.eclipse.cbi:checkstyle common
-
-# Remove separate annotations requirement of auto
-%pom_remove_dep :auto-value-annotations . common maven-plugins/common
-
-# Parent pom and common module are "released" independently, but actually nothing changed yet since last releases
-sed -i -e 's/1\.0\.6-SNAPSHOT/1.0.5/' pom.xml
-sed -i -e 's/1\.2\.4-SNAPSHOT/1.2.3/' common/pom.xml
-
-# Make dep on guava more forgiving
-sed -i -e 's/>28.0-jre</>20.0</' pom.xml
-
-# Don't use static analysis annotations
-sed -i -e 's/@Nonnull//' -e '/javax.annotation.Nonnull/d' common/src/main/java/org/eclipse/cbi/common/security/*.java
-
 %build
-%mvn_build -f -- -f maven-plugins/pom.xml -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -- -f maven-plugins/pom.xml -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -72,5 +59,8 @@ sed -i -e 's/@Nonnull//' -e '/javax.annotation.Nonnull/d' common/src/main/java/o
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Mar 06 2021 Nazarov Denis <nenderus@altlinux.org> 1.1.7-alt2
+- Fix build
+
 * Thu Mar 04 2021 Nazarov Denis <nenderus@altlinux.org> 1.1.7-alt1
 - Initial build for ALT Linux
