@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Summary: ALT Local policies
@@ -34,6 +34,7 @@ for i in sshd-gssapi-auth \
          sssd-ad-gpo-access-control \
          sssd-ad-gpo-ignore-unreadable \
          sssd-cache-credentials \
+         sssd-drop-privileges \
          sssd-dyndns-update \
          sssd-dyndns-update-ptr \
          sssd-dyndns-refresh-interval \
@@ -64,6 +65,10 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Fri Mar 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.4.8-alt1
+- Add sssd-drop-privileges control
+- Fix sssd-ad-gpo-access-control with more appropriate designations
+
 * Fri Jan 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.4.7-alt1
 - Add sssd-dyndns-{update,update-ptr,refresh-interval,ttl} controls
 
