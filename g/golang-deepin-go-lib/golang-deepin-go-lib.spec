@@ -10,7 +10,7 @@
 # %%endif
 
 Name: golang-deepin-go-lib
-Version: 5.6.0.9
+Version: 5.7.0
 Release: alt1
 Summary: Go bindings for Deepin Desktop Environment development
 
@@ -22,13 +22,15 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/go-lib-%version.tar.gz
 # Fix Warning/Info calls with formatting directives
 Patch: 0001-fix-format-calls.patch
+# ALT patches
+# Fix install error
+Patch1: 0010-fix-install.patch
 
 BuildRequires: rpm-build-golang
 BuildRequires: deepin-gir-generator dbus-tools-gui iso-codes mobile-broadband-provider-info
 #BuildRequires: golang(github.com/cryptix/wav) golang(github.com/linuxdeepin/go-x11-client) golang(golang.org/x/image/bmp) golang(golang.org/x/image/tiff) golang(golang.org/x/net/context) golang(gopkg.in/alecthomas/kingpin.v2) golang(github.com/godbus/dbus)
 BuildRequires: libgio-devel libgtk+3-devel libgdk-pixbuf-devel libpulseaudio-devel
-BuildRequires: golang-github-cryptix-wav-devel golang-deepin-go-x11-client-devel golang-x-image-devel golang-golang-x-net-devel golang-gopkg-alecthomas-kingpin-2-devel
-# Requires: golang-github-go-dbus-devel
+BuildRequires: golang-github-cryptix-wav-devel golang-deepin-go-x11-client-devel golang-x-image-devel golang-golang-x-net-devel golang-gopkg-alecthomas-kingpin-2-devel golang-github-go-dbus-devel
 
 %if_with check
 # Tests
@@ -56,6 +58,7 @@ such as glib, gettext, archive, graphic,etc.
 %prep
 %setup -n go-lib-%version
 # %%patch -p1
+%patch1 -p2
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -82,6 +85,9 @@ export GOPATH="%go_path"
 %go_path/src/%import_path
 
 %changelog
+* Thu Mar 04 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0-alt1
+- New version (5.7.0) with rpmgs script.
+
 * Fri Jan 29 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.0.9-alt1
 - New version (5.6.0.9) with rpmgs script.
 
