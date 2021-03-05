@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -145,6 +145,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Mar 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
+- 0.18.1
+
 * Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
 - 0.18.0
 
