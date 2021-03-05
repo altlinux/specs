@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTML-Parser
 Name: perl-%dist
-Version: 3.75
+Version: 3.76
 Release: alt1
 
 Summary: Parsing and extracting information from HTML documents
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/C/CA/CAPOEIRAB/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 # avoid circular dependency on perl-libwww
 %add_findreq_skiplist */HTML/HeadParser.pm
@@ -41,6 +41,9 @@ mv t/headparser-http.t t/headparser-http.t.orig
 %perl_vendor_autolib/HTML
 
 %changelog
+* Fri Mar 05 2021 Igor Vlasenko <viy@altlinux.org> 3.76-alt1
+- automated CPAN update
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 3.75-alt1
 - automated CPAN update
 
