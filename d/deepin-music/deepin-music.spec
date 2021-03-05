@@ -1,9 +1,11 @@
-%def_enable clang
+%def_disable clang
 %def_enable cmake
+
+%define repo dmusic
 
 Name: deepin-music
 Version: 6.0.1.91
-Release: alt1
+Release: alt2
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+ and LGPL-2.1+
 Group: Sound
@@ -17,6 +19,7 @@ Patch: deepin-music_6.0.1.75_alt_qt5.15.patch
 BuildRequires(pre): clang11.0-devel
 %else
 BuildRequires(pre): gcc-c++
+BuildRequires(pre): libgomp10-devel
 %endif
 
 %if_enabled cmake
@@ -41,30 +44,39 @@ BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: libvlc-devel
 BuildRequires: gsettings-qt-devel
-%if_disabled cmake
-Requires: lib%name=%version
+Requires: libvlc ffmpeg
+%if_enabled cmake
+Requires: lib%repo-static = %version
+%else
+Requires: lib%repo = %version
 %endif
 
 %description
 %summary.
 
 %if_enabled cmake
-%package -n lib%name-static
+%package -n lib%repo-static
 Summary: Static libraries for %name
 Group: Development/Other
+Provides: lib%name = %version
+Obsoletes: lib%name < %version
+Provides: lib%name-static = %version
+Obsoletes: lib%name-static < %version
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
-%description -n lib%name-static
+%description -n lib%repo-static
 This package provides static libraries for %name.
 
 %else
 
-%package -n lib%name
+%package -n lib%repo
 Summary: Libraries for %name
 Group: System/Libraries
+Provides: %name-static = %version
+Obsoletes: %name-static < %version
 
-%description -n lib%name
+%description -n lib%repo
 This package provides libraries for %name.
 
 %package devel
@@ -80,7 +92,22 @@ This package provides development files for %name.
 %prep
 %setup
 %patch -p2
-sed -i 's|#include <libcue/libcue.h>|#include <libcue-1.4/libcue/libcue.h>|' music/libdmusic/util/cueparser.cpp
+#sed -i 's|#include <libcue/libcue.h>|#include <libcue-1.4/libcue/libcue.h>|' music/libdmusic/util/cueparser.cpp
+sed -i 's|/usr/lib|%_libdir|' music/music-player/core/pluginmanager.cpp
+sed -i 's|#include "widget/soundpixmapbutton.h"|#include "view/widget/soundpixmapbutton.h"|' music/music-player/view/widget/soundvolume.cpp
+sed -i 's|#include <QGSettings>|#include <QGSettings/QGSettings>|' music/music-player/view/footerwidget.cpp
+sed -i 's|#include "databaseservice.h"|#include "../../presenter/databaseservice.h"|' music/music-player/view/widget/*.cpp
+sed -i 's|#include "global.h"|#include "../../core/util/global.h"|' music/music-player/view/widget/playlistview.cpp
+
+%if_enabled cmake
+sed -i 's|${CMAKE_BINARY_DIR}/lib|%_libdir|' tests/googletest/googletest/cmake/internal_utils.cmake
+%else
+sed -i '/libdmusic/d; s/vendor/vendor \\/' music/src.pro
+sed -i 's|$${PREFIX}/lib|%_libdir|' \
+    music/plugin/netease-meta-search/netease-meta-search.pro \
+    music/vendor/mpris-qt/src/src.pro \
+    music/vendor/dbusextended-qt/src/src.pro
+%endif
 
 %build
 %if_enabled cmake
@@ -89,6 +116,14 @@ sed -i 's|#include <libcue/libcue.h>|#include <libcue-1.4/libcue/libcue.h>|' mus
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%else
+export CC="gcc"
+export CXX="g++"
+export AR="ar"
+export NM="nm"
+export READELF="readelf"
 %endif
 
 %cmake_insource \
@@ -98,12 +133,16 @@ export AR="llvm-ar"
 
 %else
 
-%qmake_qt5 \
+# help find (and prefer) qt5 utilities, e.g. qmake, lrelease
+export PATH=%{_qt5_bindir}:$PATH
+%qmake_qt5 music/src.pro \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
 %endif
     PREFIX=%_prefix \
-    QT.KCodecs.libs=%_K5link
+    QT.KCodecs.libs=%_K5link \
+    QT+=multimedia \
+    unix:LIBS+="-L../music/dist/lib/ -ldmusic"
 %make_build
 %endif
 
@@ -126,14 +165,16 @@ export AR="llvm-ar"
 %_datadir/dman/%name/
 %_datadir/translations/*.qm
 
-%files -n lib%name
+%files -n lib%repo
 %_libdir/*.so.*
 %endif
 
 %if_enabled cmake
-%files -n lib%name-static
+%files -n lib%repo-static
 %_libdir/*.a
+
 %else
+%files devel
 %_libdir/*.so
 %dir %_includedir/DBusExtended/
 %_includedir/DBusExtended/*
@@ -144,6 +185,11 @@ export AR="llvm-ar"
 %endif
 
 %changelog
+* Fri Mar 05 2021 Leontiy Volodin <lvol@altlinux.org> 6.0.1.91-alt2
+- Fixed paths.
+- Built with gcc10.
+- Renamed libdeepin-music to libdmusic.
+
 * Wed Dec 02 2020 Leontiy Volodin <lvol@altlinux.org> 6.0.1.91-alt1
 - New version (6.0.1.91) with rpmgs script.
 
