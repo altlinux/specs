@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.11.0.42
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -169,6 +169,7 @@ export CGO_CXXFLAGS="${CXXFLAGS}"
 export CGO_LDFLAGS="${LDFLAGS}"
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
+export GO111MODULE="auto"
 export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
 export LIBS+="-L/%_lib -lpam -lsystemd"
 #make -C network/nm_generator gen-nm-code
@@ -177,6 +178,7 @@ export LIBS+="-L/%_lib -lpam -lsystemd"
 %install
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
+export GO111MODULE="auto"
 export LIBS+="-L/%_lib -lpam -lsystemd"
 %makeinstall_std PAM_MODULE_DIR=/%_lib/security
 
@@ -228,6 +230,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Fri Mar 05 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.42-alt2
+- Fixed build with golang 1.16.
+
 * Tue Dec 29 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.42-alt1
 - New version (5.11.0.42) with rpmgs script (thanks archlinux for the patch).
 
