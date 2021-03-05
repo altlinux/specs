@@ -4,8 +4,8 @@
 %filter_from_provides /^pkgconfig(%rname)/d
 
 Name: %rname-ng
-Version: %sover.0
-Release: alt2
+Version: %sover.1
+Release: alt1
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
 License: Zlib
@@ -18,7 +18,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires: bzlib-devel
-BuildRequires: cmake
+BuildRequires: cmake >= 3.13
 BuildRequires: gcc-c++
 BuildRequires: liblzma-devel
 BuildRequires: libssl-devel
@@ -130,6 +130,9 @@ popd
 %_libdir/lib%rname.so
 
 %changelog
+* Fri Mar 05 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.1-alt1
+- Version 3.0.1
+
 * Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt2
 - Remove library suffix from cmake
 - Remove pkgconfig(%rname) from provides in devel package
