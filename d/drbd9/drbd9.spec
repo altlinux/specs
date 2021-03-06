@@ -1,6 +1,6 @@
 Name: drbd9
 Version: 9.1.0
-Release: alt1
+Release: alt2
 %define githash eec3daedd7bd5e518780284841090f95806fd8d9
 
 Summary: The Linux kernel code for DRBD9.
@@ -13,7 +13,8 @@ Source0: %name-%version.tar
 Source1: %name-headers-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-kernel kernel-headers-modules-std-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-def kernel-headers-modules-un-def
 BuildRequires: coccinelle >= 1.0.8
 BuildRequires: libelf-devel
 
@@ -48,7 +49,8 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 
 %check
 # sed -i s/SUBDIRS=/M=/g Makefile
-# make -C drbd KDIR=/lib/modules/*/build -k
+make -C drbd KDIR=/lib/modules/*-std-def-*/build -k
+make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 
 %files -n kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
@@ -57,6 +59,10 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 %doc README.md COPYING
 
 %changelog
+* Sat Mar 06 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.1.0-alt2
+- Fix build for 5.11.
+- Enable check for std-def and un-def.
+
 * Fri Feb 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.1.0-alt1
 - 9.1.0
 
