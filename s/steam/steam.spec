@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.68
-Release: alt2
+Version: 1.0.0.69
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: Steam
@@ -58,6 +58,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Sat Mar 06 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.69-alt1
+- Version 1.0.0.69
+
 * Sat Feb 27 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.68-alt2
 - Restore license file
 
