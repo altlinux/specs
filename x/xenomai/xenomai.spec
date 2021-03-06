@@ -6,7 +6,7 @@
 
 Name: xenomai
 Version: 3.1
-Release: alt3
+Release: alt4
 Summary: Real-Time Framework for Linux
 License: GPL-2.0+ and LGPL-2.0+ and LGPL-2.1 and MIT
 Group: System/Kernel and hardware
@@ -206,6 +206,7 @@ pushd MERCURY
         --enable-doc-build \
 %endif
         --enable-fortify \
+        --enable-so-suffix \
         %nil
 # Note: make install will rebuild docs due to some bug.
 %make_build --no-print-directory
@@ -398,6 +399,10 @@ find /usr/share/doc/xenomai/demo -name a.out -delete
 %files checkinstall
 
 %changelog
+* Sun Mar 07 2021 Vitaly Chikunov <vt@altlinux.org> 3.1-alt4
+- Update to stable/v3.1.x commit cdc938bc1 (2021-02-03).
+- rt_e1000e: Fix __bad_udelay linking error.
+
 * Fri Dec 04 2020 Vitaly Chikunov <vt@altlinux.org> 3.1-alt3
 - spec: Add Obsoletes for libxenomai (for p9), fixes RM#24461.
 
