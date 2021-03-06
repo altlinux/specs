@@ -1,6 +1,6 @@
 Name:     suite3270
-Version:  3.5ga11
-Release:  alt2.1
+Version:  4.0ga14
+Release:  alt1
 
 Summary:  Terminal emulation 3270
 License:  BSD
@@ -11,7 +11,7 @@ Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: libX11-devel libXt-devel libXmu-devel libXaw-devel bdftopcf mkfontdir libncurses-devel libncursesw-devel tcl tcl-devel libssl-devel
+BuildRequires: libX11-devel libXt-devel libXmu-devel libXaw-devel bdftopcf mkfontdir libncurses-devel libncursesw-devel tcl tcl-devel libssl-devel libexpat-devel expat
 
 
 %description
@@ -54,6 +54,9 @@ find . -name html -type d -exec cp -ar {} %buildroot/%_docdir/%name-%version/ \;
 %_docdir/%name-%version/
 
 %changelog
+* Sat Mar 06 2021 Denis Medvedev <nbr@altlinux.org> 4.0ga14-alt1
+- new version
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.5ga11-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
