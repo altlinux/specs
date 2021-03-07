@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210211
+Version: 20210305
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,15 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Mar 07 2021 Cronbuild Service <cronbuild@altlinux.org> 20210305-alt1
+- upstream changes (GIT e425f76):
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2008.2406 (thx Petr Machata)
+  + add frimware for mediatek bluetooth chip (MT7921) (thx mark-yw.chen)
+  + rtw89: 8852a: add firmware v0.9.12.2 (thx Ping-Ke Shih)
+  + WHENCE: add missing symlink for BananaPi M3 (thx maximilian attems)
+  + brcm: Fix Raspberry Pi 4B NVRAM file (thx Matthias Brugger)
+  + silabs: add new firmware for WF200 (thx J?r?me Pouiller)
+
 * Sun Feb 14 2021 Cronbuild Service <cronbuild@altlinux.org> 20210211-alt1
 - upstream changes (GIT f7915a0):
   + amdgpu: add initial firmware for green sardine (thx Alex Deucher)
