@@ -1,6 +1,6 @@
 Name: alterator-update-kernel
-Version: 1.2
-Release: alt2
+Version: 1.3
+Release: alt1
 
 Packager: Ivan Savin <svn17@altlinux.org>
 
@@ -42,6 +42,9 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Mar 05 2021 Ivan Savin <svn17@altlinux.org> 1.3-alt1
+- Fix set_default_kernel for rpi4.
+
 * Wed Feb 24 2021 Ivan Savin <svn17@altlinux.org> 1.2-alt2
 - Correcting the text of the error message.
 
