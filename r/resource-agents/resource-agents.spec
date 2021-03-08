@@ -5,7 +5,7 @@
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
 Version: 4.7.0
-Release: alt0.rc1
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -368,6 +368,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Mon Mar 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.7.0-alt1
+- 4.7.0
+
 * Wed Dec 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.7.0-alt0.rc1
 - 4.7.0rc1
 
