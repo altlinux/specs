@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.28.0
+Version: 1.29.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Source1: %name.service
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
+BuildRequires(pre): rpm-build-python3
 
 %py3_buildrequires setuptools
 %py3_use matrix-angular-sdk >= 0.6.8
@@ -148,6 +149,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Mon Mar 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.29.0-alt1
+- new version 1.29.0 (with rpmrb script)
+
 * Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1.28.0-alt1
 - new version 1.28.0 (with rpmrb script)
 
