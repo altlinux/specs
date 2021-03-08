@@ -1,7 +1,7 @@
 %def_without tests
 
 Name:    retext
-Version: 7.2.0
+Version: 7.2.1
 Release: alt1
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
@@ -11,7 +11,6 @@ URL:     https://github.com/retext-project/retext
 
 Source0: %name-%version.tar
 Source1: %name.1
-Source2: locale_retext_ru.ts
 
 BuildArch: noarch
 
@@ -48,7 +47,6 @@ für Markdown und reStructuredText.
 
 %prep
 %setup
-cp %SOURCE2 locale/retext_ru.ts
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -89,6 +87,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Mon Mar 08 2021 Andrey Cherepanov <cas@altlinux.org> 7.2.1-alt1
+- New version.
+
 * Tue Feb 09 2021 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
 - New version.
 
