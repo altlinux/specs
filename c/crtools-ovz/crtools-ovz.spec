@@ -1,5 +1,5 @@
 Name: crtools-ovz
-Version: 3.15.1.22
+Version: 3.15.1.23
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -78,6 +78,9 @@ rm -f %buildroot%_pkgconfigdir/criu.pc
 %_man8dir/crtools.8*
 
 %changelog
+* Mon Mar 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.1.23-alt1
+- 3.15.1.23
+
 * Fri Feb 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.1.22-alt1
 - 3.15.1.22
 

@@ -1,5 +1,5 @@
 Name:     vzmigrate
-Version:  7.0.139
+Version:  7.0.143
 Release:  alt1
 
 Summary:  Virtuozzo migration tool
@@ -17,7 +17,7 @@ ExclusiveArch: x86_64
 # these reqs are for vz helper scripts
 Requires: ploop >= 7.0.160
 Requires: network-config-subsystem
-Requires: libvzctl
+Requires: libvzctl >= 7.0.645
 Requires: libvztt
 
 BuildRequires: gcc-c++
@@ -79,6 +79,9 @@ make install \
 %doc *.md
 
 %changelog
+* Mon Mar 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.143-alt1
+- 7.0.143
+
 * Sat Dec 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.139-alt1
 - 7.0.139
 
