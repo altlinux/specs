@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kcollectd
-Version: 0.11.99
+Version: 0.12.0
 Release: alt1
 
 Summary: collectd graphing frontend for KDE
@@ -17,7 +17,7 @@ Packager: Nikolay A. Fetisov <naf@altlinux.org>
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-Patch1: %name-0.9-alt-desktop_fix.patch
+Patch1: %name-0.12.0-alt-desktop_fix.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
@@ -68,6 +68,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.12.0-alt1
+- New version
+
 * Sat Aug 08 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.11.99-alt1
 - New version
 
