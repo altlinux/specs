@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: %modname implements a topological sort algorithm
@@ -39,6 +39,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README* CHANGES* NOTICE
 
 %changelog
+* Tue Mar 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6
+
 * Tue Jul 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
 - first build for Sisyphus
 
