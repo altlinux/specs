@@ -3,8 +3,8 @@
 ## Used in ikiwiki
 
 Name: perl-RPC-XML
-Version: 0.80
-Release: alt3
+Version: 0.82
+Release: alt1
 
 Summary: an implementation of XML-RPC
 
@@ -73,6 +73,9 @@ sed -e "s/localhost\([':]\)/$HOST\1/g" -i t/40_server.t
 %endif
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.82-alt1
+- New version
+
 * Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.80-alt3
 - BuildRequires w/o apache1
 
