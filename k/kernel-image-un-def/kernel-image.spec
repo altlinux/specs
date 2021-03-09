@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.10
-%define kernel_sublevel .20
+%define kernel_sublevel .22
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -184,6 +184,7 @@ it seems that you do not need this package.
 Summary: The Direct Rendering Infrastructure modules
 Group: System/Kernel and hardware
 Provides:  kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
+Provides:  kernel-modules-v4l-%flavour = %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
@@ -280,24 +281,6 @@ not work well.
 
 Install this package only if you really need it.
 
-%package -n kernel-modules-v4l-%flavour
-Summary: Video4Linux driver modules (obsolete)
-Group: System/Kernel and hardware
-Provides:  kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-v4l-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-v4l-%kversion-%flavour-%krelease > %version-%release
-Provides:  kernel-modules-uvcvideo-%kversion-%flavour-%krelease = %version-%release
-Provides:  kernel-modules-gspca-%kversion-%flavour-%krelease = %version-%release
-Provides:  kernel-modules-lirc-%kversion-%flavour-%krelease = %version-%release
-Provides:  kernel-modules-lirc-%flavour = %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
-
-%description -n kernel-modules-v4l-%flavour
-Video for linux drivers
-
 %package -n kernel-modules-staging-%flavour
 Summary:  Kernel modules under development
 Group: System/Kernel and hardware
@@ -305,7 +288,6 @@ Provides:  kernel-modules-staging-%kversion-%flavour-%krelease = %version-%relea
 Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease > %version-%release
 Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
-Requires: kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
 Prereq: %name = %epoch:%version-%release
@@ -661,9 +643,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/drm
-%modules_dir/kernel/drivers/media/cec
-%dir %modules_dir/kernel/drivers/media/rc
-%modules_dir/kernel/drivers/media/rc/rc-core.*
+%modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
 %exclude %modules_dir/kernel/drivers/gpu/drm/radeon
 %exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
@@ -696,13 +676,16 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %files -n kernel-modules-drm-radeon-%flavour
 %modules_dir/kernel/drivers/gpu/drm/radeon
 
-%files -n kernel-modules-v4l-%flavour
-%modules_dir/kernel/drivers/media/
-
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Mar 09 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.22-alt1
+- v5.10.22
+
+* Tue Mar 09 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.20-alt2
+- get rid of v4l subpackage
+
 * Fri Mar 05 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.20-alt1
 - v5.10.20
 
