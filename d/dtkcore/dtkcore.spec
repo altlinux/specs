@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.4.0
+Version: 5.4.10
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -17,9 +17,11 @@ BuildRequires(pre): clang11.0-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires: git-core
+BuildRequires: glibc-core
 BuildRequires: fdupes
 BuildRequires: qt5-base-devel
 BuildRequires: gsettings-qt-devel
+BuildRequires: libgtest-devel
 
 %description
 Deepin tool kit core modules.
@@ -57,14 +59,15 @@ sed -i "s|'/lib'|'%_lib'|" conanfile.py
     PREFIX=%prefix \
     DTK_VERSION=%version \
     LIB_INSTALL_DIR=%_libdir \
-    DEEPIN_OS_TYPE=ALT \
+    unix:LIBS+="-ldl" \
+    DEEPIN_OS_TYPE=altlinux \
     DEEPIN_OS_VERSION=9
 %make_build
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
-chmod +x %buildroot%_libdir/libdtk-5.4.0/DCore/bin/dtk-license.py
-chmod +x %buildroot%_libdir/libdtk-5.4.0/DCore/bin/dtk-translate.py
+chmod +x %buildroot%_libdir/libdtk-5.4.10/DCore/bin/dtk-license.py
+chmod +x %buildroot%_libdir/libdtk-5.4.10/DCore/bin/dtk-translate.py
 
 %files -n libdtk5-core
 %doc README.md LICENSE
@@ -86,6 +89,9 @@ chmod +x %buildroot%_libdir/libdtk-5.4.0/DCore/bin/dtk-translate.py
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Tue Mar 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.10-alt1
+- New version (5.4.10) with rpmgs script.
+
 * Thu Dec 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
 - New version (5.4.0) with rpmgs script.
 
