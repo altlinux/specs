@@ -2,7 +2,7 @@
 
 Name: perl-Throwable
 Version: 0.200013
-Release: alt1
+Release: alt2
 
 Summary: Perl role for classes that are meant to be thrown as exceptions
 
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Tue Aug 25 2015
-# optimized out: perl-CPAN-Meta-Requirements perl-Class-Method-Modifiers perl-Devel-GlobalDestruction perl-Import-Into perl-Module-Runtime perl-Parse-CPAN-Meta perl-Role-Tiny perl-Sub-Exporter-Progressive perl-strictures
-BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Devel-StackTrace perl-Moo perl-Sub-Name perl-devel
+# Automatically added by buildreq on Tue Mar 09 2021
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Class-Method-Modifiers perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-Role-Tiny perl-Sub-Quote perl-parent python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Devel-StackTrace perl-Module-Runtime perl-Moo perl-devel
 
 %description
 Perl module Throwable is a role for classes that are meant to be
@@ -45,6 +45,9 @@ calls die $self.
 %perl_vendor_privlib/StackTrace*
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.200013-alt2
+- Update BuildRequires
+
 * Tue Aug 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.200013-alt1
 - New version
 
