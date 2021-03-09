@@ -1,6 +1,6 @@
 Name: git
-Version: 2.29.2
-Release: alt2
+Version: 2.29.3
+Release: alt1
 
 Summary: Git core and tools
 License: GPLv2
@@ -528,6 +528,9 @@ popd
 %endif #doc
 
 %changelog
+* Fri Feb 12 2021 Dmitry V. Levin <ldv@altlinux.org> 2.29.3-alt1
+- 2.29.2 -> 2.29.3 (fixes: CVE-2021-21300).
+
 * Fri Dec 04 2020 Dmitry V. Levin <ldv@altlinux.org> 2.29.2-alt2
 - Dropped libgit-devel subpackage:
   libgit.a is not a publicly usable library,
