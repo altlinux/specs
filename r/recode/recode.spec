@@ -5,7 +5,7 @@
 
 Name: recode
 Version: 3.6
-Release: alt11.1.1
+Release: alt12
 
 Summary: The `recode' library converts files between character sets and usages
 License: GPL
@@ -15,6 +15,7 @@ Url: http://recode.progiciels-bpi.ca
 Source: %url/archives/%name-%version%beta.tar.gz
 Patch0: recode4python.patch
 Patch1: recode-3.6-debian-boolsize.patch
+Patch2: recode-3.6-alt-unicode-in-docs.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -70,6 +71,7 @@ files to allow you to develop applications using the `recode' libraries.
 %setup -n %name-%version%beta
 #patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 rm acinclude.m4 m4/libtool.m4 m4/flex.m4
@@ -106,6 +108,9 @@ chrpath -d %buildroot%_bindir/%name
 # - keep an eye on 3.7 (now in beta) and eventually 4.0
 
 %changelog
+* Tue Mar 09 2021 Ivan A. Melnikov <iv@altlinux.org> 3.6-alt12
+- Fix build
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.6-alt11.1.1
 - NMU: added BR: texinfo
 
