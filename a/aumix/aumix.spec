@@ -1,6 +1,6 @@
 Name: aumix
 Version: 2.9.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: A GTK+/Ncurses audio mixer
 License: GPL
@@ -25,6 +25,7 @@ Patch9: %name-2.8-rh-cursor-color.patch
 Patch10: aumix-2.9.1-alt-rh-crackrock.patch
 Patch11: %name-2.8-deb-fgbg.patch
 Patch13: aumix-2.9.1-alt-deb-failmsg.patch
+Patch14: aumix-2.9.1-deb-no-common.patch
 
 Requires: %name-minimal = %version-%release
 
@@ -56,6 +57,7 @@ line or scripts.
 %patch10 -p1
 %patch11 -p1
 %patch13 -p1
+%patch14 -p1
 bzip2 -9fk ChangeLog
 
 # Rename "xaumix" to "taumix".
@@ -116,6 +118,9 @@ EOF
 %config %_sysconfdir/firsttime.d/%name
 
 %changelog
+* Tue Mar 09 2021 Ivan A. Melnikov <iv@altlinux.org> 2.9.1-alt1.qa2
+- Add a patch from Debian to fix build with gcc10
+
 * Sun Apr 17 2011 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1.qa1
 - NMU: converted menu to desktop file
 
