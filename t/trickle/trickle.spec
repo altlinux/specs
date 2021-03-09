@@ -2,7 +2,7 @@
 
 Name:    trickle
 Version: 1.07
-Release: alt4
+Release: alt5
 
 Summary: a portable lightweight userspace bandwidth shaper
 
@@ -19,10 +19,11 @@ Patch0:  %name-1.07-debian-autoreconf_patch.patch
 Patch1:  %name-1.07-debian-library_path.patch
 Patch2:  %name-1.07-debian-man_pages.patch
 Patch3:  %name-1.07-debian-trickle-overload.patch
+Patch4:  %name-1.07-sunrpc.patch
 
-# Automatically added by buildreq on Sun Apr 17 2016
-# optimized out: python-base python-modules python3
-BuildRequires: glibc-devel-static libbsd-devel libevent-devel
+# Automatically added by buildreq on Tue Mar 09 2021
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config perl python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
+BuildRequires: glibc-devel-static libbsd-devel libevent-devel libtirpc-devel
 
 %description
 trickle is a portable lightweight userspace bandwidth shaper. It can run in
@@ -41,6 +42,7 @@ trickle runs entirely in userspace and does not require root privileges.
 %patch1
 %patch2
 %patch3
+%patch4
 
 %build
 %autoreconf
@@ -69,6 +71,9 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/%{name}d.conf
 %_libdir/%name
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.07-alt5
+- Fix for SunRPC intercace removal from glibc
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.07-alt4
 - NMU: Fix license.
 
