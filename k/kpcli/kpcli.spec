@@ -1,7 +1,7 @@
 # SPEC file for kpcli package
 
 Name: kpcli
-Version: 3.4
+Version: 3.6
 Release: alt1
 
 Summary: command line interface to work with KeePass database files
@@ -51,6 +51,9 @@ install -m 0644 -- %name.1 %buildroot/%_man1dir/
 %_man1dir/%{name}*
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.6-alt1
+- New version
+
 * Sun May 17 2020 Nikolay A. Fetisov <naf@altlinux.org> 3.4-alt1
 - New version
 
