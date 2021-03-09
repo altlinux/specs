@@ -1,7 +1,5 @@
-%global myname make-initrd
-
 Name: make-initrd
-Version: 2.12.0
+Version: 2.13.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -177,48 +175,61 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk
 %_bindir/*
 %_sbindir/*
-%_datadir/%myname
+%_datadir/%name
 %_man1dir/*
 /lib/initrd
-%exclude %_datadir/%myname/features/devmapper
-%exclude %_datadir/%myname/features/lvm
-%exclude %_datadir/%myname/features/luks
-%exclude %_datadir/%myname/features/nfsroot
-%exclude %_datadir/%myname/features/multipath
-%exclude %_datadir/%myname/features/plymouth
-%exclude %_datadir/%myname/features/mdadm
-%exclude %_datadir/%myname/features/ucode
-%exclude %_datadir/%myname/guess/ucode
+%exclude %_datadir/%name/features/devmapper
+%exclude %_datadir/%name/features/lvm
+%exclude %_datadir/%name/features/luks
+%exclude %_datadir/%name/features/nfsroot
+%exclude %_datadir/%name/features/multipath
+%exclude %_datadir/%name/features/plymouth
+%exclude %_datadir/%name/features/mdadm
+%exclude %_datadir/%name/features/ucode
+%exclude %_datadir/%name/guess/ucode
 %doc Documentation/*.md
 
 %files devmapper
-%_datadir/%myname/features/devmapper
+%_datadir/%name/features/devmapper
 
 %files lvm
-%_datadir/%myname/features/lvm
+%_datadir/%name/features/lvm
 
 %files luks
-%_datadir/%myname/features/luks
+%_datadir/%name/features/luks
 
 %files nfs
-%_datadir/%myname/features/nfsroot
+%_datadir/%name/features/nfsroot
 
 %files multipath
-%_datadir/%myname/features/multipath
+%_datadir/%name/features/multipath
 
 %files plymouth
-%_datadir/%myname/features/plymouth
+%_datadir/%name/features/plymouth
 
 %files mdadm
-%_datadir/%myname/features/mdadm
+%_datadir/%name/features/mdadm
 
 %ifarch %ix86 x86_64
 %files ucode
-%_datadir/%myname/features/ucode
-%_datadir/%myname/guess/ucode
+%_datadir/%name/features/ucode
+%_datadir/%name/guess/ucode
 %endif
 
 %changelog
+* Tue Mar 09 2021 Alexey Gladkov <legion@altlinux.ru> 2.13.0-alt1
+- Feature guestfs:
+  + Add lable utilities (thx Mikhail Gordeev)
+- Feature mdadm:
+  + Assemble only $MOUNTPOINTS related raids (thx Slava Aseev)
+- Runtime:
+  + Support root=PARTLABEL= and root=PARTUUID=
+- Utilities:
+  + depinfo: Show builtin modules hierarchically if --tree specified.
+- Misc:
+  + Improve man-pages.
+  + Add more tests.
+
 * Sat Jan 30 2021 Alexey Gladkov <legion@altlinux.ru> 2.12.0-alt1
 - Feature lkrg:
   + Respect kernel version when we check for a kernel module (thx Vladimir D. Seleznev).
