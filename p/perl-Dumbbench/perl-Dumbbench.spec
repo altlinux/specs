@@ -3,7 +3,7 @@
 %define real_name Dumbbench
 
 Name: perl-Dumbbench
-Version: 0.111
+Version: 0.501
 Release: alt1
 
 Summary: Perl module for reliable benchmarking with the least amount of thinking
@@ -53,5 +53,8 @@ from the user.
 %exclude %perl_vendor_privlib/Dumbbench/BoxPlot.pm
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.501-alt1
+- New version
+
 * Fri Aug 17 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.111-alt1
 - Initial build for ALT Linux Sisyphus
