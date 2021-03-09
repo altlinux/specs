@@ -4,7 +4,7 @@
 %define real_name Cassandra-Client
 
 Name: perl-Cassandra-Client
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Perl interface to Cassandra's native protocol
@@ -46,6 +46,9 @@ rm -f t/03-types.t
 %perl_vendor_autolib/Cassandra/Client*
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.18-alt1
+- New version
+
 * Sun Aug 09 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.17-alt1
 - New version
 
