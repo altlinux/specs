@@ -1,6 +1,6 @@
 Name: ifplugd
 Version: 0.28
-Release: alt5
+Release: alt6
 
 Summary: Detect and perform actions when an ethernet cable is (un)plugged
 License: GPL
@@ -11,6 +11,7 @@ Source0: %url/%name-%version.tar.gz
 Source1: %name.init
 Patch0:	ifplugd-0.28-alt-etcnet.patch
 Patch1:	ifplugd-0.28-interface.patch
+Patch2: ifplugd-0.28-alt-no-common.patch
 
 Packager: Denis Ovsienko <pilot@altlinux.ru>
 
@@ -44,6 +45,7 @@ NB: не каждый драйвер Ethernet в Linux выдаёт статус
 %setup
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 sed -i 's@/usr/local@@' man/*.[58]
 
 %build
@@ -79,6 +81,9 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 # - import Debian's apm script (suspend/resume ifplugd)
 
 %changelog
+* Tue Mar 09 2021 Ivan A. Melnikov <iv@altlinux.org> 0.28-alt6
+- fix build with gcc10
+
 * Tue Jun 05 2018 Michael Shigorin <mike@altlinux.org> 0.28-alt5
 - converted spec to ru_RU.UTF-8
 - minor spec cleanup
