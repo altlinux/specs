@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-NextVersion-Semantic
 
 Name: perl-Dist-Zilla-Plugin-NextVersion-Semantic
-Version: 0.2.5
-Release: alt2
+Version: 0.2.6
+Release: alt1
 
 Summary: Perl module to semantic-wise update the next version
 
@@ -43,12 +43,15 @@ export TZ=UTC
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README.mkdn Changes
 %perl_vendor_privlib/Dist/Zilla/Plugin/NextVersion/Semantic*
 %perl_vendor_privlib/Dist/Zilla/Plugin/PreviousVersion/Changelog*
 %perl_vendor_privlib/Dist/Zilla/Role/YANICK*
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.2.6-alt1
+- New version
+
 * Sat May 09 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.2.5-alt2
 - Bump release to override autoimports package
 
