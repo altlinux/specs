@@ -1,9 +1,9 @@
-%define git_version 13671
-%define git_commit 9d94a31eaea8ba5fee1f27816162fe1a291a0a4c
+%define git_version 13817
+%define git_commit 72a6fff36c42989c71765012e26285943085b8c5
 
 Name: dolphin-emu
 Version: 5.0.%git_version
-Release: alt2
+Release: alt1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -15,7 +15,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 ExclusiveArch: x86_64 aarch64
 
 # https://github.com/%name/dolphin/archive/%git_commit/dolphin-%git_commit.tar.gz
-Source: dolphin-%git_commit.tar
+Source: dolphin-%version.tar
 Patch0: %name-alt-git.patch
 
 BuildPreReq: pkgconfig(expat)
@@ -66,7 +66,7 @@ Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%git_commit
+%setup -n dolphin-%version
 %patch0 -p1
 
 %build
@@ -96,6 +96,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Tue Mar 09 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13817-alt1
+- Version 5.0-13817
+
 * Wed Feb 17 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13671-alt2
 - Enable Link Time Optimization
 - Install udev rules for GameCube Controller Adapter, Wiimotes and DolphinBar
