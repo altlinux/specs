@@ -17,8 +17,8 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.5.5
-Release: alt2
+Version: 1.5.7
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
@@ -137,6 +137,11 @@ Data files for installed tests.
 %if_enabled uefi
     -Dplugin_uefi_capsule=true \
     -Dplugin_redfish=true \
+    -Defi_sbat_distro_id="altlinux" \
+    -Defi_sbat_distro_summary="ALT Linux" \
+    -Defi_sbat_distro_pkgname="%name" \
+    -Defi_sbat_distro_version="%version" \
+    -Defi_sbat_distro_url="http://git.altlinux.org/gears/f/%{name}.git" \
     -Dplugin_nvme=true \
 %else
     -Dplugin_uefi_capsule=false \
@@ -237,8 +242,6 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_emmc.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ccgx.so
 %_libdir/fwupd-plugins-3/libfu_plugin_colorhug.so
-%_libdir/fwupd-plugins-3/libfu_plugin_coreboot.so
-%_libdir/fwupd-plugins-3/libfu_plugin_csr.so
 %_libdir/fwupd-plugins-3/libfu_plugin_cpu.so
 %if_enabled dell
 %_libdir/fwupd-plugins-3/libfu_plugin_dell.so
@@ -246,6 +249,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_dell_dock.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
+%_libdir/fwupd-plugins-3/libfu_plugin_dfu_csr.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ep963x.so
 %_libdir/fwupd-plugins-3/libfu_plugin_fresco_pd.so
@@ -280,6 +284,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_pixart_rf.so
 %_libdir/fwupd-plugins-3/libfu_plugin_optionrom.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_rmi.so
+%_libdir/fwupd-plugins-3/libfu_plugin_system76_launch.so
 %_libdir/fwupd-plugins-3/libfu_plugin_vli.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_cxaudio.so
 %_libdir/fwupd-plugins-3/libfu_plugin_logitech_hidpp.so
@@ -303,6 +308,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_uefi_dbx.so
 %config(noreplace)%_sysconfdir/fwupd/uefi_capsule.conf
 %config(noreplace)%_sysconfdir/fwupd/redfish.conf
+%_datadir/fwupd/uefi-capsule-ux.tar.xz
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
 %_libdir/fwupd-plugins-3/libfu_plugin_wacom_usb.so
@@ -323,7 +329,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 
 %files labels
 %if_enabled uefi
-%_datadir/locale/*/LC_IMAGES/fwupd*
+#%_datadir/locale/*/LC_IMAGES/fwupd*
 %endif
 
 %files tests
@@ -334,6 +340,12 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Tue Mar 09 2021 Anton Farygin <rider@altlinux.org> 1.5.7-alt1
+- 1.5.7
+
+* Fri Feb 19 2021 Anton Farygin <rider@altlinux.org> 1.5.6-alt1
+- 1.5.6
+
 * Thu Feb 04 2021 Nikita Ermakov <arei@altlinux.org> 1.5.5-alt2
 - Added riscv64 to ExclusiveArch tag
 - Removed extra libefivar-devel BR
