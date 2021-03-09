@@ -6,8 +6,8 @@
 %define ver_lteq() "%(rpmvercmp '%2' '%1')" >= "0"
 
 Name: gd3
-Version: 2.3.0
-Release: alt2
+Version: 2.3.2
+Release: alt1
 
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: fontconfig-devel libXpm-devel libfreetype-devel libjpeg-devel libpng-devel
 BuildRequires: libwebp-devel zlib-devel libtiff-devel
+BuildRequires: libheif-devel
 
 # needed for tests
 BuildRequires: fonts-ttf-dejavu
@@ -174,6 +175,10 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_bindir/*
 
 %changelog
+* Tue Mar 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.2-alt1
+- Updated to upstream version 2.3.2.
+- Enabled HEIF support.
+
 * Tue Apr 21 2020 Nikita Ermakov <arei@altlinux.org> 2.3.0-alt2
 - Fix build on riscv64 (gdimagegrayscale/basic and
   gdimagecopyresampled/bug00201 tests are fails because of the
