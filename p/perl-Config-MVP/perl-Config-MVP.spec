@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Config::MVP
 
 Name: perl-Config-MVP
-Version: 2.200011
+Version: 2.200012
 Release: alt1
 
 Summary: Perl module to work with multivalue-property INI files
@@ -45,6 +45,9 @@ things that do.
 %perl_vendor_privlib/Config/MVP*
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.200012-alt1
+- New version
+
 * Sat Apr 21 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.200011-alt1
 - New version
 
