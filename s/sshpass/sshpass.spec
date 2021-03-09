@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sshpass
-Version: 1.06
+Version: 1.09
 Release: alt1
 URL: http://sourceforge.net/projects/sshpass/
 
@@ -38,6 +38,9 @@ authentiaction instead.
 %doc AUTHORS COPYING NEWS README
 
 %changelog
+* Tue Mar 09 2021 Stanislav Levin <slev@altlinux.org> 1.09-alt1
+- 1.06 -> 1.09.
+
 * Tue Sep 22 2020 Stanislav Levin <slev@altlinux.org> 1.06-alt1
 - 1.05 -> 1.06.
 
