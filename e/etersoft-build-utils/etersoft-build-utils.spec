@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.0.4
+Version: 3.0.6
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Mar 10 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.6-alt1
+- drop hard checkbashisms and gear requires
+- check_reqs.sh: add --detail
+
+* Thu Mar 04 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.5-alt1
+- rpmgs: fix bugs
+- rpmbb: add --target ARCH support
+
 * Fri Jan 08 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt1
 - gitask: allow --test-only for run
 - rpmgs: fix Source-git support, improve commented url detection
