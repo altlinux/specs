@@ -1,6 +1,6 @@
 Name: lilo
 Version: 24.2
-Release: alt2
+Release: alt3
 Summary: The boot loader for Linux and other operating systems
 License: MIT
 Group: System/Kernel and hardware
@@ -22,6 +22,7 @@ Patch19: lilo-22.8-alt-devmapper.patch
 Patch20: lilo-22.8-alt-md-devmapper.patch
 Patch21: lilo-24.2-suse-gfx.patch
 Patch22: lilo-24.0-alt-format.patch
+Patch23: lilo-24.2-alt-gcc-10-fno-common.patch
 ExclusiveArch: %ix86 x86_64
 
 BuildRequires: dev86 libblkid-devel libdevmapper-devel perl(Pod/Text.pm) %_bindir/uudecode
@@ -64,6 +65,7 @@ This package contains extra documentation for LILO.
 #patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 
 sed -i 's/\(mkdir \)/\1-p /g' Makefile
 sed -i 's/\(keytab-lilo\)\.pl/\1/g' Makefile doc/user.tex
@@ -113,6 +115,9 @@ fi
 
 
 %changelog
+* Tue Mar 09 2021 Slava Aseev <ptrnine@altlinux.org> 24.2-alt3
+- Fixed build with gcc-10
+
 * Mon Aug 12 2019 Alexey Shabalin <shaba@altlinux.org> 24.2-alt2
 - update homapage url
 - drop requires lilo from lilo-doc package
