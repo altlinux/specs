@@ -3,7 +3,7 @@
 %define real_name PAR
 
 Name: perl-PAR
-Version: 1.016
+Version: 1.017
 Release: alt1
 
 Summary: Perl Archive Toolkit
@@ -43,6 +43,9 @@ and modules stored inside compressed .par files.
 %perl_vendor_privlib/PAR*
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.017-alt1
+- New version
+
 * Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.016-alt1
 - New version
 
