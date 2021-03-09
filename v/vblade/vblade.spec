@@ -1,6 +1,6 @@
 Name: vblade
-Version: 19
-Release: alt1.qa1
+Version: 22
+Release: alt1
 
 Summary: Virtual EtherDrive (R) blade daemon
 Group: System/Kernel and hardware
@@ -12,6 +12,7 @@ Source: http://dl.sf.net/aoetools/%name-%version.tgz
 Source1: %name.init
 Source2: %name.conf
 Patch0: %name-makefile.patch
+Patch1: %name-vars.patch
 
 %description
 The vblade is the virtual EtherDrive (R) blade, a program that makes a
@@ -26,6 +27,7 @@ access the storage if it has a compatible aoe kernel driver.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p2
 
 %build
 %make
@@ -53,6 +55,9 @@ install -D -m644 %SOURCE2 %buildroot%_sysconfdir/%name.conf
 %_man8dir/vblade.8*
 
 %changelog
+* Fri Feb 19 2021 Pavel Vasenkov <pav@altlinux.org> 22-alt1
+- Bump new version
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 19-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
