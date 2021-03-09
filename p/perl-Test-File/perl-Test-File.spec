@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File
 
 Name: perl-Test-File
-Version: 1.443
+Version: 1.447
 Release: alt1
 
 Summary: Perl module to test file attributes
@@ -17,7 +17,7 @@ BuildArch: noarch
 %define real_name Test-File
 Source: %real_name-%version.tar
 Patch0: %real_name-%version-%release.patch
-Patch1: %real_name-1.41-alt-fix_tests.patch
+Patch1: %real_name-1.447-alt-fix_tests.patch
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
@@ -53,6 +53,9 @@ rm -f -- t/win32.t t/normalize.t
 
 
 %changelog
+* Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.447-alt1
+- New version
+
 * Tue Apr 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.443-alt1
 - New version
 
