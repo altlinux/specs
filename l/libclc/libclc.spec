@@ -1,15 +1,16 @@
 Name: libclc
-Version: 0.2.0
-Release: alt6
+Version: 11.0.1
+Release: alt1
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
 Group: System/Libraries
 URL: https://libclc.llvm.org
 
-Source: %name-%version.tar
+Source: https://github.com/llvm/llvm-project/releases/tag/llvmorg-%version/%name-%version.src.tar.xz
+Patch0: libclc-11.0.1-python3.patch
 
 BuildPreReq: /proc
-BuildRequires: clang >= 10.0.0 libstdc++-devel llvm-devel >= 10.0.0 lld >= 10.0.0
+BuildRequires: cmake gcc-c++ python3 clang >= %version libstdc++-devel llvm-devel >= %version lld >= %version
 
 %description
 libclc is an open source, BSD licensed implementation of the library
@@ -37,7 +38,6 @@ functions.
 libclc currently only supports the PTX target, but support for more
 targets is welcome.
 
-
 %package devel
 Summary: Development files for %name
 Group: Development/C++
@@ -48,29 +48,30 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -q
+%setup -q -n %name-%version.src
+%patch0 -p1
 
 %build
 export CFLAGS=" -D__extern_always_inline=inline"
-./configure.py \
-	--prefix=%_prefix \
-	--libexecdir=%_prefix/libexec/clc \
-	--pkgconfigdir=%_pkgconfigdir
+%cmake -DCMAKE_INSTALL_DATADIR:PATH=%_lib
 
-%make_build
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%make -C BUILD DESTDIR=%buildroot install
 
 %files
 %doc LICENSE.TXT README.TXT CREDITS.TXT
-%_prefix/libexec/clc
+%_libdir/clc
 
 %files devel
 %_includedir/clc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 11.0.1-alt1
+- 11.0.1
+
 * Thu Oct 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt6
 - rebuild with llvm 11.0
 
