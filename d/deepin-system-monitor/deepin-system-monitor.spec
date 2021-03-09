@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 5.8.0.7
+Version: 5.8.0.9
 Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
@@ -46,14 +46,14 @@ Requires: icon-theme-hicolor
 %prep
 %setup
 # Upstream likes to refactor code while ignoring pull requests
-sed -i '20i#include <QMap>\n#include <QHash>\n#include <QPainterPath>' src/compact_memory_monitor.cpp
-sed -i '1i#include <QPainterPath>' src/memory_monitor.cpp src/compact_network_monitor.h \
-                                   src/network_monitor.h src/utils.cpp \
-                                   src/gui/system_service_page_widget.cpp \
-                                   src/gui/process_page_widget.cpp \
-                                   src/gui/base_header_view.cpp src/disk_monitor.h \
-                                   src/cpu_monitor.h src/compact_disk_monitor.h \
-                                   src/compact_cpu_monitor.cpp
+#sed -i '20i#include <QMap>\n#include <QHash>\n#include <QPainterPath>' src/compact_memory_monitor.cpp
+#sed -i '1i#include <QPainterPath>' src/memory_monitor.cpp src/compact_network_monitor.h \
+#                                   src/network_monitor.h src/utils.cpp \
+#                                   src/gui/system_service_page_widget.cpp \
+#                                   src/gui/process_page_widget.cpp \
+#                                   src/gui/base_header_view.cpp src/disk_monitor.h \
+#                                   src/cpu_monitor.h src/compact_disk_monitor.h \
+#                                   src/compact_cpu_monitor.cpp
 # Fixed paths
 sed -i 's|/usr/lib/virtualbox/VirtualBox|%_libdir/virtualbox/VirtualBox|' src/utils.cpp
 # Workaround build failure with GCC 10
@@ -91,6 +91,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/%name/
 
 %changelog
+* Tue Mar 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.0.9-alt1
+- New version (5.8.0.9) with rpmgs script.
+
 * Fri Dec 04 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.7-alt1
 - New version (5.8.0.7) with rpmgs script.
 - Fixed build with gcc10.
