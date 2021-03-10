@@ -4,7 +4,7 @@
 ExclusiveArch: %ix86 x86_64
 
 Name: dub
-Version: 1.23.0
+Version: 1.24.1
 Release: alt1
 Summary: Package and build management system for D
 Group: Development/Other
@@ -55,5 +55,8 @@ install -Dm755 bin/dub %buildroot%_bindir/dub
 %_bindir/dub
 
 %changelog
+* Wed Mar 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.24.1-alt1
+- Updated to upstream version 1.24.1.
+
 * Fri Oct 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.23.0-alt1
 - Initial build for ALT (ALT #39060).
