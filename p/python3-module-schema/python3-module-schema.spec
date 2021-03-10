@@ -1,7 +1,7 @@
 %define modname schema
 
 Name: python3-module-%modname
-Version: 0.7.2
+Version: 0.7.4
 Release: alt1
 
 Summary: Simple data validation library
@@ -37,6 +37,9 @@ Python data-types.
 %doc README*
 
 %changelog
+* Wed Mar 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt1
+- 0.7.4
+
 * Tue Jul 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - first build for Sisyphus
 
