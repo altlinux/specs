@@ -1,6 +1,6 @@
 Name: xbanner
 Version: 1.31
-Release: alt1.qa1
+Release: alt2
 Epoch: 1
 
 Summary: A program for customizing the look of the standard XDM interface
@@ -14,7 +14,8 @@ Source: XBanner1.31.tar
 Source1: xbanner.defaults
 Source2: xbanner.man
 
-Patch: xbanner-1.31-deb-alt.patch
+Patch0: xbanner-1.31-deb-alt.patch
+Patch1: xbanner-1.31-vars.patch
 
 # Automatically added by buildreq on Wed Apr 23 2008
 BuildRequires: imake libX11-devel xorg-cf-files
@@ -29,7 +30,9 @@ and/or X background.
 
 %prep
 %setup -q -n XBanner%version
-%patch -p1
+%patch0 -p1
+%patch1 -p2
+
 install -pm644 %_sourcedir/xbanner.{defaults,man} .
 
 %build
@@ -48,6 +51,10 @@ make CFLAGS="%optflags" BINDIR=%_bindir XLIBDIR=%_libdir
 %doc *.xpm samples docs/*
 
 %changelog
+* Wed Mar 10 2021 Pavel Vasenkov <pav@altlinux.org> 1:1.31-alt2
+- FTBFS workaround
+- changed global variables definitions
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.31-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
