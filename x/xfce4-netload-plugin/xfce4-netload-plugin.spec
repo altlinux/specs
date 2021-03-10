@@ -1,26 +1,23 @@
 Name: xfce4-netload-plugin
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Netload monitor plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Модуль для просмотра загрузки сети на панели Xfce
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://docs.xfce.org/panel-plugins/xfce4-netload-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
-# git://git.xfce.org/panel-plugins/xfce4-netload-plugin
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-netload-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 
-BuildRequires: glib2-devel libatk-devel libgtk+3-devel libpango-devel libxml2-devel pkgconfig
-BuildRequires: perl-XML-Parser intltool
+BuildRequires: glib2-devel libgtk+3-devel
 
-Requires: xfce4-panel >= 4.8
+Requires: xfce4-panel >= 4.12
 
 %define _unpackaged_files_terminate_build 1
 
@@ -53,6 +50,12 @@ Requires: xfce4-panel >= 4.8
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Mar 10 2021 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.4.0.
+
 * Tue Aug 13 2019 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
 - Updated to 1.3.2.
 
