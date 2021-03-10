@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.1.178
+Version: 3.0.3
 Release: alt1
 
 Summary: %modname is a lightweight template library
@@ -10,7 +10,7 @@ Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/%modname
 
-#VCS: https://github.com/akornatskyy/wheezy.template.git
+Vcs: https://github.com/akornatskyy/wheezy.template.git
 Source: https://pypi.io/packages/source/w/%modname/%modname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
@@ -53,6 +53,9 @@ tox.py3
 %doc README*
 
 %changelog
+* Wed Mar 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
+- 3.0.3
+
 * Tue Jul 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.178-alt1
 - first build for Sisyphus
 
