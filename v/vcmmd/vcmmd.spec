@@ -1,20 +1,26 @@
 %def_with check
 
 Name:    vcmmd
-Version: 8.0.1
-Release: alt4
+Version: 8.0.3
+Release: alt1
 
 Summary: Virtuozzo containers memory management daemon
 License: LGPL-2.1
 Group:   System/Configuration/Other
-# git-vsc: https://src.openvz.org/scm/ovz/vcmmd.git
+
 URL:     https://src.openvz.org/
+Vcs:     https://src.openvz.org/scm/ovz/vcmmd.git
 
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
+Source:  %name-%version.tar
+Patch: %name-%version.patch
+
+ExclusiveArch: x86_64
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: libvcmmd
+BuildRequires: lib%name
 BuildRequires: systemd
 BuildRequires: gcc-c++
 
@@ -22,11 +28,6 @@ BuildRequires: gcc-c++
 BuildRequires: /proc
 BuildRequires: python3-module-mock python3-module-pytest python3-module-psutil
 %endif
-
-ExclusiveArch: x86_64
-
-Source:  %name-%version.tar
-Patch: %name-%version.patch
 
 %description
 Virtuozzo containers memory management daemon
@@ -59,8 +60,12 @@ popd
 %config(noreplace) %_sysconfdir/dbus-1/system.d/com.virtuozzo.vcmmd.conf
 %config(noreplace) %_sysconfdir/vz/*.conf
 %config(noreplace) %_sysconfdir/logrotate.d/*
+%config %_tmpfilesdir/vcmmd-tmpfiles.conf
 
 %changelog
+* Wed Mar 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 8.0.3-alt1
+- 8.0.3
+
 * Mon Sep 28 2020 Andrew A. Vasilyev <andy@altlinux.org> 8.0.1-alt4
 - merge dist-vz7-u15 branch
 
