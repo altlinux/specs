@@ -4,7 +4,7 @@
 
 Name: mdadm
 Version: 4.1
-Release: alt2
+Release: alt3
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -101,6 +101,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.* mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Wed Mar 10 2021 Slava Aseev <ptrnine@altlinux.org> 4.1-alt3
+- fix ftbfs due to -Werror=stringop-truncation
+
 * Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 4.1-alt2
 - backported fixes from upstream
 
