@@ -3,6 +3,9 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
+%def_enable gtk2
+%def_enable gtk4
+
 %def_enable python
 %def_disable python2
 %def_enable dconf
@@ -18,7 +21,7 @@
 %def_disable installed_tests
 
 Name: ibus
-Version: 1.5.23
+Version: 1.5.24
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -32,9 +35,16 @@ Source: https://github.com/%name/%name/releases/download/%version/%name-%version
 Source: %name-%version.tar
 %endif
 Source1: ibus-xinput
+# fc
+Patch: ibus-1385349-segv-bus-proxy.patch
 
+%if_enabled gtk2
 %define gtk2_binary_version %(pkg-config --variable=gtk_binary_version gtk+-2.0)
+%endif
 %define gtk3_binary_version %(pkg-config --variable=gtk_binary_version gtk+-3.0)
+%if_enabled gtk4
+%define gtk4_binary_version %(pkg-config --variable=gtk_binary_version gtk4)
+%endif
 
 Requires: iso-codes setxkbmap xmodmap
 Requires: lib%name = %EVR
@@ -50,8 +60,9 @@ BuildRequires(pre): rpm-build-python3
 
 %{?_enable_python2:BuildRequires(pre): rpm-build-python}
 BuildRequires: vala-tools >= 0.18
-BuildRequires: libgtk+2-devel
+%{?_enable_gtk2:BuildRequires: libgtk+2-devel}
 BuildRequires: libgtk+3-devel
+%{?_enable_gtk4:BuildRequires: libgtk4-devel}
 BuildRequires: libdbus-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc
@@ -119,6 +130,15 @@ Requires: lib%name = %EVR
 %description gtk3
 This package contains IBus im module for gtk3.
 
+%package gtk4
+Summary: IBus im module for gtk4
+Group: System/Libraries
+Requires(pre): libgtk4
+Requires: lib%name = %EVR
+
+%description gtk4
+This package contains IBus im module for gtk4.
+
 %package -n lib%name-devel
 Summary: Development tools for ibus
 Group: Development/C
@@ -183,14 +203,17 @@ the functionality of the installed Intelligent Input Bus.
 
 %prep
 %setup
+%patch -p1
 %{?_enable_snapshot:touch ChangeLog}
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     --disable-static \
-    --enable-gtk2 \
+    %{?_disable_gtk2:--disable-gtk2} \
     --enable-gtk3 \
+    %{?_enable_gtk4:--enable-gtk4} \
     --enable-xim \
     %{?_enable_snapshot:--enable-gtk-doc} \
     %if_enabled python
@@ -207,7 +230,7 @@ the functionality of the installed Intelligent Input Bus.
     %{?_disable_unicode_dict:--disable-unicode-dict} \
     %{subst_enable appindicator} \
     %{?_enable_installed_tests:--enable-install-tests}
-    %nil
+%nil
 %make_build
 
 %install
@@ -274,11 +297,19 @@ xvfb-run %make check
 %files -n lib%name-gir
 %_typelibdir/IBus-%api_ver.typelib
 
+%if_enabled gtk2
 %files gtk2
 %_libdir/gtk-2.0/%gtk2_binary_version/immodules/im-ibus.so
+%endif
 
 %files gtk3
 %_libdir/gtk-3.0/%gtk3_binary_version/immodules/im-ibus.so
+
+%if_enabled gtk4
+%files gtk4
+%_libdir/gtk-4.0/%gtk4_binary_version/immodules/libim-ibus.so
+%endif
+
 
 %exclude %_libdir/gtk-*.0/*/immodules/*.la
 
@@ -319,6 +350,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Mon Feb 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.24-alt1
+- 1.5.24
+- new -gtk4 subpackage
+
 * Tue Sep 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.23-alt1
 - 1.5.23
 

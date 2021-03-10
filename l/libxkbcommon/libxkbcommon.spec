@@ -1,21 +1,25 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
+
+%define _name xkbcommon
 
 %def_enable x11
 %def_enable xkbregistry
+%def_enable docs
 %def_enable check
 
-Name: libxkbcommon
-Version: 1.0.3
+Name: lib%_name
+Version: 1.1.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
 Group: System/Libraries
 License: MIT
-Url: http://www.xkbcommon.org
+Url: https://www.xkbcommon.org
 
 %if_disabled snapshot
 Source: %url/download/%name-%version.tar.xz
+#Source: https://github.com/xkbcommon/libxkbcommon/archive/%_name-%version.tar.gz
 %else
 Vcs: https://github.com/xkbcommon/libxkbcommon.git
 Source: %name-%version.tar
@@ -24,11 +28,11 @@ Source: %name-%version.tar
 BuildRequires(pre): meson
 BuildRequires: bison flex
 BuildRequires: xkeyboard-config-devel >= 2.29
-%{?_enable_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb) >= 1.10}
-BuildRequires: doxygen
 # since 7.0 for wayland utilities
 BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
+%{?_enable_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb) >= 1.10}
 %{?_enable_xkbregistry:BuildRequires: libxml2-devel}
+%{?_enable_docs:BuildRequires: doxygen}
 %{?_enable_check:BuildRequires: python3-module-pytest %{?_enable_x11:xvfb-run}}
 
 %description
@@ -55,16 +59,26 @@ server.
 %package x11-devel
 Summary: X.Org X11 XKB keymap creation library
 Group: System/Libraries
-Requires: %name-x11 = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-x11 = %EVR
+Requires: %name-devel = %EVR
 
 %description x11-devel
 X.Org X11 XKB keymap creation library development package
+
+%package devel-doc
+Summary: Development documentation for Pango
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+This package contains development documentation for %name.
 
 %package tools
 Summary: Tools from %name package
 Group: Development/Tools
 Requires: %name = %EVR
+Requires: %name-x11 = %EVR
 
 %description tools
 This package provides xkbcli -- tool to interact with XKB keymaps.
@@ -76,7 +90,8 @@ This package provides xkbcli -- tool to interact with XKB keymaps.
 %meson \
 	-Ddefault_library=shared \
 	%{?_disable_x11:-Denable-x11=false} \
-	%{?_disable_xkbregistry:-Denable-xkbregistry=false}
+	%{?_disable_xkbregistry:-Denable-xkbregistry=false} \
+	%{?_disable_docs:-Denable-docs=false}
 %nil
 %meson_build
 
@@ -89,42 +104,48 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files
 %doc LICENSE NEWS README*
-%_libdir/libxkbcommon.so.*
+%_libdir/%name.so.*
 %{?_enable_xkbregistry:%_libdir/libxkbregistry.so.*}
 
 %files devel
-%_libdir/libxkbcommon.so
-%dir %_includedir/xkbcommon/
-%_includedir/xkbcommon/xkbcommon.h
-%_includedir/xkbcommon/xkbcommon-compat.h
-%_includedir/xkbcommon/xkbcommon-compose.h
-%_includedir/xkbcommon/xkbcommon-keysyms.h
-%_includedir/xkbcommon/xkbcommon-names.h
-%_pkgconfigdir/xkbcommon.pc
+%_libdir/%name.so
+%dir %_includedir/%_name/
+%_includedir/%_name/%_name.h
+%_includedir/%_name/%_name-compat.h
+%_includedir/%_name/%_name-compose.h
+%_includedir/%_name/%_name-keysyms.h
+%_includedir/%_name/%_name-names.h
+%_pkgconfigdir/%_name.pc
 %{?_enable_xkbregistry:%_libdir/libxkbregistry.so
-%_includedir/xkbcommon/xkbregistry.h
+%_includedir/%_name/xkbregistry.h
 %_pkgconfigdir/xkbregistry.pc}
 
-%doc %_datadir/doc/%name/
+%{?_enable_docs:
+%files devel-doc
+%_datadir/doc/%name/}
 
 %if_enabled x11
 %files x11
-%_libdir/libxkbcommon-x11.so.*
+%_libdir/%name-x11.so.*
 
 %files x11-devel
-%_libdir/libxkbcommon-x11.so
-%_includedir/xkbcommon/xkbcommon-x11.h
-%_pkgconfigdir/xkbcommon-x11.pc
+%_libdir/%name-x11.so
+%_includedir/%_name/%_name-x11.h
+%_pkgconfigdir/%_name-x11.pc
 %endif
 
 %files tools
 %_bindir/xkbcli
-%dir %_libexecdir/xkbcommon
-%_libexecdir/xkbcommon/xkbcli-*
+%dir %_libexecdir/%_name
+%_libexecdir/%_name/xkbcli-*
 %_man1dir/xkbcli*
 
 
 %changelog
+* Tue Mar 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- updated to 1.1.0-7-g21c864c
+- new devel-doc subpackage
+
 * Tue Nov 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
