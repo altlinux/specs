@@ -1,9 +1,9 @@
 Name: tcb
-Version: 1.1.9.1
+Version: 1.2
 Release: alt1
 
 Summary: Libraries and tools implementing the %name password shadowing scheme
-License: GPL or BSD
+License: GPL-2.0-or-later or BSD-3-Clause
 Group: System/Base
 Url: http://www.openwall.com/tcb/
 
@@ -29,31 +29,31 @@ NSS modules and is also used by programs from the shadow-utils package.
 
 %package -n lib%name
 Summary: %name shared library
-License: GPL or BSD
+License: GPL-2.0-or-later or BSD-3-Clause
 Group: System/Libraries
 
 %package -n lib%name-devel
 Summary: Libraries and header files for building %name-aware applications
-License: GPL or BSD
+License: GPL-2.0-or-later or BSD-3-Clause
 Group: Development/C
 Requires: lib%name = %version-%release
 
 %package -n lib%name-devel-static
 Summary: Static libraries for building statically linked %name-aware applications
-License: GPL or BSD
+License: GPL-2.0-or-later or BSD-3-Clause
 Group: Development/C
 Requires: lib%name-devel = %version-%release
 
 %package -n nss_%name
 Summary: %name NSS module
-License: GPL or BSD
+License: GPL-2.0-or-later or BSD-3-Clause
 Group: System/Libraries
 Requires: lib%name = %version-%release
 
 %set_pam_name pam_%name
 %package -n %pam_name
 Summary: %name PAM module
-License: GPL or BSD
+License: GPL-2.0-or-later or BSD-3-Clause
 Group: System/Base
 Requires: nss_%name = %version-%release, libpam%_pam_name_suffix
 Provides: pam_%name = %version-%release
@@ -61,7 +61,7 @@ Obsoletes: pam_%name
 
 %package utils
 Summary: %name utilities
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Base
 Provides: /etc/tcb
 Requires: %pam_name = %version-%release, shadow-convert
@@ -166,6 +166,9 @@ fi
 %_man8dir/tcb_*
 
 %changelog
+* Wed Jan 20 2021 Dmitry V. Levin <ldv@altlinux.org> 1.2-alt1
+- 1.1.9.1 -> 1.2.
+
 * Thu Jul 16 2020 Dmitry V. Levin <ldv@altlinux.org> 1.1.9.1-alt1
 - 1.1.0.1 -> 1.1.9.1.
 
