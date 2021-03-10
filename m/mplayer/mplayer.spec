@@ -7,7 +7,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38203
+%define svnrev 38276
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -299,7 +299,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt5.38203.1
+Release: alt6.%svnrev.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1022,6 +1022,7 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 #%%_datadir/pixmaps/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/%name/skins
+%_man1dir/gmplayer.1*
 %endif
 
 
@@ -1130,6 +1131,10 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Wed Mar 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt6.38276.1
+- Updated to SVN snapshot (revision 38276).
+- New manual page: gmplayer(1).
+
 * Tue Dec 01 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt5.38203.1
 - Updated to SVN snapshot (revision 38203).
 - Enabled bzlib, twolame and postproc support.
