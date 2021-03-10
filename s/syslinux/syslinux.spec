@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt16
+Release: alt17
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -40,6 +40,8 @@ Patch20: syslinux-4.04-python3.diff
 Patch21: sysmacros.patch
 Patch22: remove-note-gnu-section.patch
 Patch23: syslinux-4.04-lzo.diff
+Patch24: syslinux-4.04-gcc10.diff
+Patch25: syslinux-4.04-fix-asm-constraints.patch
 
 #BuildPrereq: nasm perl-base
 BuildRequires: rpm-build-python3
@@ -112,6 +114,8 @@ architectures.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p0
+%patch24 -p0
+%patch25 -p2
 install -m 0644 %SOURCE2 .
 sed -i 's,GCC_VERSION,_&,g' gpxe/src/arch/i386/Makefile
 
@@ -165,6 +169,10 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Wed Mar 10 2021 Slava Aseev <ptrnine@altlinux.org> 2:4.04-alt17
+- sync patches with SuSE (zerg@)
+- fix asm constraints
+
 * Mon Dec 09 2019 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt16
 - build with python3
 
