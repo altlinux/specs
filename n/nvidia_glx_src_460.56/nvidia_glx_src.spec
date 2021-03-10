@@ -27,7 +27,7 @@
 %define nv_version 460
 %define nv_release 56
 %define nv_minor   %nil
-%define pkg_rel alt216
+%define pkg_rel alt217
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -107,6 +107,7 @@ Source100: nvidia_create_xinf
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
 Patch3: kernel-5.7.patch
+Patch4: kernel-5.11-aarch64.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -173,6 +174,9 @@ pushd kernel
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%ifarch aarch64
+%patch4 -p1
+%endif
 rm -rf precompiled
 popd
 
@@ -367,6 +371,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 10 2021 Sergey V Turchin <zerg@altlinux.org> 460.56-alt217
+- add fix for aarch64 kernel-5.11
+
 * Wed Mar 03 2021 Sergey V Turchin <zerg@altlinux.org> 460.56-alt216
 - new version
 
