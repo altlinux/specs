@@ -1,78 +1,222 @@
-Name: bochs
-Version: 2.6.2
-Release: alt1
-
-Summary: Bochs Project x86 PC Emulator
-Summary(ru_RU.KOI8-R): Проект Bochs -- эмулятор x86 PC
-
-License: LGPL
+%define _hardened_build 1
+Name:           bochs
+Version:        2.6.11
+Release:        alt1
+Summary:        Portable x86 PC emulator
+License:        LGPLv2+
 Group: Emulators
-Url: http://bochs.sourceforge.net
-
 Packager: Ilya Mashkin <oddity@altlinux.ru>
+URL:            http://bochs.sourceforge.net/
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Patch0: %{name}-0001_bx-qemu.patch
+Patch3: %{name}-0008_qemu-bios-provide-gpe-_l0x-methods.patch
+Patch4: %{name}-0009_qemu-bios-pci-hotplug-support.patch
+Patch7: %{name}-nonet-build.patch
+# Update configure for aarch64 (bz #925112)
+Patch8: bochs-aarch64.patch
+Patch10: bochs-usb.patch
+Patch11: bochs-2.6.10-slirp-include.patch
+Patch12: smp-debug.patch
+Patch13: iasl-filename.patch
 
-Source: %name-%version.tar.gz
-Source1: bochs.sh
+ExcludeArch:    s390x
 
-# Automatically added by buildreq on Fri Sep 15 2006
-BuildRequires: docbook-utils gcc-c++ libgtk+2-devel imake libpcap-devel libreadline-devel libXpm-devel libXt-devel wget wxGTK-devel libwxGTK-devel xorg-cf-files zlib-devel libXau-devel libXdmcp-devel libXrandr-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libXt-devel libXpm-devel libSDL2-devel readline-devel byacc libncurses-devel 
+BuildRequires:  docbook-utils
+BuildRequires:  gtk2-devel
+BuildRequires: make
+%ifarch %{ix86} x86_64
+BuildRequires:  dev86 iasl
 
-#uildRequires: OpenSP XFree86-libs docbook-dtds docbook-style-dsssl docbook-utils gcc-c++ glib gtk+-devel hostinfo libjpeg libncurses-devel libpcap-devel libreadline-devel libstdc++-devel libtiff openjade sgml-common wxGTK-devel xml-common
+Requires:       %{name}-bios = %{version}-%{release}
+%endif
+Requires:       seavgabios
 
 %description
-Bochs is a portable x86 PC emulation software package that emulates enough of
-the x86 CPU, related AT hardware, and BIOS to run DOS, Windows '95, Minix 2.0,
-and other OS's, all on your workstation.
+Bochs is a portable x86 PC emulation software package that emulates
+enough of the x86 CPU, related AT hardware, and BIOS to run DOS,
+Windows '95, Minix 2.0, and other OS's, all on your workstation.
 
-%description -l ru_RU.KOI8-R
-Bochs -- это не зависящий от аппаратной платформы эмулятор x86 PC,
-который эмулирует процессор x86, необходимое аппаратное обеспечение AT
-и BIOS для запуска DOS, Windows '95, Minix 2.0, и других операционных
-систем на вашей рабочей станции.
+
+%package        debugger
+Summary:        Bochs with builtin debugger
+Requires:       %{name} = %{version}-%{release}
+Group: Emulators
+
+%description    debugger
+Special version of bochs compiled with the builtin debugger.
+
+
+%package        gdb
+Summary:        Bochs with support for debugging with gdb
+Requires:       %{name} = %{version}-%{release}
+Group: Emulators
+%description    gdb
+Special version of bochs compiled with a gdb stub so that the software running
+inside the emulator can be debugged with gdb.
+
+%ifarch %{ix86} x86_64
+# building firmwares are quite tricky, because they often have to be built on
+# their native architecture (or in a cross-capable compiler, that we lack in
+# koji), and deployed everywhere. Recent koji builders support a feature
+# that allow us to build packages in a single architecture, and create noarch
+# subpackages that will be deployed everywhere. Because the package can only
+# be built in certain architectures, the main package has to use
+# BuildArch: <nativearch>, or something like that.
+# Note that using ExclusiveArch is _wrong_, because it will prevent the noarch
+# packages from getting into the excluded repositories.
+%package	bios
+Summary:        Bochs bios
+#BuildArch:      noarch
+Provides:       bochs-bios-data = 2.3.8.1
+Obsoletes:      bochs-bios-data < 2.3.8.1
+Group: Emulators
+
+%description bios
+Bochs BIOS is a free implementation of a x86 BIOS provided by the Bochs project.
+It can also be used in other emulators, such as QEMU
+%endif
+
+%package        devel
+Summary:        Bochs header and source files
+Requires:       %{name} = %{version}-%{release}
+Group: Emulators
+
+%description    devel
+Header and source files from bochs source.
 
 %prep
 %setup -q
-%__cp %SOURCE1 bochs.sh
-%__subst "s|bios/|/usr/share/bochs/|" ./.bochsrc
-%__subst "s|#config_interface: wx|config_interface: wx|" ./.bochsrc
-%__subst "s|#display_library: wx|display_library: wx|" ./.bochsrc
+%patch0 -p1
+%patch3 -p1
+%patch4 -p1
+%patch7 -p0 -z .nonet
+%patch10 -p0
+%patch11 -p0
+%patch12 -p3
+%patch13 -p1
+
+# Fix up some man page paths.
+sed -i -e 's|/usr/local/share/|%{_datadir}/|' doc/man/*.*
+
+# remove executable bits from sources to make rpmlint happy with the debuginfo
+chmod -x `find -name '*.cc' -o -name '*.h' -o -name '*.inc'`
+# Fix CHANGES encoding
+iconv -f ISO_8859-2 -t UTF8 CHANGES > CHANGES.tmp
+mv CHANGES.tmp CHANGES
+
 
 %build
-%configure --enable-fpu --enable-cdrom --enable-sb16=linux  --enable-split-hd  --enable-ne2000 --with-x11 --with-wx --enable-pci --enable-usb 
+# Note: the CPU level, MMX et al affect what the emulator will emulate, they
+# are not properties of the build target architecture.
+# Note2: passing --enable-pcidev will change bochs license from LGPLv2+ to
+# LGPLv2 (and requires a kernel driver to be usefull)
+CONFIGURE_FLAGS=" \
+  --enable-ne2000 \
+  --enable-pci \
+  --enable-all-optimizations \
+  --enable-clgd54xx \
+  --enable-sb16=linux \
+  --enable-3dnow \
+  --with-x11 \
+  --with-nogui \
+  --with-term \
+  --with-rfb \
+  --with-sdl2 \
+  --without-wx \
+  --with-svga=no \
+  --enable-cpu-level=6 \
+  --enable-disasm \
+  --enable-e1000 \
+  --enable-x86-64 \
+  --enable-smp"
+export CXXFLAGS="$RPM_OPT_FLAGS -DPARANOID"
 
-%make
+%configure $CONFIGURE_FLAGS --enable-x86-debugger --enable-debugger
+make %{?_smp_mflags}
+mv bochs bochs-debugger
+#make dist-clean
+
+%configure $CONFIGURE_FLAGS --enable-x86-debugger --enable-gdb-stub --enable-smp=no
+make %{?_smp_mflags}
+mv bochs bochs-gdb
+#make dist-clean
+
+%configure $CONFIGURE_FLAGS
+make %{?_smp_mflags}
+
+%ifarch %{ix86} x86_64
+cd bios
+make bios
+cp BIOS-bochs-latest BIOS-bochs-kvm
+%endif
 
 %install
-%makeinstall
+rm -rf $RPM_BUILD_ROOT _installed-docs
+make install DESTDIR=$RPM_BUILD_ROOT
+ln -s %{_prefix}/share/seavgabios/vgabios-cirrus.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-cirrus
+ln -s %{_prefix}/share/seavgabios/vgabios-isavga.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-isavga
+ln -s %{_prefix}/share/seavgabios/vgabios-qxl.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-qxl
+ln -s %{_prefix}/share/seavgabios/vgabios-stdvga.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-stdvga
+ln -s %{_prefix}/share/seavgabios/vgabios-vmware.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-vmware
+%ifnarch %{ix86} x86_64
+rm -rf $RPM_BUILD_ROOT%{_prefix}/share/bochs/*{BIOS,bios}*
+%endif
+install -m 755 bochs-debugger bochs-gdb $RPM_BUILD_ROOT%{_bindir}
+mv $RPM_BUILD_ROOT%{_docdir}/bochs _installed-docs
+rm $RPM_BUILD_ROOT%{_mandir}/man1/bochs-dlx.1*
 
-install -p -m755 bochs.sh $RPM_BUILD_ROOT/%_bindir/%name-gui
-install -D -m 644 gui/icon_%name.xpm $RPM_BUILD_ROOT/%_niconsdir/%name.xpm
-
-mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%name.desktop <<EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Bochs
-Comment=Bochs Project x86 PC Emulator
-GenericName=Emulator
-Icon=%name
-Exec=%name-gui
-Terminal=false
-Categories=System;Emulator;
-EOF
-
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm
+cp -pr disasm/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
+cp -pr disasm/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
+cp -pr disasm/*.inc $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
+cp -pr config.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu
+cp -pr cpu/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/
+cp -pr cpu/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder
+cp -pr cpu/decoder/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder/
+cp -pr cpu/decoder/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder/
+# Install osdep.h BZ 1786771
+cp -pr osdep.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
 
 %files
-%_bindir/*
-%_datadir/%name
-%_man1dir/*
-%_man5dir/*
-%_docdir/%name
-%_desktopdir/%name.desktop
-%_niconsdir/*
+%doc _installed-docs/* README-*
+%{_bindir}/bochs
+%{_bindir}/bximage
+%{_bindir}/bxhub
+# Note: must include *.la in %%{_libdir}/bochs/plugins/
+#%%{_libdir}/bochs/
+%{_mandir}/man1/bochs.1*
+%{_mandir}/man1/bximage.1*
+%{_mandir}/man5/bochsrc.5*
+%dir %{_datadir}/bochs/
+%{_datadir}/bochs/keymaps/
+
+%ifarch %{ix86} x86_64
+%files bios
+%{_datadir}/bochs/BIOS*
+%{_datadir}/bochs/vgabios*
+%{_datadir}/bochs/VGABIOS*
+%{_datadir}/bochs/bios.bin-1.13.0
+%{_datadir}/bochs/SeaBIOS-README
+%endif
+
+
+%files debugger
+%{_bindir}/bochs-debugger
+
+%files gdb
+%{_bindir}/bochs-gdb
+
+%files devel
+%{_prefix}/include/bochs/
 
 %changelog
+* Wed Mar 10 2021 Ilya Mashkin <oddity@altlinux.ru> 2.6.11-alt1
+- 2.6.11
+
 * Sat Jul 27 2013 Ilya Mashkin <oddity@altlinux.ru> 2.6.2-alt1
 - 2.6.2
 
@@ -209,4 +353,6 @@ EOF
 
 * Tue Feb 05 2002 Lenny Cartier <lenny@mandrakesoft.com> 1.3-1mdk
 - new
+
+
 
