@@ -1,6 +1,10 @@
 %global appid org.gajim.Gajim
+
+# reduce an amount of overabundant dependencies
+%filter_from_requires /^python3(gajim.gui/d
+
 Name: gajim
-Version: 1.2.2
+Version: 1.3.1
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -9,15 +13,14 @@ Group: Networking/Instant messaging
 Url: http://gajim.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: https://gajim.org/downloads/%version/gajim-%version.tar.gz
+Source: https://gajim.org/downloads/1.3/gajim-%version-2.tar.gz
 Patch1: gajim-1.2.2-alt-fix-egg-requires.patch
 
-# minimal python version for gajim = 1.2.2
+# minimal python version for gajim >= 1.2.2
 Requires: python3 >= 3.7
 
 # typelib(Avahi)
 %filter_from_requires /^typelib(Avahi)/d
-Requires: libavahi-gobject
 
 Requires: libgtk+3-gir
 %py3_requires cssutils
@@ -60,7 +63,7 @@ it nicely.
 %_datadir/applications/%appid.desktop
 %_datadir/metainfo/%appid.appdata.xml
 %_datadir/icons/hicolor/scalable/apps/%appid.svg
-%_datadir/icons/hicolor/symbolic/apps/%appid-symbolic.svg
+%_datadir/icons/hicolor/scalable/apps/%appid-symbolic.svg
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%{version}*.egg-info
 
@@ -71,6 +74,11 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Wed Mar 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.1-alt1
+- 1.3.1
+- reduce amount of overabundant dependencies
+- fix source url
+
 * Mon Oct 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2.2-alt1
 - 1.2.2
 - spec: fix license field
