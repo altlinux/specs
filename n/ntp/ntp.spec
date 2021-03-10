@@ -2,7 +2,7 @@
 
 Name: ntp
 Version: 4.2.8p15
-Release: alt2
+Release: alt3
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -53,6 +53,9 @@ BuildRequires: libssl-devel
 
 # for sbin/update-leap
 BuildRequires: perl-File-Fetch perl-Digest-SHA perl-HTTP-Tiny perl-Net-SSLeay perl-IO-Socket-SSL
+
+# https://bugzilla.altlinux.org/39775
+BuildRequires: pps-tools-devel
 
 # Root directory for chrooted environment, must not be same as real system root.
 %define ROOT /var/lib/ntpd
@@ -352,6 +355,9 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Wed Mar 10 2021 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p15-alt3
+- added pps-tools-devel to BuildRequires (ALT #39775)
+
 * Thu Feb 11 2021 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p15-alt2
 - fixed FTBFS (applied patch from https://bugs.ntp.org/show_bug.cgi?id=3688)
 - applied Repocop's patches for specfile
