@@ -1,5 +1,5 @@
 Name: catch2
-Version: 2.11.1
+Version: 2.13.4
 Release: alt1
 
 Summary: C++ Unit Test framework ("all in one header")
@@ -9,7 +9,6 @@ Group: Development/C++
 Url: https://github.com/catchorg/Catch2
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
-BuildArch: noarch
 
 BuildRequires: rpm-macros-cmake cmake gcc-c++
 
@@ -42,7 +41,7 @@ but is packaged up as a single header for extra convenience.
 %__subst "s|set(CATCH_CMAKE_CONFIG_DESTINATION .*|set(CATCH_CMAKE_CONFIG_DESTINATION "%_datadir/cmake/Catch2")|" CMakeLists.txt
 
 %build
-%cmake -DCATCH_ENABLE_WERROR=OFF
+%cmake -DCATCH_ENABLE_WERROR=OFF -DBUILD_SHARED_LIBS=OFF
 %cmake_build
 
 %install
@@ -56,11 +55,15 @@ ctest -V
 %doc %_docdir/Catch2/
 %dir %_includedir/catch2/
 %_includedir/catch2/*.hpp
+%_libdir/libCatch2WithMain.a
 %_datadir/Catch2/
 %_datadir/cmake/Catch2/
 %_datadir/pkgconfig/catch2.pc
 
 %changelog
+* Wed Mar 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.13.4-alt1
+- new version 2.13.4
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
 - new version 2.11.1 (with rpmrb script)
 
