@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-qt-dbus-factory
-Version: 5.3.35
+Version: 5.4.4
 Release: alt1
 Summary: A repository stores auto-generated Qt5 dbus code
 # The entire source code is GPL-3.0+ except
@@ -67,6 +67,9 @@ sed -i 's|python|python3|' libdframeworkdbus/*.{pro,py}
 %_libdir/lib%soname.so
 
 %changelog
+* Wed Mar 10 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.4-alt1
+- New version (5.4.4) with rpmgs script.
+
 * Tue Jan 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.35-alt1
 - New version (5.3.35) with rpmgs script.
 

@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.4.1
+Version: 5.4.10
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+
@@ -10,6 +10,7 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtkwidget-5.4.10-gcc10.patch
 
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
@@ -32,6 +33,7 @@ BuildRequires: libxcbutil-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libXrender-devel
 BuildRequires: libcups-devel
+BuildRequires: libgtest-devel
 # libQt5Gui.so.5(Qt_5_PRIVATE_API)(64bit) needed by dtkwidget
 BuildRequires: libqt5-gui
 
@@ -55,6 +57,7 @@ Header files and libraries for %name.
 
 %prep
 %setup
+%patch -p2
 sed -i 's|lrelease|lrelease-qt5|' \
     tools/translate_generation.sh \
     tools/translate_generation.py
@@ -92,6 +95,9 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/lib%name.so
 
 %changelog
+* Tue Mar 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.10-alt1
+- New version (5.4.10) with rpmgs script.
+
 * Mon Nov 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.4.1-alt1
 - New version (5.4.1) with rpmgs script.
 
