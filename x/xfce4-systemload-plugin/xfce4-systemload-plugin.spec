@@ -1,5 +1,5 @@
 Name: xfce4-systemload-plugin
-Version: 1.2.4
+Version: 1.3.0
 Release: alt1
 
 Summary: System load plugin for the Xfce panel
@@ -14,11 +14,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel
 
 BuildRequires: libX11-devel libgtk+3-devel libstartup-notification libupower-devel
 
-Requires: xfce4-panel >= 4.9
+Requires: xfce4-panel >= 4.12
 
 %define _unpackaged_files_terminate_build 1
 
@@ -47,14 +47,18 @@ Requires: xfce4-panel >= 4.9
 %find_lang %name
 
 %files -f %name.lang
-%doc README.md COPYING AUTHORS
+%doc README.md COPYING AUTHORS NEWS
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
+%_iconsdir/hicolor/*/apps/*.*
 
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Mar 10 2021 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
+- Updated to 1.3.0.
+
 * Mon Dec 21 2020 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
 - Updated to 1.2.4.
 
