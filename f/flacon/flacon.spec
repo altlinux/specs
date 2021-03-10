@@ -1,6 +1,6 @@
 Name: flacon
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -46,21 +46,11 @@ Extracts audio tracks from audio CD image to separate tracks.
 %setup
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING="Release"
-
-popd
-
-%make_build -C %_target_platform
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 
 %files
 %doc LICENSE README.md
@@ -69,26 +59,19 @@ popd
 %_miconsdir/%name.png
 %_liconsdir/%name.png
 %_niconsdir/%name.png
-%dir %_iconsdir/hicolor/128x128
-%dir %_iconsdir/hicolor/128x128/apps
 %_iconsdir/hicolor/128x128/apps/%name.png
-%dir %_iconsdir/hicolor/256x256
-%dir %_iconsdir/hicolor/256x256/apps
 %_iconsdir/hicolor/256x256/apps/%name.png
-%dir %_iconsdir/hicolor/512x512
-%dir %_iconsdir/hicolor/512x512/apps
 %_iconsdir/hicolor/512x512/apps/%name.png
-%dir %_iconsdir/hicolor/64x64
-%dir %_iconsdir/hicolor/64x64/apps
 %_iconsdir/hicolor/64x64/apps/%name.png
-%dir %_iconsdir/hicolor/scalable
-%dir %_iconsdir/hicolor/scalable/apps
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
 %_datadir/metainfo/com.github.Flacon.metainfo.xml
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Mar 10 2021 Nazarov Denis <nenderus@altlinux.org> 6.1.0-alt2
+- Fix build
+
 * Fri Jun 26 2020 Nazarov Denis <nenderus@altlinux.org> 6.1.0-alt1
 - Version 6.1.0
 
