@@ -1,6 +1,6 @@
 %define nm_version 1.20.0
-#define git_hash .gab06222e
-%define git_hash %nil
+%define git_hash .g5d8a9fda
+#define git_hash %nil
 
 %define _unpackaged_files_terminate_build 1
 
@@ -15,7 +15,7 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.20.0
+Version: 1.21.0
 Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Wed Mar 10 2021 Mikhail Efremov <sem@altlinux.org> 1.21.0-alt1.g5d8a9fda
+- Upstream git snapshot.
+
 * Fri Feb 12 2021 Mikhail Efremov <sem@altlinux.org> 1.20.0-alt1
 - Updated to 1.20.0.
 
