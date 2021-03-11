@@ -1,6 +1,6 @@
 Name: composer
-Version: 1.10.15
-Release: alt2
+Version: 2.0.11
+Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
 
@@ -59,6 +59,12 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Mar 11 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt1
+- new version 2.0.11 (with rpmrb script)
+
+* Wed Feb 03 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt1
+- new version 2.0.9 (with rpmrb script)
+
 * Wed Oct 14 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.15-alt2
 - switch to build from tarball
 
