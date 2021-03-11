@@ -1,6 +1,6 @@
 Name: deepin-wallpapers
-Version: 1.7.7
-Release: alt2
+Version: 1.7.8
+Release: alt1
 Summary: Deepin Wallpapers provides wallpapers of DDE
 License: GPL-3.0+
 Group: Graphics
@@ -18,17 +18,17 @@ BuildRequires: deepin-api
 
 %prep
 %setup -n %name-%version
-# sed -i 's|lib|libexec|' Makefile
-mkdir -p %name-%version{,-community}
+#mkdir -p %name-%version
 
 %build
 for _pic in deepin/*; do
   make PICS=$_pic
 done
 
-for _pic in deepin-community/*; do
-  make PICS=$_pic
-done
+#for _pic in deepin-community/*; do
+#  make PICS=$_pic
+#done
+
 %make_build
 
 %install
@@ -40,15 +40,28 @@ cp -r image-blur %buildroot%_cachedir/
 
 # Suggested by upstream
 install -dm755 %buildroot%_datadir/backgrounds/deepin
-ln -s ../../wallpapers/deepin/Hummingbird_by_Shu_Le.jpg %buildroot%_datadir/backgrounds/deepin/desktop.jpg
-ln -s $(echo -n %_datadir/wallpapers/deepin/Hummingbird_by_Shu_Le.jpg | md5sum | cut -d " " -f 1).jpg \
+ln -s ../../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/deepin/desktop.jpg
+ln -s $(echo -n %_datadir/wallpapers/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg \
       %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg
 
-install -dm755 %buildroot%_datadir/wallpapers/deepin
-cp deepin-community/* %buildroot%_datadir/wallpapers/deepin/
+#install -dm755 %buildroot%_datadir/wallpapers/deepin
+#cp deepin-community/* %buildroot%_datadir/wallpapers/deepin/
 
 install -dm755 %buildroot%_cachedir
 cp -r image-blur %buildroot%_cachedir/
+
+touch %buildroot%_datadir/backgrounds/default_background.jpg
+
+%post
+if [ $1 -ge 1 ]; then
+  %_sbindir/update-alternatives --install %_datadir/backgrounds/default_background.jpg \
+    deepin-default-background %_datadir/wallpapers/deepin/desktop.jpg 50
+fi
+
+%postun
+if [ $1 -eq 0 ]; then
+  %_sbindir/update-alternatives --remove deepin-default-background %_datadir/wallpapers/deepin/desktop.jpg
+fi
 
 %files
 %doc README.md
@@ -56,9 +69,13 @@ cp -r image-blur %buildroot%_cachedir/
 %dir %_datadir/backgrounds/deepin/
 %_datadir/backgrounds/deepin/desktop.jpg
 %_datadir/wallpapers/deepin/
-%_cachedir/image-blur/
+%_cachedir/image-blur/*.jpg
+%ghost %_datadir/backgrounds/default_background.jpg
 
 %changelog
+* Wed Mar 10 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.8-alt1
+- New version (1.7.8) with rpmgs script.
+
 * Mon Dec 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.7.7-alt2
 - Fixed background.
 
