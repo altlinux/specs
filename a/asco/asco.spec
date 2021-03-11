@@ -1,6 +1,6 @@
 Name: asco
 Version: 0.4.10
-Release: alt2
+Release: alt3
 
 Summary: A SPICE Circuit Optimizer
 
@@ -25,10 +25,15 @@ SPICE simulators using a high-performance parallel differential evolution
 
 %prep
 %setup
+tar -zxf Autotools.tar.gz
+# Remove useless C++ compiler check
+sed -i '/AC_PROG_CXX/d' configure.ac
 #%patch
 
 %build
-#configure
+export CFLAGS="%optflags -fcommon"
+%autoreconf
+%configure
 %make_build
 
 %install
@@ -39,6 +44,9 @@ install -D -m755 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Mar 11 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.10-alt3
+- fixed build with gcc-10
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.10-alt2
 - change group to Engineering (ALT bug 16233)
 
