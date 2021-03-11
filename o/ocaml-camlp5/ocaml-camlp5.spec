@@ -1,6 +1,6 @@
 %define module camlp5
 Name: ocaml-camlp5
-Version: 7.13
+Version: 7.14
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -47,6 +47,9 @@ install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%module/META
 %_man1dir/*5*.1*
 
 %changelog
+* Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 7.14-alt1
+- 7.14
+
 * Mon Sep 28 2020 Anton Farygin <rider@altlinux.ru> 7.13-alt1
 - 7.13
 
