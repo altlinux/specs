@@ -9,7 +9,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.094.2
+Version: 2.095.1
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -27,8 +27,9 @@ Source4: tools-%version.tar
 
 Patch1: druntime-2.082.0-alt-build.patch
 Patch2: druntime-2.082.0-alt-files-list.patch
-Patch3: dmd-2.091.0-alt-build.patch
+Patch3: dmd-2.095.1-alt-build.patch
 Patch4: phobos-2.082.0-alt-build.patch
+Patch5: tools-2.095.1-alt-build.patch
 
 BuildRequires: gcc-c++ curl-devel
 BuildRequires: zlib-devel
@@ -117,27 +118,28 @@ pushd ../phobos
 %patch4 -p2
 popd
 
-%build
-pushd src
-%make_build -f posix.mak MODEL=%MODEL
+pushd ../tools
+%patch5 -p2
 popd
 
-export CFLAGS=-fPIC
-export CXXFLAGS=-fPIC
+%build
+pushd src
+%make_build -f posix.mak MODEL=%MODEL PIC=1 BUILD=release ENABLE_RELEASE=1
+popd
 
 pushd ../druntime
 #sed -i 's|-m$(MODEL) -O|-m$(MODEL) -fPIC -O|g' posix.mak
-%make_build -f posix.mak MODEL=%MODEL DRUNTIME_BASE=druntime PIC=1
+%make_build -f posix.mak MODEL=%MODEL DRUNTIME_BASE=druntime PIC=1 BUILD=release ENABLE_RELEASE=1
 #gcc lib/libdruntime.o obj/64/errno_c.o obj/64/complex.o -shared -o lib/libdruntime.so -m64 -lpthread -lm -lrt
 popd
 
 pushd ../phobos
 #sed -i 's|DFLAGS += -O -release|DFLAGS += -fPIC -O -release|g' posix.mak
-%make_build -f posix.mak MODEL=%MODEL ROOT=out PIC=1
+%make_build -f posix.mak MODEL=%MODEL ROOT=out PIC=1 BUILD=release ENABLE_RELEASE=1
 popd
 
 pushd ../tools
-%make_build -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out'
+%make_build -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out' BUILD=release ENABLE_RELEASE=1
 #../dmd/src/dmd -c -O -w -d -fPIC -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
 #gcc rdmd.o -o rdmd -m%MODEL -L../druntime/lib -L../phobos/out -ldruntime -lphobos2 -lpthread -lm -lrt
 #../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos catdoc.d
@@ -154,7 +156,7 @@ echo '; Names enclosed by %%%% are searched for in the existing environment' >> 
 echo '; and inserted. The special name %%@P%% is replaced with the path' >> %buildroot%_sysconfdir/dmd.conf
 echo '; to this file.' >> %buildroot%_sysconfdir/dmd.conf
 echo '[Environment]' >> %buildroot%_sysconfdir/dmd.conf
-echo 'DFLAGS=-I%_includedir/d -L-lrt' >> %buildroot%_sysconfdir/dmd.conf
+echo 'DFLAGS=-I%_includedir/d -L-lrt -L--export-dynamic -fPIC' >> %buildroot%_sysconfdir/dmd.conf
 
 #druntime
 cp -r ../druntime/import/* %buildroot%_includedir/d/
@@ -172,7 +174,7 @@ cp -r ../phobos/std %buildroot%_includedir/d/
 cp ../phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
 
 pushd ../tools
-%make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out' install INSTALL_DIR=%buildroot%_prefix
+%make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out' BUILD=release ENABLE_RELEASE=1 install INSTALL_DIR=%buildroot%_prefix
 popd
 
 # catdoc conflicts with file from package 'catdoc'; rename it
@@ -212,6 +214,10 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Wed Mar 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.095.1-alt1
+- Updated to upstream version 2.095.1.
+- Fixed build with gcc-10.
+
 * Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.094.2-alt1
 - Updated to upstream version 2.094.2.
 - Split package into multiple subpackages.
