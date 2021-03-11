@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 8.3
+%define major 8.4
 %define somajor 8
 #define _localstatedir /var
 %def_enable epoll
@@ -70,7 +70,9 @@ BuildRequires: python3-dev
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
 BuildRequires: libssl-devel libcurl-devel zlib-devel
-BuildRequires: libtirpc-devel rpcgen
+BuildRequires: libtirpc-devel
+# glibc-utils on p9
+BuildRequires: /usr/bin/rpcgen
 BuildRequires: libcmocka-devel
 BuildRequires: systemd
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
@@ -742,6 +744,10 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 #files checkinstall
 
 %changelog
+* Thu Mar 11 2021 Vitaly Lipatov <lav@altlinux.ru> 8.4-alt1
+- new version 8.4 (with rpmrb script)
+- change BR to /usr/bin/rpcgen (p9 compatibility)
+
 * Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 8.3-alt1
 - new version 8.3 (with rpmrb script)
 - add BR: rpcgen
