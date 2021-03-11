@@ -38,7 +38,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.16
+Version: 1.16.1
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -235,6 +235,9 @@ find \
 		-print0 |
 	xargs -0 rm -fv --
 
+# remove test for other platforms scripts
+rm %buildroot/%go_root/test/winbatch.go
+
 # remove the unnecessary zoneinfo file (Go will always use the system one first)
 rm -rfv -- \
 	%buildroot/%go_root/lib/time
@@ -341,6 +344,13 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu Mar 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
+- New version (1.16.1).
+- Fixes:
+  + CVE-2021-27918
+  + CVE-2021-27919
+- Remove test for other platform scripts.
+
 * Fri Feb 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.16-alt1
 - New version (1.16).
 - Build shared package for x86, x86_64, ppc64le, arm, aarch64.
