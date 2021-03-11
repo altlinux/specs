@@ -1,7 +1,7 @@
 %define rname signon-kwallet-extension
 
 Name: kde5-%rname
-Version: 20.12.2
+Version: 20.12.3
 Release: alt1
 %K5init altplace
 
@@ -36,6 +36,9 @@ BuildRequires: kf5-kwallet-devel signon-devel
 %_libdir/signon/extensions/*kwallet*.so*
 
 %changelog
+* Wed Mar 10 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
