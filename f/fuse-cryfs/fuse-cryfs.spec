@@ -2,7 +2,7 @@
 %def_without system_spdlog
 Name: fuse-cryfs
 Version: 0.9.11
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -16,6 +16,9 @@ Requires: fuse
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+
+# ported changes from upstream
+Patch1: fuse-cryfs-glibc-compat.patch
 
 BuildRequires: rpm-macros-cmake cmake
 BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-program_options-devel
@@ -43,6 +46,7 @@ See https://www.cryfs.org.
 
 %prep
 %setup
+%patch1 -p2
 
 # conflicts with CHAR_WIDTH macro
 %__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" vendor/spdlog/spdlog/fmt/bundled/format.h
@@ -70,6 +74,9 @@ find . -type f | xargs sed -i \
 %_man1dir/*
 
 %changelog
+* Thu Mar 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.11-alt2
+- Rebuilt with boost-1.75.0.
+
 * Wed Jun 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.11-alt1
 - new version 0.9.11 (with rpmrb script)
 
