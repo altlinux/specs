@@ -8,7 +8,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.8.1
-Release: alt1
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -21,12 +21,10 @@ ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch1: fix-dir-path.patch
-#Patch2: linuxcnc-upstream-accommodate-systems-without-io.h.patch
-#Patch3: linuxcnc-upstream-fix-undefined-symbols-1.patch
-#Patch4: linuxcnc-upstream-fix-undefined-symbols-2.patch
-#Patch5: linuxcnc-upstream-fix-undefined-symbols-3.patch
 Patch6: qtvcp_import_fix.patch
 Patch7: not_require_dpkg.patch
+Patch8: linuxcnc-upstream-gcc10-compat.patch
+Patch9: linuxcnc-alt-tirpc.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python
 BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gtk+-2.0)
@@ -146,12 +144,10 @@ Spanish documementation for %name
 %prep
 %setup
 %patch1 -p1
-#patch2 -p1
-#patch3 -p1
-#patch4 -p1
-#patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 sed -i 's|lib/tcltk/linuxcnc|%_lib/tcl/linuxcnc|' lib/python/rs274/options.py
 sed -i 's|INCLUDES := .|INCLUDES := . /usr/include/tirpc|' src/Makefile
@@ -297,6 +293,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.1-alt2
+- Fixed build with gcc-10 and rebuilt with new boost libraries.
+
 * Sun Dec 06 2020 Anton Midyukov <antohami@altlinux.org> 2.8.1-alt1
 - New version 2.8.1
 
