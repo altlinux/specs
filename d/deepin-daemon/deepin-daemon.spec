@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.11.0.42
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -97,9 +97,9 @@ install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
 sed -i '/deepin/s|lib|libexec|' Makefile
 sed -i '/${DESTDIR}\/usr\/lib\/deepin-daemon\/service-trigger/s|${DESTDIR}%_libexecdir/deepin-daemon/service-trigger|${DESTDIR}/usr/libexec/deepin-daemon/service-trigger|g' Makefile
 sed -i '/${DESTDIR}${PREFIX}\/lib\/deepin-daemon/s|${DESTDIR}${PREFIX}/lib/deepin-daemon|${DESTDIR}${PREFIX}/usr/libexec/deepin-daemon|g' Makefile
-sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
-    accounts/user.go \
-    accounts/users/testdata/autologin/lxdm.conf
+#sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
+#    accounts/user.go \
+#    accounts/users/testdata/autologin/lxdm.conf
 
 for file in $(grep "%_libexecdir/deepin-daemon" * -nR |awk -F: '{print $1}')
 do
@@ -230,6 +230,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Thu Mar 11 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.42-alt3
+- Fixed background.
+
 * Fri Mar 05 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.42-alt2
 - Fixed build with golang 1.16.
 
