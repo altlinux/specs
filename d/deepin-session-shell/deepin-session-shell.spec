@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.4.5
-Release: alt1
+Release: alt2
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -44,12 +44,12 @@ BuildRequires: libgtest-devel
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i 's|/lib|/libexec|' scripts/lightdm-deepin-greeter
 sed -i 's|/usr/bin/bash|/bin/bash|' src/dde-shutdown/view/contentwidget.cpp
-sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
-    src/widgets/fullscreenbackground.cpp \
-    src/session-widgets/userinfo.h
-sed -i 's|/usr/share/backgrounds/deepin/desktop.jpg|/usr/share/design-current/backgrounds/default.png|' \
-    src/session-widgets/lockcontent.cpp \
-    src/dde-shutdown/view/contentwidget.cpp
+#sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
+#    src/widgets/fullscreenbackground.cpp \
+#    src/session-widgets/userinfo.h
+#sed -i 's|/usr/share/backgrounds/deepin/desktop.jpg|/usr/share/design-current/backgrounds/default.png|' \
+#    src/session-widgets/lockcontent.cpp \
+#    src/dde-shutdown/view/contentwidget.cpp
 #sed -i 's|/usr/share/wallpapers/deepin/desktop.jpg|/usr/share/design-current/backgrounds/default.png|' \
 #    src/widgets/fullscreenbackground.cpp
 #sed -i 's|theme/background/default_background.jpg|theme/background.png|' \
@@ -97,6 +97,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 
 %changelog
+* Thu Mar 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt2
+- Fixed backgrounds.
+
 * Tue Mar 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt1
 - New version (5.4.5) with rpmgs script.
 
