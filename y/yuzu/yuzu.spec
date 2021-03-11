@@ -2,7 +2,7 @@
 
 Name: yuzu
 Version: 0.559
-Release: alt2
+Release: alt3
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -76,7 +76,7 @@ BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
 BuildRequires: python3-dev
 BuildRequires: python3-module-mpl_toolkits
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
 BuildRequires: zlib-devel
 
 BuildPreReq: libidn2-devel
@@ -129,7 +129,10 @@ sed -i \
 src/common/scm_rev.cpp.in
 
 %build
-%cmake -GNinja -Wno-dev
+%cmake \
+	-DENABLE_QT_TRANSLATION:BOOL=ON \
+	-GNinja \
+	-Wno-dev
 ninja -j %__nprocs -vvv -C BUILD
 
 %install
@@ -144,6 +147,9 @@ DESTDIR=%buildroot ninja install -C BUILD
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Mar 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.559-alt3
+- Enable translations
+
 * Thu Mar 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.559-alt2
 - Enforce package versioning in GUI
 
