@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 20.12.2
+Version: 20.12.3
 Release: alt1
 %K5init
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libdb4-devel libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel python-module-google qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel
-BuildRequires: libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel zlib-devel
+BuildRequires: libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel zlib-devel libtiff-devel
 #BuildRequires: libcfitsio-devel
 BuildRequires: kde5-libkdcraw-devel kde5-libkipi-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
@@ -32,6 +32,7 @@ BuildRequires: kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel 
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-baloo-devel kf5-kfilemetadata-devel
+BuildRequires: kf5-purpose-devel
 
 
 %description
@@ -102,6 +103,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
