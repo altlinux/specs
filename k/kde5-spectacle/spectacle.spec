@@ -5,8 +5,8 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 20.12.2
-Release: alt2
+Version: 20.12.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -86,6 +86,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Fri Feb 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
 - build with kf5-purpose
 

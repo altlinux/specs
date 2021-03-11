@@ -14,8 +14,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 20.12.2
-Release: alt2
+Version: 20.12.3
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -202,6 +202,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Fri Feb 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
 - build with kf5-purpose
 
