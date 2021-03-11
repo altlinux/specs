@@ -4,7 +4,7 @@
 
 Name: pgpool-II
 Version: 4.2.2
-Release: alt1
+Release: alt2
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
@@ -117,6 +117,8 @@ if [ $1 -eq 2 ]; then
     [ ! -f %_sysconfdir/pcp.conf ] || mv -f %_sysconfdir/pcp.conf %_sysconfdir/%sname/pcp.conf
     [ ! -f %_sysconfdir/pgpool.conf ] || mv -f %_sysconfdir/pgpool.conf %_sysconfdir/%sname/pgpool.conf
     [ ! -f %_sysconfdir/pool_hba.conf ] || mv -f %_sysconfdir/pool_hba.conf %_sysconfdir/%sname/pool_hba.conf
+    chown root:postgres %_sysconfdir/%sname/*
+    chmod 640 %_sysconfdir/%sname/*
 fi
 
 %post_service %sname
@@ -132,8 +134,8 @@ fi
 %_initdir/*
 %_unitdir/*
 %_tmpfilesdir/*
-%dir %attr(750,root,%sname) %_sysconfdir/%sname
-%config(noreplace) %attr(640,root,%sname) %_sysconfdir/%sname/*
+%dir %attr(750,root,postgres) %_sysconfdir/%sname
+%config(noreplace) %attr(640,root,postgres) %_sysconfdir/%sname/*
 %config(noreplace) %_sysconfdir/sysconfig/%sname
 %_man1dir/*
 %_man8dir/*
@@ -152,6 +154,9 @@ fi
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Mar 11 2021 Alexey Shabalin <shaba@altlinux.org> 4.2.2-alt2
+- Fixed config files permissions.
+
 * Wed Feb 24 2021 Alexey Shabalin <shaba@altlinux.org> 4.2.2-alt1
 - 4.2.2
 - Execute service as postgres system user.
