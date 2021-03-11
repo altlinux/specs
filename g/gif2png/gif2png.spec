@@ -4,7 +4,7 @@
 
 Name: gif2png
 Version: 3.0.0
-Release: alt2.git.a9592ae
+Release: alt3.git.a9592ae
 Summary: A GIF to PNG converter
 Group: Graphics
 License: BSD-2-Clause
@@ -52,6 +52,7 @@ cp -r %go_root/src/cmd/vendor/golang.org/x/sys src/golang.org/x/
 cp -r %go_root/src/cmd/vendor/golang.org/x/crypto src/golang.org/x/
 
 %build
+export GO111MODULE=off
 export GOPATH="$(pwd):%go_path"
 export CFLAGS="$RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
 
@@ -73,6 +74,9 @@ export CFLAGS="$RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
 %_man1dir/web2png.1*
 
 %changelog
+* Thu Mar 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt3.git.a9592ae
+- Fixed build with new golang.
+
 * Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt2.git.a9592ae
 - Applied go macros for P9 compatibility.
 
