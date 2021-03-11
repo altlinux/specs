@@ -1,6 +1,6 @@
 Name: deepin-wallpapers
 Version: 1.7.8
-Release: alt1
+Release: alt2
 Summary: Deepin Wallpapers provides wallpapers of DDE
 License: GPL-3.0+
 Group: Graphics
@@ -40,9 +40,13 @@ cp -r image-blur %buildroot%_cachedir/
 
 # Suggested by upstream
 install -dm755 %buildroot%_datadir/backgrounds/deepin
-ln -s ../../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/deepin/desktop.jpg
+#ln -s ../../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/deepin/desktop.jpg
+ln -s ../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/default_background.jpg
+
+#ln -s $(echo -n %_datadir/wallpapers/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg \
+#      %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg
 ln -s $(echo -n %_datadir/wallpapers/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg \
-      %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg
+      %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/default_background.jpg | md5sum | cut -d " " -f 1).jpg
 
 #install -dm755 %buildroot%_datadir/wallpapers/deepin
 #cp deepin-community/* %buildroot%_datadir/wallpapers/deepin/
@@ -50,7 +54,7 @@ ln -s $(echo -n %_datadir/wallpapers/deepin/desktop.jpg | md5sum | cut -d " " -f
 install -dm755 %buildroot%_cachedir
 cp -r image-blur %buildroot%_cachedir/
 
-touch %buildroot%_datadir/backgrounds/default_background.jpg
+#touch %buildroot%_datadir/backgrounds/default_background.jpg
 
 %post
 if [ $1 -ge 1 ]; then
@@ -67,12 +71,15 @@ fi
 %doc README.md
 %doc LICENSE
 %dir %_datadir/backgrounds/deepin/
-%_datadir/backgrounds/deepin/desktop.jpg
+#%%_datadir/backgrounds/deepin/desktop.jpg
+%_datadir/backgrounds/default_background.jpg
 %_datadir/wallpapers/deepin/
 %_cachedir/image-blur/*.jpg
-%ghost %_datadir/backgrounds/default_background.jpg
 
 %changelog
+* Thu Mar 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.8-alt2
+- Fixed background.
+
 * Wed Mar 10 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.8-alt1
 - New version (1.7.8) with rpmgs script.
 
