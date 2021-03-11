@@ -1,7 +1,7 @@
 
 Name: urbackup-client
-Version: 2.4.9
-Release: alt3
+Version: 2.4.11
+Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
@@ -87,6 +87,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Thu Mar 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.11-alt1
+- 2.4.11
+
 * Mon May 25 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.9-alt3
 - dep on urbackup-common added
 

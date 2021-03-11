@@ -1,6 +1,6 @@
 Name: urbackup-server
-Version: 2.4.11
-Release: alt2
+Version: 2.4.13
+Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
@@ -106,6 +106,9 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %dir %attr(0755,urbackup,urbackup) %_localstatedir/urbackup
 
 %changelog
+* Thu Mar 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.13-alt1
+- 2.4.13
+
 * Mon May 25 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.11-alt2
 - urbackup-common package introduced
 
