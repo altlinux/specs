@@ -1,6 +1,8 @@
+%define git_descr mainline-636-4822-ge3147a8959
+
 Name: yuzu
 Version: 0.559
-Release: alt1
+Release: alt2
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -120,6 +122,12 @@ BuildPreReq: libtasn1-devel
 %__mkdir externals/opus/opus/.git
 %__mkdir externals/ffmpeg/.git
 
+# Enforce package versioning in GUI
+sed -i \
+-e 's|@GIT_BRANCH@|HEAD|g' \
+-e 's|@GIT_DESC@|%git_descr|g' \
+src/common/scm_rev.cpp.in
+
 %build
 %cmake -GNinja -Wno-dev
 ninja -j %__nprocs -vvv -C BUILD
@@ -136,5 +144,8 @@ DESTDIR=%buildroot ninja install -C BUILD
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Mar 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.559-alt2
+- Enforce package versioning in GUI
+
 * Wed Mar 10 2021 Nazarov Denis <nenderus@altlinux.org> 0.559-alt1
 - Initial build for ALT Linux
