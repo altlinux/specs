@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.7
+Version: 1.10.8
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Mar 11 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.8-alt1
+- try to load efivarfs on any arch
+
 * Thu Jan 28 2021 Oleg Solovyov <mcpain@altlinux.org> 1.10.7-alt1
 - fix crypttab generation (Closes: #39581)
 
