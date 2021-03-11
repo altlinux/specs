@@ -169,8 +169,8 @@
 %endif
 
 Name: libvirt
-Version: 7.0.0
-Release: alt2
+Version: 7.1.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -220,11 +220,10 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
 %{?_with_storage_gluster:BuildRequires: libglusterfs-devel}
 %{?_with_storage_zfs:BuildRequires: zfs-utils}
-%{?_with_storage_vstorage:BuildRequires: /usr/sbin/vstorage}
 %{?_with_numactl:BuildRequires: libnuma-devel >= 2.0.6}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_netcf:BuildRequires: netcf-devel >= 0.1.8}
-%{?_with_esx:BuildRequires: libcurl-devel}
+%{?_with_esx:BuildRequires: libcurl-devel >= 7.19.1}
 %{?_with_hyperv:BuildRequires: libwsman-devel >= 2.6.3}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
@@ -800,7 +799,7 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		%{?_with_storage_mpath:-Dstorage_mpath=enabled} \
 		%{?_with_storage_gluster:-Dstorage_gluster=enabled} \
 		%{?_with_storage_zfs:-Dstorage_zfs=enabled} \
-		%{?_with_storage_vstorage:-Dstorage_vstorage=enabled} \
+		%{?_without_storage_vstorage:-Dstorage_vstorage=disabled} \
 		%{?_with_storage_sheepdog:-Dstorage_sheepdog=enabled} \
 		%{?_with_numactl:-Dnumactl=enabled} \
 		%{?_with_selinux:-Dselinux=enabled} \
@@ -900,7 +899,7 @@ rm -rf %buildroot%_man7dir
 %endif
 
 %check
-VIR_TEST_DEBUG=1 %meson_test
+VIR_TEST_DEBUG=1 %__meson_test --no-suite syntax-check --timeout-multiplier 10
 
 %pre login-shell
 %_sbindir/groupadd -r -f virtlogin
@@ -984,14 +983,14 @@ fi
 %dir %attr(0700, root, root) %_logdir/libvirt
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config(noreplace) %_sysconfdir/sysconfig/virtproxyd
-%config /lib/tmpfiles.d/libvirtd.conf
+%_tmpfilesdir/libvirtd.conf
 %_unitdir/libvirtd*
 %_unitdir/virtproxyd*
 %_unitdir/virt-guest-shutdown.target
 %_initdir/libvirtd
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
 %config(noreplace) %_sysconfdir/libvirt/virtproxyd.conf
-/lib/sysctl.d/*
+%_sysctldir/*
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd
 %_rpmlibdir/%name.filetrigger
 #virtlockd
@@ -1028,6 +1027,7 @@ fi
 %_sbindir/libvirtd
 %_sbindir/virtproxyd
 %_man8dir/libvirtd.*
+%_man8dir/virtproxyd.*
 
 %_datadir/augeas/lenses/libvirtd.aug
 %_datadir/augeas/lenses/tests/test_libvirtd.aug
@@ -1077,6 +1077,7 @@ fi
 %_sbindir/virtnetworkd
 %_libdir/%name/connection-driver/libvirt_driver_network.so
 %_libexecdir/libvirt_leaseshelper
+%_man8dir/virtnetworkd.*
 %if_with firewalld_zone
 %_prefix/lib/firewalld/zones/libvirt.xml
 %endif
@@ -1091,6 +1092,7 @@ fi
 %_unitdir/virtnodedevd*
 %_sbindir/virtnodedevd
 %_libdir/%name/connection-driver/libvirt_driver_nodedev.so
+%_man8dir/virtnodedevd.*
 
 %files daemon-driver-interface
 %config(noreplace) %_sysconfdir/sysconfig/virtinterfaced
@@ -1100,6 +1102,7 @@ fi
 %_unitdir/virtinterfaced*
 %_sbindir/virtinterfaced
 %_libdir/%name/connection-driver/libvirt_driver_interface.so
+%_man8dir/virtinterfaced.8*
 %endif #if_with udev
 
 %if_with nwfilter
@@ -1111,6 +1114,7 @@ fi
 %_unitdir/virtnwfilterd*
 %_sbindir/virtnwfilterd
 %_libdir/%name/connection-driver/libvirt_driver_nwfilter.so
+%_man8dir/virtnwfilterd.*
 %endif
 
 %files daemon-driver-secret
@@ -1121,6 +1125,7 @@ fi
 %_unitdir/virtsecretd*
 %_sbindir/virtsecretd
 %_libdir/%name/connection-driver/libvirt_driver_secret.so
+%_man8dir/virtsecretd.*
 
 %files daemon-driver-storage
 
@@ -1139,6 +1144,7 @@ fi
 %dir %_libdir/%name/storage-backend
 %dir %_libdir/%name/storage-file
 %_libdir/%name/storage-file/libvirt_storage_file_fs.so
+%_man8dir/virtstoraged.*
 
 %if_with storage_fs
 %files daemon-driver-storage-fs
@@ -1216,7 +1222,8 @@ fi
 %_datadir/augeas/lenses/libvirtd_qemu.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_qemu.aug
 %_bindir/virt-qemu-run
-%_man1dir/virt-qemu-run.1*
+%_man1dir/virt-qemu-run.*
+%_man8dir/virtqemud.*
 %endif
 
 %if_with lxc
@@ -1235,6 +1242,7 @@ fi
 %_datadir/augeas/lenses/libvirtd_lxc.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_lxc.aug
 %_libexecdir/libvirt_lxc
+%_man8dir/virtlxcd.*
 %endif
 
 %if_with libxl
@@ -1252,6 +1260,7 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.libxl
 %_datadir/augeas/lenses/libvirtd_libxl.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_libxl.aug
+%_man8dir/virtxend.*
 %endif
 
 %if_with vbox
@@ -1263,6 +1272,7 @@ fi
 %_unitdir/virtvboxd*
 %_sbindir/virtvboxd
 %_libdir/%name/connection-driver/libvirt_driver_vbox.so
+%_man8dir/virtvboxd.*
 %endif
 %endif #driver_modules
 
@@ -1342,6 +1352,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Mar 10 2021 Alexey Shabalin <shaba@altlinux.org> 7.1.0-alt1
+- 7.1.0
+
 * Wed Feb 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.0-alt2
 - add more Kunpeng920 features and tests
 
