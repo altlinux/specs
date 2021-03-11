@@ -42,7 +42,7 @@
 
 Name: ceph
 Version: 15.2.9
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -921,6 +921,10 @@ rm -f %buildroot%_datadir/ceph/mgr/dashboard/tox.ini
 rm -f %buildroot%_datadir/ceph/mgr/dashboard/*.sh
 rm -f %buildroot%_datadir/ceph/mgr/insights/{run-tox.sh,tox.ini}
 rm -rf %buildroot%_datadir/ceph/mgr/insights/tests
+rm -rf %buildroot%_datadir/ceph/mgr/pg_autoscaler/tests
+rm -rf %buildroot%_datadir/ceph/mgr/orchestrator/tests
+rm -rf %buildroot%_datadir/ceph/mgr/progress/test_progress.py
+rm -rf %buildroot%_datadir/ceph/mgr/progress/__pycache__/test_progress.cpython-*
 rm -rf %buildroot%python3_sitelibdir_noarch/cephfs_shell-*.egg-info
 
 %check
@@ -1498,6 +1502,9 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Thu Mar 11 2021 Stanislav Levin <slev@altlinux.org> 15.2.9-alt2
+- Dropped dependency on python3(tests).
+
 * Thu Feb 25 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.9-alt1
 - 15.2.9
 
