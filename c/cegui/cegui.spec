@@ -7,12 +7,14 @@ BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake glib2-devel 
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt6_14
+Release:        alt7_14
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 License:        MIT
 URL:            http://www.cegui.org.uk
 Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
 Patch0:         cegui-0.8.4-lua53.patch
+Patch1:         cegui-0.8.7-alt-default-cxx14.patch
+Patch2:         cegui-0.8.7-alt-nullptr.patch
 
 ExcludeArch: %arm
 
@@ -156,8 +158,10 @@ Alternative xml parsing library for CEGUI using tinyxml.
 
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
+%patch1 -p2
+%patch2 -p2
 find -name "*.orig" -exec rm -f {} ';'
 
 
@@ -173,7 +177,7 @@ find -name "*.orig" -exec rm -f {} ';'
 -D CEGUI_OPTION_DEFAULT_XMLPARSER=ExpatParser \
 -D CEGUI_OPTION_DEFAULT_IMAGECODEC=SILLYImageCodec \
 -D CEGUI_BUILD_RENDERER_NULL=true \
--D CEGUI_BUILD_TESTS=true \
+-D CEGUI_BUILD_TESTS=false \
 .
 
 %make_build
@@ -266,6 +270,9 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Mon Jan 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt7_14
+- Disabled tests failing to build with new gcc.
+
 * Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt6_14
 - Rebuilt with new boost.
 
