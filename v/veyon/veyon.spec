@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.4.2
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -104,6 +104,9 @@ mv .gear/3rdparty ./
 %_datadir/%name
 
 %changelog
+* Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 4.4.2-alt2
+- merge p9 git-history
+
 * Wed Sep 02 2020 Sergey V Turchin <zerg@altlinux.org> 4.4.2-alt1
 - new version
 
