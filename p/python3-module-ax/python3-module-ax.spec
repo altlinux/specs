@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,13 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Mar 06 2021 Alexey Appolonov <alexey@altlinux.org> 0.16.0-alt1
+- New function "DateTimeNow" that returns a string with a current date and time
+  in a customizable format;
+- Modified function "PrepareDir" that returns an error message in addition to
+  a formatted file path;
+- Slightly enhanced "Printer" class.
+
 * Tue Dec 15 2020 Alexey Appolonov <alexey@altlinux.org> 0.15.0-alt1
 - New module 'vul' that can be used to extract vulnerability IDs from text.
 
