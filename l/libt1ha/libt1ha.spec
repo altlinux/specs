@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libt1ha
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Fast Positive Hash
@@ -57,6 +57,9 @@ install -m644 libt1ha{,_pic}.a %buildroot%_libdir
 %_libdir/libt1ha*.a
 
 %changelog
+* Wed Mar 10 2021 Slava Aseev <ptrnine@altlinux.org> 2.1.4-alt1
+- Updated to upstream version 2.1.4.
+
 * Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.3-alt1
 - Updated to upstream version 2.1.3.
 
