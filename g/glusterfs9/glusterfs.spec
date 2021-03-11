@@ -17,7 +17,7 @@
 
 Name: glusterfs9
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -34,6 +34,8 @@ Source3: umount.glusterfs
 Source4: glusterfs.logrotate
 Source7: glusterd.init
 Source8: glustereventsd.init
+
+Patch: 0001-afr_selfheal_do-return-EIO-if-inode-type-is-not-IA_I.patch
 
 # Stop unsupported i586 build
 # Said all is ok: https://bugzilla.redhat.com/show_bug.cgi?id=1473968
@@ -70,7 +72,9 @@ BuildRequires: python3-dev
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
 BuildRequires: libssl-devel libcurl-devel zlib-devel
-BuildRequires: libtirpc-devel rpcgen
+BuildRequires: libtirpc-devel
+# glibc-utils on p9
+BuildRequires: /usr/bin/rpcgen
 BuildRequires: libcmocka-devel
 BuildRequires: systemd
 BuildRequires: libuserspace-rcu-devel >= 0.9.1
@@ -416,6 +420,7 @@ like Pacemaker.
 
 %prep
 %setup
+%patch -p1
 %__subst "s|python ||" tools/gfind_missing_files/gfind_missing_files.sh
 # Increase soname version of libs to major version
 %__subst "s|VERSION=\"0:\([01]\):0\"|VERSION=\"%somajor:\1:0\"|" configure.ac
@@ -550,6 +555,12 @@ rm -f %buildroot%_libdir/libglusterd.so
 install -p -m 0744 -D extras/command-completion/gluster.bash \
     %buildroot%_sysconfdir/bash_completion.d/gluster
 
+%if_disabled devel
+rm -rf %buildroot%_pkgconfigdir/glusterfs-api.pc
+rm -rf %buildroot%_pkgconfigdir/libgfchangelog.pc
+rm -rf %buildroot%_libdir/{libgfapi.so,libgfchangelog.so,libgfrpc.so,libgfxdr.so,libglusterfs.so}
+rm -rf %buildroot%_includedir/glusterfs/
+%endif
 
 %post server
 %post_service glusterd
@@ -759,6 +770,10 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 #files checkinstall
 
 %changelog
+* Thu Mar 11 2021 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt2
+- change BR: rpcgen to BR: /usr/bin/rpcgen (p9 compatibility)
+- add patch: afr_selfheal_do: return -EIO if inode type is not IA_IFREG
+
 * Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt1
 - new major release 9
 
