@@ -10,8 +10,8 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.4.3
-Release:	alt2
+Version:	1.4.4
+Release:	alt1
 Summary:	A daemon to control runC
 
 Group:		Development/Other
@@ -90,6 +90,9 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %_unitdir/%name.service
 
 %changelog
+* Thu Mar 11 2021 Vladimir Didenko <cow@altlinux.org> 1.4.4-alt1
+- 1.4.4 (Fixes: CVE-2021-21334)
+
 * Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 1.4.3-alt2
 - Fix build with golang 1.16
 

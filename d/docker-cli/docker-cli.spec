@@ -10,8 +10,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    20.10.3
-Release: alt2
+Version:    20.10.5
+Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -21,7 +21,7 @@ ExclusiveArch: %go_arches
 Conflicts: docker
 
 Source0: %name-%version.tar
-Patch1: docker-cli-20.10.2-alt-fix-man-page-gen.patch
+Patch1: docker-cli-20.10.5-alt-fix-man-page-gen.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.3 libseccomp-devel
@@ -91,6 +91,9 @@ install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/f
 %{_datadir}/fish/completions/docker.fish
 
 %changelog
+* Thu Mar 11 2021 Vladimir Didenko <cow@altlinux.org> 20.10.5-alt1
+- new release
+
 * Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 20.10.3-alt2
 - fix build with golang 1.16
 

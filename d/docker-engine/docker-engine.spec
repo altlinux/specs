@@ -11,8 +11,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 20.10.3
-Release: alt2
+Version: 20.10.5
+Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -121,6 +121,9 @@ exit 0
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 
 %changelog
+* Thu Mar 11 2021 Vladimir Didenko <cow@altlinux.org> 20.10.5-alt1
+- 20.10.5
+
 * Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 20.10.3-alt2
 - fix build with golang 1.16
 
