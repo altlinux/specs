@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 141
 %define nv_minor %nil
-%define pkg_rel alt210
+%define pkg_rel alt211
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -100,7 +100,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
-Patch10: buildfix_kernel_5.11.patch
+Patch10: linux-5.11.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -168,7 +168,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
-%patch10 -p1
+%patch10 -p2
 rm -rf precompiled
 popd
 
@@ -352,6 +352,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 390.141-alt211
+- return previous fix for 5.11 kernel
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 390.141-alt210
 - return previous fix for 5.11 kernel
 
