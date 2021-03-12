@@ -11,7 +11,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 051
+Version: 053
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -27,7 +27,7 @@ Url: https://dracut.wiki.kernel.org/
 Source: %name-%version.tar
 
 BuildRequires: bash >= 4
-BuildRequires: git
+BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
 
 BuildRequires: systemd-devel
@@ -203,9 +203,6 @@ ln -r -s %buildroot%_sbindir/mkinitrd %buildroot/sbin/mkinitrd
 # Cleanup
 rm -fr -- %buildroot%dracutlibdir/modules.d/01fips
 
-# for systemd, better use systemd-bootchart
-rm -fr -- %buildroot%dracutlibdir/modules.d/00bootchart
-
 # we do not support dash in the initramfs
 rm -fr -- %buildroot%dracutlibdir/modules.d/00dash
 
@@ -256,7 +253,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 
 %files
 %if_enabled documentation
-%doc README.md HACKING TODO AUTHORS NEWS dracut.html dracut.png dracut.svg
+%doc README.md HACKING.md AUTHORS NEWS.md dracut.html dracut.png dracut.svg
 %endif
 %doc COPYING
 %_sbindir/dracut
@@ -299,14 +296,22 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/00warpclock
 %endif
 #%dracutlibdir/modules.d/01fips
+%dracutlibdir/modules.d/01systemd-ask-password
+%dracutlibdir/modules.d/01systemd-coredump
 %dracutlibdir/modules.d/01systemd-initrd
+%dracutlibdir/modules.d/01systemd-modules-load
+%dracutlibdir/modules.d/01systemd-repart
+%dracutlibdir/modules.d/01systemd-sysctl
+%dracutlibdir/modules.d/01systemd-sysusers
 %dracutlibdir/modules.d/03modsign
 %dracutlibdir/modules.d/03rescue
 %dracutlibdir/modules.d/04watchdog
 %dracutlibdir/modules.d/04watchdog-modules
 %dracutlibdir/modules.d/05busybox
-%dracutlibdir/modules.d/06dbus
+%dracutlibdir/modules.d/06dbus-broker
+%dracutlibdir/modules.d/06dbus-daemon
 %dracutlibdir/modules.d/06rngd
+%dracutlibdir/modules.d/09dbus
 %dracutlibdir/modules.d/10i18n
 %dracutlibdir/modules.d/30convertfs
 %dracutlibdir/modules.d/45url-lib
@@ -445,6 +450,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Fri Mar 12 2021 Alexey Shabalin <shaba@altlinux.org> 053-alt1
+- 053
+
 * Fri Dec 18 2020 Alexey Shabalin <shaba@altlinux.org> 051-alt1
 - 051
 
