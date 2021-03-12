@@ -1,7 +1,7 @@
 %def_disable coverage
 
 Name: apt-repo-tools
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -32,20 +32,23 @@ generating the indices): genbasedir, genpkglist, gensrclist.
 # A style enforcement: always use the keyword, which helps to avoid API misuse
 %add_optflags -Werror=suggest-override
 %add_optflags -Werror=return-type
-%autoreconf
+./bootstrap
+mkdir build
+cd build
+%define _configure_script ../configure
 %configure \
 	%{?_enable_coverage:--enable-code-coverage} \
 	%nil
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
 mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 
 %check
-make check
+make check -C build
 %if_enabled coverage
-make code-coverage-capture
+make code-coverage-capture -C build
 %endif
 
 %files
@@ -58,6 +61,19 @@ make code-coverage-capture
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Fri Mar 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.1-alt1
+- genbasedir/genpkglist: fixed generation of non-flat repositories.
+- genbasedir (imz@):
+  + Fixed SIGPIPE in the old non-patching mode. (It was due to a race.)
+  + Fixed patching srclist in-place when there is no uncompressed srclist.
+  + Fixed patching a basedir if there is a spurious {pkg,src}list.*.old file
+    there, but no uncompressed {pkg,src}list.*.
+  + Fixed a potential bug (due to a race) of choosing the overwritten
+    output file as input for patching.
+  + Report an error when patching and the previous list can't be found.
+  + Do the search for the previous list the same way no matter whether
+    --prev-basedir was specified or patching "in-place".
+
 * Mon Oct 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.0-alt1
 - Added new options to patch package index.
 - Added --basedir option to specify base directory name.
