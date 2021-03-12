@@ -1,11 +1,13 @@
 Name: qlandkartegt
 Version: 1.8.1
-Release: alt4
+Release: alt5
 Summary: GPS mapping (GeoTiff and vector) and GPSr management
 
 Group: Sciences/Geosciences
 License: GPLv2+
 Url: http://www.qlandkarte.org
+
+ExcludeArch: armh
 
 Source: qlandkartegt-%version.tar
 Patch0: 01_literal-suffix.patch
@@ -49,6 +51,9 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 %_datadir/%name/*
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt5
+- don't build on armh
+
 * Wed Mar 04 2020 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt4
 - Fixed FTBFS.
 
