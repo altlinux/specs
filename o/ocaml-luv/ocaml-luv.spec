@@ -1,10 +1,8 @@
-# libuv in our repository was built with assertions and ocaml-luv test process falls on it
-%def_without check
-
+%def_with check
 %define  modulename luv
 Name:    ocaml-%modulename
 Version: 0.5.7
-Release: alt1
+Release: alt2
 Summary: Binding to libuv for ocaml: cross-platform asynchronous I/O
 License: MIT
 Group:   Development/ML
@@ -13,7 +11,7 @@ Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: dune
-BuildRequires: libuv-devel = 1.41.0
+BuildRequires: libuv-devel >= 1.41.0-alt2
 BuildRequires: ocaml-base-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-alcotest-devel
@@ -52,6 +50,7 @@ export LUV_USE_SYSTEM_LIBUV=yes
 
 %check
 export LUV_USE_SYSTEM_LIBUV=yes
+export TRAVIS=true
 %dune_check
 
 %files -f ocaml-files.runtime
@@ -60,5 +59,10 @@ export LUV_USE_SYSTEM_LIBUV=yes
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Mar 12 2021 Anton Farygin <rider@altlinux.org> 0.5.7-alt2
+- libuv-1.41.0-alt2 was built without assertions and this change made it
+  possible to enable tests
+- added patches from upstream with fixes for testing on non-x86 architectures
+
 * Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 0.5.7-alt1
 - first build for ALT
