@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
@@ -18,11 +18,11 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
-License: LGPL-2.0
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://www.pango.org/
 
@@ -41,6 +41,7 @@ Source14: pangocairo-compat.map
 Source15: pangocairo-compat.lds
 
 Patch: pango-1.45.1-alt-compat-version-script.patch
+Patch1: pango-1.48.3-alt-build.patch
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
@@ -50,7 +51,7 @@ Obsoletes: gscript
 %define meson_ver 0.55.3
 %define glib_ver 2.62
 %define cairo_ver 1.12.10
-%define gtk_doc_ver 1.0
+%define gi_docgen_ver 2021.1
 %define xft_ver 2.0.0
 %define fontconfig_ver 2.11.91
 %define freetype_ver 2.1.4
@@ -70,7 +71,8 @@ BuildRequires: help2man /proc
 %{?_enable_freetype:BuildRequires: libfreetype-devel >= %freetype_ver}
 %{?_enable_cairo:BuildRequires: libcairo-devel >= %cairo_ver libcairo-gobject-devel}
 %{?_enable_libthai:BuildRequires: libthai-devel >= %thai_ver}
-%{?_enable_docs:BuildRequires: gtk-doc >= %gtk_doc_ver}
+# since 1.48.3 gi-docgen used
+%{?_enable_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell fonts-otf-adobe-source-sans-pro
@@ -143,6 +145,7 @@ the functionality of the installed Pango library.
 %setup -n %_name-%version
 %patch -p1 -b .vs
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
+%patch1 -b .docgen
 
 %build
 %meson \
@@ -195,7 +198,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/*
+#%_datadir/gtk-doc/html/*
+%dir %_datadir/doc/%_name
+%_datadir/doc/%_name/reference/
 %endif
 
 %if_enabled static
@@ -212,6 +217,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Mar 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.3-alt1
+- updated to 1.48.3-2-gdf366de8
+
 * Thu Feb 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.2-alt1
 - 1.48.2
 
