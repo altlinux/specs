@@ -1,13 +1,11 @@
 Name: fonttosfnt
-Version: 1.0.4
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: Wrap a bitmap font in a sfnt (TrueType) wrapper
 Group: System/X11
-Url: http://cgit.freedesktop.org/xorg/app/fonttosfnt
-Source: http://xorg.freedesktop.org/releases/individual/app/%name-%version.tar.bz2
-Patch1: fonttosfnt-1.0.1-freetype_fix.patch
+Url: https://gitlab.freedesktop.org/xorg/app/fonttosfnt
+Source: %name-%version.tar.gz
 License: MIT
-Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Tue May 18 2010
 BuildRequires: libfontenc-devel libfreetype-devel xorg-xproto-devel
@@ -18,8 +16,7 @@ BuildRequires: xorg-util-macros
 Fonttosfnt wraps a bitmap font in a sfnt (TrueType or OpenType) wrapper.
 
 %prep
-%setup -q -n %name-%version
-%patch1 -p0 -b .freetype_fix
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -34,6 +31,9 @@ Fonttosfnt wraps a bitmap font in a sfnt (TrueType or OpenType) wrapper.
 %_man1dir/*
 
 %changelog
+* Fri Mar 12 2021 Fr. Br. George <george@altlinux.ru> 1.2.1-alt1
+- Autobuild version bump to 1.2.1
+
 * Tue Apr 26 2011 Fr. Br. George <george@altlinux.ru> 1.0.4-alt2
 - Fix build
 
