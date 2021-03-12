@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: liboqs
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
@@ -56,12 +56,6 @@ Development files for %name.
 %prep
 %setup
 sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
-%ifarch armh
-# Temporary ARM workaround
-# https://github.com/open-quantum-safe/liboqs/issues/921
-  sed -i '/target_compile_definitions(picnic.*PICNIC_STATIC/s/$/ NO_MISALIGNED_ACCESSES/' \
-      src/sig/picnic/CMakeLists.txt
-%endif
 
 %build
 # CMake options https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs
@@ -110,5 +104,8 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Fri Mar 12 2021 Vitaly Chikunov <vt@altlinux.org> 0.5.0-alt1
+- Update to 0.5.0 (2021-03-10).
+
 * Mon Feb 22 2021 Vitaly Chikunov <vt@altlinux.org> 0.4.0-alt1
-- First import of v0.4.0 (2020-08-11) + update (2021-02-18).
+- First import of 0.4.0 (2020-08-11) + update (2021-02-18).
