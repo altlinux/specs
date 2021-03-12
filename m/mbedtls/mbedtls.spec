@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.25.0
+Version: 2.26.0
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -16,6 +16,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/ARMmbed/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch0: %name-alt-format-truncation.patch
 
 BuildRequires: cmake
 BuildRequires: libpkcs11-helper-devel
@@ -86,19 +88,10 @@ Cryptographic utilities based on mbed TLS
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-%ifarch %ix86 x86_64
-%else
-%add_optflags '-Wno-type-limits'
-%endif
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
+%cmake .. \
 	-DENABLE_ZLIB_SUPPORT:BOOL=TRUE \
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
 	-DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=TRUE \
@@ -107,17 +100,12 @@ cmake .. \
 %else
     -DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=FALSE \
 %endif
-	-DUSE_PKCS11_HELPER_LIBRARY:BOOL=TRUE \
-	-DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DPython3_EXECUTABLE:PATH=%__python3 \
-	-Wno-dev
+	-DUSE_PKCS11_HELPER_LIBRARY:BOOL=TRUE
 
-popd
-
-%make_build -C %_target_platform
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 %__mkdir_p %buildroot%_libexecdir/%name
 %__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
 %__rm -rf %buildroot%_bindir
@@ -153,6 +141,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sat Mar 13 2021 Nazarov Denis <nenderus@altlinux.org> 2.26.0-alt1
+- Version 2.26.0
+
 * Fri Dec 11 2020 Nazarov Denis <nenderus@altlinux.org> 2.25.0-alt1
 - Version 2.25.0
 
