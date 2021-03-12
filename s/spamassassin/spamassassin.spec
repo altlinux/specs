@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.4.4
-Release: alt2.2
+Release: alt3
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -16,6 +16,7 @@ Source0: http://www.cpan.org/authors/id/K/KM/KMCGRAIL/SpamAssassin/Mail-SpamAssa
 Source1: spamd.init
 Source2: spamassassin_local.cf
 Source3: spamd.sysconfig
+Source4: spamd.service
 
 # from Debian:
 Patch10: spamassassin-deb-10_change_config_paths.patch
@@ -180,6 +181,7 @@ find %buildroot -name .svn -exec rm -rf -- {} \;
 install -pD -m755 %SOURCE1 %buildroot%_initdir/spamd
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/spamassassin/local.cf
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/spamd
+install -pD -m644 %SOURCE4 %buildroot%_unitdir/spamd.service
 
 install -d -m700 %buildroot%_sysconfdir/spamassassin/sa-update-keys
 
@@ -192,7 +194,7 @@ install -d %buildroot%_sysconfdir/cron.d
 cat <<EOF >%buildroot%_sysconfdir/cron.d/sa-update
 # you can switch "space" to "tab" between minutes and hours
 # for stop randomization when when spamassasin installing
-30 01 * * *    root    %_bindir/sa-update && [ -f /var/run/spamd.pid ] && %_initdir/spamd restart
+30 01 * * *    root    %_bindir/sa-update && service spamd condrestart
 EOF
 
 #warning: Installed (but unpackaged) file(s) found:
@@ -241,6 +243,7 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 %files spamd
 %doc spamd/README spamd/PROTOCOL
 %config %_initdir/spamd
+%config %_unitdir/spamd.service
 %config(noreplace) %_sysconfdir/sysconfig/spamd
 %_bindir/spamd
 %_bindir/sa-check_spamd
@@ -264,6 +267,10 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Fri Mar 12 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.4-alt3
+- spamd: added systemd unit.
+- sa-update cron: make it service agnostic.
+
 * Tue Mar 09 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.4-alt2.2
 - Fix dkim patch apply.
 
