@@ -1,7 +1,7 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 20.12.2
+Version: 20.12.3
 Release: alt1
 %K5init no_appdata
 
@@ -41,6 +41,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel kf5-ki18n-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kgeography
 
 Name: kde5-%rname
-Version: 20.12.2
+Version: 20.12.3
 Release: alt1
 %K5init no_appdata
 
@@ -53,6 +53,9 @@ mv data/flags/{ukraine/Crimea,russia/crimea}.png
 
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 

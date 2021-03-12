@@ -4,7 +4,7 @@
 %define libmarblewidget libmarblewidget-qt5%marblewidget_sover
 
 Name: kde5-%rname
-Version: 20.12.2
+Version: 20.12.3
 Release: alt1
 %K5init no_appdata
 
@@ -136,6 +136,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt1
 - new version
 
