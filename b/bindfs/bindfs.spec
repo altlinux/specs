@@ -1,5 +1,5 @@
 Name: bindfs
-Version: 1.13.9
+Version: 1.15.1
 Release: alt1
 License: GPLv2
 
@@ -34,6 +34,9 @@ rules.
 %_man1dir/*
 
 %changelog
+* Fri Mar 12 2021 Slava Aseev <ptrnine@altlinux.org> 1.15.1-alt1
+- Updated to upstream version 1.15.1
+
 * Mon Sep 03 2018 Pavel Moseev <mars@altlinux.org> 1.13.9-alt1
 - Updated to upstream version 1.13.9
 
