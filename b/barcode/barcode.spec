@@ -1,6 +1,6 @@
 Name: barcode
 Version: 0.99
-Release: alt1
+Release: alt2
 Group: Graphics
 Summary: Utility to generate printable barcodes in PostScript format
 Summary(ru_RU.UTF-8): Утилита для генерации штрих-кодов для печати в формате PostScript
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 Patch0: barcode-0.99-info.patch
 Patch1: barcode-0.98-leak-fix.patch
 Patch2: barcode-0.99-fix-renamed-include.patch
+Patch3: barcode-0.99-gcc-10.patch
 
 # Automatically added by buildreq on Wed Jul 08 2009
 BuildRequires: ghostscript-utils /usr/bin/tex gcc
@@ -36,12 +37,14 @@ Encapsulated Postscript (возможно также добавление ины
 В пакет входят и библиотека, и утилита командной строки, так что вы
 можете добавить поддержку генерации штрих-кодов в ваше приложение.
 
-%package -n libbarcode-static-devel
+%package -n libbarcode-devel-static
 Summary: Library to generate printable barcodes in PostScript format
 Summary(ru_RU.UTF-8): Библиотека для генерации штрих-кодов для печати в формате PostScript
 Group: System/Libraries
+Provides: libbarcode-static-devel = %EVR
+Obsoletes: libbarcode-static-devel
 
-%description -n libbarcode-static-devel
+%description -n libbarcode-devel-static
 The package is meant to solve most needs in barcode creation with a
 conventional printer. It can create printouts for the conventional
 product tagging standards: UPC-A, UPC-E, EAN-13, EAN-8, ISBN, as well
@@ -55,6 +58,7 @@ The package includes a static library.
 %patch0 -p2
 %patch1 
 %patch2 -p1
+%patch3 -p2
 
 %build
 %configure
@@ -73,11 +77,15 @@ sed -i '/^#include.*config.h"$/d' %buildroot%_includedir/barcode.h
 %attr(0755,root,root) %_bindir/barcode
 %_infodir/barcode.info*
 
-%files -n libbarcode-static-devel
+%files -n libbarcode-devel-static
 %_includedir/barcode.h
 %_libdir/libbarcode.a
 
 %changelog
+* Fri Mar 12 2021 Slava Aseev <ptrnine@altlinux.org> 0.99-alt2
+- Fixed build with gcc-10
+- Rename libbarcode-static-devel to libbarcode-devel-static (closes: #36963)
+
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 0.99-alt1
 - new version
 
