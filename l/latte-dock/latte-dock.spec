@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: latte-dock
-Version: 0.9.9
+Version: 0.9.11
 Release: alt1
 Summary: Latte is a dock based on plasma frameworks
 
@@ -9,6 +11,7 @@ Url: https://github.com/KDE/%name
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: K5bin.patch
 
 BuildRequires: xdg-utils
 BuildRequires: libxdg-basedir-devel
@@ -51,6 +54,7 @@ using parabolic zoom effect and tries to be there only when it is needed.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 %K5build  
@@ -86,5 +90,8 @@ make install/fast DESTDIR=%{buildroot} -C BUILD
 %_K5xdgconf/latte-indicators.knsrc
 
 %changelog
+* Sat Mar 13 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.11-alt1
+- Updated to upstream version v0.9.11
+
 * Sun Mar 01 2020 Artyom Bystrov <arbars@altlinux.org> 0.9.9-alt1
 - initial build for ALT Sisyphus
