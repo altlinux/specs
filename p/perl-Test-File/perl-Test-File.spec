@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File
 
 Name: perl-Test-File
-Version: 1.447
+Version: 1.448
 Release: alt1
 
 Summary: Perl module to test file attributes
@@ -11,7 +11,7 @@ Group: Development/Perl
 URL: http://search.cpan.org/dist/Test-File/
 #URL: http://github.com/briandfoy/test-file/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 %define real_name Test-File
@@ -53,6 +53,9 @@ rm -f -- t/win32.t t/normalize.t
 
 
 %changelog
+* Sat Mar 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.448-alt1
+- New version
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.447-alt1
 - New version
 
