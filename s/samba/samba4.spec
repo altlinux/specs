@@ -15,6 +15,7 @@
 %def_with    winbind
 
 %def_with profiling_data
+%def_with snapper
 
 # build as separate package
 %def_with libsmbclient
@@ -60,7 +61,7 @@
 %endif
 
 Name:    samba
-Version: 4.12.12
+Version: 4.13.5
 Release: alt1
 
 Group:   System/Servers
@@ -135,13 +136,19 @@ BuildRequires: libkrb5-devel
 BuildRequires: krb5-kdc
 %endif
 %endif
+
 BuildRequires: glibc-devel glibc-kernheaders
 # https://bugzilla.samba.org/show_bug.cgi?id=9863
 BuildConflicts: setproctitle-devel
 BuildRequires: libiniparser-devel
 BuildRequires: libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
-%{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
+%{?_with_doc:BuildRequires: libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
+
+%if_with snapper
+BuildRequires: libdbus-devel
+%endif
+
 %if_without talloc
 BuildRequires: libtalloc-devel >= 2.3.1
 BuildRequires: python3-module-talloc-devel
@@ -158,7 +165,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.1.4
+%define ldb_version 2.2.0
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -306,6 +313,21 @@ Requires: %name-common-libs = %version-%release
 
 %description vfs-glusterfs
 Samba VFS module for GlusterFS integration.
+
+%package vfs-snapper
+Summary: Samba VFS module exposes snapshots managed by snapper as shadow-copies
+Group: System/Libraries
+Requires: %name = %version-%release
+Requires: %name-libs = %version-%release
+
+%description vfs-snapper
+Samba VFS module for exposes snapshots managed by snapper for use by Samba. This
+provides the ability for remote SMB clients to access shadow-copies via Windows
+Explorer using the "previous versions" dialog.
+
+Snapshots can also be created and remove remotely, using the File Server Remote
+VSS Protocol (FSRVP). Snapshot creation and deletion requests are forwarded to
+snapper via DBus
 
 %package dc-libs
 Summary: Samba libraries
@@ -711,11 +733,17 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 
 %define _samba4_libraries heimdal,!zlib,!popt%{_talloc_lib}%{_tevent_lib}%{_tdb_lib}%{_ldb_lib}
 
+%define _vfs_snapper_lib vfs_snapper
+%if_without snapper
+%define _vfs_snapper_lib !vfs_snapper
+%endif
+
 %define _samba4_idmap_modules idmap_ad,idmap_rid,idmap_adex,idmap_hash,idmap_tdb2
 %define _samba4_pdb_modules pdb_tdbsam,pdb_ldap,pdb_ads,pdb_smbpasswd,pdb_wbc_sam,pdb_samba4
 %define _samba4_auth_modules auth_unix,auth_wbc,auth_server,auth_netlogond,auth_script,auth_samba4
+%define _samba4_vfs_modules %{_vfs_snapper_lib}
 # auth_domain needs to be static
-%define _samba4_modules %_samba4_idmap_modules,%_samba4_pdb_modules,%_samba4_auth_modules
+%define _samba4_modules %_samba4_idmap_modules,%_samba4_pdb_modules,%_samba4_auth_modules,%_samba4_vfs_modules
 
 %define _libsmbclient %nil
 %if_without libsmbclient
@@ -1111,7 +1139,12 @@ TDB_NO_FSYNC=1 %make_build test
 %attr(755,root,root) %_initdir/samba
 %_unitdir/samba.service
 %dir /var/lib/samba/sysvol
+%dir %_datadir/samba/setup
 %_datadir/samba/setup
+%dir %_datadir/samba/admx
+%_datadir/samba/admx/samba.admx
+%dir %_datadir/samba/admx/en-US
+%_datadir/samba/admx/en-US/samba.adml
 %if_with doc
 %_man8dir/samba.8*
 %endif #doc
@@ -1272,6 +1305,13 @@ TDB_NO_FSYNC=1 %make_build test
 %attr(1777,root,root) %dir /var/spool/samba
 %_sysconfdir/openldap/schema/samba.schema
 %_sysconfdir/pam.d/samba
+
+%dir %_datadir/samba
+%if_enabled spotlight
+%dir %_datadir/samba/mdssvc
+%_datadir/samba/mdssvc/elasticsearch_mappings.json
+%endif
+
 %if_with doc
 %_man5dir/lmhosts.5*
 %_man5dir/smb.conf.5*
@@ -1287,6 +1327,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 %if_enabled glusterfs
 %exclude %_man8dir/vfs_glusterfs.8*
+%endif
+%if_with snapper
+%exclude %_man8dir/vfs_snapper.8*
 %endif
 %endif #doc
 
@@ -1394,6 +1437,10 @@ TDB_NO_FSYNC=1 %make_build test
 %exclude %_samba_mod_libdir/vfs/glusterfs.so
 %endif
 
+%if_with libcephfs
+%exclude %_samba_mod_libdir/vfs/snapper.so
+%endif
+
 # libraries needed by the public libraries
 %_samba_mod_libdir/libCHARSET3-samba4.so
 %_samba_mod_libdir/libMESSAGING-samba4.so
@@ -1494,6 +1541,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/vfs_glusterfs.8*
 %endif
 
+%if_with snapper
+%files vfs-snapper
+%_samba_mod_libdir/vfs/snapper.so
+%_man8dir/vfs_snapper.8*
+%endif
+
 %if_with clustering_support
 %_samba_mod_libdir/libctdb-event-client-samba4.so
 %endif
@@ -1532,6 +1585,8 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/bind9/dlz_bind9_10.so
 %_samba_mod_libdir/bind9/dlz_bind9_11.so
 %_samba_mod_libdir/bind9/dlz_bind9_12.so
+%_samba_mod_libdir/bind9/dlz_bind9_14.so
+%_samba_mod_libdir/bind9/dlz_bind9_16.so
 %if_without mitkrb5
 %_samba_mod_libdir/libheimntlm-samba4.so.1
 %_samba_mod_libdir/libheimntlm-samba4.so.1.0.1
@@ -1812,9 +1867,18 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
-* Fri Mar 12 2021 Evgeny Sinelikov <sin@altlinux.org> 4.12.12-alt1
-- Update to latest release of Samba 4.12 with minor fixes.
-- Remove not needed anymore smbd_conn private library.
+* Sat Mar 13 2021 Evgeny Sinelikov <sin@altlinux.org> 4.13.5-alt1
+- Update to latest release of Samba 4.13
+
+* Mon Feb 08 2021 Evgeny Sinelikov <sin@altlinux.org> 4.13.4-alt1
+- Update to latest release of Samba 4.13:
+  + Insecure wide links functionality has been moved into a separate VFS module;
+  + NT4-like 'classic' Samba domain controller mode and SMBv1 only protocol
+    options has been deprecated.
+- Add snapper VFS module in separate samba-vfs-snapper package due it requires DBus.
+- Add samba group policy ADMX files to samba-dc-common package.
+- Add elasticsearch backend mappings json file for Metadata Search Service (mdssvc)
+  to samba-common package.
 
 * Mon Jan 18 2021 Evgeny Sinelikov <sin@altlinux.org> 4.12.11-alt1
 - Update to latest release of Samba 4.12
