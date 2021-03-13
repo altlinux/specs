@@ -1,13 +1,13 @@
 Name: daq
-Version: 2.0.4
+Version: 2.0.6
 Release: alt1
 Summary: Data Acquisition Library
 License: GPLv2
 Group: System/Libraries
 Provides: daq
-Source: daq-%version.tar
+Source: daq-%version.tar.gz
 URL: http://www.snort.org/
-
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 BuildRequires: autoconf, automake, flex, libpcap-devel
 
 %description
@@ -45,10 +45,20 @@ utilize lib%name.
 
 %build
 %configure
+# get rid of rpath
+%{__sed} -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+%{__sed} -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
 %make
 
 %install
 %makeinstall_std
+
+# get rid of la files
+find $RPM_BUILD_ROOT -type f -name "*.la" -delete -print
+# get rid of static libraries
+find $RPM_BUILD_ROOT -type f -name "*.a" -delete -print
+
 
 %files -n lib%name
 %_bindir/daq-modules-config
@@ -60,6 +70,9 @@ utilize lib%name.
 %_libdir/*.so
 
 %changelog
+* Sat Mar 13 2021 Ilya Mashkin <oddity@altlinux.ru> 2.0.6-alt1
+- 2.0.6
+
 * Fri Dec 19 2014 Anton Farygin <rider@altlinux.ru> 2.0.4-alt1
 - new version
 
