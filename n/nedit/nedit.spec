@@ -1,21 +1,29 @@
 Name: nedit
-Version: 5.5
+Version: 5.7
 #%%define rc_ver RC2
-Release: alt5.git20121025
+Release: alt1
 %define srcname %name-%version%{?rc_ver:%rc_ver}%{?!rc_ver:-src}
 
 Summary: A text editor for the X Window System
-License: GPL
+License: GPLv2
 Group: Editors
 Url: http://www.nedit.org/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # git://git.code.sf.net/p/nedit/git
-Source: %srcname.tar
+Source: %srcname.tar.gz
 Source1: %name.desktop
 Source2: %name-16x16.png
 Source3: %name-32x32.png
 Source4: %name-48x48.png
+Patch0: nedit-5.5-security.patch
+Patch1: 0001-Force-C89-on-gcc-linux-to-prevent-accidental-changes.patch
+# Append to Fedora's C_OPT_FLAGS and LD_OPT_FLAGS rather than overriding them.
+Patch2: nedit-5.7-makefiles.patch
+Patch3: nedit-5.6-utf8.patch
+Patch5: nedit-5.7-nc-manfix.patch
+Patch6: nedit-5.5-visfix.patch
+Patch8: nedit-5.5-scroll.patch
 
 # Automatically added by buildreq on Tue May 23 2006
 BuildRequires: libX11-devel libXext-devel libXmu-devel libXp-devel
@@ -32,6 +40,13 @@ who needs to edit text.
 
 %prep
 %setup %{?rc_ver:-n %srcname}
+%patch0 -p1 -b .security
+%patch1 -p1 -b .c89
+%patch2 -p1 -b .makefiles
+%patch3 -p1 -b .utf8
+%patch5 -p1 -b .nc-manfix
+%patch6 -p1 -b .visfix
+%patch8 -p1 -b .scroll
 
 # Change nedit.shell default from /bin/csh to /bin/sh.
 find doc -type f -print0 |
@@ -45,12 +60,20 @@ find -type f -name \*.c -print0 |
 	xargs -r0 subst -p 's,"/bin/csh","/bin/sh",g' --
 
 %build
-%make -C doc all
+#make -C doc all
+#add_optflags -DBUILD_UNTESTED_NEDIT -DBUILD_BROKEN_NEDIT
+#make_build linux YACC='bison -y'
 
-%add_optflags -DBUILD_UNTESTED_NEDIT -DBUILD_BROKEN_NEDIT
-%make_build linux YACC='bison -y'
-cp -p doc/nedit.{doc,txt}
-bzip2 -9f doc/{faq,nedit}.txt
+pushd doc
+# Upstream really doesn't want you generating the manpages, but they forgot to
+# include the manpages in 5.7. So generate them.
+make VERSION='NEdit 5.7' man
+popd
+make linux C_OPT_FLAGS="$RPM_OPT_FLAGS"
+
+
+#cp -p doc/nedit.{doc,txt}
+#bzip2 -9f doc/{faq,nedit}.txt
 
 %install
 install -pD -m755 source/%name %buildroot%_bindir/%name
@@ -69,9 +92,12 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %_miconsdir/*.png
 %_niconsdir/*.png
 %_liconsdir/*.png
-%doc README ReleaseNotes doc/NEdit.ad doc/*.txt.bz2
+%doc README ReleaseNotes doc/NEdit.ad doc/*
 
 %changelog
+* Sat Mar 13 2021 Ilya Mashkin <oddity@altlinux.ru> 5.7-alt1
+- 5.7
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5-alt5.git20121025
 - Built with lesstif instead of openmotif (ALT #29009)
 
