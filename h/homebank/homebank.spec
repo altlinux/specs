@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 5.5
+Version: 5.5.1
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -13,7 +13,7 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://%name.free.fr/index.php
 
-Source: https://%name.free.fr/public/%name-%_version.tar.gz
+Source: http://%name.free.fr/public/%name-%_version.tar.gz
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -95,6 +95,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 5.5.1-alt1
+- 5.5.1
+
 * Sat Feb 06 2021 Yuri N. Sedunov <aris@altlinux.org> 5.5-alt1
 - 5.5
 
