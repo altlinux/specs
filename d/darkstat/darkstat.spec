@@ -1,17 +1,26 @@
 Summary: Network traffic analyzer
 Name:    darkstat
-Version: 3.0.707
-Release: alt1.qa1
-License: GPL
+Version: 3.0.719
+Release: alt1
+License: GPLv2
 Group:   Monitoring
 Url: http://dmr.ath.cx/net/darkstat/
 
-Packager: Nick S. Grechukh <gns@altlinux.org>
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source: http://dmr.ath.cx/net/darkstat/darkstat-%version.tar.bz2
+Source1:       %{name}.service
+Source2:       %{name}.sysconfig
+
 
 # Automatically added by buildreq on Wed Apr 02 2008
 BuildRequires: libpcap-devel zlib-devel
+
+Requires(post):   systemd
+Requires(preun):  systemd
+Requires(postun): systemd
+BuildRequires:    systemd
+BuildRequires: make
 
 %description
 darkstat is a network traffic analyzer. It's basically a packet sniffer
@@ -22,18 +31,38 @@ all sorts of useless but interesting statistics.
 %setup
 
 %build
-%configure
+#configure
+%configure --disable-silent-rules
 %make_build
 
 %install
 %makeinstall
+install -Dp -m 0644 %{SOURCE1} %{buildroot}/%{_unitdir}/%{name}.service
+install -Dp -m 0644 %{SOURCE2} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
+
+%pre
+getent passwd %{name} >/dev/null || useradd -r -s /sbin/nologin -c "Network traffic analyzer" %{name}
+exit 0
+
+%post
+%post_service %{name}.service
+
+%preun
+%preun_service %{name}.service
+
 
 %files
-%doc AUTHORS COPYING* INSTALL LICENSE NEWS README THANKS
-%_man1dir/darkstat.1*
+%doc AUTHORS COPYING* INSTALL LICENSE NEWS README *.txt
+%_man8dir/darkstat.8*
 %_sbindir/darkstat
+%attr(0600,%{name},root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%{_unitdir}/%{name}.service
+
 
 %changelog
+* Sat Mar 13 2021 Ilya Mashkin <oddity@altlinux.ru> 3.0.719-alt1
+- 3.0.719
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.707-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
