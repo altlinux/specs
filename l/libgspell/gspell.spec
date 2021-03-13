@@ -1,14 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_enable installed_tests
 %{?_enable_snapshot:%def_enable gtk_doc}
 %def_enable check
 
 %define _name gspell
-%define ver_major 1.8
+%define ver_major 1.9
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -23,12 +23,10 @@ Source: %_name-%version.tar
 %endif
 
 %define gtk_ver 3.20.0
-%define enchant_ver 1.6.0
-
-Requires: iso-codes
+%define enchant_ver 2.2.12
 
 BuildRequires: autoconf-archive
-BuildRequires: libgtk+3-devel >= %gtk_ver libenchant2-devel >= %enchant_ver iso-codes-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver libenchant2-devel >= %enchant_ver libicu-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools gtk-doc
 %{?_enable_check:BuildRequires: xvfb-run hunspell-en valgrind}
 
@@ -87,6 +85,7 @@ the functionality of the installed Gspell library.
 %setup -n %_name-%version
 
 %build
+%autoreconf
 %configure \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     %{?_enable_installed_tests:--enable-installed-tests}
@@ -126,6 +125,9 @@ xvfb-run %make check
 
 
 %changelog
+* Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- updated to 1.9.1-5-g7f16cd2
+
 * Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
