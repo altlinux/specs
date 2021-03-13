@@ -2,18 +2,24 @@
 %def_enable snapshot
 %define modname gidocgen
 
+# mypy too old?
 %def_disable check
 
 Name: gi-docgen
-Version: 2021.1
+Version: 2021.2
 Release: alt1
 
 Summary: Documentation tool for GObject-based libraries
 Group: Development/Other
 License: Apache-2.0 or GPL-3.0-or-later
-Url: https://gitlab.gnome.org/ebassi/gi-docgen
+Url: https://pypi.org/project/gi-docgen/
 
-Source: %url/archive/%version/%name-%version.tar
+%if_disabled snapshot
+Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
+%else
+Vcs: https://gitlab.gnome.org/ebassi/gi-docgen
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -27,7 +33,7 @@ BuildRequires: python3-module-markupsafe
 BuildRequires: python3-module-Pygments
 BuildRequires: python3-module-toml
 BuildRequires: python3-module-typogrify
-%{?_enable_check:BuildRequires: xxx}
+%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-mypy}
 
 %description
 GI-DocGen is a document generator for GObject-based libraries. GObject is
@@ -38,6 +44,7 @@ reference of these libraries, as well as other ancillary documentation.
 %package templates
 Summary: Templates for GI-DocGen
 Group: Development/Other
+License: Apache-2.0 or GPL-3.0-or-later and OFL-1.1
 
 %description templates
 This package provides basic template data for GI-DocGen.
@@ -59,6 +66,7 @@ ln -sf ../../../../share/%modname/templates %buildroot%python3_sitelibdir_noarch
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+%meson_test
 
 %files
 %_bindir/%name
@@ -70,6 +78,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.2-alt1
+- updated to 2021.2-12-g4ce8f10
+
 * Fri Mar 12 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.1-alt1
 - first build for Sisyphus (29ed9ef)
 
