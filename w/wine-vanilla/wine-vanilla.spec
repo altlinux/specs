@@ -11,7 +11,7 @@
 %endif
 
 Name: wine-vanilla
-Version: 6.2
+Version: 6.4
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -510,6 +510,9 @@ done
 %endif
 
 %changelog
+* Sat Mar 13 2021 Vitaly Lipatov <lav@altlinux.ru> 6.4-alt1
+- new version 6.4
+
 * Thu Feb 18 2021 Vitaly Lipatov <lav@altlinux.ru> 6.2-alt1
 - new version 6.2
 - set strict require wine-mono 6.0.0
