@@ -1,8 +1,10 @@
-%define git_version 13817
-%define git_commit 72a6fff36c42989c71765012e26285943085b8c5
+# git describe upstream | sed 's/-g[0-9a-f]*\(+*\)$/\1/'
+%define git_version 5.0-13827
+# git show-ref --heads --hash upstream
+%define git_commit 18d95dfcca463dd24e686d74066da96e27edbb3f
 
 Name: dolphin-emu
-Version: 5.0.%git_version
+Version: 5.0.13827
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -18,6 +20,7 @@ ExclusiveArch: x86_64 aarch64
 Source: dolphin-%version.tar
 Patch0: %name-alt-git.patch
 
+BuildPreReq: llvm-common-devel-static
 BuildPreReq: pkgconfig(expat)
 BuildPreReq: pkgconfig(libbrotlicommon)
 BuildPreReq: pkgconfig(libpcre)
@@ -27,6 +30,7 @@ BuildRequires: cmake
 BuildRequires: libcubeb-devel
 BuildRequires: libmbedtls-devel
 BuildRequires: libminiupnpc-devel
+BuildRequires: llvm-common-devel
 BuildRequires: pkgconfig(Qt5)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bzip2)
@@ -73,7 +77,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %cmake .. \
 	-DENABLE_LTO:BOOL=TRUE \
 	-DUSE_SHARED_ENET:BOOL=TRUE \
-	-DDOLPHIN_WC_DESCRIBE:STRING="%(sed 's|\.|-|2' <<< %version)" \
+	-DDOLPHIN_WC_DESCRIBE:STRING="%git_version" \
 	-DDOLPHIN_WC_REVISION:STRING="%git_commit" \
 	-DDOLPHIN_WC_BRANCH:STRING="master" \
 	-DDISTRIBUTOR:STRING="ALT Linux Team" \
@@ -96,6 +100,10 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sun Mar 14 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13827-alt1
+- Version 5.0-13827
+- Enables LLVM support
+
 * Tue Mar 09 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13817-alt1
 - Version 5.0-13817
 
