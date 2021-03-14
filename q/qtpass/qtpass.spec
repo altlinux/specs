@@ -5,7 +5,7 @@
 
 Name:     qtpass
 Version:  1.3.2
-Release:  alt1
+Release:  alt2.gitcfac4db8
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
 Summary(ru_RU.UTF-8): кросс-платформенный интерфейс к менеджеру паролей pass
@@ -21,7 +21,8 @@ Source0: %real_name-%version.tar
 Patch0:  %real_name-%version-%release.patch
 
 Patch1:  %name-1.1.6-alt-desktop.patch
-Patch2:  %name-1.2.0-alt-tests.patch
+
+Patch2:  %name-1.3.2-github-pull_559.patch
 
 Source1: %name-16.png
 Source2: %name-32.png
@@ -30,8 +31,8 @@ Source3: %name-48.png
 BuildRequires(pre): rpm-build-licenses desktop-file-utils
 
 
-# Automatically added by buildreq on Wed Sep 04 2019
-# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 python3-base python3-dev qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby ruby-stdlibs sh4
+# Automatically added by buildreq on Tue Jan 28 2020
+# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-modules python2-base python3 python3-base python3-dev qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby ruby-stdlibs sh4
 BuildRequires: kf5-kwallet-devel python3-module-mpl_toolkits qt5-multimedia-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
 
 Requires: gnupg gnupg2 git-core pwgen
@@ -68,8 +69,13 @@ QtPass -  кроссплатформенный графический интер
 %patch0 -p1
 
 %patch1
-#%%patch2
+%patch2 -p1
 
+## TEMPORARY FIX program version - 1.3.3 not released yet:
+sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i Doxyfile
+sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i qtpass.iss
+sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i qtpass.pri
+sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i qtpass.plist
 
 mv -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/LICENSE) LICENSE
@@ -101,6 +107,13 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sun Mar 14 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3.2-alt2.gitcfac4db8
+- Update to current development state
+  - Fix renaming passwords and directories failures
+  - Fix support for passwords names contained dots
+  - Update translations
+  - Other bugfixes
+
 * Tue Jan 28 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.3.2-alt1
 - New version
 
