@@ -3,7 +3,7 @@
 %define  version_suffix %nil
 
 Name:    rex
-Version: 1.12.1
+Version: 1.13.3
 Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
@@ -19,14 +19,16 @@ Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.53.1-alt-fix_use.patch
+Patch2:  %name-1.13.3-alt-fix_ssh_port.patch
+Patch3:  %name-1.13.3-alt-fix_dmidecode.patch 
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Mon Aug 10 2020
-# optimized out: git-core libnss-myhostname libsasl2-3 lsb-release perl perl-App-Cmd perl-B-Hooks-EndOfScope perl-CPAN-Changes perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Load perl-Clone perl-Clone-Choose perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Cpanel-JSON-XS perl-DBI perl-Data-Dump perl-Data-OptList perl-Data-Section perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-Zilla perl-Dist-Zilla-Plugin-MetaProvides perl-Dist-Zilla-Role-ModuleMetadata perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-Find-Rule perl-File-Which perl-File-chdir perl-File-pushd perl-Getopt-Long-Descriptive perl-Git-Wrapper perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-IP perl-IO-String perl-IO-Stty perl-IO-Tty perl-IPC-Run perl-JSON-MaybeXS perl-JSON-PP perl-List-AllUtils perl-List-MoreUtils perl-List-MoreUtils-XS perl-List-SomeUtils perl-List-UtilsBy perl-Log-Dispatch perl-Log-Dispatchouli perl-Log-Log4perl perl-MRO-Compat perl-Mixin-Linewise perl-Module-Implementation perl-Module-Metadata perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Perl perl-MooseX-Types-Stringlike perl-NetAddr-IP perl-Number-Compare perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Path-Tiny perl-Perl-PrereqScanner perl-Perl-Version perl-PerlIO-utf8_strict perl-Pod-Escapes perl-Pod-Simple perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Safe-Isa perl-Socket6 perl-Software-License perl-Sort-Versions perl-Specio perl-String-Flogger perl-String-RewritePrefix perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Term-ANSIColor perl-Term-Encoding perl-TermReadKey perl-Test-Deep perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-URI perl-Unicode-Collate perl-Variable-Magic perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-XML-Simple perl-YAML-Tiny perl-aliased perl-autodie perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent perl-podlators python-modules python2-base python3 python3-base python3-dev rsync ruby ruby-stdlibs sh4 utf8proc
-BuildRequires: curl iproute2 libnss-myhostname libnss-mymachines openssh-clients perl-AWS-Signature4 perl-Archive-Tar-Wrapper perl-Class-XSAccessor perl-Data-Validate-IP perl-Digest-HMAC perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-ContributorsFile perl-Dist-Zilla-Plugin-Git-Contributors perl-Dist-Zilla-Plugin-MakeMaker-Awesome perl-Dist-Zilla-Plugin-Meta-Contributors perl-Dist-Zilla-Plugin-MetaProvides-Package perl-Dist-Zilla-Plugin-NextVersion-Semantic perl-Dist-Zilla-Plugin-OSPrereqs perl-Dist-Zilla-Plugin-OurPkgVersion perl-Dist-Zilla-Plugin-PromptIfStale perl-Dist-Zilla-Plugin-Run perl-Dist-Zilla-Plugin-Test-CPAN-Changes perl-Dist-Zilla-Plugin-Test-Kwalitee perl-Dist-Zilla-Plugin-Test-MinimumVersion perl-Dist-Zilla-Plugin-Test-Perl-Critic perl-Expect perl-File-LibMagic perl-File-ShareDir-Install perl-Hash-Merge perl-Net-OpenSSH perl-Net-SFTP-Foreign perl-Net-SSH2 perl-PPI-XS perl-Parallel-ForkManager perl-PathTools perl-Ref-Util perl-Ref-Util-XS perl-Sort-Naturally perl-String-Escape perl-Test-UseAllModules perl-YAML subversion wget
+# Automatically added by buildreq on Sun Mar 14 2021
+# optimized out: git-core libnss-myhostname libsasl2-3 lsb-release perl perl-App-Cmd perl-B-Hooks-EndOfScope perl-CPAN-Changes perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Capture-Tiny perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Inspector perl-Class-Load perl-Clone perl-Clone-Choose perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Cpanel-JSON-XS perl-DBI perl-Data-Dump perl-Data-OptList perl-Data-Section perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-Zilla perl-Dist-Zilla-Plugin-Config-Git perl-Dist-Zilla-Plugin-MetaProvides perl-Dist-Zilla-Role-ModuleMetadata perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-Find-Rule perl-File-ShareDir perl-File-Which perl-File-chdir perl-File-pushd perl-Getopt-Long-Descriptive perl-Git-Wrapper perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-IP perl-IO-String perl-IO-Stty perl-IO-Tty perl-IPC-Run perl-JSON-MaybeXS perl-JSON-PP perl-List-AllUtils perl-List-MoreUtils perl-List-MoreUtils-XS perl-List-SomeUtils perl-List-UtilsBy perl-Log-Dispatch perl-Log-Dispatchouli perl-Log-Log4perl perl-MRO-Compat perl-Mixin-Linewise perl-Module-Implementation perl-Module-Metadata perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-Has-Sugar perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Common perl-MooseX-Types-Perl perl-MooseX-Types-Stringlike perl-NetAddr-IP perl-Number-Compare perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Path-Tiny perl-Perl-PrereqScanner perl-Perl-Version perl-PerlIO-utf8_strict perl-Pod-Escapes perl-Pod-Simple perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Safe-Isa perl-Socket6 perl-Software-License perl-Sort-Versions perl-Specio perl-String-Errf perl-String-Flogger perl-String-Formatter perl-String-RewritePrefix perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Term-ANSIColor perl-Term-Encoding perl-TermReadKey perl-Test-Deep perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Time-Piece perl-Try-Tiny perl-Type-Tiny perl-Types-Path-Tiny perl-URI perl-Unicode-Collate perl-Variable-Magic perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-XML-Simple perl-YAML-Tiny perl-aliased perl-autodie perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent perl-podlators python-modules python2-base python3 python3-base python3-module-paste rsync ruby ruby-stdlibs sh4 utf8proc
+BuildRequires: curl iproute2 libnss-mymachines perl-AWS-Signature4 perl-Archive-Tar-Wrapper perl-Class-XSAccessor perl-Data-Validate-IP perl-Digest-HMAC perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-ContributorsFile perl-Dist-Zilla-Plugin-DynamicPrereqs perl-Dist-Zilla-Plugin-Git perl-Dist-Zilla-Plugin-Git-Contributors perl-Dist-Zilla-Plugin-MakeMaker-Awesome perl-Dist-Zilla-Plugin-Meta-Contributors perl-Dist-Zilla-Plugin-MetaProvides-Package perl-Dist-Zilla-Plugin-NextVersion-Semantic perl-Dist-Zilla-Plugin-OSPrereqs perl-Dist-Zilla-Plugin-OptionalFeature perl-Dist-Zilla-Plugin-OurPkgVersion perl-Dist-Zilla-Plugin-PromptIfStale perl-Dist-Zilla-Plugin-Run perl-Dist-Zilla-Plugin-Test-CPAN-Changes perl-Dist-Zilla-Plugin-Test-Kwalitee perl-Dist-Zilla-Plugin-Test-MinimumVersion perl-Expect perl-File-LibMagic perl-File-ShareDir-Install perl-Hash-Merge perl-IPC-Shareable perl-Net-OpenSSH perl-Net-SFTP-Foreign perl-Net-SSH2 perl-PPI-XS perl-Parallel-ForkManager perl-Ref-Util perl-Ref-Util-XS perl-Sort-Naturally perl-String-Escape perl-Test-Output perl-Test-UseAllModules perl-YAML subversion wget
 
 # Extra automatic dependencies, need to remove:
 #BuildRequires: lsb-core lsb-release
@@ -67,6 +69,8 @@ Zsh completion for (R)?ex remote execution framework
 %patch0 -p1
 
 %patch1 -p0
+%patch2
+%patch3
 
 ## Fix dist.ini:
 ### Remove [NextRelease] section:
@@ -125,6 +129,9 @@ mv -f ChangeLog    ../
 
 
 %changelog
+* Sun Mar 14 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.13.3-alt1
+- New version
+
 * Sat Aug 08 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.12.1-alt1
 - New version
 
