@@ -10,7 +10,7 @@
 
 
 Name: rdma-core
-Version: 33.1
+Version: 34.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -237,6 +237,7 @@ discover and use SCSI devices via the SCSI RDMA Protocol over InfiniBand.
     -DCMAKE_INSTALL_MANDIR:PATH=%_mandir \
     -DCMAKE_INSTALL_SYSCONFDIR:PATH=%_sysconfdir \
     -DCMAKE_INSTALL_SYSTEMD_SERVICEDIR:PATH=%_unitdir \
+    -DCMAKE_INSTALL_SYSTEMD_BINDIR:PATH=/lib/systemd \
     -DCMAKE_INSTALL_INITDDIR:PATH=%_initdir \
     -DCMAKE_INSTALL_RUNDIR:PATH=%_runtimedir \
     -DCMAKE_INSTALL_DOCDIR:PATH=%docdir \
@@ -564,6 +565,9 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %docdir/ibsrpdm.md
 
 %changelog
+* Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 34.0-alt1
+- new version 34.0
+
 * Sat Jan 30 2021 Alexey Shabalin <shaba@altlinux.org> 33.1-alt1
 - new version 33.1
 
