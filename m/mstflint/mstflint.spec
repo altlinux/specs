@@ -1,4 +1,4 @@
-%global commit      45e11fb8aded640515312c3124e21608876fb0ab
+%global commit cac81bf5bb128b6242da83e4110c9a209f2e3e20
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %def_enable dc
 %def_disable fw_mgr
@@ -8,7 +8,7 @@
 %def_enable openssl
 
 Name: mstflint
-Version: 4.14.0
+Version: 4.16.0
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -28,7 +28,7 @@ BuildRequires: gcc-c++
 %{?_enable_inband:BuildRequires: rdma-core-devel}
 %{?_enable_cs:BuildRequires: libssl-devel}
 %{?_enable_openssl:BuildRequires: libssl-devel}
-BuildRequires: libmuparser-devel libsqlite3-devel
+BuildRequires: libiniparser-devel jsoncpp-devel libmuparser-devel libsqlite3-devel
 AutoReq: yes, nopython
 %add_python_compile_exclude %_libdir/%name/python_tools
 %add_python3_compile_exclude %_libdir/%name/python_tools
@@ -71,14 +71,17 @@ rm -rf %buildroot%_includedir
 %_man1dir/*
 
 %changelog
+* Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 4.16.0-alt1
+- v4.16.0-1
+
 * Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 4.14.0-alt1
-- 4.14.0-1
+- v4.14.0-1
 
 * Fri Oct 18 2019 Alexey Shabalin <shaba@altlinux.org> 4.13.1-alt1
 - v4.13.1-1
 
 * Mon Feb 11 2019 Alexey Shabalin <shaba@altlinux.org> 4.11.0-alt1
-- 4.11.0-2
+- v4.11.0-2
 
 * Wed Oct 31 2018 Alexey Shabalin <shaba@altlinux.org> 4.10.0-alt1
 - v4.10.0-3
