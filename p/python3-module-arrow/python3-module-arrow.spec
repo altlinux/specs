@@ -1,28 +1,30 @@
 %define modname arrow
+%def_disable docs
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.17.0
-Release: alt2
+Version: 1.0.3
+Release: alt1
 
 Summary: Better dates & times for Python
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/arrow/
 
-# https://github.com/crsmithdev/arrow.git
+Vcs: https://github.com/crsmithdev/arrow.git
 Source: https://pypi.io/packages/source/a/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-dateutil python3-module-nose
-BuildPreReq: python3-module-chai
-BuildPreReq: python3-module-sphinx
-BuildPreReq: python3-module-simplejson
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-dateutil python3-module-nose
+BuildRequires: python3-module-chai
+BuildRequires: python3-module-simplejson
 BuildRequires: python3-module-mock python3-module-dateparser >= 0.7.2
+%{?_enable_docs:
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python3-module-sphinx python3-module-sphinx-autodoc-typehints}
 %{?_enable_check:BuildRequires: python3-module-tox}
 
 %description
@@ -42,19 +44,25 @@ work with dates and times with fewer imports and a lot less code.
 %install
 %python3_install
 
+%if_enabled docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 SPHINXBUILD=sphinx-build-3 %make -C docs html
 mkdir man
 cp -fR docs/_build/html/* man/
+%endif
 
 %check
 tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 
 %files
 %python3_sitelibdir/*
-%doc *.rst LICENSE man/
+%doc *.rst LICENSE
+%{?_enable_docs: man/}
 
 %changelog
+* Sun Mar 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Mon Nov 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.17.0-alt2
 - NMU: drop unneeded nose-cov buildrequires
 
