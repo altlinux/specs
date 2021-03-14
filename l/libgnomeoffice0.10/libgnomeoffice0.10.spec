@@ -9,8 +9,8 @@
 %endif
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.48
-Release: alt1.1
+Version: %ver_major.49
+Release: alt1
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
@@ -42,7 +42,7 @@ programs.
 %package devel
 Summary: Development libraries and header files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the header files and libraries needed to write and
@@ -60,7 +60,7 @@ This package contains development documentation for Goffice library.
 %package gir
 Summary: GObject introspection data for the Goffice library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Goffice library.
@@ -69,8 +69,8 @@ GObject introspection data for the Goffice library.
 Summary: GObject introspection devel data for the Goffice library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Goffice library.
@@ -138,6 +138,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Sun Mar 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.49-alt1
+- 0.10.49
+
 * Wed Nov 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.48-alt1.1
 - removed useless Obsoletes/Provides
 
