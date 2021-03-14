@@ -1,5 +1,5 @@
 Name: fish
-Version: 3.1.2
+Version: 3.2.0
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -17,6 +17,11 @@ BuildRequires: libncurses-devel gcc-c++
 BuildRequires: libpcre2-devel >= 10.22
 BuildRequires: cmake
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+# for check
+BuildRequires: /proc /dev/pts
+BuildRequires: procps
+BuildRequires: python3-module-pexpect
+BuildRequires: git-core
 
 %description
 fish is a shell geared towards interactive use. Its features are
@@ -27,7 +32,7 @@ is simple but incompatible with other shell languages.
 %setup
 echo "%version" > version
 
-rm -vrf pcre2-*
+rm -vrf pcre2
 
 # Change the bundled scripts to invoke the python binary directly.
 for f in $(find share/tools -type f -name '*.py'); do
@@ -65,8 +70,13 @@ fi
 %_datadir/fish
 %doc %_docdir/%name
 %_man1dir/*
+%_desktopdir/fish.desktop
+%_pixmapsdir/fish.png
 
 %changelog
+* Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Wed May 06 2020 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
 - 3.1.2
 
