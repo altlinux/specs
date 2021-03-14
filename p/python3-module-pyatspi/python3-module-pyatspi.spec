@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Python bindings for at-spi library
@@ -61,6 +61,9 @@ export PYTHON=%__python3
 
 
 %changelog
+* Sun Mar 14 2021 Yuri N. Sedunov <aris@altlinux.org> 2.38.1-alt1
+- 2.38.1
+
 * Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
 - 2.38.0
 
