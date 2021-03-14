@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 2.14.1
+Version: 2.14.2
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -285,6 +285,7 @@ LC_CTYPE=en_US.UTF-8 LC_COLLATE=en_US.UTF-8 make check
 if [ $1 -eq 2 ] && [ -f %_sysconfdir/openvswitch/system-id.conf ] ; then
     chown %name:%name %_sysconfdir/openvswitch/system-id.conf
     chown -R %name:%name %_localstatedir/%name
+    chown -R %name:%name %_logdir/%name
 fi
 %post_service %name
 
@@ -416,6 +417,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.2-alt1
+- 2.14.2 (Fixes: CVE-2020-35498)
+
 * Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.1-alt1
 - 2.14.1 (Fixes: CVE-2015-8011, CVE-2020-27827)
 
