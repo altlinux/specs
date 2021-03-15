@@ -1,14 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_disable debug
-%def_disable static
-
 %define upname libtorrent-rasterbar
 %define soname 10
 
 Name: libtorrent-rasterbar
 Epoch: 3
-Version: 1.2.11
+Version: 1.2.12
 Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
@@ -19,13 +16,18 @@ Url: https://www.rasterbar.com/products/libtorrent/
 # https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
 
+# Patch from OpenSUSE
+Patch1: libtorrent-rasterbar-fix_library_version.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
+BuildRequires: cmake
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: boost-devel boost-asio-devel boost-filesystem
 BuildRequires: boost-filesystem-devel boost-program_options-devel
 BuildRequires: python3-devel boost-python3-devel
+BuildRequires: python3(setuptools)
 BuildRequires: libGeoIP-devel
 
 %description
@@ -91,19 +93,6 @@ Conflicts: libtorrent-devel
 The libtorrent-devel package contains libraries and header files needed
 to develop applications using libTorrent.
 
-%if_enabled static
-%package -n %upname-devel-static
-Summary: Development static libraries for libTorrent
-Group: Development/C++
-Requires: %name%soname = %EVR
-Provides: libtorrent-rasterbar7-devel-static = %EVR
-Conflicts: libtorrent-rasterbar7-devel-static < %EVR
-
-%description -n %upname-devel-static
-The libtorrent-devel package contains static libraries needed
-to develop applications using libTorrent.
-%endif
-
 %package -n python3-module-%upname
 Summary: libTorrent python bindings
 Group: Development/Python3
@@ -115,40 +104,28 @@ python-3 bindings to libTorrent.
 
 %prep
 %setup
-
-mkdir -p build-aux
-touch build-aux/config.rpath
+%patch1 -p1
 
 %build
-%add_optflags -std=c++14
 %ifarch %mips32
 export LIBS=-latomic
 %endif
 
-export PYTHON=%_bindir/python3
-
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	%{subst_enable debug} \
-	--with-boost-libdir=%_libdir \
-	--enable-python-binding \
-	--with-boost-python=boost_python%{python_version_nodots python3} \
+%cmake \
+	-DCMAKE_CXX_STANDARD=14 \
+	-Dbuild_examples=ON \
+	-Dbuild_tests=ON \
+	-Dbuild_tools=ON \
+	-Dpython-bindings=ON \
+	-Dpython-egg-info=ON \
+	-Dpython-install-system-dir=ON \
+	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3 \
 	%nil
 
-# git rid of c++11
-sed s/-std=c++11//g < bindings/python/compile_cmd > bindings/python/compile_cmd.new || exit 1
-mv -f bindings/python/compile_cmd.new bindings/python/compile_cmd
-
-%make_build V=1
+%cmake_build
 
 %install
-%makeinstall_std
-
-rm -f %buildroot%_libdir/*.la
-%if_disabled static
-rm -f %buildroot%_libdir/*.a
-%endif
+%cmakeinstall_std
 
 %files -n %name%soname
 %doc AUTHORS ChangeLog NEWS README.rst
@@ -161,17 +138,16 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 %_pkgconfigdir/*
 %_datadir/cmake/Modules/*.cmake
-
-%if_enabled static
-%files -n %upname-devel-static
-%_libdir/*.a
-%endif
+%_libdir/cmake/*
 
 %files -n python3-module-%upname
 %python3_sitelibdir/libtorrent*.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.12-alt1
+- Updated to upstream version 1.2.12.
+
 * Tue Dec 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.11-alt1
 - Updated to upstream version 1.2.11.
 
