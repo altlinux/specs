@@ -1,7 +1,7 @@
 %define  oname llvmlite
 
 Name:    python3-module-%oname
-Version: 0.34.0
+Version: 0.36.0
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
@@ -12,8 +12,7 @@ URL:     https://pypi.org/project/llvmlite
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires(pre): rpm-build-python3 python3-dev
 BuildRequires: clang10.0 llvm10.0-devel libstdc++-devel
 
 Source:  %oname-%version.tar
@@ -43,6 +42,10 @@ sed -ri '/^\S+FLTO_FLAGS/ s,=.+$,=,' ffi/Makefile.linux
 
 %build
 %remove_optflags -frecord-gcc-switches
+# http://llvm.1065342.n5.nabble.com/llvm-dev-Code-Coverage-Compile-Issue-LLVM-10-td141053.html
+%ifarch armh
+%remove_optflags -O2
+%endif
 %add_optflags -grecord-gcc-switches -fPIC
 export CXX="clang++"
 export LLVM_CONFIG=%_bindir/llvm-config
@@ -58,6 +61,9 @@ export LLVMLITE_SKIP_LLVM_VERSION_CHECK=1
 %doc *.rst
 
 %changelog
+* Mon Mar 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.36.0-alt1
+- Build new version.
+
 * Sun Oct 04 2020 Grigory Ustinov <grenka@altlinux.org> 0.34.0-alt1
 - Build new version.
 
