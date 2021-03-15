@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: os-autoinst
-Version: 4.5.1527308405.8b586d5
-Release: alt18
+Version: 4.6
+Release: alt1
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -131,6 +131,9 @@ export CI=1
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Mon Mar 15 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt1
+- update to current version
+
 * Fri Jan 22 2021 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt18
 - update to current version
 
