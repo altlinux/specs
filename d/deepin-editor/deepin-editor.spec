@@ -1,5 +1,5 @@
 Name: deepin-editor
-Version: 5.9.0.16
+Version: 5.9.0.32
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -10,7 +10,27 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: gcc-c++ cmake libfreeimage-devel kf5-kcodecs-devel kf5-syntax-highlighting-devel dtk5-widget-devel libexif-devel libexif-devel libxcbutil-devel libXtst-devel libpolkitqt5-qt5-devel qt5-base-devel qt5-svg-devel qt5-x11extras-devel qt5-linguist deepin-qt-dbus-factory-devel
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: libfreeimage-devel
+BuildRequires: kf5-kcodecs-devel
+BuildRequires: kf5-syntax-highlighting-devel
+BuildRequires: dtk5-widget-devel
+BuildRequires: libexif-devel
+BuildRequires: libexif-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libXtst-devel
+BuildRequires: libpolkitqt5-qt5-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-linguist
+BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
+# use system libuchardet.a
+BuildRequires: libuchardet-devel-static
 # Requires: deepin-session-shell deepin-qt5integration
 
 %description
@@ -18,7 +38,11 @@ BuildRequires: gcc-c++ cmake libfreeimage-devel kf5-kcodecs-devel kf5-syntax-hig
 
 %prep
 %setup
-%__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
+sed -i 's|lrelease|lrelease-qt5|; s|lupdate|lupdate-qt5|' translate_generation.sh
+# use system libuchardet.a
+sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../third/lib/lib/libuchardet.a|%_libdir/libuchardet.a|' \
+	src/CMakeLists.txt \
+	test/CMakeLists.txt
 
 %build
 %cmake_insource -GNinja -DCMAKE_INSTALL_PREFIX=%_prefix -DCMAKE_BUILD_TYPE=Release
@@ -32,15 +56,16 @@ BuildRequires: gcc-c++ cmake libfreeimage-devel kf5-kcodecs-devel kf5-syntax-hig
 desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 
 %files -f %name.lang
-%doc README.md
-%doc LICENSE
-%_bindir/dedit
+%doc README.md LICENSE
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Mar 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.0.32-alt1
+- New version (5.9.0.32) with rpmgs script.
+
 * Wed Dec 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.9.0.16-alt1
 - New version (5.9.0.16) with rpmgs script.
 
