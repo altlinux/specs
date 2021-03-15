@@ -1,18 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%add_verify_elf_skiplist %modules_dir/*
 
 %define flavour			xenomai
 Name: kernel-image-%flavour
 
 %define xenomai_version		3.1
-%define ipipe_version		4.19.152-cip37-x86-15
+%define ipipe_version		4.19.177-cip44-x86-17
 %define kernel_base_version	4.19
-%define kernel_sublevel		.152
+%define kernel_sublevel		.177
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip37
-%define kernel_ipipe_release	15
+%define kernel_cip_release	cip44
+%define kernel_ipipe_release	17
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_cip_release.%kernel_ipipe_release
@@ -39,6 +38,7 @@ Release: alt1.%kernel_cip_release.%kernel_ipipe_release
 %define kheaders_dir	%_prefix/include/linux-%kversion-%flavour
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
 
+%add_verify_elf_skiplist %modules_dir/*
 %brp_strip_none /boot/*
 
 Summary: The Linux kernel (I-pipe) %ipipe_version with Xenomai %xenomai_version real-time Cobalt core
@@ -457,6 +457,10 @@ vm-run "set -x
 %modules_dir/build
 
 %changelog
+* Mon Mar 15 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.177-alt1.cip44.17
+- Update to ipipe-core-4.19.177-cip44-x86-17 (2021-03-15).
+- Fixes kernel Oops when audit enabled in combination with latest glibc.
+
 * Thu Nov 12 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.152-alt1.cip37.15
 - Update to ipipe-core-4.19.152-cip37-x86-15 (released 2020-11-09)
 
