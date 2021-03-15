@@ -1,5 +1,5 @@
 Name: 	 tellico
-Version: 3.3.5
+Version: 3.4
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -73,7 +73,7 @@ find %buildroot -type f -print0 |
 %find_lang --with-kde %name
 
 %files -f %name.lang
-%doc AUTHORS README
+%doc AUTHORS README.md
 %_K5bin/*
 %_datadir/%name
 %_K5xdgapp/*.desktop
@@ -87,6 +87,9 @@ find %buildroot -type f -print0 |
 %_datadir/metainfo/org.kde.tellico.appdata.xml
 
 %changelog
+* Mon Mar 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.4-alt1
+- New version.
+
 * Fri Feb 26 2021 Andrey Cherepanov <cas@altlinux.org> 3.3.5-alt1
 - New version.
 
