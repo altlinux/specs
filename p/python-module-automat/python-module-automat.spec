@@ -3,7 +3,7 @@
 %define modulename Automat
 Name: python-module-automat
 Version: 20.2.0
-Release: alt2
+Release: alt3
 
 Summary: Self-service finite-state machines for the programmer on the go
 
@@ -17,8 +17,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/A/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools python-module-docutils
-BuildRequires: python-module-mistune python-module-m2r python-module-setuptools_scm
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-setuptools_scm
 
 BuildArch: noarch
 
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Wed Mar 10 2021 Stanislav Levin <slev@altlinux.org> 20.2.0-alt3
+- Dropped dependency on python-m2r(removed from Sisyphus).
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 20.2.0-alt2
 - build python2 only, don't pack tests
 

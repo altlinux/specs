@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.2.91
-Release: alt1
+Release: alt2
 
 Summary: A Python wrapper for librtlsdr (a driver for Realtek RTL2832U based SDR's)
 License: GPLv3
@@ -19,13 +19,11 @@ BuildRequires: python3-devel python3-module-setuptools
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-m2r
-BuildRequires: python-module-mistune
-BuildRequires: python-module-docutils
 
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: 0001-Make-m2r-optional.patch
 
 %description
 %summary
@@ -38,9 +36,6 @@ Group: Development/Python3
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-m2r
-BuildRequires: python3-module-mistune
-BuildRequires: python3-module-docutils
 
 %description -n python3-module-%modulename
 %summary
@@ -49,6 +44,8 @@ Python 3 version
 
 %prep
 %setup
+%autopatch -p1
+
 rm -rf pyrtlsdr.egg-info
 chmod 644 rtlsdr/rtlsdrtcp/base.py
 
@@ -91,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 10 2021 Stanislav Levin <slev@altlinux.org> 0.2.91-alt2
+- Made m2r optional.
+
 * Fri Dec 28 2018 Anton Midyukov <antohami@altlinux.org> 0.2.91-alt1
 - new version 0.2.91
 
