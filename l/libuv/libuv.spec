@@ -1,6 +1,7 @@
+%def_without asserts
 Name: libuv
 Version: 1.41.0
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for NodeJS
 
@@ -33,6 +34,9 @@ libuv header and build tools.
 # due option hack in autogen.sh
 #autoreconf
 ./autogen.sh
+%if_without asserts
+    CFLAGS+="-DNDEBUG"
+%endif
 %configure --disable-static
 %make_build
 
@@ -55,6 +59,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Fri Mar 12 2021 Anton Farygin <rider@altlinux.org> 1.41.0-alt2
+- disabled assertions debug by default
+
 * Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 1.41.0-alt1
 - 1.41.0
 
