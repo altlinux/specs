@@ -1,7 +1,7 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 
 Summary: Tools to supplement packaging Python releases
@@ -39,6 +39,9 @@ rm -rf %buildroot/%_bindir/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Mar 15 2021 Andrey Cherepanov <cas@altlinux.org> 8.2.1-alt1
+- New version.
+
 * Tue Dec 29 2020 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
 - New version.
 
