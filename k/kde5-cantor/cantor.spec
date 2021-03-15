@@ -10,8 +10,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 20.12.2
-Release: alt2
+Version: 20.12.3
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -132,6 +132,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Wed Mar 10 2021 Egor Ignatov <egori@altlinux.org> 20.12.2-alt2
 - Fix octave backend
   + Add epstool dependency to prevent crash on plotting
