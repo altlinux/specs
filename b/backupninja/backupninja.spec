@@ -1,5 +1,5 @@
 Name: backupninja
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 
 Summary: backup system
@@ -32,7 +32,7 @@ In addition to backing up regular files, Backupninja has handlers to ease
 backing up: ldap, maildir, mysql, svn, trac, and the output from shell scripts.
 
 Backupninja currently supports common backup utilities, easing their
-configuration, currently supported are: rdiff-backup, duplicity, CD/DVD.
+configuration, currently supported are: rdiff-backup, duplicity, restic, borg, CD/DVD.
 
 %prep
 %setup
@@ -67,6 +67,9 @@ mkdir -p %buildroot%_sysconfdir/backup.d/
 %_sbindir/ninjahelper
 
 %changelog
+* Mon Mar 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Fri Jul 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0 (with rpmrb script)
 - use bash4
