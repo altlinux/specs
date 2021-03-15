@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.113
+Version: 0.114
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -80,8 +80,12 @@ install -Dpm0755 query-kEVR.sh \
 %files -n rpm-build-kernel
 %_rpmmacrosdir/kernel
 %_rpmlibdir/query-kEVR.sh
+%_rpmlibdir/kernel.req*
 
 %changelog
+* Thu Mar 11 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.114-alt1
+- added finding requires for kernel modules
+
 * Thu Aug 15 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.113-alt1
 - km-create-tag: changed km-karch config handling to fall back to default
   @karch@ on unmatched flavours.
