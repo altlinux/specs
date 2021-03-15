@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gtk
 %define ver_major 4.1
@@ -32,7 +32,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -95,7 +95,7 @@ BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-deve
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
 %endif
-%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver pandoc xsltproc}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver gi-docgen pandoc xsltproc}
 %{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
@@ -366,6 +366,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 4.1.2-alt1
+- 4.1.2-5-g3daad8fe87
+
 * Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
 - 4.1.1
 
