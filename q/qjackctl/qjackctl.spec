@@ -8,7 +8,7 @@
 %def_enable jack_version
 
 Name: qjackctl
-Version: 0.9.1
+Version: 0.9.2
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -19,12 +19,12 @@ Summary: Qjackctl is a programm to control the JACK sound server daemon
 Summary(ru_RU.UTF-8): Qjackctl -- это программа для контроля над демоном JACK-сервера
 Group: Sound
 License: GPL-2.0-or-later
-Url: http://%name.sourceforge.net
+Url: https://%name.sourceforge.net
 
 %ifdef cvsbuild
 Source: %name-%cvsdate.tar
 %else
-Source: http://prdownloads.sourceforge.net/%name/%name-%version%prerel.tar.gz
+Source: https://prdownloads.sourceforge.net/%name/%name-%version%prerel.tar.gz
 %endif
 
 %define jack_ver 0.118
@@ -89,6 +89,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
+- 0.9.2
+
 * Sun Feb 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
