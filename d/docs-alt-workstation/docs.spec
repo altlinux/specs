@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 9.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,12 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Mon Mar 15 2021 Elena Mishina <lepata@altlinux.org> 9.1-alt3
+- system-management: add group policy
+- functional: add alt-csp-cryptopro, luks password
+- install-packages-advanced: add epm
+- fix typo
+
 * Mon Nov 16 2020 Elena Mishina <lepata@altlinux.org> 9.1-alt2
 - update thunderbird
 - add recoll settings
