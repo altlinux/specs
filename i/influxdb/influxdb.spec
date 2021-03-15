@@ -1,15 +1,9 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 563e6c3d1a7a2790763c6289501095dbec19244e
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name:		influxdb
-Version:	1.8.3
+Version:	1.8.4
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -55,7 +49,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export VERSION=%version
-export COMMIT=%commit
+export COMMIT=%release
 export BRANCH=altlinux
 export GOFLAGS="-mod=vendor"
 
@@ -64,7 +58,7 @@ export GOFLAGS="-mod=vendor"
 
 pushd .gopath/src/%import_path
 
-CGO_ENABLED=0 GOGC=off go install -ldflags " -s -w \
+go install -ldflags " \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.branch=$BRANCH \
@@ -124,6 +118,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Mar 15 2021 Alexey Shabalin <shaba@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Fri Nov 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
@@ -167,25 +164,25 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 * Thu Oct 11 2018 Alexey Shabalin <shaba@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
-* Thu Jun 21 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.3-alt1%ubt
+* Thu Jun 21 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
-* Sat Apr 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1%ubt
+* Sat Apr 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 
-* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.4.3-alt1%ubt
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.4.3-alt1
 - 1.4.3
 
-* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.7-alt1%ubt
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.7-alt1
 - 1.3.7
 
-* Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.6-alt1%ubt
+* Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.6-alt1
 - 1.3.6
 
-* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt1%ubt
+* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt1
 - 1.3.4
 
-* Mon Aug 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1%ubt
+* Mon Aug 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 
 * Mon Jul 24 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
