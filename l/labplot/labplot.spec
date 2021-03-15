@@ -1,16 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labplot
-Version: 2.7.0
+Version: 2.8.2
 Release: alt1
-
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Other
-
 Url: https://labplot.kde.org/
-# git://anongit.kde.org/labplot
+
+# https://invent.kde.org/education/labplot
 Source: %name-%version.tar
+
+Patch1: labplot-alt-fix-netcdf-includes.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: ccmake gcc-c++ extra-cmake-modules
@@ -41,6 +42,8 @@ The plots now use double buffering and LabPlot supports scripting using QSA.
 
 %prep
 %setup
+%patch1 -p1
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
@@ -58,7 +61,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %files -f %name.lang
 %doc AUTHORS README.md COPYING ChangeLog
-%config(noreplace) %_K5xdgconf/*.knsrc
+#config(noreplace) %_K5xdgconf/*.knsrc
 %_K5bin/*
 %_K5data/%{name}2/
 %_K5xdgapp/*
@@ -69,6 +72,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.2-alt1
+- Updated to upstream version 2.8.2.
+
 * Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.0-alt1
 - Updated to upstream version 2.7.0.
 
