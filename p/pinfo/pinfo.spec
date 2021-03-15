@@ -1,6 +1,6 @@
 Name: pinfo
 Version: 0.6.13
-Release: alt1
+Release: alt2
 
 Summary: Przemek's Info Viewer - a (much) better info
 Group: System/Base
@@ -10,6 +10,8 @@ License: GPL
 Url: https://github.com/baszoetekouw/pinfo
 Source: v%version.tar.gz
 Patch1: pinfo-0.6.10-xz.patch
+Patch2: pinfo-0.6.13-fix-global-variable.patch
+Patch3: pinfo-0.6.13-fix-string-overflow.patch
 
 Requires: url_handler
 
@@ -25,6 +27,8 @@ pages as man pages. Regexp searching included.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -46,6 +50,9 @@ ln -s %name %buildroot%_bindir/pman
 %_infodir/*.info*
 
 %changelog
+* Mon Mar 15 2021 Ivan A. Melnikov <iv@altlinux.org> 0.6.13-alt2
+- Fix build with gcc10
+
 * Wed Oct 02 2019 Fr. Br. George <george@altlinux.ru> 0.6.13-alt1
 - Autobuild version bump to 0.6.13
 
