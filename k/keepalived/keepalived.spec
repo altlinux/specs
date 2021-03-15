@@ -16,7 +16,7 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -26,7 +26,8 @@ Group: Networking/Other
 Url: http://www.keepalived.org/software/
 Source0: %url/%name-%version.tar
 Source1: %name.init
-Patch: 0002-update-systemd-unit-file.patch
+Patch0: 0002-update-systemd-unit-file.patch
+Patch1: keepalived-2.2.2-fix-build-with-nftables.patch
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
@@ -51,7 +52,8 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 %ifarch %e2k
 # lcc 1.23's edg frontend can only do numbers here (#4061)
 sed -i 's,"O0",0,' lib/utils.c
@@ -81,8 +83,8 @@ sed -i 's,"O0",0,' lib/utils.c
 	--with-systemdsystemunitdir=%_unitdir
 
 GIT_TIMESTAMP=`cat gitstamp`
-printf '#define GIT_DATE        "%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%m/%d,%Y"` >lib/git-commit.h
-printf '#define GIT_YEAR        "%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%Y"` >>lib/git-commit.h
+printf '#define GIT_DATE        "%%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%%m/%%d,%%Y"` >lib/git-commit.h
+printf '#define GIT_YEAR        "%%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%%Y"` >>lib/git-commit.h
 
 %make_build
 
@@ -122,6 +124,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Fri Jan 22 2021 Anton Farygin <rider@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
