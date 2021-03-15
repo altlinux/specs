@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 10.2.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -248,6 +248,7 @@ Summary: GCC Plugin header files
 Group: Development/Other
 Provides: libgcc%gcc_branch-plugin-devel = %version
 Requires: %name = %EVR
+Requires: libgmp-devel
 
 %description plugin-devel
 This package contains header files required to build GCC plugins.
@@ -2172,6 +2173,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Mar 15 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.1-alt3
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git (ALT#39798):
+  + vendors/redhat/heads/gcc-10-branch
+  commit 966e4575ccd8b618811b4871e44c31bb2d11a82a;
+  + origin/releases/gcc-10
+  commit a07015ad4dc18a1167720aece205deca702a1ab1.
+- %name-plugin-devel: added R: libgmp-devel.
+
 * Thu Dec 03 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.1-alt2
 - Enabled hardenings by default:
   + stack clash protection;
