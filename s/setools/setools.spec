@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define libsepol_ver 3.0
+%define libsepol_ver 3.2
 
 Name: setools
-Version: 4.3.0
-Release: alt2
+Version: 4.4.0
+Release: alt1
 License: %gpl2plus
 URL: https://github.com/SELinuxProject/setools/wiki
 Summary: Policy analysis tools for SELinux
@@ -77,7 +77,6 @@ libraries designed to facilitate SELinux policy analysis.
 %patch -p1
 
 %build
-%add_optflags -Wno-error=deprecated-declarations
 CFLAGS="%{optflags}" python3 setup.py build_ext
 CFLAGS="%{optflags}" %python3_build_debug
 
@@ -86,7 +85,7 @@ CFLAGS="%{optflags}" %python3_build_debug
 
 %find_lang --with-man --all-name %name
 
-egrep 'sediff\.1|seinfo\.1|sesearch\.1' %name.lang > %name-console.lang
+egrep 'sechecker\.1|sediff\.1|seinfo\.1|sesearch\.1' %name.lang > %name-console.lang
 egrep 'sedta\.1|seinfoflow\.1' %name.lang > %name-console-analyses.lang
 egrep 'apol\.1' %name.lang > %name-gui.lang
 
@@ -97,9 +96,11 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 
 %files console -f %name-console.lang
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
+%_bindir/sechecker
 %_bindir/sediff
 %_bindir/seinfo
 %_bindir/sesearch
+%_man1dir/sechecker.1*
 %_man1dir/sediff.1*
 %_man1dir/seinfo.1*
 %_man1dir/sesearch.1*
@@ -118,6 +119,9 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 %python3_sitelibdir/setoolsgui
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt1
+- Updated to upstream version 4.4.0.
+
 * Thu Feb 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.0-alt2
 - Added dependency on qt5-assistant to setools-gui (Closes: #39599).
 - Fixed build with python-3.9.

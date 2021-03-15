@@ -9,7 +9,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 3.1
+Version: 3.2
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -248,6 +248,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_sbindir/semodule
 %_sbindir/sestatus
 %_bindir/secon
+%_bindir/sestatus
 %_libexecdir/selinux/hll/
 %config(noreplace) %_sysconfdir/sestatus.conf
 
@@ -411,6 +412,9 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt1
+- Updated to upstream version 3.2.
+
 * Fri Jul 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.1-alt1
 - Updated to upstream version 3.1.
 

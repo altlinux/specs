@@ -4,7 +4,7 @@
 
 Name: libsepol
 Epoch: 1
-Version: 3.1
+Version: 3.2
 Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
@@ -95,6 +95,9 @@ on binary policies such as customizing policy boolean settings.
 %exclude %_man8dir/genpol*
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt1
+- Updated to upstream version 3.2.
+
 * Fri Jul 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.1-alt1
 - Updated to upstream version 3.1.
 
