@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.4.4
-Release: alt3
+Release: alt4
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -267,6 +267,10 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Mon Mar 15 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.4-alt4
+- systemd: fix spamd unit file (sync with sysv)
+- spamd.sysconfig: document sql setup case.
+
 * Fri Mar 12 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.4-alt3
 - spamd: added systemd unit.
 - sa-update cron: make it service agnostic.
