@@ -30,8 +30,8 @@
 %define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 20.12.2
-Release: alt2
+Version: 20.12.3
+Release: alt1
 %K5init
 
 Group: Networking/Instant messaging
@@ -323,6 +323,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.2-alt2
 - update build requries
 
