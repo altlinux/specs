@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 Name:          foreman-addons
 Version:       0.0.4
-Release:       alt1
+Release:       alt2
 Summary:       Default addons for Foreman
 License:       GPLv3
 Group:         Development/Ruby
@@ -66,6 +66,7 @@ install -Dm0644 %SOURCE1 %buildroot%_sharedstatedir/smart-proxy-dynflow-core/Gem
 
 %post
 %post_service smart-proxy-dynflow-core
+rm -rf %_sharedstatedir/smart-proxy-dynflow-core/Gemfile.lock
 
 %preun
 railsctl cleanup %name
@@ -73,6 +74,10 @@ railsctl cleanup %name
 
 
 %changelog
+* Mon Mar 15 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.4-alt2
+- ! dep to foreman dynflow core
+- ! foreman dynflow core errors
+
 * Tue Mar 09 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.4-alt1
 - ^ some gems to newer patch version
 - - precompiled public from precompiled gems
