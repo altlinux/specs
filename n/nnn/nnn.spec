@@ -1,8 +1,8 @@
 %def_enable qsort
 
 Name: nnn
-Version: 3.5
-Release: alt2
+Version: 3.6
+Release: alt1
 
 Summary: A full-featured terminal file manager
 License: BSD-2-Clause and BSD-3-Clause
@@ -40,11 +40,12 @@ install -D -m644 misc/auto-completion/bash/nnn-completion.bash \
 %_man1dir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
-%dir %_datadir/bash-completion
-%dir %_datadir/bash-completion/completions
-%_datadir/bash-completion/completions/%name
+%_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Mar 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.6-alt1
+- 3.5 -> 3.6
+
 * Sun Feb 07 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.5-alt2
 - fix hicolor directories
 
