@@ -2,19 +2,21 @@
 %define _stripped_files_terminate_build 1
 
 Name: dwz
-Version: 0.13
-Release: alt3
+Version: 0.14
+Release: alt1
 
 Summary: DWARF optimization and duplicate removal tool
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Development/Tools
 
-URL: https://sourceware.org/git/?p=dwz.git
+Vcs: https://sourceware.org/git/?p=dwz.git
+Url: https://sourceware.org/dwz/
 Source: dwz-%version.tar
 
-# Automatically added by buildreq on Fri Jan 05 2018
-BuildRequires: libelf-devel
 BuildRequires: dejagnu
+BuildRequires: gcc-c++
+BuildRequires: gdb
+BuildRequires: libelf-devel
 
 %description
 dwz is a program that attempts to optimize DWARF debugging information
@@ -26,23 +28,26 @@ DW_TAG_partial_unit compilation units (CUs) for duplicated information
 and using DW_TAG_imported_unit to import it into each CU that needs it.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build CFLAGS='%optflags'
 
 %install
-install -pD -m755 dwz %buildroot%_bindir/dwz
-install -pD -m644 dwz.1 %buildroot%_man1dir/dwz.1
+%makeinstall_std
 
 %check
 make check || { grep FAIL dwz.log; exit 1; }
 
 %files
+%doc COPYING COPYING.RUNTIME COPYING3
 %_bindir/dwz
 %_man1dir/dwz.1*
 
 %changelog
+* Sat Mar 13 2021 Vitaly Chikunov <vt@altlinux.org> 0.14-alt1
+- Update to dwz-0.14 (2021-03-08).
+
 * Sat Jan 09 2021 Vitaly Chikunov <vt@altlinux.org> 0.13-alt3
 - Fix devel-ignore-size.sh test.
 
