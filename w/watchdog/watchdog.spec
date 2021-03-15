@@ -3,8 +3,8 @@ Group: System/Kernel and hardware
 %define _localstatedir %{_var}
 Summary:          Software and/or Hardware watchdog daemon
 Name:             watchdog
-Version:          5.13
-Release:          alt1_18
+Version:          5.16
+Release:          alt1
 License:          GPLv2+
 
 URL:              http://sourceforge.net/projects/watchdog/
@@ -45,10 +45,10 @@ expiration) initiated by the BMC.
  
 %prep
 %setup -q -n %{name}-%{version}
-%patch1 -p1 -b .help
-%patch2 -p1 -b .keepalive
-%patch3 -p1 -b .rhsel
-%patch4 -p1 -b .rhseldoc
+#patch1 -p1 -b .help
+#patch2 -p1 -b .keepalive
+#patch3 -p1 -b .rhsel
+#patch4 -p1 -b .rhseldoc
 
 cp %{SOURCE2} .
 cp %{SOURCE3} .
@@ -105,6 +105,9 @@ install -Dd -m0755 ${RPM_BUILD_ROOT}%{_libexecdir}/watchdog/scripts
 
 
 %changelog
+* Mon Mar 15 2021 Ilya Mashkin <oddity@altlinux.ru> 5.16-alt1
+- 5.16
+
 * Mon Nov 20 2017 Igor Vlasenko <viy@altlinux.ru> 5.13-alt1_18
 - new version by request of oddity@; merged alt init file
 
