@@ -1,7 +1,7 @@
 %define rname clucene-core
 Name: libclucene-core
 Version: 2.3.3.4
-Release: alt4
+Release: alt5
 
 Summary: CLucene is a C++ port of Lucene.
 License: LGPL / Apache2
@@ -69,9 +69,10 @@ as it is written in C++.
 %patch21 -p2
 
 %build
-%Kbuild \
+%Kcmake \
     -DBUILD_CONTRIBS_LIB:BOOL=ON \
     -DLUCENE_SYS_INCLUDES:PATH=%_libdir
+make -C BUILD*
 
 %install
 %Kinstall
@@ -97,6 +98,9 @@ as it is written in C++.
 #%_libdir/lib*.a
 
 %changelog
+* Mon Mar 15 2021 Sergey V Turchin <zerg@altlinux.org> 2.3.3.4-alt5
+- disable multiprocessor build
+
 * Wed Nov 28 2018 Sergey V Turchin <zerg@altlinux.org> 2.3.3.4-alt4
 - fix check gcc version
 
