@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: strawberry
-Version: 0.8.5
+Version: 0.9.1
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -27,7 +27,7 @@ BuildRequires: libgpod-devel
 
 Requires: gst-plugins-good1.0 vlc-mini
 
-Provides: bundled(utf8-cpp)
+Provides: bundled(SPMediaKeyTap)
 Provides: bundled(singleapplication)
 Provides: bundled(singlecoreapplication)
 
@@ -63,7 +63,7 @@ Features:
 # https://github.com/taglib/taglib/issues/837#issuecomment-428389347
 
 mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singleapplication
-mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
+mv 3rdparty/SPMediaKeyTap/LICENSE 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
 
 %build
 %if_enabled clang
@@ -91,7 +91,7 @@ desktop-file-validate %buildroot%_desktopdir/org.strawberrymusicplayer.strawberr
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml
 
 %files
-%doc COPYING 3rdparty/taglib/COPYING-taglib 3rdparty/singleapplication/LICENSE-singleapplication
+%doc COPYING 3rdparty/singleapplication/LICENSE-singleapplication 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
 %doc Changelog
 %_bindir/strawberry
 %_bindir/strawberry-tagreader
@@ -102,6 +102,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Mar 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.1-alt1
+- New version (0.9.1) with rpmgs script.
+
 * Mon Dec 21 2020 Leontiy Volodin <lvol@altlinux.org> 0.8.5-alt1
 - New version (0.8.5) with rpmgs script.
 
