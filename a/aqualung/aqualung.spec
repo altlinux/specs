@@ -1,13 +1,14 @@
 Name: aqualung
 Summary: Aqualung is a music player for the GNU/Linux operating system
-Version: 1.0
-Release: alt3
+Version: 1.1
+Release: alt1
 License: GPL
 Group: Sound
 # http://aqualung.factorial.hu/download.php?key=svntgzd
 Source: %name-%version.tar.gz
 Patch: use_glib_instead_of_libmac_for_charconv.patch
-Patch1: %name-%version-upstream-ffmpeg.patch
+Patch1: %name-%version-ifp.patch
+Patch2: %name-%version-var-collision.patch
 #Source:			%name-%version.tar.gz
 Url: http://aqualung.sf.net
 
@@ -60,6 +61,7 @@ Author: Tom Szilagyi <tszilagyi@users.sourceforge.net>
 %setup
 %patch
 %patch1 -p1
+%patch2 -p1
 
 sed -i 's/\[mad], \[mad],/[mad], [libmad],/' configure.ac
 
@@ -128,6 +130,9 @@ install -m 0644 %name.desktop \
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Mar 11 2021 Slava Aseev <ptrnine@altlinux.org> 1.1-alt1
+- Updated to upstream version 1.1
+
 * Mon Jun 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt3
 - Rebuilt with ffmpeg-4.
 
