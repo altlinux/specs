@@ -1,8 +1,9 @@
 %def_disable clang
+%def_enable cmake
 
 Name: deepin-image-viewer
 Version: 5.6.3.73
-Release: alt1
+Release: alt2.gitb4da182
 Summary: Image viewer for Deepin
 License: GPL-3.0+
 Group: Graphics
@@ -16,7 +17,11 @@ BuildRequires(pre): clang11.0-devel
 %else
 BuildRequires(pre): gcc-c++ libgomp10-devel
 %endif
+%if_enabled cmake
+BuildRequires(pre): cmake rpm-build-ninja
+%endif
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
 BuildRequires: libraw-devel
 BuildRequires: qt5-tools
 BuildRequires: libexif-devel
@@ -33,19 +38,16 @@ Requires: deepin-qt5integration
 
 %prep
 %setup
-sed -i 's|lrelease|lrelease-qt5|' viewer/viewer.pro
-# qt 5.15
-sed -i '/#include <QDebug>/a #include <QPainterPath>' \
-    viewer/widgets/blureframe.cpp \
-    viewer/frame/{toptoolbar.cpp,extensionpanel.cpp} \
-    viewer/module/view/contents/ttbcontent.cpp
-sed -i '/#include <QtDebug>/a #include <QPainterPath>' \
-    viewer/module/view/contents/imageinfowidget.cpp
-
+sed -i 's|lrelease|lrelease-qt5|' src/src.pro
 # Our build of freeimage disabled support for these formats like archlinux
-sed -i '/FIF_FAXG3/d' viewer/utils/unionimage.cpp
+sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 
 %build
+%if_enabled cmake
+%cmake_insource \
+	-GNinja
+%ninja_build
+%else
 %qmake_qt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
@@ -53,9 +55,14 @@ sed -i '/FIF_FAXG3/d' viewer/utils/unionimage.cpp
     CONFIG+=nostrip \
     PREFIX=%prefix
 %make_build
+%endif
 
 %install
+%if_enabled cmake
+%ninja_install
+%else
 %makeinstall INSTALL_ROOT=%buildroot
+%endif
 %find_lang %name
 
 %files -f %name.lang
@@ -63,15 +70,20 @@ sed -i '/FIF_FAXG3/d' viewer/utils/unionimage.cpp
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name/
-%dir %_datadir/dman/
-%dir %_datadir/dman/%name/
-%dir %_datadir/dman/%name/common/
-%_datadir/dman/%name/common/%name.svg
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%name/
+%_datadir/deepin-manual/manual-assets/application/%name/image-viewer/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_qt5_plugindir/imageformats/libxraw.so
 %_datadir/dbus-1/services/com.deepin.ImageViewer.service
 
 %changelog
+* Mon Mar 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.3.73-alt2.gitb4da182
+- Updated from commit b4da182b92425880e208c127d5712aef840200a4.
+- Built with cmake and ninja instead qmake and make.
+
 * Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.3.73-alt1
 - New version (5.6.3.73) with rpmgs script.
 
