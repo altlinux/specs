@@ -35,7 +35,7 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 %global cpan_version 2.024
-Version:        2.026
+Version:        2.029
 Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
@@ -46,7 +46,7 @@ Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/PDL-%{version}.tar.gz
 # Disable Proj support when it's not compatible, bug #839651
 Patch2:         PDL-2.4.10-Disable-PDL-GIS-Proj.patch
 # Compile Slatec as PIC, needed for ARM
-Patch3:         PDL-2.6.0.90-Compile-Slatec-code-as-PIC.patch
+Patch3:         PDL-2.029-Compile-Slatec-code-as-PIC.patch
 # Disable Slatec code crashing on PPC64, bug #1041304
 Patch4:         PDL-2.14.0-Disable-PDL-Slatec.patch
 Patch5:         PDL-2.17.0-Update-additional-deps-for-Basic-Core.patch
@@ -187,7 +187,7 @@ Source44: import.info
 %filter_from_provides /^perl(Inline.pm)/d
 %filter_from_provides /^perl(Win32.*.pm)/d
 %filter_from_requires /^perl(\(Data.Dumper\|File.Spec\|Filter.Simple\|Inline\|Module.Compile\|OpenGL\|Text.Balanced\).pm)/d
-Patch33: PDL-2.018-alt-link-Slatec-hack.patch
+Patch33: PDL-2.029-alt-link-Slatec-hack.patch
 
 %description
 PDL ("Perl Data Language") gives standard Perl the ability to
@@ -241,7 +241,7 @@ make test
 %endif
 
 %files
-%doc Changes INTERNATIONALIZATION README Bugs.pod Changes_CVS Doc Example
+%doc Changes INTERNATIONALIZATION README Bugs.pod Doc Example
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
@@ -249,6 +249,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Mon Mar 15 2021 Igor Vlasenko <viy@altlinux.org> 2.029-alt1
+- automated CPAN update
+
 * Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 2.026-alt1
 - automated CPAN update
 
