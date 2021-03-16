@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmatroska
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
@@ -13,7 +13,7 @@ Url: http://www.matroska.org
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake
-BuildRequires: libebml-devel >= 1.4.0
+BuildRequires: libebml-devel >= 1.4.2
 
 %description
 Matroska is aiming to become the standard of Multimedia Container
@@ -71,6 +71,9 @@ This package contains Matroska Development Documenation
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.3-alt1
+- Updated to upstream version 1.6.3.
+
 * Wed Aug 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.2-alt1
 - Updated to upstream version 1.6.2.
 
