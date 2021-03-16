@@ -1,5 +1,5 @@
 Name: element-desktop
-Version: 1.7.22
+Version: 1.7.23
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -88,6 +88,9 @@ install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.23-alt1
+- new version 1.7.23 (with rpmrb script)
+
 * Wed Mar 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.22-alt1
 - new version 1.7.22 (with rpmrb script)
 
