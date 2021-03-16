@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 5.10.0
-Release: alt2
+Version: 5.11.0
+Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL-2.1 and GPL-2.0
@@ -140,6 +140,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 5.11.0-alt1
+- 5.11.0
+
 * Fri Dec 25 2020 Anton Farygin <rider@altlinux.ru> 5.10.0-alt2
 - removed libtool_1.5 build dependency
 
