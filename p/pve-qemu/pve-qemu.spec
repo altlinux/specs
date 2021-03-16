@@ -8,10 +8,10 @@
 
 Name: pve-%rname
 Version: 5.1.0
-Release: alt4
+Release: alt5
 Epoch: 1
 Summary: QEMU CPU Emulator
-License: GPL/LGPL/BSD
+License: GPL-1 and LGPLv2 and BSD
 Group: Emulators
 Requires: %name-system = %version-%release %name-user = %version-%release
 Conflicts: %rname
@@ -24,11 +24,8 @@ Source4: qemu-kvm.rules
 Source5: qemu-kvm.sh
 
 Source100: Logo.bmp
-Source101: cargo.tar
-Source102: proxmox.tar
 
 Patch100: qemu-3.0.1-uuid.patch
-Patch101: qemu-pbs-link.patch
 
 Patch10: 0001-block-block-copy-always-align-copied-region-to-clust.patch
 Patch11: 0002-Revert-qemu-img-convert-Don-t-pre-zero-images.patch
@@ -93,13 +90,14 @@ Patch69: 0057-cpu-add-Kunpeng-920-cpu-support.patch
 
 ExclusiveArch: x86_64 aarch64
 BuildRequires: acpica bzlib-devel glib2-devel flex libaio-devel libalsa-devel libcap-devel
-BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjemalloc-devel libjpeg-devel
+BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libssh2-devel libusbredir-devel libxfs-devel
 BuildRequires: makeinfo perl-Pod-Usage python-modules-compiler pkgconfig(glusterfs-api) pkgconfig(virglrenderer)
 BuildRequires: libsystemd-devel libfuse3-devel ipxe-roms-qemu seavgabios seabios
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
-BuildRequires: /proc clang-devel rust-cargo libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-devel libfuse3-devel libuuid-devel
+BuildRequires: python3-module-sphinx
+BuildRequires: libpve-backup-qemu-devel
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -130,7 +128,6 @@ Requires: %name-img = %version-%release
 Requires: edk2-ovmf edk2-aarch64
 Conflicts: %rname-common
 Obsoletes: %name-aux < %version-%release
-Provides: libproxmox-backup-qemu = 1.0.2
 
 %description common
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -140,9 +137,8 @@ This package contains common files for qemu.
 %package system
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
-Requires: %name-common = %version-%release
+Requires: %name-common = %version-%release pve-backup-client
 Conflicts: %rname-system %rname-ivshmem-tools
-Provides: proxmox-backup-client = 1.0.5
 
 %description system
 Full system emulation.  In this mode, QEMU emulates a full system
@@ -161,7 +157,7 @@ This package provides a command line tool for manipulating disk images
 %set_verify_elf_method fhs=relaxed
 
 %prep
-%setup -n %rname-%version -a 102
+%setup -n %rname-%version
 
 %patch10 -p1
 %patch11 -p1
@@ -225,20 +221,10 @@ This package provides a command line tool for manipulating disk images
 %patch69 -p1
 
 %patch100 -p1
-%patch101 -p1 -b .-lpbs
-
-tar -xf %SOURCE101 -C %_builddir
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
 %build
-for c in proxmox-backup proxmox-backup-qemu; do
-	pushd $c
-	CARGO_HOME=%_builddir/cargo cargo build --release --offline
-	popd
-done
-ln -s proxmox-backup-qemu/proxmox-backup-qemu.h .
-ln -s proxmox-backup-qemu/target/release/libproxmox_backup_qemu.so .
 export CFLAGS="%optflags"
 # non-GNU configure
 ./configure \
@@ -266,7 +252,7 @@ export CFLAGS="%optflags"
         --enable-curl \
         --enable-glusterfs \
         --enable-gnutls \
-        --enable-jemalloc \
+        --disable-jemalloc \
         --enable-libiscsi \
         --enable-libusb \
         --enable-linux-aio \
@@ -286,24 +272,25 @@ sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
 %install
 %makeinstall_std
-install -pD -m644 proxmox-backup-qemu/target/release/libproxmox_backup_qemu.so %buildroot%_libdir/libproxmox_backup_qemu.so.0
 install -m755 pbs-restore %buildroot%_bindir/
-install -m755 proxmox-backup/target/release/pxar %buildroot%_bindir/
-install -m755 proxmox-backup/target/release/proxmox-backup-client %buildroot%_bindir/
 
 %define docdir %_docdir/%name-%version
 #mv %buildroot%_docdir/qemu
 mkdir -p %buildroot%docdir
 install -m644 LICENSE MAINTAINERS %buildroot%docdir/
+rm -rf %buildroot%_docdir/qemu
 
-install -m 0755 %SOURCE5 %buildroot%_bindir/qemu-kvm
-ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
-ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
+# Really unpackaged:
+# install -m 0755 %SOURCE5 %buildroot%_bindir/qemu-kvm
+# ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
+# ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
 
 install -m 0755 vma %buildroot%_bindir/vma
 
 rm -f %buildroot%_bindir/check-*
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
+rm -f %buildroot%_desktopdir/%rname.desktop
+rm -rf %buildroot%_iconsdir
 
 install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
 install -D -m 0755 %rname-kvm.control.in %buildroot%_controldir/kvm
@@ -363,7 +350,7 @@ fi
 %files common
 %dir %docdir/
 %docdir/LICENSE
-%_libdir/libproxmox_backup_qemu.so.0
+%docdir/MAINTAINERS
 %_datadir/qemu
 %_datadir/pve-edk2-firmware
 %_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
@@ -381,8 +368,6 @@ fi
 %_bindir/ivshmem-client
 %_bindir/ivshmem-server
 %_bindir/pbs-restore
-%_bindir/pxar
-%_bindir/proxmox-backup-client
 %_libexecdir/qemu-bridge-helper
 %_libexecdir/qemu-pr-helper
 %_libexecdir/virtfs-proxy-helper
@@ -394,6 +379,9 @@ fi
 %_bindir/qemu-nbd
 
 %changelog
+* Tue Mar 16 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:5.1.0-alt5
+- move PBS into separate package
+
 * Mon Feb 01 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:5.1.0-alt4
 - add Kunpeng 920 cpu support
 
