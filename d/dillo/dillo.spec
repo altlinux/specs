@@ -2,7 +2,7 @@
 
 Name: dillo
 Version: 3.0.5
-Release: alt3
+Release: alt4
 
 Summary: a small FLTK-based web browser
 Group: Networking/WWW
@@ -20,6 +20,7 @@ Source4: %name.desktop
 
 Patch1:  %name-3.0.5-debian-fix-OpenSSL-1.1-detection.patch
 Patch2:  %name-3.0.5-alt-ca_location_fix.patch
+Patch3:  %name-3.0.5-alt-fix_GCC.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -43,6 +44,7 @@ usable, very fast, and extensible.
 
 %patch1 -p1
 %patch2
+%patch3
 
 %build
 %autoreconf
@@ -93,6 +95,9 @@ rm -f -- doc/Makefile*
 %_man1dir/dillo.1*
 
 %changelog
+* Tue Mar 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt4
+- Fix build with GCC 10.2
+
 * Wed Feb 13 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.5-alt3
 - Rebuild with libfltk1.3.5rc1.
 
