@@ -3,7 +3,7 @@
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.52.2
+Version: 3.53.0
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
@@ -54,6 +54,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Tue Mar 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.53.0-alt1
+- Updated to upstream version 3.53.0.
+
 * Wed Feb 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.52.2-alt1
 - Updated to upstream version 3.52.2.
 
