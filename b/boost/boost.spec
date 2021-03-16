@@ -4,10 +4,10 @@
 
 %def_with devel
 %if_with devel
-%def_with jam
+%def_with boost_build
 %def_with devel_static
 %else
-%def_without jam
+%def_without boost_build
 %def_without devel_static
 %endif
 
@@ -53,7 +53,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -85,6 +85,10 @@ Patch88: boost-1.73.0-fedora-cmakedir.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1899888
 # https://github.com/boostorg/locale/issues/52
 Patch94: boost-1.73-fedora-locale-empty-vector.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1923740
+# https://github.com/boostorg/build/issues/696
+Patch95: boost-1.75.0-boost-build-fix.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
 Patch1001: boost-1.75.0-alt-jam-fix-mips32-detection.patch
@@ -663,17 +667,17 @@ standards.
 This package contains Boost libraries documentation.
 %endif #with devel
 
-%if_with jam
-%package jam
+%if_with boost_build
+%package build
 License: GPL
-Summary: Boost Jam is a replacement for make
+Summary: Cross platform build system for C++ projects
 Group: Development/Other
+Obsoletes: %name-jam < %EVR
 
-%description jam
-Boost Jam is a build tool based on FTJam, which in turn is based on
-Perforce Jam. It contains significant improvements made to facilitate
-its use in the Boost Build System, but should be backward compatible
-with Perforce Jam.
+%description build
+B2 (formerly Boost.Jam) is the low-level build engine tool for Boost.Build.
+Historically, B2 was based on on FTJam and on Perforce Jam but has grown
+a number of significant features and is now developed independently.
 %endif
 
 
@@ -1325,6 +1329,7 @@ applications. This package contains python module.
 %patch83 -p1
 %patch88 -p1
 %patch94 -p1
+%patch95 -p1
 %patch1000 -p1
 %patch1001 -p2
 
@@ -1419,6 +1424,12 @@ build_boost \
 	--with-mpi \
 %endif
 	python=%_python3_version
+
+%if_with boost_build
+pushd tools/build
+./bootstrap.sh --with-toolset=gcc
+popd
+%endif
 
 %install
 
@@ -1597,10 +1608,17 @@ boost_make_linker_script filesystem-st system-st
 
 %endif
 
-%if_with jam
+%if_with boost_build
 mkdir -p %buildroot%_bindir
 install -Dm755 tools/build/src/engine/bjam %buildroot%_bindir
 ln -s bjam %buildroot%_bindir/boost-jam
+
+pushd tools/build
+./b2 --prefix=%buildroot%_prefix install
+# Fix some permissions
+chmod +x %buildroot%_datadir/boost-build/src/tools/doxproc.py
+sed -i -e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' %buildroot%_datadir/boost-build/src/tools/doxproc.py
+popd
 %endif
 
 %if_without devel_static
@@ -1810,9 +1828,10 @@ rm -f %buildroot%_libdir/*.a || :
 
 %endif #with devel
 
-%if_with jam
-%files jam
+%if_with boost_build
+%files build
 %_bindir/*
+%_datadir/%{name}-build
 %endif
 
 %if_with devel_static
@@ -1998,6 +2017,9 @@ done
 
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.75.0-alt3
+- Packaged boost-build instead of boost-jam.
+
 * Thu Jan 21 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.75.0-alt2
 - Fix build on %%mips32
 - Don't package external parts of Boost.Beast into boost-doc
