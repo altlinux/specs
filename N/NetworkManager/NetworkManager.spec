@@ -55,12 +55,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.30.0
+Version: 1.30.2
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
-Url: http://www.gnome.org/projects/NetworkManager/
+Url: https://networkmanager.dev/
 Vcs: git://git.freedesktop.org/git/NetworkManager/NetworkManager.git
 Source: %name-%version.tar
 Source1: %name.conf
@@ -617,6 +617,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Mar 16 2021 Mikhail Efremov <sem@altlinux.org> 1.30.2-alt1
+- Updated Url tag.
+- Updated to 1.30.2.
+
 * Fri Feb 19 2021 Mikhail Efremov <sem@altlinux.org> 1.30.0-alt1
 - Explicitly set path to polkit-agent-helper-1.
 - Updated to 1.30.0.
