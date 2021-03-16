@@ -1,3 +1,11 @@
+%define IF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define IF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define IF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define IF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %def_with bundled_libs
 %def_with glvnd
 %define oname freecad
@@ -6,14 +14,18 @@
 %define build_parallel_jobs 7
 %endif
 
+%IF_ver_gteq %ubt_id M100
 %define vtkver 8.2
+%else
+%define vtkver 8.1
+%endif
 
 # Last number in version is computed by command:
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
 Version: 0.18.5
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -21,6 +33,8 @@ Group:   Graphics
 Url:     http://free-cad.sourceforge.net/
 # VCS:   https://github.com/FreeCAD/FreeCAD
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+ExcludeArch: armh
 
 Source: %name-%version.tar
 Source1: freecad.1
@@ -47,10 +61,11 @@ Obsoletes: free-cad < %version-%release
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-assistant
 BuildRequires: qt5-designer
-BuildRequires: qt5-sql-sqlite3
+BuildRequires: qt5-sql-sqlite
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
@@ -85,7 +100,7 @@ BuildRequires: libnumpy-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: gdb
 BuildRequires: libvtk%{vtkver}-devel vtk%{vtkver}-examples vtk%{vtkver}-python
-BuildRequires: libhdf5-devel libhdf5-mpi-devel
+#BuildRequires: libhdf5-devel libhdf5-mpi-devel
 BuildRequires: libmed-devel libspnav-devel
 BuildRequires: python-module-matplotlib
 BuildRequires: libkdtree++-devel
@@ -243,16 +258,32 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Tue Mar 16 2021 Sergey V Turchin <zerg@altlinux.org> 1:0.18.5-alt3
+- Add compatibility with p9.
+
 * Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.18.5-alt2
 - Rebuilt with boost-1.75.0 and enabled c++14 by default.
+
+* Fri Nov 27 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.5-alt0.1.p9
+- Backport new version to p9 branch.
 
 * Fri Nov 27 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.5-alt1
 - New version.
 - Add requirements of openscad and GitPython.
 - Fix Addon Manager during macro info retrieving.
 
+* Tue Oct 06 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.4-alt4.2.p9
+- Build with new version of coin3d.
+- Build without glvnd.
+
+* Tue Sep 15 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.4-alt4.1.p9
+- Backport fixes to p9 branch.
+
 * Fri Sep 11 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.4-alt5
 - Require python-module-matplotlib-qt4 for workbench (ALT #38925).
+
+* Wed Sep 09 2020 Sergey V Turchin <zerg@altlinux.org> 1:0.18.4-alt1.2.p9
+- Backport to p9 branch.
 
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.18.4-alt4
 - Fixed build with qt-5.15.
@@ -265,6 +296,9 @@ rm -rf %buildroot%_prefix/Ext
 - Build with Qt5.
 - Fix License tag according to upstream information and SPDX.
 - Build using ninja-build.
+
+* Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.4-alt0.1.p9
+- Backport new version to p9 branch.
 
 * Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.18.4-alt1
 - New version.
