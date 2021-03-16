@@ -1,12 +1,13 @@
 %def_disable snapshot
 
 %define _name gudev
-%define ver_major 234
+%define ver_major 236
 %define api_ver 1.0
 
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+%def_disable vala
 %def_enable umockdev
 %def_enable check
 
@@ -23,7 +24,7 @@ Url: https://wiki.gnome.org/Projects/%name
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 %define udev_ver 199
@@ -31,12 +32,13 @@ Source: %name-%version.tar
 # https://github.com/martinpitt/umockdev/issues/69
 %define umockdev_ver 0.11.2
 
+BuildRequires(pre): meson
 BuildRequires: libudev-devel >= %udev_ver
 BuildRequires: libgio-devel >= %glib_ver
-%{?_enable_umockdev:BuildRequires: libumockdev-devel >= %umockdev_ver}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
-BuildRequires: intltool
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_check:BuildRequires: libumockdev-devel >= %umockdev_ver}
 
 %description
 %name is a library with GObject bindings to libudev, now made
@@ -84,23 +86,24 @@ Requires: %name-devel = %EVR
 GObject introspection devel data for %name.
 
 %prep
-%setup
+%setup -n %name-%version
 
 %build
-%autoreconf
-%configure --disable-static \
-%{subst_enable umockdev} \
-%{?_enable_gtk_doc:--enable-gtk-doc} \
-%{subst_enable introspection}
-
-%make_build
+%meson \
+%{?_disable_introspection:-Dintrospection=disabled} \
+%{?_disable_vala:-Dvapi=disabled} \
+%{?_enable_gtk_doc:-Dgtk_doc=true} \
+%{?_disable_check:-Dtests=disabled}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
@@ -110,6 +113,8 @@ GObject introspection devel data for %name.
 %_includedir/%_name-%api_ver
 %_libdir/%name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
+%{?_enable_vala:
+%_vapidir/%_name-%api_ver.*}
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -126,6 +131,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1:236-alt1
+- 236 (ported to Meson build system)
+
 * Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1:234-alt1
 - 234
 
