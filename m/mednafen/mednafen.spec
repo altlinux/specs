@@ -1,5 +1,5 @@
 Name: mednafen
-Version: 0.9.45.1
+Version: 1.26.1
 Release: alt1
 
 Summary: Multi-consoles Emulator
@@ -9,12 +9,12 @@ Url: http://mednafen.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # http://downloads.sourceforge.net/%%name/%%name-%%version.tar.bz2
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.xz
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ liblzo2-devel libsndfile-devel
 BuildRequires: libcdio-devel libvorbis-devel libSDL_net-devel
 BuildRequires: libsndfile-devel zlib-devel bison
-BuildRequires: libSDL-devel libGL-devel libX11-devel libGLU-devel
+BuildRequires: libSDL2-devel libGL-devel libX11-devel libGLU-devel
 BuildRequires: libXaw-devel libXext-devel libXp-devel libXpm-devel xorg-cf-files
 BuildRequires: libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel
 
@@ -50,7 +50,25 @@ reasons.
 %setup -n %name
 
 %build
-%configure
+# This package has a configure test which uses ASMs, but does not link the
+# resultant .o files.  As such the ASM test is always successful in pure
+# LTO mode.  We can use -ffat-lto-objects to force code generation.
+#
+# -ffat-lto-objects is the default for F33, but is expected to be removed
+# in F34.  So we list it explicitly here.
+%define _lto_cflags -flto=auto -ffat-lto-objects
+
+CFLAGS="$RPM_OPT_FLAGS -Wl,-z,relro -Wl,-z,now"
+CXXFLAGS="$RPM_OPT_FLAGS -Wl,-z,relro -Wl,-z,now"
+
+export CFLAGS
+export CXXFLAGS
+
+%configure --disable-rpath \
+	    --with-external-lzo
+
+
+
 %make_build
 
 %install
@@ -64,6 +82,9 @@ reasons.
 
 
 %changelog
+* Tue Mar 16 2021 Ilya Mashkin <oddity@altlinux.ru> 1.26.1-alt1
+- version 1.26.1
+
 * Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.45.1-alt1
 - Updated to 0.9.45.1
 
