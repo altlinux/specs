@@ -1,10 +1,12 @@
 %define oname freenx-server
 %define hooksroot rx-etersoft
-Name: rx-etersoft
-Version: 1.4.4
-Release: alt2
 
-Summary: Freenx application/thin-client server
+Name: rx-etersoft
+Version: 1.4.5
+Release: alt1
+
+Summary: RX@Etersoft - NX based application/thin-client server
+
 Group: Networking/Remote access
 License: GPLv2
 Url: http://wiki.etersoft.ru/RX
@@ -58,8 +60,8 @@ AutoReq: yes, nopython
 
 %description
 RX@Etersoft (formely freenx-server) is an application/thin-client server based on NX technology.
-NoMachine NX is the next-generation X compression and roundtrip suppression
-scheme. It can operate remote X11 sessions over 56k modem dialup links
+NoMachine NX is the X compression and roundtrip suppression scheme.
+It can operate remote X11 sessions over 56k modem dialup links
 or anything better. This package contains a free (GPL) implementation
 of the nxserver component.
 
@@ -146,9 +148,9 @@ fi
 %config(noreplace) %_sysconfdir/%name/Xkbmap
 %_sysconfdir/%name/fixkeyboard
 %_sysconfdir/%name/Xsession
-%dir %_sysconfdir/%hooksroot/hooks/ 
+%dir %_sysconfdir/%hooksroot/hooks/
 %_sysconfdir/%hooksroot/hooks/*
-%dir %_libdir/%hooksroot/hooks/ 
+%dir %_libdir/%hooksroot/hooks/
 %_libdir/%hooksroot/hooks/*
 %attr(0400,root,root) %config(noreplace) %_sysconfdir/cron.d/%name
 %_sbindir/nx-terminate-suspend
@@ -190,6 +192,12 @@ fi
 %attr(2750,root,nx) %_var/lib/%name/db/
 
 %changelog
+* Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.5-alt1
+- remove bashisms (eterbug #14996)
+- use client.id_rsa.key instead of client.id_dsa.key for server forwarding
+- use SSH_LOCAL_KEY conf variable instead of users.id_dsa
+- small text cleanup
+
 * Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt2
 - skip nx-session-launcher* packing (obsoleted python2 script for ConsoleKit)
 
