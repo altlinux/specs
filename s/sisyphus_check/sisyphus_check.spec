@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.62
+Version: 0.8.63
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Tue Mar 16 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8.63-alt1
+- 210-check-kernel: disallow reqs from kernel-image to kernel-modules
+
 * Sat Dec 05 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.62-alt1
 - 160-check-static: new check, disallows packages containing
   both .so symlinks and corresponding .a files.
