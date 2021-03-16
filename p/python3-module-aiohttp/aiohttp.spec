@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.7.3
+Version: 3.7.4
 Release: alt1
 Summary: http client/server for asyncio
 License: Apache-2.0
@@ -88,6 +88,9 @@ python3 setup.py test
 %python3_sitelibdir/*/*/*test*
 
 %changelog
+* Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.4-alt1
+- 3.7.4 released
+
 * Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.3-alt1
 - 3.7.3 released
 
