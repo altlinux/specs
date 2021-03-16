@@ -20,7 +20,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Provide online accounts information
@@ -34,7 +34,7 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %{?_enable_kerberos:Requires: realmd}
 
@@ -70,7 +70,7 @@ This package contains shared %name libraries.
 %package -n lib%name-devel
 Summary: Development files for %name libraries
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains libraries and header files for developing
@@ -79,7 +79,7 @@ applications that use %name libraries.
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name libraries
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the %name libraries
@@ -88,8 +88,8 @@ GObject introspection data for the %name libraries
 Summary: GObject introspection devel data for the %name libraries
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name libraries
@@ -97,7 +97,7 @@ GObject introspection devel data for the %name libraries
 %package -n lib%name-devel-doc
 Summary: Development documentation for %name
 Group: Development/C
-Conflicts: lib%name < %version-%release
+Conflicts: lib%name < %version
 BuildArch: noarch
 
 %description -n lib%name-devel-doc
@@ -191,6 +191,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
