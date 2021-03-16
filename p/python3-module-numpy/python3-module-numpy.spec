@@ -7,8 +7,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.19.5
-Release: alt2
+Version: 1.20.1
+Release: alt1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
@@ -411,6 +411,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.20.1-alt1
+- Updated to upstream version 1.20.1.
+
 * Tue Feb 02 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.19.5-alt2
 - Bootstrap for python3.9.
 
