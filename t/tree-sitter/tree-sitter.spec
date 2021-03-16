@@ -1,5 +1,5 @@
 Name: tree-sitter
-Version: 0.17.3
+Version: 0.19.3
 Release: alt1
 
 Summary: Parser generator tool and an incremental parsing library
@@ -57,6 +57,9 @@ make install
 
 
 %changelog
+* Tue Mar 16 2021 Vladimir Didenko <cow@altlinux.ru> 0.19.3-alt1
+- new version
+
 * Tue Nov 24 2020 Vladimir Didenko <cow@altlinux.ru> 0.17.3-alt1
 - initial build for Sisyphus
 
