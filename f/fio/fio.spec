@@ -10,7 +10,7 @@
 %def_enable http
 
 Name: fio
-Version: 3.23
+Version: 3.26
 Release: alt1
 
 Summary: IO testing tool
@@ -105,6 +105,9 @@ find tools -type f | xargs subst "s|/usr/bin/python2.7|%__python3|"
 %_bindir/gfio
 
 %changelog
+* Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.26-alt1
+- new version 3.26
+
 * Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 3.23-alt1
 - new version 3.23 (with rpmrb script)
 
