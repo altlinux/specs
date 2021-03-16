@@ -15,11 +15,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm)
 
 Name: openqa
-Version: 4.5.1528009330.e68ebe2b
-Release: alt18
+Version: 4.6
+Release: alt1
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -223,14 +223,14 @@ rm -rf %buildroot%_sysconfdir/apparmor.d
 mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 
 %check
+# 01-test-utilities.t: https://progress.opensuse.org/issues/73162
+rm -f t/01-test-utilities.t
 rm -f t/05-scheduler-full.t
 rm -f t/24-worker-overall.t
 rm -f t/25-cache-client.t
 rm -f t/25-cache-service.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/42-screenshots.t
-rm -f t/44-scripts.t
-rm -f t/api/08-jobtemplates.t 
 rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
@@ -382,6 +382,8 @@ fi
 %_unitdir/openqa-worker-cacheservice.service
 %_unitdir/openqa-worker-no-cleanup@.service
 %_unitdir/openqa-worker-auto-restart@.service
+%_unitdir/openqa-reload-worker-auto-restart@.service
+%_unitdir/openqa-reload-worker-auto-restart@.path
 %_tmpfilesdir/openqa.conf
 #worker libs
 %dir %{_datadir}/openqa
@@ -432,6 +434,9 @@ fi
 %files single-instance
 
 %changelog
+* Mon Mar 15 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt1
+- update to current version
+
 * Fri Jan 22 2021 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt18
 - update to current version
 
