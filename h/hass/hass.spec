@@ -1,6 +1,6 @@
 Name: hass
-Version: 2021.2.3
-Release: alt3
+Version: 2021.3.4
+Release: alt1
 
 Summary: Home automation platform
 License: APL
@@ -19,9 +19,9 @@ Requires: python3-module-yaml >= 5.3.1
 Requires: python3-module-pip >= 8.0.3
 Requires: python3-module-astral >= 1.10.1
 Requires: python3-module-text-unidecode >= 1.3
-Requires: python3-module-aiohttp >= 3.7.3
+Requires: python3-module-aiohttp >= 3.7.4
 Requires: python3-module-aiohttp-cors >= 0.7.0
-Requires: python3-module-hass-frontend >= 20201229.1
+Requires: python3-module-hass-frontend >= 20210302.6
 Requires: python3-module-voluptuous >= 0.12.1
 Requires: python3-module-websocket-client >= 0.56.0
 
@@ -89,6 +89,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.3.4-alt1
+- 2021.3.4 released
+
 * Thu Feb 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.2.3-alt3
 - get rid of deprecated zwave dependency
 

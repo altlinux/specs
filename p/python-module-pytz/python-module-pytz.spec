@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2020.5
+Version: 2021.1
 Release: alt1
 
 %setup_python_module %oname
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2021.1-alt1
+- 2021.1 released
+
 * Fri Jan 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2020.5-alt1
 - 2020.5 released
 

@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.11.2
+Version: 2.11.3
 Release: alt1
 
 Summary: The new and improved version of a small but fast template engine
@@ -136,6 +136,9 @@ make test
 %endif
 
 %changelog
+* Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.11.3-alt1
+- 2.11.3 released
+
 * Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.11.2-alt1
 - 2.11.2 released
 
