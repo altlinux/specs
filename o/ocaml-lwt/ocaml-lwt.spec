@@ -1,8 +1,6 @@
-# on i586: verify-elf: ERROR: ./usr/lib/ocaml/site-lib/lwt/lwt.cmxs: TEXTREL entry found: 0x00000000
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
-Version: 5.3.0
-Release: alt3
+Version: 5.4.0
+Release: alt1
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -13,9 +11,9 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
-BuildRequires: dune ocaml-cppo ocaml-bisect_ppx-devel ocaml-ocplib-endian-devel
+BuildRequires: dune ocaml-cppo ocaml-bisect_ppx-devel ocaml-ppxlib-devel ocaml-ocplib-endian-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-ppx_tools_versioned-devel ocaml-result-devel
-BuildRequires: ocaml-dune-devel
+BuildRequires: ocaml-dune-configurator-devel ocaml-luv-devel
 
 %description
 Lwt is a lightweight thread library for Objective Caml.  This library
@@ -51,6 +49,9 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 5.4.0-alt1
+- 5.4.0 
+
 * Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 5.3.0-alt3
 - build process mirgrated to rpm-build-ocaml 1.4
 

@@ -2,10 +2,9 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-parmap
-Version: 1.1.1
-Release: alt3
+Version: 1.2
+Release: alt1
 Summary: Small OCaml library allowing to exploit multicore architectures
 Group: Development/ML
 # Parmap is distributed under the LGPL licence version 2, with the usual special linking exception to section 6 for OCaml programs.
@@ -20,7 +19,7 @@ BuildRequires: dune
 BuildRequires: ocaml
 BuildRequires: ocaml-configurator
 BuildRequires: ocaml-csexp-devel
-BuildRequires: ocaml-dune-devel
+BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-ocamldoc
@@ -43,10 +42,10 @@ developing applications that use %name.
 %setup
 
 %build
-make
+%dune_build -p parmap
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
 # `dune runtests' actually are very CPU intensive benchmarks ('scale' tests),
@@ -74,6 +73,11 @@ dune exec tests/simplescalefold.exe
 %_libdir/ocaml/parmap/*.ml
 
 %changelog
+* Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 1.2-alt1
+- 1.1.1 -> 1.2
+- specfile BR: ocaml-dune-devel renamed to ocaml-dune-configurator-devel
+- specfile build and install: use macros from rpm-build-ocaml 1.4
+
 * Sat Oct 17 2020 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt3
 - spec: Fix Beekeeper rebuild and minor spec changes.
 - Update to latest upstream patches (fix build warnings only).

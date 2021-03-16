@@ -1,18 +1,15 @@
-%set_verify_elf_method textrel=relaxed
 %define libname postgresql
 Name: ocaml-%libname
-Version: 4.5.2
+Version: 5.0.0
 Release: alt1
 Summary: PostgreSQL Bindings for OCaml
 Group: Development/ML
-License: LGPLv2.1
+License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Url: https://github.com/mmottl/postgresql-ocaml
 Source0: %name-%version.tar
-BuildRequires: ocaml-dune-devel
-BuildRequires: ocaml
+BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-base-devel
 BuildRequires: ocaml-stdio-devel
-BuildRequires: opam
 BuildRequires: postgresql-devel
 BuildRequires: chrpath
 
@@ -32,37 +29,28 @@ developing applications that use %name.
 %setup
 
 %build
-dune build -p %libname 
+%dune_build -p %libname 
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 rm -rf %buildroot/usr/share/doc
 chrpath -d %buildroot%_libdir/ocaml/stublibs/dllpostgresql_stubs.so
 
-
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md LICENSE.md CHANGES.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/stublibs/dllpostgresql_stubs.so
 
-%files devel
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/%libname/*.cmt
-%_libdir/ocaml/%libname/*.cmti
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
-%_libdir/ocaml/%libname/*.ml*
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 5.0.0-alt1
+- 5.0.0
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- spec: use SPDX for ocaml linking exception in license tag
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 4.5.2-alt1
 - 4.5.2
 

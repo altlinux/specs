@@ -1,19 +1,14 @@
-%set_verify_elf_method textrel=relaxed
 %def_with check
 %define ocamlmodule gettext
 Name: ocaml-%ocamlmodule
 Version: 0.4.2
-Release: alt2
+Release: alt3
 Summary: OCaml library for i18n
 Group: Development/ML
-
-License: LGPLv2+ with exceptions
+License: LGPLv2+ with OCaml-LGPL-linking-exception
 Url: https://github.com/gildor478/ocaml-gettext
 Source: %name-%version.tar
-
-BuildRequires: ocaml
-BuildRequires: dune
-BuildRequires: ocaml-dune-devel
+BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-camomile-devel
@@ -70,6 +65,10 @@ find test -type f -name dune -exec sed -i 's,oUnit,ounit2,' {} \;
 %_man5dir/*.5*
 
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 0.4.2-alt3
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- spec: use SPDX for ocaml linking exception in license tag
+
 * Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 0.4.2-alt2
 - added ocaml-dune-devel to BuildRequires
 - build process moved to macros from rpm-build-ocaml 1.4

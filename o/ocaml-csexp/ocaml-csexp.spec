@@ -1,10 +1,9 @@
-%set_verify_elf_method textrel=relaxed
 %define libname csexp
-%def_without check
+%def_with check
 
 Name:           ocaml-%libname
-Version:        1.3.2
-Release:        alt2
+Version:        1.4.0
+Release:        alt1
 Summary:        Canonical S-expressions for OCaml
 License:        MIT
 Group:          Development/ML
@@ -48,6 +47,9 @@ programs which use %name
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Tue Oct 13 2020 Anton Farygin <rider@altlinux.ru> 1.3.2-alt2
 - temporarily disabled tests
 

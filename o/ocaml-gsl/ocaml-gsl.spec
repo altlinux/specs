@@ -1,22 +1,20 @@
-%set_verify_elf_method textrel=relaxed
-
-Name:           ocaml-gsl
-Version:        1.24.1
-Release:        alt2
-Summary:        Interface to GSL (GNU scientific library) for OCaml
+%define ocamlmod gsl
+Name: ocaml-%ocamlmod
+Version: 1.24.1
+Release: alt3
+Summary: Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
-License:        GPLv2
-Group:          Development/ML
-Url:            http://mmottl.github.io/gsl-ocaml/
+License: GPLv3
+Group: Development/ML
+Url: http://mmottl.github.io/gsl-ocaml/
 ExcludeArch: armh
-
-Provides:	ocaml4-gsl
-Obsoletes:	ocaml4-gsl
+Provides: ocaml4-gsl
+Obsoletes: ocaml4-gsl
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libgsl-devel ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc ocaml-dune-devel opam
+BuildRequires: libgsl-devel ocaml-findlib ocaml-dune-configurator-devel ocaml-ocamldoc
 BuildRequires: ocaml-base-devel ocaml-stdio-devel
 
 %package devel
@@ -30,40 +28,31 @@ This is an interface to GSL (GNU scientific library), for the
 Objective Caml language.
 
 %description devel
-This package includes development files necessary for developing 
+This package includes development files necessary for developing
 programs which use interface to GSL (GNU scientific library)
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 
 %build
-%make
+%dune_build -p %ocamlmod
 
 %install
-dune install \
-         --destdir=%buildroot \
-         --verbose \
-         --profile release
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc LICENSE.md README.md
-%dir %_libdir/ocaml/gsl/
-%_libdir/ocaml/gsl/*
-%exclude %_libdir/ocaml/gsl/*.a
-%exclude %_libdir/ocaml/gsl/*.cmxs
-%exclude %_libdir/ocaml/gsl/*.cmxa
-%exclude %_libdir/ocaml/gsl/*.ml*
-%_libdir/ocaml/gsl/libgsl_stubs.a
-%_libdir//ocaml/stublibs/*.so*
 
-%files devel
-%exclude %_libdir/ocaml/gsl/*.a
-%exclude %_libdir/ocaml/gsl/*.cmxs
-%exclude %_libdir/ocaml/gsl/*.cmxa
-%exclude %_libdir/ocaml/gsl/*.ml*
-
+%files devel -f ocaml-files.devel
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 1.24.1-alt3
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- updated license to GPLv3 according to upstream changes
+
 * Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 1.24.1-alt2
 - exclude the armh architecture
 

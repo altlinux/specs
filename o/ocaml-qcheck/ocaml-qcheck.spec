@@ -1,6 +1,6 @@
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.16
+Version: 0.17
 Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
@@ -47,6 +47,9 @@ rm -rf %buildroot/usr/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 0.17-alt1
+- 0.17
+
 * Thu Dec 31 2020 Anton Farygin <rider@altlinux.ru> 0.16-alt1
 - 0.16
 
