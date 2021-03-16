@@ -2,7 +2,7 @@
 
 Name: policyd
 Version: 1.82
-Release: alt3.1.qa1
+Release: alt4
 
 Summary: Postfix Policyd Daemon
 
@@ -22,6 +22,9 @@ Source6: %name.chroot.lib
 Source7: README.ALT
 Source8: README.ALT.UTF-8
 Patch0:  %name-1.80-alt-uid_gid.patch
+
+Patch1: %name-1.82-alt-GCC.patch
+
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -45,6 +48,7 @@ MySQL v4.
 %prep
 %setup -q
 %patch0
+%patch1
 install -m644 -- %SOURCE7 README.ALT
 install -m644 -- %SOURCE8 README.ALT.UTF-8
 
@@ -110,6 +114,9 @@ install -p -m 0750 -D -- %SOURCE6 %buildroot%_sysconfdir/chroot.d/%name.lib
 				%dir %chrootdir/%_lib
 
 %changelog
+* Tue Mar 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.82-alt4
+- Fix build with GCC 10.2
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.82-alt3.1.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
