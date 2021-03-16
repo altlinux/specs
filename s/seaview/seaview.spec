@@ -1,5 +1,5 @@
 Name: seaview
-Version: 4.7
+Version: 5.0
 Release: alt1
 Summary: Graphical multiple sequence alignment editor
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -8,6 +8,7 @@ License: GPLv2+
 Url: http://pbil.univ-lyon1.fr/software/seaview.html
 Source0: ftp://pbil.univ-lyon1.fr/pub/mol_phylogeny/seaview/seaview_%version.tar.gz
 Source1: seaview.desktop
+Patch0:         seaview-chris.patch
 
 # Automatically added by buildreq on Wed Apr 27 2016
 # optimized out: fontconfig libX11-devel libstdc++-devel python-base python-modules python3 python3-base xorg-xproto-devel
@@ -24,6 +25,8 @@ alignment.
 
 %prep
 %setup -q -n seaview
+
+%patch0 -p 1 -b .chris
 
 chmod -x *.cxx
 chmod -x csrc/*.[ch]
@@ -56,6 +59,9 @@ install -m 644 seaview.1 $RPM_BUILD_ROOT/%_mandir/man1
 %_man1dir/*
 
 %changelog
+* Tue Mar 16 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0-alt1
+- 5.0
+
 * Thu Feb 14 2019 Grigory Ustinov <grenka@altlinux.org> 4.7-alt1
 - Build new version.
 
