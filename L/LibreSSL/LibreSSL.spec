@@ -11,13 +11,13 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
 # the code is distributed under ISC license except of original OpenSSL code
-License: ISC and BSD-style
+License: ISC and OpenSSL
 Group: Security/Networking
 Url: http://www.libressl.org/
 
@@ -270,6 +270,12 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Wed Mar 17 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2.5-alt1
+- Updated to 3.2.5.
+- Fixed:
+  + OVE-20210317-0001 Use after free.
+  + License field.
+
 * Sun Feb 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2.4-alt1
 - Updated to 3.2.4.
 
