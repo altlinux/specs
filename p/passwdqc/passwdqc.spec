@@ -1,5 +1,5 @@
 Name: passwdqc
-Version: 1.4.0
+Version: 2.0.1
 Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
@@ -52,9 +52,9 @@ Obsoletes: pam_%name
 Requires: lib%name = %version-%release
 
 %description
-passwdqc is a passphrase strength checking and policy enforcement
-toolset, including a PAM module (pam_passwdqc), command-line programs
-(pwqcheck and pwqgen), and a library (libpasswdqc).
+passwdqc is a password/passphrase strength checking and policy
+enforcement toolset, including a PAM module (pam_passwdqc), command-line
+programs (pwqcheck, pwqfilter, and pwqgen), and a library (libpasswdqc).
 
 pam_passwdqc is normally invoked on passphrase changes by programs
 such as passwd(1).  It is capable of checking password or passphrase
@@ -65,6 +65,9 @@ passphrases, with all of these features being optional and easily
 pwqcheck and pwqgen are standalone passphrase strength checking and
 random passphrase generator programs, respectively, which are usable
 from scripts.
+
+The pwqfilter program searches, creates, or updates binary passphrase
+filter files, which can also be used with pwqcheck and pam_passwdqc.
 
 libpasswdqc is the underlying library, which may also be used from
 third-party programs.
@@ -95,7 +98,9 @@ needed for building passwdqc-aware applications.
 %description utils
 This package contains standalone utilities which are usable from scripts:
 pwqcheck (a standalone passphrase strength checking program),
-and pwqgen (a standalone random passphrase generator program).
+pwqgen (a standalone random passphrase generator program), and
+pwqfilter (a standalone program that searches, creates, or updates
+binary passphrase filter files).
 
 %description -n %pam_name
 pam_passwdqc is a passphrase strength checking module for
@@ -109,14 +114,16 @@ rebuilding.
 %setup -n %name-%version-%release
 
 %build
-%add_optflags -W -Werror -DENABLE_NLS=1 -DHAVE_LIBAUDIT=1
+%add_optflags -W -Werror
 %make_build \
-	CFLAGS_lib='%optflags %optflags_shared -DLINUX_PAM' \
+	CPPFLAGS='-DENABLE_NLS=1 -DHAVE_LIBAUDIT=1 -DLINUX_PAM=1' \
 	CFLAGS_bin='%optflags' \
+	CFLAGS_lib='%optflags %optflags_shared' \
 	all locales
 
 %install
 %makeinstall_std install_locales \
+	CC=/bin/false LD=/bin/false \
 	SHARED_LIBDIR=/%_lib DEVEL_LIBDIR=%_libdir SECUREDIR=/%_lib/security
 install -pD -m755 passwdqc.control \
         %buildroot%_controldir/passwdqc-enforce
@@ -151,6 +158,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Wed Mar 10 2021 Dmitry V. Levin <ldv@altlinux.org> 2.0.1-alt1
+- Merged with 2.0.1-owl1.
+
 * Wed Dec 25 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt1
 - Merged with 1.4.0-owl1.
 

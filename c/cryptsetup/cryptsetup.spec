@@ -12,7 +12,7 @@
 %define default_luks_format LUKS2
 
 Name: cryptsetup
-Version: 2.3.4
+Version: 2.3.5
 Release: alt1
 
 Summary: Utility to setup a encrypted disks with LUKS support
@@ -219,6 +219,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %_pkgconfigdir/*
 
 %changelog
+* Thu Mar 11 2021 Dmitry V. Levin <ldv@altlinux.org> 2.3.5-alt1
+- 2.3.4 -> 2.3.5 (enhanced libpasswdqc 2.0.x support).
+
 * Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.3.4-alt1
 - 2.3.4 (Fixes: CVE-2020-14382)
 
