@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 1.3.1
+Version: 1.4.1
 Release: alt1
 
 Summary: Time-handling functionality from netcdf4-python.
@@ -44,5 +44,8 @@ py.test3
 %doc *.md
 
 %changelog
+* Wed Mar 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Build new version.
+
 * Thu Jan 21 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus.
