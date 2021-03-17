@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.4.2
-Release: alt2
+Version: 4.5.4
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -16,14 +16,11 @@ Requires: polkit qca-qt5-ossl qt5-translations
 Source: %name-%version.tar
 
 Patch1: Unbundle-some-libraries-and-fix-build-alt.patch
-Patch2: Fix-launch-of-Veyon-in-alt.patch
-Patch3: alt-qt-translation.patch
+Patch2: alt-qt-translation.patch
 
 BuildRequires: rpm-build-kf5
 BuildRequires: extra-cmake-modules
 BuildRequires: gcc-c++ make cmake
-BuildRequires: kde5-kldap-devel
-BuildRequires: kf5-kitemmodels-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: libjpeg-devel
@@ -82,7 +79,6 @@ rm -rf ./3rdparty
 mv .gear/3rdparty ./
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %cmake
@@ -104,6 +100,9 @@ mv .gear/3rdparty ./
 %_datadir/%name
 
 %changelog
+* Wed Mar 17 2021 Egor Ignatov <egori@altlinux.org> 4.5.4-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 4.4.2-alt2
 - merge p9 git-history
 
