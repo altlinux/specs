@@ -2,12 +2,13 @@
 
 %define oname pandas
 
+%def_without bootstrap
 %def_disable check
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.2.0
-Release: alt2
+Version: 1.2.3
+Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -43,6 +44,9 @@ BuildRequires: python3(numpydoc) python3(matplotlib.sphinxext) python3(matplotli
 %py3_requires pytz dateutil numpy sqlalchemy numexpr
 %py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt
 %py3_requires tables
+%if_without bootstrap
+%py3_requires statsmodels
+%endif
 
 %description
 pandas is an open source, BSD-licensed library providing
@@ -54,7 +58,9 @@ Summary: Tests for pandas
 Group: Development/Python3
 Requires: %name = %EVR
 %py3_requires numpy.ma.testutils pymysql psycopg2
-#py3_requires statsmodels.stats.multitest
+%if_without bootstrap
+%py3_requires statsmodels.stats.multitest
+%endif
 
 %description tests
 pandas is an open source, BSD-licensed library providing
@@ -138,6 +144,10 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Wed Mar 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.3-alt1
+- Updated to upstream version 1.2.3.
+- Disabled bootstrapping.
+
 * Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
 - Bootstrap for python3.9.
 
