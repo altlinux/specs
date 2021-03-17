@@ -1,7 +1,7 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 
 Summary: A library of shell functions
@@ -80,6 +80,10 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Thu Mar 18 2021 Alexey Gladkov <legion@altlinux.ru> 0.4.9-alt1
+- shell-args:
+  + Properly handle an argument starting with a dash.
+
 * Mon Mar 16 2020 Alexey Gladkov <legion@altlinux.ru> 0.4.8-alt1
 - shell-unittest changes:
   + Add option to hide successful tests
