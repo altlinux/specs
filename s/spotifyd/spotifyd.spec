@@ -1,5 +1,5 @@
 Name: spotifyd
-Version: 0.3.0
+Version: 0.3.2
 Release: alt1
 Epoch: 1
 
@@ -56,6 +56,9 @@ mkdir -p %buildroot%_cachedir/%name
 %dir %attr(0770,root,_spotify) %_cachedir/%name
 
 %changelog
+* Wed Mar 17 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.3.2-alt1
+- 0.3.2 released
+
 * Tue Feb 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.3.0-alt1
 - 0.3.0 released
 
