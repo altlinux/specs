@@ -1,5 +1,5 @@
 Name: deepin-terminal
-Version: 5.4.0.6
+Version: 5.4.0.13
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -8,6 +8,7 @@ Url: https://github.com/linuxdeepin/deepin-terminal
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-terminal-5.4.0.13-qt5.15.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -69,6 +70,7 @@ Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
 %setup
+%patch -p2
 # Much upstream weirdness
 sed -i '/<QHash>/i#include <QObject>\n#include <QMap>' 3rdparty/terminalwidget/lib/SessionManager.h
 #sed -i 's/QString("/QString::fromLatin1("/;s/message = "Session crashed.";/message = QString::fromLatin1("Session crashed.");/' 3rdparty/terminalwidget/lib/{Filter,Session}.cpp
@@ -81,7 +83,12 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %build
 %cmake \
     -GNinja \
-    -DDTKCORE_TOOL_DIR=%_libdir/libdtk-5*/DCore/bin
+    -DDTKCORE_TOOL_DIR=%_libdir/libdtk-5*/DCore/bin \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DAPP_VERSION=%version \
+    -DVERSION=%version
 %ninja_build -C BUILD
 
 %install
@@ -97,6 +104,11 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %_datadir/%name/
 %_iconsdir/hicolor/*/apps/%{name}*
 %_desktopdir/%name.desktop
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%name/
+%_datadir/deepin-manual/manual-assets/application/%name/terminal/
 
 %files -n libterminalwidget5
 %doc 3rdparty/terminalwidget/{AUTHORS,LICENSE*,CHANGELOG,README.md}
@@ -112,6 +124,9 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed Mar 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.0.13-alt1
+- New version (5.4.0.13) with rpmgs script.
+
 * Tue Dec 01 2020 Leontiy Volodin <lvol@altlinux.org> 5.4.0.6-alt1
 - New version (5.4.0.6) with rpmgs script.
 
