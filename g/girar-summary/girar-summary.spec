@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: girar-summary
-Version: 1.6
+Version: 1.7
 Release: alt1
 Summary: Summarize task build in a table
 License: GPL-2.0-only
@@ -35,6 +35,10 @@ install -p -m755 girar-summary-task %buildroot%_bindir
 %_bindir/girar-summary-task
 
 %changelog
+* Wed Mar 17 2021 Vitaly Chikunov <vt@altlinux.org> 1.7-alt1
+- Switch to c++20.
+- Bug fixes, code robustification, and rearrangements.
+
 * Tue Mar 09 2021 Vitaly Chikunov <vt@altlinux.org> 1.6-alt1
 - C++ version of girar-summary.
 - Extract kernel-modules name from a tag.
