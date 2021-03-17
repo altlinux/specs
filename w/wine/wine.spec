@@ -1,7 +1,7 @@
 %def_disable static
 %define gecko_version 2.47.2
 %define mono_version 6.0.0
-%define major 6.2
+%define major 6.4
 %define rel %nil
 
 %def_with gtk3
@@ -583,6 +583,9 @@ done
 %endif
 
 %changelog
+* Wed Mar 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.4.1-alt1
+- new version 6.4.1 (with rpmrb script)
+
 * Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.2.1-alt1
 - new version 6.2.1 (with rpmrb script)
 - set strict require wine-mono 6.0.0
