@@ -1,7 +1,7 @@
 %define  modulename pyperclip
 
 Name:    python3-module-%modulename
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Python module for cross-platform clipboard functions.
@@ -13,7 +13,6 @@ URL:     https://github.com/asweigart/pyperclip
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 
 BuildArch: noarch
@@ -55,6 +54,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Wed Mar 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.2-alt1
+- Build new version.
+
 * Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
 - Build new version.
 
