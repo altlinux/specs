@@ -1,14 +1,13 @@
-%set_verify_elf_method textrel=relaxed
 %define libname gen
 Name: ocaml-%libname
 Version: 0.5.3
-Release: alt3
+Release: alt4
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
 Url: https://github.com/c-cube/sequence/
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel ocaml-dune-devel ocaml-result-devel
+BuildRequires: ocaml-findlib-devel ocaml-dune-configurator-devel ocaml-result-devel
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc ocaml-qtest-devel
 
 %description
@@ -37,6 +36,8 @@ sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
 %check
 # check disabled on armh due to https://github.com/ocaml/dune/issues/2527
 %ifnarch armh
+# supressed a warning 33 (Unused open)
+export OCAMLPARAM="_,w=-33"
 %dune_check
 %endif
 
@@ -47,6 +48,10 @@ sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 0.5.3-alt4
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- supressed a warning 33 in tests for compatability with new dune 2.8.x
+
 * Thu Dec 24 2020 Anton Farygin <rider@altlinux.ru> 0.5.3-alt3
 - disabled check on armh due to incompatibilty -nodynlink and PIE
 

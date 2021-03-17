@@ -1,6 +1,6 @@
 %def_without check
 
-%define dune_pkg bootstrap
+%define dune_pkg configurator
 %if "%dune_pkg" != "bootstrap"
 %define subpackagename -%dune_pkg
 %def_with subpackage
@@ -67,8 +67,6 @@ Group: Development/ML
 Summary: Helper dune library for gathering system configuration
 Requires: ocaml-result-devel
 Requires: dune = %EVR
-Provides: ocaml-dune-devel = %EVR
-Obsoletes: ocaml-dune-devel < %EVR
 %description -n ocaml-%name
 dune-configurator is a small library that helps writing OCaml scripts that
 test features available on the system, in order to generate config.h
@@ -96,7 +94,7 @@ no stability guarantee.
 Summary: Development files for %name
 Group: Development/ML
 Requires: ocaml-result-devel
-Requires: %name = %EVR
+Requires: ocaml-%name = %EVR
 %description -n ocaml-%name-devel
 The %name-devel package contains libraries and signature files for
 developing applications that use %name.

@@ -1,16 +1,15 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-ssl
 Version: 0.5.9
-Release: alt3
+Release: alt4
 Summary: OCaml bindings for the OpenSSL library
-License: LGPLv2.1 with exemptions
+License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: https://github.com/savonet/ocaml-ssl
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 # Automatically added by buildreq on Sun Jan 06 2008
 BuildRequires: ocaml-findlib libssl-devel
-BuildRequires: ocaml ocaml-dune-devel opam 
+BuildRequires: ocaml ocaml-dune-configurator-devel
 
 %description
 This package contains OCaml bindings for libssl.
@@ -32,26 +31,21 @@ developing applications that use %name.
 %setup
 %patch0 -p1
 %build
-%make
+%dune_build -p ssl
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
-%_libdir/ocaml/ssl
-%exclude %_libdir/ocaml/ssl/*.a
-%exclude %_libdir/ocaml/ssl/*.cmxa
-%exclude %_libdir/ocaml/ssl/*.cmx
-%exclude %_libdir/ocaml/ssl/*.mli
-%_libdir/ocaml/stublibs/*.so
+%files -f ocaml-files.runtime
 
-%files devel
-%_libdir/ocaml/ssl/*.a
-%_libdir/ocaml/ssl/*.cmx
-%_libdir/ocaml/ssl/*.cmxa
-%_libdir/ocaml/ssl/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 0.5.9-alt4
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- spec: use SPDX for ocaml linking exception in license tag
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.5.9-alt3
 - cmx moved to the devel package
 

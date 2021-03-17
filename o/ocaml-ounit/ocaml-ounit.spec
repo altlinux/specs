@@ -1,7 +1,7 @@
 #/usr/lib/ocaml/oUnit/oUnit.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ounit
-Version: 2.2.3
+Version: 2.2.4
 Release: alt1
 Summary: Unit test framework for OCaml
 Group: Development/ML
@@ -66,6 +66,9 @@ dune runtest
 %_libdir/ocaml/ounit2-lwt/*.cmxa
 
 %changelog
+* Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 2.2.4-alt1
+- 2.2.4
+
 * Thu Jul 23 2020 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
 - 2.2.3
 

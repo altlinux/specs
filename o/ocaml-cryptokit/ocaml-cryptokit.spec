@@ -5,14 +5,14 @@
 
 Name: ocaml-%pkgname
 Version: 1.16.1
-Release: alt1
+Release: alt2
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
-License: LGPLv2 with exceptions
+License: LGPLv2 with OCaml-LGPL-linking-exception
 Url: http://forge.ocamlcore.org/projects/cryptokit/
 Source0: %name-%version.tar
 BuildRequires: ocaml ocaml-ocamldoc ocaml-zarith-devel ocaml-findlib zlib-devel
-BuildRequires: dune ocaml-dune-devel
+BuildRequires: dune ocaml-dune-configurator-devel
 Provides: ocaml-cryptokit-runtime = %version-%release
 Obsoletes: ocaml-cryptokit-runtime
 
@@ -66,6 +66,10 @@ developing applications that use %name.
 %doc README.md Changes
 
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 1.16.1-alt2
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- spec: SPDX the ocaml linking exception in license tag
+
 * Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 1.16.1-alt1
 - 1.16.1
 

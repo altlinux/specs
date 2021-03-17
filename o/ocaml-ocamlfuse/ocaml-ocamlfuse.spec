@@ -1,7 +1,6 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-ocamlfuse
 Version: 2.7.1
-Release: alt10
+Release: alt11
 Summary: Ocaml FUSE binding
 Group: Development/ML
 License: GPL-2.0
@@ -10,7 +9,7 @@ Url: https://opam.ocaml.org/packages/ocamlfuse/
 Source: %name-%version.tar
 BuildRequires: libfuse-devel
 BuildRequires: ocaml ocaml-camlidl ocaml-camlidl-devel ocaml-findlib ocaml-ocamldoc
-BuildRequires: ocaml-dune-devel opam
+BuildRequires: ocaml-dune-configurator-devel ocaml-dune-private-libs-devel
 Provides: ocaml-fuse = %EVR
 Obsoletes: ocaml-fuse < %EVR
 
@@ -37,30 +36,21 @@ developing applications that use %name.
 %setup
 
 %build
-dune build
+%dune_build -p ocamlfuse
 
 %install
-dune install --destdir=%buildroot --libdir=%_libdir/ocaml
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE README.md
-%_libdir/ocaml/ocamlfuse/META
-%_libdir/ocaml/ocamlfuse/*.cma
-%_libdir/ocaml/ocamlfuse/*.cmi
-%_libdir/ocaml/stublibs/*
 
-%files devel
-%_libdir/ocaml/ocamlfuse/opam
-%_libdir/ocaml/ocamlfuse/dune*
-%_libdir/ocaml/ocamlfuse/*.a
-%_libdir/ocaml/ocamlfuse/*.cmx
-%_libdir/ocaml/ocamlfuse/*.cmxs
-%_libdir/ocaml/ocamlfuse/*.cmxa
-%_libdir/ocaml/ocamlfuse/*.cmt
-%_libdir/ocaml/ocamlfuse/*.cmti
-%_libdir/ocaml/ocamlfuse/*.ml*
+%files devel -f ocaml-files.devel
 
 %changelog
+* Wed Mar 17 2021 Anton Farygin <rider@altlinux.org> 2.7.1-alt11
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt10
 - added fix to building using dune-2.6
 

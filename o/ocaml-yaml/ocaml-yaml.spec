@@ -1,16 +1,14 @@
-%set_verify_elf_method textrel=relaxed
 %define ocamlmod yaml
 Name: ocaml-%ocamlmod
 Version: 2.1.0
-Release: alt2
+Release: alt3
 Summary: Parse and generate YAML 1.1 files
-
 Group: Development/ML
 License: ISC
 Url: https://github.com/avsm/ocaml-yaml
 Source: %name-%version.tar
 
-BuildRequires: ocaml-dune-devel ocaml-bos-devel ocaml-ctypes-devel
+BuildRequires: ocaml-dune-configurator-devel ocaml-bos-devel ocaml-ctypes-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-sexplib-devel ocaml-rresult-devel
 BuildRequires: ocaml-fmt-devel  ocaml-logs-devel
 BuildRequires: ocaml-ppxlib-devel
@@ -45,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 2.1.0-alt3
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
 - cleanup build requires
 - migrated to rpm-build-ocaml 1.4

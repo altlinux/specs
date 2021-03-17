@@ -1,22 +1,20 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename base64
-
 Name:    ocaml-%modulename
-Version: 3.4.0
-Release: alt2
+Version: 3.5.0
+Release: alt1
 Summary: Base64 encoding for OCaml
 License: ISC
 Group:   Development/ML
 URL:     https://github.com/mirage/ocaml-base64
 Source:  %name-%version.tar
 
-BuildRequires: ocaml-dune-devel
+BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-bos-devel
 BuildRequires: ocaml-rresult-devel
 BuildRequires: ocaml-alcotest-devel
 BuildRequires: ocaml-fpath-devel
 BuildRequires: ocaml-result-devel
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildPreReq: rpm-build-ocaml >= 1.4
 
 
 %description
@@ -35,43 +33,23 @@ developing applications that use %name.
 %setup
 
 %build
-dune build -p %modulename
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%modulename
-%dir %_libdir/ocaml/%modulename/rfc2045
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
-%_libdir/ocaml/%{modulename}*/*/*.cma
-%_libdir/ocaml/%{modulename}*/*/*.cmi
-%_libdir/ocaml/%{modulename}*/*/*.cmxs
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
-%_libdir/ocaml/%{modulename}*/*/*.a
-%_libdir/ocaml/%{modulename}*/*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*/*.cmx
-%_libdir/ocaml/%{modulename}*/*/*.mli
-%_libdir/ocaml/%{modulename}*/*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 3.4.0-alt2
 - fixed build with dune 2.7
 

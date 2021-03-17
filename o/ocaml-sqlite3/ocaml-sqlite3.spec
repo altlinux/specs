@@ -1,9 +1,9 @@
-%set_verify_elf_method textrel=relaxed
+%def_with check
+%define docdir %_docdir/%name-%version
 %define module sqlite3
 Name: ocaml-%module
 Version: 5.0.2
-Release: alt1
-
+Release: alt2
 Summary: OCaml library for accessing SQLite3 databases
 License: MIT
 Group: Development/ML
@@ -11,11 +11,13 @@ Url: https://mmottl.github.io/sqlite3-ocaml/
 # https://github.com/mmottl/sqlite3-ocaml
 Source: %name-%version.tar
 
-BuildRequires: libsqlite3-devel ocaml-ocamldoc ocaml-dune-devel opam ocaml-base ocaml-stdio ocaml-configurator
+BuildRequires: libsqlite3-devel ocaml-ocamldoc ocaml-dune-configurator-devel ocaml-base ocaml-stdio
+%if_with check
+BuildRequires: ocaml-ppx_inline_test-devel
+%endif
 Provides: ocaml4-%module
 Obsoletes: ocaml4-%module
 Obsoletes: ocaml-%module-runtime < %EVR
-BuildPreReq: rpm-build-ocaml >= 1.1.1-alt2
 
 %description
 SQLite 3 database library wrapper for OCaml.
@@ -31,34 +33,27 @@ developing applications that use %name.
 
 %prep
 %setup -q 
-%define docdir %_docdir/%name-%version
 
 %build
-make
+%dune_build -p %module
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc LICENSE.md CHANGES.md README.md TODO.md
-%_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/%module
-%exclude %_libdir/ocaml/%module/*.cmx
-%exclude %_libdir/ocaml/%module/*.cmt*
-%exclude %_libdir/ocaml/%module/*.ml
-%exclude %_libdir/ocaml/%module/*.mli
-%exclude %_libdir/ocaml/%module/*.cmxa
-%exclude %_libdir/ocaml/%module/*.a
 
-%files devel
-%_libdir/ocaml/%module/*.cmx
-%_libdir/ocaml/%module/*.cmt*
-%_libdir/ocaml/%module/*.ml
-%_libdir/ocaml/%module/*.mli
-%_libdir/ocaml/%module/*.cmxa
-%_libdir/ocaml/%module/*.a
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 5.0.2-alt2
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- simplified specfile with macros from rpm-build-ocaml 1.4
+- enabled tests
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 5.0.2-alt1
 - 5.0.2
 - added devel package

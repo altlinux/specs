@@ -1,15 +1,11 @@
-# on i586: ERROR: ./usr/lib/ocaml/pcre/pcre.cmxs: TEXTREL entry found: 0x00000000
-%set_verify_elf_method textrel=relaxed
-
 Name: ocaml-pcre
 Version: 7.4.6
-Release: alt1
+Release: alt2
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
-License: LGPLv2.1
+License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: http://mmottl.github.io/pcre-ocaml/
-
 # https://github.com/mmottl/pcre-ocaml
 Source: %name-%version.tar
 Provides: pcre-ocaml = %version-%release
@@ -17,7 +13,8 @@ Obsoletes: pcre-ocaml
 Provides: ocaml-pcre-runtime = %version-%release
 Obsoletes: ocaml-pcre-runtime < %version-%release
 
-BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc ocaml-dune-devel opam ocaml-base ocaml-configurator ocaml-stdio
+BuildRequires: libpcre-devel 
+BuildRequires: ocaml-dune-configurator-devel ocaml-base
 
 %description
 This OCaml-library interfaces the PCRE (Perl-compatibility regular
@@ -38,28 +35,26 @@ developing applications that use %name.
 %setup
 
 %build
-make
+%dune_build -p pcre
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc LICENSE.md README.md
-%_libdir/ocaml/pcre
-%exclude %_libdir/ocaml/pcre/*.a
-%exclude %_libdir/ocaml/pcre/*.cmxa
-%exclude %_libdir/ocaml/pcre/*.cmx
-%exclude %_libdir/ocaml/pcre/*.mli
-%_libdir/ocaml/stublibs/*.so
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc README.md
-%_libdir/ocaml/pcre/*.a
-%_libdir/ocaml/pcre/*.cmxa
-%_libdir/ocaml/pcre/*.cmx
-%_libdir/ocaml/pcre/*.mli
 
 %changelog
+* Wed Mar 17 2021 Anton Farygin <rider@altlinux.org> 7.4.6-alt2
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- spec: use SPDX for ocaml linking exception in license tag
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Wed Sep 02 2020 Anton Farygin <rider@altlinux.ru> 7.4.6-alt1
 - 7.4.6
 
