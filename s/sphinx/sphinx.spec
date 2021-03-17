@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 Name: sphinx
 Version: 2.3.2
-Release: alt1
+Release: alt2
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -13,6 +13,8 @@ Url: http://sphinxsearch.com
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.unit
+
+Patch: sphinx-crash.patch
 
 BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel libstemmer-devel
 
@@ -66,6 +68,7 @@ Sphinx search engine, http://sphinxsearch.com
 
 %prep
 %setup
+%patch -p2
 
 # Fix wrong-file-end-of-line-encoding
 sed -i 's/\r//' api/ruby/spec/sphinx/sphinx_test.sql
@@ -178,6 +181,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Wed Mar 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt2
+- NMU: add hack: immediately exiting due possible hungup
+
 * Thu Apr 02 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
 - NMU: build 2.3.2-beta
 
