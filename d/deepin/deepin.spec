@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt5
+Release: alt6
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -75,6 +75,7 @@ Requires: deepin-system-monitor
 Requires: deepin-editor
 Requires: deepin-sound-theme
 Requires: deepin-image-viewer
+Requires: deepin-printer
 Requires: onboard
 # %%ifnarch armh
 Requires: deepin-movie
@@ -100,6 +101,7 @@ Requires: deepin-picker
 Requires: deepin-screensaver
 Requires: deepin-screensaver-modules
 Requires: deepin-compressor
+Requires: deepin-device-formatter
 
 %description full
 %name-full is a virtual package to provide full installation
@@ -121,6 +123,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Thu Mar 18 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt6
+- Added requires.
+
 * Fri Dec 11 2020 Leontiy Volodin <lvol@altlinux.org> 5-alt5
 - Added requires.
 
