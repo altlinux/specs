@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: cinaps
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 Summary: Trivial metaprogramming tool.
 License: Apache-2.0
@@ -38,6 +38,9 @@ the OCaml code.
 %_libdir/ocaml/%name/runtime
 
 %changelog
+* Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 0.15.1-alt1
+- 0.15.1
+
 * Fri Jan 22 2021 Anton Farygin <rider@altlinux.org> 0.15.0-alt1
 - 0.15.0
 
