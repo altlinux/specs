@@ -3,7 +3,7 @@
 %define oname grpcio-tools
 
 Name: python3-module-%oname
-Version: 1.26.0
+Version: 1.36.1
 Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
@@ -45,6 +45,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.36.1-alt1
+- Updated to upstream version 1.36.1.
+
 * Fri Jan 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.26.0-alt1
 - Updated to upstream version 1.26.0.
 
