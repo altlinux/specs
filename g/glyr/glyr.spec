@@ -1,12 +1,17 @@
 Name: glyr
-Version: 1.0.6
-Release: alt1.git20140714
+Version: 1.0.10
+Release: alt1
 Summary: Music related metadata searchengine
 License: GPLv3
 Group: System/Libraries
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: https://github.com/sahib/glyr
 # https://github.com/sahib/glyr.git
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
+Patch0:         glyr-date-n-time.patch
+Patch1:         glyr-optflags.patch
+Patch2:         glyr-pkgconfig.patch
+
 
 BuildPreReq: cmake rpm-macros-cmake
 BuildRequires: glib2-devel libcurl-devel libsqlite3-devel
@@ -50,6 +55,9 @@ Glyr development files.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2
 
 %build
 %cmake_insource
@@ -72,6 +80,9 @@ Glyr development files.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 18 2021 Ilya Mashkin <oddity@altlinux.ru> 1.0.10-alt1
+- 1.0.10
+
 * Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.git20140714
 - Version 1.0.6
 
