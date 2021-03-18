@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: clickhouse
-Version: 20.8.11.17
+Version: 21.3.2.5
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -10,47 +12,58 @@ Url: https://clickhouse.yandex/
 Source: %name-%version.tar
 
 Source1:  %name-%version-contrib-AMQP-CPP.tar
-Source2:  %name-%version-contrib-avro.tar
-Source3:  %name-%version-contrib-aws.tar
-Source4:  %name-%version-contrib-aws-c-common.tar
-Source5:  %name-%version-contrib-aws-c-event-stream.tar
-Source6:  %name-%version-contrib-aws-checksums.tar
-Source7:  %name-%version-contrib-base64.tar
-Source8:  %name-%version-contrib-cassandra.tar
-Source9:  %name-%version-contrib-fastops.tar
-Source10: %name-%version-contrib-gcem.tar
-Source11: %name-%version-contrib-googletest.tar
-Source12: %name-%version-contrib-grpc.tar
-Source13: %name-%version-contrib-grpc-third_party-cares-cares.tar
-Source14: %name-%version-contrib-h3.tar
-Source15: %name-%version-contrib-libhdfs3.tar
-Source16: %name-%version-contrib-llvm.tar
-Source17: %name-%version-contrib-replxx.tar
-Source18: %name-%version-contrib-ryu.tar
-Source19: %name-%version-contrib-sentry-native.tar
-Source20: %name-%version-contrib-simdjson.tar
-Source21: %name-%version-contrib-simdjson-dependencies-cxxopts.tar
-Source22: %name-%version-contrib-stats.tar
-Source23: %name-%version-contrib-thrift.tar
-Source24: %name-%version-contrib-zlib-ng.tar
+Source2:  %name-%version-contrib-antlr4-runtime.tar
+Source3:  %name-%version-contrib-avro.tar
+Source4:  %name-%version-contrib-aws.tar
+Source5:  %name-%version-contrib-aws-c-common.tar
+Source6:  %name-%version-contrib-aws-c-event-stream.tar
+Source7:  %name-%version-contrib-aws-checksums.tar
+Source8:  %name-%version-contrib-base64.tar
+Source9:  %name-%version-contrib-boringssl.tar
+Source10: %name-%version-contrib-cassandra.tar
+Source11: %name-%version-contrib-croaring.tar
+Source12: %name-%version-contrib-dragonbox.tar
+Source13: %name-%version-contrib-fast_float.tar
+Source14: %name-%version-contrib-fastops.tar
+Source15: %name-%version-contrib-gcem.tar
+Source16: %name-%version-contrib-googletest.tar
+Source17: %name-%version-contrib-grpc.tar
+Source18: %name-%version-contrib-grpc-third_party-cares-cares.tar
+Source19: %name-%version-contrib-h3.tar
+Source20: %name-%version-contrib-libhdfs3.tar
+Source21: %name-%version-contrib-libpq.tar
+Source22: %name-%version-contrib-libpqxx.tar
+Source23: %name-%version-contrib-llvm.tar
+Source24: %name-%version-contrib-miniselect.tar
+Source25: %name-%version-contrib-NuRaft.tar
+Source26: %name-%version-contrib-poco.tar
+Source27: %name-%version-contrib-replxx.tar
+Source28: %name-%version-contrib-sentry-native.tar
+Source29: %name-%version-contrib-simdjson.tar
+Source30: %name-%version-contrib-simdjson-dependencies-cxxopts.tar
+Source31: %name-%version-contrib-stats.tar
+Source32: %name-%version-contrib-thrift.tar
+Source33: %name-%version-contrib-zlib-ng.tar
 
 Patch0: %name-%version-%release.patch
 Patch1: %name-base64-ppc64le.patch
 Patch2: %name-llvm-gcc10-compat.patch
 Patch3: %name-avro-gcc10-compat.patch
 
-BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata,  cctz-devel
-BuildRequires: rpm-macros-cmake, liblz4-devel, /proc, libzstd-devel, libmariadb-devel
-BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, librdkafka-devel, libssl-devel, libre2-devel
-BuildRequires: libgsasl-devel, libcap-ng-devel, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
-BuildRequires: libpoco-devel, libbrotli-devel, capnproto-devel, libxml2-devel liblzma-devel, libcppkafka-devel
-BuildRequires: libtinfo-devel, boost-filesystem-devel, boost-program_options-devel, boost-geometry-devel
-BuildRequires: gcc-c++, perl-JSON-XS, libb64-devel libasan-devel-static, boost-lockfree-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: cmake libicu-devel libreadline-devel python3 gperf tzdata cctz-devel
+BuildRequires: rpm-macros-cmake liblz4-devel /proc libzstd-devel libmariadb-devel
+BuildRequires: farmhash-devel metrohash-devel libdouble-conversion-devel librdkafka-devel libre2-devel
+BuildRequires: libgsasl-devel libcap-ng-devel libxxhash-devel boost-complete libunixODBC-devel libgperftools-devel
+BuildRequires: libbrotli-devel capnproto-devel libxml2-devel liblzma-devel libcppkafka-devel
+# TODO: try unbundling poco when new version is released
+#BuildRequires: libpoco-devel
+BuildRequires: libtinfo-devel
+BuildRequires: gcc-c++ perl-JSON-XS libb64-devel libasan-devel-static
 BuildRequires: libprotobuf-devel protobuf-compiler protobuf-c-compiler
 BuildRequires: libstdc++-devel-static
 BuildRequires: libsparsehash-devel
 BuildRequires: rapidjson-devel
-BuildRequires: boost-devel-static
 %ifarch x86_64
 BuildRequires: libhyperscan-devel
 %endif
@@ -70,8 +83,13 @@ BuildRequires: libmsgpack-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libsnappy-devel
 BuildRequires: libltdl-devel
+BuildRequires: libabseil-cpp-devel
+BuildRequires: librocksdb-devel librocksdb-devel-static bzlib-devel libgflags-devel
+BuildRequires: liblzma-devel
 
 ExclusiveArch: aarch64 x86_64 ppc64le
+
+%add_python3_path %_datadir/clickhouse-test
 
 %description
 ClickHouse is an open-source column-oriented database management system that
@@ -101,7 +119,7 @@ Group: Databases
 Requires: %name-common-static = %EVR
 
 %description client
-This package contains clickhouse-client , clickhouse-local and clickhouse-benchmark
+This package contains clickhouse-client, clickhouse-local and clickhouse-benchmark
 
 %package test
 Summary: ClickHouse tests
@@ -112,7 +130,7 @@ Requires: %name-client = %EVR
 ClickHouse tests
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33
 %patch0 -p1
 
 pushd contrib/base64
@@ -167,7 +185,7 @@ fi
 %else
 	-DUSE_INTERNAL_LLVM_LIBRARY:BOOL=OFF \
 %endif
-	-DUSE_INTERNAL_POCO_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_POCO_LIBRARY:BOOL=ON \
 	-DUSE_INTERNAL_PROTOBUF_LIBRARY:BOOL=OFF \
 	-DUSE_INTERNAL_RDKAFKA_LIBRARY:BOOL=OFF \
 	-DUSE_INTERNAL_REPLXX:BOOL=ON \
@@ -188,6 +206,10 @@ install -Dm0644 debian/clickhouse.limits %buildroot%_sysconfdir/security/limits.
 install -Dm0644 debian/clickhouse-server.service %buildroot%_unitdir/clickhouse-server.service
 mkdir -p %buildroot%_localstatedir/clickhouse
 mkdir -p %buildroot%_logdir/clickhouse-server
+
+# remove unpackaged files
+rm -rfv %buildroot%_prefix/cmake
+rm -fv %buildroot%_prefix/lib/*.a
 
 %pre server
 %_sbindir/groupadd -r -f _clickhouse 2> /dev/null ||:
@@ -227,15 +249,16 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %_bindir/clickhouse-obfuscator
 %_bindir/clickhouse-format
 %_bindir/clickhouse-extract-from-config
+%_bindir/clickhouse-git-import
 
 %files test
 %_bindir/clickhouse-test
-%_bindir/clickhouse-test-server
 %_datadir/clickhouse-test
-%config(noreplace) %_sysconfdir/clickhouse-client/client-test.xml
-%config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Tue Mar 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.2.5-alt1
+- Updated to lts upstream version 21.3.2.5.
+
 * Wed Jan 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 20.8.11.17-alt1
 - Updated to lts upstream version 20.8.11.17.
 
