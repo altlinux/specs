@@ -3,10 +3,10 @@
 %def_without tests
 
 %define modname scipy
-%define ver_major 1.5
-%define ver_minor 2
+%define ver_major 1.6
+%define ver_minor 1
 
-%define numpy_version 1.15.4
+%define numpy_version 1.16.5
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
@@ -138,6 +138,9 @@ done
 %_includedir/%modname-py3
 
 %changelog
+* Thu Mar 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1
+- Updated to upstream version 1.6.1.
+
 * Fri Jul 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt1
 - Updated to upstream version 1.5.2.
 - Built without python-2 support.
