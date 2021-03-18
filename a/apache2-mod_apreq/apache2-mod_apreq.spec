@@ -1,8 +1,8 @@
 # Spec file for Apache2 HTTP Server Request Library
 
 Name:    apache2-mod_apreq
-Version: 2.13
-Release: alt6.2
+Version: 2.15
+Release: alt1
 
 Summary: Apache2 HTTP request library
 License: %asl 2.0
@@ -173,6 +173,12 @@ rm -f %buildroot%_man3dir/todo*
 %perl_vendor_archlib/Apache2*
 
 %changelog
+* Thu Mar 18 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.15-alt1
+- New version
+  - CVE-2019-12412 Fix a NULL pointer dereference when parsing
+     malformed multipart data
+  - Fix memory handling in apreq_brigade_concat()
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.13-alt6.2
 - rebuild with new perl 5.28.1
 
