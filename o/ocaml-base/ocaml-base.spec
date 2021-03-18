@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define oname base
 Name: ocaml-%oname
-Version: 0.14.0
-Release: alt2
+Version: 0.14.1
+Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache-2.0
 Group: Development/ML
@@ -10,7 +9,7 @@ Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
-BuildRequires: ocaml-dune-devel
+BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-sexplib0-devel  >= 0.12
 
 %description
@@ -36,53 +35,28 @@ developing applications that use %name.
 %setup
 
 %build
-dune build --verbose -p %oname %_smp_mflags
+%dune_build -p %oname
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.org LICENSE.md
-%dir %_libdir/ocaml/%oname
-%dir %_libdir/ocaml/%oname/md5
-%dir %_libdir/ocaml/%oname/caml
-%dir %_libdir/ocaml/%oname/shadow_stdlib
-%dir %_libdir/ocaml/%oname/base_internalhash_types
-%_libdir/ocaml/%oname/META
-%_libdir/ocaml/%oname/*.cmi
-%_libdir/ocaml/%oname/*.cma
-%_libdir/ocaml/%oname/*.cmxs
-%_libdir/ocaml/%oname/*/*.cmi
-%_libdir/ocaml/%oname/*/*.cma
-%_libdir/ocaml/%oname/*/*.cmxs
-%_libdir/ocaml/stublibs/dllbase_stubs.so
-%_libdir/ocaml/stublibs/dllbase_internalhash_types_stubs.so
 %_libdir/ocaml/%oname/runtime.js
 %_libdir/ocaml/%oname/base_internalhash_types/runtime.js
 
-%files devel
-%_libdir/ocaml/%oname/opam
-%_libdir/ocaml/%oname/dune-package
-%_libdir/ocaml/%oname/*.cmt
-%_libdir/ocaml/%oname/*.a
-%_libdir/ocaml/%oname/*.cmxa
-%_libdir/ocaml/%oname/*.cmti
-%_libdir/ocaml/%oname/*.cmx
-%_libdir/ocaml/%oname/*.ml
-%_libdir/ocaml/%oname/*.mli
-%_libdir/ocaml/%oname/*/*.cmt
-%_libdir/ocaml/%oname/*/*.cmti
-%_libdir/ocaml/%oname/*/*.cmx
-%_libdir/ocaml/%oname/*/*.a
-%_libdir/ocaml/%oname/*/*.cmxa
-%_libdir/ocaml/%oname/*/*.ml
-%_libdir/ocaml/%oname/*/*.mli
+%files devel -f ocaml-files.devel
 %_libdir/ocaml/%oname/base_internalhash_types/internalhash.h
 
 %changelog
+* Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 0.14.1-alt1
+- 0.14.1
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - devel parts moved to ocaml-base-devel package
 
