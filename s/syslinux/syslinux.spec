@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt17
+Release: alt18
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -41,7 +41,7 @@ Patch21: sysmacros.patch
 Patch22: remove-note-gnu-section.patch
 Patch23: syslinux-4.04-lzo.diff
 Patch24: syslinux-4.04-gcc10.diff
-Patch25: syslinux-4.04-fix-asm-constraints.patch
+Patch25: syslinux-4.04-fno-pie.diff
 
 #BuildPrereq: nasm perl-base
 BuildRequires: rpm-build-python3
@@ -169,6 +169,10 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Thu Mar 18 2021 Slava Aseev <ptrnine@altlinux.org> 2:4.04-alt18
+- revert "fix asm constraints" patch
+- add -fno-pie flag (closes: #39805)
+
 * Wed Mar 10 2021 Slava Aseev <ptrnine@altlinux.org> 2:4.04-alt17
 - sync patches with SuSE (zerg@)
 - fix asm constraints
