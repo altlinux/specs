@@ -3,7 +3,7 @@
 %define oname grpcio
 
 Name: python3-module-%oname
-Version: 1.26.0
+Version: 1.36.1
 Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
@@ -15,6 +15,7 @@ Source: %oname-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ zlib-devel libcares-devel
 BuildRequires: libssl-devel
+BuildRequires: libre2-devel
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(Cython) python3(six)
 
@@ -28,12 +29,14 @@ HTTP/2-based RPC framework.
 rm -rf third_party/zlib
 rm -rf third_party/cares
 rm -rf third_party/boringssl
+rm -rf third_party/re2
 
 %build
 export GRPC_PYTHON_BUILD_WITH_CYTHON=1
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
+export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
 
 %python3_build_debug
 
@@ -42,6 +45,7 @@ export GRPC_PYTHON_BUILD_WITH_CYTHON=1
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
+export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
 
 %python3_install
 
@@ -50,6 +54,7 @@ export GRPC_PYTHON_BUILD_WITH_CYTHON=1
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
+export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
 
 python3 setup.py test
 
@@ -58,6 +63,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.36.1-alt1
+- Updated to upstream version 1.36.1.
+
 * Fri Jan 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.26.0-alt1
 - Updated to upstream version 1.26.0 (Closes: #37909)
 
