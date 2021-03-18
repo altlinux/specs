@@ -2,7 +2,8 @@
 %global _localstatedir %_var
 Name: sphinx
 Version: 2.3.2
-Release: alt2
+Release: alt3
+
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -17,6 +18,9 @@ Source2: %name.unit
 Patch: sphinx-crash.patch
 
 BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel libstemmer-devel
+
+# due /usr/share/man/man1/indexer.1.xz and created by mnogosearch link /usr/bin/indexer
+Conflicts: mnogosearch
 
 %description
 Sphinx is a full-text search engine, distributed under GPL version 2.
@@ -181,6 +185,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Thu Mar 18 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt3
+- add Conflicts: mnogosearch
+
 * Wed Mar 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt2
 - NMU: add hack: immediately exiting due possible hungup
 
