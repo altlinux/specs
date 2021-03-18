@@ -3,8 +3,8 @@
 %define rhelp_version 0.3.0
 
 Name:           dd_rescue
-Version:        1.99.8
-Release:        alt2
+Version:        1.99.10
+Release:        alt1
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
 License:        GPL+
@@ -35,13 +35,13 @@ recovery.
 %patch1 -p1
 
 %build
-%make RPM_OPT_FLAGS="%{optflags}" %{?_smp_mflags} LIBDIR=%{_libdir}
+%make RPM_OPT_FLAGS="%{optflags}" %{?_smp_mflags} LIB=%_lib LIBDIR=%{_libdir}
 cp -p README.dd_rescue README
 cp -p dd_rhelp-%{rhelp_version}/README README.dd_rhelp
 cp -p dd_rhelp-%{rhelp_version}/FAQ FAQ.dd_rhelp
 
 %install
-%makeinstall_std INSTALLDIR=%{buildroot}/%{_bindir} INSTASROOT="" INSTALLFLAGS="" LIBDIR=%{_libdir}
+%makeinstall_std INSTALLDIR=%{buildroot}/%{_bindir} INSTASROOT="" INSTALLFLAGS="" LIB=%_lib LIBDIR=%{_libdir}
 install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_rhelp
 
 %files
@@ -57,6 +57,9 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/ddr_lzo.1*
 
 %changelog
+* Thu Mar 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.99.10-alt1
+- Updated to upstream version 1.99.10.
+
 * Mon May 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.99.8-alt2
 - Fixed build for aarch64.
 
