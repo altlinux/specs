@@ -1,9 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename cohttp
 %def_with check
-
 Name:    ocaml-%modulename
-Version: 2.5.4
+Version: 2.5.5
 Release: alt1
 Summary: An OCaml library for HTTP clients and servers
 License: ISC
@@ -64,6 +62,9 @@ sed -si 's,oUnit,ounit2,' cohttp-lwt-unix/test/dune \
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 2.5.5-alt1
+- 2.5.5
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 2.5.4-alt1
 - first build for ALT
 
