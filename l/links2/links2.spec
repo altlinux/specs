@@ -3,11 +3,12 @@
 %def_without svgalib
 
 Name: links2
-Version: 2.21
+Version: 2.22
 Release: alt1
 
 Summary: Lynx-like text and graphics WWW browser
-License: GPL
+# actually GPLv2+ with OpenSSL exception, stupid SPDX doesn't grok that
+License: GPLv2+ and MPL-2.0
 Group: Networking/WWW
 
 Url: http://links.twibright.com
@@ -133,6 +134,11 @@ chmod +x %buildroot%_bindir/x%name
 # - consider system publicsuffix like debian
 
 %changelog
+* Thu Mar 18 2021 Michael Shigorin <mike@altlinux.org> 2.22-alt1
+- new version (watch file uupdate)
+- "clarified" license (actually GPLv2+ with OpenSSL exceptions
+  and MPL2-licensed public suffix list data)
+
 * Sun Aug 09 2020 Michael Shigorin <mike@altlinux.org> 2.21-alt1
 - new version (watch file uupdate)
 
