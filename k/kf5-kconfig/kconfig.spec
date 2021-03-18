@@ -1,4 +1,5 @@
 %define rname kconfig
+%def_disable notify
 %def_disable python
 %if_enabled python
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
@@ -6,7 +7,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.79.0
+Version: 5.80.0
 Release: alt1
 %K5init altplace
 
@@ -100,7 +101,9 @@ Sip files for python3-module-%rname
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%if_enabled notify
 %patch2 -p2
+%endif
 
 %build
 NPROCS=1 %K5build
@@ -121,8 +124,10 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5bin/kreadconfig5
 %_bindir/kwriteconfig5
 %_K5bin/kwriteconfig5
+%if_enabled notify
 %_K5bin/kconf_watcher
 %_K5bin/kconf_apply
+%endif
 
 %files devel
 %_K5exec/kconfig_compiler_kf5
@@ -154,6 +159,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
+- new version
+
 * Mon Feb 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.79.0-alt1
 - new version
 
