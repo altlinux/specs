@@ -1,15 +1,12 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename jst-config
-
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt3
-
+Release: alt4
 Summary: Compile-time configuration for Jane Street libraries
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/jst-config
-BuildRequires: ocaml-dune-devel ocaml-ppx_assert-devel
+BuildRequires: ocaml-dune-configurator-devel ocaml-ppx_assert-devel
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-stdio-devel ocaml-base-devel
 
@@ -46,6 +43,9 @@ developing applications that use %name.
 %_libdir/ocaml/%{modulename}*/rt-flags
 
 %changelog
+* Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt4
+- spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt3
 - cleanup build dependencies
 
