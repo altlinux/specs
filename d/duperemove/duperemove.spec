@@ -2,7 +2,7 @@
 
 Name:    duperemove
 Version: 0.11.1
-Release: alt1
+Release: alt2.git0df677ea
 
 Summary: tool for deduping file system extents
 
@@ -71,5 +71,11 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 %_man8dir/hashstats.*
 
 %changelog
+* Thu Mar 18 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.1-alt2.git0df677ea
+- Update to the current development state, commit v0.11.beta4-117-g0df677e
+  - Fix build with GCC 10.2
+  - Impove hashing performance
+  - Update documentation
+
 * Tue Oct 15 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.11.1-alt1
 - Initial build for ALT Linux Sisyphus
