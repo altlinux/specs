@@ -4,7 +4,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.11
-Release: alt3
+Release: alt4
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -29,7 +29,7 @@ BuildPreReq: gcc-c++
 # SCARD_READERSTATE_A will change to SCARD_READERSTATE afterwards:
 BuildPreReq: libpcsclite-devel >= 1.7.4
 
-BuildRequires: libpwquality-devel
+BuildRequires: libpasswdqc-devel
 
 %description
 This Linux-PAM login module allows a X.509 certificate based user login.
@@ -97,7 +97,7 @@ sed -i -e '
 	--enable-debug \
 	--with-ldap \
 	--with-confdir=%_sysconfdir/security/%name \
-    --with-pwquality \
+    --with-passwdqc \
 	#
 %make_build docdir=%_datadir/doc/%name-%version
 cd doc
@@ -186,6 +186,10 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Thu Mar 18 2021 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt4
+- Build with  libpasswdqc (closes: 39790)
+- Warn about undefined symbols when linking the module.
+
 * Thu Sep 03 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt3
 - Fixed OpenSSL-related compilation warnings.
 
