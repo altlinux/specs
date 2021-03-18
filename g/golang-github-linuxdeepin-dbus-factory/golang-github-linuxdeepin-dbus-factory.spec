@@ -3,8 +3,8 @@
 %global goipath github.com/linuxdeepin/go-dbus-factory
 
 Name: golang-github-linuxdeepin-dbus-factory
-Version: 1.8.2
-Release: alt2
+Version: 1.8.6
+Release: alt1
 Summary: Go DBus factory for Deepin Desktop Environment
 
 License: GPL-3.0-only
@@ -68,6 +68,9 @@ export GOPATH="%go_path"
 %exclude %go_path/src/%goipath/_tool
 
 %changelog
+* Thu Mar 18 2021 Leontiy Volodin <lvol@altlinux.org> 1.8.6-alt1
+- New version (1.8.6) with rpmgs script.
+
 * Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 1.8.2-alt2
 - Fixed build with golang 1.16.
 
