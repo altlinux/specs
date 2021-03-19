@@ -1,6 +1,10 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
 
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+
 %define rname plasma-workspace
 
 %define x11confdir %_sysconfdir/X11
@@ -30,8 +34,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.20.5
-Release: alt2
+Version: 5.21.3
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -83,7 +87,6 @@ Patch125: alt-translate-keyboard-layouts.patch
 Patch126: alt-add-using-the-altappstarter.patch
 Patch127: alt-plasma-5.17-crash.patch
 #
-Patch129: alt-def-krunners.patch
 Patch130: alt-sddm-check-username.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
@@ -271,13 +274,17 @@ popd
 %patch126 -p1
 %patch127 -p2
 #
-%patch129 -p1
 %patch130 -p1
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 msgcat --use-first po/ru/libkicker.po %SOURCE2 > po/ru/libkicker.po.tmp
 cat po/ru/libkicker.po.tmp > po/ru/libkicker.po
 rm -f po/ru/libkicker.po.tmp
+
+# disable krunners by default
+for d in runners/*/*.desktop* ; do
+    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
+done
 
 %build
 %K5build \
@@ -416,6 +423,7 @@ done
 %_K5xmlgui/*/
 %_K5dbus_srv/*.service
 %_K5dbus_sys_srv/*.service
+%_unitdir_user/*.service
 
 %files -n polkit-kde-plasma-workspace
 %_datadir/polkit-1/actions/*fontinst*.policy
@@ -462,6 +470,9 @@ done
 
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt1
+- new version
+
 * Mon Jan 18 2021 Oleg Solovyov <mcpain@altlinux.org> 1:5.20.5-alt2
 - sddm-theme: don't send login request with no username given
 

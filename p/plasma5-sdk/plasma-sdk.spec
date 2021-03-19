@@ -1,8 +1,8 @@
 %define rname plasma-sdk
 
 Name: plasma5-sdk
-Version: 5.20.5
-Release: alt2
+Version: 5.21.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Development/KDE and QT
@@ -83,6 +83,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+
 * Wed Feb 17 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt2
 - update build requries
 

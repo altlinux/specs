@@ -4,7 +4,7 @@
 %define libkwaylandserver libkwaylandserver%sover
 
 Name: plasma5-%rname
-Version: 5.20.5
+Version: 5.21.3
 Release: alt1
 %K5init altplace
 
@@ -62,7 +62,7 @@ mv %buildroot/KF5/* %buildroot/%_K5inc/
 %find_lang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -77,6 +77,9 @@ mv %buildroot/KF5/* %buildroot/%_K5inc/
 %_K5lib/libKWaylandServer.so.*
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt1
 - new version
 

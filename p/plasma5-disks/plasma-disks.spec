@@ -1,8 +1,8 @@
 %define rname plasma-disks
 
 Name: plasma5-disks
-Version: 5.20.5
-Release: alt2
+Version: 5.21.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -74,6 +74,9 @@ Requires: %name-common
 %_datadir/polkit-1/actions/*smart*.policy
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+
 * Thu Jan 21 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt2
 - add gparted button
 

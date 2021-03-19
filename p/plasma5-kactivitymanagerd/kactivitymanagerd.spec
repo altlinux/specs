@@ -1,7 +1,11 @@
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+
 %define rname kactivitymanagerd
 
 Name: plasma5-kactivitymanagerd
-Version: 5.20.5
+Version: 5.21.3
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -45,7 +49,7 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 %_K5exec/kactivitymanagerd
 %_K5lib/libkactivitymanagerd_plugin.so
@@ -55,9 +59,13 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 #%_K5srv/*.protocol
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
-%_K5dbus_srv/*activitymanager*.service
+%_K5dbus_srv/*ctivity?anager*.service
+%_unitdir_user/*.service
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.20.5-alt1
 - new version
 

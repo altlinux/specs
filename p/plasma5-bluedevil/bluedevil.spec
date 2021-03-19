@@ -1,7 +1,7 @@
 %define rname bluedevil
 
 Name: plasma5-%rname
-Version: 5.20.5
+Version: 5.21.3
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -82,7 +82,7 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %find_lang %name --all-name
 
 %files -f %name.lang
-#%doc COPYING.LIB README.md
+%doc LICENSES/*
 %_K5bin/*
 %_K5plug/*.so
 %_K5plug/kcms/*.so
@@ -101,6 +101,9 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5xdgmime/*.xml
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.20.5-alt1
 - new version
 

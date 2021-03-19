@@ -1,3 +1,7 @@
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+
 %define rname powerdevil
 
 %define powerdevilconfigcommonprivate_sover 5
@@ -8,7 +12,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.20.5
+Version: 5.21.3
 Release: alt1
 %K5init altplace
 
@@ -133,6 +137,7 @@ done
 %_K5notif/*.notifyrc
 %_K5dbus_sys_srv/*.service
 %_datadir/polkit-1/actions/*.policy
+%_unitdir_user/*.service
 
 #%files devel
 #%_K5inc/powerdevil_version.h
@@ -152,6 +157,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt1
 - new version
 

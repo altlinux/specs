@@ -4,7 +4,7 @@
 
 Name: deepin-kwin
 Version: 5.3.7
-Release: alt1
+Release: alt2.git4d0141c
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -14,14 +14,16 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
+# upstream patches
+Patch: deepin-kwin-5.3.7-compile-kwin5.21.patch
 # archlinux patches
 Patch1: %name-added-functions-from-their-forked-kwin.patch
 Patch2: %name-tabbox-chameleon-rename.patch
 Patch3: %name-unload-blur.patch
+Patch4: deepin-kwin-crash.patch
 # ALT patches
-Patch11: deepin-kwin_5.2.0.2_ALT_cmake_bad-elfs.patch
-Patch12: deepin-kwin_5.2.0.2_ALT_bad-elfs_multitasking.patch
-Patch13: deepin-kwin_5.2.0.2_ALT_bad-elfs_cursor.patch
+Patch11: deepin-kwin-5.3.7-ALT-cmake-bad-elfs.patch
+
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %else
@@ -32,7 +34,8 @@ BuildRequires: cmake extra-cmake-modules qt5-tools qt5-tools-devel qt5-base-deve
 BuildRequires: zlib-devel bzlib-devel libpng-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel
 BuildRequires: libxcb-devel libglvnd-devel libX11-devel
 BuildRequires: libkwin5
-Requires: plasma5-kwin libkwineffects12 libkwinglutils12 libxcb libGL libX11
+Requires: plasma5-kwin
+# libkwineffects12 libkwinglutils12 libxcb libGL libX11
 
 %description
 This package provides a kwin configuration that used as the new WM for Deepin
@@ -47,12 +50,12 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
+%patch -p2
 %patch1 -R -p1
 %patch2 -p1
 # %patch3 -p1
-%patch11 -p2
-%patch12 -p2
-%patch13 -p2
+%patch4 -p1
+# %patch11 -p2
 
 sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/scripts|%_K5data/kwin/scripts/|' scripts/CMakeLists.txt
@@ -68,6 +71,19 @@ sed -i 's|/usr/lib|/%_libdir|' \
 sed -i 's|kwin_x11 -platform|%_K5bin/kwin_x11 -platform|' configures/kwin_no_scale.in
 # Fix build future version with kwin 5.20
 # sed -i '/m_blurManager->create();/d' plugins/kwineffects/blur/blur.cpp
+sed -i 's|#include "kwinutils.h"|#include "../platforms/lib/kwinutils.h"|' \
+    plugins/kdecoration/chameleon.cpp \
+    plugins/kdecoration/chameleonconfig.cpp \
+    plugins/kdecoration/chameleonwindowtheme.cpp
+sed -i 's|#include "kwinutils.h"|#include "../../platforms/lib/kwinutils.h"|' \
+    plugins/kwineffects/blur/blur.cpp \
+    plugins/kwineffects/blur/blur.h \
+    plugins/kwineffects/scissor-window/scissorwindow.cpp \
+    plugins/kwineffects/multitasking/multitasking.h \
+    plugins/platforms/plugin/libkwinpreload.cpp \
+    plugins/platforms/plugin/libkwinpreload.h \
+    plugins/platforms/plugin/main.cpp \
+    plugins/platforms/plugin/main_wayland.cpp
 
 %build
 %if_enabled clang
@@ -118,6 +134,10 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Wed Mar 31 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.7-alt2.git4d0141c
+- Fixed compile with kwin 5.21.
+- Built from commit 4d0141c175e770586f2e08893c8105d1022dfc29.
+
 * Tue Mar 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.7-alt1
 - New version (5.3.7) with rpmgs script.
 

@@ -1,7 +1,7 @@
 %define rname plasma-browser-integration
 
 Name: plasma5-browser-integration
-Version: 5.20.5
+Version: 5.21.3
 Release: alt1
 %K5init altplace
 
@@ -17,10 +17,11 @@ Patch1: alt-def-krunner.patch
 # optimized out: clang7.0 cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel libdbusmenu-qt52 libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-sql libqt5-svg libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms python-modules python2-base python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 sh4
 #BuildRequires: appstream extra-cmake-modules kf5-kactivities-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kded kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel kf5-kpackage-devel kf5-krunner-devel kf5-purpose-devel libssl-devel python-modules-compiler python3-dev qt5-wayland-devel
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
 BuildRequires: kf5-kactivities-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kded kf5-kfilemetadata-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel kf5-kpackage-devel kf5-krunner-devel
-BuildRequires: kf5-purpose-devel
+BuildRequires: kf5-purpose-devel kf5-kitemmodels-devel
+BuildRequires: plasma5-workspace-devel
 
 %description
 This package aims to provide better integration of web browsers with the KDE Plasma desktop.
@@ -60,6 +61,7 @@ Requires: %name-common
 
 %install
 %K5install
+%K5install_move data krunner
 %find_lang %name --all-name
 
 #%files common -f %name.lang
@@ -68,10 +70,12 @@ Requires: %name-common
 %doc COPYING* README.md
 %config %_sysconfdir/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %config %_sysconfdir/opt/chrome/native-messaging-hosts/org.kde.plasma.browser_integration.json
+%config %_sysconfdir/opt/edge/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_libdir/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_K5bin/plasma-browser-integration-host
 %_K5plug/kf5/kded/browserintegrationreminder.so
-%_K5plug/kf5/krunner/*.so
+#%_K5plug/kf5/krunner/*.so
+%_K5data/krunner/dbusplugins/plasma-runner-*.desktop
 
 #%files devel
 #%_K5inc/plasma-browser-integration_version.h
@@ -84,6 +88,9 @@ Requires: %name-common
 #%_K5lib/libplasma-browser-integration.so.*
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt1
 - new version
 

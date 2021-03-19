@@ -6,20 +6,20 @@
 
 %define kwin4_effect_builtins_sover 1
 %define libkwin4_effect_builtins libkwin4_effect_builtins%kwin4_effect_builtins_sover
-%define kwineffects_sover 12
+%define kwineffects_sover 13
 %define libkwineffects libkwineffects%kwineffects_sover
-%define kwinglutils_sover 12
+%define kwinglutils_sover 13
 %define libkwinglutils libkwinglutils%kwinglutils_sover
 %define kwin_sover 5
 %define libkwin libkwin%kwin_sover
-%define kwinxrenderutils_sover 12
+%define kwinxrenderutils_sover 13
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 %define kcmkwincommon_sover 5
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.20.5
-Release: alt2
+Version: 5.21.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -50,7 +50,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel-static qt5-declarative
 BuildRequires: libcap-utils libcap-devel zlib-devel
 BuildRequires: libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-cursor-devel libxcbutil-keysyms-devel
 BuildRequires: libxkbcommon-devel libgbm-devel libdrm-devel libEGL-devel
-BuildRequires: fontconfig-devel libfreetype-devel
+BuildRequires: fontconfig-devel libfreetype-devel liblcms2-devel
 BuildRequires: libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel-static qt5-x11extras-devel qt5-sensors-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
@@ -61,7 +61,7 @@ BuildRequires: kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-k
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel kf5-kidletime-devel
-BuildRequires: kf5-kirigami-devel
+BuildRequires: kf5-kirigami-devel kf5-krunner-devel
 BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel plasma5-kwayland-server-devel
 
 %description
@@ -144,7 +144,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data kconf_update knsrcfiles
+%K5install_move data kconf_update knsrcfiles krunner
 %find_lang %name --with-kde --all-name
 
 %post
@@ -158,13 +158,13 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 %_K5bin/kwin*
 %_K5exec/*kwin*
-%_K5plug/platforms/KWinQpaPlugin.so
-%_K5plug/kf5/org.kde.kidletime.platforms/*.so
-%_K5plug/kf5/kwindowsystem/*.so
+#%_K5plug/platforms/KWinQpaPlugin.so
+#%_K5plug/kf5/org.kde.kidletime.platforms/*.so
+#%_K5plug/kf5/kwindowsystem/*.so
+#%_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/kpackage/packagestructure/kwin_packagestructure_*.so
 %_K5plug/kwin/
 %_K5plug/kcms/*kwin*.so
-%_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/org.kde.kdecoration2/
 %_K5plug/org.kde.*kwin*/
 %_K5plug/*.so
@@ -175,6 +175,7 @@ KF5 library
 %_K5data/kpackage/kcms/kcm_kwin*/
 %_K5data/kwin/
 %_K5data/knsrcfiles/*.knsrc
+%_K5data/krunner/dbusplugins/*.desktop
 %_K5srv/*.desktop
 %_K5srv/kwin/
 %_K5srvtyp/*.desktop
@@ -184,7 +185,7 @@ KF5 library
 %files devel
 %_K5inc/kwin*.h
 %_K5link/lib*.so
-%_K5lib/cmake/KWinDBusInterface/
+%_K5lib/cmake/KWin*/
 %_K5dbus_iface/*.xml
 
 %files -n %libkwin4_effect_builtins
@@ -208,6 +209,9 @@ KF5 library
 
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+
 * Tue Feb 02 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt2
 - fix to xrender renderer defaults
 

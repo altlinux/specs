@@ -8,7 +8,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.20.5
+Version: 5.21.3
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -25,8 +25,7 @@ Requires: kf5-purpose
 Requires: quota
 
 Source: %rname-%version.tar
-Patch1: alt-sover.patch
-Patch2: alt-def-krunners.patch
+Patch2: alt-sover.patch
 Patch3: alt-weather-usability.patch
 Patch4: alt-color-picker.patch
 Patch5: alt-fixed-comic-widget-crash.patch
@@ -99,11 +98,15 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %patch2 -p1
 #%patch3 -p1
 %patch4 -p2
 %patch5 -p2
+
+# disable krunners by default
+for d in runners/*/*.desktop* ; do
+    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
+done
 
 %build
 %K5build \
@@ -118,7 +121,7 @@ KF5 library
 %find_lang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 
 %files
 #%config %_K5xdgconf/*rc
@@ -159,6 +162,9 @@ KF5 library
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.20.5-alt1
 - new version
 
