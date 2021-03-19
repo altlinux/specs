@@ -1,8 +1,9 @@
-%define git_descr mainline-636-4822-ge3147a8959
+# git describe upstream/yuzu
+%define git_descr mainline-636-4845-gfc9cd297b1
 
 Name: yuzu
-Version: 0.559
-Release: alt3
+Version: 567
+Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -126,6 +127,8 @@ BuildPreReq: libtasn1-devel
 sed -i \
 -e 's|@GIT_BRANCH@|HEAD|g' \
 -e 's|@GIT_DESC@|%git_descr|g' \
+-e 's|@TITLE_BAR_FORMAT_IDLE@|%name %version|g' \
+-e 's|@TITLE_BAR_FORMAT_RUNNING@|%name %version|g' \
 src/common/scm_rev.cpp.in
 
 %build
@@ -147,6 +150,9 @@ DESTDIR=%buildroot ninja install -C BUILD
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 567-alt1
+- Version 567
+
 * Thu Mar 11 2021 Nazarov Denis <nenderus@altlinux.org> 0.559-alt3
 - Enable translations
 
