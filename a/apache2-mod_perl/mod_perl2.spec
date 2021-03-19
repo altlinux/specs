@@ -4,8 +4,8 @@
 %define module_name  perl
 
 Name:    apache2-mod_perl
-Version: 2.0.10
-Release: alt4.2
+Version: 2.0.11
+Release: alt1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -199,7 +199,6 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 
 # Install helpers - do not need them
 %exclude %perl_vendor_archlib/Bundle*
-%exclude %perl_vendor_archlib/MyTest*
 
 
 %exclude %perl_vendor_archlib/Apache/Test*
@@ -257,6 +256,13 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Fri Mar 19 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.0.11-alt1
+- CVE-2011-2767  Arbitrary Perl code execution in the context
+  of the user account via a user-owned .htaccess.
+- Fix SIGSEGV crash due to wrong use of perl_parse()
+- Fix build with recent Apache 2.4.x
+- Update Apache::Test module to 1.43
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt4.2
 - rebuild with new perl 5.28.1
 
