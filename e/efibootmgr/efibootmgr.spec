@@ -1,13 +1,13 @@
 Name: efibootmgr
 Version: 17
-Release: alt1
+Release: alt2
 
 Summary: EFI Boot Manager
 Group: System/Kernel and hardware
 License: GPLv2+
 URL: https://github.com/rhboot/efibootmgr
 
-ExclusiveArch: %ix86 x86_64 aarch64
+ExclusiveArch: %ix86 x86_64 aarch64 riscv64
 #git https://github.com/rhboot/efibootmgr
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -36,6 +36,9 @@ http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 %_man8dir/*.*
 
 %changelog
+* Mon Mar 15 2021 Nikita Ermakov <arei@altlinux.org> 17-alt2
+- add riscv64 to ExclusiveArch list
+
 * Mon Oct 22 2018 Anton Farygin <rider@altlinux.ru> 17-alt1
 - 16->17
 
