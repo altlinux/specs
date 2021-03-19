@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt6
+Release: alt7
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -44,11 +44,15 @@ Requires: deepin-qt5platform-plugins
 Requires: deepin-launcher
 Requires: icon-theme-deepin
 Requires: deepin-polkit-agent
+Requires: deepin-polkit-agent-ext-gnomekeyring
+Requires: gnome-keyring
 Requires: startdde
 Requires: deepin-kwin
 Requires: deepin-desktop-schemas
 Requires: gtk-theme-deepin
 Requires: plasma5-kwin
+Requires: cgroup
+Requires: redshift
 # %%ifnarch armh ppc64le
 Requires: deepin-file-manager
 Requires: deepin-desktop
@@ -76,6 +80,7 @@ Requires: deepin-editor
 Requires: deepin-sound-theme
 Requires: deepin-image-viewer
 Requires: deepin-printer
+Requires: deepin-clipboard
 Requires: onboard
 # %%ifnarch armh
 Requires: deepin-movie
@@ -123,6 +128,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Tue Apr 06 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt7
+- Added requires.
+
 * Thu Mar 18 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt6
 - Added requires.
 
