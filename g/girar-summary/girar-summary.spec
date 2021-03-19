@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: girar-summary
-Version: 1.7
+Version: 1.8
 Release: alt1
 Summary: Summarize task build in a table
 License: GPL-2.0-only
@@ -35,6 +35,9 @@ install -p -m755 girar-summary-task %buildroot%_bindir
 %_bindir/girar-summary-task
 
 %changelog
+* Sat Mar 20 2021 Vitaly Chikunov <vt@altlinux.org> 1.8-alt1
+- Fix warning if stdin is a tty.
+
 * Wed Mar 17 2021 Vitaly Chikunov <vt@altlinux.org> 1.7-alt1
 - Switch to c++20.
 - Bug fixes, code robustification, and rearrangements.
