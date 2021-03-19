@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	5.10
-%define kernel_sublevel .23
+%define kernel_base_version	5.11
+%define kernel_sublevel .7
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -597,7 +597,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/build
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
-%exclude %modules_dir/kernel/drivers/gpu/drm
+%exclude %modules_dir/kernel/drivers/gpu/
 %ifnarch aarch64
 %exclude %modules_dir/kernel/drivers/ide/
 %endif
@@ -629,7 +629,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %files -n kernel-modules-drm-%flavour
-%modules_dir/kernel/drivers/gpu/drm
+%modules_dir/kernel/drivers/gpu/
 %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
 %exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
@@ -663,6 +663,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Thu Mar 18 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.7-alt1
+- v5.11.7
+
 * Fri Mar 12 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.23-alt1
 - v5.10.23
 - get rid of drm-radeon package (moved into drm)
@@ -680,8 +683,8 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 * Mon Mar 01 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.19-alt1
 - v5.10.19
 
-* Wed Feb 24 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.18-alt1
-- v5.10.18
+* Fri Feb 19 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.0-alt1
+- v5.11
 
 * Thu Feb 18 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.10.17-alt1
 - v5.10.17
