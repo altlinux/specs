@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 5.6
+Version: 5.7.1
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -21,7 +21,7 @@ Requires: python3-module-pygobject
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: mercurial
-BuildRequires: python3-devel gettext python3-module-sphinx python3-module-PyQt5
+BuildRequires: gettext python3-module-sphinx python3-module-PyQt5
 BuildRequires: desktop-file-utils libappstream-glib
 
 BuildArch: noarch
@@ -95,6 +95,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Fri Mar 19 2021 Grigory Ustinov <grenka@altlinux.org> 5.7.1-alt1
+- Build new version.
+
 * Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 5.6-alt1
 - Build new version.
 

@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 5.6
+Version: 5.7.1
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -17,7 +17,7 @@ Patch1: %name-%version-%release.patch
 Packager: Yury Yurevich <anarresti@altlinux.org>
 
 BuildPreReq: rpm-build-python3
-BuildRequires: python3-devel asciidoc xmlto python3-module-docutils
+BuildRequires: asciidoc xmlto python3-module-docutils
 BuildRequires: python3-modules-sqlite3 libzstd-devel
 
 %if_with check
@@ -136,6 +136,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Fri Mar 19 2021 Grigory Ustinov <grenka@altlinux.org> 5.7.1-alt1
+- 5.7.1.
+
 * Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 5.6-alt1
 - 5.6.
 
