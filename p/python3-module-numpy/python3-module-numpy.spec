@@ -8,7 +8,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.20.1
-Release: alt1
+Release: alt2
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
@@ -175,6 +175,13 @@ install -m644 %SOURCE2 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python3_version|g' site.cfg doc/Makefile
 sed -i 's|@PYSUFF@|3|' site.cfg
+
+%ifarch mipsel
+sed -i 's|@BLAS@|blas|' site.cfg
+%else
+sed -i 's|@BLAS@|openblas|' site.cfg
+%endif
+
 
 # headers
 sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
@@ -411,6 +418,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 19 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.20.1-alt2
+- site.cfg: Don't use openblas by default on mipsel.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.20.1-alt1
 - Updated to upstream version 1.20.1.
 
