@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    vcmmd
-Version: 8.0.3
+Version: 8.0.5
 Release: alt1
 
 Summary: Virtuozzo containers memory management daemon
@@ -63,6 +63,9 @@ popd
 %config %_tmpfilesdir/vcmmd-tmpfiles.conf
 
 %changelog
+* Fri Mar 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 8.0.5-alt1
+- 8.0.5
+
 * Wed Mar 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 8.0.3-alt1
 - 8.0.3
 
