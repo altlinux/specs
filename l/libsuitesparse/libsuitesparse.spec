@@ -5,7 +5,7 @@
 
 Name: libsuitesparse
 Version: 5.8.1
-Release: alt1
+Release: alt2
 
 Summary: Shared libraries for sparse matrix calculations
 License: LGPL and GPL
@@ -176,6 +176,9 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_bindir/mongoose
 
 %changelog
+* Fri Mar 19 2021 Ivan A. Melnikov <iv@altlinux.org> 5.8.1-alt2
+- Link with -latomic on mipsel.
+
 * Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8.1-alt1
 - Updated to upstream version 5.8.1.
 
