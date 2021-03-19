@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: libvirt-glib
-Version: 3.0.0
+Version: 4.0.0
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
@@ -10,11 +10,11 @@ URL: http://libvirt.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# From configure.ac
-%define libvirt_ver 1.2.5
-%define glib_ver 2.38.0
-%define libxml2_ver 2.0.0
+%define libvirt_ver 1.2.8
+%define glib_ver 2.48.0
+%define libxml2_ver 2.9.1
 
+BuildRequires(pre): meson >= 0.50.0
 BuildRequires: gettext
 BuildRequires: libvirt-devel >= %libvirt_ver
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
@@ -138,25 +138,16 @@ GObject introspection devel data for the libvirt-gobject library
 %patch -p1
 
 %build
-touch ChangeLog AUTHORS
-aclocal --install
-gtkdocize --copy
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-introspection \
-	--enable-vala \
-	--enable-gtk-doc
-
-%make_build
+%meson -Drpath=disabled
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%meson_install
 
 %find_lang %name
 
 %check
-%make_build check
+%meson_test
 
 %files -f %name.lang
 %doc README COPYING NEWS
@@ -212,6 +203,9 @@ gtkdocize --copy
 %_vapidir/libvirt-gobject-*
 
 %changelog
+* Fri Mar 19 2021 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt1
+- new version 4.0.0
+
 * Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
 
