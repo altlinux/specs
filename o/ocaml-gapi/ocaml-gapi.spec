@@ -1,22 +1,22 @@
-%set_verify_elf_method textrel=relaxed
+%def_with check
 Name: ocaml-gapi
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Summary: A simple OCaml client for Google Services
 License: MIT
 Group: Development/ML
 Url: https://github.com/astrada/gapi-ocaml
 Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.08
-BuildRequires: ocaml-ocamldoc dune ocaml-base ocaml-stdio ocaml-configurator
-BuildRequires: ocaml-biniou
-BuildRequires: ocaml-findlib-devel >= 1.7.1
+BuildRequires: dune 
 BuildRequires: ocaml-ocamlnet-nethttpd-devel >= 4.1.2
 BuildRequires: ocaml-cryptokit-devel >= 1.11
-BuildRequires: ocaml-extlib-devel >= 1.7.2
-BuildRequires: ocaml-yojson >= 1.3.3
-BuildRequires: ocaml-xmlm-devel >= 1.2.0
+BuildRequires: ocaml-yojson-devel >= 1.3.3
+%if_with check
 BuildRequires: ocaml-ounit-devel >= 2.0.0
+BuildRequires: ocaml-ocamlnet-devel
+BuildRequires: libcurl-devel
+%endif
 BuildRequires: ocaml-curl-devel
 BuildRequires: zlib-devel
 
@@ -66,26 +66,26 @@ developing applications that use %name.
 %setup
 
 %build
-make
+sed -i 's,oUnit,ounit2,' src/test/dune
+%dune_build -p gapi-ocaml
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.md LICENSE
-%_libdir/ocaml/gapi-ocaml
-%exclude %_libdir/ocaml/gapi-ocaml/*.a
-%exclude %_libdir/ocaml/gapi-ocaml/*.cmx
-%exclude %_libdir/ocaml/gapi-ocaml/*.cmxa
-%exclude %_libdir/ocaml/gapi-ocaml/*.mli
 
-%files devel
-%_libdir/ocaml/gapi-ocaml/*.a
-%_libdir/ocaml/gapi-ocaml/*.cmx
-%_libdir/ocaml/gapi-ocaml/*.cmxa
-%_libdir/ocaml/gapi-ocaml/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 0.4.1-alt2
+- enabled tests
+- cleanup BR
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 0.4.1-alt1
 - 0.4.1
 
