@@ -1,28 +1,15 @@
 %define _name findlib
 Name: ocaml-%_name
-Version: 1.8.1
-Release: alt3
+Version: 1.9.1
+Release: alt1
 Summary: A module packaging tool for OCaml
-License: Distributable
+License: BSD
 Group: Development/ML
 Url: http://projects.camlcity.org/projects/findlib.html
-
+# https://github.com/ocaml/ocamlfind
 Source: %_name-%version.tar
-Patch1: findlib-1.6.2-alt-native.patch
-Patch2: findlib-1.1.2pl1-alt-wizard.patch
-Patch3: findlib-1.6.2-alt-install-doc.patch
-
 BuildRequires: rpm-build-ocaml >= 1.2 ocaml-labltk-devel >= 8.06.2 libtinfo-devel ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel
-
-%package -n ocaml-ocamlfind-mini
-Summary: Minimal findlib script to be distributed with user libraries
-Group: Development/ML
-BuildArch: noarch
-
-%package toolbox
-Summary: graphical wizard to create findlib-enabled Makefiles
-Group: Development/ML
+BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel openjade
 
 %description
 The "findlib" library provides a scheme to manage reusable software
@@ -37,18 +24,6 @@ the user to enter queries on the command-line. In order to simplify
 compilation and linkage, there are new frontends of the various OCaml
 compilers that can directly deal with packages.
 
-%description -n ocaml-ocamlfind-mini
-ocamlfind-mini is an O'Caml script that implements a subset of the
-full functionality of ocamlfind. It consists only of one file, so it
-is easy to distribute it with any software.
-
-The subset is normally sufficient to compile a library and to
-install the library; but it is insufficient to link the library
-into an executable.
-
-%description toolbox
-The graphical 'findlib-make-wizard' tool to aid in creating
-findlib-enabled Makefiles.
 
 %package devel
 Summary: Development files for %name
@@ -61,65 +36,32 @@ developing applications that use %name.
 
 %prep
 %setup -n %_name-%version
-%patch1 -p2
-%patch2 -p2
 
 sed -i -e 's,@LIBDIR@,%_libdir,g' src/findlib-toolbox/make_wizard.ml
 sed -i -e '/path/s,@SITELIB@,\0:%_libdir/ocaml,' findlib.conf.in
 
 %build
+(cd tools/extract_args && make)
+tools/extract_args/extract_args -o src/findlib/ocaml_args.ml ocamlc ocamlcp ocamlmktop ocamlopt ocamldep ocamldoc ||:
+cat src/findlib/ocaml_args.ml
 ./configure \
     -mandir %_mandir \
     -config %_libdir/ocaml/etc/findlib.conf \
-    -with-toolbox \
+    -no-camlp4 \
     -sitelib `ocamlc -where` \
     #
-make
+make all
 make opt
 
 %install
-%make_install install prefix=%buildroot
-
-install -pD -m755 mini/ocamlfind-mini %buildroot%_bindir/ocamlfind-mini
-
-# remove default byte-coded wizard and install native one
-rm -f %buildroot%_libdir/ocaml/findlib/make_wizard
-install -m755 src/findlib-toolbox/make_wizard.opt %buildroot%_bindir/findlib-make-wizard
-
-# remove native dynlink plugin
-rm -f %buildroot%_libdir/ocaml/findlib/findlib.cmxs
-rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
-
-# install dummy META library for uchar
-mkdir -p %buildroot%_libdir/ocaml/uchar
-
-cat >> %buildroot%_libdir/ocaml/uchar/META<<'EOF'
-name="bytes"
-version="[distributed with OCaml 4.02 or above]"
-description="dummy backward-compatibility package for mutable strings"
-requires=""
-EOF
-
-# install dummy META library for seq
-mkdir -p %buildroot%_libdir/ocaml/seq
-
-cat >> %buildroot%_libdir/ocaml/seq/META<<'EOF'
-name="seq"
-version="[distributed with OCaml 4.07 or above]"
-description="dummy backward-compatibility package for iterators"
-requires=""
-EOF
-
-%files -n ocaml-ocamlfind-mini
-%doc mini/README
-%_bindir/ocamlfind-mini
-
-%files toolbox
-%_bindir/findlib-make-wizard
+mkdir -p $RPM_BUILD_ROOT%{_bindir}
+mkdir -p $RPM_BUILD_ROOT%{_mandir}/man{1,5}
+make install \
+     prefix=$RPM_BUILD_ROOT \
+     OCAMLFIND_BIN=%{_bindir} \
+     OCAMLFIND_MAN=%{_mandir}
 
 %files
-%exclude %_bindir/ocamlfind-mini
-%exclude %_bindir/findlib-make-wizard
 %_bindir/ocamlfind
 %_libdir/ocaml/etc/*
 %_libdir/ocaml/topfind
@@ -141,6 +83,9 @@ EOF
 
 
 %changelog
+* Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.8.1-alt3
 - ocaml-labltk have been renamed to ocaml-labltk-devel
 
