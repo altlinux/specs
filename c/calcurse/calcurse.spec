@@ -2,10 +2,10 @@ Group: Office
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           calcurse
-Version:        4.5.0
-Release:        alt1_1
+Version:        4.7.0
+Release:        alt1
 Summary:        Text-based personal organizer
-
+Packager:	Ilya Mashkin <oddity@altlinux.ru>
 License:        BSD
 URL:            https://calcurse.org
 Source0:        https://calcurse.org/files/%{name}-%{version}.tar.gz
@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Fri Mar 19 2021 Ilya Mashkin <oddity@altlinux.ru> 4.7.0-alt1
+- 4.7.0
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.0-alt1_1
 - update to new release by fcimport
 
