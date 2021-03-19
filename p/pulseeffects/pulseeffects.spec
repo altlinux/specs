@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.8.4
+Version: 4.8.5
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -10,7 +10,7 @@ License: GPL-3.0
 Group: Sound
 Url: https://github.com/wwmm/pulseeffects
 
-Source: %url/archive/%version/%name-%version.tar.gz
+Source: %url/archive/v%version/%name-%version.tar.gz
 
 %define gst_ver 1.12.5
 %define glibmm_ver 2.56
@@ -75,6 +75,9 @@ mkdir -p %buildroot%_sysconfdir/PulseEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 4.8.5-alt1
+- 4.8.5
+
 * Tue Dec 22 2020 Yuri N. Sedunov <aris@altlinux.org> 4.8.4-alt1
 - 4.8.4
 
