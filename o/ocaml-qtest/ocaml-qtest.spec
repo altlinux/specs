@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname qtest
 Name: ocaml-%libname
-Version: 2.11.1
+Version: 2.11.2
 Release: alt1
 Summary: Inline (Unit) Tests for OCaml
 License: GPLv3
@@ -45,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 2.11.2-alt1
+- 2.11.2
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 2.11.1-alt1
 - 2.11.1
 
