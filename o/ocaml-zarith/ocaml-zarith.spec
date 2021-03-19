@@ -1,12 +1,12 @@
 %global pkgname zarith
 %define ocamlstublib %_ocamldir/stublibs/
 Name: ocaml-%pkgname
-Version: 1.11
+Version: 1.12
 Release: alt1
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
-License: LGPLv2 with exceptions
+License: LGPLv2 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/Zarith
 Source0: %name-%version.tar
 
@@ -93,6 +93,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %_ocamldir/%pkgname/*.cmxa
 
 %changelog
+* Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 1.12-alt1
+- 1.12
+
 * Thu Dec 31 2020 Anton Farygin <rider@altlinux.ru> 1.11-alt1
 - 1.11
 
