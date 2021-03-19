@@ -73,7 +73,7 @@
 
 Name: Mesa
 Version: 21.0.0
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -497,6 +497,10 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Mar 19 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.0.0-alt2
+- BE-M1000 (aka Baikal-M) SoC initial support
+- wine work again (closes: #39809)
+
 * Fri Mar 12 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.0.0-alt1
 - 21.0.0
 
