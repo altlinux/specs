@@ -4,7 +4,7 @@
 
 Name: libmirage
 Version: 3.2.4
-Release: alt2
+Release: alt2.1
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -13,20 +13,28 @@ Group: System/Libraries
 URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+# http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Source: %name-%version.tar
+
+BuildPreReq: gobject-introspection-devel
+BuildPreReq: libblkid-devel
+BuildPreReq: libflac-devel
+BuildPreReq: libmount-devel
+BuildPreReq: libogg-devel
+BuildPreReq: libopus-devel
+BuildPreReq: libpcre-devel
+BuildPreReq: libselinux-devel
+BuildPreReq: libvorbis-devel
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
 BuildRequires: glib-networking
-BuildRequires: glibc-kernheaders-generic
-BuildRequires: gobject-introspection-devel
 BuildRequires: gtk-doc
 BuildRequires: intltool
 BuildRequires: libGConf
 BuildRequires: liblzma-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libsndfile-devel
-BuildRequires: time
 BuildRequires: zlib-devel
 
 %description
@@ -70,20 +78,11 @@ This package contains files needed to develop with libMirage.
 %setup -q
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-         -DCMAKE_INSTALL_PREFIX:PATH="%prefix" \
-         -DCMAKE_C_FLAGS:STRING="%optflags" \
-         -DCMAKE_BUILD_TYPE:STRING="Release"
-         
-popd
-
-%make_build -C %_target_platform
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 %find_lang %name
 
 %files -n %name%soversion -f %name.lang
@@ -106,6 +105,10 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2.1
+- Don't bzip sources to speedup rpmbuild -bp
+- Update build requires
+
 * Sun Dec 13 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2
 - Build with -fcommon instead -fno-common by default
 
