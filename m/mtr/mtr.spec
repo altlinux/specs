@@ -1,6 +1,6 @@
 Name: mtr
 Version: 0.82
-Release: alt3
+Release: alt4
 
 Summary: Matt's Traceroute - network diagnostic tool
 License: GPL
@@ -21,6 +21,7 @@ Patch3: mtr-0.72-rh-underflow.patch
 Patch4: mtr-0.80-fc-crash-in-xml-mode.patch
 Patch5: mtr-0.80-fc-now-waits-for-last-response.patch
 Patch6: mtr-0.80-fc-xml-format-fixes.patch
+Patch7: mtr-0.82-gcc10-fix.patch
 
 Requires: shadow-utils
 Requires: /var/resolv
@@ -93,6 +94,7 @@ mtr - утиліта для діагностики мережі, що поєдн
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p2
 install -pm644 %_sourcedir/gtk1.m4 acinclude.m4
 touch ChangeLog
 
@@ -164,6 +166,9 @@ done
 # - netadmin group would get non-predictable gid if not pre-existed
 
 %changelog
+* Fri Mar 19 2021 Slava Aseev <ptrnine@altlinux.org> 0.82-alt4
+- fixed build with gcc-10
+
 * Mon Sep 10 2018 Michael Shigorin <mike@altlinux.org> 0.82-alt3
 - recoded spec into UTF-8
 - minor spec cleanup
