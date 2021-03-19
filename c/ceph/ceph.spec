@@ -1,8 +1,8 @@
-%define git_version bdf3eebcd22d7d0b3dd4d5501bee5bac354d5b55
+%define git_version 27917a557cca91e4da407489bbaa64ad4352cc02
 %define _unpackaged_files_terminate_build 1
 
 %def_with ocf
-%def_without tcmalloc
+%def_with tcmalloc
 %def_without libzfs
 %def_without selinux
 %def_with libradosstriper
@@ -41,8 +41,8 @@
 %endif
 
 Name: ceph
-Version: 15.2.9
-Release: alt2
+Version: 15.2.10
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1502,6 +1502,10 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Fri Mar 19 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.10-alt1
+- 15.2.10
+- Build with tcmalloc
+
 * Thu Mar 11 2021 Stanislav Levin <slev@altlinux.org> 15.2.9-alt2
 - Dropped dependency on python3(tests).
 
