@@ -1,7 +1,6 @@
-%set_verify_elf_method textrel=relaxed
 %define libname stdcompat
 Name: ocaml-%libname
-Version: 14
+Version: 15
 Release: alt1
 Summary: Compatibility module for OCaml standard library
 License: BSD-3-Clause
@@ -58,6 +57,9 @@ make -f Makefile.bootstrap
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 15-alt1
+- 14 -> 15
+
 * Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 14-alt1
 - 13 -> 14
 
