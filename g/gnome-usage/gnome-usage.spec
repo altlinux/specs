@@ -5,7 +5,7 @@
 %define ver_major 3.38
 
 Name: gnome-usage
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME system information viewer
@@ -61,6 +61,9 @@ disk space.
 %doc README* NEWS
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
