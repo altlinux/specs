@@ -1,6 +1,6 @@
 Name: kernel-source-vhba
 Version: 20200106
-Release: alt1
+Release: alt1.1
 
 Summary: Source for VHBA module
 License: GPLv2
@@ -9,7 +9,8 @@ Group: Development/Kernel
 URL: http://cdemu.sourceforge.net/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
-Source0: http://downloads.sourceforge.net/cdemu/vhba-module-%version.tar.bz2
+# http://downloads.sourceforge.net/cdemu/vhba-module-%version.tar.bz2
+Source0: http://downloads.sourceforge.net/cdemu/vhba-module-%version.tar
 Source1: 60-vhba.rules
 
 BuildArch: noarch
@@ -46,6 +47,9 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 20200106-alt1.1
+- Don't bzip sources to speedup rpmbuild -bp
+
 * Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 20200106-alt1
 - Version 20200106
 

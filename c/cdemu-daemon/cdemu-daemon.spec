@@ -2,7 +2,7 @@
 
 Name: cdemu-daemon
 Version: 3.2.4
-Release: alt2
+Release: alt2.1
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -11,12 +11,18 @@ Group: System/Servers
 URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2 
+# http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Source0: %name-%version.tar
 Source1: vhba.init
 Source2: vhba.service
 
+BuildPreReq: libblkid-devel
+BuildPreReq: libmount-devel
+BuildPreReq: libpcre-devel
+BuildPreReq: libselinux-devel
+BuildPreReq: zlib-devel
+
 BuildRequires: cmake
-BuildRequires: glibc-kernheaders-generic
 BuildRequires: intltool
 BuildRequires: libao-devel >= 0.8.0
 BuildRequires: libmirage-devel >= 3.2.0
@@ -36,24 +42,14 @@ options passed to it) where it exposes an interface that can be used by clients
 to control it.
 
 %prep
-%setup -q
+%setup
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-         -DCMAKE_INSTALL_PREFIX:PATH="%prefix" \
-         -DCMAKE_INSTALL_LIBEXECDIR:PATH="%_libexecdir/%name" \
-         -DCMAKE_C_FLAGS:STRING="%optflags" \
-         -DCMAKE_BUILD_TYPE:STRING="Release"
-         
-popd
-
-%make_build -C %_target_platform
+%cmake -DCMAKE_INSTALL_LIBEXECDIR:PATH="%_libexecdir/%name"
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 %__install -Dp -m0755 %SOURCE1 %buildroot%_initdir/vhba
 %__install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/vhba.service
 %find_lang %name
@@ -81,6 +77,10 @@ popd
 %_unitdir/vhba.service
 
 %changelog
+* Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2.1
+- Don't bzip sources to speedup rpmbuild -bp
+- Update build requires
+
 * Sun Dec 13 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2
 - Build with -fcommon instead -fno-common by default
 

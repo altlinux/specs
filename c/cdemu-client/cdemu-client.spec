@@ -1,6 +1,6 @@
 Name: cdemu-client
 Version: 3.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: A simple command-line client to control CDEmu daemon
 License: GPLv2+
@@ -10,7 +10,10 @@ URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 BuildArch: noarch
 
-Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+# http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Source: %name-%version.tar
+
+BuildPreReq: bash-completion
 
 BuildRequires: cmake
 BuildRequires: intltool
@@ -31,19 +34,11 @@ retrieving/setting devices' debug masks.
 %setup
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-         -DCMAKE_INSTALL_PREFIX:PATH="%prefix" \
-         -DCMAKE_BUILD_TYPE:STRING="Release"
-         
-popd
-
-%make_build -C %_target_platform
+%cmake -Wno-dev
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 %find_lang cdemu
 
 %files -f cdemu.lang
@@ -52,10 +47,13 @@ popd
 %_desktopdir/%name.desktop
 %_man1dir/cdemu.*
 %_pixmapsdir/%name.svg
-%dir %_sysconfdir/bash_completion.d
-%_sysconfdir/bash_completion.d/cdemu
+%_datadir/bash-completion/completions/cdemu
 
 %changelog
+* Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1.1
+- Don't bzip sources to speedup rpmbuild -bp
+- Update build requires
+
 * Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1
 - Version 3.2.4
 
