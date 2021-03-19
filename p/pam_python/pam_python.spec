@@ -1,5 +1,5 @@
 Name: pam_python
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: A Pluggable Authentication Module that runs the Python interpreter
@@ -12,8 +12,16 @@ Group: System/Base
 # Source-url: https://prdownloads.sourceforge.net/pam-python/pam-python-%version-1/pam-python-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: libpam-devel
-BuildRequires: rpm-build-python python-module-setuptools python-module-sphinx
+Patch: pam_python.python3.patch
+
+BuildRequires: libpam-devel >= 0.76
+BuildRequires: rpm-build-python3 python3-module-setuptools
+
+# doc
+BuildRequires: python3-module-sphinx
+
+# for test
+BuildRequires: python3-module-PAM
 
 %description
 pam_python is a PAM module that runs the Python interpreter
@@ -32,10 +40,15 @@ See also https://github.com/privacyidea/pam_python as example.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
+subst "s|-Werror||" src/Makefile
+subst "s|sphinx-build|sphinx-build-3|" doc/Makefile
 
 %build
-# TODO: change with python_build
+cd src && %python3_build_debug ; cd -
+# hack
+p=$(echo src/build/lib*)
+cp $p/pam_python*.so $p/pam_python.so
 %make_build LIBDIR=%_pam_modules_dir
 
 %install
@@ -50,5 +63,9 @@ See also https://github.com/privacyidea/pam_python as example.
 %doc %_docdir/%name/
 
 %changelog
+* Fri Mar 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.8-alt1
+- new version 1.0.8 (with rpmrb script)
+- switch to python3
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.7-alt1
 - initial build for ALT Sisyphus
