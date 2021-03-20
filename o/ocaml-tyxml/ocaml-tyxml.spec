@@ -1,21 +1,19 @@
-%set_verify_elf_method textrel=relaxed
-%add_ocaml_req_skip Ppx_sigs_reflected
-%def_disable check
+%def_enable check
 %define libname tyxml
 Name:           ocaml-%libname
 Version:        4.4.0
-Release:        alt3
+Release:        alt4
 Summary:        TyXML is a library for building statically correct HTML5 and SVG documents
-License:        LGPLv2.1 with exeptions
+License:        LGPLv2.1 with OCaml-LGPL-linking-exception
 Group:          Development/ML
 Url:            https://ocsigen.org/tyxml/
 # https://github.com/ocsigen/tyxml
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml >= 4.07.1 opam dune ocaml-migrate-parsetree-devel
-BuildRequires: ocaml-ocamldoc ocaml-re ocaml-ppx_tools_versioned-devel ocaml-uutf-devel ocaml-markup-devel
-BuildRequires: ocaml-re-devel ocaml-result-devel
+BuildRequires: ocaml >= 4.07.1 dune 
+BuildRequires: ocaml-ocamldoc ocaml-uutf-devel ocaml-markup-devel
+BuildRequires: ocaml-re-devel 
 %if_enabled check
 BuildRequires: ocaml-alcotest-devel
 %endif
@@ -41,14 +39,14 @@ programs which use %name
 %patch0 -p1
 
 %build
-%dune_build --release @install
+%dune_build -p %libname
 
 %check
-%dune_check
+%dune_check -p %libname
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/
-%dune_install
+%dune_install %libname
 
 
 %files -f ocaml-files.runtime
@@ -57,6 +55,11 @@ mkdir -p %buildroot%_libdir/ocaml/
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 4.4.0-alt4
+- cleanup BR
+- built clean library without addittonal modules
+- enabled test
+
 * Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 4.4.0-alt3
 - BR: devel package for ocaml-ppx_tools_versioned
 - building process moved to rpm-build-ocaml 1.4
