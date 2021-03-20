@@ -2,21 +2,28 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: image-analyzer
-Version: 3.2.0
+Version: 3.2.4
 Release: alt1
+
 Summary: Simple Gtk+ application that displays tree structure of disc image
 Summary(ru_RU.UTF-8): Простое GTK+ приложение для просмотра структуры образа диска
 License: GPLv2+
 Group: Emulators
+
 Url: http://cdemu.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
-Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+
+# http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
-BuildRequires: cmake intltool
 
-Buildarch: noarch
+BuildRequires: cmake
+BuildRequires: intltool
+
+BuildArch: noarch
 
 %description
 Image Analyzer is a simple Gtk+ application that displays tree structure of disc
@@ -40,11 +47,11 @@ libMirage, тем не менее он может также использов�
 sed 's|/usr/bin/env python3|/usr/bin/python3|' -i src/%name
 
 %build
-%cmake_insource
-%make_build
+%cmake -Wno-dev
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 %find_lang %name
 
 %files -f %name.lang
@@ -54,6 +61,9 @@ sed 's|/usr/bin/env python3|/usr/bin/python3|' -i src/%name
 %_pixmapsdir/*.svg
 
 %changelog
+* Sat Mar 20 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1
+- Version 3.2.4
+
 * Mon Jul 30 2018 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
 - new version (3.2.0) with rpmgs script
 
