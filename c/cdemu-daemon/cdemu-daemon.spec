@@ -2,7 +2,7 @@
 
 Name: cdemu-daemon
 Version: 3.2.4
-Release: alt2.1
+Release: alt3
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -13,8 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 Source0: %name-%version.tar
-Source1: vhba.init
-Source2: vhba.service
+Source1: %name.conf
 
 BuildPreReq: libblkid-devel
 BuildPreReq: libmount-devel
@@ -50,17 +49,8 @@ to control it.
 
 %install
 %cmakeinstall_std
-%__install -Dp -m0755 %SOURCE1 %buildroot%_initdir/vhba
-%__install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/vhba.service
+%__install -Dp -m0644 %SOURCE1 %buildroot%_sysconfdir/modules-load.d/%name.conf
 %find_lang %name
-
-%preun
-%preun_service vhba
-/sbin/service vhba condstop ||:
-
-%post
-%post_service vhba
-/sbin/service vhba condrestart ||:
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
@@ -68,15 +58,13 @@ to control it.
 %dir %_libexecdir/%name
 %_libexecdir/%name/%name-session.sh
 %_man8dir/%name.*
-%dir %_datadir/dbus-1
-%dir %_datadir/dbus-1/services
 %_datadir/dbus-1/services/*.service
-%_initdir/vhba
-%dir /lib/systemd
-%dir %_unitdir
-%_unitdir/vhba.service
+%config %_sysconfdir/modules-load.d/%name.conf
 
 %changelog
+* Sat Mar 20 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt3
+- Autoload vhba module without unit service (ALT #32492)
+
 * Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2.1
 - Don't bzip sources to speedup rpmbuild -bp
 - Update build requires
