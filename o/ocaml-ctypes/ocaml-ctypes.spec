@@ -1,6 +1,5 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-ctypes
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 Summary: Combinators for binding to C libraries without writing any C
 
@@ -12,7 +11,7 @@ Source: %name-%version.tar
 Patch1: make-ocamlfind-ldconf.patch
 Patch2: make-install-mls.patch
 
-BuildRequires: ocaml-findlib ocaml-integers-devel
+BuildRequires: ocaml-findlib ocaml-integers-devel ocaml-bigarray-compat-devel
 BuildRequires: libffi-devel
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
@@ -65,5 +64,8 @@ mv %buildroot/%_libdir/ocaml/ctypes/dll*.so %buildroot/%_libdir/ocaml/stublibs
 %_libdir/ocaml/ctypes*/*.h
 
 %changelog
+* Sun Mar 28 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.18.0-alt1
+- new version 0.18.0
+
 * Wed Jul 08 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.17.1-alt1
 - Initial build for Sisyphus
