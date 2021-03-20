@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -8,6 +8,7 @@
 
 %def_enable gstreamer
 %def_enable systemd
+%def_enable libcamera
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
 %def_enable vulkan
@@ -21,7 +22,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.22
+Version: %ver_major.24
 Release: alt1
 
 Summary: Media Sharing Server
@@ -45,7 +46,8 @@ Requires: rtkit
 
 BuildRequires(pre): meson
 BuildRequires: libgio-devel libudev-devel libdbus-devel
-BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
+BuildRequires: libalsa-devel libpulseaudio-devel
+BuildRequires: libjack-devel
 BuildRequires: libv4l-devel libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
@@ -64,6 +66,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %endif
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
+%{?_enable_libcamera:BuildRequires: libcamera-devel libdrm-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
 %{?_enable_man:BuildRequires: xmltoman}
 %{?_enable_check:BuildRequires: /proc gcc-c++}
@@ -114,13 +117,14 @@ This package contains command line utilities for the PipeWire media server.
 %build
 export LIB=%_lib
 %meson \
-	%{?_enable_docs:-Ddocs=true} \
-	%{?_enable_man:-Dman=true} \
-	%{?_enable_gstreamer:-Dgstreamer=true} \
-	%{?_disable_vulkan:-Dvulkan=false} \
-	%{?_disable_systemd:-Dsystemd=false} \
-	%{?_enable_systemd_system_service:-Dsystemd-system-service=true} \
-	%{?_disable_examples:-Dexamples=false}
+	%{?_enable_docs:-Ddocs=enabled} \
+	%{?_disable_man:-Dman=disabled} \
+	%{?_enable_gstreamer:-Dgstreamer=enabled} \
+	%{?_disable_vulkan:-Dvulkan=disabled} \
+	%{?_disable_libcamera:-Dlibcamera=disabled} \
+	%{?_disable_systemd:-Dsystemd=disabled} \
+	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
+	%{?_disable_examples:-Dexamples=disabled}
 %nil
 %meson_build
 
@@ -161,6 +165,7 @@ export LIB=%_lib
 %_prefix/lib/systemd/user/%name.socket
 %_prefix/lib/systemd/user/%name-pulse.service
 %_prefix/lib/systemd/user/%name-pulse.socket
+%_prefix/lib/systemd/user/%name-media-session.service
 
 %{?_enable_systemd_system_service:
 %_unitdir/%name.service
@@ -228,6 +233,12 @@ export LIB=%_lib
 
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.24-alt1
+- updated to 0.3.24-6-gdb85339f
+
+* Thu Mar 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.23-alt1
+- updated to 0.3.23-2-g0ad60337
+
 * Thu Feb 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.22-alt1
 - 0.3.22
 - lakostis@: Don't overwrite configs in /etc/pipewire
