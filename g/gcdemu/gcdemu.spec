@@ -1,28 +1,33 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-Summary: GTK+ based GUI for controlling CDEmu daemon
-Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
 Name: gcdemu
 Version: 3.2.4
-Release: alt1
-Group: Emulators
+Release: alt1.1
+
+Summary: GTK+ based GUI for controlling CDEmu daemon
+Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
 License: GPLv2+
+Group: Emulators
+
 Url: http://cdemu.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+# http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Source: %name-%version.tar
 Patch1: autostart.patch
-Patch3: fix_desktop.patch
+Patch2: fix_desktop.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
+
 BuildRequires: cmake intltool
 
 Requires: cdemu-daemon >= %version
 Requires: cdemu-client >= %version
 Requires: typelib(Gtk) = 3.0
+
 %filter_from_requires /^typelib(AppIndicator3)/d
 
 BuildArch: noarch
@@ -53,17 +58,17 @@ gCDEmu - базирующийся на Gtk+ и Appindicator апплет в об
 %prep
 %setup
 %patch1 -p1
-%patch3 -p2
+%patch2 -p2
 
 #fix PATH to python3
 sed 's|/usr/bin/env python3|/usr/bin/python3|' -i src/%name
 
 %build
-%cmake_insource
-%make_build
+%cmake -Wno-dev
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 %find_lang %name
 mkdir -p %buildroot/%_sysconfdir/xdg/autostart/
 mv %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
@@ -76,6 +81,9 @@ mv %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Sat Mar 20 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1.1
+- Don't bzip sources to speedup rpmbuild -bp
+
 * Thu Jan 07 2021 Anton Midyukov <antohami@altlinux.org> 3.2.4-alt1
 - new version (3.2.4)
 - Add requires typelib(Gtk) = 3.0
