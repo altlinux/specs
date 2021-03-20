@@ -1,12 +1,12 @@
 Name: multicat
-Version: 2.0
+Version: 2.3
 Release: alt1
 Summary: A set of tools designed to manipulate multicast streams
 License: GPLv2+
 Group: Video
 Url: http://www.videolan.org/projects/multicat.html
-
-Source: %name-%version.tar
+Packager: Ilya Mashkin <oddity@altlinux.ru>
+Source: %name-%version.tar.bz2
 
 BuildRequires: libdvbpsi-devel bitstream-headers
 
@@ -58,6 +58,9 @@ install -pm644 {multicat.1,ingests.1,aggregartp.1,reordertp.1,offsets.1,lasts.1}
 %_man1dir/*
 
 %changelog
+* Sun Mar 21 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3-alt1
+- 2.3
+
 * Thu Feb 06 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0-alt1
 - New version
 
