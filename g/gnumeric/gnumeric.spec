@@ -5,13 +5,13 @@
 %define goffice_api_ver 0.10
 
 %def_without gda
-%def_without python
+%def_with python
 %def_with perl
 %def_enable introspection
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.48
+Version: %ver_major.49
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -29,9 +29,12 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.47
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.48
+%define goffice_ver 0.10.49
+
+%{?_with_python:
+%add_python3_path %_libdir/%name/%version/plugins
 # Provided by python_loader.so
-%{?_with_python:Provides: python%__python_version(Gnumeric)}
+Provides: python3(Gnumeric)}
 
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
 Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
@@ -47,8 +50,8 @@ BuildRequires: intltool yelp-tools zlib-devel librarian
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgnomeoffice%goffice_api_ver-gir-devel}
 %{?_with_perl:BuildRequires: perl-devel}
 %{?_with_python:
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-pygobject3-devel}
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-pygobject3-devel}
 %{?_with_gda:BuildRequires: libgda5-devel >= %gda_ver libgnomedb4-devel}
 %{?_enable_check:BuildRequires: xvfb-run}
 
@@ -115,13 +118,12 @@ GObject introspection devel data for the Gnumeric.
 %prep
 %setup
 %patch -p1
-%patch1
+#%%patch1
 
 subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
-subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--disable-schemas-compile \
@@ -130,7 +132,7 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 	%{subst_with python} \
 	%{subst_with perl} \
 	%{?_enable_introspection:--enable-introspection=yes} \
-	%{?_with_python:PYTHON=%_bindir/python2}
+	%{?_with_python:PYTHON=%__python3}
 %make_build
 
 %install
@@ -145,7 +147,7 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %_libdir/%name/
 %_libdir/goffice/%goffice_api_ver/plugins/%name/%name.so
 %_libdir/goffice/%goffice_api_ver/plugins/%name/plugin.xml
-%{?_with_python:%python_sitelibdir/gi/overrides/Gnm.py*}
+%{?_with_python:%python3_sitelibdir/gi/overrides/*}
 %doc AUTHORS ChangeLog NEWS BUGS README COPYING HACKING
 
 %exclude %_libdir/%name/%version/plugins/*/*.la
@@ -157,7 +159,7 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %dir %_datadir/%name
 %_datadir/%name/%version/
 %_datadir/applications/*
-%_datadir/pixmaps/*
+#%_datadir/pixmaps/*
 %_iconsdir/hicolor/*/apps/gnumeric.*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
@@ -181,6 +183,10 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.49-alt1
+- 1.12.49
+- enabled python3 support
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.12.48-alt1
 - 1.12.48
 
