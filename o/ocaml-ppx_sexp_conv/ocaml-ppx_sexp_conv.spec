@@ -1,15 +1,14 @@
-%set_verify_elf_method textrel=relaxed
 %define libname ppx_sexp_conv
 Name: ocaml-%libname
-Version: 0.14.1
+Version: 0.14.3
 Release: alt1
 Summary: Generation of S-expression conversion functions from type definitions
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/ppx_sexp_conv
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam ocaml-result-devel ocaml-compiler-libs-devel
-BuildRequires: ocaml-sexplib0-devel ocaml-ppxlib-devel ocaml-migrate-parsetree-devel ocaml-base-devel
+BuildRequires: dune 
+BuildRequires: ocaml-sexplib0-devel ocaml-ppxlib-devel ocaml-base-devel
 
 %description
 ppx_sexp_conv is a PPX syntax extension that generates code for converting OCaml
@@ -28,44 +27,25 @@ developing applications that use %name.
 %setup
 
 %build
-dune build -p %libname --verbose
+%dune_build -p %libname
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.org LICENSE.md CHANGES.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/*
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.cmt*
-%exclude %_libdir/ocaml/%libname/*.ml
-%exclude %_libdir/ocaml/%libname/*.mli
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmxs
-%exclude %_libdir/ocaml/%libname/*/*.cmx
-%exclude %_libdir/ocaml/%libname/*/*.cmt*
-%exclude %_libdir/ocaml/%libname/*/*.ml
-%exclude %_libdir/ocaml/%libname/*/*.mli
-%exclude %_libdir/ocaml/%libname/*/*.cmxa
-%exclude %_libdir/ocaml/%libname/*/*.cmxs
 
 
-%files devel
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.ml
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
-%_libdir/ocaml/%libname/*/*.cmx
-%_libdir/ocaml/%libname/*/*.cmt*
-%_libdir/ocaml/%libname/*/*.ml
-%_libdir/ocaml/%libname/*/*.mli
-%_libdir/ocaml/%libname/*/*.cmxa
-%_libdir/ocaml/%libname/*/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.3-alt1
+- 0.14.3
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 

@@ -1,24 +1,17 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_base
-
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt2
+Release: alt3
 
 Summary: Base set of ppx rewriters
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_base
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires: dune ocaml-ppx_js_style-devel ocaml-ppx_hash-devel
 BuildRequires: ocaml-ppx_enumerate-devel ocaml-ppx_cold-devel
-BuildRequires: ocaml-base-devel ocaml-ppxlib-devel ocaml-result-devel
+BuildRequires: ocaml-base-devel ocaml-ppxlib-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-ppx_compare-devel
-BuildRequires: ocaml-migrate-parsetree-devel ocaml-compiler-libs-devel
 BuildRequires: ocaml-octavius-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
 
 Source:  %modulename-%version.tar
 
@@ -59,6 +52,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt3
+- specfile BR: cleanup
+
 * Thu Sep 17 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - added requires to devel subpackage from dune file
 - migrated to rpm-build-ocaml 1.4

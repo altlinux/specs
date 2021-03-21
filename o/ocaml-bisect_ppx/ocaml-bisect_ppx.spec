@@ -1,7 +1,6 @@
-%set_verify_elf_method textrel=relaxed
 %define libname bisect_ppx
 Name: ocaml-%libname
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 Summary: Code coverage for OCaml
 Group: Development/ML
@@ -13,8 +12,8 @@ Patch0: %name-%version-%release.patch
 BuildRequires: ocaml >= 4.07.1
 BuildRequires: ocaml-findlib-devel
 BuildRequires: dune
-BuildRequires: ocaml-ppx_tools_versioned-devel
 BuildRequires: ocaml-migrate-parsetree-devel
+BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-cmdliner-devel
 
@@ -52,6 +51,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Fri Jan 15 2021 Anton Farygin <rider@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
