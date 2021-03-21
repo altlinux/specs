@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -45,7 +45,7 @@ Obsoletes: %name-loaders <= %version
 BuildRequires(pre): meson >= %meson_ver rpm-build-gir
 BuildRequires: /proc libgio-devel >= %glib_ver
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 %{?_enable_man:BuildRequires: docbook-utils xsltproc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 
@@ -203,7 +203,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+#%_datadir/gtk-doc/html/*
+%_datadir/doc/%_name/
 %endif
 
 %if_enabled introspection
@@ -224,6 +225,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.42.4-alt1
+- 2.42.4
+
 * Tue Dec 08 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.2-alt1
 - 2.42.2
 
