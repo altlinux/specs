@@ -3,7 +3,7 @@
 %define _name wpebackend-fdo
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
@@ -51,6 +51,9 @@ This package provides files for developing applications that use %name.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
