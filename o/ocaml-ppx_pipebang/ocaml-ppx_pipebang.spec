@@ -1,23 +1,14 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_pipebang
-
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: A ppx rewriter that inlines reverse application operators |> and |!
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_pipebang
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires: dune
-BuildRequires: ocaml-base-devel ocaml-ppxlib-devel ocaml-result-devel
-BuildRequires: ocaml-migrate-parsetree-devel ocaml-compiler-libs-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
-
+BuildRequires: ocaml-base-devel ocaml-ppxlib-devel 
 Source:  %modulename-%version.tar
 
 %description
@@ -36,33 +27,22 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
-%_libdir/ocaml/%{modulename}*/*.exe
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt2
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Wed Jul 29 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus

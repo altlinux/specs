@@ -1,8 +1,7 @@
 %define ocamlmod ppx_expect
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-%ocamlmod
 Version: 0.14.0
-Release: alt2
+Release: alt3
 Summary: a cram like framework for OCaml
 Group: Development/ML
 License: MIT
@@ -14,19 +13,10 @@ Patch0: %name-%version-%release.patch
 BuildRequires: ocaml >= 4.10
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-stdio-devel
-BuildRequires: ocaml-jane-street-headers-devel
-BuildRequires: ocaml-compiler-libs-devel
 BuildRequires: ocaml-ppx_inline_test-devel
 BuildRequires: ocaml-ppx_here-devel
-BuildRequires: ocaml-time_now-devel
-BuildRequires: ocaml-ppx_enumerate-devel
-BuildRequires: ocaml-ppx_hash-devel
-BuildRequires: ocaml-ppx_sexp_conv-devel
 BuildRequires: ocaml-re-devel
-BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-base-devel
-BuildRequires: ocaml-sexplib0-devel
 BuildRequires: dune
 
 %description
@@ -46,42 +36,29 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-dune build @install
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 # tests is broken in upstream
 #%check
 #dune runtest
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE.md
-%_libdir/ocaml/%{ocamlmod}*
-%_libdir/ocaml/stublibs/*test_collector*.so
-%exclude %_libdir/ocaml/%ocamlmod/*.a
-%exclude %_libdir/ocaml/%ocamlmod/*.cmx
-%exclude %_libdir/ocaml/%ocamlmod/*.cmxa
-%exclude %_libdir/ocaml/%ocamlmod/*.mli
-%exclude %_libdir/ocaml/%ocamlmod/*/*.a
-%exclude %_libdir/ocaml/%ocamlmod/*/*.cmx
-%exclude %_libdir/ocaml/%ocamlmod/*/*.cmxa
-%exclude %_libdir/ocaml/%ocamlmod/*/*.mli
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc README.org CHANGES.md
-%_libdir/ocaml/%ocamlmod/*.a
-%_libdir/ocaml/%ocamlmod/*.cmxa
-%_libdir/ocaml/%ocamlmod/*.cmx
-%_libdir/ocaml/%ocamlmod/*.mli
-%_libdir/ocaml/%ocamlmod/*/*.a
-%_libdir/ocaml/%ocamlmod/*/*.cmx
-%_libdir/ocaml/%ocamlmod/*/*.cmxa
-%_libdir/ocaml/%ocamlmod/*/*.mli
 
 %changelog
+* Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt3
+- specfile BR: cleanup
+- simplified specfile with macros from rpm-build-ocaml 1.4
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - devel parts have been moved from the main package
 

@@ -1,9 +1,8 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_custom_printf
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
+Version: 0.14.1
+Release: alt1
 
 Summary: Printf-style format-strings for user-defined string conversion
 License: MIT
@@ -43,6 +42,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.1-alt1
+- 0.14.1
+
 * Tue Dec 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - specfile migrated to rpm-build-ocaml 1.4
 

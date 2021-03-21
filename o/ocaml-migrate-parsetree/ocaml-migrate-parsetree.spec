@@ -1,15 +1,13 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-migrate-parsetree
-Version: 1.8.0
+Version: 2.1.0
 Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
-License: LGPLv2+ with exceptions
+License: LGPLv2+ with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml-ppx/ocaml-migrate-parsetree
 Source0: %name-%version.tar
-
 BuildRequires: ocaml
-BuildRequires: dune
+BuildRequires: dune cinaps
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-ppx_derivers-devel
 
@@ -40,11 +38,14 @@ files for developing applications that use %name.
 %dune_check
 
 %files -f ocaml-files.runtime
-%doc README.md MANUAL.md CHANGES.md LICENSE.md
+%doc README.md CHANGES.md LICENSE.md
 
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Wed Dec 09 2020 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 

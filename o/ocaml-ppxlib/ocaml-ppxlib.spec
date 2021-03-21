@@ -1,4 +1,3 @@
-%set_verify_elf_method textrel=relaxed
 %define libname ppxlib
 
 # tests fail on armh:
@@ -18,15 +17,15 @@
 %endif
 
 Name: ocaml-%libname
-Version: 0.15.0
-Release: alt2
+Version: 0.22.0
+Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
 Url: https://github.com/ocaml-ppx/ppxlib
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: ocaml-findlib-devel dune opam  cinaps ocaml-result-devel
+BuildRequires: ocaml-findlib-devel dune cinaps ocaml-result-devel
 BuildRequires: ocaml-re-devel ocaml-compiler-libs-devel ocaml-ppx_derivers-devel
 BuildRequires: ocaml-sexplib0-devel ocaml-migrate-parsetree-devel ocaml-stdio-devel
 BuildRequires: ocaml-base-devel
@@ -58,10 +57,12 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
+sed -i 's/ stdlib-shims//' */dune
 %dune_build -p %libname
 
 %install
 %dune_install
+rm -rf %buildroot%_bindir
 
 %check
 %dune_check
@@ -73,6 +74,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Sat Dec 12 2020 Anton Farygin <rider@altlinux.ru> 0.15.0-alt2
 - added upstream patch fix build with ocaml 4.11
 - used macros from rpm-build-ocaml 1.4

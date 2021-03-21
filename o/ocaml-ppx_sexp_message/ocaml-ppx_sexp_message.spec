@@ -1,10 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_sexp_message
-
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt2
-
+Release: alt3
 Summary: A ppx rewriter for easy construction of s-expressions
 License: MIT
 Group:   Development/ML
@@ -16,6 +13,7 @@ BuildRequires: ocaml-ppx_sexp_conv-devel
 BuildRequires: ocaml-ppx_here-devel
 
 Source: %modulename-%version.tar
+Patch0: %name-%version-%release.patch
 
 %description
 %summary
@@ -31,6 +29,7 @@ developing applications that use %name.
 
 %prep
 %setup -n %modulename-%version
+%patch0 -p1
 
 %build
 %dune_build -p %modulename
@@ -46,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt3
+- added upstream patch against ppxlib 0.22
+
 * Tue Dec 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - specfile migrated to rpm-build-ocaml 1.4
 

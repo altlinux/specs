@@ -1,21 +1,13 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_fixed_literal
-
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt2
-
+Release: alt3
 Summary: Simpler notation for fixed point literals
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_fixed_literal
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
-BuildRequires: dune ocaml-ppxlib-devel ocaml-compiler-libs-devel
-BuildRequires: ocaml-migrate-parsetree-devel ocaml-result-devel
+BuildRequires: dune ocaml-ppxlib-devel
 BuildRequires: ocaml-base-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
 
 Source:  %modulename-%version.tar
 
@@ -48,6 +40,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt3
+- specfile BR: cleanup
+
 * Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - migrate to rpm-build-ocaml 1.4
 - added ocaml-base-devel to BuildRequires
