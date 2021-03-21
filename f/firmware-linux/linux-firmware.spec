@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210305
+Version: 20210310
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,16 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Mar 21 2021 Cronbuild Service <cronbuild@altlinux.org> 20210310-alt1
+- upstream changes (GIT 3568f96):
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + rtw88: 8822c: Update normal firmware to v9.9.6 (thx Zong-Zhe Yang)
+  + iwlwifi: add new FWs from core59-66 release (thx Luca Coelho)
+  + iwlwifi: update 9000-family firmwares (thx Luca Coelho)
+  + iwlwifi: update 7265D firmware (thx Luca Coelho)
+
 * Sun Mar 07 2021 Cronbuild Service <cronbuild@altlinux.org> 20210305-alt1
 - upstream changes (GIT e425f76):
   + Mellanox: Add new mlxsw_spectrum firmware xx.2008.2406 (thx Petr Machata)
