@@ -1,6 +1,6 @@
 Name: pam_python
 Version: 1.0.8
-Release: alt1
+Release: alt2
 
 Summary: A Pluggable Authentication Module that runs the Python interpreter
 
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Patch: pam_python.python3.patch
 
 BuildRequires: libpam-devel >= 0.76
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3 python3-dev python3-module-setuptools
 
 # doc
 BuildRequires: python3-module-sphinx
@@ -63,6 +63,9 @@ cp $p/pam_python*.so $p/pam_python.so
 %doc %_docdir/%name/
 
 %changelog
+* Sun Mar 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.8-alt2
+- add missed python3-dev
+
 * Fri Mar 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.8-alt1
 - new version 1.0.8 (with rpmrb script)
 - switch to python3
