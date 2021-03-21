@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: retro-gtk
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Toolkit to write Gtk+3-based frontends to libretro
@@ -115,6 +115,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Mon Mar 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Sun Nov 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 - enabled %%check
