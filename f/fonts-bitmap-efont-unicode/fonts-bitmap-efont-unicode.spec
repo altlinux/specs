@@ -8,14 +8,18 @@
 
 Name: fonts-bitmap-efont-unicode
 Version: 0.4.2
-Release: alt2.qa1
+Release: alt3
 
 Summary: Unicode fonts collection by /efont/
-License: distributable
+License: BSD-3-Clause
 Group: System/Fonts/X11 bitmap
 
 Url: http://openlab.ring.gr.jp/efont
 Source: %url/dist/unicode-bdf/%origname-bdf-%version-src.tar.bz2
+Patch0: baseline-offset.diff
+Patch1: bugzilla-199997-some-glyphs-for-yast.patch
+Patch2: reproducible.patch
+Patch3: remove_deprecated_one_based_array_index.diff
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
@@ -23,7 +27,7 @@ BuildArch: noarch
 BuildRequires: bdfresize bdftopcf mkfontdir
 
 BuildRequires: rpm-build-fonts >= 0.3
-PreReq: chkfontpath
+Requires: chkfontpath
 
 Provides: %origname = %version-%release
 Obsoletes: %origname < 0.4.2-alt2
@@ -39,10 +43,14 @@ Authors:
     Kazuhiko  <kazuhiko/ring.gr.jp>
 
 %prep
-%setup -q -n %origname-bdf-%version-src
-%configure --with-fontdir=%fontdir
+%setup -n %origname-bdf-%version-src
+%patch0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
+%configure --with-fontdir=%fontdir
 %make
 mkfontdir
 
@@ -53,6 +61,11 @@ mkfontdir
 %doc README* COPYRIGHT ChangeLog
 
 %changelog -n efont-unicode
+* Sun Mar 21 2021 Michael Shigorin <mike@altlinux.org> 0.4.2-alt3
+- fixed perl-related ftbfs with opensuse patch
+  (applied all of them while at that)
+- updated License: (thanks, debian)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt2.qa1
 - NMU: applied repocop patch
 
