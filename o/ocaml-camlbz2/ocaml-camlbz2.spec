@@ -1,9 +1,8 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-camlbz2
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 Summary: OCaml bindings for the libbz2
-License: LGPLv2 with linking exception
+License: LGPLv2 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: http://camlbz2.forge.ocamlcore.org/
 Source0: %name-%version.tar
@@ -64,6 +63,9 @@ make install
 %_libdir/ocaml/bz2/*.mli
 
 %changelog
+* Mon Mar 22 2021 Anton Farygin <rider@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Sat Mar 16 2019 Anton Farygin <rider@altlinux.ru> 0.6.0-alt1
 - first build for ALT
 - ported from String to Bytes to avoid problems with latest ocaml and safe-string defaults
