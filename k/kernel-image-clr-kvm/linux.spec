@@ -10,7 +10,7 @@
 %define krelease %release
 
 %define kernel_base_version     5.4
-%define kernel_sublevel .91
+%define kernel_sublevel .105
 %define kernel_extra_version    %nil
 
 %define kernel_extra_version_numeric 1.0.0
@@ -163,6 +163,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/*
 
 %changelog
+* Mon Mar 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.4.105-alt1
+- 5.4.105
+
+* Fri Mar 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.4.102-alt1
+- 5.4.102
+
 * Wed Jan 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.4.91-alt1
 - 5.4.91
 
