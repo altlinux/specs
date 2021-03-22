@@ -1,8 +1,6 @@
-%set_verify_elf_method fhs=relaxed
-
 Name: dbeaver
 Version: 21.0.1
-Release: alt1
+Release: alt2
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -20,6 +18,7 @@ Source1: %name.desktop
 Source2: maven-local-repository.tar
 
 Patch0: %name-alt-arch.patch
+Patch1: %name-alt-autoupdate.patch
 
 BuildRequires: /proc
 BuildRequires: java-11-openjdk-headless
@@ -45,6 +44,7 @@ DBeaver is free and open source universal database tool for developers and datab
 %prep
 %setup -b 2
 %patch0 -p1
+%patch1 -p1
 
 %__rm -rf ~/.m2
 %__mv -Tf ../.m2 ~/.m2
@@ -53,20 +53,55 @@ DBeaver is free and open source universal database tool for developers and datab
 mvn -o package
 
 %install
+# Create  directories
 %__mkdir_p %buildroot%_bindir
-%__mkdir_p %buildroot%_datadir
-%__mkdir_p %buildroot%_desktopdir
-%__cp -r product/community/target/products/org.jkiss.dbeaver.core.product/linux/gtk/%_arch/%name %buildroot%_datadir
-%__install -m 0755 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-%__ln_s %_datadir/%name/%name %buildroot%_bindir/%name
+%__mkdir_p %buildroot%_datadir/%name
+%__mkdir_p %buildroot%_libexecdir
+%__mkdir_p %buildroot%_pixmapsdir
+
+# Install icons into /usr/share/icons/hicolor
+for _size in 16 32 48 64 128 256 512
+do
+	%__install -Dp -m 0644 product/community/icons-sources/icon_${_size}x${_size}.png %buildroot%_iconsdir/hicolor/${_size}x${_size}/apps/%name.png
+done
+
+# Move into the target directory
+%__cp -r product/community/target/products/org.jkiss.dbeaver.core.product/linux/gtk/%_arch/%name %buildroot%_libexecdir
+
+# Move shared data to /usr/share/dbeaver
+for _file in  .eclipseproduct artifacts.xml configuration dbeaver.ini licenses readme.txt
+do
+	%__mv %buildroot%_libexecdir/%name/${_file} %buildroot%_datadir/%name
+	%__ln_s ../../..%_datadir/%name/${_file} %buildroot%_libexecdir/%name/
+done
+
+%ifarch x86_64
+%__rm %buildroot%_libexecdir/%name/%name.png
+%endif
+
+# Install icons into /usr/share/pixmaps
+%__mv %buildroot%_libexecdir/%name/icon.xpm %buildroot%_pixmapsdir/%name.xpm
+
+# Install executable script into /usr/bin
+%__ln_s ../..%_libexecdir/%name/%name %buildroot%_bindir/%name
+
+# Install application launcher into /usr/share/applications
+%__install -Dp -m 0755 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
 %_bindir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
 %config %_datadir/%name/%name.ini
+%_iconsdir/hicolor/*/apps/%name.png
+%_libexecdir/%name
+%_pixmapsdir/%name.xpm
 
 %changelog
+* Mon Mar 22 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.1-alt2
+- Improved build
+- Disable auto update check by default
+
 * Mon Mar 22 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.1-alt1
 - Version 21.0.1
 
