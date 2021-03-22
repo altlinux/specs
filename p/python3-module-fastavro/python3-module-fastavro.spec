@@ -1,7 +1,7 @@
 %define  modulename fastavro
 
 Name:    python3-module-%modulename
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: Fast Avro for Python
@@ -13,7 +13,6 @@ URL:     https://github.com/fastavro/fastavro
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython
 
 Source:  %modulename-%version.tar
@@ -44,6 +43,9 @@ export FASTAVRO_USE_CYTHON=1
 %doc *.md
 
 %changelog
+* Mon Mar 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.4-alt1
+- Automatically updated to 1.3.4.
+
 * Wed Mar 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
 - Automatically updated to 1.3.3.
 
@@ -78,4 +80,4 @@ export FASTAVRO_USE_CYTHON=1
 - Automatically updated to 1.0.0.
 
 * Sat Jun 20 2020 Grigory Ustinov <grenka@altlinux.org> 0.23.4-alt1
-- Initial build for Sisyphus
+- Initial build for Sisyphus.
