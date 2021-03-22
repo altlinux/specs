@@ -1,7 +1,6 @@
-%set_verify_elf_method textrel=relaxed
 %define libname cppo_ocamlbuild
 Name: ocaml-cppo
-Version: 1.6.6
+Version: 1.6.7
 Release: alt1
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
@@ -9,7 +8,7 @@ Group: Development/ML
 Url: http://mjambon.com/cppo.html
 # https://github.com/mjambon/cppo
 Source0: %name-%version.tar
-BuildRequires: ocaml ocaml-findlib dune opam ocaml-ocamlbuild
+BuildRequires: dune ocaml ocaml-ocamlbuild-devel ocaml-findlib
 
 %description
 Cppo is an equivalent of the C preprocessor targeted at the OCaml
@@ -41,38 +40,32 @@ developing applications that use %name-ocamlbuild.
 
 %prep
 %setup 
+
 %build
-make all
+%dune_build --release @install
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
+
+%check
+%dune_check
 
 %files
 %doc LICENSE.md README.md Changes
 %_bindir/cppo
-%_libdir/ocaml/cppo/META
-%_libdir/ocaml/cppo/opam
+%_libdir/ocaml/cppo
 
-%files -n ocaml-%libname
-%dir %_libdir/ocaml/%libname
-%dir %_libdir/ocaml/cppo
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
+%files -n ocaml-%libname -f ocaml-files.runtime
+%exclude %_libdir/ocaml/cppo/META
 
-%files -n ocaml-%libname-devel
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/cppo/dune-package
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/*.ml
+%files -n ocaml-%libname-devel -f ocaml-files.devel
+%exclude %_libdir/ocaml/cppo/opam
+%exclude %_libdir/ocaml/cppo/dune-package
 
 %changelog
+* Mon Mar 22 2021 Anton Farygin <rider@altlinux.org> 1.6.7-alt1
+- 1.6.7
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.6.6-alt1
 - 1.6.6
 
