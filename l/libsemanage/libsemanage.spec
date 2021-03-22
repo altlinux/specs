@@ -6,7 +6,7 @@
 
 Name: libsemanage
 Epoch: 1
-Version: 3.1
+Version: 3.2
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
@@ -86,7 +86,6 @@ binary policies.
 
 %install
 %makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib install-pywrap PYTHON=python3
-ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_libdir/libsemanage.so
 
 # TODO: currently only man5dir is translated. If other man pages are translated, %%find_lang use should be improved
 %find_lang --with-man --all-name %name
@@ -116,6 +115,9 @@ ln -sf $(relative /%_lib/libsemanage.so.1 %_libdir/libsemanage.so) %buildroot/%_
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt1
+- Updated to upstream version 3.2.
+
 * Fri Jul 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.1-alt1
 - Updated to upstream version 3.1.
 
