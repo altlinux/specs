@@ -3,7 +3,7 @@
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 4.6.2
+Version: 4.6.3
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
@@ -16,23 +16,20 @@ URL: https://pypi.org/project/lxml
 # https://github.com/lxml/lxml
 Source: %name-%version.tar
 
-BuildPreReq: libxslt-devel zlib-devel
-
 %if_without bootstrap
 # Used for tests only, but depends on lxml itself,
 # which is not yet built in a bootstrap environment.
-BuildPreReq: python3-module-cssselect
+BuildRequires: python3-module-cssselect
 # needed for: from lxml.cssselect import CSSSelector
-%py3_use cssselect
+Requires: python3-module-cssselect
 %endif
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: libxslt-devel zlib-devel
 # see doc/build.txt
 BuildRequires: python3-module-Cython >= 0.18
-BuildRequires: python3-devel
-
-%add_python3_req_skip etree
 
 %description
 lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.
@@ -91,6 +88,9 @@ PYTHONPATH=src python3 src/lxml/tests/selftest2.py
 %doc doc samples
 
 %changelog
+* Mon Mar 22 2021 Grigory Ustinov <grenka@altlinux.org> 4.6.3-alt1
+- Build new version.
+
 * Tue Mar 02 2021 Grigory Ustinov <grenka@altlinux.org> 4.6.2-alt1
 - Build new version.
 - Disable bootstrap.
