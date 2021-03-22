@@ -1,5 +1,5 @@
 Name: spdlog
-Version: 1.8.0
+Version: 1.8.2
 Release: alt1
 
 Summary: Super fast C++ logging library
@@ -69,6 +69,9 @@ export LD_LIBRARY_PATH=$(pwd)/BUILD
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.2-alt1
+- new version 1.8.2 (with rpmrb script)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0 (with rpmrb script)
 
