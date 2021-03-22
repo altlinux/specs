@@ -1,7 +1,7 @@
 %define ocamlmod gsl
 Name: ocaml-%ocamlmod
-Version: 1.24.1
-Release: alt3
+Version: 1.24.3
+Release: alt1
 Summary: Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License: GPLv3
@@ -49,6 +49,9 @@ programs which use interface to GSL (GNU scientific library)
 
 %files devel -f ocaml-files.devel
 %changelog
+* Mon Mar 22 2021 Anton Farygin <rider@altlinux.org> 1.24.3-alt1
+- 1.24.3
+
 * Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 1.24.1-alt3
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - updated license to GPLv3 according to upstream changes
