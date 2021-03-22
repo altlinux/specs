@@ -1,7 +1,7 @@
 %define rname kigo
 
 Name: kde5-%rname
-Version: 20.12.0
+Version: 20.12.3
 Release: alt1
 %K5init
 
@@ -50,6 +50,9 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
+- new version
+
 * Tue Dec 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - new version
 
