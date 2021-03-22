@@ -2,13 +2,15 @@
 
 %define ver_major 3.34
 %define api_ver 1.0
+%define sover 14
 %define _libexecdir %_prefix/libexec
 
 %def_enable introspection
 %def_enable gtk_doc
+%def_disable check
 
 Name: gnome-bluetooth
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -18,7 +20,7 @@ Url: https://wiki.gnome.org/Projects/GnomeBluetooth
 
 Provides: bluez-gnome = %version
 Obsoletes: bluez-gnome < %version
-Requires:  bluez >= 5
+Requires:  bluez >= 5.51
 Requires: lib%name = %version-%release rfkill
 
 %if_disabled snapshot
@@ -37,6 +39,8 @@ BuildRequires: libcanberra-gtk3-devel
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 %endif
+%{?_enable_check:BuildRequires: bluez dbus python3-module-pygobject3 python3-module-dbus
+BuildRequires: python3-module-dbusmock typelib(Gtk) = 3.0}
 
 %description
 The GNOME Bluetooth Subsystem
@@ -102,8 +106,11 @@ cat > %buildroot%_altdir/%name <<EOF
 %_bindir/bluetooth-sendto	%_bindir/%name-sendto	10
 EOF
 
-
 %find_lang --with-gnome --output=global.lang %name gnome-bluetooth2
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+dbus-run-session %meson_test
 
 
 %files -f global.lang
@@ -135,6 +142,9 @@ EOF
 %endif
 
 %changelog
+* Mon Mar 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4 (bumped soname)
+
 * Thu Oct 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 
