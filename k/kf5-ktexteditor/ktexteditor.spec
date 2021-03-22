@@ -1,8 +1,8 @@
 %define rname ktexteditor
 
 Name: kf5-%rname
-Version: 5.79.0
-Release: alt2
+Version: 5.80.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -98,6 +98,9 @@ mkdir %buildroot/%_datadir/katepart5/syntax/
 #%_K5xmlgui/katepart/
 
 %changelog
+* Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
+- new version
+
 * Wed Mar 10 2021 Slava Aseev <ptrnine@altlinux.org> 5.79.0-alt2
 - fix missing KF5SyntaxHighlighting in devel package
 

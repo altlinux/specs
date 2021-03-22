@@ -1,9 +1,9 @@
 %define rname kio
 
-%def_enable streebog
+%def_disable streebog
 
 Name: kf5-%rname
-Version: 5.79.0
+Version: 5.80.0
 Release: alt1
 %K5init altplace
 
@@ -115,7 +115,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data doc kconf_update
+%K5install_move data doc kconf_update kdevappwizard
 %find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 
@@ -153,6 +153,7 @@ KF5 library
 %_K5archdata/mkspecs/modules/qt_KIO*.pri
 %_K5archdata/mkspecs/modules/qt_KNTLM.pri
 %_K5dbus_iface/*.xml
+%_K5data/kdevappwizard/templates/*ioslave*
 
 %files -n libkf5kiocore
 %_K5lib/libKF5KIOCore.so.*
@@ -166,6 +167,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
+- new version
+
 * Mon Feb 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.79.0-alt1
 - new version
 
