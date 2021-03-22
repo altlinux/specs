@@ -1,8 +1,8 @@
 %set_verify_elf_method fhs=relaxed
 
 Name: dbeaver
-Version: 21.0.0
-Release: alt3
+Version: 21.0.1
+Release: alt1
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -56,7 +56,7 @@ mvn -o package
 %__mkdir_p %buildroot%_bindir
 %__mkdir_p %buildroot%_datadir
 %__mkdir_p %buildroot%_desktopdir
-%__cp -r product/standalone/target/products/org.jkiss.dbeaver.core.product/linux/gtk/%_arch/%name %buildroot%_datadir
+%__cp -r product/community/target/products/org.jkiss.dbeaver.core.product/linux/gtk/%_arch/%name %buildroot%_datadir
 %__install -m 0755 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %__ln_s %_datadir/%name/%name %buildroot%_bindir/%name
 
@@ -67,6 +67,9 @@ mvn -o package
 %config %_datadir/%name/%name.ini
 
 %changelog
+* Mon Mar 22 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.1-alt1
+- Version 21.0.1
+
 * Thu Mar 04 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.0-alt3
 - Build on ppc64le
 
