@@ -1,6 +1,5 @@
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-opam-file-format
-Version: 2.1.0
+Version: 2.1.2
 Release: alt1
 Summary: Parser and printer for the opam file syntax
 Group: Development/ML
@@ -38,6 +37,9 @@ files for developing applications that use %name.
 %doc LICENSE
 
 %changelog
+* Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 - switch to dune build system
