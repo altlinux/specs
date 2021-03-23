@@ -16,7 +16,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox-esr
-Version: 78.8.0
+Version: 78.9.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -57,6 +57,9 @@ Patch022: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
 Patch024: 0024-MOZILLA-1605273-only-run-CRLite-on-certificates-with.patch
 Patch025: 0025-update-packed_simd-for-rust-1.48.patch
 ### End Patches
+
+# Hang up on build browser/components/about
+ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -160,7 +163,6 @@ Mozilla, созданная с использованием языка XUL дл�
 %package wayland
 Summary:    Firefox Wayland launcher.
 Group:      Networking/WWW
-BuildArch:  noarch
 Requires:   %name
 Conflicts:  firefox-wayland
 
@@ -171,7 +173,6 @@ to run Firefox natively on Wayland.
 %package config-privacy
 Summary:    Firefox configuration with the paranoid privacy settings
 Group:	    System/Configuration/Networking
-BuildArch:  noarch
 Requires: %name = %version-%release
 Conflicts:  firefox-config-privacy
 
@@ -449,6 +450,15 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Mar 23 2021 Andrey Cherepanov <cas@altlinux.org> 78.9.0-alt1
+- New version (78.9.0).
+- Security fixes:
+  + CVE-2021-23981 Texture upload into an unbound backing buffer resulted in an out-of-bound read
+  + CVE-2021-23982 Internal network hosts could have been probed by a malicious webpage
+  + CVE-2021-23984 Malicious extensions could have spoofed popup information
+  + CVE-2021-23987 Memory safety bugs fixed in Firefox 87 and Firefox ESR 78.9
+- Do not build for ppc64le.
+
 * Tue Feb 23 2021 Andrey Cherepanov <cas@altlinux.org> 78.8.0-alt1
 - New version (78.8.0).
 - Security fixes:
