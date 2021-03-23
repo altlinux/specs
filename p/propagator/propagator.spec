@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20201216
+Version: 20210323
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Tue Mar 23 2021 Anton Midyukov <antohami@altlinux.org> 20210323-alt1
+- disk.c, mount.c: Add support exfat
+
 * Wed Dec 16 2020 Dmitry Terekhin <jqt4@altlinux.org> 20201216-alt1
 - mkmodpack: warn about incorrect patterns
   Kernel modules may be needed to access rootfs.
