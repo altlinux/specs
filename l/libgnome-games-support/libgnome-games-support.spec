@@ -2,7 +2,7 @@
 %define api_ver 1
 
 Name: libgnome-games-support
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Shared library for GNOME games
@@ -57,6 +57,9 @@ developing applications that use %name.
 
 
 %changelog
+* Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
