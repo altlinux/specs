@@ -1,6 +1,6 @@
 %define rname purpose
 
-%def_disable bootstrap
+%def_enable bootstrap
 
 %define sover 5
 %define libphabricatorhelpers libphabricatorhelpers%sover
@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.80.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -98,6 +98,9 @@ KF5 library
 %install
 %K5install
 %K5install_move data purpose kpackage locale
+
+mkdir -p %buildroot/%_datadir/accounts/services/kde/
+
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
@@ -112,7 +115,9 @@ KF5 library
 %_K5qml/org/kde/purpose/
 %_K5data/purpose/
 #%_K5data/kpackage/Purpose/
+%if_disabled bootstrap
 %_K5icon/*/*/actions/kipiplugin_youtube.*
+%endif
 %_K5icon/*/*/apps/*purpose*.*
 %_datadir/accounts/services/kde/
 
@@ -135,6 +140,9 @@ KF5 library
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Tue Mar 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt2
+- build without kaccounts-integration because loop of build requires
+
 * Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
 - new version
 
