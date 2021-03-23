@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.80.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -140,7 +140,13 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Tue Mar 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt3
+- merge p9 changelog
+
 * Tue Mar 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt2
+- build without kaccounts-integration because loop of build requires
+
+* Tue Mar 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.79.0-alt2
 - build without kaccounts-integration because loop of build requires
 
 * Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
