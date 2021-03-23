@@ -1,6 +1,6 @@
 Name: fricas
-Version: 1.2.6
-Release: alt2
+Version: 1.3.6
+Release: alt1
 
 Summary: FriCAS Computer Algebra System
 License: Modified BSD License
@@ -17,6 +17,9 @@ Source4: %name.desktop
 Requires: sbcl >= 1.1.12
 
 Conflicts: axiom
+
+ExclusiveArch: armh aarch64 %ix86 x86_64 ppc sparcv9
+
 
 BuildRequires: libXpm-devel libXpm clisp
 BuildRequires: /proc
@@ -74,6 +77,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Wed Mar 24 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.6-alt1
+- 1.3.6
+
 * Thu Dec 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt2
 - rebuilt with recent libffcall
 
