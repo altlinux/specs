@@ -1,12 +1,12 @@
 Name: zlib-ng
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Zlib replacement with optimizations
 License: Zlib
 Group: System/Libraries
 
-Url: https://ru.%name.org/
+Url: https://github.com/%name/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExcludeArch: armh
@@ -29,7 +29,7 @@ The %name-devel package contains development files for
 developing application that use %name.
 
 %package devel-static
-Summary: Static library for zlib-ng
+Summary: Static library for %name
 Group: Development/C
 Requires: %name-devel = %EVR
 
@@ -63,5 +63,8 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Tue Mar 23 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1
+- Version 2.0.2
+
 * Thu Mar 18 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1
 - Initial build for ALT Linux
