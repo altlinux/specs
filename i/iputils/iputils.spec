@@ -1,7 +1,7 @@
 Name: iputils
-%define timestamp 20200821
+%define timestamp 20210202
 Version: %timestamp
-Release: alt3
+Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+ and Rdisc
@@ -12,12 +12,6 @@ Source0: %name-%version.tar
 Source1: ping.control
 Source2: ninfod.init
 Patch: %name-%version-%release.patch
-
-# Patches from upstream git.
-# Drop them when new version will be released.
-Patch100: common-fix-infinite-loop-when-getrandom-fails.patch
-Patch101: ping-fix-dead-loop-problem.patch
-Patch102: arpping-make-update-neighbours-work-again.patch
 
 Conflicts: netkit-base
 
@@ -57,9 +51,6 @@ Queries.
 %prep
 %setup
 %patch -p1
-%patch100 -p1
-%patch101 -p1
-%patch102 -p1
 
 %build
 %add_optflags -fno-strict-aliasing -Wstrict-prototypes -Werror -Wno-error=variadic-macros
@@ -73,6 +64,7 @@ export LDFLAGS='-pie'
 %meson \
 	-DBUILD_TFTPD=false \
 	-Dsystemdunitdir=%_unitdir \
+	-DINSTALL_SYSTEMD_UNITS=true \
 	-DNO_SETCAP_OR_SUID=true \
 	-DUSE_CAP=true \
 	-DUSE_IDN=true \
@@ -160,6 +152,10 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Tue Mar 23 2021 Mikhail Efremov <sem@altlinux.org> 20210202-alt1
+- Drop obsoleted patches.
+- 20200821 -> 20210202.
+
 * Thu Nov 19 2020 Mikhail Efremov <sem@altlinux.org> 20200821-alt3
 - ninfod: Fix seq type.
 - Patch from upstream:
