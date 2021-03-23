@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define libname uri
 Name: ocaml-%libname
-Version: 3.1.0
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Summary: An RFC3986 URI/URL parsing library for OCaml
 Group: Development/ML
 License: BSD
@@ -11,9 +10,8 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: dune >= 1.8
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: opam
 BuildRequires: ocaml-ounit-devel
+BuildRequires: ocaml-angstrom-devel
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel
 BuildRequires: ocaml-result-devel
@@ -40,48 +38,27 @@ developing applications that use %name.
 
 %build
 sed -si 's,oUnit,ounit2,' lib_test/dune
-dune build --release @install
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 # Makes *.cmxs executable such that they will be stripped.
 find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%libname
-%dir %_libdir/ocaml/%libname-sexp
-%dir %_libdir/ocaml/%libname/services
-%dir %_libdir/ocaml/%libname/services_full
-%_libdir/ocaml/%{libname}*/META
-%_libdir/ocaml/%{libname}*/*.cmi
-%_libdir/ocaml/%{libname}*/*.cma
-%_libdir/ocaml/%libname/*/*.cmi
-%_libdir/ocaml/%libname/*/*.cma
 
-%files devel
-%_libdir/ocaml/%{libname}*/opam
-%_libdir/ocaml/%{libname}*/dune-package
-%_libdir/ocaml/%{libname}*/*.cmx
-%_libdir/ocaml/%{libname}*/*.cmt*
-%_libdir/ocaml/%{libname}*/*.ml
-%_libdir/ocaml/%{libname}*/*.mli
-%_libdir/ocaml/%{libname}*/*.a
-%_libdir/ocaml/%{libname}*/*.cmxa
-%_libdir/ocaml/%{libname}*/*.cmxs
-%_libdir/ocaml/%libname/*/*.cmx
-%_libdir/ocaml/%libname/*/*.cmt*
-%_libdir/ocaml/%libname/*/*.ml
-%_libdir/ocaml/%libname/*/*.mli
-%_libdir/ocaml/%libname/*/*.a
-%_libdir/ocaml/%libname/*/*.cmxa
-%_libdir/ocaml/%libname/*/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 4.1.0-alt1
+- 4.1.0
+- cleanup spec
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 3.1.0-alt2
 - enabled sexp variant
 
