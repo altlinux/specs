@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.9.1
-Release: alt1
+Release: alt2
 Summary: A module packaging tool for OCaml
 License: BSD
 Group: Development/ML
@@ -61,6 +61,17 @@ make install \
      OCAMLFIND_BIN=%{_bindir} \
      OCAMLFIND_MAN=%{_mandir}
 
+# install dummy META library for seq
+mkdir -p %buildroot%_libdir/ocaml/seq
+
+cat >> %buildroot%_libdir/ocaml/seq/META<<'EOF'
+name="seq"
+version="[distributed with OCaml 4.07 or above]"
+description="dummy backward-compatibility package for iterators"
+requires=""
+EOF
+
+
 %files
 %_bindir/ocamlfind
 %_libdir/ocaml/etc/*
@@ -83,6 +94,9 @@ make install \
 
 
 %changelog
+* Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 1.9.1-alt2
+- added dummy META file for seq library
+
 * Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
