@@ -1,6 +1,6 @@
 Name: torsmo
 Version: 0.18
-Release: alt3.qa2
+Release: alt4
 Summary: Torsmo is a system monitor like gkrellm, but lightweight
 
 Source0: %name-%version.tar.gz
@@ -30,16 +30,13 @@ Torsmo can show various information about your system and it's peripherals.
 %patch1 -p1
 
 %build
-
-autoreconf -fisv
+%autoreconf
+%add_optflags -fcommon
 %configure --x-libraries=%_libdir
-
 %make
 
 %install
-
-
-%makeinstall BINDIR=$RPM_BUILD_ROOT%_bindir
+%makeinstall BINDIR=%buildroot%_bindir
 
 # menu
 mkdir -p %buildroot%_desktopdir
@@ -63,6 +60,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.18-alt4
+- NMU: fixed FTBFS.
+
 * Thu Apr 07 2011 Igor Vlasenko <viy@altlinux.ru> 0.18-alt3.qa2
 - NMU: converted debian menu to freedesktop
 
