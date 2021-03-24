@@ -1,7 +1,7 @@
 %global repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.3.0.45
+Version: 5.4.4
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -44,11 +44,11 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 # sed -i '/include <QPainter>/a #include <QPainterPath>' \
 #    src/widgets/miniframenavigation.cpp src/widgets/avatar.cpp src/widgets/miniframebutton.cpp
 # Fixed background for the launcher.
-sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' \
-    src/boxframe/{backgroundmanager.cpp,boxframe.cpp}
-sed -i '1i#include <QPainterPath>' \
-    src/windowedframe.h \
-    src/widgets/modetogglebutton.cpp
+#sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/backgrounds/deepin/desktop.jpg|' \
+#    src/boxframe/{backgroundmanager.cpp,boxframe.cpp}
+#sed -i '1i#include <QPainterPath>' \
+#    src/windowedframe.h \
+#    src/widgets/modetogglebutton.cpp
 
 %build
 %cmake_insource \
@@ -67,12 +67,16 @@ sed -i '1i#include <QPainterPath>' \
 %_datadir/%repo/
 %_datadir/dbus-1/services/*.service
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%_datadir/glib-2.0/schemas/com.deepin.dde.launcher.gschema.xml
 %_desktopdir/%repo.desktop
 
 %files devel
 %_includedir/%repo/
 
 %changelog
+* Fri Mar 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.4-alt1
+- New version (5.4.4) with rpmgs script.
+
 * Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.45-alt1
 - New version (5.3.0.45) with rpmgs script.
 
