@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.8.6
-Release: alt3
+Release: alt4
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -145,6 +145,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 # Note: to handle dependency we require libmuffin-gir explicitly
 %filter_from_requires /typelib(Meta)/d
 
+# Another conflict with gnome-shell
+%filter_from_requires /typelib(St)/d
+
 # Remove from explicit dependencies muffin private libraries. By default
 # RPM doesn't generate this provides for muffin but generates requires
 # for them in cinnamon debuginfo packages.
@@ -152,6 +155,7 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %filter_from_requires /libmuffin-cogl/d
 
 # Clean-up provides
+# gnome-shell provides typelib(St) as well
 %filter_from_provides /typelib(St)/d
 
 %files
@@ -183,6 +187,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Wed Mar 24 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt4
+- Resolve deps conflict with gnome-shell
+
 * Mon Feb 15 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt3
 - Fix meson build deps for js test executable
 
