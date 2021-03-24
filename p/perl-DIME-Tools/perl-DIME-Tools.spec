@@ -6,7 +6,7 @@
 %def_disable test
 
 Name: perl-DIME-Tools
-Version: 0.04
+Version: 0.05
 Release: alt1
 
 Summary: modules for parsing and generate DIME messages
@@ -18,7 +18,7 @@ Url: http://www.cpan.org
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/DIME-Tools-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 26 2006
 BuildRequires: perl-devel
@@ -30,7 +30,7 @@ encoded messages ( Direct Internet Message Encapsulation ). DIME-tools support
 single-record and chunked payloads for sending big attachments.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 find . -name '*.pm' -print0  | xargs -r0 subst "s,\r,," 
 %build
 %perl_vendor_build
@@ -40,9 +40,13 @@ find . -name '*.pm' -print0  | xargs -r0 subst "s,\r,,"
 #add_findreq_skiplist */DIME/Identifier.pm
 
 %files
+%doc Changes README LICENSE examples
 %perl_vendor_privlib/DIME
 
 %changelog
+* Wed Mar 24 2021 Igor Vlasenko <viy@altlinux.org> 0.05-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - automated CPAN update
 
