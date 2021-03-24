@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Crypt/CBC.pm) perl(Crypt/Rijndael.pm) perl(Cry
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.011
+Version: 1.000
 Release: alt1
 Summary: Encrypted, expiring, compressed, serialized session data with integrity
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Mar 24 2021 Igor Vlasenko <viy@altlinux.org> 1.000-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
 - automated CPAN update
 
