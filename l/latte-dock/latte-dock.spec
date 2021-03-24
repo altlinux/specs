@@ -2,7 +2,7 @@
 
 Name: latte-dock
 Version: 0.9.11
-Release: alt1
+Release: alt2
 Summary: Latte is a dock based on plasma frameworks
 
 License: GPLv2+
@@ -90,6 +90,9 @@ make install/fast DESTDIR=%{buildroot} -C BUILD
 %_K5xdgconf/latte-indicators.knsrc
 
 %changelog
+* Wed Mar 24 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.11-alt2
+- Fix desktop file
+
 * Sat Mar 13 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.11-alt1
 - Updated to upstream version v0.9.11
 
