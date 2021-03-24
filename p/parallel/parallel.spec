@@ -1,5 +1,5 @@
 Name: parallel
-Version: 20210222
+Version: 20210322
 Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
@@ -47,6 +47,9 @@ ln -sf parallel %buildroot%_bindir/sem
 %_man7dir/*
 
 %changelog
+* Tue Mar 23 2021 Michael Shigorin <mike@altlinux.org> 20210322-alt1
+- new version (watch file uupdate)
+
 * Mon Feb 22 2021 Michael Shigorin <mike@altlinux.org> 20210222-alt1
 - new version (watch file uupdate)
 
