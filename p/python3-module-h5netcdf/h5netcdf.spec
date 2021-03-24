@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname h5netcdf
 
-%def_with check
+%def_enable check
 
 Name: python3-module-%oname
-Version: 0.7.4
+Version: 0.10.0
 Release: alt1
 
 Summary: Pythonic interface to netCDF4 via h5py
@@ -19,9 +19,10 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-h5py python3-module-netCDF4
 BuildRequires: python3-module-Cython
-%if_with check
+%if_enabled check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-cftime
 %endif
 
 %py3_provides %oname
@@ -46,12 +47,8 @@ tested for compatibility with other netCDF4 interfaces.
 %install
 %python3_install
 
-%if_with check
 %check
 python3 setup.py test -v
-export PYTHONPATH=%buildroot%python3_sitelibdir
-# py.test3 -vv
-%endif
 
 %files
 %doc *.rst
@@ -59,6 +56,10 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
+- Build new version.
+- Fixed Build Requires (Fixed FTBFS).
+
 * Fri Nov 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7.4-alt1
 - Version updated to 0.7.4
 - python2 disabled
