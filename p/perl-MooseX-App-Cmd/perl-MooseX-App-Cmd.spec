@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(FindBin.pm) perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/NoTabs.pm) perl-devel perl-podlators
+BuildRequires: perl(FindBin.pm) perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/NoTabs.pm) perl-devel perl-podlators perl(Module/Metadata.pm)
 # END SourceDeps(oneline)
 Name:       perl-MooseX-App-Cmd
-Version:    0.32
-Release:    alt1.1
+Version:    0.34
+Release:    alt1
 # see lib/MooseX/App/Cmd.pm
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Mashes up MooseX::Getopt and App::Cmd
-Source:     http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-App-Cmd-%{version}.tar.gz
+Source0:     http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-App-Cmd-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/MooseX-App-Cmd
 BuildArch:  noarch
 
@@ -130,10 +130,13 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 make test
 
 %files
-%doc Changes LICENSE README
+%doc Changes README CONTRIBUTING
 %{perl_vendor_privlib}/MooseX
 
 %changelog
+* Wed Mar 24 2021 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1.1
 - rebuild to restore role requires
 
