@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.9
-Release: alt2
+Release: alt3
 
 Summary: A Bower-centric static file server for WSGI
 License: BSD
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-webtest
+BuildRequires: python3-module-sphinx
 
 %py3_provides %oname
 
@@ -102,6 +103,9 @@ py.test3
 
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.9-alt3
+- Fixed BuildRequires (fixed FTBFS).
+
 * Mon Feb 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9-alt2
 - Build for python2 disabled.
 
