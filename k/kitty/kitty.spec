@@ -2,7 +2,7 @@
 
 Name: kitty
 Version: 0.19.3
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -85,7 +85,10 @@ find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%{__python3}|g'  
 
 %install
 mkdir -p %buildroot%_prefix
-python3 setup.py linux-package --prefix=%buildroot%_prefix --update-check-interval=0
+python3 setup.py linux-package \
+	--prefix=%buildroot%_prefix \
+	--update-check-interval=0 \
+	--debug
 
 %check
 python3 setup.py test --prefix=%buildroot%_prefix
@@ -102,5 +105,8 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_datadir/terminfo/*/*
 
 %changelog
+* Wed Mar 24 2021 Egor Ignatov <egori@altlinux.org> 0.19.3-alt2
+- Fix: add debug sources to debuginfo
+
 * Tue Feb 09 2021 Egor Ignatov <egori@altlinux.org> 0.19.3-alt1
 - First build for ALT.
