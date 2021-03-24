@@ -2,14 +2,14 @@
 
 Name:           heroes-sdl
 Version:        0.21
-Release:        alt2.1
+Release:        alt3
 
 Summary:        Heroes - Game like Nibbles but different.
-License:	GPL
+License:        GPLv2
 Group:          Games/Arcade
 URL:            http://heroes.sourceforge.net/
 Source:         http://download.sourceforge.net/heroes/%_name-%version.tar.gz
-Packager:	Fr. Br. George <george@altlinux.ru>
+Packager:       Fr. Br. George <george@altlinux.ru>
 
 Patch1: heroes-0.21-gcc4.diff
 Patch2: heroes-0.21-gcc_warning.diff
@@ -34,13 +34,14 @@ of play are available, including "get-all-the-bonuses", deathmatch, and
 %define pixdir  %_datadir/pixmaps
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 %patch1 -p1
 %patch2
 %patch3
 
 
 %build
+%add_optflags -fcommon
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir --without-ggi --without-gii --disable-debug --enable-html-doc=%customdocdir ;
 %make_build INTLLIBS=-lm
 cat > %name.desktop <<@@@
@@ -79,6 +80,9 @@ install -D misc/heroes-1.xpm %buildroot%_liconsdir/%name.xpm
 
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.21-alt3
+- NMU: fixed FTBFS.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2.1
 - NMU: added BR: texinfo
 
