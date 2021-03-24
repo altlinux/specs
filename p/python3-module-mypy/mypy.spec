@@ -12,8 +12,8 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.790
-Release: alt2
+Version: 0.812
+Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -69,7 +69,7 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 # Python2 parser
 rm mypy/fastparse2.py
@@ -147,6 +147,9 @@ tox.py3 --sitepackages -vvr -- -vv $TESTS
 %endif
 
 %changelog
+* Tue Mar 23 2021 Stanislav Levin <slev@altlinux.org> 0.812-alt1
+- 0.790 -> 0.812.
+
 * Wed Oct 28 2020 Stanislav Levin <slev@altlinux.org> 0.790-alt2
 - Fixed FTBFS(virtualenv 20.1.0).
 
