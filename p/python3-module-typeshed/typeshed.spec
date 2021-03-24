@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0
-Release: alt1.git81d06761
+Release: alt1.gitadd4d92f
 
 Summary: External type annotations for the Python packages
 License: Apache-2.0
@@ -40,6 +40,9 @@ cp -a third_party %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/
 
 %changelog
+* Wed Mar 24 2021 Stanislav Levin <slev@altlinux.org> 0-alt1.gitadd4d92f
+- Updated to add4d92f.
+
 * Tue Sep 15 2020 Stanislav Levin <slev@altlinux.org> 0-alt1.git81d06761
 - Initial build for Sisyphus.
 
