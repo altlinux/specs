@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.9.2
-Release: alt4
+Release: alt5
 
 Summary: Parser interpreter based on PEG grammars written in Python
 License: MIT
@@ -12,6 +12,7 @@ BuildArch: noarch
 
 Source0: v%version.tar.gz
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-livereload python3-module-mkdocs
 
 
@@ -38,6 +39,9 @@ rm -rf build && ln -sf build3 build
 
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt5
+- Fixed FTBFS.
+
 * Mon Jun 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.9.2-alt4
 - Docs build fixed.
 
