@@ -1,7 +1,7 @@
 Name: tuxmath
 Group: Games/Other
 Version: 2.0.3
-Release: alt5
+Release: alt6
 Summary: Educational math tutor for children
 
 License: GPLv3 AND CC-BY-SA-3.0 AND OFL-1.1
@@ -31,6 +31,7 @@ different types of gameplay, at a variety of difficulty levels.
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -66,6 +67,9 @@ appstream-util validate-relax --nonet \
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt6
+- fixed ftbfs
+
 * Fri Dec 20 2019 Anton Farygin <rider@altlinux.ru> 2.0.3-alt5
 - applied another russian translation update
 
