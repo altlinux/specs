@@ -1,9 +1,9 @@
 Name: xboard
 Version: 4.9.1
-Release: alt1
+Release: alt2
 
 Summary: An X Window System graphical chessboard
-License: GPL
+License: GPLv3+
 Group: Games/Boards
 
 # git://git.savannah.gnu.org/xboard.git
@@ -52,6 +52,7 @@ default theme for xboard
 %setup
 
 %build
+%add_optflags -fcommon
 %autoreconf
 %configure --with-gtk
 %make_build
@@ -93,6 +94,10 @@ install -d %buildroot%_datadir/%name/theme
 %_gamesdatadir/%name/themes/
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt2
+- Fixed FTBFS.
+- Fixed licence.
+
 * Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
 - Build new version.
 
@@ -173,59 +178,3 @@ install -d %buildroot%_datadir/%name/theme
 
 * Wed Jan 17 2001 AEN <aen@logic.ru>
 - RE adaptation
-
-* Sun Oct 29 2000 Geoffrey Lee <snailtalk@mandrakesoft.com> 4.1.0-1mdk
-- new and shiny source.
-
-* Wed Aug 16 2000 David BAUDENS <baudens@mandrakesoft.com> 4.0.7-5mdk
-- Fix menu entry
-
-* Wed Aug 16 2000 Enzo Maggi <enzo@mandrakesoft.com> 4.0.7-4mdk
-- Minor bug fix in the spec
-
-* Tue Aug 14 2000 Enzo Maggi <enzo@mandrakesoft.com> 4.0.7-3mdk
-- introduced the %_mandir, %_bindir, %_infodir etc.
-
-* Mon Aug 07 2000 Frederic Lepied <flepied@mandrakesoft.com> 4.0.7-2mdk
-- automatically added BuildRequires
-
-* Thu Jun 13 2000 Florin Grad <florin@mandrakesoft.com> 4.0.7-1mdk
-- "new" release
-
-* Fri May 05 2000 Florin Grad <florin@mandrakesoft.com> 4.0.5-2mdk
-- fix the menu integration
-
-* Sat Apr 08 2000 Christopher Molnar <molnarc@mandrakesoft.com> 4.0.5-1mdk
-- Updated to 4.0.5
-- New groups
-- Added docs
-- added menu funtions to spec file
-
-* Fri Nov 12 1999 Damien Kroktine <damien@mandrakesoft.com>
-- Mandrake release
-
-* Wed Sep  8 1999 Bill Nottingham <notting@redhat.com>
-- update to 4.0.3
-
-* Sat Aug 14 1999 Bill Nottingham <notting@redhat.com>
-- change requires: to virtual 'chessprogram'
-
-* Thu Aug 12 1999 Bill Nottingham <notting@redhat.com>
-- require gnuchess so it will work out of the box
-
-* Fri Jul 30 1999 Bill Nottingham <notting@redhat.com>
-- update to 4.0.2
-
-* Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com>
-- auto rebuild in the new build environment (release 3)
-
-* Thu Dec 17 1998 Michael Maher <mike@redhat.com>
-- cleaned up spec file
-- built package for 6.0
-
-* Sat Jul 11 1998 Mike Wangsmo <wanger@redhat.com>
-- updated to a new version
-- buildrooted the package too
-
-* Fri May 01 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
