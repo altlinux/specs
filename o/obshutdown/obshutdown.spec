@@ -1,6 +1,6 @@
 Name: obshutdown
 Version: 0.1
-Release: alt3
+Release: alt4
 Summary: Openbox shutdown manager
 Summary(ru_RU.UTF-8): Управеление сеансом openbox
 License: GPL
@@ -18,9 +18,9 @@ Openbox shutdown manager
 %setup
 
 %build
-%add_optflags -fgnu89-inline
+%add_optflags -fgnu89-inline -fcommon
 %autoreconf
-%configure 
+%configure
 %make_build
 
 %install
@@ -34,9 +34,11 @@ Openbox shutdown manager
 %_datadir/%name/*
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.1-alt4
+- Fixed FTBFS.
+
 * Wed May 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt3
 - NMU: fixed build with new toolchain.
 
 * Sun Nov 08 2015 Konstantin Artyushkin <akv@altlinux.org> 0.1-alt2
 - initial build for ALT Linux Sisyphus
-
