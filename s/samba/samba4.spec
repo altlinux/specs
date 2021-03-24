@@ -61,7 +61,7 @@
 %endif
 
 Name:    samba
-Version: 4.13.7
+Version: 4.14.2
 Release: alt1
 
 Group:   System/Servers
@@ -137,6 +137,11 @@ BuildRequires: krb5-kdc
 %endif
 %endif
 
+%if_with dc
+BuildRequires: python3-module-markdown
+BuildRequires: python3-module-dns
+%endif
+
 BuildRequires: glibc-devel glibc-kernheaders
 # https://bugzilla.samba.org/show_bug.cgi?id=9863
 BuildConflicts: setproctitle-devel
@@ -150,7 +155,7 @@ BuildRequires: libdbus-devel
 %endif
 
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.3.1
+BuildRequires: libtalloc-devel >= 2.3.2
 BuildRequires: python3-module-talloc-devel
 %endif
 
@@ -165,7 +170,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.2.1
+%define ldb_version 2.3.0
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1020,6 +1025,7 @@ ln -sf ..%_samba_libdir/libnss_wins.so    %buildroot/%_lib/libnss_wins.so.2
 
 mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5
 mv %buildroot%_samba_mod_libdir/krb5/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
+mv %buildroot%_samba_mod_libdir/krb5/async_dns_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
 %if_with mitkrb5
 mv %buildroot%_samba_mod_libdir/krb5/winbind_krb5_localauth.so %buildroot%_libdir/krb5/plugins/libkrb5/
 %endif
@@ -1779,10 +1785,10 @@ TDB_NO_FSYNC=1 %make_build test
 
 %files winbind-krb5-locator
 %_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
+%_libdir/krb5/plugins/libkrb5/async_dns_krb5_locator.so
 %if_with doc
 %_man8dir/winbind_krb5_locator.8*
 %endif #doc
-%endif
 
 %if_with mitkrb5
 %files winbind-krb5-localauth
@@ -1790,7 +1796,8 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with doc
 %_man8dir/winbind_krb5_localauth.8*
 %endif #doc
-%endif
+%endif #mitkrb5
+%endif #winbind
 
 %if_with clustering_support
 %files ctdb
@@ -1821,7 +1828,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_sbindir/ctdbd_wrapper
 %_bindir/ctdb
 %_bindir/ctdb_diagnostics
-%_bindir/ctdb_local_daemons
 %_bindir/ltdbtool
 %_bindir/onnode
 %_bindir/ping_pong
@@ -1854,12 +1860,16 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/ctdb-statistics.7*
 %endif
 
+%if_with testsuite
 %files ctdb-tests
+%doc ctdb/tests/README
 %_libexecdir/ctdb/tests
+%_bindir/ctdb_local_daemons
 %_bindir/ctdb_run_tests
 %_bindir/ctdb_run_cluster_tests
 %_datadir/ctdb/tests
-%endif
+%endif #testsuite
+%endif #clustering_support
 
 %files -n task-samba-dc
 
@@ -1867,11 +1877,14 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
-* Wed Mar 24 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.13.7-alt1
-- Update to latest stable security release of the Samba 4.13
+* Thu Mar 25 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.2-alt1
+- Update to latest stable security release of the Samba 4.14
 - Security fixes:
   + CVE-2020-27840: Heap corruption via crafted DN strings
   + CVE-2021-20277: Out of bounds read in AD DC LDAP server
+
+* Mon Mar 22 2021 Evgeny Sinelikov <sin@altlinux.org> 4.14.0-alt1
+- Update to release of Samba 4.14 with client Group Policy support
 
 * Sat Mar 13 2021 Evgeny Sinelikov <sin@altlinux.org> 4.13.5-alt1
 - Update to latest release of Samba 4.13
