@@ -5,16 +5,16 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.29
-%define nss_version   3.61.0
-%define rust_version  1.48.0
-%define cargo_version 1.48.0
+%define nspr_version  4.30
+%define nss_version   3.63.0
+%define rust_version  1.50.0
+%define cargo_version 1.50.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        86.0
+Version:        87.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -496,6 +496,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Mar 24 2021 Alexey Gladkov <legion@altlinux.ru> 87.0-alt1
+- New release (87.0).
+- Security fixes:
+  + CVE-2021-23981: Texture upload into an unbound backing buffer resulted in an out-of-bound read
+  + CVE-2021-23982: Internal network hosts could have been probed by a malicious webpage
+  + CVE-2021-23983: Transitions for invalid ::marker properties resulted in memory corruption
+  + CVE-2021-23984: Malicious extensions could have spoofed popup information
+  + CVE-2021-23985: Devtools remote debugging feature could have been enabled without indication to the user
+  + CVE-2021-23986: A malicious extension could have performed credential-less same origin policy violations
+  + CVE-2021-23987: Memory safety bugs fixed in Firefox 87 and Firefox ESR 78.9
+  + CVE-2021-23988: Memory safety bugs fixed in Firefox 87
+
 * Mon Mar 01 2021 Alexey Gladkov <legion@altlinux.ru> 86.0-alt1
 - New release (86.0).
 - Security fixes:
