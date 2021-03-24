@@ -35,7 +35,7 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 %global cpan_version 2.024
-Version:        2.029
+Version:        2.032
 Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
@@ -249,6 +249,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Wed Mar 24 2021 Igor Vlasenko <viy@altlinux.org> 2.032-alt1
+- automated CPAN update
+
 * Mon Mar 15 2021 Igor Vlasenko <viy@altlinux.org> 2.029-alt1
 - automated CPAN update
 
