@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 0.11.1
-Release: alt2
+Release: alt2.1
 Summary: Statistical computations and models for use with SciPy
 License: BSD-3-Clause
 Group: Development/Python3
@@ -26,10 +26,12 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel python3-devel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-scipy
-# Test dependencies
+
+%if_enabled check
 BuildRequires: python3-module-tox
-BuildRequires: python3(patsy) python3(pandas)
+BuildRequires: python3(patsy) python3(pandas) python3(pandas.util.testing)
 BuildRequires: python3(joblib) python3(pytest-xdist)
+%endif
 
 %py3_provides %oname
 %py3_requires numpy scipy pandas patsy matplotlib cvxopt
@@ -68,7 +70,7 @@ sed -i \
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%python3_build_debug -j${NPROCS:-%__nprocs}
 
 %install
 %python3_install
@@ -101,6 +103,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/%rname/*/test*
 
 %changelog
+* Wed Mar 24 2021 Ivan A. Melnikov <iv@altlinux.org> 1:0.11.1-alt2.1
+- Enable parallel build.
+
 * Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1:0.11.1-alt2
 - Disable check for python3.9 bootstrap.
 
