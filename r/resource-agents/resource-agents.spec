@@ -4,7 +4,7 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.7.0
+Version: 4.8.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
@@ -21,6 +21,7 @@ BuildRequires: python3-devel xsltproc libxslt-devel glib2-devel which docbook-st
 BuildRequires: perl-podlators perl-Socket6 perl-libwww perl-IO-Socket-INET6 perl-Net-Ping perl-MailTools
 BuildRequires: systemd-devel
 BuildRequires: python3-module-jsonlib
+BuildRequires: python3-module-google-api-client
 
 Requires: linux-ha-common
 
@@ -122,21 +123,6 @@ BuildArch: noarch
 %description xen
 Manages Xen virtual machine instances by mapping cluster resource
 start and stop,  to Xen create and shutdown, respectively.
-
-%package drbd
-Group: System/Base
-Requires: %name = %version-%release
-Summary: resource agent manage DRBD
-BuildArch: noarch
-
-%description drbd
-This resource agent manages a Distributed
-Replicated Block Device (DRBD) object as a master/slave
-resource. DRBD is a mechanism for replicating storage.
-
-Deprecation warning: This agent is deprecated and may be removed from
-a future release. See the ocf:linbit:drbd resource agent for a
-supported alternative.
 
 %package lvm
 Group: System/Base
@@ -288,10 +274,6 @@ mkdir -p %buildroot%_var/run/resource-agents
 %exclude %_libexecdir/ocf/resource.d/heartbeat/Xen
 %exclude %_man7dir/*_Xen.*
 
-#exclude %_libexecdir/ocf/resource.d/heartbeat/drbd
-%exclude %_datadir/cluster/drbd*
-#exclude %_man7dir/*_drbd.*
-
 %exclude %_libexecdir/ocf/resource.d/heartbeat/LVM
 %exclude %_datadir/cluster/lvm*
 %exclude %_datadir/%name/ocft/configs/LVM
@@ -342,11 +324,6 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_libexecdir/ocf/resource.d/heartbeat/Xen
 %_man7dir/*_Xen.*
 
-#files drbd
-#_libexecdir/ocf/resource.d/heartbeat/drbd
-#_datadir/cluster/drbd*
-#_man7dir/*_drbd.*
-
 %files lvm
 %_libexecdir/ocf/resource.d/heartbeat/LVM
 %_datadir/cluster/lvm*
@@ -368,6 +345,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Mar 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Mon Mar 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.7.0-alt1
 - 4.7.0
 
