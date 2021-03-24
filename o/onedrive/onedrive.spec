@@ -1,5 +1,5 @@
 Name: onedrive
-Version: 2.4.9
+Version: 2.4.10
 Release: alt1
 
 Summary: OneDrive Free Client written in D
@@ -66,6 +66,9 @@ chmod a-x %buildroot/%_man1dir/%{name}*
 %config %_logrotatedir/onedrive
 
 %changelog
+* Mon Mar 22 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.10-alt1
+- new version 2.4.10 (with rpmrb script)
+
 * Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.9-alt1
 - new version 2.4.9 (with rpmrb script)
 - set DCFLAGS, not DFLAGS
