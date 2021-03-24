@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 2.5
+%define ver_major 2.6
 %define rdn_name com.github.johnfactotum.Foliate
 
 %define handy_api_ver 1
 %define tracker_api_ver 2.0
 
 Name: foliate
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -23,8 +23,9 @@ Source: %name-%version.tar
 %endif
 
 %define gjs_ver 1.52
+%define iso_codes_ver 3.57
 
-Requires: libgjs >= %gjs_ver dconf iso-codes
+Requires: libgjs >= %gjs_ver dconf iso-codes >= %iso_codes_ver
 #Recommends: espeak, espeak-ng or festival
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -34,7 +35,7 @@ Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Gspell)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(Handy) = %handy_api_ver
 Requires: typelib(Pango)
 Requires: typelib(Soup)
@@ -45,7 +46,7 @@ Requires: typelib(WebKit2)
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: desktop-file-utils libappstream-glib-devel
-BuildRequires: libgjs-devel
+BuildRequires: libgjs-devel iso-codes-devel >= %iso_codes_ver
 
 %description
 Foliate is a simple and modern GTK eBook reader with following features:
@@ -84,6 +85,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Wed Mar 24 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
