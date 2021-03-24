@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.61.0
+Version:	3.63.0
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -226,6 +226,20 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed Mar 24 2021 Alexey Gladkov <legion@altlinux.ru> 3.63.0-alt1
+- New version (3.63).
+- Certificate Authority Changes:
+  + Add CN=GlobalSign Secure Mail Root R45
+  + Add CN=GlobalSign Secure Mail Root E45
+  + Add CN=GlobalSign Root R46
+  + Add CN=GlobalSign Root E46
+  + Add CN=AC RAIZ FNMT-RCM SERVIDORES SEGUROS
+  + Remove CN=GeoTrust Primary Certification Authority - G2
+  + Remove CN=VeriSign Universal Root Certification Authority
+  + Turn off Websites trust bit for "Staat der Nederlanden Root CA - G3"
+  + Turn off Websites trust bit for "Chambers of Commerce Root - 2008"
+  + Turn off Websites trust bit for "Global Chambersign Root - 2008"
+
 * Wed Jan 27 2021 Alexey Gladkov <legion@altlinux.ru> 3.61.0-alt1
 - New version (3.61).
 - Certificate Authority Changes:
