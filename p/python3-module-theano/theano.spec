@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname theano
 
-%def_with bootstrap
+%def_without bootstrap
 
 Name:       python3-module-%oname
 Version:    1.0.5
-Release:    alt1
+Release:    alt2
 
 Summary:    Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License:    BSD
@@ -20,13 +20,14 @@ Patch1: %oname-alt-numpy-compat.patch
 Patch2: %oname-alt-python3-compat.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 
 %add_python3_req_skip lazylinker_ext pycuda scan_perform gnumpy pygpu
+%add_python3_req_skip multinomial neighbours theano_object
+%add_python3_req_skip lazylinker_ext.lazylinker_ext
 %if_with bootstrap
-%add_python3_req_skip lazylinker_ext.lazylinker_ext pycuda.compiler
-%add_python3_req_skip pycuda.elementwise pycuda.tools
+%add_python3_req_skip pycuda.elementwise pycuda.tools pycuda.compiler
 %add_python3_req_skip scan_perform.scan_perform theano.compat.six.moves
+%add_python3_req_skip pycuda.driver pycuda.gpuarray pygpu.array
 %endif
 
 
@@ -46,22 +47,6 @@ built on top of NumPy. Theano features:
 * **dynamic C code generation:** evaluate expressions faster.
 * **extensive unit-testing and self-verification:** includes tools for
   detecting and diagnosing bugs and/or potential problems.
-
-%package tests
-Summary: Tests for Theano
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-%add_python3_req_skip multinomial neighbours theano_object
-%if_with bootstrap
-%add_python3_req_skip pycuda.driver pycuda.gpuarray pygpu.array
-%endif
-
-%description tests
-Theano is a Python library that allows you to define, optimize, and efficiently
-evaluate mathematical expressions involving multi-dimensional arrays. It is
-built on top of NumPy.
-
-This package contains tests for Theano.
 
 %package docs
 Summary: Documentation for Theano
@@ -98,24 +83,17 @@ export LC_ALL=en_US.UTF-8
 %files
 %doc *.txt
 %_bindir/theano-*
-%exclude %_bindir/theano-nose
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/bin/theano_nose.py
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/*/*/tests
-
-%files tests
-%_bindir/theano-nose
-%python3_sitelibdir/bin/theano_nose.py
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/tests
-%python3_sitelibdir/*/*/*/tests
 
 %files docs
 %doc doc/*
 
 %changelog
+* Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt2
+- Built without bootstrap.
+- Drop tests subpackage (fixed ftbfs).
+  + Because basic module tied with tests rather close.
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt1
 - Updated to upstream version 1.0.5.
 
