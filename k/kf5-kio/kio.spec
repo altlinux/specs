@@ -1,10 +1,10 @@
 %define rname kio
 
-%def_disable streebog
+%def_enable streebog
 
 Name: kf5-%rname
 Version: 5.80.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -167,6 +167,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Mar 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.80.0-alt2
+- Re-enabled streebog support.
+
 * Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
 - new version
 
