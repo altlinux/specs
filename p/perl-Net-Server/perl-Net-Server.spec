@@ -1,9 +1,9 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define module  Net-Server
 
 Name: perl-%module
-Version: 2.009
+Version: 2.010
 Release: alt1
 
 Summary: Net::Server - Extensible, general Perl server engine
@@ -53,6 +53,9 @@ scripts for %name
 
 
 %changelog
+* Wed Mar 24 2021 Igor Vlasenko <viy@altlinux.org> 2.010-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.009-alt1
 - automated CPAN update
 
