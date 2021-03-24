@@ -2,8 +2,8 @@
 %define module Crypt-OpenSSL-DSA
 
 Name: perl-%module
-Version: 0.19
-Release: alt1.2
+Version: 0.20
+Release: alt1
 
 Summary: Digital Signature Algorithm using OpenSSL 
 License: Perl
@@ -32,10 +32,14 @@ library, located at http://www.openssl.org
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_archlib/Crypt
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Mar 24 2021 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.2
 - rebuild with new perl 5.28.1
 
