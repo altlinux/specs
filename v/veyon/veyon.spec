@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.5.4
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -12,6 +12,8 @@ Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
 
 Requires: polkit qca-qt5-ossl qt5-translations
+
+Conflicts: italc3
 
 Source: %name-%version.tar
 
@@ -100,6 +102,12 @@ mv .gear/3rdparty ./
 %_datadir/%name
 
 %changelog
+* Wed Mar 24 2021 Egor Ignatov <egori@altlinux.org> 4.5.4-alt2
+- Fixed:
+  + ALT Education authentification error (#37960)
+  + Incorrect display of the Computers list (#37952)
+  + Typo in russian translation
+
 * Wed Mar 17 2021 Egor Ignatov <egori@altlinux.org> 4.5.4-alt1
 - new version
 
