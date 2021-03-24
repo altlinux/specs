@@ -17,7 +17,7 @@
 
 Name: glusterfs9
 Version: %major
-Release: alt2
+Release: alt3
 
 Summary: Cluster File System
 
@@ -120,10 +120,10 @@ Summary: GlusterFS CLI
 Group: System/Base
 Requires: lib%name = %EVR
 Requires: libglusterd%somajor = %EVR
-Conflicts: glusterfs7-cli
-Conflicts: glusterfs8-cli
 Conflicts: glusterfs3
 Conflicts: glusterfs6
+Conflicts: glusterfs7
+Conflicts: glusterfs8-cli
 
 %description cli
 GlusterFS is a distributed file-system capable of scaling to several
@@ -424,9 +424,6 @@ like Pacemaker.
 %__subst "s|python ||" tools/gfind_missing_files/gfind_missing_files.sh
 # Increase soname version of libs to major version
 %__subst "s|VERSION=\"0:\([01]\):0\"|VERSION=\"%somajor:\1:0\"|" configure.ac
-
-# due log2 in 6.0
-#__subst "s|libgfrpc_la_LIBADD =|libgfrpc_la_LIBADD = -lm|" rpc/rpc-lib/src/Makefile.am
 
 # due _libexecdir is /usr/lib
 %__subst "s|/libexec/glusterfs|/lib/glusterfs|" ./configure.ac
@@ -730,12 +727,8 @@ rm -rf %buildroot%_includedir/glusterfs/
 %_libdir/libgfchangelog.so
 %_libdir/libgfrpc.so
 %_libdir/libgfxdr.so
-#%_libdir/libgfdb.so
 %_libdir/libglusterfs.so
-#_libdir/libglusterd.so
 %_pkgconfigdir/libgfchangelog.pc
-# pkgconfiglib.req: WARNING: /tmp/.private/lav/glusterfs3-buildroot/usr/lib64/pkgconfig/libgfdb.pc: cannot find -lgfchangedb library path (skip)
-#_pkgconfigdir/libgfdb.pc
 %endif
 
 %files -n libglusterd%somajor
@@ -770,6 +763,9 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Wed Mar 24 2021 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt3
+- set conflicts cli with glusterfs7
+
 * Thu Mar 11 2021 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt2
 - change BR: rpcgen to BR: /usr/bin/rpcgen (p9 compatibility)
 - add patch: afr_selfheal_do: return -EIO if inode type is not IA_IFREG
