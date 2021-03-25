@@ -1,18 +1,17 @@
 Name:           gigolo
-Version:        0.5.1
+Version:        0.5.2
 Release:        alt1
 Summary:        frontend to manage connections to remote filesystems using GIO/GVfs
 Group:          File tools
 License:        GPL-2.0-only
 URL:            https://www.uvena.de/gigolo/
 Packager: Xfce Team <xfce@packages.altlinux.org>
-Vcs:        git://git.xfce.org/apps/gigolo
+Vcs:        https://gitlab.xfce.org/apps/gigolo.git
 Source:     %name-%version.tar
 Patch:		%name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.15.0
 BuildRequires: libgtk+3-devel libgio-devel libX11-devel
-BuildRequires: exo-csource
 
 %define _unpackaged_files_terminate_build 1
 
@@ -41,9 +40,19 @@ filesystem and manage bookmarks of such.
 %doc %_defaultdocdir/%name
 %_bindir/%name
 %_datadir/applications/gigolo.desktop
+%_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.*
 
 %changelog
+* Thu Mar 25 2021 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
+- Dropped obsoleted patch.
+- Updated to 0.5.2.
+
+* Sat Sep 12 2020 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt2.g6b50425
+- Dropped exo-csource from BR.
+- Updated Vcs tag.
+- Updated from upstream git.
+
 * Mon Mar 16 2020 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Added Vcs tag.
 - Don't use rpm-build-licenses.
