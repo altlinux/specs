@@ -44,7 +44,7 @@
 
 Name: freeipa
 Version: 4.8.9
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1049,6 +1049,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Thu Mar 25 2021 Stanislav Levin <slev@altlinux.org> 4.8.9-alt2
+- Fixed FTBFS(new Pylint 2.7.2).
+
 * Fri Aug 21 2020 Stanislav Levin <slev@altlinux.org> 4.8.9-alt1
 - 4.8.8 -> 4.8.9.
 - Made SELinux optional (closes: #38788).

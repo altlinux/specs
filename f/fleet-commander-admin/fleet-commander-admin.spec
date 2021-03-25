@@ -7,7 +7,7 @@
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt5
+Release: alt6
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -160,6 +160,9 @@ ln -s %_datadir/spice-html5 \
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Thu Mar 25 2021 Stanislav Levin <slev@altlinux.org> 0.15.1-alt6
+- Fixed FTBFS(new Pylint 2.7.2).
+
 * Tue Dec 22 2020 Stanislav Levin <slev@altlinux.org> 0.15.1-alt5
 - Applied upstream fixes.
 
