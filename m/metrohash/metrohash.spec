@@ -1,10 +1,11 @@
 Name: metrohash
-Version: 1.1
+Version: 1.1.3
 Release: alt1
 Summary: Hash functions for non-cryptographic use cases
 Group: Development/C++
 # https://github.com/jandrewrogers/MetroHash
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 License: ASL 2.0
 Url: https://github.com/jandrewrogers/MetroHash
 BuildRequires: gcc-c++
@@ -25,6 +26,7 @@ Development environment for %name, %summary
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make
@@ -46,5 +48,9 @@ ln -sf libmetrohash.so.1.0 %buildroot%_libdir/libmetrohash.so
 %_includedir/*
 
 %changelog
+* Thu Mar 25 2021 Anton Farygin <rider@altlinux.org> 1.1.3-alt1
+- sync version with upstream
+- split source to tarball from upstream tag and alt patch
+
 * Mon Jun 24 2019 Anton Farygin <rider@altlinux.ru> 1.1-alt1
 - first build for ALT
