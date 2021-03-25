@@ -9,13 +9,14 @@ BuildRequires: /usr/bin/pandoc
 %define devname libipt-devel
 
 Name: libipt
-Version: 2.0.2
+Version: 2.0.4
 Release: alt1_1
 SummarY: Intel Processor Trace Decoder Library
 Group:	 Development/Tools
 License: BSD
 URL: https://github.com/intel/libipt
 Source0: https://github.com/intel/libipt/archive/v%{version}.tar.gz
+Patch0: libipt-gcc11.patch
 # c++ is required only for -DPTUNIT test "ptunit-cpp".
 # pandoc is for -DMAN.
 BuildRequires: gcc-c++ ccmake cmake ctest
@@ -55,6 +56,7 @@ or it can be partially or fully integrated into your tool.
 
 %prep
 %setup -q -n libipt-%{version}
+%patch0 -p1
 
 %build
 %{mageia_cmake} \
@@ -86,6 +88,9 @@ or it can be partially or fully integrated into your tool.
 
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 2.0.4-alt1_1
+- update by mgaimport
+
 * Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_1
 - update by mgaimport
 
