@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libXext-devel 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		qtractor
-Version:	0.9.20
+Version:	0.9.21
 Release:	alt1_1
 Summary:	An Audio/MIDI multi-track sequencer
 License:	GPLv2+
@@ -91,6 +91,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 0.9.21-alt1_1
+- update by mgaimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.9.20-alt1_1
 - update by mgaimport
 
