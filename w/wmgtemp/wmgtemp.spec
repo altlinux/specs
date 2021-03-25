@@ -1,9 +1,9 @@
 Name: wmgtemp
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Summary: Dock app for WindowMaker that displays the CPU and SYS temperatures
-License: Artistic
+License: Artistic-1
 Group: Graphical desktop/Window Maker
 
 Url: http://www.fluxcode.net/projects/wmgtemp
@@ -27,6 +27,7 @@ high-temperature warning lights.
 %build
 cd src
 %add_optflags "-std=gnu89"
+%add_optflags "-fcommon"
 %make_build CCFLAGS="%optflags"
 
 %install
@@ -40,6 +41,10 @@ install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.1-alt3
+- gcc10 FTBFS workaround (-fcommon)
+- updated license tag
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1.1-alt2
 - gcc5 FTBFS workaround (-std=gnu89)
 - minor spec cleanup

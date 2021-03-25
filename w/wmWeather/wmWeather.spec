@@ -1,9 +1,9 @@
 Name: wmWeather
 Version: 1.31
-Release: alt4.qa1
+Release: alt5
 
 Summary: Applet that displays the weather
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Window Maker
 
 #Url: http://nis-www.lanl.gov/~mgh/WindowMaker/DockApps.shtml
@@ -41,7 +41,7 @@ miejsca.
 %setup
 
 %build
-make -C Src CFLAGS="%optflags"
+make -C Src CFLAGS="%optflags -fcommon"
 
 %install
 install -d %buildroot{%_x11bindir,%_bindir,%_menudir,%_man1dir}
@@ -63,6 +63,10 @@ install -m644 %SOURCE2 $RPM_BUILD_DIR/%name-%version/README.ALT
 # TODO: try to analyse /etc/localtime to get location?
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.31-alt5
+- Fixed FTBFS with -fcommon.
+- Updated license tag.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.31-alt4.qa1
 - NMU: rebuilt for debuginfo.
 

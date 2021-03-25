@@ -2,10 +2,10 @@
 
 Name: wmMatrix
 Version: 0.2
-Release: alt3.qa2
+Release: alt4
 Summary: DockApp version of Jamie Zawinski's xmatrix screensaver hack
 Group: Graphical desktop/Window Maker
-License: GPL
+License: GPLv2
 
 Packager: Sir Raorn <raorn@altlinux.ru>
 
@@ -31,7 +31,7 @@ with other window managers.
 
 %build
 %make_build clean
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS="%optflags -fcommon"
 
 %install
 mkdir -p %buildroot{%_bindir,%_menudir}
@@ -43,6 +43,10 @@ install -m644 %_sourcedir/%name.menu %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.2-alt4
+- Fixed FTBFS with -fcommon.
+- Updated license tag.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt3.qa2
 - NMU: rebuilt for updated dependencies.
 

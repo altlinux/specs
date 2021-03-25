@@ -2,10 +2,10 @@
 
 Name: wmhdaps
 Version: 0.04
-Release: alt3
+Release: alt4
 
 Summary: Harddisk Active Protection System visualization DockApp
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Window Maker
 
 Url: http://dockapps.org/file.php/id/297
@@ -31,6 +31,7 @@ until the "shock" is over.
 %build
 pushd wmhdaps
 %add_optflags "-std=gnu89"
+%add_optflags "-fcommon"
 %make_build CFLAGS="%optflags"
 
 %install
@@ -41,6 +42,10 @@ install -pDm755 wmhdaps/wmhdaps %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.04-alt4
+- gcc10 FTBFS workaround (-fcommon)
+- updated license tag
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.04-alt3
 - gcc5 FTBFS workaround (-std=gnu89)
 - minor spec cleanup
