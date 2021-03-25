@@ -1,5 +1,7 @@
+%def_enable python
+
 Name: sudo
-Version: 1.9.5p2
+Version: 1.9.6p1
 Release: alt1
 Epoch: 1
 
@@ -98,7 +100,7 @@ configure_options='
 --with-sssd
 --with-selinux
 --with-linux-audit
---enable-python
+%{subst_enable python}
 --docdir=%_datadir/doc/%name-%version
 --with-plugindir=%_libdir/sudo
 --libexecdir=%_libdir
@@ -198,7 +200,9 @@ fi
 %_libdir/*.so.*
 %_libdir/sudo/sesh
 %_libdir/sudo/*.so*
+%if_enabled python
 %exclude %_libdir/sudo/python_plugin.so
+%endif
 %attr(700,root,root) %_bindir/sudo
 %attr(700,root,root) %_bindir/sudoreplay
 %attr(755,root,root) %_sbindir/visudo
@@ -206,7 +210,9 @@ fi
 %_bindir/cvtsudoers
 %_mandir/man?/*
 %exclude %_man8dir/sudo_plugin.8*
+%if_enabled python
 %exclude %_man8dir/sudo_plugin_python.8*
+%endif
 %exclude %_man5dir/sudo_logsrv.proto.5*
 %exclude %_man5dir/sudo_logsrvd.conf.5*
 %exclude %_man8dir/sudo_logsrvd.8*
@@ -222,9 +228,11 @@ fi
 %_man8dir/sudo_logsrvd.8*
 %_man8dir/sudo_sendlog.8*
 
+%if_enabled python
 %files python
 %_libdir/sudo/python_plugin.so
 %_man8dir/sudo_plugin_python.8*
+%endif
 
 %files devel
 %doc plugins/sample/sample_plugin.c
@@ -232,6 +240,12 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Thu Mar 25 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.6p1-alt1
+- Update to latest bugfix release of the sudo 1.9
+
+* Wed Jan 27 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.5p2-alt2
+- Set sudo python plugin to be definable and enabled by default
+
 * Wed Jan 27 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.5p2-alt1
 - Update to latest security release (fixes: CVE-2021-3156) (closes: 39615)
 - Added sudo-python package with Sudo Python Plugin API
