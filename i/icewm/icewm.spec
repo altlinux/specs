@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.1.2
+Version: 2.2.1
 Release: alt1
 Epoch:3
 
@@ -63,8 +63,6 @@ sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
 	-DLIBDIR=%_x11x11dir/%realname \
 	-DDOCDIR=%_datadir/doc/%name-%version \
 	-DCONFIG_IMLIB2=on \
-	-DCONFIG_XPM=on \
-	-DCONFIG_LIBPNG=off \
 	-DCONFIG_LIBRSVG=on \
 	-DCONFIG_GUIEVENTS=on \
 	-DICESOUND="ALSA,OSS" \
@@ -123,6 +121,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Thu Mar 25 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.2.1-alt1
+- 2.2.1
+
 * Wed Feb 10 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.1.2-alt1
 - 2.1.2
 
