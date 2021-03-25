@@ -11,7 +11,7 @@ BuildRequires: gcc-c++
 
 Name:           lib%sname
 Summary:        A library for accessing floppy drives and disk images transparently
-Version:        1.5.14
+Version:        1.5.15
 Release:        alt1_1
 License:        LGPLv2+
 Group:          System/Libraries
@@ -103,6 +103,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.5.15-alt1_1
+- update by mgaimport
+
 * Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 1.5.14-alt1_1
 - update by mgaimport
 
