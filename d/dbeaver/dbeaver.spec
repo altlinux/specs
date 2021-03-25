@@ -1,6 +1,6 @@
 Name: dbeaver
 Version: 21.0.1
-Release: alt2
+Release: alt3
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -21,11 +21,21 @@ Patch0: %name-alt-arch.patch
 Patch1: %name-alt-autoupdate.patch
 
 BuildRequires: /proc
-BuildRequires: java-11-openjdk-headless
 BuildRequires: libsecret
-BuildRequires: maven-lib
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-local
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit
+BuildRequires: maven-surefire-provider-testng
 BuildRequires: rpm-build-java
+BuildRequires: xmvn-install
+BuildRequires: xmvn-minimal
+BuildRequires: xmvn-mojo
 BuildRequires: xmvn-resolve
+BuildRequires: xmvn-subst
 
 Requires: java-11-openjdk-headless
 
@@ -50,7 +60,7 @@ DBeaver is free and open source universal database tool for developers and datab
 %__mv -Tf ../.m2 ~/.m2
 
 %build
-mvn -o package
+xmvn --batch-mode --offline package
 
 %install
 # Create  directories
@@ -98,6 +108,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Thu Mar 25 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.1-alt3
+- Reduce maven local repository
+
 * Mon Mar 22 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.1-alt2
 - Improved build
 - Disable auto update check by default
