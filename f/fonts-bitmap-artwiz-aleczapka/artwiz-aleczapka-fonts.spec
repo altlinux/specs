@@ -14,7 +14,7 @@ software and support an extended character set. \
 
 Name:		fonts-bitmap-artwiz-aleczapka
 Version:	1.3
-Release:	alt2_28
+Release:	alt2_30
 Summary:	Very small futuristic font family
 License:	GPLv2
 URL:		http://artwizaleczapka.sourceforge.net/
@@ -40,7 +40,8 @@ Source17:	artwiz-aleczapka-fonts-snap-fontconfig.conf
 Patch0:		artwiz-aleczapka-fkp-cleanups.patch
 Patch1:		artwiz-aleczapka-fonts-1.3-fix-makepcf.patch
 BuildArch:	noarch
-BuildRequires:	bdftopcf fonttosfnt mkfontscale xorg-font-utils, fontpackages-devel
+BuildRequires:	bdftopcf
+BuildRequires:	fontpackages-devel
 Requires:	fonts-bitmap-artwiz-aleczapka-anorexia = %{version}-%{release}
 Requires:	fonts-bitmap-artwiz-aleczapka-aqui = %{version}-%{release}
 Requires:	fonts-bitmap-artwiz-aleczapka-cure = %{version}-%{release}
@@ -401,6 +402,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.3-alt2_30
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_28
 - update to new release by fcimport
 
