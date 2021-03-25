@@ -1,15 +1,16 @@
 Group: Text tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: hunspell-eu
 Summary: Basque hunspell dictionaries
-%global upstreamid 20080507
-Version: 0.%{upstreamid}
-Release: alt2_14
-Source0: http://www.euskara.euskadi.net/r59-20660/eu/contenidos/informacion/euskarazko_softwarea/eu_9567/adjuntos/eu-ES-hunspell.tar.gz
-Source1: http://www.euskara.euskadi.net/r59-20660/eu/contenidos/informacion/euskarazko_softwarea/eu_9567/adjuntos/XUXEN_kode_irekia_eskuliburua-LINUX-OO.pdf
-URL: http://www.euskara.euskadi.net/r59-20660/eu/contenidos/informacion/euskarazko_softwarea/eu_9567/xuxen.html
-License: GPLv2
+Version: 5.1
+Release: alt1_1
+Source0: http://xuxen.eus/static/hunspell/xuxen_%{version}_hunspell.zip
+URL: http://xuxen.eus
+License: GPLv3
 BuildArch: noarch
 
 Requires: hunspell
@@ -20,21 +21,23 @@ Basque hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-eu
-cp -p %{SOURCE1} .
 
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p eu-ES/eu-ES.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/eu_ES.dic
-cp -p eu-ES/eu-ES.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/eu_ES.aff
+mkdir -p %{buildroot}%{_datadir}/myspell
+cp -p eu_ES.dic %{buildroot}%{_datadir}/myspell/eu_ES.dic
+cp -p eu_ES.aff %{buildroot}%{_datadir}/myspell/eu_ES.aff
 
 
 %files
-%doc XUXEN_kode_irekia_eskuliburua-LINUX-OO.pdf
+%doc --no-dereference LICENSE.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080507-alt2_14
 - update to new release by fcimport
 
