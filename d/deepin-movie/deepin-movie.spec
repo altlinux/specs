@@ -2,7 +2,7 @@
 
 Name: deepin-movie
 Version: 5.7.6.165
-Release: alt1
+Release: alt2
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
 Group: Video
@@ -75,7 +75,11 @@ export AR="llvm-ar"
 
 %cmake_insource \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DAPP_VERSION=%version \
+    -DVERSION=%version
 %ninja_build
 
 %install
@@ -100,6 +104,9 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu Mar 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.6.165-alt2
+- Fixed version tag.
+
 * Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.6.165-alt1
 - New version (5.7.6.165) with rpmgs script.
 
