@@ -1,12 +1,13 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/perl gcc-c++ imake libXpm-devel libXt-devel libglvnd-devel xorg-cf-files
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_24
+Release:        alt1_26
 Summary:        A generic image manipulation library
 
 License:        LGPLv2+
@@ -94,10 +95,10 @@ sed -i -e '/zlib\/zlib\.h/d' .depend
 --disable-mmx-optimization --without-builtin-gif --without-afterbase \
 --x-includes=%{_includedir} --x-libraries=%{_libdir}
 
-make CCFLAGS="-DNO_DEBUG_OUTPUT -fPIC $RPM_OPT_FLAGS" %{?_smp_mflags}
+%make_build CCFLAGS="-DNO_DEBUG_OUTPUT -fPIC %{optflags}" AR="ar cq"
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std CCFLAGS="-DNO_DEBUG_OUTPUT -fPIC %{optflags}" AR="ar cq"
 
 cp %{SOURCE1} COPYING
 
@@ -117,6 +118,9 @@ cp %{SOURCE1} COPYING
 %{_bindir}/as*
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.20-alt1_26
+- update to new release by fcimport
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_24
 - fixed build
 
