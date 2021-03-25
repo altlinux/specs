@@ -3,11 +3,10 @@
 %define ver_major 2.6
 %define rdn_name com.github.johnfactotum.Foliate
 
-%define handy_api_ver 1
-%define tracker_api_ver 2.0
+
 
 Name: foliate
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -22,6 +21,8 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
+%define handy_api_ver 1
+%define tracker_api_ver 2.0
 %define gjs_ver 1.52
 %define iso_codes_ver 3.57
 
@@ -85,6 +86,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Wed Mar 24 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
