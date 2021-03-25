@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(tevent)
-# END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -8,8 +5,8 @@ Group: Development/C
 %global homepage https://github.com/latchset/libverto
 
 Name:           libverto
-Version:        0.3.1
-Release:        alt1_2
+Version:        0.3.2
+Release:        alt1_1
 Summary:        Main loop abstraction library
 
 License:        MIT
@@ -120,7 +117,7 @@ and signal.
 
 %build
 autoreconf -fiv
-%configure --disable-static --without-tevent
+%configure --disable-static
 %make_build
 
 %install
@@ -169,6 +166,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}-libev.pc
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 0.3.2-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_2
 - update to new release by fcimport
 
