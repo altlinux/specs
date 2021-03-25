@@ -1,7 +1,7 @@
 %def_with system_locale
 
 Name:    nx-libs
-Version: 3.5.99.22
+Version: 3.5.99.26
 Release: alt1
 Summary: NX X11 protocol compression libraries
 
@@ -228,8 +228,8 @@ rm -rf %buildroot%_datadir/X11/locale
 #cp -a nxproxy/VERSION %buildroot%_datadir/nx/VERSION.nxproxy
 #cp -a debian/keystrokes.cfg %buildroot%_sysconfdir/nxagent/
 #cp -a debian/nxagent.keyboard %buildroot%_sysconfdir/nxagent/
-#mkdir -p %buildroot%_datadir/pixmaps/
-#cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps/
+mkdir -p %buildroot%_datadir/pixmaps/
+cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps/
 
 %files
 #%doc README.md LICENSE LICENSE.nxcomp
@@ -281,6 +281,9 @@ rm -rf %buildroot%_datadir/X11/locale
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Thu Mar 25 2021 Slava Aseev <ptrnine@altlinux.org> 3.5.99.26-alt1
+- new version 3.5.99.26 (with rpmrb script)
+
 * Fri Sep 13 2019 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.22-alt1
 - new version 3.5.99.22 (with rpmrb script)
 - build without channel_usbip, channel_pcscd, channel_extra1
