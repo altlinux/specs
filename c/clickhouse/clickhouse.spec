@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clickhouse
-Version: 21.3.2.5
+Version: 21.3.3.14
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -45,10 +45,13 @@ Source31: %name-%version-contrib-stats.tar
 Source32: %name-%version-contrib-thrift.tar
 Source33: %name-%version-contrib-zlib-ng.tar
 
+Source1000: %name.watch
+
 Patch0: %name-%version-%release.patch
 Patch1: %name-base64-ppc64le.patch
 Patch2: %name-llvm-gcc10-compat.patch
 Patch3: %name-avro-gcc10-compat.patch
+Patch4: %name-grpc-abseil-cxx17-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake libicu-devel libreadline-devel python3 gperf tzdata cctz-devel
@@ -145,6 +148,10 @@ pushd contrib/avro
 %patch3 -p1
 popd
 
+pushd contrib/grpc
+%patch4 -p1
+popd
+
 %build
 if [ %__nprocs -gt 6 ] ; then
 	export NPROCS=6
@@ -229,6 +236,7 @@ rm -fv %buildroot%_prefix/lib/*.a
 %config(noreplace) %_sysconfdir/security/limits.d/clickhouse.conf
 
 %files server
+%dir %_sysconfdir/clickhouse-server
 %config(noreplace) %_sysconfdir/cron.d/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/config.xml
 %config(noreplace) %_sysconfdir/clickhouse-server/users.xml
@@ -241,6 +249,7 @@ rm -fv %buildroot%_prefix/lib/*.a
 %dir %attr(0750,_clickhouse,_clickhouse) %_localstatedir/clickhouse
 
 %files client
+%dir %_sysconfdir/clickhouse-client
 %config(noreplace) %_sysconfdir/clickhouse-client/config.xml
 %_bindir/clickhouse-client
 %_bindir/clickhouse-local
@@ -256,6 +265,10 @@ rm -fv %buildroot%_prefix/lib/*.a
 %_datadir/clickhouse-test
 
 %changelog
+* Thu Mar 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.3.14-alt1
+- Updated to lts upstream version 21.3.3.14.
+- Added watch file for upstream lts releases.
+
 * Tue Mar 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.2.5-alt1
 - Updated to lts upstream version 21.3.2.5.
 
