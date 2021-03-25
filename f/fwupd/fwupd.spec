@@ -17,7 +17,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.5.7
+Version: 1.5.8
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -150,10 +150,10 @@ Data files for installed tests.
 %endif
 %if_enabled dell
     -Dplugin_dell=true \
-    -Dplugin_synaptics=true \
+    -Dplugin_synaptics_mst=true \
 %else
     -Dplugin_dell=false \
-    -Dplugin_synaptics=false \
+    -Dplugin_synaptics_mst=false \
 %endif
 
 %meson_build
@@ -340,6 +340,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Thu Mar 25 2021 Anton Farygin <rider@altlinux.org> 1.5.8-alt1
+- 1.5.8
+
 * Tue Mar 09 2021 Anton Farygin <rider@altlinux.org> 1.5.7-alt1
 - 1.5.7
 
