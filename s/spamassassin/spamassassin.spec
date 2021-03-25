@@ -4,8 +4,8 @@
 %def_enable ssl
 
 Name: spamassassin
-Version: 3.4.4
-Release: alt4
+Version: 3.4.5
+Release: alt1
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -23,8 +23,6 @@ Patch10: spamassassin-deb-10_change_config_paths.patch
 Patch11: spamassassin-deb-20_edit_spamc_pod.patch
 Patch12: spamassassin-deb-55_disable_nagios_epm.patch
 Patch13: spamassassin-deb-90_pod_cleanup.patch
-# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=961273
-Patch14: spamassassin-deb-961273_dkim.patch
 
 %def_without test
 # normal method nukes on errors :(
@@ -149,7 +147,6 @@ subpackages versions with.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 %build
 cp -f spamc/spamc.pod spamc/spamc
@@ -267,6 +264,10 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Thu Mar 25 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.5-alt1
+- 3.4.5 (fixes: CVE-2020-1946)
+- remove dkim patch (fixed by upstream).
+
 * Mon Mar 15 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.4-alt4
 - systemd: fix spamd unit file (sync with sysv)
 - spamd.sysconfig: document sql setup case.
