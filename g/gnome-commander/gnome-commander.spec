@@ -1,4 +1,4 @@
-%define ver_major 1.10
+%define ver_major 1.12
 %def_with exiv2
 %def_with chm
 %def_with taglib
@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -23,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gtk_ver 2.24
 
 Requires: dconf xdg-utils
-Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
+Requires: %_bindir/gio gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
 
 BuildRequires: flex gcc-c++
 BuildRequires: yelp-tools libappstream-glib-devel
@@ -70,7 +70,6 @@ all standard file operations and some extra features like FTP support.
 %_datadir/pixmaps/%name.svg
 %_datadir/pixmaps/%name/
 %_datadir/metainfo/%name.appdata.xml
-%_datadir/%name
 %_man1dir/*
 %doc AUTHORS ChangeLog NEWS README TODO doc/*.txt
 
@@ -79,6 +78,9 @@ all standard file operations and some extra features like FTP support.
 
 
 %changelog
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Fri Jun 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.10.3-alt1
 - 1.10.3
 
