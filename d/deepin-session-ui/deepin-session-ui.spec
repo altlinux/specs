@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.3.35
+Version: 5.4.5
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -26,6 +26,7 @@ BuildRequires: libgtk+2-devel
 BuildRequires: lightdm-devel
 BuildRequires: libsystemd-devel
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-multimedia-devel
@@ -40,7 +41,6 @@ BuildRequires: libgtest-devel
 
 %description
 This project include those sub-project:
-
 - dde-switchtogreeter: The tools to switch the user to login in.
 - dde-license-dialog.
 - dde-pixmix.
@@ -50,11 +50,12 @@ This project include those sub-project:
 %prep
 %setup -n %repo-%version
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
+sed -i 's|lupdate|lupdate-qt5|' lupdate.sh
 #sed -i 's|default_background.jpg|deepin/desktop.jpg|' \
 #    widgets/fullscreenbackground.cpp \
 #    lightdm-deepin-greeter/logintheme.qrc \
 #    dde-lock/logintheme.qrc
-sed -i 's|lib|libexec|' \
+sed -i 's|/lib/deepin-daemon|/libexec/deepin-daemon|' \
     misc/applications/deepin-toggle-desktop.desktop* \
     dde-osd/dde-osd_autostart.desktop \
     dde-osd/com.deepin.dde.osd.service \
@@ -78,8 +79,19 @@ sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifica
     QMAKE_STRIP= -spec linux-clang \
 %endif
     CONFIG+=nostrip \
-    PREFIX=%prefix \
-    PKGTYPE=rpm
+    PREFIX=%_prefix \
+    PKGTYPE=rpm \
+#     SYSTYPE=Desktop \
+%ifarch mipsel mips64el sw_64
+    SHUTDOWN_NO_QUIT=YES \
+    LOCK_NO_QUIT=YES \
+    DISABLE_DEMO_VIDEO=YES \
+    DISABLE_TEXT_SHADOW=YES \
+    DISABLE_ANIMATIONS=YES \
+    USE_CURSOR_LOADING_ANI=YES \
+%endif
+#
+    
 %make_build
 
 %install
@@ -111,6 +123,9 @@ sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifica
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Thu Mar 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt1
+- New version (5.4.5) with rpmgs script.
+
 * Tue Jan 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.35-alt1
 - New version (5.3.35) with rpmgs script.
 
