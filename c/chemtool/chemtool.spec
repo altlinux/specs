@@ -1,11 +1,11 @@
 Name: chemtool
 Version: 1.6.14
-Release: alt1
+Release: alt2
 
 %define pre %nil
 
 Summary: A program for 2D drawing organic molecules
-License: GPL
+License: GPLv2
 Group: Sciences/Chemistry
 
 Url: http://ruby.chemie.uni-freiburg.de/~martin/chemtool
@@ -14,6 +14,7 @@ Source1: %name.desktop
 Source2: %name.menu
 Source3: %name.watch
 Patch: chemtool-cht.patch
+Patch1: chemtool-gcc10.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Summary(ru_RU.UTF-8): Программа для рисования двумерных органических структур
@@ -51,6 +52,7 @@ u©ywaj╠c bibliotek GTK.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %configure --enable-undo --enable-emf
@@ -82,6 +84,10 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.6.14-alt2
+- fixed ftbfs
+- updated license tag
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.6.14-alt1
 - new version (watch file uupdate)
 
