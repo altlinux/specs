@@ -1,6 +1,6 @@
 Name: wmCalClock
 Version: 1.25
-Release: alt10
+Release: alt11
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
@@ -8,7 +8,7 @@ Summary: wmCalClock is a simple Calendar Clock for Window Maker
 Summary(ru_RU.KOI8-R): Простенькие, но очень хорошие часы для Window Maker
 
 Url: http://dockapps.windowmaker.org/file.php/id/9
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Window Maker
 
 Source0: http://nis-www.lanl.gov/~mgh/WindowMaker/%name-%version.tar.bz2
@@ -29,7 +29,8 @@ drop shadows. Doesnt do much except tell time...
 %setup
 
 %build
-%make_build -C Src INCDIR= LIBDIR=
+%add_optflags "-fcommon"
+%make_build -C Src CFLAGS="%optflags" INCDIR= LIBDIR=
 
 %install
 install -D -pm755 Src/%name %buildroot%_bindir/%name
@@ -43,6 +44,10 @@ install -D -pm644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.25-alt11
+- fixed FTBFS with -fcommon
+- updated license tag
+
 * Tue Oct 15 2013 Michael Shigorin <mike@altlinux.org> 1.25-alt10
 - fixed menu file
 - minor spec cleanup

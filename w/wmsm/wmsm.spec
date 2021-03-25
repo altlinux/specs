@@ -1,9 +1,9 @@
 Name: wmsm
 Version: 0.2.1
-Release: alt3
+Release: alt4
 
 Summary: System monitor for WindowMaker
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Window Maker
 
 Url: http://repo.or.cz/w/dockapps.git
@@ -22,7 +22,7 @@ and Uptime of your machine.
 
 %prep
 %setup
-sed -i 's,^CFLAGS.*,& -std=gnu89,' wmsm/Makefile
+sed -i 's,^CFLAGS.*,& -std=gnu89 -fcommon,' wmsm/Makefile
 
 %build
 cd wmsm
@@ -42,6 +42,10 @@ install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt4
+- gcc10 FTBFS workaround (-fcommon)
+- updated license tag
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.2.1-alt3
 - gcc5 FTBFS workaround (-std=gnu89)
 - minor spec cleanup

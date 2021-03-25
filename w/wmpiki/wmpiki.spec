@@ -1,9 +1,9 @@
 Name: wmpiki
 Version: 0.2.1
-Release: alt4.1
+Release: alt5
 
 Summary: Hosts activity checker dockapp
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Window Maker
 
 Url: http://clay.ll.pl/dockapps.html
@@ -40,7 +40,7 @@ wmpiki -- аплет, що перев╕ря╓ досяжн╕сть в╕ддалених вузл╕в (п╕н╜)
 
 %build
 %make_build \
-	CFLAGS="%optflags -Wall" \
+	CFLAGS="%optflags -Wall -fcommon" \
 	LIBS="-L%_x11libdir -lXpm -lXext -lX11"
 
 %install
@@ -63,6 +63,10 @@ EOF
 %_menudir/*
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt5
+- Fixed FTBFS with -fcommon.
+- Updated license tag.
+
 * Thu Apr 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt4.1
 - Fixed built
 

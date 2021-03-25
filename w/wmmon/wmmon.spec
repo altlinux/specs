@@ -3,11 +3,11 @@
 
 Name: wmmon
 Version: 1.0b2
-Release: alt5
+Release: alt6
 
 Summary: Nice system monitor for WindowMaker
 Group: Graphical desktop/Window Maker
-License: GPL
+License: GPLv2
 
 Url: http://repo.or.cz/w/dockapps.git
 Source0: %name-%version.tar.gz
@@ -40,7 +40,7 @@ WMMon currently provides:
 %prep
 %setup -n %name.app
 %patch -p1
-sed -i 's,cc ,cc -std=gnu89 ,' wmmon/Makefile
+sed -i 's,cc ,cc -std=gnu89 -fcommon ,' wmmon/Makefile
 
 %build
 cd %name
@@ -59,6 +59,10 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %_menudir/%name
 
 %changelog
+* Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.0b2-alt6
+- gcc10 FTBFS workaround (-fcommon)
+- updated license tag
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1.0b2-alt5
 - gcc5 FTBFS workaround (-std=gnu89)
 - moved to %_bindir
