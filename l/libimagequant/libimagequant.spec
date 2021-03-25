@@ -7,7 +7,7 @@ Group: Development/C
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libimagequant
-Version:        2.14.0
+Version:        2.14.1
 Release:        alt1_1
 Summary:        Palette quantization library
 
@@ -17,8 +17,6 @@ Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 # Fix shared library permissions
 Patch0:         libimagequant_solibperm.patch
-# Mark additional variable as shared in omp for loop
-Patch1:         libimagequant_omp.patch
 
 BuildRequires:  gcc
 Source44: import.info
@@ -41,7 +39,6 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 
 
@@ -72,6 +69,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.a
 
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 2.14.1-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.14.0-alt1_1
 - update to new release by fcimport
 
