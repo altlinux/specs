@@ -2,7 +2,7 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.2.2
+Version:   1.2.3
 Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
@@ -259,6 +259,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Mar 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.3-alt1
+- Updated to upstream version 1.2.3.
+
 * Tue Dec 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
 - Updated to upstream version 1.2.2.
 - Disabled vala requires and provides due to conflicts.
