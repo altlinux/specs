@@ -3,11 +3,11 @@ Group: Other
 %define _localstatedir %{_var}
 Name:       dontpanic   
 Version:    1.02
-Release:    alt1_1
+Release:    alt1_8
 Summary:    Very simple library and executable used in testing Alien::Base
 License:    GPL+ or Artistic    
-URL:        https://perl5-alien.github.io/page/%{name}.html
-Source0:    https://github.com/Perl5-Alien/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+URL:        https://github.com/Perl5-Alien/%{name}/
+Source0:    %{url}archive/%{version}/%{name}-%{version}.tar.gz
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  findutils
@@ -35,7 +35,7 @@ autoreconf -fi
 
 %build
 %configure --enable-shared --disable-static --disable-silent-rules
-%make_build
+%{make_build}
 
 %install
 %makeinstall_std
@@ -56,6 +56,9 @@ make %{?_smp_mflags} check
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.02-alt1_8
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1_1
 - update to new release by fcimport
 
