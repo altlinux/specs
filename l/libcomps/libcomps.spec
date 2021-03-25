@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ python-devel rpm-build-python
 
 Name:           libcomps
 Version:        0.1.15
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Comps XML file manipulation library
 
 Group:          System/Libraries
@@ -124,6 +124,9 @@ make test -C %{_vpath_builddir}
 
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 0.1.15-alt1_3
+- update by mgaimport
+
 * Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.15-alt1_2
 - update by mgaimport
 
