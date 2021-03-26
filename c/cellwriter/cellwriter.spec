@@ -1,6 +1,6 @@
 Name: cellwriter
 Version: 1.3.5
-Release: alt1
+Release: alt2
 
 Summary: A grid-entry natural handwriting input panel
 License: GPLv2+
@@ -31,6 +31,7 @@ sed -ri 's,^(LDADD.*)$,\1 -lX11,' Makefile.am
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -54,6 +55,9 @@ rm -r %buildroot%_pixmapsdir/
 # - 16x16 and 48x48? (%%_miconsdir and %%_liconsdir)
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt2
+- fixed FTBFS with -fcommon
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.3.5-alt1
 - new version (watch file uupdate)
 
