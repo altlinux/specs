@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 
 Summary: Pytest plugin to randomly order tests and control random.seed
-License: BSD-3-Clause
+License: MIT
 Group: Development/Python
 # Source-git: https://github.com/pytest-dev/pytest-randomly
 Url: https://pypi.org/project/pytest-randomly/
@@ -27,6 +27,7 @@ BuildRequires: python3(numpy)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -51,10 +52,6 @@ filled in randomly due to not being specified.
 %setup
 %patch -p1
 
-# relax deps
-grep -qsF 'deps = -rrequirements/py37.txt' tox.ini || exit 1
-sed -i 's/deps = -rrequirements\/py37\.txt/deps = /' tox.ini
-
 %build
 %python3_build
 
@@ -62,18 +59,10 @@ sed -i 's/deps = -rrequirements\/py37\.txt/deps = /' tox.ini
 %python3_install
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -- -vra
 
 %files
 %doc README.rst
@@ -82,6 +71,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/pytest_randomly-*.egg-info/
 
 %changelog
+* Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
+- 3.4.1 -> 3.5.0.
+
 * Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
 - 3.1.0 -> 3.4.1.
 
