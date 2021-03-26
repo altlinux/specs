@@ -1,9 +1,9 @@
 Name: alsamixergui
 Version: 0.9.0
-Release: alt5
+Release: alt6
 
 Summary: Advanced Linux Sound Architecture (ALSA) graphical mixer
-License: GPL
+License: GPLv2
 Group: Sound
 
 Url: http://www.iua.upf.es/~mdeboer/projects/alsamixergui/
@@ -14,6 +14,7 @@ Patch2: alsamixer-0.9.0rc1-2-fltk2.patch
 Patch3: alsamixergui-0.9.0rc1-memleak.patch
 Patch4: alsamisergui-fix-compile-gcc-3.4.patch
 Patch5: alsamixergui-0.9.0rc1-lock.patch
+Patch6: alsamixergui-strsignal.patch
 Packager: Alex Negulescu <alecs@altlinux.org>
 
 BuildRequires: gcc-c++ libX11-devel libalsa-devel libfltk-devel
@@ -33,6 +34,7 @@ graphical userinterface.
 %patch3 -p1
 %patch4 -p1 -b .fix_gcc_3.4
 %patch5 -p0
+%patch6 -p1
 
 %build
 %autoreconf
@@ -60,6 +62,10 @@ EOF
 %_datadir/applnk/Multimedia/%name.desktop
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt6
+- Fixed FTBFS.
+- Fixed license tag.
+
 * Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 0.9.0-alt5
 - fixed build on %%e2k (and maybe others) with mere autoreconf
 - spec cleanup
