@@ -1,6 +1,6 @@
 Name: fatsort
-Version: 1.4.2.439
-Release: alt3
+Version: 1.6.3.622
+Release: alt1
 Summary: A command-line utilitiy that sorts directory structures of FAT12, FAT16 and FAT32 file systems
 License: %pubdomain
 Group: File tools
@@ -32,6 +32,9 @@ the command line.
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 1.6.3.622-alt1
+- Update to 1.6.3.622
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.2.439-alt3
 - NMU: remove rpm-build-ubt from BR:
 
