@@ -1,7 +1,6 @@
-
 Name: bristol
 Version: 0.60.11
-Release: alt4
+Release: alt5
 Summary: Synthesizer emulator
 Group: Sound
 License: GPLv2+
@@ -33,7 +32,7 @@ This package contains the development libraries for Bristol.
 %prep
 %setup
 
-%patch0 -p0 -b .libpath
+%patch -p0 -b .libpath
 %patch1 -p2
 %patch2 -p2
 
@@ -48,6 +47,7 @@ sed -i 's/-msse -mfpmath=sse //g' bristol/Makefile.in
 %endif
 
 %build
+%add_optflags -fcommon
 %configure --enable-static=no --disable-version-check
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -79,6 +79,9 @@ desktop-file-install \
 %_libdir/lib*.so
 
 %changelog
+* Thu Mar 25 2021 Slava Aseev <ptrnine@altlinux.org> 0.60.11-alt5
+- fix build with gcc-10
+
 * Sun Jan 13 2019 Ivan A. Melnikov <iv@altlinux.org> 0.60.11-alt4
 - get rid of valgrind and cpufrequtils dependencies (closes: #30820)
 
