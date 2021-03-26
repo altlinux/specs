@@ -1,6 +1,6 @@
 Name: netatalk
 Version: 3.1.12
-Release: alt3
+Release: alt4
 
 Summary: Open Source Apple Filing Protocol(AFP) File Server
 
@@ -52,6 +52,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ \( -name '*.py' -o -name 'afpstats' \))
 
 %build
+%add_optflags -fcommon
 %configure \
         --localstatedir=%_localstatedir             \
         --with-acl                                  \
@@ -125,6 +126,9 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.12-alt4
+- Fixed FTBFS with -fcommon
+
 * Mon Oct 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.1.12-alt3
 - python2 -> python3
 
