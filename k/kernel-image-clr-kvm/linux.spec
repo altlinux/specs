@@ -10,7 +10,7 @@
 %define krelease %release
 
 %define kernel_base_version     5.4
-%define kernel_sublevel .105
+%define kernel_sublevel .107
 %define kernel_extra_version    %nil
 
 %define kernel_extra_version_numeric 1.0.0
@@ -32,7 +32,7 @@ Release: alt1
 %define kgcc_version    %__gcc_version_base
 
 License: GPL-2.0
-Summary: Linux %sub_flavour kernel
+Summary: Intel optimized Clear Linux kvm kernel
 Url: http://www.kernel.org/
 Group: System/Kernel and hardware
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
@@ -163,6 +163,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/*
 
 %changelog
+* Fri Mar 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.4.107-alt1
+- 5.4.107
+
 * Mon Mar 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.4.105-alt1
 - 5.4.105
 
