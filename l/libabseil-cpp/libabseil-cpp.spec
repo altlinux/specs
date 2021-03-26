@@ -1,8 +1,8 @@
 # wait for GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST
 %def_without test
 Name: libabseil-cpp
-Version: 20200923.2
-Release: alt2
+Version: 20200923.3
+Release: alt1
 
 Summary: C++ Common Libraries
 
@@ -48,7 +48,9 @@ Development headers for %name
 
 %build
 %add_optflags "-fPIC"
+# about -DCMAKE_CXX_STANDARD=17 see https://github.com/desktop-app/tg_owt/pull/55#discussion_r599718405
 %cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_CXX_STANDARD=17 \
 %if_with test
     -DABSL_RUN_TESTS=ON -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
 %endif
@@ -72,6 +74,10 @@ ctest
 %_libdir/cmake/absl/
 
 %changelog
+* Fri Mar 26 2021 Vitaly Lipatov <lav@altlinux.ru> 20200923.3-alt1
+- new version (20200923.3) with rpmgs script
+- build with -DCMAKE_CXX_STANDARD=17
+
 * Thu Jan 28 2021 Arseny Maslennikov <arseny@altlinux.org> 20200923.2-alt2
 - NMU: enable -fPIC.
 
