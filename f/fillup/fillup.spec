@@ -1,6 +1,6 @@
 Name: fillup
 Version: 1.42
-Release: alt6.qa1
+Release: alt7
 
 Summary: Tool for merging config files
 License: GPL
@@ -36,7 +36,8 @@ Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
 
 %prep
-%setup -q
+%setup
+sed -ie 's/^\(DEFINES\s*=\)/\1 -fcommon/' SRC/Makefile
 
 %build
 %make clean
@@ -65,6 +66,9 @@ install -pDm644 SGML/fillup.8.gz %buildroot%_man8dir/%name.8.gz
 
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.42-alt7
+- NMU: fixed ftbfs with -fcommon.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.42-alt6.qa1
 - NMU: rebuilt for debuginfo.
 
