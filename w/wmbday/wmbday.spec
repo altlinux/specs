@@ -3,7 +3,7 @@
 
 Name: wmbday
 Version: 0.3.1
-Release: alt6
+Release: alt7
 
 Summary: This dockapp will remind you of birthdays
 Summary(ru_RU.CP1251): Ётот апплет будет напоминать вам о дн€х рождени€
@@ -20,7 +20,7 @@ Patch0: %name-0.3.1-alt-warnings-x86_64.patch
 Patch1: %name-0.3.1-alt-autotools-support.patch
 Patch2: %name-0.3.1-alt-man-kill_x11_path.patch
 Patch3: %name-0.3.1-alt-doc-update_my_email.patch
-Patch4: %name-0.3.1-fix-build-with-gcc8.patch
+Patch4: %name-0.3.1-fix-build-with-gcc10.patch
 
 BuildRequires: libXext-devel libXpm-devel
 
@@ -86,6 +86,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt7
+- Fixed FTBFS.
+
 * Wed Dec 19 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt6
 - Fixed FTBFS.
 
