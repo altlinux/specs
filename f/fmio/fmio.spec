@@ -2,7 +2,7 @@
 
 Name: fmio
 Version: 2.0.8
-Release: alt3
+Release: alt4
 
 Summary: fmio, FM radio card manipulation utility
 License: BSD
@@ -67,7 +67,7 @@ sh license.sh > ../LICENSE
 popd
 
 %build
-export CFLAGS="-DSYSCONFDIR=\\\"%_sysconfdir\\\" $RPM_OPT_FLAGS -fPIC"
+export CFLAGS="-DSYSCONFDIR=\\\"%_sysconfdir\\\" $RPM_OPT_FLAGS -fPIC -fcommon"
 export LIBDIR="-L%_libdir"
 %if_with direct_io
 export WITH_DIRECT_IO=y
@@ -103,6 +103,9 @@ install -pm644 %SOURCE2 README.fedora
 
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.8-alt4
+- Fixed FTBFS with -fcommon.
+
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.8-alt3
 - Porting wrapper on python3.
 
