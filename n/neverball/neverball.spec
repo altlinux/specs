@@ -1,9 +1,9 @@
 Name: neverball
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: OpenGL golf-based game
-License: GPL
+License: GPLv2+
 Group: Games/Other
 
 Url: http://www.icculus.org/neverball/
@@ -41,7 +41,7 @@ golf game using the physics and graphics of Neverball.
 %prep
 %setup
 #patch -p0
-sed -i 's|\(ALL_CFLAGS\ \:\=.*\)|\1 -g|' Makefile
+sed -i 's|\(ALL_CFLAGS\ \:\=.*\)|\1 -g -fcommon|' Makefile
 
 %build
 %make_build DATADIR=%_datadir/%name
@@ -112,6 +112,10 @@ ln -sf %_datadir/fonts/ttf/dejavu/DejaVuSans-Bold.ttf \
 %_datadir/applications/*
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Mon Jun 09 2014 Ilya Mashkin <oddity@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
