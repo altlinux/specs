@@ -5,7 +5,7 @@ BuildRequires: /proc
 
 Name: fakenes
 Version: 0.5.9
-Release: alt1.5.%beta
+Release: alt2.5.%beta
 Summary: Nintendo Entertainment System emulator
 Group: Emulators
 License: Artistic
@@ -41,7 +41,7 @@ well.  There are also official builds available for Mac OS X.
 sed -i 's/\r//' docs/faq.html
 
 %build
-%add_optflags -DALLEGRO_NO_FIX_ALIASES
+%add_optflags -fcommon -DALLEGRO_NO_FIX_ALIASES
 export CFLAGS="$RPM_OPT_FLAGS -ffast-math"
 make cbuild
 ./cbuild --verbose
@@ -67,6 +67,9 @@ install -p -m 644 FakeNES_128x128x32.png \
 %_datadir/icons/hicolor/128x128/apps/%name.png
 
 %changelog
+* Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 0.5.9-alt2.5.beta3
+- Fix build with gcc-10
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt1.5.beta3
 - NMU: applied logoved fixes
 
