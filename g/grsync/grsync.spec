@@ -1,5 +1,5 @@
 Name: grsync
-Version: 1.2.8
+Version: 1.3.0
 Release: alt1
 
 Summary: Grsync is a GUI for rsync
@@ -17,7 +17,7 @@ Requires: rsync
 
 BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Sun Jan 15 2012
-BuildRequires: dos2unix intltool libgtk+2-devel
+BuildRequires: dos2unix intltool libwebkitgtk3-devel
 
 %description
 Grsync is a GUI (Graphical User Interface) for rsync, the command line file and
@@ -56,6 +56,9 @@ install -pD -m644 %_sourcedir/grsync16.png %buildroot%_miconsdir/grsync.png
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Build new version.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.8-alt1
 - Build new version.
 
