@@ -1,7 +1,5 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: sway
-Version: 1.5
+Version: 1.5.1
 Release: alt1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
@@ -16,6 +14,8 @@ Source1: startsway
 Source2: Sway_Wallpaper_Gray.png
 
 Patch00: sway-config.patch
+
+%define _unpackaged_files_terminate_build 1
 
 BuildRequires: gcc-c++
 BuildRequires: asciidoc-a2x
@@ -109,6 +109,9 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Thu Mar 25 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.5.1-alt1
+- New version (1.5.1)
+
 * Sun Jul 26 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.5-alt1
 - New version (1.5)
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.11
+%define ver_major 0.12
 
 %def_enable x11
 %def_enable xcb_icccm
@@ -27,8 +27,6 @@ Source: %url/archive/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-Patch01: 0001-Add-drmhelper-support.patch
-
 BuildRequires(pre): meson
 BuildRequires: ctags
 BuildRequires: libwayland-server-devel libwayland-client-devel
@@ -37,7 +35,7 @@ BuildRequires: libEGL-devel libGLES-devel libdrm-devel libgbm-devel
 BuildRequires: libinput-devel libxkbcommon-devel
 BuildRequires: libudev-devel libpixman-devel
 BuildRequires: pkgconfig(systemd)
-BuildRequires: libdrmhelper-devel
+BuildRequires: pkgconfig(libseat)
 %{?_enable_x11:BuildRequires: pkgconfig(x11-xcb) pkgconfig(xcb) pkgconfig(xcb-xinput) pkgconfig(xcb-xfixes)}
 %{?_enable_xwayland:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-composite) pkgconfig(xcb-render) pkgconfig(xcb-xfixes)}
 %{?_enable_xcb_icccm:BuildRequires: pkgconfig(xcb-icccm)}
@@ -65,7 +63,6 @@ This package provides development files for %name library.
 
 %prep
 %setup -n %name-%version
-%patch01 -p2
 
 %build
 %meson
@@ -88,6 +85,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Mar 25 2021 Alexey Gladkov <legion@altlinux.ru> 0.12.0-alt1
+- New version (0.12.0)
+- Add libseat backend.
+- Drop libdrmhelper backend.
+
 * Sun Jul 26 2020 Alexey Gladkov <legion@altlinux.ru> 0.11.0-alt1
 - New version (0.11.0)
 
