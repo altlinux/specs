@@ -1,6 +1,6 @@
 Name: typespeed
 Version: 0.6.5
-Release: alt1.qa1
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -24,6 +24,7 @@ challenging your friends.
 %setup
 
 %build
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -40,6 +41,9 @@ challenging your friends.
 %exclude %_datadir/doc
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.5-alt2
+- Fixed FTBFS with -fcommon.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
