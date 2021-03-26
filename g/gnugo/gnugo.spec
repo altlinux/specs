@@ -1,6 +1,6 @@
 Name: gnugo
 Version: 3.8
-Release: alt1.qa1.1
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -26,6 +26,7 @@ Legend Go Server in Taiwan and the WING server in Japan.
 %setup
 
 %build
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -40,6 +41,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/gnugo.desktop
 %_infodir/gnugo.*
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.8-alt2
+- Fixed FTBFS with -fcommon
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1.qa1.1
 - NMU: added BR: texinfo
 
