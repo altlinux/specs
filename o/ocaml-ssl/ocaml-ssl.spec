@@ -1,6 +1,6 @@
 Name: ocaml-ssl
-Version: 0.5.9
-Release: alt4
+Version: 0.5.10
+Release: alt1
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
@@ -41,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Mar 26 2021 Anton Farygin <rider@altlinux.org> 0.5.10-alt1
+- 0.5.10
+
 * Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 0.5.9-alt4
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - spec: use SPDX for ocaml linking exception in license tag
