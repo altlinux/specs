@@ -6,8 +6,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.11
-Release: alt2
+Version: 2.4.12
+Release: alt1
 Summary: Filesystem abstraction layer
 License: MIT
 Group: Development/Python3
@@ -127,6 +127,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.12-alt1
+- Automatically updated to 2.4.12.
+
 * Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.11-alt2
 - Removed backports.os dependency since it's not needed for python-3.
 
