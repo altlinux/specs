@@ -1,12 +1,13 @@
 Name: jimtcl
-Version: 0.76
+Version: 0.80
 Release: alt1
-Summary: A small embeddable Tcl interpreter
 
+Summary: A small embeddable Tcl interpreter
 License: BSD
 Group: Development/Tcl
 Url: http://jim.tcl.tk
-# git clone git://repo.or.cz/jimtcl.git
+
+# https://github.com/msteveb/jimtcl.git
 Source0: %name-%version.tar
 
 BuildRequires: asciidoc
@@ -65,8 +66,12 @@ popd
 %_includedir/*
 %_bindir/build-jim-ext
 %_libdir/libjim.so
+%_pkgconfigdir/jimtcl.pc
 
 %changelog
+* Fri Mar 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.80-alt1
+- 0.80 released
+
 * Thu Nov 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.76-alt1
 - Updated to 0.76.
 

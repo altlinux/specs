@@ -1,71 +1,68 @@
 Name: libgpiod
-Version: 1.4.1
+Version: 1.6.3
 Release: alt1
-Summary: C library and tools for interacting with linux GPIO char device
 
-License: LGPLv2+
+Summary: Linux GPIO interacting library
+License: LGPL-2.1
 Group: System/Libraries
 Url: https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/
-Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: %name-%version.tar
+Source0: %name-%version-%release.tar
 
-BuildRequires: autoconf-archive
-BuildRequires: doxygen
-BuildRequires: gcc-c++
-BuildRequires: libkmod-devel
-BuildRequires: libstdc++-devel
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: libsystemd-devel
-
-%description
-libgpiod is a C library and tools for interacting with the linux GPIO character
-device (gpiod stands for GPIO device) The new character device interface
-guarantees all allocated resources are freed after closing the device file
-descriptor and adds several new features that are not present in the obsolete
-sysfs interface (like event polling, setting/reading multiple values at once or
-open-source and open-drain GPIOs).
-
-%package utils
-Summary: Utilities for GPIO
-Group: System/Kernel and hardware
-Requires: %name = %EVR
-
-%description utils
-Utilities for interacting with GPIO character devices.
+BuildRequires: autoconf-archive gcc-c++ help2man
+BuildRequires: python3-devel python3-module-setuptools
 
 %package c++
-Summary: C++ bindings for %name
+Summary: C++ bindings for libgpiod
 Group: System/Libraries
-Requires: %name = %EVR
-
-%description c++
-C++ bindings for use with %name.
-
-%package -n python3-module-%name
-Summary: Python 3 bindings for %name
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description -n python3-module-%name
-Python 3 bindings for development with %name.
 
 %package devel
-Summary: Development package for %name
+Summary: Linux GPIO interacting library
 Group: Development/C
-Requires: %name = %EVR
+
+%package -n gpio-tools
+Summary: Linux GPIO interacting tools
+Group: System/Kernel and hardware
+Provides: libgpiod-utils = %EVR
+Obsoletes: libgpiod-utils
+
+%package -n python3-module-gpiod
+Summary: Python 3 bindings for %name
+Group: Development/Python3
+Provides: python3-module-libgpiod = %EVR
+Obsoletes: python3-module-libgpiod
+
+%define desc C library and tools for interacting with the linux GPIO \
+character device (gpiod stands for GPIO device).\
+Since linux 4.8 the GPIO sysfs interface is deprecated. User space should use\
+the character device instead. This library encapsulates the ioctl calls and\
+data structures behind a straightforward API.
+
+%description
+%desc
+
+%description c++
+%desc
+This package contains C++ bindings for libgpiod.
 
 %description devel
-Files for development with %name.
+%desc
+This package contains development part of libgpiod.
+
+%description -n gpio-tools
+%desc
+This package contains command-line tools.
+
+%description -n python3-module-gpiod
+%desc
+This package contains Python bindings for libgpiod.
 
 %prep
 %setup
 
 %build
 %autoreconf
-%configure \
-	--enable-tools=yes \
+%configure --enable-tools \
 	--disable-static \
 	--enable-bindings-cxx \
 	--enable-bindings-python
@@ -75,27 +72,37 @@ Files for development with %name.
 %install
 %makeinstall_std
 
-#Remove libtool archives.
-find %buildroot -name '*.la' -delete
-
 %files
 %doc COPYING README
-%_libdir/%name.so.*
-
-%files utils
-%_bindir/gpio*
+%_libdir/libgpiod.so.*
 
 %files c++
 %_libdir/libgpiodcxx.so.*
 
-%files -n python3-module-%name
+%files devel
+%_includedir/gpiod.h
+%_libdir/libgpiod.so
+%_libdir/libgpiodcxx.so
+%_pkgconfigdir/libgpiod.pc
+%_pkgconfigdir/libgpiodcxx.pc
+
+%files -n gpio-tools
+%doc COPYING NEWS README TODO
+%_bindir/gpio*
+%_man1dir/gpio*.1*
+
+%files -n python3-module-gpiod
 %python3_sitelibdir/gpiod.so
 
-%files devel
-%_includedir/gpiod.*
-%_pkgconfigdir/libgpiod*.pc
-%_libdir/%{name}*.so
-
 %changelog
+* Fri Mar 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.3-alt1
+- 1.6.3 reelased
+
+* Mon Dec 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.2-alt1
+- 1.6.2 released
+
+* Wed Sep 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.4-alt1
+- 1.4.4 released
+
 * Thu Jan 16 2020 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
 - initial build for ALT
