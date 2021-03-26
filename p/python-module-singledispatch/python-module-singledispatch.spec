@@ -1,11 +1,9 @@
 # Created by pyp2rpm-1.0.1
 %global pypi_name singledispatch
 
-%def_with python3
-
 Name:           python-module-%{pypi_name}
 Version:        3.4.0.3
-Release:        alt1.1.2
+Release:        alt2
 Summary:        This library brings functools.singledispatch from Python 3.4 to Python 2.6-3.3
 Group:          Development/Python
 
@@ -16,7 +14,7 @@ BuildArch:      noarch
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-ordereddict python-module-setuptools python3-module-setuptools rpm-build-python3
+BuildRequires: python-module-ordereddict python-module-setuptools
 
 #BuildRequires:  python-devel
 #BuildRequires:  python-module-setuptools
@@ -25,26 +23,8 @@ BuildRequires: python-module-ordereddict python-module-setuptools python3-module
 Requires:       python-module-six
 Requires:       python-module-ordereddict
 #BuildRequires:  python-module-ordereddict
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildRequires:  python3-devel
-#BuildRequires:  python3-module-setuptools
-#BuildRequires:  python3-module-six
-%endif
 
 %description
-PEP 443 proposed to expose a mechanism in the functools standard library
-module in Python 3.4 that provides a simple form of generic programming 
-known as single-dispatch generic functions.
-
-This library is a backport of this functionality to Python 2.6 - 3.3.
-
-%package -n python3-module-%pypi_name
-Summary:        This library brings functools.singledispatch from Python 3.4 to Python 2.6-3.3
-Group:          Development/Python3
-Requires:       python3-module-six
-
-%description -n python3-module-%pypi_name
 PEP 443 proposed to expose a mechanism in the functools standard library
 module in Python 3.4 that provides a simple form of generic programming 
 known as single-dispatch generic functions.
@@ -60,27 +40,11 @@ rm -rf %{pypi_name}.egg-info
 sed -i '1d' singledispatch.py
 sed -i '1d' singledispatch_helpers.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %python_build
 
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
-
 %install
 %python_install
-
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-%endif
 
 # %check
 # %{__python} setup.py test
@@ -91,13 +55,10 @@ popd
 %{python_sitelibdir}/%{pypi_name}.py*
 %{python_sitelibdir}/%{pypi_name}_helpers.py*
 
-%if_with python3
-%files -n python3-module-%pypi_name
-%doc README.rst
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 3.4.0.3-alt2
+- Stopped Python3 package build.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.4.0.3-alt1.1.2
 - (NMU) rebuild with python3.6
 

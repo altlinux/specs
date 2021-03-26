@@ -2,7 +2,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: A lean WSGI object-dispatching web framework
 Group: Development/Python3
 
@@ -18,11 +18,9 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-webob >= 1.2
 BuildRequires: python3-module-simplegeneric >= 0.8
 BuildRequires: python3-module-mako >= 0.4.0
-BuildRequires: python3-module-singledispatch
 BuildRequires: python3-module-webtest >= 1.3.1
 BuildRequires: python3-module-logutils >= 0.3
 
-Requires: python3-module-singledispatch
 Requires: python3-module-logutils >= 0.3
 Requires: python3-module-webob >= 1.2
 Requires: python3-module-mako >= 0.4.0
@@ -67,6 +65,9 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests/config_fixtures/bad
 %python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 1.4.0-alt2
+- Dropped dependency on singledispatch(removed from Sisyphus).
+
 * Tue Sep 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Build new version.
 
