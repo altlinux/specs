@@ -1,9 +1,9 @@
 Name: lcdproc
 Version: 0.5.7
-Release: alt3
+Release: alt4
 
 Summary: Show info on LCD displays
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 
 Url: http://lcdproc.omnipotent.net
@@ -42,6 +42,7 @@ subst "s#\(DriverPath\)=.*#\1=%_libdir/lcdproc/#" LCDd.conf
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure \
 	--enable-libusb \
 	--enable-stat-nfs \
@@ -73,6 +74,10 @@ install -pDm644 %SOURCE2 %buildroot%_unitdir/%name.service
 %_unitdir/*
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt4
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.7-alt3
 - Switched to libftdi1.
 
