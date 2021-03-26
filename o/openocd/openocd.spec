@@ -1,16 +1,15 @@
 Name: openocd
 Version: 0.11.0
-Release: alt1.rc1
+Release: alt2
+
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
-
-Group: Development/Tools
 License: GPLv2
+Group: Development/Tools
 Url: http://sourceforge.net/projects/openocd
-Source: %name.tar
-Source10: libjaylink.tar
-Source44: %name.watch
 
-BuildRequires: chrpath libftdi1-devel jimtcl-devel libgpiod-devel libhidapi-devel libusb-compat-devel texinfo
+Source: %name-%version-%release.tar
+
+BuildRequires: jimtcl-devel libftdi1-devel libgpiod-devel libhidapi-devel libjaylink-devel libusb-devel texinfo
 
 %description
 The Open On-Chip Debugger (OpenOCD) provides debugging, in-system
@@ -22,20 +21,17 @@ Install OpenOCD if you are looking for an open source solution for
 hardware debugging.
 
 %prep
-%setup -n %name
-tar -xf %SOURCE10 -C src/jtag/drivers
+%setup
 
 %build
 %autoreconf
-# FIXME   --enable-werror
 %configure \
   --disable-werror \
   --disable-doxygen-html \
   --disable-internal-jimtcl \
+  --disable-internal-libjaylink \
   --enable-aice \
   --enable-amtjtagaccel \
-  --enable-arm-jtag-ew \
-  --enable-armjtagew \
   --enable-at91rm9200 \
   --enable-bcm2835gpio \
   --enable-buspirate \
@@ -47,6 +43,7 @@ tar -xf %SOURCE10 -C src/jtag/drivers
   --enable-gw16012 \
   --enable-jlink \
   --enable-jtag_vpi \
+  --enable-linuxgpiod \
   --enable-opendous \
   --enable-openjtag \
   --enable-osbdm \
@@ -54,7 +51,6 @@ tar -xf %SOURCE10 -C src/jtag/drivers
   --enable-parport_ppdev \
   --enable-presto \
   --enable-remote-bitbang \
-  --enable-rlink \
   --enable-stlink \
   --enable-sysfsgpio \
   --enable-ti-icdi \
@@ -62,33 +58,32 @@ tar -xf %SOURCE10 -C src/jtag/drivers
   --enable-usb-blaster \
   --enable-usb-blaster-2 \
   --enable-usb_blaster_libftdi \
-  --enable-usbprog \
   --enable-vsllink \
   CROSS=
 %make_build
 
 %install
 %makeinstall_std
-#chrpath --delete %buildroot/%_bindir/openocd
-mkdir -p %buildroot%_sysconfdir/udev/rules.d/
-install -m644 \
-	contrib/*.rules \
-	src/jtag/drivers/libjaylink/contrib/*.rules \
-	%buildroot%_sysconfdir/udev/rules.d/
+install -pm644 -D contrib/60-openocd.rules %buildroot%_udevrulesdir/60-openocd.rules
+
+%pre
+/usr/sbin/groupadd -r -f plugdev &>/dev/null ||:
 
 %files
 %doc AUTHORS BUGS ChangeLog HACKING NEWS* NEWTAPS
 %doc README TODO
-%doc %_datadir/%name/contrib
-%_sysconfdir/udev/rules.d/*
-%dir %_datadir/%name
-%_datadir/%name/scripts
-%_datadir/%name/OpenULINK
-%_bindir/%name
-%_infodir/%name.info*
+%doc %_datadir/%name/contrib/libdcc
+%_udevrulesdir/*.rules
+%_bindir/openocd
+%_datadir/openocd
+%exclude %_datadir/openocd/contrib
+%_infodir/openocd.info*
 %_mandir/man1/*
 
 %changelog
+* Fri Mar 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.0-alt2
+- 0.11.0 released
+
 * Thu Dec 10 2020 Ildar Mulyukov <ildar@altlinux.ru> 0.11.0-alt1.rc1
 - new version (git HEAD)
 
