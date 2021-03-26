@@ -1,5 +1,5 @@
 Name: libburn
-Version: 1.5.2
+Version: 1.5.4
 Release: alt1
 
 Summary: CD/DVD-R/RW disc reading/writing library
@@ -104,6 +104,9 @@ runs, though.
 %_man1dir/*
 
 %changelog
+* Thu Mar 25 2021 Anton Farygin <rider@altlinux.org> 1.5.4-alt1
+- 1.5.4
+
 * Thu Jul 23 2020 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 

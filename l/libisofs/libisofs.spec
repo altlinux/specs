@@ -1,5 +1,5 @@
 Name: libisofs
-Version: 1.5.2
+Version: 1.5.4
 Release: alt1
 
 Summary: ISO9660 filesystem creation library
@@ -57,6 +57,9 @@ libisofs is to be the foundation of our upcoming mkisofs emulation.
 %doc README ChangeLog
 
 %changelog
+* Thu Mar 25 2021 Anton Farygin <rider@altlinux.org> 1.5.4-alt1
+- 1.5.4
+
 * Thu Jul 23 2020 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 
