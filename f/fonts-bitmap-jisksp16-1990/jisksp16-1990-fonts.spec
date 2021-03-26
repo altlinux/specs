@@ -1,6 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
+Group: System/Fonts/True type
 %define oldname jisksp16-1990-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,16 +7,15 @@ BuildRequires: unzip
 
 Name:		fonts-bitmap-jisksp16-1990
 Version:	0.983
-Release:	alt4_15
+Release:	alt4_23
 Summary:	16x16 JIS X 0212:1990 Bitmap font
-Group:		System/Fonts/True type
 License:	Public Domain
 
 URL:		http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/ftp/fonts/
 Source0:	http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/ftp/fonts/jisksp16-1990.bdf.Z
 
 BuildArch:	noarch
-BuildRequires:	gzip gzip-utils less bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils fontpackages-devel
+BuildRequires:	gzip gzip-utils mkfontdir fontpackages-devel
 
 Provides:	jisksp16-1990 = 0.1-16
 Obsoletes:	jisksp16-1990 <= 0.1-16
@@ -85,12 +82,16 @@ fi
 
 
 %files
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/jisksp16-1990.pcf.gz
 
 %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/fonts.dir
 %{catalogue}/*
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 0.983-alt4_23
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.983-alt4_15
 - update to new release by fcimport
 
