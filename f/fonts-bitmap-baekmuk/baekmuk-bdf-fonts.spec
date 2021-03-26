@@ -10,7 +10,7 @@ BuildRequires: fontpackages-devel
 
 Name:           fonts-bitmap-baekmuk
 Version:        2.2
-Release:        alt3_24
+Release:        alt3_29
 Summary:        Korean bitmap fonts
 
 License:        Baekmuk
@@ -18,7 +18,7 @@ URL:            http://kldp.net/projects/baekmuk/
 Source:  http://kldp.net/frs/download.php/1428/%{fontname}-%{version}.tar.gz
 Patch0:	 baekmuk-bdf-fonts-fix-fonts-alias.patch
 BuildArch:      noarch
-BuildRequires:  bdftopcf mkfontdir mkfontscale xorg-font-utils
+BuildRequires:  mkfontdir bdftopcf
 Source44: import.info
 
 %description
@@ -61,6 +61,9 @@ iconv -f EUC-KR -t UTF-8 COPYRIGHT.ks > COPYRIGHT.ko
 
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 2.2-alt3_29
+- update to new release by fcimport
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_24
 - sync with fc
 
