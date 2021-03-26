@@ -3,7 +3,7 @@
 %global goipath         github.com/jinzhu/now
 
 Name: golang-github-jinzhu-now
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: Time toolkit for Go
 Group: Development/Other
@@ -55,5 +55,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Fri Mar 26 2021 Leontiy Volodin <lvol@altlinux.org> 1.1.2-alt1
+- New version (1.1.2).
+
 * Tue Jun 02 2020 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
