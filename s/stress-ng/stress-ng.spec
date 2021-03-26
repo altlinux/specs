@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: stress-ng
-Version: 0.12.05
+Version: 0.12.06
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -45,7 +45,7 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %endif
 
 %build
-%make_build_ext
+%make_build_ext --no-print-directory --output-sync=none
 
 %install
 %makeinstall_std
@@ -69,6 +69,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Fri Mar 26 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.06-alt1
+- Update to V0.12.06 (2021-03-24).
+
 * Mon Mar 15 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.05-alt1
 - Update to V0.12.05 (2021-03-12).
 
