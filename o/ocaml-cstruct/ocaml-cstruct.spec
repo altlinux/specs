@@ -2,10 +2,9 @@
 
 # TODO: async
 %define opamodules cstruct,cstruct-unix,cstruct-lwt,cstruct-sexp
-
 Name:    ocaml-%modulename
-Version: 5.3.0
-Release: alt2
+Version: 6.0.0
+Release: alt1
 Summary: access C-like structures directly from OCaml
 License: ISC
 Group:   Development/ML
@@ -57,6 +56,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Mar 26 2021 Anton Farygin <rider@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 5.3.0-alt2
 - removed ppx submodule
 
