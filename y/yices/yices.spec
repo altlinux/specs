@@ -3,7 +3,7 @@
 
 Name: yices
 Version: 2.3.0
-Release: alt3
+Release: alt4
 Summary: The Yices SMT Solver
 License: Noncommercial use only
 Group: Sciences/Mathematics
@@ -78,7 +78,7 @@ This package contains development files of %name.
 %setup
 
 %build
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -fcommon
 %autoreconf
 %configure \
 	--enable-shared \
@@ -116,6 +116,9 @@ sed -i 's|%prefix|%buildroot%prefix|' %make_include
 %_libdir/*.so
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt4
+- Fixed FTBFS with -fcommon.
+
 * Wed Feb 20 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.0-alt3
 - Fixed build on non-x86 architectures.
 
