@@ -1,6 +1,6 @@
 Name: bygfoot
 Version: 2.3.2
-Release: alt1
+Release: alt2
 
 Summary: The game - a manager of football team
 Summary(ru_RU.KOI8-R): Игра - менеджер футбольной команды
@@ -25,7 +25,7 @@ The game - a manager of football team
 %patch0 -p0
 
 %build
-
+%add_optflags -fcommon
 %configure
 %make_build 
 
@@ -38,6 +38,9 @@ The game - a manager of football team
 %_datadir/bygfoot/
 
 %changelog
+* Thu Mar 25 2021 Slava Aseev <ptrnine@altlinux.org> 2.3.2-alt2
+- fix build with gcc-10
+
 * Tue May 06 2014 Ilya Mashkin <oddity@altlinux.ru> 2.3.2-alt1
 - 2.3.2
 
