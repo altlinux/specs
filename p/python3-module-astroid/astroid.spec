@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.2
-Release: alt3
+Version: 2.5.1
+Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -57,7 +57,7 @@ rm %buildroot%python3_sitelibdir/astroid/test_utils.py
 %check
 export PIP_NO_INDEX=YES
 export PIP_NO_DEPS=YES
-export TOXENV=py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}-six
 tox.py3 --sitepackages -p auto -o -v
 
 %files
@@ -66,6 +66,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Wed Mar 24 2021 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
+- 2.4.2 -> 2.5.1.
+
 * Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 2.4.2-alt3
 - Unpinned lazy-object-proxy.
 
