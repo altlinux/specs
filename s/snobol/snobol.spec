@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 
 Name: snobol
 Version: 4.%snobrel
-Release: alt2.qa1
+Release: alt3
 Summary: The SNOBOL programming language
 
 Group: Development/Other
@@ -44,7 +44,7 @@ programming" and "object oriented" constructs.
 %patch2 -p1
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
+export CFLAGS="$RPM_OPT_FLAGS -fcommon"
 ./configure  --prefix=%prefix --mandir=%_mandir \
              --snolibdir=%_datadir/snobol4 \
               --with-tcl=%_libdir/tclConfig.sh
@@ -61,6 +61,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_mandir/man*/*
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 4.1.5-alt3
+- Fixed FTBFS with -fcommon
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.5-alt2.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
