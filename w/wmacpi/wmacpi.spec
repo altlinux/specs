@@ -1,9 +1,9 @@
 Name: wmacpi
 Version: 2.2rc4
-Release: alt0.2
+Release: alt0.3
 
 Summary: This is a ACPI status monitor for Window Maker.
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Window Maker
 
 Url: http://himi.org/wmacpi
@@ -31,6 +31,7 @@ This version is a complete rewrite of wmacpi-1.34.
 sed -i -e s,dockapp.h,libdockapp/dockapp.h, wmacpi.c
 
 %build
+%add_optflags -fcommon
 %make_build OPT="%optflags"
 
 %install
@@ -48,6 +49,10 @@ install -pD -m644 %SOURCE1 %buildroot%_menudir/%name
 # - replace debian menufile with freedesktop one some day
 
 %changelog
+* Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.2rc4-alt0.3
+- NMU: fixed ftbfs with -fcommon
+- fixed license tag
+
 * Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 2.2rc4-alt0.2
 - NMU: rebuild with new libdockapp
 
