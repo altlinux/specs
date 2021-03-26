@@ -4,7 +4,7 @@
 
 Name: golang-github-go-dbus
 Version: 5.0.3
-Release: alt1.gitefee839
+Release: alt2.gitc88335c
 Summary: Go client bindings for the D-Bus
 
 License: BSD-2-Clause
@@ -68,5 +68,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/_examples
 
 %changelog
+* Fri Mar 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.3-alt2.gitc88335c
+- Built from commit c88335c0b1d28a30e7fc76d526a06154b85e5d97.
+
 * Mon Aug 24 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.3-alt1.gitefee839
 - Initial build for ALT Sisyphus.
