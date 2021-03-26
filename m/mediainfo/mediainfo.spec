@@ -1,7 +1,7 @@
 %def_disable kde4
 
 Name: mediainfo
-Version: 20.09
+Version: 21.03
 Release: alt1
 
 Group: File tools
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: dos2unix
 BuildRequires: zlib-devel
 BuildRequires: libpango-devel
-BuildRequires: libzen-devel >= 0.4.38
+BuildRequires: libzen-devel >= 0.4.39
 BuildRequires: libmediainfo-devel >= %version
 BuildRequires: libwxGTK-devel
 BuildRequires: sgml-common
@@ -152,6 +152,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 21.03-alt1
+- 21.03
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 20.09-alt1
 - 20.09
 

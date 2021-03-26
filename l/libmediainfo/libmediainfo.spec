@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 20.09
+Version: 21.03
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ BuildRequires: id3lib-devel
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
-BuildRequires: libzen-devel >= 0.4.38
+BuildRequires: libzen-devel >= 0.4.39
 BuildRequires: libcurl-devel
 BuildRequires: libmms-devel
 BuildRequires: libtinyxml2-devel
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 21.03-alt1
+- 21.03
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 20.09-alt1
 - 20.09
 
