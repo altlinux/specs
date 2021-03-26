@@ -1,6 +1,6 @@
 Name: cyclades-serial-client
 Version: 0.93
-Release: alt4
+Release: alt5
 
 Summary: Serial port client
 License: GPL
@@ -11,7 +11,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 #Source: %url/%name-%version.tar.gz
 Source: %name-%version.tgz
 Patch: %name.patch
-
+Patch1: %name-cflags.patch
 
 # Automatically added by buildreq on Fri Jun 08 2007
 BuildRequires: gcc-c++
@@ -26,8 +26,10 @@ RFC 2217 compliant client
 %setup -q
 
 patch -p0 -i %PATCH0
+%patch1 -p2
 
 %build
+%add_optflags -fcommon
 %configure
 %make
 #%%make_build
@@ -45,6 +47,9 @@ patch -p0 -i %PATCH0
 %_man8dir/*
 
 %changelog
+* Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 0.93-alt5
+- fix build with gcc-10
+
 * Mon Apr 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.93-alt4
 - fix build
 
