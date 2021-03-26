@@ -5,7 +5,6 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
-%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global use_system_admesh 0
@@ -15,7 +14,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt3_16
+Release:        alt3_19
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -40,7 +39,11 @@ Patch8:         %{name}-endian.patch
 # Make boost::Placeholders::_1 visible (PR#4976)
 Patch9:         %{name}-bind-placeholders.patch
 # Use boost/nowide/cstdlib.hpp instead of boost/nowide/cenv.hpp (PR#4976)
-Patch10:         %{name}-boost-nowide.patch
+Patch10:        %{name}-boost-nowide.patch
+
+# Security fix for CVE-2020-28591
+# https://github.com/slic3r/Slic3r/pull/5063
+Patch11:        %{name}-CVE-2020-28591.patch
 
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
@@ -152,6 +155,7 @@ for more information.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # Optional removals
 %if %{use_system_admesh}
@@ -261,12 +265,13 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{perl_vendor_archlib}/auto/Slic3r*
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
-%if 0%{?fedora} < 21
-%endif
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/%{name}
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt3_19
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt3_16
 - update to new release by fcimport
 
