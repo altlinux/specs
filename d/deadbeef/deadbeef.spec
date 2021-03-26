@@ -4,7 +4,7 @@
 %set_verify_elf_method textrel=relaxed 
 Name: deadbeef
 Version: 1.8.4
-Release: alt1
+Release: alt2
 Summary: DeaDBeeF is an audio player
 Url: https://github.com/Alexey-Yakovenko/deadbeef
 Source: %name-%version.tar
@@ -561,7 +561,8 @@ rm -rf %buildroot/%_libdir/%name/*.la
 
 %files -f %name.lang
 %dir %_libdir/%name
-%doc AUTHORS COPYING COPYING.* NEWS README ChangeLog about.txt help.txt
+%doc AUTHORS COPYING COPYING.* NEWS README ChangeLog
+%doc about.txt help.txt translation/help.ru.txt
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name
@@ -720,6 +721,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Fri Mar 26 2021 Anton Midyukov <antohami@altlinux.org> 1.8.4-alt2
+- add missing help.ru.txt (Closes: 39842)
+
 * Thu Jul 16 2020 Anton Midyukov <antohami@altlinux.org> 1.8.4-alt1
 - new version 1.8.4
 - new general plugin ddb_soundtouch
