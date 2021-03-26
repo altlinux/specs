@@ -14,8 +14,8 @@ Group: System/Libraries
 %bcond_without check
 
 Name:           libqb
-Version:        2.0.2
-Release:        alt1_2
+Version:        2.0.3
+Release:        alt1_1
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPLv2+
@@ -111,6 +111,9 @@ This package contains a program to create nicely-formatted man pages from Doxyge
 
 
 %changelog
+* Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_2
 - update to new release by fcimport
 
