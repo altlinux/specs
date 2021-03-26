@@ -1,6 +1,6 @@
 Name: pam_python
 Version: 1.0.8
-Release: alt2
+Release: alt3
 
 Summary: A Pluggable Authentication Module that runs the Python interpreter
 
@@ -63,6 +63,9 @@ cp $p/pam_python*.so $p/pam_python.so
 %doc %_docdir/%name/
 
 %changelog
+* Fri Mar 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.8-alt3
+- link with major python version
+
 * Sun Mar 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.8-alt2
 - add missed python3-dev
 
