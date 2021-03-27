@@ -1,11 +1,6 @@
-%def_with fcitx
-%def_with ibus
-%def_with nas
-%def_with pulse
-
 Name: SDL2
 Version: 2.0.14
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -23,30 +18,37 @@ Patch0: %name-2.0.9-rh-khrplatform.patch
 # http://bugzilla.libsdl.org/show_bug.cgi?id=5418
 Patch1: SDL2-e2k.patch
 
-BuildRequires: libXext-devel
-BuildRequires: libdbus-devel
+BuildPreReq: libblkid-devel
+BuildPreReq: libffi-devel
+BuildPreReq: libmount-devel
+BuildPreReq: libpcre-devel
+BuildPreReq: libselinux-devel
+BuildPreReq: zlib-devel
 
-%{?_with_fcitx:BuildRequires: fcitx-devel}
+BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libGLES-devel
 BuildRequires: libXScrnSaver-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXi-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libXrandr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
-%{?_with_nas:BuildRequires: libaudio-devel}
+BuildRequires: libaudio-devel
+BuildRequires: libdbus-devel
+BuildRequires: libdrm-devel
 BuildRequires: libesd-devel
-%{?_with_ibus:BuildRequires: libibus-devel}
+BuildRequires: libgbm-devel
+BuildRequires: libglvnd-devel
+BuildRequires: libibus-devel
 BuildRequires: libjack-devel
-%{?_with_pulse:BuildRequires: libpulseaudio-devel}
+BuildRequires: libpulseaudio-devel
 BuildRequires: libsamplerate-devel
+BuildRequires: libssl-devel
 BuildRequires: libudev-devel
-# Wayland support
-BuildRequires: libxkbcommon-devel
-BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
-BuildRequires: libwayland-server-devel
-BuildRequires: wayland-devel
-BuildRequires: wayland-protocols
+BuildRequires: libxkbcommon-devel
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -84,19 +86,12 @@ to develop SDL applications.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%configure \
-    --enable-video-vulkan \
-    --enable-video-wayland \
-    --disable-rpath \
-    --disable-static
-    
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
-rm %buildroot%_libdir/*.a
-%set_verify_elf_method strict
-%define _unpackaged_files_terminate_build 1
+%cmakeinstall_std
+%__rm %buildroot%_libdir/*.a
 
 %files -n lib%name
 %doc BUGS.txt COPYING.txt CREDITS.txt README*.txt WhatsNew.txt
@@ -106,11 +101,15 @@ rm %buildroot%_libdir/*.a
 %_bindir/sdl2-config
 %_includedir/%name/
 %_libdir/lib%name.so
+%_libdir/lib%name-2.0.so
 %_libdir/cmake/%name/
 %_pkgconfigdir/sdl2.pc
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Sat Mar 27 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.14-alt3
+- Build with cmake
+
 * Fri Jan 08 2021 Michael Shigorin <mike@altlinux.org> 2.0.14-alt2
 - E2K: add upstream system features detection patch (libsdl#5418)
 
