@@ -1,5 +1,5 @@
 %define name    stella
-%define version 6.2.1
+%define version 6.5.2
 %define rel     1
 
 %define enable_gl 1
@@ -13,8 +13,8 @@
 
 Name: stella
 Summary: An Atari 2600 Video Computer System emulator
-Version: 6.2.1
-Release: alt3
+Version: 6.5.2
+Release: alt1
 Group: Emulators
 License: GPL2
 Url: https://stella-emu.github.io
@@ -105,6 +105,9 @@ rm -rf $RPM_BUILD_DIR/%name-%version
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Mar 27 2021 Artyom Bystrov <arbars@altlinux.org> 6.5.2-alt1
+- update to new version
+
 * Wed Aug 26 2020 Artyom Bystrov <arbars@altlinux.org> 6.2.1-alt3
 - removing non-working macros
 
