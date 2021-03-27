@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 0d057c777ad62d9f612a605689b0d8ab544cf325
+%global commit cf8730309484629d2f5ee95b19db36d5d57ceea5
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2021-02-07T01-31-02Z
-%define version 2021.02.07
+%global tag RELEASE.2021-03-26T00-00-41Z
+%define version 2021.03.26
 
 %global _unpackaged_files_terminate_build 1
 
@@ -94,6 +94,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Sat Mar 27 2021 Alexey Shabalin <shaba@altlinux.org> 2021.03.26-alt1
+- Update to RELEASE.2021-03-26T00-00-41Z
+
 * Mon Feb 08 2021 Alexey Shabalin <shaba@altlinux.org> 2021.02.07-alt1
 - Update to RELEASE.2021-02-07T01-31-02Z
 
