@@ -1,6 +1,11 @@
+%def_with fcitx
+%def_with ibus
+%def_with nas
+%def_with pulse
+
 Name: SDL2
 Version: 2.0.14
-Release: alt3
+Release: alt4
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -18,37 +23,30 @@ Patch0: %name-2.0.9-rh-khrplatform.patch
 # http://bugzilla.libsdl.org/show_bug.cgi?id=5418
 Patch1: SDL2-e2k.patch
 
-BuildPreReq: libblkid-devel
-BuildPreReq: libffi-devel
-BuildPreReq: libmount-devel
-BuildPreReq: libpcre-devel
-BuildPreReq: libselinux-devel
-BuildPreReq: zlib-devel
+BuildRequires: libXext-devel
+BuildRequires: libdbus-devel
 
-BuildRequires: cmake
+%{?_with_fcitx:BuildRequires: fcitx-devel}
 BuildRequires: gcc-c++
+BuildRequires: libGLES-devel
 BuildRequires: libXScrnSaver-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXi-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXrandr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
-BuildRequires: libaudio-devel
-BuildRequires: libdbus-devel
-BuildRequires: libdrm-devel
+%{?_with_nas:BuildRequires: libaudio-devel}
 BuildRequires: libesd-devel
-BuildRequires: libgbm-devel
-BuildRequires: libglvnd-devel
-BuildRequires: libibus-devel
+%{?_with_ibus:BuildRequires: libibus-devel}
 BuildRequires: libjack-devel
-BuildRequires: libpulseaudio-devel
+%{?_with_pulse:BuildRequires: libpulseaudio-devel}
 BuildRequires: libsamplerate-devel
-BuildRequires: libssl-devel
 BuildRequires: libudev-devel
+# Wayland support
+BuildRequires: libxkbcommon-devel
+BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
-BuildRequires: libxkbcommon-devel
+BuildRequires: libwayland-server-devel
+BuildRequires: wayland-devel
+BuildRequires: wayland-protocols
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -86,12 +84,19 @@ to develop SDL applications.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake
-%cmake_build
+%configure \
+    --enable-video-vulkan \
+    --enable-video-wayland \
+    --disable-rpath \
+    --disable-static
+    
+%make_build
 
 %install
-%cmakeinstall_std
-%__rm %buildroot%_libdir/*.a
+%makeinstall_std
+rm %buildroot%_libdir/*.a
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files -n lib%name
 %doc BUGS.txt COPYING.txt CREDITS.txt README*.txt WhatsNew.txt
@@ -101,12 +106,14 @@ to develop SDL applications.
 %_bindir/sdl2-config
 %_includedir/%name/
 %_libdir/lib%name.so
-%_libdir/lib%name-2.0.so
 %_libdir/cmake/%name/
 %_pkgconfigdir/sdl2.pc
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Sun Mar 28 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.14-alt4
+- Restore buid with configure
+
 * Sat Mar 27 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.14-alt3
 - Build with cmake
 
