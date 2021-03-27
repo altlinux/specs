@@ -1,5 +1,5 @@
 Name: libzen
-Version: 0.4.38
+Version: 0.4.39
 Release: alt1
 
 Group: System/Libraries
@@ -49,6 +49,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.4.39-alt1
+- 0.4.39
+
 * Fri Apr 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4.38-alt1
 - 0.4.38
 - fixed License tag
