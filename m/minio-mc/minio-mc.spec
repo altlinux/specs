@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit c44387cb3203700425fa0c576bf574798245d0d1
+%global commit c3cae160b35d53056e454386c09850a158c049ec
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2021-02-07T02-02-05Z
-%define version 2021.02.07
+%global tag RELEASE.2021-03-23T05-46-11Z
+%define version 2021.03.23
 
 %global _unpackaged_files_terminate_build 1
 
@@ -66,6 +66,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Mar 27 2021 Alexey Shabalin <shaba@altlinux.org> 2021.03.23-alt1
+- Update to RELEASE.2021-03-23T05-46-11Z
+
 * Mon Feb 08 2021 Alexey Shabalin <shaba@altlinux.org> 2021.02.07-alt1
 - Update to RELEASE.2021-02-07T02-02-05Z
 
