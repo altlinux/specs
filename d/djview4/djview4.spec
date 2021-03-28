@@ -1,6 +1,6 @@
 Name: djview4
-Version: 4.10.6
-Release: alt2
+Version: 4.12.0
+Release: alt3
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
 License: GPLv2+
@@ -11,6 +11,7 @@ Url: http://djvu.sourceforge.net/djview4.html
 Source: djview-%version.tar
 
 Patch1: djview-4.8-rh-include.patch
+Patch2: djview-4.12-alt-disable-fseeko.patch
 
 %def_disable static
 %define qtdir %_libdir/qt4
@@ -22,9 +23,9 @@ Obsoletes: djvu-viewer < %EVR
 BuildRequires: libdjvu-devel >= 3.5.25
 BuildRequires: browser-plugins-npapi-devel
 
-# Automatically added by buildreq on Sat Apr 13 2013
-# optimized out: fontconfig gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libqt4-core libqt4-gui libqt4-network libstdc++-devel pkg-config phonon-devel xorg-xproto-devel
-BuildRequires: gcc-c++ glib2-devel libXt-devel libdjvu-devel libqt4-devel libtiff-devel xdg-utils
+# Automatically added by buildreq on Thu Jan 28 2021
+# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libImageMagick6-common libSM-devel libX11-devel libXext-devel libcairo-gobject libgdk-pixbuf libglvnd-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-webkit-devel libstdc++-devel perl pkg-config python-modules python2-base python3 python3-base sh4 tzdata xorg-proto-devel
+BuildRequires: ImageMagick-tools gcc-c++ libXt-devel libdjvu-devel libtiff-devel phonon-devel python3-dev python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy-alt
 
 %description
 This package contains the djview4 viewer and browser plugin.
@@ -46,38 +47,28 @@ Highlights:
 - metadata dialog (see djvused command set-meta)
 - implemented as reusable Qt widgets
 
-%package -n mozilla-plugin-djvu4
-Summary: DjVu NPAPI plugin (QT4 based version)
-Group: Networking/WWW
-Requires: %name = %EVR
-Requires: browser-plugins-npapi 
-Conflicts: mozilla-plugin-djvu < 4.1
-Obsoletes: mozilla-plugin-djvu < 4.1
-
-%description -n mozilla-plugin-djvu4
-Under Unix/X11, djview4 can be used as a browser plugin
-by means of the small shared library named nsdejavu.so.
-The djview3 distributed with djvulibre uses the same approach.
-
 %prep
 %setup -n djview-%version
 %patch1 -p1
+%patch2 -p1
 
 sed -i '/^#/d' desktopfiles/djvulibre-djview4.desktop
-sed -i 's,^\(plugindir[[:space:]]*=[[:space:]]*\).*,\1%browser_plugins_path,' nsdejavu/Makefile.in
 
 %build
 export QTDIR=%qtdir
+export QTMAKE=qmake-qt4
 export PATH=$QTDIR/bin:$PATH
+sh autogen.sh
 %configure %{subst_enable static}
 %make_build NSDEJAVU_LIBS='-lXt -lX11'
 
 %install
 %makeinstall_std
 
-# Перемещаем плагин для браузеров в предназначенное для этого место.
-mkdir -p %buildroot%browser_plugins_path
-mv %buildroot%_libdir/mozilla/plugins/nsdejavu.so %buildroot%browser_plugins_path/nsdejavu.so
+# Удаляем плагин для браузеров - увы, но современные браузеры его не поддерживают.
+rm -f %buildroot%_libdir/mozilla/plugins/nsdejavu.so
+rm -f %buildroot%_mandir/man1/nsdejavu.*
+
 # Стираем файл .la, который нужен лишь libtool'у для генерации имён библиотек.
 rm -f %buildroot%_libdir/mozilla/plugins/nsdejavu.la
 
@@ -102,11 +93,16 @@ ln -s %buildroot%_bindir/djview4 djview
 %_iconsdir/hicolor/64x64/mimetypes/*
 %_iconsdir/hicolor/scalable/mimetypes/*
 
-%files -n mozilla-plugin-djvu4
-%browser_plugins_path/*.so*
-%_mandir/man?/nsdejavu*
-
 %changelog
+* Sun Mar 28 2021 Andrey Bergman <vkni@altlinux.org> 4.12.0-alt3
+- Add patch disabling fseeko as non-LFS.
+
+* Sun Mar 28 2021 Andrey Bergman <vkni@altlinux.org> 4.12.0-alt2
+- Increase alt version.
+
+* Thu Jan 28 2021 Andrey Bergman <vkni@altlinux.org> 4.12.0-alt1
+- Updated to 4.12.0.
+
 * Tue Dec 18 2018 Ivan A. Melnikov <iv@altlinux.org> 4.10.6-alt2
 - Add -D_FILE_OFFSET_BITS=64 to optflags to fix FTBFS.
 
