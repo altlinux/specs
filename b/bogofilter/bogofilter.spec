@@ -1,5 +1,5 @@
 Name: bogofilter
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Fast anti-spam filtering by Bayesian statistical analysis
@@ -14,7 +14,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 %define pkgdocdir %_docdir/%name-%version
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.xz
 Patch0: %name-0.96.4-alt-bogus-deps.patch
 
 Requires: libgsl >= %gsl_ver
@@ -132,6 +132,9 @@ install -m644 doc/README.db \
 %_libdir/%name/contrib
 
 %changelog
+* Sun Mar 28 2021 Ilya Mashkin <oddity@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Thu Aug 15 2013 Ilya Mashkin <oddity@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 
