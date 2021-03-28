@@ -18,7 +18,7 @@
 %def_disable	unit_tests
 
 Name: syslog-ng
-Version: 3.28.1
+Version: 3.31.2
 Release: alt1
 
 Summary: syslog-ng daemon
@@ -520,6 +520,9 @@ fi
 %_libdir/libsyslog-ng-native-connector.a
 
 %changelog
+* Sun Mar 28 2021 Sergey Y. Afonin <asy@altlinux.org> 3.31.2-alt1
+- 3.31.2
+
 * Thu Aug 20 2020 Sergey Y. Afonin <asy@altlinux.org> 3.28.1-alt1
 - 3.28.1
 - syslog-ng-snmp replaced by syslog-ng-afsnmp
