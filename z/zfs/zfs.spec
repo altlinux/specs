@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 0.8.6
+Version: 2.0.4
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
@@ -13,7 +13,6 @@ Conflicts: fuse-zfs
 Source0: %name-%version.tar
 Source1: gitrevision.h
 Patch1: zfs-0.7.13-import-by-disk-id.patch
-Patch2: zfs-0.8.4-fix-unresolved-aok.patch
 
 BuildRequires: libblkid-devel libssl-devel libudev-devel libuuid-devel python3-devel zlib-devel rpm-build-kernel libtirpc-devel
 
@@ -65,7 +64,6 @@ This package contains ZFS modules sources for Linux kernel.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
 sed -i 's|datarootdir|libdir|' lib/libzfs/Makefile.am
 install -m0644 %SOURCE1 include/zfs_gitrev.h
 
@@ -157,6 +155,9 @@ fi
 %config(noreplace) %_sysconfdir/modprobe.d/zfs.conf
 %dir %_sysconfdir/zfs/zpool.d
 %config(noreplace) %_sysconfdir/zfs/zpool.d/*
+%config(noreplace) %_sysconfdir/sysconfig/zfs
+%config(noreplace) %_sysconfdir/sudoers.d/zfs
+%_sysconfdir/zfs/zfs-functions
 %_sysconfdir/zfs/*.example
 %_sysconfdir/modules-load.d/%name.conf
 %_unitdir/*.service
@@ -195,6 +196,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Fri Dec 18 2020 Anton Farygin <rider@altlinux.ru> 0.8.6-alt1
 - 0.8.6
 

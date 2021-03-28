@@ -2,14 +2,20 @@
 %define module_version 2.0.4
 %define module_release alt1
 
-%define flavour std-def
+%define flavour un-def
 %define karch %ix86 x86_64 aarch64 ppc64le
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 
 %setup_kernel_module %flavour
 
 %define strip_mod_opts --strip-unneeded -R .comment
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/fs
+
+# The kernel 5.10 on powerpc has a GPL-only symbol mmu_feature_keys, which block build zfs with an error:
+# ERROR: modpost: GPL-incompatible module zfs.ko uses GPL-only symbol 'mmu_feature_keys'
+%if "%(rpmvercmp '%kversion' '5.10')" >= "0"
+ExcludeArch: ppc64le
+%endif
 
 Summary: ZFS Linux modules
 Name: kernel-modules-%module_name-%flavour
