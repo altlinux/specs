@@ -1,5 +1,5 @@
 Name: simh
-Version: 3.11.0
+Version: 3.11.1
 Release: alt1
 Summary: A highly portable, multi-system emulator
 
@@ -13,6 +13,7 @@ Url: http://simh.trailing-edge.com/
 Packager: Andrey Bergman <vkni@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-3.11.1-alt-uc15_memsize.patch
 
 BuildRequires: libpcap-devel recode
 
@@ -65,6 +66,7 @@ http://pdp-11.org.ru
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 mkdir -p BIN
@@ -88,6 +90,9 @@ for i in `find -iname "*.txt"`; do recode cp1251/CR-LF.. $i; done
 #%%doc DOC/*.pdf
 
 %changelog
+* Sun Mar 28 2021 Andrey Bergman <vkni@altlinux.org> 3.11.1-alt1
+- Version update.
+
 * Sun Jun 07 2020 Andrey Bergman <vkni@altlinux.org> 3.11.0-alt1
 - Version update.
 
