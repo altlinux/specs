@@ -1,11 +1,10 @@
-%set_verify_elf_method textrel=relaxed
 %ifarch %ix86 armh
 %def_without check
 %else
 %def_with check
 %endif
 Name: js_of_ocaml
-Version: 3.8.0
+Version: 3.9.1
 Release: alt1
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
@@ -107,6 +106,9 @@ files for developing applications that use %name.
 %_libdir/ocaml/js_of_ocaml-ppx/ppx_js
 
 %changelog
+* Sun Mar 28 2021 Anton Farygin <rider@altlinux.org> 3.9.1-alt1
+- 3.9.1
+
 * Fri Dec 11 2020 Anton Farygin <rider@altlinux.ru> 3.8.0-alt1
 - 3.8.0
 
