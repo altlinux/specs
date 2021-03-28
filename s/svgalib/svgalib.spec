@@ -9,7 +9,7 @@ Summary(tr):	Tam-ekran [S]VGA çizimleri kitaplýđý
 Summary(uk_UA):	Низькорівнева бібліотека повноекранної SVGA графіки
 Name: svgalib
 Version: 1.9.25
-Release: alt2.5
+Release: alt2.6
 License: distributable
 Group: System/Libraries
 Source0: %name-%version.tar
@@ -20,6 +20,7 @@ Patch3: %name-1.9.23-unresolved.patch
 Patch4: %name-1.9.25-kernel-2.6.26.patch
 Patch5: %name-1.9.25-gtf-patch.patch
 Patch6: %name-threeDKit-glibc.patch
+Patch7: %name-%version-alt-asm-fix.patch
 Url: https://www.svgalib.org/
 ExclusiveArch: %ix86 x86_64
 
@@ -221,6 +222,7 @@ kernel-space модуль для %name, позволяющий получить 
 %patch4 -p1
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
 
 # remove backup of svgalib.7 - we don't want it in package
 rm -f doc/man7/svgalib.7?*
@@ -298,6 +300,9 @@ for i in threeDKit/0-*; do %__cp $i $i.threeDKit; done
 %_usrsrc/kernel
 
 %changelog
+* Sun Mar 28 2021 L.A. Kostis <lakostis@altlinux.ru> 1.9.25-alt2.6
+- fix asm errors (untested).
+
 * Fri Apr 19 2019 L.A. Kostis <lakostis@altlinux.ru> 1.9.25-alt2.5
 - .spec: convert to unicode.
 - Update URL.
