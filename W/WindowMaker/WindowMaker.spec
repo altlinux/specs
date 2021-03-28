@@ -11,8 +11,8 @@
 %define frame_border   navy
 
 Name: WindowMaker
-Version: 0.95.8
-Release: alt2
+Version: 0.95.9
+Release: alt1
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -263,7 +263,6 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/WPrefs
 
 %_man1dir/*
-%_man8dir/*
 %_mandir/ru/man1/*
 %_menudir/*
 %_miconsdir/*.xpm
@@ -284,8 +283,6 @@ rm -rf %buildroot%_mandir/cs
 %_libdir/libWUtil.so.%WUtil_SOVER.*
 
 %files -n libWINGs-devel
-%_bindir/get-wings-flags
-%_bindir/get-wutil-flags
 %_includedir/WINGs
 %_libdir/libWINGs.so
 %_libdir/libWUtil.so
@@ -297,7 +294,6 @@ rm -rf %buildroot%_mandir/cs
 %_libdir/libwraster.so.%wraster_SOVER.*
 
 %files -n libwraster-devel
-%_bindir/get-wraster-flags
 %_includedir/wraster.h
 %_libdir/libwraster.so
 %_libdir/pkgconfig/wrlib.pc
@@ -314,6 +310,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Sun Mar 28 2021 Andrey Bergman <vkni@altlinux.org> 0.95.9-alt1
+- Update to version 0.95.9. Removed flag-info executables.
+
 * Fri Mar 17 2017 Michael Shigorin <mike@altlinux.org> 0.95.8-alt2
 - Revert upstream commits changing fullscreen window handling
   (use case that broke reported to bjorn@).
