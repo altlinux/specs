@@ -1,6 +1,5 @@
-%set_verify_elf_method textrel=relaxed
 Name: utop
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 Summary: Universal toplevel for OCaml
 
@@ -30,10 +29,13 @@ developing applications that use %name.
 sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 
 %build
-dune build
+%dune_build -p %name
 
 %install
-dune install --destdir=%buildroot
+%dune_install %name
+
+%check
+%dune_check
 
 %files
 %doc CHANGES.md README.md
@@ -56,5 +58,8 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/utop*/*.ml
 
 %changelog
+* Sun Mar 28 2021 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.0-alt1
+- new version 2.7.0
+
 * Sat Jun 20 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.6.0-alt1
 - Initial build for Sisyphus
