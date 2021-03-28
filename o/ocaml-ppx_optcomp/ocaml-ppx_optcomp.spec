@@ -1,7 +1,7 @@
 %define  modulename ppx_optcomp
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt3
+Version: 0.14.1
+Release: alt1
 
 Summary: Optional compilation for OCaml
 License: MIT
@@ -43,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 28 2021 Anton Farygin <rider@altlinux.org> 0.14.1-alt1
+- 0.14.1
+
 * Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt3
 - simplified specfile with macros from rpm-build-ocaml 1.4
 - added upstream fix against ppxlib 0.22
