@@ -5,10 +5,10 @@
 
 %define Name newLISP
 Name: newlisp
-Version: 10.6.2
-Release: alt4
+Version: 10.7.5
+Release: alt1
 Summary: Lisp-like, general purpose scripting language
-License: GPLv3
+License: GPLv3+
 Group: Development/Lisp
 URL: http://www.%name.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -18,7 +18,7 @@ Patch0: %name-9.4.4-test.patch
 Patch1: %name-9.4.4-shebang.patch
 Patch2: %name-9.4.4-ext_pcre.patch
 
-Patch3:         %{name}-0001-Support-64bit.patch
+Patch3:         %{name}-0000-Support-64bit.patch
 Patch4:         %{name}-0003-Don-t-strip-the-resulting-binary.patch
 
 
@@ -28,6 +28,8 @@ Patch4:         %{name}-0003-Don-t-strip-the-resulting-binary.patch
 %{?_with_ext_pcre:BuildRequires: libpcre-devel}
 BuildRequires: rpm-build-vim vim-devel libffi-devel openssl-devel
 BuildRequires: libgmp-devel libgsl-devel libmysqlclient-devel libsqlite3-devel postgresql-devel zlib-devel
+Provides: %name-guiserver
+Obsoletes:  %name-guiserver
 
 
 %description
@@ -57,21 +59,21 @@ and memory but has a deep, practical API.
 This package contains standard modules for %Name.
 
 
-%package guiserver
-Summary: Application for generating GUIs and 2D graphics for %Name
-Group: Development/Lisp
-Requires: %name-modules = %version-%release
-Requires: jre
-BuildArch: noarch
+#package guiserver
+#Summary: Application for generating GUIs and 2D graphics for %Name
+#Group: Development/Lisp
+#Requires: %name-modules = %version-%release
+#Requires: jre
+#BuildArch: noarch
 
-%description guiserver
-guiserver.lsp is a module for interfacing to guiserver.jar a Java
-server application for generating GUIs (graphical user interfaces) and
-2D graphics for %Name applications. The guiserver.lsp module
-implements a %Name API much smaller and more abstract than the APIs
-of the Java Swing libraries which it interfaces with. Because of this,
-GUI applications can be built much faster than when using the original
-Java APIs.
+#%description guiserver
+#guiserver.lsp is a module for interfacing to guiserver.jar a Java
+#server application for generating GUIs (graphical user interfaces) and
+#2D graphics for %Name applications. The guiserver.lsp module
+#implements a %Name API much smaller and more abstract than the APIs
+#of the Java Swing libraries which it interfaces with. Because of this,
+#GUI applications can be built much faster than when using the original
+#Java APIs.
 
 
 %package doc
@@ -117,8 +119,10 @@ This package contains VIm syntax for %Name.
 #patch0 -p1
 #patch1 -p1
 #patch2 -p1
-%patch3 -p1 -b .64bit-support
+
+%patch3 -p0 -b .64bit-support
 %patch4 -p1 -b .stop-binary-strip
+
 
 install -m 0644 %SOURCE1 ./Makefile.alt
 
@@ -170,7 +174,7 @@ CFLAGS="%{optflags} -c -DREADLINE -DSUPPORT_UTF8 -DLINUX" \
 
 install -d -m 0755 %buildroot{%_bindir,%vim_syntax_dir,%_datadir/nano}
 %make_install bindir=%buildroot%_bindir datadir=%buildroot%_datadir install
-chmod 755 %buildroot%_datadir/%name/guiserver/*
+#chmod 755 %buildroot%_datadir/%name/guiserver/*
 mv %buildroot%_docdir/%name{,-%version}
 mv %buildroot{%_datadir/%name/util,%vim_syntax_dir}/%name.vim
 #mv %buildroot%_datadir/{%name/util/,nano/%name.}nanorc
@@ -191,15 +195,15 @@ ln -s %name-%version %name
 %_datadir/%name/modules
 
 
-%files guiserver
-%_datadir/%name/guiserver.*
-%_datadir/%name/*.png
+#files guiserver
+#_datadir/%name/guiserver.*
+#%_datadir/%name/*.png
 
 
 %files doc
 %_docdir/%name-%version
 %dir %_datadir/%name
-%_datadir/%name/guiserver
+#_datadir/%name/guiserver
 #_datadir/%name/init.lsp.example
 
 
@@ -212,6 +216,10 @@ ln -s %name-%version %name
 
 
 %changelog
+* Mon Mar 29 2021 Ilya Mashkin <oddity@altlinux.ru> 10.7.5-alt1
+- 10.7.5
+- drop %name-guiserver
+
 * Tue Jun 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 10.6.2-alt4
 - fixed packaging on so-called armh
 
