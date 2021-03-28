@@ -3,8 +3,8 @@
 %define _home %_localstatedir/%name
 
 Name: eggdrop
-Version: 1.8.4
-Release: alt2
+Version: 1.9.0
+Release: alt1
 
 Summary: Eggdrop is an IRC bot, written in C
 License: GPL-2.0
@@ -113,6 +113,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %doc doc/* README*
 
 %changelog
+* Sun Mar 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
+- New version.
+
 * Sun Dec 27 2020 Andrey Cherepanov <cas@altlinux.org> 1.8.4-alt2
 - Rebuild with latest autoconf.
 - Fix License according to SPDX.
