@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: routino
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 Summary: Router for OpenStreetMap Data
 License: AGPL-3.0
@@ -102,6 +102,9 @@ make test
 %_libdir/lib%{name}*.so
 
 %changelog
+* Sat Mar 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.3-alt1
+- Updated to 3.3.3.
+
 * Sun Apr 12 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.2-alt1
 - Updated to 3.3.2.
 
