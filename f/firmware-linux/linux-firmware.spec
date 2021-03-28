@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210310
+Version: 20210322
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,22 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Mar 28 2021 Cronbuild Service <cronbuild@altlinux.org> 20210322-alt1
+- upstream changes (GIT 3f026a2):
+  + rtl_bt: Update RTL8822C BT(UART I/F) FW to 0x59A_76A3 (thx hildawu)
+  + amdgpu: update sienna cichlid firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update vega20 firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update picasso firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update navi12 firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update renoir firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: update raven firmware for 20.50 (thx Alex Deucher)
+  + amdgpu: add initial support for navy flounder (thx Alex Deucher)
+
 * Sun Mar 21 2021 Cronbuild Service <cronbuild@altlinux.org> 20210310-alt1
 - upstream changes (GIT 3568f96):
   + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
