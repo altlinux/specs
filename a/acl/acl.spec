@@ -1,5 +1,5 @@
 Name: acl
-Version: 2.2.53
+Version: 2.3.1
 Release: alt1
 
 Summary: ACL manipulation utilities
@@ -101,6 +101,9 @@ mv %buildroot%_bindir/chacl %buildroot/bin/
 %endif
 
 %changelog
+* Tue Mar 16 2021 Dmitry V. Levin <ldv@altlinux.org> 2.3.1-alt1
+- v2.2.53 -> v2.3.1.
+
 * Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 2.2.53-alt1
 - v2.2.52-52-g33f01b5 -> v2.2.53.
 
