@@ -20,7 +20,7 @@
 
 Name: godot
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
@@ -40,7 +40,7 @@ Patch0: godot-3.0.2-workaround-gcc-ice-armv7hl.patch
 # optimized out: libX11-devel libXext-devel libXfixes-devel libXrender-devel libcom_err-devel libgpg-error libjson-c libkrb5-devel libstdc++-devel pkg-config python-base python-devel python-module-numpy python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
-BuildRequires: python-module-Reportlab python-module-configobj python-module-enum34 python-module-olefile python-module-pygobject3 python-module-pyxdg python3-module-yieldfrom python-modules-json
+BuildRequires: python-module-Reportlab python-module-configobj python-module-enum34 python-module-olefile python-module-pygobject3 python3-module-yieldfrom python-modules-json
 BuildRequires: scons pkgconfig libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel libXi-devel libGL-devel libalsa-devel libpulseaudio-devel openssl-devel libudev-devel libGLU-devel libpng-devel gcc gcc-c++ libssl-devel ccache
 
 %{!?_with_builtin_bullet:BuildRequires: libbullet-devel}
@@ -184,6 +184,9 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 3.1-alt2
+- Fixed FTBFS (removed python-module-pyxdg from BR's)
+
 * Mon Mar 16 2019 Sergey Bubnov <omg@altlinux.org> 3.1-alt1
 - 3.1-stable
 
