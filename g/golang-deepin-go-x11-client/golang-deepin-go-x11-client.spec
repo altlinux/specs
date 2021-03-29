@@ -5,7 +5,7 @@
 %global goipath github.com/linuxdeepin/go-x11-client
 
 Name: golang-deepin-go-x11-client
-Version: 0.6.2
+Version: 0.6.4
 Release: alt1
 Summary: A X11 client Go bindings for Deepin Desktop Environment
 License: GPL-3.0
@@ -40,13 +40,14 @@ building other packages which use import path with
 # remove debian files
 rm -rf debian/
 # undefined python scripts
-sed -i -e '1 s|^|#!/usr/bin/env python3\n\n|;' tools/*.py
-sed -i 's|python2 tools/go_client.py|python3 tools/go_client.py|' gen.sh
+# sed -i -e '1 s|^|#!/usr/bin/env python3\n\n|;' tools/*.py
+# sed -i 's|python2 tools/go_client.py|python3 tools/go_client.py|' gen.sh
 
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%goipath"
 export GOPATH="%go_path"
+export DH_GOLANG_EXCLUDES="tools/gen util/tool/gen-keysymdef"
 
 %golang_prepare
 
@@ -57,6 +58,7 @@ cd .build/src/%goipath
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
 %golang_install
+chmod +x %buildroot%go_path/src/%goipath/tools/{common,enum,go_client}.py
 
 %if_with check
 %check
@@ -69,6 +71,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Mar 29 2021 Leontiy Volodin <lvol@altlinux.org> 0.6.4-alt1
+- New version (0.6.4) with rpmgs script.
+
 * Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
 - New version.
 
