@@ -1,5 +1,5 @@
 Name: hydra
-Version: 9.1
+Version: 9.2
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
@@ -26,14 +26,14 @@ Patch3:         hydra-fix-apr-svn.patch
 # Reported upstream: https://github.com/vanhauser-thc/thc-hydra/pull/500
 Patch4:         hydra-fix-firebird-includes.patch
 
-%set_gcc_version 8
+#set_gcc_version 8
 
 
 Provides: hydra = %version-%release
 Requires: hydra-common hydra-gtk hydra-pwinspector 
 
 # Automatically added by buildreq on Wed Jun 08 2005
-BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils gcc8
+BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils gcc
 #libpq-devel
 
 
@@ -159,6 +159,12 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Tue Mar 30 2021 Ilya Mashkin <oddity@altlinux.ru> 9.2-alt1
+- 9.2
+
+* Wed Mar 03 2021 Ilya Mashkin <oddity@altlinux.ru> 9.1-alt1.1
+- build for e2k
+
 * Sat Feb 27 2021 Ilya Mashkin <oddity@altlinux.ru> 9.1-alt1
 - 9.1
 
