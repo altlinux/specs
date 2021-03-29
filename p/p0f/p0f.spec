@@ -1,9 +1,9 @@
 Name: p0f
 Version: 2.0.8
-Release: alt1
+Release: alt2
 
 Summary: Passive OS fingerprinting tool
-License: LGPL
+License: LGPL-2.1
 Group: Networking/Other
 
 URL: http://lcamtuf.coredump.cx/p0f.shtml
@@ -26,11 +26,11 @@ active scanners (nmap, queSO) - it is done without sending anything to
 this host.
 
 %prep
-%setup -q -n p0f
+%setup -n p0f
 %patch -p1
 
 %build
-make CC="gcc %optflags"
+make CC="gcc %optflags -fcommon"
 
 %install
 install -pD -m755 p0f %buildroot%_sbindir/p0f
@@ -55,6 +55,10 @@ install -m644 *.fp %buildroot%_sysconfdir/p0f/
 %_man1dir/*
 
 %changelog
+* Tue Mar 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.8-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Wed Dec 13 2006 Victor Forsyuk <force@altlinux.org> 2.0.8-alt1
 - 2.0.8
 
