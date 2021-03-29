@@ -1,6 +1,6 @@
 Name: gpac
 Epoch: 1
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: GPAC is a multimedia framework covering MPEG-4, VRML/X3D and SVG.
@@ -10,7 +10,6 @@ Url: http://gpac.sourceforge.net/
 Packager: Michael A. Kangin <prividen@altlinux.org>
 
 Source: %name-%version.tar
-Patch: gpac-1.0.0-not-deb.patch
 
 Requires: lib%name = %EVR
 
@@ -92,7 +91,6 @@ Development headers and libraries for %name.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %configure --prefix="%_prefix" \
@@ -147,6 +145,9 @@ chrpath -d %buildroot%_bindir/gpac
 %_includedir/%name
 
 %changelog
+* Mon Mar 29 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.0.1-alt1
+- 1.0.1
+
 * Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 1:1.0.0-alt1
 - Updated to 1.0.0.
 - Fixed license.
