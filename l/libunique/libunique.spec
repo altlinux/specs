@@ -1,12 +1,11 @@
 %define s_name unique
-%def_disable introspection
 
 Name: lib%s_name
 Version: 1.1.6
-Release: alt7.1
+Release: alt8
 
 Summary: is a library for writing single instance application
-License: LGPL
+License: LGPL-2.1
 Group: System/Libraries
 Url: http://live.gnome.org/LibUnique
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -18,8 +17,7 @@ Patch2: libunique-1.1.6-alt-no-Werror.patch
 
 BuildPreReq: rpm-build-gnome gnome-common
 BuildRequires: glib2-devel libdbus-devel libdbus-glib-devel libgtk+2-devel gtk-doc
-BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+2-gir-devel
-%{?_enable_introspection: BuildRequires: libgtk+2-gir-devel}
+BuildRequires: gobject-introspection-devel >= 0.9.5
 
 %description
 Unique is a library for writing single instance application. If you
@@ -73,8 +71,7 @@ GObject introspection devel data for the Unique library
 
 %build
 %autoreconf
-%configure --enable-gtk-doc --disable-static \
-	%{?_disable_introspection:--enable-introspection=no}
+%configure --enable-gtk-doc --disable-static --enable-introspection=no
 %make_build V=1
 
 %install
@@ -90,15 +87,11 @@ GObject introspection devel data for the Unique library
 %_datadir/gtk-doc/html/%s_name/*
 %doc AUTHORS ChangeLog NEWS README
 
-%if_enabled introspection
-%files gir
-%_libdir/girepository-1.0/Unique-1.0.typelib
-
-%files gir-devel
-%_datadir/gir-1.0/Unique-1.0.gir
-%endif
-
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.6-alt8
+- Removed introspection knob with all contents, because there is
+  + no more libgtk+2-gir-devel package
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt7.1
 - Disabled -Werror flag
 
