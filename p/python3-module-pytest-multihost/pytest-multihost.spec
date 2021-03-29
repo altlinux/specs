@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0
-Release: alt2
+Version: 3.4
+Release: alt1
 
 Summary: Utility for writing multi-host tests for pytest
 License: GPLv3
@@ -52,6 +52,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/pytest_multihost-*.egg-info/
 
 %changelog
+* Mon Mar 29 2021 Stanislav Levin <slev@altlinux.org> 3.4-alt1
+- 3.0 -> 3.4.
+
 * Fri Dec 06 2019 Stanislav Levin <slev@altlinux.org> 3.0-alt2
 - Dropped Python2 subpackage.
 
