@@ -1,6 +1,6 @@
 Name:		freedroid
 Version:	1.0.2
-Release:	alt1.qa1
+Release:	alt2
 Summary:	A clone of the game "Paradroid"
 Group:		Games/Arcade
 License:	GPLv2
@@ -50,6 +50,7 @@ Categories=Game;ArcadeGame;
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure --disable-sdltest --with-x
 %make_build
 
@@ -58,9 +59,9 @@ Categories=Game;ArcadeGame;
 install -D %SOURCE1 %buildroot/%_niconsdir/%name.png
 install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 
-# There is a file in the package named .DS_Store or .DS_Store.gz, 
-# the file name used by Mac OS X to store folder attributes.  
-# Such files are generally useless in packages and were usually accidentally 
+# There is a file in the package named .DS_Store or .DS_Store.gz,
+# the file name used by Mac OS X to store folder attributes.
+# Such files are generally useless in packages and were usually accidentally
 # included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
@@ -75,6 +76,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/*
 
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt2
+- Fixed FTBFS with -fcommon.
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.2-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
