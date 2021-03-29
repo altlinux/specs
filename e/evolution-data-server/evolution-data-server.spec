@@ -7,8 +7,8 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.38
-%define ver_base 3.38
+%define ver_major 3.40
+%define ver_base 3.40
 %define ver_lib 1.2
 %define ver_libecal 2.0
 
@@ -30,7 +30,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -82,7 +82,7 @@ BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libn
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
 %{?_enable_introspection:
 BuildRequires: gobject-introspection-devel libsoup-gir-devel
-BuildRequires:libgtk+3-gir-devel libical-glib-gir-devel}
+BuildRequires:libgtk+3-gir-devel libical-glib-gir-devel libgdata-gir-devel}
 %{?_with_libdb:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
@@ -276,6 +276,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 

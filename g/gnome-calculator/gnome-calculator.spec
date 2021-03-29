@@ -1,5 +1,6 @@
 %def_disable snapshot
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define api_ver 2
 # GTK interface library
 %define gci_api_ver 1
@@ -9,8 +10,8 @@
 %def_enable check
 
 Name: gnome-calculator
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GTK+3 based desktop calculator
 License: GPL-3.0-or-later
@@ -18,7 +19,7 @@ Group: Sciences/Mathematics
 Url: https://wiki.gnome.org/Apps/Calculator
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -33,9 +34,10 @@ BuildRequires: vala-tools >= 0.24 valadoc
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= 3.20.0
 BuildRequires: libgio-devel >= 2.50.0 libgee0.8-devel libxml2-devel
-BuildRequires: libmpfr-devel libgtksourceview4-devel >= 4.0.2
+BuildRequires: libmpfr-devel libgtksourceview4-devel >= 4.8
 BuildRequires: libsoup-devel >= 2.42 libmpc-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgee0.8-gir-devel libsoup-gir-devel
+BuildRequires: pkgconfig(libhandy-1)
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -135,7 +137,7 @@ GTK interface library.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -201,6 +203,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 - enabled %%check

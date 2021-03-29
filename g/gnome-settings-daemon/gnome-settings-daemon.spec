@@ -4,8 +4,9 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.38
-%define api_ver 3.0
+%define ver_major 40
+%define beta %nil
+%define api_ver 40
 %define xdg_name org.gnome.SettingsDaemon
 
 %def_enable smartcard
@@ -18,8 +19,8 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
 License: GPL-2.0
@@ -27,7 +28,7 @@ Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -37,7 +38,7 @@ Source: %name-%version.tar
 %define gnome_desktop_ver 3.34.2
 %define notify_ver 0.7.3
 %define pulse_ver 2.0
-%define gsds_ver 3.38.0
+%define gsds_ver 40
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.99.8
@@ -45,7 +46,7 @@ Source: %name-%version.tar
 %define wacom_ver 0.7
 %define geocode_ver 3.10.0
 %define geoclue_ver 2.3.1
-%define gweather_ver 3.9.5
+%define gweather_ver 40
 %define nm_ver 1.0
 %define lcms_ver 2.2
 %define polkit_ver 0.114
@@ -112,7 +113,7 @@ Requires: %name = %version-%release
 The %name-tests package provides programms for testing GSD plugins.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -193,6 +194,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

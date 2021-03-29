@@ -1,15 +1,16 @@
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.5
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: General GNOME User Documentation
 License: %fdl
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 BuildArch: noarch
 AutoReqProv: no
@@ -29,7 +30,7 @@ This package contains general GNOME user documentation which is not
 directly associated with any particular GNOME application or package.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %configure
@@ -43,6 +44,9 @@ directly associated with any particular GNOME application or package.
 %doc README NEWS
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.5-alt1
 - 3.38.5
 

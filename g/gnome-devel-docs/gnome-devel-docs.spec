@@ -1,7 +1,7 @@
-%define ver_major 3.38
+%define ver_major 40
 
 Name: gnome-devel-docs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: General GNOME Developper Documentation
@@ -58,6 +58,9 @@ This package is a part of %name and provides demos for GNOME developpers
 %_datadir/help/*/gnome-devel-demos/
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

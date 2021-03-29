@@ -1,6 +1,7 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 3.0
+%define ver_major 3.1
+%define beta %nil
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
 %define gst_api_ver 1.0
@@ -23,8 +24,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0 and LGPL-2.1-or-later
@@ -32,7 +33,7 @@ Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
@@ -137,7 +138,7 @@ This package provides tests programs that can be used to verify
 the functionality of the installed Tracker.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 #fixed install_rpath for tracker, tracker-store binaries
 sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
@@ -205,6 +206,12 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
+* Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt0.8.rc
+- 3.1.0.rc
+
 * Mon Jan 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.38
+%define ver_major 40
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Sound Recorder for GNOME
@@ -23,6 +23,7 @@ Provides:  gnome-media-grecord = %version-%release
 %define glib_ver 2.44
 %define gtk_ver 3.14
 %define gjs_ver 1.54
+%define handy_ver 1.1.90
 
 Requires: libgjs >= %gjs_ver
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
@@ -49,7 +50,7 @@ BuildRequires: pkgconfig(gstreamer-player-%gst_api_ver)
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: gstreamer%gst_api_ver-utils gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
-BuildRequires: gobject-introspection-devel pkgconfig(libhandy-1)
+BuildRequires: gobject-introspection-devel pkgconfig(libhandy-1) >= %handy_ver
 
 
 %description
@@ -77,6 +78,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Jan 30 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

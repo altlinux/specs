@@ -1,8 +1,9 @@
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 
 Name: orca
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -10,7 +11,7 @@ Group: Accessibility
 License: LGPL-2.1
 Url: http://wiki.gnome.org/Projects/Orca
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 Source1: voiceman-server
 Source2: %name.watch
 Source3: orca-autostart.desktop
@@ -26,7 +27,6 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildPreReq: /proc
-#BuildRequires: gnome-doc-utils
 BuildRequires: libgtk+3-devel >= 3.2
 BuildRequires: libgtk+3-gir
 BuildRequires: libat-spi2-core-devel >= 2.26
@@ -57,7 +57,7 @@ Orca - это программа экранного доступа для люд
 Jaws For Windows компании Freedom Scientific.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 #%patch1 -p1
 %patch2 -p1
 cp -f %SOURCE4 po/ru.po
@@ -91,6 +91,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Tue Dec 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

@@ -1,11 +1,12 @@
 %def_disable snapshot
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define xdg_name org.gnome.Games
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Simple game launcher for GNOME
 License: %gpl3plus
@@ -13,14 +14,14 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Games
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 
 %define vala_ver 0.48.0
 
-BuildRequires(pre): meson rpm-build-licenses
+BuildRequires(pre): meson >= 0.50 rpm-build-licenses
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
@@ -33,7 +34,7 @@ BuildRequires: pkgconfig(manette-0.2) >= 0.2.5
 BuildRequires: pkgconfig(retro-gtk-1) >= 1.0.0
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(tracker-sparql-2.0)
-BuildRequires: pkgconfig(libhandy-1) >= 1.0.0
+BuildRequires: pkgconfig(libhandy-1) >= 1.1.90
 
 %description
 Games is a GNOME3 application to browse your video games library and to
@@ -48,7 +49,7 @@ Requires: %name = %EVR
 This package provides files needed to develop plugins for GNOME Games.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -78,6 +79,9 @@ This package provides files needed to develop plugins for GNOME Games.
 
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

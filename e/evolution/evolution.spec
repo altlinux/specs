@@ -5,8 +5,8 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
-%define ver_base 3.38
+%define ver_major 3.40
+%define ver_base 3.40
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -21,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -177,7 +177,7 @@ the functionality of the installed Evolution.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 # reenable RPATH* to link against private libraries
 %cmake \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
@@ -236,6 +236,7 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.mail-notification.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.prefer-plain.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.publish-calendar.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.sender-validator.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.templates.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.shell.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.text-highlight.gschema.xml
@@ -272,6 +273,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 

@@ -1,14 +1,15 @@
-%define ver_major 3.38
+%define ver_major 40
+%define beta .rc
 
 Name: gnome-backgrounds
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major
+Release: alt0.8%beta
 
 Summary: A collection of GNOME backgrounds
 License: GPLv2
 Group: Graphical desktop/GNOME
 URL: http://www.gnome.org
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ to use for your desktop background which are packaged
 with the GNOME desktop.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -37,6 +38,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Thu Mar 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

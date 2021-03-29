@@ -1,14 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -18,7 +19,7 @@ Url: https://wiki.gnome.org/Projects/GnomeShell
 BuildArch: noarch
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -40,7 +41,7 @@ and optional functionality to GNOME Shell.
 See %_docdir/%name-%version/README for more information.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -154,15 +155,15 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
-# horizontal-workspaces
-%dir %_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/horizontal-workspaces@gnome-shell-extensions.%domain/stylesheet.css
-
 %doc NEWS README.md
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
+* Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

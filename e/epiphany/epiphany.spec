@@ -3,14 +3,15 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define api_ver 3.10
 %define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -21,7 +22,7 @@ Url: http://www.gnome.org/projects/%name
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 
 Provides: webclient
@@ -29,8 +30,8 @@ Obsoletes: %name-extensions
 
 %add_findprov_lib_path %_libdir/%name
 
-%define glib_ver 2.61.2
-%define webkit_ver 2.29.3
+%define glib_ver 2.64
+%define webkit_ver 2.31.91
 %define gtk_ver 3.24.0
 %define nettle_ver 3.4
 %define libxml2_ver 2.6.12
@@ -38,7 +39,7 @@ Obsoletes: %name-extensions
 %define secret_ver 0.19
 %define gcr_ver 3.5.5
 %define dazzle_ver 3.37.1
-%define handy_ver 0.90
+%define handy_ver 1.1.0
 %define iso_codes_ver 0.35
 %define sqlite_ver 3.22
 %define portal_ver 0.0.2
@@ -46,7 +47,7 @@ Obsoletes: %name-extensions
 Requires: %name-data = %version-%release indexhtml iso-codes
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel
+BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
@@ -61,6 +62,7 @@ BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 BuildRequires: libicu-devel libjson-glib-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libportal-devel >= %portal_ver
+BuildRequires: libarchive-devel
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
@@ -79,7 +81,7 @@ Epiphany is a GNOME web browser based on the Webkit rendering engine.
 This package contains common noarch files needed for Epiphany.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -113,6 +115,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 

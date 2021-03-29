@@ -1,18 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: A collection of GSettings schemas
 License: %lgpl21plus
 Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org/
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 Requires: %name-data = %version-%release
 
@@ -64,7 +65,7 @@ Requires: %name-devel = %version-%release
 GObject introspection devel data for %name.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -125,6 +126,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

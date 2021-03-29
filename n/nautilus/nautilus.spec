@@ -1,6 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
@@ -12,8 +13,8 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Nautilus is a network user environment
 License: GPL-3.0
@@ -21,14 +22,14 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Nautilus
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
-%define glib_ver 2.55.1
+%define glib_ver 2.67.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
 %define gtk_ver 3.22.27
@@ -36,7 +37,10 @@ Source: %name-%version.tar
 %define gexiv2_ver 0.10
 %define gir_ver 0.10.2
 %define tracker_ver 2.99.2
-%define autoar_ver 0.2.1
+%define autoar_ver 0.3.0
+%define portal_ver 0.3
+%define handy_ver 1.1.0
+%define selinux_ver 2.0
 
 Requires(post): libcap-utils
 Requires: lib%name = %version-%release
@@ -61,11 +65,13 @@ BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libX11-devel
 BuildRequires: libseccomp-devel
-BuildRequires: pkgconfig(gstreamer-tag-1.0)
+BuildRequires: pkgconfig(gstreamer-tag-1.0) pkgconfig(gstreamer-pbutils-1.0)
+BuildRequires: libportal-devel >= %portal_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) tracker3-sandbox}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
-%{?_enable_selinux:BuildRequires: libselinux-devel}
+%{?_enable_selinux:BuildRequires: libselinux-devel >= %selinux_ver}
 %{?_enable_check:
 BuildRequires(pre): rpm-build-python3
 BuildRequires: xvfb-run dbus-tools-gui /proc}
@@ -123,7 +129,7 @@ GObject introspection devel data for the nautilus-extension library
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup
+%setup -n %name-%version%beta
 sed -i 's|\(#\!/usr/bin/env python\)|\13|' test/interactive/*.py
 
 %build
@@ -198,6 +204,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

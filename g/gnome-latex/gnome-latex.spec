@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 3.38
 %define xdg_name org.gnome.gnome-latex
 
@@ -8,7 +8,7 @@
 
 Name: gnome-latex
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
 Group: Publishing
@@ -25,7 +25,7 @@ Requires: %_bindir/latexmk dconf
 
 %define gtk_ver 3.22
 %define gtksource_ver 3.99.7
-%define tepl_ver 5.0.0
+%define tepl_ver 5.99.0
 %define amtk_ver 5.1.1
 %define vala_ver 0.46.5
 
@@ -34,7 +34,7 @@ BuildRequires: autoconf-archive libappstream-glib-devel yelp-tools intltool
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview4-devel >= %gtksource_ver
-BuildRequires: pkgconfig(tepl-5) >= %tepl_ver
+BuildRequires: pkgconfig(tepl-6) >= %tepl_ver
 BuildRequires: libamtk-devel >= %amtk_ver
 BuildRequires: libgspell-devel libgee0.8-devel
 BuildRequires: gsettings-desktop-schemas-devel
@@ -97,6 +97,9 @@ This package contains documentation for %name.
 %endif
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
+- 3.38.0-13-g703c2c9 (ported to Tepl-6)
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

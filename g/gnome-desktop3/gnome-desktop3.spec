@@ -2,7 +2,8 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -16,8 +17,8 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
 License: GPL-2.0 and LGPL-2.0
@@ -25,7 +26,7 @@ Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
 %if_disabled snapshot
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
@@ -42,7 +43,7 @@ BuildRequires: libgtk+3-devel >= 3.3.6
 BuildRequires: libgio-devel >= 2.54.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.28.0
 BuildRequires: iso-codes-devel
-BuildRequires: xkeyboard-config-devel
+BuildRequires: xkeyboard-config-devel libxkbcommon-devel
 BuildRequires: libXrandr-devel >= 1.3 libXext-devel >= 1.1
 BuildRequires: libudev-devel pkgconfig(systemd)
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -127,7 +128,7 @@ the functionality of the Gnome 3 desktop library.
 
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 %ifarch %e2k
 %patch -p1 -b .e2k
 %endif
@@ -152,10 +153,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files -n lib%name -f %_name.lang
 %_libdir/*.so.*
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files -n lib%name-devel
-%_libexecdir/gnome-rr-debug
+%_libexecdir/%_name-debug/
 %_includedir/*
 %_libdir/*.so
 %_datadir/gnome/gnome-version.xml
@@ -187,6 +188,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Tue Feb 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 

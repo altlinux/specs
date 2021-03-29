@@ -1,7 +1,8 @@
 %def_disable snapshot
 
-%define ver_major 3.38
-%define plugins_ver 13
+%define ver_major 40
+%define beta %nil
+%define plugins_ver 16
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
@@ -38,8 +39,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -47,7 +48,7 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Software
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -56,15 +57,16 @@ Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 
 %define glib_ver 2.46
 %define gtk_ver 3.22.4
-%define appstream_glib_ver 0.7.14
+%define appstream_ver 0.14
 %define json_glib_ver 1.1.1
 %define soup_ver 2.52
 %define packagekit_ver 1.1.9
-%define gnome_desktop_ver 3.18
+%define gsds_ver 3.18
 %define fwupd_ver 1.0.3
 %define flatpak_ver 0.99.3
 %define ostree_ver 2018.4
 %define xmlb_ver 0.1.4
+%define handy_ver 0.90
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
 %{?_enable_packagekit:Requires: appstream-data}
@@ -72,8 +74,8 @@ Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 
 BuildRequires(pre): meson rpm-build-xdg rpm-macros-valgrind
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libappstream-glib-devel >= %appstream_glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
@@ -83,7 +85,7 @@ BuildRequires: libxmlb-devel >= %xmlb_ver
 %{?_enable sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gspell:BuildRequires: libgspell-devel}
-%{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
+%{?_enable_gnome_desktop:BuildRequires: gsettings-desktop-schemas >= %gsds_ver}
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
@@ -118,14 +120,14 @@ GNOME Software.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 %patch
 
 %build
 %meson \
 	%{?_enable_gspell:-Dgspell=true} \
 	%{?_enable_gudev:-Dgudev=true} \
-	%{?_enable_gnome_desktop:-Dgnome_desktop=true} \
+	%{?_disable_gnome_desktop:-Dgsettings_desktop_schemas=disabled} \
 	%{?_enable_polkit:-Dpolkit=true} \
 	%{?_disable_fwupd:-Dfwupd=false} \
 	%{?_enable_flatpak:-Dflatpak=true} \
@@ -153,7 +155,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libexecdir/%name-cmd
 %_libexecdir/%name-restarter
 %{?_enable_external_appstream:%_libexecdir/%name-install-appstream}
-%_libdir/gs-plugins-%plugins_ver/
+%dir %_libdir/%name
+%_libdir/%name/libgnomesoftware.so
+%_libdir/%name/plugins-%plugins_ver/
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
 %_datadir/app-info/xmls/%xdg_name.Featured.xml
@@ -175,12 +179,14 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
-%_libdir/libgnomesoftware.a
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0 (ported to upstream instead of libappstream-glib)
+
 * Thu Mar 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

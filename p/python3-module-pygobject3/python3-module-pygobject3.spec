@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.38
+%define ver_major 3.40
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
@@ -11,7 +11,7 @@
 
 Name: python3-module-%{_name}3
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: Python3 bindings for GObject
 Group: Development/Python
@@ -31,15 +31,15 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 %filter_from_requires /Gst.*/d
 %filter_from_requires /typelib(WebKit)/d
 
-%define glib_ver 2.48.0
-%define gi_ver 1.46.0
-%define pycairo_ver 1.11.1
+%define glib_ver 2.56.0
+%define gi_ver 1.56.0
+%define pycairo_ver 1.16
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-pytest 
 %{?_enable_pycairo:BuildRequires: python3-module-pycairo-devel libcairo-gobject-devel}
 %{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui libgtk+3-gir-devel glibc-i18ndata}
 
@@ -123,6 +123,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Sat Jan 30 2021 Grigory Ustinov <grenka@altlinux.org> 3.38.0-alt3
 - fixed build requires
 

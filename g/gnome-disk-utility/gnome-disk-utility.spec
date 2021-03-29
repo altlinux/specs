@@ -1,12 +1,13 @@
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Disk management application
 License: LGPLv2+
@@ -16,7 +17,7 @@ Url: https://wiki.gnome.org/Apps/Disks
 Requires: udisks2 cryptsetup
 Requires: gnome-icon-theme-symbolic
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define udisks_ver 2.7.6
 %define glib_ver 2.31.0
@@ -25,6 +26,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define pwquality_ver 1.0.0
 %define dvdread_ver 4.2.0
 %define lzma_ver 5.0.5
+%define handy_ver 1.1.90
 
 Provides: gnome-disks = %EVR
 Requires: udisks2 >= %udisks_ver
@@ -39,6 +41,7 @@ BuildRequires: libpwquality-devel >= %pwquality_ver
 BuildRequires: libdvdread-devel >= %dvdread_ver
 BuildRequires: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_libsystemd:BuildRequires: pkgconfig(systemd)}
 BuildRequires: xsltproc docbook-style-xsl
 
@@ -48,7 +51,7 @@ Palimpsest supports partitioning, file system creation, encryption,
 RAID, SMART monitoring, etc
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -80,6 +83,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Thu Mar 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Thu Feb 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

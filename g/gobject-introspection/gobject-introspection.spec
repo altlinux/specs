@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 1.66
+%define ver_major 1.68
 %def_enable doctool
 %def_enable check
 %def_enable gtk_doc
 
 Name: gobject-introspection
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -143,6 +143,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.68.0-alt1
+- 1.68.0
+
 * Sat Oct 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.66.1-alt1
 - 1.66.1
 

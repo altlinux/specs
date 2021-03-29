@@ -3,21 +3,13 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 4.0
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.30
+%define ver_major 2.32
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
 %define oname webkit
 %define _name webkitgtk
 %define bwrap_bin %_bindir/bwrap
-
-# wpebackend-fdo >= 1.4
-#Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp:
-#wpe_loader_init("libWPEBackend-fdo-1.0.so");
-# fixed in 2.30.3
-#wpe_loader_init("libWPEBackend-fdo-1.0.so.1");
-
-%define wpebackend_fdo_sover 1
 
 %def_enable ninja
 %if_enabled ninja
@@ -39,7 +31,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -53,7 +45,7 @@ Source1: webkit2gtk.env
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
-Patch1: webkitgtk-2.29.91-alt-python3.patch
+Patch1: webkitgtk-2.31.1-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
 
 %define bwrap_ver 0.3.1
@@ -95,7 +87,9 @@ BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
 BuildRequires: libupower-devel
 # since 2.25.x
-BuildRequires: libwpebackend-fdo-devel
+BuildRequires: libwpe-devel libwpebackend-fdo-devel >= 1.8.0
+# since 2.31.x
+BuildRequires: libmanette-devel
 %{?_enable_bubblewrap_sandbox:BuildRequires: bubblewrap >= %bwrap_ver xdg-dbus-proxy libseccomp-devel}
 # since 2.29.x 
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
@@ -177,8 +171,6 @@ JavaScriptCore engine.
 Summary: JavaScriptCore shell for WebKit GTK+
 Group: Development/GNOME and GTK+
 Requires: libjavascriptcoregtk4 = %EVR
-# since 2.14.1 jsc moved to %pkglibexecdir
-#Conflicts: jsc
 
 %description -n jsc4
 jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
@@ -233,10 +225,6 @@ GObject introspection devel data for the JavaScriptCore library
 %patch2 -b .arm64
 %endif
 
-# fixed in 2.30.3
-#sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
-#	Source/WebKit/UIProcess/glib/WebProcessPoolGLib.cpp
-
 # Remove bundled libraries
 rm -rf Source/ThirdParty/gtest/
 rm -rf Source/ThirdParty/qunit/
@@ -248,8 +236,8 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 %define optflags_debug -g1
 %add_optflags -Wl,--no-keep-memory
 %{?_disable_gold: %add_optflags -Wl,--reduce-memory-overheads}
-%ifarch %ix86
 %add_optflags %(getconf LFS_CFLAGS)
+%ifarch %ix86
 # since 2.24.1 sse2 required for %%ix86
 %add_optflags -msse2 -mfpmath=sse
 %endif
@@ -287,18 +275,6 @@ export PYTHON=%__python3
 -DUSER_AGENT_BRANDING:STRING="ALTLinux" \
 %{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF}
 %nil
-
-#-DENABLE_TOUCH_EVENTS:BOOL=ON \
-#-DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
-#-DENABLE_TOUCH_SLIDER:BOOL=ON \
-#-Dbmalloc_LIBRARIES:STRING=-ldl
-# automatically enabled on x86_64
-#-DENABLE_FTL_JIT:BOOL=ON
-#-DENABLE_FTPDIR:BOOL=ON \
-#-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
-#-DENABLE_BATTERY_STATUS:BOOL=ON \
-#-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
-#-DENABLE_ORIENTATION_EVENTS:BOOL=ON
 %cmake_build
 
 %install
@@ -314,7 +290,7 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_libdir/libwebkit2gtk-%api_ver.so.*
 %dir %pkglibexecdir
 %pkglibexecdir/WebKitNetworkProcess
-%pkglibexecdir/WebKitPluginProcess
+#%pkglibexecdir/WebKitPluginProcess
 %pkglibexecdir/WebKitWebProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
@@ -366,6 +342,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Mar 26 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
+- 2.32.0
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.30.6-alt1
 - 2.30.6
 

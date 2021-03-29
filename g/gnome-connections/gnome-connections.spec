@@ -1,10 +1,10 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 3.38
+%define ver_major 40
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Connections
@@ -13,7 +13,7 @@ License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Connections
 
 %if_disabled snapshot
-Source: https://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Vcs: https://gitlab.gnome.org/GNOME/connections.git
 Source: %name-%version.tar
@@ -38,7 +38,7 @@ BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 %summary
 
 %prep
-%setup -n %_name-%version
+%setup -n %name-%version
 
 %build
 %meson
@@ -46,11 +46,11 @@ BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 
 %install
 %meson_install
-%find_lang --with-gnome %_name
+%find_lang --with-gnome %name
 
-%files -f %_name.lang
-%_bindir/%_name
-%_libdir/%_name/
+%files -f %name.lang
+%_bindir/%name
+%_libdir/%name/
 %_datadir/applications/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
@@ -60,12 +60,15 @@ BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 %doc README* NEWS*
 
 # gtk-frdp usless stuff
-%exclude %_includedir/%_name/
-%exclude %_datadir/%_name/
-%exclude %_libdir/%_name/girepository-1.0/
-%exclude %_libdir/%_name/pkgconfig/
+%exclude %_includedir/%name/
+%exclude %_datadir/%name/
+%exclude %_libdir/%name/girepository-1.0/
+%exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

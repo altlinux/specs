@@ -1,4 +1,8 @@
-%define ver_major 3.36
+%def_disable snapshot
+
+%define _libexecdir %_prefix/libexec
+%define ver_major 40
+%define beta %nil
 %define api_ver 3.0
 %def_enable introspection
 %def_enable vala
@@ -8,24 +12,28 @@
 %def_disable check
 
 Name: libgweather
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A library for weather information
 Group: System/Libraries
 License: GPLv3
 Url: https://wiki.gnome.org/Projects/LibGWeather
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 %define gtk_ver 3.13.5
-%define glib_ver 2.35.1
+%define glib_ver 2.44
 %define soup_ver 2.44
 %define gir_ver 0.9.5
 %define vala_ver 0.21.1
 %define geocode_ver 3.26.1
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-build-gnome meson
 BuildRequires: libgio-devel >= %glib_ver
@@ -33,6 +41,7 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libgeocode-glib-devel >= %geocode_ver libxml2-devel
 BuildRequires: xsltproc perl-XML-Parser xml-utils gzip
+BuildRequires: python3-module-pygobject3 python3-module-pylint
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -55,12 +64,8 @@ This package contains locations data for %name
 
 %package devel
 Summary: Development files for %name
-Group: Development/GNOME and GTK+
-# libgweather used to be part of gnome-applets, and
-# gnome-applets-devel only had the libgweather-devel parts in it
-Obsoletes: gnome-applets-gweather-devel < %version
-Provides: gnome-applets-gweather-devel = %version
-Requires: %name = %version-%release
+Group: Development/C
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -70,7 +75,7 @@ developing applications that use %name.
 Summary: Development documentation for %name
 Group: Development/Documentation
 BuildArch: noarch
-Conflicts: %name-devel < %version-%release
+Conflicts: %name-devel < %EVR
 
 %description devel-doc
 The %name-devel-doc package contains documentation for
@@ -79,7 +84,7 @@ developing applications that use %name.
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library
@@ -88,8 +93,8 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name library
@@ -98,13 +103,15 @@ GObject introspection devel data for the %name library
 Summary: Vala language bindings for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description vala
 This package provides Vala language bindings for the %name library.
 
 %prep
-%setup
+%setup -n %name-%version%beta
+
+sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 %build
 # for tm.tm_gmtoff
@@ -125,10 +132,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files -f %name.lang
+%dir %_libdir/%name
+%_libdir/%name/Locations.bin
 %_libdir/*.so.*
 %_datadir/glib-2.0/schemas/org.gnome.GWeather.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.GWeather.gschema.xml
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files data -f %name-locations.lang
 %dir %_datadir/libgweather
@@ -162,6 +171,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Jun 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 

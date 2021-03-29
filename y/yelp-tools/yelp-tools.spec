@@ -1,21 +1,25 @@
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 
 Name: yelp-tools
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Collection of tools for building and converting documentation
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: http://yelp.io
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 BuildArch: noarch
-Requires: yelp-xsl >= 3.32.0 itstool xmllint
+
+Requires: yelp-xsl >= 3.32.0 itstool xmllint xsltproc
 # Optional jing dep
 #%%filter_from_requires /jing/d
 
+BuildRequires(pre): meson rpm-build-python3
+BuildRequires: python3-module-lxml
 BuildRequires: yelp-xsl itstool xml-utils xsltproc
 
 %description
@@ -25,14 +29,14 @@ the heavy lifting is done by packages like yelp-xsl and itstool. This
 package just wraps things up in a developer-friendly way.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_bindir/yelp-build
@@ -43,6 +47,9 @@ package just wraps things up in a developer-friendly way.
 %doc AUTHORS README
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

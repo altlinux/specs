@@ -3,7 +3,7 @@
 %define _name robots
 %define xdg_name org.gnome.Robots
 %define __name gnome-%_name
-%define ver_major 3.38
+%define ver_major 40
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -22,7 +22,7 @@ Obsoletes: gnome-games-gnobots
 Provides:  gnome-games-gnobots = %version-%release
 
 %define glib_ver 2.32.0
-%define gtk_ver 3.22.0
+%define gtk_ver 3.24.0
 
 BuildRequires(pre): meson
 BuildRequires: vala-tools
@@ -59,6 +59,9 @@ systems.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 3.40
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
@@ -8,7 +8,7 @@
 %def_enable battstat
 %def_enable command
 %def_enable timer
-%def_disable tracker
+%def_enable tracker
 
 Name: gnome-applets
 Version: %ver_major.0
@@ -38,11 +38,12 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 %define libwnck_ver 2.9.3
 %define libnotify_ver 0.7.1
 %define icon_theme_ver 3.14
-%define libgweather_ver 3.17.1
+%define libgweather_ver 3.40
+%define tracker_api_ver 3.0
 
 Requires: gnome-panel >= %gnome_panel_ver
 Requires: gvfs
-%{?_enable tracker:Requires: tracker}
+%{?_enable tracker:Requires: tracker3}
 
 Obsoletes: %name-common < 3.37
 Provides: %name-common = %EVR
@@ -112,7 +113,7 @@ BuildRequires: gnome-settings-daemon-devel
 BuildRequires: libxml2-devel libdbus-devel
 BuildRequires: libpolkit-devel xorg-cf-files yelp-tools
 %{?_enable_battstat:BuildRequires: libupower-devel}
-%{?_enable tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
+%{?_enable tracker:BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver)}
 %{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
 
 %description
@@ -198,6 +199,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Sat Oct 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

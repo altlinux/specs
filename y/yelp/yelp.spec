@@ -1,20 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Yelp
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %def_disable debug
 %def_enable lzma
 
 Name: yelp
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Lightweight help browser for GNOME
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: http://yelp.io
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 # From configure.ac
 %define gio_ver 2.38
@@ -83,7 +84,7 @@ Yelp.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %configure \
@@ -123,6 +124,12 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.9.rc
+- 40
+
 * Sun Feb 14 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 

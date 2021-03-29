@@ -1,9 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 40
 %define xdg_name org.gnome.Notes
 %define _libexecdir %_prefix/libexec
-%def_enable zeitgeist
+# dropped since 40.0
+%def_disable zeitgeist
 
 Name: bijiben
 Version: %ver_major.0
@@ -23,7 +24,7 @@ Source: %name-%version.tar
 %define glib_ver 2.54
 %define gtk_ver 3.20
 %define tracker_api_ver 3.0
-%define tracker_ver 2.99
+%define tracker_ver 3.0
 %define eds_ver 3.34.0
 %define webkit_ver 2.26
 
@@ -36,8 +37,9 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: libxml2-devel libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libgnome-online-accounts-devel libuuid-devel
-BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel libicu-devel
-BuildRequires: pkgconfig(libhandy-0.0)
+BuildRequires: evolution-data-server-devel >= %eds_ver libcurl-devel
+BuildRequires: libical-devel libicu-devel libjson-glib-devel
+BuildRequires: pkgconfig(libhandy-1)
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 
 %description
@@ -75,6 +77,9 @@ desktop integration.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Thu Mar 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Mon Sep 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 

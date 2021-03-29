@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
+%define ver_major 3.40
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable check
 
 Name: gcr
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -26,7 +26,7 @@ Requires: libtasn1-utils
 Conflicts: gnome-keyring < 3.3.0
 
 %define glib_ver 2.44.0
-%define gtk_ver 3.20
+%define gtk_ver 3.22
 %define p11kit_ver 0.19.0
 %define vala_ver 0.18.1
 %define gcrypt_ver 1.4.5
@@ -187,6 +187,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Wed Jan 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

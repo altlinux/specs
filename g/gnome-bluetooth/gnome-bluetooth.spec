@@ -2,15 +2,15 @@
 
 %define ver_major 3.34
 %define api_ver 1.0
-%define sover 14
+%define sover 13
 %define _libexecdir %_prefix/libexec
 
 %def_enable introspection
 %def_enable gtk_doc
-%def_disable check
+%def_enable check
 
 Name: gnome-bluetooth
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -30,6 +30,7 @@ Source: %name-%version.tar
 %endif
 
 %define gtk_ver 3.12.0
+%define dbusmock_ver 0.23.0
 
 BuildRequires(pre): meson rpm-macros-alternatives
 BuildRequires: gtk-doc yelp-tools
@@ -40,7 +41,7 @@ BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 %endif
 %{?_enable_check:BuildRequires: bluez dbus python3-module-pygobject3 python3-module-dbus
-BuildRequires: python3-module-dbusmock typelib(Gtk) = 3.0}
+BuildRequires: python3-module-dbusmock >= %dbusmock_ver typelib(Gtk) = 3.0}
 
 %description
 The GNOME Bluetooth Subsystem
@@ -123,7 +124,7 @@ dbus-run-session %meson_test
 %doc AUTHORS README* NEWS
 
 %files -n lib%name
-%_libdir/lib%name.so.*
+%_libdir/lib%name.so.%{sover}*
 
 %files -n lib%name-devel
 %_includedir/%name/
@@ -142,6 +143,10 @@ dbus-run-session %meson_test
 %endif
 
 %changelog
+* Fri Mar 26 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.5-alt1
+- 3.34.5 (changed soname back)
+- enabled %%check
+
 * Mon Mar 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4 (bumped soname)
 

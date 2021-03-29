@@ -1,6 +1,7 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -11,24 +12,27 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Bootstrapping your OS
 Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: https://live.gnome.org/GnomeOS/Design/Whiteboards/InitialSetup
 
-Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define nm_ver 1.2
 %define nma_ver 1.0
-%define glib_ver 2.53.0
+%define glib_ver 2.64.0
 %define gtk_ver 3.12.0
 %define secret_ver 0.18.8
 %define geoclue_ver 2.4.3
 %define packagekit_ver 1.1.4
 %define gsds_ver 3.37.1
+%define cheese_ver 3.28
+%define ibus_ver 1.4.99
+%define malcontent_ver 0.6.0
 
 Requires: gnome-shell >= 3.37.92 gdm dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
@@ -43,7 +47,7 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libnm-devel >= %nm_ver libnma-devel >= %nma_ver
 BuildRequires: libkrb5-devel libpwquality-devel
-BuildRequires: libxkbfile-devel libibus-devel librest-devel
+BuildRequires: libxkbfile-devel libibus-devel >= %ibus_ver librest-devel
 BuildRequires: libaccountsservice-devel libgnome-desktop3-devel
 BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst3.0-devel
 BuildRequires: libgweather-devel libgnome-online-accounts-devel
@@ -52,9 +56,9 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver libgeocode-glib-devel
 BuildRequires: libwebkit2gtk-devel
-%{?_enable_cheese:BuildRequires: libcheese-devel}
+%{?_enable_cheese:BuildRequires: libcheese-devel >= %cheese_ver}
 %{?_enable_software_sources:BuildRequires: pkgconfig(packagekit-glib2) >= %packagekit_ver}
-%{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-ui-0)}
+%{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-ui-0) >= %malcontent_ver}
 
 %description
 GNOME Initial Setup is an alternative to firstboot, providing
@@ -62,7 +66,7 @@ a good setup experience to welcome you to your system, and walks
 you through configuring it. It is integrated with gdm.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -86,11 +90,12 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %files -f %name.lang
 %_libexecdir/%name
 %_libexecdir/%name-copy-worker
-%_libexecdir/gnome-welcome-tour
-%_sysconfdir/xdg/autostart/gnome-welcome-tour.desktop
+#%_libexecdir/gnome-welcome-tour
+#%_sysconfdir/xdg/autostart/gnome-welcome-tour.desktop
 %_sysconfdir/xdg/autostart/%name-copy-worker.desktop
 %_sysconfdir/xdg/autostart/%name-first-login.desktop
-%_datadir/gdm/greeter/applications/%name.desktop
+#%_datadir/gdm/greeter/applications/%name.desktop
+%_desktopdir/%name.desktop
 %_datadir/gnome-session/sessions/%name.session
 %_datadir/gnome-shell/modes/initial-setup.json
 %_datadir/polkit-1/rules.d/20-gnome-initial-setup.rules
@@ -100,6 +105,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Mon Feb 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name libhandy
-%define ver_major 1.0
+%define ver_major 1.2
 %define api_ver 1
 
 %def_enable introspection
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with GTK+3 widgets for mobile devices (API version 1)
@@ -22,7 +22,7 @@ Url: https://gitlab.gnome.org/GNOME/libhandy
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 #Source: %url/-/archive/%version/%name-%version.tar.bz2
 %else
-#VCS: https://gitlab.gnome.org/GNOME/libhandy.git
+Vcs: https://gitlab.gnome.org/GNOME/libhandy.git
 Source: %_name-%version.tar
 %endif
 
@@ -34,6 +34,7 @@ BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
+BuildRequires: pkgconfig(fribidi)
 %{?_enable_introspection:BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 3.0}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -123,6 +124,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Fri Mar 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Dec 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 

@@ -1,23 +1,24 @@
-%define ver_major 3.38
+%define ver_major 40
+%define beta %nil
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
 License: GPL-2.0 and LGPL-2.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Maps
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
 %define glib_ver 2.44
-%define gjs_ver 1.52
+%define gjs_ver 1.66
 %define geocode_ver 3.20.0
 %define geoclue_ver 2.4.0
 %define champlain_ver 0.12.19
@@ -39,16 +40,17 @@ Requires: typelib(GLib)
 Requires: typelib(GnomeMaps)
 Requires: typelib(Goa)
 Requires: typelib(GObject)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(GtkChamplain)
 Requires: typelib(GtkClutter)
 Requires: typelib(GWeather)
+Requires: typelib(Handy) = 1
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Rest)
 Requires: typelib(Secret)
-Requires: typelib(Soup)
-Requires: typelib(WebKit2)
+Requires: typelib(Soup) = 2.4
+Requires: typelib(WebKit2) = 4.0
 
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
@@ -58,12 +60,13 @@ BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
 BuildRequires: libgee0.8-devel libfolks-devel libgeocode-glib-devel libchamplain-gtk3-devel
 BuildRequires: libgeocode-glib-gir-devel libchamplain-gtk3-gir-devel librest-gir-devel
 BuildRequires: libclutter-gir-devel libcogl-gir-devel
+BuildRequires: pkgconfig(libhandy-1)
 
 %description
 Maps is a map application for GNOME.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -89,6 +92,12 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
+* Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40.rc
+
 * Sat Feb 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 

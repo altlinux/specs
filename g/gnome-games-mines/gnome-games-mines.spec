@@ -3,11 +3,11 @@
 
 %define _name mines
 %define __name gnome-%_name
-%define ver_major 3.36
+%define ver_major 40
 %define xdg_name org.gnome.Mines
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Classic find the mines in the minefield game
@@ -55,6 +55,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Tue Aug 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 

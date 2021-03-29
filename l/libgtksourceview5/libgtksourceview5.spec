@@ -1,5 +1,5 @@
 %define _name gtksourceview
-%define ver_major 4.99
+%define ver_major 5.0
 %define api_ver 5
 
 %def_disable static
@@ -157,6 +157,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Fri Feb 12 2021 Yuri N. Sedunov <aris@altlinux.org> 4.99.0-alt1
 - first build for Sisyphus
 

@@ -1,6 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 2.66
+%define ver_major 2.68
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
@@ -15,7 +16,7 @@
 
 Name: glib-networking
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Networking support for GIO
 Group: System/Libraries
@@ -23,7 +24,7 @@ License: LGPL-2.0-or-later
 Url: http://www.gnome.org
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -31,8 +32,8 @@ Source: %name-%version.tar
 %{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
 Requires: ca-certificates
 
-%define glib_ver 2.60.0
-%define gnutls_ver 2.12.8
+%define glib_ver 2.67.0
+%define gnutls_ver 3.6.5
 %define p11kit_ver 0.20
 %define libproxy_ver 0.3.1
 
@@ -69,7 +70,7 @@ the functionality of the installed %name package.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -111,6 +112,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.0-alt1
+- 2.68.0
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 2.66.0-alt1
 - 2.66.0
 
