@@ -1,9 +1,9 @@
 Name: swftools
 Version: 0.9.2
-Release: alt3
+Release: alt4
 
 Summary: A collection of SWF manipulation and generation utilities
-License: GPL
+License: GPLv2
 Group: Graphics
 
 Url: http://www.swftools.org
@@ -100,6 +100,7 @@ FreeBSD и MacOS X.
 %patch1 -p1
 
 %build
+%add_optflags -fcommon
 %configure --disable-static
 %make_build
 
@@ -118,6 +119,10 @@ cd %buildroot%_datadir/%name/swfs
 %doc AUTHORS ChangeLog doc/*
 
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt4
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Thu Mar 23 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.9.2-alt3
 - build with pdf2swf
 
