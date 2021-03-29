@@ -1,9 +1,9 @@
 Name: spreed-webrtc
 Version: 0.29.7
-Release: alt1
+Release: alt2
 
 Summary: A WebRTC audio/video call and conferencing server
-License: AGPLv3
+License: AGPL-3.0
 Group: System/Servers
 Url: https://github.com/strukturag/spreed-webrtc/
 
@@ -20,7 +20,7 @@ Spreed WebRTC implements a WebRTC audio/video call and conferencing server.
 %build
 [ ! -x autogen.sh ] || sh autogen.sh
 %configure
-%make_build DEB_BUILDING=1
+%make_build DEB_BUILDING=1 GO111MODULE=off
 
 %install
 %makeinstall_std
@@ -49,6 +49,9 @@ install -pm0644 -D spreed-webrtc.sysconfig %buildroot%_sysconfdir/sysconfig/%nam
 %_datadir/spreed-webrtc-server
 
 %changelog
+* Mon Mar 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.29.7-alt2
+- fixed build with golang >= 1.16
+
 * Fri Mar 15 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.29.7-alt1
 - 0.29.7 released
 
