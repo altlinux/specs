@@ -11,8 +11,8 @@ BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 Name:           nagstamon
-Version:        3.4.1
-Release:        alt3
+Version:        3.5.0
+Release:        alt2.rc1
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -24,6 +24,7 @@ Patch1:         %name-%version-init-translator.patch
 Patch2:         nagstamon-3.0.1-alt-default-values-in-config.patch
 Patch3:         %name-%version-system-config.patch
 Patch4:         %name-%version-abstract-socket.patch
+Patch5:         %name-%version-startup-message.patch
 Source44:       import.info
 Source1:        all.ts
 Source2:        all.qm
@@ -41,6 +42,7 @@ servers.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 cp %SOURCE1 %SOURCE2 Nagstamon/QUI/
 
@@ -80,6 +82,13 @@ desktop-file-install \
 
 
 %changelog
+* Tue Mar 30 2021 Paul Wolneykien <manowar@altlinux.org> 3.5.0-alt2.rc1
+- Fix: Initialize 'message' to prevent check uninitialized error
+  (patch).
+
+* Mon Mar 29 2021 Paul Wolneykien <manowar@altlinux.org> 3.5.0-alt1.rc1
+- Fresh up to testing version 3.5.x 2021-03-26.
+
 * Thu Jun 04 2020 Paul Wolneykien <manowar@altlinux.org> 3.4.1-alt3
 - Fix: Require python3-module-requests-gssapi (closes: 38577).
 
