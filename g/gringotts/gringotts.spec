@@ -1,8 +1,8 @@
 Summary: Electronic strongbox
 Name: gringotts
 Version: 1.2.10
-Release: alt1.qa1
-License: GPL
+Release: alt2
+License: GPLv2
 Group: Editors
 URL: http://devel.pluto.linux.it/projects/Gringotts/
 
@@ -40,6 +40,7 @@ Categories=GNOME;Application;Utility;
 EOF
 
 %build
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -62,6 +63,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_datadir}/applications/gringotts.desktop
 
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.10-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.2.10-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
