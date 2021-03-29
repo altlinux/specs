@@ -2,10 +2,10 @@
 
 Name: redirector
 Version: 3.2.8
-Release: alt1.qa1
+Release: alt2
 
 Summary: rejik3 is a redirector for squid
-License: GPL
+License: GPLv2
 Group: Networking/Other
 Url: http://rejik.ru
 
@@ -44,6 +44,8 @@ tar zxf %SOURCE4 && mv squid-like-www-ru squid-like-ban-ru
 tar zxf %SOURCE5 && mv squid-like-www-en squid-like-ban-en
 subst 's|\(chown\)|#\1|g; s|^\(INSTALL_PATH=\).*|\1%_sbindir|' Makefile
 subst 's|\(DEFAULT_CONFIG\).*|\1 "%redirector_cfgdir/redirector.conf"|' vars.h
+
+sed -i 's/\(CC=.*\)/\1 -fcommon/' Makefile
 
 %build
 %make_build
@@ -135,6 +137,10 @@ fi
 %dir %_localstatedir/%name/dbl
 
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 3.2.8-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.8-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
