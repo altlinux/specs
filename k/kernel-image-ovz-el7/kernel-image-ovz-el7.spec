@@ -6,7 +6,7 @@
 %define flavour %base_flavour-%sub_flavour
 
 #     rh7-3.10.0-1160.15.2.vz7.173.7
-%define orelease 1160.15.2.vz7.173.7
+%define orelease 1160.15.2.vz7.173.7.1
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -586,6 +586,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Mon Mar 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.15.2.vz7.173.7.1
+- revert lazytime mount option commit
+
 * Fri Mar 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.15.2.vz7.173.7
 - Build rh7-3.10.0-1160.15.2.vz7.173.7
 - config: change the default cpufreq governor to "performance"
