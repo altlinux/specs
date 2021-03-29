@@ -1,11 +1,11 @@
 %define Name Oroborus
 Name: oroborus
 Version: 2.0.20
-Release: alt1
+Release: alt2
 Summary: Small window manager for the X Window System
 Summary(uk_UA.CP1251): Маленький віконний менеджер для X Window System
 Summary(ru_RU.CP1251): Маленький оконный менеджер для X Window System
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Other
 URL: http://www.%name.org/
 Source0: %name-%version.tar.bz2
@@ -61,6 +61,7 @@ Themes for %Name Window Manager.
 
 
 %build
+%add_optflags -fcommon
 %configure \
 	--with-x
 %make_build
@@ -131,6 +132,10 @@ __MENU__
 
 
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.20-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.20-alt1
 - Version 2.0.20
 
