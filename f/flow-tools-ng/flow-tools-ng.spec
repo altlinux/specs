@@ -1,6 +1,6 @@
 Name: flow-tools-ng
 Version: 0.68.5
-Release: alt3
+Release: alt4
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -11,6 +11,7 @@ Url: http://code.google.com/p/flow-tools/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+Patch1: %name-%version-gcc-10-extern.patch
 
 Provides: flow-tools
 Conflicts: flow-tools
@@ -66,6 +67,7 @@ This package contains scripts to provide ASCII, HTML, RRD output
 
 %prep
 %setup
+%patch1 -p1
 # fix broken env path
 find -type f | xargs subst "s|#!/bin/env|#/!/usr/bin/env|g"
 
@@ -115,6 +117,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 0.68.5-alt4
+- fix build with gcc-10
+
 * Thu Mar 21 2019 Anton Farygin <rider@altlinux.ru> 0.68.5-alt3
 - rebuild without w3c-markup-validator-libs
 
