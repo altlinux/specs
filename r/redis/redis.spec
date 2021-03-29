@@ -1,6 +1,6 @@
 Name: redis
 Version: 5.0.8
-Release: alt1
+Release: alt2
 
 Summary: Redis is an advanced key-value store
 
@@ -160,6 +160,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Mon Mar 29 2021 Ivan A. Melnikov <iv@altlinux.org> 5.0.8-alt2
+- Link with libatomic on %%mips32
+
 * Tue Mar 31 2020 Nikolay A. Fetisov <naf@altlinux.org> 5.0.8-alt1
 - New version
 
