@@ -1,7 +1,7 @@
 
 Name: kvmtool
 Version: 3.18.0
-Release: alt3.git.a0eab49a
+Release: alt4.git.117d6495
 Summary: Linux Native KVM Tool
 License: GPLv2+
 Group: Emulators
@@ -52,6 +52,9 @@ running 32-bit guests on those 64-bit architectures that allow this.
 %doc README COPYING
 
 %changelog
+* Mon Mar 29 2021 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt4.git.117d6495
+- update to upstream master (117d64953228afa90b52f6e1b4873770643ffdc9)
+
 * Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt3.git.a0eab49a
 - update to upstream master (a0eab49a8876ad29a200ce688d1055b566c69b38)
 
