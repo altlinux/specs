@@ -1,6 +1,6 @@
 Name: ddrutility
 Version: 2.8
-Release: alt1
+Release: alt2
 
 Summary: Utility for use with gnuddrescue to aid with data recovery
 License: GPLv3+
@@ -27,7 +27,7 @@ ddru_ntfsfindbad
 %setup
 
 %build
-%make_build
+%make_build CFLAGS="%optflags -Wall -W -fcommon"
 
 %install
 %makeinstall_std \
@@ -41,6 +41,9 @@ ddru_ntfsfindbad
 %_infodir/*
 
 %changelog
+* Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 2.8-alt2
+- fix build with gcc-10
+
 * Sun Dec 04 2016 Michael Shigorin <mike@altlinux.org> 2.8-alt1
 - new version (watch file uupdate)
   + why on Earth have they dropped autoconf for manual make?
