@@ -1,6 +1,6 @@
 Name: basesystem
 Version: sisyphus
-Release: alt22
+Release: alt23
 Epoch: 1
 
 Summary: The skeleton package which defines a basic %distribution chroot
@@ -42,7 +42,6 @@ Requires: mingetty
 Requires: network-config-subsystem
 Requires: passwd
 Requires: sash
-Requires: startup
 Requires: stmpclean
 Requires: syslogd-daemon
 Requires: SysVinit
@@ -61,6 +60,10 @@ This package defines the components of an interactive %distribution system
 %files -n interactivesystem
 
 %changelog
+* Fri Mar 26 2021 Arseny Maslennikov <arseny@altlinux.org> 1:sisyphus-alt23
+- Cleaned up dependencies of interactivesystem:
+  - removed: startup.
+
 * Wed Mar 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1:sisyphus-alt22
 - Cleaned up dependencies:
   * basesystem:
