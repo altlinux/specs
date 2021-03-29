@@ -1,5 +1,5 @@
 Name: privoxy
-Version: 3.0.29
+Version: 3.0.32
 Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
@@ -65,7 +65,7 @@ export ac_cv_prog_MAN2HTML=man2html
 %install
 # From junkbuster.spec
 install -pD -m755 %name %buildroot%_sbindir/%name
-install -pD -m644 %name.1 %buildroot%_man8dir/%name.8
+install -pD -m644 %name.8 %buildroot%_man8dir/%name.8
 install -pD -m640 %name.log %buildroot%_sysconfdir/logrotate.d/%name
 install -pD -m755 %name.init %buildroot%_initdir/%name
 
@@ -143,6 +143,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.32-alt1
+- new version 3.0.32 (with rpmrb script)
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.29-alt1
 - new version 3.0.29 (with rpmrb script)
 
