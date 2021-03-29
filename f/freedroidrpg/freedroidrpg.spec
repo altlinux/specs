@@ -1,9 +1,9 @@
 Name: freedroidrpg
 Version: 0.16.1
-Release: alt2
+Release: alt3
 
 Summary: Isometric action game with RPG elements
-License: GPL
+License: GPLv2
 Group: Games/Arcade
 Url: http://freedroid.sf.net
 Packager: Roman Savochenko <rom_as at altlinux.ru>
@@ -18,6 +18,9 @@ Source1: %name.desktop
 Source3: %name-16x16.png
 Source4: %name-32x32.png
 Source5: %name-48x48.png
+
+# Fix multiple definitions
+Patch: e610d427374226b79da5258d979936459f30c761.patch
 
 %description
 Interesting Diablo-like game featuring The Tux as the main character.
@@ -39,7 +42,11 @@ BuildArch: noarch
 This package contains media files for Freedroid RPG game
 
 %prep
-%setup -q
+%setup
+%patch -p1
+
+# see https://gitlab.com/freedroid/freedroid-src/-/commit/642f6a95ad4fa8211abf68327685caaf20d46e7d.patch
+sed -i 's/\(strncpy(MenuTexts\[i\], \)Options\[i\]/\1\&(Options\[i\]\[0\])/' src/menu.c
 
 sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
 
@@ -88,6 +95,10 @@ mv %buildroot%_gamesdatadir/appdata %buildroot%_datadir
 %_gamesbindir/make_atlas
 
 %changelog
+* Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 0.16.1-alt3
+- Fixed FTBFS with upstream patches.
+- Fixed license tag.
+
 * Fri Mar 27 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.16.1-alt2
 - Porting to python3.
 
