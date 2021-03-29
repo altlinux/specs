@@ -2,7 +2,7 @@
 
 Name: free-sa
 Version: 1.6.2
-Release: alt3.2
+Release: alt3.3
 
 Packager: Avramenko Andrew <liks@altlinux.ru>
 Summary: Squid report generator per user/ip/name
@@ -10,6 +10,7 @@ URL: http://free-sa.sourceforge.net/
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: %name-1.6.2-alt-no-strip.patch
+Patch2: %name-%version-alt-gcc-10-fno-common.patch
 ExclusiveArch: i586 x86_64
 
 License: GPL
@@ -25,6 +26,7 @@ HTML/CSS reports code.
 %setup -q
 %patch0 -p1
 %patch1 -p2
+%patch2 -p2
 sed -i 's|\(\-\-relax\)|-Wl,\1|' configs/*.mk
 sed -i 's|\-mrelax||' configs/*.mk
 
@@ -54,6 +56,9 @@ subst "s,%buildroot,," %buildroot/%_sysconfdir/%name/%name.conf
 %dir /var/cache/%name
 
 %changelog
+* Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 1.6.2-alt3.3
+- Fixed build with gcc-10 (-fno-common FTBFS)
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt3.2
 - Fixed build with gcc 4.7
 
