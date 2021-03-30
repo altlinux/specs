@@ -4,7 +4,7 @@
 
 Name: ocaml-parmap
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: Small OCaml library allowing to exploit multicore architectures
 Group: Development/ML
 # Parmap is distributed under the LGPL licence version 2, with the usual special linking exception to section 6 for OCaml programs.
@@ -51,7 +51,7 @@ developing applications that use %name.
 # `dune runtests' actually are very CPU intensive benchmarks ('scale' tests),
 # and we don't need to run benchmarks for integration testing. Run single and
 # fastest test just to be sure parmap is working at all.
-dune exec tests/simplescalefold.exe
+dune exec -p parmap tests/simplescalefold.exe
 
 %files
 %_docdir/parmap
@@ -73,6 +73,9 @@ dune exec tests/simplescalefold.exe
 %_libdir/ocaml/parmap/*.ml
 
 %changelog
+* Tue Mar 30 2021 Anton Farygin <rider@altlinux.org> 1.2-alt2
+- spec: added build flags from the dune project when starting the test
+
 * Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 1.2-alt1
 - 1.1.1 -> 1.2
 - specfile BR: ocaml-dune-devel renamed to ocaml-dune-configurator-devel
