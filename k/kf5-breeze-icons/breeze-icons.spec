@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.80.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -38,6 +38,12 @@ Provides: kde4-icon-theme = %version-%release
 %patch1 -p1
 
 chmod a+x *.sh
+
+# remove telegram status icons
+find ./ -type f -name 'telegram-*' | \
+while read f; do
+    rm -f $f
+done
 
 %build
 %K5build
@@ -99,6 +105,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Tue Mar 30 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt2
+- exclude telegram status icons
+
 * Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
 - new version
 
