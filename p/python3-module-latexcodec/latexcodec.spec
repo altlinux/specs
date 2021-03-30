@@ -1,7 +1,7 @@
 %define oname latexcodec
 
 Name: python3-module-%oname
-Version: 1.0.7
+Version: 2.0.1
 Release: alt1
 
 Summary: A lexer and codec to work with LaTeX code in Python
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-nose
 BuildRequires: python3-module-sphinx python3-module-six
+BuildRequires: python3-module-pytest
 
 %py3_provides %oname
 %py3_requires six
@@ -39,7 +40,7 @@ This package contains pickles for %oname.
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -64,6 +65,9 @@ coverage3 run --source=latexcodec $(type -p nosetests3) -vv
 
 
 %changelog
+* Tue Mar 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Build new version.
+
 * Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.7-alt1
 - Version updated to 1.0.7
 - python2 disabled
