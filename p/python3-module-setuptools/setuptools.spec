@@ -5,8 +5,8 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 46.1.3
-Release: alt2
+Version: 54.2.0
+Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -15,17 +15,24 @@ Group: Development/Python3
 Url: https://pypi.org/project/setuptools/
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: /dev/shm
 BuildRequires: python3(mock)
+BuildRequires: python3(jaraco.envs)
+BuildRequires: python3(jaraco.path)
 BuildRequires: python3(pip)
 BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(pytest_virtualenv)
+BuildRequires: python3(pytest_enabler)
+BuildRequires: python3(sphinx)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(virtualenv)
 BuildRequires: python3(wheel)
 
@@ -72,7 +79,7 @@ This package contains pkg_resources for Python3.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 # Remove bundled exes
 rm -f setuptools/*.exe
@@ -88,31 +95,18 @@ python3 bootstrap.py
 %install
 %python3_install
 
-rm %buildroot%_bindir/easy_install
-ln -s easy_install-%_python3_version -T %buildroot%_bindir/easy_install3
-
 %check
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
--e '/^setenv[ ]*=/a\
-    py3: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vv -r -- --ignore pavement.py
+export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION'
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -- --ignore pavement.py -vra
 
 %files
 %doc LICENSE *.rst
-%_bindir/easy_install3
-%_bindir/easy_install-%_python3_version
-%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/_distutils_hack/
+%python3_sitelibdir/distutils-precedence.pth
 %python3_sitelibdir/setuptools
-%python3_sitelibdir/easy_install.*
 
 %files -n python3-module-pkg_resources
 %doc LICENSE
@@ -128,6 +122,9 @@ tox.py3 --sitepackages -vv -r -- --ignore pavement.py
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 1:54.2.0-alt1
+- 46.1.3 -> 54.2.0.
+
 * Wed Oct 28 2020 Stanislav Levin <slev@altlinux.org> 1:46.1.3-alt2
 - Fixed FTBFS(virtualenv 20.1.0).
 
