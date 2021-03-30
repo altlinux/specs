@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.46
-Release: alt2
+Release: alt3
 Epoch: 1
 
 License: %asl
@@ -105,7 +105,7 @@ BuildPreReq: pkg-config
 BuildPreReq: libgdbm-devel
 BuildPreReq: libexpat-devel
 BuildPreReq: libpcre-devel
-BuildPreReq: openldap libldap-devel
+BuildPreReq: openldap-common libldap-devel
 BuildPreReq: libsasl2-devel libsasl2-plugin-gssapi
 BuildPreReq: openssl
 #following is required by dbmmanage
@@ -1518,6 +1518,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Mar 30 2021 Slava Aseev <ptrnine@altlinux.org> 1:2.4.46-alt3
+- fixed FTBFS due to openldap package renaming
+
 * Fri Oct 02 2020 Anton Farygin <rider@altlinux.ru> 1:2.4.46-alt2
 - fixed apachectl -M behavior (closes: #39025)
 
