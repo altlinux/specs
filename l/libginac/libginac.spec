@@ -1,7 +1,7 @@
 %define oname ginac
 
 Name: libginac
-Version: 1.7.8
+Version: 1.8.0
 Release: alt1
 Epoch: 1
 
@@ -57,9 +57,12 @@ for developing GiNaC applications.
 
 %prep
 %setup -n %oname-%version
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39854
+subst "s|2\.7|3.0|" configure.ac
 
 %build
 %autoreconf
+
 %configure \
 	--disable-static \
 	--disable-rpath
@@ -90,6 +93,9 @@ rm -fv %buildroot/usr/lib/ginac-excompiler
 %_infodir/*.info*
 
 %changelog
+* Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.8-alt1
 - new version 1.7.8 (with rpmrb script)
 
