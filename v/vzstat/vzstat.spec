@@ -1,7 +1,7 @@
 
 Name: vzstat
 Version: 7.0.25
-Release: alt1
+Release: alt2
 Summary: vzstat utility for node monitoring
 
 Group: System/Base
@@ -36,6 +36,9 @@ This package contains statistic monitoring utility for OpenVZ HW node.
 %doc README.md COPYING
 
 %changelog
+* Tue Mar 30 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.25-alt2
+- fix FTBFS
+
 * Wed Jul 01 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.25-alt1
 - 7.0.25
 
