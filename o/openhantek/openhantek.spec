@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 3.1.5
+Version: 3.2
 Release: alt1
 Epoch: 1
 
@@ -44,13 +44,16 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %files
 %_bindir/%name
 %_bindir/OpenHantek
-%_udevrulesdir/60-hantek.rules
+%_udevrulesdir/60-openhantek.rules
 %_desktopdir/OpenHantek.desktop
 %_docdir/openhantek/
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.2-alt1
+- new version 3.2 (with rpmrb script)
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.1.5-alt1
 - new version 3.1.5 (with rpmrb script)
 
