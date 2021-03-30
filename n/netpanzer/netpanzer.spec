@@ -1,22 +1,26 @@
 Name: netpanzer
-Version: 0.8.2
-Release: alt1.qa3
+Version: 0.8.7
+Release: alt1
 Summary: An Online Multiplayer Tactical Warfare Game
 
 Group: Games/Arcade
 License: GPLv2+
-Url: http://netpanzer.berlios.de
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source0: http://download.berlios.de/netpanzer/netpanzer-%version.tar.bz2
-Patch0: netpanzer-desktop.patch
-Patch1: netpanzer-0.8.2-Pallette-memory.patch
-Patch2: netpanzer-0.8.2-ColorTable-memory.patch
-Patch3: netpanzer-0.8.2-Log-algorithm.patch
-Patch4: netpanzer-0.8.2-MapSelectionView-memory.patch
 
-BuildRequires: jam, libphysfs-devel, desktop-file-utils, doxygen, gcc, gcc-c++
+URL:            http://www.netpanzer.info
+Source0:	http://www.netpanzer.info/Download/NetPanzer/Releases/0.8.7/netpanzer-0.8.7-source.zip
+Source1:	netpanzer.desktop
+Patch0: netpanzer-desktop.patch
+
+Patch4:         netpanzer-0.8.2-MapSelectionView-memory.patch
+Patch6:         netpanzer-0.8.7-ccflags.patch
+Patch8:		netpanzer-0.8.7-syslibs.patch
+Patch9:         netpanzer-python3.patch
+
+#set_gcc_version 8
+BuildRequires: jam libphysfs-devel unzip desktop-file-utils doxygen gcc gcc-c++ scons liblua5.1-compat-devel
 BuildRequires: libSDL-devel >= 1.2.5, libSDL_mixer-devel >= 1.2, libSDL_image-devel >= 1.2
-Obsoletes: netpanzer-data <= 0.8
+Obsoletes: netpanzer-data <= 0.8 
 Provides: netpanzer-data = %version-%release
 Requires(post): coreutils
 Requires(postun): coreutils
@@ -30,49 +34,60 @@ with a set of new units. Players can join or leave multiplayer games at any
 time.
 
 %prep
-%setup -q
+%setup -qcn netpanzer-0.8.7
 
-# Strip \r from RELNOTES file
-sed -i 's/\r//' RELNOTES
 
 #Correct .desktop file
-%patch0 -p0
+#patch0 -p0
 
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
 %patch4 -p0
+%patch6 -p1
+%patch8 -p1
+%patch9 -p0
+rm -r src/Lib/lua src/Lib/physfs
+
 
 %build
-%add_optflags -fpermissive
-%configure
-jam %{?_smp_mflags}
+CCFLAGS="%{optflags} -std=c++14" scons datadir=%{_datadir}/netpanzer %{?_smp_mflags}
+
 
 %install
-export DESTDIR=$RPM_BUILD_ROOT
-jam install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT%{_bindir}
+install -m 755 netpanzer $RPM_BUILD_ROOT%{_bindir}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr cache/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr maps/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr pics/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr powerups/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr scripts/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr units/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr wads/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
+cp -pr sound/ $RPM_BUILD_ROOT%{_datadir}/netpanzer/
 
 # Install desktop item
-rm -f $RPM_BUILD_ROOT%_datadir/applications/netpanzer.desktop
-rm -f $RPM_BUILD_ROOT%_datadir/pixmaps/netpanzer.xpm
+rm -f $RPM_BUILD_ROOT%{_datadir}/applications/netpanzer.desktop
+rm -f $RPM_BUILD_ROOT%{_datadir}/pixmaps/netpanzer.xpm
 
-mkdir -p $RPM_BUILD_ROOT%_datadir/icons/hicolor/48x48/apps
-mv $RPM_BUILD_ROOT%_datadir/pixmaps/netpanzer.png \
-   $RPM_BUILD_ROOT%_datadir/icons/hicolor/48x48/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+mv netpanzer.png \
+   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 
-desktop-file-install --vendor fedora				\
-	--dir $RPM_BUILD_ROOT%_datadir/applications		\
-	--add-category X-Fedora					\
-	netpanzer.desktop
+desktop-file-install \
+	--dir ${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
 
 %files
-%doc ChangeLog COPYING README RELNOTES TODO docs/serverhowto.html docs/tipofday.txt
+%doc  COPYING README*  docs/
 %_bindir/netpanzer
-%_datadir/applications/fedora-netpanzer.desktop
+#{_datadir}/appdata/%{name}.appdata.xml
+%_datadir/applications/netpanzer.desktop
 %_datadir/icons/hicolor/48x48/apps/netpanzer.png
 %_datadir/netpanzer
 
 %changelog
+* Tue Mar 30 2021 Ilya Mashkin <oddity@altlinux.ru> 0.8.7-alt1
+- 0.8.7
+
 * Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.qa3
 - Fixed build with gcc 4.7
 
