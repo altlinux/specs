@@ -1,5 +1,5 @@
 Name: leafnode
-Version: 1.11.11
+Version: 1.11.12
 Release: alt1
 
 Summary: a leafsite NNTP server
@@ -114,6 +114,9 @@ chmod -R u=rwX,go=rX %_spooldir/news/
 %_bindir/*
 
 %changelog
+* Tue Mar 30 2021 Michael Shigorin <mike@altlinux.org> 1.11.12-alt1
+- new version (watch file uupdate)
+
 * Tue Aug 25 2015 Michael Shigorin <mike@altlinux.org> 1.11.11-alt1
 - new version (watch file uupdate)
 
