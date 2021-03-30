@@ -1,5 +1,5 @@
 Name: kernel-image-std-pae
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	5.4
 %define kernel_sublevel .108
@@ -138,7 +138,6 @@ BuildRequires: ccache
 Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
-Requires: startup >= 0.8.3-alt1
 
 Provides: kernel = %kversion
 
@@ -715,6 +714,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Mar 30 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.4.108-alt2
+- changelog entry for p9
+
 * Sat Mar 27 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.4.108-alt1
 - v5.4.108
 
@@ -1104,6 +1106,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Tue Sep 10 2019 Kernel Bot <kernelbot@altlinux.org> 1:5.2.14-alt1
 - v5.2.14
+
+* Tue Sep 10 2019 Kernel Bot <kernelbot@altlinux.org> 1:4.19.72-alt1
+- v4.19.72
 
 * Fri Sep 06 2019 Kernel Bot <kernelbot@altlinux.org> 1:5.2.12-alt1
 - v5.2.12
