@@ -1,6 +1,6 @@
 Name: nail
 Version: 10.7
-Release: alt1.qa1
+Release: alt2
 
 Summary: The /bin/nail program for send and receive MIME conformant mail
 License: BSD
@@ -14,11 +14,12 @@ Nail is an intelligent mail processing system, which has a command syntax
 reminiscent of ed(1) with lines replaced by messages.  It is based on Berkeley Mail 8.1,
 is intended to provide the functionality  of the POSIX.2 mailx command,
 and offers extensions for MIME messages, POP3 and SMTP.
-				   
+
 %prep
-%setup -q
+%setup
 
 %build
+%add_optflags -fcommon
 %configure --with-csh=/bin/csh \
 	    --with-vi="/bin/vi -c 'set ft=mail tw=74' '+/^$'" \
 	    --with-sendmail=/usr/sbin/sendmail
@@ -34,6 +35,9 @@ and offers extensions for MIME messages, POP3 and SMTP.
 %doc COPYING README AUTHORS INSTALL ChangeLog
 
 %changelog
+* Tue Mar 30 2021 Grigory Ustinov <grenka@altlinux.org> 10.7-alt2
+- Fixed FTBFS with -fcommon.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 10.7-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
