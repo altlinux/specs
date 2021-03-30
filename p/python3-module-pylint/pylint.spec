@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.7.2
+Version: 2.7.4
 Release: alt1
 
 Summary: Python code static checker
@@ -28,6 +28,7 @@ BuildRequires: python3(isort)
 BuildRequires: python3(enchant)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(turtle)
 BuildRequires: hunspell-en
 %endif
@@ -73,11 +74,11 @@ done
 %check
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -- \
+tox.py3 --sitepackages --console-scripts -vvr --no-deps -- \
     -v --ignore tests/benchmark/test_baseline_benchmarks.py
 
 %files
-%doc ChangeLog README.rst doc/
+%doc ChangeLog README.rst
 %_bindir/pylint.py3
 %_bindir/epylint.py3
 %_bindir/pyreverse.py3
@@ -86,6 +87,9 @@ tox.py3 --sitepackages --console-scripts -vvr -- \
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Tue Mar 30 2021 Stanislav Levin <slev@altlinux.org> 2.7.4-alt1
+- 2.7.2 -> 2.7.4.
+
 * Wed Mar 24 2021 Stanislav Levin <slev@altlinux.org> 2.7.2-alt1
 - 2.6.0 -> 2.7.2.
 

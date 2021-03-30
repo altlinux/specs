@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -27,6 +27,7 @@ BuildRequires: python3-module-wrapt
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-tox
+BuildRequires: python3(tox_no_deps)
 %endif
 
 BuildArch: noarch
@@ -58,7 +59,7 @@ rm %buildroot%python3_sitelibdir/astroid/test_utils.py
 export PIP_NO_INDEX=YES
 export PIP_NO_DEPS=YES
 export TOXENV=py%{python_version_nodots python3}-six
-tox.py3 --sitepackages -p auto -o -v
+tox.py3 --sitepackages --no-deps -vvr -- tests -vra
 
 %files
 %doc ChangeLog README.rst
@@ -66,6 +67,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Tue Mar 30 2021 Stanislav Levin <slev@altlinux.org> 2.5.2-alt1
+- 2.5.1 -> 2.5.2.
+
 * Wed Mar 24 2021 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
 - 2.4.2 -> 2.5.1.
 
