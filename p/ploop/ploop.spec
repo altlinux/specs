@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.254
+Version: 7.0.255
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -109,6 +109,10 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 30 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.255-alt1
+- 7.0.255
+- disable metadata_csum feature for VE filesystem
+
 * Fri Mar 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.254-alt1
 - 7.0.254
 
