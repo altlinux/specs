@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210323
+Version: 20210329
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,14 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Mon Mar 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 20210329-alt1
+- Add support 'fuid' automatic mode option for method cdrom
+- Fix potential memory overflow in welcome string
+- Set PREFIX to "/" for nfs and cifs methods due its mounted to image root
+
+* Sat Mar 27 2021 Evgeny Sinelnikov <sin@altlinux.org> 20210327-alt1
+- cdrom.c: Try to mount multiple devices in automatic mode
+
 * Tue Mar 23 2021 Anton Midyukov <antohami@altlinux.org> 20210323-alt1
 - disk.c, mount.c: Add support exfat
 
