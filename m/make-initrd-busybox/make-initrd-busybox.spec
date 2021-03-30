@@ -1,6 +1,6 @@
 Name: make-initrd-busybox
 Version: 1.32.1
-Release: alt2
+Release: alt3
 
 Summary: Busybox for make-initrd
 License: GPL-2.0-or-later
@@ -29,15 +29,13 @@ mkdir -p -- %buildroot/lib/initrd/var/run
 cd busybox
 %make install CONFIG_PREFIX=%buildroot/lib/initrd
 
-cd %buildroot/lib/initrd
-
-ln -s ../usr/bin/readlink bin/readlink
-ln -s ../usr/sbin/chroot  sbin/chroot
-
 %files
 /lib/initrd/*
 
 %changelog
+* Tue Mar 30 2021 Alexey Gladkov <legion@altlinux.ru> 1.32.1-alt3
+- Add start-stop-daemon.
+
 * Mon Jan 11 2021 Alexey Gladkov <legion@altlinux.ru> 1.32.1-alt2
 - Fix build under srpm_cleanup (mike@).
 
