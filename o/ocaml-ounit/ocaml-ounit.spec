@@ -1,8 +1,6 @@
-#/usr/lib/ocaml/oUnit/oUnit.cmxs: TEXTREL entry found: 0x00000000
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-ounit
 Version: 2.2.4
-Release: alt1
+Release: alt2
 Summary: Unit test framework for OCaml
 Group: Development/ML
 License: MIT
@@ -11,12 +9,8 @@ Url: http://ounit.forge.ocamlcore.org/
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-findlib-devel
-BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-lwt-devel
-BuildRequires: ocaml-ocplib-endian-devel
-BuildRequires: ocaml-result-devel
 BuildRequires: libev-devel
 BuildRequires: dune
 
@@ -40,32 +34,26 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-dune build @install
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check --release
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE.txt
-%_libdir/ocaml/ounit*
-%exclude %_libdir/ocaml/ounit2-lwt/*.a
-%exclude %_libdir/ocaml/ounit2-lwt/*.cmxa
-%exclude %_libdir/ocaml/ounit*/*/*.a
-%exclude %_libdir/ocaml/ounit*/*/*.cmxa
-%exclude %_libdir/ocaml/ounit*/*/*.mli
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc LICENSE.txt README.md CHANGES.md
-%_libdir/ocaml/ounit*/*/*.a
-%_libdir/ocaml/ounit*/*/*.cmxa
-%_libdir/ocaml/ounit*/*/*.mli
-%_libdir/ocaml/ounit2-lwt/*.a
-%_libdir/ocaml/ounit2-lwt/*.cmxa
 
 %changelog
+* Tue Mar 30 2021 Anton Farygin <rider@altlinux.org> 2.2.4-alt2
+- added --release option for dune in build and check sections
+- simplified specfile with macros from rpm-build-ocaml 1.4
+- cleanup build requires
+
 * Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 2.2.4-alt1
 - 2.2.4
 
