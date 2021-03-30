@@ -1,12 +1,13 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-uutf
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: Non-blocking streaming codec for UTF-8, UTF-16, UTF-16LE and UTF-16BE
 License: BSD3
 Group: Development/ML
 Url: http://erratique.ch/software/uutf
 Source0: %name-%version.tar
+Patch0: ocaml-uutf-uchar.patch
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-cmdliner-devel
@@ -35,6 +36,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 ocaml pkg/pkg.ml build
@@ -62,6 +64,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/uutf/*.mli
 
 %changelog
+* Tue Mar 30 2021 Anton Farygin <rider@altlinux.org> 1.0.2-alt2
+- removed uutf dependency
+
 * Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
