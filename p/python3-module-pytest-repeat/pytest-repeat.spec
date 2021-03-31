@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.0
+Version: 0.9.1
 Release: alt1
 Summary: pytest plugin for repeating tests
 License: MPL-2.0 
@@ -36,6 +36,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
+sed -i '/isolated_build/s/true/false/' tox.ini
 sed -i '/\[testenv\]/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
@@ -43,6 +44,7 @@ commands_pre =\
     \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
+export PIP_NO_BUILD_ISOLATION=no
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -v
@@ -54,5 +56,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/pytest_repeat-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Mar 31 2021 Mikhail Chernonog <snowmix@altlinux.org> 0.9.1-alt1
+- 0.8.0 -> 0.9.1
+- Fixed testing
+
 * Thu Mar 07 2019 Mikhail Chernonog <snowmix@altlinux.org> 0.8.0-alt1
 - Initial build for Sisyphus
