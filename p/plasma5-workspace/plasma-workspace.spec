@@ -35,7 +35,7 @@
 
 Name: plasma5-workspace
 Version: 5.21.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -424,6 +424,7 @@ done
 %_K5dbus_srv/*.service
 %_K5dbus_sys_srv/*.service
 %_unitdir_user/*.service
+%_unitdir_user/*.target
 
 %files -n polkit-kde-plasma-workspace
 %_datadir/polkit-1/actions/*fontinst*.policy
@@ -470,6 +471,9 @@ done
 
 
 %changelog
+* Wed Mar 31 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt2
+- package systemd targets
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt1
 - new version
 
