@@ -1,7 +1,7 @@
 %define target TARGET=opt
 
 Name: hevea
-Version: 2.34
+Version: 2.35
 Release: alt1
 Packager: %packager
 
@@ -52,6 +52,9 @@ rm -f config.sh
 %doc README CHANGES LICENSE pub.txt
 
 %changelog
+* Wed Mar 31 2021 Andrey Bergman <vkni@altlinux.org> 2.35-alt1
+- Update to version 2.35.
+
 * Sun Jun 07 2020 Andrey Bergman <vkni@altlinux.org> 2.34-alt1
 - Update to version 2.34.
 
