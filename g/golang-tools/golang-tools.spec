@@ -1,5 +1,5 @@
 %global import_path golang.org/x/tools
-%global commit 24acc66eabead631b4e856255a9ad925549cee80
+%global commit 8c34cc9cafff8f13c3f3ed95a11de309752c1c60
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -11,7 +11,7 @@
 
 Name:		golang-tools
 Version:	0
-Release:	alt7.git%abbrev
+Release:	alt8.git%abbrev
 Summary:	Supplementary tools and packages for Go
 
 Group:		Development/Other
@@ -50,6 +50,7 @@ which use the supplementary Go tools libraries with golang.org/x/ imports.
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
+export GO111MODULE="auto"
 
 %golang_prepare
 
@@ -57,6 +58,7 @@ rm -rf -- .build/src/%import_path/cmd/html2article
 rm -rf -- .build/src/%import_path/cmd/present
 rm -rf -- .build/src/%import_path/cmd/cover
 rm -rf -- .build/src/%import_path/cmd/vet
+rm -rf -- .build/src/%import_path/cmd/auth
 
 cd .build/src/%import_path
 %golang_build cmd/* ||:
@@ -64,6 +66,7 @@ cd .build/src/%import_path
 %install
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
+export GO111MODULE="auto"
 
 %golang_install
 
@@ -76,8 +79,8 @@ for f in %buildroot/%_bindir/*; do
 done
 
 # upstream commit 734737930440fc305a816e577cab457fbbc807c1 (rename oracle to guru)
-rm -f -- %buildroot/%_bindir/oracle
-ln -s -- guru %buildroot/%_bindir/oracle
+# rm -f -- %buildroot/%_bindir/oracle
+# ln -s -- guru %buildroot/%_bindir/oracle
 
 # remove testdata, tests, and non-go files
 find \
@@ -101,6 +104,10 @@ find \
 %go_path/src/*
 
 %changelog
+* Wed Mar 31 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt8.git8c34cc9c
+- New snapshot.
+- Fixed build with golang 1.16.
+
 * Tue Jan 22 2019 Alexey Gladkov <legion@altlinux.ru> 0-alt7.git24acc66e
 - Hide build error.
 
