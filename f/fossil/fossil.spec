@@ -1,6 +1,6 @@
 %def_enable Werror
 Name: fossil
-Version: 2.14
+Version: 2.15
 Release: alt1
 
 Summary: A distributed SCM with bug tracking and wiki
@@ -63,6 +63,9 @@ install -pDm644 fossil.1 %buildroot%_man1dir/fossil.1
 #doc www
 
 %changelog
+* Wed Mar 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.15-alt1
+- Updated to 2.15.
+
 * Thu Mar 11 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.14-alt1
 - Updated to 2.14.
 
