@@ -12,7 +12,7 @@
 
 Name: plasma5-%rname
 Version: 5.21.3
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -188,6 +188,7 @@ done
 #
 %_K5plug/kcms/kcm_updates.so
 %_K5data/kpackage/kcms/kcm_updates/
+%_K5srv/kcm_updates.desktop
 
 %files kns
 %_K5plug/discover/kns-backend.so
@@ -223,6 +224,9 @@ done
 
 
 %changelog
+* Wed Mar 31 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt2
+- fix package
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
 - new version
 
