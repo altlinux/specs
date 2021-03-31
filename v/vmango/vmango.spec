@@ -1,16 +1,10 @@
 %global import_path github.com/subuk/vmango
-%global commit 63ed62d7c71c31d071f05d3f18d87449483a850b
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
 
 Summary: KVM virtual machines management
 Name: vmango
-Version: 0.7.0
+Version: 0.12.1
 Release: alt1
 URL: https://vmango.org
 License: GPLv3
@@ -19,6 +13,7 @@ Group: Networking/WWW
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
+#ExclusiveArch: %go_arches
 ExclusiveArch: x86_64 aarch64 ppc64le
 BuildRequires(pre): rpm-build-golang
 BuildRequires: go-bindata
@@ -45,7 +40,6 @@ export GOPATH="$BUILDDIR:%go_path"
 cd .gopath/src/%import_path
 
 export VERSION=%version
-export COMMIT=%commit
 export BRANCH=altlinux
 export GOFLAGS="-mod=vendor"
 
@@ -62,7 +56,7 @@ pushd .gopath/src/%import_path
 
 %makeinstall_std
 mkdir -p %buildroot{%_unitdir,%home_dir}
-install -p -m 644 rpm/vmango.service %buildroot%_unitdir/vmango.service
+install -p -m 644 vmango.service %buildroot%_unitdir/vmango.service
 popd
 
 #Cleanup
@@ -80,5 +74,8 @@ rm -rf -- %buildroot/usr/src
 %dir %attr(0770, root, %groupid) %home_dir
 
 %changelog
+* Wed Mar 31 2021 Alexey Shabalin <shaba@altlinux.org> 0.12.1-alt1
+- 0.12.1
+
 * Sun Jul 21 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
 - Initial build for ALT
