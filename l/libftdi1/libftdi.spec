@@ -1,7 +1,7 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi1
-Version:   1.4
-Release:   alt5
+Version:   1.5
+Release:   alt1
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
 URL:       http://www.intra2net.com/en/developer/libftdi
@@ -101,7 +101,13 @@ Documentation files for userspace libftdi library
 %patch -p1
 
 %build
-%cmake_insource
+%cmake_insource \
+    -D DOCUMENTATION=1 \
+    -D PYTHON_BINDINGS=1 \
+    -D FTDIPP=1 \
+    -D FTDI_EEPROM=1 \
+    -D EXAMPLES=1 \
+    -D BUILD_TESTS=1
 %make_build VERBOSE=1
 
 %install
@@ -133,13 +139,13 @@ fi
 
 %files -n ftdi-eeprom
 %_bindir/ftdi_eeprom
-%_docdir/%name/example.conf
+%_docdir/%namepp/example.conf
 %_man3dir/ftdi_eeprom*
 
 %files -n %namepp-devel
 %_libdir/%sonamepp.so
 %_libdir/pkgconfig/%sonamepp.pc
-%_includedir/%name/*.hpp
+%_includedir/%namepp/*.hpp
 
 %files devel-static
 %_libdir/%soname.a
@@ -158,6 +164,10 @@ fi
 %exclude %_man3dir/ftdi_eeprom*
 
 %changelog
+* Wed Mar 31 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.5-alt1
+- Update to latest release
+- Implement tc[io]flush methods and deprecate broken purge_buffers methods
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt5
 - NMU: remove rpm-build-ubt from BR:
 
