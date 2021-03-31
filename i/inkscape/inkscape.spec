@@ -10,7 +10,7 @@
 
 Name: inkscape
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -26,6 +26,7 @@ Source: %name-%version.tar
 Patch: %name-dia.patch
 Patch6: fix_atomic_rel_error.patch
 Patch7: 0001-CMakeLists.txt-move-GNUInstallDirs-after-project-NAM.patch
+Patch8: inkscape-glib.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -133,8 +134,8 @@ Run checkinstall tests for %name.
 
 %prep
 %setup
-#patch6 -p1
 %patch7 -p1
+%patch8 -p0
 
 %build
 %cmake_insource \
@@ -208,6 +209,9 @@ true
 %files checkinstall
 
 %changelog
+* Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt2
+- fix build with glib >= 2.67.3
+
 * Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2 (with rpmrb script)
 
