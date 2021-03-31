@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-UNIVERSAL-require
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: require() modules from a variable
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/UNIVERSAL-require-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 22 2006
 BuildRequires: perl-devel
@@ -48,7 +48,7 @@ It doesn't save you much typing, but it'll make alot more sense to
 someone who's not a ninth level Perl acolyte.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -58,10 +58,13 @@ someone who's not a ninth level Perl acolyte.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc Changes
+%doc Changes README
 %perl_vendor_privlib/UNIVERSAL/*
 
 %changelog
+* Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
