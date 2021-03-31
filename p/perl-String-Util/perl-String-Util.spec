@@ -6,7 +6,7 @@ BuildRequires: perl(Encode.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(Module
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.31
+Version: 1.32
 Release: alt1
 Summary: String::Util -- String processing utilities
 Group: Development/Perl
@@ -35,6 +35,9 @@ strings.
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 1.32-alt1
+- automated CPAN update
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 
