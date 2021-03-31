@@ -1,44 +1,24 @@
 %define oname rencode
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: The rencode module is similar to bencode from the BitTorrent project
 
-Group: Development/Python
+Group: Development/Python3
 License: LGPL
 Url: https://pypi.python.org/pypi/rencode
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-%setup_python_module %oname
-
 # Source-url: https://github.com/aresch/rencode/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-Cython python3-module-wheel
-%endif
-
-BuildRequires: python-module-Cython python-module-wheel
 
 %description
-The rencode module is similar to bencode from the BitTorrent project.
-Forcomplex, heterogeneous data structures with many small elements,
-r-encodingstake up significantly less space than b-encodings.
-This version of rencode isa complete rewrite in Cython to attempt
-to increase the performance over thepure Python module
-written by Petru Paler, Connelly Barnes et al.
-
-%package -n python3-module-%oname
-Summary: The rencode module is similar to bencode from the BitTorrent project
-Group: Development/Python3
-
-%description -n python3-module-%oname
 The rencode module is similar to bencode from the BitTorrent project.
 Forcomplex, heterogeneous data structures with many small elements,
 r-encodingstake up significantly less space than b-encodings.
@@ -49,40 +29,20 @@ written by Petru Paler, Connelly Barnes et al.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%python_install
 
 %files
-%python_sitelibdir/*
-#_docdir/%modulename/
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt2
+- build python3 package separately
+
 * Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
 - new version 1.0.6 (with rpmrb script)
 
