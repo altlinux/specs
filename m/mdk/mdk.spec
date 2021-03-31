@@ -1,5 +1,5 @@
 Name: mdk
-Version: 1.2.10
+Version: 1.3.0
 Release: alt1
 
 Summary: GNU MIX Development Kit
@@ -16,11 +16,11 @@ Patch: %name-1.2.3.patch
 Patch1: %name-1.2.7-enable-deprecated.patch
 
 # Automatically added by buildreq on Mon Oct 29 2007
-BuildRequires: cvs flex guile18-devel libglade-devel libncurses-devel libreadline-devel
+BuildRequires: flex guile30-devel libglade-devel libncurses-devel libreadline-devel
 # FIXME:
 BuildPreReq:  intltool
 # explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: texinfo makeinfo
 
 %description
 MDK stands for MIX Development Kit, and provides tools for developing and
@@ -81,6 +81,9 @@ rm -f %buildroot%_infodir/dir
 %_emacslispdir/*
 
 %changelog
+* Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.10-alt1
 - new version 1.2.10 (with rpmrb script)
 
