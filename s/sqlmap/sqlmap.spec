@@ -1,5 +1,5 @@
 Name: sqlmap
-Version: 1.4.7
+Version: 1.5.3
 Release: alt1
 
 Summary: Automatic SQL injection and database takeover tool
@@ -23,6 +23,11 @@ BuildRequires: python3-module-paste
 
 %add_python3_lib_path %_datadir/%name
 %add_python3_req_skip thirdparty.six.moves
+%add_findprov_skiplist %_datadir/%name/extra/*
+%add_findprov_skiplist %_datadir/%name/lib/*
+%add_findprov_skiplist %_datadir/%name/plugins/*
+%add_findprov_skiplist %_datadir/%name/tamper/*
+%add_findprov_skiplist %_datadir/%name/thirdparty/*
 
 %description
 sqlmap is an open source penetration testing tool that automates the process of
@@ -49,6 +54,7 @@ install -m 755 sqlmap.py %buildroot%_datadir/%name
 install -m 755 sqlmapapi.py %buildroot%_datadir/%name
 cp -pr data %buildroot%_datadir/%name/
 cp -pr extra %buildroot%_datadir/%name/
+rm -rfv %buildroot%_datadir/%name/extra/runcmd/
 rm -rfv %buildroot%_datadir/%name/extra/shutils/
 cp -pr lib %buildroot%_datadir/%name/
 cp -pr plugins %buildroot%_datadir/%name/
@@ -79,6 +85,11 @@ popd
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Wed Mar 31 2021 Pavel Nakonechnyi <zorg@altlinux.org> 1.5.3-alt1
+- new version (1.5.3) with rpmgs script
+- do not pack runcmd
+- skip finding provides in (some) sqlmap' scripts
+
 * Mon Jul 27 2020 Pavel Nakonechnyi <zorg@altlinux.org> 1.4.7-alt1
 - new version 1.4.7
 
