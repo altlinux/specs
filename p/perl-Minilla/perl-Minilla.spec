@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 Name: perl-Minilla
-Version: 3.1.11
-Release: alt2
+Version: 3.1.12
+Release: alt1
 
 Summary: CPAN module authoring tool
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildRequires: perl(Module/Runtime.pm) perl(Module/Metadata.pm) perl(Test/Requir
 %doc Changes README.md
 
 %changelog
+* Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 3.1.12-alt1
+- new version
+
 * Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.11-alt2
 - fixed build
 
