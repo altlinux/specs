@@ -1,6 +1,6 @@
 Name: cpio
 Version: 2.12
-Release: alt1
+Release: alt2
 
 Summary: A GNU archiving program
 License: GPLv3+
@@ -104,6 +104,9 @@ mv %buildroot%_bindir/cpio{,.}static
 %define _unpackaged_files_terminate_build 1
 
 %changelog
+* Fri Mar 19 2021 Slava Aseev <ptrnine@altlinux.org> 2.12-alt2
+- Fix multiple definition of "program_name".
+
 * Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 2.12-alt1
 - 2.11 -> 2.12.
 - Merged some patches and synced manpage with Fedora cpio-2.12-2.
