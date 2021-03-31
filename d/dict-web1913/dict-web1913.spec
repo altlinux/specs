@@ -2,47 +2,47 @@
 
 Name: dict-web1913
 Version: 1.4_0.47pd
-Release: alt2.1
+Release: alt3
 Epoch: 1
 
 Summary: Webster dictionary in dict format
-License: GPL, Public Domain
+License: GPLv2+ and ALT-Public-Domain
 Group: Text tools
 
-Source: %name-%wrongversion.tar.bz2
+Source0: %name-%wrongversion.tar.bz2
 Source1: webster-sedscript
 Source2: debian-copyright
 Patch: debian-webster.patch.bz2
 
-BuildArchitectures: noarch
+BuildArch: noarch
 # Automatically added by buildreq on Sun Oct 19 2003
-BuildRequires: dict-tools flex libltdl texlive-collection-basic texlive-collection-basic texlive-collection-latexrecommended transfig
+BuildRequires: dict-tools flex
 BuildRequires: dict-tools
-PreReq: dictd
+Requires: dictd
 
-Summary(ru_RU.KOI8-R): Словарь Вебстера в формате dict
+Summary(ru_RU.UTF-8): п║п╩п╬п╡п╟я─я▄ п▓п╣п╠я│я┌п╣я─п╟ п╡ я└п╬я─п╪п╟я┌п╣ dict
 
 %description
 This is the most full english dictionary by Webster published in 1913.
 It is free because all copyrights ended due to the time. But it is still
 very helpful in work.
 
-%description -l ru_RU.KOI8-R
-Это наиболее полный английский словарь, созданный Вебстером и опубликованный
-в 1913 году. Он стал свободным из-за того, что прошло много времени
-с его опубликования. Однако он до сих пор сохраняет свою актуальность
-и помогает в работе.
+%description -l ru_RU.UTF-8
+п╜я┌п╬ п╫п╟п╦п╠п╬п╩п╣п╣ п©п╬п╩п╫я▀п╧ п╟п╫пЁп╩п╦п╧я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄, я│п╬п╥п╢п╟п╫п╫я▀п╧ п▓п╣п╠я│я┌п╣я─п╬п╪ п╦ п╬п©я┐п╠п╩п╦п╨п╬п╡п╟п╫п╫я▀п╧
+п╡ 1913 пЁп╬п╢я┐. п·п╫ я│я┌п╟п╩ я│п╡п╬п╠п╬п╢п╫я▀п╪ п╦п╥-п╥п╟ я┌п╬пЁп╬, я┤я┌п╬ п©я─п╬я┬п╩п╬ п╪п╫п╬пЁп╬ п╡я─п╣п╪п╣п╫п╦
+я│ п╣пЁп╬ п╬п©я┐п╠п╩п╦п╨п╬п╡п╟п╫п╦я▐. п·п╢п╫п╟п╨п╬ п╬п╫ п╢п╬ я│п╦я┘ п©п╬я─ я│п╬я┘я─п╟п╫я▐п╣я┌ я│п╡п╬я▌ п╟п╨я┌я┐п╟п╩я▄п╫п╬я│я┌я▄
+п╦ п©п╬п╪п╬пЁп╟п╣я┌ п╡ я─п╟п╠п╬я┌п╣.
 
 %prep
-%setup -q -n %name-%wrongversion
-%patch0 -p1
-cp %SOURCE1 ./sedfile
+%setup -n %name-%wrongversion
+%patch -p1
+cp -a %SOURCE1 sedfile
 
 %build
 sed -i "s|__FUNCTION__|__FILE__|g" libmaa/*.c
 %configure
 export LANG=C
-#NO SMP
+# NO SMP
 %make
 %make db
 
@@ -60,6 +60,11 @@ export LANG=C
 %doc rpmdoc/*
 
 %changelog
+* Wed Mar 31 2021 Michael Shigorin <mike@altlinux.org> 1:1.4_0.47pd-alt3
+- cleaned up weird old BRs
+- clarified License:
+- recoded spec into utf-8
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.4_0.47pd-alt2.1
 - NMU: rebuild with texlive instead of tetex
 
