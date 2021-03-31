@@ -24,7 +24,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1
+Release: alt2
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -293,6 +293,9 @@ fi
 
 
 %changelog
+* Wed Mar 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.2.5-alt2
+- fix FTBFS
+
 * Thu Jan 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.2.5-alt1
 - 11.2.5
 
