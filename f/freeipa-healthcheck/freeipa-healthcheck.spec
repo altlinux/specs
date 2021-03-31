@@ -3,7 +3,7 @@
 %def_with check
 
 Name: freeipa-healthcheck
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Check the health of a FreeIPA installation
@@ -23,8 +23,9 @@ BuildRequires: python3-module-ipaserver
 BuildRequires: python3-module-pytest-runner
 
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-pytest
+BuildRequires: python3(tox)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pylint)
 BuildRequires: /proc
 %endif
 
@@ -84,8 +85,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %preun_service ipa-healthcheck
 
 %check
-export TOXENV=py3
-tox.py3 --sitepackages -vv
+export PIP_NO_INDEX=YES
+export TOXENV=py3,lint
+tox.py3 --sitepackages -vvr
 
 %files
 %doc README.md COPYING
@@ -107,6 +109,9 @@ tox.py3 --sitepackages -vv
 %python3_sitelibdir/ipaclustercheck/
 
 %changelog
+* Tue Mar 30 2021 Stanislav Levin <slev@altlinux.org> 0.8-alt1
+- 0.7 -> 0.8.
+
 * Fri Nov 06 2020 Stanislav Levin <slev@altlinux.org> 0.7-alt1
 - 0.6 -> 0.7.
 
