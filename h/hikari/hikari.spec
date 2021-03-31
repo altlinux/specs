@@ -1,6 +1,6 @@
 Name: hikari
-Version: 2.2.2
-Release: alt3
+Version: 2.2.3
+Release: alt1
 
 Summary: a stacking Wayland compositor
 
@@ -76,6 +76,9 @@ bmake \
 %_man1dir/hikari.1*
 
 %changelog
+* Wed Mar 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.3-alt1
+- Updated to 2.2.3.
+
 * Wed Dec 30 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.2-alt3
 - Fixed package group (ALT#39488).
 
