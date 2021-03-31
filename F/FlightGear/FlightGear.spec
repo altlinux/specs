@@ -1,9 +1,9 @@
 %def_without dbus
-%define origver 2020.1.2
+%define origver 2020.3.8
 
 Name: FlightGear
 Version: %origver
-Release: alt3
+Release: alt1
 
 Summary: open-source flight simulator
 License: GPLv2+
@@ -26,7 +26,6 @@ Patch1: 0001-check-to-be-sure-that-n-is-not-being-set-as-format-t.patch
 Patch2: 0002-make-ShivaVG-and-FGAdminUI-static-libraries.patch
 Patch5: 0005-explicitely-link-with-libX11.patch
 Patch6: 0006-make-fglauncher-a-static-library.patch
-Patch7: FlightGear-alt-rename-version-file.patch
 
 Requires: FlightGear-data = %version
 #Requires: fgrun >= 1.6.1
@@ -40,13 +39,14 @@ BuildRequires: plib-devel >= 1.8.5
 BuildRequires: rpm-macros-cmake cmake gcc-c++ imake libalut-devel libfltk-devel libfreeglut-devel libjpeg-devel libpng-devel
 
 BuildRequires: libpng-devel libfltk-devel libudev-devel
-BuildPreReq: libXres-devel libXi-devel libXmu-devel
-BuildPreReq: libXtst-devel libXcomposite-devel libXcursor-devel
-BuildPreReq: libXdamage-devel libXdmcp-devel libXfixes-devel
-BuildPreReq: libXft-devel libXinerama-devel libxkbfile-devel
-BuildPreReq: libXpm-devel libXrandr-devel libXrender-devel
-BuildPreReq: libXScrnSaver-devel libXv-devel libXxf86misc-devel
-BuildPreReq: libXxf86vm-devel libXxf86vm-devel libapr1-devel
+BuildRequires: libXres-devel libXi-devel libXmu-devel
+BuildRequires: libXtst-devel libXcomposite-devel libXcursor-devel
+BuildRequires: libXdamage-devel libXdmcp-devel libXfixes-devel
+BuildRequires: libXft-devel libXinerama-devel libxkbfile-devel
+BuildRequires: libXpm-devel libXrandr-devel libXrender-devel
+BuildRequires: libXScrnSaver-devel libXv-devel libXxf86misc-devel
+BuildRequires: libXxf86vm-devel libXxf86vm-devel libapr1-devel
+BuildRequires: liblzma-devel
 
 %if_with dbus
 # disables screensaver; requires running messagebus service
@@ -76,7 +76,6 @@ http://ericbrasseur.org/flight_simulator_tutorial.html
 #patch2 -p1
 #patch5 -p1
 %patch6 -p1
-%patch7 -p2
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
 for ext in Cygwin IRIX Joystick Linux MSVC MSVC8 MacOS SimGear Unix \
@@ -121,8 +120,14 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_mandir/*/*
 %_iconsdir/*/*/*/flightgear.*
 %_desktopdir/org.flightgear.FlightGear.desktop
+%_datadir/metainfo/*.xml
 
 %changelog
+* Wed Mar 31 2021 Michael Shigorin <mike@altlinux.org> 2020.3.8-alt1
+- 2020.3.8
+- drop patch7 (fixed upstream)
+- add metainfo
+
 * Sat Jan 09 2021 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt3
 - E2K: disable debuginfo following OpenSceneGraph (avoid unmets)
 
