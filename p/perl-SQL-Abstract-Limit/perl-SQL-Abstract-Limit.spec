@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-SQL-Abstract-Limit
-Version: 0.142
+Version: 0.143
 Release: alt1
 
 Summary: %m_name - portable LIMIT emulation
@@ -42,10 +42,14 @@ Portability layer for LIMIT emulation.
 %perl_vendor_install
 
 %files
+%doc README.md Changes
 %perl_vendor_privlib/SQL*
-%doc Changes README
+%doc Changes
 
 %changelog
+* Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 0.143-alt1
+- automated CPAN update
+
 * Mon Nov 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.142-alt1
 - automated CPAN update
 
