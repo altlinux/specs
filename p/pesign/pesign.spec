@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: pesign
 Version: 113
-Release: alt2
+Release: alt3
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
@@ -11,6 +11,7 @@ Url: https://github.com/vathpela/pesign
 # git://git.altlinux.org/gears/p/pesign.git
 Source: %name-%version-%release.tar
 Patch1: pesign-fix-build-with-nss3.44.patch
+Patch2: pesign-113-upstream-pesigcheck-remove-superfluous-type-settings.patch
 
 BuildRequires: libnss-devel
 BuildRequires: libpopt-devel
@@ -24,6 +25,7 @@ as well as other associated tools.
 %prep
 %setup -n %name-%version-%release
 %patch1 -p1
+%patch2 -p1
 sed -i '/^libexecdir/s/)libexec/)lib/' Make.defaults
 %ifarch %e2k
 # lcc 1.23.20 doesn't do that
@@ -87,6 +89,10 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Tue Jan 19 2021 Nikolai Kostrigin <nickel@altlinux.org> 113-alt3
+- Fix FTBFS with gcc10
+  + add upstream-pesigcheck-remove-superfluous-type-settings patch
+
 * Mon Jul 27 2020 Nikolai Kostrigin <nickel@altlinux.org> 113-alt2
 - macros.pesign: remove strings duplicates
 
