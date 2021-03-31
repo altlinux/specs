@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.138
-Release: alt2
+Version: 1.140
+Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
 
@@ -59,6 +59,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 1.140-alt1
+- automated CPAN update
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.138-alt2
 - fixed build
 
