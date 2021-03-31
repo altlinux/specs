@@ -1,8 +1,8 @@
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 Name: iozone
-Version: 3.489
-Release: alt3
+Version: 3.490
+Release: alt1
 
 Summary: IOzone Filesystem Benchmark
 Summary(ru_RU.UTF-8): Эталонный тест файловой подсистемы IOzone
@@ -13,7 +13,7 @@ Url: http://www.iozone.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://www.iozone.org/src/current/%name%oversion.tar
+# Source0-url: http://www.iozone.org/src/current/%name%oversion.tar
 Source0: %name-%version.tar
 Source1: %name-graphs
 
@@ -96,6 +96,9 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 3.490-alt1
+- new version 3.490 (with rpmrb script)
+
 * Mon Jul 13 2020 Michael Shigorin <mike@altlinux.org> 3.489-alt3
 - 64-bit LE arches may use linux-AMD64 target (Don's advice again)
 
