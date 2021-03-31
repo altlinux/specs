@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-CIDR
 Name: perl-Net-CIDR
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Manipulate IPv4/IPv6 netblocks in CIDR notation
@@ -35,6 +35,9 @@ The Net::CIDR functions handle both IPv4 and IPv6 addresses.
 %perl_vendor_privlib/Net
 
 %changelog
+* Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 0.21-alt1
+- automated CPAN update
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
