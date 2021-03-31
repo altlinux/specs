@@ -3,64 +3,55 @@
 
 Name: gwget
 Version: %ver_major.4
-Release: alt4.1
+Release: alt5
 
-Summary: Gwget - Gnome2 wget Front-end
-License: %gpl2plus
+Summary: Gwget - Gnome wget Front-end
+License: GPL-2.0+
 Group: Networking/File transfer
 URL: http://gnome.org/projects/gwget
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
+Source: %name-%version.tar
 Patch1: %name-%version-git.patch
 Patch2: %name-%version-alt-fixes.patch
-Patch3: %name-1.0.4-alt-glib2.patch
 
 Provides: gwget2
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses common-licenses gnome-common
 %{?_enable_epiphany:BuildRequires: epiphany-devel}
-BuildRequires: gcc-c++ libgnomeui-devel libnotify-devel intltool
-BuildRequires: libgtk+2-devel libdbus-glib-devel
-BuildRequires: zlib-devel libGConf-devel
+BuildRequires: gcc-c++ libnotify-devel intltool
+BuildRequires: libgtk+3-devel libdbus-glib-devel
+BuildRequires: zlib-devel
 BuildRequires: libgio-devel >= 2.16.0
-
+BuildRequires: ImageMagick-tools
 Requires: wget
 
 %description
-Gwget: Gnome2 wget Front-end.
-Gwget it's a download manager for the Gnome Desktop. The main features are: 
+Gwget: Gnome wget Front-end.
+Gwget it's a download manager for the Gnome Desktop. The main features are:
 * Resume: By default, gwget tries to continue any download.
-* Notification: Gwget tries to use the Gnome notification area support, 
+* Notification: Gwget tries to use the Gnome notification area support,
   if available. You can close the main window and gwget runs in the background.
-* Recursivity: Gwget detects when you put a html, php, asp or a web page dir 
-  in the url to download, and ask you 
+* Recursivity: Gwget detects when you put a html, php, asp or a web page dir
+  in the url to download, and ask you
   to only download certain files (multimedia, only the index, and so on).
-* Drag & Drop: You can d&d a url to the main gwget window or 
-  the notification area icon to add a new download. 
-
-%if_enabled epiphany
+* Drag & Drop: You can d&d a url to the main gwget window or
+  the notification area icon to add a new download.
 
 %package -n epiphany-extension-gwget
 Summary: Gwget extention for Epiphany browser
 Group: Networking/File transfer
 Requires:       %name = %version-%release
 Requires:       epiphany epiphany-extensions
-BuildRequires: epiphany-devel
 
 %description -n epiphany-extension-gwget
 Extention Gwget for Epiphany browser
-%endif
 
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p0
-
-rm -f COPYING
-ln -s %_licensedir/GPL-2 COPYING
 
 %build
-./autogen.sh
+%add_optflags -fcommon
+%autoreconf
 %configure  \
 %if_enabled epiphany
 	--enable-epiphany-extension \
@@ -73,28 +64,26 @@ ln -s %_licensedir/GPL-2 COPYING
 %install
 %make_install install DESTDIR=%buildroot
 
+mkdir -p %buildroot%_iconsdir/hicolor/{48x48,64x64,128x128}/apps/
+convert pixmaps/gwget-large.png +set date:create +set date:modify -resize 48x48 -alpha on "%buildroot%_iconsdir/hicolor/48x48/apps/gwget.png"
+convert pixmaps/gwget-large.png +set date:create +set date:modify -resize 64x64 -alpha on "%buildroot%_iconsdir/hicolor/64x64/apps/gwget.png"
+convert pixmaps/gwget-large.png +set date:create +set date:modify -resize 128x128 -alpha on "%buildroot%_iconsdir/hicolor/128x128/apps/gwget.png"
+
 # remove none-packaged files
-%__rm -f %buildroot%_libdir/epiphany/*/extensions/*.{a,la}
+rm -f %buildroot%_libdir/epiphany/*/extensions/*.{a,la}
 
-%find_lang --with-gnome %name 
+%find_lang --with-gnome %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-    %gconf2_uninstall %name
-fi
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README TODO
-%doc --no-dereference COPYING
 %_bindir/*
 %_datadir/%name
 %_datadir/pixmaps/*
+%_iconsdir/hicolor/*/apps/gwget.png
 %_datadir/applications/*
-%config %_sysconfdir/gconf/schemas/*
 %_datadir/dbus-1/services/*.service
+%_datadir/glib-2.0/schemas/*.xml
 
 %if_enabled epiphany
 %files -n epiphany-extension-gwget
@@ -102,6 +91,13 @@ fi
 %endif
 
 %changelog
+* Wed Mar 31 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.4-alt5
+- Add patches from Arch:
+  + drop libgnomeui
+  + gtk3 port
+  + gsettings port
+  + various fixes
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt4.1
 - Fixed build
 
