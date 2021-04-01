@@ -15,7 +15,7 @@
 %endif
 
 Name: wine
-Version: %major.1
+Version: %major.2
 Release: alt1
 Epoch: 1
 
@@ -583,6 +583,10 @@ done
 %endif
 
 %changelog
+* Thu Apr 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.5.2-alt1
+- update patches to staging wine-6.5
+ + fix dotnet 4.5 install (https://bugs.winehq.org/show_bug.cgi?id=49897)
+
 * Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.5.1-alt1
 - new version 6.5.1 (with rpmrb script)
 
