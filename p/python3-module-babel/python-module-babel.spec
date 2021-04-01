@@ -1,10 +1,13 @@
 %define oname Babel
+# see babel/scripts/download_import_cldr.py
+%define cldr_version 37
+%define cldr_name cldr-%cldr_version
 
 %def_with doc
 %def_without check
 
 Name:    python3-module-babel
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 Epoch:   1
 
@@ -25,7 +28,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pytz >= 2015.7
-BuildRequires: cldr-common = 36
+BuildRequires: %cldr_name-common >= %cldr_version
 
 #BuildRequires: python3-module-pytest-cov python3-module-freezegun
 #py3_requires pytz
@@ -50,7 +53,7 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
-%__python3 scripts/import_cldr.py /usr/share/unicode/cldr/common
+%__python3 scripts/import_cldr.py /usr/share/unicode/%cldr_name/common
 %python3_build
 
 %install
@@ -75,6 +78,10 @@ ln -s ../objects.inv docs/
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:2.9.0-alt1
+- new version 2.9.0 (with rpmrb script)
+- require CLDR = 37
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:2.8.0-alt1
 - new version 2.8.0 (with rpmrb script)
 - require CLDR = 36
