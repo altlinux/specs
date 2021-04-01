@@ -11,7 +11,7 @@
 
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Education
@@ -25,7 +25,7 @@ Requires: epstool
 Source: %rname-%version.tar
 Patch1: alt-lib-so-ver.patch
 Patch2: alt-find-luajit.patch
-Patch3: cantor-20.12.3-alt-Make-gnuplot-the-default-graphics-toolkit-for-octave.patch
+Patch3: cantor-20.12.3-alt-octave-backend-default-settings.patch
 
 # Automatically added by buildreq on Wed Mar 30 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -132,6 +132,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Tue Mar 23 2021 Egor Ignatov <egori@altlinux.org> 20.12.3-alt2
+- fix octave backend
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
