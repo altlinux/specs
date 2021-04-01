@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.3
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -122,7 +122,7 @@ Common polkit files for %name
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
-%patch19 -p2
+%patch19 -p1
 %patch100 -p1
 
 #Fix translate in Input Method Panel (kimpanel) widget.
@@ -206,6 +206,9 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Apr 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt2
+- update improved performance of task groups patch (thanks darktemplar@alt)
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
 - new version
 - improved performance of task groups (thanks darktemplar@alt)
