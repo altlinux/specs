@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.45
-Release: alt1
+Release: alt2
 
 Summary: A screen saver and locker for the X window system
 
@@ -332,6 +332,9 @@ find %buildroot -name "*handsy*" -delete
 %files -n desktop-screensaver-modules-xscreensaver-gl
 
 %changelog
+* Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 5.45-alt2
+- Fix GPL license file path (Closes: #39505).
+
 * Wed Dec 16 2020 Grigory Ustinov <grenka@altlinux.org> 5.45-alt1
 - Build new version (new hacks covid19, headroom, sphereeversion and beats).
 
