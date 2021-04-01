@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.3.3
-Release: alt2.op2
+Release: alt3.op2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -66,7 +66,6 @@ Patch127: Ubuntu-0027-Do-not-mess-with-the-permissions-of-cupsd.conf.patch
 Patch128: Ubuntu-0028-Show-compile-command-lines.patch
 Patch129: Ubuntu-0029-Set-the-default-for-SyncOnClose-to-Yes.patch
 Patch130: Ubuntu-0030-Set-default-job-error-policy-to-retry-job.patch
-Patch132: Ubuntu-0032-Use-dpkg-architecture-in-cups-config-to-make-it-arch.patch
 Patch133: Ubuntu-0033-Build-mantohtml-with-the-build-architecture-compiler.patch
 Patch134: Ubuntu-0034-po4a-infrastructure-and-translations-for-manpages.patch
 Patch136: Ubuntu-0006-Fix-leakage-of-ppd.patch
@@ -204,7 +203,6 @@ services using the main CUPS library "libcups".
 %patch128 -p1
 #patch129 -p1
 %patch130 -p1
-%patch132 -p1
 %patch133 -p1
 #patch134 -p1
 ##patch136 -p1
@@ -385,6 +383,9 @@ chmod 755 %buildroot/usr/lib/cups/backend/ipp
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Thu Apr 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt3.op2
+- Removed dpkg-architecture call from cups-config.
+
 * Fri Mar 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt2.op2
 - Updated to upstream version 2.3.3op2 (Fixes: CVE-2020-10001).
 - Project moved to OpenPrinting.
