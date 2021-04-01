@@ -1,73 +1,39 @@
 %define oname libcloud
 
-Name: python-module-%oname
-Version: 2.5.0
+Name: python3-module-%oname
+Version: 3.3.1
 Release: alt1
 Summary: Library for interacting with popular cloud service
 
 License: Apache-2.0
-Group: Development/Python
+Group: Development/Python3
 Url: http://libcloud.apache.org/
 BuildArch: noarch
 
 # Source-git: https://github.com/apache/libcloud
 Source: %oname-%version.tar
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-requests
-BuildRequires: python-module-pytest-runner
-BuildRequires: python-module-urllib3
-
-# for docs
-BuildRequires: python-module-sphinx
-
-# for tests
-%py_requires mock requests requests_mock pytest
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-module-requests
 BuildPreReq: python3-module-pytest-runner
 BuildPreReq: python3-module-urllib3
 
+%py3_provides libcloud.compute.drivers.vsphere
+
 # for docs
 BuildPreReq: python3-module-sphinx
-
+# for tests
+%py3_requires mock requests requests_mock pytest
 
 %description
 Apache Libcloud is a Python library which hides differences between 
 different cloud provider APIs and allows you to manage different 
 cloud resources through a unified and easy to use API.
 
-%package -n python3-module-%oname
-Summary: Library for interacting with popular cloud service
-Group: Development/Python3
-# for tests
-%py3_requires mock requests requests_mock pytest
-
-%description -n python3-module-%oname
-Apache Libcloud is a Python library which hides differences between 
-different cloud provider APIs and allows you to manage different 
-cloud resources through a unified and easy to use API.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Apache Libcloud is a Python library which hides differences between 
-different cloud provider APIs and allows you to manage different 
-cloud resources through a unified and easy to use API.
-
-This package contains tests for %oname
-
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
-Requires: python-module-%oname = %EVR
+Group: Development/Python3
+Requires: %name = %EVR
 
 %description tests
 Apache Libcloud is a Python library which hides differences between 
@@ -99,47 +65,32 @@ rm -f vsphere.py
 popd
 popd
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 export PYTHONPATH=$PWD
-%make -C docs man
+%make SPHINXBUILD="sphinx-build-3" -C docs man
 
 %install
-%python_build_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc *.rst LICENSE example_*.py
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test
-
-%files -n python3-module-%oname
 %doc *.rst LICENSE example_*.py
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/libcloud/test/*
-
 %files tests
-%python_sitelibdir/libcloud/test/*
+%python3_sitelibdir/libcloud/test/*
 
 %files docs
 %doc docs/_build/*
 
 
 %changelog
+* Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Build new version.
+- Drop python2 support.
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
 - new version 2.5.0 (with rpmrb script)
 
