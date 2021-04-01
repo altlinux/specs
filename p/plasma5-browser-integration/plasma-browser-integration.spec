@@ -2,7 +2,7 @@
 
 Name: plasma5-browser-integration
 Version: 5.21.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -12,6 +12,7 @@ License: GPL-3.0-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-def-krunner.patch
+Patch2: alt-detect-more-browsers.patch
 
 # Automatically added by buildreq on Thu Feb 27 2020 (-bi)
 # optimized out: clang7.0 cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel libdbusmenu-qt52 libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-sql libqt5-svg libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms python-modules python2-base python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 sh4
@@ -52,6 +53,7 @@ Requires: %name-common
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build \
@@ -88,6 +90,9 @@ Requires: %name-common
 #%_K5lib/libplasma-browser-integration.so.*
 
 %changelog
+* Thu Apr 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt2
+- fix detect chromium and chromium-gost
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
 - new version
 
