@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -17,6 +17,7 @@ License: GPLv2+ / LGPLv2+
 Source: %rname-%version.tar
 Patch1: alt-dbus-service.patch
 Patch2: alt-desktop-exec.patch
+Patch3: alt-kimageannotator-tr.patch
 
 # Automatically added by buildreq on Wed May 11 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcb-render-util libxcbutil-cursor libxcbutil-image libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 xml-common xml-utils
@@ -57,6 +58,7 @@ developing applications that use %name.
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build \
@@ -86,6 +88,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Thu Apr 01 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
+- load kimageannotator translations
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
