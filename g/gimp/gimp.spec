@@ -7,7 +7,7 @@
 %define brushes_ver 1.0
 
 Name: gimp
-Version: %ver_major.22
+Version: %ver_major.24
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -118,6 +118,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Wed Mar 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.10.24-alt1
+- 2.10.24
+
 * Fri Oct 09 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.22-alt1
 - 2.10.22
 
