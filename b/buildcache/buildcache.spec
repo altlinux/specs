@@ -1,14 +1,13 @@
 Name: buildcache
-Version: 0.23.0
-Release: alt2
+Version: 0.26.1
+Release: alt1
 
 Summary: a simple compiler accelerator
 License: Zlib
 Group: Development/Tools
 
 Url: https://github.com/mbitsnbites/buildcache
-Source: %name-%version.tar.gz
-Packager: Ivan Savin <svn17@altlinux.org>
+Source: %name-%version.tar
 
 Patch: %name-%version-alt.patch
 
@@ -37,10 +36,16 @@ cd src
 %_bindir/buildcache
 
 %changelog
+* Thu Apr 01 2021 Ivan Savin <svn17@altlinux.org> 0.26.1-alt1
+- 0.26.1
+- Returns code of unbundled libraries.
+- Fix .gear/rules and spec.
+
 * Fri Dec 04 2020 Ivan Savin <svn17@altlinux.org> 0.23.0-alt2
 - Add system library (xxhash) instead of bundled.
 
 * Fri Dec 04 2020 Ivan Savin <svn17@altlinux.org> 0.23.0-alt1
+- 0.23.0
 - Merge remote-tracking branch 'upstream/master' into sisyphus.
 
 * Wed Nov 18 2020 Ivan Savin <svn17@altlinux.org> 0.18.0-alt2
