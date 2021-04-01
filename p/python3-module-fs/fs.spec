@@ -6,7 +6,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.12
+Version: 2.4.13
 Release: alt1
 Summary: Filesystem abstraction layer
 License: MIT
@@ -127,6 +127,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.13-alt1
+- Automatically updated to 2.4.13.
+
 * Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.12-alt1
 - Automatically updated to 2.4.12.
 
