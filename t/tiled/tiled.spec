@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tiled
-Version: 1.4.3
+Version: 1.5.0
 Release: alt1
 Summary: Tiled is a general purpose tile map editor
 License: GPLv2
@@ -9,6 +9,7 @@ Group: Graphics
 Url: http://www.mapeditor.org
 # https://github.com/bjorn/tiled
 Source: %name-%version.tar
+Patch: tiled-1.5.0-fix_libyy_link.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools zlib-devel
@@ -75,6 +76,7 @@ A plugin for tiled which allows to export maps as GameMaker Studio room files.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %qmake_qt5 %name.pro -r RPATH=no PREFIX=%_prefix LIBDIR=%_libdir
@@ -110,16 +112,13 @@ A plugin for tiled which allows to export maps as GameMaker Studio room files.
 %_libdir/%name/plugins/liblua.so
 %_libdir/%name/plugins/libjson1.so
 %_libdir/%name/plugins/libdefoldcollection.so
+%_libdir/%name/plugins/libyy.so
 
 %_mandir/man1/%name.1*
 %_mandir/man1/tmxrasterizer.1*
 %_mandir/man1/tmxviewer.1*
 %dir %_datadir/thumbnailers
 %_datadir/thumbnailers/%name.thumbnailer
-
-# Fix post-install onowned files
-%_iconsdir/hicolor/scalable
-%_datadir/metainfo
 
 %files plugin-tbin
 %_libdir/%name/plugins/libtbin.so
@@ -143,6 +142,9 @@ A plugin for tiled which allows to export maps as GameMaker Studio room files.
 %_libdir/%name/plugins/libgmx.so
 
 %changelog
+* Sat Mar 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Wed Nov 18 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
 - Automatically updated to 1.4.3.
 
