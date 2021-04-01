@@ -11,7 +11,7 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.20.5
+Version: 5.21.3
 Release: alt1
 %K5init no_altplace appdata
 
@@ -30,13 +30,14 @@ Patch2: alt-skip-obsoleted-and-removed-from-upgrade.patch
 Patch3: alt-discover-update-all-packages-from-appstream.patch
 Patch4: alt-pk-launch.patch
 Patch5: alt-soversion.patch
+Patch200: flatpak-mr99-extern-c.patch
 
 # Automatically added by buildreq on Tue Aug 07 2018 (-bi)
 # optimized out: appstream appstream-qt cmake cmake-modules elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-common kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-common kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-common kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgio-devel libgpg-error libjson-glib libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 rpm-build-qml ruby ruby-stdlibs sh3
 #BuildRequires: appstream-qt-devel extra-cmake-modules kf5-karchive-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kirigami-devel kf5-kitemmodels-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-plasma-framework-devel libflatpak-devel libssl-devel packagekit-qt-devel python3-dev qt5-declarative-devel qt5-translations rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: libssl-devel qt5-declarative-devel
-BuildRequires: pkgconfig(libmarkdown) 
+BuildRequires: libssl-devel qt5-declarative-devel qt5-x11extras-devel
+BuildRequires: pkgconfig(libmarkdown)
 %if_enabled fwupd
 BuildRequires: pkgconfig(fwupd)
 %endif
@@ -45,7 +46,7 @@ BuildRequires: appstream-qt-devel
 BuildRequires: libflatpak-devel
 BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kio-devel
 BuildRequires: kf5-kirigami-devel kf5-kitemmodels-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel
-BuildRequires: kf5-kdeclarative-devel
+BuildRequires: kf5-kdeclarative-devel kf5-kcmutils-devel kf5-kidletime-devel
 BuildRequires: kf5-plasma-framework-devel
 
 %description
@@ -140,6 +141,7 @@ KF5 library
 #%patch3 -p2 -b .upd-appstream
 %patch4 -p1
 %patch5 -p1
+%patch200 -p1
 
 %build
 %K5build
@@ -148,7 +150,7 @@ KF5 library
 %K5install
 mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 
-%K5install_move data libdiscover discover locale knsrcfiles
+%K5install_move data libdiscover discover locale knsrcfiles kpackage
 
 mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
 install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}-flatpak.sh
@@ -183,6 +185,9 @@ done
 %_K5xmlgui/*
 %_K5notif/*.notifyrc
 %_datadir/metainfo/org.kde.discover.appdata.xml
+#
+%_K5plug/kcms/kcm_updates.so
+%_K5data/kpackage/kcms/kcm_updates/
 
 %files kns
 %_K5plug/discover/kns-backend.so
@@ -218,6 +223,9 @@ done
 
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt1
 - new version
 

@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.20.5
-Release: alt4
+Version: 5.21.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -36,7 +36,9 @@ Patch15: alt-menu-add-tooltip.patch
 Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-def-krunners.patch
 Patch18: alt-users-use-gost-yescrypt.patch
-Patch19: alt-desktop-midbutton.patch
+Patch19: alt-taskgroup-performance.patch
+# FC
+Patch100: plasma-desktop-python-shebang.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libusb-compat libxcb-devel libxcbutil-image libxcbutil-keysyms libxkbfile-devel mkfontscale pkg-config python-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -49,8 +51,8 @@ BuildRequires: libudev-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel
 BuildRequires: libxcbutil-devel libxcbutil-image-devel libxkbcommon-devel
 BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel xorg-drv-libinput-devel
-BuildRequires: iceauth mkfontdir xset
-BuildRequires: accounts-qt5-devel kde5-kaccounts-integration-devel
+BuildRequires: iceauth mkfontdir xset /usr/bin/intltool-merge
+BuildRequires: accounts-qt5-devel kde5-kaccounts-integration-devel signon-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel
@@ -107,7 +109,7 @@ Common polkit files for %name
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 #%patch8 -p1
@@ -120,7 +122,8 @@ Common polkit files for %name
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
-%patch19 -p1
+%patch19 -p2
+%patch100 -p1
 
 #Fix translate in Input Method Panel (kimpanel) widget.
 #If the po-file is called differently than "plasma_applet_org.kde.plasma.kimpanel.po", the kimpanel widget menu will be in English only.
@@ -139,7 +142,7 @@ Common polkit files for %name
 %K5install_move data color-schemes doc kcmmouse knsrcfiles kglobalaccel
 %K5install_move data kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
 %K5install_move data kcontrol ksmserver kconf_update solid kpackage
-%K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad
+%K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad plasma/avatars
 
 %find_lang %name --with-kde --all-name
 
@@ -149,6 +152,8 @@ Common polkit files for %name
 %_datadir/locale/*/LC_SCRIPTS/kfontinst/
 %_K5icon/*/*/*/*.*
 %_datadir/qlogging-categories5/*.*categories
+%dir %_K5data/plasma/avatars/
+%dir %_K5data/plasma/avatars/photos/
 
 %files
 #%config(noreplace) %_K5xdgconf/*
@@ -179,6 +184,8 @@ Common polkit files for %name
 %_K5data/kcm*/
 %_K5data/kactivitymanagerd/
 %_K5data/kpackage/kcms/*
+%_K5data/plasma/avatars/*.*
+%_K5data/plasma/avatars/photos/*.*
 %_K5data/plasma/plasmoids/*
 %_K5data/plasma/packages/*
 %_K5data/plasma/layout-templates/*
@@ -188,8 +195,8 @@ Common polkit files for %name
 %_K5data/kglobalaccel/*.desktop
 %_K5data/knsrcfiles/*.knsrc
 %_K5dbus_sys_srv/*.service
-#%_datadir/accounts/providers/kde/*.provider
-#%_datadir/accounts/services/kde/*.service
+%_datadir/accounts/providers/kde/*.provider
+%_datadir/accounts/services/kde/*.service
 
 %files -n polkit-kde-plasma-desktop
 %_datadir/polkit-1/actions/*kcmclock*.policy
@@ -199,6 +206,10 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- new version
+- improved performance of task groups (thanks darktemplar@alt)
+
 * Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.5-alt4
 - fix default desktop mouse middle-button action
 
