@@ -20,7 +20,7 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.6
+Version: 2.53.7
 Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
@@ -49,7 +49,6 @@ Source11: seamonkey-ru.watch
 Patch0: seamonkey-fix-installdirs.patch
 Patch1: seamonkey-alt-machOS-fix.patch
 Patch2: seamonkey-alt-fix-plugin-path.patch
-Patch3: xulrunner-noarch-extensions.patch
 %if_with system_mozldap
 Patch5: thunderbird-with-system-mozldap.patch
 %endif
@@ -197,7 +196,6 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 #patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %if_with system_mozldap
 %patch5 -p1 -b .mozldap
 %endif
@@ -470,6 +468,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Fri Apr 02 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.7-alt1
+- New version.
+
 * Fri Jan 22 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.6-alt1
 - New version.
 
