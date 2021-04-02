@@ -1,14 +1,16 @@
 Name: kakasi
-Version: 2.3.4
-Release: alt3
+Version: 2.3.6
+Release: alt1
 
 Summary: A Japanese character set conversion filter
 Summary(ru_RU.UTF-8): Преобразователь японского текста
-License: GPL
+License: GPLv2+
 Group: Text tools
 URL: http://kakasi.namazu.org/
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.xz
 Patch: kakasi-2.3.4-fixdict.patch
+Patch4:		kakasi-multilib.patch
+
 
 # Automatically added by buildreq on Sun Oct 16 2011
 BuildRequires: glibc-devel-static
@@ -39,7 +41,8 @@ set filter.
 
 %prep
 %setup -q
-%patch -p1
+#patch -p1
+%patch4 -p1
 
 %build
 %configure --disable-static
@@ -47,7 +50,7 @@ set filter.
 
 %install
 %makeinstall
-install -pD -m644 doc/kakasi.1 $RPM_BUILD_ROOT%_mandir/ja/man1/kakasi.1
+install -pD -m644 man/kakasi.1 $RPM_BUILD_ROOT%_mandir/ja/man1/kakasi.1
 
 %files
 %_bindir/atoc_conv
@@ -59,6 +62,7 @@ install -pD -m644 doc/kakasi.1 $RPM_BUILD_ROOT%_mandir/ja/man1/kakasi.1
 %dir %_datadir/kakasi
 %_datadir/kakasi/itaijidict
 %_datadir/kakasi/kanwadict
+%_man1dir/kakasi*
 %_mandir/ja/man1/kakasi.1*
 %doc AUTHORS ChangeLog NEWS README README-ja
 
@@ -68,6 +72,9 @@ install -pD -m644 doc/kakasi.1 $RPM_BUILD_ROOT%_mandir/ja/man1/kakasi.1
 %_libdir/libkakasi.so
 
 %changelog
+* Sat Apr 03 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.6-alt1
+- 2.3.6
+
 * Sun Oct 16 2011 Alexey Tourbin <at@altlinux.ru> 2.3.4-alt3
 - rebuilt for debuginfo
 
