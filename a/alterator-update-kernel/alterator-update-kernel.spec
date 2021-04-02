@@ -1,8 +1,8 @@
+%define mname update-kernel
+
 Name: alterator-update-kernel
 Version: 1.3
-Release: alt1
-
-Packager: Ivan Savin <svn17@altlinux.org>
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -36,12 +36,27 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 
 %files
 %_datadir/alterator/applications/*
-%_datadir/alterator/ui/*/
-%_alterator_libdir/ui/update-kernel/*.go
-%_alterator_libdir/ui/update-kernel/update/*.go
-%_alterator_backend3dir/*
+
+%dir %_datadir/alterator/ui/%mname
+%_datadir/alterator/ui/%mname/*.scm
+%_datadir/alterator/ui/%mname/*.html
+
+%dir %_datadir/alterator/ui/%mname/update
+%_datadir/alterator/ui/%mname/update/*.scm
+%_datadir/alterator/ui/%mname/update/*.html
+
+%dir %_alterator_libdir/ui/%mname
+%_alterator_libdir/ui/%mname/*.go
+
+%dir %_alterator_libdir/ui/%mname/update
+%_alterator_libdir/ui/%mname/update/*.go
+
+%_alterator_backend3dir/%mname
 
 %changelog
+* Fri Apr 02 2021 Ivan Savin <svn17@altlinux.org> 1.3-alt2
+- Fix spec.
+
 * Fri Mar 05 2021 Ivan Savin <svn17@altlinux.org> 1.3-alt1
 - Fix set_default_kernel for rpi4.
 
