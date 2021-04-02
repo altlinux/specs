@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
+
 Name: shim
-Version: 15
-Release: alt4
+Version: 15.4
+Release: alt1
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -10,14 +14,18 @@ Url: https://github.com/rhboot/shim
 #Git: https://github.com/rhboot/shim.git
 Source: %name-%version.tar
 Source1: altlinux-ca.cer
+Source2: %name-%version-gnu-efi.tar
 
-Patch1: shim-15-fix-gcc9-address-of-packed-members.patch
-Patch2: shim-15-upstream-fix-a-typo.patch
+Patch1: shim-15.4-upstream-fix-a-broken-file-header-on-ia32.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
-BuildRequires: gnu-efi >= 3.0.8
 BuildRequires: libelf-devel
+BuildRequires: dos2unix
+
+%if_with check
+BuildRequires: xxd
+%endif
 
 # Shim is only required on platforms implementing the UEFI secure boot
 # protocol. The only one of those we currently wish to support is 64-bit x86.
@@ -26,6 +34,8 @@ ExclusiveArch: x86_64
 
 # Figure out the right file path to use
 %global efidir altlinux
+# SBAT generation number for ALT (refer to SBAT.md)
+%global alt_gen_number 1
 
 %description
 Initial UEFI bootloader that handles chaining to a trusted
@@ -41,9 +51,11 @@ full bootloader under secure boot environments.
 Includes both ia32 and x64 EFI binaries.
 
 %prep
-%setup
+%setup -a 2
 %patch1 -p1
-%patch2 -p1
+
+# fill in SBAT section with ALT data
+echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,http://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
 
 %build
 MAKEFLAGS=""
@@ -53,10 +65,10 @@ fi
 
 mkdir build-ia32 build-x64
 pushd build-ia32
-  %make_build ${MAKEFLAGS} EFI_PATH="/usr/lib/" TOPDIR=.. ARCH=ia32 -f ../Makefile
+  %make_build ${MAKEFLAGS} TOPDIR=.. ARCH=ia32 -f ../Makefile
 popd
 pushd build-x64
-  %make_build ${MAKEFLAGS} EFI_PATH=%_libdir TOPDIR=.. -f ../Makefile
+  %make_build ${MAKEFLAGS} TOPDIR=.. -f ../Makefile
 popd
 
 %install
@@ -77,8 +89,12 @@ install -m 0644 shimx64.hash %buildroot%_datadir/shim/%version/%_efi_arch/shimx6
 install -m 0644 BOOTX64.CSV %buildroot%_datadir/shim/%version/%_efi_arch/BOOTX64.CSV
 popd
 
+%check
+%make_build ARCH=ia32 test
+%make_build test
+
 %files -n %name-unsigned
-%doc README README.fallback README.tpm COPYRIGHT
+%doc README.md README.fallback README.tpm COPYRIGHT
 %dir %_datadir/shim
 %dir %_datadir/shim/%version
 %dir %_datadir/shim/%version/ia32
@@ -87,6 +103,20 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Fri Apr 02 2021 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt1
+- new version
+  + introduce SBAT
+  + use bundled gnu-efi version from rhboot/gnu-efi
+    (git submodule, refer to c61bfdc8 for details)
+- add script for submodules update (thanks to darktemplar@)
+- remove fix-gcc9-address-of-packed-members patch
+- remove upstream-fix-a-typo patch
+- add upstream-fix-a-broken-file-header-on-ia32 patch
+- spec: add dos2unix to BR:, remove gnu-efi
+  + add ALT specific SBAT data
+  + add check section
+- replace altlinux-ca.cer
+
 * Tue Sep 15 2020 Nikolai Kostrigin <nickel@altlinux.org> 15-alt4
 - fix FTBFS against gnu-efi 3.0.10+ due to fixed typo
   + add upstream-fix-a-typo patch
