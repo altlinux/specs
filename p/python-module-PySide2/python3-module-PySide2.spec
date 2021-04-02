@@ -1,6 +1,6 @@
 Name: python-module-PySide2
 Version: 5.15.0
-Release: alt4
+Release: alt5
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python
@@ -24,7 +24,6 @@ BuildRequires: libxslt-devel
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-wheel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: qt5-x11extras-devel
@@ -184,6 +183,9 @@ rm -f %buildroot%_libdir/pkgconfig/*.pc
 %python_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Fri Apr 02 2021 Grigory Ustinov <grenka@altlinux.org> 5.15.0-alt5
+- Fixed BuildRequires
+
 * Fri Feb 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt4
 - merge with p9
 
