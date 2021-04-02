@@ -1,6 +1,6 @@
 Name: libcamera
 Version: 0.0.20210204
-Release: alt1
+Release: alt2
 
 Summary: A complex camera support library for Linux
 License: LGPL-2.1-or-later
@@ -67,7 +67,7 @@ This package contains development part of libcamera.
 %endif
 
 %build
-%meson -Dpipelines=%platdefs -Dv4l2=true
+%meson -Dpipelines=%platdefs -Dv4l2=true -Dwerror=false
 %meson_build
 
 %install
@@ -93,6 +93,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/camera.pc
 
 %changelog
+* Fri Apr 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210204-alt2
+- fix build with recent gstreamer
+
 * Thu Feb 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210204-alt1
 - updated from git.336de7af
 
