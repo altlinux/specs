@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname natsort
 
-%def_without docs
+%def_with docs
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.0.1
+Version: 7.1.1
 Release: alt1
 
 Summary: Sort lists naturally
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/natsort/
 BuildArch: noarch
 
 # https://github.com/SethMMorton/natsort.git
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -30,6 +30,7 @@ BuildRequires: python3(semver)
 
 %if_with docs
 BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-m2r2
 BuildRequires: python3(sphinx_rtd_theme)
 %endif
 
@@ -58,7 +59,7 @@ This package contains documentation for %oname.
 %endif # docs
 
 %prep
-%setup -q -n %oname-%version
+%setup
 
 echo '' > dev/requirements.txt
 
@@ -109,6 +110,10 @@ tox.py3 --sitepackages -p auto -o -rv
 
 
 %changelog
+* Fri Apr 02 2021 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt1
+- Automatically updated to 7.1.1.
+- Build with docs.
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 7.0.1-alt1
 - Version updated to 7.0.1.
 
