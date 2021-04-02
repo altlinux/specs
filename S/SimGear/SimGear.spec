@@ -1,24 +1,21 @@
-%define origver 2020.1.2
+%define origver 2020.3.8
 
 Name: SimGear
 Version: %origver
-Release: alt4
+Release: alt1
 
 Summary: Simulator Construction Tools
-
-License: GPL
+License: GPLv2+
 Group: System/Libraries
+
 Url: http://www.flightgear.org
-
-Packager: Michael Shigorin <mike@altlinux.org>
-
 # Source-url: https://sourceforge.net/projects/flightgear/files/release-%origver/simgear-%version.tar.bz2
 Source: %name-%version.tar
 Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
 Patch2: %name-g++8.patch
 Patch3: simgear-2018.2.2-alt-e2k.patch
-Patch4: SimGear-alt-rename-version-file.patch
+Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -26,6 +23,7 @@ BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-
 
 BuildRequires: cmake libapr1-devel
 BuildRequires: libexpat-devel
+BuildRequires: liblzma-devel
 
 %ifarch %e2k
 # had to disable in OpenSceneGraph => unmets followed up
@@ -73,7 +71,6 @@ This package contains header files for SimGear.
 %patch2 -p2
 %endif
 %patch3 -p2
-%patch4 -p2
 #sed -i "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
 
 # rename version file to simgear_version because it's incorrectly detected as header file
@@ -108,6 +105,11 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Wed Mar 31 2021 Michael Shigorin <mike@altlinux.org> 2020.3.8-alt1
+- 2020.3.8
+- drop patch4 (fixed upstream)
+- minor spec cleanup
+
 * Sat Jan 09 2021 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt4
 - E2K: disable debuginfo following OpenSceneGraph (avoid unmets)
 

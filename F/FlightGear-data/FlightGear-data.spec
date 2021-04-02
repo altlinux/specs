@@ -1,20 +1,18 @@
 Name: FlightGear-data
-Version: 2020.1.2
+Version: 2020.3.8
 Release: alt1
 
 Summary: Data pack for FlightGear open-source flight simulator
-
 License: GPL
 Group: Games/Arcade
-Url: http://www.flightgear.org
 
+Url: http://www.flightgear.org
+# Source-url: https://sourceforge.net/projects/flightgear/files/release-2020.3/FlightGear-%version-data.txz/download
+Source: %name-%version.tar
+# NB: ignore *-update-data.txz, it's just a diff (better rely on a full version)
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Source-url: https://sourceforge.net/projects/flightgear/files/release-2018.2/FlightGear-%version-data.tar.bz2
-Source: %name-%version.tar
-
 BuildArch: noarch
-
 AutoReqProv: no
 
 Provides: fgfs-data = %version-%release
@@ -75,6 +73,9 @@ find %buildroot -name 'Thumbs.db*' -print -delete
 %_docdir/FlightGear-%version
 
 %changelog
+* Wed Mar 31 2021 Michael Shigorin <mike@altlinux.org> 2020.3.8-alt1
+- 2020.3.8
+
 * Wed May 27 2020 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt1
 - 2020.1.2
 
