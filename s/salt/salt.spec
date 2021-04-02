@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3002.2
+Version: 3003
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -164,7 +164,7 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %preun_service salt-minion
 
 %files -n python3-module-salt
-%doc AUTHORS README* LICENSE HACKING.rst
+%doc AUTHORS README*
 %config(noreplace) %dir %_sysconfdir/salt
 %config(noreplace) %dir %_sysconfdir/salt/pki
 %python3_sitelibdir/*
@@ -239,6 +239,12 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Thu Apr 01 2021 Andrey Cherepanov <cas@altlinux.org> 3003-alt1
+- New version.
+
+* Wed Mar 10 2021 Andrey Cherepanov <cas@altlinux.org> 3002.5-alt1
+- New version.
+
 * Thu Nov 19 2020 Andrey Cherepanov <cas@altlinux.org> 3002.2-alt1
 - New version.
 
