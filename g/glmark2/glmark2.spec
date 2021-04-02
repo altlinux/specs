@@ -1,8 +1,8 @@
 %define flavors	x11-gl,drm-gl,x11-glesv2,drm-glesv2,wayland-gl,wayland-glesv2
 
 Name:		glmark2
-Version:	2020.04
-Release:	alt1.ed9ac85.1
+Version:	2021.02
+Release:	alt1
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -25,7 +25,7 @@ BuildRequires:	libEGL-devel libglvnd-devel
 # DRM support
 BuildRequires:	libdrm-devel libgbm-devel
 # Wayland support
-BuildRequires:	libwayland-client-devel libwayland-egl-devel wayland-protocols
+BuildRequires:	libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
 
 Requires:	%name-common
 
@@ -145,6 +145,9 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Tue Mar 30 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.02-alt1
+- Updated to 2021.02. Closes #39822
+
 * Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2020.04-alt1.ed9ac85.1
 - Updated to ed9ac857059f3b29fb4dd5ca3a2ec1256bdb0aae.
 - Renamed glmark2-data to glmark2-common.
