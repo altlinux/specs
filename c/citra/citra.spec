@@ -1,8 +1,8 @@
 # git describe --always upstream/citra
-%define git_desc 8e3c767
+%define git_desc b3cab3c450
 
 Name: citra
-Version: 1696
+Version: 1697
 Release: alt1
 
 Summary: Nintendo 3DS emulator
@@ -144,5 +144,8 @@ src/common/scm_rev.cpp.in
 %_man6dir/%name-qt.6*
 
 %changelog
+* Sat Apr 03 2021 Nazarov Denis <nenderus@altlinux.org> 1697-alt1
+- Version Nightly 1697
+
 * Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 1696-alt1
 - Initial build for ALT Linux
