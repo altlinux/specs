@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 Epoch:3
 
@@ -121,8 +121,12 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Sat Apr 03 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.3.0-alt1
+- 2.3.0
+
 * Thu Mar 25 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.2.1-alt1
 - 2.2.1
+- fixed build with LTO
 
 * Wed Feb 10 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.1.2-alt1
 - 2.1.2
@@ -169,6 +173,7 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
 * Mon Jan 27 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.4.0.2.397480d-alt1
 - 1.6.4
+- built with enabled LTO
 
 * Wed Dec 25 2019 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.3-alt1
 - 1.6.3
