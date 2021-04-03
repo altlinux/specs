@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: Sphinx extension that automatically document argparse commands and options
 License: MIT
@@ -16,9 +16,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx python3-module-pytest
 BuildRequires: python3-module-sphinx_rtd_theme
-BuildRequires: python3-module-pytest python3-module-commonmark0.7
+BuildRequires: python3-module-pytest python3-module-commonmark
 
-Requires: python3-module-commonmark0.7
+Requires: python3-module-commonmark
 
 %py3_provides sphinxarg
 
@@ -82,6 +82,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sat Apr 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt2
+- Fixed BuildRequires.
+
 * Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.5-alt1
 - Version updated to 0.2.5
 - porting on python3.
