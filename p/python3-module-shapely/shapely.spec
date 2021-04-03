@@ -2,44 +2,55 @@
 
 %define oname shapely
 
+# Tests fail on i586 due to fp math precision
+%ifarch %ix86
 %def_disable check
+%endif
+%def_with docs
 
-Name: python-module-%oname
-Version: 1.7
-Release: alt2.b1
+Name: python3-module-%oname
+Version: 1.7.1
+Release: alt1
 
 Summary: Planar geometries, predicates, and operations
 
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/Shapely
 
 # https://github.com/Toblerity/Shapely.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+# Backport a relevant subset of commit
+# 611a0b3b2047bf8a49db32dc4b30684a10f5b6eb, which fixes
+# https://github.com/Toblerity/Shapely/issues/1079 (Test failure with geos
+# 3.9.0) and corresponds to https://github.com/Toblerity/Shapely/pull/1042/
+# (Expand CI and tests to support GEOS 3.9.0beta2). The particular test vectors
+# must be adjusted in the backport because
+# https://github.com/Toblerity/Shapely/pull/1031 is not in 1.7.1;
+# in particular, “WKTWriter.defaults = {}” is still in tests/__init__.py.
+Patch: shapely-1.7.1-611a0b3b-subset.patch
+
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: libgeos-devel
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-Cython libnumpy-devel
-BuildRequires: python-module-descartes python-module-sphinx-devel
-BuildRequires: python-module-matplotlib-sphinxext
-BuildRequires: python-module-packaging
-BuildRequires: python-module-pytest
-BuildRequires: python-module-numpy-testing
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-descartes
 BuildRequires: python3-module-packaging
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
 BuildRequires: xvfb-run
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: /usr/bin/sphinx-apidoc
+BuildRequires: python3(matplotlib.sphinxext)
+%endif
 
 %description
 Planar geometries, predicates, and operations.
 
 %package examples
 Summary: Examples for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description examples
@@ -47,27 +58,10 @@ Planar geometries, predicates, and operations.
 
 This package contains examples for %oname.
 
-%package -n python3-module-%oname
-Summary: Planar geometries, predicates, and operations
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Planar geometries, predicates, and operations.
-
-%package -n python3-module-%oname-examples
-Summary: Examples for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-examples
-Planar geometries, predicates, and operations.
-
-This package contains examples for %oname.
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
-%add_python_req_skip figures
+Group: Development/Python3
+%add_python3_req_skip figures
 
 %description pickles
 Planar geometries, predicates, and operations.
@@ -86,73 +80,60 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-cp -fR . ../python3
+%patch -p1
 
-%prepare_sphinx .
+%if_with docs
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 export LC_ALL=en_US.UTF-8
 %add_optflags -fno-strict-aliasing
 
-%python_build_debug
-
-pushd ../python3
-%python3_build_debug
-popd
+%python3_build
 
 %install
 export LC_ALL=en_US.UTF-8
 
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
-%make -C docs pickle
-%make -C docs html
+%if_with docs
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
-# Tests fail on i586 due to fp math precision
-%ifnarch %ix86
 %check
 export LC_ALL=en_US.UTF-8
 
-python setup.py test
-python setup.py build_ext -i
-py.test -vv
-
-pushd ../python3
 xvfb-run python3 setup.py test
 python3 setup.py build_ext -i
 py.test3 -vv
-popd
-%endif
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/examples
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/examples
 
 %files examples
-%python_sitelibdir/*/examples
+%python3_sitelibdir/*/examples
 
+%if_with docs
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
-
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/examples
-
-%files -n python3-module-%oname-examples
-%python3_sitelibdir/*/examples
+%endif
 
 %changelog
+* Sat Apr 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
+- Automatically updated to 1.7.1.
+- Enable check.
+- Drop python2 support.
+
 * Sun Feb 14 2021 Grigory Ustinov <grenka@altlinux.org> 1.7-alt2.b1
 - Disable check for building python3.9.
 
