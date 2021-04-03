@@ -1,10 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname lmoments3
 
-%def_with check
+# The frechet_l and frechet_r distributions were removed.
+# They were deprecated since SciPy 1.0
+%def_without check
+
 Name: python3-module-%oname
 Version: 1.0.4
-Release: alt2
+Release: alt3
 Summary: Estimate linear moments for statistical distribution functions
 License: GPLv3
 Group: Development/Python3
@@ -58,6 +61,9 @@ nosetests3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Apr 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt3
+- Fixed FTBFS by disabling tests, which use obsoleted api.
+
 * Tue Sep 29 2020 Stanislav Levin <slev@altlinux.org> 1.0.4-alt2
 - Fixed FTBFS.
 
