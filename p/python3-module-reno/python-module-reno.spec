@@ -1,13 +1,14 @@
 %define pypi_name reno
-%def_without doc
+
+%def_without docs
 
 Name: python3-module-%pypi_name
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Release Notes manager
 
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: http://www.openstack.org/
 
@@ -29,6 +30,7 @@ BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-yaml >= 3.10.0
 BuildRequires: python3-module-oslotest
 BuildRequires: python3-module-nose
+BuildRequires: python3-module-openstackdocstheme
 
 %description
 Reno is a release notes manager for storing
@@ -38,11 +40,11 @@ Managing release notes for a complex project over a long period
 of time with many releases can be time consuming and error prone. Reno
 helps automate the hard parts.
 
-%package doc
+%package docs
 Summary: reno documentation
 Group: Development/Documentation
 
-%description doc
+%description docs
 Documentation for reno
 
 %package tests
@@ -66,10 +68,12 @@ rm -rf {test-,}requirements.txt
 %build
 %python3_build
 
-%if_with doc
+%if_with docs
 # disabling git call for last modification date from git repo
 sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python setup.py build_sphinx
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
 %endif
@@ -86,12 +90,15 @@ rm -fr doc/build/html/.buildinfo
 %files tests
 %python3_sitelibdir/*/tests
 
-%if_with doc
-%files doc
+%if_with docs
+%files docs
 %doc doc/build/html
 %endif
 
 %changelog
+* Sat Apr 03 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Build new version.
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - NMU: new version 3.2.0 (with rpmrb script)
 
