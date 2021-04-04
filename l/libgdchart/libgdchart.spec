@@ -1,6 +1,6 @@
 Name: libgdchart
 Version: 0.11.5
-Release: alt1.1.qa1
+Release: alt1.2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -33,7 +33,7 @@ programs which will use the %name library.
 subst 's@/local@@' Makefile
 subst 's@/usr/lib@%_libdir@' Makefile
 subst 's/^EXTERND//' array_alloc.h  gdchart.h  gdcpie.h gdc.h
-%make_build CFLAGS="%optflags -fPIC -fno-stack-protector"
+%make_build CFLAGS="%optflags -fPIC -fno-stack-protector -fcommon"
 
 # Author build only static library, but we need shared one.
 ld -shared -soname libgdc.so.0.11.5 -o libgdc.so.0.11.5 price_conv.o gdc.o gdc_pie.o gdchart.o array_alloc.o -lm -lgd
@@ -53,6 +53,9 @@ install -pm644 libgdc.so* %buildroot%_libdir
 %_libdir/lib*.so
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.5-alt1.2
+- Fixed FTBFS with -fcommon.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11.5-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
