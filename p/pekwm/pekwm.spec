@@ -1,12 +1,14 @@
 Name: pekwm
 Version: 0.1.17
-Release: alt2
+Release: alt3
 Summary: Fast & lightweight window manager
 License: GPLv2
 Group: Graphical desktop/Other
 Url: http://pekwm.org
 Source: %name-%version.tar.bz2
 source1: %name.png
+
+Patch: pekwm-0.1.17-gcc10.patch
 
 # Automatically added by buildreq on Sun Sep 15 2013
 # optimized out: fontconfig fontconfig-devel libICE-devel libX11-devel libXrender-devel libfreetype-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -21,6 +23,7 @@ keygrabber that supports keychains, and much more.
 
 %prep
 %setup
+%patch -p1
 cat > %name.wmsession <<@@@
 NAME=PekWM
 ICON=%_iconsdir/hicolor/64x64/apps/pekwm.png
@@ -51,6 +54,9 @@ install -D %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.17-alt3
+- Fix build for gcc10.
+
 * Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 0.1.17-alt2
 - Fix build
 
