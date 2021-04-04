@@ -1,6 +1,6 @@
 Name:		gravit
 Version:	0.5.0
-Release:	alt1.1
+Release:	alt2
 Group:		Games/Educational
 Summary:	Visually stunning gravity simulator
 URL:		http://gravit.slowchop.com
@@ -25,6 +25,7 @@ sed -i '/AX_EXT_SSE/d' configure.in
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure --disable-silent-rules
 %ifarch x86_64
 %make_build CPPFLAGS+=-DHAVE_SSE
@@ -43,6 +44,9 @@ ln -sf %_ttffontsdir/TrueType-vera/Vera.ttf %buildroot%_datadir/%name/data/Vera.
 %_datadir/%name
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt2
+- Fixed FTBFS with -fcommon.
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1.1
 - rebuild with new lua 5.3
 
