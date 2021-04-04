@@ -14,7 +14,7 @@ BuildRequires: /proc
 
 Name: liquidwar
 Version: 5.6.4
-Release: alt6.1
+Release: alt6.2
 
 Group: Games/Arcade
 Summary: Liquid War is a unique multiplayer wargame
@@ -56,8 +56,7 @@ sed -i '/^liquidwar-mapgen:/,$s/EXTERN_LIBS)/EXTERN_LIBS) -lm/' src/Makefile.in
 
 %build
 %autoreconf
-#autoconf
-
+%add_optflags -fcommon
 %configure \
 	%configureasm \
 	--datadir=%_datadir \
@@ -121,6 +120,9 @@ install -m 644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 5.6.4-alt6.2
+- Fixed FTBFS with -fcommon.
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 5.6.4-alt6.1
 - NMU: applied logoved fixes
 
