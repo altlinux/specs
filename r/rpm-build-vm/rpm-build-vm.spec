@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.20
+Version: 1.21
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -107,6 +107,10 @@ Run checkinstall tests for vm-run.
 CFLAGS="%optflags" make
 %endif
 
+bash -n vm-run
+bash -n vm-init
+bash -n filetrigger
+
 %install
 %ifnarch %supported_arches
 install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
@@ -174,6 +178,15 @@ timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 
 %changelog
+* Sun Apr 04 2021 Vitaly Chikunov <vt@altlinux.org> 1.21-alt1
+- Allow to use --kernels to list what is available.
+- Do not auto-run depmod for %%buildroot kernels.
+- Allow to use OVMF firmware.
+- Allow to disable KVM with --tcg option.
+- Experimental --fat= directory share with guest.
+- Support microvm machine boot (without PCI).
+- Allow to pass more options to qemu.
+
 * Mon Jan 25 2021 Vitaly Chikunov <vt@altlinux.org> 1.20-alt1
 - Try to catch accidental qemu crashes.
 
