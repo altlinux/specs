@@ -1,6 +1,6 @@
 Name: phlipple
 Version: 0.8.5
-Release: alt3
+Release: alt4
 Summary: Reduce a 3D shape to a single square
 Group: Games/Puzzles
 License: GPLv3
@@ -27,6 +27,7 @@ for N in 16 24 32 48 128; do convert extra/%name.png $N.png; done
 sed -i '/LIBS = @LIBS@/s/$/ -lm/' src/Makefile.in
 
 %build
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -45,6 +46,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.5-alt4
+- Fixed FTBFS with -fcommon.
+
 * Tue Mar 25 2014 Fr. Br. George <george@altlinux.ru> 0.8.5-alt3
 - Fix build
 
