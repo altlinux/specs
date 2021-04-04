@@ -1,5 +1,5 @@
 Name: gzdoom
-Version: 4.4.2
+Version: 4.5.0
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -89,6 +89,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Apr 04 2021 Artyom Bystrov <arbars@altlinux.org> 4.5.0-alt1
+- Update version to 4.5.0
+
 * Thu Jul 16 2020 Artyom Bystrov <arbars@altlinux.org> 4.4.2-alt1
 - Update version to 4.4.2, now is x86_64-bit only
 - zmusic is now a standalone library
