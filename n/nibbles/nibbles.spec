@@ -2,8 +2,8 @@
 Summary: NCurses based nibbles game
 Name: nibbles
 Version: 0.0.4
-Release: alt1.qa2
-License: GPL
+Release: alt2
+License: GPLv2
 Group: Games/Arcade
 Source0: http://www.earth.li/projectpurple/files/%name-v%version.tar.gz
 Patch0: %name-Makefile.patch
@@ -21,13 +21,13 @@ sure that better nibbles games exist, but I thought that I'd write an
 ncurses one to learn how.
 
 %prep
-%setup -q -n %name-v%version
+%setup -n %name-v%version
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
-make DATADIR=%_datadir
+make DATADIR=%_datadir CFLAGS="$CFLAGS -fcommon"
 
 %install
 install -d %buildroot{%_bindir,%_datadir/games,/var/games}
@@ -44,6 +44,10 @@ cp -a nibbles.levels %buildroot%_datadir/games
 %doc README TODO HISTORY CREDITS example.nibblerc
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.0.4-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.4-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
