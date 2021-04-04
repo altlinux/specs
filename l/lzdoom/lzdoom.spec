@@ -1,6 +1,6 @@
 Name: lzdoom
-Version: 3.85
-Release: alt1
+Version: 3.87c
+Release: alt2
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -14,7 +14,9 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
 Source1: ico_%name.png
 
-BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2
+Patch0: lzdoom-3.87c-sse2.patch
+
+BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2 zmusic-devel
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
 
@@ -34,6 +36,8 @@ LZDoom - ответвление от  GZDoom 3.3, собранное с MinGW д
 
 %prep
 %setup -n %name-%version
+
+%patch0 -p1
 
 %build
 %cmake_insource \
@@ -79,5 +83,12 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Apr 04 2021 Artyom Bystrov <arbars@altlinux.org> 3.87c-alt2
+- Add patch for fixing bild on x86 arch (taked from ROSA Linux gzdoom repo);
+- Add zmusic library in list of deps
+
+* Sun Apr 04 2021 Artyom Bystrov <arbars@altlinux.org> 3.87c-alt1
+- Update to 3.87c
+
 * Sat Jun 20 2020 Artyom Bystrov <arbars@altlinux.org> 3.85-alt1
 - initial build for ALT Sisyphus
