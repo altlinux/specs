@@ -1,5 +1,5 @@
 Name: passwdqc
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
@@ -116,7 +116,7 @@ rebuilding.
 %build
 %add_optflags -W -Werror
 %make_build \
-	CPPFLAGS='-DENABLE_NLS=1 -DHAVE_LIBAUDIT=1 -DLINUX_PAM=1' \
+	CPPFLAGS="-DENABLE_NLS=1 -DHAVE_LIBAUDIT=1 -DLINUX_PAM=1 $(getconf LFS_CFLAGS)" \
 	CFLAGS_bin='%optflags' \
 	CFLAGS_lib='%optflags %optflags_shared' \
 	all locales
@@ -129,6 +129,10 @@ install -pD -m755 passwdqc.control \
         %buildroot%_controldir/passwdqc-enforce
 
 %find_lang passwdqc
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %pre -n lib%name
 %pre_control passwdqc-enforce
@@ -148,6 +152,7 @@ install -pD -m755 passwdqc.control \
 %files -n lib%name-devel
 %_libdir/lib*.so
 %_includedir/*.h
+%_man3dir/*
 
 %files -n %pam_name
 /%_lib/security/*
@@ -158,6 +163,12 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Sun Apr 04 2021 Dmitry V. Levin <ldv@altlinux.org> 2.0.2-alt1
+- Merged with 2.0.2-owl1:
+  + pam_passwdqc: enhanced formatting of auto-generated policy descriptions;
+  + libpasswdqc-devel: added libpasswdqc(3) manual page and manual page links
+    for all functions documented in libpasswdqc(3).
+
 * Wed Mar 10 2021 Dmitry V. Levin <ldv@altlinux.org> 2.0.1-alt1
 - Merged with 2.0.1-owl1.
 
