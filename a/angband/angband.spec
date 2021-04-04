@@ -1,6 +1,6 @@
 Name: angband
 Version: 4.1.2
-Release: alt1
+Release: alt2
 
 Summary: Angband is a "graphical" dungeon adventure game
 Summary(ru_RU.UTF-8): 	Angband - приключенческая игра.
@@ -42,6 +42,7 @@ EOF
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure --enable-x11 --enable-curses --disable-sdl
 %make_build
 
@@ -60,6 +61,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt2
+- Fixed FTBFS with -fcommon.
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 4.1.2-alt1
 - Autobuild version bump to 4.1.2
 
