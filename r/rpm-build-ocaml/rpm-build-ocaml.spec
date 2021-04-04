@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 BuildArch: noarch
 
@@ -34,6 +34,10 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Sun Apr 04 2021 Anton Farygin <rider@altlinux.org> 1.4.2-alt1
+- removed the creation of buggy dependencies from .cmxa to .a archives
+  (ocaml 4.12 does not create .a archive for the empty cmxa)
+
 * Sun Dec 06 2020 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - require full version of the ocaml-runtime
 - relaxed the text relocations check for 32-bit x86 and armh architectures
