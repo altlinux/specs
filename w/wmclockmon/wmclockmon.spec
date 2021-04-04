@@ -3,7 +3,7 @@
 
 Name: wmclockmon
 Version: 0.8.1
-Release: alt5.qa1
+Release: alt6
 
 Summary: displays a clock in 12/24h mode with alarm mode and 7 different LCD styles
 License: GPLv2
@@ -35,6 +35,7 @@ calendar and configuration utilities.
 %autoreconf
 
 %build
+%add_optflags -fcommon
 %configure
 %make_build --silent --no-print-directory
 
@@ -54,6 +55,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt6
+- Fixed FTBFS with -fcommon.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.1-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
