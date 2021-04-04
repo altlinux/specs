@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -21,6 +21,8 @@ Source: %name-%version.tar
 #   musl-devel         - does not cover all arches.
 #   glibc-devel-static - binaries are bigger.
 BuildRequires: klibc-devel
+# For %%check.
+BuildRequires: /dev/kvm
 
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
 # from sisyphus_check.
@@ -177,7 +179,21 @@ ls -l /dev/kvm
 timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 
+%ifarch %ix86 x86_64 ppc64le aarch64
+%check
+# Verify availability of KVM in girar & beehiver.
+# armh is intentionally excluded from the test.
+ls -l /dev/kvm && test -w /dev/kvm
+%endif
+
 %changelog
+* Sun Apr 04 2021 Vitaly Chikunov <vt@altlinux.org> 1.22-alt1
+- Add --kvm=cond option for conditional run
+- spec: Test /dev/kvm presence in the %%check
+
+* Sun Apr 04 2021 Vitaly Chikunov <vt@altlinux.org> 1.21-alt2
+- Add /dev/kvm test in %%check for girar and ALT beekeeper.
+
 * Sun Apr 04 2021 Vitaly Chikunov <vt@altlinux.org> 1.21-alt1
 - Allow to use --kernels to list what is available.
 - Do not auto-run depmod for %%buildroot kernels.
