@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
 Summary: Oslo VMware library for OpenStack projects
 Group: Development/Python3
 License: Apache-2.0
@@ -24,7 +24,7 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-yaml >= 3.12
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
-BuildRequires: python3-module-suds-jurko >= 0.6
+BuildRequires: python3-module-suds
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-urllib3 >= 1.21.1
@@ -86,6 +86,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Mon Apr 05 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1.1
+- FTBFS: use python3-module-suds instead of python3-module-suds-jurko.
+
 * Fri Jun 05 2020 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Automatically updated to 3.4.0.
 - Fix license.
