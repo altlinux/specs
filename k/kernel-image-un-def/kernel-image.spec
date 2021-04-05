@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.11
 %define kernel_sublevel .11
@@ -662,6 +662,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Thu Apr 01 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.11.11-alt2
+- BE-M1000 partial support. PCI-E and sensors are NOT supported yet
+
 * Wed Mar 31 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.11-alt1
 - v5.11.11
 
