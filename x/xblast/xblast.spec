@@ -1,8 +1,8 @@
 Name:	 xblast
 Summary: The X11 bomberman team game
 Version: 2.10.4
-Release: alt1
-License: GPL
+Release: alt2
+License: GPLv2
 Icon: %{name}_32x32.png
 Group: Games/Arcade
 Source0: %name-%version.tar.gz
@@ -34,6 +34,7 @@ Amiga, NES, GameBoy and Super NES.
 sed -i 's/".*-helvetica-bold-\(r-.*-[0-9][0-9]*-.*\)-iso8859-.*"/"-*-terminus-bold-\1-iso10646-1"/' x11_config.c
 
 %autoreconf
+%add_optflags -fcommon
 %configure --enable-SMPF --enable-sound --enable-admin --bindir=%_gamesbindir --with-otherdatadir=%_gamesdatadir/XBlast-TNT --prefix=/usr
 %make_build
 
@@ -63,6 +64,10 @@ install -D %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %doc README INSTALL ChangeLog AUTHORS NEWS
 
 %changelog
+* Mon Apr 05 2021 Grigory Ustinov <grenka@altlinux.org> 2.10.4-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Mon Jul 22 2013 Fr. Br. George <george@altlinux.ru> 2.10.4-alt1
 - Version up
 - Hack out helvetica fonts
