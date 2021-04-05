@@ -3,7 +3,7 @@
 
 Name: guacamole-server
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -13,6 +13,7 @@ Source0: %name-%version.tar
 Source1: %name.sysconfig
 Source2: %name.service
 Source3: %name.conf
+Patch: %name-%version.patch
 
 Requires: guacd
 Requires: libguac-client-ssh
@@ -145,6 +146,7 @@ framework to translate between arbitrary protocols and the Guacamole protocol.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -240,6 +242,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd
 
 %changelog
+* Mon Apr 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt2
+- fix build with freerdp-2.0.0
+
 * Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
