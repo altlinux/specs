@@ -1,7 +1,7 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi1
 Version:   1.5
-Release:   alt1
+Release:   alt2
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
 URL:       http://www.intra2net.com/en/developer/libftdi
@@ -12,12 +12,12 @@ BuildRequires: libusb-devel, pkg-config, doxygen
 BuildRequires: gcc-c++ boost-devel
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake swig
-BuildRequires: python-devel rpm-build-python
+BuildRequires: python3-devel rpm-build-python3
 BuildRequires: libconfuse-devel
 
 
 %define    namepp libftdipp1
-%define    pyname python-module-ftdi1
+%define    pyname python3-module-ftdi1
 
 %define    soname libftdi1
 %define    sonamepp libftdipp1
@@ -58,6 +58,7 @@ Requires:  %namepp-devel = %version
 Summary:   Python bindings for libftdi
 Group:     Development/Python
 Requires:  %name = %version
+AutoReqProv: yes,nopython
 
 %package   docs
 Summary:   Documentation files for libftdi
@@ -113,9 +114,6 @@ Documentation files for userspace libftdi library
 %install
 %makeinstall_std
 
-# Install python bindings
-mkdir -p %buildroot%python_sitelibdir
-
 # Install man pages
 mkdir -p %buildroot%_mandir
 cp -a doc/man/* %buildroot%_mandir/
@@ -139,13 +137,13 @@ fi
 
 %files -n ftdi-eeprom
 %_bindir/ftdi_eeprom
-%_docdir/%namepp/example.conf
+%_docdir/%name/example.conf
 %_man3dir/ftdi_eeprom*
 
 %files -n %namepp-devel
 %_libdir/%sonamepp.so
 %_libdir/pkgconfig/%sonamepp.pc
-%_includedir/%namepp/*.hpp
+%_includedir/%name/*.hpp
 
 %files devel-static
 %_libdir/%soname.a
@@ -154,8 +152,9 @@ fi
 %_libdir/%sonamepp.a
 
 %files -n %pyname
-%python_sitelibdir/*.py*
-%python_sitelibdir/*.so
+%python3_sitelibdir/*.py*
+%python3_sitelibdir/*.so
+%python3_sitelibdir/*/ftdi1.*
 %_datadir/libftdi/examples/*.py
 
 %files docs
@@ -164,6 +163,10 @@ fi
 %exclude %_man3dir/ftdi_eeprom*
 
 %changelog
+* Mon Apr 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5-alt2
+- fix broken libftdi1.pc file
+- built python3 bindings
+
 * Wed Mar 31 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.5-alt1
 - Update to latest release
 - Implement tc[io]flush methods and deprecate broken purge_buffers methods
