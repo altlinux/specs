@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210322
+Version: 20210403
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Apr 05 2021 Cronbuild Service <cronbuild@altlinux.org> 20210403-alt1
+- upstream changes (GIT 0dd245d):
+  + rtl_bt: Add rtl8723bs_config-OBDA0623.bin symlink (thx Hans de Goede)
+  + brcm: Add nvram for the Chuwi Hi8 (CWI509) tablet (thx Hans de Goede)
+  + brcm: Add nvram for the Predia Basic tablet (thx Hans de Goede)
+  + qcom: sm8250: update remoteproc firmware (thx Dmitry Baryshkov)
+  + qcom: update a650 firmware files (thx Dmitry Baryshkov)
+
 * Sun Mar 28 2021 Cronbuild Service <cronbuild@altlinux.org> 20210322-alt1
 - upstream changes (GIT 3f026a2):
   + rtl_bt: Update RTL8822C BT(UART I/F) FW to 0x59A_76A3 (thx hildawu)
