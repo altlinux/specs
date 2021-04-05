@@ -87,7 +87,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.2
+Version: %{pybasever}.4
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -109,7 +109,7 @@ BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel
 BuildRequires: libffi-devel libncursesw-devel
 BuildRequires: libssl-devel libreadline-devel libsqlite3-devel
 BuildRequires: zlib-devel libuuid-devel libnsl2-devel
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils autoconf-archive
 %{?_with_bluez:BuildPreReq: libbluez-devel}
 %{?_with_x11:BuildRequires: libX11-devel}
 %{?_with_tk:BuildRequires: tcl-devel tk-devel}
@@ -185,6 +185,10 @@ Patch1012: python3-alt-2to3-python-version.patch
 
 # make configure to detect e2k arch
 Patch1013: python3-e2k-support.patch
+
+# remove -g and replace -O3 by -O2 in configure.ac
+# see ALT39329
+Patch1014: python3-fix-optflags.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -380,6 +384,7 @@ done
 %patch1011 -p2
 %patch1012 -p2
 %patch1013 -p2
+%patch1014 -p2
 
 %ifarch %e2k
 # unsupported as of lcc 1.23.12
@@ -410,6 +415,9 @@ cp -rl * ../build-shared/
 topdir=$(pwd)
 
 build() {
+#see ALT39329
+%remove_optflags -g -O3
+
 %configure \
   --with-platlibdir=%{_lib} \
   --enable-ipv6 \
@@ -427,7 +435,7 @@ build() {
   --without-ensurepip \
   $*
 
-%make_build CFLAGS=
+%make_build
 }
 
 pushd ../build-shared
@@ -998,6 +1006,10 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Mon Apr 05 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.4-alt1
+- Updated to upstream version 3.9.4.
+- Fix multiple -O3 and -g flags (Closes: #39329).
+
 * Thu Feb 25 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.2-alt1
 - Updated to upstream version 3.9.2.
 - Fixed building on e2k arch.
