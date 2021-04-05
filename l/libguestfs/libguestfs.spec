@@ -18,7 +18,7 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.44.0
+Version: 1.44.1
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -575,6 +575,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Mon Apr 05 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.1-alt1
+- 1.44.1
+
 * Wed Feb 10 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.0-alt1
 - 1.44.0
 
