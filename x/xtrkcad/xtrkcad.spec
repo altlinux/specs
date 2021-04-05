@@ -1,6 +1,6 @@
 Name: xtrkcad
 Version: 4.0.3a
-Release: alt2
+Release: alt3
 Group: Games/Educational
 License: GPL
 Summary: XTrkCad Model Railroad CAD
@@ -30,6 +30,7 @@ car inventory.
 %patch0 -p2
 
 %build
+%add_optflags -fcommon
 %cmake
 cd BUILD
 %make_build
@@ -60,6 +61,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Apr 05 2021 Grigory Ustinov <grenka@altlinux.org> 4.0.3a-alt3
+- Fixed FTBFS with -fcommon.
+
 * Tue Apr 22 2014 Fr. Br. George <george@altlinux.ru> 4.0.3a-alt2
 - Fix build
 
