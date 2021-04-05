@@ -1,6 +1,6 @@
 Name: dbeaver
-Version: 21.0.1
-Release: alt3
+Version: 21.0.2
+Release: alt1
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -108,6 +108,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Mon Apr 05 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.2-alt1
+- Version 21.0.2
+
 * Thu Mar 25 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.1-alt3
 - Reduce maven local repository
 
