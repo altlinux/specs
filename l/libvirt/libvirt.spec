@@ -169,7 +169,7 @@
 %endif
 
 Name: libvirt
-Version: 7.1.0
+Version: 7.2.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -238,7 +238,7 @@ BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
 BuildRequires: libacl-devel
-BuildRequires: glib2-devel >= 2.48 libgio-devel
+BuildRequires: glib2-devel >= 2.56 libgio-devel
 BuildRequires: libxml2-devel xml-utils xsltproc
 BuildRequires: python3 python3-devel
 BuildRequires: python3-module-docutils
@@ -409,7 +409,7 @@ Requires: %name-daemon = %EVR
 Requires: nfs-utils
 # For mkfs
 Requires: util-linux
-%{?_with qemu:Requires: /usr/bin/qemu-img}
+%{?_with qemu:Requires: %_bindir/qemu-img}
 
 %description daemon-driver-storage-core
 The storage driver plugin for the libvirtd daemon, providing
@@ -528,7 +528,7 @@ Summary: Qemu driver plugin for the libvirtd daemon
 Group: System/Libraries
 Requires: %name-daemon-driver-network = %EVR
 Requires: %name-daemon-driver-storage-fs = %EVR
-Requires: /usr/bin/qemu-img
+Requires: %_bindir/qemu-img
 Requires: qemu-kvm-core
 # For image compression
 Requires: gzip
@@ -1352,6 +1352,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Apr 06 2021 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt1
+- 7.2.0
+
 * Wed Mar 10 2021 Alexey Shabalin <shaba@altlinux.org> 7.1.0-alt1
 - 7.1.0
 
