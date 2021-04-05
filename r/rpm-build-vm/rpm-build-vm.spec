@@ -5,7 +5,7 @@
 
 Name: rpm-build-vm
 Version: 1.22
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -27,9 +27,9 @@ BuildRequires: /dev/kvm
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
 # from sisyphus_check.
 Requires(pre): kernel >= 5.7
+%endif
 
 Requires(pre): %name-run = %EVR
-%endif
 
 %ifarch %supported_arches
 %description
@@ -175,7 +175,9 @@ chmod go-rwx /dev/kvm
 set -ex
 # qemu in tcg mode can hang un-def-5.10 kernel on ppc64 if smp>1 on "smp:
 # Bringing up secondary CPUs" message.
+%ifarch %supported_arches
 ls -l /dev/kvm
+%endif
 timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 
@@ -187,6 +189,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Mon Apr 05 2021 Ivan A. Melnikov <iv@altlinux.org> 1.22-alt2
+- Fix checkinstall package on unsupported architectures
+
 * Sun Apr 04 2021 Vitaly Chikunov <vt@altlinux.org> 1.22-alt1
 - Add --kvm=cond option for conditional run
 - spec: Test /dev/kvm presence in the %%check
