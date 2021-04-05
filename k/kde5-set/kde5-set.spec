@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 20.12.0
+Version: 21.01.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -38,7 +38,8 @@ Requires: webclient
 #
 Requires: icon-theme-breeze
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
-Requires: plasma5-sddm-kcm plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-ksysguard
+Requires: kde5-display-manager
+Requires: plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-ksysguard
 Requires: plasma5-drkonqi plasma5-milou plasma5-systemsettings plasma5-integration
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kcalc kde5-kdebugsettings kde5-kross-python
@@ -61,7 +62,8 @@ Requires: gtk2-theme-breeze
 Requires: kf5-qqc2-desktop-style
 Requires: kde5-plasma-applet-places-widget
 Requires: plasma5-kde-gtk-config kf5-baloo plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass
-Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-integration plasma5-disks
+Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-integration
+#Requires: plasma5-disks
 Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd kde5-kgpg
 Requires: plasma5-kmenuedit plasma5-kgamma plasma5-thunderbolt
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
@@ -198,6 +200,10 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Mon Apr 05 2021 Sergey V Turchin <zerg@altlinux.org> 21.01.0-alt1
+- require kde5-display-manager instead of sddm
+- temporary discard plasma5-disks
+
 * Tue Feb 16 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.0-alt1
 - add plasma5-disks
 

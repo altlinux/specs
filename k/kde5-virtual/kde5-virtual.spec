@@ -1,6 +1,6 @@
 
 Name: kde5-virtual
-Version: 5.20.1
+Version: 5.21.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -217,6 +217,26 @@ Requires: psi-plus-plugin-otr psi-plus-plugin-stopspam psi-plus-plugin-storageno
 %description -n kde5-messenger-client-6-mix
 %summary
 
+%package -n kde5-display-manager-2-sddm
+Group: Graphical desktop/KDE
+Summary: Virtual SDDM Display Manager
+Provides: kde5-display-manager = %EVR
+Provides: kde5-display-manager-sddm = %EVR
+Requires: kf5-filesystem
+Requires: plasma5-sddm-kcm sddm
+%description -n kde5-display-manager-2-sddm
+%summary
+
+%package -n kde5-display-manager-4-lightdm
+Group: Graphical desktop/KDE
+Summary: Virtual LightDM Display Manager
+Provides: kde5-display-manager = %EVR
+Provides: kde5-display-manager-lightdm = %EVR
+Requires: kf5-filesystem
+Requires: lightdm-gtk-greeter
+%description -n kde5-display-manager-4-lightdm
+%summary
+
 %files -n kde5-network-manager-0-dummy
 %files -n kde5-network-manager-2-etcnet
 %files -n kde5-network-manager-4-nm
@@ -243,7 +263,13 @@ Requires: psi-plus-plugin-otr psi-plus-plugin-stopspam psi-plus-plugin-storageno
 %files -n kde5-messenger-client-4-telepathy
 %files -n kde5-messenger-client-6-mix
 
+%files -n kde5-display-manager-2-sddm
+%files -n kde5-display-manager-4-lightdm
+
 %changelog
+* Mon Apr 05 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt1
+- add virtual kde5-display-manager
+
 * Tue Feb 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.20.1-alt1
 - add konversation to kde5-messenger-client-mix
 
