@@ -1,8 +1,8 @@
 Summary: srecord programs
 Name: srecord
 Version: 1.64
-Release: alt3
-License: GPL
+Release: alt4
+License: GPLv3
 Group: Development/Tools
 Source: http://srecord.sourceforge.net/%name-%version.tar.gz
 Patch0: srecord_rm_pdf_docs.patch
@@ -34,7 +34,7 @@ This package contains static libraries and header files for compiling programs
 that manipulate EPROM load files.
 
 %prep
-%setup -q
+%setup
 
 %patch0 -p1
 
@@ -44,14 +44,14 @@ that manipulate EPROM load files.
 
 %install
 %makeinstall DESTDIR=%buildroot
-%__rm -f $RPM_BUILD_ROOT/usr/lib/*.la
+rm -f %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/libsrecord.a
 
 %check
 %make sure
 
 %files
 %doc LICENSE BUILDING README
-# %_datadir/doc/srecord/*
 %_bindir/srec_cat
 %_bindir/srec_cmp
 %_bindir/srec_info
@@ -65,11 +65,14 @@ that manipulate EPROM load files.
 %dir %_includedir/srecord
 %_includedir/srecord/*
 %_libdir/pkgconfig/srecord.pc
-%_libdir/libsrecord.a
 %_libdir/libsrecord.so
 %_man3dir/*
 
 %changelog
+* Mon Apr 05 2021 Grigory Ustinov <grenka@altlinux.org> 1.64-alt4
+- Fixed FTBFS.
+- Fixed license tag.
+
 * Mon Sep 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.64-alt3
 - Update BR list.
 
