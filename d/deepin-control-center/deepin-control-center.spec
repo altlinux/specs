@@ -1,7 +1,7 @@
 %global repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.4.9
+Version: 5.4.17
 Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
@@ -10,6 +10,8 @@ Url: https://github.com/linuxdeepin/dde-control-center
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+# archlinux patches
+Patch: deepin-control-center-no-user-experience.patch
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils rpm-build-kf5
 BuildRequires: gcc-c++
@@ -59,6 +61,7 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
+%patch -p2
 
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i -E '/add_compile_definitions/d' CMakeLists.txt
@@ -89,7 +92,10 @@ export SYSTYPE=Desktop
     -DDCC_DISABLE_GRUB=YES \
     -DDISABLE_SYS_UPDATE=YES \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCVERSION=%version
+    -DDISABLE_RECOVERY=YES \
+    -DCVERSION=%version \
+    -DAPP_VERSION=%version \
+    -DVERSION=%version
 %ninja_build -C BUILD
 
 %install
@@ -117,13 +123,13 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %doc LICENSE
 %_bindir/%repo
 %_bindir/%repo-wapper
-%_bindir/abrecovery
+# %%_bindir/abrecovery
 %_desktopdir/%repo.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/polkit-1/actions/*.policy
 %_datadir/%repo/
 %_datadir/dict/MainEnglishDictionary_ProbWL.txt
-%_sysconfdir/xdg/autostart/deepin-ab-recovery.desktop
+# %%_sysconfdir/xdg/autostart/deepin-ab-recovery.desktop
 %_datadir/glib-2.0/schemas/com.deepin.dde.control-center.gschema.xml
 # %%_libdir/%%repo/
 %_libdir/libdccwidgets.so
@@ -133,6 +139,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Tue Apr 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.17-alt1
+- New version (5.4.17) with rpmgs script (thanks archlinux for the patch).
+
 * Wed Mar 24 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.9-alt1
 - New version (5.4.9) with rpmgs script.
 
