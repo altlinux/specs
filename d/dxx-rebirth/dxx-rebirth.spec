@@ -1,6 +1,6 @@
 Summary: The port of Descent/Descent 2 for Linux
 Name: dxx-rebirth
-Version: 20200301
+Version: 20210326
 Release: alt1
 License: GPLv3
 Group: Games/Arcade
@@ -9,9 +9,9 @@ Patch: dxx-d1x-rebirth-utilities.patch
 Source: %{name}_%version-src.tar.xz
 Requires: d1x-rebirth d2x-rebirth
 
-# Automatically added by buildreq on Sat Mar 28 2020
-# optimized out: GraphicsMagick-common GraphicsMagick-nox glibc-kernheaders-generic glibc-kernheaders-x86 libGLU-devel libSDL-devel libglvnd-devel libgpg-error libstdc++-devel pkg-config python-modules python2-base python3 python3-base sh4 xz zlib-devel
-BuildRequires: ImageMagick-tools dos2unix flex gcc-c++ git-core libSDL_mixer-devel libphysfs-devel libpng-devel scons
+# Automatically added by buildreq on Tue Apr 06 2021
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libImageMagick6-common libSDL2-devel libglvnd-devel libstdc++-devel pkg-config python2-base python3 python3-base python3-module-pkg_resources sh4 xz zlib-devel
+BuildRequires: ImageMagick-tools dos2unix flex gcc-c++ git-core libGLU-devel libSDL2_image-devel libSDL2_mixer-devel libphysfs-devel libpng-devel scons
 
 %description
 This is the port of Descent and Descent 2, the famous 3D games for PC.
@@ -72,12 +72,18 @@ for F in d2x-rebirth/utilities/*.c; do
 	make ${F%%.c}
 done
 
-scons 	-j%__nprocs prefix=/usr \
-	d1x_sharepath=%_datadir/descent \
-	d2x_sharepath=%_datadir/descent2 \
-	sdlmixer=1 \
-	dxx=ogl,e, \
+%define SCOPTS prefix=/usr \\\
+	d1x_sharepath=%_datadir/descent \\\
+	d2x_sharepath=%_datadir/descent2 \\\
+    d1x_program_name=`pwd`/d1x-rebirth/d1x-rebirth \\\
+    d2x_program_name=`pwd`/d2x-rebirth/d2x-rebirth \\\
+	sdlmixer=1 \\\
+	sdl2=1 \\\
+    editor=1 \\\
 	verbosebuild=1
+
+scons 	-j`nproc` %SCOPTS
+
 	#sdl_opengl=0 sdlmixer=1 \
 	#dxx=sdl, dxx=ogl,e, \
 	#d1x_ogl_program_name=d2x-rebirth-gl \
@@ -98,13 +104,13 @@ for F in d2x-rebirth/utilities/*.c; do
 	install -D ${F%%.c}.1 %buildroot%_man6dir/${P%%.c}.6
 done
 
-scons	prefix=/usr \
-	DESTDIR=%buildroot install 
-	mkdir -p %buildroot%_datadir/descent/missions
-	mkdir -p %buildroot%_datadir/descent2/missions
-	install d1x-rebirth/utilities/macd1extract %buildroot%_bindir/
-	mkdir -p %buildroot%_desktopdir
-	install */*.desktop %buildroot%_desktopdir/
+scons	%SCOPTS DESTDIR=%buildroot install
+
+mkdir -p %buildroot%_datadir/descent/missions
+mkdir -p %buildroot%_datadir/descent2/missions
+install d1x-rebirth/utilities/macd1extract %buildroot%_bindir/
+mkdir -p %buildroot%_desktopdir
+install */*.desktop %buildroot%_desktopdir/
 
 %files -n d1x-rebirth
 %doc d1x*/*.txt d1x*/*.plist d1x*/*.ini
@@ -125,6 +131,9 @@ scons	prefix=/usr \
 %_desktopdir/d2x*
 
 %changelog
+* Tue Apr 06 2021 George V. Kouryachy (Fr. Br. George) <george@altlinux.org> 20210326-alt1
+- Final (?) update
+
 * Sat Mar 28 2020 Fr. Br. George <george@altlinux.ru> 20200301-alt1
 - Initial build from source
 
