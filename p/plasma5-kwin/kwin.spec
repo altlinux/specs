@@ -19,7 +19,7 @@
 
 Name: plasma5-%rname
 Version: 5.21.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -209,6 +209,12 @@ KF5 library
 
 
 %changelog
+* Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt2
+- merge p9 changelog
+
+* Mon Apr 05 2021 Sergey V Turchin <zerg@altlinux.org> 5.18.5-alt2
+- add upstream fix get all EGL extension defines
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
 - new version
 
