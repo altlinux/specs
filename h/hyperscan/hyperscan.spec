@@ -1,6 +1,6 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
-%define major 5.3
+%define major 5.4
 %define libname libhyperscan%major
 %define develname libhyperscan-devel
 
@@ -19,6 +19,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/01org/%name/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+Patch: hyperscan-fix-missed-symbols.patch
+
 BuildRequires: boost-complete
 BuildRequires: cmake ctest
 BuildRequires: pkgconfig(libpcre)
@@ -26,7 +28,8 @@ BuildRequires: pkgconfig(python2)
 BuildRequires: ragel
 BuildRequires: pkgconfig(sqlite3) >= 3.0
 BuildRequires: libpcap-devel
-BuildRequires: %_bindir/doxygen %_bindir/sphinx-build gcc-c++ python-devel rpm-build-python
+BuildRequires: %_bindir/doxygen %_bindir/sphinx-build gcc-c++
+# python-devel rpm-build-python
 
 Requires: pcretest
 
@@ -65,6 +68,7 @@ needed for developing Hyperscan applications.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_STATIC_AND_SHARED:BOOL=OFF
@@ -85,6 +89,9 @@ needed for developing Hyperscan applications.
 %_includedir/hs/
 
 %changelog
+* Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt1
+- new version 5.4.0 (with rpmrb script)
+
 * Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt1
 - new version 5.3.0 (with rpmrb script)
 
