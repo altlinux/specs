@@ -2,8 +2,8 @@
 %define oname rasterio
 
 Name: python3-module-%oname
-Version: 1.1.8
-Release: alt3
+Version: 1.2.1
+Release: alt1
 
 License: BSD
 Group: Development/Python
@@ -67,6 +67,9 @@ xvfb-run py.test3 ||:
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt3
 - s/libnumpy-devel/libnumpy-py3-devel
 
