@@ -2,8 +2,8 @@
 %define oname geojson
 
 Name: python3-module-%oname
-Version: 1.3.3
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: Python bindings and utilities for GeoJSON
 License: BSD
@@ -13,6 +13,8 @@ Url: https://pypi.python.org/pypi/geojson/
 BuildArch: noarch
 
 Source0: https://pypi.python.org/packages/56/2d/44abe5d3fda94b524e93a8e0f8c83d1e890a9e97e3791f40483a28ccb971/%{oname}-%{version}.tar.gz
+
+Patch: d88e32f1b05ad287a8d612e6f61ed7432fc72957.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -43,6 +45,7 @@ This package contains examples for %oname.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch -p1
 
 %build
 %python3_build_debug
@@ -65,6 +68,9 @@ This package contains examples for %oname.
 
 
 %changelog
+* Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
+- Build new version.
+
 * Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.3-alt2
 - python2 disabled
 
