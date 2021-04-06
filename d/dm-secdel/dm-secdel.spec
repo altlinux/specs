@@ -1,18 +1,23 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+
 Name: dm-secdel
 Version: 1.0.7
-Release: alt2
+Release: alt3
 
 Summary: dm-linear with secure deletion on discard
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Requires: /sbin/dmsetup /sbin/blockdev /usr/bin/expr
 BuildArch: noarch
 
 Url: https://github.com/vt-alt/dm-secdel
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires: banner
+BuildRequires: kernel-headers-modules-std-def
+BuildRequires: kernel-headers-modules-un-def
 
 %description
 Linear device-mapper target with secure deletion on discard.
@@ -26,9 +31,7 @@ BuildArch: noarch
 Linear device-mapper target with secure deletion on discard (source).
 
 %prep
-%setup -q
-
-%build
+%setup
 
 %install
 make install-bin DESTDIR=%buildroot
@@ -37,17 +40,20 @@ mkdir %buildroot/etc
 echo '# <target name> <source device> <options>' > %buildroot/etc/secdeltab
 
 %check
-# do dummy build of the module
-make KDIR=$(echo /lib/modules/*/build) VERSION=%version
+# Do dummy build of the module.
+banner un-def
+make KDIR=$(echo /lib/modules/*-un-def-*/build) VERSION=%version all clean
+banner std-def
+make KDIR=$(echo /lib/modules/*-std-def-*/build) VERSION=%version all clean
 
 %files -n kernel-source-%name
-%attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
+%kernel_src/kernel-source-%name-%version.tar
 
 %files
 %doc README.md
 %config /etc/secdeltab
 /sbin/secdelsetup
-%{_unitdir}/secdeltab.service
+%_unitdir/secdeltab.service
 
 %post
 %post_service secdeltab
@@ -57,6 +63,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Tue Apr 06 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt3
+- Fix building for v5.5 (tested on v5.11).
+
 * Thu Feb 06 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt2
 - Fix building for 5.4 again.
 
