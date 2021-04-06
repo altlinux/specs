@@ -1,10 +1,10 @@
 Name: stereograph
 Version: 0.30a
-Release: alt2
+Release: alt3
 
 Summary: Stereogram generator
 
-License: GPL
+License: GPLv2
 Group: Graphics
 Url: http://januszewski.de/stereogramm-howto-de.html
 
@@ -30,7 +30,7 @@ regard them - everyone can learn it.
 
 %build
 for module in stereograph renderer gfxio; do
-    gcc -O2 -Dlinux -c -o $module.o $module.c
+    gcc -O2 -fcommon -Dlinux -c -o $module.o $module.c
 done
 gcc stereograph.o renderer.o gfxio.o -o stereograph -lm -lz -lpng
 
@@ -44,6 +44,10 @@ install -pD -m 644 %name\.1 %buildroot%_man1dir/%name\.1
 %doc README ChangeLog AUTHORS
 
 %changelog
+* Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.30a-alt3
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Mon Feb 11 2013 Dmitry Derjavin <dd@altlinux.org> 0.30a-alt2
 - Fix to build against libpng-1.5.x.
 
