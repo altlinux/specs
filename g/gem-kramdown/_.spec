@@ -1,8 +1,9 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname kramdown
+%define _unpackaged_files_terminate_build 1
 
 Name:          gem-%pkgname
-Version:       2.1.0
+Version:       2.3.1
 Release:       alt1
 Summary:       kramdown is a fast, pure Ruby Markdown superset converter
 License:       MIT
@@ -14,6 +15,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem-rexml
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -97,5 +99,8 @@ Executable file for %gemname gem.
 
 
 %changelog
+* Thu Mar 25 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 2.3.1-alt1
+- New version.
+
 * Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
