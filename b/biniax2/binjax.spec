@@ -1,6 +1,6 @@
 Name:		biniax2
 Version:	1.30
-Release:	alt2.qa1
+Release:	alt2.qa2
 License:	ZLib
 Group:		Games/Puzzles
 Summary:	Colour block logic game with original gameplay
@@ -29,6 +29,9 @@ Data files for %name
 
 %prep
 %setup -q -c -n %name-%version
+sed -i 's/\(gcc\)/\1 -fcommon/' makefile
+
+%build
 %make
 cat > %name.sh <<@@@
 #!/bin/sh
@@ -74,6 +77,9 @@ cp -r data %buildroot%_gamesdatadir/%name/data
 %_gamesdatadir/%name/*
 
 %changelog
+* Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.30-alt2.qa2
+- Fixed FTBFS with -fcommon.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.30-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
