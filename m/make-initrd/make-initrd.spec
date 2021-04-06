@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -219,6 +219,19 @@ fi
 %endif
 
 %changelog
+* Tue Apr 06 2021 Alexey Gladkov <legion@altlinux.ru> 2.15.0-alt1
+- Runtime:
+  + Allow init= to be symlink
+  + Fix root=NUMBER
+  + Show on console stopped services
+  + Make killall messages more informative
+- Utilities:
+  + initrd-put: Copy absolute symlinks (ALT#39877)
+- Misc:
+  + Make a compatibility symlink only if the file doesn't exist
+  + Create initramfs filesystem structure based on system filesystem
+  + Add more documentation
+
 * Tue Mar 30 2021 Alexey Gladkov <legion@altlinux.ru> 2.14.0-alt1
 - Feature mdadm:
   + Generate udev rules for guessed raid devices.
