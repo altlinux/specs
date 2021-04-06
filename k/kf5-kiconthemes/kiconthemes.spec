@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.80.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch: https://invent.kde.org/frameworks/kiconthemes/commit/3262669e.patch
 
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base qt5-base-devel ruby ruby-stdlibs
@@ -50,6 +51,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p1
 
 %build
 %K5build
@@ -78,6 +80,9 @@ KF5 library
 %_K5plug/iconengines/KIconEnginePlugin.so
 
 %changelog
+* Tue Apr 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.80.0-alt2
+- fixed missing icons outside of the plasma
+
 * Thu Mar 18 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt1
 - new version
 
