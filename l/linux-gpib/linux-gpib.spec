@@ -1,11 +1,11 @@
 Name: linux-gpib
-Version: 4.3.0
-Release: alt5
+Version: 4.3.4
+Release: alt1
 
 Summary: Support package for GPIB (IEEE 488) hardware
 Group: System/Kernel and hardware
 Url: http://linux-gpib.sourceforge.net/
-License: GPL
+License: GPLv2
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-kernel docbook-utils
@@ -14,7 +14,6 @@ Requires: fxload firmware-gpib
 
 Source0: %name-%version.tar
 Source1: %name-kernel-%version.tar.bz2
-Patch0: port-to-python3.patch
 
 %description
 The Linux GPIB Package is a support package for GPIB (IEEE 488) hardware.
@@ -50,10 +49,8 @@ This package contains GPIB modules sources for Linux kernel.
 
 %prep
 %setup
-%patch0 -p2
 
 %build
-export PYTHON=%__python3
 %autoreconf
 %configure
 %make_build
@@ -107,6 +104,9 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Apr 06 2021 Vladislav Zavjalov <slazav@altlinux.org> 4.3.4-alt1
+- v4.3.4
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.3.0-alt5
 - Porting to python3.
 
