@@ -1,7 +1,7 @@
 Summary: Is an open source real-time web log analyzer
 Name: goaccess
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Url: http://goaccess.prosoftcorp.com/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -22,6 +22,7 @@ report on the fly.
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure --enable-geoip
 %make
 
@@ -36,6 +37,9 @@ install -D -m 644 goaccess.1 %buildroot%_man1dir/goaccess.1
 %doc AUTHORS ChangeLog NEWS COPYING README TODO
 
 %changelog
+* Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
+- Fixed FTBFS with -fcommon.
+
 * Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.1.1-alt1
 - New version (ALT 32790)
 
