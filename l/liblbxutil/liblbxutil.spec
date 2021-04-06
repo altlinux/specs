@@ -1,11 +1,12 @@
 Name:		liblbxutil
 Version:	1.1.0
-Release:	alt2
+Release:	alt3
 License:	MIT
 Group:		System/X11
 Summary:	LBX utility routines
 Source:		%{name}-%{version}.tar.bz2
 Patch:		liblbxutil-1.1.0-alt-Xalloc.patch
+Patch1:     liblbxutil-1.1.0-alt-gcc10.patch
 URL:		http://cgit.freedesktop.org/xorg/lib/%name
 
 # Automatically added by buildreq on Thu Feb 14 2013
@@ -38,6 +39,7 @@ Requires:	%name-devel
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -60,6 +62,9 @@ Requires:	%name-devel
 %_libdir/lib*.a
 
 %changelog
+* Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 1.1.0-alt3
+- Fix GCC10 build
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.1.0-alt2
 - Fix build
 
