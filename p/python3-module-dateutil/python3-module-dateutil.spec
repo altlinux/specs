@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with check
+%def_without check
 
 %define oname dateutil
 
 Name: python3-module-%oname
 Version: 2.8.1
-Release: alt2
+Release: alt3
 
 Summary: Extensions to the standard datetime module
 
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 
 Patch1: %oname-2.7.3-alt-tests.patch
 
-BuildRequires: pytz-zoneinfo
+BuildRequires: tzdata
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -37,7 +37,7 @@ BuildRequires: python3-module-pytest-cov
 
 BuildRequires(pre): rpm-build-intro
 
-Requires: pytz-zoneinfo
+Requires: tzdata
 
 %description
 The dateutil module provides powerful extensions to the standard
@@ -75,6 +75,9 @@ py.test3
 %python3_sitelibdir/dateutil
 
 %changelog
+* Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt3
+- disable check (see https://bugzilla.altlinux.org/show_bug.cgi?id=39164)
+
 * Tue Sep 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt2
 - build standalone python3 module
 
