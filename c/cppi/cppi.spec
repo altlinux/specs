@@ -1,5 +1,5 @@
 Name: cppi
-Version: 1.18.0.19.0ac4
+Version: 1.18.0.27.0405
 Release: alt1
 
 Summary: C preprocessor directive indenter
@@ -11,7 +11,7 @@ Url: https://www.gnu.org/software/cppi/
 # git://git.altlinux.org/gears/c/cppi.git
 Source: %srcname.tar
 
-BuildRequires: flex gperf help2man gnulib >= 0.1.2305.95c96
+BuildRequires: flex gperf help2man gnulib >= 0.1.4170.b0728
 
 %description
 cppi indents the C preprocessor directives to reflect their nesting
@@ -47,8 +47,9 @@ sed -i '/^\(git\|makeinfo\|rsync\)[[:space:]]/d' bootstrap.conf
 
 %find_lang %name
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 %make_build -k check
@@ -59,5 +60,10 @@ sed -i '/^\(git\|makeinfo\|rsync\)[[:space:]]/d' bootstrap.conf
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 1.18.0.27.0405-alt1
+- cppi: v1.18-19-g0ac456b -> v1.18-27-g040518f.
+- gnulib BR: v0.1-2305-g95c96b6dd-> v0.1-4170-gb07286e46.
+- Updated translations from translationproject.org.
+
 * Sun Dec 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1.18.0.19.0ac4-alt1
 - v1.18-19-g0ac456b.

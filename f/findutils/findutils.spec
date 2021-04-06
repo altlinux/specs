@@ -1,5 +1,5 @@
 Name: findutils
-Version: 4.6.0.0.204.b23a2
+Version: 4.8.0.0.5.caa0
 Release: alt1
 
 Summary: The GNU versions of find utilities (find and xargs)
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.1.2305.95c96
+BuildRequires: gnulib >= 0.1.4349.8ed1d
 BuildRequires: glibc-devel-static
 BuildRequires: makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -61,16 +61,14 @@ mkdir dynamic static
 pushd dynamic
 mkdir locate
 echo '@set LOCATE_DB /var/lib/locate/locatedb' >locate/dblocation.texi
-%configure --bindir=/bin
+# Since find and xargs are not threaded executables,
+# configure gnulib with --disable-threads.
+%configure --disable-threads --bindir=/bin
 %make_build MAKEINFOFLAGS=--no-split
 popd
 
 pushd static
-export	ac_cv_search_setfilecon=no \
-	ac_cv_header_selinux_context_h=no \
-	ac_cv_header_selinux_flask_h=no \
-	ac_cv_header_selinux_selinux_h=no
-%configure --disable-nls
+%configure --disable-nls --disable-threads --without-selinux
 # Do not build xargs and doc.
 sed -i -e 's/ xargs / /' -e 's/ doc / /' Makefile*
 %make_build
@@ -90,8 +88,17 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 
 %find_lang %name
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+# section [ 3] '.rela.plt': relocation 0: invalid symbol index
+# ...
+# section [ 3] '.rela.plt': relocation 34: invalid symbol index
+# verify-elf: ERROR: ./usr/bin/find.static: eu-elflint failed
+%set_verify_elf_method strict,lint=relaxed
+
 %check
 %make_build -k check -C dynamic
+env PATH="%buildroot/bin:$PATH" \
 %make_build -k check -C static
 
 %files -f %name.lang
@@ -108,6 +115,10 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 4.8.0.0.5.caa0-alt1
+- findutils: v4.6.0-204-gb23a2693 -> v4.8.0-5-gcaa03867.
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4349-g8ed1d1f9f.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 4.6.0.0.204.b23a2-alt1
 - findutils: v4.6.0-99-g11a050c -> v4.6.0-204-gb23a2693
 - gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
@@ -413,7 +424,7 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 * Sun Apr  2 2000 Dmitry V. Levin <ldv@fandra.org>
 - Merged RH patches.
 
-* Wed Sep 23 1999 Dmitry V. Levin <ldv@fandra.org>
+* Thu Sep 23 1999 Dmitry V. Levin <ldv@fandra.org>
 - Feature: e2compr patch.
 - Fandra adaptions.
 

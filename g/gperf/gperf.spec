@@ -1,5 +1,5 @@
 Name: gperf
-Version: 3.1.0.19.9f4f
+Version: 3.1.0.27.b0f9
 Release: alt1
 
 Summary: A perfect hash function generator
@@ -9,7 +9,7 @@ Url: https://www.gnu.org/software/gperf/
 %define srcname %name-%version-%release
 # http://git.savannah.gnu.org/cgit/gperf.git
 Source: %srcname.tar
-BuildRequires: gnulib >= 0.1.2305.95c96
+BuildRequires: gnulib >= 0.1.4003.cfe65
 BuildRequires: gcc-c++ help2man makeinfo
 
 %description
@@ -27,7 +27,7 @@ ln -snf %_bindir/help2man doc/
 
 %build
 GNULIB_TOOL='gnulib-tool ' ./autogen.sh
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
 %define docdir %_docdir/%name
 %configure --docdir=%docdir
 %make_build
@@ -35,6 +35,10 @@ GNULIB_TOOL='gnulib-tool ' ./autogen.sh
 %install
 %makeinstall_std
 install -pm644 AUTHORS NEWS README %buildroot%docdir/
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 %make_build -k check
@@ -46,6 +50,10 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %docdir/
 
 %changelog
+* Tue Apr 06 2021 Dmitry V. Levin <ldv@altlinux.org> 3.1.0.27.b0f9-alt1
+- gperf: v3.1-19-g9f4f11a -> v3.1-27-gb0f961a.
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4003-gcfe65a873.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 3.1.0.19.9f4f-alt1
 - gperf: v3.1 -> v3.1-19-g9f4f11a.
 - gnulib: v0.1-1213-g683b60789 -> v0.1-2305-g95c96b6dd.

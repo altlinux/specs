@@ -1,5 +1,5 @@
 Name: libsigsegv
-Version: 2.12.0.11.f2e3
+Version: 2.13.0.5.8107
 Release: alt1
 
 Summary: Library for handling page faults in user mode
@@ -12,7 +12,7 @@ Url: https://www.gnu.org/software/libsigsegv/
 %define srcname %name-%version-%release
 Source: %srcname.tar
 
-BuildRequires: gnulib >= 0.1.2433.3043e
+BuildRequires: gnulib >= 0.1.4550.2a794
 
 %define libname %{name}2
 
@@ -60,18 +60,19 @@ with GNU libsigsegv.
 echo -n %version > .tarball-version
 
 %build
-GNULIB_TOOL=gnulib-tool sh -x ./autogen.sh
+GNULIB_SRCDIR=%_datadir/gnulib sh -x ./autogen.sh
 %configure --disable-silent-rules --enable-shared --disable-static
 %make_build
 
 %install
 %makeinstall_std
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %check
 %make_build -k check
-
-%set_verify_elf_method strict
-%define _unpackaged_files_terminate_build 1
 
 %files -n %libname
 %_libdir/*.so.*
@@ -82,6 +83,10 @@ GNULIB_TOOL=gnulib-tool sh -x ./autogen.sh
 %_includedir/*
 
 %changelog
+* Tue Apr 13 2021 Dmitry V. Levin <ldv@altlinux.org> 2.13.0.5.8107-alt1
+- libsigsegv: v2.12-11-gf2e3824 -> v2.13-5-g8107f54.
+- gnulib BR: v0.1-2433-g3043e43a7 -> v0.1-4550-g2a7948aad.
+
 * Tue Mar 05 2019 Dmitry V. Levin <ldv@altlinux.org> 2.12.0.11.f2e3-alt1
 - v2.10 -> v2.12-11-gf2e3824.
 - Enabled LFS on 32-bit systems.

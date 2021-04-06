@@ -1,5 +1,5 @@
 Name: gzip
-Version: 1.10
+Version: 1.10.0.31.34db
 Release: alt1
 
 Summary: The GNU data compression program
@@ -10,7 +10,7 @@ Url: https://www.gnu.org/software/gzip/
 %define srcname %name-%version-%release
 Source0: %srcname.tar
 
-BuildRequires: gnulib >= 0.1.2305.95c96, makeinfo
+BuildRequires: gnulib >= 0.1.4279.bb6ec, makeinfo
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: less}}
@@ -52,7 +52,7 @@ echo -n %version > .tarball-version
 # a safe handling of non-IEEE-754 'long double' values.
 sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' m4/gnulib-comp.m4 configure
 
-%configure --bindir=/bin --disable-silent-rules
+%configure --bindir=/bin --disable-silent-rules DEFS=-DNO_ASM
 %make_build
 ln -snf zdiff zcmp
 cp -p gzip.1 gzip.doc
@@ -107,6 +107,10 @@ ln -s zme.1 %buildroot%_man1dir/bzme.1
 # Our zless and zmore live in less package.
 rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %check
 %make_build -k check
 
@@ -128,6 +132,10 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Fri Apr 09 2021 Dmitry V. Levin <ldv@altlinux.org> 1.10.0.31.34db-alt1
+- gzip: v1.10 -> v1.10-31-g34db0a2.
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4279-gbb6ecf327.
+
 * Sun Dec 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1.10-alt1
 - gzip: v1.9-18-g9c2a2de -> v1.10.
 

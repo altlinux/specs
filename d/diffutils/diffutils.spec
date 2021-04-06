@@ -1,5 +1,5 @@
 Name: diffutils
-Version: 3.7
+Version: 3.7.0.38.cc14
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -17,7 +17,7 @@ Source1: po-%version-%release.tar
 
 Conflicts: man-pages <= 1.52-alt1
 
-BuildRequires: gnulib >= 0.1.2305.95c96
+BuildRequires: gnulib >= 0.1.4513.79a63
 BuildRequires: gperf help2man makeinfo
 
 %description
@@ -55,6 +55,10 @@ export PR_PROGRAM=%_bindir/pr
 %makeinstall_std
 %find_lang %name
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %check
 %make_build -k check
 
@@ -65,6 +69,11 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 3.7.0.38.cc14-alt1
+- diffutils: v3.7 -> v3.7-38-gcc14770.
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4513-g79a63f591.
+- Updated translations from translationproject.org.
+
 * Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 3.7-alt1
 - diffutils: v3.6-17-gd5bab3a -> v3.7.
 - gnulib: v0.1-2305-g95c96b6dd -> v0.1-2313-g4652c7baf.
@@ -183,7 +192,7 @@ export PR_PROGRAM=%_bindir/pr
 - BM
 - major spec simplification
 
-* Thu Apr 4 2000 Denis Havlik <denis@mandrakesoft.com> 2.7-18mdk
+* Tue Apr 4 2000 Denis Havlik <denis@mandrakesoft.com> 2.7-18mdk
 - new group: Development/Other
 - spechelper conform
 

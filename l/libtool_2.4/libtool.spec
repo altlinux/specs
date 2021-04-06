@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.6
-Release: alt2
+Release: alt3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -21,7 +21,7 @@ Requires: automake
 # git://git.altlinux.org/gears/l/%name.git
 Source: libtool-%version-%release.tar
 
-BuildRequires: gnulib >= 0.1.2433.3043e
+BuildRequires: gnulib >= 0.1.4550.2a794
 BuildRequires: gnulib-modules-bootstrap >= 0.0.70.037f
 BuildRequires: gcc-c++ gcc-g77 help2man makeinfo
 # for tests/search-path.at
@@ -154,6 +154,9 @@ ln -rsnf %buildroot/usr/share/gnu-config/config.{guess,sub} \
 %_libdir/*.a
 
 %changelog
+* Tue Apr 13 2021 Dmitry V. Levin <ldv@altlinux.org> 2.4.6-alt3
+- Updated build with gnulib v0.1-4550-g2a7948aad.
+
 * Mon Dec 21 2020 Dmitry V. Levin <ldv@altlinux.org> 2.4.6-alt2
 - libltdl: enabled LFS on 32-bit architectures.
 - Replaced config.* files with symlinks.

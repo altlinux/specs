@@ -1,6 +1,6 @@
 Name: m4
-Version: 1.4.18
-Release: alt2
+Version: 1.4.18.0.15.4e5c
+Release: alt1
 
 Summary: The GNU macro processor
 License: GPLv3+
@@ -10,7 +10,10 @@ Url: https://www.gnu.org/software/m4/
 # git://git.altlinux.org/gears/m/m4.git
 Source: %name-%version-%release.tar
 
-BuildRequires: help2man, gnulib >= 0.1.2305.95c96, makeinfo
+BuildRequires: gnulib >= 0.1.3618.4cfff6
+BuildRequires: gperf
+BuildRequires: help2man
+BuildRequires: makeinfo
 
 %description
 A GNU implementation of the traditional UNIX macro processor.  m4 is
@@ -28,28 +31,35 @@ echo -n %version > .tarball-version
 
 rmdir gnulib
 ln -s %_datadir/gnulib .
-%define _configure_update_config :
 
 %build
-./bootstrap --force
+./bootstrap --skip-po --force
 %configure
 %make_build MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std
-install -pD -m644 m4/m4.m4 %buildroot%_datadir/aclocal/m4.m4
+install -pD -m644 m4/m4.m4 %buildroot%_aclocaldir/m4.m4
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %files
 %_bindir/*
 %_infodir/*.info*
 %_man1dir/*
-%_datadir/aclocal/*
+%_aclocaldir/*
 %doc AUTHORS BACKLOG NEWS README THANKS TODO
 
 %changelog
+* Tue Apr 06 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.18.0.15.4e5c-alt1
+- v1.4.18 -> v1.4.18-15-g4e5c2c01 (fixes build with makeinfo >= 6.7).
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-3618-g4cfff6810.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.18-alt2
 - gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.
 
@@ -173,7 +183,7 @@ install -pD -m644 m4/m4.m4 %buildroot%_datadir/aclocal/m4.m4
 * Fri Apr 10 1998 Cristian Gafton <gafton@redhat.com>
 - Manhattan build
 
-* Wed Oct 21 1997 Cristian Gafton <gafton@redhat.com>
+* Tue Oct 21 1997 Cristian Gafton <gafton@redhat.com>
 - added info file handling and BuildRoot
 
 * Mon Jun 02 1997 Erik Troan <ewt@redhat.com>
