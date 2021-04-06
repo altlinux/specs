@@ -2,15 +2,15 @@
 
 Name: jamin
 Version: 0.95.0
-Release: alt2.1
+Release: alt3
 
 Summary: JAMin is a Realtime Mastering Processor
 Summary(ru_RU.KOI8-R): JAMin -- приложение для мастеринга звука
 License: GPL
 Group: Sound
 Url: http://%name.sourceforge.net
-Packager: Fr. Br. George <george@altlinux.ru>
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
+Patch: jamin-gcc10.patch
 
 Requires: ladspa-swh-plugins >= 0.4.11
 Requires: jackd
@@ -45,6 +45,7 @@ JAMin -- приложение, работающее через сервер JACK, он
 
 %prep
 %setup -q -n %name-%version
+%patch -p1
 # Fix lib
 for file in controller/Makefile.am src/plugin.c; do
    sed -i 's|/lib/|/%_lib/|g' $file
@@ -87,6 +88,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 0.95.0-alt3
+- Fix GCC10 build
+
 * Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.95.0-alt2.1
 - Rebuild with new version liblo
 
