@@ -1,6 +1,6 @@
 Name:          libdmtx
 Version:       0.7.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Library for working with Data Matrix 2D bar-codes
 Group:         System/Libraries
 License:       BSD-2-Clause
@@ -19,6 +19,16 @@ The included utility programs, dmtxread and dmtxwrite, provide the official
 interface to libdmtx from the command line, and also serve as a good reference
 for programmers who wish to write their own programs that interact with
 libdmtx.
+
+
+%package       devel-static
+Summary:       Development files for %name
+Group:         Development/C
+Requires:      %name = %version-%release
+
+%description   devel-static
+The %name-devel package contains static libraries and header files for
+developing applications that use %name.
 
 
 %package       devel
@@ -55,9 +65,14 @@ developing applications that use %name.
 %_libdir/%name.so
 %_libdir/pkgconfig/%name.pc
 %_mandir/man3/%name.3*
+
+%files        devel-static
 %_libdir/%name.a
 
 %changelog
+* Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 0.7.5-alt1.1
+- NMU: separate dynamic and static development libs
+
 * Thu Apr 02 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.5-alt1
 - > another library source on github
 - ^ 0.7.2 -> 0.7.5
