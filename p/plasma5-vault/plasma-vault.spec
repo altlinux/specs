@@ -1,7 +1,7 @@
 %define rname plasma-vault
 
 Name: plasma5-vault
-Version: 5.21.3
+Version: 5.21.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -79,6 +79,9 @@ Requires: %name-common = %version-%release
 %_K5srv/*vault*.desktop
 
 %changelog
+* Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt1
+- new version
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt1
 - new version
 

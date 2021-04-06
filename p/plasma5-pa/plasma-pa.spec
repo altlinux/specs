@@ -4,7 +4,7 @@
 %define libqpulseaudioprivate libqpulseaudioprivate%sover
 
 Name: plasma5-pa
-Version: 5.21.3
+Version: 5.21.4
 Release: alt1
 %K5init altplace no_appdata
 
@@ -96,6 +96,9 @@ KF5 library
 #%_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt1
+- new version
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname plasma-browser-integration
 
 Name: plasma5-browser-integration
-Version: 5.21.3
-Release: alt2
+Version: 5.21.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,9 @@ Requires: %name-common
 #%_K5lib/libplasma-browser-integration.so.*
 
 %changelog
+* Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt1
+- new version
+
 * Thu Apr 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt2
 - fix detect chromium and chromium-gost
 
