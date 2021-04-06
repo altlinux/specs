@@ -6,7 +6,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %define bname coredumper
 Name: lib%bname
 Version: 1.2.1
-Release: alt2.3
+Release: alt2.4
 Summary: Library to create core dumps of the running program
 Group: System/Libraries
 License: %bsdstyle
@@ -18,6 +18,8 @@ Patch1: %bname-1.2.1-alt-glibc-kernheaders-3.5.4.patch
 # Automatically added by buildreq on Tue Apr 15 2008
 BuildRequires: gcc-c++
 BuildRequires: rpm-build-licenses
+
+ExclusiveArch: x86_64 %ix86
 
 %description
 The %bname library can be compiled into applications to create core
@@ -80,6 +82,7 @@ This package includes examples of using %name.
 %patch -p1
 %patch1 -p2
 
+sed -i '/#include <sys\/sysctl.h>/d' src/elfcore.c
 
 %build
 %configure %{subst_enable shared} %{subst_enable static}
@@ -124,6 +127,9 @@ install -m 0644 examples/* %buildroot%_docdir/%name-%version/examples/
 
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt2.4
+- Fixed FTBFS.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.3
 - Fixed build with glibc-kernheaders 3.5.4
 
