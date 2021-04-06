@@ -1,13 +1,13 @@
 Name: libchipmunk
 Version: 7.0.3
-Release: alt1
+Release: alt2
 Summary: Physics engine for 2D games
 
 Group: System/Libraries
 License: MIT
 Url: http://chipmunk-physics.net
 Source0: http://files.slembcke.net/chipmunk/release/Chipmunk-%version.tgz
-Patch: Chipmunk-6.1.5-alt-build-shared-demos.patch
+Patch: Chipmunk-7.0.3-alt-gcc10.patch
 
 # Automatically added by buildreq on Sun Mar 03 2013
 # optimized out: cmake-modules libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -41,7 +41,7 @@ Demo binary and source for %name
 
 %prep
 %setup -n Chipmunk-%version
-#patch -p1
+%patch -p1
 
 %build
 %add_optflags -DCHIPMUNK_FFI
@@ -67,6 +67,9 @@ sed -i 's@target_link_libraries(chipmunk m)@target_link_libraries(chipmunk m pth
 %_bindir/*
 
 %changelog
+* Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 7.0.3-alt2
+- Fix gcc10 build
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 7.0.3-alt1
 - Autobuild version bump to 7.0.3
 
