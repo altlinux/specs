@@ -2,12 +2,12 @@
 
 Name: latte-dock
 Version: 0.9.11
-Release: alt2
+Release: alt3
 Summary: Latte is a dock based on plasma frameworks
 
 License: GPLv2+
 Group: Graphical desktop/KDE
-Url: https://github.com/KDE/%name
+Url: https://download.kde.org/stable/%name
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
@@ -61,10 +61,10 @@ using parabolic zoom effect and tries to be there only when it is needed.
 
 
 %install
+%K5install
+%find_lang %name --with-kde --all-name
 
-make install/fast DESTDIR=%{buildroot} -C BUILD
-
-%files
+%files -f %name.lang
 %_K5bin/%name
 %_datadir/metainfo/org.kde.%name.appdata.xml
 %_datadir/metainfo/org.kde.latte.plasmoid.appdata.xml
@@ -90,6 +90,10 @@ make install/fast DESTDIR=%{buildroot} -C BUILD
 %_K5xdgconf/latte-indicators.knsrc
 
 %changelog
+* Tue Apr 06 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.11-alt3
+- Add translation files.
+- Change source URL.
+
 * Wed Mar 24 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.11-alt2
 - Fix desktop file
 
