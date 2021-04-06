@@ -1,5 +1,5 @@
 Name: gnu-config
-Version: 1.0.971.ff53
+Version: 2021.03.10
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
@@ -36,6 +36,12 @@ install -pm644 doc/config.guess.1 doc/config.sub.1 %buildroot%_man1dir/
 %_man1dir/*.1*
 
 %changelog
+* Wed Mar 10 2021 Dmitry V. Levin <ldv@altlinux.org> 2021.03.10-alt1
+- 2021-01-01 -> 2021-03-10.
+
+* Fri Jan 01 2021 Dmitry V. Levin <ldv@altlinux.org> 2021.01.01-alt1
+- release-1-0-971-gff53d91 -> gnu-config-2021-01-01.
+
 * Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.0.971.ff53-alt1
 - release-1-0-968-g888c8e3 -> release-1-0-971-gff53d91.
 - Packaged manpages.
