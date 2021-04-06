@@ -1,5 +1,5 @@
 Name: mousepad
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 4.14.0
 BuildRequires: libxfconf-devel
-BuildRequires: libgtk+3-devel intltool libgtksourceview3-devel
+BuildRequires: libgtk+3-devel intltool libgtksourceview4-devel
 
 Obsoletes: xfce-mousepad < %version
 Provides: xfce-mousepad = %version-%release
@@ -44,6 +44,7 @@ Mousepad - простой текстовый редактор для Xfce осн
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
+	--enable-gtksourceview4 \
 	--enable-debug=minimum
 %make_build
 
@@ -61,6 +62,10 @@ Mousepad - простой текстовый редактор для Xfce осн
 %_desktopdir/*
 
 %changelog
+* Tue Apr 06 2021 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
+- Built with libgtksourceview4.
+- Updated to 0.5.4.
+
 * Sun Feb 28 2021 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
 - Updated to 0.5.3.
 
