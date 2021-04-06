@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack oslo.versionedobjects library
 
@@ -83,14 +83,19 @@ rm -rf html/.{doctrees,buildinfo}
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/test.py
 
 %files tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/*/test.py
 
 %files doc
 %doc LICENSE html
 
 %changelog
+* Tue Apr 06 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1.1
+- FTBFS: remove requirement of test from main module.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
 - Automatically updated to 2.0.2.
 - Fix license.
