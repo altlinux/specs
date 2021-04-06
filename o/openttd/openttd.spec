@@ -1,8 +1,8 @@
-%define daterev 20200730
-%define gitsnapshot baf5bf29fa68c908e7033e58465562d22ec97a07
+%define daterev 20210401
+%define gitsnapshot bd80ec7cff2f2186b133ea4bee431cb1a2f1fc95
 
 Name: openttd
-Version: 1.10.3
+Version: 1.11.0
 Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
@@ -16,82 +16,40 @@ Patch: %name-%version-alt.patch
 
 Requires: TiMidity++
 Requires: fonts-ttf-dejavu
-Requires: %name-data = %EVR
-Requires: openttd-3rd-party >= 0.6.0
+Obsoletes: %name-data < %EVR
+Requires: openttd-3rd-party >= 0.6.1
 
 BuildRequires: libSDL2-devel libpng-devel libfreetype-devel fontconfig-devel gcc-c++ liblzo2-devel liblzma-devel libxdg-basedir-devel libfluidsynth-devel
+BuildRequires: cmake
 
 %description
 An open source clone of the Microprose game "Transport Tycoon Deluxe".
 
-%package data
-Buildarch: noarch
-Summary: Data files for %name
-Requires: %name
-Group: Games/Strategy
-Requires: %name-3rd-party
-
-%description data
-Data files for %name.
 
 %prep
 %setup
 %patch -p1
-%ifarch %e2k
-# unsupported as of lcc 1.24.11 (mcst#5095)
-sed -i 's,-flifetime-dse=1,,' config.lib
-%endif
 
 %build
-echo "%version	%daterev	0	%gitsnapshot	1	1" >.ottdrev
-
-./configure \
-    --prefix-dir=%_prefix \
-    --with-sdl \
-    --with-png \
-    --with-freetype \
-    --with-fontconfig \
-    #
-    
-%make_build WITH_SDL=1 UNIX=1 INSTALL=1 WITH_NETWORK=1 ISTAG=1 ISSTABLETAG=1 \
-    USE_HOMEDIR=1 VERBOSE=1 RELEASE=%version PERSONAL_DIR=.%name \
-    PREFIX=%_prefix DATA_DIR=share/games/%name \
-    #
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_DATADIR=share/games
+%cmake_build
 
 %install
-mkdir -p %buildroot%_gamesbindir
-mkdir -p %buildroot%_gamesdatadir/%name/{gm,lang,ai}
-mkdir -p %buildroot%_man6dir
-
-install -m755 -s bin/%name %buildroot%_gamesbindir/%name
-cp -a bin/baseset %buildroot%_gamesdatadir/%name/
-cp -a bin/ai/*.nut %buildroot%_gamesdatadir/%name/ai/
-cp -a bin/lang/*.lng %buildroot%_gamesdatadir/%name/lang/
-chmod -x %buildroot%_gamesdatadir/%name/baseset/*
-
-# menu
-install -dm 755 %buildroot%_datadir/applications
-install -m644 media/%name.desktop %buildroot%_datadir/applications/%name.desktop
-
-# icons
-install -pD -m644 media/%name.16.png %buildroot%_miconsdir/%name.png
-install -pD -m644 media/%name.32.png %buildroot%_niconsdir/%name.png
-install -pD -m644 media/%name.48.png %buildroot%_liconsdir/%name.png
-install -pD -m644 docs/%name.6 %buildroot%_man6dir/
+%cmakeinstall_std
 
 %files
-%_gamesbindir/%name
-
-%files data
 %doc docs/* bin/scripts README.md known-bugs.txt changelog.txt COPYING.md
+%_gamesbindir/%name
 %_gamesdatadir/%name
 %_datadir/applications/%name.desktop
-%_niconsdir/%name.png
-%_miconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/*/*/*.png
 %_man6dir/*
 
 %changelog
+* Tue Apr 06 2021 Anton Farygin <rider@altlinux.org> 1.11.0-alt1
+- 1.11.0
+- content of the openttd-data package included to main openttd package
+
 * Sat Sep 19 2020 Anton Farygin <rider@altlinux.ru> 1.10.3-alt1
 - 1.10.3
 
