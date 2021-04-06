@@ -6,7 +6,7 @@
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt-fsarchiver
 Version: 0.8.4.%subver
-Release: alt2
+Release: alt3
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -117,6 +117,7 @@ echo QMAKE_CFLAGS_RELEASE = %optflags >>  qt5-fsarchiver.pro
 %build
 export PATH=$PATH:%_qt5_bindir
 
+%add_optflags -fcommon
 %qmake_qt5 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" qt5-fsarchiver.pro
 
@@ -161,6 +162,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.4.0-alt3
+- Fixed FTBFS with -fcommon.
+
 * Fri Feb 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.8.4.0-alt2
 - no return statement in the non-void function fixed (according g++8)
 
