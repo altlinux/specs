@@ -1,7 +1,7 @@
 %define  modulename inflect
 
 Name:    python3-module-%modulename
-Version: 4.1.0
+Version: 5.0.2
 Release: alt1
 
 Summary: Correctly generate plurals, singular nouns, ordinals, indefinite articles; convert numbers to words
@@ -36,6 +36,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt1
+- new version 5.0.2 (with rpmrb script)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - new version 4.1.0 (with rpmrb script)
 
