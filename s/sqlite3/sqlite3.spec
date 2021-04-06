@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.35.3
+Version: 3.35.4
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -199,6 +199,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Tue Apr 06 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.35.4-alt1
+- 3.35.4.
+
 * Mon Mar 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.35.3-alt1
 - 3.35.3.
 
