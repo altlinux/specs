@@ -1,7 +1,7 @@
 %define pymodule GTG
 
 Name: gtg
-Version: 0.4.0
+Version: 0.5
 Release: alt1
 
 Summary: A personal tasks and TODO list items organizer.
@@ -53,15 +53,14 @@ need to do and need to know, from small tasks to large projects.
 %_bindir/*
 %_desktopdir/*
 %python3_sitelibdir/GTG
-%_iconsdir/hicolor/*/apps/*
-%_iconsdir/hicolor/*/actions/*
-%_iconsdir/hicolor/*/categories/*
-%_iconsdir/hicolor/*/emblems/*
-%_iconsdir/ubuntu-mono-dark/*/apps/*
-%_iconsdir/ubuntu-mono-light/*/apps/*
 %_man1dir/*
 %_datadir/metainfo/*
+%_datadir/dbus-1/services/org.gnome.GTG.service
+%_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Apr 06 2021 Vladimir Didenko <cow@altlinux.org> 0.5-alt1
+- New version
+
 * Thu Jul 09 2020 Vladimir Didenko <cow@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus
