@@ -1,5 +1,5 @@
 Name: opam
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
@@ -87,6 +87,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Mon Apr 05 2021 Anton Farygin <rider@altlinux.org> 2.0.8-alt1
+- 2.0.8
+
 * Fri Apr 24 2020 Anton Farygin <rider@altlinux.ru> 2.0.7-alt1
 - 2.0.7
 
