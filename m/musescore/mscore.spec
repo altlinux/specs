@@ -1,5 +1,5 @@
 %define rname mscore
-%define mversion 3.5
+%define mversion 3.6
 
 Name: musescore
 Version: %mversion.2
@@ -85,22 +85,17 @@ chrpath -d %buildroot%_bindir/mscore
 %_bindir/*
 %_datadir/metainfo/org.musescore.MuseScore.appdata.xml
 %_desktopdir/mscore.desktop
-%_datadir/metainfo
 %_datadir/mscore-%mversion
 %_man1dir/*
 %_xdgmimedir/packages/musescore.xml
 %_iconsdir/hicolor/16x16/apps/mscore.png
 %_iconsdir/hicolor/32x32/apps/mscore.png
 %_iconsdir/hicolor/48x48/apps/mscore.png
-%_iconsdir/hicolor/24x24
-%_iconsdir/hicolor/64x64
-%_iconsdir/hicolor/96x96
-%_iconsdir/hicolor/128x128
-%_iconsdir/hicolor/512x512
-%_iconsdir/hicolor/48x48/mimetypes
-%_iconsdir/hicolor/scalable
 
 %changelog
+* Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 3.6.2-alt1
+- Build new version.
+
 * Tue Oct 27 2020 Grigory Ustinov <grenka@altlinux.org> 3.5.2-alt1
 - Automatically updated to 3.5.2.
 
