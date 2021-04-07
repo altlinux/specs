@@ -4,9 +4,14 @@
 %add_python3_path %_datadir/fence
 %allow_python3_import_path %_datadir/fence
 
+# like subst_with, but replacing '_' with '-'
+%define subst_enable_dash() %{expand:%%(echo '%%{subst_enable %1}' | sed 's/_/-/g')}
+
+%def_enable cpg_plugin
+
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.7.1
+Version: 4.8.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -14,10 +19,17 @@ Url: http://sourceware.org/cluster/wiki/
 # Source-url: https://github.com/ClusterLabs/fence-agents/archive/v%version.tar.gz
 
 Source0: %name-%version.tar.xz
+Source11: fence_virtd.init
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: autoconf-archive python3-module-pexpect python3-module-pycurl python3-module-requests python3-module-suds sudo xml-utils xsltproc
+BuildRequires: autoconf-archive
+BuildRequires: python3-module-pexpect python3-module-pycurl python3-module-requests python3-module-suds
 BuildRequires: python3-module-boto3
+BuildRequires: sudo xml-utils xsltproc
+
+BuildRequires: libcorosync-devel libvirt-devel
+BuildRequires: libxml2-devel nss-devel nspr-devel
+BuildRequires: flex libuuid-devel
 
 %description
 Fence Agents is a collection of scripts to handle remote
@@ -30,6 +42,17 @@ Summary: Common utilities for fence agents
 
 %description common
 Fence Agents is a collection of scripts and libraries to handle remote power management for various devices.
+
+%package aliyun
+License: GPLv2+ and LGPLv2+ and ADSL and BSD and MIT
+Summary: Fence agent for Alibaba Cloud (Aliyun)
+BuildArch: noarch
+Group: System/Base
+Requires: fence-agents-common = %version-%release
+Requires: python3-module-jmespath >= 0.9.0
+
+%description aliyun
+The fence-agents-aliyun package contains a fence agent for Alibaba Cloud (Aliyun) instances.
 
 %package alom
 BuildArch: noarch
@@ -645,8 +668,83 @@ Requires: fence-agents-common = %version-%release
 %description zvm
 The fence-agents-zvm package contains a fence agent for IBM z/VM over IP.
 
+# fence-virt
+
+%package -n fence-virt
+Summary: A pluggable fencing framework for virtual machines
+Group: System/Base
+
+%description -n fence-virt
+Fencing agent for virtual machines.
+
+%package -n fence-virtd
+Summary: Daemon which handles requests from fence-virt
+Group: System/Base
+
+%description -n fence-virtd
+This package provides the host server framework, fence_virtd,
+for fence_virt.  The fence_virtd host daemon is resposible for
+processing fencing requests from virtual machines and routing
+the requests to the appropriate physical machine for action.
+
+%package -n fence-virtd-multicast
+Summary:  Multicast listener for fence-virtd
+Requires: fence-virtd
+Group: System/Base
+
+%description -n fence-virtd-multicast
+Provides multicast listener capability for fence-virtd.
+
+%package -n fence-virtd-serial
+Summary:  Serial VMChannel listener for fence-virtd
+Requires: libvirt >= 0.6.2
+Requires: fence-virtd
+Group: System/Base
+
+%description -n fence-virtd-serial
+Provides serial VMChannel listener capability for fence-virtd.
+
+%package -n fence-virtd-tcp
+Summary:  TCP listener for fence-virtd
+Requires: fence-virtd
+Group: System/Base
+
+%description -n fence-virtd-tcp
+Provides TCP listener capability for fence-virtd.
+
+%package -n fence-virtd-vsock
+Summary: VSOCK listener for fence-virtd
+Requires: fence-virtd
+Group: System/Base
+
+%description -n fence-virtd-vsock
+Provides VSOCK listener capability for fence-virtd.
+
+%package -n fence-virtd-libvirt
+Summary:  Libvirt backend for fence-virtd
+Requires: libvirt >= 0.6.0
+Requires: fence-virtd
+Group: System/Base
+
+%description -n fence-virtd-libvirt
+Provides fence_virtd with a connection to libvirt to fence
+virtual machines.  Useful for running a cluster of virtual
+machines on a desktop.
+
+%package -n fence-virtd-cpg
+Summary:  CPG/libvirt backend for fence-virtd
+Requires: fence-virtd
+Group: System/Base
+
+%description -n fence-virtd-cpg
+Provides fence_virtd with a connection to libvirt to fence
+virtual machines. Uses corosync CPG to keep track of VM
+locations to allow for non-local VMs to be fenced when VMs
+are located on corosync cluster nodes.
+
 %prep
 %setup
+echo -n %version-%release > .tarball-version
 
 sed -i '/^.*pywsman.*/d' configure.ac
 
@@ -654,31 +752,50 @@ sed -i '/^.*pywsman.*/d' configure.ac
 %autoreconf
 export PYTHON="/usr/bin/python3"
 export SBD_PATH="/usr/sbin/sbd"
-%configure --localstatedir=%_var
+%configure --localstatedir=%_var %{subst_enable_dash cpg_plugin}
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
 
-rm  %buildroot%_sbindir/fence_aliyun
-rm  %buildroot%_man8dir/fence_aliyun.8*
 ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check
 ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardreboot
-xz  %buildroot%_man8dir/*.8
+
+rm -f %buildroot%_libdir/fence-virt/*.a
+rm -f %buildroot%_libdir/fence-virt/*.la
+
+# Systemd unit file
+mkdir -p %buildroot{%_unitdir,%_initdir}
+install -m 0644 agents/virt/fence_virtd.service %buildroot%_unitdir/
+install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
+
+%post
+%post_service fence_virtd
+
+%preun
+%preun_service fence_virtd
 
 %files common
 %_defaultdocdir/%name
 %_datadir/fence
-%_datadir/cluster
-%_datadir/pkgconfig/%name.pc
 %exclude %_datadir/fence/azure_fence.*
+%exclude %_datadir/fence/__pycache__/azure_fence.*
+%exclude %_datadir/fence/XenAPI.*
+%exclude %_datadir/fence/__pycache__/XenAPI.*
+%_datadir/cluster
+%exclude %_datadir/cluster/fence_mpath_check*
 %exclude %_datadir/cluster/fence_scsi_check*
+%_datadir/pkgconfig/%name.pc
 %exclude %_sbindir/fence_ack_manual
 %exclude %_man8dir/fence_ack_manual.8*
 %exclude %_sbindir/fence_dummy
 %exclude %_man8dir/fence_dummy.8*
 %exclude %_sbindir/fence_zvm
 %exclude %_man8dir/fence_zvm.8*
+
+%files aliyun
+%_sbindir/fence_aliyun
+%_mandir/man8/fence_aliyun.8*
 
 %files alom
 %_sbindir/fence_alom
@@ -857,6 +974,7 @@ xz  %buildroot%_man8dir/*.8
 
 %files mpath
 %_sbindir/fence_mpath
+%_datadir/cluster/fence_mpath_check*
 %_man8dir/fence_mpath.8*
 
 %files netio
@@ -956,7 +1074,47 @@ xz  %buildroot%_man8dir/*.8
 %_sbindir/fence_zvmip
 %_man8dir/fence_zvmip.8*
 
+%files -n fence-virt
+%doc agents/virt/docs/*
+%_sbindir/fence_virt
+%_sbindir/fence_xvm
+%_man8dir/fence_virt.*
+%_man8dir/fence_xvm.*
+
+%files -n fence-virtd
+%_sbindir/fence_virtd
+%_unitdir/fence_virtd.service
+%_initdir/fence_virtd
+%config(noreplace) %_sysconfdir/fence_virt.conf
+%dir %_libdir/fence-virt
+%_man5dir/fence_virt.conf.*
+%_man8dir/fence_virtd.*
+
+%files -n fence-virtd-multicast
+%_libdir/fence-virt/multicast.so
+
+%files -n fence-virtd-serial
+%_libdir/fence-virt/serial.so
+
+%files -n fence-virtd-tcp
+%_libdir/fence-virt/tcp.so
+
+%files -n fence-virtd-vsock
+%_libdir/fence-virt/vsock.so
+
+%files -n fence-virtd-libvirt
+%_libdir/fence-virt/virt.so
+
+%if_enabled cpg_plugin
+%files -n fence-virtd-cpg
+%_libdir/fence-virt/cpg.so
+%endif
+
 %changelog
+* Wed Apr 07 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.8.0-alt1
+- 4.8.0
+- fence-virt packages
+
 * Mon Feb 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.7.1-alt1
 - 4.7.1
 
