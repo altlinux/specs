@@ -1,15 +1,10 @@
 %global import_path github.com/influxdata/kapacitor
-%global commit e6bc51b8447de450c3f6fc0f6e47b6a0987ce5b6
+%global commit 06a16e51ceb5b7086b3b855969c3f93532da1550
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/*
-
 Name:		kapacitor
-Version:	1.5.3
+Version:	1.5.9
 Release:	alt1
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
@@ -24,7 +19,7 @@ Source102: %name.init
 Source103: %name.service
 Source104: %name.tmpfiles
 
-ExclusiveArch:  %go_arches
+ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
 
 %description
@@ -99,6 +94,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed Apr 07 2021 Alexey Shabalin <shaba@altlinux.org> 1.5.9-alt1
+- 1.5.9
+
 * Thu Jul 18 2019 Alexey Shabalin <shaba@altlinux.org> 1.5.3-alt1
 - 1.5.3
 
