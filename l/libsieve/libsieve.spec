@@ -1,6 +1,6 @@
 Name: libsieve
 Version: 2.2.5
-Release: alt1.qa2
+Release: alt2
 
 Summary: Standalone library providing an interpreter for RFC 3028 Sieve and various extensions
 License: CMU and LGPL
@@ -49,6 +49,7 @@ the Cyrus Sieve implementation.
 %build
 cd libsieve2/src
 ./bootstrap
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -74,9 +75,9 @@ cd src
 %_libdir/%name.so.?*
 %doc %_docdir/%name-%version/*
 # The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
+# The line below is added by repocop to fix this bug in a straightforward way.
 # Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/libsieve-%version 
+%dir %_docdir/libsieve-%version
 
 %files -n %name-devel
 %_includedir/*.h
@@ -86,6 +87,9 @@ cd src
 %_libdir/%name.a
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.5-alt2
+- Fixed FTBFS with -fcommon.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.5-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
