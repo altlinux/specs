@@ -1,6 +1,6 @@
 Name: gpm
 Version: 1.20.1
-Release: alt18.1
+Release: alt18.2
 
 Summary: A mouse server for the Linux console
 License: GPLv2+
@@ -120,6 +120,7 @@ find -type f -name \*.y |while read f; do
 done
 
 export ac_cv_path_emacs=no
+%add_optflags -fcommon
 %autoreconf
 %configure
 # SMP-incompatible build.
@@ -180,6 +181,9 @@ bzip2 -9 Changelog ||:
 %_man1dir/gpm-root.1*
 
 %changelog
+* Wed Apr 07 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.20.1-alt18.2
+- build with gcc10 hackarounded
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.20.1-alt18.1
 - NMU: added URL
 
