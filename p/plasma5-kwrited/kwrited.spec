@@ -1,7 +1,7 @@
 %define rname kwrited
 
 Name: plasma5-%rname
-Version: 5.21.3
+Version: 5.21.4
 Release: alt1
 %K5init altplace
 
@@ -76,6 +76,9 @@ KF5 library
 %_K5notif/*writed*
 
 %changelog
+* Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt1
+- new version
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
 - new version
 

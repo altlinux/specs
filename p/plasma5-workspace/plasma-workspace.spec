@@ -34,8 +34,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.21.3
-Release: alt2
+Version: 5.21.4
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -43,6 +43,9 @@ Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Provides: kf5-plasma-workspace = %EVR
+Obsoletes: kf5-plasma-workspace < %EVR
 
 Requires: sddm-theme-breeze
 Requires: %name-qml
@@ -107,8 +110,6 @@ BuildRequires: pipewire-libs-devel
 BuildRequires: libxapian-devel prison-devel libnm-devel
 BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
-BuildRequires: kde5-kholidays-devel kde5-plasma-wayland-protocols
-BuildRequires: plasma5-kscreenlocker-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel
@@ -123,9 +124,8 @@ BuildRequires: plasma5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel plas
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel kf5-prison-devel
 BuildRequires: kf5-networkmanager-qt-devel kf5-kpeople-devel kf5-kactivities-stats-devel
 BuildRequires: kf5-kded kf5-kded-devel
-
-Provides: kf5-plasma-workspace = %EVR
-Obsoletes: kf5-plasma-workspace < %EVR
+BuildRequires: kde5-kholidays-devel kde5-plasma-wayland-protocols
+BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel
 
 %description
 KDE Plasma Workspace
@@ -282,8 +282,13 @@ cat po/ru/libkicker.po.tmp > po/ru/libkicker.po
 rm -f po/ru/libkicker.po.tmp
 
 # disable krunners by default
-for d in runners/*/*.desktop* ; do
+for d in runners/*/*.desktop ; do
     sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
+done
+# enable some krunners by default
+for d in shell
+do
+    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
 done
 
 %build
@@ -471,6 +476,9 @@ done
 
 
 %changelog
+* Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt1
+- new version
+
 * Wed Mar 31 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.3-alt2
 - package systemd targets
 
