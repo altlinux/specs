@@ -4,7 +4,7 @@
 
 Name: golang-github-burntsushi-toml-test
 Version: 0.2.0
-Release: alt3.git39bb76d
+Release: alt4.git9767d20
 
 Summary: Language agnostic test suite for TOML
 License: MIT
@@ -32,6 +32,7 @@ tests.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export GO111MODULE="auto"
 %golang_prepare
 
 cd .build/src/%import_path
@@ -40,6 +41,7 @@ cd .build/src/%import_path
 %install
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
+export GO111MODULE="auto"
 
 %golang_install
 
@@ -52,6 +54,10 @@ cp -a tests %buildroot%_datadir/toml-test/
 %_datadir/toml-test/
 
 %changelog
+* Wed Apr 07 2021 Leontiy Volodin <lvol@altlinux.org> 0.2.0-alt4.git9767d20
+- Updated to the latest git snapshot.
+- Fixed build with golang 1.16.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 0.2.0-alt3.git39bb76d
 - Restored for Sisyphus.
 
