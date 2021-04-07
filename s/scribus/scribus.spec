@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.6.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -35,7 +35,7 @@ BuildRequires: fontconfig-devel >= 2.0
 BuildRequires: libxml2-devel >= 2.6.0
 BuildRequires: ghostscript > 9.0
 BuildRequires: libhunspell-devel
-BuildRequires: libpodofo-devel >= 0.9.6
+BuildRequires: libpodofo-devel >= 0.9.7
 # boost used only for 2geom
 BuildRequires: boost-devel-headers
 BuildRequires: GraphicsMagick
@@ -102,6 +102,9 @@ BuildArch: noarch
 
 %prep
 %setup
+# don't
+# brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
+subst 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
 
 %ifarch %e2k
 # until lcc-1.24: strip UTF-8 BOM
@@ -164,11 +167,16 @@ popd
 #%_docdir/%name/PACKAGING
 %_docdir/%name/LINKS
 %_docdir/%name/TRANSLATION
-%_docdir/%name/en
+%_docdir/%name/en/
+%_docdir/%name/ru/
 %exclude %_docdir/%name/de
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.6.1-alt2
+- fix build with podofo 0.9.7
+- pack ru docs
+
 * Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.6.1-alt1
 - new version (1.5.6.1) with rpmgs script
 - build from release tarball
