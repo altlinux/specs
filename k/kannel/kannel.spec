@@ -9,7 +9,7 @@
 Summary: WAP and SMS gateway
 Name: kannel
 Version: 1.5.0
-Release: alt1.cvs%cvs_build.3
+Release: alt1.cvs%cvs_build.4
 License: Kannel
 Group: Communications
 URL: http://www.kannel.org/
@@ -70,7 +70,7 @@ applications that use Kannel.
 
 %build
 %configure \
-		--with-cflags='-fPIC' \
+		--with-cflags='-fPIC -fcommon' \
 		--enable-cookies \
 		--enable-largefile \
 		--disable-docs \
@@ -153,6 +153,9 @@ install -m 755 %SOURCE4 %buildroot%_sysconfdir/monitrc.d/kannel
 %_libdir/kannel/*.a
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1.cvs20091101.4
+- Fixed FTBFS with -fcommon.
+
 * Thu Feb 07 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.5.0-alt1.cvs20091101.3
 - fix FTBFS against libmysqlclient.so.21
 
