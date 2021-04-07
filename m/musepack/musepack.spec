@@ -1,6 +1,6 @@
 Name: musepack
 Version: r475
-Release: alt2
+Release: alt3
 Summary: Portable Musepack decoder library
 License: BSD
 Group: Sound
@@ -8,6 +8,8 @@ Url: https://www.musepack.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+
+Patch: make-gcc10-happy.patch
 
 BuildPreReq: cmake libcuefile-devel libreplaygain-devel
 
@@ -38,6 +40,7 @@ This package contains development files of libmpcdec.
 
 %prep
 %setup
+%patch -p2
 
 %build
 cmake \
@@ -75,6 +78,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_libdir/*.so
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> r475-alt3
+- Fixed FTBFS.
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r475-alt2
 - Applied repocop patch
 
