@@ -1,6 +1,6 @@
 Name: tinyfugue
 Version: 5.0beta8
-Release: alt1
+Release: alt2
 Summary: Console MUD client
 License: GPLv2
 Group: Games/Other
@@ -25,6 +25,7 @@ TinyFugue или tf - это свободный клиент для игр MUD
 %setup
 
 %build
+%add_optflags -fcommon
 %configure
 %make
 
@@ -53,7 +54,8 @@ install -pm644 README %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 5.0beta8-alt2
+- Fixed FTBFS with -fcommon.
+
 * Tue Dec 22 2015 Andrey Bergman <vkni@altlinux.org> 5.0beta8-alt1
 - Initial release for Sisyphus.
-
-
