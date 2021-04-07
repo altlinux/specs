@@ -1,9 +1,9 @@
 Name: mbrowse
 Version: 0.4.3
-Release: alt3
+Release: alt4
 
 Summary: SNMP MIB browser
-License: GPL
+License: GPLv2
 Group: Networking/Other
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://sourceforge.net/projects/mbrowse/
@@ -32,6 +32,7 @@ Mbrowse is an SNMP MIB browser based on GTK and net-snmp.
 #patch4 -p2
 
 %build
+%add_optflags -fcommon
 %configure  --with-snmp-lib=%_libdir
 %make_build
 
@@ -66,6 +67,9 @@ install -pm 0644 %SOURCE2 %buildroot%_man1dir
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt4
+- Fixed FTBFS with -fcommon.
+
 * Fri Aug 30 2019 Alexey Shabalin <shaba@altlinux.org> 0.4.3-alt3
 - rebuild
 
