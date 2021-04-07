@@ -1,6 +1,6 @@
 Name: desmume
 Version: 0.9.11
-Release: alt3
+Release: alt4
 Summary: A Nintendo DS emulator
 Group: Emulators
 License: GPLv2+
@@ -21,6 +21,7 @@ BuildRequires: gettext
 BuildRequires: intltool
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
+BuildRequires: libSDL-devel
 Requires: icon-theme-hicolor
 BuildPreReq: chrpath
 
@@ -147,6 +148,9 @@ done
 %doc AUTHORS ChangeLog COPYING README README.LIN
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.11-alt4
+- Fixed FTBFS (corrected build requires).
+
 * Tue Feb 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.11-alt3
 - NMU: fixed build with gcc-8.
 
