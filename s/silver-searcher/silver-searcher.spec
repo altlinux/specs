@@ -1,6 +1,6 @@
 Name: silver-searcher
 Version: 2.2.0
-Release: alt2
+Release: alt3
 
 Summary: A code searching tool similar to ack, with a focus on speed
 License: Apache-2.0
@@ -26,6 +26,7 @@ The command name is 33%% shorter than ack, and all keys are on the home row!
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -40,6 +41,9 @@ The command name is 33%% shorter than ack, and all keys are on the home row!
 %doc README.md
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt3
+- Fixed FTBFS with -fcommon.
+
 * Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 2.2.0-alt2
 - fixed build on e2k (looks like clang was overlooked anyways)
 - minor spec cleanup
