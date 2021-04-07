@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    gitea
-Version: 1.12.6
+Version: 1.13.7
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -23,9 +23,10 @@ Patch1: %name-%version.patch
 Patch2: ALT_config.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.12 go-bindata
+BuildRequires: golang >= 1.13 go-bindata
 BuildRequires: npm >= 6.13.6-alt2 node >= 10.13
 BuildRequires: libpam0-devel
+BuildRequires: /proc
 
 Requires: git-core
 
@@ -58,11 +59,11 @@ install -Dm 0755 %name %buildroot%_bindir/%name
 install -Dm 0644 %SOURCE2 %buildroot%_unitdir/%name.service
 mkdir -p %buildroot%_sysconfdir/systemd/system/gitea.service.d
 install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/systemd/system/gitea.service.d/port.conf
-install -Dm 0660 custom/conf/app.ini.sample %buildroot%_sysconfdir/%name/app.ini
+install -Dm 0660 custom/conf/app.example.ini %buildroot%_sysconfdir/%name/app.ini
 
 # install docs
 mkdir -p %buildroot%_docdir/%name
-install -Dm 0644 custom/conf/app.ini.sample %buildroot%_docdir/%name/default-app.ini
+install -Dm 0644 custom/conf/app.example.ini %buildroot%_docdir/%name/default-app.ini
 install -Dm 0644 %SOURCE4 %buildroot%_docdir/%name/
 
 %pre
@@ -91,6 +92,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Wed Apr 07 2021 Alexey Shabalin <shaba@altlinux.org> 1.13.7-alt1
+- Build new version.
+
 * Fri Dec 11 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.6-alt1
 - Build new version.
 
