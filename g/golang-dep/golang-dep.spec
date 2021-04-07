@@ -3,8 +3,8 @@
 
 
 Name: golang-dep
-Version: 0.5.0
-Release: alt2
+Version: 0.5.4
+Release: alt1
 Summary: Go dependency management tool
 License: BSD
 Group: Development/Other
@@ -32,6 +32,7 @@ Check out the Roadmap for more on what this means!
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export GO111MODULE="auto"
 
 %golang_prepare
 
@@ -42,6 +43,7 @@ popd
 %install
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
+export GO111MODULE="auto"
 
 %golang_install
 
@@ -50,6 +52,10 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Wed Apr 07 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.4-alt1
+- New version.
+- Fixed build with golang 1.16.
+
 * Wed Feb 27 2019 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt2
 - delete ubt macros
 
