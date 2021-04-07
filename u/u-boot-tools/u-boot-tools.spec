@@ -1,6 +1,6 @@
 Name: u-boot-tools
-Version: 2021.01
-Release: alt2
+Version: 2021.04
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -38,6 +38,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Wed Apr 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt1
+- 2021.04 released
+
 * Mon Feb 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.01-alt2
 - fw_setenv/fw_printenv and sample config packaged
 
