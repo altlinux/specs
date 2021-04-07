@@ -5,7 +5,7 @@
 Name: usbip
 Summary: Utility for manage usbip devices
 Version: 2.0.4
-Release: alt6
+Release: alt7
 
 %define lname lib%name
 
@@ -74,6 +74,7 @@ rm -rf kernel-source-%kernel_version
 %build
  %__subst 's| -Werror||g' configure.ac
 ./autogen.sh
+%add_optflags -fcommon
 %configure --with-usbids-dir=%_datadir/misc
 %make_build
 
@@ -114,6 +115,9 @@ install -D -m0644 usbip-client.modules.conf %buildroot%_sysconfdir/modules-load.
 %_libdir/*.a
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.4-alt7
+- Fixed FTBFS with -fcommon.
+
 * Tue Sep 18 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt6
 - rebuild for kernel 4.18.x
 
