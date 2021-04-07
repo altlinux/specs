@@ -1,7 +1,7 @@
 %define sourcename ta-lib
 Name: libta-lib
 Version: 0.4.0
-Release: alt3
+Release: alt4
 Summary: TA LIB
 
 Group: Development/Other
@@ -37,6 +37,8 @@ Requires: %name
 %install
 %makeinstall_std
 
+rm -rf %buildroot/%_libdir/libta_lib.a
+
 %files
 %doc HISTORY.TXT CHANGELOG.TXT
 %_bindir/ta-lib-config
@@ -46,6 +48,9 @@ Requires: %name
 %_includedir/ta-lib
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt4
+- Fixed FTBFS.
+
 * Thu Jan 10 2019 Konstantin Artyushkin <akv@altlinux.org> 0.4.0-alt3
 - make_build || make
 
