@@ -1,9 +1,9 @@
 Name: wf
 Version: 0.41
-Release: alt1.qa1
+Release: alt2
 
 Summary: Simple word frequency counter
-License: GPL2
+License: GPLv2
 Group: Text tools
 Url: http://www.async.com.br/~marcelo/wf/
 Source: %name-%version.tar
@@ -17,6 +17,7 @@ wf scans a text file and counts the frequency of words through the whole text
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure
 make
 
@@ -30,6 +31,9 @@ make
 %doc AUTHORS NEWS README TODO ChangeLog
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 0.41-alt2
+- Fixed FTBFS with -fcommon.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.41-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
