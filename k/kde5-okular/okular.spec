@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -37,6 +37,7 @@ Patch1: alt-chm-encoding.patch
 Patch2: alt-def-memory-level.patch
 Patch3: alt-print-truncate-title.patch
 Patch4: alt-add-indication-for-document-loading-process.patch
+Patch5: alt-cryptopro-verifying.patch
 
 # Automatically added by buildreq on Tue Jan 19 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libpoppler1-qt5 libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xz zlib-devel
@@ -109,6 +110,7 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p2
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 tmp_file=`mktemp`
@@ -202,6 +204,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed Apr 07 2021 Oleg Solovyov <mcpain@altlinux.org> 20.12.3-alt2
+- implement gost signatures verifying
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
