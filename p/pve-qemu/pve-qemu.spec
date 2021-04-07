@@ -8,12 +8,12 @@
 
 Name: pve-%rname
 Version: 5.1.0
-Release: alt5
+Release: alt6
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL-1 and LGPLv2 and BSD
 Group: Emulators
-Requires: %name-system = %version-%release %name-user = %version-%release
+Requires: %name-system = %EVR %name-user = %EVR
 Conflicts: %rname
 URL: http://www.nongnu.org/qemu/
 
@@ -22,6 +22,8 @@ Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
 # qemu-kvm back compat wrapper
 Source5: qemu-kvm.sh
+# /etc/qemu/bridge.conf
+Source12: bridge.conf
 
 Source100: Logo.bmp
 
@@ -93,8 +95,8 @@ BuildRequires: acpica bzlib-devel glib2-devel flex libaio-devel libalsa-devel li
 BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libssh2-devel libusbredir-devel libxfs-devel
-BuildRequires: makeinfo perl-Pod-Usage python-modules-compiler pkgconfig(glusterfs-api) pkgconfig(virglrenderer)
-BuildRequires: libsystemd-devel libfuse3-devel ipxe-roms-qemu seavgabios seabios
+BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer)
+BuildRequires: libsystemd-devel ipxe-roms-qemu seavgabios seabios
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
 BuildRequires: python3-module-sphinx
 BuildRequires: libpve-backup-qemu-devel
@@ -124,10 +126,10 @@ Requires(pre): shadow-utils sysvinit-utils
 Requires: seavgabios
 Requires: seabios
 Requires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d
-Requires: %name-img = %version-%release
+Requires: %name-img = %EVR
 Requires: edk2-ovmf edk2-aarch64
 Conflicts: %rname-common
-Obsoletes: %name-aux < %version-%release
+Obsoletes: %name-aux < %EVR
 
 %description common
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -137,8 +139,8 @@ This package contains common files for qemu.
 %package system
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
-Requires: %name-common = %version-%release pve-backup-client
-Conflicts: %rname-system %rname-ivshmem-tools
+Requires: %name-common = %EVR pve-backup-client
+Conflicts: %rname-system %rname-ivshmem-tools %rname-tools %rname-kvm-core
 
 %description system
 Full system emulation.  In this mode, QEMU emulates a full system
@@ -280,10 +282,10 @@ mkdir -p %buildroot%docdir
 install -m644 LICENSE MAINTAINERS %buildroot%docdir/
 rm -rf %buildroot%_docdir/qemu
 
-# Really unpackaged:
-# install -m 0755 %SOURCE5 %buildroot%_bindir/qemu-kvm
-# ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
-# ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
+install -m 0755 %SOURCE5 %buildroot%_bindir/qemu-kvm
+ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
+ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
+ln -sf qemu.1.xz %buildroot%_man1dir/qemu-kvm.1.xz
 
 install -m 0755 vma %buildroot%_bindir/vma
 
@@ -294,6 +296,13 @@ rm -rf %buildroot%_iconsdir
 
 install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
 install -D -m 0755 %rname-kvm.control.in %buildroot%_controldir/kvm
+
+# TODO:
+# Install qemu-pr-helper service
+#install -m 0644 contrib/systemd/qemu-pr-helper.service %buildroot%_unitdir/qemu-pr-helper.service
+#install -m 0644 contrib/systemd/qemu-pr-helper.socket %buildroot%_unitdir/qemu-pr-helper.socket
+# Install rules to use the bridge helper with libvirt's virbr0
+install -D -m 0644 %SOURCE12 %buildroot%_sysconfdir/%name/bridge.conf
 
 %if_enabled vnc_sasl
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%rname.conf
@@ -353,11 +362,15 @@ fi
 %docdir/MAINTAINERS
 %_datadir/qemu
 %_datadir/pve-edk2-firmware
+%dir %_sysconfdir/%name
 %_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
 %_controldir/*
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%rname.conf
 %endif
+%_man7dir/qemu-block-drivers.*
+%_man7dir/qemu-qmp-ref.*
+%_man7dir/qemu-cpu-models.*
 
 %files system -f %rname.lang
 %_bindir/elf2dmp
@@ -365,20 +378,39 @@ fi
 %_bindir/vma
 %_bindir/qemu-edid
 %_bindir/qemu-storage-daemon
+%_bindir/qemu-kvm
+%_bindir/kvm
+%_bindir/qemu
+%_man1dir/qemu.*
+%_man1dir/qemu-kvm.1*
 %_bindir/ivshmem-client
 %_bindir/ivshmem-server
 %_bindir/pbs-restore
-%_libexecdir/qemu-bridge-helper
+%attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
+%config(noreplace) %_sysconfdir/%name/bridge.conf
 %_libexecdir/qemu-pr-helper
+# TODO:
+#%_bindir/qemu-pr-helper
+#%_unitdir/qemu-pr-helper.service
+#%_unitdir/qemu-pr-helper.socket
 %_libexecdir/virtfs-proxy-helper
+%_man1dir/virtfs-proxy-helper.*
 %_libexecdir/virtiofsd
+%_man1dir/virtiofsd.*
 
 %files img
 %_bindir/qemu-img
 %_bindir/qemu-io
 %_bindir/qemu-nbd
+%_man1dir/qemu-img.1*
+%_man8dir/qemu-nbd.8*
 
 %changelog
+* Mon Mar 29 2021 Alexey Shabalin <shaba@altlinux.org> 1:5.1.0-alt6
+- install /usr/bin/qemu-kvm script
+- update udev rules and control
+- fix perm of qemu-bridge-helper
+
 * Tue Mar 16 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:5.1.0-alt5
 - move PBS into separate package
 
