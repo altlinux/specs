@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2021.01
+Version: 2021.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -27,8 +27,6 @@ This package supports various Rockchip RK3399 based boards.
 egrep -lr 'CONFIG_ROCKCHIP_(PX30|RK3328|RK3399)' configs |xargs sed -i \
 	-e '/^CONFIG_DEFAULT_FDT_FILE/ s,rockchip/,,' \
 	-e '/^CONFIG_BAUDRATE/ s,1500000,115200,'
-sed -E '/^CONFIG_DEFAULT_FDT_FILE=/ s,=.+$,="rk3399-sapphire-excavator.dtb",' \
-	< configs/evb-rk3399_defconfig > configs/rk3399-sapphire-excavator_defconfig
 
 %build
 export PYTHON=python3
@@ -59,6 +57,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Apr 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt1
+- 2021.04 released
+
 * Wed Jan 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.01-alt1
 - 2021.01 released
 
