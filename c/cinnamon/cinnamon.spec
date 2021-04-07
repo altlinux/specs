@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.8.6
-Release: alt4
+Release: alt5
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -44,7 +44,7 @@ Requires: %name-translations
 Requires: mintlocale
 Requires: gst-plugins-base1.0
 
-Requires: typelib(Soup)
+Requires: libsoup-gir
 
 # needed to install applets
 Requires: gettext-tools
@@ -187,6 +187,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Wed Apr 07 2021 Anton Midyukov <antohami@altlinux.org> 4.8.6-alt5
+- Add Requires: libsoup-gir (Closes: 39890)
+
 * Wed Mar 24 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt4
 - Resolve deps conflict with gnome-shell
 
