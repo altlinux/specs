@@ -1,8 +1,8 @@
 Summary: The free terminal and multiprotocol client for Linux
 Name: lterm
 Version: 1.5.1
-Release: alt1
-License: GPL2+
+Release: alt2
+License: GPLv2+
 Group: Terminals
 Url: http://lterm.sourceforge.net/
 Source0: %name-%version.tar
@@ -35,6 +35,7 @@ Features:
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure
 %make_build
 
@@ -49,6 +50,9 @@ Features:
 %doc ChangeLog NEWS AUTHORS TODO README
 
 %changelog
+* Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt2
+- Fixed FTBFS with -fcommon.
+
 * Sun Oct 28 2018 Terechkov Evgenii <evg@altlinux.org> 1.5.1-alt1
 - 1.5.1
 - Patch1 to avoid linking with libssh_threads (non-existent)
