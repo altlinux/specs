@@ -1,5 +1,5 @@
 Name: seadrive-gui
-Version: 2.0.12
+Version: 2.0.13
 Release: alt1
 
 Summary: Seafile Drive client
@@ -36,6 +36,7 @@ Note: you need install seadrive-daemon also, which not opensourced.
 
 %prep
 %setup
+subst '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLists.txt
 
 %build
 PATH=%_qt5_bindir:$PATH %cmake_insource
@@ -53,6 +54,10 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
+* Wed Apr 07 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.13-alt1
+- new version (2.0.13) with rpmgs script
+- fix build with glib >= 2.67.3
+
 * Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.12-alt1
 - new version 2.0.12 (with rpmrb script)
 
