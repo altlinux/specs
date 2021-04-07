@@ -24,7 +24,7 @@
 
 Name: xorg-server
 Version: 1.20.10
-Release: alt2
+Release: alt3
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -312,6 +312,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Sun Apr 04 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 2:1.20.10-alt3
+- Xorg runs on Baikal-M out of the box
+
 * Fri Mar 19 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.10-alt2
 - disabled Xwayland
 
