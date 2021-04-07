@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname PLTable
+%define oname pltable
 
 Name: python3-module-%oname
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Summary: Easily displaying tabular data in a visually appealing ASCII table format
 
@@ -16,8 +16,8 @@ Url: https://github.com/platomav/PLTable
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-Provides: python3-module-prettytable = %EVR
-Obsoletes: python3-module-prettytable < %EVR
+Provides: python3-module-PLTable = %EVR
+Obsoletes: python3-module-PLTable < %EVR
 
 %py3_provides %oname
 
@@ -40,5 +40,10 @@ PLTable is a fork of PTable which was in turn originally forked from PrettyTable
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 07 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.2-alt1
+- 1.0.2
+- rename from PLTable to pltable
+- do not provides and obsoletes prettytable
+
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.1-alt1
 - Initial build
