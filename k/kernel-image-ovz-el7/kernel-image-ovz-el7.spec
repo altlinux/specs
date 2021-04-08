@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.15.2.vz7.173.7
-%define orelease 1160.15.2.vz7.173.7.1
+#     rh7-3.10.0-1160.15.2.vz7.173.9
+%define orelease 1160.15.2.vz7.173.9
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -115,6 +115,7 @@ Requires: mkinitrd >= 1:2.9.9-alt1
 Requires: startup >= 0.9.8.24.1
 
 Provides: kernel = %kversion
+Provides: vzkernel = %kversion
 Provides: kernel-modules-md-%flavour = %version-%release
 
 Requires(pre): coreutils
@@ -586,6 +587,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Thu Apr 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.15.2.vz7.173.9
+- Build rh7-3.10.0-1160.15.2.vz7.173.9
+- Provides: vzkernel
+
 * Mon Mar 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.15.2.vz7.173.7.1
 - revert lazytime mount option commit
 
