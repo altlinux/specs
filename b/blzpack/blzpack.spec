@@ -5,7 +5,7 @@
 %define sover %somver.4.0
 Name: blzpack
 Version: 04.00
-Release: alt11
+Release: alt12
 Summary: Block LancZos PACKage
 License: BSD
 Group: Sciences/Mathematics
@@ -126,6 +126,7 @@ This package contains development documentation for BLZPACK.
 
 %prep
 %setup
+sed -i 's/\(-Wall\)/\1 -fallow-argument-mismatch/' sys/MACROS/Linux
 
 %build
 mpi-selector --set %mpiimpl
@@ -186,6 +187,9 @@ popd
 %doc %_docdir/lib%name-%version/examples
 
 %changelog
+* Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 04.00-alt12
+- Fixed FTBFS.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 04.00-alt11
 - Fixed FTBFS.
 
