@@ -1,12 +1,12 @@
 %define module_name     hinic
 %define module_version  2.3.2.17
-%define module_release  alt1
+%define module_release  alt2
 %define flavour         std-def
 %define karch x86_64 aarch64
 
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/updates
 
 Summary: Huawei(R) Intelligent Network Interface Card Driver
 Name: kernel-modules-%module_name-%flavour
@@ -39,21 +39,14 @@ tar -xf %kernel_src/kernel-source-%module_name-%module_version.tar*
 %setup -D -T -n kernel-source-%module_name-%module_version
 
 %build
-#sed -i s/SUBDIRS=/M=/g Makefile
 make -C /lib/modules/*/build M=$PWD/drivers/net/ethernet/huawei/hinic modules CONFIG_HINIC=m -j
 
 %install
 install -d %buildroot/%module_dir
-install -m644 -D drivers/net/ethernet/huawei/hinic/hinic.ko %buildroot/%module_dir/hinic2.ko
-# Blacklist original hinic
-mkdir -p %buildroot/%_sysconfdir/modprobe.d
-cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-hinic.conf << __EOF__
-blacklist hinic
-__EOF__
+install -m644 -D drivers/net/ethernet/huawei/hinic/hinic.ko %buildroot/%module_dir/hinic.ko
 
 %files
-%module_dir
-%config(noreplace) %_sysconfdir/modprobe.d/blacklist-hinic.conf
+%module_dir/*.ko
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
