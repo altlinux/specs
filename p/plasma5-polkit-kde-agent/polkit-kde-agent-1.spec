@@ -1,3 +1,7 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%define ecm_ver %{get_version extra-cmake-modules}
 %ifndef _unitdir_user
 %define _unitdir_user %prefix/lib/systemd/user
 %endif
@@ -6,7 +10,7 @@
 
 Name: plasma5-polkit-kde-agent
 Version: 5.21.4
-Release: alt2
+Release: alt4
 Epoch: 1
 %K5init altplace
 
@@ -20,12 +24,13 @@ Requires: polkit
 Source: %rname-%version.tar
 Patch1: alt-stay-on-top.patch
 Patch2: alt-show-only-one-user-too.patch
+Patch3: alt-ecm-req.patch
 
 # Automatically added by buildreq on Fri Feb 27 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libjson-c libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel libpolkitqt5-qt5-devel python-module-google ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires(pre): rpm-build-kf5 extra-cmake-modules
+BuildRequires: gcc-c++
 BuildRequires: polkitqt5-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel
@@ -68,6 +73,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build \
@@ -83,9 +89,17 @@ KF5 library
 %_K5start/*polkit-kde-authentication-agent*.desktop
 %_K5xdgapp/*polkit-kde-authentication-agent*.desktop
 %_K5notif/policykit1-kde.notifyrc
+%_K5if_ver_gteq %ecm_ver 5.73
 %_unitdir_user/*.service
+%endif
 
 %changelog
+* Thu Apr 08 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt4
+- fix to build with old ECM
+
+* Thu Apr 08 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt3
+- descrease build requires
+
 * Thu Apr 08 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt2
 - show user list if only one found
 
