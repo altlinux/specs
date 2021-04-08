@@ -3,10 +3,10 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt2.qa2
+Release: alt2.qa3
 Summary: Language tool for high-performance scientific computing community
- 
-License: LGPL v2.1
+
+License: LGPLv2.1
 Group: Sciences/Mathematics
 Url: http://www.llnl.gov/CASC/components/babel.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -251,6 +251,7 @@ export JAVAFLAGS=""
 export MPI_VENDOR=%mpiimpl
 source %mpidir/bin/mpivars.sh
 
+%add_optflags -fallow-argument-mismatch
 %configure \
 	--enable-pure-static-runtime=no \
 	--enable-static=no \
@@ -365,6 +366,9 @@ done
 %_docdir/%name
 
 %changelog
+* Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2.qa3
+- Fixed FTBFS.
+
 * Thu Oct 03 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.0-alt2.qa2
 - Fixed build on ppc64le.
 
