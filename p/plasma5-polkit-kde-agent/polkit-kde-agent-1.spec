@@ -6,7 +6,7 @@
 
 Name: plasma5-polkit-kde-agent
 Version: 5.21.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -19,6 +19,7 @@ Requires: polkit
 
 Source: %rname-%version.tar
 Patch1: alt-stay-on-top.patch
+Patch2: alt-show-only-one-user-too.patch
 
 # Automatically added by buildreq on Fri Feb 27 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libjson-c libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel
@@ -66,6 +67,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build \
@@ -84,6 +86,9 @@ KF5 library
 %_unitdir_user/*.service
 
 %changelog
+* Thu Apr 08 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt2
+- show user list if only one found
+
 * Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt1
 - new version
 
