@@ -1,8 +1,6 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1
 Name:		ltxml
 Version:	1.2.7
-#Release:	alt2
+Release:	alt3
 License:	GPL
 Group:		Text tools
 Summary:	LT XML toolkit
@@ -12,6 +10,7 @@ Requires:	zlib
 URL:		http://www.ltg.ed.ac.uk/software/xml/
 Source:		ftp://ftp.cogsci.ed.ac.uk/pub/LTXML/%{name}-%{version}.tar.gz
 Patch:		%{name}-1.2.7-configure.in.patch
+Patch1:     ltxml-without-sys_errlist.patch
 
 BuildRequires:	autoconf zlib-devel
 
@@ -35,10 +34,11 @@ LT XML API libraries and header files.
 %prep
 %setup -q -n %{name}-%{version}/XML
 %patch -p2
+%patch1 -p3
 
 %build
 %__autoconf
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -fcommon
 %configure --enable-multi-byte
 %__make all
 
@@ -65,6 +65,9 @@ mv %buildroot%_libexecdir/ltxml* %buildroot%_libdir/
 %{_libdir}/*.a
 
 %changelog
+* Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt3
+- Fixed FTBFS.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.7-alt2.1
 - (AUTO) subst_x86_64.
 
