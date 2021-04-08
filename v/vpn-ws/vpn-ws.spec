@@ -1,6 +1,6 @@
 Name: vpn-ws
 Version: 0.2
-Release: alt3
+Release: alt4
 
 Summary: A VPN system over websockets
 
@@ -19,6 +19,7 @@ protocol and to manage websockets connections.
 
 %prep
 %setup
+sed -i 's/\(-Wall\)/\1 -fcommon/' Makefile
 
 %build
 %make_build
@@ -37,6 +38,9 @@ cp altlinux/*.service %buildroot/%systemd_unitdir/
 %systemd_unitdir/vpn-ws*.service
 
 %changelog
+* Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.2-alt4
+- Fixed FTBFS with -fcommon.
+
 * Sat Dec 29 2018 Eugene Prokopiev <enp@altlinux.ru> 0.2-alt3
 - use templates for client unit
 
