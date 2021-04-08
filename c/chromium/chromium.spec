@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        89.0.4389.90
+Version:        89.0.4389.114
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -85,6 +85,7 @@ Patch019: 0019-Move-offending-function-to-chromeos-only.patch
 Patch020: 0020-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 Patch021: 0021-GCC-do-not-pass-unique_ptr-to-DCHECK_NE-but-the-actu.patch
 Patch022: 0022-IWYU-add-ctime-for-std-time.patch
+Patch023: 0023-Fix-libva-redefinitions.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -200,6 +201,7 @@ tar -xf %SOURCE1
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
+%patch023 -p1
 ### Finish apply patches
 
 # lost sources
@@ -455,6 +457,16 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Apr 08 2021 Alexey Gladkov <legion@altlinux.ru> 89.0.4389.114-alt1
+- New version (89.0.4389.114).
+- Security fixes:
+  - CVE-2021-21194: Use after free in screen capture.
+  - CVE-2021-21195: Use after free in V8.
+  - CVE-2021-21196: Heap buffer overflow in TabStrip.
+  - CVE-2021-21197: Heap buffer overflow in TabStrip.
+  - CVE-2021-21198: Out of bounds read in IPC.
+  - CVE-2021-21199: Use Use after free in Aura.
+
 * Mon Mar 15 2021 Alexey Gladkov <legion@altlinux.ru> 89.0.4389.90-alt1
 - New version (89.0.4389.90).
 - Security fixes:
