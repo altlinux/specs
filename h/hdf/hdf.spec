@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/diff /usr/bin/makeinfo /usr/bin/neqn /usr/bin/tbl
 
 Name: hdf
 Version: 4.2.14
-Release: alt1_1
+Release: alt2
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 URL: https://portal.hdfgroup.org/
@@ -95,7 +95,7 @@ rm config/*linux-gnu
 # for missing link to libdf.so
 export CFLAGS="%{optflags} -fPIC -I%{_includedir}/tirpc"
 export LIBS="-ltirpc"
-export FFLAGS="%{optflags} -fPIC -ffixed-line-length-none"
+export FFLAGS="%{optflags} -fPIC -ffixed-line-length-none -fallow-argument-mismatch"
 %configure --disable-production --disable-java --disable-netcdf \
  --enable-shared=no --enable-static=yes --enable-fortran %{!?el6:--with-szlib} \
  --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
@@ -149,6 +149,9 @@ make -j1 check
 %{_docdir}/%{name}/examples/
 
 %changelog
+* Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 4.2.14-alt2
+- Fixed FTBFS.
+
 * Tue Dec 18 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.14-alt1_1
 - new version
 
