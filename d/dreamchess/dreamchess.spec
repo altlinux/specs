@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 Name:    dreamchess
 Version: 0.3.0
-Release: alt1.git5174b54
+Release: alt2.git1dabf97
 
 Summary: DreamChess is a user interface for playing chess.
-License: GPL
+License: GPLv3
 URL: http://www.dreamchess.org/
 
 Group: Games/Boards
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 Summary(ru_RU.UTF8): DreamChess - пользовательский интерфейс для игры в шахматы.
 
-BuildRequires: cmake gcc-c++ bison flex libmxml-devel libGLEW-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel 
+BuildRequires: cmake gcc-c++ bison flex libmxml-devel libGLEW-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libexpat-devel
 
 Requires: %name-data = %EVR
 
@@ -47,7 +47,7 @@ Requires: %name = %EVR
 This package contains data files for DreamChess game
 
 %prep
-%setup -q
+%setup
 
 %build
 %cmake
@@ -55,6 +55,8 @@ This package contains data files for DreamChess game
 
 %install
 %cmakeinstall_std
+
+rm -rf %buildroot%_datadir/locale/*
 
 %files
 %_bindir/*
@@ -67,6 +69,10 @@ This package contains data files for DreamChess game
 %_datadir/%name
 
 %changelog
+* Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt2.git1dabf97
+- Update to upstream snapshot 1dabf97.
+- Fix license tag.
+
 * Thu Dec 27 2018 Alexey Melyashinsky <bip@altlinux.org> 0.3.0-alt1.git5174b54
 - Update to upstream snapshot 5174b54.
 
