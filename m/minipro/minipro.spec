@@ -2,7 +2,7 @@
 
 Name: minipro
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Program for controlling the MiniPRO TL866xx series of chip programmers
 License: GPLv3
 Group: Engineering
@@ -27,7 +27,6 @@ Used to program flash, EEPROM, etc.
 make install DESTDIR=%buildroot PREFIX=%_prefix
 install -D -p -m 0644 udev/60-minipro.rules %buildroot%_udevrulesdir/60-minipro.rules
 install -D -p -m 0644 udev/61-minipro-uaccess.rules %buildroot%_udevrulesdir/61-minipro-uaccess.rules
-
 # see https://gitlab.com/DavidGriffith/minipro/-/issues/161
 install -D -p -m 0644 bash_completion.d/minipro %buildroot%_sysconfdir/bash_completion.d/minipro
 
@@ -35,14 +34,18 @@ install -D -p -m 0644 bash_completion.d/minipro %buildroot%_sysconfdir/bash_comp
 %files
 %_bindir/minipro
 %_bindir/miniprohex
-%_mandir/man1/%name.*
+%_man1dir/%name.*
 %_udevrulesdir/60-minipro.rules
 %_udevrulesdir/61-minipro-uaccess.rules
-/usr/share/minipro/infoic.xml
+%_datadir/%name/
 %_sysconfdir/bash_completion.d/*
 
 
 %changelog
+* Thu Apr 08 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.5-alt2
+- fixed paths, so that the/usr/share/minipro/directory is not left when
+  the package is removed
+
 * Thu Feb 04 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.5-alt1
 - initial build
 
