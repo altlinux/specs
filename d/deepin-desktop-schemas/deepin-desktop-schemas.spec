@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 5.9.5
+Version: 5.9.8
 Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
@@ -28,14 +28,9 @@ Requires: gtk-theme-deepin
 %prep
 %setup
 
-# fix default background url
-#sed -i '/picture-uri/s|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
-#    overrides/common/com.deepin.wrap.gnome.desktop.override
-#sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
-#    schemas/com.deepin.dde.appearance.gschema.xml
 sed -i 's|adwaita-lock.jpg|adwaita-night.jpg|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
-sed -i 's|python|python3|' Makefile tools/overrides.py
+# sed -i 's|python|python3|' Makefile tools/overrides.py
 sed -i 's|org.deepin.browser|firefox|' \
     overrides/common/desktop/dock.override
 sed -i 's|uos-browser|firefox|' \
@@ -44,6 +39,7 @@ sed -i 's|uos-browser|firefox|' \
 
 %build
 export GOPATH=%go_path
+export SYSTYPE=Desktop
 %make_build ARCH=%_arch
 
 %install
@@ -64,6 +60,9 @@ make test
 %exclude %_datadir/deepin-appstore/
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.8-alt1
+- New version (5.9.8) with rpmgs script.
+
 * Fri Mar 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.5-alt1
 - New version (5.9.5) with rpmgs script.
 

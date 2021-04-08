@@ -1,7 +1,7 @@
 %global repo dde-network-utils
 
 Name: deepin-network-utils
-Version: 5.3.0.8
+Version: 5.4.5
 Release: alt1
 Summary: Deepin desktop-environment - network utils
 License: GPL-3.0-or-later
@@ -16,7 +16,7 @@ BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-linguist
 BuildRequires: gsettings-qt-devel
-BuildRequires: libgio-qt-devel
+# BuildRequires: libgio-qt-devel
 BuildRequires: libgtest-devel
 
 %description
@@ -63,6 +63,9 @@ sed -i 's|/lib$|/%_lib|' dde-network-utils/dde-network-utils.pro
 %_libdir/lib%{repo}.so
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt1
+- New version (5.4.5) with rpmgs script.
+
 * Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.8-alt1
 - New version (5.3.0.8) with rpmgs script.
 
