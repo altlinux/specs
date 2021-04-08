@@ -1,6 +1,6 @@
 Name: tora
 Version: 3.2
-Release: alt7.git1a03ec3d
+Release: alt8.gitf31e755f
 Summary: TOra is an open-source multi-platform database management GUI
 License: GPL
 Group: Databases
@@ -50,6 +50,9 @@ install -pm 644 src/tora.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Wed Apr 07 2021 Andrey Sokolov <keremet@altlinux.ru> 3.2-alt8.gitf31e755f
+- Updated to v3.2-296-gf31e755f (closes: 39894)
+
 * Mon Jan 11 2021 Andrey Sokolov <keremet@altlinux.ru> 3.2-alt7.git1a03ec3d
 - Fixed gear rules scheme
 
