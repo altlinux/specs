@@ -8,7 +8,7 @@
 %define soname 2.2
 
 Name:           lib%oname
-Version:        2.2.12.0
+Version:        2.2.13.1
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -155,8 +155,8 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 	-DVERBOSE=TRUE \
 %ifarch %e2k
 	-DUSE_SIMD=0 \
-	-DSKIP_TESTS=1 \
 %endif
+	-DOIIO_BUILD_TESTS:BOOL=FALSE \
 	%nil
 
 %cmake_build
@@ -200,6 +200,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Apr 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.13.1-alt1
+- Updated to upstream version 2.2.13.1.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.12.0-alt1
 - Updated to upstream version 2.2.12.0.
 
