@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.4.4
+Version: 5.4.7
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -36,6 +36,8 @@ BuildRequires: libxcb-devel
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libxcbutil-image-devel
 BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
+BuildRequires: dtk5-common
 Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
 
 %description
@@ -80,8 +82,7 @@ export AR="llvm-ar"
 %ninja_install
 
 %files
-%doc LICENSE
-%_sysconfdir/%repo/
+%doc LICENSE README.md
 %_bindir/%repo
 %_libdir/%repo/
 %_datadir/%repo/
@@ -95,6 +96,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.7-alt1
+- New version (5.4.7) with rpmgs script.
+
 * Wed Mar 24 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.4-alt1
 - New version (5.4.4) with rpmgs script.
 

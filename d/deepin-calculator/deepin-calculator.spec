@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 5.6.0.10
+Version: 5.7.0.15
 Release: alt1
 Summary: An easy to use calculator for ordinary users
 License: GPL-3.0+
@@ -17,7 +17,7 @@ BuildRequires(pre): clang11.0-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: cmake qt5-linguist qt5-base-devel qt5-svg-devel dtk5-widget-devel deepin-qt-dbus-factory-devel
+BuildRequires: cmake qt5-linguist qt5-base-devel qt5-svg-devel dtk5-widget-devel deepin-qt-dbus-factory-devel dtk5-common libgtest-devel libgmock-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -25,8 +25,8 @@ Requires: icon-theme-hicolor
 
 %prep
 %setup
-%__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
-%__subst '1i#include <QPainterPath>' src/views/simplelistdelegate.cpp
+sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
+# sed -i '1i#include <QPainterPath>' src/views/simplelistdelegate.cpp
 
 %build
 %if_enabled clang
@@ -52,8 +52,12 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%_datadir/deepin-manual/manual-assets/application/%name/calculator/*/*
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0.15-alt1
+- New version (5.7.0.15) with rpmgs script.
+
 * Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.0.10-alt1
 - New version (5.6.0.10) with rpmgs script.
 

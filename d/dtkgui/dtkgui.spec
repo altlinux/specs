@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.4.10
+Version: 5.4.13
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -14,7 +14,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %if_enabled clang
 BuildRequires(pre): clang11.0-devel
 %endif
-BuildRequires: dtk5-core-devel librsvg-devel
+BuildRequires: dtk5-core-devel dtk5-common librsvg-devel libgtest-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -59,7 +59,6 @@ Header files and libraries for %name.
 %_libdir/libdtkgui.so.5*
 %dir %_libdir/libdtk-5*/
 %_libdir/libdtk-5*/DGui/
-%_sysconfdir/dbus-1/system.d/com.deepin.dtk.FileDrag.conf
 
 %files -n dtk5-gui-devel
 %_includedir/libdtk-5*/
@@ -70,6 +69,9 @@ Header files and libraries for %name.
 %_libdir/libdtkgui.so
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
+- New version (5.4.13) with rpmgs script.
+
 * Tue Mar 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.10-alt1
 - New version (5.4.10) with rpmgs script.
 

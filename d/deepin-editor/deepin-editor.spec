@@ -1,5 +1,5 @@
 Name: deepin-editor
-Version: 5.9.0.32
+Version: 5.9.0.49
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -29,6 +29,7 @@ BuildRequires: qt5-linguist
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
+BuildRequires: dtk5-common
 # use system libuchardet.a
 BuildRequires: libuchardet-devel-static
 # Requires: deepin-session-shell deepin-qt5integration
@@ -40,12 +41,18 @@ BuildRequires: libuchardet-devel-static
 %setup
 sed -i 's|lrelease|lrelease-qt5|; s|lupdate|lupdate-qt5|' translate_generation.sh
 # use system libuchardet.a
-sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../third/lib/lib/libuchardet.a|%_libdir/libuchardet.a|' \
+sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/lib/lib/libuchardet.a|%_libdir/libuchardet.a|' \
 	src/CMakeLists.txt \
-	test/CMakeLists.txt
+	tests/CMakeLists.txt
 
 %build
-%cmake_insource -GNinja -DCMAKE_INSTALL_PREFIX=%_prefix -DCMAKE_BUILD_TYPE=Release
+%cmake_insource \
+    -GNinja \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DAPP_VERSION=%version \
+    -DVERSION=%version \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir
 %ninja_build
 
 %install
@@ -61,8 +68,12 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%_datadir/deepin-manual/manual-assets/application/%name/editor/*/*
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.0.49-alt1
+- New version (5.9.0.49) with rpmgs script.
+
 * Fri Mar 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.0.32-alt1
 - New version (5.9.0.32) with rpmgs script.
 

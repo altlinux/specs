@@ -1,5 +1,5 @@
 Name: deepin-terminal
-Version: 5.4.0.13
+Version: 5.4.0.20
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -70,15 +70,11 @@ Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
 %setup
-%patch -p2
+# %patch -p2
 # Much upstream weirdness
 sed -i '/<QHash>/i#include <QObject>\n#include <QMap>' 3rdparty/terminalwidget/lib/SessionManager.h
-#sed -i 's/QString("/QString::fromLatin1("/;s/message = "Session crashed.";/message = QString::fromLatin1("Session crashed.");/' 3rdparty/terminalwidget/lib/{Filter,Session}.cpp
 sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)' 3rdparty/terminalwidget/CMakeLists.txt
 sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.txt
-sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/example/RemoteTerm/shell-srv.py
-# sed -i '/3rdparty/d' CMakeLists.txt
-# rm -rf 3rdparty/
 
 %build
 %cmake \
@@ -111,7 +107,7 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %_datadir/deepin-manual/manual-assets/application/%name/terminal/
 
 %files -n libterminalwidget5
-%doc 3rdparty/terminalwidget/{AUTHORS,LICENSE*,CHANGELOG,README.md}
+%doc 3rdparty/terminalwidget/{AUTHORS,LICENSE*,CHANGELOG}
 %_libdir/libterminalwidget5.so.*
 
 %files -n terminalwidget5-data
@@ -124,6 +120,9 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %_includedir/terminalwidget5/
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.0.20-alt1
+- New version (5.4.0.20) with rpmgs script.
+
 * Wed Mar 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.0.13-alt1
 - New version (5.4.0.13) with rpmgs script.
 

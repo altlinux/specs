@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.4.10
+Version: 5.4.13
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -22,6 +22,7 @@ BuildRequires: fdupes
 BuildRequires: qt5-base-devel
 BuildRequires: gsettings-qt-devel
 BuildRequires: libgtest-devel
+BuildRequires: dtk5-common
 
 %description
 Deepin tool kit core modules.
@@ -44,11 +45,6 @@ Header files and libraries for %name.
 
 %prep
 %setup
-#sed -i 's|/lib|/libexec|' tools/settings/settings.pro
-sed -i 's|/lib|%_lib|' dtk_build_config.prf
-sed -i "s|'/lib'|'%_lib'|" conanfile.py
-#sed -i 's|qmake|qmake-qt5|' src/dtk_module.prf
-#sed -i 's|lrelease|lrelease-qt5|' tools/script/dtk-translate.py src/dtk_translation.prf
 
 %build
 %qmake_qt5 \
@@ -58,37 +54,39 @@ sed -i "s|'/lib'|'%_lib'|" conanfile.py
     CONFIG+=nostrip \
     PREFIX=%prefix \
     DTK_VERSION=%version \
+    VERSION=%version \
     LIB_INSTALL_DIR=%_libdir \
     unix:LIBS+="-ldl" \
-    DEEPIN_OS_TYPE=altlinux \
-    DEEPIN_OS_VERSION=9
+    DEEPIN_OS_TYPE=Desktop \
+    DEEPIN_OS_VERSION=20.2 \
+#
 %make_build
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
-chmod +x %buildroot%_libdir/libdtk-5.4.10/DCore/bin/dtk-license.py
-chmod +x %buildroot%_libdir/libdtk-5.4.10/DCore/bin/dtk-translate.py
+chmod +x %buildroot%_libdir/libdtk-%version/DCore/bin/dtk-license.py
+chmod +x %buildroot%_libdir/libdtk-%version/DCore/bin/dtk-translate.py
 
 %files -n libdtk5-core
 %doc README.md LICENSE
 %_libdir/lib%name.so.5*
 %dir %_libdir/libdtk-5*/
 %_libdir/libdtk-5*/DCore/
-%_datadir/glib-2.0/schemas/com.deepin.dtk.gschema.xml
 
 %files -n dtk5-core-devel
 %doc doc/Specification.md
 %_libdir/lib%name.so
 %_includedir/libdtk-*/
-%_qt5_archdatadir/mkspecs/features/*.prf
 %_qt5_archdatadir/mkspecs/modules/*.pri
-%_libdir/cmake/Dtk/
 %_libdir/cmake/DtkCore/
 %_libdir/cmake/DtkCMake/
 %_libdir/cmake/DtkTools/
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
+- New version (5.4.13) with rpmgs script.
+
 * Tue Mar 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.10-alt1
 - New version (5.4.10) with rpmgs script.
 

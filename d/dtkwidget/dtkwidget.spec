@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.4.10
+Version: 5.4.16
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+
@@ -21,6 +21,7 @@ BuildRequires: qt5-svg-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: dtk5-core-devel
 BuildRequires: dtk5-gui-devel
+BuildRequires: dtk5-common
 BuildRequires: gsettings-qt-devel
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: libudev-devel
@@ -73,6 +74,7 @@ export PATH=%{_qt5_bindir}:$PATH
     CONFIG+=nostrip \
     PREFIX=%_prefix \
     LIB_INSTALL_DIR=%_libdir \
+    VERSION=%version \
     DBUS_VERSION_0_4_2=YES
 
 %make_build
@@ -95,6 +97,9 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/lib%name.so
 
 %changelog
+* Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.16-alt1
+- New version (5.4.16) with rpmgs script.
+
 * Tue Mar 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.10-alt1
 - New version (5.4.10) with rpmgs script.
 
