@@ -1,8 +1,8 @@
 %define iptables_modules_dir /%_lib/iptables
 
 Name: ndpi-netfilter
-Version: 2.6
-Release: alt2
+Version: 3.2
+Release: alt1
 Summary: Open source deep packet inspection iptables modules
 Group: Networking/Other
 
@@ -11,7 +11,7 @@ License: LGPLv3
 
 Source: %name-%version.tar
 
-BuildRequires: libpcap-devel libiptables-devel
+BuildRequires: libpcap-devel libiptables-devel libjson-c-devel
 BuildPreReq: rpm-build-kernel
 
 %description
@@ -54,6 +54,9 @@ install -m644 kernel-source-ndpi-%version.tar.bz2 %kernel_srcdir/
 %attr(644,root,root) /%_lib/iptables/libxt_ndpi.so
 
 %changelog
+* Thu Apr 08 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.2-alt1
+- flow-3.2 branch from upstream for build with kernels >= 5.6
+
 * Wed Feb 05 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.6-alt2
 - updated from git, build with 5.0 kernel fixed
 
