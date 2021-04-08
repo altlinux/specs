@@ -8,7 +8,7 @@ BuildRequires: tex(dehypht.tex)
 
 Name: pnetcdf
 Version: 1.8.1
-Release: alt2.1
+Release: alt2.2
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -97,7 +97,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %add_optflags %optflags_shared -DNDEBUG -Df2cFortran -I%mpidir/lib
-export FCFLAGS="%optflags"
+export FCFLAGS="%optflags -fallow-argument-mismatch"
 export F90FLAGS="%optflags"
 %autoreconf
 %configure \
@@ -137,6 +137,9 @@ rm -f %buildroot%_libdir/*.so.
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt2.2
+- Fixed FTBFS.
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2.1
 - NMU: applied logoved fixes
 
