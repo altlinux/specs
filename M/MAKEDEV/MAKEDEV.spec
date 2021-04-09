@@ -1,6 +1,6 @@
 Name: MAKEDEV
 Version: 3.3.1
-Release: alt22
+Release: alt23
 
 %define revision 3
 
@@ -34,11 +34,11 @@ if [ -r /proc/mounts ]; then \
 		echo '** Cannot %{-r:remove %{-r*}}%{-i:install %{-i*}}: mounted udev detected.' \
 		echo '** This is no problem, but to avoid side-effects with' \
 		echo '** stopping and starting it automatically, please do:' \
-		echo 'service udevd umount' \
+		echo '/etc/init.d/udevd umount' \
 		echo '%{-r:rpm -e %{-r*}}%{-i:apt-get install %{-i*}}' \
-		echo 'service udevd restart' \
+		echo '/etc/init.d/udevd restart' \
 		echo '** Note that some services like syslogd or gpm might need' \
-		echo '** restart after this, too; dcop (KDE) might have problems.' \
+		echo '** restart after this, too; others might have problems.' \
 		exit 1 \
 	} \
 fi
@@ -313,6 +313,9 @@ PCA=/sbin/pam_console_apply
 # - add dev-asterisk (=> no more nonexistant group spam :)
 
 %changelog
+* Fri Apr 09 2021 Michael Shigorin <mike@altlinux.org> 3.3.1-alt23
+- updated udevd umount/restart notice (closes: #39897)
+
 * Mon Jun 15 2020 Nikita Ermakov <arei@altlinux.org> 3.3.1-alt22
 - Fix undefined reference to makedev.
 
