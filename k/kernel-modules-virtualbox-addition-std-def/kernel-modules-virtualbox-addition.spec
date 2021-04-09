@@ -1,9 +1,9 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.18
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
-%define karch x86_64 %ix86
+%define karch x86_64
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
 BuildRequires(pre): kernel-headers-modules-std-def
 
