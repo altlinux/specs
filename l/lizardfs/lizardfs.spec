@@ -5,7 +5,7 @@
 %define liz_confdir	%_sysconfdir/mfs
 %define liz_limits_conf %_sysconfdir/security/limits.d/10-lizardfs.conf
 %define liz_pam_d %_sysconfdir/pam.d/lizardfs
-%define __nprocs 4
+%define nprocs 16
 
 %def_without docs
 %def_without ganesha
@@ -13,7 +13,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc3.2
+Release: alt0.rc3.37
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -92,7 +92,6 @@ Summary: LizardFS client
 Group: System/Servers
 Requires: fuse
 Requires: libfuse
-Requires: bash-completion
 Conflicts: moosefs-common
 Conflicts: moosefs-client
 
@@ -199,6 +198,9 @@ done
 	-DENABLE_DOCS=OFF \
 %endif
 	-DENABLE_POLONAISE=OFF
+
+# Adjust nprocs for git.alt
+[ ${NPROCS:-%__nprocs} -le %nprocs ] || NPROCS=16
 
 %cmake_build
 
@@ -410,6 +412,9 @@ popd
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Fri Apr 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.37
+- update to dd2413192d0dd00403ad409fcd9a4483c77281d3 from upstream
+
 * Thu Dec 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.2
 - update to aa878d3977a1fd25c4a63c9bdce5d5f59b3db784 from upstream
 
