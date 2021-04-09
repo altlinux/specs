@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.7
-Release: alt6
+Release: alt7
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch1: %name-%version-alt-fixes.patch
 Patch2: %name-%version-pd.patch
 Patch3: %name-%version-switch-lang.patch
+Patch4: %name-%version-load-css.patch
 
 Requires: lightdm >= 1.16.7-alt11
 #Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
@@ -40,6 +41,7 @@ directly controlled by PAM prompts and messages.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %autoreconf
@@ -74,6 +76,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Fri Apr 09 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt7
+- Added "css-path" configuration parameter to load CSS from a file
+  (patch).
+
 * Fri Apr 09 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt6
 - Switch the default background to
   /usr/share/design/current/backgrounds/xdm.png.
