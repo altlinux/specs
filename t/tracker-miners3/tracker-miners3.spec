@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -200,6 +200,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
