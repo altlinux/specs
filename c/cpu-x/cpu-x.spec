@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cpu-x
-Version: 4.0.0
+Version: 4.2.0
 Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
@@ -10,10 +10,20 @@ Group: System/Kernel and hardware
 Url: https://github.com/X0rg/CPU-X
 Source: %name-%version.tar
 Buildrequires(pre): rpm-macros-cmake
-Buildrequires: gcc-c++ cmake pkgconfig(gtk+-3.0) pkgconfig(libarchive) pkgconfig(libcurl) pkgconfig(libpci) pkgconfig(libprocps) pkgconfig(libstatgrab) pkgconfig(ncurses) pkgconfig(libcpuid)
+Buildrequires: gcc-c++ cmake 
+BuildRequires: nasm
+BuildRequires: libappstream-glib
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.12.0
+BuildRequires: pkgconfig(json-c)
+BuildRequires: pkgconfig(libcpuid) >= 0.4.0
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libpci)
+BuildRequires: pkgconfig(libprocps)
+BuildRequires: pkgconfig(libstatgrab)
+BuildRequires: pkgconfig(ncursesw)
 Requires: icon-theme-hicolor
 
-ExclusiveArch: %ix86 x86_64 aarch64 armh
+ExclusiveArch: %ix86 x86_64
 
 %description
 CPU-X is a Free software that gathers information on CPU, motherboard and more.
@@ -51,6 +61,9 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Fri Apr 09 2021 Anton Midyukov <antohami@altlinux.org> 4.2.0-alt1
+- new version 4.2.0
+
 * Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
 - new version 4.0.0
 
