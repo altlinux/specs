@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.7
-Release: alt2
+Release: alt6
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -11,10 +11,11 @@ Url: https://launchpad.net/lightdm-gtk-greeter
 #To get source code use the command "bzr branch lp:lightdm-gtk-greeter"
 Source: %name-%version.tar
 Patch1: %name-%version-alt-fixes.patch
-Patch2: %name-%version-advanced.patch
+Patch2: %name-%version-pd.patch
+Patch3: %name-%version-switch-lang.patch
 
 Requires: lightdm >= 1.16.7-alt11
-Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
+#Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
 Requires: /usr/share/design/current
 
 Provides: lightdm-greeter
@@ -38,6 +39,7 @@ directly controlled by PAM prompts and messages.
 %setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -72,6 +74,25 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Fri Apr 09 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt6
+- Switch the default background to
+  /usr/share/design/current/backgrounds/xdm.png.
+
+* Thu Apr 08 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt5
+- Set hide-cancel-noprompt to true by default.
+- Fixed hiding "Cancel" on auth complete when hide-cancel-noprompt
+  is set to false.
+
+* Wed Apr 07 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt4
+- Increase the default font size to 12 pt (closes: 39878).
+- Reduced patch for the promt-driven greeter (no password/pin change,
+  no user switch via dm-tool).
+
+* Mon Mar 29 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt3
+- Don't require any themes.
+- Restart the greeter when the user selects a different language
+  from the menu (patch).
+
 * Thu Feb 25 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt2
 - Added "enter-username" config param to explicitly ask for a
   username before authentication starts (closes: 38544).
