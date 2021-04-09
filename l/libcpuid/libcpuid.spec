@@ -2,15 +2,20 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcpuid
-Version: 0.4.1
-Release: alt2.20200518
+Version: 0.5.1
+Release: alt1
 Summary: Provides CPU identification for x86, x86_64, aarch64, armh
 License: BSD-2-Clause
 Group: Development/C
 Url: https://github.com/anrieff/libcpuid
 Source: libcpuid-%version.tar
+Patch: 0001-CMakeLists.txt-Add-LIB_DESTINATION-variable.patch
 
 ExclusiveArch: %ix86 x86_64 aarch64 armh
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: doxygen
 
 %description
 Libcpuid provides CPU identification for the x86 and x86_64.
@@ -28,15 +33,14 @@ on the project's site (http://libcpuid.sourceforge.net/)
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%autoreconf
-%configure
-%make_build
+%cmake -DCMAKE_INSTALL_LIBDIR=%_libdir
+%cmake_build
 
 %install
-%makeinstall_std
-rm %buildroot%_libdir/*.a
+%cmakeinstall_std
 
 %files
 %_libdir/%name.so.*
@@ -44,10 +48,15 @@ rm %buildroot%_libdir/*.a
 %files devel
 %_bindir/cpuid_tool
 %_includedir/%name
-%_libdir/*.so
+%_man3dir/*
+%_libdir/%name.so
 %_libdir/pkgconfig/%name.pc
+%_prefix/lib/cmake/cpuid
 
 %changelog
+* Fri Apr 09 2021 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
+- new version 0.5.1
+
 * Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt2.20200518
 - new snapshot
 
