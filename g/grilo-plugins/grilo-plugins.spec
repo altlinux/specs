@@ -5,12 +5,11 @@
 %define gupnp_api_ver 1.2
 
 %def_enable lua_factory
-%def_disable tracker
 %def_enable tracker3
 
 Name: grilo-plugins
-Version: %ver_major.12
-Release: alt2
+Version: %ver_major.13
+Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -23,11 +22,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define tracker_ver 2.3.0
 %define tracker3_ver 2.99.2
 
 Requires: grilo-tools >= %version
-Requires: tracker >= %tracker_ver
+Requires: tracker3 >= %tracker3_ver
 
 BuildRequires(pre): meson
 BuildRequires: gperf
@@ -44,7 +42,6 @@ BuildRequires: libgom-devel >= 0.3.2
 BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
-%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0) >= %tracker_ver}
 %{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver tracker3-tests}
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
@@ -114,7 +111,6 @@ This package contains the pkg-config file for Grilo plugins package.
 %_libdir/grilo-%ver_major/libgrlflickr.so
 %_libdir/grilo-%ver_major/libgrlfreebox.so
 %_libdir/grilo-%ver_major/libgrlgravatar.so
-%_libdir/grilo-%ver_major/libgrljamendo.so
 %_libdir/grilo-%ver_major/libgrllocalmetadata.so
 %{?_enable_lua_factory:%_libdir/grilo-%ver_major/libgrlluafactory.so}
 %_libdir/grilo-%ver_major/libgrlmagnatune.so
@@ -126,9 +122,7 @@ This package contains the pkg-config file for Grilo plugins package.
 %_libdir/grilo-%ver_major/libgrlshoutcast.so
 %_libdir/grilo-%ver_major/libgrlthetvdb.so
 %_libdir/grilo-%ver_major/libgrltmdb.so
-%{?_enable_tracker:%_libdir/grilo-%ver_major/libgrltracker.so}
 %{?_enable_tracker3:%_libdir/grilo-%ver_major/libgrltracker3.so}
-%_libdir/grilo-%ver_major/libgrlvimeo.so
 %_libdir/grilo-%ver_major/libgrlyoutube.so
 %if_enabled lua_factory
 %dir %_datadir/%name
@@ -141,6 +135,9 @@ This package contains the pkg-config file for Grilo plugins package.
 
 
 %changelog
+* Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
+- 0.3.13
+
 * Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt2
 - rebuilt with tracker3 support for gnome-3.38
 
