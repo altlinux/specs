@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %set_verify_elf_method unresolved=relaxed
 
 %define _libexecdir %_prefix/libexec
@@ -9,7 +9,7 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -90,6 +90,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1
+- 0.8.5-1-5-g4d6f3fd
+
 * Mon Feb 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
 - 0.8.4
 
