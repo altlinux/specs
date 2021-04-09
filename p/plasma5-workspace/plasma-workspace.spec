@@ -35,7 +35,7 @@
 
 Name: plasma5-workspace
 Version: 5.21.4
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -478,6 +478,9 @@ done
 
 
 %changelog
+* Fri Apr 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.21.4-alt3
+- Fixed kscreenlocker theme to stop unexpectedly erasing password after grace period
+
 * Thu Apr 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.21.4-alt2
 - Adapted kscreenlocker theme to new interface with better PAM support
 
