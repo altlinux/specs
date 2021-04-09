@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name xkbcommon
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -142,6 +142,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Tue Mar 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - updated to 1.1.0-7-g21c864c
 - new devel-doc subpackage
