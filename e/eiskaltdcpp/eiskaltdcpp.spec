@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -16,6 +16,9 @@ BuildRequires: libaspell-devel libgtk+2-devel libidn2-devel liblua-devel
 BuildRequires: libnotify-devel libpcrecpp-devel qt5-phonon-devel
 BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-script-devel
 BuildRequires: libssl-devel perl-JSON-RPC perl-Term-ShellUI libminiupnpc-devel
+
+# ALT39859
+%filter_from_requires /^.usr.bin.php$/d
 
 %description
 EiskaltDC++ is a cross-platform program that uses the Direct Connect and
@@ -169,6 +172,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Fri Apr 09 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt2
+- Removed php from requires (Closes: #39859).
+
 * Wed Mar 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt1
 - Build new version.
 
