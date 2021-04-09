@@ -1,6 +1,6 @@
 Name: python3-module-zeroconf
 Version: 0.29.0
-Release: alt1
+Release: alt2
 
 Summary: Pure Python Multicast DNS Service Discovery Library
 License: LGPLv2
@@ -28,9 +28,13 @@ modified by William McBrine (https://github.com/wmcbrine/pyzeroconf).
 
 %files
 %python3_sitelibdir/zeroconf
+%exclude %python3_sitelibdir/zeroconf/test.py
 %python3_sitelibdir/zeroconf-%version-*-info
 
 %changelog
+* Fri Apr 09 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.29.0-alt2
+- exclude tests
+
 * Thu Apr 08 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.29.0-alt1
 - 0.29.0 released
 
