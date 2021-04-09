@@ -1,5 +1,5 @@
 Name: python3-module-didl-lite
-Version: 1.2.4
+Version: 1.2.6
 Release: alt1
 
 Summary: DIDL-Lite (Digital Item Declaration Language) tools for Python
@@ -30,6 +30,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/python_didl_lite-%version-*-info
 
 %changelog
+* Thu Apr 08 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt1
+- 1.2.6 released
+
 * Tue Jan 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt1
 - initial
-
