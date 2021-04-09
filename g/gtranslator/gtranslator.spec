@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.38
+%define ver_major 40
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
@@ -35,6 +35,7 @@ BuildRequires: libgda5-devel libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libsoup-devel gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libgspell-devel >= %gspell_ver libxml2-devel >= %xml_ver
 BuildRequires: libjson-glib-devel libdazzle-devel
+BuildRequires: pkgconfig(libhandy-1)
 
 %description
 gtranslator is a quite comfortable gettext po/po.gz/(g)mo files editor
@@ -46,6 +47,7 @@ GNU gettext/GNOME desktop world.
 %package devel
 Summary: %name header files
 Group: Development/C
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description devel
@@ -79,16 +81,20 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/glib-2.0/schemas/*.xml
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%_pixmapsdir/*.png
 %_man1dir/%name.1*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README* THANKS
 
 %files devel
 %_includedir/gtr-marshal.h
-%{?_enable_gtk_doc:%_datadir/gtk-doc/html/%name/}
+
+%{?_enable_gtk_doc:%files devel-doc
+%_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
