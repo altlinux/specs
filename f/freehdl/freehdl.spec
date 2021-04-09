@@ -5,7 +5,7 @@
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt5
+Release: alt6
 License: GPL
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -58,17 +58,17 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall BUILDROOT=%buildroot
 
 %files
 %_bindir/freehdl-config
 %_bindir/freehdl-gennodes
 %_bindir/freehdl-v2cc
 %_bindir/gvhdl
-%_datadir/freehdl
-%_datadir/freehdl/lib
-%_datadir/freehdl/lib/ieee
-%_datadir/freehdl/lib/std
+%dir %_datadir/freehdl
+%dir %_datadir/freehdl/lib
+%dir %_datadir/freehdl/lib/ieee
+%dir %_datadir/freehdl/lib/std
 %_datadir/freehdl/lib/ieee/math_real.vhdl
 %_datadir/freehdl/lib/ieee/numeric_bit.vhdl
 %_datadir/freehdl/lib/ieee/numeric_std.vhdl
@@ -87,7 +87,7 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_man5dir/v2cc.libs.5*
 
 %files -n libfreehdl
-%_libdir/freehdl
+%dir %_libdir/freehdl
 %_libdir/freehdl/libieee.so.0
 %_libdir/freehdl/libieee.so.0.0.0
 %_libdir/libfreehdl-cdfggen.so.0
@@ -102,18 +102,20 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.so.0.0.0
 
 %files -n libfreehdl-devel
-%_libdir/freehdl/libieee.la
+%dir %_libdir/freehdl
 %_libdir/freehdl/libieee.so
 %_libdir/libfreehdl-cdfggen.so
 %_libdir/libfreehdl-fire.so
 %_libdir/libfreehdl-kernel.so
 %_libdir/libfreehdl-std.so
 %_libdir/libfreehdl-vaul.so
-%_libdir/*.la
 %_pkgconfigdir/freehdl.pc
 %_includedir/freehdl
 
 %files -n libfreehdl-devel-static
+%dir %_libdir/freehdl
+%_libdir/freehdl/libieee.la
+%_libdir/*.la
 %_libdir/freehdl/libieee.a
 %_libdir/libfreehdl-cdfggen.a
 %_libdir/libfreehdl-fire.a
@@ -122,6 +124,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.8-alt6
+- fix build
+
 * Wed Feb 13 2019 Pavel Moseev <mars@altlinux.org> 0.0.8-alt5
 - no return statement in the non-void function fixed (according g++8)
 
