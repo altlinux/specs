@@ -2,7 +2,7 @@
 
 Name: deepin-control-center
 Version: 5.4.17
-Release: alt1
+Release: alt2
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -37,6 +37,7 @@ BuildRequires: libgtest-devel
 BuildRequires: libpolkitqt5-qt5-devel
 BuildRequires: deepin-pw-check-devel
 BuildRequires: deepin-desktop-base
+BuildRequires: dtk5-common
 # ---
 BuildRequires: libpcre-devel
 BuildRequires: libffi-devel
@@ -139,6 +140,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.17-alt2
+- Fixed build with dtk 5.4.13.
+
 * Tue Apr 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.17-alt1
 - New version (5.4.17) with rpmgs script (thanks archlinux for the patch).
 

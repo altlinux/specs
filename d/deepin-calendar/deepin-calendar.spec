@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.8.0.8
+Version: 5.8.0.19
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -17,6 +17,7 @@ BuildRequires: cmake
 BuildRequires: deepin-gettext-tools
 BuildRequires: qt5-linguist
 BuildRequires: dtk5-widget-devel
+BuildRequires: dtk5-common
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: deepin-qt-dbus-factory-devel
@@ -39,7 +40,10 @@ sed -i 's|lib/deepin-daemon/|libexec/deepin-daemon/|' \
 %cmake_insource \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DAPP_VERSION=%version \
+    -DVERSION=%version
 %ninja_build
 
 %install
@@ -62,8 +66,17 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %dir %_libdir/deepin-aiassistant/
 %dir %_libdir/deepin-aiassistant/serivce-plugins/
 %_libdir/deepin-aiassistant/serivce-plugins/libuosschedulex-plugin.so
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%repo/
+%_datadir/deepin-manual/manual-assets/application/%repo/calendar/
 
 %changelog
+* Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.0.19-alt1
+- New version (5.8.0.19) with rpmgs script.
+- Fixed build with dtk 5.4.13.
+
 * Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.0.8-alt1
 - New version (5.8.0.8) with rpmgs script.
 
