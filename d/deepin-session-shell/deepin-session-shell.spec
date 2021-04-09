@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.4.5
-Release: alt2
+Release: alt3
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -26,6 +26,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: libpam0-devel
 BuildRequires: dtk5-widget-devel
+BuildRequires: dtk5-common
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-svg-devel
@@ -97,6 +98,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 
 %changelog
+* Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt3
+- Fixed build with dtk 5.4.13.
+
 * Thu Mar 11 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt2
 - Fixed backgrounds.
 

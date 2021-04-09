@@ -4,7 +4,7 @@
 
 Name: deepin-kwin
 Version: 5.3.7
-Release: alt2.git4d0141c
+Release: alt3.git4d0141c
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -30,7 +30,7 @@ BuildRequires(pre): clang11.0-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-kf5 rpm-build-ninja
-BuildRequires: cmake extra-cmake-modules qt5-tools qt5-tools-devel qt5-base-devel plasma5-kdecoration-devel qt5-x11extras-devel qt5-declarative-devel kf5-kwindowsystem-devel kf5-kcoreaddons-devel dtk5-gui-devel kf5-kconfig-devel kf5-kglobalaccel-devel kf5-ki18n-devel gsettings-qt-devel plasma5-kwin-devel plasma5-kwayland-server-devel kf5-kwayland-devel
+BuildRequires: cmake extra-cmake-modules qt5-tools qt5-tools-devel qt5-base-devel plasma5-kdecoration-devel qt5-x11extras-devel qt5-declarative-devel kf5-kwindowsystem-devel kf5-kcoreaddons-devel dtk5-gui-devel dtk5-common kf5-kconfig-devel kf5-kglobalaccel-devel kf5-ki18n-devel gsettings-qt-devel plasma5-kwin-devel plasma5-kwayland-server-devel kf5-kwayland-devel
 BuildRequires: zlib-devel bzlib-devel libpng-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel
 BuildRequires: libxcb-devel libglvnd-devel libX11-devel
 BuildRequires: libkwin5
@@ -134,6 +134,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.7-alt3.git4d0141c
+- Fixed build with dtk 5.4.13.
+
 * Wed Mar 31 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.7-alt2.git4d0141c
 - Fixed compile with kwin 5.21.
 - Built from commit 4d0141c175e770586f2e08893c8105d1022dfc29.
