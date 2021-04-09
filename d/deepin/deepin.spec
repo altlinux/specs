@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt7
+Release: alt8
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -30,7 +30,6 @@ Requires: libgsettings-qt
 Requires: libdtk5-core
 Requires: libdtk5-gui
 Requires: libdtk5-widget
-Requires: libdtk5-wm
 Requires: deepin-dock
 Requires: deepin-menu
 Requires: deepin-desktop-base
@@ -53,6 +52,7 @@ Requires: gtk-theme-deepin
 Requires: plasma5-kwin
 Requires: cgroup
 Requires: redshift
+# Requires: fcitx-gtk3 fcitx-qt5
 # %%ifnarch armh ppc64le
 Requires: deepin-file-manager
 Requires: deepin-desktop
@@ -128,6 +128,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt8
+- Removed orphaned dtkwm.
+
 * Tue Apr 06 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt7
 - Added requires.
 
