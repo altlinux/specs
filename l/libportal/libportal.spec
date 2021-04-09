@@ -1,11 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 0.3
+%define ver_major 0.4
 %define soname 0
 %define xdg_name org.gnome.Portal
 
 %def_enable gtk_doc
 %def_enable test
+%def_enable  check
 
 Name: libportal
 Version: %ver_major
@@ -23,7 +24,7 @@ Source: %url/archive/%version/%name-%version.tar
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.38
+%define glib_ver 2.58
 
 BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver gtk-doc
@@ -83,7 +84,6 @@ of the installed %name.
 %doc README*
 
 %files devel
-
 %_includedir/%name
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
@@ -102,6 +102,9 @@ of the installed %name.
 %endif
 
 %changelog
+* Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1:0.4-alt1
+- 0.4
+
 * Sat Dec 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.3-alt1
 - 0.3
 
