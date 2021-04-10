@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	5.11
-%define kernel_sublevel .11
+%define kernel_sublevel .13
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -402,6 +402,8 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 %make_build modules_install INSTALL_MOD_PATH=%buildroot
 
+install -d %buildroot%modules_dir/updates
+
 # Move some modules to kernel-image package tree
 # rmi2-core deps
 install -d %buildroot%modules_dir/kernel/drivers/media-core/
@@ -591,6 +593,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
 %dir %modules_dir/
+%dir %modules_dir/updates
 %defattr(0600,root,root,0700)
 %modules_dir/*
 %exclude %modules_dir/build
@@ -662,6 +665,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Sat Apr 10 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.13-alt1
+- v5.11.13
+
+* Thu Apr 08 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.12-alt1
+- v5.11.12  (Fixes: CVE-2021-29657)
+
 * Thu Apr 01 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.11.11-alt2
 - BE-M1000 partial support. PCI-E and sensors are NOT supported yet
 
