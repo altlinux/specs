@@ -1,16 +1,16 @@
-%def_without check
-
 %define dune_pkg bootstrap
 %if "%dune_pkg" != "bootstrap"
 %define subpackagename -%dune_pkg
 %def_with subpackage
+%def_without check
 %else
 %define subpackagename %nil
 %def_without subpackage
+%def_with check
 %endif
 
 Name: dune%subpackagename
-Version: 2.8.4
+Version: 2.8.5
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -26,28 +26,6 @@ BuildRequires: opam
 %if_with subpackage
 BuildRequires: dune
 BuildRequires: ocaml-csexp-devel
-%endif
-%if_with check
-BuildRequires: ocaml-csexp-devel
-BuildRequires: ocaml-ppx_expect-devel
-BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-time_now-devel
-BuildRequires: gcc-c++
-BuildRequires: ocaml-ppxlib-devel ocaml-migrate-parsetree-devel ocaml-compiler-libs-devel
-BuildRequires: utop-devel
-BuildRequires: libev-devel
-BuildRequires: ocaml-lwt-devel
-BuildRequires: ocaml-lambda-term-devel
-BuildRequires: ocaml-ppx_hash-devel
-BuildRequires: ocaml-ppx_enumerate-devel
-BuildRequires: ocaml-jane-street-headers-devel
-BuildRequires: ocaml-ppx_sexp_conv-devel
-BuildRequires: ocaml-ppx_compare-devel
-BuildRequires: ocaml-ppx_inline_test-devel
-BuildRequires: ocaml-re-devel
-BuildRequires: cinaps
-BuildRequires: node
-BuildRequires: js_of_ocaml ocaml-js_of_ocaml-devel
 %endif
 
 %description
@@ -67,8 +45,6 @@ Group: Development/ML
 Summary: Helper dune library for gathering system configuration
 Requires: ocaml-result-devel
 Requires: dune = %EVR
-Provides: ocaml-dune-devel = %EVR
-Obsoletes: ocaml-dune-devel < %EVR
 %description -n ocaml-%name
 dune-configurator is a small library that helps writing OCaml scripts that
 test features available on the system, in order to generate config.h
@@ -96,7 +72,7 @@ no stability guarantee.
 Summary: Development files for %name
 Group: Development/ML
 Requires: ocaml-result-devel
-Requires: %name = %EVR
+Requires: ocaml-%name = %EVR
 %description -n ocaml-%name-devel
 The %name-devel package contains libraries and signature files for
 developing applications that use %name.
@@ -123,7 +99,7 @@ sed -i '/^(name/a (version %version)' dune-project
 %endif
 
 %check
-./dune.exe runtest
+./dune.exe runtest test/unit-tests
 
 %if_without subpackage
 %files
@@ -176,6 +152,10 @@ sed -i '/^(name/a (version %version)' dune-project
 %endif
 
 %changelog
+* Fri Apr 09 2021 Anton Farygin <rider@altlinux.org> 2.8.5-alt1
+- 2.8.5
+- enabled unit-test
+
 * Tue Mar 09 2021 Anton Farygin <rider@altlinux.org> 2.8.4-alt1
 - 2.8.4
 - dune package was splitted into subpackages by analogy with upstream packages
