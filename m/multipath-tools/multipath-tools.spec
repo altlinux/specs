@@ -8,7 +8,7 @@
 
 Name: multipath-tools
 Version: 0.8.3
-Release: alt2
+Release: alt3
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -41,7 +41,7 @@ The tools are:
 
 %package -n libmultipath
 Summary: The %name modules and shared library
-License: GPL+
+License: GPL-1.0+
 Group: System/Libraries
 Conflicts: multipath-tools <= 0.4.9-alt3
 
@@ -89,6 +89,7 @@ device-mapper-multipath's libdmmp C API library
 %patch1 -p1
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 unset RPM_OPT_FLAGS
 %make_build \
 	LIB=%_lib \
@@ -173,6 +174,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Sat Apr 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.8.3-alt3
+- fix build with gcc-10
+
 * Mon May 11 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.3-alt2
 - fixed build with json-c 0.14.0
 
