@@ -8,11 +8,13 @@
 %def_disable devel
 
 Name: unit
-Summary: NGINX Unit - Web Application Server
 Version: 1.22.0
-Release: alt1
+Release: alt2
+
+Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
 Group: System/Servers
+
 Url: https://unit.nginx.org/
 Vcs: http://hg.nginx.org/unit/
 # Mirror Vcs: https://github.com/nginx/unit
@@ -64,6 +66,11 @@ Ruby module for NGINX Unit
 sed -i -e 's/NXT_HAVE_MEMFD_CREATE/NO_&/' auto/shmem
 
 %build
+%ifarch %e2k
+# lcc 1.25.12 found some perl/php interpreter header glitches missed by gcc
+%add_optflags -Wno-error=unused-function -Wno-error=ignored-qualifiers
+%endif
+
 CONFIGURE_ARGS="
 	--prefix=%_prefix
 	--state=%_localstatedir/unit
@@ -163,11 +170,13 @@ build/tests
 %doc COPYRIGHT perl-app.ru perl-unit.config
 %_libdir/unit/modules/perl.unit.so
 %endif
+
 %if_enabled php
 %files php
 %doc COPYRIGHT php-app.ru php-unit.config
 %_libdir/unit/modules/php.unit.so
 %endif
+
 %if_enabled ruby
 %files ruby
 %doc COPYRIGHT ruby-app.ru ruby-unit.config
@@ -175,6 +184,10 @@ build/tests
 %endif
 
 %changelog
+* Sat Apr 10 2021 Michael Shigorin <mike@altlinux.org> 1.22.0-alt2
+- E2K: workaround interpreter header glitches found by lcc
+- Minor spec cleanup
+
 * Sun Feb 07 2021 Vitaly Chikunov <vt@altlinux.org> 1.22.0-alt1
 - Update to 1.22.0 (2021-02-04).
 
