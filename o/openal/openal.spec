@@ -2,7 +2,7 @@
 %def_with qt5
 
 Name: openal
-Version: 1.19.1
+Version: 1.21.1
 Release: alt1
 
 Summary: Open Audio Library
@@ -137,6 +137,9 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 %endif
 
 %changelog
+* Sat Apr 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.21.1-alt1
+- Version 1.21.1
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19.1-alt1
 - new version 1.19.1 (with rpmrb script)
 - switch to Qt5, build tools subpackage
