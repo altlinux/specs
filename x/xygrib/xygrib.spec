@@ -2,7 +2,7 @@
 
 Name: xygrib
 Version: 1.2.6
-Release: alt2
+Release: alt3
 
 Summary: Visualisation of meteo data from files in GRIB formats
 
@@ -15,6 +15,7 @@ Source1: %binname.desktop
 Patch1: XyGrib-1.2.6-71e6ce91da79.diff
 Patch2: XyGrib-1.2.6-c3fd4c5b0a41.diff
 Patch3: XyGrib-1.2.6-Qt-5.15.patch
+Patch4: XyGrib-1.2.6-openjpeg-2.4.patch
 
 Requires: fonts-ttf-liberation
 Requires: %name-data = %version-%release
@@ -49,6 +50,7 @@ home page: http://www.geonames.org/
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 # -DNO_UPDATE=1 deactivates XyGrib internal SW update
@@ -86,6 +88,9 @@ find %buildroot \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 %_datadir/openGribs
 
 %changelog
+* Sat Apr 10 2021 Sergey Y. Afonin <asy@altlinux.org> 1.2.6-alt3
+- fixed build with openjpeg 2.4 (XyGrib-1.2.6-openjpeg-2.4.patch)
+
 * Sat Sep 19 2020 Sergey Y. Afonin <asy@altlinux.org> 1.2.6-alt2
 - fixed build with Qt 5.15 (based on Gentoo's bug 732732)
 - updated License tag to SPDX syntax
