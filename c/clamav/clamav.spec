@@ -15,8 +15,8 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.103.1
-Release: alt5
+Version: 0.103.2
+Release: alt1
 %define abiversion 9
 
 Summary: Clam Antivirus scanner
@@ -397,6 +397,11 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Sat Apr 10 2021 Sergey Y. Afonin <asy@altlinux.org> 0.103.2-alt1
+- 0.103.2
+  + CVE-2021-1252, CVE-2021-1405 - 0.103.0 and 0.103.1 only.
+  + CVE-2021-1404 - 0.103.1 and prior
+
 * Sat Feb 20 2021 Alexey Shabalin <shaba@altlinux.org> 0.103.1-alt5
 - Add clamav-freshclam-update.service for run first time, if antiviruse db empty
 
