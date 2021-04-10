@@ -8,7 +8,7 @@
 %define unregister_shell() for i in %*; do sed -i 'y/\\//)/; /^'$(echo "$i" | tr / ')')'$/d; y/)/\\//' /etc/shells; done
 
 Name: mrsh
-Version: 0.0.1.g280fdf5ec59d
+Version: 0.0.2.g9f9884083831
 Release: alt1
 
 Summary: A minimal POSIX shell
@@ -21,6 +21,8 @@ Url: https://mrsh.sh
 
 VCS: https://git.sr.ht/~emersion/mrsh
 Source: %name-%version-%release.tar
+
+Patch1: 0001-parser-make-an-auto-const-char-array-static.patch
 
 %if %mrsh_build_system == meson
 BuildRequires: meson
@@ -53,10 +55,15 @@ that use %name's shared library.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %if %mrsh_build_system == meson
-%meson -Dreadline=enabled
+%meson -Dreadline=enabled \
+%ifarch i586 armh
+-Dwerror=false
+%endif
+
 %meson_build
 %endif
 %if %mrsh_build_system == make
@@ -97,5 +104,9 @@ fi
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Apr 10 2021 Arseny Maslennikov <arseny@altlinux.org> 0.0.2.g9f9884083831-alt1
+- 0.0.1.g280fdf5ec59d -> 0.0.2.g9f9884083831.
+- Fix build with Wformat-truncation (pending upstream).
+
 * Mon Jul 28 2020 Arseny Maslennikov <arseny@altlinux.org> 0.0.1.g280fdf5ec59d-alt1
 - Initial build for ALT Sisyphus.
