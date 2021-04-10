@@ -1,14 +1,14 @@
 Name: icebreaker
-Version: 1.9.8
+Version: 2.2.0
 Release: alt1
 Epoch: 1
 
 Summary: An addictive action-puzzle game involving bouncing penguins
-License: GPL
+License: GPLv2+
 Group: Games/Arcade
 
 Url: http://www.mattdm.org/icebreaker/
-Source0: %name-%version.tgz
+Source0: %name-%version.tar.xz
 Source1: %name.desktop
 Source2: %name.16.xpm
 Source3: %name.32.xpm
@@ -28,8 +28,8 @@ where they are essential to a secret plot for world domination.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+#patch0 -p1
+#patch1 -p1
 
 %build
 %define _optlevel 3
@@ -58,6 +58,10 @@ install -pDm644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %_liconsdir/icebreaker.xpm
 
 %changelog
+* Fri Apr 09 2021 Ilya Mashkin <oddity@altlinux.ru> 1:2.2.0-alt1
+- 2.2.0
+- update license
+
 * Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1:1.9.8-alt1
 - 1.9.8
 
