@@ -1,5 +1,5 @@
 Name: rpmidentity
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Calculate rpm package identity
@@ -26,11 +26,18 @@ make PREFIX=%_prefix
 make DESTDIR=%buildroot PREFIX=%_prefix install
 
 %files
+%doc CHANGES
 %_bindir/rpmidentity
 %dir %_datadir/rpmidentity
 %_datadir/rpmidentity/taglist
 
 %changelog
+* Sat Apr 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.4-alt1
+- Fixed package arguments parsing.
+- Fixed bug in the regexp that removes disttag from dependency versions.
+- Refactored code.
+- Packed CHANGES.
+
 * Sat Apr 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3-alt1
 - Updated to 0.3.
 - Added support for calculation identities for multiple packages at once.
