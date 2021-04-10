@@ -1,14 +1,14 @@
 Name: rpmidentity
-Version: 0.2
+Version: 0.3
 Release: alt1
 
-Summary: calculate rpm package identity
+Summary: Calculate rpm package identity
 
 License: GPL-3.0-or-later
 Group: Development/Other
-Url: git://git.altlinux.org/gears/r/rpmidenity.git
+Url: http://git.altlinux.org/gears/%(echo %name |cut -b1)/%name.git
 
-VCS: git://git.altlinux.org/gears/r/rpmidenity.git
+VCS: git://git.altlinux.org/gears/%(echo %name |cut -b1)/%name.git
 Source: %name-%version-%release.tar
 
 BuildArch: noarch
@@ -31,6 +31,12 @@ make DESTDIR=%buildroot PREFIX=%_prefix install
 %_datadir/rpmidentity/taglist
 
 %changelog
+* Sat Apr 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3-alt1
+- Updated to 0.3.
+- Added support for calculation identities for multiple packages at once.
+- Refactored code, fixed bugs.
+- Spec: Fixed summary, url and vcs tags.
+
 * Thu May 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2-alt1
 - Fixed to work with rpm 4.0.4.
 
