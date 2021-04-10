@@ -1,23 +1,18 @@
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.5
+%def_enable gtk_doc
 %def_enable check
 
 Name: bamf
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: BAMF Application Matching Framework
-License: GPLv3/LGPLv3
+License: GPL-3.0 and LGPL-3.0
 Group: Graphical desktop/Other
 Url: https://launchpad.net/bamf
 
-Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
-
-# Debian
-Patch10: 1001_remove-former-mono-macros.patch
-Patch11: 1002_spelling-fix.patch
-Patch12: 1003_add-compile-warning-flags.patch
-Patch13: 1004_py2to3_gtester2xunit.patch
+Source: %url/%ver_major/%version/+download/%name-%version.tar.xz
 
 BuildRequires: libgtk+3-devel gtk-doc gnome-common
 BuildRequires: libdbus-glib-devel libwnck3-devel libgtop-devel
@@ -44,7 +39,7 @@ through GDesktopAppInfo
 Summary: Window matching library - shared library
 Group: System/Libraries
 Obsoletes: libbamf3-0
-Provides: libbamf3-0 = %version-%release
+Provides: libbamf3-0 = %EVR
 
 %description -n libbamf3
 bamf matches application windows to desktop files.
@@ -54,7 +49,7 @@ This package contains shared libraries to be used by applications.
 %package -n libbamf3-devel
 Summary: Window matching library - development files
 Group: Development/C
-Requires: libbamf3 = %version-%release
+Requires: libbamf3 = %EVR
 
 %description -n libbamf3-devel
 bamf matches application windows to desktop files.
@@ -80,7 +75,7 @@ This package contains the documentation.
 Summary: Vala language bindings for bamf3 library
 Group: Development/Other
 BuildArch: noarch
-Requires: libbamf3 = %version-%release
+Requires: libbamf3 = %EVR
 
 %description -n libbamf3-vala
 This package provides Vala language bindings for bamf3 library.
@@ -88,7 +83,7 @@ This package provides Vala language bindings for bamf3 library.
 %package -n libbamf3-gir
 Summary: GObject introspection data for bamf3 library
 Group: System/Libraries
-Requires: libbamf3 = %version-%release
+Requires: libbamf3 = %EVR
 
 %description -n libbamf3-gir
 GObject introspection data for bamf3 library.
@@ -97,24 +92,20 @@ GObject introspection data for bamf3 library.
 Summary: GObject introspection devel data for bamf3 library.
 Group: System/Libraries
 BuildArch: noarch
-Requires: libbamf3-gir = %version-%release
-Requires: libbamf3-devel = %version-%release
+Requires: libbamf3-gir = %EVR
+Requires: libbamf3-devel = %EVR
 
 %description -n libbamf3-gir-devel
 GObject introspection devel data for bamf3 library.
 
-
 %prep
 %setup
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
 
 %build
 export PYTHON=%__python3
 %autoreconf
 %configure \
+  %{?_enable_gtk_doc:--enable-gtk-doc} \
   --enable-headless-tests
 %make_build V=1
 
@@ -154,9 +145,14 @@ export PYTHON=%__python3
 %_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Sat Apr 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
+- 0.5.5
+- removed debian patchset
+
 * Sat Aug 1 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - 0.5.4
 - applied debian patchset
+- fixed License tag
 
 * Mon Sep 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt3
 - rebuilt against libgtop-2.0.so.11
