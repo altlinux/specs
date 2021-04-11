@@ -1,5 +1,5 @@
 # check deps/npm/package.json for it
-%define npmver 6.14.10
+%define npmver 6.14.12
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -20,9 +20,8 @@
 %def_without systemv8
 
 
-# TODO: set 1.1.1j to fix CVE-2021-23840
 # https://bugzilla.altlinux.org/show_bug.cgi?id=39716
-%define openssl_version 1.1.1i
+%define openssl_version 1.1.1k
 %def_with systemssl
 
 %global libuv_abi 1.40.0
@@ -51,7 +50,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -381,6 +380,11 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sun Apr 11 2021 Vitaly Lipatov <lav@altlinux.ru> 14.16.1-alt1
+- new version 14.16.1 (with rpmrb script)
+- set openssl >= 1.1.1k
+- set npm >= 6.14.12
+
 * Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 14.16.0-alt1
 - new version 14.16.0 (with rpmrb script)
 - CVE-2021-22883: HTTP2 'unknownProtocol' cause Denial of Service by resource exhaustion
@@ -401,7 +405,6 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 - new version 14.15.0 (with rpmrb script)
 - 2020-10-27, Version 14.15.0 'Fermium' (LTS), @richardlau
   This release marks the transition of Node.js 14.x into Long Term Support (LTS)
-
 
 * Fri Oct 16 2020 Vitaly Lipatov <lav@altlinux.ru> 14.14.0-alt1
 - new version 14.14.0 (with rpmrb script)
