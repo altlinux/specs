@@ -18,7 +18,7 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.5.8
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
@@ -140,7 +140,7 @@ Data files for installed tests.
     -Defi_sbat_distro_id="altlinux" \
     -Defi_sbat_distro_summary="ALT Linux" \
     -Defi_sbat_distro_pkgname="%name" \
-    -Defi_sbat_distro_version="%version" \
+    -Defi_sbat_distro_version="%version-%release" \
     -Defi_sbat_distro_url="http://git.altlinux.org/gears/f/%{name}.git" \
     -Dplugin_nvme=true \
 %else
@@ -340,6 +340,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.sh
 
 %changelog
+* Fri Apr 09 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.5.8-alt2
+- add ALT release information to SBAT section
+
 * Thu Mar 25 2021 Anton Farygin <rider@altlinux.org> 1.5.8-alt1
 - 1.5.8
 
