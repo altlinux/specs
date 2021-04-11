@@ -7,7 +7,7 @@
 %def_disable ipod
 
 Name: exaile
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
@@ -120,6 +120,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- 4.1.1
+
 * Sun Feb 14 2021 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0 (ported to Python 3)
 
