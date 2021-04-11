@@ -1,5 +1,5 @@
 Name: open-isns
-Version: 0.99
+Version: 0.101
 Release: alt1
 Summary: The iSNS daemon and utility programs
 
@@ -39,7 +39,7 @@ Development files for iSNS
 
 %build
 %autoreconf
-%configure --enable-shared --disable-static
+%configure --enable-shared --disable-static --with-rundir=/run
 %make_build
 
 %install
@@ -75,5 +75,8 @@ install -p -m 755 -D %SOURCE2 %buildroot%_initdir/isnsd
 %_libdir/libisns.so
 
 %changelog
+* Sun Apr 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.101-alt1
+- 0.101
+
 * Fri Dec 21 2018 Alexey Shabalin <shaba@altlinux.org> 0.99-alt1
 - Initial build.

@@ -1,10 +1,11 @@
 %define Name iSCSI
 %define bname iscsi
+
 Name: open-%bname
 %define module_name %name
-Version: 2.0.877
-License: %gpl2plus
-Release: alt1.git73652184
+Version: 2.1.4
+License: GPL-2.0-or-later
+Release: alt1
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
 URL: http://%name.org
@@ -14,7 +15,6 @@ Patch: %name-%version-%release.patch
 Conflicts: linux-iscsi
 Provides: iscsi-initiator-utils = 6.%version-%release
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libmount-devel
 BuildRequires: libkmod-devel
 BuildRequires: libssl-devel
@@ -137,6 +137,9 @@ fi
 %_pkgconfigdir/libopeniscsiusr.pc
 
 %changelog
+* Sun Apr 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.4-alt1
+- 2.1.4
+
 * Fri Dec 21 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.877-alt1.git73652184
 - master snapshot 7365218437ecf8c03860e34c002c76871abf9943
 
