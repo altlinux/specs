@@ -1,5 +1,5 @@
 Name: distro_info
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: Get various info about a system and used distro
@@ -32,6 +32,9 @@ install -m0644 -D man/distro_info.1 %buildroot%_man1dir/distro_info.1
 %_man1dir/*
 
 %changelog
+* Sun Apr 11 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
+- fix c9f1 detection again
+
 * Mon Apr 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt1
 - distro_info: fix package type detection for Kali Linux
 - distro_info: add -z for print current CPU MHz
