@@ -1,5 +1,7 @@
+# do not forget to update Git revision in setup section
+
 Name: yosys
-Version: 0.7.0.0.826.g626b555
+Version: 0.9.0.0.4052.ga58571d
 Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
@@ -8,14 +10,12 @@ Group: Engineering
 Url: http://www.clifford.at/yosys/
 
 Source: %name-%version.tar
-Patch0: explicit-git-revision.patch
-Patch1: makefile-cxxflags.patch
 
 BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jun 21 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel pkg-config python-base python3-base tcl
-BuildRequires: flex gcc-c++ libffi-devel libreadline-devel python3 tcl-devel
+BuildRequires: flex gcc-c++ libffi-devel libreadline-devel python3 tcl-devel zlib-devel
 
 BuildPreReq: /proc
 
@@ -42,8 +42,8 @@ and programs needed to build yosys plugins.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%__subst "s|GIT_REV := .*$|GIT_REV := a58571d|" Makefile
+%__subst "s|CXXFLAGS += -std=c++11 -Os|CXXFLAGS += -std=c++11|" Makefile
 
 %build
 make config-gcc
@@ -71,6 +71,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Sat Apr 11 2021 Pavel Nakonechnyi <zorg@altlinux.org> 0.9.0.0.4052.ga58571d-alt1
+- New version
+
 * Tue Jun 19 2018 Elvira Khabirova <lineprinter@altlinux.org> 0.7.0.0.826.g626b555-alt1
 - New version
 
