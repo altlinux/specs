@@ -1,5 +1,5 @@
 Name: xmedcon
-Version: 0.16.2
+Version: 0.21.0
 Release: alt1
 Summary: A medical image conversion utility and library
 License: GPLv2 and LGPLv2.1
@@ -11,7 +11,7 @@ Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: %name.png
 
-BuildRequires: gcc-c++ libgtk+2-devel libpng-devel
+BuildRequires: gcc-c++ libgtk+3-devel libpng-devel
 
 %description
 This project stands for Medical Image Conversion and is released under the
@@ -39,7 +39,7 @@ necessary for developing programs that make use of the (X)MedCon library
 %setup -q
 
 %build
-%configure
+%configure --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -63,11 +63,13 @@ install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
 %_man3dir/*
 %_man4dir/*
 %_includedir/*
-%_libdir/*.a
 %_libdir/*.so
 %_datadir/aclocal/*
 
 %changelog
+* Sun Apr 11 2021 Anton Farygin <rider@altlinux.org> 0.21.0-alt1
+- 0.21.0
+
 * Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 0.16.2-alt1
 - 0.16.2
 
