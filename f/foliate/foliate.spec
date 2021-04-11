@@ -6,7 +6,7 @@
 
 
 Name: foliate
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -86,6 +86,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
+- 2.6.3
+
 * Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
 - 2.6.2
 
