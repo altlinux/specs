@@ -7,15 +7,15 @@
 %add_verify_elf_skiplist /%_lib/libmultipath.so.*
 
 Name: multipath-tools
-Version: 0.8.3
-Release: alt3
+Version: 0.8.6
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
-License: GPLv2+
+License: GPL-2.0-only
 Group: System/Configuration/Hardware
 
 Url: http://christophe.varoqui.free.fr
-# http://git.opensvc.com/multipath-tools/.git
+Vcs: https://github.com/opensvc/multipath-tools.git
 Source: %name-%version.tar
 Source2: multipath.rules
 Source3: multipathd.init
@@ -41,7 +41,7 @@ The tools are:
 
 %package -n libmultipath
 Summary: The %name modules and shared library
-License: GPL-1.0+
+License: GPL-2.0-only AND LGPL-2.1-only AND LGPL-2.0-or-later
 Group: System/Libraries
 Conflicts: multipath-tools <= 0.4.9-alt3
 
@@ -53,6 +53,7 @@ libmultipath.
 %package -n libmultipath-devel
 Summary: Development libraries and headers for %name
 Group: Development/C
+License: GPL-2.0-only AND LGPL-2.0-or-later
 Requires: libmultipath = %EVR
 
 %description -n libmultipath-devel
@@ -62,6 +63,7 @@ multipath-tools's libmpathpersist and libmpathcmd libraries.
 %package -n kpartx
 Summary: Partition device manager for device-mapper devices
 Group: System/Configuration/Hardware
+License: GPL-2.0-only
 Conflicts: multipath-tools <= 0.4.9-alt3
 
 %description -n kpartx
@@ -70,6 +72,7 @@ kpartx manages partition creation and removal for device-mapper devices.
 %package -n libdmmp
 Summary: multipath-tools C API library
 Group: System/Libraries
+License: GPL-3.0-or-later
 
 %description -n libdmmp
 This package contains the shared library for the multipath-tools
@@ -78,6 +81,7 @@ C API library.
 %package -n libdmmp-devel
 Summary: device-mapper-multipath C API library headers
 Group: Development/C
+License: GPL-3.0-or-later
 Requires: libdmmp = %EVR
 
 %description -n libdmmp-devel
@@ -89,7 +93,6 @@ device-mapper-multipath's libdmmp C API library
 %patch1 -p1
 
 %build
-export CFLAGS="$CFLAGS -fcommon"
 unset RPM_OPT_FLAGS
 %make_build \
 	LIB=%_lib \
@@ -125,7 +128,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %preun_service multipathd
 
 %files
-%doc README
+%doc README.md README.alua
 /sbin/multipath
 /sbin/multipathd
 #/sbin/mpathconf
@@ -174,6 +177,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Sun Apr 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.8.6-alt1
+- 0.8.6
+
 * Sat Apr 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.8.3-alt3
 - fix build with gcc-10
 
