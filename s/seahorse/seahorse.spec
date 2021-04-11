@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
+%define ver_major 40
 %define xdg_name org.gnome.seahorse
 
 %def_disable debug
@@ -18,7 +18,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -35,16 +35,17 @@ Source: %name-%version.tar
 Source1: %name.ru.po
 
 %define glib_ver 2.58
-%define gtk_ver 3.22
+%define gtk_ver 3.24
 %define soup_ver 2.34
 %define secret_ver 0.16
 %define avahi_ver 0.6
-%define gcr_ver 3.12
+%define gcr_ver 3.38
 %define gpgme_ver 1.7
-%define handy_ver 1.0
+%define handy_ver 1.1
+%define gnupg_ver 2.2.0
 
 Requires: dconf
-Requires: gnupg2 gcr
+Requires: gnupg2 > %gnupg_ver gcr >= %gcr_ver
 Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
@@ -54,7 +55,7 @@ BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: gtk-doc desktop-file-utils
 BuildRequires: gcc-c++ glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-BuildRequires: gnupg2
+BuildRequires: gnupg2 >= %gnupg_ver
 BuildRequires: libgpgme-devel >= %gpgme_ver
 BuildRequires: libgpg-error-devel
 BuildRequires: vala-tools
@@ -108,6 +109,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Mon Feb 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
