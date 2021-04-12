@@ -1,6 +1,6 @@
 Name: unison
 Version: 2.51.3
-Release: alt1
+Release: alt2
 
 Summary: File-synchronization tool
 
@@ -50,6 +50,9 @@ make test
 %_bindir/unison
 
 %changelog
+* Mon Apr 12 2021 Anton Farygin <rider@altlinux.org> 2.51.3-alt2
+- fixed build with ocaml 4.12
+
 * Sat Oct 24 2020 Anton Farygin <rider@altlinux.ru> 2.51.3-alt1
 - 2.51.3
 
