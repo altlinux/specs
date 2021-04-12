@@ -1,5 +1,5 @@
 Name: zile
-Version: 2.4.15
+Version: 2.6.1
 Release: alt1
 
 Summary: zile - emacs-like editor
@@ -11,7 +11,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tar.gz
 
 # Automatically added by buildreq on Tue Oct 18 2005
-BuildRequires: libncurses-devel libtinfo-devel libgc-devel help2man
+BuildRequires: libncurses-devel libtinfo-devel libgc-devel help2man glib2-devel libgee0.8-devel libgio-devel gobject-introspection-devel
 
 %description
 Zile (emacs-like) editor. 
@@ -36,6 +36,9 @@ Zile (emacs-like) editor.
 
 
 %changelog
+* Tue Apr 13 2021 Ilya Mashkin <oddity@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+
 * Wed Mar 03 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.15-alt1
 - 2.4.15
 - update license
