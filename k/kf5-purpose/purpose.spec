@@ -7,8 +7,8 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf5-%rname
-Version: 5.80.0
-Release: alt3
+Version: 5.81.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -140,6 +140,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Mon Apr 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.81.0-alt1
+- new version
+
 * Tue Mar 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt3
 - merge p9 changelog
 
