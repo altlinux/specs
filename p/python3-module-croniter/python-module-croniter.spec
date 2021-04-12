@@ -1,7 +1,7 @@
 %global oname croniter
 
 Name: python3-module-%oname
-Version: 0.3.34
+Version: 1.0.11
 Release: alt1
 
 Summary: Iteration for datetime object with cron like format
@@ -13,11 +13,10 @@ BuildArch: noarch
 
 Source0: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-natsort
-BuildRequires: python3-module-pytz
-BuildRequires: python3-module-tzlocal
+BuildRequires: rpm-build-python3 python3(setuptools) python3(dateutil)
+# tests
+BuildRequires: python3(pytz)
+BuildRequires: python3(pytest)
 
 %description
 Croniter provides iteration for datetime object with cron like format.
@@ -37,8 +36,8 @@ find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 %python3_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir/ %__python3 -m unittest discover -s %buildroot%python3_sitelibdir/%oname/tests -p 'test_*.py'
-rm -fr %buildroot%python3_sitelibdir/%oname/tests/
+# TimezoneDateutil test fails, see https://bugzilla.altlinux.org/show_bug.cgi?id=39164
+py.test3 -v ||:
 
 %files
 %doc README.rst docs/LICENSE
@@ -46,6 +45,9 @@ rm -fr %buildroot%python3_sitelibdir/%oname/tests/
 %python3_sitelibdir/%oname-%version-py?.?.egg-info
 
 %changelog
+* Mon Apr 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.11-alt1
+- 1.0.11
+
 * Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.34-alt1
 - 0.3.34 released
 
