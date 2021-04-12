@@ -1,5 +1,5 @@
 Name: stone_soup
-Version: 0.21.1
+Version: 0.26.1
 Release: alt1
 %define Sum Roguelike with tiled and ascii interfaces
 Summary: %Sum
@@ -14,7 +14,7 @@ Requires: %name-data = %version, %name-tiles = %version
 # optimized out: fontconfig libGL-devel libSDL2-devel libcloog-isl4 libncurses-devel libstdc++-devel libtinfo-devel pkg-config zlib-devel
 BuildRequires: ImageMagick-tools flex fonts-ttf-dejavu gcc-c++ git-core libGLU-devel libSDL2_image-devel libfreetype-devel lua5.1-devel libncursesw-devel libpng-devel libsqlite3-devel perl-Unicode-Collate
 
-BuildRequires: fonts-ttf-dejavu
+BuildRequires: fonts-ttf-dejavu python3-module-yaml
 
 %description
 Dungeon Crawl Stone Soup is an open-source, single-player, role-playing
@@ -109,6 +109,9 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Mon Apr 12 2021 Fr. Br. George <george@altlinux.ru> 0.26.1-alt1
+- Autobuild version bump to 0.26.1
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.21.1-alt1
 - Autobuild version bump to 0.21.1
 
