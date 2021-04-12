@@ -1,12 +1,13 @@
 Name: rezerwar
 Summary: A big mess of networked blocks and pipes
 Version: 0.4.2
-Release: alt1
+Release: alt2
 License: BSD
 Group: Games/Puzzles
 Source: http://tamentis.com/projects/rezerwar/files/%name-%version.tar.gz
 Source1: %name.desktop
 Source2: %name.png
+Patch: gcc10.patch
 Url: http://tamentis.com/projects/rezerwar/
 
 # Automatically added by buildreq on Thu Jun 17 2010
@@ -20,6 +21,7 @@ Authors: Bertrand Janin <tamentis@neopulsar.org>
 
 %prep
 %setup -q
+%patch -p2
 
 TARGET_BIN="%_bindir" TARGET_DATA="%_datadir/%name" TARGET_DOC="%_docdir/%name" ./configure Linux
 sed -i -e "1i CFLAGS += $RPM_OPT_FLAGS" src/Makefile
@@ -42,6 +44,9 @@ install -D -m 644 %SOURCE2 %buildroot/%_niconsdir/%name.png
 %_niconsdir/%name.png
 
 %changelog
+* Mon Apr 12 2021 Fr. Br. George <george@altlinux.ru> 0.4.2-alt2
+- GCC10 build
+
 * Thu Jun 17 2010 Fr. Br. George <george@altlinux.ru> 0.4.2-alt1
 - Initial build from SuSE
 
