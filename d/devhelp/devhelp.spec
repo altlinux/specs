@@ -1,9 +1,11 @@
-%define ver_major 3.38
+%define ver_major 40
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
+%def_enable plugin_gedit
+
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
@@ -96,7 +98,9 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %setup
 
 %build
-%meson -Dgtk_doc=true
+%meson -Dgtk_doc=true \
+%{?_enable_plugin_gedit:-Dplugin_gedit=true}
+%nil
 %meson_build
 
 %install
@@ -137,10 +141,14 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name-*/
 
+%{?_enable_plugin_gedit:
 %files -n gedit-plugin-%name
-%gedit_pluginsdir/*
+%gedit_pluginsdir/*}
 
 %changelog
+* Mon Apr 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
