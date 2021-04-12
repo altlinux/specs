@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.0
+Version:  0.1.1
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -58,5 +58,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Mon Apr 12 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.1-alt1
+- 0.1.1
+
 * Mon Mar 29 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
