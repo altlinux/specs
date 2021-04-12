@@ -4,13 +4,14 @@
 
 Name: python3-module-%oname
 Version: 0.5.4
-Release: alt1
+Release: alt2
 Summary: script for cloning a non-relocatable virtualenv
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/virtualenv-clone/
 Source: %name-%version.tar.gz
 Patch0: %name-%version-%release.patch
+Patch1: %oname-python39-support.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -26,6 +27,7 @@ A script for cloning a non-relocatable virtualenv.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %python3_build
@@ -53,6 +55,9 @@ tox.py3 --sitepackages -v
 %_bindir/virtualenv-clone
 
 %changelog
+* Mon Apr 12 2021 Nikita Obukhov <nickf@altlinux.org> 0.5.4-alt2
+- Add patch to support python3.9
+
 * Mon Apr 06 2020 Nikita Obukhov <nickf@altlinux.org> 0.5.4-alt1
 - Update to 0.5.4
 - Mark virtualenv-clone as supporting python3.8
