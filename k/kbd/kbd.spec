@@ -3,7 +3,7 @@
 Name: kbd
 Epoch: 0
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Group: Terminals
 Summary: Tools for managing the Linux console
@@ -214,10 +214,12 @@ mkdir -p \
 	%buildroot/sbin \
 	%buildroot/%_bindir \
 	%buildroot/%_sysconfdir/security/console.apps \
-	%buildroot/%_sysconfdir/pam.d
+	%buildroot/%_sysconfdir/pam.d \
+	%buildroot/%_unitdir
 
 install -p -m640 rpm/kbdrate.pamd %buildroot/%_sysconfdir/pam.d/kbdrate
 install -p -m640 rpm/kbdrate.apps %buildroot/%_sysconfdir/security/console.apps/kbdrate
+install -p -m644 rpm/consolesaver.service %buildroot/%_unitdir/consolesaver.service
 
 mv %buildroot/bin/kbdrate %buildroot/sbin/
 ln -s -- %_usr/lib/consolehelper/helper %buildroot/bin/kbdrate
@@ -395,6 +397,7 @@ done
 %attr(755,root,root) %config %_initdir/*
 %attr(755,root,root) %config %_sysconfdir/profile.d/*.sh
 %attr(755,root,root) %config %_sysconfdir/profile.d/*.csh
+%_unitdir/consolesaver.service
 %_datadir/console-scripts
 %dir %_sysconfdir/sysconfig/console
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/sysconfig/consolefont
@@ -417,6 +420,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Mon Apr 12 2021 Alexey Gladkov <legion@altlinux.ru> 0:2.4.0-alt2
+- Add systemd unit file for consolesaver (ALT#30155).
+
 * Wed Dec 16 2020 Alexey Gladkov <legion@altlinux.ru> 0:2.4.0-alt1
 - New release version (2.4.0).
 
