@@ -1,9 +1,9 @@
 %define ver_major 40
-%define beta .rc
+%define beta %nil
 
 Name: gnome-backgrounds
-Version: %ver_major
-Release: alt0.8%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A collection of GNOME backgrounds
 License: GPLv2
@@ -38,6 +38,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Mon Apr 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Thu Mar 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
 - 40.rc
 
