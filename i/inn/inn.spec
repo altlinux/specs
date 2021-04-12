@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: inn
-Version: 2.6.3
-Release: alt2.1
+Version: 2.6.4
+Release: alt1
 
 Summary: The InterNetNews (INN) system, an Usenet news server
 License: %gpl2plus
@@ -44,7 +44,7 @@ Requires: lib%name = %version-%release
 Requires: webserver-common
 
 BuildRequires: ctags flex gnupg  su tcl time uucp wget gawk ncompress perl-podlators
-BuildRequires: libkrb5-devel libpam-devel libssl-devel libsasl2-devel libdb4.8-devel libe2fs-devel
+BuildRequires: libkrb5-devel libpam-devel libssl-devel libsasl2-devel libdb4-devel libe2fs-devel
 BuildRequires: perl-devel perl-libnet perl-Math-BigInt perl-Encode perl-MIME-tools perl-GD-Text
 BuildRequires: python-devel python-modules-compiler python-modules-encodings
 
@@ -462,6 +462,11 @@ fi
 %_bindir/inews
 
 %changelog
+* Mon Apr 12 2021 Sergey Y. Afonin <asy@altlinux.org> 2.6.4-alt1
+- 2.6.4
+- added check for /var/run/news directory to init script
+- changed back libdb4.8-devel to libdb4-devel in BuildRequires
+
 * Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt2.1
 - rebuild with new perl 5.30.2 and libdb4.8
 
