@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 
 Summary: A Python 3 wrapper for the mediainfo library
@@ -10,6 +10,7 @@ Group: Development/Python3
 License: MIT
 Url: https://pypi.python.org/pypi/%modname
 Source: https://pypi.io/packages/source/p/%modname/%modname-%version.tar.gz
+# skip internet test
 Patch: %modname-5.0.3-alt-skip_internet_test.patch
 
 BuildArch: noarch
@@ -46,6 +47,9 @@ py.test3
 
 
 %changelog
+* Mon Apr 12 2021 Yuri N. Sedunov <aris@altlinux.org> 5.0.4-alt1
+- 5.0.4
+
 * Tue Nov 24 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.3-alt1
 - 5.0.3
 - enabled %%check
