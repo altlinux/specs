@@ -1,6 +1,6 @@
 Name: mednafen
-Version: 1.26.1
-Release: alt2
+Version: 1.27.0
+Release: alt1
 
 Summary: Multi-consoles Emulator
 Group: Emulators
@@ -9,10 +9,10 @@ Url: http://mednafen.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # http://downloads.sourceforge.net/%%name/%%name-%%version.tar.bz2
-Source: %name-%version.tar.xz
+Source: %name-%version-UNSTABLE.tar.xz
 Patch1: mednafen-e2k.patch
 
-BuildRequires: gcc-c++ liblzo2-devel libsndfile-devel
+BuildRequires: gcc-c++ liblzo2-devel libsndfile-devel libflac-devel
 BuildRequires: libcdio-devel libvorbis-devel libSDL_net-devel
 BuildRequires: libsndfile-devel zlib-devel bison
 BuildRequires: libSDL2-devel libGL-devel libX11-devel libGLU-devel
@@ -84,6 +84,9 @@ export CXXFLAGS
 
 
 %changelog
+* Tue Apr 13 2021 Ilya Mashkin <oddity@altlinux.ru> 1.27.0-alt1
+- version 1.27.0
+
 * Sat Mar 20 2021 Ilya Mashkin <oddity@altlinux.ru> 1.26.1-alt2
 - fix for e2k
 
