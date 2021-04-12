@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.12.6
+Release: alt0.12.7
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 # alternatives
 %set_compress_method gzip
 %define weight 30
-PreReq: alternatives >= 0.2.0
+Requires(pre,postun): alternatives >= 0.2.0
 BuildPreReq: alternatives >= 0.2.0
 
 Provides: webclient, links
@@ -58,6 +58,7 @@ export ac_cv_prog_HAVE_SMBCLIENT=no
 touch src/intl/gettext/plural.y
 make -C src/intl/gettext V=1 plural.c
 
+%add_optflags -Wno-error=builtin-declaration-mismatch
 %add_optflags -fno-strict-aliasing -Wno-pointer-sign -Werror
 %ifarch %e2k
 # elinks-0.12/src/util/error.h:189 (#define if_assert_failed) => ftbfs on e2k
@@ -93,6 +94,9 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Mon Apr 12 2021 Fr. Br. George <george@altlinux.ru> 0.12-alt0.12.7
+- Fix GCC10 build
+
 * Sat Oct 03 2020 Michael Shigorin <mike@altlinux.org> 0.12-alt0.12.6
 - workaround ftbfs with lcc
 
