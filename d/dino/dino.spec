@@ -4,7 +4,7 @@
 
 Name: dino
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Modern Jabber/XMPP client
 License: GPL-3.0
@@ -16,6 +16,8 @@ Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+# up
+Patch: dino-9acb54df9254609f2fe4de83c9047d408412de28.patch
 
 Requires: lib%name = %EVR
 
@@ -48,6 +50,7 @@ This package provides libraries and headers needed to develop Dino plugins.
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %cmake
@@ -89,6 +92,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_vapidir/*
 
 %changelog
+* Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
+- fixed build with vala >= 0.50.4 (upstream patch)
+
 * Fri Nov 13 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
