@@ -1,10 +1,10 @@
 Name: eaglemode
-Version: 0.94.2
+Version: 0.95.0
 Release: alt1
 Group: Graphical desktop/Other
 Summary: Futuristic desktop allowing user to visit almost everything by zooming in
 Packager: Fr. Br. George <george@altlinux.ru>
-License: GPL
+License: GPLv3
 Source: %name-%version.tar.bz2
 Source1: %name-install.sed
 Source2: %name.wrapper
@@ -18,10 +18,19 @@ Requires: arj p7zip lzop lha zip unzip unrar htmldoc
 BuildRequires: libpoppler-glib-devel
 
 # Automatically added by buildreq on Thu Jun 24 2010
-BuildRequires: gcc-c++ libgio-devel libgtk+2-common-devel libjpeg-devel librsvg-devel libtiff-devel libxine2-devel perl-threads libpng-devel
+BuildRequires: gcc-c++ libgio-devel libgtk+2-common-devel libjpeg-devel librsvg-devel libtiff-devel libxine2-devel perl-threads libpng-devel libvlc-devel
 
 %description
-Eagle Mode is an advanced solution for a futuristic style of man-machine communication, in which the user can visit almost everything simply by zooming in. It has a professional file manager, file viewers and players for most of the common file types, a chess game, a 3D mines game, a multi-function clock and some fractal fun, all integrated in a virtual cosmos. By featuring a separate popup-zoomed control view, help texts in the things they are describing, editable bookmarks, multiple input methods, fast anti-aliased graphics, a virtually unlimited depth of panel tree, and by its portable C++ API, Eagle Mode aims to be a cutting edge of zoomable user interfaces.
+Eagle Mode is an advanced solution for a futuristic style of man-machine
+communication, in which the user can visit almost everything simply by
+zooming in. It has a professional file manager, file viewers and players
+for most of the common file types, a chess game, a 3D mines game,
+a multi-function clock and some fractal fun, all integrated in a virtual
+cosmos. By featuring a separate popup-zoomed control view, help texts in
+the things they are describing, editable bookmarks, multiple input
+methods, fast anti-aliased graphics, a virtually unlimited depth of
+panel tree, and by its portable C++ API, Eagle Mode aims to be a cutting
+edge of zoomable user interfaces.
 
 %package devel
 Group: Graphical desktop/Other
@@ -63,6 +72,9 @@ mv %buildroot%_libdir/%name/include %buildroot%_includedir/%name && ln -s %_incl
 %_includedir/%name/*
 
 %changelog
+* Mon Apr 12 2021 Fr. Br. George <george@altlinux.ru> 0.95.0-alt1
+- Autobuild version bump to 0.95.0
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 0.94.2-alt1
 - Autobuild version bump to 0.94.2
 
