@@ -1,6 +1,6 @@
 Name: sispmctl
-Version: 4.8
-Release: alt2
+Version: 4.9
+Release: alt1
 
 Summary: Gembird Silver Shield PM USB PDU control
 License: GPLv2+
@@ -55,6 +55,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 # - darktemplar@ for explaining me a silly lapse with the shared library
 
 %changelog
+* Mon Apr 12 2021 Michael Shigorin <mike@altlinux.org> 4.9-alt1
+- new version (watch file uupdate)
+
 * Wed Sep 16 2020 Michael Shigorin <mike@altlinux.org> 4.8-alt2
 - refer to egctl for *LAN devices
 - fix %%changelog
