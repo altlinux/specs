@@ -1,6 +1,6 @@
 Name:                wicd
 Version:             1.7.4
-Release:             alt3
+Release:             alt4
 Summary:             Wireless and wired network connection manager
 
 Group:               System/Base
@@ -15,12 +15,32 @@ Patch2:              wicd-1.7.2.4-dbus-policy.patch
 Patch3:              wicd-1.7.3-DaemonClosing.patch
 Patch4:              wicd-1.7.3-unicode.patch
 Patch5:              wicd-1.7.3-sanitize.patch
+# debian patches
+Patch13: 03-import-wpath.patch
+Patch14: 04-bytes-vs-strings-in-setup.py.patch
+Patch26: 26-support_etc-network_scripts.patch
+Patch32: 32-prefer_pkexec.patch
+Patch34: 34-newer_urwid.patch
+Patch35: 35-fix_ValueError_None_is_not_in_list.patch
+Patch36: 36-fix_wrongly_displayed_keybinding.patch
+Patch37: 37-fix_IndexError_list_index_out_of_range.patch
+Patch38: 38-fix_typo_for_pedantic_wpa_supplicant_2.6.patch
+Patch39: 39-add_wpa-peap_without_domain.patch
+Patch40: 40-initialize_wicd-gtk_wifi-on-off-button.patch
+Patch41: 41-fix_wicd-manager-settings.conf_5_man_page_wrt_wired_connect_mode.patch
+Patch42: 42-fix_documentation_wrt_generated_dhclient.conf.patch
+Patch43: 43-fix-wrong-Galician-translation.patch
+Patch44: 44-fix_wicd-curses_AttributeError_in_keypress-function.patch
+Patch45: 45-update_systemd_service_file.patch
+Patch46: 46-dhcpcd_is_now_dhcpcd5.patch
+Patch47: 47-fix-833929-no-autoconnect-when-GUI-is-open.patch
 
 BuildRequires(pre):  rpm-build-python
 BuildRequires:       python-devel
 BuildRequires:       desktop-file-utils
 BuildRequires:       gettext
 BuildRequires:       /usr/bin/pybabel
+BuildRequires:       pm-utils
 
 Requires:            %{name}-common = %{version}-%{release}
 BuildArch:	     noarch
@@ -100,6 +120,26 @@ Client program for wicd that uses a GTK+ interface.
 # Upstream bug report and patch:
 # https://bugs.launchpad.net/wicd/+bug/993912
 %patch5 -p1
+
+# debian fixes
+%patch13 -p1
+# %patch14 -p1
+%patch26 -p1
+%patch32 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
+%patch45 -p1
+# %patch46 -p1
+%patch47 -p1
 
 # Set correct python2 executable in shebang and scripts
 subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
@@ -205,8 +245,10 @@ desktop-file-install \
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa-psk
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa-psk-hex
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa-peap
+%config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa-peap-wo-domain
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa2-leap
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa2-peap
+%config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa2-peap-wo-domain
 %{_unitdir}/wicd.service
 %{python_sitelibdir_noarch}/wicd/*
 %{python_sitelibdir_noarch}/wicd-%{version}*.egg-info
@@ -255,6 +297,10 @@ desktop-file-install \
 %{_datadir}/wicd/icons/*
 
 %changelog
+* Mon Apr 12 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.4-alt4
+- Fixed startup error in wicd-curses (ALT #39843)
+- Many bug fixes and improvements (thanks debian for the patches)
+
 * Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 1.7.4-alt3
 - Set correct python2 executable in shebang and scripts.
 
