@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo
-Version: 4.4.4
+Version: 4.4.5
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -195,6 +195,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Mon Apr 12 2021 Vladimir Didenko <cow@altlinux.org> 4.4.5-alt1
+- 4.4.5
+
 * Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 4.4.4-alt1
 - 4.4.4
 
