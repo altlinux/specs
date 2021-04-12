@@ -2,11 +2,15 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.1
+%define ver_major 40
+%define beta %nil
+
+%def_enable vnc
+%def_enable rdp
 
 Name: gnome-remote-desktop
-Version: %ver_major.9
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Remote Desktop
 Group: Networking/Remote access
@@ -14,34 +18,44 @@ License: GPLv2+
 Url: https://gitlab.gnome.org/GNOME/gnome-remote-desktop
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Vcs: https://gitlab.gnome.org/GNOME/gnome-remote-desktop.git
 Source: %name-%version.tar
 %endif
 
-%define pipewire_ver 0.3.2
+%define glib_ver 2.67.1
+%define pw_api_ver 0.3
+%define pw_ver 0.3.22
 %define vnc_ver 0.9.11
+%define freerdp_ver 2.3.1
 %define gst_ver 1.10
+%define fuse_ver 3.9.1
+%define xkbc_ver 1.0.0
 
-Requires: pipewire >= %pipewire_ver
+Requires: pipewire >= %pw_ver
+Requires: fuse3 >= %fuse_ver
 
 BuildRequires(pre): meson pkgconfig(systemd)
-BuildRequires: pkgconfig(libpipewire-0.3) >= %pipewire_ver
-BuildRequires: libgio-devel libvncserver-devel >= %vnc_ver
-BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
-BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
-BuildRequires: libsecret-devel libnotify-devel
-BuildRequires: libcairo-devel libfreerdp-devel
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
+%{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
+%{?_enable_rdp:BuildRequires: libfreerdp-devel >= %freerdp_ver}
+BuildRequires: libfuse3-devel >= %fuse_ver
+BuildRequires: libxkbcommon-devel >= %xkbc_ver
+BuildRequires: libsecret-devel libnotify-devel libcairo-devel
 
 %description
 Remote desktop daemon for GNOME using pipewire.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
-%meson -Dsystemd_user_unit_dir=%_userinitdir
+%meson \
+    %{?_disable_rdp:-Drdp=false} \
+    -Dsystemd_user_unit_dir=%_userinitdir
+%nil
 %meson_build
 
 %install
@@ -55,6 +69,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README
 
 %changelog
+* Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
 - 0.1.9
 
