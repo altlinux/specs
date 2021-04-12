@@ -1,7 +1,7 @@
 %define  oname numba
 
 Name:    python3-module-%oname
-Version: 0.53.0
+Version: 0.53.1
 Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
@@ -47,6 +47,9 @@ mv %buildroot%_bindir/pycc %buildroot%_bindir/pycc3
 %doc CHANGE_LOG *.rst
 
 %changelog
+* Sat Apr 10 2021 Grigory Ustinov <grenka@altlinux.org> 0.53.1-alt1
+- Build new version.
+
 * Mon Mar 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.53.0-alt1
 - Build new version. (Closes: #39744).
 
