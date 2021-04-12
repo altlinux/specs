@@ -1,6 +1,6 @@
 Name: awesome
 Version: 4.3
-Release: alt3
+Release: alt4
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -93,6 +93,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc LICENSE build/docs/*.md
 
 %changelog
+* Fri Mar 12 2021 Slava Aseev <ptrnine@altlinux.org> 4.3-alt4
+- Fix build with gcc-10
+
 * Sat Jun  1 2019 Terechkov Evgenii <evg@altlinux.org> 4.3-alt3
 - Add /usr/share/xsessions/awesome.desktop (ALT#36830)
 
