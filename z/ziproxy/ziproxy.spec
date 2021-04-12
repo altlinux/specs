@@ -1,5 +1,5 @@
 Name: ziproxy
-Version: 3.3.0
+Version: 3.3.2
 Release: alt1
 
 Summary: Ziproxy is a forwarding (non-caching) compressing HTTP proxy server. 
@@ -10,9 +10,8 @@ URL: http://ziproxy.sourceforge.net/
 Packager: Sergey Alembekov <rt@altlinux.ru>
 
 Source: %name.tar
+Source1: %name.watch
 Patch1: ziproxy-ziproxyconf.patch
-Patch2: ziproxy-fix-spelling.patch
-Patch3: ziproxy-giflib5.patch
 
 BuildRequires: libpng-devel libgif-devel libjasper-devel libjpeg-devel zlib-devel libsasl2-devel
 
@@ -27,9 +26,6 @@ preemptive hostname resolution, transparent proxying, IP ToS marking
 %prep
 %setup -n %name
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
 %build
 %configure
 %make_build
@@ -43,6 +39,10 @@ preemptive hostname resolution, transparent proxying, IP ToS marking
 %_man1dir/*
 
 %changelog
+* Mon Apr 12 2021 Andrey Cherepanov <cas@altlinux.org> 3.3.2-alt1
+- New version.
+- Add watch file.
+
 * Thu Jun 11 2020 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
 - New version.
 - Fix build for giflib 5.x.
