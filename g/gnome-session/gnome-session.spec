@@ -2,7 +2,7 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %define ver_major 40
-%define beta .beta
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
@@ -11,8 +11,8 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major
-Release: alt0.2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
@@ -180,6 +180,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Apr 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.2.beta
 - 40.beta
 
