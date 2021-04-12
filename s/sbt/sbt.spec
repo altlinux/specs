@@ -1,10 +1,11 @@
+ExcludeArch: armh
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 %define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -61,7 +62,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		sbt
 Version:	%{sbt_version}
-Release:	alt5_9.1jpp8
+Release:	alt8_9.1jpp8
 Summary:	The simple build tool for Scala and Java projects
 
 BuildArch:	noarch
@@ -323,7 +324,6 @@ Source184:	%sbt_ivy_descriptor%%20precompiled-2_9_3
 %endif
 
 BuildRequires:	mvn(org.scala-lang:scala-compiler)
-BuildRequires:	java-devel
 BuildRequires:	python
 # maven is required because climbing-nemesis.py uses xmvn-resolve
 BuildRequires:	maven-local
@@ -451,6 +451,7 @@ sed -i -e 's/0.13.0/%{sbt_bootstrap_version}/g' project/build.properties
 ./climbing-nemesis.py org.fusesource.jansi jansi %{ivy_local_dir} --version 1.12
 ./climbing-nemesis.py org.fusesource.jansi jansi-native %{ivy_local_dir} --version 1.8
 ./climbing-nemesis.py org.fusesource.hawtjni hawtjni-runtime %{ivy_local_dir} --version 1.16
+./climbing-nemesis.py org.fusesource.hawtjni hawtjni-runtime %{ivy_local_dir} --version 1.17
 %else
 ./climbing-nemesis.py jline jline %{ivy_local_dir} --version 2.11 --jarfile %{_javadir}/jline2-2.10.jar
 ./climbing-nemesis.py org.fusesource.jansi jansi %{ivy_local_dir} --version 1.9
@@ -619,6 +620,9 @@ sed -i -e 's/"-dontnote",/"-dontnote", "-dontshrink", "-dontoptimize",/g' projec
 sed -i -e 's/mapLibraryJars.all filterNot in[.]toSet./mapLibraryJars(all.map {f => new java.io.File(f.getCanonicalPath())} filterNot in.map {f => new java.io.File(f.getCanonicalPath())}.toSet)/g' project/Proguard.scala
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 
 %if %{do_bootstrap}
 java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -jar -Dfedora.sbt.ivy.dir=ivy-local -Dfedora.sbt.boot.dir=sbt-boot-dir -Divy.checksums='""' -Dsbt.boot.properties=rpmbuild-sbt.boot.properties sbt-launch.jar package "set publishTo in Global := Some(Resolver.file(\"published\", file(\"published\"))(Resolver.ivyStylePatterns) ivys \"$(pwd)/published/[organization]/[module]/[revision]/ivy.xml\" artifacts \"$(pwd)/published/[organization]/[module]/[revision]/[artifact]-[revision].[ext]\")" publish makePom
@@ -734,6 +738,15 @@ done
 %doc README.md LICENSE NOTICE
 
 %changelog
+* Mon Apr 12 2021 Igor Vlasenko <viy@altlinux.org> 0.13.1-alt8_9.1jpp8
+- use ExcludeArch: armh hack
+
+* Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt7_9.1jpp8
+- use zerg@'s hack for armh
+
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt6_9.1jpp8
+- fixed build with new java
+
 * Fri Jun 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt5_9.1jpp8
 - fixed build with new jline
 
