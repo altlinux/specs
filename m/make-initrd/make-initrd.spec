@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.15.0
+Version: 2.16.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -148,6 +148,16 @@ AutoReq: noshell, noshebang
 %description ucode
 CPU microcode autoloading module for %name
 
+%package iscsi
+Summary: iSCSI module for %name
+Group: System/Base
+Requires: %name = %version-%release
+Requires: open-iscsi
+AutoReq: noshell, noshebang
+
+%description iscsi
+iSCSI module for %name
+
 %prep
 %setup -q
 
@@ -189,6 +199,7 @@ fi
 %exclude %_datadir/%name/features/mdadm
 %exclude %_datadir/%name/features/ucode
 %exclude %_datadir/%name/guess/ucode
+%exclude %_datadir/%name/features/iscsi
 %doc Documentation/*.md
 
 %files devmapper
@@ -218,7 +229,23 @@ fi
 %_datadir/%name/guess/ucode
 %endif
 
+%files iscsi
+%_datadir/%name/features/iscsi
+
 %changelog
+* Mon Apr 12 2021 Alexey Gladkov <legion@altlinux.ru> 2.16.0-alt1
+- Runtime:
+  + ueventd tries to process events again if it did not work the first time.
+  + Move READONLY handle to fstab service.
+  + Fix polld service dependency.
+- New feature:
+  + iscsi: feature adds you to perform a diskless system boot using pxe
+  and iSCSI (thx Mikhail Chernonog) (ALT#27354).
+- Feature mdadm:
+  + md-raid-member handler assume that it has successfully processed all the events.
+- Feature pipeline:
+  + Use ro,loop options only for a non-device files.
+
 * Tue Apr 06 2021 Alexey Gladkov <legion@altlinux.ru> 2.15.0-alt1
 - Runtime:
   + Allow init= to be symlink
