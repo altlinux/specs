@@ -3,7 +3,7 @@
 
 Name: dict-%dict_name-utf8
 Version: 1.2
-Release: alt5
+Release: alt6
 
 Summary: V.K. Mueller English-Russian Dictionary, 7 Edition: dict format
 Summary(ru_RU.KOI8-R): Англо-русский словарь Мюллера, редакция 7: формат dict
@@ -20,7 +20,7 @@ PreReq: dictd >= 1.7.1
 Obsoletes: %dict_name-dict
 Obsoletes: dictd-%dict_name-utf8
 
-BuildRequires: libltdl perl-Unicode-Map8 perl-Unicode-String dict-tools >= 1.9.1-alt2
+BuildRequires: perl-Unicode-Map8 perl-Unicode-String dict-tools >= 1.9.1-alt2
 
 %description 
 Electronic version of V.K. Mueller English-Russian Dictionary, 7 Edition
@@ -32,7 +32,7 @@ in dict format and utf8 encoding. You can use it with your favourite dict client
 dict клиентом.
 
 %prep
-%setup -q -c
+%setup -c
 
 %build
 cd usr/local/share/dict
@@ -64,6 +64,9 @@ install -p -m644 -D usr/local/share/dict/%dict_name.index.exp $RPM_BUILD_ROOT%_d
 %_datadir/dictd/*
 
 %changelog
+* Tue Apr 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.2-alt6
+- Fixed Build Requires.
+
 * Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt5
 - removed post/un in favor of filetrigger
 
