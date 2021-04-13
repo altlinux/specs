@@ -12,7 +12,7 @@
 
 Name: zeitgeist
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: Framework providing Desktop activity awareness
 Group: Office
@@ -194,6 +194,9 @@ cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %endif
 
 %changelog
+* Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt2
+- updated to v1.0.3-3-g702fdbac (fixed build with vala-0.52)
+
 * Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3 (dropped Python 2 support)
 
