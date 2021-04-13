@@ -1,5 +1,7 @@
+%def_without check
+
 Name: crtools-ovz
-Version: 3.15.1.23
+Version: 3.15.1.27
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -29,7 +31,16 @@ BuildRequires: python3-base
 # BuildRequires: libselinux-devel
 BuildRequires(pre): rpm-build-python3
 
-Requires: nftables util-linux
+%if_with check
+BuildRequires: rpm-build-vm-run
+BuildRequires: vzkernel
+BuildRequires: libaio-devel
+BuildRequires: python-module-future python3-module-yaml python3-module-protobuf
+BuildRequires: libbsd-devel
+BuildRequires: iproute2 iptables iputils openvswitch
+%endif
+
+Requires: nftables util-linux ipset
 
 %description
 An utility to checkpoint/restore tasks for OpenVZ containers.
@@ -65,6 +76,9 @@ rm -rf %buildroot%_includedir/compel
 rm -f %buildroot%_libdir/*.so
 rm -f %buildroot%_pkgconfigdir/criu.pc
 
+%check
+vm-run --kvm=cond make test || :
+
 %files
 %doc README.md COPYING CREDITS
 %_sbindir/criu
@@ -78,6 +92,12 @@ rm -f %buildroot%_pkgconfigdir/criu.pc
 %_man8dir/crtools.8*
 
 %changelog
+* Tue Apr 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.1.27-alt1
+- 3.15.1.27
+
+* Thu Apr 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.1.26-alt1
+- 3.15.1.26
+
 * Mon Mar 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.1.23-alt1
 - 3.15.1.23
 
