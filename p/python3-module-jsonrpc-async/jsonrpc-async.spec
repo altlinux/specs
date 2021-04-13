@@ -1,5 +1,5 @@
 Name: python3-module-jsonrpc-async
-Version: 1.1.1
+Version: 2.0.0
 Release: alt1
 
 Summary: JSON-RPC client implementation for asyncio python code
@@ -30,5 +30,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/jsonrpc_async-%version-*-info
 
 %changelog
+* Tue Apr 13 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
+- 2.0.0 released
+
 * Mon Jan 13 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt1
 - initial
