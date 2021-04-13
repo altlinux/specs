@@ -1,6 +1,6 @@
 Name:           suspend-utils
 Version:        1.0
-Release:        alt1.git668c5f7
+Release:        alt2.git668c5f7
 Summary:        A Set Of Tools To Support Sleep Modes
 License:        GPLv2+
 Url:            http://sourceforge.net/projects/suspend
@@ -26,7 +26,8 @@ specific problems each machine has.
 %setup -q
 
 %build
-%add_optflags --std=gnu89
+%add_optflags -std=gnu89
+%add_optflags -fcommon
 %autoreconf
 %configure
 %make
@@ -44,6 +45,9 @@ install -d %buildroot%_sysconfdir
 /usr/sbin/*
 
 %changelog
+* Tue Apr 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0-alt2.git668c5f7
+- Fixed optflags.
+
 * Fri May 05 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0-alt1.git668c5f7
 - built commit 668c5f7
 - packaged all the built files
