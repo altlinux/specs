@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 3.38
@@ -14,7 +14,7 @@
 
 Name: cheese
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL-2.0
@@ -170,6 +170,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
+- updated to 3.38.0-32-gdf2c5f2c
+
 * Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
