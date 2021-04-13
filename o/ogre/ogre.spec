@@ -1,6 +1,6 @@
 Name: ogre
 Version: 1.9.0
-Release: alt3
+Release: alt4
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++ cmake zziplib-devel libfreetype-devel libgtk+2-devel libo
 BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXinerama-devel libXi-devel libXpm-devel libXv-devel libXxf86misc-devel xorg-xf86miscproto-devel libXxf86vm-devel libXext-devel libGLU-devel libfreeimage-devel tinyxml-devel
 #BuildRequires:  glew-devel 
 BuildRequires: libharfbuzz-devel libGLES-devel libpoco-devel
-BuildRequires: libglsl-optimizer-devel libGLEW-devel hlsl2glsl
+BuildRequires: libGLEW-devel
 
 %description
 OGRE (Object-Oriented Graphics Rendering Engine) is a scene-oriented,
@@ -40,7 +40,7 @@ This package contains the Ogre library and plugins.
 %package -n lib%name-devel
 Summary: Object-oriented Graphics Rendering Engine (development files)
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Ogre is a complete object-oriented 3D rendering engine. It supports
@@ -61,7 +61,7 @@ manual. Install this package if you want to develop programs that use Ogre.
 %package samples
 Summary: Ogre samples executables and media
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description samples
 This package contains the compiled (not the source) sample applications coming
@@ -91,8 +91,7 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 	-DOGRE_BUILD_TESTS=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DOGRE_DOCS_PATH=docs \
-	-DGLSL_Optimizer_INC_SEARCH_PATH=%_includedir/glsl-optimizer/src/glsl \
-	-DHLSL2GLSL_INC_SEARCH_PATH:PATH=%_includedir/hlsl2glsl/include
+	%nil
 
 %cmake_build
 
@@ -152,6 +151,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Tue Apr 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt4
+- Rebuilt without glsl-optimizer and hlsl2glsl.
+
 * Wed Feb 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt3
 - Fixed build on armh and rebuilt with new boost libraries.
 
