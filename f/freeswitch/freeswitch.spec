@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.10.5
-Release: alt3
+Version: 1.10.6
+Release: alt1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -28,7 +28,7 @@ BuildRequires: libpcap-devel perl-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
 BuildRequires: libopenr2.3-devel libspandsp3-devel libsofia-sip-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
-BuildRequires: libuuid-devel postgresql-devel
+BuildRequires: libuuid-devel postgresql-devel libsofia-sip-devel
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
 BuildRequires: libmemcached-devel libopus-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libsilk-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
@@ -539,6 +539,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Apr 13 2021 Anton Farygin <rider@altlinux.org> 1:1.10.6-alt1
+- 1.10.6
+
 * Fri Feb 26 2021 Anton Farygin <rider@altlinux.org> 1:1.10.5-alt3
 - fixed build with gcc-9
 
