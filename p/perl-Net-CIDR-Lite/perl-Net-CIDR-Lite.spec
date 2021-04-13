@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-CIDR-Lite
 
 Name: perl-%module
-Version: 0.21
-Release: alt1.1
+Version: 0.22
+Release: alt1
 
 Summary: Perl extension for merging IPv4 or IPv6 CIDR addresses
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/D/DO/DOUGW/Net-CIDR-Lite-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/S/ST/STIGTSP/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
 Perl extension for merging IPv4 or IPv6 CIDR addresses.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,9 +30,13 @@ Perl extension for merging IPv4 or IPv6 CIDR addresses.
 %perl_vendor_install
 
 %files
+%doc Changes README
 %perl_vendor_privlib/Net
 
 %changelog
+* Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 0.22-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
