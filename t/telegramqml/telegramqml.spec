@@ -2,7 +2,7 @@
 
 Name: telegramqml
 Version: 2.0.0
-Release: alt2
+Release: alt3
 Summary: Telegram API tools for QtQml and Qml
 
 License: GPLv3+
@@ -41,14 +41,15 @@ BuildRequires: qt5-multimedia-devel
 %summary.
 
 %prep
-%setup -n %origname-%version 
+%setup -n %origname-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
 %build
-%qmake_qt5 
+%add_optflags -Wno-narrowing
+%qmake_qt5
 
 %make_build
 
@@ -61,6 +62,9 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 %_qt5_qmldir/TelegramQml/
 
 %changelog
+* Tue Apr 13 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt3
+- Fixed FTBFS with -Wno-narrowing.
+
 * Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
 - Rebuild with libqtelegram-ae-devel (Closes: #35990).
 
