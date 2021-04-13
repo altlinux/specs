@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-CBC
-Version: 3.01
+Version: 3.02
 Release: alt1
 
 Summary: Crypt-CBC - Encrypt Data with Cipher Block Chaining Mode
@@ -63,6 +63,9 @@ operate on a whole data value at once.
 %perl_vendor_privlib/Crypt/
 
 %changelog
+* Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 3.02-alt1
+- automated CPAN update
+
 * Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 3.01-alt1
 - automated CPAN update
 
