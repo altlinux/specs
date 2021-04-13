@@ -13,10 +13,10 @@
 %def_enable introspection
 %def_enable vala
 %def_disable installed_tests
-%def_disable check
+%def_enable check
 
 Name: %bname
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
@@ -190,6 +190,10 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.50.4-alt1
+- 2.50.4
+- enabled %%check
+
 * Thu Jan 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.50.3-alt1
 - 2.50.3
 
