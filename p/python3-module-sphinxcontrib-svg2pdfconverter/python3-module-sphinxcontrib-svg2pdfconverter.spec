@@ -1,9 +1,12 @@
 %define  prefixname python3-module-sphinxcontrib
 %define  modulename svg2pdfconverter
 
+# https://github.com/missinglinkelectronics/sphinxcontrib-svg2pdfconverter/issues/14
+%def_disable check
+
 Name:    %prefixname-%modulename
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Sphinx SVG to PDF converter extension
 License: BSD-2-Clause
@@ -107,6 +110,9 @@ This package contains converter using CairoSVG.
 %python3_sitelibdir/sphinxcontrib/cairosvgconverter.py
 
 %changelog
+* Tue Apr 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
+- Disabled check, because it isn't supported by python3.9 and upstream sleeps.
+
 * Wed Mar 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
 - Automatically updated to 1.1.1.
 
