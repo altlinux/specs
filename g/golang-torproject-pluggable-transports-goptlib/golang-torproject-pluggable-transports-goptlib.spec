@@ -45,13 +45,13 @@ BuildRequires: rpm-build-golang
 # https://git.torproject.org/pluggable-transports/goptlib
 %global provider_prefix git.%{provider}.%{provider_tld}/%{project}/%{repo}.git
 %global import_path     %{provider_prefix}
-%global commit          fcc1d072d63b3e843495d4af4c0f522ddbb9fefc
+%global commit  781a46c66d2ddbc3509354ae7f1fccab74cb9927
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170331
+%global commitdate      20190411
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0.7
-Release:        alt1_2
+Version:        1.1.0
+Release:        alt1_1
 Summary:        A library for writing Tor pluggable transports in Go
 License:        CC0
 URL:            https://gitweb.%{provider}.%{provider_tld}/%{project}/%{repo}
@@ -159,6 +159,7 @@ sort -u -o devel.file-list devel.file-list
 %endif
 
 %check
+go mod init %{import_path}
 %if 0%{?with_check} && 0%{?with_unit_test} && 0%{?with_devel}
 %if ! 0%{?with_bundled}
 export GOPATH=%{buildroot}/%{go_path}:%{go_path}
@@ -192,6 +193,10 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Tue Apr 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1_1
+- new version
+- fixed build with golang 1.16
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_2
 - new version
 
