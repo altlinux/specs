@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: opentoonz
-Version: 1.4.0
-Release: alt3
+Version: 1.5.0
+Release: alt1
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -25,14 +25,10 @@ Source2: %name-%version-sample.tar
 
 # NOTE: on each update pull updates to docs and samples
 
-Patch1: %name-%version-alt-return-type.patch
-Patch2: %name-%version-alt-libraries-path.patch
-Patch3: %name-%version-alt-data-location.patch
-Patch4: opensuse-0001-Fix-linker-errors-on-Linux.patch
-Patch5: opensuse-0001-Use-the-system-mypaint-brushes.patch
-Patch6: %name-%version-alt-qt5-compat.patch
-Patch7: %name-%version-upstream-gcc10-compat.patch
-Patch8: %name-%version-upstream-glibc-compat.patch
+Patch1: %name-1.4.0-alt-libraries-path.patch
+Patch2: %name-1.4.0-alt-data-location.patch
+Patch3: opensuse-0001-Fix-linker-errors-on-Linux.patch
+Patch4: opensuse-0001-Use-the-system-mypaint-brushes.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -53,7 +49,9 @@ BuildRequires: qt5-tools-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
+BuildRequires: qt5-serialport-devel
 BuildRequires: libfreetype-devel
+BuildRequires: libopencv-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(sphinx_rtd_theme)
 
@@ -88,10 +86,6 @@ This package contains documentation and samples for OpenToonz.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 # prevent using unbundled libraries
 # don't unbundle libtiff because it's patched. See: https://github.com/opentoonz/opentoonz/blob/master/doc/how_to_build_linux.md#building-libtiff
@@ -159,6 +153,9 @@ done
 %doc additional/sample
 
 %changelog
+* Tue Apr 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt1
+- Updated to upstream version 1.5.0.
+
 * Tue Jan 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt3
 - Fixed build with new toolchain.
 
