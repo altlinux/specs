@@ -1,5 +1,8 @@
+
+%define _unpackaged_files_terminate_build 1
+
 Name: hydrogen
-Version: 0.9.7
+Version: 1.0.2
 Release: alt1
 
 Summary: Hydrogen Drum Machine
@@ -9,17 +12,10 @@ URL: http://www.hydrogen-music.org
 
 # https://github.com/hydrogen-music/hydrogen.git
 Source0: %name-%version.tar
-Source1: %name-32x32.xpm
-Source2: %name-16x16.xpm
-Source3: %name-48x48.xpm
-Patch1: %name-%version-upstream-detect-pulse.patch
-Patch2: %name-%version-upstream-detect-rubberband.patch
-Patch3: %name-%version-alt-desktop.patch
-Patch4: %name-%version-alt-man-dir.patch
 
-BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo liblrdf-devel
+BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo-devel liblrdf-devel
 BuildRequires: libportaudio2-devel libportmidi librubberband-devel libsndfile-devel libtar-devel libpulseaudio-devel cppunit-devel
-BuildRequires: libqt4-sql-mysql phonon-devel
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-xmlpatterns-devel zlib-devel
 
 BuildRequires: desktop-file-utils
 
@@ -38,40 +34,35 @@ Hydrogen is a sample based drum machine with:
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
-export QTDIR=%_libdir/qt4
 %cmake -DWANT_RUBBERBAND=ON
 %cmake_build DESTDIR=%buildroot
 
 %install
-export QTDIR=%_libdir/qt4
 %cmakeinstall_std prefix=%_prefix
-
-install -pD -m644 %SOURCE1 %buildroot%_niconsdir/%name.xpm
-install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.xpm
-install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.xpm
 
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Midi \
-	%buildroot%_desktopdir/hydrogen.desktop
+	%buildroot%_desktopdir/org.hydrogenmusic.Hydrogen.desktop
 
 %files
 %doc -P AUTHORS ChangeLog README.txt
 %_bindir/*
 %_datadir/%name/
 %_libdir/*.so
-%_niconsdir/%name.xpm
-%_liconsdir/%name.xpm
-%_miconsdir/%name.xpm
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
+%_datadir/appdata/*.xml
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/%name.1*
 
+# TODO: put headers into separate subpackage
+%exclude /usr/include/%name
+
 %changelog
+* Mon Apr 12 2021 Ivan A. Melnikov <iv@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1
 - Updated to upstream version 0.9.7.
 
