@@ -8,7 +8,7 @@ BuildRequires: tex(dehypht.tex)
 
 Name: pnetcdf
 Version: 1.8.1
-Release: alt2.2
+Release: alt2.3
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -97,7 +97,10 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %add_optflags %optflags_shared -DNDEBUG -Df2cFortran -I%mpidir/lib
-export FCFLAGS="%optflags -fallow-argument-mismatch"
+export FCFLAGS="%optflags"
+%ifnarch %e2k
+export FCFLAGS="$FCFLAGS -fallow-argument-mismatch"
+%endif
 export F90FLAGS="%optflags"
 %autoreconf
 %configure \
@@ -137,6 +140,9 @@ rm -f %buildroot%_libdir/*.so.
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Tue Apr 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt2.3
+- Fixed -fallow-argument-mismatch for %%e2k arches.
+
 * Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt2.2
 - Fixed FTBFS.
 
