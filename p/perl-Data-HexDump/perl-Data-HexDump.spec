@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module Data::HexDump
 
 %define real_name Data-HexDump
 
 Name: perl-Data-HexDump
-Version: 0.02
-Release: alt1.1
+Version: 0.04
+Release: alt1
 
 Summary: Hexadecial Dumper
 
@@ -15,7 +16,7 @@ URL: http://search.cpan.org/~ftassin/Data-HexDump/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source: http://search.cpan.org/CPAN/authors/id/F/FT/FTASSIN/%real_name-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/Data-HexDump-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,7 +34,7 @@ others are shown as single dots)
 
 
 %prep
-%setup -q -n %real_name-%version
+%setup -q -n Data-HexDump-%{version}
 
 %build
 %perl_vendor_build
@@ -41,15 +42,19 @@ others are shown as single dots)
 %install
 %perl_vendor_install
 
-mv -f -- %buildroot%_bindir/hexdump %buildroot%_bindir/hexdump.pl
+mkdir -p %buildroot%_bindir/
+mv -f -- eg/hexdump %buildroot%_bindir/hexdump.pl
 
 %files
-%doc README
+%doc README Changes
 
 %perl_vendor_privlib/Data/HexDump*
 %_bindir/hexdump.pl
 
 %changelog
+* Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 0.04-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
