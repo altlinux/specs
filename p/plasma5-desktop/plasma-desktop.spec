@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.4
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ Provides: plasma5-user-manager = %EVR
 Obsoletes: plasma5-user-manager < %EVR
 
 Source: %rname-%version.tar
+Source1: multicomponentchooser.tar
 Patch2: alt-menu-icon.patch
 Patch3: alt-def-apps-menu.patch
 Patch4: alt-def-kicker.patch
@@ -109,7 +110,7 @@ Common polkit files for %name
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 #%patch8 -p1
@@ -124,6 +125,10 @@ Common polkit files for %name
 %patch18 -p1
 %patch19 -p1
 %patch100 -p1
+
+pushd kcms
+    tar xvf %SOURCE1
+popd
 
 #Fix translate in Input Method Panel (kimpanel) widget.
 #If the po-file is called differently than "plasma_applet_org.kde.plasma.kimpanel.po", the kimpanel widget menu will be in English only.
@@ -206,6 +211,9 @@ Common polkit files for %name
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue Apr 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt2
+- readd default media players chooser
+
 * Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt1
 - new version
 
