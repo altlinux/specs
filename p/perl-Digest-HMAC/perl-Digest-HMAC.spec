@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Digest-HMAC
 Name: perl-%dist
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Summary: Keyed-Hashing for Message Authentication
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AR/ARODLAND/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ algorithm, usually MD5 or SHA-1.  The HMAC mechanism is described in
 RFC 2104.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +36,9 @@ RFC 2104.
 %perl_vendor_privlib/Digest
 
 %changelog
+* Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 1.04-alt1
+- automated CPAN update
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 1.03-alt1
 - 1.02 -> 1.03
 - rebuilt as plain src.rpm
