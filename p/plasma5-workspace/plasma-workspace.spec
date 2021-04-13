@@ -35,7 +35,7 @@
 
 Name: plasma5-workspace
 Version: 5.21.4
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -478,6 +478,9 @@ done
 
 
 %changelog
+* Mon Apr 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.21.4-alt4
+- Removed 'unlock' button. Now unlocking starts immediately instead of displaying the button.
+
 * Fri Apr 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.21.4-alt3
 - Fixed kscreenlocker theme to stop unexpectedly erasing password after grace period
 

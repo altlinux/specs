@@ -7,7 +7,7 @@
 
 Name: plasma5-%rname
 Version: 5.21.4
-Release: alt2
+Release: alt3
 Epoch: 2
 %K5init altplace
 
@@ -125,6 +125,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Mon Apr 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:5.21.4-alt3
+- Updated PAM support
+
 * Thu Apr 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:5.21.4-alt2
 - Implemented better PAM support
 
