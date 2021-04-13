@@ -1,7 +1,7 @@
 %def_enable qsort
 
 Name: nnn
-Version: 3.6
+Version: 3.7
 Release: alt1
 
 Summary: A full-featured terminal file manager
@@ -43,6 +43,9 @@ install -D -m644 misc/auto-completion/bash/nnn-completion.bash \
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Apr 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.7-alt1
+- 3.6 -> 3.7
+
 * Mon Mar 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.6-alt1
 - 3.5 -> 3.6
 
