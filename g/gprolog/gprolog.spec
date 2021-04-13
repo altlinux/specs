@@ -1,19 +1,21 @@
 Name: gprolog
 Version: 1.4.5
-Release: alt1
+Release: alt2
 Summary: GNU Prolog is a free Prolog compiler
-
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Other
 License: GPLv2
 Url: http://www.gprolog.org
 Source: %name-%version.tar.gz
 Patch1: gprolog-1.4.0-test.patch
 Patch2: gprolog-1.3.0-linedit.patch
+Patch3:   gprolog.make-print-submake-output.patch
 
 Obsoletes: gprolog-examples < 1.4.0
 Provides: gprolog-examples = %version-%release
-
-ExclusiveArch: x86_64 %ix86
+%set_gcc_version 8
+BuildRequires:  gcc8 libgdb-devel perl-devel
+ExclusiveArch: x86_64 %ix86 %e2k
 
 %description
 GNU Prolog is a native Prolog compiler with constraint solving over
@@ -50,9 +52,21 @@ Documentation for GNU Prolog.
 %setup
 #patch1 -p1
 # %patch2 -p1
+%patch3 -p1
 
 %build
+# This package fails to build with LTO due to undefined symbols.  LTO
+# was disabled in OpenSuSE as well, but with no real explanation why
+# beyond the undefined symbols.  It really shold be investigated further.
+# Disable LTO
+%define _lto_cflags %{nil}
+
 cd src
+
+# BZ #1799464
+%define _legacy_common_support 1
+
+
 
 # gprolog only acccept -O0 and don't like -fomit-frame-pointer
 
@@ -61,7 +75,7 @@ CFLG="$(echo $RPM_OPT_FLAGS | sed -s "s/\-O2/-O1/g" \
 
 # Based on a gentoo ebuild (??)
 CFLG="$CFLG -funsigned-char"
-
+%add_optflags -fcommon
 # sed -i -e "s:TXT_FILES      = @TXT_FILES@:TXT_FILES=:" Makefile.in
 ./configure \
        --with-install-dir=$RPM_BUILD_ROOT%_libdir/gprolog-%version \
@@ -115,6 +129,9 @@ rm -rf SWI WAMCC XSB YAP
 %doc src/dist-doc/*
 
 %changelog
+* Tue Apr 13 2021 Ilya Mashkin <oddity@altlinux.ru> 1.4.5-alt2
+- fix build 
+
 * Mon Sep 09 2019 Fr. Br. George <george@altlinux.ru> 1.4.5-alt1
 - Autobuild version bump to 1.4.5
 
