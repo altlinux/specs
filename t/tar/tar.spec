@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.32
+Version: 1.34.0.13.66b59fcc
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -14,7 +14,7 @@ Source: %srcname.tar
 %def_enable selinux
 BuildRequires: libacl-devel libattr-devel makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-BuildRequires: gnulib >= 0.1.2313.4652c, paxutils >= 0.0.1.125.5693
+BuildRequires: gnulib >= 0.1.4460.783f2, paxutils >= 0.0.1.139.2f7d
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
@@ -46,15 +46,19 @@ export tar_cv_path_RSH=no
 %make_build -C po update-po
 %make_build AM_MAKEINFOFLAGS=--no-split
 
-%check
-%make_build -k check
-
 %install
 mkdir -p %buildroot{%_bindir,%_man1dir}
 %makeinstall_std bindir=/bin
 ln -s ../../bin/tar %buildroot%_bindir/gtar
 install -pm644 doc/tar.1 %buildroot%_man1dir/
 %find_lang %name
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%check
+%make_build -k check
 
 %files -f %name.lang
 /bin/tar
@@ -64,6 +68,12 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Apr 13 2021 Dmitry V. Levin <ldv@altlinux.org> 1.34.0.13.66b59fcc-alt1
+- tar: release_1_32 -> release_1_34-13-g66b59fcc.
+- gnulib BR: v0.1-2313-g4652c7baf -> v0.1-4460-g783f2967e.
+- paxutils BR: v0.0.1-125-g5693984 -> v0.0.1-139-g2f7d215.
+- Updated translations from translationproject.org.
+
 * Sat Feb 23 2019 Dmitry V. Levin <ldv@altlinux.org> 1.32-alt1
 - release_1_31 -> release_1_32.
 
@@ -263,14 +273,14 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 * Fri Aug 13 1999 Thierry Vignaud <tvignaud@mandrakesoft.com>
 - 1.3.6
 
-* Tue Jul 22 1999 Thierry Vignaud <tvignaud@mandrakesoft.com>
+* Thu Jul 22 1999 Thierry Vignaud <tvignaud@mandrakesoft.com>
 - 1.13.5
 
 * Thu Jul 15 1999 Thierry Vignaud <tvignaud@mandrakesoft.com>
 - 1.13.2
 - french description
 
-* Tue Jul 12 1999 Bernhard Rosenkraenzer <bero@mandrakesoft.de>
+* Mon Jul 12 1999 Bernhard Rosenkraenzer <bero@mandrakesoft.de>
 - 1.13.1
 
 * Fri Jul 09 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
