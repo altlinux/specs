@@ -1,6 +1,6 @@
 Name: gnulib
-Version: 0.1.2433.3043e
-Release: alt2
+Version: 0.1.4550.2a794
+Release: alt1
 
 Summary: GNU Portability Library
 # assorted licenses, see the source
@@ -9,9 +9,10 @@ Group: Development/C
 BuildArch: noarch
 Url: https://www.gnu.org/software/gnulib/
 Source: %name-%version.tar
+# git://git.altlinux.org/people/ldv/packages/gnulib refs/heads/po-current
+Source1: po-%version-%release.tar
 Patch1: gnulib-alt-utimens.patch
 Patch2: gnulib-alt-mktime-internal.patch
-Patch3: nproc-Ensure-nproc-NPROC_ALL-nproc-NPROC_CURRENT-wit.patch
 AutoReqProv: no
 BuildRequires: gnu-config makeinfo
 
@@ -25,14 +26,16 @@ distribution; instead, developers grab modules directly from the
 source repository.
 
 %prep
-%setup
+%setup -a1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 
 %build
+# Generate LINGUAS file.
+ls build-aux/po/*.po | sed 's|.*/||; s|\.po$||' > build-aux/po/LINGUAS
+
 make info
 
 %install
@@ -49,6 +52,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Wed Apr 07 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4550.2a794-alt1
+- v0.1-2433-g3043e43a7 -> v0.1-4550-g2a7948aad.
+
 * Tue Jun 11 2019 Nikita Ermakov <arei@altlinux.org> 0.1.2433.3043e-alt2
 - Ensure nproc(NPROC_ALL) >= nproc(NPROC_CURRENT) with glibc >= 2.26.
 

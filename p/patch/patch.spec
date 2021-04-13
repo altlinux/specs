@@ -1,5 +1,5 @@
 Name: patch
-Version: 2.7.6.0.24.76e7
+Version: 2.7.6.0.27.7623
 Release: alt1
 
 Summary: The GNU patch command, for modifying/upgrading files
@@ -9,7 +9,7 @@ Url: https://www.gnu.org/software/patch/
 Vcs: git://git.altlinux.org/gears/p/patch.git
 Source: %name-%version-%release.tar
 
-BuildRequires: gnulib >= 0.1.2305.95c96
+BuildRequires: gnulib >= 0.1.4078.702cb
 
 # for extended attribute copying support
 BuildRequires: libattr-devel
@@ -30,11 +30,20 @@ echo -n %version > .tarball-version
 
 %build
 ./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
-%configure --disable-silent-rules
+# Since patch is not a threaded executable,
+# configure gnulib with --disable-threads.
+# This is not just a harmless optimization that saves a few cycles
+# but also a workaround that fixes GNU ld errors on ppc64le reported by
+# eu-elflint --gnu-ld /usr/bin/patch
+%configure --disable-silent-rules --disable-threads
 %make_build
 
 %install
 %makeinstall_std
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 %make_build -k check VERBOSE=1
@@ -45,6 +54,10 @@ echo -n %version > .tarball-version
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 2.7.6.0.27.7623-alt1
+- patch: v2.7.6-24-g76e7758 -> v2.7.6-27-g7623b2d.
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4078-g702cba00f.
+
 * Sat Nov 02 2019 Dmitry V. Levin <ldv@altlinux.org> 2.7.6.0.24.76e7-alt1
 - patch: v2.7.6-17-g9c98635 -> v2.7.6-24-g76e7758.
 - spec: added VCS tag.
@@ -215,7 +228,7 @@ echo -n %version > .tarball-version
 * Tue Apr 07 1998 Cristian Gafton <gafton@redhat.com>
 - added buildroot
 
-* Wed Oct 21 1997 Cristian Gafton <gafton@redhat.com>
+* Tue Oct 21 1997 Cristian Gafton <gafton@redhat.com>
 - updated to 2.5
 
 * Mon Jun 02 1997 Erik Troan <ewt@redhat.com>

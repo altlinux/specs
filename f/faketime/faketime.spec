@@ -1,5 +1,5 @@
 Name: faketime
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: Execute program with changed notion of system time
@@ -43,12 +43,26 @@ LC_ALL=C TZ=UTC LD_LIBRARY_PATH=%buildroot%_libdir \
 	%buildroot%_bindir/faketime -d '1970-01-01 1234557890 seconds' -- date > out
 diff exp out
 
+date -u -r/ '+%%Y-%%m-%%d %%H:%%M:%%S' > exp
+LC_ALL=C LD_LIBRARY_PATH=%buildroot%_libdir \
+	%buildroot%_bindir/faketime -r/ -- \
+	date -u '+%%Y-%%m-%%d %%H:%%M:%%S' > out
+diff exp out
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %_bindir/*
 %_libdir/*.so
 %_man1dir/*
 
 %changelog
+* Wed Apr 07 2021 Dmitry V. Levin <ldv@altlinux.org> 0.2.8-alt1
+- Fixed build with fresh gnulib.
+- Built with explicitly enabled LFS support.
+
 * Fri Dec 18 2020 Dmitry V. Levin <ldv@altlinux.org> 0.2.7-alt1
 - Fixed build with fresh glibc.
 

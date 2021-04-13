@@ -1,6 +1,6 @@
 Name: coreutils
-Version: 8.31.0.3.6bd78
-Release: alt2
+Version: 8.32.0.138.34a48
+Release: alt1
 %define srcname %name-%version-%release
 
 Summary: The GNU versions of common management utilities
@@ -36,7 +36,7 @@ Patch: %srcname.patch
 %def_enable selinux
 
 Provides: stat = %version, fileutils = %version, textutils = %version, sh-utils = %version
-Provides: mktemp = 0:1.6, mktemp = 1:1.5-alt2
+Provides: mktemp = 1:1.6
 Obsoletes: stat, fileutils, textutils, sh-utils, mktemp
 Conflicts: man-pages < 0:1.52-alt2, initscripts < 0:5.49-ipl41mdk, rpm-build < 0:4.0.4-alt7
 # due to /bin/arch
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.1.2433.3043e
+BuildRequires: gnulib >= 0.1.4521.e54b6
 BuildRequires: makeinfo
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
@@ -106,7 +106,7 @@ ls po/*.po 2>/dev/null |
 	sed 's|.*/||; s|\.po$||' >po/LINGUAS
 
 # Compress docs for packaging.
-bzip2 -9k NEWS THANKS
+xz -9k NEWS THANKS
 
 # workarounds for bootstrap
 ln -s /bin/false build-aux/git-version-gen
@@ -200,6 +200,12 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 
 %find_lang %name
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+# GNU_RELRO segment not contained in a loaded segment
+# verify-elf: ERROR: ./bin/true: eu-elflint failed
+%set_verify_elf_method strict,lint=relaxed
+
 %check
 : ${SHELL:=/bin/sh} ${VERBOSE:=no}
 export SHELL VERBOSE
@@ -215,9 +221,14 @@ export SHELL VERBOSE
 %_libexecdir/%name/
 %_man1dir/*
 %_infodir/*.info*
-%doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
+%doc AUTHORS NEWS.xz README THANKS.xz TODO
 
 %changelog
+* Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 8.32.0.138.34a48-alt1
+- coreutils: v8.31-3-g6bd78f27f -> v8.32-138-g34a48bf0f.
+- gnulib BE: v0.1-2433-g3043e43a7 -> v0.1-4521-ge54b645fc.
+- Updated translations from translationproject.org.
+
 * Tue May 21 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.31.0.3.6bd78-alt2
 - true, false: build a portable implementation if the traditional one fails
   (fixes these utilities at least on ppc64le architecture).

@@ -1,5 +1,5 @@
 Name: sed
-Version: 4.7
+Version: 4.8.0.7.b352
 Release: alt1
 Epoch: 1
 
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: makeinfo, gnulib >= 0.1.2305.95c96
+BuildRequires: makeinfo, gnulib >= 0.1.4290.f2225
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -66,6 +66,10 @@ xz -k NEWS
 
 %find_lang %name
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %check
 %make_build -k check
 
@@ -77,6 +81,11 @@ xz -k NEWS
 %doc BUGS NEWS.xz README doc/*.txt.xz
 
 %changelog
+* Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 1:4.8.0.7.b352-alt1
+- sed: v4.7 -> v4.8-7-gb352b74.
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4290-gf22259966.
+- Updated translations from translationproject.org.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 1:4.7-alt1
 - sed: v4.4-10-g05800ee -> v4.7.
 - gnulib: v0.1-1209-g24b3216 -> v0.1-2305-g95c96b6dd.

@@ -1,5 +1,5 @@
 Name: bison
-Version: 3.0.5
+Version: 3.7.6
 Release: alt1
 
 Summary: A GNU general-purpose parser generator
@@ -12,14 +12,16 @@ Url: https://www.gnu.org/software/bison/
 Source0: %srcname.tar
 # git://git.altlinux.org/people/ldv/packages/bison refs/heads/po-current
 Source1: po-%version-%release.tar
+# git://git.altlinux.org/people/ldv/packages/bison refs/heads/runtime-po-current
+Source2: runtime-po-%version-%release.tar
 
 Requires: m4 >= 0:1.4
 Requires: %name-runtime = %version-%release
 Provides: byacc = %version-%release
 Obsoletes: byacc
 
-BuildRequires: flex, gcc-c++, help2man, makeinfo
-BuildRequires: gnulib >= 0.1.2305.95c96
+BuildRequires: flex, gcc-c++, gperf, help2man, makeinfo
+BuildRequires: gnulib >= 0.1.4516.e639e5
 
 %description
 Bison is a general purpose parser generator which converts a grammar
@@ -46,31 +48,53 @@ See the Internationalization in the Bison manual section for more
 information.
 
 %prep
-%setup -n %srcname -a1
+%setup -n %srcname -a1 -a2
 
 # Build scripts expect to find the bison version in this file.
 echo -n %version > .tarball-version
 
-# Generate LINGUAS file.
+# Generate LINGUAS files.
 ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
+ls runtime-po/*.po | sed 's|.*/||; s|\.po$||' > runtime-po/LINGUAS
 
 # Install submodule files.
 rm m4/m4.m4 data/m4sugar/{foreach,m4sugar}.m4 build-aux/move-if-change
-ln -s %_aclocaldir/m3.m4 m4/
+ln -s %_aclocaldir/m4.m4 m4/
 ln -s %_datadir/autoconf/m4sugar/{foreach,m4sugar}.m4 data/m4sugar/
 ln -s %_datadir/gnulib/build-aux/move-if-change build-aux/
 
+# Use bootstrap script from gnulib.
+if grep -qs ^bootstrap_sync=true bootstrap.conf; then
+	ln -snf %_datadir/gnulib/build-aux/bootstrap .
+fi
+
 %build
 ./bootstrap --no-git --skip-po --gnulib-srcdir=%_datadir/gnulib
-%configure --disable-silent-rules
+
+# Use translations from gnulib.
+if [ -f %_datadir/gnulib/build-aux/po/LINGUAS ]; then
+	rm gnulib-po/LINGUAS
+	cp -p %_datadir/gnulib/build-aux/po/{LINGUAS,*.po} gnulib-po/
+fi
+
+# Since bison is not a threaded executable,
+# configure gnulib with --disable-threads.
+# This is not just a harmless optimization that saves a few cycles
+# but also a workaround that fixes GNU ld errors on ppc64le reported by
+# eu-elflint --gnu-ld /usr/bin/bison
+%configure --disable-silent-rules --disable-threads
 touch src/scan-????.l
 %make_build
 
 %install
 %makeinstall_std
 
-%find_lang %name
+%find_lang --output=%name.lang %name %name-gnulib
 %find_lang %name-runtime
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 %make_build -k check
@@ -87,6 +111,11 @@ touch src/scan-????.l
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Thu Apr 08 2021 Dmitry V. Levin <ldv@altlinux.org> 3.7.6-alt1
+- bison: v3.0.5 -> v3.7.6 (closes: #39846).
+- gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4516-ge639e557f.
+- Updated translations from translationproject.org.
+
 * Wed Dec 26 2018 Dmitry V. Levin <ldv@altlinux.org> 3.0.5-alt1
 - bison: v3.0.4-14-g8bf276d -> v3.0.5.
 - gnulib: v0.1-585-g2fda85e -> v0.1-2305-g95c96b6dd.
