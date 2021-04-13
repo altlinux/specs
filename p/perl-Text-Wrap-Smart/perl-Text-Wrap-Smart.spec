@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Text-Wrap-Smart
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Wrap text into chunks of (mostly) equal length
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/Text-Wrap-Smart/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/S/SC/SCHUBIGER/Text-Wrap-Smart-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SC/SCHUBIGER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Jun 04 2008
 BuildRequires: perl-Math-BigInt perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-version perl(boolean.pm) perl(Params/Validate.pm)
@@ -36,7 +36,7 @@ BuildRequires: perl-Math-BigInt perl-Module-Build perl-Test-Pod perl-Test-Pod-Co
 Text::Wrap::Smart was primarly developed to split an overly long SMS message into chunks of mostly equal size. The distribution's wrap_smart() may nevertheless be suitable for other purposes.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -44,10 +44,14 @@ Text::Wrap::Smart was primarly developed to split an overly long SMS message int
 %perl_vendor_install
 
 %files
+%doc README Changes
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 0.8-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1
 - automated CPAN update
 
