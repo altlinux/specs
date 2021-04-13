@@ -1,13 +1,12 @@
 Name: dsniff
 Version: 2.4
 %define beta_ver b1
-Release: alt0.13.b1
+Release: alt0.14.b1
 
 Summary: Network audit tools
 License: BSD-like
 Group: Monitoring
 Url: http://www.monkey.org/~dugsong/dsniff/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # http://www.monkey.org/~dugsong/dsniff/beta/dsniff-2.4b1.tar.gz
 Source: dsniff-2.4b1.tar
@@ -35,9 +34,9 @@ Patch18: dsniff-2.4b1-fc-pntohl_shift.patch
 Patch19: dsniff-2.4b1-fc-sysconf_clocks.patch
 Patch20: dsniff-2.4b1-deb-fix-parallel-FTBFS.patch
 
-# Automatically added by buildreq on Wed Feb 06 2019
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXt-devel libnet2-devel libpcap-devel python-base sh4 xorg-proto-devel
-BuildRequires: imake libXmu-devel libdb4-devel libnids-devel libnsl2-devel libssl-devel xorg-cf-files
+# Automatically added by buildreq on Tue Apr 13 2021
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXt-devel libgpg-error libnet2-devel libpcap-devel python2-base sh4 xorg-proto-devel
+BuildRequires: imake libXmu-devel libdb4-devel libnids-devel libnsl2-devel libssl-devel libtirpc-devel rpcgen xorg-cf-files
 
 %package X11
 Summary: Network audit tools for X11
@@ -100,6 +99,7 @@ sed -i 's/dn_expand/__&/g' configure.in
 %set_autoconf_version 2.13
 autoconf
 %add_optflags -I%_includedir/nsl
+%add_optflags -I%_includedir/tirpc
 %configure --libdir=%_datadir/dsniff
 sed -i 's,[[:space:]]\+-\(I/usr/include\|L/usr/lib\)\([[:space:]]\|$\),\2,g' Makefile
 %make_build
@@ -120,6 +120,10 @@ sed -i 's,[[:space:]]\+-\(I/usr/include\|L/usr/lib\)\([[:space:]]\|$\),\2,g' Mak
 %_mandir/man?/webspy.*
 
 %changelog
+* Tue Apr 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4-alt0.14.b1
+- Fixed FTBFS.
+- spec: Removed packager field.
+
 * Fri Feb 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4-alt0.13.b1
 - Rebuilt against libssl.so.1.1.
 - Rebuilt against libnsl2.
