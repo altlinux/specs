@@ -17,7 +17,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.0.1
-Release: alt2
+Release: alt3
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -31,9 +31,13 @@ Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs
 Vcs: https://github.com/ptomato/mozjs.git
 Source: %name-%version.tar
 %endif
-
+# fix errors like:
+# dependency (nix) specification is ambiguous. Only one of branch, tag or rev is allowed.
+Patch: mozjs78-rust.patch
 # fc armv7 fix
 Patch17: mozjs78-armv7_disable_WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS.patch
+# 0ad links with SharedArrayRawBufferRefs
+Patch20: mozjs78-0ad-FixSharedArray.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
@@ -82,12 +86,14 @@ interface to the JavaScript engine.
 %prep
 #%%setup -n firefox-%{version}esr
 %setup -n mozjs-%{version}gnome
-
+%patch -b .rust
 %ifarch armh
 # Disable WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS as it causes the compilation to fail
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1526653
 %patch17 -p1
 %endif
+
+%patch20 -p1 -b .0ad
 
 %build
 mkdir _build
@@ -176,6 +182,10 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 78.0.1-alt3
+- fixed build with rust-1.50
+- export class SharedArrayRawBufferRefs, patch from 0ad
+
 * Sat Dec 26 2020 Yuri N. Sedunov <aris@altlinux.org> 78.0.1-alt2
 - rebuilt with newer autoconf
 
