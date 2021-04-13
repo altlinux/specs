@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Crypt-Rijndael
 Name: perl-%dist
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: Crypt::CBC compliant Rijndael encryption module
@@ -33,6 +33,9 @@ as the Advanced Encryption Standard.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 1.16-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
 - automated CPAN update
 
