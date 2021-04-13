@@ -2,7 +2,7 @@
 %def_disable clang
 
 Name: deepin-clipboard
-Version: 5.3.11
+Version: 5.3.15
 Release: alt1
 Summary: Clipboard for DDE
 License: GPL-3.0+
@@ -60,5 +60,8 @@ sed -i 's|lrelease|lrelease-qt5|' \
 %_datadir/dbus-1/services/com.deepin.dde.Clipboard.service
 
 %changelog
+* Tue Apr 13 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.15-alt1
+- New version (5.3.15) with rpmgs script.
+
 * Fri Mar 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.11-alt1
 - Initial build for ALT Sisyphus.

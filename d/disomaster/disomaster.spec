@@ -1,10 +1,10 @@
 Name: disomaster
-Version: 5.0.4
+Version: 5.0.7
 Release: alt1
 Summary: Library to manipulate DISC burning
 License: GPL-3.0+
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/%name
+Url: https://github.com/linuxdeepin/disomaster
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
@@ -52,6 +52,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Apr 13 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.7-alt1
+- New version (5.0.7) with rpmgs script.
+
 * Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.4-alt1
 - New version (5.0.4) with rpmgs script.
 
