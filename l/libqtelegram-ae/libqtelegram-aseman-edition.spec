@@ -1,6 +1,6 @@
 Name:     libqtelegram-ae
 Version:  10.0.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Most powerfull telegram library that created using C++ and Qt.
 
@@ -42,6 +42,7 @@ Development files for %name.
 %patch -p1
 
 %build
+%add_optflags -Wno-narrowing
 %qmake_qt5 CONFIG+=typeobjects
 %make_build
 
@@ -58,5 +59,8 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 %_libdir/lib*.so
 
 %changelog
+* Tue Apr 13 2021 Grigory Ustinov <grenka@altlinux.org> 10.0.0-alt2
+- Fixed FTBFS with -Wno-narrowing.
+
 * Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 10.0.0-alt1
 - Initial build for Sisyphus.
