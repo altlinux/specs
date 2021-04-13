@@ -7,7 +7,7 @@
 
 Name: geeqie
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: Graphics file browser utility
 License: GPLv2+
@@ -22,6 +22,7 @@ Source: %name-%version.tar
 %endif
 
 Patch: %name-1.5-libdir-fix.patch
+Patch1: %name-1.6-up-doc-build.patch
 
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
@@ -47,6 +48,8 @@ ExifTool.
 %prep
 %setup
 %patch -b .libdir
+%patch1 -p1
+
 sed -i 's/\-Werror//' configure.ac
 
 %build
@@ -77,6 +80,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt2
+- fixed doc building with newer yelp by upstream
+
 * Thu Dec 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6 (GTK3 build)
 - note: to run geeqie under wayland need to use following command
