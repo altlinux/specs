@@ -3,7 +3,7 @@ Group: System/Libraries
 %define _localstatedir %_var
 Name: t4k_common
 Version: 0.1.1
-Release: alt4.gita6c6b15
+Release: alt5.gita6c6b15
 Url: https://github.com/tux4kids/t4kcommon
 Summary: Library for Tux4Kids applications
 License: GPLv3+
@@ -58,6 +58,9 @@ chmod 755 $RPM_BUILD_ROOT%_libdir/lib%name.so
 %_libdir/pkgconfig/t4k_common.pc
 
 %changelog
+* Tue Apr 13 2021 Anton Farygin <rider@altlinux.org> 0.1.1-alt5.gita6c6b15
+- fixed FTBFS with gcc-10
+
 * Tue Dec 10 2019 Anton Farygin <rider@altlinux.ru> 0.1.1-alt4.gita6c6b15
 - added a patch from github against crashes with recent version of the librsvg
 
