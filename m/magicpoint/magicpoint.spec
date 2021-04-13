@@ -1,6 +1,6 @@
 Name: magicpoint
 Version: 1.13a
-Release: alt4.20140908
+Release: alt5.20140908
 
 Summary: Presentation tool
 Group: Office
@@ -66,6 +66,9 @@ sed -i 's|\(CDEBUGFLAGS =.*\)|\1 -g|' Makefile
 %doc COPYRIGHT FAQ README* RELNOTES SYNTAX USAGE sample
 
 %changelog
+* Tue Apr 13 2021 Anton Farygin <rider@altlinux.org> 1.13a-alt5.20140908
+- fixed FTBFS with gcc-10
+
 * Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.13a-alt4.20140908
 - NMU: rebuild with new libmng
 
