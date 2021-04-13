@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,9 @@ install -m 0644 BUILD/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Tue Apr 13 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.5-alt1
+- fail if there are untrusted certs
+
 * Tue Apr 13 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.4-alt1
 - new version (Closes: #39547)
 
