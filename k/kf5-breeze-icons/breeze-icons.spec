@@ -1,8 +1,8 @@
 %define rname breeze-icons
 
 Name: kf5-%rname
-Version: 5.80.0
-Release: alt2
+Version: 5.81.0
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -105,6 +105,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Mon Apr 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.81.0-alt1
+- new version
+
 * Tue Mar 30 2021 Sergey V Turchin <zerg@altlinux.org> 5.80.0-alt2
 - exclude telegram status icons
 
