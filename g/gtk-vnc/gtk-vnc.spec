@@ -1,4 +1,4 @@
-%define ver_major 1.0
+%define ver_major 1.2
 %define api_ver 1.0
 
 %def_enable introspection
@@ -16,22 +16,24 @@ Url: https://wiki.gnome.org/Projects/gtk-vnc
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: libgtk3vnc = %version-%release
+Requires: libgtk3vnc = %EVR
 
-%define gnutls_ver 3.1.18
-%define gcrypt_ver 1.5.0
-%define glib_ver 2.42
+%define glib_ver 2.56
+%define gtk_ver 3.22
+%define gnutls_ver 3.6.0
+%define gcrypt_ver 1.8.0
+%define sasl_ver 2.1.27
 
 BuildRequires(pre): meson
-BuildRequires: libgtk+3-devel
-# pod2man
-BuildRequires: perl-podlators
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel >= %gcrypt_ver
-BuildRequires: glib2-devel >= %glib_ver libcairo-gobject-devel libsasl2-devel
+BuildRequires: libcairo-gobject-devel libsasl2-devel >= %sasl_ver
 BuildRequires: libpulseaudio-devel zlib-devel perl-Text-CSV
+BuildRequires: %_bindir/pod2man
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_with_python:BuildRequires: python-module-pygobject-devel}
 %{?_enable_introspection:BuildRequires: libgtk+3-gir-devel}
+%{?_with_python:BuildRequires: python-module-pygobject-devel}
 
 %description
 gtk-vnc is a project providing client side APIs for the RFB protocol/VNC
@@ -56,9 +58,9 @@ protocol.
 %package -n libgvnc-devel
 Summary: GVnc library
 Group: Development/C
-Requires: libgvnc = %version-%release
+Requires: libgvnc = %EVR
 %{?_disable_vapi:Obsoletes: libgvnc-vala}
-%{?_disable_vapi:Provides: libgvnc-vala = %version-%release}
+%{?_disable_vapi:Provides: libgvnc-vala = %EVR}
 
 %description -n libgvnc-devel
 gtk-vnc is a project providing client side APIs for the RFB protocol/VNC
@@ -69,7 +71,7 @@ This package provides development files for the GVnc library.
 %package -n libgtk3vnc
 Summary: VNC viewer widget library
 Group: System/Libraries
-Requires: libgvnc = %version-%release
+Requires: libgvnc = %EVR
 
 %description -n libgtk3vnc
 gtk-vnc is a VNC viewer widget for GTK. It is built using
@@ -79,10 +81,10 @@ remaining single threaded.
 %package -n libgtk3vnc-devel
 Summary: Development package for VNC viewer widget library
 Group: Development/C
-Requires: libgtk3vnc = %version-%release
-Requires: libgvnc-devel = %version-%release
+Requires: libgtk3vnc = %EVR
+Requires: libgvnc-devel = %EVR
 %{?_disable_vapi:Obsoletes: libgtk3vnc-vala}
-%{?_disable_vapi:Provides: libgtk3vnc-vala = %version-%release}
+%{?_disable_vapi:Provides: libgtk3vnc-vala = %EVR}
 
 %description -n libgtk3vnc-devel
 gtk-vnc is a VNC viewer widget for GTK. It is built using
@@ -94,7 +96,7 @@ This package provides development files for the GtkVnc widget library.
 %package -n libgvnc-gir
 Summary: GObject introspection data for the CVnc library
 Group: System/Libraries
-Requires: libgvnc = %version-%release
+Requires: libgvnc = %EVR
 
 %description -n libgvnc-gir
 GObject introspection data for the GVnc library
@@ -103,7 +105,7 @@ GObject introspection data for the GVnc library
 Summary: GObject introspection devel data for the GVnc library
 Group: System/Libraries
 BuildArch: noarch
-Requires: libgvnc-gir = %version-%release
+Requires: libgvnc-gir = %EVR
 
 %description -n libgvnc-gir-devel
 GObject introspection devel data for the GVnc library
@@ -112,7 +114,7 @@ GObject introspection devel data for the GVnc library
 Summary: Vala bindings for GVnc library
 Group: Development/C
 BuildArch: noarch
-Requires: libgvnc = %version-%release
+Requires: libgvnc = %EVR
 
 %description -n libgvnc-vala
 This package provides Vala language bindings for for the GVnc library.
@@ -120,8 +122,8 @@ This package provides Vala language bindings for for the GVnc library.
 %package -n libgtk3vnc-gir
 Summary: GObject introspection data for the GtkVnc library
 Group: System/Libraries
-Requires: libgtk3vnc = %version-%release
-Requires: libgvnc-gir = %version-%release
+Requires: libgtk3vnc = %EVR
+Requires: libgvnc-gir = %EVR
 
 %description -n libgtk3vnc-gir
 GObject introspection data for the GtkVnc widget library
@@ -130,8 +132,8 @@ GObject introspection data for the GtkVnc widget library
 Summary: GObject introspection devel data for the GtkVnc library
 Group: System/Libraries
 BuildArch: noarch
-Requires: libgtk3vnc-gir = %version-%release
-Requires: libgvnc-gir-devel = %version-%release
+Requires: libgtk3vnc-gir = %EVR
+Requires: libgvnc-gir-devel = %EVR
 
 %description -n libgtk3vnc-gir-devel
 GObject introspection devel data for the GtkVnc widget library
@@ -139,7 +141,7 @@ GObject introspection devel data for the GtkVnc widget library
 %package -n libgtk3vnc-vala
 Summary: Vala bindings for GtkVnc library
 Group: Development/C
-Requires: libgtk3vnc = %version-%release
+Requires: libgtk3vnc = %EVR
 
 %description -n libgtk3vnc-vala
 This package provides Vala language bindings for for the GtkVnc widget
@@ -150,7 +152,7 @@ library.
 
 %build
 %meson \
-%{?_enable_vala:-Dwith-vala=true}
+%{?_enable_vala:-Dwith-vala=enabled}
 %meson_build
 
 %install
@@ -215,8 +217,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/GtkVnc-2.0.gir
 %endif
 
-
 %changelog
+* Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Aug 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0 (removed gtk2 support, ported to Meson build system)
 
