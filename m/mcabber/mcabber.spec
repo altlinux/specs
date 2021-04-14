@@ -1,9 +1,9 @@
 Name: mcabber
 Version: 1.0.5
-Release: alt1
+Release: alt2
 
 Summary: console Jabber client
-License: GPL
+License: GPLv2
 Group: Networking/Instant messaging
 Url: http://www.lilotux.net/~mikael/mcabber/
 
@@ -35,6 +35,7 @@ for more information.
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure --enable-aspell --with-ssl --enable-sigwinch --enable-otr --enable-xep0022 --enable-enchant
 %make_build
 
@@ -53,6 +54,10 @@ for more information.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Apr 14 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0.5-alt1
 - new version 1.0.5
 
