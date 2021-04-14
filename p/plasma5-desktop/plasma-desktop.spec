@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.4
-Release: alt3
+Release: alt4
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -211,6 +211,9 @@ popd
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Apr 14 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt4
+- fix crash in media players chooser
+
 * Wed Apr 14 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt3
 - fix to show selected media players
 
