@@ -53,7 +53,7 @@ Name: erlang
 Epoch: 1
 %define subver 3.6
 Version: %ver.%subver
-Release: alt3
+Release: alt4
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -633,7 +633,7 @@ sed -i '/-Werror=return-type/d' erts/configure.in
 %define _configure_script ./otp_build configure
 
 ./otp_build autoconf
-export CFLAGS="%optflags -fno-strict-aliasing"
+export CFLAGS="%optflags -fno-strict-aliasing -fcommon"
 export CXXFLAGS=$CFLAGS
 
 %configure \
@@ -1249,6 +1249,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Wed Apr 14 2021 Grigory Ustinov <grenka@altlinux.org> 1:21.3.6-alt4
+- Fixed FTBFS with -fcommon.
+
 * Wed Jun 24 2020 Michael Shigorin <mike@altlinux.org> 1:21.3.6-alt3
 - E2K: ftbfs workaround
 - fixed docs knob
