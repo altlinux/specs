@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python-module-%modname
-Version: 0.3.13
+Version: 0.5.11
 Release: alt1
 
 Summary: Library of astronomical algorithms in Python
@@ -87,6 +87,9 @@ popd
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.11-alt1
+- 0.5.11
+
 * Sun Feb 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
 - 0.3.13
 - enabled %%check

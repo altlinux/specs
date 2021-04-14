@@ -1,9 +1,9 @@
 %define modname convertdate
-
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39164
 %def_enable check
 
 Name: python3-module-%modname
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
@@ -44,9 +44,12 @@ py.test-3 tests
 %doc *.rst *.md
 
 %changelog
+* Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
+- 2.3.2
+
 * Thu Feb 18 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
-- enabled %%check
+- enabled %check
 
 * Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
