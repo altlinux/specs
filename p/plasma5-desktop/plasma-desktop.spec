@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.4
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -211,6 +211,9 @@ popd
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Apr 14 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt3
+- fix to show selected media players
+
 * Tue Apr 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt2
 - readd default media players chooser
 
