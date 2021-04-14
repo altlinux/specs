@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.1
-Release: alt3
+Version: 2.0.0
+Release: alt1
 
 Summary: Waitress WSGI server
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 
 Url: https://pypi.org/project/waitress/
@@ -19,12 +19,12 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(nose)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 %endif
 
 Conflicts: python-module-%oname
-
 
 %description
 Waitress is meant to be a production-quality pure-Python WSGI server with
@@ -46,30 +46,22 @@ visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 %install
 %python3_install
 
-# don't package tests
-# rm -r %buildroot{%python3_sitelibdir}/%oname/tests
-
 %check
-# we won't use coverage in tox
-sed -i '/\x27coverage\x27,/d' setup.py
-sed -i '/\[testenv\]/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    cp %_bindir\/nosetests3 \{envbindir\}\/nosetests\
-    sed -i \x27s/\\x27nosetests-.*\\x27/\\x27nosetests\\x27/g;1c #!{envpython}\x27 {envbindir}/nosetests' tox.ini
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt
-%_bindir/*
+%_bindir/waitress-serve
 %python3_sitelibdir/waitress/
 %python3_sitelibdir/waitress-%version-py%_python3_version.egg-info/
 
-
 %changelog
+* Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.2.1 -> 2.0.0.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.1-alt3
 - Build for python2 disabled.
 
