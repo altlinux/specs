@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt8
+Release: alt9
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -51,7 +51,6 @@ Requires: deepin-desktop-schemas
 Requires: gtk-theme-deepin
 Requires: plasma5-kwin
 Requires: cgroup
-Requires: redshift
 # Requires: fcitx-gtk3 fcitx-qt5
 # %%ifnarch armh ppc64le
 Requires: deepin-file-manager
@@ -81,6 +80,9 @@ Requires: deepin-sound-theme
 Requires: deepin-image-viewer
 Requires: deepin-printer
 Requires: deepin-clipboard
+Requires: deepin-music
+Requires: deepin-calculator
+Requires: deepin-screen-recorder
 Requires: onboard
 # %%ifnarch armh
 Requires: deepin-movie
@@ -99,14 +101,13 @@ ExcludeArch: ppc64le armh
 Requires: %name-default = %version-%release
 Requires: deepin-shortcut-viewer
 Requires: deepin-account-faces
-Requires: deepin-calculator
-Requires: deepin-screen-recorder
 Requires: deepin-topbar
 Requires: deepin-picker
 Requires: deepin-screensaver
 Requires: deepin-screensaver-modules
 Requires: deepin-compressor
 Requires: deepin-device-formatter
+Requires: redshift
 
 %description full
 %name-full is a virtual package to provide full installation
@@ -128,6 +129,10 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Wed Apr 14 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt9
+- Added deepin-music, deepin-calculator, deepin-screen-recorder to deepin-default.
+- Moved redshift to deepin-full.
+
 * Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt8
 - Removed orphaned dtkwm.
 
