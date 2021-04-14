@@ -1,6 +1,6 @@
 Name: fakeroot
-Version: 1.20.2
-Release: alt2
+Version: 1.25.3
+Release: alt1
 
 Summary: Run a command in an environment faking root privileges for file manipulation
 License: GPLv3+
@@ -26,7 +26,6 @@ have to construct the archives directly, without using the archiver.
 %prep
 %setup -n %name-%version-%release
 echo 'define(FAKEROOT_VERSION, %version)' >acinclude.m4
-bzip2 -9fk debian/changelog
 
 %build
 grep -FZrl sys: test |
@@ -39,7 +38,7 @@ autoreconf -fisv
 %make_build LIBCPATH=/%_lib/libc.so.6
 
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %install
 %makeinstall libdir=%buildroot%_libdir/libfakeroot
@@ -49,9 +48,12 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %_bindir/*
 %_libdir/libfakeroot
 %_mandir/man?/*
-%doc debian/changelog.bz2 doc/README* DEBUG
+%doc doc/README* DEBUG
 
 %changelog
+* Thu Feb 18 2021 Dmitry V. Levin <ldv@altlinux.org> 1.25.3-alt1
+- 1.20.2 -> 1.25.3.
+
 * Tue May 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.20.2-alt2
 - Fixed build on ppc64le.
 
