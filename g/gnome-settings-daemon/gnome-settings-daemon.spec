@@ -19,7 +19,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -194,6 +194,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0.1-alt1
+- 40.0.1
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
