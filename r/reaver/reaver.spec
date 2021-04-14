@@ -1,12 +1,13 @@
 Name:		reaver
 Version:	1.4
-Release:	alt1
+Release:	alt2
 Group:		Security/Networking
 License:	GPLv2
 Summary:	Utility for audit wireless security against via WAP's and WPS pin
 Url:		http://code.google.com/p/reaver-wps/
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source:		%name-%version.tar.gz
+Patch:      reaver-make-gcc10-happy.patch
 
 # Automatically added by buildreq on Mon Oct 29 2012 (-bi)
 # optimized out: elfutils
@@ -17,6 +18,7 @@ Reaver-WPS - is a utility for audit wireless security against via WAP's and WPS 
 
 %prep
 %setup
+%patch -p2
 pushd src
 %configure
 popd
@@ -45,5 +47,8 @@ popd
 %_man1dir/*
 
 %changelog
+* Wed Apr 14 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt2
+- NMU: Fixed build.
+
 * Mon Oct 29 2012 Motsyo Gennadi <drool@altlinux.ru> 1.4-alt1
 - initial build for ALT Linux
