@@ -2,7 +2,7 @@
 
 Name: w3m
 Version: 0.5.3
-Release: alt3.git20200502
+Release: alt4.git20200502
 License: BSD
 Group: Networking/WWW
 Summary: w3m is a pager with Web browsing capability
@@ -30,6 +30,7 @@ Patch7:  %{name}-0.5.3-FTBFS-sys-errlist.patch
 BuildRequires: imlib2-devel libgc-devel libgpm-devel libgtk+2-devel libssl-devel man zlib-devel automake gcc-c++
 BuildRequires: lynx
 BuildRequires: libtinfo-devel
+BuildRequires: libgdk-pixbuf-xlib-devel
 # JP support, currently in autoimports
 #BuildRequires:  nkf
 
@@ -96,6 +97,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_libexecdir/w3m/w3mimgdisplay
 
 %changelog
+* Wed Apr 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.3-alt4.git20200502
+- QA: Fixed FTBFS.
+
 * Tue Oct 20 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt3.git20200502
 - Updated to snapshot from upstream (Fixes: CVE-2016-9422, CVE-2016-9423,
   CVE-2016-9424, CVE-2016-9425, CVE-2016-9426, CVE-2016-9428, CVE-2016-9429,
