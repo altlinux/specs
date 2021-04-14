@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt3
+Release: alt4
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -140,6 +140,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Wed Apr 14 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.0-alt4
+- Remove pages and buttons with downloading clients and actors
+
 * Mon Dec 07 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt3
 - merge with upstream v3.0 branch (b1c43850908c5c207afa5812edc6c1ce46d8ca78)
 - update nginx config
