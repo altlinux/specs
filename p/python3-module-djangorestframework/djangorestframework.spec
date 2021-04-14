@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.12.1
+Version: 3.12.4
 Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
@@ -28,6 +28,7 @@ BuildRequires: python3(livereload)
 
 %if_with check
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(pytest_django)
 BuildRequires: python3-module-django2.2
 BuildRequires: python3-module-django2.2-tests
@@ -69,8 +70,8 @@ mkdocs build
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps -vvr
 
 %files
 %doc *.md
@@ -83,6 +84,9 @@ tox.py3 --sitepackages -v
 
 
 %changelog
+* Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 3.12.4-alt1
+- 3.12.1 -> 3.12.4.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 3.12.1-alt1
 - 3.11.0 -> 3.12.1.
 
