@@ -8,8 +8,8 @@
 %endif
 
 Name: zbar
-Version: 0.23.1
-Release: alt2
+Version: 0.23.92
+Release: alt1
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -17,12 +17,8 @@ Summary: A library for scanning and decoding bar codes
 Group: Graphics
 License: GPLv2+
 Url: https://github.com/mchehab/zbar
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
-Patch: 938d39716488b545b92c28f48acc94a7b8fc9138.patch
-
-# Automatically added by buildreq on Thu Dec 19 2019
-# optimized out: at-spi2-atk docbook-dtds docbook-style-xsl fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXv-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libharfbuzz-devel libpango-devel libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libxcb-devel perl pkg-config python-modules python2-base python3 python3-base qt5-base-devel sh4 xml-common xml-utils xorg-proto-devel xsltproc
 BuildRequires: glibc-devel-static libImageMagick-devel libdbus-devel libgtk+3-devel libjpeg-devel libv4l-devel python3-dev xmlto
 
 %if_with qt5
@@ -198,10 +194,8 @@ scanning widget.
 
 %prep
 %setup
-%patch -p1
 # TODO
 sed -i 's/gtk+-2.0/gtk+-3.0/' zbar-gtk.pc.in
-sed -i 's/Qt/Qt5/g;s/Qt54/Qt5/g' zbar-qt.pc.in
 
 %build
 %autoreconf
@@ -274,6 +268,9 @@ export LIBS=-lm
 %endif
 
 %changelog
+* Wed Apr 14 2021 Anton Farygin <rider@altlinux.org> 0.23.92-alt1
+- update to 0.23.92
+
 * Fri Jan 29 2021 Grigory Ustinov <grenka@altlinux.org> 0.23.1-alt2
 - Add python3.9 support.
 
