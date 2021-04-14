@@ -1,10 +1,11 @@
 Name: uae
 Version: 0.8.29
-Release: alt3
+Release: alt4
 Group: Emulators
 Summary: UAE Amiga Emulator
 License: GPLv2
 Source: %name-%version.tar.bz2
+Patch: uae-make-gcc10-happy.patch
 Url: http://www.amigaemulator.org/
 
 # Automatically added by buildreq on Sun Apr 03 2011
@@ -34,6 +35,7 @@ This version of UAE emulates:
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure  --with-sdl --with-x --with-sdl-gfx --with-alsa
@@ -50,6 +52,9 @@ install -sD readdisk %buildroot/%_bindir/%name-readdisk
 %_datadir/%name/*
 
 %changelog
+* Wed Apr 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.29-alt4
+- NMU: fixed build.
+
 * Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.29-alt3
 - NMU: fixed build.
 
