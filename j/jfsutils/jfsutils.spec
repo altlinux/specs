@@ -3,7 +3,7 @@
 
 Name: jfsutils
 Version: 1.1.15
-Release: alt3
+Release: alt4
 Summary: IBM JFS utility programs
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -40,6 +40,7 @@ enterprise-серверах IBM, розроблена для високопро�
 
 %build
 %autoreconf
+%add_optflags -fcommon
 %configure --enable-largefile
 %make_build
 for n in NEWS ChangeLog; do
@@ -62,6 +63,9 @@ done
 
 
 %changelog
+* Wed Apr 14 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.15-alt4
+- fixed build with -fcommon
+
 * Sun May 17 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.15-alt3
 - fixed build
 
