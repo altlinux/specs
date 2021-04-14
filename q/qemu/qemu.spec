@@ -130,7 +130,7 @@
 
 Name: qemu
 Version: 5.2.0
-Release: alt4
+Release: alt5
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -395,7 +395,7 @@ compiled for one CPU on another CPU. \
 %{expand:%(for i in %qemu_arches; do echo %%do_package_user user-binfmt $i Requires: qemu-user-$i Conflicts: qemu-user-static-binfmt-$i; done)}
 
 %if_enabled user_static
-%{expand:%(for i in %qemu_arches; do echo %%do_package_user user-static $i Requires: qemu-aux; done)}
+%{expand:%(for i in %qemu_arches; do echo %%do_package_user user-static $i; done)}
 %{expand:%(for i in %qemu_arches; do echo %%do_package_user user-static-binfmt $i Requires: qemu-user-static-$i Conflicts: qemu-user-binfmt-$i; done)}
 %endif
 
@@ -716,6 +716,7 @@ run_configure \
 	--enable-linux-user \
 	--enable-attr \
 	--enable-tcg \
+	--extra-ldflags="$extraldflags -Wl,-Ttext-segment=0x60000000" \
 	--audio-drv-list="" \
 	--disable-auth-pam \
 	--disable-avx2 \
@@ -912,6 +913,7 @@ run_configure \
 	%{subst_enable libpmem} \
 	%{subst_enable libdaxctl} \
 	--enable-xkbcommon \
+	--extra-ldflags="$extraldflags" \
 	--disable-xen
 
 %make_build V=1 $buildldflags
@@ -1027,6 +1029,9 @@ ln -r -s %buildroot%_datadir/qboot/bios.bin %buildroot%_datadir/%name/qboot.rom
 
 mkdir -p %buildroot%_binfmtdir
 ./scripts/qemu-binfmt-conf.sh --systemd ALL --exportdir %buildroot%_binfmtdir --qemu-path %_bindir
+
+# Drop qemu-mipsn32*.conf -- see https://bugzilla.altlinux.org/39619
+rm -rf %buildroot%_binfmtdir/*mipsn32*
 
 for f in %buildroot%_binfmtdir/*.conf; do
     [ -f "$f" ]
@@ -1216,6 +1221,11 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Mon Apr 12 2021 Ivan A. Melnikov <iv@altlinux.org> 5.2.0-alt5
+- Move qemu-user-static text segment to 0x60000000 (ALT #39178)
+- Drop qemu-aux dependency from qemu-user-static (ALT #39815)
+- Drop qemu-mipsn32*.conf from binfmt config packages (ALT #39619)
+
 * Mon Feb 01 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt4
 - Add the Kunpeng-920 CPU model.
 
