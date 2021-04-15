@@ -1,8 +1,8 @@
+BuildRequires: chrpath
 Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libncurses-devel
 # END SourceDeps(oneline)
-BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # No FUSE on RHEL5
@@ -12,7 +12,7 @@ BuildRequires: chrpath
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_32
+Release:        alt3_34
 Summary:        Apple Filing Protocol client
 
 License:        GPL+
@@ -22,6 +22,7 @@ Patch0:         afpfs-ng-0.8.1-overflows.patch
 Patch1:         afpfs-ng-0.8.1-pointer.patch
 # Sent by e-mail to Alex deVries <alexthepuffin@gmail.com>
 Patch2:         afpfs-ng-0.8.1-formatsec.patch
+Patch3:         afpfs-ng-0.8.1-longoptions.patch
 
 %{?!_without_fuse:BuildRequires: libfuse-devel}
 BuildRequires:  gcc
@@ -60,6 +61,7 @@ Library for dynamic linking and header files of afpfs-ng.
 %patch0 -p1 -b .overflows
 %patch1 -p1 -b .pointer
 %patch2 -p1 -b .formatsec
+%patch3 -p1 -b .longoptions
 
 
 %build
@@ -115,6 +117,9 @@ done
 
 
 %changelog
+* Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt3_34
+- update to new release by fcimport
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_32
 - fixed build
 
