@@ -2,8 +2,8 @@
 %def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.6.3.73
-Release: alt2.gitb4da182
+Version: 5.7.4
+Release: alt1
 Summary: Image viewer for Deepin
 License: GPL-3.0+
 Group: Graphics
@@ -45,7 +45,10 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 %build
 %if_enabled cmake
 %cmake_insource \
-	-GNinja
+	-GNinja \
+	-DAPP_VERSION=%version \
+	-DVERSION=%version \
+	-DCMAKE_INSTALL_LIBDIR=%_libdir
 %ninja_build
 %else
 %qmake_qt5 \
@@ -53,7 +56,10 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
     QMAKE_STRIP= -spec linux-clang \
 %endif
     CONFIG+=nostrip \
-    PREFIX=%prefix
+    PREFIX=%prefix \
+    DAPP_VERSION=%version \
+	DVERSION=%version \
+    LIB_INSTALL_DIR=%_libdir
 %make_build
 %endif
 
@@ -80,6 +86,9 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 %_datadir/dbus-1/services/com.deepin.ImageViewer.service
 
 %changelog
+* Thu Apr 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.4-alt1
+- New version (5.7.4) with rpmgs script.
+
 * Mon Mar 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.6.3.73-alt2.gitb4da182
 - Updated from commit b4da182b92425880e208c127d5712aef840200a4.
 - Built with cmake and ninja instead qmake and make.
