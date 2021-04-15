@@ -3,7 +3,7 @@
 Summary: This library provides functions to read, create, and modify mp4 files
 Name: libmp4v2-3
 Version: 2.0
-Release: alt4
+Release: alt5
 License: MPLv1.1
 Group: System/Libraries
 Url: http://code.google.com/p/mp4v2/
@@ -52,6 +52,7 @@ This contains the command line example utilities.
 
 %build
 %autoreconf
+%add_optflags -Wno-narrowing
 %configure --disable-static --disable-debug
 
 mkdir -p doc/articles/txt
@@ -75,6 +76,9 @@ mkdir -p doc/articles/txt
 %_man1dir/*
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.0-alt5
+- Fixed FTBFS with -Wno-narrowing.
+
 * Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0-alt4
 - Fixed build.
 
