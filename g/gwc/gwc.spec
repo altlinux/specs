@@ -3,7 +3,7 @@
 
 Name: gwc
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt3
 
 Summary: Gnome Wave Cleaner
 License: GPLv2+
@@ -17,6 +17,7 @@ Source3: gwc-16x16.xpm
 Source4: gwc.desktop
 Patch0: gwc-0.21.07-alt-makefile.patch
 Patch1: gwc-0.21.19-debian-clang.patch
+Patch2: gwc-0.21.17-make-gcc10-happy.patch
 
 # Automatically added by buildreq on Sun Jun 19 2011
 BuildRequires: libalsa-devel libfftw3-devel libgnomeui-devel libsndfile-devel
@@ -29,6 +30,7 @@ decrackle in a GUI environment.
 %setup -n gwc-%ver_major-%ver_minor
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 find -iname makefile.in | xargs sed -i 's/-O6/-O%_optlevel/g' --
 
 %build
@@ -57,6 +59,9 @@ install -pD -m644 %SOURCE3 %buildroot%_miconsdir/gwc.xpm
 %_pixmapsdir/*
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.21.17-alt3
+- Fixed FTBFS.
+
 * Fri Apr 17 2020 Michael Shigorin <mike@altlinux.org> 0.21.17-alt2
 - E2K:
   + apply debian's clang patch (debian#750369)
