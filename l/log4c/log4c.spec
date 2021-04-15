@@ -1,6 +1,6 @@
 Name: 		log4c
 Version: 	1.2.1
-Release: 	alt1.1.qa1
+Release: 	alt1.1.qa2
 
 Summary: 	Log for C
 License:	LGPL
@@ -50,7 +50,7 @@ The %name-doc package contains the %name documentation
 %_bindir/*
 %_includedir/*
 %_libdir/*.so
-%_libdir/*.a
+%exclude %_libdir/*.a
 %_datadir/aclocal/*
 %_man3dir/*
 
@@ -58,6 +58,9 @@ The %name-doc package contains the %name documentation
 %doc  doc/html
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.1.qa2
+- Fixed FTBFS.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.1.qa1
 - NMU: applied repocop patch
 
