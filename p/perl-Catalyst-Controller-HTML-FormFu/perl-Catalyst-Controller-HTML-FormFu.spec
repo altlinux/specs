@@ -1,14 +1,14 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(Crypt/Cipher/AES.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        2.04
-Release:        alt1_6
+Release:        alt2_6
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
@@ -100,6 +100,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 2.04-alt2_6
+- fixed build using logoved
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1_6
 - update to new release by fcimport
 
