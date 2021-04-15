@@ -3,7 +3,7 @@
 
 Name: guacamole-server
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -36,7 +36,7 @@ BuildRequires: pkgconfig(libssl)
 BuildRequires: pkgconfig(libtelnet)
 BuildRequires: pkgconfig(libvncserver)
 BuildRequires: pkgconfig(libwebp)
-BuildRequires: pkgconfig(ossp-uuid)
+BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(vorbis)
 BuildRequires: pkgconfig(winpr2)
@@ -242,6 +242,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd
 
 %changelog
+* Thu Apr 15 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt3
+- Build with libuuid instead ossp-uuid.
+
 * Mon Apr 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt2
 - fix build with freerdp-2.0.0
 
