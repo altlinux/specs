@@ -1,6 +1,6 @@
 Name: buildbot
-Version: 2.9.3
-Release: alt2
+Version: 3.0.2
+Release: alt1
 Summary: Python-based continuous integration testing framework
 
 Group: Development/Python
@@ -168,6 +168,7 @@ python3 -mzipfile -e %SOURCE6 %buildroot/%python3_sitelibdir
 
 rm %buildroot%_bindir/buildbot_windows_service
 rm %buildroot%_bindir/buildbot_worker_windows_service
+rm %buildroot%python3_sitelibdir/buildbot-*.egg-info/requires.txt
 
 
 ###############################################################################
@@ -219,6 +220,9 @@ trial -e buildbot.test buildbot_worker.test
 %files checkinstall
 
 %changelog
+* Thu Apr 01 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.2-alt1
+- new version 3.0.2
+
 * Wed Dec 23 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.9.3-alt2
 - merge python3-module-buildbot-tests back into buildbot package, because
   buildbot.test.fake is used in buildbot dataspec
