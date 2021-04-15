@@ -1,6 +1,6 @@
 Name: CBFlib
 Version: 0.9.2.3
-Release: alt2
+Release: alt3
 
 Summary: Crystallographic Binary File and Image Library
 # library files (*.so*) are LGPLv2+, all else is GPLv2+
@@ -9,6 +9,7 @@ Group: System/Libraries
 
 Url: http://www.bernstein-plus-sons.com/software/CBF
 Source: http://downloads.sourceforge.net/cbflib/%name-%version.tar.gz
+Patch1: %name-%version-fix-boz-in-case.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-fortran
@@ -51,6 +52,7 @@ This package contains CBF (Crystallographic Binary File) utilities.
 
 %prep
 %setup
+%patch1 -p2
 # various cleanups
 iconv -f iso8859-15 -t utf-8 doc/cif_img_1.5.3_8Jul07.dic \
 > doc/cif_img_1.5.3_8Jul07.dic.conv \
@@ -65,7 +67,7 @@ gcc -fPIC -DCBF_DONT_USE_LONG_LONG -D_USE_XOPEN_EXTENDED %optflags \
 	-c *.c ../examples/img.c -I../include/ -I../examples/
 gcc -shared -Wl,-soname,libcbf.so.0 -o libcbf.so.0.0.0 *.o -lm
 rm *.o
-gfortran -fPIC -fno-range-check %optflags -c *.f90 -I../include/
+gfortran -fPIC -fallow-invalid-boz -fno-range-check %optflags -c *.f90 -I../include/
 gfortran -shared -Wl,-soname,libfcb.so.0 -o libfcb.so.0.0.0 *.o
 
 cd ../examples
@@ -142,6 +144,9 @@ install -pm644 examples/img.h %buildroot%_includedir/cbf/
 %_bindir/cif2c
 
 %changelog
+* Thu Apr 15 2021 Slava Aseev <ptrnine@altlinux.org> 0.9.2.3-alt3
+- Fix FTBFS due to new gfortran-10
+
 * Fri Sep 23 2011 Michael Shigorin <mike@altlinux.org> 0.9.2.3-alt2
 - drop empty package
 
