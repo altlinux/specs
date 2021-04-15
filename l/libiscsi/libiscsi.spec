@@ -1,6 +1,6 @@
 Name: libiscsi
 Version: 1.19.0
-Release: alt1
+Release: alt2
 
 Summary: iSCSI client library
 License: LGPLv2.1+
@@ -8,6 +8,7 @@ Group: System/Libraries
 
 Url: https://github.com/sahlberg/libiscsi
 Source: %name-%version.tar
+Patch0: %name-%version-gcc-10.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: bc
@@ -38,6 +39,7 @@ The libiscsi-devel package includes the header files for libiscsi.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -62,6 +64,9 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Apr 15 2021 Slava Aseev <ptrnine@altlinux.org> 1.19.0-alt2
+- Fix build with gcc-10 (-fno-common)
+
 * Thu Sep 12 2019 Alexey Shabalin <shaba@altlinux.org> 1.19.0-alt1
 - new version 1.19.0
 
