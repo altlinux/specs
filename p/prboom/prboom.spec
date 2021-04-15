@@ -1,11 +1,11 @@
 Name: prboom
 Version: 2.5.0
-Release: alt0.3.1
+Release: alt0.3.2
 
 Summary: Doom - classic 3D shoot-em-up game
 Group: Games/Arcade
 URL: http://prboom.sourceforge.net/
-License: GPL
+License: GPLv2
 
 Source0: %name-%version.tar.gz
 Patch: prboom-2.5.0-alt-libpng15.patch
@@ -28,6 +28,7 @@ could play them.
 %patch -p2
 
 %build
+%add_optflags -fcommon
 %configure \
 	--disable-cpu-opt
 %make_build
@@ -46,6 +47,10 @@ rm -rf %buildroot%_docdir/%name-%version/COPYING
 %_man6dir/*
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt0.3.2
+- Fixed FTBFS with -fcommon.
+- Fixed license tag.
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt0.3.1
 - Rebuilt with libpng15
 
