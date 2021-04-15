@@ -1,29 +1,37 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/gconftool-2 ElectricFence gcc-c++ libreadline-devel perl(Text/Wrap.pm)
+BuildRequires: /usr/bin/desktop-file-install ElectricFence libgmock-devel libgtest-devel libreadline-devel
 # END SourceDeps(oneline)
-%define fedora 31
+%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           teg
-Version:        0.11.2
-Release:        alt2_46
+Version:        0.12.0
+Release:        alt1_1
 Summary:        Turn based strategy game
 License:        GPLv2
-URL:            http://teg.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+URL:            https://github.com/wfx/teg/
+Source0:        https://github.com/wfx/teg/archive/refs/tags/%{version}.tar.gz
 Source1:        teg.desktop
-Patch0:         teg_libxml.patch
+#Patch0:         teg_libxml.patch
 #Patch1:         teg_themes.patch
 #Patch2:         teg-disable-help.patch
-Patch3:         teg_fixwording.patch
-Source2:        teg-fix-help.patch
+#Patch3:         teg_fixwording.patch
+#Source2:        teg-fix-help.patch
 
-Patch20:        multiple_definitions.patch
+#Patch20:        multiple_definitions.patch
 
-BuildRequires:  gcc
-BuildRequires:  tidy glib2-devel libgio libgio-devel libxml2-devel libgnomeui-devel
+BuildRequires:  gcc-c++
+BuildRequires:  autoconf
+BuildRequires:  libtool
+BuildRequires:  libgoocanvas2-devel libgoocanvas2-gir-devel
+BuildRequires:  xmlto
+BuildRequires:  tidy
+BuildRequires:  glib2-devel libgio libgio-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  libgnomeui-devel
 BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools libasprintf-devel
 BuildRequires:  perl(XML/Parser.pm)
 BuildRequires:  desktop-file-utils
 Requires(pre):  GConf libGConf
@@ -37,17 +45,19 @@ Guerra, a turn based strategy game. Some rules are different.
 
 %prep
 %setup -q 
-%patch0 -p1
+#%patch0 -p1
 #%patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 for file in AUTHORS COPYING README TODO PEOPLE ChangeLog; do
     iconv -f iso8859-1 -t utf-8 < $file > $file.$$
     mv -f $file.$$  $file
 done
 
-%patch20 -p1
+#%patch20 -p1
 
 %build
+./autogen.sh
+%global optflags %{optflags} -fcommon
 %configure
 %make_build
 
@@ -63,8 +73,16 @@ desktop-file-install \
                  \
 %endif
   --dir=$RPM_BUILD_ROOT/%{_datadir}/applications %{SOURCE1}
-patch -p1 < %{SOURCE2}
-mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/%{_datadir}/gnome/help/teg/C/teg.xml
+#patch -p1 < %{SOURCE2}
+#mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/%{_datadir}/gnome/help/teg/C/teg.xml
+
+pushd .
+cd $RPM_BUILD_ROOT/%{_datadir}/locale
+for a in *.gmo; do
+    mv -f $a/LC_MESSAGES/teg@INSTOBJEXT@ $a/LC_MESSAGES/teg.mo
+    mv -f $a `basename $a .gmo`
+done
+popd
 
 %find_lang %{name}
 
@@ -81,28 +99,14 @@ mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/
 %else
 %{_datadir}/applications/teg.desktop
 %endif
-%{_sysconfdir}/gconf/schemas/teg.schemas
-
-%pre
-if [ "$1" -gt 1 ]; then
-    export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-    gconftool-2 --makefile-uninstall-rule \
-    %{_sysconfdir}/gconf/schemas/teg.schemas >/dev/null || :
-fi
-
-%preun
-if [ "$1" -eq 0 ]; then
-    export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-    gconftool-2 --makefile-uninstall-rule \
-    %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
-fi
-
-%post
-export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-gconftool-2 --makefile-install-rule \
-  %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
+#%{_sysconfdir}/gconf/schemas/teg.schemas
+%{_datadir}/glib-2.0/schemas/net.sf.teg.gschema.xml
+%{_datadir}/GConf/gsettings/teg.convert
 
 %changelog
+* Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_46
 - update to new release by fcimport
 
