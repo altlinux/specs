@@ -7,7 +7,7 @@
 Name:		libnut
 %define	svnrev	675
 Version:	0.0.%{svnrev}
-Release:	alt1_10
+Release:	alt1_11
 Url:		http://wiki.multimedia.cx/index.php?title=NUT
 License:	MIT
 Group:		System/Libraries
@@ -94,13 +94,12 @@ encoded media frames.
 %files -n %{devname}
 %{_includedir}/libnut.h
 %{_libdir}/libnut.so
-%{_libdir}/libnut.a
-
-
-
-
+%exclude %{_libdir}/libnut.a
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.0.675-alt1_11
+- fixed build
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.0.675-alt1_10
 - fixed build
 
