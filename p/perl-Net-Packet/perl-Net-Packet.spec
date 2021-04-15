@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Net/IPv4Addr.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Packet
 Name: perl-%dist
 Version: 3.28
-Release: alt1
+Release: alt2
 
 Summary: A framework to easily send and receive frames from layer 2 to layer 7
 License: Artistic
@@ -30,6 +33,7 @@ and matched against the request.
 
 %prep
 %setup -q -n %dist-%version
+rm -f t/[0-9][-_]pod[-_]coverage.t t/[0-9][0-9][-_]pod[-_]coverage.t t/[0-9]pod[-_]coverage.t t/[0-9][0-9]pod[-_]coverage.t t/pod[-_]coverage.t t/[0-9][-_]podcoverage.t t/[0-9][0-9][-_]podcoverage.t t/[0-9]podcoverage.t t/[0-9][0-9]podcoverage.t t/podcoverage.t
 
 #sed -i -e 's,^=head1,=encoding ISO8859-1\n\n=head1,' `find . -name '*.pm'`
 
@@ -44,6 +48,9 @@ and matched against the request.
 %perl_vendor_privlib/Net
 
 %changelog
+* Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 3.28-alt2
+- fixed build using logoved
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 3.28-alt1
 - automated CPAN update
 
