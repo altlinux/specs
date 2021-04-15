@@ -46,7 +46,8 @@
 %def_enable libgme
 %def_enable libgsm
 %def_enable libjack
-%def_enable liblensfun
+# https://trac.ffmpeg.org/ticket/9112
+%def_disable liblensfun
 %def_enable libmp3lame
 %{?_enable_version3:%def_enable libopencore_amrnb}
 %{?_enable_version3:%def_enable libopencore_amrwb}
@@ -68,7 +69,6 @@
 %def_enable libvidstab
 %def_enable libvorbis
 %def_enable libvpx
-%def_enable libwavpack
 %def_enable libwebp
 %def_enable libx264
 %def_enable libx265
@@ -145,7 +145,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.3.2
+Version:	4.4
 Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -210,7 +210,6 @@ BuildRequires:	yasm
 %{?_enable_libvidstab:BuildRequires: libvidstab-devel}
 %{?_enable_libvorbis:BuildRequires: libvorbis-devel}
 %{?_enable_libvpx:BuildRequires: libvpx-devel}
-%{?_enable_libwavpack:BuildRequires: libwavpack-devel}
 %{?_enable_libwebp:BuildRequires: libwebp-devel}
 %{?_enable_libx264:BuildRequires: libx264-devel >= 118}
 %{?_enable_libx265:BuildRequires: libx265-devel}
@@ -663,7 +662,6 @@ xz Changelog
 	%{subst_enable libvmaf} \
 	%{subst_enable libvorbis} \
 	%{subst_enable libvpx} \
-	%{subst_enable libwavpack} \
 	%{subst_enable libwebp} \
 	%{subst_enable libx264} \
 	%{subst_enable libx265} \
@@ -863,6 +861,9 @@ xz Changelog
 %endif
 
 %changelog
+* Thu Apr 15 2021 Anton Farygin <rider@altlinux.org> 2:4.4-alt1
+- 4.4
+
 * Sun Mar 28 2021 Anton Farygin <rider@altlinux.org> 2:4.3.2-alt1
 - 4.3.2
 
@@ -893,6 +894,7 @@ xz Changelog
 
 * Mon Jul 13 2020 Anton Farygin <rider@altlinux.ru> 2:4.3.1-alt1
 - 4.3.1
+- removed support of the libwavpack (by upstream)
 
 * Thu Jun 18 2020 Anton Farygin <rider@altlinux.ru> 2:4.3-alt1
 - 4.3
