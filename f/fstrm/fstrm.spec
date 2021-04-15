@@ -1,22 +1,33 @@
 Group: Development/C
+%define _unpackaged_files_terminate_build 1
 %define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name fstrm
-%define version 0.6.0
+%define version 0.6.1
 %global _hardened_build 1
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name: fstrm
 Summary: Frame Streams implementation in C
-Version: 0.6.0
-Release: alt1_3
+Version: 0.6.1
+Release: alt1_2
 License: MIT
 URL: https://github.com/farsightsec/fstrm
 Source0: https://dl.farsightsecurity.com/dist/%{name}/%{name}-%{version}.tar.gz
+# Patches to libmy library
+# https://github.com/farsightsec/libmy/pull/4
+Patch1: fstrm-0.6.1-Fix-deadcode-and-check-return-code.patch
+Patch2: fstrm-0.6.1-Invalid-dereference.patch
+Patch3: fstrm-0.6.1-Possible-resource-leak-fix.patch
+Patch4: fstrm-0.6.1-Fix-CLANG_WARNING.patch
 BuildRequires: autoconf automake libtool
 BuildRequires: libevent-devel
+# Upstream repository without a single release
+# https://github.com/farsightsec/libmy
+# Always included as sources copy in farsightsec projects
+Provides: bundled(libmy)
 Source44: import.info
 
 %description
@@ -79,6 +90,11 @@ fstrm library.
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
 # regenerated build scripts to:
 # - remove RPATHs
 # - allow dynamic linking and execution of 'make check'
@@ -91,7 +107,7 @@ make html
 
 %install
 # install the library
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 rm %{buildroot}%{_libdir}/libfstrm.la
 
 # install documentation
@@ -128,6 +144,9 @@ make check
 %doc %{_docdir}/%{name}/html
 
 %changelog
+* Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.6.1-alt1_2
+- update to new release by fcimport
+
 * Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_3
 - new version
 
