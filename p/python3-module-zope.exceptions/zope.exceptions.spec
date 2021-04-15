@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.0
-Release: alt5
+Version: 4.4
+Release: alt1
 
 Summary: Zope Exceptions
 License: ZPLv2.1
@@ -71,6 +71,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 4.4-alt1
+- Automatically updated to 4.4.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt5
 - Build for python2 disabled.
 
@@ -80,10 +83,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt3
 - NMU: remove %ubt from release
 
-* Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt2%ubt
+* Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt2.S1
 - Fix a wrong logic of packaging for non x86_64 arch
 
-* Mon Feb 12 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
+* Mon Feb 12 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.S1
 - v4.0.8 -> v4.2.0
 
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.8-alt1.1.1.1
