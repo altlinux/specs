@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.3
-Release: alt1
+Release: alt2
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
 Group: Development/Python3
@@ -21,6 +21,8 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 BuildRequires: git-core
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 
 BuildRequires: python3(aspectlib)
 BuildRequires: python3(cpuinfo)
@@ -39,20 +41,6 @@ A pytest fixture for benchmarking code.
 %setup
 %patch -p1
 
-# unpin or remove unpackaged testing deps
-grep -qsF 'pytest-instafail' tox.ini || exit 1
-grep -qsF 'pytest-travis-fold' tox.ini || exit 1
-grep -qsF 'pygaljs' tox.ini || exit 1
-grep -qsF 'hunter' tox.ini || exit 1
-sed -i \
--e '/pytest-instafail/d' \
--e '/pytest-travis-fold/d' \
--e '/pygaljs/d' \
--e '/hunter/d' \
--e 's/elasticsearch==.*$/elasticsearch/g' \
--e 's/==/>=/g' \
-tox.ini
-
 %build
 %python3_build
 
@@ -64,18 +52,9 @@ for i in $(ls); do
 done
 
 %check
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
--e '/^setenv[ ]*=$/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}-nocov
-tox.py3 --sitepackages -rv
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -85,6 +64,9 @@ tox.py3 --sitepackages -rv
 %python3_sitelibdir/pytest_benchmark-*.egg-info/
 
 %changelog
+* Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 3.2.3-alt2
+- Fixed FTBFS.
+
 * Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 3.2.3-alt1
 - 3.2.2 -> 3.2.3.
 
