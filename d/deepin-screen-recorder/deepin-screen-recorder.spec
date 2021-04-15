@@ -1,7 +1,8 @@
 %def_disable clang
+%def_disable cmake
 
 Name: deepin-screen-recorder
-Version: 5.8.0.61
+Version: 5.8.1
 Release: alt1
 Summary: Default screen recorder application for Deepin
 License: GPL-3.0+
@@ -10,7 +11,7 @@ Url: https://github.com/linuxdeepin/deepin-screen-recorder
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-screen-recorder_5.8.0.57_alt_qt5.15.patch
+Patch: deepin-screen-recorder-5.8.1-qt5.15.patch
 
 Provides: %name-data = %version
 Obsoletes: %name-data < %version
@@ -20,15 +21,20 @@ BuildRequires(pre): clang11.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
+%if_enabled cmake
+BuildRequires(pre): cmake rpm-build-ninja
+%endif
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools
+BuildRequires: qt5-tools-devel
 BuildRequires: libxcbutil-devel
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: dtk5-gui-devel
 BuildRequires: dtk5-widget-devel
+BuildRequires: gsettings-qt-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-multimedia-devel
+BuildRequires: qt5-svg-devel
 BuildRequires: libprocps-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavformat-devel
@@ -53,21 +59,29 @@ sed -i 's|lupdate|lupdate-qt5|; s|lrelease|lrelease-qt5|' screen_shot_recorder.p
 # X11 header's weirdness with GCC 10
 sed -i '/include <X11.extensions.XTest.h>/a #undef min' src/event_monitor.cpp
 sed -i '/#include <iostream>/d;1i #include <iostream>' src/screen_shot_event.cpp
+sed -i '/include <X11.extensions.shape.h>/a #undef None' src/utils.cpp
 
 %build
+%if_enabled cmake
+%cmake_insource \
+	-GNinja
+%ninja_build
+%else
 %qmake_qt5 \
     CONFIG+=nostrip \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
 %endif
-    QT.KWindowSystem.libs=%_K5link \
-    QT.KWaylandClient.libs=%_K5link \
-    QT.KI18n.libs=%_K5link \
-    QT.KConfigCore.libs=%_K5link
+    #
 %make_build
+%endif
 
 %install
+%if_enabled cmake
+%ninja_install
+%else
 %makeinstall INSTALL_ROOT=%buildroot
+%endif
 %find_lang %name
 
 %files -f %name.lang
@@ -85,6 +99,9 @@ sed -i '/#include <iostream>/d;1i #include <iostream>' src/screen_shot_event.cpp
 %_datadir/dbus-1/services/com.deepin.Screenshot.service
 
 %changelog
+* Thu Apr 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.1-alt1
+- New version (5.8.1).
+
 * Thu Dec 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.61-alt1
 - New version (5.8.0.61) with rpmgs script.
 
