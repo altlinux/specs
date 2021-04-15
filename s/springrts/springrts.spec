@@ -1,16 +1,36 @@
 %define _unpackaged_files_terminate_build 1
+
 %def_enable debug
 
 Name: springrts
-Version: 104.0
-Release: alt3
+Version: 105.0
+Release: alt1
 
 Summary: Real time strategy game engine with many mods
-License: GPL2+ or Artistic
+License: GPL-2.0+ and BSD-3-Clause
 Group: Games/Strategy
 Url: https://springrts.com/
 
 ExclusiveArch: %ix86 x86_64
+
+# https://github.com/spring/spring.git
+Source: %name-%version.tar
+
+# submodules
+Source1: %name-%version-AI-Interfaces-Python.tar
+Source2: %name-%version-AI-Skirmish-AAI.tar
+Source3: %name-%version-AI-Skirmish-CircuitAI.tar
+Source4: %name-%version-AI-Skirmish-HughAI.tar
+Source5: %name-%version-AI-Skirmish-KAIK.tar
+Source6: %name-%version-AI-Skirmish-Shard.tar
+Source7: %name-%version-tools-mapcompile.tar
+Source8: %name-%version-tools-pr-downloader.tar
+Source9: %name-%version-tools-pr-downloader-src-lib-libgit2.tar
+Source10: %name-%version-tools-unitsync-python.tar
+
+Patch1: %name-alt-linking.patch
+Patch2: %name-alt-unbundle-libs.patch
+Patch3: %name-alt-unbundle-libs-pr-downloader.patch
 
 BuildRequires(pre): rpm-build-xdg rpm-macros-cmake
 BuildRequires: cmake cmake-modules java-devel /proc libGL-devel libGLU-devel gcc-c++
@@ -36,12 +56,6 @@ Conflicts: %name-dedicated < %EVR
 Provides: %name-dedicated = %EVR
 Obsoletes: %name-dedicated
 
-Source: %name-%version.tar
-Patch1: %name-alt-linking.patch
-Patch2: %name-alt-gcc8.patch
-Patch3: %name-alt-unbundle-libs.patch
-Patch4: %name-alt-gcc10.patch
-
 %description
 Spring is an open source RTS (Real time Strategy) engine originally
 designed to recreate the experience of Total Annihilation.  Spring now
@@ -60,31 +74,37 @@ BuildArch: noarch
 data files for Spring RTS engine
 
 %prep
-%setup
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10
+%patch1 -p1
+%patch2 -p1
+
+pushd tools/pr-downloader
+%patch3 -p1
+popd
 
 # TODO: remove remaining bundled libraries. They're either missing or patched.
 rm -rf tools/pr-downloader/src/lib/{jsoncpp,minizip}
 rm -rf rts/lib/{asio,assimp,minizip}
 
+# provide version information
+echo %version > VERSION
+
 %build
 %add_optflags -fPIC -DPIC -D_FILE_OFFSET_BITS=64
 %cmake \
 %if_enabled debug
-        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 %else
-        -DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_BUILD_TYPE=Release \
 %endif
-        -DLIBDIR=%_libdir \
-        -DBINDIR=%_gamesbindir \
-        -DAI_LIBS_DIR=%_libdir/spring \
-        -DAI_DATA_DIR=%_gamesdatadir/spring \
-        -DDOCDIR=share/doc/%name-%version \
-        -DDOCBOOK_XSL=%_datadir/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl \
-        -DAI_TYPES=NATIVE
+	-DLIBDIR=%_libdir \
+	-DBINDIR=%_gamesbindir \
+	-DAI_LIBS_DIR=%_libdir/spring \
+	-DAI_DATA_DIR=%_gamesdatadir/spring \
+	-DDOCDIR=share/doc/%name-%version \
+	-DDOCBOOK_XSL=%_datadir/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl \
+	-DAI_TYPES=NATIVE \
+	%nil
 
 %cmake_build VERBOSE=1
 
@@ -106,11 +126,15 @@ mv %buildroot%_pixmapsdir/application-x-spring-demo.png \
 sed -i -e '/NoDisplay=true/d' \
     %buildroot%_desktopdir/spring.desktop
 
-%files 
+%files
+%doc LICENSE LICENSE.html
+%doc AUTHORS FAQ THANKS
 %_gamesbindir/pr-downloader
 %_gamesbindir/spring
 %_gamesbindir/spring-headless
 %_gamesbindir/spring-dedicated
+%_gamesbindir/mapcompile
+%_gamesbindir/mapdecompile
 %_libdir/spring
 %_libdir/*.so
 
@@ -123,6 +147,10 @@ sed -i -e '/NoDisplay=true/d' \
 %_man6dir/*
 
 %changelog
+* Wed Apr 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 105.0-alt1
+- Updated to upstream version 105.0.
+- Updated packaging scheme and license.
+
 * Mon Jan 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt3
 - Fixed build with gcc-10.
 
