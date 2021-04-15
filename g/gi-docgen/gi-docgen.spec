@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: gi-docgen
-Version: 2021.3
+Version: 2021.6
 Release: alt0.5
 
 Summary: Documentation tool for GObject-based libraries
@@ -17,7 +17,7 @@ Url: https://pypi.org/project/gi-docgen/
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/ebassi/gi-docgen
+Vcs: https://gitlab.gnome.org/GNOME/gi-docgen.git
 Source: %name-%version.tar
 %endif
 
@@ -79,6 +79,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Thu Apr 15 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.6-alt0.5
+- updated to 2021.5-3-g0b0c237
+
 * Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.3-alt0.5
 - updated to 2021.2-90-g7fbbaf3
 
