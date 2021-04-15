@@ -4,7 +4,7 @@
 
 Name: egl-wayland
 Version: 1.1.6
-Release: alt1.1
+Release: alt1.2
 Epoch: 1
 
 Group: System/Libraries
@@ -48,7 +48,7 @@ Wayland EGL External Platform library development package
 %build
 %ifarch %e2k
 # lcc barfs on include/wayland-eglstream-server.h:87
-%add_optflags -Wno-error=signed-one-bit-field
+%add_optflags -Wno-error=signed-one-bit-field -Wno-error=maybe-uninitialized
 %endif
 %configure
 %make_build
@@ -70,6 +70,9 @@ install -pDm644 %SOURCE1 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Thu Apr 15 2021 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt1.2
+- E2K: *workaround* ftbfs with lcc
+
 * Thu Apr 15 2021 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt1.1
 - E2K: workaround ftbfs with lcc
 - minor spec cleanup
