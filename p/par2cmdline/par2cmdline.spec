@@ -3,17 +3,24 @@ Group: Archiving/Other
 %define _localstatedir %{_var}
 Name: par2cmdline
 Version: 0.8.1
-Release: alt1_2
+Release: alt1_4
 Summary: PAR 2.0 compatible file verification and repair tool
 
 License: GPLv2+
 URL: https://github.com/Parchive/par2cmdline/
 Source0: https://github.com/Parchive/par2cmdline/releases/download/v%{version}/par2cmdline-%{version}.tar.bz2
+Source1: https://github.com/Parchive/par2cmdline/releases/download/v%{version}/par2cmdline-%{version}.tar.bz2.sig
+# GitHub releases are signed by GitHub user https://github.com/BlackIkeEagle
+# which has verified his GitHub handle via his Keybase.io profile
+# https://keybase.io/blackikeeagle.
+Source2: https://keybase.io/blackikeeagle/pgp_keys.asc?fingerprint=db2277bcd500aa3825610bdddb323392796ca067#/gpg-db2277bcd500aa3825610bdddb323392796ca067.asc
 # Fix tests to account for endianness correctly.
 # Backport of https://github.com/Parchive/par2cmdline/commit/4f3576a314d7169912842ec9dc1e595e61e52653.
 Patch0: 0001-Fix-for-Github-issue-143.-Test-did-not-account-for-e.patch
 
 BuildRequires: gcc-c++
+# Needed for source file verification.
+BuildRequires: gnupg gnupg2
 Source44: import.info
 Conflicts: par2 < 0.5
 Obsoletes: par2 < 0.5
@@ -61,6 +68,9 @@ make check-TESTS
 
 
 %changelog
+* Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt1_4
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_2
 - update to new release by fcimport
 
