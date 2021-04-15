@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 2.0.1
+Version: 2.1
 Release: alt1
 
 Summary: Sphinx objects.inv Inspection/Manipulation Tool
@@ -12,7 +12,8 @@ License: MIT
 Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/bskinn/sphobjinv.git
-Source: https://pypi.io/packages/source/s/%modname/%modname-%version.tar.gz
+#Source: https://pypi.io/packages/source/s/%modname/%modname-%version.tar.gz
+Source: https://github.com/bskinn/%modname/archive/v%version/%modname-%version.tar.gz
 
 BuildArch: noarch
 
@@ -43,6 +44,9 @@ py.test3
 
 
 %changelog
+* Thu Apr 15 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
+- 2.1
+
 * Sun Mar 07 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - first build for Sisyphus
 
