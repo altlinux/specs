@@ -4,7 +4,7 @@
 
 Name: egl-wayland
 Version: 1.1.6
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ License: MIT
 
 Source0: %name-%version.tar
 Source1: 10_nvidia_wayland.json
-Patch1: alt-ftbfs.patch
+Patch: alt-ftbfs.patch
 
 # Automatically added by buildreq on Fri Jul 12 2019 (-bi)
 # optimized out: elfutils glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-server perl pkg-config python-base python-modules python3 python3-base python3-dev rpm-build-python3 sh4 wayland-devel xorg-proto-devel
@@ -41,18 +41,22 @@ Summary: Wayland EGL External Platform library development package
 Wayland EGL External Platform library development package
 
 %prep
-%setup -q
-%patch1 -p1
+%setup
+%patch -p1
 %autoreconf
 
 %build
+%ifarch %e2k
+# lcc barfs on include/wayland-eglstream-server.h:87
+%add_optflags -Wno-error=signed-one-bit-field
+%endif
 %configure
 %make_build
 
 %install
 %makeinstall_std
-install -m 0755 -d %buildroot/%_datadir/egl/egl_external_platform.d/
-install -pm 0644 %SOURCE1 %buildroot/%_datadir/egl/egl_external_platform.d/
+install -pDm644 %SOURCE1 \
+	%buildroot/%_datadir/egl/egl_external_platform.d/10_nvidia_wayland.json
 
 %files -n %libnvidia_egl_wayland
 %doc README.md COPYING
@@ -66,6 +70,10 @@ install -pm 0644 %SOURCE1 %buildroot/%_datadir/egl/egl_external_platform.d/
 %_datadir/wayland-eglstream/
 
 %changelog
+* Thu Apr 15 2021 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt1.1
+- E2K: workaround ftbfs with lcc
+- minor spec cleanup
+
 * Wed Mar 03 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.6-alt1
 - new version
 
