@@ -1,7 +1,6 @@
-
 Name: svox-pico
 Version: 20120212
-Release: alt2
+Release: alt3
 License: Apache License
 Group: Sound
 Summary: Text-To-Speech engine from Android project
@@ -30,6 +29,7 @@ cd ..
 cd pico
 make DESTDIR=%buildroot install
 cd ..
+rm -f %buildroot%_libdir/libttspico.a
 
 %files
 %_bindir/*
@@ -38,6 +38,9 @@ cd ..
 %_datadir/pico
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 20120212-alt3
+- Fixed FTBFS.
+
 * Sat Dec 07 2013 Michael Pozhidaev <msp@altlinux.ru> 20120212-alt2
 - m4 directory creation added to autogen.sh for compilation error fixing
 
