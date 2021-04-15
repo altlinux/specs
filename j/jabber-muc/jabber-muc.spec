@@ -5,7 +5,7 @@
 
 Name: jabber-muc
 Version: 0.8.81
-Release: alt0.1
+Release: alt0.2
 
 Summary: MU-Conference service for Jabber (using JCR)
 Group: System/Servers
@@ -47,7 +47,7 @@ Jabber MultiUser Conference service (MUC).
 #patch3 -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" \
+CFLAGS="$RPM_OPT_FLAGS -fcommon" \
 %make
 
 %install 
@@ -89,6 +89,9 @@ install -pD -m0755 %SOURCE3 %buildroot%_jabber_component_dir/%name
 %_jabber_component_dir/*
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.81-alt0.2
+- Fixed FTBFS with -fcommon.
+
 * Mon Mar 25 2019 L.A. Kostis <lakostis@altlinux.ru> 0.8.81-alt0.1
 - Updated to 0.8.81 (as latest source avilable).
 - Added patch from Gentoo:
