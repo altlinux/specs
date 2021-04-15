@@ -5,7 +5,7 @@
 Name: nas
 %define dname %{name}d
 Version: 1.9.4
-Release: alt2.git20131009
+Release: alt3.git20131009
 Summary: Network Audio System - a portable, network-transparent audio system
 Group: Sound
 License: distributable
@@ -146,6 +146,7 @@ echo "#define SharedLibX YES" >> config/NetAudio.def
 echo "#define NormalLibX YES" >> config/NetAudio.def
 xmkmf
 pushd config
+%add_optflags -fcommon
 %configure --with-gnu-ld %{subst_with pic}
 popd
 %make_build BOOTSTRAPCFLAGS="%optflags" CDEBUGFLAGS="%optflags" CXXDEBUGFLAGS="%optflags" World
@@ -217,6 +218,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt3.git20131009
+- Fixed FTBFS with -fcommon.
+
 * Tue Feb 20 2018 Andrew Savchenko <bircoph@altlinux.org> 1.9.4-alt2.git20131009
 - E2K: Fix preprocessing with lcc.
 
