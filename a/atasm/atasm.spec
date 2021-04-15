@@ -1,19 +1,19 @@
 Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atasm
-Version:        1.08
-Release:        alt1_8
+Version:        1.09
+%global verstr  %(echo %{version} | sed -e 's/\\.//')
+Release:        alt1_1
 Summary:        6502 cross-assembler
 
 License:        GPLv2+
-URL:            http://atari.miribilist.com/atasm/
-# fedora-getsvn atasm https://svn.code.sf.net/p/atasm/code/trunk 100
-# svn rev 100 == version 1.08
-Source0:        atasm-svn100.tar.bz2
+URL:            https://atari.miribilist.com/atasm/
+Source0:        https://atari.miribilist.com/atasm/%{name}%{verstr}.zip
 
 BuildRequires:  gcc
 BuildRequires:  zlib-devel
@@ -28,13 +28,13 @@ with lightning speed.
 
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}%{verstr}
 
 
 %build
 pushd src
 %make_build CFLAGS="%{optflags} -DZLIB_CAPABLE -DUNIX" L="%{build_ldflags} -lz"
-sed -e 's|%%DOCDIR%%|%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}|g' %{name}.1.in > %{name}.1
+sed -e 's|\%\%DOCDIR\%\%|%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}|g' %{name}.1.in > %{name}.1
 popd
 
 
@@ -55,12 +55,16 @@ popd
 
 
 %files
-%doc LICENSE VERSION.TXT atasm.blurb atasm.txt
+%doc --no-dereference LICENSE
+%doc VERSION.TXT README.md docs/atasm.blurb docs/atasm.txt
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
 
 %changelog
+* Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 1.09-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 1.08-alt1_8
 - update to new release by fcimport
 
