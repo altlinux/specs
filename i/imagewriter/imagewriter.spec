@@ -8,13 +8,16 @@
 Name:           imagewriter
 Summary:        SUSE Imagewriter
 Version:        1.10
-Release:        alt4
+Release:        alt5
 Url:            https://github.com/mbarringer/imagewriter
 Group:          Archiving/Other
 License:        GPLv2
 Source:         imagewriter-%version.tar.gz
 Patch1:		imagewriter-add-missing-i18n.patch
 Patch2:		imagewriter-add-russian-localization.patch
+
+# https://github.com/openSUSE/imagewriter/pull/28/commits/3164e25267243ef4983f53ef5c1f849d3301c36f
+Patch3:     3164e25267243ef4983f53ef5c1f849d3301c36f.patch
 
 BuildRequires: gcc-c++ libqt4-devel
 
@@ -31,6 +34,7 @@ SUSE Imagewriter is a graphical utility for writing raw disk images & hybrid iso
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 # Generate localization files
 lrelease-qt4 imagewriter.pro
 
@@ -48,6 +52,9 @@ make INSTALL_ROOT=%buildroot install
 %_datadir/%name/*
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.10-alt5
+- Fixed FTBFS.
+
 * Fri Mar 14 2014 Andrey Cherepanov <cas@altlinux.org> 1.10-alt4
 - Add Russian localization
 
