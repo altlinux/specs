@@ -1,9 +1,9 @@
 Name: koules
 Version: 1.4
-Release: alt10
+Release: alt11
 
 Summary: Action game with multiplayer, network and sound support
-License: GPL
+License: GPLv2
 Group: Games/Arcade
 
 Url: http://www.ucw.cz/~hubicka/koules/English/koules.html
@@ -19,6 +19,7 @@ Patch6: koules-schumacher.patch
 Patch7: koules-1.4-alt-tmpfile.patch
 Patch8: koules-1.4-alt-no-shm.patch
 Patch9: koules-1.4-slackbuilds-aoss.patch
+Patch10: koules-1.4-make-gcc10-happy.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
@@ -65,6 +66,7 @@ Koules ("кульки") - файна цяцька, що попри всієї с
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p2
 
 %build
 sed -i 's,SYSDEFS =,& -std=gnu89 -fgnu89-inline,' Iconfig */Makefile
@@ -99,6 +101,10 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 # - consider soundwrapper (right now DOESN'T work for me w/emu10k1)
 
 %changelog
+* Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt11
+- Fixed FTBFS.
+- Fixed license tag.
+
 * Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 1.4-alt10
 - fixed FTBFS
 - converted spec to UTF-8
