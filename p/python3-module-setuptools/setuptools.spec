@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 54.2.0
+Version: 56.0.0
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -122,6 +122,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -- --ignore pavement.py 
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
+* Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 1:56.0.0-alt1
+- 54.2.0 -> 56.0.0.
+
 * Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 1:54.2.0-alt1
 - 46.1.3 -> 54.2.0.
 
