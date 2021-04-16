@@ -8,10 +8,11 @@ BuildRequires: perl-podlators
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
 Version:	0.38
-Release:	alt1_5
+Release:	alt1_12
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/MouseX-Getopt
 Source0:	https://cpan.metacpan.org/modules/by-module/MouseX/MouseX-Getopt-%{version}.tar.gz
+Patch0:		MouseX-Getopt-0.38-GLD-0.107.patch
 BuildArch:	noarch
 # Module Build
 BuildRequires:	rpm-build-perl
@@ -56,6 +57,9 @@ objects using parameters passed in from the command line.
 %prep
 %setup -q -n MouseX-Getopt-%{version}
 
+# Fix compatibility with GLD 0.107
+%patch0
+
 %build
 perl Build.PL --installdirs=vendor
 ./Build
@@ -73,6 +77,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Fri Apr 16 2021 Igor Vlasenko <viy@altlinux.org> 0.38-alt1_12
+- fixed build
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1_5
 - update to new release by fcimport
 
