@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     lxqt-admin
-Version:  0.16.0
+Version:  0.17.0
 Release:  alt1
 
 Summary:  LXQt system administration tool
@@ -44,6 +44,9 @@ BuildRequires: libpolkitqt5-qt5-devel
 %doc AUTHORS CHANGELOG *.md
 
 %changelog
+* Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt1
+- new version 0.17.0
+
 * Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
 - new version 0.16.0
 

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-build-tools
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Various packaging tools and scripts for LXQt applications
@@ -41,6 +41,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_bindir/*
 
 %changelog
+* Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- new version 0.9.0
+
 * Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
 - new version 0.8.0
 

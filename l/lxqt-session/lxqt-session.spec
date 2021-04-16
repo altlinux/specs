@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Session manager
@@ -18,6 +18,7 @@ BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: rpm-build-xdg libqtxdg-devel xdg-utils xdg-user-dirs
 BuildRequires: libudev-devel
+BuildRequires: libprocps-devel
 
 Requires: lxqt-themes
 Requires: xdg-utils
@@ -57,6 +58,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt1
+- new version 0.17.0
+
 * Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.16.0-alt1
 - new version 0.16.0
 
