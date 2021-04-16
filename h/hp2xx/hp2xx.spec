@@ -14,7 +14,7 @@
 
 Name: hp2xx
 Version: 3.4.2
-Release: alt1
+Release: alt2
 
 Summary: Converts HP-GL Plotter Language into a Variety of Formats
 License: GPLv2+
@@ -49,7 +49,7 @@ of popular graphics formats, both vector and raster.
 %patch3 -p1
 
 %build
-make CC="gcc" OPTFLAGS="%optflags" #LFLAGS="-L/usr/X11R6/%_lib"
+make CC="gcc" OPTFLAGS="%optflags -fcommon" #LFLAGS="-L/usr/X11R6/%_lib"
 
 %install
 mkdir -p %buildroot{%_bindir,%_infodir,%_man1dir}
@@ -64,6 +64,9 @@ make bindir=%buildroot%_bindir \
 %doc AUTHORS CHANGES README TODO copying doc/readme doc/changes doc/hp_cmds.lst
 
 %changelog
+* Fri Apr 16 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt2
+- Fixed FTBFS with -fcommon.
+
 * Wed Apr 01 2015 Michael Shigorin <mike@altlinux.org> 3.4.2-alt1
 - built for ALT Linux (based on opensuse's 3.4.2-593.1 package)
 
