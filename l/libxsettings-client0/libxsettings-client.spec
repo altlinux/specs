@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/gtkdocize libICE-devel libSM-devel libX11-devel
 Summary: utility functions for the Xsettings protocol (GPE)
 Name: libxsettings-client0
 Version: 0.17
-Release: alt2
+Release: alt3
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: BSD-like, LGPL
 Group: System/Libraries
@@ -67,15 +67,23 @@ make install DESTDIR=%buildroot
 
 %files -n libxsettings-client-devel
 %_libdir/*.so
-%_libdir/*.a
+%exclude %_libdir/*.a
 %_includedir/xsettings-client.h
 %_includedir/xsettings-common.h
 %_libdir/pkgconfig/*.pc
+
+%if 0
+%files -n libxsettings-client-devel-static
+%_libdir/*.a
+%endif
 
 %files -n libxsettings-client-doc
 %_datadir/gtk-doc/html/libXsettings-client
 
 %changelog
+* Fri Apr 16 2021 Igor Vlasenko <viy@altlinux.org> 0.17-alt3
+- exclude static lib
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2
 - sync with debian
 - fixed build (disabled gtk-doc; /usr/bin/gtkdoc-mktmpl no more)
