@@ -1,10 +1,10 @@
 %define _name adwaita-icon-theme
 %define ver_major 40
-%define beta .rc
+%define beta %nil
 
 Name: icon-theme-adwaita
-Version: %ver_major
-Release: alt0.8%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Adwaita icon theme
 License: CC-BY-SA-3.0 and LGPL-3.0
@@ -43,6 +43,9 @@ Adwaita icon theme for GTK+.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Fri Apr 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Wed Mar 17 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
 - 40.rc
 
