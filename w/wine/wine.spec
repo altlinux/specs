@@ -1,7 +1,7 @@
 %def_disable static
 %define gecko_version 2.47.2
-%define mono_version 6.0.0
-%define major 6.5
+%define mono_version 6.1.1
+%define major 6.6
 %define rel %nil
 
 %def_with gtk3
@@ -15,7 +15,7 @@
 %endif
 
 Name: wine
-Version: %major.2
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -474,6 +474,8 @@ done
 %endif
 
 %libwinedir/ntdll.so
+%libwinedir/dnsapi.so
+%libwinedir/dwrite.so
 %libwinedir/gdi32.so
 %libwinedir/user32.so
 %libwinedir/bcrypt.so
@@ -583,6 +585,13 @@ done
 %endif
 
 %changelog
+* Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.6.1-alt1
+- new version 6.6.1 (with rpmrb script)
+- set strict require wine-mono 6.1.1
+
+* Tue Apr 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.5.1-alt1
+- new version 6.5.1 (with rpmrb script)
+
 * Thu Apr 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.5.2-alt1
 - update patches to staging wine-6.5
  + fix dotnet 4.5 install (https://bugs.winehq.org/show_bug.cgi?id=49897)
