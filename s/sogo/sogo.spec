@@ -4,7 +4,7 @@
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
 Version: 5.1.0
-Release: alt1
+Release: alt2
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -432,11 +432,16 @@ fi
 
 %post
 %post_service sogo
+dovecot_service="/lib/systemd/system/dovecot.service"
+test -e "$dovecot_service" && %post_service dovecot
 
 %preun
 %preun_service sogo
 
 %changelog
+* Fri Apr 16 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt2
+- Restart dovecot if it is running on sogo update.
+
 * Sat Apr 03 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
 - New version.
 
