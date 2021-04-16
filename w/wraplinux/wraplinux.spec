@@ -1,12 +1,14 @@
 Summary: Utility to wrap a Linux kernel and initrd into an ELF or NBI file
 Name: wraplinux
 Version: 1.7
-Release: alt1
+Release: alt2
 License: GPL2
 Group: System/Kernel and hardware
 Url: http://www.kernel.org/pub/linux/utils/boot/wraplinux/
 Source: http://www.kernel.org/pub/linux/utils/boot/wraplinux/wraplinux-%version.tar.gz
 Patch: wraplinux-1.7-reloc.patch
+
+ExclusiveArch: i586 x86_64
 
 %ifarch x86_64
 %define mflag -fno-stack-protector
@@ -14,28 +16,31 @@ Patch: wraplinux-1.7-reloc.patch
 %define mflag -m32 -fno-stack-protector
 %endif
 
-
 %description
 A tool to wrap an x86 Linux kernel and one or more initrd files into a
 single file in ELF or NBI format, as required by some booting protocols.
 
 %prep
-%setup 
-%patch -p1 
+%setup
+%patch -p1
 
 %build
+export CFLAGS="$CFLAGS -fcommon"
 %autoreconf
 %configure
-%make CC='gcc %mflag' 
+%make CC='gcc %mflag'
 
 %install
-%makeinstall CC='gcc %mflag' 
+%makeinstall CC='gcc %mflag'
 
 %files
 %_bindir/wraplinux
 %_man1dir/wraplinux.1*
 
 %changelog
+* Fri Apr 16 2021 Leontiy Volodin <lvol@altlinux.org> 1.7-alt2
+- Fixed build with gcc10.
+
 * Sat May 28 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.7-alt1
 - Version 1.7
 
