@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.12.7
+Release: alt0.12.8
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -35,6 +35,9 @@ with more open patches/features inclusion policy.
 
 # fix shebang
 sed -i 's,/usr/bin/env python,%_bindir/python2,' doc/tools/asciidoc/asciidoc.py
+
+# fix old bison behaivour
+sed -i '/rm -f \$\*.h/s/^/# /' src/intl/gettext/Makefile
 
 %build
 cat config/m4/*.m4 >acinclude.m4
@@ -94,6 +97,9 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Fri Apr 16 2021 Fr. Br. George <george@altlinux.ru> 0.12-alt0.12.8
+- Build with new bison
+
 * Mon Apr 12 2021 Fr. Br. George <george@altlinux.ru> 0.12-alt0.12.7
 - Fix GCC10 build
 
