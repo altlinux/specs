@@ -7,7 +7,7 @@
 %define ver 8.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt8
+Release: alt9
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -51,7 +51,7 @@ BuildRequires: texlive-latex-extra texlive-science
 BuildRequires: libavformat-devel libpostproc-devel libswscale-devel
 BuildRequires: libavdevice-devel libavfilter-devel
 BuildRequires: liblz4-devel
-BuildRequires: libnetcdf-devel libnetcdf_c++-devel
+BuildRequires: libnetcdf-devel netcdf-cxx4-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
 BuildRequires: qt5-base-devel-static
@@ -358,7 +358,6 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DQT_INCLUDE_DIR="%_includedir/qt5" \
 	-DQT_QMAKE_EXECUTABLE="%_qt5_bindir/qmake" \
 	-DVTK_Group_Qt:BOOL=ON \
-	-DNETCDF_DIR=%_libdir/hdf5-seq \
 	-DVTK_INSTALL_LIBRARY_DIR=%_lib \
 	-DVTK_INSTALL_ARCHIVE_DIR=%_lib \
 	-DVTK_INSTALL_PACKAGE_DIR=%_lib/cmake/vtk-%ver \
@@ -476,6 +475,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.2.0-alt9
+- Updated build dependencies.
+
 * Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.2.0-alt8
 - Fixed build with gcc-10 and new cmake.
 

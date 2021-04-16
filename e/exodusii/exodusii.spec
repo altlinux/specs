@@ -1,13 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%define mpiimpl openmpi
-%define mpidir %_libdir/%mpiimpl
-
 Name: exodusii
 Version: 6.09.0
-%define somver 0
-%define sover %somver.%version
-Release: alt5
+Release: alt6.git20150119
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -15,16 +10,19 @@ Url: http://sourceforge.net/projects/exodusii/
 
 ExclusiveArch: %ix86 x86_64
 
+%define somver 0
+%define sover %somver.%version
+
 # git://exodusii.git.sourceforge.net/gitroot/exodusii/exodusii
 Source: %name-%version.tar
-Source1: CMakeCache.txt
 Patch0: port-on-python3.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: doxygen graphviz
-BuildPreReq: %mpiimpl-devel cmake libnetcdf-mpi-devel imake
-BuildPreReq: netcdf11-mpi-tools libhdf5-mpi-devel
-BuildPreReq: libcurl-devel
+BuildRequires: gcc-c++ gcc-fortran
+BuildRequires: doxygen graphviz
+BuildRequires: cmake imake
+BuildRequires: libnetcdf-devel netcdf-tools libhdf5-devel
+BuildRequires: libcurl-devel
 
 %description
 EXODUS II is a model developed to store and retrieve transient data for
@@ -35,7 +33,6 @@ Includes the nemesis parallel extension.
 %package -n lib%name
 Summary: Shared libraries of EXODUS II
 Group: System/Libraries
-Requires: libnetcdf11-mpi
 
 %description -n lib%name
 EXODUS II is a model developed to store and retrieve transient data for
@@ -74,7 +71,7 @@ This package contains development documentation for EXODUS II.
 %package -n python3-module-exodus
 Summary: Python binding for EXODUS II
 Group: Development/Python3
-Requires: lib%name-devel = %EVR libnetcdf-devel
+Requires: lib%name = %EVR
 
 %description -n python3-module-exodus
 EXODUS II is a model developed to store and retrieve transient data for
@@ -87,32 +84,40 @@ This package contains python binding for EXODUS II.
 %prep
 %setup
 %patch0 -p1
-install -p -m644 %SOURCE1 exodus
-install -p -m644 %SOURCE1 nemesis
-sed -i "s|@64@|%_libsuff|g" exodus/CMakeCache.txt nemesis/CMakeCache.txt
-sed -i "s|@PWD@|$PWD|g" exodus/CMakeCache.txt nemesis/CMakeCache.txt
 
 %build
-mpi-selector --set %mpiimpl
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
-
 pushd exodus
-cmake \
-	-DLIB_SUFFIX:STRING="%_libsuff" \
+%cmake_insource \
 	-DSOMVER:STRING="%somver" \
 	-DSOVER:STRING="%sover" \
 	-DNETCDF_SO_ROOT=%_libdir \
 	-DPYTHON_INSTALL=%python3_sitelibdir \
-	.
+	-DNETCDF_INCLUDE_DIR:STRING="%_includedir" \
+	-DNETCDF_LIBRARY:STRING=-lnetcdf \
+	-DHDF5_LIBRARY:STRING=-lhdf5 \
+	-DHDF5HL_LIBRARY:STRING=-lhdf5_hl \
+	-DBUILD_TESTING:BOOL=OFF \
+	-DEXODUS_LIBRARY:STRING=-lexoIIv2c \
+	-DBUILD_SHARED:BOOL=ON \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	%nil
 %make_build VERBOSE=1
 popd
+
 pushd nemesis
-cmake \
-	-DLIB_SUFFIX:STRING="%_libsuff" \
+%cmake_insource \
 	-DSOMVER:STRING="%somver" \
 	-DSOVER:STRING="%sover" \
-	.
+	-DNETCDF_INCLUDE_DIR:STRING="%_includedir" \
+	-DNETCDF_LIBRARY:STRING=-lnetcdf \
+	-DHDF5_LIBRARY:STRING=-lhdf5 \
+	-DHDF5HL_LIBRARY:STRING=-lhdf5_hl \
+	-DBUILD_TESTING:BOOL=OFF \
+	-DEXODUS_LIBRARY:STRING=-lexoIIv2c \
+	-DBUILD_SHARED:BOOL=ON \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	%nil
+
 %make_build VERBOSE=1
 popd
 
@@ -121,9 +126,6 @@ doxygen
 popd
 
 %install
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
-
 pushd exodus
 %makeinstall_std
 popd
@@ -136,25 +138,25 @@ mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
 mv nemesis/README README.Nemesis
 
-%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf11-mpi-debuginfo\t/
-%filter_from_requires /^debug.*(libhdf5\.so.*/s/^/libhdf5-8-mpi-debuginfo\t/
-
 %files -n lib%name
 %doc exodus/COPYRIGHT exodus/README README.Nemesis ChangeLog
-%_libdir/*.so.*
+%_libdir/*.so.%{somver}
+%_libdir/*.so.%{sover}
 
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
 
 %files -n lib%name-devel-doc
-#doc exodus/html exodus/doc/* nemesis/doc/*
 %doc exodus/html exodus/doc/*
 
 %files -n python3-module-exodus
 %python3_sitelibdir/*
 
 %changelog
+* Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt6.git20150119
+- Updated build and runtime dependencies.
+
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.09.0-alt5
 - Porting python binding on python3.
 

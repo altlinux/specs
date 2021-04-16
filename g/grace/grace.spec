@@ -4,7 +4,7 @@
 
 Name: grace
 Version: 5.1.25
-Release: alt4
+Release: alt5
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
@@ -40,7 +40,6 @@ BuildRequires: sgml-tools texlive-latex-recommended
 %{?_with_lpr:BuildRequires: /usr/bin/lpr}
 # argh
 %{?_with_netcdf:BuildRequires: libnetcdf-devel}
-%{?_with_netcdf:Requires: libnetcdf libhdf5}
 # no need this conflict now
 #{?_with_netcdf:Conflicts: libnetcdf-mpi libhdf5-mpi mpi-selector openmpi}
 
@@ -145,6 +144,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.25-alt5
+- Rebuilt with new libnetcdf and libhdf5.
+
 * Mon Dec 25 2017 Michael Shigorin <mike@altlinux.org> 5.1.25-alt4
 - build against fftw3 instead of fftw
 

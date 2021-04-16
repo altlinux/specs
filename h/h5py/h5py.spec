@@ -1,6 +1,12 @@
-%define hdf5dir %_libdir/hdf5-seq
+%define _unpackaged_files_terminate_build 1
 
+# disable tests on 32bit architectures
+%ifnarch %ix86 armh
 %def_with check
+%else
+%def_without check
+%endif
+
 %def_without docs
 
 %define descr \
@@ -23,8 +29,8 @@ supports slicing, and has dtype and shape attributes. HDF5 groups are \
 presented using a dictionary metaphor, indexed by name.
 
 Name:       h5py
-Version:    2.10.0
-Release:    alt3
+Version:    3.2.1
+Release:    alt1
 
 Summary:    Python interface to the Hierarchical Data Format library, version 5
 License:    MIT
@@ -33,7 +39,9 @@ Url:        http://www.h5py.org/
 
 #           https://github.com/h5py/h5py.git
 Source:     %name-%version.tar
-Patch1:     remove-failing-tests.patch
+
+Patch1:     %name-alt-doc.patch
+Patch2:     %name-alt-build.patch
 
 BuildRequires: libhdf5-devel
 BuildRequires: libsz2-devel
@@ -48,6 +56,7 @@ BuildRequires: python3-module-sphinx-devel
 %if_with check
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-unittest2
+BuildRequires: python3(pytest_mpi)
 %endif
 
 %description
@@ -56,7 +65,6 @@ BuildRequires: python3-module-unittest2
 %package -n python3-module-%name
 Summary: Python interface to the Hierarchical Data Format library, version 5
 Group: Development/Python3
-#py3_requires h5py.tests
 %add_python3_req_skip Tkinter
 
 %description -n python3-module-%name
@@ -86,7 +94,7 @@ This package contains pickles for H5PY.
 %package -n python3-module-%name-tests
 Summary: Tests for Python interface to the HDF5
 Group: Development/Python3
-Requires: python3-module-%name = %version-%release
+Requires: python3-module-%name = %EVR
 
 %description -n python3-module-%name-tests
 %descr
@@ -96,16 +104,15 @@ This package contains tests for H5PY.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %if_with docs
 sed -i 's|@PYVER@|%_python3_version|g' docs/Makefile
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 %endif
 
 %build
 %add_optflags -fno-strict-aliasing
 
-%__python3 setup.py configure --hdf5=%hdf5dir
 %__python3 api_gen.py
 %python3_build_debug
 
@@ -156,8 +163,10 @@ touch %buildroot%python3_sitelibdir/%name/examples/__init__.py
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/%name/examples
 
-
 %changelog
+* Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1
+- Updated to upstream version 3.2.1.
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt3
 - fix build, fix tests packing
 

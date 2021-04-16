@@ -21,7 +21,7 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt4.svn20150317
+Release: alt5.svn20150317
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -65,7 +65,7 @@ Summary: Shared libraries of CFD General Notation System (%desc version)
 Group: System/Libraries
 Provides: lib%oname = %version-%release
 %if "%seqmpi" == "seq"
-Requires: libhdf5
+Requires: libhdf5-103 libhdf5-hl-100
 %else
 Requires: libhdf5-mpi
 %endif
@@ -209,6 +209,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt5.svn20150317
+- Rebuilt with new libhdf5.
+
 * Mon Feb 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2-alt4.svn20150317
 - Fixed build on other architectures with %%_lib != lib.
 

@@ -1,6 +1,6 @@
 Name:     libmed
-Version:  3.3.1
-Release:  alt3
+Version:  4.1.0
+Release:  alt1
 
 Summary:  Library to store and exchange meshed data or computation result in MED format
 License:  GPLv3 and LGPLv3
@@ -11,8 +11,10 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   med-%version.tar
 
-Patch1: med-3.0.7-fedora-tests.patch
+Patch1: med-4.1.0-fedora-cmake.patch
 
+BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: libhdf5-devel
 BuildRequires: hdf5-8-tools
@@ -39,38 +41,45 @@ Utilities for work with MED format.
 %setup -n med-%{version}_SRC
 %patch1 -p1
 
-# fix tests for aarch64
-find tests -name '*.sh' -print0 | xargs -0 \
-	sed -i -e 's:H5T_STD_\[IU\]I8\[LB\]E:H5T_STD_[IU]8[LB]E:g'
-
 %build
-%undefine _configure_gettext
-%autoreconf
-%configure --disable-static \
-           --disable-python
-%make_build
+%cmake \
+	-DMEDFILE_BUILD_PYTHON:BOOL=OFF \
+	%nil
+
+%cmake_build
 
 %install
-%makeinstall_std
-rm -f %buildroot%_libdir/*.la
-rm -rf %buildroot%_datadir/doc/med
+%cmakeinstall_std
+
+# Remove test-suite files
+rm -rf %buildroot%_bindir/testc
+rm -rf %buildroot%_bindir/testf
+rm -rf %buildroot%_bindir/testpy
 
 %check
-#make_build check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+pushd BUILD
+ctest
+popd
 
 %files
 %doc AUTHORS README
+%doc %_defaultdocdir/med
 %_libdir/*.so.*
-%_libdir/libmed3.settings
 
 %files devel
 %_libdir/*.so
+%_libdir/cmake/*
 %_includedir/*
 
 %files tools
 %_bindir/*
 
 %changelog
+* Mon Apr 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt1
+- Updated to upstream version 4.1.0.
+- Enabled tests.
+
 * Tue Jan 12 2021 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt3
 - FTBFS: disable tests.
 

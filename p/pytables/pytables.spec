@@ -12,7 +12,6 @@ memory and disk resources so that data takes much less space (specially \
 if on-flight compression is used) than other solutions such as \
 relational or object oriented databases.
 
-%define hdf5dir %_libdir/hdf5-seq
 %define oname tables
 
 %def_enable check
@@ -21,7 +20,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.6.1
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -33,7 +32,16 @@ Url: http://www.pytables.org/
 # https://github.com/PyTables/PyTables.git
 Source: %name-%version.tar
 
-Patch: pytables-use-lowercase-float64-as-numpy-dtype.patch
+# Patches from Debian
+Patch1: 0004-remove-gtags.patch
+Patch2: 0005-Skip-index-backcompat-tests-on-bingendian.patch
+Patch3: 0006-Fix-pttree.patch
+Patch4: 0007-Fix-syntax-warnings.patch
+Patch5: 0008-Fix-the-interpreter-name-in-examples.patch
+
+# Patches from upstream
+Patch100: upstream-pull-862.patch
+Patch101: upstream-pull-866.patch
 
 Requires: python3-module-%oname = %EVR
 
@@ -100,19 +108,26 @@ This package contains documentation for PyTables.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch100 -p1
+%patch101 -p1
+
 find . -type f -name '*.py' -exec \
-    sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
+    sed -i 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' '{}' +
 find . -type f -name '*.py' -exec \
-    sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' '{}' +
+    sed -i 's|#!/usr/bin/python$|#!/usr/bin/python3|' '{}' +
 
 %build
 %add_optflags -fno-strict-aliasing
 export NPY_NUM_BUILD_JOBS=%__nprocs
-%python3_build_debug --hdf5=%hdf5dir
+%python3_build_debug
 
 %install
-%python3_install --hdf5=%hdf5dir --root=%buildroot
+%python3_install --root=%buildroot
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -147,6 +162,9 @@ cp -fR LICENSES %buildroot%_docdir/%name
 %python3_sitelibdir/%oname/tests/
 
 %changelog
+* Mon Apr 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.6.1-alt6
+- Rebuilt with new libhdf5.
+
 * Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt5
 - Fixed FTBFS.
 

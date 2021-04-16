@@ -2,7 +2,7 @@
 
 Name: libminc
 Version: 2.4.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: The core library and API of the MINC toolkit 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires: gcc-c++ cmake 
-BuildRequires: zlib-devel libhdf5-devel libnetcdf_c++4-devel libniftilib-devel
+BuildRequires: zlib-devel libhdf5-devel netcdf-cxx4-devel libniftilib-devel
 
 %define _description \
 The MINC file format is a highly flexible medical image file format \
@@ -63,6 +63,9 @@ This package contains development files for libminc.
 %_includedir/*
 
 %changelog
+* Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.3-alt2
+- Updated build dependencies.
+
 * Mon Feb 18 2019 Slava Aseev <ptrnine@altlinux.org> 2.4.3-alt1
 - Initial build for ALT
 
