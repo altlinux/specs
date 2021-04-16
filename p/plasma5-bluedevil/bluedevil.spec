@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.21.4
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -104,7 +104,18 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 #%_K5srv/kded/*.desktop
 %_K5xdgmime/*.xml
 
+%post
+printf "Updating mime database: "
+if update-mime-database /usr/share/mime/ &>/dev/null; then
+        echo "OK"
+else
+        echo "FAIL"
+fi
+
 %changelog
+* Fri Apr 16 2021 Egor Ignatov <egori@altlinux.org> 1:5.21.4-alt3
+- Update mime database after install
+
 * Mon Apr 12 2021 Egor Ignatov <egori@altlinux.org> 1:5.21.4-alt2
 - Fixes to make sendfile work from KIO
 
