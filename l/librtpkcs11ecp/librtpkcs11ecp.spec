@@ -4,7 +4,7 @@
 %brp_strip_none
 
 Name: librtpkcs11ecp
-Version: 2.0.11.0
+Version: 2.1.1.0
 Release: alt1
 
 Summary: Rutoken PKCS#11 Library
@@ -48,8 +48,11 @@ install -pDm644 rutokenecp.module \
 %config(noreplace) %_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %changelog
+* Tue Apr 13 2021 Anna Khrustova <khab@altlinux.org> 2.1.1.0-alt1
+- Update to 2.1.1.0 all library except ppc64le.
+
 * Thu Jan 21 2021 Anna Khrustova <khab@altlinux.org> 2.0.11.0-alt1
-- Update to 2.9.11.0 all library except ppc64le.
+- Update to 2.0.11.0 all library except ppc64le.
 
 * Tue Nov 10 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.9.0-alt2
 - Add library for ppc64le.
