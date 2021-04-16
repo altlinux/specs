@@ -1,6 +1,6 @@
 Name:           jitsi-meet
 Version:        4109
-Release:        alt0.2
+Release:        alt1
 
 Summary:        Jitsi Meet - WebRTC JavaScript video conferences
 #Group:          Networking/Instant messaging
@@ -20,7 +20,8 @@ BuildRequires(pre): rpm-build-intro >= 1.9.18
 BuildRequires:  npm node-devel
 
 BuildRequires: node-sass >= 4.13.1
-BuildRequires: node-webpack-cli
+# uses obsoleted webpack-cli 3.1.2
+#BuildRequires: node-webpack-cli
 # >= 4.27.1
 
 # requires of the meta package
@@ -76,6 +77,7 @@ Summary: Prosody plugins and configuration for Jitsi Meet
 Group: System/Servers
 #Requires: openssl prosody | prosody-trunk | prosody-0.11
 # The first release of 0.11 branch was 0.11.1
+Requires: jitsi-meet-web = %EVR
 Requires: prosody >= 0.11.1
 
 %description -n jitsi-meet-prosody
@@ -105,7 +107,7 @@ Group: System/Servers
 %setup -a1
 # Makefile uses it
 #ln -sv %_bindir/webpack ./node_modules/.bin/webpack
-#ln -sv %_bindir/node-sass ./node_modules/.bin/node-sass
+ln -sv %_bindir/node-sass ./node_modules/.bin/node-sass
 # sass does not search .css files when importing
 mv -v css/_audio-preview.css css/_audio-preview.scss
 mv -v css/_meter.css css/_meter.scss
@@ -120,8 +122,7 @@ npm run postinstall
 cd -
 make
 
-rm -fv node_modules/{nan,node-sass,webpack,webpack-cli,node-gyp}
-npm prune --production
+#npm prune --production
 
 %install
 mkdir -p %buildroot%_sysconfdir/jitsi/meet
@@ -176,7 +177,7 @@ mv doc/debian doc_debian
 %files -n jitsi-meet-web
 %doc LICENSE
 %doc README.md
-%_datadir/%name
+%_datadir/%name/
 %exclude %_datadir/%name/prosody-plugins
 
 %files -n jitsi-meet-web-config
@@ -195,6 +196,10 @@ mv doc/debian doc_debian
 %endif
 
 %changelog
+* Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 4109-alt1
+- use internal webpack (old version)
+- update node_modules
+
 * Thu May 21 2020 Arseny Maslennikov <arseny@altlinux.org> 4109-alt0.2
 - Packaged the webroot for Jitsi Meet's web app.
 - Packaged Prosody plugins for Jitsi Meet.
