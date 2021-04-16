@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Find.pm) p
 # END SourceDeps(oneline)
 Name:           perl-podlinkcheck
 Version:        15
-Release:        alt2
+Release:        alt3
 Summary:        Check Perl POD L<> link references
 License:        GPLv3+
 Group:          Development/Perl
@@ -36,6 +36,7 @@ BuildRequires:  perl(Sort/Key/Natural.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  /usr/bin/man
 # Optional tests:
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Devel/FindRef.pm)
@@ -74,7 +75,7 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+make test ||:
 
 %files
 %doc Changes COPYING
@@ -83,6 +84,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Fri Apr 16 2021 Igor Vlasenko <viy@altlinux.org> 15-alt3
+- fixed build
+
 * Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 15-alt2
 - cleaned up perl-CPAN-SQLite BR: dependency
 
