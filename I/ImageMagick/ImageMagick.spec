@@ -16,7 +16,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: ImageMagick
@@ -47,6 +47,12 @@ BuildRequires: libheif-devel libraw-devel libraqm-devel libflif-devel libzstd-de
 
 %{?!_with_bootstrap:BuildRequires: libdjvu-devel openexr-devel transfig libopenjpeg2.0-devel}
 %{?_enable_openmp:BuildRequires: libgomp-devel}
+
+%ifarch %e2k
+# FIXME: a hack but --disable openmp would still try -fopenmp
+#        (enabling it would fail otherwise, see commit message)
+BuildRequires: libgomp-devel
+%endif
 
 %if_with rsvg
 BuildRequires: librsvg-devel
@@ -158,6 +164,9 @@ rm PerlMagick/t/composite.t
 rm PerlMagick/t/filter.t
 rm PerlMagick/t/montage.t
 subst 's,2.69,2.68,' configure.ac
+%ifarch %e2k
+sed -i 's,-lomp,-fopenmp,g' configure* # -lomp was wrong in the first place
+%endif
 
 %build
 %autoreconf
@@ -263,6 +272,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Apr 16 2021 Michael Shigorin <mike@altlinux.org> 6.9.12.7-alt2
+- E2K: use -fopenmp instead of -lomp but still --disable-openmp
+
 * Thu Apr 15 2021 Anton Farygin <rider@altlinux.ru> 6.9.12.7-alt1
 - new version 6.9.12.7
 
