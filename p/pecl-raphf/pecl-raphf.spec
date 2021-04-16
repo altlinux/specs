@@ -2,7 +2,7 @@
 
 Name: pecl-%php7_extension
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary:  Resource and persistent handles factory
 
@@ -43,6 +43,9 @@ phpize
 %pecl7_install
 %pecl7_install_doc CREDITS
 
+# load firstly
+subst "s|file_ini=|file_ini=01_|" %buildroot%php7_extconf/%php7_extension/params
+
 %post
 %php7_extension_postin
 
@@ -55,10 +58,12 @@ phpize
 %files devel
 %_includedir/php/*/*/*
 
-
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%php7_version-%php7_release
+
+* Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
+- load firstly
 
 * Thu Apr 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
 - build 2.0.1 for php7
