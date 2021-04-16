@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.3.2
-Release: alt22
+Release: alt23
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap and crtstuff have an exception which
@@ -11,7 +11,7 @@ Summary: GNU Compiler Collection
 License: GPLv3+ and GPLv2+ with exceptions
 Group: Development/C
 Url: http://gcc.gnu.org/
-ExcludeArch: aarch64 ppc64le
+ExclusiveArch: %ix86 x86_64
 
 %ifarch ppc
 # On ppc32, we build a 64-bit compiler with default 32-bit mode.
@@ -164,6 +164,7 @@ Patch719: gcc43-fix-build-with-bison.patch
 Patch720: up-fix-build-with-glibc2.26-ucontext.patch
 Patch721: up-fix-texi2pod-perl.patch
 Patch722: up-fix-build-with-texinfo.patch
+Patch723: up-fix-build-with-texinfo-nbsp.patch
 
 Obsoletes: egcs, gcc3.0, gcc3.1
 Conflicts: glibc-devel < 2.2.6
@@ -791,6 +792,7 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch720 -p1
 %patch721 -p1
 %patch722 -p1
+%patch723 -p2
 
 # Remove -I- gcc option.
 find -type f -name Makefile\* -print0 |
@@ -1545,6 +1547,10 @@ rm %buildroot%_man1dir/g++%psuffix.1* %buildroot%_man1dir/gcc%psuffix.1*
 %endif #with_pdf
 
 %changelog
+* Fri Apr 16 2021 Slava Aseev <ptrnine@altlinux.org> 4.3.2-alt23
+- Fixed build with texinfo 6.7.
+- Enabled build on ix86/x86_64 only
+
 * Fri Oct 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3.2-alt22
 - Fixed build with libtool 2.4.6 (ldv@).
 - %name-locales: removed noarch.
