@@ -1,7 +1,7 @@
 Name: blas
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 Version: 3.9.2
-Release: alt2
+Release: alt3
 Group: System/Libraries
 URL: http://www.netlib.org/blas/
 License: ALT-Public-Domain
@@ -101,6 +101,10 @@ This package contains some supporting documentation.
 %setup
 %patch0 -p1
 %patch1 -p1
+
+# Fix rank mismatch in argument (rank-1 and scalar)
+grep -rl "STEMP,STEMP" | xargs sed -i 's/STEMP,STEMP/STEMP(1),STEMP/'
+
 %make -f debian/rules debian/patch_applied
 sed -i -e 's/\$(shell[[:space:]]\+dpkg.*arch.*)/%_arch/g' debian/rules
 sed -i -e 's/\$(shell[[:space:]]\+dpkg.*arch.*)/%_arch/g' cblas/testing/Makefile
@@ -153,6 +157,9 @@ install -m0644 -t %buildroot%_man3dir man/man*/*.3
 %doc debian/patched-docs/cinterface.pdf
 
 %changelog
+* Fri Apr 16 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.2-alt3
+- Fixed FTBFS.
+
 * Mon Dec 16 2019 Paul Wolneykien <manowar@altlinux.org> 3.9.2-alt2
 - Fixed the License tag: ALT-Public-Domain.
 - Fix: Rqeuire texlive-dist to fix can't find file 'dehypht.tex'
