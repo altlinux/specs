@@ -1,5 +1,5 @@
 Name: notmuch
-Version: 0.28.4
+Version: 0.31.4
 Release: alt1
 
 Summary: new email reading system called notmuch
@@ -10,10 +10,13 @@ Url: http://notmuchmail.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# git clone git://notmuchmail.org/git/notmuch
+# Source-git: git://notmuchmail.org/git/notmuch
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libgmime-devel libtalloc-devel libxapian-devel emacs-devel emacs-nox emacs-gnus zlib-devel python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+BuildRequires: rpm-macros-emacs
+BuildRequires: gcc-c++ libgmime3.0-devel libtalloc-devel libxapian-devel zlib-devel gnupg
+BuildRequires: emacs-devel emacs-nox emacs-gnus
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 
 %description
 Notmuch is not much of an email program. It doesn't receive messages
@@ -98,7 +101,6 @@ install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_bindir/notmuch-emacs-mua
 %_emacs_sitestart_dir/%name.el
 %_emacslispdir/*.el*
-%_emacslispdir/*%{name}*
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -108,6 +110,10 @@ install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_libdir/lib%name.so
 
 %changelog
+* Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.31.4-alt1
+- new version 0.31.4 (with rpmrb script)
+- update BR
+
 * Fri Jun  7 2019 Terechkov Evgenii <evg@altlinux.org> 0.28.4-alt1
 - 0.28.4
 
