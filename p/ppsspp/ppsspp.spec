@@ -7,7 +7,7 @@
 
 Name: ppsspp
 Version: 1.11.3
-Release: alt1
+Release: alt2
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -37,6 +37,7 @@ Source8: %name-qt.desktop
 
 Patch0: %name-alt-ffmpeg.patch
 Patch1: %name-alt-git.patch
+Patch2: %name-alt-ffmpeg-4.4.patch
 
 BuildRequires: cmake
 BuildRequires: pkgconfig(Qt5Multimedia)
@@ -95,6 +96,7 @@ This build using the Qt frontend.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 echo "// This is a generated file.
 
@@ -194,6 +196,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Fri Apr 16 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.3-alt2
+- Fix build with ffmpeg 4.4
+
 * Sat Mar 06 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.3-alt1
 - Version 1.11.3
 
