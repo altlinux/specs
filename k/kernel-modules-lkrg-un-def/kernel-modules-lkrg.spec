@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.8.1+git20210222.abaca2f
+%define module_version	0.9.0
 %define module_release	alt1
 
 %define flavour		un-def
@@ -188,6 +188,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Apr 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.0-alt1
+- Updated to v0.9.0.
 
 * Tue Mar 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210222.abaca2f-alt1
 - Updated to commit abaca2fc7218fb992a2836d005db5c035851b4a6.
