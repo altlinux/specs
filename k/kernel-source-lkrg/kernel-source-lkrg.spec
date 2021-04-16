@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1+git20210222.abaca2f
+%define module_version 0.9.0
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -13,7 +13,6 @@ Url:  https://www.openwall.com/lkrg/
 
 VCS: https://github.com/openwall/lkrg.git
 Source: %module_name-%version.tar
-Patch: %module_name-%version-%release.patch
 
 ExclusiveArch: aarch64 armh %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
@@ -35,9 +34,6 @@ This package contains the LKRG sources.
 
 %prep
 %setup -q -c
-pushd %module_name-%version
-%patch -p1
-popd
 
 %install
 mkdir -p %kernel_srcdir
@@ -54,6 +50,9 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Apr 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.0-alt1
+- Updated to v0.9.0.
+
 * Tue Mar 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20210222.abaca2f-alt1
 - Updated to commit abaca2fc7218fb992a2836d005db5c035851b4a6.
 - Fixed FTBFS with kernel 5.11 on aarch64.
