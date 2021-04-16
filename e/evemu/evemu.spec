@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ python3-devel
+BuildRequires: gcc-c++ python-devel python3-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ python3-devel
 
 Name:		evemu
 Version:	2.7.0
-Release:	alt2_3
+Release:	alt2_4
 Summary:	Event Device Query and Emulation Program
 Group:		Development/Other
 License:	GPLv3+
@@ -48,7 +48,7 @@ dynamically linked with evemu.
 Summary:	Event Device Query and Emulation Program Development Package
 Group:		Development/Other
 Requires:       %{libname} = %{version}-%{release}
-Requires:	python3
+Requires:	python3 python3-tools
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 
@@ -94,6 +94,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Fri Apr 16 2021 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt2_4
+- update by mgaimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_3
 - build w/python3
 
