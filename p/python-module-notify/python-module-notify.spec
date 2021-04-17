@@ -1,5 +1,5 @@
 %define version 0.1.1
-%define release alt6
+%define release alt7
 
 %define oname notify-python
 
@@ -7,17 +7,18 @@
 
 Name: %packagename
 Version: %version
-Release: %release.1
+Release: %release
 Packager: Python Development Team <python@packages.altlinux.org>
 
 Summary: Python bindings for libnotify
-License: LGPL
+License: LGPL-2.1
 Group: System/Libraries
 Url: http://www.galago-project.org/
 Source0: http://www.galago-project.org/files/releases/source/%oname/%oname-%version.tar.bz2
 Patch0: notify-python-0.1.1-fix-GTK-symbols.patch
 # http://pkgs.fedoraproject.org/gitweb/?p=notify-python.git;a=blob_plain;f=libnotify07.patch
 Patch1: libnotify07.patch
+Patch2: notify-python-0.1.1-alt-gcc10.patch
 
 Obsoletes: notify-python
 Provides: notify-python = %version-%release
@@ -32,6 +33,7 @@ Python bindings for libnotify.
 %setup -n %oname-%version
 %patch0 -p1
 %patch1 -p1
+%patch2
 
 %build
 %configure
@@ -46,6 +48,10 @@ Python bindings for libnotify.
 %_pkgconfigdir/notify-python.pc
 
 %changelog
+* Sat Apr 17 2021 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt7
+- fixed build with -fno-common
+- fixed License tag
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.1-alt6.1
 - Rebuild with Python-2.7
 
