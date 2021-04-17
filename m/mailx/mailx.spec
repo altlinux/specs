@@ -1,6 +1,6 @@
 Name: mailx
 Version: 8.1.2
-Release: alt7
+Release: alt8
 
 %def_without lockspool
 
@@ -27,6 +27,7 @@ and sending e-mail messages.  It is often used in shell scripts.
 
 %build
 %{expand:%%add_optflags %(getconf LFS_CFLAGS)}
+%add_optflags -fcommon
 %add_optflags -DMAXLOGNAME=32
 %{?_with_lockspool:%add_optflags -DUSE_LOCKSPOOL}
 %make_build
@@ -45,6 +46,9 @@ bzip2 -9 USD.doc/USD.txt
 %doc USD.doc/*.bz2
 
 %changelog
+* Sat Apr 17 2021 Dmitry V. Levin <ldv@altlinux.org> 8.1.2-alt8
+- %%add_optflags -fcommon.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 8.1.2-alt7
 - Built with LFS support enabled.
 
