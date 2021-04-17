@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: iverilog
-Version: 10.2
+Version: 11.0
 Release: alt1
 Summary: Verilog simulation and synthesis tool
 
@@ -8,6 +10,7 @@ License: %lgpl21only
 Url: http://iverilog.icarus.com
 Source: %name-%version.tar
 
+BuildRequires: /proc
 # Automatically added by buildreq on Sun Jun 17 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libstdc++-devel perl python-base
 BuildRequires: flex gcc-c++ gperf libreadline-devel
@@ -52,9 +55,11 @@ install -m644 examples/* %buildroot%_docdir/%name-%version/examples/
 %_man1dir/*
 %_docdir/%name-%version/
 %exclude %_docdir/%name-%version/cygwin.txt
-%exclude %_docdir/%name-%version/macosx.txt
 %exclude %_docdir/%name-%version/mingw.txt
 
 %changelog
+* Sat Apr 17 2021 Egor Ignatov <egori@altlinux.org> 11.0-alt1
+- New version
+
 * Sat Jun 16 2018 Elvira Khabirova <lineprinter@altlinux.org> 10.2-alt1
 - Initial build
