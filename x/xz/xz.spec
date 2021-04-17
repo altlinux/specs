@@ -1,6 +1,6 @@
 Name: xz
 Version: 5.2.5
-Release: alt1
+Release: alt2
 
 Summary: LZMA/XZ compression programs
 # We don't package scripts to grep, diff, and view compressed files here
@@ -81,12 +81,22 @@ rm src/liblzma/*.lo src/liblzma/liblzma.la
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-generate"
 ./libtool --tag=CC --mode=link gcc %optflags -fprofile-generate -static src/xz/xz-*.o src/liblzma/liblzma.la -o xz.static
 for i in '0 -C none' '2 -C crc32' '6 --arm --lzma2 -C crc64' '6 --x86 --lzma2=lc=4 -C sha256' '7e --format=lzma'; do
-	./src/xz/xz -$i <.tar |./xz.static -d >/dev/null
-	./xz.static -$i <.tar |./src/xz/xz -d >/dev/null
+    # workaround lcc bug with corrupted profile written by several apps concurrently
+	./src/xz/xz -$i <.tar > .tmp
+    cat .tmp | ./xz.static -d >/dev/null
+	./xz.static -$i <.tar > .tmp
+    cat .tmp | ./src/xz/xz -d >/dev/null
 done
-rm src/liblzma/*.lo src/liblzma/liblzma.la
-%make_build -C src/liblzma CFLAGS="$cflags -fprofile-use %{!?_enable_debug:-O3}" liblzma_la-lzma_decoder.lo
-%make_build -C src/liblzma CFLAGS="$cflags -fprofile-use"
+rm src/liblzma/*.lo src/liblzma/liblzma.la .tmp
+%ifarch %e2k
+eprof_helper
+# lcc needs special paths handling, MCST is not willing to fix this
+%define profile_file '=../../eprof.sum'
+%else
+%define profile_file %nil
+%endif
+%make_build -C src/liblzma CFLAGS="$cflags -fprofile-use%profile_file %{!?_enable_debug:-O3}" liblzma_la-lzma_decoder.lo
+%make_build -C src/liblzma CFLAGS="$cflags -fprofile-use%profile_file"
 %make_build
 readelf -n src/liblzma/.libs/*.so
 %endif
@@ -135,6 +145,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Thu Apr 15 2021 Andrew Savchenko <bircoph@altlinux.org> 5.2.5-alt2
+- Fix profiling on e2k by adapting to lcc peculiarities.
+
 * Mon Mar 23 2020 Dmitry V. Levin <ldv@altlinux.org> 5.2.5-alt1
 - 5.2.4 -> v5.2.5-2-gcf1ec551.
 
