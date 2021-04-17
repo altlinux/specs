@@ -12,8 +12,8 @@
 
 Name: ossec-hids
 
-Version: 3.1.0
-Release: alt2
+Version: 3.6.0
+Release: alt1
 
 Summary: OSSEC is a full platform to monitor and control your systems
 License: GPLv2
@@ -29,6 +29,7 @@ Source4: %name.logrotate
 
 Patch1: ossec-hids-2.9.3-alt-fhs-compliance.patch
 Patch2: ossec-hids-2.9.3-alt-email-conf.patch
+Patch3: ossec-hids-3.6.0-fix-build-with-gcc-10.patch
 
 BuildRequires(pre): rpm-build-perl
 
@@ -36,6 +37,7 @@ BuildRequires(pre): rpm-build-perl
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libpq-devel libsasl2-3 libssl-devel python-base
 BuildRequires: libGeoIP-devel libmysqlclient-devel postgresql-devel
 BuildRequires: liblua5-devel zlib-devel libjson-c-devel
+BuildRequires: libpcre2-devel libevent-devel libssl-devel
 
 ExclusiveOS: linux
 %brp_strip_none %ossec_bin_dir/bin/* %ossec_bin_dir/ossec-agent/bin/*
@@ -118,6 +120,7 @@ OSSEC is a full platform to monitor and control your systems. It mixes together 
 
 %patch1 -p1	
 %patch2 -p1
+%patch3 -p1
 
 # fix for FHS
 sed -i 's|/var/ossec|%ossec_default_dir|' src/LOCATION
@@ -146,6 +149,8 @@ CFLAGS="$CFLAGS -Wstack-protector"
 LDFLAGS="-fPIE -pie -Wl,-z,relro"
 SH_LDFLAGS="-fPIE -pie -Wl,-z,relro"
 export CFLAGS LDFLAGS SH_LDFLAGS
+
+export LUA_ENABLE=yes
 
 # Agent
 pushd ./src
@@ -297,6 +302,7 @@ do
 #link %%bindir to ossec binaries for systemd unit convenience
     ln -snf  %ossec_bin_dir/bin/$i         %buildroot%_bindir/$i
 done
+ln -sf %ossec_bin_dir/bin/ossec-server.sh %buildroot%_bindir/ossec-control
 
 install -pD -m 0550 external/lua/src/ossec-lua %buildroot%ossec_bin_dir/bin/
 install -pD -m 0550 external/lua/src/ossec-luac %buildroot%ossec_bin_dir/bin/
@@ -466,7 +472,7 @@ if [ -f %ossec_sysconf_dir/ossec-agent/etc ]; then
 fi
 
 %files
-%doc BUGS CONFIG CONTRIBUTORS INSTALL LICENSE README.md CHANGELOG doc contrib
+%doc BUGS CONFIG CONTRIBUTORS INSTALL LICENSE README.md CHANGELOG.md doc contrib
 %attr(550,root,ossec) %dir %ossec_default_dir
 %attr(550,root,ossec) %dir %ossec_bin_dir/active-response
 %attr(550,root,ossec) %ossec_bin_dir/active-response/bin
@@ -599,6 +605,10 @@ fi
 %_datadir/ossec/contrib/postgresql.schema
 
 %changelog
+* Sat Apr 17 2021 Egor Ignatov <egori@altlinux.org> 3.6.0-alt1
+- new version
+- fix build with gcc10
+
 * Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 3.1.0-alt2
 - E2K: avoid lcc-unsupported option
 
