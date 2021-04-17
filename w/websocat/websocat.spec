@@ -1,5 +1,5 @@
 Name: websocat
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Netcat, curl and socat for WebSockets
@@ -45,6 +45,9 @@ cargo test
 %doc doc.md moreexamples.md
 
 %changelog
+* Sat Apr 17 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt1
+- Updated to v1.8.0.
+
 * Thu Apr 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.0-alt1
 - Initial build for ALT Sisyphus.
 
