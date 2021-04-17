@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -78,6 +78,9 @@ all standard file operations and some extra features like FTP support.
 
 
 %changelog
+* Sat Apr 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
@@ -241,7 +244,7 @@ all standard file operations and some extra features like FTP support.
 * Fri Jun 6 2003 Andrey Semenov <mitrofan@altlinux.ru> 1.0-alt1
 - Realese 1.0
 
-* Thu Apr 20 2003 Andrey Semenov <mitrofan@altlinux.ru> 0.9.12-alt2
+* Sun Apr 20 2003 Andrey Semenov <mitrofan@altlinux.ru> 0.9.12-alt2
 - Add requires to fam and cleanup spec
 
 * Tue Mar 25 2003 Andrey Semenov <mitrofan@altlinux.ru> 0.9.12-alt1
