@@ -1,34 +1,33 @@
-Name:		zaz
-Version:	1.0.0
-Release:	alt3
-Group:		Games/Arcade
-License:	GPLv3
-Source:		http://sunet.dl.sourceforge.net/project/%name/%name-%version.tar.bz2
-Summary:	A puzzle game where the player has to arrange balls in triplets.
-URL:		http://sourceforge.net/projects/zaz
-Packager:	Fr. Br. George <george@altlinux.ru>
-Requires:	%name-data = %version
+Name: zaz
+Version: 1.0.1
+Release: alt1
+Group: Games/Arcade
+License: GPLv3
+Source: %name-%version.tar.gz
+Summary: A puzzle game where the player has to arrange balls in triplets
+Url: http://sourceforge.net/projects/zaz
+Packager: Fr. Br. George <george@altlinux.ru>
+Requires: %name-data = %version
 
 # Automatically added by buildreq on Fri Oct 09 2009
 BuildRequires: ImageMagick-tools gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libtheora-devel libvorbis-devel
 
 BuildRequires: pkgconfig(ftgl) >= 2.1.3
-BuildRequires: gnulib
 
 %description
 Zaz ain't Z*** is a puzzle game where the player has to arrange balls in triplets.
 
 %package data
-Group:		Games/Arcade
-Summary:	Game data files for ZAZ
-BuildArch:	noarch
+Group: Games/Arcade
+Summary: Game data files for ZAZ
+BuildArch: noarch
 
 %description data
 Zaz ain't Z*** is a puzzle game where the player has to arrange balls in triplets.
 This package contains platform-independed data files.
 
 %prep
-%setup -q
+%setup
 
 cat > %name.sh <<@@@
 #!/bin/sh
@@ -45,7 +44,6 @@ exec "\$0.bin"
 @@@
 
 %build
-cp %_datadir/gnulib/build-aux/po/Makefile.in.in po
 sed -i 's/vorbisfile theoraenc/vorbisfile vorbis theoraenc/' configure.ac
 %autoreconf
 %configure
@@ -72,8 +70,10 @@ install -m755 %name.sh %buildroot%_bindir/%name
 %files data
 %_datadir/%name/*
 
-
 %changelog
+* Sat Apr 17 2021 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
+- Autobuild version bump to 1.0.1
+
 * Tue Mar 25 2014 Fr. Br. George <george@altlinux.ru> 1.0.0-alt3
 - Fix DSO underlinkage
 
