@@ -9,8 +9,8 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:		gambas
-Version:	3.15.2
-Release:	alt2
+Version:	3.16.0
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -86,6 +86,7 @@ BuildRequires:  qt5-base-devel
 BuildRequires:  qt5-svg-devel
 BuildRequires:  qt5-webkit-devel
 BuildRequires:  qt5-x11extras-devel
+BuildRequires:  qt5-webengine-devel
 BuildRequires:	xdg-utils
 BuildRequires:	zlib-devel
 
@@ -94,6 +95,10 @@ BuildRequires:  libmodplug-devel
 BuildRequires:  libmpg123-devel
 BuildRequires:  libfluidsynth-devel
 BuildRequires:  libncurses-devel
+BuildRequires:  libzstd-devel
+BuildRequires:  libwebkit2gtk-devel
+BuildRequires:  libpoppler-cpp-devel
+BuildRequires:  libpoppler-glib-devel
 
 Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
@@ -145,6 +150,9 @@ Requires:      %name-gb-gsl = %version-%release
 Requires:      %name-gb-gtk = %version-%release
 Requires:      %name-gb-gtk-opengl = %version-%release
 Requires:      %name-gb-gtk3 = %version-%release
+Requires:      %name-gb-gtk3-wayland = %version-%release
+Requires:      %name-gb-gtk3-webview = %version-%release
+Requires:      %name-gb-gtk3-x11 = %version-%release
 Requires:      %name-gb-gui = %version-%release
 Requires:      %name-gb-httpd = %version-%release
 Requires:      %name-gb-image = %version-%release
@@ -210,6 +218,7 @@ Requires:      %name-gb-form-terminal = %version-%release
 Requires:      %name-gb-term = %version-%release
 Requires:      %name-gb-test = %version-%release
 Requires:      %name-gb-form-print = %version-%release
+Requires:      %name-gb-poppler = %version-%release
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -273,13 +282,17 @@ Requires:       %name-gb-form-editor = %version-%release
 Requires:	%name-gb-form-mdi = %version-%release
 Requires:	%name-gb-form-stock = %version-%release
 Requires:	%name-gb-form-terminal = %version-%release
-Requires:	%name-gb-gtk = %version-%release
+#Requires:	%name-gb-gtk3 = %version-%release
+#Requires:	%name-gb-gtk3-x11 = %version-%release
+#Requires:	%name-gb-gtk3-webview = %version-%release
 Requires:	%name-gb-gui = %version-%release
 Requires:	%name-gb-image = %version-%release
 Requires:	%name-gb-image-effect = %version-%release
 Requires:	%name-gb-markdown = %version-%release
 Requires:	%name-gb-qt5 = %version-%release
+Requires:	%name-gb-qt5-x11 = %version-%release
 Requires:	%name-gb-qt5-webkit = %version-%release
+Requires:	%name-gb-qt5-webview = %version-%release
 Requires:	%name-gb-settings = %version-%release
 Requires:	%name-gb-signal = %version-%release
 Requires:       %name-gb-util = %version-%release
@@ -545,6 +558,33 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-gtk3
 This package includes the Gambas3 GTK3 GUI component.
+
+%package gb-gtk3-wayland
+Summary: Gambas3 component package for gtk3-wayland
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+Requires: %name-gb-gtk3 = %version-%release
+
+%description gb-gtk3-wayland
+%summary.
+
+%package gb-gtk3-webview
+Summary: Gambas3 component package for gtk3-webview
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+Requires: %name-gb-gtk3 = %version-%release
+
+%description gb-gtk3-webview
+%summary.
+
+%package gb-gtk3-x11
+Summary: Gambas3 component package for gtk3-x11
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+Requires: %name-gb-gtk3 = %version-%release
+
+%description gb-gtk3-x11
+%summary.
 
 %if_enabled opengl
 %package gb-gtk-opengl
@@ -1063,6 +1103,33 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 %prov3 gb-qt5-opengl
 
+%package gb-qt5-wayland
+Summary: Gambas3 component package for qt5-wayland
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+Requires: %name-gb-qt5 = %version-%release
+
+%description gb-qt5-wayland
+%summary.
+
+%package gb-qt5-webview
+Summary: Gambas3 component package for qt5-webview
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+Requires: %name-gb-qt5 = %version-%release
+
+%description gb-qt5-webview
+%summary.
+
+%package gb-qt5-x11
+Summary: Gambas3 component package for qt5-x11
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+Requires: %name-gb-qt5 = %version-%release
+
+%description gb-qt5-x11
+%summary.
+
 %description gb-qt5-opengl
 This package contains the Gambas3 qt5-opengl components.
 
@@ -1120,6 +1187,15 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-form-print
 This package contains the Gambas3 component for print form.
+
+%package gb-poppler
+Summary: Gambas3 component package for gb-poppler
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+Requires: %name-gb-image = %version-%release
+
+%description gb-poppler
+%summary.
 
 %prep
 %setup -q
@@ -1245,10 +1321,7 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.eval.info
 %appdir/info/gb.info
 %appdir/info/gb.list
-%dir %appdir/icons/
-%appdir/icons/application-x-gambas3.png
 %_xdgmimedir/packages/application-x-gambas3.xml
-%appdir/icons/application-x-gambasserverpage.png
 %_man1dir/gbr3.1*
 %_man1dir/gbx3.1*
 
@@ -1265,7 +1338,6 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %_bindir/gbs3
 %_bindir/gbs3.gambas
 %_bindir/gbw3
-%appdir/icons/application-x-gambasscript.png
 %_xdgmimedir/packages/application-x-gambasscript.xml
 %_man1dir/gbs3.1*
 %_man1dir/gbw3.1*
@@ -1407,6 +1479,27 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %_libdir/gambas3/gb.gtk3.la
 %appdir/info/gb.gtk3.info
 %appdir/info/gb.gtk3.list
+
+%files gb-gtk3-wayland
+%_libdir/gambas3/gb.gtk3.wayland.component
+%_libdir/gambas3/gb.gtk3.wayland.so*
+%_libdir/gambas3/gb.gtk3.wayland.la
+%appdir/info/gb.gtk3.wayland.info
+%appdir/info/gb.gtk3.wayland.list
+
+%files gb-gtk3-webview
+%_libdir/gambas3/gb.gtk3.webview.component
+%_libdir/gambas3/gb.gtk3.webview.so*
+%_libdir/gambas3/gb.gtk3.webview.la
+%appdir/info/gb.gtk3.webview.info
+%appdir/info/gb.gtk3.webview.list
+
+%files gb-gtk3-x11
+%_libdir/gambas3/gb.gtk3.x11.component
+%_libdir/gambas3/gb.gtk3.x11.so*
+%_libdir/gambas3/gb.gtk3.x11.la
+%appdir/info/gb.gtk3.x11.info
+%appdir/info/gb.gtk3.x11.list
 
 %if_enabled opengl
 %files gb-gtk-opengl
@@ -1672,6 +1765,27 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.qt5.info
 %appdir/info/gb.qt5.list
 
+%files gb-qt5-wayland
+%_libdir/gambas3/gb.qt5.wayland.component
+%_libdir/gambas3/gb.qt5.wayland.so*
+%_libdir/gambas3/gb.qt5.wayland.la
+%appdir/info/gb.qt5.wayland.info
+%appdir/info/gb.qt5.wayland.list
+
+%files gb-qt5-webview
+%_libdir/gambas3/gb.qt5.webview.component
+%_libdir/gambas3/gb.qt5.webview.so*
+%_libdir/gambas3/gb.qt5.webview.la
+%appdir/info/gb.qt5.webview.info
+%appdir/info/gb.qt5.webview.list
+
+%files gb-qt5-x11
+%_libdir/gambas3/gb.qt5.x11.component
+%_libdir/gambas3/gb.qt5.x11.so*
+%_libdir/gambas3/gb.qt5.x11.la
+%appdir/info/gb.qt5.x11.info
+%appdir/info/gb.qt5.x11.list
+
 %files gb-qt5-opengl
 %_libdir/gambas3/gb.qt5.opengl.*
 %appdir/info/gb.qt5.opengl.*
@@ -1703,7 +1817,20 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %_libdir/gambas3/gb.form.print.*
 %appdir/info/gb.form.print.*
 
+%files gb-poppler
+%_libdir/gambas3/gb.poppler.component
+%_libdir/gambas3/gb.poppler.so*
+%_libdir/gambas3/gb.poppler.la
+%appdir/info/gb.poppler.info
+%appdir/info/gb.poppler.list
+
 %changelog
+* Sat Apr 17 2021 Andrey Cherepanov <cas@altlinux.org> 3.16.0-alt1
+- New version.
+- New components: gtk3-wayland, gtk3-webview, gtk3-x11, qt5-wayland,
+  qt5-webview, qt5-x11, poppler.
+- Use only qt5 backend for gambas-ide by default.
+
 * Mon Nov 09 2020 Andrey Cherepanov <cas@altlinux.org> 3.15.2-alt2
 - Build gambas-gb-jit without LLVM.
 - Fix requirements for gambas-ide.
