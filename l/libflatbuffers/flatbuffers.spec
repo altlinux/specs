@@ -1,6 +1,6 @@
 Name: libflatbuffers
 Version: 1.12.0
-Release: alt1
+Release: alt2
 
 Summary: Memory Efficient Serialization Library
 License: APL
@@ -31,9 +31,7 @@ This package contains development part of FlatBuffers.
 %setup
 %add_optflags -Wno-class-memaccess -Wno-stringop-overflow
 %ifarch %e2k
-%add_optflags -std=c++11
-# include/flatbuffers/base.h:250
-sed -i 's,-Werror ,,' CMakeLists.txt
+sed -i 's,-Werror -Wextra -Werror=shadow,,' CMakeLists.txt
 %endif
 
 %build
@@ -64,6 +62,9 @@ make test
 %_libdir/*.so
 
 %changelog
+* Sat Apr 17 2021 Michael Shigorin <mike@altlinux.org> 1.12.0-alt2
+- E2K: workaround ftbfs with (stricter) lcc
+
 * Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.0-alt1
 - 1.12.0 released
 
