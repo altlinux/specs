@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: icestorm
-Version: 0.0.0.618.gf029975
-Release: alt2
+Version: 0.0.0.777.gc495861
+Release: alt1
 
 Summary: Tools for working with Lattice iCE40 bitstream files
 License: ISC
@@ -58,6 +60,9 @@ chmod a+x %buildroot%_bindir/icebox.py
 %_datadir/icebox
 
 %changelog
+* Sat Apr 17 2021 Egor Ignatov <egori@altlinux.org> 0.0.0.777.gc495861-alt1
+- New version
+
 * Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.0.618.gf029975-alt2
 - NMU: Updated build dependencies.
 
