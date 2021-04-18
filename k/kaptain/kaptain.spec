@@ -1,11 +1,12 @@
 Name: kaptain
 Summary: An universal graphical front-end for command line programs
 Version: 0.73
-Release: alt1
+Release: alt2
 Source0: http://sourceforge.net/projects/kaptain/files/kaptain/0.73/kaptain-0.73.tgz
 Url: http://kaptain.sourceforge.net
 Group: Shells
 License: GPLv2
+Patch: kaptain-0.73-bison.patch
 
 # Automatically added by buildreq on Thu Sep 05 2013
 # optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel
@@ -17,9 +18,11 @@ It works on linux/UNIX platforms whereever Qt3 and Qt4 is available.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %qmake_qt4 PREFIX=%prefix
+make parser_yacc.o # Doesn't parallel
 %make_build
 
 %install
@@ -36,6 +39,10 @@ mv %buildroot%_datadir/%name %buildroot%_libexecdir/%name
 %_man1dir/*
 
 %changelog
+* Sun Apr 18 2021 Fr. Br. George <george@altlinux.ru> 0.73-alt2
+- Fix build with bison3.7
+- Fix parallel build race
+
 * Thu Sep 05 2013 Fr. Br. George <george@altlinux.ru> 0.73-alt1
 - Initial build from Mageia
 
