@@ -7,7 +7,7 @@ Name: kernel-image-drm-tip
 %define kernel_source_version	5.11
 %define kernel_base_version	5.12
 %define kernel_sublevel .0
-%define kernel_extra_version	+rc7.20210414
+%define kernel_extra_version	+rc7.20210418
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1
 
@@ -55,8 +55,6 @@ BuildRequires: rsync
 BuildRequires: openssl-devel openssl
 BuildRequires: dwarves >= 1.16
 BuildRequires: banner
-# To import .config
-BuildRequires: kernel-headers-modules-un-def
 # For check
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run}}
 
@@ -116,7 +114,11 @@ KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
 
-cp /usr/src/linux-*-un-def-*/.config .config
+head .config
+# Experimentally reduce debuginfo for this also experimental package,
+# should be enough for stack traces, but not for BPF/BTF.
+scripts/config -e DEBUG_INFO_REDUCED
+
 %make_build olddefconfig
 %make_build bzImage
 %make_build modules
@@ -209,6 +211,6 @@ vm-run 'banner `uname -r`'
 %modules_dir/build
 
 %changelog
-* Wed Apr 14 2021 Kernel Pony <kernelpony@altlinux.org> 5.12.0+rc7.20210414-alt1
-- drm-tip 2021y-04m-14d-11h-14m-54s (8f38b366ca75).
+* Sun Apr 18 2021 Kernel Pony <kernelpony@altlinux.org> 5.12.0+rc7.20210418-alt1
+- drm-tip 2021y-04m-17d-23h-38m-38s (3fc393180390).
 
