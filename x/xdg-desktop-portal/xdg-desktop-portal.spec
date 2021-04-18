@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
@@ -7,7 +7,7 @@
 
 Name: xdg-desktop-portal
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -95,6 +95,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Sun Apr 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt2
+- updated to 1.8.1-3-g89d2197
+
 * Thu Feb 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
