@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 7.0.10
+Version: 8.0.2
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -43,6 +43,8 @@ Seafile is a full-fledged document collaboration platform.
 %setup
 %patch -p2
 %patch2 -p1
+# https://github.com/haiwen/seafile-client/pull/1346
+subst '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLists.txt
 cp %SOURCE1 data/
 
 %build
@@ -63,6 +65,10 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Sun Apr 18 2021 Vitaly Lipatov <lav@altlinux.ru> 8.0.2-alt1
+- new version 8.0.2 (with rpmrb script)
+- fix build with glib2 >= 2.67.3
+
 * Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 7.0.10-alt1
 - new version 7.0.10 (with rpmrb script)
 
