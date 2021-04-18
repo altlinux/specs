@@ -1,25 +1,31 @@
+%def_enable snapshot
 %define ver_major 2.1
 
 Name: rawstudio
 Version: %ver_major
-Release: alt0.5
+Release: alt0.6
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
 Group: Graphics
+Url: http://rawstudio.org/
 
-URL: http://rawstudio.org/
-#VCS: https://github.com/rawstudio/rawstudio
+%if_disabled snapshot
+Source: http://rawstudio.org/files/release/rawstudio-%version.tar.gz
+%else
+#Vcs: https://github.com/rawstudio/rawstudio.git
+Vcs: https://github.com/sergiomb2/rawstudio.git
 Source: %name-%version.tar
-#Source: http://rawstudio.org/files/release/rawstudio-%version.tar.gz
+%endif
 
 Patch1: rawstudio-2.0-fc-lensfun.patch
 Patch2: rawstudio-2.1-alt-lfs.patch
-Patch3: rawstudio-2.1-exiv2-0.27.patch
 
-BuildRequires: gcc-c++ libappstream-glib-devel libGConf-devel libdbus-devel libexiv2-devel libfftw3-devel libflickcurl-devel
-BuildRequires: libgphoto2-devel libgtk+3-devel libjpeg-devel liblcms-devel liblensfun-devel libpng-devel
-BuildRequires: libsqlite3-devel libssl-devel libtiff-devel libosm-gps-map-devel libxml2-devel
+BuildRequires: gcc-c++ libgtk+3-devel libappstream-glib-devel libGConf-devel libdbus-devel
+BuildRequires: libexiv2-devel liblcms2-devel libfftw3-devel libflickcurl-devel
+BuildRequires: libgphoto2-devel libjpeg-devel liblcms-devel liblensfun-devel libpng-devel
+BuildRequires: libsqlite3-devel libssl-devel libtiff-devel libosm-gps-map-devel
+BuildRequires: libxml2-devel libpugixml-devel
 
 %description
 Rawstudio can read and convert RAW-images from most digital cameras.
@@ -28,19 +34,21 @@ Rawstudio can read and convert RAW-images from most digital cameras.
 %setup
 %patch1 -p1
 %patch2
-%patch3 -p1 -b .exiv2
 
 [ ! -d m4 ] && mkdir m4
 
 %build
+%add_optflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
 glib-gettextize -c -f
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+    --enable-experimental \
+    --enable-maintainer-mode
+%nil
 %make_build
 
 %install
 %makeinstall_std
-
 %find_lang %name
 
 %files -f %name.lang
@@ -61,6 +69,11 @@ glib-gettextize -c -f
 %exclude %_pkgconfigdir
 
 %changelog
+* Sun Apr 18 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt0.6
+- updated to v2.0-616-g781ddd9b from https://github.com/sergiomb2/rawstudio.git
+- note: to run rawstudio under wayland need to use following command
+  "GDK_BACKEND=x11 rawstudio"
+
 * Sun Aug 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt0.5
 - rebuilt against libexiv2.so.27
 
