@@ -1,15 +1,15 @@
 %define includedir %_includedir/%name
 
 Name: p7zip
-Version: 17.02
-Release: alt2
+Version: 17.04
+Release: alt1
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
-License: Freely distributable
+License: LGPLv2+ with UnRAR exception
 Group: Archiving/Compression
 
 Url: https://github.com/szcnick/p7zip
-Source: %name-%version.tar.gz
+Source: v%version.tar.gz
 Patch: p7zip-17.02-P7ZIP_HOME_DIR.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
@@ -65,6 +65,8 @@ chmod +x *.sh */*.sh
 
 %ifarch %ix86
 cp -f makefile.linux_x86_asm_gcc_4.X makefile.machine
+sed -i 's/mx=22/mx=10/' check/check.sh
+sed -i 's/mx=22/mx=10/' check/check_7za.sh
 %endif
 %ifarch x86_64
 cp -f makefile.linux_amd64_asm makefile.machine
@@ -109,6 +111,14 @@ xargs -0 install -pm644 -t %buildroot%includedir/
 P7ZIP_HOME_DIR=`pwd`/bin/ make test_7z
 
 %changelog
+* Sun Apr 18 2021 Fr. Br. George <george@altlinux.ru> 17.04-alt1
+- Autobuild version bump to 17.04
+- Reduce i686 memory on tests
+- Closes (#31806, #39640)
+
+* Wed Feb 03 2021 Fr. Br. George <george@altlinux.ru> 17.03-alt1
+- Autobuild version bump to 17.03
+
 * Mon Jul 20 2020 Fr. Br. George <george@altlinux.ru> 17.02-alt2
 - Fix out-of path .so error
 
