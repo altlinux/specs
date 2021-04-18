@@ -1,12 +1,12 @@
 %def_disable    bootstrap
 %define         short_version 0.1.9998
-%define         svn_revision 3178
+%define         svn_revision 3493
 
 ExclusiveArch: %ix86 x86_64
 
 Name:           kBuild
 Version:        %short_version.r%svn_revision
-Release:        alt4
+Release:        alt5
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -16,6 +16,7 @@ Url:            http://svn.netlabs.org/kbuild
 Source:         %name-%version.tar.bz2
 Patch2:         kBuild-0.1.3-escape.patch
 Patch3:         kBuild-alt-compat.patch
+Patch4:         kBuild-use-bison.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires:  cvs flex libacl-devel
@@ -52,6 +53,7 @@ Authors:
 %setup -q
 %patch2 -p1
 %patch3 -p2
+%patch4 -p2
 chmod a+x kBuild/env.sh
 chmod a+x src/sed/configure
 
@@ -87,6 +89,10 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Fri Apr 16 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3493-alt5
+- Update to last unstable release from svn trunk (r3493)
+- Replace using of yacc with bison during building kash
+
 * Mon Dec 03 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt4
 - Disable ubt macros due binary package identity changes
 
