@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.5
+Version:      1.6
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -38,6 +38,42 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/*
 
 %changelog
+* Sun Apr 18 2021 Vladislav Zavjalov <slazav@altlinux.org> 1.6-alt1
+- Drawing maps, tracks, waypoints, srtm-data:
+    Fix projection setting if map boundaries can not be converted.
+    Fix adjusting waypolit lable positions, avoid infinite loops.
+    Fix multi-thread locking in waypoint rendering.
+    Fix default track color (blue).
+    Fix drawing summit labels on tiles (srtm layer).
+    Use srtm_bgcolor if picture is out-of-scale
+    When drawing tiled maps do not fail at empty images, return color 0
+- Geodata, geo-conversions:
+  - Read-only support for Polygon/MultiPolygon features in GeoJSON.
+  - New alias: SU<n>N for soviet grid without zone prefix.
+- Creating map references (mkref):
+  - Allow floating-point arguments in --mag and --dpi options when creating a map.
+  - Add --north option for --mkref=nom.
+  - Set default border in "tiles" and "proj" modes.
+- Vector maps:
+  - Add `clip` drawing feature: set clipping for all following steps
+  - Value of --clip-border setting is not changing then configuring `brd`
+    step, it also affects out-of-scale filling.
+  - Add `fit_patt_size` drawing option.
+  - Always load patterns at original size.
+  - Fix a few problems with pattern rendering.
+  - Support lable scaling (import/export/rendering).
+- Rendering tiles:
+  - Always crop tile range to [0,0,2^z,2^z]
+  - Create sub-directories when creating tiles, allow tile templates with subdirs
+    (thanks to @ioctl).
+  - A few optimizations for creating tile maps (thanks to @ioctl):
+    do not create empty tiles, do not re-assemble old tiles in --tmap_scale mode,
+    a bit faster color quantization.
+- geo_nom, geo_tiles:
+  - ms2nom: -W option: use WGS coordinates in calculations.
+  - Fix problems with crossing lon=+180/-180 
+  - Add --cover option with figure or geo-file argument (thanks to @ioctl).
+
 * Thu Dec 03 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.5-alt1
 - Reading/writing geodata:
   - use filename as a waypoint list name when reading waypolints from gpx or wpt,
