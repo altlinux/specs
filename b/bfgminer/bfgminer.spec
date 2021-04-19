@@ -1,11 +1,13 @@
 Name:           bfgminer
 Version:        5.5.0
-Release:        alt1
+Release:        alt2
 Summary:        A multi-threaded BitCoin miner
 Url:            http://bfgminer.org
 Group:          Office
 License:        GPLv3
-Source:        %name-%version.tar
+Source:         %name-%version.tar
+Patch0:         %name-%version-fno-common.patch
+Patch1:         %name-%version-altivec.patch
 
 BuildPreReq:	udev-rules
 
@@ -29,6 +31,8 @@ to develop applications with %name
 
 %prep
 %setup
+%patch0 -p2
+%patch1 -p2
 
 %build
 cat > version.h << EOF
@@ -39,6 +43,7 @@ cat > version.h << EOF
 #endif
 #define VERSION "%version"
 EOF
+%add_optflags -no-pie
 %autoreconf
 %configure	--prefix=%prefix \
 		--enable-keccak \
@@ -75,6 +80,12 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 19 2021 Slava Aseev <ptrnine@altlinux.org> 5.5.0-alt2
+- fix build due to:
+  + -fno-common in gcc-10 (adapted gentoo patch)
+  + -enable-default-pie (-no-pie added)
+  + altivec related errors on ppc64le
+
 * Tue Sep 18 2018 Alexey Shabalin <shaba@altlinux.org> 5.5.0-alt1
 - 5.5.0
 - build with libmicrohttpd-0.9.59
