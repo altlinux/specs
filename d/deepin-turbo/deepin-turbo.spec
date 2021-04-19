@@ -1,6 +1,6 @@
 Name: deepin-turbo
-Version: 0.0.3
-Release: alt1.git387889d
+Version: 0.0.5
+Release: alt1
 Summary: A daemon that helps to launch applications faster
 License: LGPL-2.1
 Group: Graphical desktop/Other
@@ -10,7 +10,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake qt5-base-devel libdbus-devel libsystemd-devel
+BuildRequires: gcc-c++ cmake qt5-base-devel libdbus-devel libsystemd-devel dtk5-common dtk5-widget-devel
 
 %description
 %summary.
@@ -55,5 +55,8 @@ sed -i 's|/usr/lib/binfmt.d|%_binfmtdir|' src/booster-desktop/CMakeLists.txt
 %_libdir/lib%name.so
 
 %changelog
+* Mon Apr 19 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.5-alt1
+- New version (0.0.5) with rpmgs script.
+
 * Fri Sep 11 2020 Leontiy Volodin <lvol@altlinux.org> 0.0.3-alt1.git387889d
 - Initial build for ALT Sisyphus.
