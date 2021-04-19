@@ -21,7 +21,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.6.1
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -32,6 +32,8 @@ Url: http://www.pytables.org/
 
 # https://github.com/PyTables/PyTables.git
 Source: %name-%version.tar
+
+Patch: pytables-use-lowercase-float64-as-numpy-dtype.patch
 
 Requires: python3-module-%oname = %EVR
 
@@ -98,6 +100,7 @@ This package contains documentation for PyTables.
 
 %prep
 %setup
+%patch -p1
 find . -type f -name '*.py' -exec \
     sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
 find . -type f -name '*.py' -exec \
@@ -144,6 +147,9 @@ cp -fR LICENSES %buildroot%_docdir/%name
 %python3_sitelibdir/%oname/tests/
 
 %changelog
+* Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt5
+- Fixed FTBFS.
+
 * Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.1-alt4
 - NMU: update buildreqs, build tests subpackage
 
