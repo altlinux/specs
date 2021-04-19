@@ -3,7 +3,7 @@
 
 Summary:	Game Music Emulators library
 Name:		libgme
-Version:	0.6.1
+Version:	0.6.3
 Release:	alt1
 Source0:	http://game-music-emu.googlecode.com/files/%{srcname}-%{version}.tbz2
 License:	LGPLv2+
@@ -13,7 +13,7 @@ URL:            https://bitbucket.org/mpyne/game-music-emu/wiki/Home
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
 # Automatically added by buildreq on Sun Sep 26 2010 (-bi)
-BuildRequires: cmake gcc-c++
+BuildRequires: cmake gcc-c++ libSDL2-devel
 
 %description
 This is a collection of video game music file emulators that supports a
@@ -97,6 +97,9 @@ cd ..
 
 
 %changelog
+* Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt1
+- 0.6.3
+
 * Sat Mar 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1
 - NMU: updated to 0.6.1, added player
 
