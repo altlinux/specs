@@ -1,14 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname numpy
-%def_without latex
-%def_without doc
-%def_without tests
 
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.20.1
-Release: alt2
+Release: alt3
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
@@ -20,18 +17,16 @@ Source: %name-%version.tar
 Source2: site.cfg
 Patch0: %oname-%version-Remove-strict-dependency-on-testing-package.patch
 
+# E2K patchset with MCST numbering scheme
+Patch1001: 0001-arch_e2k_define.patch
+Patch1002: 0002-bug92804.patch
+Patch1003: 0003-lcc-1.24-compat.patch
+
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
-BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
-BuildRequires: swig
-BuildRequires: python3-devel
+BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
 BuildRequires: python3-module-Cython
-BuildRequires: python3-module-setuptools
-%if_with doc
-BuildRequires: python3-module-alabaster python3-module-html5lib python3-module-matplotlib-sphinxext python3-module-notebook python3-module-numpydoc python3-module-objects.inv
-BuildRequires: tex(preview.sty)
-%endif
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=18379
 %add_python3_req_skip Scons setuptools distutils nose number code_generators
@@ -118,58 +113,15 @@ create arrays of arbitrary type.
 
 This package contains pickles for NumPy.
 
-%if_with doc
-%package doc
-Summary: Documentation modules of NumPy
-Group: Development/Python3
-Requires: %name = %EVR
-Conflicts: %name < %EVR
-%add_python3_req_skip Numeric
-
-%description doc
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains documentation modules of NumPy.
-
-%package doc-html
-Summary: Documentation in HTML for NumPy
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc-html
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains documentation for NumPy in HTML format.
-
-%package doc-pdf
-Summary: Documentation in PDF for NumPy
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc-pdf
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains documentation for NumPy in PDF format.
-%endif
-
 %prep
 %setup
 %patch0 -p1
+
+%ifarch %e2k
+%patch1001 -p1
+%patch1002 -p1
+%patch1003 -p1
+%endif
 
 install -m644 %SOURCE2 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
@@ -188,14 +140,6 @@ sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
 	%oname/core/npymath.ini.in
 sed -i 's|^includedir.*|includedir=%_includedir/python%_python3_version/%oname|' \
 	%oname/core/npymath.ini.in
-
-%if_with doc
-# Sphinx
-sed -i "s|@TOP@|$PWD|" \
-	doc/source/conf.py
-%prepare_sphinx3 doc
-ln -s ../objects.inv doc/source/objects.inv
-%endif
 
 %build
 INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
@@ -235,73 +179,6 @@ install -d %buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config
 cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 	%buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config/
 
-# docs, tests and addons need build with installed NumPy
-export PYTHONPATH=%buildroot%python3_sitelibdir
-
-# docs
-%if_with doc
-
-%if_with latex
-%make -C doc
-%else
-%make -C doc html
-%endif
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd doc
-install -p -m644 conf.py %buildroot%python3_sitelibdir
-#generate_pickles %buildroot%python_sitelibdir $PWD %oname
-%make html
-%make pickle
-popd
-rm -f %buildroot%python3_sitelibdir/conf.py
-cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
-
-pushd doc/cdoc
-%make
-popd
-
-install -d %buildroot%_docdir/%name/pdf/reference
-install -d %buildroot%_docdir/%name/cdoc
-cp -fR doc/build/html %buildroot%_docdir/%name/
-cp -fR doc/cdoc/build/html %buildroot%_docdir/%name/cdoc/
-%if_with latex
-cp -u $(find doc -name '*.pdf' |egrep -v plot_directive) \
-	%buildroot%_docdir/%name/pdf/
-cp -fR doc/build/plot_directive/reference/generated/*.pdf \
-	%buildroot%_docdir/%name/pdf/reference/
-%endif
-
-%endif
-
-# tests
-
-%if_with tests
-cp %oname/fft/*.c %oname/fft/*.h \
-	%buildroot%python3_sitelibdir/%oname/fft/
-cp %oname/linalg/*.c \
-	%buildroot%python3_sitelibdir/%oname/linalg/
-cp -fR %oname/core/src \
-	%buildroot%python3_sitelibdir/%oname/core/
-cp -fR %oname/random/mtrand \
-	%buildroot%python3_sitelibdir/%oname/random/
-
-export PYTHONPATH=%buildroot%python3_sitelibdir
-
-%if_with doc
-#export PYTHONPATH=%buildroot%python3_sitelibdir
-pushd doc
-for i in newdtype_example; do
-pushd $i
-%python3_build_debug
-%python3_install
-popd
-done
-popd
-
-%endif
-%endif
-
 %files
 %doc LICENSE.txt
 %doc README.md THANKS.txt
@@ -327,21 +204,6 @@ popd
 %exclude %python3_sitelibdir/%oname/core/include
 %exclude %python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/f2py/src
-%if_with tests
-%exclude %python3_sitelibdir/%oname/random/mtrand/*.h
-%exclude %python3_sitelibdir/%oname/random/mtrand/*.c
-%exclude %python3_sitelibdir/%oname/random/mtrand/*.pxi
-%exclude %python3_sitelibdir/%oname/random/mtrand/*.pyx
-%exclude %python3_sitelibdir/%oname/core/src/multiarray/*.h
-%exclude %python3_sitelibdir/%oname/core/src/multiarray/*.c*
-%exclude %python3_sitelibdir/%oname/core/src/npymath
-%exclude %python3_sitelibdir/%oname/core/src/private
-%exclude %python3_sitelibdir/%oname/core/src/*.c*
-%exclude %python3_sitelibdir/%oname/core/src/umath
-%exclude %python3_sitelibdir/%oname/fft/*.c
-%exclude %python3_sitelibdir/%oname/fft/*.h
-%exclude %python3_sitelibdir/%oname/linalg/*.c
-%endif #if_with tests
 %exclude %python3_sitelibdir/%oname/core/lib/libnpymath.a
 %exclude %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 %python3_sitelibdir/%oname-%version-*.egg-info
@@ -361,34 +223,9 @@ popd
 %python3_sitelibdir/%oname/f2py/tests/src/array_from_pyobj
 %python3_sitelibdir/%oname/lib/recfunctions.py
 %python3_sitelibdir/%oname/lib/__pycache__/recfunctions.*
-%if_with tests
-%python3_sitelibdir/%oname/f2py/f2py_testing.py
-%python3_sitelibdir/%oname/f2py/__pycache__/f2py_testing.*
-%python3_sitelibdir/%oname/ma/timer_comparison.py
-%python3_sitelibdir/%oname/ma/__pycache__/timer_comparison.*
-%python3_sitelibdir/f2py_ext*
-%python3_sitelibdir/gen_ext*
-%python3_sitelibdir/swig_ext*
-%python3_sitelibdir/testnumpydistutils*
-%endif
 
 %files -n lib%oname-py3-devel
 %_includedir/python%_python3_version/%oname
-%if_with tests
-%python3_sitelibdir/%oname/random/mtrand/*.h
-%python3_sitelibdir/%oname/random/mtrand/*.c
-%python3_sitelibdir/%oname/random/mtrand/*.pxi
-%python3_sitelibdir/%oname/random/mtrand/*.pyx
-%python3_sitelibdir/%oname/core/src/multiarray/*.h
-%python3_sitelibdir/%oname/core/src/multiarray/*.c*
-%python3_sitelibdir/%oname/fft/*.c
-%python3_sitelibdir/%oname/fft/*.h
-%python3_sitelibdir/%oname/core/src/npymath
-%python3_sitelibdir/%oname/core/src/private
-%python3_sitelibdir/%oname/core/src/*.c*
-%python3_sitelibdir/%oname/core/src/umath
-%python3_sitelibdir/%oname/linalg/*.c
-%endif
 %python3_sitelibdir/%oname/core/include
 %python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/distutils/tests
@@ -397,27 +234,11 @@ popd
 %python3_sitelibdir/%oname/core/lib/libnpymath.a
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
-%if_with doc
-%files doc
-%python3_sitelibdir/%oname/doc
-
-%files doc-html
-%dir %_docdir/%name
-%_docdir/%name/html
-%_docdir/%name/cdoc
-
-%if_with latex
-%files doc-pdf
-%dir %_docdir/%name
-%_docdir/%name/pdf
-%endif
-
-%files pickles
-%dir %python_sitelibdir/%oname
-%python3_sitelibdir/%oname/pickle
-%endif
-
 %changelog
+* Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.20.1-alt3
+- Add %%e2k support (Closes: #36684).
+- Removed unused subpackages and knobs.
+
 * Fri Mar 19 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.20.1-alt2
 - site.cfg: Don't use openblas by default on mipsel.
 
