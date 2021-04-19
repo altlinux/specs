@@ -1,7 +1,7 @@
 %define pear_name Net_SMTP
 
 Name: pear-Net_SMTP
-Version: 1.9.2
+Version: 1.10.0
 Release: alt1
 
 Summary: An implementation of the SMTP protocol
@@ -48,6 +48,9 @@ class.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Apr 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
+- new version 1.10.0 (with rpmrb script)
+
 * Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.2-alt1
 - new version 1.9.2 (with rpmrb script)
 
