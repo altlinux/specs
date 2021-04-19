@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.1.2
+Version: 6.0.1
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -14,7 +14,7 @@ Url: https://pypi.org/project/setuptools-scm/
 
 # https://github.com/pypa/setuptools_scm.git
 Source: %name-%version.tar
-Patch1: %oname-2.1.0-alt-tests.patch
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -23,6 +23,8 @@ BuildRequires: git-core
 BuildRequires: mercurial
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_provides setuptools-scm
@@ -43,8 +45,6 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %setup
 %patch1 -p1
 
-rm ./src/setuptools_scm/win_py31_compat.py
-
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
@@ -58,25 +58,20 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TESTS_NO_NETWORK=1
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOX_TESTENV_PASSENV='TESTS_NO_NETWORK'
 export TOXENV=py%{python_version_nodots python3}-test
-tox.py3 --sitepackages -r -vv
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sun Apr 18 2021 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
+- 4.1.2 -> 6.0.1.
+
 * Mon Oct 05 2020 Stanislav Levin <slev@altlinux.org> 4.1.2-alt1
 - 3.5.0 -> 4.1.2.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Pytest support for asyncio
@@ -20,9 +20,10 @@ BuildRequires(pre): rpm-build-python3
 %py3_provides %oname
 
 %if_with check
-BuildRequires: python3(async_generator)
 BuildRequires: python3(hypothesis)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -45,13 +46,16 @@ python 3.5+.
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 19 2021 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
+- 0.14.0 -> 0.15.0.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 0.14.0-alt1
 - 0.10.0 -> 0.14.0.
 
