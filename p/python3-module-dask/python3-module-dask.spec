@@ -2,7 +2,7 @@
 %define oname dask
 
 Name: python3-module-dask
-Version: 2021.3.0
+Version: 2021.4.0
 Release: alt1
 
 License: BSD
@@ -48,6 +48,9 @@ Dask is a flexible parallel computing library for analytics.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2021.4.0-alt1
+- new version 2021.4.0 (with rpmrb script)
+
 * Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2021.3.0-alt1
 - new version 2021.3.0 (with rpmrb script)
 
