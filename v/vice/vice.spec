@@ -1,6 +1,6 @@
 Name: vice
 Version: 3.4
-Release: alt2
+Release: alt3
 
 Summary: Versatile Commodore Emulator
 Summary(pl.UTF-8): Uniwersalny emulator Commodore
@@ -66,7 +66,7 @@ pasował do tej linii), CBM-II (C610) oraz Plus4.
 
 %build
 touch ABOUT-NLS config.rpath
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -fcommon
 %autoreconf
 %configure \
 	--enable-sdlui2 \
@@ -107,6 +107,9 @@ tar xjf %SOURCE13 -C %buildroot%_iconsdir/hicolor/16x16/apps
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 3.4-alt3
+- Fixed FTBFS with -fcommon.
+
 * Tue May 12 2020 Anton Midyukov <antohami@altlinux.org> 3.4-alt2
 - Rebuild with xa
 
