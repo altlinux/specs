@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.2.0
+Version: 2.3.1
 Release: alt1
 
 Summary: A simple program which checks Python source files for errors
@@ -66,6 +66,9 @@ tox.py3 --sitepackages -vvr
 
 
 %changelog
+* Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
+- 2.2.0 -> 2.3.1.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.1 -> 2.2.0.
 
