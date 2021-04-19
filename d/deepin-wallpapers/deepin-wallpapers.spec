@@ -1,6 +1,6 @@
 Name: deepin-wallpapers
-Version: 1.7.8
-Release: alt2
+Version: 1.7.10
+Release: alt1
 Summary: Deepin Wallpapers provides wallpapers of DDE
 License: GPL-3.0+
 Group: Graphics
@@ -58,13 +58,16 @@ cp -r image-blur %buildroot%_cachedir/
 
 %post
 if [ $1 -ge 1 ]; then
-  %_sbindir/update-alternatives --install %_datadir/backgrounds/default_background.jpg \
-    deepin-default-background %_datadir/wallpapers/deepin/desktop.jpg 50
+    mv /usr/share/wallpapers/deepin/desktop.jpg /usr/share/wallpapers/deepin/abc-124.jpg
+    mv /usr/share/wallpapers/deepin/Deepin-Technology-Brand-Logo.jpg /usr/share/wallpapers/deepin/desktop.jpg
+    mkdir -p /usr/share/backgrounds/
+    %_sbindir/update-alternatives --install /usr/share/backgrounds/default_background.jpg \
+    deepin-default-background /usr/share/wallpapers/deepin/desktop.jpg 50
 fi
 
 %postun
 if [ $1 -eq 0 ]; then
-  %_sbindir/update-alternatives --remove deepin-default-background %_datadir/wallpapers/deepin/desktop.jpg
+  %_sbindir/update-alternatives --remove deepin-default-background %_datadir/wallpapers/deepin/desktop.*
 fi
 
 %files
@@ -77,6 +80,9 @@ fi
 %_cachedir/image-blur/*.jpg
 
 %changelog
+* Mon Apr 19 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.10-alt1
+- New version (1.7.10) with rpmgs script.
+
 * Thu Mar 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.8-alt2
 - Fixed background.
 
