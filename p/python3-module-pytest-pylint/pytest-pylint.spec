@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.17.0
-Release: alt2
+Version: 0.18.0
+Release: alt1
 
 Summary: pytest plugin to check source code with pylint
 License: MIT
@@ -56,6 +56,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_pylint-*.egg-info/
 
 %changelog
+* Sun Apr 18 2021 Stanislav Levin <slev@altlinux.org> 0.18.0-alt1
+- 0.17.0 -> 0.18.0.
+
 * Wed Aug 05 2020 Stanislav Levin <slev@altlinux.org> 0.17.0-alt2
 - Fixed FTBFS(new pytest 6.0.1).
 

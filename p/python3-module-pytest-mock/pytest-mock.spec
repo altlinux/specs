@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.3.1
+Version: 3.5.1
 Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
@@ -63,6 +63,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_mock-*.egg-info/
 
 %changelog
+* Mon Apr 19 2021 Stanislav Levin <slev@altlinux.org> 3.5.1-alt1
+- 3.3.1 -> 3.5.1.
+
 * Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 1.10.4 -> 3.3.1.
 

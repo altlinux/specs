@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.12.4
-Release: alt1
+Release: alt2
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
@@ -84,6 +84,9 @@ tox.py3 --sitepackages --no-deps -vvr
 
 
 %changelog
+* Fri Apr 16 2021 Stanislav Levin <slev@altlinux.org> 3.12.4-alt2
+- Applied upstream fix for new Pygments.
+
 * Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 3.12.4-alt1
 - 3.12.1 -> 3.12.4.
 

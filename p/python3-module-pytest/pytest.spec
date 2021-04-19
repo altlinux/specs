@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.1.1
+Version: 6.2.3
 Release: alt1
 
 Summary: Python test framework
@@ -36,7 +36,6 @@ BuildRequires: python3(nose)
 BuildRequires: python3(numpy)
 BuildRequires: python3(py)
 BuildRequires: python3(packaging)
-BuildRequires: python3(pathlib2)
 BuildRequires: python3(pexpect)
 BuildRequires: python3(pluggy)
 BuildRequires: python3(requests)
@@ -69,19 +68,6 @@ scales to support complex functional testing for applications and libraries.
 %prep
 %setup
 %patch -p1
-
-# adjust timeouts for testing on aarch64/beehive
-for ptrn in 'child\.expect(.*)' 'child\.expect_exact([[:space:]]*$' 'testdir\.spawn_pytest([[:space:]]*$'
-do
-    grep -qs "$ptrn" testing/test_{debugging,terminal,unittest}.py || exit 1
-done
-
-sed -i -e '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g;' \
--e '/child\.expect_exact([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1timeout=60,/g}' \
--e '/testdir\.spawn_pytest(.*)/s/)[[:space:]]*$/, expect_timeout=30)/g;' \
--e '/testdir\.spawn_pytest([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1expect_timeout=30,/g}' \
--e 's/\([[:space:]]*\)child\.sendline(\x22p .*)$/&\n\1import time; time.sleep(child.delaybeforesend)/g' \
-testing/test_{debugging,terminal,unittest}.py
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -122,6 +108,9 @@ tox.py3 --sitepackages -vvr
 %_bindir/pytest-3
 
 %changelog
+* Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 6.2.3-alt1
+- 6.1.1 -> 6.2.3.
+
 * Mon Oct 12 2020 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
 - 6.0.1 -> 6.1.1.
 

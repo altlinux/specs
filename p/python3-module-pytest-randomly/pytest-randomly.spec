@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.5.0
+Version: 3.7.0
 Release: alt1
 
 Summary: Pytest plugin to randomly order tests and control random.seed
@@ -71,6 +71,9 @@ tox.py3 --sitepackages --console-scripts -vvr -- -vra
 %python3_sitelibdir/pytest_randomly-*.egg-info/
 
 %changelog
+* Mon Apr 19 2021 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
+- 3.5.0 -> 3.7.0.
+
 * Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
 - 3.4.1 -> 3.5.0.
 

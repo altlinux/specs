@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.41.2
+Version: 6.9.2
 Release: alt1
 
 Summary: A library for property based testing
@@ -16,7 +16,6 @@ Url: https://pypi.org/project/hypothesis/
 
 BuildArch: noarch
 
-# Source-url: %__pypi_url hypothesis
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -28,6 +27,7 @@ BuildRequires: python3(attr)
 BuildRequires: python3(black)
 BuildRequires: python3(dateutil)
 BuildRequires: python3(fakeredis)
+BuildRequires: python3(libcst)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pandas)
 BuildRequires: python3(pytz)
@@ -36,6 +36,7 @@ BuildRequires: python3(redis)
 BuildRequires: python3(sortedcontainers)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
 %endif
 
 %description
@@ -55,22 +56,10 @@ in your code with less work.
 %python3_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-whitelist_externals =
-    /bin/cp
-    /bin/sed
-commands_pre =
-    /bin/cp %_bindir/py.test3 {envbindir}/py.test
-    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
-commands =
-    {envbindir}/py.test {posargs:-vra}
-EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -- --numprocesses auto tests
+export TOXENV=py%{python_version_nodots python3}-custom
+tox.py3 --sitepackages -vvr --no-deps -- --numprocesses auto tests
 
 %files
 %doc LICENSE.txt README.rst
@@ -79,6 +68,9 @@ tox.py3 --sitepackages -vvr -- --numprocesses auto tests
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 16 2021 Stanislav Levin <slev@altlinux.org> 6.9.2-alt1
+- 5.41.2 -> 6.9.2.
+
 * Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 5.41.2-alt1
 - new version 5.41.2
 

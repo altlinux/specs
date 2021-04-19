@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname Pygments
 
-%def_with docs
 %def_with check
 
 Name: python3-module-Pygments
-Version: 2.6.1
-Release: alt2
+Version: 2.8.1
+Release: alt1
 
 Summary: Pygments is a syntax highlighting package written in Python
 
@@ -18,22 +17,15 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: autobuild.watch
-
-BuildRequires: time
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx3
-BuildPreReq: python3-module-docutils
-BuildPreReq: python3-module-alabaster
-BuildPreReq: python3-module-html5lib
-BuildPreReq: python3-module-objects.inv
-%endif
 
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 %endif
 
 %description
@@ -46,25 +38,9 @@ to prettify source code. Highlights are:
  * a number of output formats, presently HTML, LaTeX, RTF, SVG and ANSI sequences
  * it is usable as a command-line tool and as a library
 
-%if_with docs
-%package doc
-Summary: Documentation for %name
-Group: Development/Documentation
-BuildArch: noarch
-%description doc
-This package contains documentation for %name.
-
-%package pickles
-Summary: Pickles for %name
-Group: Development/Python3
-BuildArch: noarch
-
-%description pickles
-This package contains pickles for %name.
-%endif
-
 %prep
 %setup
+%autopatch -p1
 
 # drop post release tags
 sed -i \
@@ -73,45 +49,18 @@ sed -i \
 setup.cfg
 
 %build
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv doc/
-%endif
-
 %python3_build
-%if_with docs
-export PYTHONPATH=$(pwd)/build/lib
-%make SPHINXBUILD='py3_sphinx-build' -C doc pickle
-%make SPHINXBUILD='py3_sphinx-build' -C doc html
-%endif
 
 %install
 %python3_install
 mv %buildroot%_bindir/pygmentize %buildroot%_bindir/pygmentize3
 ln -s pygmentize3 %buildroot%_bindir/pygmentize.py3
 
-%if_with docs
-install -d %buildroot%_docdir/%name
-cp -fR doc/_build/html %buildroot%_docdir/%name/
-cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/pygments/
-%endif
-
 %check
-ptrn='pytest-cov'
-{ grep -s -l "$ptrn" tox.ini | xargs sed -i -e "/$ptrn/d"; } || exit 1
-# use tox's pytest
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py3: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vv -r
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc LICENSE
@@ -119,18 +68,11 @@ tox.py3 --sitepackages -vv -r
 %_bindir/pygmentize.py3
 %python3_sitelibdir/pygments/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%if_with docs
-%exclude %python3_sitelibdir/*/pickle
-
-%files doc
-%doc %dir %_docdir/python3-module-%oname
-%doc %_docdir/python3-module-%oname/html
-
-%files pickles
-%python3_sitelibdir/*/pickle
-%endif
 
 %changelog
+* Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1
+- 2.6.1 -> 2.8.1.
+
 * Mon Dec 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1-alt2
 - Fixed documentation generation on p9.
 

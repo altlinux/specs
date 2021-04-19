@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.10.1
-Release: alt2
+Version: 2.11.1
+Release: alt1
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
@@ -25,6 +25,8 @@ BuildRequires: python3(fields)
 BuildRequires: python3(process_tests)
 BuildRequires: python3(pytest-xdist)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -51,26 +53,11 @@ sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 %python3_install
 
 %check
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
--e '/^setenv[ ]*=$/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
-
-grep -qs "'hunter',$" setup.py || exit 1
-sed -i '/\x27hunter\x27,$/d' setup.py
-# don't use a specific version
-sed -i 's/==/>=/g' tox.ini setup.py
-
 export PIP_NO_INDEX=YES
 export PYTHONPATH_PY3=%_libdir/python3/site-packages
 export TOX_TESTENV_PASSENV='PYTHONPATH_PY3'
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -79,6 +66,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Sun Apr 18 2021 Stanislav Levin <slev@altlinux.org> 2.11.1-alt1
+- 2.10.1 -> 2.11.1.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 2.10.1-alt2
 - Drop python2 support.
 

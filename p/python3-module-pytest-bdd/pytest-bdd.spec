@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: BDD library for the py.test runner
@@ -26,6 +26,8 @@ BuildRequires: python3(mako)
 BuildRequires: python3(parse)
 BuildRequires: python3(parse_type)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 %endif
 
 
@@ -59,7 +61,7 @@ the Gherkin imperative declarations.
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc CHANGES.rst README.rst
@@ -69,6 +71,9 @@ tox.py3 --sitepackages -vvr
 
 
 %changelog
+* Sun Apr 18 2021 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
+- 4.0.1 -> 4.0.2.
+
 * Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
 - 3.2.1 -> 4.0.1.
 
