@@ -2,7 +2,7 @@
 
 Name: hping3
 Version: 0.0.%snap
-Release: alt6
+Release: alt7
 
 Summary: TCP/IP stack auditing and much more
 License: GPLv2
@@ -14,6 +14,7 @@ Patch1: hping3-20051105-cflags.patch
 Patch2: hping3-bytesex.patch
 Patch3: hping3-20051105-pcap.patch
 Patch4: hping3-20051105-willalwaysoverflow.patch
+Patch5: hping3-20051105-fix-build-with-gcc10.patch
 Packager: Victor Forsyuk <force@altlinux.org>
 
 # Automatically added by buildreq on Sat Jan 10 2009
@@ -32,6 +33,7 @@ Since version 3, hping implements scripting capabilties.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 # Teach configure to recognize tcl 8.5 :)
@@ -52,6 +54,10 @@ install -pD -m644 docs/hping3.8 %buildroot%_man8dir/hping3.8
 %doc docs/A* docs/HPING2-HOWTO.txt docs/[M-Z]* docs/hping2rc.example
 
 %changelog
+* Mon Apr 19 2021 Egor Ignatov <egori@altlinux.org> 0.0.20051105-alt7
+- Fix build with gcc 10 (-fno-common)
+- Fix arm build
+
 * Mon Sep 23 2019 Michael Shigorin <mike@altlinux.org> 0.0.20051105-alt6
 - E2K: fix ftbfs
 
