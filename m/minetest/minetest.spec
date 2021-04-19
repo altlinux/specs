@@ -3,8 +3,8 @@
 %global gitname celeron55
 
 Name: minetest
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -165,6 +165,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Mon Apr 19 2021 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
+- New version.
+
 * Tue Apr 06 2021 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt2
 - Add missing devel packages (ALT #39398).
 - Fix License tag.
