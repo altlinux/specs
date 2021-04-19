@@ -1,8 +1,8 @@
 # TODO: see https://github.com/imrehg/xoscope
 
 Name: xoscope
-Version: 2.2
-Release: alt3
+Version: 2.3
+Release: alt1
 
 Summary: xoscope: digital oscilloscope
 
@@ -15,16 +15,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://prdownloads.sourceforge.net/project/xoscope/xoscope/%version/xoscope-%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: %name-gcc10.patch
-
-BuildRequires: libICE-devel libalsa-devel libcomedi-devel libfftw3-devel libgtkdatabox-devel
+BuildRequires: libICE-devel libalsa-devel libcomedi-devel libfftw3-devel libgtkdatabox3-devel
 
 %description
 xoscope: digital oscilloscope
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %configure
@@ -43,6 +40,10 @@ xoscope: digital oscilloscope
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt1
+- new version 2.3 (with rpmrb script)
+- migrate to gtkdatabox 1.0 and gtk3
+
 * Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt3
 - fix build with gcc10
 
