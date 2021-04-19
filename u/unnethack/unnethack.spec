@@ -1,6 +1,6 @@
 Name: unnethack
 Version: 5.3.2
-Release: alt1
+Release: alt2
 Summary: An enhancement to the dungeon exploration game NetHack
 Group: Games/Adventure
 Url: https://unnethack.wordpress.com
@@ -24,7 +24,9 @@ than vanilla NetHack.
 
 %build
 LIBS=-lgsl %configure --enable-curses-graphics
+# Parallel build races
 make include/autoconf_paths.h
+make -C src ../include/date.h
 %make_build
 #make
 make -C util recover lev_comp dgn_comp
@@ -35,9 +37,9 @@ mv %buildroot%_datadir/%name/recover %buildroot%_bindir/%name.recover && \
   ln -rs %_bindir/%name.recover %buildroot%_datadir/%name/recover
 mv %buildroot%_datadir/%name/%name %buildroot%_bindir/%name.bin && \
   ln -rs %_bindir/%name.bin %buildroot%_datadir/%name/%name
-for u in dlb dgn_comp lev_comp recover tilemap; do
-  install util/$u %_bindir/%name.$u &&
-  ln -rs %_bindir/%name.$u %buildroot%_datadir/%name/$u
+for u in dlb dgn_comp lev_comp tilemap; do
+  install util/$u %buildroot%_bindir/%name.$u &&
+  ln -rs %buildroot%_bindir/%name.$u %buildroot%_datadir/%name/$u
 done
 
 %files
@@ -51,6 +53,9 @@ done
 %attr(664,root,games) %_localstatedir/%name/[^sbl]*
 
 %changelog
+* Mon Apr 19 2021 Fr. Br. George <george@altlinux.ru> 5.3.2-alt2
+- Fix install bug
+
 * Fri Apr 16 2021 Fr. Br. George <george@altlinux.ru> 5.3.2-alt1
 - Autobuild version bump to 5.3.2
 
