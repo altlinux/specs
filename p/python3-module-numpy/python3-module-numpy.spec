@@ -4,8 +4,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.20.1
-Release: alt3
+Version: 1.20.2
+Release: alt1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
@@ -235,6 +235,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.20.2-alt1
+- Automatically updated to 1.20.2.
+
 * Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.20.1-alt3
 - Add %%e2k support (Closes: #36684).
 - Removed unused subpackages and knobs.
