@@ -1,6 +1,6 @@
 Name: paprefs
-Version: 0.9.10
-Release: alt2
+Version: 1.1
+Release: alt1
 
 Summary: PulseAudio Preferences
 License: GPL
@@ -9,15 +9,14 @@ Group: Sound
 Url: http://freedesktop.org/software/pulseaudio/%name
 Source0: http://freedesktop.org/software/pulseaudio/%name/%name-%version.tar.xz
 Source1: %name.desktop
-Patch0: paprefs-0.9.6-alt-desktop-file.patch
-Patch1: %name-%version-modules-path.patch
-Patch2: %name-%version-module-combine-sink.patch
+Patch2: %name-0.9.10-module-combine-sink.patch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Requires: pulseaudio >= 0.9.5
 
-# Automatically added by buildreq on Tue Dec 02 2008
-BuildRequires: gcc-c++ intltool libgconfmm2-devel libglademm-devel lynx libpulseaudio-devel libdbus-glib-devel
+# Automatically added by buildreq on Mon Apr 19 2021
+BuildRequires: gcc-c++ libgtkmm3-devel libpulseaudio-devel
+BuildRequires: meson ninja-build
 
 %description
 PulseAudio Preferences (paprefs) is a simple GTK based configuration dialog for
@@ -29,23 +28,18 @@ PulseAudio 0.9.5 this modules is loaded by default.)
 
 %prep
 %setup
-%patch0 -p1
-
-touch -r configure.ac configure.ac.stamp
-%patch1 -p1 -b .modules-path
-touch -r configure.ac.stamp configure.ac
-%patch2 -p1 -b .module-combine-sink
+#patch2 -p1 -b .module-combine-sink
 
 %build
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %find_lang %name
 
@@ -55,6 +49,10 @@ install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %_datadir/paprefs/paprefs.glade
 
 %changelog
+* Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- NMU: new version 1.1 (with rpmrb script)
+- switch to meson and gtkmm3
+
 * Sun Jun 30 2019 Michael Shigorin <mike@altlinux.org> 0.9.10-alt2
 - E2K: explicit -std=c++11
 - minor spec cleanup
