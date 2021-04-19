@@ -2,7 +2,7 @@
 
 Name:       hedgewars
 Version:    1.0.0
-Release:    alt2
+Release:    alt3
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -110,6 +110,7 @@ This package contains all the data files for %name.
 rm -r misc/liblua
 
 %build
+%add_optflags -fcommon
 %remove_optflags -frecord-gcc-switches
 %cmake_insource -DPHYSFS_SYSTEM=1 \
 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir" \
@@ -152,6 +153,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt3
+- Fixed FTBFS on %%ix86.
+
 * Wed Aug 26 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt2
 - Fixed FTBFS.
 
