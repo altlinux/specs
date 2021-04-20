@@ -1,7 +1,7 @@
 %define oname iceB
 
 Name:    iceb
-Version: 19.15
+Version: 20.0
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -62,6 +62,9 @@ rm -rf %buildroot/lib/terminfo
 %_libexecdir/cups/filter/iceb_ps
 
 %changelog
+* Tue Apr 20 2021 Cronbuild Service <cronbuild@altlinux.org> 20.0-alt1
+- new version 20.0
+
 * Wed Nov 18 2020 Cronbuild Service <cronbuild@altlinux.org> 19.15-alt1
 - new version 19.15
 
