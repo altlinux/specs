@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 40
-%define beta .alpha
+%define beta .rc
 %define xdg_name org.gnome.Geary
 # see meson_options.txt
 %define profile release
@@ -13,7 +13,7 @@
 
 Name: geary
 Version: %ver_major
-Release: alt0.1%beta
+Release: alt0.8%beta
 
 Summary: Email client
 License: LGPL-2.1-or-later
@@ -34,6 +34,8 @@ Source: %name-%version.tar
 %define webkit_ver 2.30
 %define gmime_ver 3.2.4
 %define peas_ver 1.24
+%define icu_ver 60
+%define handy_ver 1.2.1
 
 Requires: dconf gnome-keyring gcr
 
@@ -53,7 +55,8 @@ BuildRequires: libsoup-gir-devel libwebkit2gtk-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
 BuildRequires: libfolks-devel  libfolks-vala libenchant2-devel
 BuildRequires: libytnef-devel libdbus-devel libgspell-devel
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(icu-uc) >= %icu_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libgsound-devel libstemmer-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_valadoc:BuildRequires: valadoc}
@@ -96,6 +99,9 @@ Geary's development.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
+- 40
+
 * Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.1.alpha
 - 40.alpha
 
