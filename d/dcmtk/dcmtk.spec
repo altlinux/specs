@@ -1,8 +1,8 @@
 %add_optflags %optflags_shared
-%define soname 15
+%define soname 16
 
 Name: dcmtk
-Version: 3.6.5
+Version: 3.6.6
 Release: alt1
 Summary: DCMTK - DICOM Toolkit
 License: MIT
@@ -83,6 +83,9 @@ Headers for building software that uses %name.
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Tue Apr 20 2021 Anton Farygin <rider@altlinux.ru> 3.6.6-alt1
+- 3.6.6
+
 * Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 3.6.5-alt1
 - 3.6.5
 
