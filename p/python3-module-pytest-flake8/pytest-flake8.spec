@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 Summary: pytest plugin for efficiently checking PEP8 compliance
 License: BSD
@@ -17,8 +17,10 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3-module-flake8
-BuildRequires: python3-module-tox
+BuildRequires: python3(flake8)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -33,15 +35,9 @@ pytest plugin for efficiently checking PEP8 compliance
 %python3_install
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc LICENSE CHANGELOG README.rst
@@ -50,6 +46,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Tue Apr 20 2021 Stanislav Levin <slev@altlinux.org> 1.0.7-alt1
+- 1.0.6 -> 1.0.7.
+
 * Wed Aug 05 2020 Stanislav Levin <slev@altlinux.org> 1.0.6-alt1
 - 1.0.4 -> 1.0.6.
 
