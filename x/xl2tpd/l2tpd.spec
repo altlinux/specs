@@ -1,16 +1,16 @@
 Name: xl2tpd
-Version: 1.3.15
+Version: 1.3.16
 Release: alt1
 
 Summary: Layer 2 Tunnelling Protocol Daemon (RFC 2661)
-License: GPL
+License: GPLv2
 Group: Accessibility
 
 Url: http://www.xelerance.com/software/xl2tpd/
 # https://github.com/xelerance/xl2tpd
 Source0: %name-%version.tar
 
-Provides: l2tpd = %version-%release
+Provides: l2tpd = %EVR
 Obsoletes: l2tpd =< 0.69-alt2
 BuildRequires: libpcap-devel
 
@@ -77,6 +77,9 @@ fi
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/%name/l2tp-secrets
 
 %changelog
+* Tue Apr 20 2021 Anton Farygin <rider@altlinux.ru> 1.3.16-alt1
+- 1.3.16
+
 * Wed Oct 23 2019 Anton Farygin <rider@altlinux.ru> 1.3.15-alt1
 - 1.3.15
 
