@@ -1,6 +1,6 @@
 Name: unfs3
 Version: 0.9.22
-Release: alt5
+Release: alt6
 
 Summary: UNFS3 user-space NFSv3 server
 License: BSD-3-Clause
@@ -11,10 +11,14 @@ Source0: %name-%version.tar.gz
 Source1: unfs3.init
 Source2: unfs3.monit
 Source100: unfs3.watch
+
+# https://abf.io/import/unfs3/raw/rosa2019.1/unfs3-0.9.22-tirpc.patch
+Patch: unfs3-0.9.22-tirpc.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Tue Dec 04 2007
-BuildRequires: flex
+BuildRequires: flex libtirpc-devel
 
 Requires: monit-base
 Conflicts: nfs-server nfs-server-userland
@@ -28,8 +32,11 @@ and removable media.
 
 %prep
 %setup
+%patch -p1
 
 %build
+%add_optflags `pkg-config --cflags libtirpc`
+%add_optflags -fcommon
 %configure --enable-cluster
 %make
 
@@ -53,6 +60,9 @@ install -pDm644 %SOURCE2 %buildroot%_sysconfdir/monitrc.d/%name.auto
 %preun_service nfs
 
 %changelog
+* Tue Apr 20 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.22-alt6
+- Fixed FTBFS with libtirpc and -fcommon.
+
 * Thu Apr 16 2020 Michael Shigorin <mike@altlinux.org> 0.9.22-alt5
 - SPDX must die
 - spec fixup while at that
