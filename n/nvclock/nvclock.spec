@@ -1,6 +1,6 @@
 Name: nvclock
 Version: 0.8b4
-Release: alt5.qa1
+Release: alt6
 
 Summary: An overclocking tool for NVIDIA cards
 License: GPL
@@ -12,6 +12,7 @@ Source1: %name.png
 Patch0: nvclock-0.8b-alt-makefile.patch
 Patch1: nvclock-0.8b-alt-DSO.patch
 Patch2: %{name}0.8b4-makefile.patch
+Patch3: nvclock-0.8b4-make-gcc10-happy.patch
 Packager: Vyacheslav Dikonov <slava@altlinux.ru>
 
 ExclusiveArch: %ix86 x86_64
@@ -85,6 +86,7 @@ Qt-iнтерфейс для nvclock - програми, яка дозволяє 
 %patch0 -p1
 %patch1 -p2
 %patch2 -p1
+%patch3 -p2
 
 %build
 unset QTDIR || : ; . /etc/profile.d/qt3dir.sh
@@ -150,6 +152,9 @@ rm -rf %_docdir/%name/
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Tue Apr 20 2021 Grigory Ustinov <grenka@altlinux.org> 0.8b4-alt6
+- Fixed FTBFS.
+
 * Fri Oct 04 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8b4-alt5.qa1
 - Added ExclusiveArch tag to limit architectures to %%ix86 and x86_64.
 
