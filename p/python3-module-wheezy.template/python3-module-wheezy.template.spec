@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 3.0.3
+Version: 3.1.0
 Release: alt1
 
 Summary: %modname is a lightweight template library
@@ -53,6 +53,9 @@ tox.py3
 %doc README*
 
 %changelog
+* Tue Apr 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Wed Mar 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
