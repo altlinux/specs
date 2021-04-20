@@ -41,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 15.2.10
+Version: 15.2.11
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -1502,6 +1502,9 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.11-alt1
+- 15.2.11 (Fixes: CVE-2021-20288).
+
 * Fri Mar 19 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.10-alt1
 - 15.2.10
 - Build with tcmalloc
