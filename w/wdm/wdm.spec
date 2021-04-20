@@ -2,7 +2,7 @@
 
 Name: wdm
 Version: 1.28
-Release: alt20
+Release: alt21
 
 Summary: WINGs Display Manager
 License: GPL
@@ -124,6 +124,9 @@ install -pDm755 %SOURCE4 %buildroot%_sysconfdir/firsttime.d/wdm
 %doc AUTHORS ChangeLog INSTALL NEWS README README.pam TODO
 
 %changelog
+* Tue Apr 20 2021 Grigory Ustinov <grenka@altlinux.org> 1.28-alt21
+- Fixed FTBFS.
+
 * Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.28-alt20
 - Fixed FTBFS.
 
