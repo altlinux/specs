@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: lmbench
-Version: 3.0
-Release: alt3
+Version: 3.0a9
+Release: alt1
 Summary: Suite of simple, portable benchmarks
 
 License: GPL-2.0-or-later
@@ -8,18 +10,15 @@ Group: System/Kernel and hardware
 Url: http://www.bitmover.com/lmbench
 #URL: http://sourceforge.net/projects/lmbench
 
-Source: lmbench-%version-a5.tgz
+Source: %name-%version.tar
 
 # patchs from https://github.com/intel/lmbench
-Patch0: 0001-Bug-Use-the-same-value-type-to-avoid-overflow.patch
-Patch1: 0002-Bug-fix-check-the-return-value-of-malloc.patch
-Patch2: 0003-config-run-set-OUTPUT-as-dev-null.patch
-Patch3: 0004-Fix-errors-of-fstat-stat-open-in-lat_syscall.patch
-Patch4: 0005-lseek-is-64-bit-clean-these-days.-Therefore-nothing-.patch
-Patch5: 0006-lmbench_usage-needs-a-prototype.patch
-Patch6: 0007-lmbench_usage-not-being-called-w-proper-arguments.patch
-Patch7: 0008-Create-s.ChangeSet.patch
-Patch8: 0009-Revert-lmbench_usage-needs-a-prototype.patch
+Patch0: 0003-config-run-set-OUTPUT-as-dev-null.patch
+Patch1: 0004-Fix-errors-of-fstat-stat-open-in-lat_syscall.patch
+Patch2: 0008-Create-s.ChangeSet.patch
+Patch3: lmbench-3.0a9-alt-add-libtirpc-support.patch
+
+BuildRequires: libtirpc-devel
 
 %description
 Bandwidth benchmarks: cached file read, memory copy (bcopy), memory read,
@@ -33,24 +32,27 @@ read latency; Miscellanious Processor clock rate calculation.
 Измерение пропускной способности:
 cached file read, memory copy (bcopy),
 memory read, memory write, pipe, TCP;
-Имерение задержек:
+Измерение задержек:
 context switching, connection establishment, pipe, TCP, UDP,
 RPC hot potato, file system creates and deletes, process
 creation, signal handling, system call overhead, memory
 read latency; Miscellanious Processor clock rate calculation.
 
 %prep
-%setup -n %name-%version-a5
-%autopatch -p1
+%setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p2
 
 %build
-%make_build
+%make_build 
 
 %install
 install -d -m0755 %buildroot%_sbindir
 install -d -m0755 %buildroot%_mandir/{man1,man3,man8}/ \
 
-%ifarch %ix86 x86_64
+%ifarch %arm %ix86 x86_64
 pushd bin/*-linux-gnu
 %else
 pushd bin
@@ -86,6 +88,13 @@ install -p -m0644 doc/*.8 %buildroot%_man8dir/
 %_sbindir/*
 
 %changelog
+* Tue Apr 20 2021 Egor Ignatov <egori@altlinux.org> 3.0a9-alt1
+- Cleanup spec
+- Update .gear/rules
+- Remove unneeded patch files
+- Fix build with glibc-2.26 and newer
+  + Add support for libtirpc
+
 * Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 3.0-alt3
 - Cleanup spec
 - Added patches from https://github.com/intel/lmbench
