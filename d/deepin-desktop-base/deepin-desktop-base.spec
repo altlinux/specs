@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2021.2.20
+Version: 2021.3.10
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -8,7 +8,7 @@ Url: https://github.com/linuxdeepin/deepin-desktop-base
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-desktop-base_2020.11.04_alt_fix-multiarch-build.patch
+Patch: deepin-desktop-base_2021.3.10_alt_fix-multiarch-build.patch
 
 BuildArch: noarch
 #Recommends:     deepin-wallpapers
@@ -23,14 +23,6 @@ This package provides some components for Deepin desktop environment.
 - login screen background image
 - language information
 
-#%package -n deepin-manual-directory
-#Summary: Package that owns the Deepin manual directory
-#Group: Graphical desktop/Other
-
-#%description -n deepin-manual-directory
-#This package owns the Deepin manual directory. This is a workaround
-#before deepin-manual actually comes into ALT to unblock packaging.
-
 %prep
 %setup
 %patch -p2
@@ -43,8 +35,8 @@ sed -E '/lsb-release|systemd|apt|back/d' Makefile
 # Fix data path
 sed -i 's|/usr/lib|%_datadir|' Makefile
 
-# Set deepin type to ALT
-sed -i 's|Type=.*|Type=ALT|; /Type\[/d; s|Version=.*|Version=9|' files/desktop-version*.in
+# Set deepin type to Desktop
+sed -i 's|Type=.*|Type=Desktop|; /Type\[/d; s|Version=.*|Version=20.2|' files/desktop-version*.in
 
 sed -i 's|/etc/systemd/|/lib/systemd/|' Makefile
 
@@ -57,10 +49,6 @@ sed -i 's|/etc/systemd/|/lib/systemd/|' Makefile
 # Make a symlink for deepin-version
 mkdir -p %buildroot/etc/
 ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
-
-#mkdir -p %buildroot%_datadir/dman
-#echo "This package owns the Deepin manual directory. This is a workaround
-#before deepin-manual actually comes into ALT to unblock packaging." > %buildroot%_datadir/dman/README.ALT
 
 %files
 %doc LICENSE
@@ -78,10 +66,10 @@ ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
 %exclude %_datadir/python-apt/templates/Deepin.info
 %exclude %_datadir/python-apt/templates/Deepin.mirrors
 
-#%files -n deepin-manual-directory
-#%_datadir/dman
-
 %changelog
+* Tue Apr 20 2021 Leontiy Volodin <lvol@altlinux.org> 2021.3.10-alt1
+- New version (2021.3.10) with rpmgs script.
+
 * Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 2021.2.20-alt1
 - New version (2021.2.20) with rpmgs script.
 
