@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: i3status
-Version: 2.9
+Version: 2.13
 Release: alt1
 
 Summary: I3 status bar generator for i3bar, dzen2, xmobar or similar programs.
@@ -8,18 +10,15 @@ Group: Graphical desktop/Other
 
 URL: http://i3wm.org/i3status
 Source: %name-%version.tar
-# Patch takes into account compressing of man pages by this script
-Patch0: %name-alt-makeman.patch
 # Patch adds "none" to the default config because
 # current version of i3bar crashes without it
 # Remove after corresponding correction of i3bar or 
 # i3status.
-Patch1: %name-alt-config.patch
+#Patch1: %name-alt-config.patch
 
-Packager: %packager
-
-# Automatically added by buildreq on Sat Aug 18 2012
-BuildRequires: libalsa-devel libconfuse-devel libwireless-devel libyajl-devel
+BuildRequires: libalsa-devel libconfuse-devel libyajl-devel
+BuildRequires: libnl-devel libpulseaudio-devel
+BuildRequires: asciidoc xmlto
 
 %description
 i3status is a small program (about 1500 SLOC) for generating a
@@ -47,23 +46,26 @@ i3status это крошечная программа (размером прим
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
-%patch1 -p1
+#%%patch1 -p1
 
 %build
-%make
-
-# Сжимаем страницы руководств (для этого добавлен makeman.patch)
-cd man
-bzip -9 *.1
+%autoreconf
+mkdir BUILD && pushd $_
+ln -s ../configure
+%configure --disable-sanitizers
+%make_build
+popd
 
 %install
+pushd BUILD
 make DESTDIR=%buildroot install
 
 # Добавляем нехитрую документацию.
 %define docdir %_docdir/%name-%version
 
 mkdir -p %buildroot/%docdir
+popd
+
 install -pm644 LICENSE %buildroot%docdir/
 install -pm644 CHANGELOG %buildroot%docdir/
 
@@ -75,6 +77,9 @@ install -pm644 CHANGELOG %buildroot%docdir/
 %_man1dir/*
 
 %changelog
+* Tue Apr 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.13-alt1
+- Version update.
+
 * Sat Mar 28 2015 Andrey Bergman <vkni@altlinux.org> 2.9-alt1
 - Version update.
 
