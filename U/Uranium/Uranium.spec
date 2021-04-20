@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 4.8
-Release: alt1
+Release: alt2
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -37,6 +37,7 @@ BuildRequires:  python3-module-twisted-web
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: Uranium-4.7.1-set-default-languages.patch
 
 %description
 %summary
@@ -51,6 +52,7 @@ related applications.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 # there is no arch specific content, so we set LIB_SUFFIX to nothing
@@ -90,6 +92,12 @@ python3 -m pytest -v
 %doc html LICENSE
 
 %changelog
+* Tue Apr 20 2021 Anton Midyukov <antohami@altlinux.org> 4.8-alt2
+- merge with p9
+
+* Thu Apr 15 2021 Anton Midyukov <antohami@altlinux.org> 4.7.1-alt1.p9
+- Fix setup default language
+
 * Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 4.8-alt1
 - New version 4.8
 
