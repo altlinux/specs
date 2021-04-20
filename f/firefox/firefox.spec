@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        87.0
+Version:        88.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -38,21 +38,20 @@ Source12:       firefox-privacy-prefs.js
 Source13:       firefox-search-provider.ini
 
 ### Start Patches
-Patch001: 0001-SUSE-NonGnome-KDE-integration.patch
-Patch002: 0002-ALT-Use-system-nspr-headers.patch
-Patch003: 0003-FEDORA-build-arm-libopus.patch
-Patch004: 0004-FEDORA-build-arm.patch
-Patch005: 0005-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch006: 0006-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch007: 0007-ALT-Fix-aarch64-build.patch
-Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
-Patch011: 0011-use-floats-for-audio-on-arm-too.patch
-Patch012: 0012-bmo-847568-Support-system-harfbuzz.patch
-Patch013: 0013-bmo-847568-Support-system-graphite2.patch
-Patch014: 0014-bmo-1559213-Support-system-av1.patch
-Patch015: 0015-VAAPI-Add-extra-frames.patch
+Patch001: 0001-ALT-Use-system-nspr-headers.patch
+Patch002: 0002-FEDORA-build-arm-libopus.patch
+Patch003: 0003-FEDORA-build-arm.patch
+Patch004: 0004-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch005: 0005-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
+Patch006: 0006-ALT-Fix-aarch64-build.patch
+Patch007: 0007-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch008: 0008-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch009: 0009-arm-js-src-wasm-add-struct-user_vfp-definition.patch
+Patch010: 0010-use-floats-for-audio-on-arm-too.patch
+Patch011: 0011-bmo-847568-Support-system-harfbuzz.patch
+Patch012: 0012-bmo-847568-Support-system-graphite2.patch
+Patch013: 0013-bmo-1559213-Support-system-av1.patch
+Patch014: 0014-VAAPI-Add-extra-frames.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -226,7 +225,6 @@ Most likely you don't need to use this package.
 %patch012 -p1
 %patch013 -p1
 %patch014 -p1
-%patch015 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -496,6 +494,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Apr 19 2021 Alexey Gladkov <legion@altlinux.ru> 88.0-alt1
+- New release (88.0).
+- Security fixes:
+  + CVE-2021-23994: Out of bound write due to lazy initialization
+  + CVE-2021-23995: Use-after-free in Responsive Design Mode
+  + CVE-2021-23996: Content rendered outside of webpage viewport
+  + CVE-2021-23997: Use-after-free when freeing fonts from cache
+  + CVE-2021-23998: Secure Lock icon could have been spoofed
+  + CVE-2021-23999: Blob URLs may have been granted additional privileges
+  + CVE-2021-24000: requestPointerLock() could be applied to a tab different from the visible tab
+  + CVE-2021-24001: Testing code could have enabled session history manipulations by a compromised content process
+  + CVE-2021-24002: Arbitrary FTP command execution on FTP servers using an encoded URL
+  + CVE-2021-29945: Incorrect size computation in WebAssembly JIT could lead to null-reads
+  + CVE-2021-29944: HTML injection vulnerability in Firefox for Android's Reader View
+  + CVE-2021-29946: Port blocking could be bypassed
+  + CVE-2021-29947: Memory safety bugs fixed in Firefox 88
+
 * Wed Mar 24 2021 Alexey Gladkov <legion@altlinux.ru> 87.0-alt1
 - New release (87.0).
 - Security fixes:
