@@ -1,7 +1,7 @@
 Summary:   An intrusion detection system
 Name:      snort
-Version:   2.9.7.0
-Release:   alt3
+Version:   2.9.17.1
+Release:   alt1
 License: %gpl2only
 Group:     Security/Networking
 Url:       http://www.snort.org
@@ -28,6 +28,7 @@ BuildRequires(pre): rpm-macros-alternatives
 
 BuildRequires: libpcap-devel >= 0.4, libpcre-devel
 BuildRequires: zlib-devel libdnet-devel libdaq-devel flex
+BuildRequires: libluajit-devel libssl-devel libnghttp2-devel libtirpc-devel
 
 Conflicts: snort-rules < 2.8
 
@@ -154,6 +155,7 @@ function prepconf() {
 	--sysconfdir=%_sysconfdir/%name \
 	--enable-linux-smp-stats \
 	--disable-static-daq \
+    --with-libtirpc \
 	"$@"
     %make    
     mv src/%name ../building/%name-$d
@@ -262,6 +264,10 @@ touch %buildroot%_sysconfdir/%name/rules/black_list.rules
 %doc doc/snort_manual.*
 
 %changelog
+* Mon Apr 19 2021 Slava Aseev <ptrnine@altlinux.org> 2.9.17.1-alt1
+- update to 2.9.17.1
+- apply libtirpc patch from gentoo
+
 * Thu Feb 21 2019 Mikhail Efremov <sem@altlinux.org> 2.9.7.0-alt3
 - Drop remnants of bloat subpackage from spec.
 - README-ALT.ru.m4: Drop inline from doc.
