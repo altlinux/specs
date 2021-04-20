@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           gluegen2
 Version:        2.3.2
-Release:        alt1_11jpp8
+Release:        alt2_11jpp8
 %global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
@@ -27,6 +27,7 @@ Patch5:         %{name}-0005-use-system-antlib.patch
 Patch6:         %{name}-0006-disable-static-libgcc.patch
 Patch7:         %{name}-0007-add-ppc64-aarch64.patch
 Patch8:         %{name}-0008-jcpp-remove-javax-api.patch
+Patch9:         %{name}-fix-gcc-10.patch
 
 BuildRequires:  gcc
 BuildRequires:  jpackage-utils
@@ -93,6 +94,7 @@ sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -231,6 +233,9 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Tue Apr 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.3.2-alt2_11jpp8
+- fix build with gcc-10 (-fno-common)
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_11jpp8
 - fc update
 
