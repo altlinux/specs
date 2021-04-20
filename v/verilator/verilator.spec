@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/git tex(dehypht.tex)
 # END SourceDeps(oneline)
+
+%define _unpackaged_files_terminate_build 1
+
 Name: verilator
-Version: 3.924
-Release: alt1.2
+Version: 4.200
+Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
 Group: Engineering
 License: LGPLv3 or Perl Artistic 2.0
 Url: https://www.veripool.org/wiki/verilator
 Source: %name-%version.tar
-# Version string in pkg-config files can not contain whitespace
-Patch0: pkg-config-version-fix.patch
 
 BuildRequires: flex gcc-c++ perl-Pod-LaTeX texlive
 BuildRequires: /usr/bin/pod2html
@@ -32,11 +33,10 @@ BuildArch: noarch
 Verilator is the fastest free Verilog HDL simulator, and beats most commercial
 simulators. This package contains documentation and examples.
 
-%define docfiles README README.html README.pdf internals.txt internals.html internals.pdf verilator.txt verilator.html verilator.pdf
+%define docfiles verilator.txt verilator.html verilator.pdf
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 autoconf
@@ -64,6 +64,10 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Tue Apr 20 2021 Egor Ignatov <egori@altlinux.org> 4.200-alt1
+- new version
+- remove pkg-config-version-fix patch
+
 * Sat Apr 18 2020 Michael Shigorin <mike@altlinux.org> 3.924-alt1.2
 - added missing BR: /usr/bin/pod2html
 
