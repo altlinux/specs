@@ -1,7 +1,7 @@
 %define major 0.9
 Name: podofo
-Version: %major.6
-Release: alt2
+Version: %major.7
+Release: alt1
 
 Summary: PDF manipulation library and tools
 Summary(ru_RU.UTF8): Библиотека и инструменты для работы с PDF
@@ -51,6 +51,7 @@ Development files for the PoDoFo library.
 
 %prep
 %setup
+subst "s|@PODOFO_VERSION@|%version|" src/podofo/libpodofo.pc.in
 # fix broken copying rule
 mkdir test/TokenizerTest/objects
 
@@ -63,11 +64,6 @@ mkdir test/TokenizerTest/objects
 
 %install
 %makeinstall_std
-
-# hack .pc-file (TODO: upstream?)
-%__subst "s|podofo-0|podofo|g" %buildroot%_pkgconfigdir/libpodofo-0.pc
-%__subst "s|^Version:.*|Version: %version|g" %buildroot%_pkgconfigdir/libpodofo-0.pc
-
 
 %files
 %doc README.html FAQ.html
@@ -83,6 +79,9 @@ mkdir test/TokenizerTest/objects
 %_libdir/*.so
 
 %changelog
+* Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
+- new version 0.9.7 (with rpmrb script)
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt2
 - fix build with cmake 3.13.1 (ALT bug 35732)
 - build with -D_FILE_OFFSET_BITS=64
