@@ -1,5 +1,5 @@
 Name: fish
-Version: 3.2.0
+Version: 3.2.2
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -74,6 +74,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.2-alt1
+- 3.2.2
+
 * Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
