@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.8.4
+Version: 3.9.1
 Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
@@ -20,12 +20,13 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(coverage)
 BuildRequires: python3(mccabe)
 BuildRequires: python3(mock)
 BuildRequires: python3(pycodestyle)
 BuildRequires: python3(pyflakes)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_requires mccabe
@@ -61,17 +62,9 @@ warning. - a Mercurial hook.
 %python3_install
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
-commands_pre =\
-    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc README.rst LICENSE
@@ -80,6 +73,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/flake8-*.egg-info/
 
 %changelog
+* Tue Apr 20 2021 Stanislav Levin <slev@altlinux.org> 3.9.1-alt1
+- 3.8.4 -> 3.9.1.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 3.8.4-alt1
 - 3.7.9 -> 3.8.4.
 

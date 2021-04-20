@@ -2,7 +2,7 @@
 %define oname pycodestyle
 
 Name: python3-module-%oname
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: Python style guide checker
@@ -52,6 +52,9 @@ tox.py3 --sitepackages -vvr
 
 
 %changelog
+* Tue Apr 20 2021 Stanislav Levin <slev@altlinux.org> 2.7.0-alt1
+- 2.6.0 -> 2.7.0.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
 - 2.5.0 -> 2.6.0.
 
