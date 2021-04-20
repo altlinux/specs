@@ -1,6 +1,6 @@
 Name:    installer-distro-education
 Version: 9.2
-Release: alt1
+Release: alt2
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -114,6 +114,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Tue Apr 20 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt2
+- Set default size for root filesystem to 50 GiB.
+
 * Tue Apr 06 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt1
 - Remove orphained hook for lightdm theme set.
 - Add all needed installer-features from mkimage-profiles.
