@@ -1,10 +1,10 @@
 %def_without check
-%def_with python3
+%def_without python3
 
 %define modulename hpack
 Name: python-module-hpack
 Version: 3.0.0
-Release: alt1.qa1
+Release: alt2
 
 Summary: Pure-Python HPACK header compression
 
@@ -80,6 +80,9 @@ popd
 
 
 %changelog
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt2
+- build python2 module only
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1.qa1
 - NMU: applied repocop patch
 
