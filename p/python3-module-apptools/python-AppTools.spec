@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+# wait for python module importlib_resources
 # https://bugzilla.altlinux.org/39327
-%def_with check
+%def_without check
 
 %define oname apptools
 
 Name:           python3-module-%oname
-Version:        4.5.0
+Version:        5.1.0
 Release:        alt1
 
 Summary:        Enthough Tool Suite Application Tools
@@ -15,7 +16,7 @@ License:        BSD and LGPLv2+
 Group:          Development/Python3
 URL:            https://docs.enthought.com/apptools/
 
-# https://github.com/enthought/apptools.git
+# Source-url: https://github.com/enthought/apptools/archive/refs/tags/%version.tar.gz
 Source:         %name-%version.tar
 Source1:        README.fedora.python-AppTools
 #Patch1:         %oname-%version-alt-build.patch
@@ -101,10 +102,6 @@ This package contains documentation for AppTools.
 
 %prep
 %setup
-#patch1 -p1
-
-find ./ -name '*.py' -exec python3-2to3 -w -n '{}' +
-find ./ -name '*.py' | xargs sed -i -e 's:email.MIMEBase:email.mime.base:g'
 
 %if_with doc
 %prepare_sphinx3 docs/source
@@ -121,8 +118,6 @@ install -p -m644 %SOURCE1 README.fedora
 %python3_prune
 
 %check
-# remove buggy test
-rm examples/permissions/server/test_client.py
 #  Note: if the cwd is somewhere under /tmp, that confuses test_file_path.py
 xvfb-run py.test3
 
@@ -152,6 +147,11 @@ xvfb-run py.test3
 
 
 %changelog
+* Sun Apr 18 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
+- new version 5.1.0 (with rpmrb script)
+- build from tarball
+- disable tests (wait for python module importlib_resources)
+
 * Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 4.5.0-alt1
 - new version 4.5.0 (with rpmrb script)
 
