@@ -1,4 +1,3 @@
-#%%set_verify_elf_method textrel=relaxed
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -21,7 +20,7 @@
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt11
+Release: alt12
 
 Summary: Web browser engine
 License: LGPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -40,6 +39,8 @@ Patch7: webkitgtk-2.4.10-suse-aarch64.patch
 Patch8: webkitgtk-2.4.11-alt-build.patch
 # python->python2
 Patch9: webkitgtk-2.4.11-alt-python2.patch
+# workaround for bison-3.7.x
+Patch10: webkitgtk-2.4.11-alt-bison-3.7-workaround.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
 %{?_enable_geolocation:Requires: geoclue2}
@@ -201,6 +202,7 @@ GObject introspection devel data for the JavaScriptCore library
 %patch7 -p1
 %patch8 -b .orig
 %patch9 -p1
+%patch10 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -210,7 +212,7 @@ rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmai
 %ifarch ppc64le
 %add_optflags -DENABLE_YARR_JIT=0
 %endif
-%add_optflags -Wno-expansion-to-defined -Wno-implicit-fallthrough
+%add_optflags -Wno-expansion-to-defined -Wno-implicit-fallthrough -Wno-class-memaccess -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_36
 # Use linker flags to reduce memory consumption
 %add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
 
@@ -300,6 +302,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Wed Apr 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt12
+- fixed build
+
 * Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt11
 - disabled introspection
 
