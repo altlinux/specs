@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2021.02.09
+Version: 2021.04.20
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -12,7 +12,8 @@ Source: %name-%version.tar.gz
 
 BuildArch: noarch
 Packager: Leontiy Volodin <lvol@altlinux.org>
-BuildRequires: libgtk+3-devel libgtk+2-devel sassc
+BuildRequires: sassc
+#BuildRequires: libgtk+3-devel libgtk+2-devel
 #Requires: libgtk-engine-murrine
 
 %description
@@ -28,12 +29,21 @@ Based on Arc gtk theme
 mkdir -p %buildroot%_datadir/themes/Qogir
 ./install.sh -d %buildroot%_datadir/themes
 
+%check
+./test.sh
+
 %files
 %doc AUTHORS COPYING HACKING README.md
 %dir %_datadir/themes
 %_datadir/themes/Qogir*
 
 %changelog
+* Wed Apr 21 2021 Leontiy Volodin <lvol@altlinux.org> 1:2021.04.20-alt1
+- New version.
+- Upstream:
+  + Add gnome-shell 40.0 supported.
+  + Add Gtk+ 4.0 supported.
+
 * Wed Feb 10 2021 Leontiy Volodin <lvol@altlinux.org> 1:2021.02.09-alt1
 - New version.
 - Upstream:
