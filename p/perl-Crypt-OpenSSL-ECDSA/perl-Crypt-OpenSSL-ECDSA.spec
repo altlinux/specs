@@ -2,27 +2,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel libssl-devel perl(AutoLoader.pm) perl(Crypt/OpenSSL/EC.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/Constant.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm)
 # END SourceDeps(oneline)
-%define module_version 0.08
 %define module_name Crypt-OpenSSL-ECDSA
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
-Release: alt2.1
+Version: 0.10
+Release: alt1
 Summary: Perl extension for OpenSSL ECDSA (Elliptic Curve Digital Signature Algorithm)
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/M/MI/MIKEM/Crypt-OpenSSL-ECDSA-%{version}.tar.gz
-Patch0: 0001-Port-to-OpenSSL-1.1.0.patch
+Source0: http://www.cpan.org/authors/id/M/MI/MIKEM/%{module_name}-%{version}.tar.gz
 
 %description
 From summary: %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
-%patch0 -p1
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +33,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 21 2021 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2.1
 - rebuild with new perl 5.28.1
 
