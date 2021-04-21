@@ -3,7 +3,7 @@
 %def_disable static
 
 Name: vips
-Version: 8.10.2
+Version: 8.10.6
 Release: alt1
 
 Summary: Large image processing library
@@ -21,7 +21,7 @@ BuildRequires: libxml2-devel libexpat-devel
 BuildRequires: gcc-c++ libImageMagick-devel libcfitsio-devel libexif-devel libfftw3-devel
 BuildRequires: liblcms2-devel libmatio-devel liborc-devel libpango-devel openexr-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libgif-devel libimagequant-devel
-BuildRequires: libwebp-devel libopenslide-devel librsvg-devel libpoppler-glib-devel
+BuildRequires: libwebp-devel libopenslide-devel librsvg-devel libpoppler-glib-devel libheif-devel
 
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
@@ -149,6 +149,10 @@ rm -fv %buildroot%_bindir/vips%majorver
 # - package python bindings
 
 %changelog
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 8.10.6-alt1
+- new version 8.10.6 (with rpmrb script)
+- enable build with libheif
+
 * Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 8.10.2-alt1
 - new version 8.10.2
 
