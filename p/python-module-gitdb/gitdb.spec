@@ -2,11 +2,12 @@
 
 %define oname gitdb
 
-%def_with python3
+%def_without test
+%def_without python3
 
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt3.qa1
+Release: alt4
 Summary: IO of git-style object databases
 License: BSD
 BuildArch: noarch
@@ -175,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt4
+- build python2 only module, disable tests
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt3.qa1
 - NMU: remove rpm-build-ubt from BR:
 

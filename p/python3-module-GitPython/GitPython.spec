@@ -1,29 +1,29 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname GitPython
 
-%def_without python3
 %def_disable check
 
-Name: python-module-%oname
-Version: 2.1.10
-Release: alt2
+Name: python3-module-%oname
+Version: 3.1.14
+Release: alt1
+
 Summary: GitPython is a python library used to interact with Git repositories
+
 License: BSD
-BuildArch: noarch
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/GitPython/
 
-# https://github.com/gitpython-developers/GitPython.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 Patch1: %oname-alt-build.patch
 
-BuildRequires: python-module-setuptools python2.7(gitdb) python-module-ddt python-module-mock
-BuildRequires: git-core
-%if_with python3
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+
+#BuildRequires: git-core
+
 BuildRequires: python3-module-setuptools python3(gitdb) python3-module-ddt python3-module-mock
-%endif
 
 Requires: git-core
 
@@ -31,59 +31,21 @@ Requires: git-core
 A simple, flexible, easy-to-use configfile and command-line parsing library
 built on top of the standard library optparse module.
 
-%package -n python3-module-%oname
-Summary: GitPython is a python library used to interact with Git repositories
-Group: Development/Python3
-Requires: git-core
-
-%description -n python3-module-%oname
-A simple, flexible, easy-to-use configfile and command-line parsing library
-built on top of the standard library optparse module.
-
 %prep
 %setup
-%patch1 -p1
-
-%if_with python3
-cp -fR . ../python3
-%endif
+#patch1 -p1
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+%python3_prune
 
 %check
 # needed for tests
-git config --global user.email "darktemplar at altlinux.org"
-git config --global user.name "darktemplar"
-
-rm -f .gitmodules
-
-git init
-git add -A
-git commit -m "%version"
-git tag %version -m "%version"
-
-git tag 0.1.6 -m "0.1.6"
-
-nosetests
-
-%if_with python3
-pushd ../python3
+#git config --global user.email "darktemplar at altlinux.org"
+#git config --global user.name "darktemplar"
 
 rm -f .gitmodules
 
@@ -95,22 +57,14 @@ git tag %version -m "%version"
 git tag 0.1.6 -m "0.1.6"
 
 nosetests3
-popd
-%endif
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/git/test
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/git/test
-%endif
 
 %changelog
-* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.10-alt2
-- build python2 module only
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.14-alt1
+- new version
+- build python3 module standalone
 
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.10-alt1
 - Updated to upstream version 2.1.10.
