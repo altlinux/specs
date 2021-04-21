@@ -1,6 +1,6 @@
 Name: flam3
 Version: 3.1.1
-Release: alt2
+Release: alt3
 
 Summary: Programs to generate and render cosmic recursive fractal flames
 License: GPL-3.0-or-later
@@ -73,6 +73,9 @@ The %name palettes xml file.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Apr 21 2021 Slava Aseev <ptrnine@altlinux.org> 3.1.1-alt3
+- Rebuilt with glibc-2.32 (since 2.31 libm has no *_finite functions)
+
 * Mon Dec 07 2020 Dmitry V. Levin <ldv@altlinux.org> 3.1.1-alt2
 - Imported patches from Debian.
 - %%configure --enable-shared --disable-static.
