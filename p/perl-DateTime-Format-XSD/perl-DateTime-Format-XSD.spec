@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(base.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-XSD
-Version:        0.2
-Release:        alt2_25
+Version:        0.4
+Release:        alt1
 Summary:        Format DateTime according to xsd:dateTime
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Format-XSD
-Source0:        https://cpan.metacpan.org/modules/by-module/DateTime/DateTime-Format-XSD-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/T/TI/TIMLEGGE/DateTime-Format-XSD-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(DateTime/Format/ISO8601.pm)
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Apr 21 2021 Igor Vlasenko <viy@altlinux.org> 0.4-alt1
+- automated CPAN update
+
 * Wed Nov 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_25
 - dropped obsolete provides (closes: #39247)
 
