@@ -5,7 +5,7 @@
 
 Name: mars_nwe
 Version: 0.99
-Release: alt5
+Release: alt6
 
 Summary: NetWare file and print servers which run on Linux systems.
 License: GPL
@@ -22,6 +22,7 @@ Patch0: %name-0.99pl21-tools.patch.gz
 Patch1: %name-glibc21.patch.bz2
 Patch2: %name-0.99.pl19-buffer.patch.bz2
 Patch3: %name-0.99.pl20-emutli1.patch.gz
+Patch4: %name-glibc-sys-errlist.patch
 
 Conflicts: mars-nwe
 Obsoletes: mars-nwe
@@ -42,11 +43,10 @@ clients, using NetWare's native IPX protocol suite.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 gzip -dc %SOURCE1 > mk.li
 gzip -dc %SOURCE1 \
-%ifarch x86_64 e2k aarch64
-    | sed -e 's|/lib/|/lib64/|g' \
-%endif
+    | sed -e 's|/lib/|/%_lib/|g' \
     > mk.li
 chmod 755 mk.li
 gzip -dc %SOURCE2 \
@@ -94,6 +94,9 @@ install -m 0644 %SOURCE6 %buildroot%_sysconfdir/logrotate.d/%name.log
 %_initdir/*
 
 %changelog
+* Wed Apr 21 2021 Slava Aseev <ptrnine@altlinux.org> 0.99-alt6
+- fix FTBFS (sys_errlist removal in glibc)
+
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 0.99-alt5
 - fixed FTBFS at the price of disabling _FORTIFY_SOURCE (thanks, rosa)
 - ensure build against gdbm
