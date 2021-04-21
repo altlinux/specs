@@ -15,8 +15,8 @@
 %define _enable_test 1
 
 Name: perl-Digest-CRC
-Version: 0.21
-Release: alt1.2
+Version: 0.23
+Release: alt1
 
 Summary: Digest::CRC - Generic CRC functions
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Digest-CRC/
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
-Source: http://www.cpan.org/authors/id/O/OL/OLIMAUL/Digest-CRC-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OL/OLIMAUL/%{module}-%{version}.tar.gz
 
 #BuildArch: noarch
 # Automatically added by buildreq on Mon Jun 30 2008
@@ -37,7 +37,7 @@ The Digest::CRC module calculates CRC sums of all sorts. It contains wrapper
 functions with the correct parameters for CRC-CCITT, CRC-16 and CRC-32.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -50,6 +50,9 @@ functions with the correct parameters for CRC-CCITT, CRC-16 and CRC-32.
 %doc README Changes
 
 %changelog
+* Wed Apr 21 2021 Igor Vlasenko <viy@altlinux.org> 0.23-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1.2
 - rebuild with new perl 5.28.1
 
