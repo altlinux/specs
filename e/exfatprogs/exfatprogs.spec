@@ -1,5 +1,5 @@
 Name: exfatprogs
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
@@ -44,6 +44,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Wed Apr 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Tue Feb 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
