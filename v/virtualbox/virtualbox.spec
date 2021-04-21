@@ -31,6 +31,7 @@
 %def_with libvpx
 %def_with python
 %def_without vboxpci
+%def_with vboximg
 
 %ifarch %ix86
 %define vbox_platform linux.x86
@@ -62,7 +63,7 @@
 
 Name: virtualbox
 Version: 6.1.18
-Release: alt1
+Release: alt4
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -92,6 +93,7 @@ Source25:	virtualbox-vboxvideo.modprobe.conf
 Source26:	virtualbox-vboxguest.modprobe.conf
 Source27:	virtualbox-vmsvga.service
 Source28:	virtualbox-addition.conf
+Source29:	virtualbox-vboxsf.modprobe.conf
 
 %if_with manual
 %if_without manualbuild
@@ -145,7 +147,10 @@ BuildPreReq: yasm kBuild >= 0.1.9998.r3178
 BuildRequires: libgsoap-devel libgsoap-devel-static > 2.8.0
 %endif
 %if_with python
-BuildRequires: python-dev
+BuildRequires: python3-dev
+BuildRequires(pre): rpm-build-python3
+%add_python3_path %vboxdir
+%add_python3_req_skip xpcom._xpcom
 %endif
 BuildRequires: libpam-devel
 %if_with manualbuild
@@ -237,6 +242,14 @@ Provides: %name-guest-common-vboxguest = 6.1.0
 This packages contains common files for VirtualBox OSE vboxguest driver.
 It consists modprobe rules to load kernel module vboxguest on guest system.
 
+%package guest-common-vboxsf
+Summary: Additions common files for VirtualBox OSE vboxsf driver
+Group: Emulators
+
+%description guest-common-vboxsf
+This packages contains common files for VirtualBox OSE vboxsf driver.
+It consists modprobe rules to load kernel module vboxsf on guest system.
+
 %package webservice
 Summary: VirtualBox Web Service
 Group: Emulators
@@ -246,12 +259,12 @@ Requires: %name = %version-%release
 This packages contains VirtualBox web service API daemon.
 It allows to control virtual machines via web interface.
 
-%package -n python-module-vboxapi
+%package -n python3-module-vboxapi
 Summary: VirtualBox python API
 Group: Development/Python
 Requires: %name = %version-%release
 
-%description -n python-module-vboxapi
+%description -n python3-module-vboxapi
 This packages contains VirtualBox python module 'vboxapi'.
 It allows to control virtual machines via python scripts.
 
@@ -340,7 +353,7 @@ This package contains VirtualBox User Manual.
 %package sdk
 Summary: VirtualBox SDK
 Group: Development/Other
-Requires: python-module-vboxapi = %version-%release
+Requires: python3-module-vboxapi = %version-%release
 
 %description sdk
 This package contains VirtualBox SDK.
@@ -362,7 +375,7 @@ cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 # fix python shebang for scripts
 grep -R '^#!/usr/bin/\(env[[:space:]]\+\)\?python' src | cut -d: -f1 |
     while read f; do
-        sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python$@\1%__python@' "$f"
+        sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python$@\1%__python3@' "$f"
     done
 
 %build
@@ -452,6 +465,9 @@ echo "VBOX_CHMCMD                := 1" >> LocalConfig.kmk
 echo "VBOX_WITH_DOCS_CHM         :=" >> LocalConfig.kmk
 echo "VBOX_CHMCMD                :=" >> LocalConfig.kmk
 %endif
+%if_with vboximg
+echo "VBOX_WITH_VBOX_IMG         := 1" >> LocalConfig.kmk
+%endif
 %if_with manualbuild
 echo "VBOX_PATH_DOCBOOK          := /usr/share/xml/docbook/xsl-stylesheets" >> LocalConfig.kmk
 echo "VBOX_PATH_DOCBOOK_DTD      := /usr/share/xml/docbook/dtd/4.5" >> LocalConfig.kmk
@@ -534,6 +550,10 @@ cp -a \
 %if_with webservice
     vboxwebsrv \
 %endif
+    vboximg-mount \
+%if_with vboximg
+    vbox-img \
+%endif
     %buildroot%vboxdir
 
 find sdk -maxdepth 1 -mindepth 1 -not -name docs -print0 | xargs -0 cp -R --target-directory=%buildroot%vboxdir --parents
@@ -547,7 +567,7 @@ cd -
 
 %if_with python
 cd sdk/installer >/dev/null
-  VBOX_INSTALL_PATH=%vboxdir VBOX_VERSION=%version %__python vboxapisetup.py install --install-lib=%python_sitelibdir --root=%buildroot
+  VBOX_INSTALL_PATH=%vboxdir VBOX_VERSION=%version %__python3 vboxapisetup.py install --install-lib=%python3_sitelibdir --root=%buildroot
 cd -
 %endif
 
@@ -585,6 +605,10 @@ for n in VBoxAutostart \
          virtualbox \
 %if_with webservice
          vboxwebsrv \
+%endif
+         vboximg-mount \
+%if_with vboximg
+         vbox-img \
 %endif
          xpidl; do
     ln -s $(relative %vboxdir/$n %_bindir/$n) %buildroot%_bindir
@@ -644,6 +668,7 @@ cd additions >/dev/null
   install -pDm644 %SOURCE25 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxvideo.conf
   install -pDm644 %SOURCE26 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxguest.conf
   install -pDm644 %SOURCE28 %buildroot%_sysconfdir/modules-load.d/virtualbox-addition.conf
+  install -pDm644 %SOURCE29 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxsf.conf
 
 # create links
   ln -s $(relative %_bindir/VBoxService %_sbindir/) %buildroot%_sbindir/vboxadd-service
@@ -714,8 +739,6 @@ install -pDm644 %SOURCE23 %buildroot%_sysconfdir/modules-load.d/%name.conf
 sed -i -n '/vboxcpi/!p' %buildroot%_unitdir/%name.service
 sed -i -n '/vboxcpi/!p' %buildroot%_sysconfdir/modules-load.d/%name.conf
 %endif
-
-
 
 %if_with vnc
  cp -a ExtensionPacks/VNC %buildroot%vboxdir/ExtensionPacks/
@@ -848,6 +871,9 @@ mountpoint -q /dev || {
 %files guest-common-vboxguest
 %config %_sysconfdir/modprobe.d/virtualbox-vboxguest.conf
 
+%files guest-common-vboxsf
+%config %_sysconfdir/modprobe.d/virtualbox-vboxsf.conf
+
 %files guest-utils
 /sbin/mount.vboxsf
 %_initrddir/vboxadd-service
@@ -876,9 +902,9 @@ mountpoint -q /dev || {
 %endif
 
 %if_with python
-%files -n python-module-vboxapi
+%files -n python3-module-vboxapi
 %vboxdir/VBoxPython*.so
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %vboxdir/sdk/bindings/xpcom/python/xpcom
 %endif
 
@@ -910,6 +936,19 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Sun Apr 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.18-alt4
+- Enable to build vbox-img converting command line utility (Closes: 39451)
+- Add missed vboximg-mount FUSE mounting command line utility provides
+  raw access to an virtual disk image on the host system.
+
+* Sat Apr 17 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.18-alt3
+- Add fixes for build with python3 and support python-3.9
+- Rename python-module-vboxapi to python3-module-vboxapi
+- Remove requirement to python2 (Closes: 39737)
+
+* Sat Apr 17 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.18-alt2
+- Add separated modprobe rule for vboxsf (Closes: 39656)
+
 * Thu Jan 21 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.18-alt1
 - Update to newest version 6.1.18
 
