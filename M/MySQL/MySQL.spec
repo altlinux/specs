@@ -12,7 +12,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.23
+Version: 8.0.24
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -755,6 +755,8 @@ fi
 %_bindir/mysql_tzinfo_to_sql
 %_bindir/mysql_upgrade
 %_bindir/mysqld_safe
+%_bindir/mysql_keyring_encryption_test
+%_bindir/mysql_migrate_keyring
 %_sbindir/*
 %_libdir/mysql/plugin
 %_datadir/mysql
@@ -790,6 +792,23 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed Apr 21 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.24-alt1
+- new version
+  + (fixes: CVE-2020-1971, CVE-2020-28196, CVE-2021-2144, CVE-2021-2146)
+  + (fixes: CVE-2021-2154, CVE-2021-2160, CVE-2021-2162, CVE-2021-2164)
+  + (fixes: CVE-2021-2166, CVE-2021-2169, CVE-2021-2170, CVE-2021-2171)
+  + (fixes: CVE-2021-2172, CVE-2021-2174, CVE-2021-2178, CVE-2021-2179)
+  + (fixes: CVE-2021-2180, CVE-2021-2193, CVE-2021-2194, CVE-2021-2196)
+  + (fixes: CVE-2021-2201, CVE-2021-2202, CVE-2021-2203, CVE-2021-2208)
+  + (fixes: CVE-2021-2212, CVE-2021-2213, CVE-2021-2215, CVE-2021-2217)
+  + (fixes: CVE-2021-2226, CVE-2021-2230, CVE-2021-2232, CVE-2021-2278)
+  + (fixes: CVE-2021-2293, CVE-2021-2298, CVE-2021-2299, CVE-2021-2300)
+  + (fixes: CVE-2021-2301, CVE-2021-2304, CVE-2021-2305, CVE-2021-2307)
+  + (fixes: CVE-2021-2308, CVE-2021-23841, CVE-2021-3449)
+  + keyring utilities added
+- spec: add mysql_keyring_encryption_test, mysql_migrate_keyring to
+  server subpackage file section
+
 * Tue Feb 09 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.23-alt1
 - new version
 
