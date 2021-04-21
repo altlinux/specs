@@ -1,22 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: owamp
-Summary: one-way delay tester
-Version: 3.5.0
-Release: alt2
-License: Apache License v2.0
+Version: 4.3.4
+Release: alt1
+Summary: A tool for performing one-way or two-way active measurements
+
+License: Apache-2.0
 Group: Networking/Other
-URL: http://e2epi.internet2.edu/owamp/
-Source: %{name}-%{version}.tar.gz
-# A Debian source:
-Source1: owamp-server.service
-Source2: owamp-server.init
-Patch0: %name-%version-configure-patch_level.patch
-# Debian patches which may be useful and reasonable,
-# but not applied (yet), because they might have no actual effect.
-Patch2: man.diff
-Patch100: owamp-3.4-a.seriy@in-line.ru-jitter-rfc3550.diff
+Url: http://e2epi.internet2.edu/owamp/
+# git: https://github.com/perfsonar/owamp
+
+Source: %name-%version.tar
+
+Patch0: owamp-alt-daemon-path.patch
+Patch1: owamp-alt-datadir.patch
+
 Requires: %name-client, %name-server, %name-doc
 
-BuildPreReq: patchutils
 BuildRequires: libI2util-devel
 BuildRequires: groff-base
 
@@ -25,13 +25,10 @@ OWAMP is a client/server package that allows one to measure the latency between
 hosts. Unlike ping, which can only measure the bidirectional delay, OWAMP
 enables you to measure the unidirectional delay between two hosts.
 
-%files
-
-
 %package client
-Summary: one-way delay tester client
+Summary: Client for performing one-way or two-way active measurements
 Group: Networking/Other
-# Needed for owping_conn_opts of owping(1), owfetch(1), owup(1); powstream(1):
+# Needed for owping_conn_opts of owping(1), owfetch(1), owup(1); powstream(1):a
 Requires: I2util-tools
 # Running ntpds (with "synchronized" configuration) are needed for reasonable operation
 # on both ends: owamp-server and owamp-client.
@@ -42,7 +39,7 @@ owamp command line utilities for performing owamp measurements with an owamp
 server.
 
 %package server
-Summary: one-way delay tester server
+Summary: Server for performing one-way or two-way active measurements
 Group: Networking/Other
 # Needed for owampd.pfs(5):
 Requires: I2util-tools
@@ -63,116 +60,135 @@ owamp server
 #applications that use the owamp library.
 
 %package doc
-Summary: one-way delay tester documentation
+Summary: Documentation for one-way and two-way delay tester
 Group: Networking/Other
 BuildArch: noarch
 %description doc
 The general documentation concerning OWAMP architecture.
 
-# Thrulay and I2Util get installed, but really, shouldn't be instaled.
-# Let's see what happens:
-%define _unpackaged_files_terminate_build      1
-
 %prep
-%setup -q
-filterdiff -p1 --exclude I2util <%PATCH0 \
-| patch -p1
-%patch100 -p2
+%setup
+%patch0 -p1
+%patch1 -p1
 
 %build
-
 %autoreconf
 %configure --with-I2util=no PATCH_LEVEL=%release
 %make_build
 
 %install
 %makeinstall
-# The upstream and Debian .service files differ only in the path to owampd:
-#%{__install} -D -p -m 0644 conf/owampd.service %{buildroot}%{_unitdir}/owamp-server.service
-%{__install} -D -p -m 0644 %SOURCE1 %{buildroot}%{_unitdir}/owamp-server.service
-# The upstream is too RH-specific; the Debian one should work fine through lsb-init
-# (and one our prospective user is Debian-oriented; they patch the script :( ):
-#%{__install} -D -p -m 0755 conf/owampd.init %{buildroot}%{_sysconfdir}/rc.d/init.d/owamp-server
-%{__install} -D -p -m 0755 %SOURCE2 %{buildroot}%{_initdir}/owamp-server
-%{__install} -D -p -m 0755 conf/owampd.limits %{buildroot}%{_sysconfdir}/owamp-server/owamp-server.limits
-%{__install} -D -p -m 0755 conf/owampd.rpm.conf %{buildroot}%{_sysconfdir}/owamp-server/owamp-server.conf
-%{__install} -D -p -m 0755 conf/owampd.limits %{buildroot}%{_sysconfdir}/owamp-server/owamp-server.limits.default
-%{__install} -D -p -m 0755 conf/owampd.rpm.conf %{buildroot}%{_sysconfdir}/owamp-server/owampd.conf.default
+
+%__install -D -p -m 0644 conf/owampd.service %buildroot%_unitdir/owamp-server.service
+%__install -D -p -m 0755 conf/owampd.init %buildroot%_initdir/owamp-server
+%__install -D -p -m 0755 conf/owampd.limits %buildroot%_sysconfdir/owamp-server/owamp-server.limits
+%__install -D -p -m 0755 conf/owampd.rpm.conf %buildroot%_sysconfdir/owamp-server/owamp-server.conf
+%__install -D -p -m 0755 conf/owampd.limits %buildroot%_sysconfdir/owamp-server/owamp-server.limits.default
+%__install -D -p -m 0755 conf/owampd.rpm.conf %buildroot%_sysconfdir/owamp-server/owampd.conf.default
+
+%__install -D -p -m 0644 conf/twampd.service %buildroot%_unitdir/twamp-server.service
+%__install -D -p -m 0755 conf/twampd.init %buildroot%_initdir/twamp-server
+%__install -D -p -m 0755 conf/twampd.limits %buildroot%_sysconfdir/twamp-server/twamp-server.limits
+%__install -D -p -m 0755 conf/twampd.rpm.conf %buildroot%_sysconfdir/twamp-server/twamp-server.conf
+%__install -D -p -m 0755 conf/twampd.limits %buildroot%_sysconfdir/twamp-server/twamp-server.limits.default
+%__install -D -p -m 0755 conf/twampd.rpm.conf %buildroot%_sysconfdir/twamp-server/twampd.conf.default
 
 # a ghost:
-mkdir -p %buildroot%_sysconfdir/%name-server/%name-server.pfs
-touch %buildroot%_sysconfdir/%name-server/%name-server.pfs
+mkdir -p %buildroot%_sysconfdir/owamp-server/
+touch %buildroot%_sysconfdir/owamp-server/owamp-server.pfs
+
+mkdir -p %buildroot%_sysconfdir/twamp-server/
+touch %buildroot%_sysconfdir/twamp-server/twamp-server.pfs
+
 # a default:
 mkdir -p %buildroot%_sysconfdir/default
-echo "#DAEMON_ARGS='-c /etc/owamp-server -R /var/run'" >%buildroot%_sysconfdir/default/%name-server
-mkdir -p %buildroot%_localstatedir/%name
+echo "#DAEMON_ARGS='-c /etc/owamp-server -R /var/run'" >%buildroot%_sysconfdir/default/owamp-server
+echo "#DAEMON_ARGS='-c /etc/twamp-server -R /var/run'" >%buildroot%_sysconfdir/default/twamp-server
+mkdir -p %buildroot%_localstatedir/owamp
+mkdir -p %buildroot%_localstatedir/twamp
 
-# A more correct place (like in Debian):
+# Move daemons to sbin:
 mkdir -p %buildroot%_sbindir
 mv -v %buildroot%_bindir/owampd -t %buildroot%_sbindir/
-# A test (not packaged in Debian, too):
-rm -v %buildroot%_bindir/owtvec
+mv -v %buildroot%_bindir/twampd -t %buildroot%_sbindir/
+
 # A static library used (only) to build these tools
-# (and not packaged in Debian, too):
 rm -v %buildroot%_libdir/lib%name.a
 
 %pre server
-# (Borrowed everything from openldap-servers.)
-# Take care to only do ownership-changing if we're adding the user.
-/usr/sbin/groupadd -rf %name
-/usr/sbin/useradd  -rM -c "OWAMP User" -g %name -s /dev/null -d %_localstatedir/%name %name &>/dev/null
-if [ -d %_localstatedir/%name ]; then
-	chown -R %name:%name %_localstatedir/%name
+/usr/sbin/groupadd -rf owamp
+/usr/sbin/groupadd -rf twamp
+
+/usr/sbin/useradd  -rM -c "OWAMP User" -g owamp -s /dev/null -d %_localstatedir/owamp owamp &>/dev/null
+/usr/sbin/useradd  -rM -c "TWAMP User" -g twamp -s /dev/null -d %_localstatedir/twamp twamp &>/dev/null
+if [ -d %_localstatedir/owamp ]; then
+	chown -R owamp:owamp %_localstatedir/owamp
 fi
 
+if [ -d %_localstatedir/twamp ]; then
+	chown -R twamp:twamp %_localstatedir/twamp
+fi
+
+
 %post server
-%post_service %name-server
+%post_service owamp-server
+%post_service twamp-server
 
 %preun server
-%preun_service %name-server
+%preun_service owamp-server
+%preun_service twamp-server
 
 %files client
-# Like in Debian (except for the docs):
 %doc README
 %doc LICENSE
-%{_bindir}/owfetch
-%{_bindir}/owping
-%{_bindir}/owstats
-%{_bindir}/owup
-%{_bindir}/powstream
-%{_mandir}/man1/owfetch.1.*
-%{_mandir}/man1/owping.1.*
-%{_mandir}/man1/owstats.1.*
-%{_mandir}/man1/owup.1.*
-%{_mandir}/man1/powstream.1.*
+%_bindir/owfetch
+%_bindir/owping
+%_bindir/owstats
+%_bindir/owup
+%_bindir/powstream
+%_bindir/twping
+%_mandir/man1/owfetch.1.*
+%_mandir/man1/owping.1.*
+%_mandir/man1/owstats.1.*
+%_mandir/man1/owup.1.*
+%_mandir/man1/powstream.1.*
+%_mandir/man1/twping.1.*
 
 %files doc
 %doc doc/draft-shalunov-reordering-definition-02.txt
-# Extra docs (not packaged in Debian):
 %doc doc/*.html doc/*.png doc/*.pdf
 
 %files server
-# Mostly like in Debian (except for some compat links):
 %doc README
 %doc LICENSE
-%{_sbindir}/owampd
-%{_mandir}/man5/*
-%{_mandir}/man8/*
-%config(noreplace) %{_sysconfdir}/owamp-server
-%ghost %config(noreplace) %{_sysconfdir}/owamp-server/owamp-server.pfs
-%{_unitdir}/owamp-server.service
-%{_initdir}/owamp-server
+%_sbindir/owampd
+%_sbindir/twampd
+%_mandir/man5/*
+%_mandir/man8/*
+%config(noreplace) %_sysconfdir/owamp-server
+%config(noreplace) %_sysconfdir/twamp-server
+%exclude %_sysconfdir/owamp-server/owamp-server.pfs
+%exclude %_sysconfdir/twamp-server/twamp-server.pfs
+%_unitdir/*
+%_initdir/*
+%ghost %config(noreplace) %_sysconfdir/owamp-server/owamp-server.pfs
+%ghost %config(noreplace) %_sysconfdir/twamp-server/twamp-server.pfs
 # And the unpriviledged dir:
-%attr(0750,owamp,owamp) %dir %_localstatedir/%name
+%attr(0750,owamp,owamp) %dir %_localstatedir/owamp
+%attr(0750,twamp,twamp) %dir %_localstatedir/twamp
 # An optional conf for the service:
-%config(noreplace) %_sysconfdir/default/%name-server
-# BTW, shadow-utils-4.1.4.2-alt8 makes %_sysconfdir/default/ not readable by all? Why?
+%config(noreplace) %_sysconfdir/default/owamp-server
+%config(noreplace) %_sysconfdir/default/twamp-server
 
 #%files devel
-#%{_libdir}/libbwlib.a
-#%{_includedir}/owamp/*
+#%_libdir/libbwlib.a
+#%_includedir/owamp/*
 
 %changelog
+* Wed Apr 21 2021 Egor Ignatov <egori@altlinux.org> 4.3.4-alt1
+- new version
+- cleanup spec and .gear/rules
+
 * Thu Oct  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt2
 - Running ntpds (with "synchronized" configuration) are needed for
   reasonable operation on both ends: owamp-server and owamp-client.
