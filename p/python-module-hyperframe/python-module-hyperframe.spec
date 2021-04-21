@@ -1,10 +1,10 @@
 %def_without check
-%def_with python3
+%def_without python3
 
 %define modulename hyperframe
 Name: python-module-hyperframe
 Version: 5.2.0
-Release: alt1
+Release: alt2
 
 Summary: HTTP/2 framing layer for Python
 
@@ -84,6 +84,9 @@ popd
 
 
 %changelog
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt2
+- build python2 module only
+
 * Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
 - new version 5.2.0 (with rpmrb script)
 
