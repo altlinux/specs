@@ -1,17 +1,48 @@
 %ifnarch %ix86
-%define _without_asm 1
+%def_without asm
+%else
+%set_verify_elf_method textrel=relaxed
 %endif
 
-%define mk_build %make_build LDFLAGS="-lm -ldl"
+# default build options
+%{!?_without_asm:%define asm_buildopt USE_X86_ASM=yes}
+%{!?_without_alsa:%define alsa_buildopt USE_ALSA=yes}
+%{!?_without_midi:%define midi_buildopt USE_MIDI=yes}
+%{!?_without_timidity:%define timidity_buildopt USE_CODEC_TIMIDITY=yes}
+%{!?_without_wavmusic:%define wavmusic_buildopt USE_CODEC_WAVE=yes}
+%{!?_with_mpg123:%define mp3_libraryopt MP3LIB=mad}
+%{!?_without_mp3:%define mp3_buildopt USE_CODEC_MP3=yes}
+%{!?_without_ogg:%define ogg_buildopt USE_CODEC_VORBIS=yes}
+%{!?_with_flac:%define flac_buildopt USE_CODEC_FLAC=no}
+%{!?_with_opus:%define opus_buildopt USE_CODEC_OPUS=no}
+%{!?_with_mikmod:%define mikmod_buildopt USE_CODEC_MIKMOD=no}
+%{!?_with_umx:%define umx_buildopt USE_CODEC_UMX=no}
+# build option overrides
+%{?_without_asm:%define asm_buildopt USE_X86_ASM=no}
+%{?_without_alsa:%define alsa_buildopt USE_ALSA=no}
+%{?_without_midi:%define midi_buildopt USE_MIDI=no}
+%{?_without_timidity:%define timidity_buildopt USE_CODEC_TIMIDITY=no}
+%{?_without_wavmusic:%define wavmusic_buildopt USE_CODEC_WAVE=no}
+%{?_with_mpg123:%define mp3_libraryopt MP3LIB=mpg123}
+%{?_without_mp3:%define mp3_buildopt USE_CODEC_MP3=no}
+%{?_without_ogg:%define ogg_buildopt USE_CODEC_VORBIS=no}
+%{?_with_flac:%define flac_buildopt USE_CODEC_FLAC=yes}
+%{?_with_opus:%define opus_buildopt USE_CODEC_OPUS=yes}
+%{?_with_mikmod:%define mikmod_buildopt USE_CODEC_MIKMOD=yes}
+%{?_with_umx:%define umx_buildopt USE_CODEC_UMX=yes}
+# all build options passed to makefile
+%define engine_buildopt	%asm_buildopt %alsa_buildopt %midi_buildopt %timidity_buildopt %wavmusic_buildopt %mp3_buildopt %mp3_libraryopt %ogg_buildopt %opus_buildopt %flac_buildopt %mikmod_buildopt %umx_buildopt
+
+%define mk_build %make_build %engine_buildopt
 
 %define desktop_vendor	uhexen2
-%define gamecode_ver	1.19a
+%define gamecode_ver	1.29b
 %define gamedir %_libdir/%name
 
 Name: hexen2
-License: GPL
+License: GPLv2
 Group: Games/Arcade
-Version: 1.4.3
+Version: 1.5.9
 Release: alt3
 Summary: Hexen II: Hammer of Thyrion
 Url: http://uhexen2.sourceforge.net/
@@ -23,8 +54,9 @@ Patch:	hexen-MAX_OSPATH.patch
 
 %{!?_without_asm:BuildRequires:  nasm >= 0.98}
 
-# Automatically added by buildreq on Sun Jun 06 2010
-BuildRequires: libGL-devel libSDL_mixer-devel libalsa-devel libgtk+2-devel zlib-devel
+# Automatically added by buildreq on Wed Apr 21 2021
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libImageMagick6-common libglvnd-devel libgpg-error libogg-devel python2-base sh4
+BuildRequires: ImageMagick-tools libSDL-devel libalsa-devel libmad-devel libvorbis-devel
 
 %description
 Hexen II is a class based shooter game by Raven Software from 1997.
@@ -48,50 +80,36 @@ run a HexenWorld server or client, and a master server application.
 
 %prep
 %setup -q -n hexen2source-%version -a1 -a2
-%if %{?_without_asm:1}0
-sed -i 's/USE_X86_ASM=yes/USE_X86_ASM=no/' hexen2/Makefile hexenworld/Client/Makefile
-%endif
-#if %{?_without_alsa:1}0
-#ed -i 's/USE_ALSA=yes/USE_ALSA=no/' hexen2/Makefile hexenworld/Client/Makefile
-#endif
-#if %{?_without_midi:1}0
-#ed -i 's/USE_MIDI=yes/USE_MIDI=no/' hexen2/Makefile hexenworld/Client/Makefile
-#endif
-
-%patch -p1
+sed -i 's@hexen2dir=.*@hexen2dir=%gamedir@' scripts/hexen2-run.sh
 
 %build
 
 # Build the main game binaries
-%mk_build -C hexen2 h2
-%make -s -C hexen2 clean
-%mk_build -C hexen2 glh2
-%make -s -C hexen2 clean
+%mk_build -C engine/hexen2 h2
+%make -s -C engine/hexen2 localclean
+%mk_build -C engine/hexen2 glh2
+%make -s -C engine/hexen2 localclean
 # Build the dedicated server
-%make_build -C hexen2 -f Makefile.sv
+%make_build -C engine/hexen2/server
 # HexenWorld binaries
-%make_build -C hexenworld/Server
-%mk_build -C hexenworld/Client hw
-%make -s -C hexenworld/Client clean
-%mk_build -C hexenworld/Client glhw
+%make_build -C engine/hexenworld/server
+%mk_build -C engine/hexenworld/client hw
+%make -s -C engine/hexenworld/client localclean
+%mk_build -C engine/hexenworld/client glhw
 # HexenWorld master server
-%make_build -C hexenworld/Master
+%make_build -C hw_utils/hwmaster
 
-# Build xdelta binary and its libraries: do this before
-# building the launcher, it uses its object files.
-%make_build -C xdelta11 -f Makefile.xd
+# Build h2patch
+%make_build -C h2patch
 
-# Launcher binaries
-%make_build -C launcher
-# Build the hcode compilers
-%make_build -C utils/hcc_old
+# Build the hcode compiler
 %make_build -C utils/hcc
 # Build the game-code
-utils/hcc_old/hcc -src gamecode-%gamecode_ver/hc/h2
-utils/hcc_old/hcc -src gamecode-%gamecode_ver/hc/h2 -name progs2.src
-utils/bin/hcc -src gamecode-%gamecode_ver/hc/portals -oi -on
-utils/bin/hcc -src gamecode-%gamecode_ver/hc/hw -oi -on
-#utils/bin/hcc -src gamecode-%gamecode_ver/hc/siege -oi -on
+utils/hcc/hcc -src gamecode-%gamecode_ver/hc/h2 -os
+utils/hcc/hcc -src gamecode-%gamecode_ver/hc/h2 -os -name progs2.src
+utils/hcc/hcc -src gamecode-%gamecode_ver/hc/portals -os -oi -on
+utils/hcc/hcc -src gamecode-%gamecode_ver/hc/hw -os -oi -on
+#utils/bin/hcc -src gamecode-%gamecode_ver/hc/siege -os -oi -on
 
 # Install menu entry
 cat > %name.desktop << EOF
@@ -106,95 +124,104 @@ Categories=Game;ActionGame;
 EOF
 # Done building
 
+convert engine/resource/hexen2n.png -resize 48x48 48.png
+convert engine/resource/hexen2n.png -resize 16x16 16.png
+
 %install
-install -D -m755 hexen2/h2ded %buildroot/%gamedir/h2ded
-install -D -m755 hexen2/glhexen2 %buildroot/%gamedir/glhexen2
-install -D -m755 hexen2/hexen2 %buildroot/%gamedir/hexen2
-install -D -m755 hexenworld/Client/hwcl %buildroot/%gamedir/hwcl
-install -D -m755 hexenworld/Client/glhwcl %buildroot/%gamedir/glhwcl
-install -D -m755 hexenworld/Server/hwsv %buildroot/%gamedir/hwsv
-install -D -m755 hexenworld/Master/hwmaster %buildroot/%gamedir/hwmaster
-install -D -m755 launcher/h2launcher %buildroot/%gamedir/h2launcher
-# Make a symlink of the game-launcher
-mkdir -p %buildroot/%_bindir
-ln -s %gamedir/h2launcher %buildroot/%_bindir/hexen2
+install -D -m755 engine/hexen2/glhexen2 %buildroot/%gamedir/glhexen2
+install -D -m755 engine/hexen2/hexen2 %buildroot/%gamedir/hexen2
+install -D -m755 engine/hexen2/server/h2ded %buildroot/%gamedir/h2ded
+install -D -m755 engine/hexenworld/client/hwcl %buildroot/%gamedir/hwcl
+install -D -m755 engine/hexenworld/client/glhwcl %buildroot/%gamedir/glhwcl
+install -D -m755 engine/hexenworld/server/hwsv %buildroot/%gamedir/hwsv
+install -D -m755 hw_utils/hwmaster/hwmaster %buildroot/%gamedir/hwmaster
+install -D -m755 h2patch/h2patch %buildroot/%gamedir/h2patch
+
+# Install the run script and make symlinks to it
+install -D -m755 scripts/hexen2-run.sh %buildroot/%_bindir/hexen2-run.sh
+ln -s hexen2-run.sh %buildroot/%_bindir/glhexen2
+ln -s hexen2-run.sh %buildroot/%_bindir/hexen2
+ln -s hexen2-run.sh %buildroot/%_bindir/h2ded
+ln -s hexen2-run.sh %buildroot/%_bindir/glhwcl
+ln -s hexen2-run.sh %buildroot/%_bindir/hwcl
+ln -s hexen2-run.sh %buildroot/%_bindir/hwsv
+
+# Install the cd-rip scripts
+install -m755 scripts/cdrip_* %buildroot/%gamedir/
 
 # Install the gamedata
-mkdir -p %buildroot/%gamedir/data1/
 install -D -m644 gamecode-%gamecode_ver/hc/h2/progs.dat %buildroot/%gamedir/data1/progs.dat
 install -D -m644 gamecode-%gamecode_ver/hc/h2/progs2.dat %buildroot/%gamedir/data1/progs2.dat
-install -D -m644 gamecode-%gamecode_ver/txt/h2/hexen.rc %buildroot/%gamedir/data1/hexen.rc
-install -D -m644 gamecode-%gamecode_ver/txt/h2/strings.txt %buildroot/%gamedir/data1/strings.txt
-install -D -m644 gamecode-%gamecode_ver/txt/h2/default.cfg %buildroot/%gamedir/data1/default.cfg
-mkdir -p %buildroot/%gamedir/portals/
+install -D -m644 gamecode-%gamecode_ver/res/h2/hexen.rc %buildroot/%gamedir/data1/hexen.rc
+install -D -m644 gamecode-%gamecode_ver/res/h2/strings.txt %buildroot/%gamedir/data1/strings.txt
+install -D -m644 gamecode-%gamecode_ver/res/h2/default.cfg %buildroot/%gamedir/data1/default.cfg
 install -D -m644 gamecode-%gamecode_ver/hc/portals/progs.dat %buildroot/%gamedir/portals/progs.dat
-install -D -m644 gamecode-%gamecode_ver/txt/portals/hexen.rc %buildroot/%gamedir/portals/hexen.rc
-install -D -m644 gamecode-%gamecode_ver/txt/portals/strings.txt %buildroot/%gamedir/portals/strings.txt
-install -D -m644 gamecode-%gamecode_ver/txt/portals/infolist.txt %buildroot/%gamedir/portals/infolist.txt
-install -D -m644 gamecode-%gamecode_ver/txt/portals/maplist.txt %buildroot/%gamedir/portals/maplist.txt
-install -D -m644 gamecode-%gamecode_ver/txt/portals/puzzles.txt %buildroot/%gamedir/portals/puzzles.txt
-install -D -m644 gamecode-%gamecode_ver/txt/portals/default.cfg %buildroot/%gamedir/portals/default.cfg
-mkdir -p %buildroot/%gamedir/hw/
+install -D -m644 gamecode-%gamecode_ver/res/portals/hexen.rc %buildroot/%gamedir/portals/hexen.rc
+install -D -m644 gamecode-%gamecode_ver/res/portals/strings.txt %buildroot/%gamedir/portals/strings.txt
+install -D -m644 gamecode-%gamecode_ver/res/portals/infolist.txt %buildroot/%gamedir/portals/infolist.txt
+install -D -m644 gamecode-%gamecode_ver/res/portals/maplist.txt %buildroot/%gamedir/portals/maplist.txt
+install -D -m644 gamecode-%gamecode_ver/res/portals/puzzles.txt %buildroot/%gamedir/portals/puzzles.txt
+install -D -m644 gamecode-%gamecode_ver/res/portals/default.cfg %buildroot/%gamedir/portals/default.cfg
 install -D -m644 gamecode-%gamecode_ver/hc/hw/hwprogs.dat %buildroot/%gamedir/hw/hwprogs.dat
-install -D -m644 gamecode-%gamecode_ver/txt/hw/strings.txt %buildroot/%gamedir/hw/strings.txt
-install -D -m644 gamecode-%gamecode_ver/txt/hw/default.cfg %buildroot/%gamedir/hw/default.cfg
+install -D -m644 gamecode-%gamecode_ver/res/hw/mapcycle.cfg %buildroot/%gamedir/hw/mapcycle.cfg
+install -D -m644 gamecode-%gamecode_ver/res/hw/server.cfg %buildroot/%gamedir/hw/server.cfg
+install -D -m644 gamecode-%gamecode_ver/res/hw/strings.txt %buildroot/%gamedir/hw/strings.txt
+install -D -m644 gamecode-%gamecode_ver/res/hw/default.cfg %buildroot/%gamedir/hw/default.cfg
 install -D -m644 hw/pak4.pak %buildroot/%gamedir/hw/pak4.pak
 
-# Install the xdelta updates
-mkdir -p %buildroot/%gamedir/patchdata/
-mkdir -p %buildroot/%gamedir/patchdata/data1
-install -D -m755 gamecode-%gamecode_ver/pak_v111/update_xdelta.sh %buildroot/%gamedir/update_xdelta.sh
-install -D -m644 gamecode-%gamecode_ver/pak_v111/patchdata/data1/data1pak0.xd %buildroot/%gamedir/patchdata/data1/data1pak0.xd
-install -D -m644 gamecode-%gamecode_ver/pak_v111/patchdata/data1/data1pak1.xd %buildroot/%gamedir/patchdata/data1/data1pak1.xd
+# Install ent fixes handling map quirks
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/README.txt %buildroot/%gamedir/data1/maps/README.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/cath.ent %buildroot/%gamedir/data1/maps/cath.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/cath.txt %buildroot/%gamedir/data1/maps/cath.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/demo2.ent %buildroot/%gamedir/data1/maps/demo2.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/demo2.txt %buildroot/%gamedir/data1/maps/demo2.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/egypt4.ent %buildroot/%gamedir/data1/maps/egypt4.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/egypt4.txt %buildroot/%gamedir/data1/maps/egypt4.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/egypt5.ent %buildroot/%gamedir/data1/maps/egypt5.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/egypt5.txt %buildroot/%gamedir/data1/maps/egypt5.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/romeric5.ent %buildroot/%gamedir/data1/maps/romeric5.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/romeric5.txt %buildroot/%gamedir/data1/maps/romeric5.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/tower.ent %buildroot/%gamedir/data1/maps/tower.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/data1/maps/tower.txt %buildroot/%gamedir/data1/maps/tower.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/portals/maps/README.txt %buildroot/%gamedir/portals/maps/README.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/portals/maps/tibet2.ent %buildroot/%gamedir/portals/maps/tibet2.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/portals/maps/tibet2.txt %buildroot/%gamedir/portals/maps/tibet2.txt
+install -D -m644 gamecode-%gamecode_ver/mapfixes/portals/maps/tibet9.ent %buildroot/%gamedir/portals/maps/tibet9.ent
+install -D -m644 gamecode-%gamecode_ver/mapfixes/portals/maps/tibet9.txt %buildroot/%gamedir/portals/maps/tibet9.txt
 
-# Install the update-patcher binaries
-install -D -m755 xdelta11/xdelta %buildroot/%gamedir/xdelta114
+# Install the pak deltas
+install -D -m644 gamecode-%gamecode_ver/patch111/patchdat/data1/data1pk0.xd3 %buildroot/%gamedir/patchdat/data1/data1pk0.xd3
+install -D -m644 gamecode-%gamecode_ver/patch111/patchdat/data1/data1pk1.xd3 %buildroot/%gamedir/patchdat/data1/data1pk1.xd3
+install -D -m644 gamecode-%gamecode_ver/patch111/patchdat.txt %buildroot/%gamedir/patchdat.txt
+
+install -D -m644 engine/resource/hexen2.png %buildroot/%gamedir/hexen2.png
 
 # Install the menu icon
-mkdir -p %buildroot/%_datadir/pixmaps
-install -D -m644 hexen2/icons/h2_32x32x4.png %buildroot/%_datadir/pixmaps/%name.png
+install -D engine/resource/%name.png %buildroot%_niconsdir/%name.png
+install -D 48.png %buildroot%_liconsdir/%name.png
+install -D 16.png %buildroot%_miconsdir/%name.png
 
 install -D -m 0644 %name.desktop  %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc docs/*
-#exclude %_defaultdocdir/%name-%version/README.hw*
-%gamedir/h2ded
-%gamedir/hexen2
-%gamedir/glhexen2
-%gamedir/xdelta114
-%gamedir/update_xdelta.sh
-%gamedir/patchdata/data1/data1pak0.xd
-%gamedir/patchdata/data1/data1pak1.xd
-%gamedir/data1/progs.dat
-%gamedir/data1/progs2.dat
-%gamedir/data1/hexen.rc
-%gamedir/data1/strings.txt
-%gamedir/data1/default.cfg
-%gamedir/portals/progs.dat
-%gamedir/portals/hexen.rc
-%gamedir/portals/strings.txt
-%gamedir/portals/puzzles.txt
-%gamedir/portals/infolist.txt
-%gamedir/portals/maplist.txt
-%gamedir/portals/default.cfg
-%_bindir/hexen2
-%_datadir/pixmaps/%name.png
-%gamedir/h2launcher
+%_bindir/*
+%exclude %_bindir/*hw*
+%gamedir/*
+%exclude %gamedir/*hw* 
 %_desktopdir/%name.desktop
+%_iconsdir/hicolor/*/apps/*
 
 %files -n hexenworld
-%doc docs/README.hw*
-%gamedir/hwsv
-%gamedir/hwmaster
-%gamedir/hwcl
-%gamedir/glhwcl
-%gamedir/hw/hwprogs.dat
-%gamedir/hw/pak4.pak
-%gamedir/hw/strings.txt
-%gamedir/hw/default.cfg
+%doc docs/*hw*
+%_bindir/*hw*
+%gamedir/*hw* 
 
 %changelog
+* Wed Apr 21 2021 Fr. Br. George <george@altlinux.ru> 1.5.9-alt3
+- Submajor version update
+- Brute force ix86 build
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 1.4.3-alt3
 - DSO list completion
 
