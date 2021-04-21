@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-macros-mageia-compat
 BuildRequires: perl(Module/Build.pm) perl-podlators
@@ -10,14 +11,14 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    3.0.3
-Release:    alt1_1
+Version:    3.0.4
+Release:    alt1
 
 Summary:    Perl extension to model fractions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    https://cpan.metacpan.org/modules/by-module/Number/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{upstream_name}-v%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -39,7 +40,7 @@ overloading.
 If you use the module in your program in the usual way
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-v%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -53,10 +54,13 @@ If you use the module in your program in the usual way
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README
+%doc META.json META.yml README Changes.md Changes.old
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Apr 21 2021 Igor Vlasenko <viy@altlinux.org> 3.0.4-alt1
+- automated CPAN update
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_1
 - update by mgaimport
 
