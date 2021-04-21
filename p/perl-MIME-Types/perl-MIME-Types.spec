@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MIME-Types
 Name: perl-MIME-Types
-Version: 2.18
+Version: 2.19
 Release: alt1
 
 Summary: Definition of MIME types
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/home/markov/local/perl-git/%{dist}/public_html/mime-types/source/MIME-Types-219targz/MIME-Types-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -55,6 +55,9 @@ Requires: %name = %version-%release
 %doc	%perl_vendor_privlib/MojoX/MIME/*.pod
 
 %changelog
+* Wed Apr 21 2021 Igor Vlasenko <viy@altlinux.org> 2.19-alt1
+- automated CPAN update
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1
 - automated CPAN update
 
