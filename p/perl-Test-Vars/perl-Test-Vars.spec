@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-Vars
-Version:	0.014
-Release:	alt1_13
+Version:	0.015
+Release:	alt1
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-Vars
-Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-Vars-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/G/GF/GFUJI/Test-Vars-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Build requirements
@@ -81,15 +82,17 @@ perl Build.PL --installdirs=vendor
 prove -Ilib $(echo $(find xt/ -name '*.t'))
 
 %files
+%doc LICENSE Changes README.md example
 %if 0%{?_licensedir:1}
-%doc --no-dereference LICENSE
 %else
-%doc LICENSE
 %endif
 %doc Changes README.md example/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Apr 21 2021 Igor Vlasenko <viy@altlinux.org> 0.015-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_13
 - update to new release by fcimport
 
