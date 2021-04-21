@@ -1,6 +1,6 @@
 Summary: Flat assembler
 Name: fasm
-Version: 1.73.12
+Version: 1.73.27
 Release: alt1
 License: BSD-like
 Group: Development/Tools
@@ -10,7 +10,7 @@ ExclusiveArch: %ix86
 
 # Automatically added by buildreq on Wed Feb 08 2017
 # optimized out: python-base
-BuildRequires: fasm prelink
+BuildRequires: fasm prelink glibc-devel-static
 
 %description
 The flat assembler is a fast and efficient self-assembling 80x86
@@ -26,13 +26,17 @@ is included.
 %setup -n %name
 sed -i 's/fopen/fopen64/g' source/libc/system.inc
 sed -i 's/fopen/fopen64/g' tools/libc/system.inc
+sed -i 's/cinvoke exit$/cinvoke exit, 0/' examples/elfexe/dynamic/hello.asm
+sed -i '/ret$/i xor eax, eax' examples/libcdemo/libcdemo.asm
+sed -i 's/gcc libcdemo.o/gcc -static libcdemo.o/' examples/libcdemo/libcdemo.asm
 
 %build
+find * -name \*.o -exec rm {} \;
 %define FTOOLS listing prepsrc symbols
 fasm source/Linux/fasm.asm fasm
 for n in %FTOOLS; do
 	./fasm tools/libc/$n.asm $n.o
-	cc $n.o -o $n
+	cc -static $n.o -o $n
 	execstack -c $n
 done
 
@@ -40,11 +44,31 @@ done
 install -Dm755 %name %buildroot%_bindir/%name
 install %FTOOLS %buildroot%_bindir/
 
+%check
+./fasm examples/elfexe/hello.asm
+examples/elfexe/hello | { read A; test "$A" = 'Hello world!'; }
+./fasm examples/elfexe/dynamic/hello.asm
+examples/elfexe/dynamic/hello | { read A; test "$A" = 'Hello world!'; }
+./fasm examples/elfobj/msgdemo.asm
+./fasm examples/elfobj/writemsg.asm
+ld examples/elfobj/msgdemo.o examples/elfobj/writemsg.o -o examples/elfobj/msgdemo
+examples/elfobj/msgdemo | { read A; test "$A" = 'Elves are coming!'; }
+./fasm examples/libcdemo/libcdemo.asm
+cc -static examples/libcdemo/libcdemo.o -o examples/libcdemo/libcdemo
+examples/libcdemo/libcdemo >o &
+wait
+read A <o
+test "$A" = "Current process ID is $!."
+
 %files
 %doc *.txt examples
 %_bindir/*
 
 %changelog
+* Wed Apr 21 2021 Fr. Br. George <george@altlinux.ru> 1.73.27-alt1
+- Autobuild version bump to 1.73.27
+- Introduce check section
+
 * Mon Jun 17 2019 Fr. Br. George <george@altlinux.ru> 1.73.12-alt1
 - Autobuild version bump to 1.73.12
 
