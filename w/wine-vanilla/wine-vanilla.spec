@@ -1,6 +1,6 @@
 %def_disable static
 %define gecko_version 2.47.2
-%define mono_version 6.0.0
+%define mono_version 6.1.1
 
 # rpm-build-info gives _distro_version
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
@@ -11,7 +11,7 @@
 %endif
 
 Name: wine-vanilla
-Version: 6.5
+Version: 6.6
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -401,6 +401,8 @@ done
 %endif
 
 %_libdir/wine/ntdll.so
+%_libdir/wine/dnsapi.so
+%_libdir/wine/dwrite.so
 %_libdir/wine/gdi32.so
 %_libdir/wine/user32.so
 %_libdir/wine/bcrypt.so
@@ -510,6 +512,9 @@ done
 %endif
 
 %changelog
+* Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.6-alt1
+- new version 6.6
+
 * Sat Mar 27 2021 Vitaly Lipatov <lav@altlinux.ru> 6.5-alt1
 - new version 6.5
 
