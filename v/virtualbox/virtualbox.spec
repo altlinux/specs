@@ -62,8 +62,8 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 6.1.18
-Release: alt4
+Version: 6.1.20
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -936,6 +936,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Apr 21 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.20-alt1
+- Update to latest maintenance release.
+
 * Sun Apr 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.18-alt4
 - Enable to build vbox-img converting command line utility (Closes: 39451)
 - Add missed vboximg-mount FUSE mounting command line utility provides

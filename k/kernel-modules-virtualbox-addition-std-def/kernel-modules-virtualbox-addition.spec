@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version  6.1.18
-%define module_release	alt3
+%define module_version  6.1.20
+%define module_release	alt1
 
 %define flavour		std-def
 %define karch x86_64 %ix86
@@ -28,8 +28,6 @@ ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
 
 Patch0: vboxcommon-5.4.patch
-Patch1: vboxvideo-5.11.patch
-Patch2: vboxguest-5.10.patch
 
 BuildPreReq: gcc-c++
 BuildRequires: perl
@@ -113,16 +111,12 @@ your kernel.
 tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
 pushd kernel-source-%guest_module_name-%module_version
 %patch0 -p1
-%patch2 -p4
 popd
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 pushd kernel-source-%vfs_module_name-%module_version
 %patch0 -p1
 popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
-pushd kernel-source-%video_module_name-%module_version
-%patch1 -p6
-popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -158,6 +152,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Apr 21 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.20-alt1
+- Updated template for virtualbox 6.1.20
 
 * Mon Apr 19 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.18-alt3
 - Fixed build with kernel-5.10 on i586 and with un-def kernel-5.11
