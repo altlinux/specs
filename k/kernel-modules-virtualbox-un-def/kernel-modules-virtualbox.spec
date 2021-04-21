@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	6.1.18
+%define module_version	6.1.20
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -32,7 +32,6 @@ ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
 
 Patch0: vboxcommon-5.4.patch
-Patch1: vboxnetflt-5.11.patch
 
 BuildPreReq: gcc-c++
 BuildRequires: perl
@@ -77,7 +76,6 @@ popd
 tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
 pushd kernel-source-%net_module_name-%module_version
 %patch0 -p1
-%patch1 -p1
 popd
 tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
 pushd kernel-source-%net_module_adaptor_name-%module_version
@@ -120,6 +118,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Apr 21 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.20-alt1
+- Updated template for virtualbox 6.1.20
 
 * Thu Jan 21 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.18-alt1
 - Updated template for virtualbox 6.1.18
