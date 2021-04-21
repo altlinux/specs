@@ -13,7 +13,7 @@
 
 Name: ppp
 Version: 2.4.8
-Release: alt2
+Release: alt3
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -237,6 +237,9 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Wed Apr 21 2021 Slava Aseev <ptrnine@altlinux.org> 2.4.8-alt3
+- fix FTBFS due to sys_errlist removal in glibc
+
 * Tue Mar 10 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.8-alt2
 - delete -fstack-protector
 
