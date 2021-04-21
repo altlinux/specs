@@ -1,11 +1,12 @@
 Name:		xmr-stak
-Version:	2.5.2
+Version:	2.10.8
 Release:	alt1
 Summary:	XMR-Stak - Cryptonight Mining Software
 Url:		https://github.com/fireice-uk/xmr-stak
 Group:		Office
 License:	GPLv3
 Source0:	%name.tar.xz
+Patch0:	%name-libmicrohttpd.patch
 
 ExclusiveArch:	x86_64
 
@@ -21,6 +22,7 @@ and many more Cryptonight coins.
 
 %prep
 %setup -n %name
+%patch0 -p2
 
 %build
 subst 's|2.0|0.1|g' ./xmrstak/donate-level.hpp
@@ -42,6 +44,10 @@ install -Dp -m 0755 ./bin/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Apr 21 2021 Slava Aseev <ptrnine@altlinux.org> 2.10.8-alt1
+- 2.10.8
+- fix build with libmicrohttpd-0.9.71
+
 * Wed Nov 14 2018 Motsyo Gennadi <drool@altlinux.ru> 2.5.2-alt1
 - 2.5.2
 
