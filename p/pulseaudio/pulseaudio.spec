@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 14.2
-Release: alt2
+Release: alt3
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -323,6 +323,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/vala/vapi/*
 
 %changelog
+* Wed Apr 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt3
+- do not require doxygen at build time
+
 * Thu Mar 18 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt2
 - readded udev-extras req to ease migration from older branches
 
