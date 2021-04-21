@@ -1,14 +1,14 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.8.2
-%def_disable grass
+%define grass_version 7.8.5
+%def_enable grass
 %def_enable python
 %def_enable devel
 %def_enable server
 %define rname qgis
 
 Name:    qgis3
-Version: 3.18.1
+Version: 3.18.2
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -24,11 +24,9 @@ Source2: qgis.desktop
 Source3: qgis-server-httpd.conf
 Source4: qgis-server-README
 Source5: qgis.xml
-Source6: %rname-mimelnk.tar
 
-# Fix detection problem for GRASS libraries
-Patch1: %rname-ignore-bundled-modules.patch
-Patch3: %rname-fix-unresolved-variable.patch
+Patch1: qgis-lib64.patch
+Patch2: qgis-serverprefix.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -170,8 +168,8 @@ Please refer to %name-server-README for details!
 
 %prep
 %setup -n %rname-%version
-#patch1 -p1
-#%%patch3 -p1
+%patch1 -p1
+%patch2 -p1
 
 # Delete bundled libs
 rm -rf src/core/gps/qextserialport
@@ -195,9 +193,9 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
 	-DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%rname \
 	-DWITH_BINDINGS:BOOL=%{?_enable_python:ON}%{?!_enable_python:OFF} \
 	-DWITH_SERVER:BOOL=%{?_enable_server:ON}%{?!_enable_server:OFF} \
-%if_with grass
-	-DGRASS_PREFIX:PATH=%_libdir/grass \
-	-DGRASS_PREFIX7:PATH=%_libdir/grass \
+%if_enabled grass
+	-DWITH_GRASS=TRUE \
+	-DGRASS_PREFIX7=%_libdir/grass \
 %endif
 	-DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
 	-DWITH_CUSTOM_WIDGETS:BOOL=TRUE \
@@ -226,8 +224,6 @@ desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE2
 # Install MIME type definitions
 install -pd %buildroot%_datadir/mime/packages
 install -pm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%rname.xml
-install -pd %buildroot%_datadir/mimelnk/application
-tar xf %SOURCE6 -C %buildroot%_datadir/mimelnk/application
 
 # Install application and MIME icons
 install -pd %buildroot%_datadir/pixmaps
@@ -330,7 +326,6 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %exclude %_libdir/%rname/libgrassrasterprovider*.so
 %exclude %_libdir/%rname/grass
 %endif
-%_datadir/mimelnk/application/*
 %_datadir/metainfo/org.qgis.qgis.appdata.xml
 
 %if_enabled devel
@@ -367,6 +362,10 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Tue Apr 20 2021 Andrey Cherepanov <cas@altlinux.org> 3.18.2-alt1
+- New version.
+- Enable GRASS support.
+
 * Sat Mar 20 2021 Andrey Cherepanov <cas@altlinux.org> 3.18.1-alt1
 - New version.
 
