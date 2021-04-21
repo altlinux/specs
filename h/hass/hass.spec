@@ -1,5 +1,5 @@
 Name: hass
-Version: 2021.4.4
+Version: 2021.4.6
 Release: alt1
 
 Summary: Home automation platform
@@ -89,6 +89,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed Apr 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.4.6-alt1
+- 2021.4.6 released
+
 * Tue Apr 13 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.4.4-alt1
 - 2021.4.4 released
 
