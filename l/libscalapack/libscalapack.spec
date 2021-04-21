@@ -6,23 +6,33 @@
 
 %def_enable bootstrap
 
-%define somver 1
-%define sover %somver.8.0
+%define sover 2
 Name: lib%origname
-Version: 1.8.0
-Release: alt20
+Version: 2.1.0
+Release: alt1
 Summary: Scalable LAPACK library
-License: LGPL
+License: BSD-style
 Group: Sciences/Mathematics
 Url: http://www.netlib.org/scalapack/
 
 Source: %origname-%version.tar
-Source1: SLmake.inc
-Source2: manpages.tar
+Source1: manpages.tar
 
-BuildPreReq: liblapack-devel gcc-fortran
-BuildPreReq: %mpiimpl-devel
-BuildPreReq: libblacs-devel chrpath
+# Patches from Fedora
+Patch1: scalapack-2.1-fix-version.patch
+
+# Patches from Gentoo
+Patch2: scalapack-upstream-gcc10-compat.patch
+
+# Patches from ALT
+Patch3: scalapack-2.1.0-alt-pkgconfig.patch
+
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: cmake
+BuildRequires: gcc-fortran
+BuildRequires: libopenblas-devel
+BuildRequires: liblapack-devel
+BuildRequires: libblacs-devel
 %if_disabled bootstrap
 # circular build deps with arpack
 BuildRequires: libarpack-devel
@@ -53,29 +63,44 @@ as much as possible.
 
 If You need man pages, install libscalapack-manpages.
 
-%package debug
-Summary: Debug version of ScaLAPACK
+%package common
+Summary: Common files for scalapack
 Group: Sciences/Mathematics
-%if_disabled bootstrap
-Requires: libarpack-devel
-%endif
-Requires: libblacs-devel-debug
 
-%description debug
-Debug version of ScaLAPACK.
+%description common
+The ScaLAPACK (or Scalable LAPACK) library includes a subset of LAPACK routines
+redesigned for distributed memory MIMD parallel computers. It is currently
+written in a Single-Program-Multiple-Data style using explicit message passing
+for interprocessor communication. It assumes matrices are laid out in a
+two-dimensional block cyclic decomposition.
 
-If You need man pages, install libscalapack-manpages.
+ScaLAPACK is designed for heterogeneous computing and is portable on any 
+computer that supports MPI or PVM.
+
+Like LAPACK, the ScaLAPACK routines are based on block-partitioned algorithms in
+order to minimize the frequency of data movement between different levels of the
+memory hierarchy. (For such machines, the memory hierarchy includes the
+off-processor memory of other processors, in addition to the hierarchy of
+registers, cache, and local memory on each processor.) The fundamental building
+blocks of the ScaLAPACK library are distributed memory versions (PBLAS) of the
+Level 1, 2 and 3 BLAS, and a set of Basic Linear Algebra Communication
+Subprograms (BLACS) for communication tasks that arise frequently in parallel
+linear algebra computations. In the ScaLAPACK routines, all interprocessor
+communication occurs within the PBLAS and the BLACS. One of the design goals of
+ScaLAPACK was to have the ScaLAPACK routines resemble their LAPACK equivalents
+as much as possible.
+
+This package contains common files which are not specific
+to any MPI implementation.
 
 %package devel
 Summary: Development files of ScaLAPACK
 Group: Development/Other
-Requires: libblacs-devel %mpiimpl-devel
+Requires: %mpiimpl-devel
 %if_disabled bootstrap
 Requires: libarpack-devel
 %endif
 Requires: %name = %EVR
-Conflicts: %name < %EVR
-Obsoletes: %name < %EVR
 
 %description devel
 Development files of ScaLAPACK.
@@ -84,100 +109,9 @@ Development files of ScaLAPACK.
 Summary: Static library of ScaLAPACK
 Group: Development/Other
 Requires: %name-devel = %EVR
-Conflicts: %name < %EVR
-Conflicts: %name-devel < %EVR
 
 %description devel-static
 Static library of ScaLAPACK.
-
-%package -n pblas-tests
-Summary: Tests for PBLAS
-Group: Sciences/Mathematics
-
-%description -n pblas-tests
-Tests for PBLAS.
-
-%package -n pblas-tests-data
-Summary: Test data for PBLAS
-Group: Sciences/Mathematics
-BuildArch: noarch
-Requires: pblas-tests = %EVR
-
-%description -n pblas-tests-data
-Test data for PBLAS.
-
-%package -n pblas-timing
-Summary: PBLAS timing
-Group: Sciences/Mathematics
-
-%description -n pblas-timing
-PBLAS timing.
-
-%package -n pblas-timing-data
-Summary: Data for PBLAS timing
-Group: Sciences/Mathematics
-BuildArch: noarch
-Requires: pblas-timing = %EVR
-
-%description -n pblas-timing-data
-Data for PBLAS timing.
-
-%package -n pblas-devel
-Summary: Headers for PBLAS
-Group: Sciences/Mathematics
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description -n pblas-devel
-Headers for PBLAS.
-
-%package -n %origname-redist
-Summary: Tests for ScaLAPACK redist
-Group: Sciences/Mathematics
-
-%description -n %origname-redist
-Tests for ScaLAPACK redist.
-
-%package -n %origname-redist-data
-Summary: Test data for ScaLAPACK redist
-Group: Sciences/Mathematics
-BuildArch: noarch
-Requires: %origname-redist = %EVR
-
-%description -n %origname-redist-data
-Test data for ScaLAPACK redist.
-
-%package -n %origname-tests
-Summary: Tests for ScaLAPACK
-Group: Sciences/Mathematics
-
-%description -n %origname-tests
-Tests for ScaLAPACK.
-
-%package -n %origname-tests-data
-Summary: Test data for ScaLAPACK
-Group: Sciences/Mathematics
-BuildArch: noarch
-Requires: %origname-tests = %EVR
-
-%description -n %origname-tests-data
-Test data for ScaLAPACK.
-
-%package -n %origname-example
-Summary: Example for ScaLAPACK
-Group: Sciences/Mathematics
-
-%description -n %origname-example
-Example for ScaLAPACK.
-
-%package -n %origname-example-data
-Summary: Example data for ScaLAPACK
-Group: Sciences/Mathematics
-BuildArch: noarch
-Requires: %origname-example = %EVR
-
-%description -n %origname-example-data
-Example data for ScaLAPACK.
 
 %package manpages
 Summary: Man pages of ScaLAPACK
@@ -187,212 +121,86 @@ BuildArch: noarch
 %description manpages
 Man pages of ScaLAPACK.
 
-%package full
-Summary: All in one ScaLAPACK shared libraries
-Group: System/Libraries
-
-%description full
-All in one ScaLAPACK shared libraries.
-
-%package full-devel
-Summary: All in one ScaLAPACK development files
-Group: Development/Other
-Requires: %name-full = %EVR
-
-%description full-devel
-All in one ScaLAPACK development files.
-
-
 %prep
-%setup -a2
-install -p -m644 %SOURCE1 ./
+%setup -a1
+%patch1 -p2
+%patch2 -p1
+%patch3 -p2
+
+pushd ..
+cp -rv %name-%version %name-%version-static
+popd
 
 %build
+%define build_fflags %(echo %build_fflags -fallow-argument-mismatch| sed 's|-Werror=format-security||g')
+
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-BUILDDIR=`pwd`
-sed -i 's|(LIBEXECDIR)|%_libdir|g' SLmake.inc
-sed -i 's|(LIBDIR)|%_libdir|g' SLmake.inc
-sed -i "s|(HOME)|$BUILDDIR|g" SLmake.inc
-sed -i -e 's/(OPTFLAGS)/%optflags %optflags_shared -fno-strict-aliasing/g' \
-	SLmake.inc
-mkdir -pv TESTING0
-cp -f TESTING/*.dat TESTING0/
-make lib
-mkdir -pv LIB0
-mv *.a LIB0/
-sed -i -e 's/^\(BLACSDBGLVL\).*/\1  = 1/' SLmake.inc
-make lib what=clean
-for i in pblaslib pblasexe toolslib redistlib redistexe scalapacklib \
-	scalapackexe example
-do
-	make $i
-# for know, what package have executables
-#	pushd TESTING
-#	ls x* > ../$i.list
-#	mv x* %buildroot%_bindir
-#	popd
-done
+%cmake \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DBUILD_STATIC_LIBS:BOOL=OFF \
+	-DLAPACK_LIBRARIES="$(pkg-config --libs lapack)" \
+	-DBLAS_LIBRARIES="$(pkg-config --libs openblas)" \
+	%nil
+
+%cmake_build
+
+pushd ../%name-%version-static
+%cmake \
+	-DBUILD_SHARED_LIBS:BOOL=OFF \
+	-DBUILD_STATIC_LIBS:BOOL=ON \
+	-DLAPACK_LIBRARIES="$(pkg-config --libs lapack)" \
+	-DBLAS_LIBRARIES="$(pkg-config --libs openblas)" \
+	%nil
+
+%cmake_build
+popd
 
 %install
+mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-mkdir -pv %buildroot%_bindir
-mkdir -pv %buildroot%_libdir
-mkdir -pv %buildroot%_includedir
-mkdir -pv %buildroot%_datadir/%origname/tests
-mkdir -pv %buildroot%_datadir/%origname/pblas-tests
-mkdir -pv %buildroot%_datadir/%origname/pblas-timing
-mkdir -pv %buildroot%_datadir/%origname/redist
-mkdir -pv %buildroot%_datadir/%origname/example
-mkdir -pv %buildroot%_mandir
-rm -f SRC/pblas.h
-cp -ar TESTING/x* %buildroot%_bindir/
-cp -ar libscalapack*.a %buildroot%_libdir/
-cp -ar LIB0/libscalapack*.a %buildroot%_libdir/
-cp -ar PBLAS/SRC/*.h %buildroot%_includedir/
-cp -ar REDIST/SRC/*.h %buildroot%_includedir/
-cp -ar SRC/*.h %buildroot%_includedir/
-cp -ar TESTING0/*.dat %buildroot%_datadir/%origname/tests/
-cp -ar PBLAS/TESTING/*.dat %buildroot%_datadir/%origname/pblas-tests/
-cp -ar PBLAS/TIMING/*.dat %buildroot%_datadir/%origname/pblas-timing/
-cp -ar REDIST/TESTING/*.dat %buildroot%_datadir/%origname/redist/
-cp -ar EXAMPLE/*.dat %buildroot%_datadir/%origname/example/
-cp -ar MANPAGES/man/manl %buildroot%_mandir/
+%cmakeinstall_std
 
-# all in one library
-
-function createScalapack() {
-	LNAME=%name$2-full.so
-	mkdir tmp
-	pushd tmp
-	for i in blacs${1}init blacs arpack_LINUX
-	do
-		ar x %_libdir/lib$i.a
-	done
-	ar x %buildroot%_libdir/libscalapack_LINUX-0.a
-	for i in $(ls *.C); do
-		mv $i $i.o
-	done
-	mpif77 -shared -o ../$LNAME.0 * \
-		-Wl,-soname,$LNAME.0 \
-		-Wl,-R%mpidir/lib -lmpi_f77 -lmpi \
-		-llapack -lopenblas
-	popd
-	rm -fR tmp
-	ln -s $LNAME.0 $LNAME
-	install -m644 $LNAME* %buildroot%_libdir
-}
-
-#createScalapack F77
-#createScalapack C c
-#install -d %buildroot%_includedir/%origname
-#install -p -m644 %buildroot%_includedir/*.h \
-#	$(rpm -ql libblacs-devel|grep '\.h') \
-#	$(rpm -ql libarpack-devel|grep '\.h') \
-#	%buildroot%_includedir/%origname
-
-# simple shared library
-
-pushd %buildroot%_libdir
-mkdir tmp
-pushd tmp
-LIB=%{name}_LINUX-0
-ar x ../$LIB.a
-mpif77 -shared -o ../%name.so.%sover * \
-	-Wl,-soname,%name.so.%somver \
-	-Wl,-R%mpidir/lib -lblacs \
-%if_disabled bootstrap
-	-larpack_LINUX \
-%endif
-	-llapack -lopenblas
-ln -s %name.so.%sover ../%name.so.%somver
-ln -s %name.so.%somver ../%name.so
-ln -s %name.so ../$LIB.so
-chrpath -r %mpidir/lib ../$LIB.so
-rm -f *
-popd
-rmdir tmp
+pushd ../%name-%version-static
+%cmakeinstall_std
 popd
 
-rm %buildroot%_libdir/*.a
+install -d %buildroot%_includedir/blacs
+install -m644 BLACS/SRC/*.h %buildroot%_includedir/blacs/
+
+install -d %buildroot%_includedir/scalapack
+install -m644 PBLAS/SRC/*.h %buildroot%_includedir/scalapack/
+
+install -d %buildroot%_mandir/manl
+install -m644 MANPAGES/man/manl/* %buildroot%_mandir/manl/
 
 %files
+%doc LICENSE
 %doc README
-%_libdir/*.so.*
-#exclude %_libdir/%{name}*-full.so.*
-%_datadir/%origname
-%exclude %_datadir/%origname/tests
-%exclude %_datadir/%origname/pblas-tests
-%exclude %_datadir/%origname/pblas-timing
-%exclude %_datadir/%origname/redist
-%exclude %_datadir/%origname/example
-
-#files debug
-#doc README
-#_libdir/*-1.a
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
 %files devel
 %_libdir/*.so
-#exclude %_libdir/%{name}*-full.so
-%_includedir/redist.h
-%_includedir/tools.h
-%_includedir/pxsyevx.h
+%_includedir/*
+%_libdir/cmake/*
+%_pkgconfigdir/*
 
-#files devel-static
-#_libdir/*-0.a
-
-%files -n pblas-tests
-%_bindir/x?pblas?tst
-
-%files -n pblas-tests-data
-%_datadir/%origname/pblas-tests
-
-%files -n pblas-timing
-%_bindir/x?pblas?tim
-
-%files -n pblas-timing-data
-%_datadir/%origname/pblas-timing
-
-%files -n pblas-devel
-%_includedir/pblas.h
-%_includedir/PB*.h
-
-%files -n %origname-redist
-%_bindir/x???mr
-
-%files -n %origname-redist-data
-%_datadir/%origname/redist
-
-%files -n %origname-tests
-%_bindir/*
-%exclude %_bindir/x?pblas*
-%exclude %_bindir/x???mr
-%exclude %_bindir/x?scaex
-
-%files -n %origname-tests-data 
-%_datadir/%origname/tests
-
-%files -n %origname-example
-%_bindir/x?scaex
-
-%files -n %origname-example-data
-%_datadir/%origname/example
+%files devel-static
+%_libdir/*.a
 
 %files manpages
 %_mandir/manl/*
 
-#files full
-#_libdir/%{name}*-full.so.*
-
-#files full-devel
-#_libdir/%{name}*-full.so
-#_includedir/%origname
-
 %changelog
+* Tue Apr 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
+- Updated to upstream version 2.1.0.
+- Cleaned up spec.
+
 * Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt20
 - Updated conflicts and obsoletes.
 

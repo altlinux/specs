@@ -6,15 +6,15 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt2
+Release: alt3
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
 Url: http://getfem.org/
 License: LGPLv2+
 
-Provides: %rname = %version-%release
-Obsoletes: %rname < %version-%release
+Provides: %rname = %EVR
+Obsoletes: %rname < %EVR
 
 Source0: getfem-%version.tar
 Patch1: alt-ppc64le.patch
@@ -41,8 +41,8 @@ problems).
 %package -n %libgetfem
 Group: System/Libraries
 Summary: %rname library
-Provides: libgetfemxx = %version-%release
-Obsoletes: libgetfemxx < %version-%release
+Provides: libgetfemxx = %EVR
+Obsoletes: libgetfemxx < %EVR
 %description -n %libgetfem
 %rname library
 
@@ -59,7 +59,7 @@ Python bindings to %name
 %autoreconf
 
 %build
-%add_optflags -fno-strict-aliasing -fpermissive -I%_includedir/metis0
+%add_optflags -fno-strict-aliasing -fpermissive -I%_includedir/metis0 -I%_includedir/mumps
 export CFLAGS="%optflags" CXXFLAGS="%optflags"
 %undefine _configure_gettext
 %configure \
@@ -107,6 +107,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Thu Apr 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3-alt3
+- Rebuilt with new mumps.
+
 * Mon Mar 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.3-alt2
 - build without scilab
 
