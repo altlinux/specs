@@ -1,96 +1,55 @@
 %define oname gevent
 
-%def_without python3
 %def_disable embed
 
-Name: python-module-%oname
-Version: 1.4.0
-Release: alt3
+Name: python3-module-%oname
+Version: 21.1.2
+Release: alt1
 
-Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
+Summary: Coroutine-based network library
 
-Group: Development/Python
 License: MIT
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/gevent
 
-%add_findreq_skiplist %python_sitelibdir/gevent/_socket3.py
-%add_python_req_skip test
+#add_findreq_skiplist %python_sitelibdir/gevent/_socket3.py
+#add_python_req_skip test
 
-# https://github.com/surfly/gevent.git
-Source: %oname-%version.tar
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-repoze.sphinx.autointerface
-BuildRequires: libev-devel libcares-devel
-BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-greenlet
-
-%setup_python_module %oname
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+
+BuildRequires: libev-devel libuv-devel libcares-devel
+
 BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-OpenSSL
 BuildRequires: python3-module-Cython python3-module-cryptography python3-module-html5lib
-%endif
 
-%py_requires greenlet
-
-%description
-gevent is a coroutine-based Python networking library that uses greenlet
-to provide a high-level synchronous API on top of libevent event loop.
-
-Features include:
-* convenient API around greenlets
-* familiar synchronization primitives (gevent.event, gevent.queue)
-* socket module that cooperates
-* WSGI server on top of libevent-http
-* DNS requests done through libevent-dns
-* monkey patching utility to get pure Python modules to cooperate
-
-%package -n python-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description -n python-module-%oname-tests
-This package contains tests for %oname.
-
-%package -n python-module-greentest
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-Requires: %name-tests = %EVR
-
-%description -n python-module-greentest
-gevent is a coroutine-based Python networking library that uses greenlet
-to provide a high-level synchronous API on top of libevent event loop.
-
-This package contains tests for %oname.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python 3 network library that uses greenlet and libevent for easy and scalable concurrency
-Group: Development/Python3
 %py3_requires greenlet
 %add_python3_req_skip gevent.libev._corecffi
 
-%description -n python3-module-%oname
-gevent is a coroutine-based Python networking library that uses greenlet
-to provide a high-level synchronous API on top of libevent event loop.
+%description
+gevent is a coroutine-based Python networking library
+that uses greenlet to provide a high-level synchronous API on top of the libev or libuv event loop.
 
 Features include:
-* convenient API around greenlets
-* familiar synchronization primitives (gevent.event, gevent.queue)
-* socket module that cooperates
-* WSGI server on top of libevent-http
-* DNS requests done through libevent-dns
-* monkey patching utility to get pure Python modules to cooperate
+* Fast event loop based on libev or libuv.
+* Lightweight execution units based on greenlets.
+* API that re-uses concepts from the Python standard library (for examples there are events and queues).
+* Cooperative sockets with SSL support
+* Cooperative DNS queries performed through a threadpool, dnspython, or c-ares.
+* Monkey patching utility to get 3rd party modules to become cooperative
+* TCP/UDP/HTTP servers
+* Subprocess support (through gevent.subprocess)
+* Thread pools
 
 %package -n python3-module-%oname-tests
 Summary: Tests for %oname
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 
 %description -n python3-module-%oname-tests
 This package contains tests for %oname.
@@ -106,7 +65,6 @@ gevent is a coroutine-based Python networking library that uses greenlet
 to provide a high-level synchronous API on top of libevent event loop.
 
 This package contains tests for %oname.
-%endif
 
 %package doc
 Summary: Documentation for gevent
@@ -119,16 +77,6 @@ to provide a high-level synchronous API on top of libevent event loop.
 
 This package contains documentation and examples for gevent.
 
-%package pickles
-Summary: Pickles for gevent
-Group: Development/Documentation
-
-%description pickles
-gevent is a coroutine-based Python networking library that uses greenlet
-to provide a high-level synchronous API on top of libevent event loop.
-
-This package contains pickles for gevent.
-
 %prep
 %setup
 
@@ -136,11 +84,7 @@ This package contains pickles for gevent.
 rm -rf deps
 %endif
 
-%if_with python3
-cp -a . ../python3
-%endif
-
-%prepare_sphinx doc
+#prepare_sphinx doc
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -150,18 +94,6 @@ export LIBEV_EMBED=0
 export CARES_EMBED=0
 %endif
 
-# remove all versions of greentest, leave only versions for current python version
-pushd src/greentest
-for i in * ; do
-	if [ -z "$(echo $i | grep ^%__python_version$)" ] ; then
- 		rm -fR $i
-	fi
-done
-popd
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 export CYTHON=cython3
 rm -fR src/gevent/_util_py2.py*
 # remove all versions of greentest, leave only versions for current python3 version
@@ -173,8 +105,6 @@ for i in * ; do
 done
 popd
 %python3_build_debug
-popd
-%endif
 
 %install
 %if_disabled embed
@@ -183,50 +113,17 @@ export LIBEV_EMBED=0
 export CARES_EMBED=0
 %endif
 
-%python_install
-cp -fR src/greentest %buildroot%python_sitelibdir/
-
-%if_with python3
-pushd ../python3
 %python3_install
 cp -fR src/greentest %buildroot%python3_sitelibdir/
-popd
-%endif
 
 #doc
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd doc
-%make pickle
-%make html
-
-cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
-popd
+#export PYTHONPATH=%buildroot%python_sitelibdir
+#pushd doc
+#make pickle
+#make html
 
 %files
-%doc AUTHORS LICENSE* TODO *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/pickle
-%exclude %python_sitelibdir/greentest
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/testing
-
-%files -n python-module-%oname-tests
-%python_sitelibdir/%oname/tests/
-%python_sitelibdir/%oname/testing/
-
-%files -n python-module-greentest
-%python_sitelibdir/greentest
-
-%files doc
-%doc doc/_build/html
-%doc examples
-
-%files pickles
-%python_sitelibdir/%oname/pickle
-
-%if_with python3
-%files -n python3-module-%oname
 %doc AUTHORS LICENSE* TODO *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/greentest
@@ -239,11 +136,15 @@ popd
 
 %files -n python3-module-greentest
 %python3_sitelibdir/greentest
-%endif
+
+#files doc
+#doc doc/_build/html
+#doc examples
 
 %changelog
-* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt3
-- build python2 module only
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 21.1.2-alt1
+- new version (21.1.2) with rpmgs script
+- build python3 module separately
 
 * Wed May 08 2019 Stanislav Levin <slev@altlinux.org> 1.4.0-alt2
 - Moved the tests out to subpackage.

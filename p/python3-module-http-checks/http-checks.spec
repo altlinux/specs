@@ -2,20 +2,23 @@
 %define oname http-checks
 
 Name: python3-module-%oname
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Test a couple of hundred urls in seconds
+
 License: Free
 Group: Development/Python3
-BuildArch: noarch
-
 Url: https://pypi.python.org/pypi/http-checks/
-# https://github.com/Hipo/http-checks.git
 
+# Source-url: %__pypi_url %oname
 Source: %oname-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+
 BuildRequires: python3-module-yaml python3-module-requests
 BuildRequires: python3-module-gevent python3-module-BeautifulSoup4
 BuildRequires: python3(json) python3(jsonpath_rw)
@@ -23,16 +26,15 @@ BuildRequires: python3(json) python3(jsonpath_rw)
 %py3_provides httpchecks
 %py3_requires yaml gevent bs4
 
-
 %description
 http-checks is an application that can test a couple of hundred urls in
 seconds.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -51,6 +53,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt1
+- NMU: new version 0.2.1 (with rpmrb script)
+
 * Wed Oct 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.0-alt2
 - disable python2, enable python3
 
