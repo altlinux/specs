@@ -2,7 +2,7 @@
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt6.git8787e95
+Release: alt7.git8787e95
 
 Summary: Medial image viewer for DICOM images
 License: GPL/LGPL
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Requires: dcmtk, GConf
 BuildPreReq: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
 BuildPreReq: libxml2-devel, libssl-devel
-BuildPreReq: libgtkmm2-devel, libglademm-devel, libgconfmm2-devel
+BuildPreReq: libgtkmm2-devel, libglademm-devel
 BuildPreReq: perl-XML-Parser, gettext, intltool
 BuildPreReq: libdcmtk-devel
 BuildRequires: desktop-file-utils GConf
@@ -35,7 +35,7 @@ any platform were these packages are available.
 
 %build
 %autoreconf
-%configure
+%configure --with-gsettings --disable-schemas-install
 
 %install
 %makeinstall_std
@@ -57,6 +57,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt7.git8787e95
+- NMU: drop obsoleted gconfmm2, use gsettings
+
 * Sun Jan 20 2019 Anton Farygin <rider@altlinux.ru> 0.2.2-alt6.git8787e95
 - rebuilt for libdcmtk14
 
