@@ -32,14 +32,13 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.14.1
+Version: 2.14.3
 Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPLv2
 Group: Networking/Instant messaging
 Url: http://pidgin.im
-Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Provides: gaim = %version
 Obsoletes: gaim
@@ -97,17 +96,14 @@ BuildRequires: ca-certificates
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
-protocols including AIM, Jabber, Bonjour, Gadu-Gadu,
-ICQ, IRC, Novell Groupwise, QQ, Lotus Sametime, SILC, Simple and
+protocols including XMPP, Bonjour, Gadu-Gadu,
+IRC, Novell Groupwise, QQ, Lotus Sametime, SILC, Simple and
 Zephyr.  These protocols are implemented using a modular, easy to
 use design.  To use a protocol, just add an account using the
 account editor.
 
 Pidgin supports many common features of other clients, as well as many
 unique features, such as perl scripting, TCL scripting and C plugins.
-
-Pidgin is not affiliated with or endorsed by America Online, Inc.,
-Microsoft Corporation, or ICQ Inc.
 
 %package devel
 Summary: Development headers, documentation, and libraries for Pidgin
@@ -133,8 +129,8 @@ Conflicts: libpurple-mini
 libpurple contains the core IM support for IM clients such as Pidgin
 and Finch.
 
-libpurple supports a variety of messaging protocols including AIM,
-Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
+libpurple supports a variety of messaging protocols including
+XMPP, Bonjour, Gadu-Gadu, IRC, Novell Groupwise, QQ,
 Lotus Sametime, SILC, Simple and Zephyr.
 
 %package -n libpurple-devel
@@ -319,7 +315,7 @@ done
 %if_enabled perl
 	--with-perl-lib=vendor \
 %endif
-	--with-python=%__python3 \
+	--with-python3=%__python3 \
 	--with-system-ssl-certs=%_datadir/ca-certificates \
 	--with-extraversion=%release
 
@@ -457,6 +453,11 @@ fi
 %endif
 
 %changelog
+* Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.3-alt1
+- 2.14.3
+- Removed the AIM protocol plugin. AIM has been shut down since December
+  15th of 2017.
+
 * Fri Jun 19 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.1-alt1
 - 2.14.1
 
