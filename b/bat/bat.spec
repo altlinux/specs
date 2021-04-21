@@ -1,8 +1,8 @@
 Name: bat
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
-License: MIT and Apache-2.0
+License: MIT or Apache-2.0
 Group: File tools
 Url: https://github.com/sharkdp/bat
 Source: %name-%version.tar
@@ -42,6 +42,9 @@ install -m 0644 target/release/build/%name-*/out/assets/manual/%name.1 %buildroo
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Wed Apr 21 2021 Egor Ignatov <egori@altlinux.org> 0.18.0-alt1
+- Update to version 0.18.0
+
 * Sat Jan 09 2021 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.1-alt1
 - Updated to version 0.17.1
 
