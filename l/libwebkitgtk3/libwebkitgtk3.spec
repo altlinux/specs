@@ -1,4 +1,3 @@
-#%%set_verify_elf_method textrel=relaxed
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %add_verify_elf_skiplist %_libexecdir/WebKitPluginProcess
@@ -20,7 +19,7 @@
 
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt10
+Release: alt11
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -37,6 +36,7 @@ Patch3: webkitgtk-2.4.11-icu59.patch
 Patch4: webkitgtk-x86-assembler-fix.patch
 Patch5: webkitgtk-2.4.10-suse-aarch64.patch
 Patch6: webkitgtk-2.4.11-icu65.patch
+Patch7: webkitgtk-2.4.11-alt-bison-3.7-workaround.patch
 
 Obsoletes: %name-webinspector
 Provides: %name-webinspector = %EVR
@@ -226,6 +226,7 @@ GObject introspection data for the Webkit2 library
 %patch4 -p2
 %patch5 -p1
 %patch6 -p2
+%patch7 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -243,6 +244,8 @@ subst 's|#!/usr/bin/env python|#!%__python|' `fgrep -Rl '#!/usr/bin/env python' 
 %ifarch ppc ppc64 ppc64le riscv64
 %add_optflags -DENABLE_YARR_JIT=0
 %endif
+# Fix build with gcc10
+%add_optflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_36
 
 # Build with -g1 on all platforms to avoid running into 4 GB ar format limit
 # https://bugs.webkit.org/show_bug.cgi?id=91154
@@ -362,6 +365,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Thu Apr 22 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.11-alt11
+- Fix build with gcc 10 and bison 3.7 (thanks aris@).
+
 * Wed Mar 25 2020 Andrey Cherepanov <cas@altlinux.org> 2.4.11-alt10
 - Do not delete null pointer checks (ALT #38256).
 - Fix build.
