@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define api_ver 3.0
 
@@ -12,7 +12,7 @@
 %def_with system_tzdata
 
 Name: libical
-Version: 3.0.9
+Version: 3.0.10
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -198,6 +198,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Sun Apr 18 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.10-alt1
+- 3.0.10
+
 * Sat Feb 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt1
 - updated to v3.0.9-8-g66b2fe2d
 
