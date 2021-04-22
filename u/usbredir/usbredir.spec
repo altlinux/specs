@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: usbredir
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 Summary: USB network redirection protocol libraries
 Group: System/Libraries
@@ -9,7 +9,13 @@ License: LGPLv2+
 Url: http://gitlab.freedesktop.org/spice/usbredir
 
 Source: %name-%version.tar
-BuildRequires: libusb-devel >= 1.0.9
+Patch0001: 0001-Fix-generated-by-meson-libusbredirhostpc.patch
+Patch0002: 0002-Add-local-directory-to-include-search-path-for-meson.patch
+
+BuildRequires(pre): meson
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(libusb-1.0) >= 1.0.9
+BuildRequires: pkgconfig(glib-2.0) >= 2.44 pkgconfig(gio-unix-2.0) >= 2.44
 
 %description
 usbredir is a protocol for redirection USB traffic from a single USB device,
@@ -68,32 +74,36 @@ A simple usb-host tcp server, using libusbredirhost.
 
 %prep
 %setup
+%patch0001 -p1
+%patch0002 -p1
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable static}
-%make_build
+%meson
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %files  -n lib%name
-%doc ChangeLog COPYING.LIB README TODO
+%doc README.md ChangeLog.md
 %_libdir/*.so.*
 
 %files  -n lib%name-devel
-%doc usb-redirection-protocol.txt
+%doc docs/usb-redirection-protocol.md docs/multi-thread.md
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %files server
-%doc COPYING
+%_bindir/usbredirect
 %_sbindir/usbredirserver
+%_man1dir/usbredirect.1*
 %_man1dir/usbredirserver.*
 
 %changelog
+* Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
+- new version 0.9.0
+
 * Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
