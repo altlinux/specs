@@ -1,6 +1,6 @@
 
 Name: vzctl
-Version: 7.0.241
+Version: 7.0.242
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -8,6 +8,8 @@ License: GPLv2
 Group: System/Configuration/Other
 Url: http://openvz.org/
 Vcs: https://src.openvz.org/scm/ovzl/vzctl.git
+
+Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -121,6 +123,10 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Thu Apr 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.242-alt1
+- 7.0.241
+- vzlist: reduce the width of CTID field
+
 * Sun Jan 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.241-alt1
 - 7.0.241
 
