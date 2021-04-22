@@ -2,7 +2,7 @@
 
 Name: zip
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Epoch: 30000000
 
@@ -24,6 +24,7 @@ Patch5: zip-3.0-exec-shield.patch
 Patch6: zip-3.0-currdir.patch
 # Not upstreamed.
 Patch7: zip-3.0-time.patch
+Patch8: zip-3.0-no-pie.patch
 
 
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -63,6 +64,7 @@ subst \
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p2
 
 %define _optlevel 3
 
@@ -83,6 +85,9 @@ make -f unix/Makefile prefix=$RPM_BUILD_ROOT%{_prefix} \
 %_man1dir/*
 
 %changelog
+* Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 30000000:3.0-alt2
+- fix FTBFS due to -enable-default-pie
+
 * Mon Mar 19 2012 Andrey Cherepanov <cas@altlinux.org> 30000000:3.0-alt1
 - Version 3.0 (ALT #26954)
 - Disable zcrypt29 encription and codepage detection by natspec
