@@ -2,7 +2,7 @@
 
 Name: owamp
 Version: 4.3.4
-Release: alt1
+Release: alt2
 Summary: A tool for performing one-way or two-way active measurements
 
 License: Apache-2.0
@@ -138,6 +138,8 @@ fi
 %preun_service owamp-server
 %preun_service twamp-server
 
+%files
+
 %files client
 %doc README
 %doc LICENSE
@@ -185,6 +187,9 @@ fi
 #%_includedir/owamp/*
 
 %changelog
+* Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 4.3.4-alt2
+- add %files section to create owamp packagep
+
 * Wed Apr 21 2021 Egor Ignatov <egori@altlinux.org> 4.3.4-alt1
 - new version
 - cleanup spec and .gear/rules
