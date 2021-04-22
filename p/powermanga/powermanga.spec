@@ -1,6 +1,6 @@
 Name: powermanga
 Version: 0.93.1
-Release: alt1
+Release: alt2
 Summary: Shoot them up with 3d graphics
 
 License: %gpl3plus
@@ -44,6 +44,11 @@ description). To play the game, you should install both %name and %name-data pac
 %build
 %autoreconf
 %add_optflags -DPNG_EXPORT_ENABLE=1
+
+%ifarch %ix86
+%add_optflags -no-pie
+%endif
+
 %configure \
 	--mandir=%_man6dir \
 	--enable-x11 \
@@ -73,6 +78,9 @@ install -Dpm 644 %SOURCE202 %buildroot/%_liconsdir/%name.png
 %_datadir/games/%name
 
 %changelog
+* Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 0.93.1-alt2
+- Fixed build on ix86 due to --enable-default-pie
+
 * Sat Sep 24 2016 Fr. Br. George <george@altlinux.ru> 0.93.1-alt1
 - Autobuild version bump to 0.93.1
 
