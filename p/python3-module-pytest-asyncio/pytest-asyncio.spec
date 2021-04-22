@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 
 Summary: Pytest support for asyncio
@@ -53,6 +53,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 22 2021 Stanislav Levin <slev@altlinux.org> 0.15.1-alt1
+- 0.15.0 -> 0.15.1.
+
 * Mon Apr 19 2021 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
 - 0.14.0 -> 0.15.0.
 
