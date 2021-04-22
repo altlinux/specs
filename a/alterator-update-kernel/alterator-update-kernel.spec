@@ -2,7 +2,7 @@
 
 Name: alterator-update-kernel
 Version: 1.3
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -52,8 +52,12 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_alterator_libdir/ui/%mname/update/*.go
 
 %_alterator_backend3dir/%mname
+%_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Thu Apr 22 2021 Ivan Savin <svn17@altlinux.org> 1.3-alt3
+- Add introspection file for alterator-dbus.
+
 * Fri Apr 02 2021 Ivan Savin <svn17@altlinux.org> 1.3-alt2
 - Fix spec.
 
