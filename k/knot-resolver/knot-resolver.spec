@@ -5,7 +5,7 @@
 %def_disable doc
 
 Name: knot-resolver
-Version: 5.2.1
+Version: 5.3.1
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -24,9 +24,9 @@ BuildRequires: gcc-c++
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(libedit)
-BuildRequires: pkgconfig(libknot) >= 2.8
-BuildRequires: pkgconfig(libzscanner) >= 2.8
-BuildRequires: pkgconfig(libdnssec) >= 2.8
+BuildRequires: pkgconfig(libknot) >= 2.9
+BuildRequires: pkgconfig(libzscanner) >= 2.9
+BuildRequires: pkgconfig(libdnssec) >= 2.9
 BuildRequires: pkgconfig(libnghttp2)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libcap-ng)
@@ -216,6 +216,9 @@ fi
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 5.3.1-alt1
+- 5.3.1
+
 * Wed Dec 16 2020 Alexey Shabalin <shaba@altlinux.org> 5.2.1-alt1
 - 5.2.1
 
