@@ -16,21 +16,23 @@
 %global rel 1
 
 Name: pcc
-Version: 1.0.0
+Version: 1.2.0
 %if %usepcc
-Release: alt2
+Release: alt1
 %else
-Release: alt2
+Release: alt1
 %endif
 Summary: The Portable C Compiler
 Group: Development/C
 License: BSD with advertising and BSD and ISC
 Url: http://pcc.ludd.ltu.se/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source0: ftp://pcc.ludd.ltu.se/pub/pcc-releases/pcc-%version.tgz
-Source1: ftp://pcc.ludd.ltu.se/pub/pcc-releases/pcc-libs-%version.tgz
-# Patch to disable the use of -g on pcc-libs-090805/csu/linux/crtbegin.c which is partly assembler code
-Patch0: pcc-090808-optflags.patch
+Source0: pcc-%version.tar
+Source1: pcc-libs-%version.tar
+# Patch to disable the use of -g in pcc-libs/csu/linux/ which is partly assembler code.
+# Also, inlineing is disabled because it will break the code.
+# Also, remove default -O flag from the code.
+Patch0: pcc-20141210-flags.patch
 
 # Currently only x86 and x86_64 supported both in ppc and ppc-libs
 
@@ -40,6 +42,8 @@ Requires: glibc-devel
 %if %usepcc
 BuildRequires: pcc
 %endif
+
+ExclusiveArch: x86_64 %ix86
 
 %description
 The compiler is based on the original Portable C Compiler by Stephen C.
@@ -60,8 +64,6 @@ Caution: the compiler is still undergoing heavy development.
 
 %prep
 %setup -q -a1
-# Get rid of the default optimization flag
-find . -name Makefile.in |xargs sed -i 's| -O | |g'
 # Rename the libs directory for the patch to work
 mv pcc-libs-%version pcc-libs
 # Apply patch
@@ -92,13 +94,13 @@ export CFLAGS_NODEBUG=$(echo ${FLAGS} | sed -e 's/\(^\| \)-g\($\| \)/ /g')
 
 # First, build the library.
 cd pcc-libs
-%pccconfigure
+%pccconfigure --disable-stripping
 make CFLAGS="-I${archdir} -Ilinux -I. ${FLAGS}" CFLAGS_NODEBUG="-I${archdir} -Ilinux -I. $CFLAGS_NODEBUG"
 #%{?_smp_mflags}
 cd ..
 # Then, build the compiler
 %pccconfigure --with-assembler=%_bindir/as --with-linker=%_bindir/ld \
- --with-libdir=%_libdir --with-incdir=%_includedir --enable-tls
+ --with-libdir=%_libdir --with-incdir=%_includedir --enable-tls --disable-stripping
 make
 #%{?_smp_mflags}
 
@@ -118,15 +120,24 @@ mkdir -p %buildroot%_includedir/pcc
 
 %files
 %_bindir/pcc
+%_bindir/p++
+%_bindir/pcpp
 %_libdir/pcc/
 %_includedir/pcc/
 %_libexecdir/cpp
 %_libexecdir/ccom
+%_libexecdir/cxxcom
 %_mandir/man1/ccom.1.*
 %_mandir/man1/pcc-cpp.1.*
 %_mandir/man1/pcc.1.*
+%_mandir/man1/p++.1.*
+%_mandir/man1/pcpp.1.*
 
 %changelog
+* Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 1.2.0-alt1
+- new version
+- import pcc-20141210-flags patch from Fedora
+
 * Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2
 - Fixed regex removing debug flags.
 
