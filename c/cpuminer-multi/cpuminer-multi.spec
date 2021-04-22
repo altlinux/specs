@@ -1,6 +1,6 @@
 Name:		cpuminer-multi
 Version:	1.3.5
-Release:	alt2
+Release:	alt3
 Summary:	Multi-threaded CPU miner
 Url:		https://github.com/tpruvot/cpuminer-multi
 Group:		Office
@@ -28,7 +28,9 @@ https://www.nicehash.com/index.jsp?p=software#cpu
 
 %build
 ./autogen.sh
+%ifarch %ix86
 %add_optflags -no-pie
+%endif
 %configure CFLAGS="%optflags" CXXFLAGS="%optflags" --with-crypto --with-curl
 %make_build
 
@@ -43,6 +45,9 @@ install -Dp -m 644 {%SOURCE1,%SOURCE2,%SOURCE3,%SOURCE4} ./examples/
 %_man1dir/*
 
 %changelog
+* Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 1.3.5-alt3
+- Use -no-pie on ix86 only
+
 * Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 1.3.5-alt2
 - Fix FTBFS due to --enable-default-pie
 
