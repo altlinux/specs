@@ -11,7 +11,7 @@
 
 Name: lxd3.0
 Version: 3.0.4
-Release: alt1
+Release: alt2
 Summary: LXD -- REST API, command line tool and OpenStack integration plugin for LXC
 
 Group: Development/Other
@@ -77,6 +77,7 @@ REST API, command line tool and OpenStack integration plugin for LXC.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR"
+export GO111MODULE=off
 export CGO_ENABLED=1
 
 mkdir $BUILDDIR
@@ -187,5 +188,8 @@ rm %buildroot%_libdir/%name/{*.a,*.la,*.so}
 %attr(0751,%lxduser,%lxdgroup) %dir %_logdir/lxd
 
 %changelog
+* Thu Apr 22 2021 Leontiy Volodin <lvol@altlinux.org> 3.0.4-alt2
+- fix build with golang 1.16
+
 * Sun May 17 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.4-alt1
 - build 3.0/stable as lxd3 package
