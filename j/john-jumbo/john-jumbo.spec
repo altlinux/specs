@@ -1,6 +1,6 @@
 Name: john-jumbo
 Version: 1.9.0
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: System/Base
 Url: http://www.openwall.com/john/
@@ -139,6 +139,11 @@ cd src
 
 %define CONFOPTS --with-systemwide
 
+%ifarch %ix86
+%add_optflags -no-pie
+export LDFLAGS="$LDFLAGS -no-pie"
+%endif
+
 for VARIANT in `seq 8`; do
   %configure %CONFOPTS || break
   MAXARCH="`sed -n '/CFLAGS =/s/.* -m\([^ ]*\).*/\1/p' Makefile`"
@@ -219,6 +224,9 @@ rm %buildroot%jdata/john.conf && \
 %exclude %jlibexec/zip2john
 
 %changelog
+* Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 1.9.0-alt3
+- fix FTBFS on i586 due to -enalbe-default-pie
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt2
 - NMU: make dpkt optional
 
