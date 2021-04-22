@@ -1,18 +1,20 @@
 Name: john
-Version: 1.8.0.2
+Version: 1.9
 Release: alt1
 %define charsets_version 20130529
 
 Summary: John the Ripper password cracker
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Base
-Url: http://www.openwall.com/john/
+Url: https://www.openwall.com/john/
 
 # ftp://ftp.openwall.com/pub/projects/john/john-%version.tar
 # git://git.altlinux.org/gears/j/john
 Source0: %name-%version-%release.tar
 # ftp://ftp.openwall.com/pub/projects/john/john-charsets-%charsets_version.tar.gz
 Source1: john-charsets-%charsets_version.tar
+
+ExclusiveArch: x86_64 %ix86 aarch64 %arm ppc64le
 
 %def_enable avx
 %def_enable xop
@@ -37,6 +39,11 @@ of other hash types are supported as well.
 %prep
 %setup -n %name-%version-%release -a1
 
+%define arg_cc CC='%__cc'
+%ifarch %ix86
+# non-pic asm code
+%define arg_cc CC='%__cc -no-pie'
+%endif
 %define cflags -c %optflags -DJOHN_SYSTEMWIDE=1 $(getconf LFS_CFLAGS)
 %define _make_bin %__make
 %define john_execdir /usr/libexec/john
@@ -45,7 +52,7 @@ of other hash types are supported as well.
 cd src
 
 make() {
-	%make_build "$@"
+	%make_build %arg_cc "$@"
 	%{!?_without_check:%{!?_without_test:%__make check}}
 }
 
@@ -68,12 +75,12 @@ make linux-x86-sse2 CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU
 mv_john sse2
 make linux-x86-avx CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
 %define john_last avx
+%endif #avx
 %if_enabled xop
 mv_john avx
 make linux-x86-xop CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
 %define john_last xop
 %endif #xop
-%endif #avx
 # OpenMP builds
 %if_enabled omp
 mv_john %john_last
@@ -132,6 +139,44 @@ make linux-x86-64-xop CFLAGS="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_B
 %endif #omp
 %endif #x86_64
 
+%ifarch aarch64
+# non-OpenMP builds
+make linux-arm64le CFLAGS="%cflags"
+# OpenMP builds
+%if_enabled omp
+mv_john arm64le
+OMP_FALLBACK='\"john-arm64le\"'
+make linux-x86-64 CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%endif #omp
+%endif #aarch64
+
+%ifarch %arm
+# non-OpenMP builds
+make linux-arm32le CFLAGS="%cflags"
+mv_john arm32le
+make linux-arm32le-neon CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
+# OpenMP builds
+%if_enabled omp
+mv_john arm32le-neon
+OMP_FALLBACK='\"john-arm32le\"'
+make linux-arm32le CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+mv_john omp-arm32le
+OMP_FALLBACK='\"john-arm32le-neon\"'
+make linux-arm32le-neon CFLAGS="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%endif #omp
+%endif #arm
+
+%ifarch ppc64 ppc64le
+# non-OpenMP builds
+make linux-ppc64 CFLAGS="%cflags"
+# OpenMP builds
+%if_enabled omp
+mv_john ppc64
+OMP_FALLBACK='\"john-ppc64\"'
+make linux-x86-64 CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%endif #omp
+%endif #ppc64
+
 %install
 mkdir -p %buildroot{%_bindir,%john_execdir,{/etc,%_datadir}/john}
 install -pm755 run/john{,-*} %buildroot%john_execdir/
@@ -144,6 +189,10 @@ install -pm644 run/password.lst \
 ln -r -s %buildroot/etc/john/john.conf %buildroot%_datadir/john/
 install -pm644 run/{mailer,makechr,relbench} doc/
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %doc doc/*
 %attr(750,root,wheel) %dir /etc/john/
@@ -154,6 +203,11 @@ install -pm644 run/{mailer,makechr,relbench} doc/
 %_datadir/john/
 
 %changelog
+* Thu Apr 22 2021 Dmitry V. Levin <ldv@altlinux.org> 1.9-alt1
+- Synced with 1.9-owl1.
+- Fixed build on x86 when gcc produces pie executables by default.
+- Added build rules for aarch64, arm, and ppc64le.
+
 * Sun Sep 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.0.2-alt1
 - Synced with 1.8.0.2-owl1.
 
