@@ -4,7 +4,7 @@
 %def_without ImageMagick
 
 Name: vapoursynth
-Version: 52
+Version: 53
 Release: alt1
 Summary: Video processing framework with simplicity in mind
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
@@ -158,5 +158,11 @@ python3 -m pytest -v
 %_libdir/%name/lib*.so
 
 %changelog
+* Thu Apr 22 2021 Leontiy Volodin <lvol@altlinux.org> 53-alt1
+- New version (53) with rpmgs script.
+- Upstream:
+  + Add Python 3.9 support.
+  + Apply a few contributes bugfixes.
+
 * Wed Jan 13 2021 Leontiy Volodin <lvol@altlinux.org> 52-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
