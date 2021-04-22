@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt5
+Release: alt6
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -34,6 +34,7 @@ Requires: python3-module-django-dbbackend-sqlite3 >= 2.2
 Requires: openssl
 Requires: logrotate
 
+Conflicts: openuds-tunnel openuds-guacamole-tunnel
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): webserver-common rpm-build-webserver-common rpm-macros-apache2
@@ -140,6 +141,11 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt6
+- Switch to local memory from memcached by default in settings.py.
+- Fix openuds-web.service for execute gunicorn.py3 for use python3.
+- Add conflicts with openuds-tunnel,openuds-guacamole-tunnel.
+
 * Wed Apr 21 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt5
 - Fix typo in nginx config (ALT #39968)
 
