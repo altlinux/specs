@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.2.5
+Version: 4.3.4.1
 Epoch: 1
 Release: %rel
 
@@ -15,7 +15,7 @@ License: GPLv2
 Group: Networking/File transfer
 Url: http://qbittorrent.org
 
-Source: %name-%version.tar.xz
+Source: %name-%version.tar.gz
 
 BuildPreReq: desktop-file-utils
 
@@ -103,6 +103,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Apr 22 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.4.1-alt1
+- 4.3.4.1
+
 * Sat May 02 2020 Motsyo Gennadi <drool@altlinux.ru> 1:4.2.5-alt1
 - 4.2.5
 
