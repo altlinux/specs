@@ -9,13 +9,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-ssh
-Version: 1.2.11
+Version: 1.2.12
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
 Url: https://github.com/danfruehauf/NetworkManager-ssh
-# git:git://github.com/danfruehauf/NetworkManager-ssh.git
+Vcs: git://github.com/danfruehauf/NetworkManager-ssh.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -95,6 +95,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Apr 22 2021 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt1
+- Added Vcs tag.
+- Updated to 1.2.12.
+
 * Mon Feb 17 2020 Mikhail Efremov <sem@altlinux.org> 1.2.11-alt1
 - Get rid of rpm-build-licenses.
 - Updated to 1.2.11.
