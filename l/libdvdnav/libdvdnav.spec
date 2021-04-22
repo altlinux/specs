@@ -1,6 +1,6 @@
 %define soname 4
 Name: libdvdnav
-Version: 6.1.0
+Version: 6.1.1
 Release: alt1
 Summary: DVD Navigation library
 License: GPLv2+
@@ -52,6 +52,9 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Apr 22 2021 Anton Farygin <rider@altlinux.ru> 6.1.1-alt1
+- 6.1.1
+
 * Fri Apr 17 2020 Anton Farygin <rider@altlinux.ru> 6.1.0-alt1
 - 6.1.0
 
