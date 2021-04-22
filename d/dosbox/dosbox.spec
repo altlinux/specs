@@ -3,7 +3,7 @@
 Name: dosbox
 Epoch: 1
 Version: 0.74.3
-Release: alt2
+Release: alt3
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -148,8 +148,7 @@ EOF
 %build
 
 %ifarch %ix86
-export CFLAGS="$CFLAGS -no-pie"
-export CXXFLAGS="$CXXFLAGS -no-pie"
+%add_optflags -no-pie
 %endif
 
 %configure \
@@ -209,6 +208,9 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 %_desktopdir/*
 
 %changelog
+* Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 1:0.74.3-alt3
+- use add_optflags instead of export CFLAGS
+
 * Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 1:0.74.3-alt2
 - fix FTBFS on i586 due to -enalbe-default-pie
 
