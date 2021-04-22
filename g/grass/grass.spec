@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 7.8.5
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -159,7 +159,7 @@ export LDCONFIG=-llz4
 	--with-motif \
 	%{subst_with mysql} \
 	--with-mysql-includes=%{_includedir}/mysql \
-        --with-netcdf=%_libdir/hdf5-seq/bin/nc-config \
+        --with-netcdf=%_bindir/nc-config \
 	--with-nls \
 	--with-odbc \
         %{subst_with opencl} \
@@ -312,6 +312,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Thu Apr 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.8.5-alt2
+- Rebuilt with new netcdf.
+
 * Mon Apr 19 2021 Andrey Cherepanov <cas@altlinux.org> 7.8.5-alt1
 - New version.
 - Build with Python3.

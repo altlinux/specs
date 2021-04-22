@@ -1,45 +1,49 @@
-#TODO: examples packing
+%define _unpackaged_files_terminate_build 1
 
 %define oname hdf5
-%define sover 8
-%define cpp_sover 8
-%define f_sover 8
-%define hl_sover 8
-%define hdfdir %_libdir/%oname-seq
-%define priority 30
-Name: lib%oname-%sover-seq
-Version: 1.8.13
-Release: alt1.qa4
+%define sover 103
+%define soverhl 100
 
+Name: lib%oname
+Version: 1.10.6
+Release: alt1
 Summary: Hierarchical Data Format 5 library
-
 Group: System/Libraries
 License: Nearly BSD, but changed sources must be marked
 Url: http://www.hdfgroup.org/HDF5/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# https://github.com/HDFGroup/hdf5.git
+Source: %name-%version.tar
 
-Source: ftp://ftp.hdfgroup.org/HDF5/current/src/%oname-%version.tar.bz2
-
-Conflicts: lib%oname-mpi < 1.8.3-alt5
-Provides: lib%oname = %version-%release
-Provides: lib%oname-%sover = %version-%release
-Conflicts: lib%oname-%sover < %version-%release
-Obsoletes: lib%oname-%sover < %version-%release
-%ifarch x86_64
-Provides: lib%oname.so.%sover()(64bit)
-Provides: lib%{oname}_hl.so.%sover()(64bit)
-%else
-Provides: lib%oname.so.%sover
-Provides: lib%{oname}_hl.so.%sover
-%endif
-Requires(post,preun): alternatives
+Patch1: %name-alt-disable-rpath.patch
 
 # Automatically added by buildreq on Sat Sep 15 2007
 BuildRequires: gcc-c++ libssl-devel zlib-devel
-%{?_enable_fortran:BuildRequires: gcc-fortran}
 
 %description
+HDF5 is a completely new Hierarchical Data Format product consisting
+of a data format specification and a supporting library
+implementation. HDF5 is designed to address some of the limitations of
+the older HDF product and to address current and anticipated
+requirements of modern systems and applications.
+
+%package -n lib%oname-%sover
+Summary: Hierarchical Data Format 5 library
+Group: System/Libraries
+
+%description -n lib%oname-%sover
+HDF5 is a completely new Hierarchical Data Format product consisting
+of a data format specification and a supporting library
+implementation. HDF5 is designed to address some of the limitations of
+the older HDF product and to address current and anticipated
+requirements of modern systems and applications.
+
+%package -n lib%oname-hl-%soverhl
+Summary: Hierarchical Data Format 5 library
+Group: System/Libraries
+Requires: lib%oname-%sover = %EVR
+
+%description -n lib%oname-hl-%soverhl
 HDF5 is a completely new Hierarchical Data Format product consisting
 of a data format specification and a supporting library
 implementation. HDF5 is designed to address some of the limitations of
@@ -49,25 +53,20 @@ requirements of modern systems and applications.
 %package -n lib%oname-devel
 Summary: HDF5 library development package
 Group: Development/C
-Requires(post,preun): alternatives
 Requires: libstdc++-devel zlib-devel
-%{?_enable_fortran:Requires: libgfortran-devel}
-Requires: lib%oname = %version-%release
+Requires: lib%oname-%sover = %EVR
+Requires: lib%oname-hl-%soverhl = %EVR
 Conflicts: lib%oname-mpi-devel < 1.8.3-alt5
 
 %description -n lib%oname-devel
 Header files for HDF5 library.
 
-%package -n %oname-%sover-tools
+%package -n %oname-tools
 Summary: HDF5 tools
 Group: Development/Tools
-Requires(post,preun): alternatives
-Requires: lib%oname = %version-%release
 Conflicts: %oname-mpi-tools < 1.8.3-alt5
-Conflicts: lib%oname < %version-%release
-Provides: %oname-tools = %version-%release
 
-%description -n %oname-%sover-tools
+%description -n %oname-tools
 HDF5 is a completely new Hierarchical Data Format product consisting
 of a data format specification and a supporting library
 implementation. HDF5 is designed to address some of the limitations of
@@ -91,7 +90,9 @@ requirements of modern systems and applications.
 This package contains examples for HDF5.
 
 %prep
-%setup -n %oname-%version
+%setup
+%patch1 -p1
+
 %ifarch %e2k
 # unsupported by lcc as of 1.21.21
 sed -i -e 's,-Wlogical-op,,' \
@@ -102,112 +103,70 @@ sed -i -e 's,-Wlogical-op,,' \
 %endif
 
 %build
-sed -i -e 's/(SOVER)/%sover/' src/H5detect.c
 %autoreconf
 %add_optflags -fno-strict-aliasing
+# --with-default-api-version=v18 is needed for libnetcdf
 %configure \
-	--bindir=%hdfdir/bin \
-	--libdir=%hdfdir/lib \
-	--includedir=%hdfdir/include \
+	--enable-hl \
 	--enable-cxx \
-	--enable-linux-lfs \
 	--enable-shared \
-	--enable-production \
+	--disable-static \
+	--disable-sharedlib-rpath \
+	--enable-build-mode=production \
+	--with-pic \
 	--with-pthread \
-	--with-ssl \
 	--with-zlib \
-	%{subst_enable fortran} \
-	%{?_enable_fortran:FC=f95}
+	--with-szlib \
+	--with-default-api-version=v18 \
+	%nil
 
-subst "s|^LT=.*|LT=../libtool|g" c++/src/Makefile c++/test/Makefile
-cp src/lib%oname.settings src/lib%oname-%sover.settings
 %make_build
 
 %install
-export LD_LIBRARY_PATH="../src/.libs"
-install -d %buildroot%hdfdir/include
-
 %makeinstall_std
 
-mv %buildroot%hdfdir/lib/lib%oname.settings \
-	%buildroot%hdfdir/lib/lib%oname-%sover.settings
-
-install -d %buildroot%_docdir
-mv %buildroot%_datadir/hdf5_examples %buildroot%_docdir/
-
-install -d %buildroot%_includedir
-pushd %buildroot%hdfdir/include
-for i in $(ls); do
-	ln -s %hdfdir/include/$i %buildroot%_includedir/$i
-done
-popd
-
-# alternatives
-
-install -d %buildroot%_altdir
-mkdir -p %buildroot%_libdir
-pushd %buildroot%hdfdir/lib
-for i in $(ls *.so.*) $(ls *.settings); do
-	ln -s ../..%hdfdir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name.alternatives
-done
-for i in $(ls *.so); do
-	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-devel.alternatives
-done
-popd
-pushd %buildroot%hdfdir/bin
-for i in $(ls); do
-	echo "%_bindir/$i %hdfdir/bin/$i %priority" >> \
-		%buildroot%_altdir/%oname-tools.alternatives
-done
-popd
-
 install -d %buildroot%_pkgconfigdir
-cat <<EOF >%buildroot%_pkgconfigdir/%oname-seq.pc
+cat << EOF > %buildroot%_pkgconfigdir/%oname.pc
 prefix=%prefix
 exec_prefix=%prefix
-libdir=%hdfdir/lib
-includedir=%hdfdir/include
+libdir=%_libdir
+includedir=%_includedir
 
 Name: %oname
 Description: Hierarchical Data Format 5 library
 Version: %version
-%if_enabled fortran
-Libs: -lhdf5hl_fortran -lhdf5_hl_cpp -lhdf5_hl -lhdf5_fortran -lhdf5_cpp -lhdf5 -lgfortran -lstdc++ -lz
-%else
 Libs: -lhdf5_hl_cpp -lhdf5_hl -lhdf5_cpp -lhdf5 -lstdc++ -lz
-%endif
-Cflags: -I%hdfdir/include
 EOF
 
-echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
-	%buildroot%_altdir/%name-devel.alternatives
+%files -n lib%oname-%sover
+%doc COPYING COPYING_LBNL_HDF5
+%doc README.txt release_docs/{HISTORY*,RELEASE.txt}
+%_libdir/lib*.so.%{sover}
+%_libdir/lib*.so.%{sover}.*
 
-%files
-%doc COPYING README.txt release_docs/{HISTORY*,RELEASE.txt}
-%ghost %_libdir/lib*.so.*
-%hdfdir/lib/*.so.*
-# used to show configuration at runtime
-%hdfdir/lib/libhdf5-%sover.settings
-%_altdir/%name.alternatives
+%files -n lib%oname-hl-%soverhl
+%_libdir/lib*.so.%{soverhl}
+%_libdir/lib*.so.%{soverhl}.*
 
 %files -n lib%oname-devel
-%hdfdir/lib/lib*.so
-%hdfdir/include/*
+%_libdir/lib*.so
 %_includedir/*
 %_pkgconfigdir/*
-%_altdir/%name-devel.alternatives
 
-%files -n %oname-%sover-tools
-%hdfdir/bin/*
-%_altdir/%oname-tools.alternatives
+%files -n %oname-tools
+%_bindir/*
+# used to show configuration at runtime
+%_libdir/libhdf5.settings
 
 %files -n %oname-examples
-%_docdir/hdf5_examples
+%_datadir/hdf5_examples
 
 %changelog
+* Wed Apr 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.6-alt1
+- Updated to upstream version 1.10.6.
+- Removed alternatives.
+- Updated packaging scheme.
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.8.13-alt1.qa4
 - Replace e2k arch name with %%e2k macro (grenka@)
 

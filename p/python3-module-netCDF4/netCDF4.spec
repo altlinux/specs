@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.5.6
-Release: alt1
+Release: alt2
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python3
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-notebook python3-module-numpy-testing
+BuildRequires: libhdf5-devel
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
@@ -70,9 +71,7 @@ This package contains documentation for %oname.
 install -m644 %SOURCE1 ./
 rm -f *.c netCDF4.c netcdftime/.c
 
-%ifarch x86_64
-sed -i "s|'lib'|'lib64'|g" setup.py
-%endif
+sed -i "s|'lib'|'%_lib'|g" setup.py
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -102,6 +101,9 @@ popd
 #doc docs/html examples
 
 %changelog
+* Mon Apr 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.6-alt2
+- Rebuilt with new libhdf5.
+
 * Thu Mar 18 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.6-alt1
 - Build new version.
 

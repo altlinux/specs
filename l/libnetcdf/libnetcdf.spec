@@ -1,42 +1,22 @@
-%define major 4
+%define _unpackaged_files_terminate_build 1
+
 %define oname netcdf
-%define sname lib%oname
-%define sover 11
-%define priority 30
-%define hdfdir %_libdir/hdf5-seq
+%define sover 19
 
-Name: %sname%sover-seq
-Version: %major.4.1.1
-Release: alt3
-
+Name: lib%oname
+Version: 4.8.0
+Release: alt1
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
-
 License: NetCDF
 Group: System/Libraries
 Url: http://www.unidata.ucar.edu/software/netcdf/
 
-Requires(post,preun): alternatives
-Requires: libhdf5-8-seq
-Conflicts: %sname-mpi < 4.0.1-alt6 %oname%sover-mpi-tools < 4.0.1-alt6
-Conflicts: %sname-mpi-devel-doc
-Provides: %sname = %version-%release
-Provides: %sname%sover = %version-%release
-Conflicts: %sname < %version-%release
-Obsoletes: %sname%sover < %version-%release
-%ifarch x86_64
-Provides: %sname.so.%sover()(64bit)
-%else
-Provides: %sname.so.%sover
-%endif
-
 # https://github.com/Unidata/netcdf-c.git
-Source: %oname-%version.tar
-Patch1: %oname-%version-alt-build.patch
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jan 18 2009
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel
-
-BuildPreReq: /usr/bin/tex libcurl-devel libexpat-devel doxygen graphviz
+BuildRequires: /usr/bin/tex libcurl-devel libexpat-devel doxygen graphviz
 
 %description
 NetCDF (network Common Data Form) is an interface for array-oriented
@@ -83,36 +63,88 @@ NetCDF (network Common Data Form) - это ориентированный на �
 поддерживают создание, доступ и совместное использование научных
 данных.
 
-%package -n %sname-devel
+%package -n %name%sover
+Summary: Libraries to use the Unidata network Common Data Form (netCDF)
+Group: System/Libraries
+
+%description -n %name%sover
+NetCDF (network Common Data Form) is an interface for array-oriented
+data access and a freely-distributed collection of software libraries
+for C, Fortran, C++, and perl that provides an implementation of the
+interface.
+The netCDF library also defines a machine-independent format for
+representing scientific data. Together, the interface, library, and
+format support the creation, access, and sharing of scientific data. The
+netCDF software was developed at the Unidata Program Center in Boulder,
+Colorado.
+
+NetCDF data is:
+
+   o Self-Describing. A netCDF file includes information about the data
+     it contains.
+
+   o Network-transparent. A netCDF file is represented in a form that
+     can be accessed by computers with different ways of storing
+     integers, characters, and floating-point numbers.
+
+   o Direct-access. A small subset of a large dataset may be accessed
+     efficiently, without first reading through all the preceding data.
+
+   o Appendable. Data can be appended to a netCDF dataset along one
+     dimension without copying the dataset or redefining its structure.
+     The structure of a netCDF dataset can be changed, though this
+     sometimes causes the dataset to be copied.
+
+   o Sharable. One writer and multiple readers may simultaneously
+     access the same netCDF file.
+
+%description -l ru_RU.UTF-8 -n %name%sover
+NetCDF (network Common Data Form) - это ориентированный на массивы
+интерфейс для доступа к данным и, одновременно, свободно
+распространяемая коллекция программ и библиотек для C, Fortran, C++,
+которые реализуют этот интерфейс. Программы netCDF были
+разработаны Гленом Дэвисом (Glenn Davis), Руссом Рью (Russ Rew),
+Стивом Еммерсоном (Steve Emmerson), Джоном Кэроном (John Caron) и
+Харвей Дэвисом (Harvey Davies) в Unidata Program Center в Боулдере,
+Колорадо и расширены вкладами от других пользователей netCDF.
+Библиотеки netCDF определяют машиннонезависимый  формат для
+представления научных данных. Интерфейс, библиотеки и сам формат
+поддерживают создание, доступ и совместное использование научных
+данных.
+
+%package -n %oname-tools
+Summary: NetCDF tools
+Group: Development/Tools
+
+%description -n %oname-tools
+This package contains tools for work with NetCDF
+
+%package devel
 Summary: Development tools for the NetCDF library
 Summary(ru_RU.UTF-8): Средства разработки программ на основе библиотеки NetCDF
 Group: Development/C
-Provides: pkgconfig(%oname) = %EVR
-Requires(post,preun): alternatives
-Requires: %name = %version-%release
-Conflicts: %sname-mpi-devel < 4.0.1-alt6
+Provides: pkgconfig(netcdf) = %EVR
 
-%description -n %sname-devel
+%description devel
 This package contains the netCDF-3 header files, shared devel libs, and
 man pages.
 
 If you want to develop applications which will use the NetCDF library,
-you'll need to install the %sname-devel package.
+you'll need to install the %name-devel package.
 
-%description -l ru_RU.UTF-8 -n %sname-devel
+%description -l ru_RU.UTF-8 devel
 Заголовочные файлы и документация для использования библиотеки NetCDF
 в приложениях.
 
 Если вы собираетесь разрабатывать приложения, которые будут
 использовать библиотеку NetCDF, вам необходимо установить пакет
-%sname-devel.
+%name-devel.
 
 %package doc
 Summary: Documentation for NetCDF
 Summary(ru_RU.UTF-8): Документация по NetCDF
 Group: Documentation
 BuildArch: noarch
-Conflicts: %name < %version-%release
 
 %description doc
 Documentation for NetCDF library.
@@ -122,121 +154,57 @@ Documentation for NetCDF library.
 
 %prep
 %setup
-%patch1 -p1
 
 rm -fR udunits/expat
 
 %build
-%add_optflags -I%hdfdir/include -fno-strict-aliasing %optflags_shared
+%add_optflags -fno-strict-aliasing
 %autoreconf
 %configure \
 	--enable-shared \
 	--enable-static=no \
-	--bindir=%hdfdir/bin \
-	--libdir=%hdfdir/lib \
-	--includedir=%hdfdir/include \
 	--enable-netcdf-4 \
-	--enable-cxx-4 \
-	--enable-docs-install \
-	--enable-ncgen4 \
-	--with-udunits \
-	--with-hdf5=%hdfdir \
-	--with-zlib=%prefix \
 	--enable-doxygen \
 	--enable-internal-docs \
-	--enable-extra-example-tests \
-	--enable-extra-tests \
 	--enable-v2 \
 	--enable-mmap \
-	--disable-dap-remote-tests
+	--disable-dap-remote-tests \
+	--disable-filter-testing \
+	%nil
+
 %make
 
 %install
 %makeinstall_std
 
-install -d %buildroot%hdfdir/include/netcdf
-ln -s netcdf %buildroot%hdfdir/include/netcdf-3
-install -p -m644 include/*.h %buildroot%hdfdir/include/netcdf
-sed -i 's|config\.h|netcdf_config.h|' \
-	%buildroot%hdfdir/include/netcdf/*
-install -p -m644 config.h \
-	%buildroot%hdfdir/include/netcdf/netcdf_config.h
-rm -f %buildroot%hdfdir/include/netcdf/netcdf.h
-mv %buildroot%hdfdir/include/*.* %buildroot%hdfdir/include/netcdf/
-install -d %buildroot%_includedir
-ln -s %hdfdir/include/netcdf %buildroot%_includedir/netcdf-3
-ln -s %hdfdir/include/netcdf %buildroot%_includedir/netcdf
-rm -f %buildroot%hdfdir/lib/*.la
+%files -n %name%sover
+%doc COPYRIGHT
+%doc README* RELEASE_NOTES*
+%_libdir/*.so.%{sover}
+%_libdir/*.so.%{sover}.*
 
-install -m644 docs/man/man3/* %buildroot%_man3dir
-
-# alternatives
-
-install -d %buildroot%_altdir
-mkdir -p %buildroot%_libdir
-pushd %buildroot%hdfdir/lib
-for i in %sname.so.*; do
-	ln -s ../..%hdfdir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name.alternatives
-done
-for i in $(ls *.so); do
-	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-devel.alternatives
-done
-echo "%_bindir/nc-config %hdfdir/bin/nc-config %priority" >> \
-	%buildroot%_altdir/%name-devel.alternatives
-echo "%_pkgconfigdir/%oname.pc %hdfdir/lib/pkgconfig/%oname.pc %priority" >> \
-	%buildroot%_altdir/%name-devel.alternatives
-popd
-pushd %buildroot%hdfdir/bin
-for i in $(ls |egrep -v 'nc\-config'); do
-	echo "%_bindir/$i %hdfdir/bin/$i %priority" >> \
-		%buildroot%_altdir/%name.alternatives
-done
-popd
-
-# There is a file in the package with a name starting with <tt>._</tt>,
-# the file name pattern used by Mac OS X to store resource forks in non-native
-# file systems. Such files are generally useless in packages and were usually
-# accidentally included by copying complete directories from the source tarball.
-find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-# for ones installed as %%doc
-find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-
-
-%pre -n %sname-devel
-rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
-	%hdfdir/include/netcdf-3 %hdfdir/include/netcdf
-
-%files
-%doc COPYRIGHT README* RELEASE_NOTES*
-%hdfdir/bin/*
-%exclude %hdfdir/bin/nc-config
-%_man1dir/*
-%ghost %_libdir/%sname.so.*
-%hdfdir/lib/%sname.so.*
-%_altdir/%name.alternatives
-
-%files -n %sname-devel
-%hdfdir/bin/nc-config
-%hdfdir/include/netcdf-3
-%hdfdir/include/netcdf
-%_includedir/netcdf-3
-%_includedir/netcdf
-%hdfdir/lib/*.so
-%hdfdir/lib/pkgconfig/*
+%files devel
+%_bindir/nc-config
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*
 %_man3dir/netcdf.3*
-%_altdir/%name-devel.alternatives
+
+%files -n %oname-tools
+%_bindir/*
+%exclude %_bindir/nc-config
+%_libdir/*.settings
+%_man1dir/*
 
 %files doc
 %doc docs/html examples
-%_man3dir/*
-%exclude %_man3dir/error.3*
-%exclude %_man3dir/netcdf.3*
-#exclude %_man3dir/index.3*
 
 %changelog
+* Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0-alt1
+- Updated to upstream version 4.8.0.
+- Removed alternatives.
+- Updated packaging scheme.
+
 * Fri Sep 08 2017 Mikhail Gordeev <obirvalger@altlinux.org> 4.4.1.1-alt3
 - (ALT#33843) Fix broken update
 
@@ -277,8 +245,8 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 - Fixed flags in nc-config
 
 * Thu Mar 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt2
-- Fixed alternative for %oname.pc (ALT #27049)
-- Fixed Cflags in %oname.pc
+- Fixed alternative for netcdf.pc (ALT #27049)
+- Fixed Cflags in netcdf.pc
 
 * Tue Sep 06 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1
 - Version 4.1.3
