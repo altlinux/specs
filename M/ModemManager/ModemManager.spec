@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.16.2
+Version: 1.16.4
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -234,6 +234,9 @@ fi
 %endif
 
 %changelog
+* Thu Apr 22 2021 Mikhail Efremov <sem@altlinux.org> 1.16.4-alt1
+- Updated to 1.16.4.
+
 * Tue Mar 02 2021 Mikhail Efremov <sem@altlinux.org> 1.16.2-alt1
 - BR: require autoconf-archive >= 2021.02.19-alt1.
 - Dropped workaround for --no-as-needed.
