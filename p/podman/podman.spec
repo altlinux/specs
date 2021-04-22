@@ -1,9 +1,8 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/containers/podman
-%global commit a0d478edea7f775b7ce32f8eb1a01e75374486cb
 
 Name:     podman
-Version:  2.2.1
+Version:  3.1.2
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -66,13 +65,25 @@ connections as well.
 %setup
 
 %build
+export CGO_CFLAGS="-O2 -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -ffat-lto-objects -fexceptions -fasynchronous-unwind-tables -fstack-protector-strong -fstack-clash-protection -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE"
+
+%ifnarch %ix86 %mips32 %arm
+export CGO_CFLAGS+=" -D_FILE_OFFSET_BITS=64"
+%endif
+
+%ifarch x86_64
+# Builds only on x86_64 with this flag
+export CGO_CFLAGS+=" -m64 -mtune=generic"
+export CGO_CFLAGS+=" -fcf-protection"
+%endif
+
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 export RELEASE_VERSION=v%version
 export RELEASE_NUMBER=%version
-export GIT_COMMIT=%commit
+export GIT_COMMIT=%release
 
 %golang_prepare
 
@@ -86,7 +97,7 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path:$PWD"
 export RELEASE_VERSION=v%version
 export RELEASE_NUMBER=%version
-export GIT_COMMIT=%commit
+export GIT_COMMIT=%release
 
 pushd .gopath/src/%import_path
 %make DESTDIR=%buildroot PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir \
@@ -96,7 +107,8 @@ pushd .gopath/src/%import_path
     install.cni \
     install.completions \
     install.systemd \
-    install.docker
+    install.docker \
+    install.docker-docs
 popd
 
 # install /etc/modules-load.d/podman.conf
@@ -136,6 +148,9 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
+- new version 3.1.2
+
 * Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.1-alt1
 - new version 2.2.1
 
