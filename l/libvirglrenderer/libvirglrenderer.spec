@@ -1,13 +1,14 @@
 
 Name: libvirglrenderer
-Version: 0.8.2
+Version: 0.9.1
 Release: alt1
 
 Summary: Virgl Rendering library
 Group: System/Libraries
 License: MIT
 
-#VCS: git:git://people.freedesktop.org/~airlied/virglrenderer
+Url: https://gitlab.freedesktop.org/virgl/virglrenderer.git
+Vcs: https://gitlab.freedesktop.org/virgl/virglrenderer.git
 Source: %name-%version.tar
 
 BuildRequires(pre): meson
@@ -63,6 +64,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
+- new version 0.9.1
+
 * Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
@@ -75,7 +79,7 @@ driver to test virgl rendering without GL.
 * Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
-* Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1%ubt
+* Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1
 - 0.6.0
 
 * Thu May 19 2016 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt1
