@@ -1,5 +1,5 @@
 Name: conmon
-Version: 2.0.21
+Version: 2.0.27
 Release: alt1
 # due to typo in version :(
 Epoch: 1
@@ -10,7 +10,9 @@ Group: System/Configuration/Other
 
 Url: https://github.com/containers/conmon
 Source: %name-%version.tar
+Patch: %name-%version.patch
 
+BuildRequires: go-md2man
 BuildRequires: glibc-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(libsystemd)
@@ -20,8 +22,10 @@ BuildRequires: pkgconfig(libsystemd)
 
 %prep
 %setup
+%patch -p1
 
 %build
+export GIT_COMMIT=%release
 %make_build CFLAGS+="%(getconf LFS_CFLAGS) -Wno-error=deprecated-declarations"
 
 %install
@@ -30,8 +34,12 @@ BuildRequires: pkgconfig(libsystemd)
 %files
 %doc README.md
 %_bindir/conmon
+%_man8dir/conmon.*
 
 %changelog
+* Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 1:2.0.27-alt1
+- new version 2.0.27
+
 * Thu Sep 10 2020 Alexey Shabalin <shaba@altlinux.org> 1:2.0.21-alt1
 - new version 2.0.21
 
