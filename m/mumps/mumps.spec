@@ -1,30 +1,42 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable arpack
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define somver 4
-%define sover %somver.10.0
+%global soname_version 5.3
+
 Name: mumps
-Version: 4.10.0
-Release: alt11
+Version: 5.3.5
+Release: alt1
 Summary: MUltifrontal Massively Parallel sparse direct Solver
-License: Free
+License: ALT-Public-Domain
 Group: Sciences/Mathematics
 Url: http://mumps.enseeiht.fr/
 
+# http://mumps.enseeiht.fr/MUMPS_%{version}.tar.gz
 Source: MUMPS_%version.tar
-Source1: Makefile.inc
-Source2: Makefile.inc.seq
+
+# Custom Makefile changed for Fedora and built from Make.inc/Makefile.gfortran.PAR in the source.
+Source1: MUMPS-Makefile.par.inc
+
+# Custom Makefile changed for Fedora and built from Make.inc/Makefile.gfortran.SEQ in the source.
+Source2: MUMPS-Makefile.seq.inc
+
+# These patches create static and shared versions of pord, sequential and mumps libraries
+# They are changed for Fedora and  derive from patches for Debian on 
+# http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/raring/mumps/raring/files/head:/debian/patches/
+Patch0: MUMPS-examples-mpilibs.patch
+Patch1: MUMPS-shared-pord.patch
+Patch2: MUMPS-shared.patch
+Patch3: MUMPS-shared-seq.patch
+
+Patch100: MUMPS-alt-build.patch
 
 BuildRequires: %mpiimpl-devel libopenblas-devel
 BuildRequires: libscotch-devel libparmetis-devel
-BuildRequires: libscalapack-devel libblacs-devel
-%if_enabled arpack
-# circular build deps with scalapack
-BuildRequires: libarpack-devel
-%endif
+BuildRequires: libscalapack-devel
+BuildRequires: libmetis-devel
+BuildRequires: libgomp-devel
 
 %description
 MUMPS solves a sparse system of linear equations A x = b
@@ -44,17 +56,6 @@ MUMPS solves a sparse system of linear equations A x = b
 using Gaussian elimination.
 
 This package contains headers for MUMPS.
-
-%package -n lib%name-devel-doc
-Summary: Documentation for MUMPS
-Group: Development/Documentation
-BuildArch: noarch
-
-%description -n lib%name-devel-doc
-MUMPS solves a sparse system of linear equations A x = b
-using Gaussian elimination.
-
-This package contains development documentation for MUMPS.
 
 %package -n lib%name
 Summary: Shared libraries of MUMPS
@@ -77,19 +78,6 @@ MUMPS solves a sparse system of linear equations A x = b
 using Gaussian elimination.
 
 This package contains development files of MUMPS.
-
-%package -n lib%name-devel-static
-Summary: Static libraries of MUMPS
-Group: Development/Other
-Requires: lib%name-headers = %EVR
-Requires: lib%name-devel = %EVR
-Conflicts: lib%name-devel < %EVR
-
-%description -n lib%name-devel-static
-MUMPS solves a sparse system of linear equations A x = b
-using Gaussian elimination.
-
-This package contains static libraries of MUMPS.
 
 %package -n lib%name-seq
 Summary: Shared libraries of MUMPS (sequential version)
@@ -115,182 +103,257 @@ using Gaussian elimination.
 
 This package contains development files of MUMPS (sequential version).
 
-%package -n lib%name-seq-devel-static
-Summary: Static libraries of MUMPS (sequential version)
+%package -n lib%name-examples
+Summary: Examples for MUMPS
 Group: Development/Other
-Requires: libfakempi-devel = %EVR
-Requires: lib%name-headers = %EVR
-Requires: lib%name-devel = %EVR
-Conflicts: lib%name-devel < %EVR
 
-%description -n lib%name-seq-devel-static
+%description -n lib%name-examples
 MUMPS solves a sparse system of linear equations A x = b
 using Gaussian elimination.
 
-This package contains static libraries of MUMPS (sequential version).
+This package contains examples for MUMPS.
 
-%package -n libfakempi-devel
-Summary: Sequential MPI static library
+%package -n lib%name-seq-examples
+Summary: Examples for MUMPS (sequential version)
 Group: Development/Other
 
-%description -n libfakempi-devel
-This is sequential MPI static library, dummy MPI implementation for
-uniprocessor machines only, no parallel.
+%description -n lib%name-seq-examples
+MUMPS solves a sparse system of linear equations A x = b
+using Gaussian elimination.
+
+This package contains examples for MUMPS (sequential version).
 
 %prep
 %setup
-install -m644 %SOURCE1 %SOURCE2 .
-sed -i "s|@TOPDIR@|$PWD|" Makefile.inc*
-sed -i 's|\-lmetis|-lparmetis|g' Make.inc/Makefile.*
-%if_disabled arpack
-sed -i '/^SCALAP/s/-larpack_LINUX//' Makefile.inc
-%endif
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch100 -p2
 
+mv examples/README examples/README-examples
+
+pushd ..
+cp -r %name-%version %name-%version-seq
+popd
+
+pushd ../%name-%version-seq
+%patch3 -p2
+popd
 
 %build
+# Workaround for GCC-10
+# https://gcc.gnu.org/gcc-10/porting_to.html
+%define build_fflags %{optflags} -fallow-argument-mismatch
+
+%define mpif77_cflags %(env PKG_CONFIG_PATH=%mpidir/lib/pkgconfig pkg-config --cflags ompi-f77)
+%define mpif77_libs %(env PKG_CONFIG_PATH=%mpidir/lib/pkgconfig pkg-config --libs ompi-f77)
+%define mpifort_cflags %(env PKG_CONFIG_PATH=%mpidir/lib/pkgconfig pkg-config --cflags ompi-fort)
+%define mpifort_libs %(env PKG_CONFIG_PATH=%mpidir/lib/pkgconfig pkg-config --libs ompi-fort)
+%define mpic_libs %(env PKG_CONFIG_PATH=%mpidir/lib/pkgconfig pkg-config --libs ompi)
+
 mpi-selector --yes --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
 
-function buildIt() {
-	for i in clean all; do
-		%make \
-			LIBDIR=%_libdir \
-			LIBEXECDIR=%_libdir \
-			MPIDIR=%mpidir \
-			TOPDIR=$PWD $i \
-			LIBEXT=.a \
-			LIBOTHERS="-lscalapack -lscotchmetis -lblacs -lmpi -lpthread" \
-			INCS="-I%mpidir/include"
-	done
-}
+cp -f %{SOURCE1} Makefile.inc
 
-mkdir lib
-buildIt
+# -DBLR_MT needs OpenMP
+sed -e "s| -DBLR_MT||g" -i Makefile.inc
 
-mkdir -p par/lib
-cp PORD/lib/*.a par/lib
-rm -f lib/libpord.a
-cp lib/* par/lib
-mkdir -p par/bin
-cp examples/c_example examples/?simpletest par/bin
+# Set build flags macro
+sed -e "s|@@FFLAGS@@|%{build_fflags} -Dscotch -Dmetis -Dptscotch -DWITHOUT_PTHREAD -DINTSIZE32|g" -i Makefile.inc
+sed -e "s|@@CFLAGS@@|%optflags -Dscotch -Dmetis -Dptscotch -DWITHOUT_PTHREAD -DINTSIZE32|g" -i Makefile.inc
+sed -e "s|@@LDFLAGS@@|${OMPI_LDFLAGS}|g" -i Makefile.inc
+sed -e "s|@@MPICLIB@@|-lmpi|g" -i Makefile.inc
+sed -e "s|@@MPIFORTRANLIB@@|${OMPI_LDFLAGS} %{mpif77_libs}|g" -i Makefile.inc
 
-cp -f Makefile.inc.seq Makefile.inc
-#sed -i -e '15s/c_example//' examples/Makefile
-buildIt
+MUMPS_MPI=openmpi
+MUMPS_INCDIR=-I%mpidir/include
+LMETISDIR=%{_libdir}
+IMETIS="-I%mpidir/include/metis"
+LMETIS="-L%{_libdir} -lmetis"
+SCOTCHDIR=%mpidir/lib
+ISCOTCH=-I%_includedir
+LSCOTCH=" -L%mpidir/lib -lesmumps -lscotch -lscotcherr -lptscotch -lptscotcherr"
+IPORD=" -I$PWD/PORD/include/"
+LPORD=" -L$PWD/PORD/lib -lpord"
 
-pushd examples
-for i in s d c z; do
-	mv ${i}simpletest ${i}simpletest_seq
-done
-mv c_example c_example_seq
+export MPIBLACSLIBS=""
+export MPI_COMPILER_NAME=openmpi
+export LD_LIBRARY_PATH="%mpidir/lib:%_libdir"
+export LDFLAGS="${OMPI_LDFLAGS}"
+
+export LIBBLAS="-L%_libdir -lopenblas"
+export INCBLAS=-I%_includedir/openblas
+
+make all \
+	SONAME_VERSION=%{soname_version} \
+	CC=%mpidir/bin/mpicc \
+	FC=%mpidir/bin/mpif77 \
+	FL=%mpidir/bin/mpif77 \
+	MUMPS_MPI="$MUMPS_MPI" \
+	MUMPS_INCDIR="$MUMPS_INCDIR $INCBLAS" \
+	MUMPS_LIBF77="${LIBBLAS} -L%mpidir -Wl,-rpath -Wl,%mpidir %{mpic_libs} $MPIFORTRANSLIB -lscalapack -llapack $MPIBLACSLIBS" \
+	LMETISDIR="$LMETISDIR" LMETIS="$LMETIS" \
+	IMETIS="$IMETIS" \
+	SCOTCHDIR=$SCOTCHDIR \
+	ISCOTCH=$ISCOTCH \
+	LSCOTCH="$LSCOTCH" \
+	IPORD="$IPORD" \
+	LPORD="$LPORD" \
+	OPTL="${OMPI_LDFLAGS}" \
+	%nil
+
+mkdir -p %name-%version-%mpiimpl/lib
+mkdir -p %name-%version-%mpiimpl/examples
+mkdir -p %name-%version-%mpiimpl/modules
+
+cp -pr lib/* %name-%version-%mpiimpl/lib
+cp -pr examples/* %name-%version-%mpiimpl/examples
+cp -a include %name-%version-%mpiimpl/
+cp -pr src/*.mod %name-%version-%mpiimpl/modules
+
+pushd ../%name-%version-seq
+cp -f %{SOURCE2} Makefile.inc
+
+# Set build flags macro
+sed -e "s|@@CFLAGS@@|%optflags -fopenmp -Dscotch -Dmetis -DWITHOUT_PTHREAD -DINTSIZE32|g" -i Makefile.inc
+sed -e "s|@@FFLAGS@@|%{build_fflags} -fopenmp -Dscotch -Dmetis -DWITHOUT_PTHREAD -DINTSIZE32|g" -i Makefile.inc
+sed -e "s|@@LDFLAGS@@|-fopenmp -lgomp -lrt|g" -i Makefile.inc
+
+IPORD=" -I$PWD/PORD/include/"
+LPORD=" -L$PWD/PORD/lib -lpord_seq"
+IMETIS="-I%_includedir/metis"
+
+export LIBBLAS="-L%_libdir -lopenblas"
+export INCBLAS=-I%_includedir/openblas
+export LDFLAGS="-fopenmp -lgomp -lrt"
+
+make all \
+	SONAME_VERSION=%{soname_version} \
+	CC=gcc \
+	FC=gfortran \
+	FL=gfortran \
+	MUMPS_LIBF77="${LIBBLAS} -llapack" \
+	LIBBLAS="${LIBBLAS}" \
+	LIBOTHERS=" " \
+	LIBSEQ="-L../libseq -lmpiseq" \
+	INCSEQ="-I../libseq $INCBLAS" \
+	LMETISDIR=%_libdir \
+	IMETIS="$IMETIS" \
+	LMETIS="-L%_libdir -lmetis" \
+	SCOTCHDIR=%_prefix \
+	ISCOTCH="-I%_includedir" \
+	LSCOTCH=" -L%_libdir -lesmumps -lscotch -lscotcherr -lscotchmetis" \
+	IPORD="$IPORD" \
+	LPORD="$LPORD" \
+	OPTL="-fopenmp -lrt" \
+	%nil
+
+make -C examples
+
+mkdir -p %name-%version-seq/lib
+mkdir -p %name-%version-seq/examples
+mkdir -p %name-%version-seq/modules
+
+cp -pr lib/* %name-%version-seq/lib
+cp -pr examples/* %name-%version-seq/examples
+cp -a include %name-%version-seq/
+cp -pr src/*.mod %name-%version-seq/modules
 popd
-pushd lib
-for i in $(ls|sed 's/\.a//'); do
-	mv $i.a ${i}_seq.a
-done
-popd
-
-mv libseq/libmpiseq.a libseq/libmpi.a
 
 %install
+mkdir -p %buildroot%_libdir
+mkdir -p %buildroot%_libdir/%name-%version-%mpiimpl-examples
+mkdir -p %buildroot%_libdir/%name-%version-seq-examples
+mkdir -p %buildroot%_includedir/%name
+
+### install common files
+install -cpm 644 %name-%version-%mpiimpl/include/*.h %buildroot%_includedir/%name/
+install -cpm 644 PORD/include/* %buildroot%_includedir/%name/
+install -cpm 644 %name-%version-%mpiimpl/modules/* %buildroot%_includedir/%name/
+
+### install mpi version
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-install -d %buildroot%_bindir
-install -d %buildroot%_libdir
-install -d %buildroot%_includedir/PORD
-install -d %buildroot%_docdir/lib%name-devel
-install -d %buildroot%_libdir/fakempi/lib
-install -d %buildroot%_libdir/fakempi/include
+# Install libraries.
+install -cpm 755 %name-%version-%mpiimpl/lib/lib*-*.so %buildroot%_libdir/
 
-install -m755 par/bin/* examples/*_seq %buildroot%_bindir
-install -m644 par/lib/* lib/* %buildroot%_libdir
-install -p -m644 include/* src/*.h %buildroot%_includedir
-install -p -m644 PORD/include/*.h %buildroot%_includedir/PORD
-install -p -m644 doc/* %buildroot%_docdir/lib%name-devel
-install -p -m644 libseq/*.a %buildroot%_libdir/fakempi/lib
-install -p -m644 libseq/*.h %buildroot%_libdir/fakempi/include
+# Install development files.
+cp -a %name-%version-%mpiimpl/lib/lib*.so %buildroot%_libdir/
 
-# shared libraries
+install -cpm 755 %name-%version-%mpiimpl/examples/?simpletest %buildroot%_libdir/%name-%version-%mpiimpl-examples/
+install -cpm 755 %name-%version-%mpiimpl/examples/input_* %buildroot%_libdir/%name-%version-%mpiimpl-examples/
+install -cpm 755 %name-%version-%mpiimpl/examples/README-* %buildroot%_libdir/%name-%version-%mpiimpl-examples/
 
-function makeShared() {
-	if [ "$2" = "" ]; then
-		LIBS="$ADDLIB"
-	else
-		LIBS="$ADDLIB_SEQ"
-	fi
-	if [ "$1" = "libdmumps" -o "$1" = "libsmumps" ]; then
-		FINLIB=-lopenblas
-	elif [ "$1" = "libmumps_common" ]; then
-		FINLIB=-lpthread
-	else
-		FINLIB=
-	fi
-	ar x ../$1$2.a
-	mpif77 -shared * -L.. $LIBS \
-		-lscotchmetis -lesmumps -lscalapack -lblacs \
-%if_enabled arpack
-		-larpack_LINUX \
-%endif
-		-Wl,-R%mpidir/lib \
-		$FINLIB \
-		-Wl,-soname,$1$2.so.%somver -o ../$1$2.so.%sover
-	ln -s $1$2.so.%sover ../$1$2.so.%somver
-	ln -s $1$2.so.%somver ../$1$2.so
-	rm -f *
-}
+### install seq version
+pushd ../%name-%version-seq
 
-pushd %buildroot%_libdir
-mkdir tmp
-pushd tmp
-for i in pord mumps_common cmumps dmumps smumps zmumps
-do
-	makeShared lib$i
-	makeShared lib$i _seq
-	ADDLIB="-l$i $ADDLIB"
-	ADDLIB_SEQ="-l${i}_seq $ADDLIB_SEQ"
-done
-popd
-rmdir tmp
+# Install libraries.
+install -cpm 755 %name-%version-seq/lib/lib*-*.so %buildroot%_libdir/
+
+# Install development files.
+cp -a %name-%version-seq/lib/lib*.so %buildroot%_libdir/
+
+install -cpm 755 %name-%version-seq/examples/?simpletest %buildroot%_libdir/%name-%version-seq-examples/
+install -cpm 755 %name-%version-seq/examples/input_* %buildroot%_libdir/%name-%version-seq-examples/
+install -cpm 755 %name-%version-seq/examples/README-* %buildroot%_libdir/%name-%version-seq-examples/
+
 popd
 
-%files
-%doc ChangeLog LICENSE README
-%_bindir/*
+%check
+# Running test programs
+pushd ../%name-%version-seq/examples
+LD_LIBRARY_PATH=$PWD:../lib:$LD_LIBRARY_PATH \
+ ./ssimpletest < input_simpletest_real
+LD_LIBRARY_PATH=$PWD:../lib:$LD_LIBRARY_PATH \
+ ./dsimpletest < input_simpletest_real
+LD_LIBRARY_PATH=$PWD:../lib:$LD_LIBRARY_PATH \
+ ./csimpletest < input_simpletest_cmplx
+LD_LIBRARY_PATH=$PWD:../lib:$LD_LIBRARY_PATH \
+ ./zsimpletest < input_simpletest_cmplx
+LD_LIBRARY_PATH=$PWD:../lib:$LD_LIBRARY_PATH \
+ ./c_example
+popd
 
 %files -n lib%name-headers
 %_includedir/*
 
 %files -n lib%name
-%_libdir/*.so.*
-%exclude %_libdir/*_seq.so.*
+%doc LICENSE
+%doc ChangeLog CREDITS README
+%_libdir/*-%{soname_version}.so
+%exclude %_libdir/*_seq-%{soname_version}.so
+%exclude %_libdir/libmpiseq-%{soname_version}.so
 
 %files -n lib%name-devel
 %_libdir/*.so
+%exclude %_libdir/*-%{soname_version}.so
 %exclude %_libdir/*_seq.so
-
-%files -n lib%name-devel-static
-%_libdir/*.a
-%exclude %_libdir/*_seq.a
+%exclude %_libdir/libmpiseq.so
 
 %files -n lib%name-seq
-%_libdir/*_seq.so.*
+%doc LICENSE
+%doc ChangeLog CREDITS README
+%_libdir/*_seq-%{soname_version}.so
+%_libdir/libmpiseq-%{soname_version}.so
 
 %files -n lib%name-seq-devel
 %_libdir/*_seq.so
+%_libdir/libmpiseq.so
 
-%files -n lib%name-seq-devel-static
-%_libdir/*_seq.a
+%files -n lib%name-examples
+%_libdir/%name-%version-%mpiimpl-examples
 
-%files -n libfakempi-devel
-%_libdir/fakempi
-
-%files -n lib%name-devel-doc
-%_docdir/lib%name-devel
+%files -n lib%name-seq-examples
+%_libdir/%name-%version-seq-examples
 
 %changelog
+* Wed Apr 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.5-alt1
+- Updated to upstream version 5.3.5 by adapting spec and patches from Fedora.
+
 * Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10.0-alt11
 - Updated conflicts and obsoletes.
 
