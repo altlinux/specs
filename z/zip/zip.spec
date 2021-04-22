@@ -2,7 +2,7 @@
 
 Name: zip
 Version: 3.0
-Release: alt2
+Release: alt3
 
 Epoch: 30000000
 
@@ -24,7 +24,6 @@ Patch5: zip-3.0-exec-shield.patch
 Patch6: zip-3.0-currdir.patch
 # Not upstreamed.
 Patch7: zip-3.0-time.patch
-Patch8: zip-3.0-no-pie.patch
 
 
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -64,7 +63,10 @@ subst \
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p2
+
+%ifarch %ix86
+sed -i 's/-o zip$E/-no-pie &/' unix/Makefile
+%endif
 
 %define _optlevel 3
 
@@ -85,6 +87,9 @@ make -f unix/Makefile prefix=$RPM_BUILD_ROOT%{_prefix} \
 %_man1dir/*
 
 %changelog
+* Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 30000000:3.0-alt3
+- Use -no-pie on ix86 only
+
 * Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 30000000:3.0-alt2
 - fix FTBFS due to -enable-default-pie
 
