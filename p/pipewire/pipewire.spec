@@ -22,7 +22,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.24
+Version: %ver_major.26
 Release: alt1
 
 Summary: Media Sharing Server
@@ -56,7 +56,7 @@ BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 #https://github.com/pali/libopenaptx
 BuildRequires: libopenaptx-devel
 # for pw-top
-BuildRequires: libncurses-devel
+BuildRequires: libncursesw-devel
 %if_enabled gstreamer
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver)
@@ -130,6 +130,7 @@ export LIB=%_lib
 
 %install
 %meson_install
+%find_lang %name
 
 %check
 %meson_test
@@ -139,7 +140,7 @@ export LIB=%_lib
 %_sbindir/useradd -r -N -g %name -d / \
 	-s /dev/null -c "PipeWire System Daemon" %name 2>/dev/null ||:
 
-%files
+%files -f %name.lang
 %_bindir/%name
 %_bindir/pw-jack
 %_bindir/%name-pulse
@@ -205,6 +206,8 @@ export LIB=%_lib
 %_bindir/pw-cli
 %_bindir/pw-dot
 %_bindir/pw-dump
+%_bindir/pw-link
+%_bindir/pw-loopback
 %_bindir/pw-metadata
 %_bindir/pw-mididump
 %_bindir/pw-midiplay
@@ -233,6 +236,9 @@ export LIB=%_lib
 
 
 %changelog
+* Fri Apr 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.26-alt1
+- updated to 0.3.26-11-gab7bc6ed
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.24-alt1
 - updated to 0.3.24-6-gdb85339f
 
