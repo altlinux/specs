@@ -1,5 +1,5 @@
 Name: installer-feature-desktop-other-fs
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
 
 Summary: Mount existing filesystems too
@@ -35,6 +35,10 @@ Conflicts: installer-ltsp-school-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Fri Apr 23 2021 Michael Shigorin <mike@altlinux.org> 0.7.7-alt1
+- use "nofail" for everything added and not just ntfs
+  (thx Anton Samsonov)
+
 * Mon Aug 31 2020 Michael Shigorin <mike@altlinux.org> 0.7.6-alt1
 - E2K: exclude /mnt/hdc1 (thx vas.expert)
 
