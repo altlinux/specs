@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt6
+Release: alt7
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -82,7 +82,7 @@ sed -i 's|#!/usr/bin/env python3|#!/usr/bin/python3|' \
 
 %install
 
-mkdir -p %buildroot{%_datadir,%_logdir,%_sysconfdir}/openuds
+mkdir -p %buildroot{%_datadir,%_logdir,%_sysconfdir,%_sharedstatedir}/openuds
 cp -r src/* %buildroot%_datadir/openuds/
 mv %buildroot%_datadir/openuds/server/settings.py.sample %buildroot%_sysconfdir/openuds/settings.py
 ln -r -s %buildroot%_logdir/openuds %buildroot%_datadir/openuds/log
@@ -126,6 +126,7 @@ cert-sh generate nginx-openuds ||:
 %_datadir/openuds
 %dir %attr(0750, root, openuds) %_sysconfdir/openuds
 %config(noreplace) %attr(0640, root, openuds) %_sysconfdir/openuds/settings.py
+%dir %attr(0770, root, openuds) %_sharedstatedir/openuds
 %dir %attr(0770, root, openuds) %_logdir/openuds
 %config(noreplace) %_logrotatedir/openuds-server
 %_unitdir/openuds-taskmanager.service
@@ -141,6 +142,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Fri Apr 23 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt7
+- Fix create home dir for user openuds
+
 * Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt6
 - Switch to local memory from memcached by default in settings.py.
 - Fix openuds-web.service for execute gunicorn.py3 for use python3.
