@@ -5,7 +5,7 @@
 
 Name: grantlee5
 Version: 5.2.0
-Release: alt3
+Release: alt3.1
 
 Group: System/Libraries
 Summary: Qt string template engine based on the Django template system
@@ -85,6 +85,10 @@ format for easy browsing.
 sed -i 's| -ansi ||' CMakeLists.txt
 
 %build
+%ifarch %e2k
+# see also http://altlinux.org/lcc
+%add_optflags -Wl,--no-warn-shared-textrel
+%endif
 %K5build \
   -DBUILD_TESTS=OFF \
   #
@@ -126,6 +130,9 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 %doc %_docdir/HTML/en/grantlee5-apidocs/
 
 %changelog
+* Sat Apr 17 2021 Michael Shigorin <mike@altlinux.org> 5.2.0-alt3.1
+- E2K: workaround ftbfs with lcc
+
 * Fri Jul 24 2020 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt3
 - return 5.2
 - fix build requries
