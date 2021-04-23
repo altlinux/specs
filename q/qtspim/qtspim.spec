@@ -1,12 +1,12 @@
 Name: qtspim
-Version: 9.1.20
-Release: alt1.r715
+Version: 9.1.22
+Release: alt1.r739
 License: BSD
 Summary: MIPS32 Simulator
 Url: http://spimsimulator.sourceforge.net/
 Group: Emulators
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar.gz
 Source1: %name.desktop
 
 # Automatically added by buildreq on Sun Jun 03 2018
@@ -33,13 +33,15 @@ cp -r ../QtSpim/windows_images .
 sed -i 's/TARGET = QtSpim/TARGET = qtspim/g' ../QtSpim/QtSpim.pro
 sed -i 's/QString("\/usr\/lib\/qtspim\/help\/qtspim.qhc")/QString("\/usr\/share\/qtspim\/help\/qtspim.qhc")/g' ../QtSpim/menu.cpp
 sed -i 's/"\/usr\/lib\/qtspim\/bin\/assistant"/"\/usr\/bin\/assistant-qt5"/g' ../QtSpim/menu.cpp
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" ../QtSpim/QtSpim.pro
 popd
 cp -f %SOURCE1 .
 
 %build
 pushd build
-make
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" ../QtSpim/QtSpim.pro
+sed -i 's@\$(MOVE) ./parser.tab@cp ./parser.tab@' Makefile
+sed -i 's@qhelpgenerator @qhelpgenerator-qt5 @' Makefile
+%make_build
 popd
 
 %install
@@ -68,6 +70,9 @@ install -m  644  ChangeLog  Setup/qtspim_debian_deployment/copyright %buildroot%
 
 
 %changelog
+* Fri Apr 23 2021 Fr. Br. George <george@altlinux.ru> 9.1.22-alt1.r739
+- new version
+
 * Wed Jun 06 2018 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 9.1.20-alt1.r715
 - new version
 - specfile cleanup
