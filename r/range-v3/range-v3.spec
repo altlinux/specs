@@ -1,11 +1,12 @@
+# Check also https://github.com/EasyCoding/range-v3/blob/master/range-v3.spec
+
 %def_with test
 
-# Check also https://github.com/EasyCoding/range-v3/blob/master/range-v3.spec
 Name: range-v3
+Version: 0.11.0
+Release: alt2
 
 Summary: Range library for C++14/17/20, basis for C++20's std::ranges
-Version: 0.11.0
-Release: alt1
 
 License: Boost
 Group: Development/C++
@@ -16,14 +17,20 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/ericniebler/range-v3/archive/%version.tar.gz
 Source: %name-%version.tar
 
+# https://bugzilla.altlinux.org/show_bug.cgi?id=37930
+# https://bugzilla.altlinux.org/show_bug.cgi?id=38830
+Patch: a91f0e1be27a31c446452a753001d4518ef83a6b.patch
+
 BuildArch: noarch
 
-# WAIT: https://bugzilla.altlinux.org/show_bug.cgi?id=37930
-# WAIT: https://bugzilla.altlinux.org/show_bug.cgi?id=38830
-%set_gcc_version 8
-BuildRequires: gcc8-c++
+BuildRequires: gcc-c++
 
-BuildRequires: cmake ctest
+BuildRequires(pre): rpm-build-intro >= 2.1.14
+BuildRequires: cmake
+
+%if_with test
+BuildRequires: ctest
+%endif
 
 %description
 Range library for C++14/17/20. This code was the basis
@@ -46,6 +53,7 @@ which was merged into the C++20 working drafts in November 2018.
 
 %prep
 %setup
+%patch -p1
 %__subst 's|DESTINATION lib/cmake/range-v3|DESTINATION share/cmake/range-v3|g' CMakeLists.txt
 %__subst '/-Werror/d' cmake/ranges_flags.cmake
 
@@ -77,6 +85,9 @@ rm -vf %buildroot%_includedir/module.modulemap
 %_datadir/cmake/%name
 
 %changelog
+* Fri Apr 23 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt2
+- build with gcc10 on Sisyphus
+
 * Thu Aug 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
 - new version 0.11.0 (with rpmrb script)
 
