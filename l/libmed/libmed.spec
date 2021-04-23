@@ -1,6 +1,6 @@
 Name:     libmed
 Version:  4.1.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Library to store and exchange meshed data or computation result in MED format
 License:  GPLv3 and LGPLv3
@@ -17,7 +17,7 @@ BuildRequires: cmake
 BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: libhdf5-devel
-BuildRequires: hdf5-8-tools
+BuildRequires: hdf5-tools
 BuildRequires: gcc-fortran
 
 %description
@@ -76,6 +76,9 @@ popd
 %_bindir/*
 
 %changelog
+* Fri Apr 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt2
+- Fixed build dependencies.
+
 * Mon Apr 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt1
 - Updated to upstream version 4.1.0.
 - Enabled tests.
