@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 40
-%define beta .rc
+%define beta %nil
 %define xdg_name org.gnome.Geary
 # see meson_options.txt
 %define profile release
@@ -12,8 +12,8 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major
-Release: alt0.8%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Email client
 License: LGPL-2.1-or-later
@@ -99,6 +99,9 @@ Geary's development.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Fri Apr 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 40-alt0.8.rc
 - 40
 
