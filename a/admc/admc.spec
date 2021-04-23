@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.4.1
+Version: 0.5.1
 Release: alt1
 
 Summary: AD editor
@@ -17,6 +17,7 @@ BuildRequires(pre): qt5-tools-devel
 BuildRequires(pre): catch2-devel
 BuildRequires(pre): cmake-modules
 
+BuildRequires: samba-devel
 BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libsmbclient-devel
@@ -33,6 +34,7 @@ Requires: libsasl2
 Requires: libsmbclient
 Requires: libuuid
 Requires: qt5-base-common
+Requires: libqt5-help
 Requires: glib2
 Requires: libkrb5
 
@@ -68,17 +70,32 @@ cd BUILD
 
 %files
 %doc README.md
+%_datadir/admc.qch
 %_bindir/admc
+%_libdir/libadldap.so
+%_man1dir/admc*
 
 %files test
+%_libdir/libadmctest.so
 %_bindir/admc_test_object_menu
 %_bindir/admc_test_unlock_edit
+%_bindir/admc_test_upn_edit
+%_bindir/admc_test_string_edit
+%_bindir/admc_test_country_edit
+%_bindir/admc_test_gplink
+%_bindir/admc_test_ad_interface
 
 %files gpgui
 %_bindir/gpgui
 %_libdir/libgptbackend.so
 
 %changelog
+* Fri Apr 23 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
+* Thu Apr 22 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Mar 02 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
