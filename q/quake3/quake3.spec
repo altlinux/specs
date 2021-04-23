@@ -11,12 +11,14 @@
 
 Name: quake3
 Version: 1.36
-Release: alt3.svn%revision
+Release: alt4.svn%revision
 
 Summary: Quake 3: Arena by ID Software
 License: GPL
 Group: Games/Arcade
 Url: http://ioquake3.org
+
+ExcludeArch: %arm
 
 Source0: ioquake3-r%revision.tar.bz2
 
@@ -29,6 +31,7 @@ Source12: quake3-ctf.init
 Source13: quake3-ctf.sysconfig
 
 Patch0: quake3-alt-aarch64.patch
+Patch1: quake3-alt-no-pie.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -82,7 +85,8 @@ Quake 3: Arena by ID Software.
 
 %prep
 %setup -q -n ioquake3
-%patch -p2
+%patch0 -p2
+%patch1 -p2
 
 #rm -rf code/zlib code/libspeex
 
@@ -184,6 +188,10 @@ echo "In order to actually play the game, you'll need pak-files from original ga
 %dir %attr(1770,root,%_group) %_home
 
 %changelog
+* Fri Apr 23 2021 Slava Aseev <ptrnine@altlinux.org> 1.36-alt4.svn2349
+- Fix build on ix86 due to --enable-default-pie
+- Disable build on arm
+
 * Sat Sep 28 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.36-alt3.svn2349
 - Fixed build on ppc64le and aarch64 architectures.
 
