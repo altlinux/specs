@@ -4,7 +4,7 @@
 
 Name: monodevelop
 Version: 7.6.9.22
-Release: alt3
+Release: alt4
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -143,7 +143,7 @@ for i in ../nuget-core/*.nupkg ; do
     name=$(basename ${i%%.nupkg})
     mkdir $name
     pushd $name
-    7z x ../$i
+    7z x -y ../$i
     cp ../$i ./
     popd
 done
@@ -165,7 +165,7 @@ for i in ../../../nuget-external-fsharpbinding/*.version.txt ; do
     mkdir $name
     pushd $name
     # these nupkg file names are usually lowercase
-    7z x ../$dir/${namelower}.${version}.nupkg
+    7z x -y ../$dir/${namelower}.${version}.nupkg
     cp ../$dir/${namelower}.${version}.nupkg ./${namelower}.${version}.nupkg
     popd
 done
@@ -185,7 +185,7 @@ for i in ../../nuget-home/*.version.txt ; do
     for version in $(cat $i) ; do
         mkdir -p $name/$version
         pushd $name/$version
-        7z x ../../$dir/${name}.${version}.nupkg
+        7z x -y ../../$dir/${name}.${version}.nupkg
         # copy additionally required files
         cp ../../$dir/${name}.${version}.nupkg ./
         cp ../../$dir/${name}.${version}.nupkg.sha512 ./
@@ -261,6 +261,9 @@ rm -f %buildroot%_libexecdir/%name/bin/libe_sqlite3.so
 %_man1dir/*
 
 %changelog
+* Fri Apr 23 2021 Vitaly Lipatov <lav@altlinux.ru> 7.6.9.22-alt4
+- NMU: fix 7z unpacking
+
 * Tue Jun 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 7.6.9.22-alt3
 - Added Russian translation to desktop file (Closes: #36849)
 
