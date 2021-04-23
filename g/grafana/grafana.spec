@@ -1,11 +1,10 @@
 %global import_path github.com/grafana/grafana
-%global commit 1e261642f4bff28093de2c30093198fcd231c8a6
 
 %global _unpackaged_files_terminate_build 1
 %define _runtimedir /run
 
 Name:		grafana
-Version:	7.3.7
+Version:	7.5.4
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -73,7 +72,7 @@ export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 export npm_config_devdir="$PWD/node_modules/.node-gyp"
 export VERSION=%version
-export COMMIT=%commit
+export COMMIT=%release
 export BRANCH=altlinux
 
 #%golang_prepare
@@ -90,7 +89,8 @@ export NODE_OPTIONS=--max_old_space_size=2048
 %endif
 #npm rebuild
 #npm run build
-go run build.go build-frontend
+#go run build.go build-frontend
+yarn run build
 
 #GO111MODULE=off CGO_ENABLED=1 go run build.go build
 #%%golang_build pkg/cmd/*
@@ -201,6 +201,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Fri Apr 23 2021 Alexey Shabalin <shaba@altlinux.org> 7.5.4-alt1
+- 7.5.4
+
 * Sat Jan 23 2021 Alexey Shabalin <shaba@altlinux.org> 7.3.7-alt1
 - 7.3.7
 
