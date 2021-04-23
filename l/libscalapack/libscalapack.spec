@@ -9,7 +9,7 @@
 %define sover 2
 Name: lib%origname
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: Scalable LAPACK library
 License: BSD-style
 Group: Sciences/Mathematics
@@ -32,7 +32,6 @@ BuildRequires: cmake
 BuildRequires: gcc-fortran
 BuildRequires: libopenblas-devel
 BuildRequires: liblapack-devel
-BuildRequires: libblacs-devel
 %if_disabled bootstrap
 # circular build deps with arpack
 BuildRequires: libarpack-devel
@@ -197,6 +196,9 @@ install -m644 MANPAGES/man/manl/* %buildroot%_mandir/manl/
 %_mandir/manl/*
 
 %changelog
+* Fri Apr 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt2
+- Fixed build dependencies.
+
 * Tue Apr 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Updated to upstream version 2.1.0.
 - Cleaned up spec.
