@@ -1,82 +1,86 @@
 %define _unpackaged_files_terminate_build 1
+%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
 
-%def_with docs
+%def_without bootstrap
+
+Name: python3-module-pip
+Version: 21.0.1
+Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
-Name: python-module-pip
-Version: 20.1.1
-Release: alt2
-Source0: pip-%version.tar.gz
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pip.pypa.io
-Obsoletes: python-module-pip-pickles
-%setup_python_module pip
 
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-sphinx
+Source0: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+
+# dependencies for build wheel
+%if_without bootstrap
+BuildRequires: python3(wheel)
+BuildRequires: python3(system_seed_wheels)
 %endif
+
+Obsoletes: python3-module-pip-pickles
 
 %description
 %summary
-%add_findprov_skiplist %python_sitelibdir/pip/_vendor/*
 
-%if_with docs
-%package docs
-Summary: Documentation for pip
-Group: Development/Documentation
+%add_findprov_skiplist %python3_sitelibdir/pip/_vendor/*
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(pip\._vendor\..*)/d
 
-%description docs
+%if_without bootstrap
+%package wheel
+Summary: %summary
+Group: Development/Python3
+%py3_requires system_seed_wheels
+
+%description wheel
 %summary
 
-This package contains documentation for pip.
+Packaged as wheel. Provides the seed package for virtualenv.
 %endif
 
 %prep
-%setup -n %modulename-%version
+%setup
 
-%if_with docs
-# XXX wait for packaging pypa_theme
-sed -i '
-s/pypa_theme/default/
-/.navigation_depth.: 3,/s/^/#/
-/.issues_url.:/s/^/#/
-' docs/html/conf.py
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-%endif
+# never unbundle vendored packages
+# built wheel being installed into virtualenv will lack of unbundled packages
 
 %build
-%python_build
-
-%if_with docs
-PYTHONPATH=`pwd`/build/lib sphinx-build -c docs/html docs/html html2
-%endif
+%python3_build
 
 %install
-%python_install
-# Python3 entrypoint script
-rm %buildroot%_bindir/pip
+%python3_install
+
+# since we package python modules as arch dependent
+%if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
+mkdir -p %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+%endif
+
+%if_without bootstrap
+%{python3_setup:} bdist_wheel --dist-dir %buildroot%system_wheels_path/
+%endif
 
 %files
 %doc *.txt *.rst
-%_bindir/pip2
-%_bindir/pip2.7
-%python_sitelibdir/pip/
-%python_sitelibdir/pip-*.egg-info/
+%_bindir/pip
+%_bindir/pip3
+%_bindir/pip%__python3_version
+%python3_sitelibdir/pip/
+%python3_sitelibdir/pip-*.egg-info/
 
-%if_with docs
-%files docs
-%doc html2
-
+%if_without bootstrap
+%files wheel
+%system_wheels_path/pip-%version-*.whl
 %endif
 
 %changelog
-* Fri Apr 23 2021 Stanislav Levin <slev@altlinux.org> 20.1.1-alt2
-- Built Python3 package from its own src(Python2 EOL).
+* Fri Apr 23 2021 Stanislav Levin <slev@altlinux.org> 21.0.1-alt1
+- 20.1.1 -> 21.0.1.
+- Built wheel package(for virtualenv).
 
 * Thu Jun 04 2020 Fr. Br. George <george@altlinux.ru> 20.1.1-alt1
 - Autobuild version bump to 20.1.1

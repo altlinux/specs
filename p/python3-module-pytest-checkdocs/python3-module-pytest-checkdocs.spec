@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define  modulename pytest-checkdocs
 
 %def_with check
 
 Name:    python3-module-%modulename
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: A pytest plugin that checks the long description of the project to ensure it renders properly.
 License: MIT
@@ -15,10 +16,12 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-more-itertools
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tox
+BuildRequires: python3(docutils)
+BuildRequires: python3(more_itertools)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -45,7 +48,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vv -r
+tox.py3 --sitepackages --no-deps --console-scripts -vvr
 
 %files
 %python3_sitelibdir/__pycache__/*
@@ -53,6 +56,9 @@ tox.py3 --sitepackages -vv -r
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 2.1.1-alt2
+- Fixed FTBFS(new pip's resolver).
+
 * Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
 - 1.2.3 -> 2.1.1.
 

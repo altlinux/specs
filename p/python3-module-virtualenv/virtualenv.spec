@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define modulename virtualenv
+%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
 
 %def_with check
 
 Name: python3-module-%modulename
-Version: 20.1.0
+Version: 20.4.4
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -21,21 +22,25 @@ BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: python3(appdirs)
-BuildRequires: python3(coverage)
 BuildRequires: python3(distlib)
 BuildRequires: python3(filelock)
+BuildRequires: python3(six)
+
 BuildRequires: python3(flaky)
 BuildRequires: python3(packaging)
 BuildRequires: python3(pytest_freezegun)
 BuildRequires: python3(pytest_mock)
 BuildRequires: python3(pytest_randomly)
 BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(pytest_xdist)
-BuildRequires: python3(six)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3-module-system-seed-wheels-wheels
 %endif
 
 BuildArch: noarch
+
+# system seed wheels
+Requires: python3-module-system-seed-wheels-wheels
 
 %description
 Tool to create isolated Python environments.
@@ -65,7 +70,10 @@ in newly created environment by invoking /your/dir/bin/python
 %patch -p1
 
 # don't package win module
-rm -f src/virtualenv/util/subprocess/_win_subprocess.py
+rm src/virtualenv/util/subprocess/_win_subprocess.py
+
+# remove all bundled seed wheels
+rm src/virtualenv/seed/wheels/embed/*.whl
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -80,11 +88,11 @@ mv %buildroot%_bindir/{virtualenv,virtualenv3}
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 export PIP_NO_BUILD_ISOLATION=no
-export PIP_FIND_LINKS=%buildroot%python3_sitelibdir/virtualenv/seed/wheels/embed
+export PIP_FIND_LINKS=%system_wheels_path
 export NO_INTERNET=yes
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
 export TOXENV=py3
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --no-deps -vvr
 
 %files
 %doc README.md
@@ -93,6 +101,10 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 23 2021 Stanislav Levin <slev@altlinux.org> 20.4.4-alt1
+- 20.1.0 -> 20.4.4.
+- Switched to system seed wheels.
+
 * Mon Oct 26 2020 Stanislav Levin <slev@altlinux.org> 20.1.0-alt1
 - 16.7.9 -> 20.1.0.
 

@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname iniconfig
 
-Name: python-module-%oname
-Version: 1.0.0
-Release: alt3
+%def_with check
+
+Name: python3-module-%oname
+Version: 1.1.1
+Release: alt1
 
 Summary: A small and simple INI-file parser
 License: MIT
@@ -14,7 +16,14 @@ Url: https://pypi.org/project/iniconfig/
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: python2.7(setuptools_scm)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools_scm)
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 BuildArch: noarch
 
@@ -27,21 +36,29 @@ BuildArch: noarch
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_build
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_install
+%python3_install
 
 %check
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION'
+export TOXENV=py3
+
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 %doc CHANGELOG LICENSE README.txt
-%python_sitelibdir/iniconfig.py*
-%python_sitelibdir/iniconfig-%version-py%_python_version.egg-info/
+%python3_sitelibdir/iniconfig/
+%python3_sitelibdir/iniconfig-%version-py%_python3_version.egg-info/
 
 %changelog
-* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.0.0-alt3
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
+- 1.0.0 -> 1.1.1.
 - Built Python3 package from its ows src.
 
 * Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2

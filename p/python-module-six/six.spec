@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.15.0
-Release: alt1
+Release: alt2
 
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
@@ -26,8 +26,6 @@ BuildRequires(pre): rpm-build-python3
 
 # for test suite
 %if_with check
-BuildRequires: python-module-pytest
-BuildRequires: python-modules-tkinter
 BuildRequires: python3-modules-tkinter
 BuildRequires: python3-module-tox
 %endif
@@ -79,8 +77,8 @@ diff -y move.expected.list move.actual.list
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc README.rst documentation/index.rst
@@ -94,6 +92,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/six-*.egg-info/
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.15.0-alt2
+- Disabled testing for Python2.
+
 * Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 1.15.0-alt1
 - 1.14.0 -> 1.15.0.
 

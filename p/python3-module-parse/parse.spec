@@ -1,86 +1,51 @@
+%define _unpackaged_files_terminate_build 1
 %define oname parse
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
-Version: 1.8.2
+Name: python3-module-%oname
+Version: 1.19.0
 Release: alt1
 Summary: parse() is the opposite of format()
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/parse
+Url: https://pypi.org/project/parse/
 
 # https://github.com/r1chardj0n3s/parse.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 %description
 Parse strings using a specification based on the Python format() syntax.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: parse() is the opposite of format()
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Parse strings using a specification based on the Python format() syntax.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-py.test
-%if_with python3
-pushd ../python3
-py.test3
-popd
-%endif
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.19.0-alt1
+- 1.8.2 -> 1.19.0.
+
 * Thu May 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1
 - Updated to upstream version 1.8.2.
 

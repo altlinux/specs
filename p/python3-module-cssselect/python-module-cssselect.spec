@@ -1,18 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: python-module-cssselect
+%def_with check
+
+Name: python3-module-cssselect
 Version: 0.9.1
 Release: alt3
 
 Summary: Parses CSS3 Selectors and translates them to XPath 1.0
-Group: Development/Python
+Group: Development/Python3
 License: BSD-style
 Url: http://packages.python.org/cssselect/
 BuildArch: noarch
 
-%setup_python_module cssselect
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-lxml
 
-BuildRequires: python-module-lxml
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 # http://pypi.python.org/packages/source/c/cssselect/cssselect-%version.tar.gz
 Source: cssselect-%version.tar
@@ -26,15 +31,18 @@ engine to find the matching elements in an XML or HTML document.
 %setup -n cssselect-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %doc AUTHORS docs README.rst CHANGES LICENSE PKG-INFO
 
 %changelog

@@ -1,19 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define mname pyasn1
 
-Name: python-module-%mname
+%def_with check
+
+Name: python3-module-%mname
 Version: 0.4.8
 Release: alt2
 
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/etingof/pyasn1.git
 Url: https://pypi.python.org/pypi/pyasn1
 
 Source0: %name-%version.tar
 Source1: pyasn1.watch
 Patch: %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
 
 BuildArch: noarch
 
@@ -28,17 +37,25 @@ based on ASN.1 specification.
 %patch -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc LICENSE.rst README.md CHANGES.rst
-%python_sitelibdir/pyasn1/
-%python_sitelibdir/pyasn1-%version-*.egg-info/
+%python3_sitelibdir/pyasn1/
+%python3_sitelibdir/pyasn1-%version-*.egg-info/
 
 %changelog
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.4.8-alt2

@@ -1,21 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define mname pyasn1-modules
 
-Name: python-module-%mname
+%def_with check
+
+Name: python3-module-%mname
 Version: 0.2.8
 Release: alt2
 
 Summary: ASN.1 modules for Python
 License: BSD-2-Clause
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/etingof/pyasn1-modules.git
 Url: https://pypi.python.org/pypi/pyasn1-modules
 
 Source: %name-%version.tar
 
-BuildRequires: python2.7(pyasn1)
+BuildRequires(pre): rpm-build-python3
 
-Requires: python-module-pyasn1 >= 0.4.6
+BuildRequires: python3(pyasn1)
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
+
+Requires: python3-module-pyasn1 >= 0.4.6
 BuildArch: noarch
 
 %description
@@ -28,17 +37,26 @@ It's thought to be useful to protocol developers and testers.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc LICENSE.txt README.md
-%python_sitelibdir/pyasn1_modules/
-%python_sitelibdir/pyasn1_modules-%version-*.egg-info/
+%python3_sitelibdir/pyasn1_modules/
+%python3_sitelibdir/pyasn1_modules-%version-*.egg-info/
 
 %changelog
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.2.8-alt2

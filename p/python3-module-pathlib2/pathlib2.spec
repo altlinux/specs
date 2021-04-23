@@ -1,20 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %global oname pathlib2
 
-Name: python-module-%oname
+%def_with check
+
+Name: python3-module-%oname
 Version: 2.3.3
 Release: alt2
 
 Summary: Object-oriented filesystem paths
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 
 # Source-git: https://github.com/mcmtroffaes/pathlib2
 Url: https://pypi.org/project/pathlib2
 Source: %name-%version.tar.gz
 
+BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-test
+BuildRequires: python3(pytest)
+BuildRequires: python3(six)
+BuildRequires: python3(tox)
+%endif
+
 BuildArch: noarch
-%py_requires scandir
 
 %global _description \
 The old pathlib module on bitbucket is in bugfix-only mode. The goal of\
@@ -28,17 +38,26 @@ pathlib can be used also on older Python versions.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
+cat > tox.ini <<EOF
+[testenv]
+usedevelop=True
+commands =
+    python -m pytest tests {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc CHANGELOG.rst LICENSE.rst README.rst
-%python_sitelibdir/pathlib2/
-%python_sitelibdir/pathlib2-*.egg-info/
+%python3_sitelibdir/pathlib2/
+%python3_sitelibdir/pathlib2-*.egg-info/
 
 %changelog
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 2.3.3-alt2
