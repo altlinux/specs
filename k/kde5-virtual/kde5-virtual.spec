@@ -1,6 +1,6 @@
 
 Name: kde5-virtual
-Version: 5.21.2
+Version: 5.21.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -244,7 +244,7 @@ Obsoletes: kde5-display-manager-2-sddm < %EVR
 Provides: kde5-display-manager = %EVR
 Provides: kde5-display-manager-sddm = %EVR
 Requires: kf5-filesystem
-Requires: plasma5-sddm-kcm sddm
+Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %description -n kde5-display-manager-5-sddm
 %summary
 
@@ -279,6 +279,9 @@ Requires: plasma5-sddm-kcm sddm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Fri Apr 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.3-alt1
+- requires sddm-theme-breeze for kde5-display-manager-sddm
+
 * Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.2-alt1
 - add requires for lightdm-gtk-greeter-settings
 
