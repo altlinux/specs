@@ -35,7 +35,7 @@
 
 Name: plasma5-workspace
 Version: 5.21.4
-Release: alt4
+Release: alt5
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -47,7 +47,6 @@ License: GPL-2.0-or-later
 Provides: kf5-plasma-workspace = %EVR
 Obsoletes: kf5-plasma-workspace < %EVR
 
-Requires: sddm-theme-breeze
 Requires: %name-qml
 Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes
@@ -478,6 +477,9 @@ done
 
 
 %changelog
+* Fri Apr 23 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt5
+- clean requires
+
 * Mon Apr 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.21.4-alt4
 - Removed 'unlock' button. Now unlocking starts immediately instead of displaying the button.
 
