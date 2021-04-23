@@ -1,7 +1,10 @@
-#define gver 4.7
-#set_gcc_version %%gver
+%define _unpackaged_files_terminate_build 1
 
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le %e2k
+
+%ifarch %ix86
+%add_optflags -no-pie
+%endif
 
 %define _user _tremulous
 %define _group _tremulous
@@ -28,7 +31,7 @@ ExclusiveArch: %ix86 x86_64 aarch64 ppc64le %e2k
 
 Name: tremulous
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: Tremulous - 3D FPS Strategic Shooter
 License: GPL
@@ -51,8 +54,8 @@ Patch11: tremulous-getstatus-dos.patch
 Patch12: tremulous-aarch64.patch
 Patch13: tremulous-i686.patch
 
-Requires: %name-server = %version-%release
-Requires: %name-client = %version-%release
+Requires: %name-server = %EVR
+Requires: %name-client = %EVR
 
 # Automatically added by buildreq on Wed Jun 25 2008
 BuildRequires: esound libX11-devel libXext-devel libopenal-devel libSDL-devel
@@ -106,8 +109,8 @@ This package contains common files.
 %package client
 Group: Games/Arcade
 Summary: Tremulous client
-Requires: %name-common = %version-%release
-Provides: %name-client = %version-%release
+Requires: %name-common = %EVR
+Provides: %name-client = %EVR
 Requires: %name-data = %version
 
 %description client
@@ -124,7 +127,7 @@ Tremulous client.
 %package server
 Group: Games/Arcade
 Summary: Tremulous dedicated server package
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: %name-data = %version
 
 %description server
@@ -164,13 +167,15 @@ rm -r src/SDL12 src/AL src/libcurl src/libspeex src/libs
 # since we've stripped out q3cc as this is not Free Software.
 %make_build release \
 	OPTIMIZE="%optflags" \
+	LDFLAGS="%optflags" \
 	CROSS_COMPILING=1 \
 	USE_CODEC_VORBIS=1 \
 	USE_LOCAL_HEADERS=0 \
 	BUILD_GAME_SO=0 \
 	GENERATE_DEPENDENCIES=0 \
 	USE_INTERNAL_SPEEX=0 \
-	USE_INTERNAL_ZLIB=0
+	USE_INTERNAL_ZLIB=0 \
+	%nil
 
 %install
 install -p -D -m644 %SOURCE1 %buildroot%_desktopdir/%name-client.desktop
@@ -236,6 +241,9 @@ install -d %buildroot%_home
 %attr(775,root,%_group) %dir %_home
 
 %changelog
+* Thu Apr 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt3
+- Fixed build on i586.
+
 * Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 1.2.0-alt2
 - Build on %%e2k and aarch64 as well (try building on ppc64le either)
 - Pull fedora patches and some spec bits in
