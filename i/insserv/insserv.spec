@@ -1,6 +1,6 @@
 Name:       insserv
 Version:    1.16.0
-Release:    alt2
+Release: alt3
 
 Summary:    Tool for process controlling in System V boot scripts 
 License:    GPLv2+
@@ -25,6 +25,9 @@ in System V boot scripts.
 %patch -p2
 
 %build
+%ifarch %ix86
+%add_optflags -no-pie
+%endif
 %make_build
 
 %install
@@ -38,6 +41,9 @@ rm -f %buildroot%_libexecdir/lsb/*_initd
 %_man8dir/%name.8.*
 
 %changelog
+* Fri Apr 23 2021 Slava Aseev <ptrnine@altlinux.org> 1.16.0-alt3
+- Fix build on ix86 due to --enable-default-pie
+
 * Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.16.0-alt2
 - Do not use strict extension for man pages
 
