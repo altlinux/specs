@@ -5,13 +5,25 @@
 Summary: GNOME bindings for Mono
 Name: lib%{realname}
 Version: 2.24.2
-Release: alt6
+Release: alt7
 License: LGPLv2+
 Group: Development/Other
 Packager: Mono Maintainers Team <mono@packages.altlinux.org>
 Source: http://ftp.gnome.org/pub/GNOME/sources/%realname/2.20/%realname-%version.tar.bz2
+
+# Patches from Fedora
+Patch0: gnome-sharp-2241-getopts.patch
+# init gtype before using gconf
+Patch2: gnome-sharp-gconf-init.patch
+# https://github.com/meebey/gnome-sharp/commit/e9d06b56a54dcd399d1d3eaaf62bdacb7e07084d
+Patch3: gnome-sharp-2.24.2-dbus-thread-fix.patch
+# https://github.com/mono/gnome-sharp/commit/d797ce61a18f8238acd2f9a7bf97b157ae70b443
+Patch4: gnome-sharp-2.24.2-canvaspathdef.patch
+# https://github.com/mono/gnome-sharp/commit/cfabe1b0a581f8cd10ec75d347a93ebc1c365ac7
+Patch5: gnome-sharp-2.24.2-gconf-path.patch
+
+# Patches from ALT
 Patch11: %realname-2.20.0-fix-configs.patch
-Patch12: %realname-%version-alt-build.patch
 
 Url: http://www.mono-project.com/
 
@@ -40,16 +52,20 @@ This assembly has following configuration:
 %package devel
 Summary: .Net language bindings for GNOME: development files
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package includes development files for the Gtk\# project
 to parse and bind Gnome libraries.
 
 %prep
-%setup -n %realname-%version -q
+%setup -n %realname-%version
+%patch0 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %patch11 -p1
-%patch12 -p2
 
 %build
 %autoreconf
@@ -72,16 +88,19 @@ to parse and bind Gnome libraries.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt7
+- Rebuilt with new mono and patches from Fedora.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.24.2-alt6
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.24.2-alt5
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt4%ubt
+* Mon Jul 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt4
 - Rebuilt for additional architectures.
 
-* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt3%ubt
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt3
 - Rebuilt with support of %%ubt macro.
 
 * Tue Jul 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt2

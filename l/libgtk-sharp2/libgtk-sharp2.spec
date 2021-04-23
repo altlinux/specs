@@ -1,17 +1,25 @@
+%define _unpackaged_files_terminate_build 1
+
 %define realname gtk-sharp
 %def_disable doc
 
 Summary: GTK+ and GNOME bindings for Mono
 Name: lib%{realname}2
-Version: 2.12.11
-Release: alt7
+Version: 2.12.45
+Release: alt1
 License: LGPLv2+
 Group: Development/Other
 Url: http://www.mono-project.com/
-Source: http://ftp.gnome.org/pub/GNOME/sources/%realname/2.12/%name-%version.tar
 
-Patch0: %name-%version-alt-build.patch
-Patch1: %name-2.12.11-alt-glib2.patch
+# https://github.com/mono/gtk-sharp.git
+Source: %name-%version.tar
+
+Patch1: 0001-apply-gtk-sharp-2.10.1-fix-configs.patch.patch
+Patch2: 0002-apply-gtk-sharp-2.12.6-alt-monodoc.patch.patch
+
+# Patches from Fedora
+Patch10: gtk-sharp2-2.12.12-glib-include.patch
+Patch11: gtk-sharp2-2.12.12-gtkrange.patch
 
 Requires: libglade libgtk+2 >= 2.12.0
 
@@ -28,7 +36,7 @@ BuildRequires: /proc
 
 Conflicts: lib%{realname}2-mono4
 Obsoletes: lib%{realname}2-mono4
-Provides: lib%{realname}2-mono4 = %version-%release
+Provides: lib%{realname}2-mono4 = %EVR
 
 %description
 This package provides a library that allows you to build
@@ -41,8 +49,8 @@ Pango, Gdk, libgnome, libgnomeui and libgnomecanvas. Gtk#
 %package gapi
 Summary: Glib and GObject C source parser and C generator for the creation and maintenance of managed bindings for Mono and .NET
 Group: Development/Other
-Requires: %name = %version-%release
-Provides: lib%{realname}2-mono4-gapi = %version-%release
+Requires: %name = %EVR
+Provides: lib%{realname}2-mono4-gapi = %EVR
 Conflicts: lib%{realname}2-mono4-gapi
 Obsoletes: lib%{realname}2-mono4-gapi
 
@@ -56,8 +64,8 @@ libgnome, libgnomeui and libgnomecanvas.
 %package devel
 Summary: .Net language bindings for Gtk+ and GNOME development files
 Group: Development/Other
-Requires: %name-gapi = %version-%release
-Provides: lib%{realname}2-mono4-devel = %version-%release
+Requires: %name-gapi = %EVR
+Provides: lib%{realname}2-mono4-devel = %EVR
 Conflicts: lib%{realname}2-mono4-devel
 Obsoletes: lib%{realname}2-mono4-devel
 
@@ -68,14 +76,14 @@ to parse and bind GObject libraries.
 %package doc
 Summary: %name documentation in monodoc format
 Group: Documentation
-Provides: %name-monodoc = %version-%release
+Provides: %name-monodoc = %EVR
 Obsoletes: %name-monodoc
-Provides: %name-mono4-monodoc = %version-%release
+Provides: %name-mono4-monodoc = %EVR
 Obsoletes: %name-mono4-monodoc
 Requires: mono-monodoc >= 2.2
 BuildArch: noarch
 Obsoletes: lib%{realname}2-mono4-doc
-Provides: lib%{realname}2-mono4-doc = %version-%release
+Provides: lib%{realname}2-mono4-doc = %EVR
 Conflicts: lib%{realname}2-mono4-doc
 
 %description doc
@@ -83,10 +91,11 @@ This package includes documentation in monodoc format for the Gtk\# project
 for use with monodoc / monodoc Gtk# (from mono-tools) / monodevelop.
 
 %prep
-%setup -q
-
-%patch0 -p1
-%patch1 -p0
+%setup
+%patch1 -p1
+%patch2 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 NOCONFIGURE=1 ./bootstrap-2.12
@@ -121,13 +130,17 @@ NOCONFIGURE=1 ./bootstrap-2.12
 %endif
 
 %changelog
+* Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.45-alt1
+- Updated to upstream version 2.12.45.
+- Applied patches from Fedora.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.11-alt7
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.11-alt6
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.11-alt5%ubt
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.11-alt5
 - Rebuilt with support of %%ubt macro.
 
 * Fri Jul 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.11-alt4
