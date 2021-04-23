@@ -6,7 +6,7 @@
 
 Name: cmake
 Version: 3.19.7
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -30,7 +30,7 @@ BuildRequires: libcurl-devel libexpat-devel libncurses-devel libxml2-devel
 BuildRequires: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
 BuildRequires: librhash-devel libuv-devel
 BuildRequires: shared-mime-info rpm-build-vim
-%{?!_disable_docs:BuildRequires: python-module-sphinx-devel}
+%{?!_disable_docs:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
 %{?!_disable_gui:BuildRequires: qt5-base-devel}
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc gcc-fortran java-devel cvs subversion mercurial git-core}}
@@ -143,8 +143,12 @@ Set of RPM macros for packaging applications that use cmake.
 %setup
 %patch -p1
 %patch1 -p1
-# force _libdir due strange libdir detection
-#__subst 's|LIBDIR_DEFAULT "lib"|LIBDIR_DEFAULT "%_lib"|' Modules/GNUInstallDirs.cmake
+
+# remove bundled sources
+rm -rf cmake/Utilities/{cmbzip2,cmbzip2,cmcurl,cmexpat,cmlibarchive,cmliblzma,cmlibrhash,cmlibuv,cmnghttp2,cmvssetup,cmzlib,cmzstd}/
+%if_disabled jsoncpp_bootstrap
+rm -rf cmake/Utilities/cmjsoncpp/
+%endif
 
 %build
 mkdir build
@@ -199,6 +203,8 @@ install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 #mv -f %buildroot%_datadir/%name/completions %buildroot%_sysconfdir/bash_completion.d/%name
 rm -vf %buildroot/usr/share/emacs/site-lisp/cmake-mode.el
+# drop dump requires
+rm -rfv %buildroot/%prefix/share/%name/Modules/Platform/AIX/
 
 install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
@@ -297,6 +303,11 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Fri Apr 23 2021 Vitaly Lipatov <lav@altlinux.ru> 3.19.7-alt2
+- drop requires dump from cmake-modules
+- build without bundled sources
+- use python3-module-sphinx-sphinx-build-symlink instead of python-module-sphinx-devel
+
 * Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.19.7-alt1
 - new version 3.19.7 (with rpmrb script)
 
