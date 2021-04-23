@@ -1,6 +1,6 @@
 Name: xinetd
 Version: 2.3.15
-Release: alt4
+Release: alt5
 
 Summary: xinetd is a powerful replacement for inetd
 Group: System/Base
@@ -51,6 +51,8 @@ Patch28: xinetd-2.3.15-up-CVE-2013-4342.patch
 
 Provides: %_sysconfdir/%name.d
 
+BuildRequires: libtirpc-devel
+
 %package devel
 Summary: Libraries and header files for developing xinetd-aware applications
 Group: Development/C
@@ -100,11 +102,12 @@ install -p -m644 %_sourcedir/{faq.html,xinetd-tutorial.html} .
 find -type f -name \*.orig -delete
 
 %build
-%add_optflags -Wno-unused -Wno-switch
+%{expand:%%add_optflags -Wno-unused -Wno-switch %(pkg-config --cflags libtirpc)}
 %def_without libwrap
 %def_with loadavg
 autoconf
 export ac_cv_header_DNSServiceDiscovery_DNSServiceDiscovery_h=no
+export LDFLAGS="${LDFLAGS-} $(pkg-config --libs libtirpc)"
 %configure \
 	%{subst_with libwrap} \
 	%{subst_with loadavg} \
@@ -174,6 +177,10 @@ rm %buildroot%_mandir/*.3
 %doc README.*
 
 %changelog
+* Fri Apr 23 2021 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt5
+- Built with libtirpc to fix build after removal of Sun RPC interfaces
+  from glibc.
+
 * Thu Aug 30 2018 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt4
 - Applied upstream fix for TCPMUX services (fixes: CVE-2013-4342).
 - Stripped executable bit from xinetd.service (closes: #34566).
