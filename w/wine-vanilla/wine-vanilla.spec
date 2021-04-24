@@ -11,7 +11,7 @@
 %endif
 
 Name: wine-vanilla
-Version: 6.6
+Version: 6.7
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -411,6 +411,9 @@ done
 %_libdir/wine/windowscodecs.so
 %_libdir/wine/crtdll.so
 %_libdir/wine/crypt32.so
+%_libdir/wine/kerberos.so
+%_libdir/wine/netapi32.so
+%_libdir/wine/wldap32.so
 %_libdir/wine/mscms.so
 %_libdir/wine/msvcr100.so
 %_libdir/wine/msvcr110.so
@@ -447,6 +450,7 @@ done
 %exclude %_libdir/wine/opengl32.dll.so
 %exclude %_libdir/wine/glu32.dll.so
 %exclude %_libdir/wine/wined3d.dll.so
+%exclude %_libdir/wine/winevulkan.so
 
 %files full
 
@@ -475,6 +479,7 @@ done
 %_libdir/wine/opengl32.dll.so
 %_libdir/wine/glu32.dll.so
 %_libdir/wine/wined3d.dll.so
+%_libdir/wine/winevulkan.so
 
 %files -n lib%name-devel
 %doc LICENSE
@@ -512,6 +517,9 @@ done
 %endif
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 6.7-alt1
+- new version 6.7
+
 * Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.6-alt1
 - new version 6.6
 
