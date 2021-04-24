@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 2.11.2
+Version: 2.12.1
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -93,6 +93,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.1-alt1
+- new version 2.12.1 (with rpmrb script)
+
 * Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt1
 - new version 2.11.2 (with rpmrb script)
 
