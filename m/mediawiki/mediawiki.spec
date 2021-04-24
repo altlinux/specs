@@ -2,7 +2,7 @@
 %define major 1.35
 
 Name: mediawiki
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -59,7 +59,7 @@ Requires: webserver-common
 Requires: php7-libs >= 7.3.19
 Requires: php7-dom php7-fileinfo php7-mbstring php7-mcrypt php7-xmlreader php7-gd
 Requires: diffutils
-Requires: php7-opcache
+Requires: php7-opcache php7-apcu php7-intl
 Requires: pear-Mail >= 1.4.1
 
 AutoProv:no
@@ -418,6 +418,14 @@ exit 0
 %_mediawiki_settings_dir/50-PdfHandler.php
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.35.2-alt1
+- new version 1.35.2 (with rpmrb script)
+- (T270453, CVE-2021-30153) (T270713, CVE-2021-30152)
+- (T270988, CVE-2021-30155) (T272386, CVE-2021-30159)
+- (T276843, CVE-2021-20270, CVE-2021-27291)
+- (T277009, CVE-2021-30158) (T278014, CVE-2021-30154)
+- (T278058, CVE-2021-30157) (T279451, CVE-2021-30458)
+
 * Wed Dec 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.35.1-alt1
 - new version 1.35.1 (with rpmrb script)
 - T268894, CVE-2020-35474, T268917, CVE-2020-35475
