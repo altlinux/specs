@@ -10,7 +10,7 @@
 
 Name: libnice
 Version: %ver_major.18
-Release: alt1
+Release: alt2
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
@@ -25,7 +25,7 @@ Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 
 BuildRequires(pre): meson
 BuildRequires: glib2-devel >= %glib_ver
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc %_bindir/dot}
 %{?_enable_gupnp:BuildRequires: libgupnp-igd-devel}
 %{?_with_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
 BuildRequires: gobject-introspection-devel >= %gi_ver
@@ -163,6 +163,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Apr 24 2021 Yuri N. Sedunov <aris@altlinux.org> 0.1.18-alt2
+- updated BR
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.18-alt1
 - 0.1.18 (ported to Meson build system)
 
