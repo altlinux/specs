@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 7.3.1
-Release: alt9
+Release: alt10
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -185,6 +185,7 @@ Patch727: alt-testsuite-Wtrampolines.patch
 Patch728: alt-libstdc++-libvtv-rpath-disable.patch
 # lsan seems to be broken on ppc* in this gcc branch
 Patch729: alt-ppc-disable-lsan.patch
+Patch730: upstream-fix-libsanitizer-glibc2.31.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
@@ -1046,6 +1047,7 @@ version %version.
 %patch727 -p1
 %patch728 -p1
 %patch729 -p1
+%patch730 -p1
 
 echo '%distribution %version-%release' > gcc/DEV-PHASE
 
@@ -2096,6 +2098,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sat Apr 24 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3.1-alt10
+- Fixed build with glibc >= 2.31.
+
 * Sat Jun 15 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3.1-alt9
 - Added ppc64le support.
 
