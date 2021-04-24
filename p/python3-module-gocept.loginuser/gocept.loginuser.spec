@@ -2,18 +2,20 @@
 %define oname %mname.loginuser
 
 Name: python3-module-%oname
-Version: 2.0
+Version: 3.0
 Release: alt1
 
 Summary: Sqlalchemy user object and password management
+
 License: ZPLv2.1
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/gocept.loginuser/
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-
 
 %description
 Sqlalchemy user object and password management.
@@ -36,6 +38,7 @@ This package contains tests for %oname.
 
 %install
 %python3_install
+%python3_prune
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -48,13 +51,13 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %doc *.txt doc/*.txt
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/%mname/*/tests
-
-%files tests
-%python3_sitelibdir/%mname/*/tests
 
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
+- NMU: new version 3.0 (with rpmrb script)
+- NMU: cleanup sources scheme, drop tests subpackage
+
 * Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt1
 - Version updated to 2.0
 - porting on python3
