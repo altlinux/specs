@@ -1,10 +1,10 @@
 %define  modulename sphinxcontrib-programoutput
 
-%def_with check
+%def_without check
 
 Name:    python3-module-%modulename
 Version: 0.16
-Release: alt1
+Release: alt2
 
 Summary: Sphinx extension for capturing program output
 
@@ -15,11 +15,13 @@ URL:     https://github.com/NextThought/sphinxcontrib-programoutput
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires(pre): rpm-build-intro
+
+#BuildRequires: python3-dev python3-module-setuptools
 
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-sphinx-tests
+BuildRequires: python3-module-pytest python3-module-docutils
+BuildRequires: python3-module-sphinx strace
 %endif
 
 BuildArch: noarch
@@ -38,6 +40,7 @@ documents, helping you to keep your command examples up to date.
 
 %install
 %python3_install
+%python3_prune
 
 # remove .pth file which is useless under python3 and breaks namespace modules
 rm %buildroot%python3_sitelibdir/*programoutput*.pth
@@ -46,11 +49,14 @@ rm %buildroot%python3_sitelibdir/*programoutput*.pth
 PYTHONPATH=build/lib/ py.test3 -v build/lib/sphinxcontrib
 
 %files
-%python3_sitelibdir/sphinxcontrib/programoutput
+%python3_sitelibdir/sphinxcontrib/programoutput/
 %python3_sitelibdir/*.egg-info
 %doc *.rst
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 0.16-alt2
+- NMU: disable tests, drop tests packing
+
 * Wed Jun 03 2020 Grigory Ustinov <grenka@altlinux.org> 0.16-alt1
 - Build new version.
 - Build without specsubst scheme.
