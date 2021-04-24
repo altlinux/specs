@@ -1,9 +1,12 @@
 Name:    libomniORB
-License: LGPL
-URL:     http://omniorb.sourceforge.net/
-
 Version: 4.2.4
-Release: alt2
+Release: alt3
+
+Summary: ORB from AT&T (core libraries)
+
+License: LGPL
+Group:   Networking/Remote access
+URL:     http://omniorb.sourceforge.net/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -17,13 +20,11 @@ Patch0: libomniORB-non-strict.patch
 Patch1: libomniORB-all-cosifaces.patch
 Patch2: libomniORB-ziopdynamic-link.patch
 
-# Automatically added by buildreq on Wed Aug 26 2009
-BuildRequires: gcc-c++ libssl-devel python-devel python-modules-compiler
+BuildRequires(pre): rpm-build-python3
 
-BuildPreReq: zlib-devel
+BuildRequires: gcc-c++ libssl-devel zlib-devel
+BuildRequires: python3-dev
 
-Summary: ORB from AT&T (core libraries)
-Group:   Networking/Remote access
 %description
 omniORB is an Object Request Broker (ORB) that implements the 2.3
 specification of the Common Object Request Broker Architecture
@@ -73,19 +74,17 @@ Requires: %name-COS = %version-%release
 This package contains standard compliant NameService implementation
 for omniORB.
 
-%setup_python_subpackage omniidl
-%package -n %{packagename}
+%package -n python3-module-omniidl
 Summary: Python module for omniidl
 Group:   Development/C++
-%setup_std_python_package_deps
-%description -n %{packagename}
+%description -n python3-module-omniidl
 This package includes python files for the omniORB package.
 
 %package devel
 Summary: development part of omniORB (core definitions and tools)
 Group:   Development/C++
 Requires: %name = %version-%release
-Requires: %packagename = %version-%release
+Requires: python3-module-omniidl = %version-%release
 %description devel
 This devel package includes the libraries and header files
 for the omniORB package.
@@ -122,16 +121,20 @@ for the omniORB package (COS module).
 %patch1 -p 1
 %patch2 -p 0
 
+subst "s|AM_PATH_PYTHON|AM_PATH_PYTHON(3.3)|" configure.ac
+
 %build
+%autoreconf
 %configure \
 	--disable-thread-tracing \
 	--with-openssl=%_prefix \
 	--with-omniORB-config=%_sysconfdir/omniORB.cfg \
 	--with-omniNames-logdir=%_logdir/omniORB
 
-# altlinux specific
-find . -type f -name '*.py' -print0 | xargs -0 %__subst 's|env python|env python2.7|g'
+# use python3 only
+find . -type f -name '*.py' -print0 | xargs -0 %__subst 's|env python|env python3|g'
 
+# FIXME: %make_build
 %make EnableZIOP=1
 
 %install
@@ -153,10 +156,6 @@ cp -a man/man1/* %buildroot%_man1dir
 install -p -m 644 %SOURCE1 %buildroot%_sysconfdir
 install -p -D -m 755 %SOURCE2 %buildroot%_initdir/omninames
 install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
-
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
-%endif
 
 %files
 %config(noreplace) %_sysconfdir/omniORB.cfg
@@ -188,8 +187,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_man1dir/nameclt*
 %attr(755,daemon,daemon) %dir %_logdir/omniORB
 
-%files -n %packagename
-%python_sitelibdir/*
+%files -n python3-module-omniidl
+%python3_sitelibdir/*
+%python3_sitelibdir_noarch/*
 
 %files devel
 %_bindir/omniidl*
@@ -220,6 +220,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.4-alt3
+- switch to python3
+
 * Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 4.2.4-alt2
 - update spec
 
