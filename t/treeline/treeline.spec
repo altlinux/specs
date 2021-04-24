@@ -1,6 +1,6 @@
 BuildRequires: desktop-file-utils
 Name: treeline
-Version: 3.1.2
+Version: 3.1.4
 Release: alt1
 
 Summary: Treeline stores almost any kind of information
@@ -50,6 +50,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.4-alt1
+- new version 3.1.4 (with rpmrb script)
+
 * Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt1
 - new version 3.1.2 (with rpmrb script)
 
