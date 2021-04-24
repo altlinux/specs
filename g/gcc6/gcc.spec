@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 6.3.1
-Release: alt6
+Release: alt7
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -226,6 +226,7 @@ Patch729: alt-fix-build-with-glibc2.26-ucontext.patch
 Patch730: alt-fix-build-with-glibc2.26-sigaltstack-__res_state.patch
 Patch731: upstream-ppc64le-fix-lex-r256656.patch
 Patch732: upstream-glibc-ustat-r260684.patch
+Patch733: upstream-fix-libsanitizer-glibc2.31.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
@@ -1174,6 +1175,7 @@ version %version.
 %patch730 -p1
 %patch731 -p1
 %patch732 -p1
+%patch733 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -2439,6 +2441,9 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
+* Sat Apr 24 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.1-alt7
+- Fixed build with glibc >= 2.31.
+
 * Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.1-alt6
 - Fixed build with glibc >= 2.28.
 - Changed License tag to SPDX ID.
