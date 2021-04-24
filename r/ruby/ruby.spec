@@ -7,11 +7,11 @@
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 2.7.2
+%define        _version 2.7.3
 
 Name:          ruby
 Version:       %_version
-Release:       alt1.2
+Release:       alt1.3
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -21,7 +21,6 @@ Vcs:           https://github.com/ruby/ruby.git
 Source0:       %name-%version.tar
 Source3:       fakeruby.sh
 Source4:       miniruby.sh
-Patch1: ruby-2.7.2-upstream-Removed-YYUSE-Bug-17582.patch
 BuildRequires(pre): rpm-macros-ruby >= 1:1.0.0
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /usr/bin/setup.rb
@@ -247,7 +246,6 @@ on different arches.
 
 %prep
 %setup -q
-%patch1 -p1
 #́# More strict shebang
 sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
@@ -432,6 +430,9 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Sat Apr 24 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.7.3-alt1.3
+- ^ ruby 2.7.2 -> 2.7.3
+
 * Thu Apr 22 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 2.7.2-alt1.2
 - get a patch from upstream to fix a bug when building with Bision 3.7.5
 
