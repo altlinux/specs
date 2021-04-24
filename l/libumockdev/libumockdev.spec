@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name umockdev
 %define api_ver 1.0
 
@@ -7,7 +7,7 @@
 
 Name: lib%_name
 Version: 0.15.4
-Release: alt1
+Release: alt2
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
 Group: System/Libraries
@@ -126,6 +126,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Sat Apr 24 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.4-alt2
+- updated to 0.15.4-14-gbc2bf0b
+
 * Mon Jan 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.4-alt1
 - 0.15.4
 
