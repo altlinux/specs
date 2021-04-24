@@ -13,7 +13,7 @@
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.29.3
+Version: 1.30.1
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -285,6 +285,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.30.1-alt1
+- new version 1.30.1 (with rpmrb script)
+
 * Sat Feb 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1.29.3-alt1
 - new version 1.29.3 (with rpmrb script)
 - build without new anomalies plugin (wait for pyod module)
