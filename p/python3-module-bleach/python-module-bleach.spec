@@ -1,16 +1,16 @@
 %def_without check
-%def_with python3
 
 %define modulename bleach
-Name: python-module-bleach
-Version: 3.1.0
+
+Name: python3-module-bleach
+Version: 3.3.0
 Release: alt1
 
 Summary: An easy whitelist-based HTML-sanitizing tool
 
 Url: http://github.com/jsocol/bleach
 License: ASL 2.0
-Group: Development/Python
+Group: Development/Python3
 
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -18,27 +18,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/mozilla/bleach/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-
 BuildArch: noarch
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
-
-#setup_python_module %modulename
+#BuildPreReq: python3-devel python3-module-setuptools
 
 %description
-Bleach is an HTML sanitizing library that escapes or strips markup and
-attributes based on a white list.
-
-
-%package -n python3-module-bleach
-Summary: An easy whitelist-based HTML-sanitizing tool
-Group: Development/Python3
-
-%description -n python3-module-bleach
 Bleach is an HTML sanitizing library that escapes or strips markup and
 attributes based on a white list.
 
@@ -46,40 +31,24 @@ attributes based on a white list.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-bleach
-%doc README.rst
 %python3_sitelibdir/*
-%endif
 
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
+- new version 3.3.0 (with rpmrb script)
+
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt2
+- build python3 module separately
+
 * Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - new version 3.1.0 (with rpmrb script)
 
