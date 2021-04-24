@@ -1,8 +1,8 @@
 %define oname Flask-Migrate
 
 Name: python3-module-flask-migrate
-Version: 2.5.3
-Release: alt3
+Version: 2.7.0
+Release: alt1
 
 Summary: SQLAlchemy database migrations for Flask applications using Alembic
 
@@ -45,6 +45,9 @@ under the flask db command.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
+- new version 2.7.0 (with rpmrb script)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt3
 - use flask-sqlalchemy normalized name
 
