@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 5.3.1
-Release: alt8
+Release: alt9
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -218,6 +218,7 @@ Patch731: gcc-asan-fix-missing-include-signal-h.patch
 Patch732: alt-fix-texi2pod-perl.patch
 Patch733: upstream-ppc64le-fix-lex-r256656.patch
 Patch734: upstream-glibc-ustat-r260684.patch
+Patch735: upstream-fix-libsanitizer-glibc2.31.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
@@ -1147,6 +1148,7 @@ version %version.
 %patch732 -p1
 %patch733 -p1
 %patch734 -p1
+%patch735 -p1
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1211957
 sed -i -e 's/ -Wl,-z,nodlopen//g' gcc/ada/gcc-interface/Makefile.in
@@ -2369,6 +2371,9 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
+* Sat Apr 24 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt9
+- Fixed build with glibc >= 2.31.
+
 * Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt8
 - Fixed build with glibc >= 2.28.
 - Changed License tag to SPDX ID.
