@@ -1,5 +1,9 @@
+# git revision (as reported by git describe) is used as version minor for snapshots
+# set git 0 for full release, 1 for snapshot tarball
+%define git	1
+
 Name: phototonic
-Version: 2.1.10
+Version: 2.1.72
 Release: alt1
 
 Summary: An image viewer and organizer
@@ -7,8 +11,13 @@ Group: Graphics
 License: GPLv3
 Url: https://github.com/oferkv/phototonic
 
-#VCS: https://github.com/oferkv/phototonic.git
-Source: %name-%version.tar.gz
+%if %{git}
+Source0:	%{name}-%{version}.tar.gz
+%else
+Source0:	http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}.tar.gz
+%endif
+# Run ./mk-tar-git-rev in SOURCES to create snapshot tarball
+Source1:	mk-tar-git-rev
 
 # Automatically added by buildreq on Sun Oct 18 2015 (-bi)
 # optimized out: elfutils libGL-devel libqt5-core libqt5-gui libqt5-widgets libstdc++-devel python-base python3 python3-base qt5-base-devel qt5-declarative-devel
@@ -56,9 +65,14 @@ cp -r translations/*.qm %buildroot%_datadir/%name/translations
 %_desktopdir/%name.desktop
 %_datadir/%name/translations
 %_iconsdir/hicolor/*x*/apps/%name.png
+%_datadir/pixmaps/%name.png
 %doc README.md
 
 %changelog
+* Sat Apr 23 2021 Ilya Mashkin <oddity@altlinux.ru> 2.1.72-alt1
+- 2.1.72
+- git snaphot and sync spec from Mageia
+
 * Mon Jan 28 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.10-alt1
 - 2.1.10
 
