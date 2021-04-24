@@ -70,7 +70,7 @@
 %global use_system_ntirpc %{on_off_switch system_ntirpc}
 
 Name: nfs-ganesha
-Version: 3.3
+Version: 3.5
 Release: alt1
 
 Summary: NFS-Ganesha is a NFS Server running in user space
@@ -370,6 +370,7 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_sbindir
 mkdir -p %buildroot%_libdir/ganesha
 mkdir -p %buildroot%_runtimedir/ganesha
+mkdir -p %buildroot%_docdir/ganesha
 
 cd src
 install -m 644 config_samples/logrotate_ganesha	%buildroot%_sysconfdir/logrotate.d/ganesha
@@ -556,6 +557,9 @@ rm -f %buildroot%_bindir/ganesha-rados-grace
 %endif
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
+- new version 3.5 (with rpmrb script)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
 - new version 3.3 (with rpmrb script)
 
