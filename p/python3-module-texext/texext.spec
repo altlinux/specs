@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%def_without test
 
 %define oname texext
 
 Name: python3-module-%oname
-Version: 0.6.1
-Release: alt3
+Version: 0.6.6
+Release: alt1
 
 Summary: Sphinx extensions for working with LaTeX math
 License: BSD
@@ -31,7 +32,7 @@ Texext - sphinx extensions for working with LaTeX math.
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 
 # fix version info
 sed -i \
@@ -39,7 +40,7 @@ sed -i \
 	%oname/_version.py
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -51,6 +52,10 @@ py.test3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.6-alt1
+- NMU: new version 0.6.6
+- NMU: disable tests (wait for real users of texext)
+
 * Thu Apr 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt3
 - Build for python2 disabled.
 
