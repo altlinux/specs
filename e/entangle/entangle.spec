@@ -1,18 +1,23 @@
+%def_enable snapshot
 %define api_ver 0.1
 %define gst_api_ver 1.0
 %define rdn_name org.entangle_photo.Manager
 
 Name: entangle
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Tethered Camera Control and Capture tool
 Group: Graphics
 License: GPLv3+
 Url: http://entangle-photo.org/
 
-#VCS: https://gitlab.com/entangle/entangle
+%if_disabled snapshot
 Source: http://entangle-photo.org/download/sources/%name-%version.tar.xz
+%else
+Vcs: https://gitlab.com/entangle/entangle
+Source: %name-%version.tar
+%endif
 
 Requires: adwaita-icon-theme
 Requires: libpeas-python3-loader
@@ -20,7 +25,7 @@ Requires: libpeas-python3-loader
 %add_python3_path %_libdir/%name/plugins
 
 BuildRequires(pre): meson >= 0.49.0 rpm-build-gir rpm-build-python3
-BuildRequires: yelp-tools gtk-doc perl-podlators
+BuildRequires: /proc yelp-tools gtk-doc %_bindir/pod2man
 BuildRequires: glib2-devel >= 2.38.0
 BuildRequires: libgtk+3-devel >= 3.22.0
 BuildRequires: libgphoto2-devel >= 2.5.0
@@ -68,7 +73,8 @@ and 'hands off' shooting directly from the controlling computer.
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %_typelibdir/Entangle-%api_ver.typelib
-%doc README* AUTHORS NEWS ChangeLog
+%doc README*
+%{?_disable_snapshot:%doc AUTHORS NEWS ChangeLog}
 
 # devel, devel-doc
 %_datadir/gtk-doc/html/%name/
@@ -77,6 +83,10 @@ and 'hands off' shooting directly from the controlling computer.
 %_girdir/Entangle-%api_ver.gir
 
 %changelog
+* Sat Apr 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt2
+- updated to v3.0-8-g1debc4b
+- updated BR
+
 * Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 
