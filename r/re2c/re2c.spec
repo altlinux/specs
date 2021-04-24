@@ -1,5 +1,5 @@
 Name: re2c
-Version: 1.1.1
+Version: 2.1.1
 Release: alt1
 
 Summary: re2c - A tool for generating C-based recognizers from regular expressions
@@ -13,8 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/skvadrik/re2c/archive/%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Sat Nov 11 2006
-BuildRequires: gcc-c++ linux-libc-headers
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has
@@ -27,32 +27,26 @@ flexible.
 %setup
 
 %build
-cd re2c
-%autoreconf
-%configure
+%cmake_insource
 %make_build
-#make re2c
-##regenerate file scanner.cc
-#rm -f scanner.cc
-#./re2c scanner.re > scanner.cc
-#rm -f re2c scanner.o
-#make
 
 %install
-cd re2c
 %makeinstall_std
-#mkdir -p %buildroot%_bindir/
-#install -m 0755 re2c %buildroot%_bindir/
-
-#mkdir -p %buildroot%_man1dir
-#install -m 0755 re2c.1 %buildroot%_man1dir/
 
 %files
 %_bindir/re2c
+%_bindir/re2go
 %_man1dir/re2c.1*
-%doc re2c/README re2c/examples
+%_man1dir/re2go.1*
+%_datadir/%name/
+%doc README.md
+# re2c/examples
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+- switch to cmake build
+
 * Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
