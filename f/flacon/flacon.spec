@@ -1,6 +1,6 @@
 Name: flacon
-Version: 6.1.0
-Release: alt2
+Version: 7.0.1
+Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -69,6 +69,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Apr 25 2021 Nazarov Denis <nenderus@altlinux.org> 7.0.1-alt1
+- Version 7.0.1
+
 * Wed Mar 10 2021 Nazarov Denis <nenderus@altlinux.org> 6.1.0-alt2
 - Fix build
 
