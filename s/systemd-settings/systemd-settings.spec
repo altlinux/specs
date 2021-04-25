@@ -1,5 +1,5 @@
 Name: systemd-settings
-Version: 2
+Version: 3
 Release: alt1
 Summary: Settings for systemd
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
@@ -82,6 +82,26 @@ install -p -m644 enable-log-to-tty12.conf \
 install -p -m644 disable-user-systemd-for-selinux.conf \
     %buildroot/lib/systemd/system/user@.service.d/disable-user-systemd-for-selinux.conf
 
+# How to check `KillUserProcesses' setting:
+# busctl get-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager KillUserProcesses
+%post disable-kill-user-processes
+SYSTEMCTL=systemctl
+SD_BOOTED=sd_booted
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+if $SD_BOOTED && $SYSTEMCTL --version >/dev/null 2>&1; then
+	$SYSTEMCTL daemon-reload
+	$SYSTEMCTL try-restart systemd-logind.service
+fi
+
+%postun disable-kill-user-processes
+SYSTEMCTL=systemctl
+SD_BOOTED=sd_booted
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+if $SD_BOOTED && $SYSTEMCTL --version >/dev/null 2>&1; then
+	$SYSTEMCTL daemon-reload
+	$SYSTEMCTL try-restart systemd-logind.service
+fi
+
 %files disable-kill-user-processes
 /lib/systemd/logind.conf.d/disable-kill-user-processes.conf
 
@@ -101,6 +121,9 @@ install -p -m644 disable-user-systemd-for-selinux.conf \
 /lib/systemd/journald.conf.d/enable-log-to-tty12.conf
 
 %changelog
+* Sun Apr 25 2021 Vitaly Chikunov <vt@altlinux.org> 3-alt1
+- Automatically restart logind for disable-kill-user-processes.
+
 * Thu Jul 25 2019 Alexey Shabalin <shaba@altlinux.org> 2-alt1
 - Added packages:
   + enable-showstatus
