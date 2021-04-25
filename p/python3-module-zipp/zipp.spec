@@ -3,28 +3,35 @@
 
 %def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.0
 Release: alt2
+
 Summary: A pathlib-compatible Zipfile object wrapper
+
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.org/project/zipp/
 
-# Source-git: https://github.com/jaraco/zipp.git
+BuildArch: noarch
+
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires: python2.7(setuptools_scm)
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python2.7(contextlib2)
-BuildRequires: python2.7(pathlib2)
-BuildRequires: python2.7(unittest2)
+BuildRequires: python3(contextlib2)
+BuildRequires: python3(pytest)
+BuildRequires: python3(unittest2)
 %endif
 
 %description
-%summary
+A pathlib-compatible Zipfile object wrapper.
+
 
 %prep
 %setup
@@ -36,29 +43,24 @@ rm -f pyproject.toml
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_build
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_install
+%python3_install
 
 %check
-sed -i 's/pathlib2$/pathlib2; python_version < \x273\x27/' setup.cfg
-grep -qsF 'install_command = python pin-pip.py' tox.ini || exit 1
-sed -i '/install_command = python pin-pip\.py/d' tox.ini
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-%_bindir/tox.py3 --sitepackages -p auto -o -v
+py.test3
 
 %files
 %doc LICENSE README.rst
-%python_sitelibdir/zipp.py*
-%python_sitelibdir/zipp-*.egg-info/
+%python3_sitelibdir/zipp.py
+%python3_sitelibdir/__pycache__/zipp.cpython-*.py*
+%python3_sitelibdir/zipp-*.egg-info/
 
 %changelog
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt2
-- NMU: build python2 module only, disable checking (was via python3)
+- NMU: build python3 module only, cleanup spec
 
 * Tue May 14 2019 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
 - 0.4.0 -> 0.5.0.
