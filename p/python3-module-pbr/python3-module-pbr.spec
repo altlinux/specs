@@ -1,7 +1,6 @@
-%global pypi_name pbr
+%define pypi_name pbr
 
-%def_without doc
-%def_without python3
+%def_with doc
 
 %define descr \
 PBR is a library that injects some useful and sensible default behaviors \
@@ -11,37 +10,32 @@ OpenStack hit 18 different projects each with at least 3 active \
 branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
-Name:       python-module-%pypi_name
-Version:    5.5.0
-Release:    alt3
+Name:       python3-module-%pypi_name
+Version:    5.5.1
+Release:    alt1
 
 Summary:    Python Build Reasonableness
 
-Group:      Development/Python
+Group:      Development/Python3
 License:    Apache-2.0
 URL:        http://pypi.python.org/pypi/pbr
 
-# git://git.openstack.org/openstack-dev/pbr
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools python-module-unittest2 python-module-d2to1
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3-module-setuptools python3-module-unittest2 python3-module-d2to1
-BuildRequires: python3-module-sphinxcontrib-apidoc
+%if_with doc
+BuildRequires: python3-module-sphinx python3-module-sphinxcontrib-apidoc
 %endif
 
 BuildArch:  noarch
 
+Conflicts: python-module-pbr
+
 %description
-%descr
-
-%package -n python3-module-%pypi_name
-Summary:    Python Build Reasonableness
-Group:      Development/Python3
-Requires:   python3-module-pip
-
-%description -n python3-module-%pypi_name
 %descr
 
 %prep
@@ -53,44 +47,22 @@ rm -rf {test-,}requirements.txt
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 export PBR_VERSION="%version"
-
 export SKIP_PIP_INSTALL=1
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %if_with doc
 # generate html docs
-sphinx-build doc/source html
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 export PBR_VERSION="%version"
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-    mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
+%python3_prune
 
 %files
 %doc README.rst LICENSE
@@ -98,25 +70,16 @@ popd
 %doc html
 %endif
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/%pypi_name-%version-py*.egg-info
-%python_sitelibdir/%pypi_name
-%exclude %python_sitelibdir/%pypi_name/tests
-
-%if_with python3
-%files -n python3-module-%pypi_name
-%doc README.rst LICENSE
-%_bindir/*.py3
 %python3_sitelibdir/%pypi_name-%version-py*.egg-info
 %python3_sitelibdir/%pypi_name
-%exclude %python3_sitelibdir/%pypi_name/tests
-%endif
 
 %changelog
+* Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt1
+- new version 5.5.1 (with rpmrb script)
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt3
-- build python2 module only
+- build python3 module separately
+- cleanup spec, drop pip require
 
 * Tue Oct 27 2020 Stanislav Levin <slev@altlinux.org> 5.5.0-alt2
 - Stopped packaging of tests.
