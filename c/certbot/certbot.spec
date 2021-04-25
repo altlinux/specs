@@ -5,7 +5,7 @@
 
 Name: certbot
 Version: 1.14.0
-Release: alt1
+Release: alt2
 
 Summary: A free, automated certificate authority client
 
@@ -48,7 +48,7 @@ Requires: python3-module-future
 %py3_use parsedatetime >= 2.4
 %py3_use rfc3339
 %py3_use pytz
-%py3_use setuptools >= 39.0.1
+#py3_use setuptools >= 39.0.1
 %py3_use zope.component
 %py3_use zope.interface
 
@@ -265,6 +265,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt2
+- drop setuptools requires
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
 - new version 1.14.0 (with rpmrb script)
 
