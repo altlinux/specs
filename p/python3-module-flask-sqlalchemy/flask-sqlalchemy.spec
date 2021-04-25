@@ -2,7 +2,7 @@
 %def_without docs
 
 Name: python3-module-flask-sqlalchemy
-Version: 2.4.4
+Version: 2.5.1
 Release: alt1
 
 Summary: Adds SQLAlchemy support to your Flask application
@@ -81,6 +81,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
+- new version 2.5.1 (with rpmrb script)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt1
 - new version 2.4.4 (with rpmrb script)
 
