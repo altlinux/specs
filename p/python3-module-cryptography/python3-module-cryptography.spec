@@ -3,10 +3,10 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 3.4.6
+Version: 3.4.7
 Release: alt1
 
-Summary: Cryptographic recipes and primitives to Python developers.
+Summary: Cryptographic recipes and primitives to Python developers
 
 License: %asl
 Group: Development/Python3
@@ -14,10 +14,17 @@ Url: https://pypi.python.org/pypi/cryptography/
 
 Packager: Vladimir Didenko <cow@altlinux.org>
 
-# Source-url: https://pypi.python.org/packages/source/c/cryptography/%oname-%version.tar.gz
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 python3-devel python3-module-cffi python3-module-setuptools rpm-build-licenses
+# see gear/predownloaded-preinstall-hook
+Source1: %name-development-%version.tar
+
+
+BuildRequires(pre): rpm-build-intro >= 2.2.4
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-devel python3-module-cffi python3-module-setuptools rpm-build-licenses
 BuildRequires: libssl-devel
 BuildRequires: /proc
 BuildRequires: rust rust-cargo python3-module-setuptools_rust
@@ -40,7 +47,7 @@ digests and key derivation functions.
 
 
 %prep
-%setup
+%setup -a1
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -74,6 +81,10 @@ py.test3
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4.7-alt1
+- new version (3.4.7) with rpmgs script (ALT bug 39889)
+- update src/rust/vendor separately
+
 * Thu Mar 4 2021 Vladimir Didenko <cow@altlinux.ru> 3.4.6-alt1
 - new version (3.4.6)
 
