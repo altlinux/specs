@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.38
+%define ver_major 3.39
 %define api_ver 2.0
 %define xdg_name org.gnome.Glade
 %def_enable gtk_doc
@@ -9,11 +9,11 @@
 %def_enable gjs
 %def_enable gladeui
 %def_enable webkit2gtk
-%def_enable check
+%def_disable check
 
 Name: glade
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt0.1
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -162,6 +162,10 @@ xvfb-run %meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Sun Apr 25 2021 Yuri N. Sedunov <aris@altlinux.org> 3.39.0-alt0.1
+- updated to 3.39.0-91-g86b45d9a
+- disabled %%check
+
 * Sat Nov 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
