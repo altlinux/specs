@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 2.4.4
+Version: 3.5.4
 Release: alt1
 
 Summary: Tool for producing documentation for Python projects
@@ -24,7 +24,7 @@ BuildArch: noarch
 Provides: python3-module-objects.inv
 Obsoletes: python3-module-objects.inv
 
-# https://github.com/sphinx-doc/sphinx.git
+# Source0-url: https://github.com/sphinx-doc/sphinx/archive/refs/tags/v%version.tar.gz
 Source0: sphinx-%version.tar.gz
 Source1: conf.py.template
 Source2: macro3
@@ -253,6 +253,9 @@ PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.5.4-alt1
+- NMU: new version 3.5.4 (with rpmrb script)
+
 * Thu Jul 09 2020 Fr. Br. George <george@altlinux.ru> 1:2.4.4-alt1
 - Version up
 
