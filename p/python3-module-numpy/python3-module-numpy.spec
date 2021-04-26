@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.20.2
-Release: alt1
+Release: alt2
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
@@ -39,6 +39,8 @@ BuildRequires: python3-module-Cython
 
 %py3_provides %oname.addons
 Provides: python3-module-numpy-addons = %EVR
+
+Conflicts: python-module-numpy < 1:1.15.4-alt6
 
 %description
 NumPy is a general-purpose array-processing package designed to
@@ -235,6 +237,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.20.2-alt2
+- NMU: add conflicts to old python-module-numpy
+
 * Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.20.2-alt1
 - Automatically updated to 1.20.2.
 
