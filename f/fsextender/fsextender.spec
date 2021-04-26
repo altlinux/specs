@@ -20,7 +20,7 @@
 %global import_path     %{provider_prefix}
 
 Name: fsextender
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 Summary: Extend filesystems with underliing layers: partitions, lvm on mbr and gpt disks
 License: MIT
@@ -29,6 +29,7 @@ Group: System/Configuration/Hardware
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: fsextender-alt-fix-build.patch
 
 BuildRequires: golang
 
@@ -40,6 +41,7 @@ tables. It can create new partitions and LVM Physical volumes on disk
 with MSDOS and GPT partition tables.
 
 %package devel
+BuildArch: noarch
 Group: Development/Other
 Requires: golang
 Summary: %{summary}
@@ -50,12 +52,13 @@ This is the source libraries for fsextender.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 mkdir -p src/github.com/rekby
 
 ln -s ../../../  src/github.com/rekby/fsextender
-export GOPATH=$(pwd):$(pwd)/vendor:%{gopath}
+export GOPATH=$(pwd)/vendor:%{gopath}
 
 mkdir bin
 binaries=(fsextender)
@@ -86,6 +89,9 @@ sort -u -o devel.file-list devel.file-list
 %{gopath}/src/%{import_path}
 
 %changelog
+* Mon Apr 26 2021 Egor Ignatov <egori@altlinux.org> 0.1.6-alt1
+- new version 0.1.6
+
 * Fri Mar 15 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.5-alt1
 - new version 0.1.5
 - use vendorized BuildRequires
