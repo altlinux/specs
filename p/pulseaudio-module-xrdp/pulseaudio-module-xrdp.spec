@@ -1,11 +1,11 @@
-%define pulseaudio_version 13.0
+%define pulseaudio_version 14.2
 
 Name:     pulseaudio-module-xrdp
-Version:  0.4
+Version:  0.5
 Release:  alt1
 
 Summary:  xrdp sink / source pulseaudio modules
-License:  Apache 2.0
+License:  Apache-2.0
 Group:    Other
 Url:      https://github.com/neutrinolabs/pulseaudio-module-xrdp
 
@@ -68,6 +68,10 @@ rm -f %buildroot%_libdir/pulse-*/modules/*.la
 %_libdir/pulse-*/modules/*.so
 
 %changelog
+* Mon Apr 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.5-alt1
+- New version.
+- Rebuild woth Pulseaudio 14.2.
+
 * Mon Oct 28 2019 Andrey Cherepanov <cas@altlinux.org> 0.4-alt1
 - New version.
 
