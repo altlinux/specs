@@ -1,6 +1,6 @@
 Name: hpsahba
 Version: 20201220
-Release: alt1
+Release: alt2
 
 Summary: Tool to enable/disable HBA mode on some HP Smart Array controllers
 
@@ -13,7 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-git: https://github.com/im-0/hpsahba.git
 Source: %name-%version.tar
 
-BuildRequires: pandoc
+#BuildRequires: pandoc >= 2.9
 
 BuildRequires: kernel-build-tools
 
@@ -80,5 +80,8 @@ tar jcf %kernel_srcdir/%module_name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%module_name-%version.tar.bz2
 
 %changelog
+* Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 20201220-alt2
+- don't use pandoc during build (too old on p9 and too complex to update)
+
 * Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 20201220-alt1
 - initial build for ALT Sisyphus
