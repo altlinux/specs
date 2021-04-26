@@ -1,5 +1,5 @@
 Name: libofx
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: The OFX parser library
@@ -76,6 +76,9 @@ rm -f ofxdump/ofxdump.1
 %_docdir/%name/
 
 %changelog
+* Mon Apr 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.10.2-alt1
+- New version.
+
 * Wed Jan 27 2021 Andrey Cherepanov <cas@altlinux.org> 0.10.1-alt1
 - New version.
 - Mention previous CVE.
