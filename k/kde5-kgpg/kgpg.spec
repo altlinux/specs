@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: File tools
@@ -58,6 +58,9 @@ Graphical GPG frontend.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Apr 26 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
+- fix to use gpg2 at first start
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
