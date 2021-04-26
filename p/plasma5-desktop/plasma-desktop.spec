@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.4
-Release: alt4
+Release: alt5
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -118,7 +118,7 @@ Common polkit files for %name
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
+#%patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
@@ -211,6 +211,9 @@ popd
 %_K5dbus_iface/*.xml
 
 %changelog
+* Mon Apr 26 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt5
+- don't arrange desktop icons by columns by default
+
 * Wed Apr 14 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt4
 - fix crash in media players chooser
 
