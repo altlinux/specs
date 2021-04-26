@@ -13,7 +13,7 @@ re-usable library.
 
 Name:       python-module-%pypi_name
 Version:    5.5.0
-Release:    alt3
+Release:    alt4
 
 Summary:    Python Build Reasonableness
 
@@ -97,7 +97,7 @@ popd
 %if_with doc
 %doc html
 %endif
-%_bindir/*
+#_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
 %endif
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt4
+- don't pack bin tools
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt3
 - build python2 module only
 

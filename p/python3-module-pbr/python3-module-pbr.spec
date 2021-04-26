@@ -12,7 +12,7 @@ re-usable library.
 
 Name:       python3-module-%pypi_name
 Version:    5.5.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Python Build Reasonableness
 
@@ -33,7 +33,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinxcontrib-apidoc
 
 BuildArch:  noarch
 
-Conflicts: python-module-pbr
+Conflicts: python-module-pbr < 5.5.0-alt4
 
 %description
 %descr
@@ -74,6 +74,9 @@ export PBR_VERSION="%version"
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt2
+- conflicts only with old python-module-pbr
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt1
 - new version 5.5.1 (with rpmrb script)
 
