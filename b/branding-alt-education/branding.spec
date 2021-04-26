@@ -3,8 +3,8 @@
 %define theme education
 %define Theme Education
 %define codename FalcoRusticolus
-%define status beta
-%define status_en beta
+%define status %nil
+%define status_en %nil
 %define flavour %brand-%theme
 
 %define gtk_theme Breeze
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 9.2
-Release: alt0.7.beta
+Release: alt0.8.rc1
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -461,6 +461,10 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Apr 26 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt0.8.rc1
+- 9.2 rc1.
+- whisker menu: Use dm-tool to switch users.
+
 * Fri Apr 23 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt0.7.beta
 - Do not obsolete packages itself without version.
 - Replace gksu by beesu.
