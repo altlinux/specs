@@ -1,24 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.interface
 
-%def_without check
+%def_with check
 
-Name: python-module-%oname
-Version: 5.1.0
-Release: alt4
+Name: python3-module-%oname
+Version: 5.4.0
+Release: alt1
 
 Summary: Zope interfaces package
 License: ZPL-2.1
-Group: Development/Python
+Group: Development/Python3
 # Source-git https://github.com/zopefoundation/zope.interface.git
 Url: http://www.python.org/pypi/zope.interface
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-repoze.sphinx.autointerface
 
-BuildRequires: python-module-repoze.sphinx.autointerface
-BuildRequires: python-module-setuptools
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-zope.event
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-zope.testing
+%endif
 
 %description
 This is a separate distribution of the %oname package used in
@@ -26,16 +33,16 @@ Zope 3, along with the packages it depends on.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-%py_requires zope.event
+%py3_requires zope.event
 
 %description tests
 This package contains tests for %oname.
 
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 This package contains pickles for %oname.
@@ -51,44 +58,53 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 export PYTHONPATH=$PWD/src
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+
+%check
+export PIP_INDEX_URL=http://host.invalid./
+# copy necessary exec deps
+tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
+cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/zope/interface/tests
-%exclude %python_sitelibdir/zope/interface/common/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/zope/interface/tests
+%exclude %python3_sitelibdir/zope/interface/common/tests
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
 %files tests
-%python_sitelibdir/zope/interface/tests
-%python_sitelibdir/zope/interface/common/tests
+%python3_sitelibdir/zope/interface/tests
+%python3_sitelibdir/zope/interface/common/tests
 
 %changelog
-* Mon Apr 26 2021 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt4
-- Split python packages.
+* Sun Apr 25 2021 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1
+- Automatically updated to 5.4.0.
+- Build with check.
+- Drop python2 support.
 
 * Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt3
 - Bootstrap for python3.9.
