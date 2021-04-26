@@ -1,6 +1,6 @@
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
 Version: 3.2.0
-Release: alt1
+Release: alt2
 Name: python3-module-bcrypt
 Source0: %version.tar.gz
 Source1: bfhash
@@ -13,6 +13,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-six python3-module-cffi
+
+Conflicts: python-module-bcrypt < 3.1.7-alt4
 
 %description
 py-bcrypt is an implementation the OpenBSD Blowfish password hashing
@@ -46,6 +48,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir py.test3
 test `PYTHONPATH=%buildroot%python3_sitelibdir %buildroot%_bindir/bfhash Password '$2a$08$saltsaltsaltsaltsaltsalt'` = '$2a$08$saltsaltsaltsaltsaltsOP5qmOWTOOR/q1xZLey.J4jBko3nSImS'
 
 %changelog
+* Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt2
+- NMU: add conflicts with old python-module-bcrypt
+
 * Mon Feb 01 2021 Fr. Br. George <george@altlinux.ru> 3.2.0-alt1
 - Autobuild version bump to 3.2.0
 
