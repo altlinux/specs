@@ -1,5 +1,5 @@
 Name: jhead
-Version: 3.04
+Version: 3.06.0.1
 Release: alt1
 
 Summary: Tool for handling EXIF data in JPEG image files
@@ -36,6 +36,9 @@ install -pD -m644 jhead.1 %buildroot%_man1dir/jhead.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.06.0.1-alt1
+- Build new version.
+
 * Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 3.04-alt1
 - Build new version.
 
