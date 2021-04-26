@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.9
+Version: 1.4.10
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,22 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Apr 26 2021 Anton Midyukov <antohami@altlinux.org> 1.4.10-alt1
+- build propagator and copy kernel in mkimage-profiles
+- copy kernel to boot/ directory on iso image
+- multiple kernels support for iso with grub
+- add support initrd.img instead full.cz in stage1 with grub, syslinux
+- use method:cdrom,fuid instead method:disk,uuid in uuid-iso feature
+  (thanks jqt4@)
+- vmguest: Drop virtualbox-addition kernel modules
+- fix make distclean
+- reports.mk: Generate rpm and srpms lists
+- add hdt for grub-pc (floppy disk image)
+- add items boot with local drive for grub-pc (iso)
+- oem: use/deflogin/root
+- add switch sddm|lightdm for kde5
+- education 9.2 beta
+
 * Mon Apr 05 2021 Anton Midyukov <antohami@altlinux.org> 1.4.9-alt1
 - build-distro: BOOT_TYPE = BOOTLOADER
 - Add the ability to override BOOTLOADER
