@@ -2,7 +2,7 @@
 %def_disable cmake
 
 Name: deepin-screen-recorder
-Version: 5.8.1
+Version: 5.9.3
 Release: alt1
 Summary: Default screen recorder application for Deepin
 License: GPL-3.0+
@@ -11,7 +11,6 @@ Url: https://github.com/linuxdeepin/deepin-screen-recorder
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-screen-recorder-5.8.1-qt5.15.patch
 
 Provides: %name-data = %version
 Obsoletes: %name-data < %version
@@ -29,6 +28,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: libxcbutil-devel
 BuildRequires: deepin-qt-dbus-factory-devel
+BuildRequires: deepin-dock-devel
 BuildRequires: dtk5-gui-devel
 BuildRequires: dtk5-widget-devel
 BuildRequires: gsettings-qt-devel
@@ -54,14 +54,15 @@ BuildRequires: kf5-kconfig-devel
 
 %prep
 %setup -n %name-%version
-%patch -p2
-sed -i 's|lupdate|lupdate-qt5|; s|lrelease|lrelease-qt5|' screen_shot_recorder.pro
+sed -i 's|/usr/lib/|%_libdir/|' src/dde-dock-plugins/recordtime/recordtime.pro
+sed -i 's|/etc/due-shell|/etc/dde-shell|' src/src.pro
 # X11 header's weirdness with GCC 10
-sed -i '/include <X11.extensions.XTest.h>/a #undef min' src/event_monitor.cpp
+sed -i '/#include <X11.extensions.XTest.h>/a #undef min' src/event_monitor.cpp
 sed -i '/#include <iostream>/d;1i #include <iostream>' src/screen_shot_event.cpp
-sed -i '/include <X11.extensions.shape.h>/a #undef None' src/utils.cpp
+sed -i '/#include <X11.extensions.shape.h>/a #undef None' src/utils.cpp
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %if_enabled cmake
 %cmake_insource \
 	-GNinja
@@ -88,17 +89,27 @@ sed -i '/include <X11.extensions.shape.h>/a #undef None' src/utils.cpp
 %doc LICENSE README.md CHANGELOG.md
 %_bindir/%name
 %_desktopdir/%name.desktop
-%dir %_datadir/dman
-%_datadir/dman/%name/
 %_datadir/%name/
+%dir %_libdir/dde-dock/
+%dir %_libdir/dde-dock/plugins/
+%_libdir/dde-dock/plugins/libdeepin-screen-recorder-plugin.so
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/deepin-screenshot.svg
-%config(noreplace) %_sysconfdir/modprobe.d/%name.conf
-%config(noreplace) %_sysconfdir/modules-load.d/%name.conf
 %_datadir/dbus-1/services/com.deepin.ScreenRecorder.service
 %_datadir/dbus-1/services/com.deepin.Screenshot.service
+%dir %_sysconfdir/dde-shell/
+%dir %_sysconfdir/dde-shell/json/
+%_sysconfdir/dde-shell/json/screenRecorder.json
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%name/
+%_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
 
 %changelog
+* Mon Apr 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.3-alt1
+- New version (5.9.3) with rpmgs script.
+
 * Thu Apr 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.1-alt1
 - New version (5.8.1).
 
