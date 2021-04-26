@@ -6,8 +6,8 @@
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2020.3
-Release: alt2
+Version: 2021.1
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -41,7 +41,7 @@ TRIK Studio perfectly as universal for teaching programming, provided the
 transition from the chart to the textual programming language that is planned to
 implement the language of block diagrams. The environment is also implemented
 programming robots Lego Mindsorms NXT 2.0 and EV3, but the possibility of such
-robots are very limited in comparison with the TRIC .
+robots are very limited in comparison with the TRIK.
 
 %description -l ru_RU.UTF-8
 Интуитивно-понятная среда программирования позволяет программировать роботов с
@@ -97,6 +97,9 @@ tar -xf gamepad.tar.bz2
 popd
 pushd qrgui/thirdparty
 tar -xf qt-solutions.tar.bz2
+popd
+pushd thirdparty/qslog
+tar -xf qslog.tar.bz2
 popd
 %patch2 -p1
 
@@ -184,8 +187,17 @@ popd
 %endif
 
 %changelog
+* Mon Apr 26 2021 Evgeny Sinelnikov <sin@altlinux.org> 2021.1-alt1
+- Update to 2021.1
+
+* Thu Feb 04 2021 Valery Sinelnikov <greh@altlinux.org> 2020.6-alt1
+- Update to 2020.6
+
 * Thu Oct 01 2020 Sergey V Turchin <zerg@altlinux.org> 2020.3-alt2
 - build with Qt-5.15
+
+* Fri Aug 21 2020 Valery Sinelnikov <greh@altlinux.org> 2020.4-alt1
+- Update to 2020.4
 
 * Tue Jun 09 2020 Valery Sinelnikov <greh@altlinux.org> 2020.3-alt1
 - Update to 2020.3
