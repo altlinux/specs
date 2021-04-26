@@ -7,7 +7,7 @@
 
 Name: plasma5-%rname
 Version: 5.21.4
-Release: alt4
+Release: alt5
 Epoch: 2
 %K5init altplace
 
@@ -125,6 +125,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Mon Apr 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:5.21.4-alt5
+- Fixed crash on multiscreen setups
+
 * Thu Apr 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:5.21.4-alt4
 - Enabled localization of PAM messages
 
