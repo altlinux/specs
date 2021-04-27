@@ -4,7 +4,7 @@
 
 Name: shim
 Version: 15.4
-Release: alt1
+Release: alt2
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -17,6 +17,10 @@ Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
 
 Patch1: shim-15.4-upstream-fix-a-broken-file-header-on-ia32.patch
+Patch2: shim-15.4-upstream-fix-mokutil--disable-validation-does-not-work.patch
+Patch3: shim-15.4-upstream-mok-config-table-as-bootservicesdata.patch
+Patch4: shim-15.4-upstream-don-t-call-queryvariableinfo-on-efi-1.10.patch
+Patch5: shim-15.4-upstream-fix-build-with-old-binutils-on-aarch64.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -53,6 +57,10 @@ Includes both ia32 and x64 EFI binaries.
 %prep
 %setup -a 2
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 # fill in SBAT section with ALT data
 echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,http://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
@@ -103,6 +111,13 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Tue Apr 27 2021 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt2
+- fix critical issues discovered recently
+  + add upstream-fix-mokutil--disable-validation-does-not-work patch
+  + add upstream-mok-config-table-as-bootservicesdata patch
+  + add upstream-don-t-call-queryvariableinfo-on-efi-1.10 patch
+  + add upstream-fix-build-with-old-binutils-on-aarch64 patch
+
 * Fri Apr 02 2021 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt1
 - new version
   + introduce SBAT
