@@ -20,8 +20,8 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.18.0
-Release:	alt2
+Version:	0.19.0
+Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -39,7 +39,7 @@ Source1:	libbpf.tar
 # See https://github.com/iovisor/bcc/issues/3241
 ExclusiveArch:	x86_64 aarch64 ppc64le
 
-%define clang_version 10.0
+%define clang_version 12.0
 
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
@@ -266,6 +266,10 @@ fi
 %endif
 
 %changelog
+* Tue Apr 27 2021 Vitaly Chikunov <vt@altlinux.org> 0.19.0-alt1
+- Update to v0.19.0 (2021-03-19).
+- Build using clang/llvm 12.
+
 * Fri Jan 29 2021 Vitaly Chikunov <vt@altlinux.org> 0.18.0-alt2
 - spec: Build libbpf-tools (CO-RE eBPF tools) on x86_64.
 
