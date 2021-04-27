@@ -1,8 +1,10 @@
 %define oname sqlalchemy_mptt
+%def_without pickles
+%def_without docs
 
 Name: python3-module-%oname
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: SQLAlchemy MPTT mixins (Nested Sets)
 License: MIT
@@ -14,9 +16,11 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-SQLAlchemy python3-module-coverage
-BuildRequires: python3-module-nose python3-modules-sqlite3
-BuildRequires: python3-module-sphinx python3-module-flake8
+BuildRequires: python3-module-SQLAlchemy
+%if_with docs
+BuildRequires: python3-module-sphinx
+%endif
+BuildRequires: python3-module-nose python3-module-coverage python3-module-flake8
 
 %py3_provides %oname
 %py3_requires sqlite3
@@ -68,10 +72,13 @@ export LC_ALL=en_US.UTF-8
 
 %python3_install
 
-%make -C docs pickle
+%if_with docs
 %make -C docs html
-
+%endif
+%if_with pickles
+%make -C docs pickle
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
 %__python3 setup.py test
@@ -79,16 +86,23 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
+%if_with pickles
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
 %python3_sitelibdir/*/pickle
+%endif
 
+%if_with docs
 %files docs
 %doc docs/_build/html/*
+%endif
 
 
 %changelog
+* Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt2
+- build without docs and pickles (due obsoleted sphinx.ext.mathbase require)
+
 * Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.5-alt1
 - Version updated to 0.2.5
 - python2 disabled
