@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 5.10.0.7
-Release: alt2
+Version: 5.10.0.15
+Release: alt1
 Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
 Group: Archiving/Compression
@@ -40,33 +40,29 @@ BuildRequires: qt5-svg-devel
 BuildRequires: gsettings-qt-devel
 BuildRequires: libgtest-devel
 # Requires: icon-theme-hicolor
-Requires: p7zip
+# Requires: p7zip
 
 %description
 %summary.
 
 %prep
 %setup
-sed -i 's|lrelease|lrelease-qt5|' \
-    deepin-compressor/translate_generation.sh \
-    test/UnitTest/deepin-compressor/translate_generation.sh
-#sed -i 's|lupdate|lupdate-qt5|' \
-#    deepin-compressor/CMakeLists.txt \
-#    test/UnitTest/deepin-compressor/CMakeLists.txt
 sed -i 's|/usr/bin/cp|/bin/cp|' \
-    test/FuzzyTest/libfuzzer/CMakeLists.txt
+    tests/FuzzyTest/libfuzzer/CMakeLists.txt
 sed -i 's|/usr/lib|%_libdir|' \
-    3rdparty/interface/pluginmanager.cpp
+    src/source/common/pluginmanager.cpp \
+    tests/UnitTest/CMakeLists.txt
 sed -i 's|#include <zip.h>|#include <libzip/zip.h>|' \
     3rdparty/libzipplugin/libzipplugin.h
-sed -i 's|lib/|%_lib/|' CMakeLists.txt
+sed -i 's|lib/|%_lib/|' \
+    CMakeLists.txt
 # remove unbuilded translation
 rm -rf translations/deepin-compressor*.ts
 
-%if_disabled clang
-sed -i 's|int myshowWarningDialog|void myshowWarningDialog|' \
-    test/UnitTest/deepin-compressor/source/src/uncompresspage_test.cpp
-%endif
+# %if_disabled clang
+# sed -i 's|int myshowWarningDialog|void myshowWarningDialog|' \
+#     tests/UnitTest/deepin-compressor/source/src/uncompresspage_test.cpp
+# %endif
 
 %build
 %if_enabled clang
@@ -76,8 +72,13 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-
-%K5cmake -GNinja
+export PATH=%_qt5_bindir:$PATH
+%K5cmake \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DAPP_VERSION=%version \
+    -DVERSION=%version
 %ninja_build -C BUILD
 
 %install
@@ -92,17 +93,23 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name/
-%dir %_datadir/deepin/
-%dir %_datadir/deepin/dde-file-manager/
-%dir %_datadir/deepin/dde-file-manager/oem-menuextensions/
-%_datadir/deepin/dde-file-manager/oem-menuextensions/*.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/mime/packages/%name.xml
+%dir %_datadir/applications/context-menus/
+%_datadir/applications/context-menus/*.conf
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%name/
+%_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Mon Apr 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.0.15-alt1
+- New version (5.10.0.15) with rpmgs script.
+
 * Sat Dec 26 2020 Leontiy Volodin <lvol@altlinux.org> 5.10.0.7-alt2
 - Built with gcc10.
 
