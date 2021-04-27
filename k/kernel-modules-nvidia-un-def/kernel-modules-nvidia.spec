@@ -7,17 +7,14 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	460.56
+%define package_version	460.73.01
 %define module_version	%package_version
-%ifarch armh
-%define module_version	390.141
+%ifarch %ix86 armh
+%define module_version	390.143
 %endif
-%ifarch %ix86
-%define module_version	340.108
-%endif
-%define module_release	alt2
+%define module_release	alt1
 %define flavour		un-def
-%define karch x86_64 aarch64
+%define karch x86_64 aarch64 %ix86
 
 %setup_kernel_module %flavour
 %define module_srcver	%(echo %module_version | tr -d .)
@@ -57,15 +54,12 @@
 
 %define legacy6 %nil
 %nvIF_ver_lt %xorg_ver 1.21
-%define legacy6 390.141
+%define legacy6 390.143
 %endif
 %define legacy6_src %(echo %legacy6 | tr -d .)
 
 %ifarch %ix86 armh
 %define legacy6 %nil
-%endif
-%ifarch %ix86
-%define legacy5 %nil
 %endif
 %ifarch aarch64
 %define legacy6 %nil
@@ -285,6 +279,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Apr 26 2021 Sergey V Turchin <zerg at altlinux dot org> 440.31-alt1
+- new releases(460.73.01, 390.143)
 
 * Fri Mar 12 2021 Sergey V Turchin <zerg at altlinux dot org> 460.56-alt2
 - don't build for iX86
