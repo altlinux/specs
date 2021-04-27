@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: 4.4.7
-Release: alt1
+Release: alt2
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 
@@ -37,10 +37,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: dvipng
 
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-html5lib python3-module-nose python3-module-pbr
+BuildRequires: python3-module-html5lib python3-module-nose
 BuildRequires: python3(Crypto)
 BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3(requests)
-BuildRequires: python3(case) python3(eventlet) python3(billiard)
+BuildRequires: python3(case) python3(eventlet)
 BuildRequires: python3(redis)
 
 %if_with doc
@@ -62,9 +62,10 @@ BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest >= 4.3.1
 BuildRequires: python3-module-pytest < 4.4.0
 BuildRequires: python3-module-unittest2
+%endif
+
 %if_with s3
 BuildRequires: python3-module-moto >= 1.3.7
-%endif
 %endif
 
 Conflicts: python-module-celery
@@ -103,6 +104,14 @@ Celery is used in production systems to process millions of tasks a day.
 
 This package contains documentation for %oname.
 
+%package sphinx
+Summary: Sphinx documentation plugin used to document tasks
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description sphinx
+Sphinx documentation plugin used to document tasks.
+
 %prep
 %setup
 #patch1 -p1
@@ -136,9 +145,13 @@ rm -f t/unit/contrib/test_sphinx.py
 %python3_test
 
 %files
-%doc Changelog.rst *.txt *.rst TODO
+%doc *.txt *.rst TODO
 %_bindir/*
 %python3_sitelibdir/celery*
+%exclude %python3_sitelibdir/celery/contrib/sphinx.py
+
+%files sphinx
+%python3_sitelibdir/celery/contrib/sphinx.py
 
 %if_with doc
 %files docs
@@ -146,6 +159,9 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt2
+- separate sphinx plugin
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt1
 - new version (4.4.7) with rpmgs script
 
