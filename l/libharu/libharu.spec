@@ -3,15 +3,13 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^python2.7.haru/d
-BuildRequires: python-modules-encodings
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global gittag0 RELEASE_2_3_0RC3
 
 Name:           libharu
 Version:        2.3.0
-Release:        alt2_12
+Release:        alt2_13
 Summary:        C library for generating PDF files
 License:        zlib with acknowledgement
 URL:            http://libharu.org
@@ -66,13 +64,16 @@ developing applications that use %{name}.
 %files
 %doc README
 %{_libdir}/libhpdf.so.*
-%{_datadir}/%{name}
+%exclude %{_datadir}/%{name}
 
 %files devel
 %{_includedir}/*
 %{_libdir}/libhpdf.so
 
 %changelog
+* Tue Apr 27 2021 Igor Vlasenko <viy@altlinux.org> 2.3.0-alt2_13
+- dropped python2 examples (closes: #39982)
+
 * Fri Sep 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_12
 - fixed build
 
