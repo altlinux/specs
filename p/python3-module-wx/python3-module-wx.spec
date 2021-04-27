@@ -1,6 +1,6 @@
 Name:		python3-module-wx
 Version:	4.0.7
-Release:	alt1
+Release:	alt2
 Group:		Development/Python3
 Summary:	The cross-platform GUI toolkit for the Python language
 URL:		https://pypi.org/project/wxPython
@@ -60,6 +60,10 @@ for F in `grep -rl '#!/usr/bin/env python$' [^b]*/*`; do
 	sed -i 's@#!/usr/bin/env python$@#!/usr/bin/python3@' "$F"
 done
 
+# Hack off NoUri migration
+sed -i 's/from sphinx.environment import NoUri/from sphinx.errors import NoUri/' docs/sphinx/availability.py
+
+
 git init
 git config user.email "%packagerAddress"
 git config user.name "%packagerName"
@@ -98,6 +102,9 @@ cp -a demo %buildroot%python3_sitelibdir/wx/demo
 %_bindir/*
 
 %changelog
+* Tue Apr 27 2021 Fr. Br. George <george@altlinux.ru> 4.0.7-alt2
+- Build with new sphinx
+
 * Mon Mar 30 2020 Fr. Br. George <george@altlinux.ru> 4.0.7-alt1
 - Initial wxPython Phoenix project build for ALT
 
