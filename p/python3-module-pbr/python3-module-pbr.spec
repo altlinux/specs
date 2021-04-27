@@ -12,7 +12,7 @@ re-usable library.
 
 Name:       python3-module-%pypi_name
 Version:    5.5.1
-Release:    alt2
+Release:    alt3
 
 Summary:    Python Build Reasonableness
 
@@ -64,6 +64,9 @@ export PBR_VERSION="%version"
 %python3_install
 %python3_prune
 
+# no idea who use it
+rm -fv %buildroot%python3_sitelibdir/%pypi_name/sphinxext.py
+
 %files
 %doc README.rst LICENSE
 %if_with doc
@@ -74,6 +77,9 @@ export PBR_VERSION="%version"
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt3
+- drop pbr.sphinxext
+
 * Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt2
 - conflicts only with old python-module-pbr
 
