@@ -18,7 +18,7 @@
 
 Name: libvpx5
 Version: 1.7.0
-Release: alt3
+Release: alt4
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -36,16 +36,6 @@ BuildRequires: yasm
 VP8 is an open video codec, originally developed by On2 and released
 as open source by Google Inc. It is the successor of the VP3 codec,
 on which the Theora codec was based
-
-%package devel
-Summary: VP8 Libraries and Header Files
-Group: Development/C
-Requires: %name = %version-%release
-Conflicts: libvpx-devel
-
-%description devel
-%name-devel contains the libraries and header files needed to
-develop programs which make use of %name
 
 %prep
 %setup
@@ -82,13 +72,10 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %doc AUTHORS LICENSE PATENTS CHANGELOG
 %_libdir/*.so.*
 
-%files devel
-%_includedir/vpx
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-
-
 %changelog
+* Tue Apr 27 2021 Anton Farygin <rider@altlinux.ru> 1.7.0-alt4
+- migration period is over, devel package was removed
+
 * Tue Feb 26 2019 Anton Farygin <rider@altlinux.ru> 1.7.0-alt3
 - for migration period the temporary devel package for libvpx5 is added
 

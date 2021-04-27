@@ -17,7 +17,7 @@
 %endif
 
 Name: libvpx6
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: VP8 video codec
 Group: Video
@@ -100,6 +100,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Tue Apr 27 2021 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+
 * Thu Oct 01 2020 Anton Farygin <rider@altlinux.ru> 1.9.0-alt1
 - 1.9.0
 
