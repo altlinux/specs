@@ -13,7 +13,7 @@
 %global forgeurl https://github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 5.4.2
+Version: 5.4.5
 Release: alt1
 Summary: Go-lang bingding for dde-daemon
 License: GPL-3.0+
@@ -69,6 +69,8 @@ sed -i 's|gobuild|.build|' Makefile
 sed -i 's|/etc/default/locale|%_datadir/locale|' \
     adjust-grub-theme/util.go \
     locale-helper/ifc.go
+# sed -i 's|PREFIX}${libdir|LIBDIR|; s|libdir|LIBDIR|' \
+#     Makefile adjust-grub-theme/main.go
 
 %build
 export BUILDDIR=$PWD/.build
@@ -122,6 +124,9 @@ make test-coverage
 %go_path/src/%goipath
 
 %changelog
+* Tue Apr 27 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt1
+- New version (5.4.5) with rpmgs script.
+
 * Thu Mar 04 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.2-alt1
 - New version (5.4.2) with rpmgs script.
 - Fixed build with golang 1.16.

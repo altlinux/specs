@@ -3,7 +3,7 @@
 %global repo dde-daemon
 
 Name: deepin-daemon
-Version: 5.13.6
+Version: 5.13.10
 Release: alt1
 Epoch: 1
 Summary: Daemon handling the DDE session settings
@@ -42,6 +42,7 @@ BuildRequires: libddcutil-devel
 BuildRequires: librsvg-utils
 BuildRequires: deepin-gettext-tools
 BuildRequires: deepin-gir-generator
+BuildRequires: deepin-clipboard
 BuildRequires: libgdk-pixbuf-xlib-devel
 # nm module
 #BuildRequires: libnm-gir-devel
@@ -292,6 +293,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue Apr 27 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.10-alt1
+- New version (5.13.10) with rpmgs script.
+
 * Fri Mar 19 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.6-alt1
 - New version (5.13.6) with rpmgs script.
 
