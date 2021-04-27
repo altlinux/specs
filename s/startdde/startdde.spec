@@ -2,7 +2,7 @@
 
 Name: startdde
 Version: 5.8.7
-Release: alt1
+Release: alt2
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -37,9 +37,9 @@ sed -i 's|/lib/deepin-daemon|/libexec/deepin-daemon|' \
     session.go \
     utils.go \
     display/manager.go
-sed -i 's|/usr/lib/|/usr/libexec/|' \
-    misc/auto_launch/{chinese,default}.json \
-    watchdog/{deepinid_daemon.go,dde_polkit_agent.go}
+# sed -i 's|/usr/lib/|/usr/libexec/|' \
+#     misc/auto_launch/{chinese,default}.json \
+#     watchdog/{deepinid_daemon.go,dde_polkit_agent.go}
 sed -i 's|/usr/lib/|%_libdir/|' startmanager.go
 sed -i 's|/etc/X11/Xresources|/etc/X11|' \
     etc_x11_session_d.go
@@ -81,6 +81,9 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/glib-2.0/schemas/com.deepin.dde.startdde.gschema.xml
 
 %changelog
+* Tue Apr 27 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.7-alt2
+- Fixed build with deepin-polkit-agent.
+
 * Thu Apr 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.7-alt1
 - New version (5.8.7) with rpmgs script.
 
