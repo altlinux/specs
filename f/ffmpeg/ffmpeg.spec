@@ -125,12 +125,12 @@
 %endif
 #soversion
 
-# nvidia cuda doesn't support arm
+# nvidia cuda doesn't support arm, mips and others
 # https://developer.nvidia.com/nvidia-video-codec-sdk/download
-%ifarch %arm
-%def_disable cuvid
-%else
+%ifarch %ix86 x86_64 aarch64 ppc64le
 %def_enable cuvid
+%else
+%def_disable cuvid
 %endif # cuvid
 
 %define avdevicever 58
@@ -146,7 +146,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.4
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -591,6 +591,7 @@ xz Changelog
 %endif
 %ifarch mips mipsel
 	--disable-mipsfpu \
+	--extra-libs="-latomic" \
 %endif
 	%{subst_enable gpl} \
 	%{subst_enable version3} \
@@ -861,6 +862,10 @@ xz Changelog
 %endif
 
 %changelog
+* Thu Apr 22 2021 Ivan A. Melnikov <iv@altlinux.org> 2:4.4-alt2
+- enable cuvid on supported architectures only
+- link with libatomic on %%mips32
+
 * Thu Apr 15 2021 Anton Farygin <rider@altlinux.org> 2:4.4-alt1
 - 4.4
 
