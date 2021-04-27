@@ -13,7 +13,7 @@
 
 %define major 9
 %define minor 1
-%define bugfix 5
+%define bugfix 6
 %define altversion %major.%minor
 
 Name: branding-%fakebrand-%smalltheme
@@ -40,7 +40,7 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
 %define status_ru %nil
 %define ProductName %Brand %Theme %altversion
 %define ProductName_ru %Brand_ru %Theme_ru %altversion
-%define branding_data_dir %_datadir/%name
+%define branding_data_dir %_datadir/branding-data-current
 
 %define variants alt-kdesktop alt-server alt-starterkit alt-workstation altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
 
@@ -278,10 +278,10 @@ DOCUMENTATION_URL="https://docs.altlinux.org/"
 SUPPORT_URL="https://support.basealt.ru/"
 __EOF__
 # save release
-mkdir -p %buildroot/%branding_data_dir
-mv %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/
+mkdir -p %buildroot/%branding_data_dir/release/
+mv %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/
 > %buildroot/%_sysconfdir/altlinux-release
-mv %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/
+mv %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/
 > %buildroot/%_sysconfdir/os-release
 
 #notes
@@ -377,10 +377,10 @@ sed -i "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf ||:
 
 %post release
 if ! [ -e %_sysconfdir/altlinux-release ]; then
-       cp -a %branding_data_dir/altlinux-release %_sysconfdir/altlinux-release ||:
+       cp -a %branding_data_dir/release/altlinux-release %_sysconfdir/altlinux-release ||:
 fi
 if ! [ -e %_sysconfdir/os-release ]; then
-       cp -a %branding_data_dir/os-release %_sysconfdir/os-release ||:
+       cp -a %branding_data_dir/release/os-release %_sysconfdir/os-release ||:
 fi
 
 %post gnome-settings
@@ -425,8 +425,8 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %config(noreplace) %_sysconfdir/system-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
 %dir %branding_data_dir/
-%branding_data_dir/altlinux-release
-%branding_data_dir/os-release
+%dir %branding_data_dir/release/
+%branding_data_dir/release/*-release
 
 %files notes
 %_datadir/alt-notes/*
@@ -460,6 +460,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 27 2021 Sergey V Turchin <zerg at altlinux dot org> 9.1.6-alt1
+- fix os-release for livecd
+
 * Mon Apr 12 2021 Sergey V Turchin <zerg at altlinux dot org> 9.1.5-alt1
 - save original os-release on system upgrade
 
