@@ -2,7 +2,7 @@
 
 Name: python3-module-fasteners
 Version: 0.15
-Release: alt1
+Release: alt2
 
 Summary: A python package that provides useful locks
 
@@ -37,6 +37,7 @@ A python package that provides useful locks.
 %install
 %python3_install
 %python3_prune
+rm -f %python3_sitelibdir/%oname/test.py
 
 %check
 nosetests3
@@ -48,6 +49,9 @@ nosetests3
 
 
 %changelog
+* Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 0.15-alt2
+- drop test.py
+
 * Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 0.15-alt1
 - separate build python3 module version 0.15
 - cleanup spec
