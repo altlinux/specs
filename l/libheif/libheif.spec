@@ -1,5 +1,5 @@
 Name: libheif
-Version: 1.9.0
+Version: 1.11.0
 Release: alt1
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -51,6 +51,9 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Apr 27 2021 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1
+- 1.11.0
+
 * Thu Sep 24 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.9.0-alt1
 - 1.9.0
 
