@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kitty
-Version: 0.19.3
-Release: alt2
+Version: 0.20.1
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -11,21 +11,24 @@ Url: https://sw.kovidgoyal.net/kitty/
 
 Requires: %name-terminfo = %EVR
 
-#Upstream: https://github.com/kovidgoyal/kitty
+# Upstream: https://github.com/kovidgoyal/kitty
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: fonts-ttf-gnu-freefont-mono
-BuildRequires: libXcursor-devel, libXrandr-devel, libXi-devel, libXinerama-devel
-BuildRequires: python3-devel, python3-module-sphinx-sphinx-build-symlink
-BuildRequires: libxkbcommon-x11-devel, libGL-devel, fontconfig-devel
-BuildRequires: libharfbuzz-devel, libpng-devel, liblcms2-devel, libdbus-devel
-BuildRequires: wayland-protocols, libwayland-client-devel, libwayland-cursor-devel
+BuildRequires: libXcursor-devel libXrandr-devel libXi-devel libXinerama-devel
+BuildRequires: python3-devel python3-module-sphinx-sphinx-build-symlink
+BuildRequires: libxkbcommon-x11-devel libGL-devel fontconfig-devel
+BuildRequires: libharfbuzz-devel libpng-devel liblcms2-devel libdbus-devel
+BuildRequires: wayland-protocols libwayland-client-devel libwayland-cursor-devel
 
-#For tic
+# For tic
 BuildRequires: ncurses
 
+# For tests
+BuildRequires: kitty
+BuildRequires: /proc
 
 %add_python3_path %_libexecdir/%name
 
@@ -75,9 +78,6 @@ The terminfo file for kitty
 %prep
 %setup
 
-# The following test is known to be failed
-rm kitty_tests/tui.py
-
 # Changing shebangs to python3
 find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%{__python3}|g'  \
                                     -e 's|/usr/bin/env python|%{__python3}|g'   \
@@ -105,6 +105,10 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_datadir/terminfo/*/*
 
 %changelog
+* Tue Apr 27 2021 Egor Ignatov <egori@altlinux.org> 0.20.1-alt1
+- Update sources to 0.20.1
+- Cleanup spec
+
 * Wed Mar 24 2021 Egor Ignatov <egori@altlinux.org> 0.19.3-alt2
 - Fix: add debug sources to debuginfo
 
