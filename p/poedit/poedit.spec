@@ -7,7 +7,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -19,7 +19,7 @@ Url: http://www.poedit.net/
 %if_disabled snapshot
 Source: https://github.com/vslavik/%name/releases/download/v%version-oss/%name-%version.tar.gz
 %else
-# VCS: https://github.com/vslavik/poedit.git
+Vcs: https://github.com/vslavik/poedit.git
 Source: %name-%version.tar
 %endif
 Requires: gettext-tools
@@ -73,6 +73,9 @@ wxLocale библиотеки wxWindows.
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Tue Apr 27 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Tue Nov 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
