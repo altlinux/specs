@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -516,6 +516,9 @@ Requires: alterator-netinst
 %endif
 Requires: alterator-net-openvpn
 Requires: alterator-net-routing
+Requires: alterator-net-bond
+Requires: alterator-net-bridge
+Requires: alterator-net-iptables
 Requires: alterator-openldap
 Requires: samba4
 Requires: alterator-openvpn-server
@@ -530,6 +533,7 @@ Requires: alterator-postfix-dovecot
 Requires: alterator-ulogd
 Requires: xauth
 Requires: xrdp
+Requires: pulseaudio-module-xrdp
 %ifarch %ix86 x86_64
 Requires: docker-ce
 Requires: lsb
@@ -592,6 +596,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Apr 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- Add pulseaudio-module-xrdp, alterator-net-bond, alterator-net-bridge
+  and alterator-net-iptables to task-edu-server-apps.
+
 * Fri Apr 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
 - Update for Sisyphus.
 - Move from qgis to qgis3.
@@ -600,7 +608,7 @@ Requires: task-edu-teacher
 - Remove python3-modules-nis.
 
 * Mon Apr 12 2021 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
-- Replace italc3 to veyon. 
+- Replace italc3 to veyon.
 
 * Sun Apr 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
 - Remove documentation for pip.
