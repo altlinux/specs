@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: glances
-Version: 2.11.1
-Release: alt2
+Version: 3.1.6
+Release: alt1
 
 Summary: CLI curses based monitoring tool
 License: GPLv3
@@ -20,6 +22,7 @@ Requires: python3-module-%name = %EVR
 %add_python3_req_skip cassandra
 %add_python3_req_skip cassandra.cluster
 %add_python3_req_skip cassandra.util
+%add_python3_req_skip cassandra.auth
 %add_python3_req_skip couchdb
 %add_python3_req_skip couchdb.mapping
 %add_python3_req_skip docker
@@ -28,6 +31,7 @@ Requires: python3-module-%name = %EVR
 %add_python3_req_skip influxdb.client
 %add_python3_req_skip influxdb.influxdb08
 %add_python3_req_skip influxdb.influxdb08.client
+%add_python3_req_skip influxdb_client
 %add_python3_req_skip kafka
 %add_python3_req_skip matplotlib
 %add_python3_req_skip netifaces
@@ -79,14 +83,18 @@ Glances uses the PsUtil library to get information from your system.
 %files
 %_bindir/glances
 %_man1dir/glances.1*
+%_docdir/glances/
 
 %files -n python3-module-%name
-%doc AUTHORS COPYING README.rst NEWS
+%doc AUTHORS COPYING README.rst NEWS.rst
 %python3_sitelibdir/%name/
 %python3_sitelibdir/Glances-%version-py%_python3_version.egg-info/
 
 
 %changelog
+* Mon Apr 26 2021 Egor Ignatov <egori@altlinux.org> 3.1.6-alt1
+- new version
+
 * Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.11.1-alt2
 - build for python2 disabled
 
