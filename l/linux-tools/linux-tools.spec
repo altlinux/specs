@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.11
+%define kernel_base_version 5.12
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -198,6 +198,9 @@ sed -i '/apt-get/ {
 # Transient powerpc `make bpf` fix
 sed -i '/#include/a typedef struct { __u32 u[4]; } __vector128;' include/uapi/linux/types.h
 
+# Fix `trace/beauty/generated/fsconfig_arrays.c:2:3: error: expected expression before ']' token'.
+sed -i 's/*+/*/' perf/trace/beauty/fsconfig.sh
+
 %build
 cd %kernel_source/tools
 
@@ -231,7 +234,8 @@ make -C perf \
      all \
      doc \
      python \
-     libtraceevent_plugins
+     libtraceevent_plugins \
+     V=1
 
 ### build bpf tools
 # runqslower does not build with: `Couldn't find kernel BTF; set VMLINUX_BTF to specify its location.`
@@ -544,6 +548,9 @@ fi
 %_man8dir/bpftool*
 
 %changelog
+* Tue Apr 27 2021 Vitaly Chikunov <vt@altlinux.org> 5.12-alt1
+- Update to v5.12 (2021-04-25).
+
 * Wed Feb 17 2021 Vitaly Chikunov <vt@altlinux.org> 5.11-alt1
 - Update to v5.11 (2021-02-14).
 
