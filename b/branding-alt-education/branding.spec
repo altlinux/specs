@@ -10,7 +10,7 @@
 %define gtk_theme Breeze
 %define kde_theme Breeze
 %define icon_theme Papirus-Light
-%define window_theme Smoothwall
+%define window_theme Smoothwall-Breeze
 
 # Enable compositing on ix86 and x86_64 only
 %ifarch %ix86 x86_64
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 9.2
-Release: alt0.8.rc1
+Release: alt0.9.rc1
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -205,6 +205,7 @@ Requires: icon-theme-Papirus
 Requires: icon-theme-Papirus-Dark
 Requires: icon-theme-Papirus-Light
 Requires: gtk-theme-breeze
+Requires: xfwm4-theme-Smoothwall-Breeze
 Requires(post): lightdm-gtk-greeter
 # XFCE plugins
 Requires: xfce4-whiskermenu-plugin
@@ -461,6 +462,9 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Apr 27 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt0.9.rc1
+- Use Smoothwall-Breeze window theme in XFCE.
+
 * Mon Apr 26 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt0.8.rc1
 - 9.2 rc1.
 - whisker menu: Use dm-tool to switch users.
