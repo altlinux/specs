@@ -1,6 +1,6 @@
 Name: procps
 Version: 3.3.17
-Release: alt2
+Release: alt3
 
 Summary: System and process monitoring utilities
 License: GPLv2+ and LGPLv2+
@@ -13,11 +13,6 @@ Source: %name-%version-%release.tar
 
 # it is actually procps-ng
 Provides: procps-ng = %version-%release
-
-%ifarch x86_64
-# hack around arepo, remove this as soon as possible
-Provides: i586-procps = %version-%release
-%endif
 
 Requires: lib%name = %version-%release
 
@@ -115,6 +110,12 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Tue Apr 27 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt3
+- Dropped arepo hackaround.
+- Patch from upstream:
+  + top: In the bye_bye function, replace fputs with the write
+    interface.
+
 * Mon Feb 15 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt2
 - Patch from upstream:
   + pidwait: Rename from pwait.
