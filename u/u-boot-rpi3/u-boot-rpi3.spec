@@ -1,6 +1,6 @@
 Name: u-boot-rpi3
 Version: 2021.04
-Release: alt2
+Release: alt3
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -48,6 +48,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Apr 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt3
+- fix usb keyboard handling (closes: 39978)
+
 * Fri Apr 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt2
 - resync defconfig for rpi_3_b_plus_32b (closes: 39978)
 

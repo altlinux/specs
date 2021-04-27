@@ -1,6 +1,6 @@
 Name: u-boot-meson
 Version: 2021.04
-Release: alt2
+Release: alt3
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -40,6 +40,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Apr 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt3
+- fix usb keyboard handling
+
 * Mon Apr 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt2
 - eth phy timings aligned with kernel ones
 
