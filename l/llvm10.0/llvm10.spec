@@ -20,7 +20,7 @@
 
 Name: %llvm_name
 Version: 10.0.1
-Release: alt2
+Release: alt3
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -131,6 +131,14 @@ Summary: clang shared libraries
 
 %description -n %clang_name-libs
 Shared libraries for the clang compiler.
+
+%package -n %clang_name-libs-shared-runtimes
+Group: Development/C
+Summary: Shared runtimes for Clang's shared libraries
+Requires: %clang_name-libs = %EVR
+
+%description -n %clang_name-libs-shared-runtimes
+The package contains shared runtime libraries for Scudo and sanitizers.
 
 %package -n %clang_name-devel
 Summary: Header files for clang
@@ -325,6 +333,19 @@ cd %buildroot%_libdir/clang/%version/lib/linux
 ls *-i[3-9]86* | while read f; do ln -s $f $(echo $f | sed 's|i[3-9]86|i386|') ; done
 %endif
 
+# Backported from llvm-12
+# For paranoic reasons library packaging policy covers peculiar directory paths.
+# If there are $A.a and $A.so in %llvm_libdir/clang, they should not end up in the
+# same package (but can be co-installed on a system).
+# Let's list all the $A.so for which $A.a exists into a separate package.
+# We also consider i386-symlinks for iN86.
+find %buildroot%_libdir/clang -type f,l -name '*.a' -or -name '*.so' | \
+sed -r -n 's/^(\/.+)\.a$/\1/p; s/^(.+)\.so$/\1/p' | sort | uniq -d > %_tmppath/libclang-support-dupes
+sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.a/' > %_tmppath/libclang-support-static-runtimes
+sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.so/' > %_tmppath/libclang-support-shared-runtimes
+sed < %_tmppath/libclang-support-shared-runtimes 's/^/%%exclude /' > %_tmppath/dyn-files-libclang-support
+echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-files-libclang-support
+
 %check
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%_libdir:$LD_LIBRARY_PATH
@@ -378,9 +399,11 @@ ninja -C BUILD check-all || :
 %_bindir/c-index-test
 %_man1dir/clang.1*
 
-%files -n %clang_name-libs
+%files -n %clang_name-libs -f %_tmppath/dyn-files-libclang-support
 %_libdir/clang
 %_libdir/libclang*.so.*
+
+%files -n %clang_name-libs-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
 
 %files -n %clang_name-devel
 %_includedir/clang
@@ -418,6 +441,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Apr 27 2021 Slava Aseev <ptrnine@altlinux.org> 10.0.1-alt3
+- Living in harmony with sisyphus_check on ix86 (backported from llvm12.0)
+
 * Wed Aug 12 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 10.0.1-alt2
 - Applied upstream patch which should fix ppc64le-specific issue.
 
