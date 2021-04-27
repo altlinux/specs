@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -13,7 +13,7 @@ Group: Networking/Instant messaging
 Url: http://gajim.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: https://gajim.org/downloads/1.3/gajim-%version-2.tar.gz
+Source: https://gajim.org/downloads/1.3/gajim-%version.tar.gz
 Patch1: gajim-1.2.2-alt-fix-egg-requires.patch
 
 # minimal python version for gajim >= 1.2.2
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Tue Apr 27 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Wed Mar 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.1-alt1
 - 1.3.1
 - reduce amount of overabundant dependencies
