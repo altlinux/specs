@@ -1,18 +1,5 @@
-%def_disable snapshot
-
-%define ver_major 0.12
-
-%def_enable x11
-%def_enable xcb_icccm
-%def_enable xwayland
-%def_disable xcb_errors
-%def_enable examples
-%def_enable freerdp
-
-%def_enable check
-
 Name: wlroots
-Version: %ver_major.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -20,49 +7,67 @@ License: MIT
 Group: System/Libraries
 Url: https://github.com/swaywm/wlroots
 
-%if_disabled snapshot
-Source: %url/archive/%name-%version.tar.gz
-%else
 # VCS: https://github.com/swaywm/wlroots.git
-Source: %name-%version.tar
-%endif
+Source: %name.tar
+
+%define soversion 8
+%define soname %name%soversion
 
 BuildRequires(pre): meson
 BuildRequires: ctags
-BuildRequires: libwayland-server-devel libwayland-client-devel
-BuildRequires: libwayland-egl-devel wayland-protocols
-BuildRequires: libEGL-devel libGLES-devel libdrm-devel libgbm-devel
-BuildRequires: libinput-devel libxkbcommon-devel
-BuildRequires: libudev-devel libpixman-devel
-BuildRequires: pkgconfig(systemd)
+
+BuildRequires: pkgconfig(egl)
+BuildRequires: pkgconfig(freerdp2)
+BuildRequires: pkgconfig(gbm)
+BuildRequires: pkgconfig(glesv2)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(libseat)
-%{?_enable_x11:BuildRequires: pkgconfig(x11-xcb) pkgconfig(xcb) pkgconfig(xcb-xinput) pkgconfig(xcb-xfixes)}
-%{?_enable_xwayland:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-composite) pkgconfig(xcb-render) pkgconfig(xcb-xfixes)}
-%{?_enable_xcb_icccm:BuildRequires: pkgconfig(xcb-icccm)}
-%{?_enable_xcb_errors:BuildRequires: pkgconfig(xcb-errors)}
-%{?_enable_examples:BuildRequires: libwayland-cursor-devel}
-%{?_enable_freerdp:BuildRequires: pkgconfig(freerdp2)}
+BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(wayland-scanner)
+BuildRequires: pkgconfig(wayland-server)
+BuildRequires: pkgconfig(x11-xcb)
+BuildRequires: pkgconfig(xcb)
+BuildRequires: pkgconfig(xcb-composite)
+BuildRequires: pkgconfig(xcb-icccm)
+BuildRequires: pkgconfig(xcb-render)
+BuildRequires: pkgconfig(xcb-xfixes)
+BuildRequires: pkgconfig(xcb-xinput)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xwayland)
 
 %description
 %summary
 
-%package -n lib%name
+%package -n lib%soname
 Summary: Modular Wayland compositor library
 Group: System/Libraries
+Provides: lib%name = %version-%release
 
-%description -n lib%name
+%description -n lib%soname
 This package provides shared %name library.
 
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%soname = %version-%release
 
 %description -n lib%name-devel
 This package provides development files for %name library.
 
 %prep
-%setup -n %name-%version
+%setup -n %name
+
+if ! grep -qs '^soversion[[:space:]]*=[[:space:]]*%soversion[[:space:]]*$' meson.build; then
+	echo >&2 "Outdated %%soversion value in spec"
+	exit 1
+fi
 
 %build
 %meson
@@ -75,7 +80,7 @@ This package provides development files for %name library.
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
-%files -n lib%name
+%files -n lib%soname
 %_libdir/lib%name.so.*
 %doc README.md LICENSE
 
@@ -85,6 +90,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 26 2021 Alexey Gladkov <legion@altlinux.ru> 0.13.0-alt1
+- New version (0.13.0)
+- Rebased to upstream git history.
+- Soversion added to the package name.
+
 * Thu Mar 25 2021 Alexey Gladkov <legion@altlinux.ru> 0.12.0-alt1
 - New version (0.12.0)
 - Add libseat backend.

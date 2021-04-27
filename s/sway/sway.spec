@@ -1,5 +1,5 @@
 Name: sway
-Version: 1.5.1
+Version: 1.6
 Release: alt1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
@@ -17,28 +17,30 @@ Patch00: sway-config.patch
 
 %define _unpackaged_files_terminate_build 1
 
-BuildRequires: gcc-c++
 BuildRequires: asciidoc-a2x
 BuildRequires: cmake
-BuildRequires: libcap-devel
-BuildRequires: libdbus-devel
-BuildRequires: libevdev-devel
-BuildRequires: libgdk-pixbuf-devel
-BuildRequires: libjson-c-devel
-BuildRequires: libinput-devel
+BuildRequires: gcc-c++
 BuildRequires: libpam-devel
-BuildRequires: libpango-devel
-BuildRequires: libpcre-devel
-BuildRequires: libwayland-client-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: libwayland-egl-devel
-BuildRequires: libwayland-server-devel
-BuildRequires: wayland-protocols
-BuildRequires: libwlroots-devel >= 0.10.1-alt2
-BuildRequires: libxkbcommon-devel
-BuildRequires: libEGL-devel
-BuildRequires: libinput-devel
 BuildRequires: meson
+BuildRequires: pkgconfig(basu)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(egl)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(json-c)
+BuildRequires: pkgconfig(libcap)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libevdev)
+BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(libpcre)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(wayland-server)
+BuildRequires: pkgconfig(wlroots)
+BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: scdoc
 BuildRequires: time
 
@@ -71,6 +73,9 @@ This package contains data files.
 %build
 %meson \
 	-Dwerror=false \
+	-Dzsh-completions=false \
+	-Dbash-completions=false \
+	-Dfish-completions=false \
 	#
 %meson_build
 
@@ -81,12 +86,6 @@ mkdir -p %buildroot/%_sysconfdir/%name/config.d
 
 install -p -m0755 -D %SOURCE1 %buildroot/%_bindir/
 install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
-
-rm -rf -- \
-	%buildroot/%_datadir/bash-completion \
-	%buildroot/%_datadir/fish \
-	%buildroot/%_datadir/zsh \
-	#
 
 %files
 %doc LICENSE
@@ -109,6 +108,11 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Tue Apr 27 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.6-alt1
+- New version (1.6)
+- Rebased to upstream git history.
+- Update buildrequires.
+
 * Thu Mar 25 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.5.1-alt1
 - New version (1.5.1)
 

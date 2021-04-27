@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.5
+Version: 0.9.7
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -11,35 +11,39 @@ Source1: xkb-layout.py
 Source2: clock.py
 
 Patch0: waybar-config.patch
-Patch1: 0001-Drop-the-clock-module-and-the-date-dependency.patch
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 BuildRequires(pre): rpm-build-xdg
 
 BuildRequires: cmake meson
 BuildRequires: gcc-c++
-BuildRequires: jsoncpp-devel
-BuildRequires: libfmt-devel
-BuildRequires: libgtkmm3-devel
-BuildRequires: libinput-devel
-BuildRequires: libsigc++2-devel
-BuildRequires: libspdlog-devel
 BuildRequires: libstdc++-devel-static
-BuildRequires: libwayland-client-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: wayland-protocols
+BuildRequires: pkgconfig(fmt)
+BuildRequires: pkgconfig(gtkmm-3.0)
+BuildRequires: pkgconfig(jsoncpp)
+BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(scdoc)
+BuildRequires: pkgconfig(sigc++-2.0)
+BuildRequires: pkgconfig(spdlog)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(wayland-protocols)
 
 # sni module
-BuildRequires: libdbusmenu-gtk3-devel
-BuildRequires: libgio-devel
+BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
+BuildRequires: pkgconfig(gio-unix-2.0)
 
 # pulseaudio module
-BuildRequires: libpulseaudio-devel
+BuildRequires: pkgconfig(libpulse)
 
 # backlight
-BuildRequires: libudev-devel
+BuildRequires: pkgconfig(libudev)
 
 # network module
-BuildRequires: libnl-devel
+BuildRequires: pkgconfig(libnl-3.0)
+BuildRequires: pkgconfig(libnl-genl-3.0)
 
 # mpd module
 # BuildRequires: libmpdclient-devel
@@ -77,8 +81,13 @@ install -m 755 -- %SOURCE2 %buildroot/%helperdir/
 %config(noreplace) %_xdgconfigdir/%name/config
 %config(noreplace) %_xdgconfigdir/%name/style.css
 %helperdir
+%_man5dir/*
 
 %changelog
+* Tue Apr 27 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.7-alt1
+- New version (0.9.7)
+- Update buildrequires.
+
 * Fri Jan 08 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.5-alt1
 - New version (0.9.5)
 - Replace clock module by custom version.
