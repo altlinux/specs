@@ -1,27 +1,31 @@
 Name:       mako
-Version:    1.4
-Release:    alt2
+Version:    1.4.1.64.ge5b5d56
+Release:    alt1
 Summary:    Lightweight Wayland notification daemon
-Provides:   desktop-notification-daemon
 Group:      Graphical desktop/Other
-
 License:    MIT
+
 URL:        https://github.com/emersion/mako
 Source0:    %name-%version.tar
-Patch0:     meson-disable-werror.patch
 
-BuildRequires:  cmake
-BuildRequires:  gcc
-BuildRequires:  meson
-BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
-BuildRequires:  pkgconfig(wayland-protocols) >= 1.14
-BuildRequires:  pkgconfig(wayland-client)
-BuildRequires:  pkgconfig(pango)
-BuildRequires:  pkgconfig(cairo)
-BuildRequires:  systemd-devel
-#BuildRequires: libelogind-devel
-BuildRequires:  scdoc
-Requires:       dbus
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+BuildRequires: cmake
+BuildRequires: gcc
+BuildRequires: meson
+BuildRequires: pkgconfig(basu)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(scdoc)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-protocols)
+
+Provides: desktop-notification-daemon
+
+Requires: basu
+Requires: dbus
 
 %description
 mako is a lightweight notification daemon for Wayland compositors that support
@@ -29,27 +33,29 @@ the layer-shell protocol.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-%meson
+%meson -Dwerror=false
 %meson_build
 
 %install
 %meson_install
 
-rm -f -- \
-	%buildroot/%_bindir/makoctl \
-	%buildroot/%_man1dir/makoctl.* \
-
-
 %files
 %doc LICENSE README.md
 %_bindir/mako
+%_bindir/makoctl
 %_datadir/dbus-1/services/fr.emersion.mako.service
 %_man1dir/mako.*
+%_man1dir/makoctl.*
+%_man5dir/mako.*
 
 %changelog
+* Tue Apr 27 2021 Alexey Gladkov <legion@altlinux.ru> 1.4.1.64.ge5b5d56-alt1
+- New snapshot (1.4.1-64-ge5b5d56)
+- Rebase to upstream git history.
+- Add makoctl.
+
 * Wed Nov 06 2019 Alexey Gladkov <legion@altlinux.ru> 1.4-alt2
 - Drop makoctl to avoid logind dependency.
 

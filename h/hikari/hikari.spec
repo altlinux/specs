@@ -1,5 +1,5 @@
 Name: hikari
-Version: 2.2.3
+Version: 2.3.0
 Release: alt1
 
 Summary: a stacking Wayland compositor
@@ -18,7 +18,7 @@ Requires: libdrmhelper
 
 # Automatically added by buildreq on Thu Nov 12 2020
 # optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libcairo-devel libglvnd-devel libgpg-error libharfbuzz-devel libpixman-devel libudev-devel libwayland-client libwayland-egl libwayland-server libwayland-server-devel libxcb-devel libxcbutil-icccm pkg-config python2-base sh4 wayland-devel
-BuildRequires: bmake libinput-devel libpam-devel libpango-devel libucl5-devel libwlroots-devel libxkbcommon-devel pkgsrc-mk-files wayland-protocols
+BuildRequires: bmake libinput-devel libpam-devel libpango-devel libucl5-devel libwlroots-devel libxkbcommon-devel pkgsrc-mk-files wayland-protocols libdrm-devel
 # dependencies listed above do not requires libEGL-devel on armh for some reason
 BuildRequires: libEGL-devel
 
@@ -76,6 +76,9 @@ bmake \
 %_man1dir/hikari.1*
 
 %changelog
+* Tue Apr 27 2021 Alexey Gladkov <legion@altlinux.ru> 2.3.0-alt1
+- NMU: Updated to 2.3.0.
+
 * Wed Mar 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.3-alt1
 - Updated to 2.2.3.
 
