@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_21jpp8
+Release: alt1_28jpp8
 Summary: Namespace aware SAX-Parser utility library
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{origname}-%%{version}.zip
@@ -20,9 +20,11 @@ License: LGPLv2
 Source: %{origname}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
 BuildRequires: ant ant-contrib jpackage-utils libbase libloader
-Requires: java jpackage-utils libbase >= 1.1.2 libloader >= 1.1.2
+Requires: libbase >= 1.1.2 libloader >= 1.1.2
 BuildArch: noarch
 Patch0: libxml-1.1.2-build.patch
+Patch1: libxml-1.1.2-java11.patch
+Patch2: libxml-1.1.3-remove-commons-logging.patch
 Source44: import.info
 
 %description
@@ -42,9 +44,11 @@ Javadoc for %{name}.
 %prep
 %setup -q -c
 %patch0 -p1 -b .build
+%patch1 -p1 -b .java11
+%patch2 -p1 -b .no_commons_logging
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
-build-jar-repository -s -p lib commons-logging-api libbase libloader
+build-jar-repository -s -p lib libbase libloader
 cd lib
 ln -s /usr/share/java/ant ant-contrib
 
@@ -70,6 +74,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Tue Apr 27 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_28jpp8
+- dropped java requires (closes: #40000)
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_21jpp8
 - update
 
