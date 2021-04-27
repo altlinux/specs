@@ -1,6 +1,6 @@
 Name: u-boot-sunxi
 Version: 2021.04
-Release: alt2
+Release: alt3
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -64,6 +64,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Apr 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt3
+- fix usb keyboard handling
+
 * Fri Apr 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt2
 - fix ethernet support on H5 boards
 
