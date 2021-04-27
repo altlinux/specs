@@ -2,7 +2,7 @@
 
 Name:     pulseaudio-module-xrdp
 Version:  0.5
-Release:  alt1
+Release:  alt2
 
 Summary:  xrdp sink / source pulseaudio modules
 License:  Apache-2.0
@@ -36,6 +36,13 @@ sound system used on POSIX operating systems.
 tar xf %SOURCE1
 
 %build
+# Check currect pulseaudio version
+pa_ver="$(pkg-config --modversion libpulse)"
+if [ "$pa_ver" != "%pulseaudio_version" ]; then
+    echo "Package builds with different version of Pulseaudio in repository."
+    exit 1
+fi
+
 %undefine _configure_gettext
 # Configure Pulseaudio like pulseaudio.spec
 pushd pulseaudio-src
@@ -68,6 +75,9 @@ rm -f %buildroot%_libdir/pulse-*/modules/*.la
 %_libdir/pulse-*/modules/*.so
 
 %changelog
+* Tue Apr 27 2021 Andrey Cherepanov <cas@altlinux.org> 0.5-alt2
+- Add hook to check current pulseaudio version in repository.
+
 * Mon Apr 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.5-alt1
 - New version.
 - Rebuild woth Pulseaudio 14.2.
