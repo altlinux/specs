@@ -1,6 +1,6 @@
 Name: libexplain
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Summary: Library functions to explain system call errors
 
@@ -16,9 +16,13 @@ Patch3: libexplain-1.4-gcc-10.patch
 Patch4: libexplain-1.4-nettstamp-needs-types.patch
 Patch5: libexplain-1.4-sanitize-bison.patch
 Patch6: libexplain-1.4-typos.patch
+Patch7: libexplain-1.4-remove-termiox.patch
 
 License: LGPLv3+
 Group: System/Libraries
+
+# See libexplain-1.4-remove-termiox.patch
+BuildRequires: glibc-kernheaders >= 5.12
 
 BuildRequires: bison libacl-devel libcap-devel libtool lsof gettext-tools
 BuildRequires: ghostscript-utils groff-base groff-ps
@@ -66,6 +70,7 @@ Development files for the libexplain library.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # hack against missed dlci_add struct
 %__subst "s|#ifdef SIOCADDDLCI|#ifdef IGNORE_SIOCADDDLCI|" libexplain/iocontrol/siocadddlci.c
@@ -128,6 +133,9 @@ install -m 0664 README LICENSE %buildroot%_pkgdocdir
 # provides a wrapper for mktemp, not because it is used.
 
 %changelog
+* Wed Apr 28 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt3
+- fix build with glibc-kernheaders-5.12 (no more termiox)
+
 * Sun Feb 28 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt2
 - fix build, add patches from Debian
 
