@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl-podlators perl(PPIx/Utils.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Perl-MinimumVersion
-Version:        1.38
-Release:        alt1_23
+Version:        1.40
+Release:        alt1
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Perl-MinimumVersion
-Source0:        https://cpan.metacpan.org/authors/id/N/NE/NEILB/Perl-MinimumVersion-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DB/DBOOK/Perl-MinimumVersion-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -68,13 +69,15 @@ make test
 %endif
 
 %files
-%doc Changes
-%doc --no-dereference LICENSE
+%doc Changes README
 %{_bindir}/*
 %{perl_vendor_privlib}/Perl
 %{_mandir}/man1/*
 
 %changelog
+* Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 1.40-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_23
 - update to new release by fcimport
 
