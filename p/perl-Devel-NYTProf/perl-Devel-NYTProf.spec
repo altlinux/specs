@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-NYTProf
 Name: perl-%dist
-Version: 6.07
+Version: 6.08
 Release: alt1
 
 Summary: Powerful fast feature-rich perl source code profiler
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/J/JK/JKEENAN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
-BuildRequires: perl-JSON-Any perl-Moose perl-Test-Pod perl-Test-Pod-Coverage zlib-devel perl-Test-Differences perl(File/Which.pm)
+BuildRequires: perl-JSON-Any perl-Moose perl-Test-Pod perl-Test-Pod-Coverage zlib-devel perl-Test-Differences perl(File/Which.pm) perl(Capture/Tiny.pm)
 
 %description
 Devel::NYTProf is a powerful feature-rich perl source code profiler.
@@ -40,6 +40,9 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %perl_vendor_autolib/Devel
 
 %changelog
+* Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 6.08-alt1
+- automated CPAN update
+
 * Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 6.07-alt1
 - automated CPAN update
 
