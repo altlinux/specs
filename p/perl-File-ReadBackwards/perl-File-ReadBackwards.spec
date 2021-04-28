@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-ReadBackwards
 Name: perl-%dist
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Read a file backwards by lines
@@ -9,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/U/UR/URI/File-ReadBackwards-1.05.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ memory efficient and fast. It supports both an object and a tied handle
 interface.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +36,9 @@ interface.
 %perl_vendor_privlib/File*
 
 %changelog
+* Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 1.06-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
