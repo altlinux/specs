@@ -3,7 +3,7 @@
 %def_disable webkit
 
 Name: psi-plus
-Version: 1.4.1513
+Version: 1.5.1494
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -15,6 +15,7 @@ Url: https://www.psi-plus.com/
 
 # https://github.com/psi-plus/psi-plus-snapshots/archive/%version.tar.gz
 Source: %name-snapshots-%version.tar
+Source1: usrsctp.tar
 
 Patch1: %name-disable-sm-alt.patch
 Patch2: %name-doubleclick-alt.patch
@@ -569,7 +570,8 @@ Each element can contain a regular expression to check for matches with JID, fro
  - Настройку для воспроизведения звукового файла всегда, даже если глобальные звуки выключены.
 
 %prep
-%setup -n %name-snapshots-%version
+%setup -n %name-snapshots-%version -a1
+mv usrsctp/ iris/3rdparty/
 #%patch1 -p2
 %patch2 -p1
 %patch3 -p2
@@ -590,7 +592,8 @@ done
 %cmake \
     -DBUILD_PLUGINS="ALL" \
     -DENABLE_PLUGINS=ON \
-    -DBUILD_DEV_PLUGINS=ON
+    -DBUILD_DEV_PLUGINS=ON \
+    -DBUNDLED_USRSCTP=ON
 %cmake_build
 
 %install
@@ -605,7 +608,7 @@ rm %buildroot%_datadir/%name/{COPYING,README.html}
 rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp}plugin.so
 
 %files
-%doc COPYING INSTALL README.html TODO
+%doc COPYING INSTALL.md README.html TODO
 %_bindir/%name
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
@@ -732,6 +735,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp}plugin.so
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Apr 28 2021 Oleg Solovyov <mcpain@altlinux.org> 1.5.1494-alt1
+- Version 1.5.1494
+
 * Fri Oct 02 2020 Oleg Solovyov <mcpain@altlinux.org> 1.4.1513-alt1
 - Version 1.4.1513
 
