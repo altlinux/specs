@@ -5,7 +5,7 @@
 %def_with doc
 
 Name: gnustep-base
-Version: 1.27.0
+Version: 1.28.0
 Release: alt1
 Epoch: 1
 
@@ -176,6 +176,9 @@ fi
 %endif
  
 %changelog
+* Wed Apr 28 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.28.0-alt1
+- New version.
+
 * Tue Oct 13 2020 Andrey Cherepanov <cas@altlinux.org> 1:1.27.0-alt1
 - New version.
 - Fix License tag according to SPDX.
