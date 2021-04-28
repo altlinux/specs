@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt164
+Release: alt165
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -64,7 +64,7 @@ Requires: pkgconfig-reqprov
 Requires: procps
 Requires: psmisc
 Requires: rpm-build-perl >= 0.76
-Requires: rpm-build-python >= 0.31
+Requires: rpm-macros-python
 Requires: rpmspec
 Requires: sed
 Requires: service
@@ -94,7 +94,7 @@ BuildPreReq: elfutils-devel
 BuildRequires: librpm-devel
 
 # Automatically added by buildreq on Thu Apr 23 2009 and edited manually.
-BuildRequires: libdb4.7-devel libelf-devel liblzma-devel libpopt-devel python-devel zlib-devel
+BuildRequires: libdb4.7-devel libelf-devel liblzma-devel libpopt-devel zlib-devel
 
 %package -n lib%oname
 Summary: Shared libraries required for applications which will manipulate RPM packages
@@ -316,6 +316,10 @@ sed -r -n 's/^(.+)64(_.*|$)/\1\2/p' all-funcs |
 mv -T %buildroot%_rpmlibdir/rpm{,build}rc
 mv -T %buildroot%_rpmlibdir/{,build}macros
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %pre
 [ ! -L %_rpmlibdir/noarch-alt-%_target_os ] || rm -f %_rpmlibdir/noarch-alt-%_target_os ||:
 
@@ -411,6 +415,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Apr 28 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt165
+- Replaced rpm-build-python with rpm-macros-python in rpm-build requirements.
+- Removed python-devel from BuildRequires.
+
 * Wed Jan 06 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt164
 - ldd.in: fix trace_elf error diagnostics (ldv).
 - rpmio: Workaround another liblzma memory allocation failure on armh.
