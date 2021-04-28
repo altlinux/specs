@@ -7,10 +7,10 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.12
+Version: 2.4.22
 
 # %%ifndef git_commit
-Release: alt2
+Release: alt1
 # %%else
 # Release: alt0.git_1_%git_commit
 # %%endif
@@ -23,11 +23,11 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 Url: http://www.bzflag.org
 
 # commit e2fefdbb30154605c61fb85315d1d39e9be34689
-%ifdef git_commit
-Source: %name-%version-%release.tar
-%else
-Source: %name-%version.tar
-%endif
+#ifdef git_commit
+#Source: %name-%version-%release.tar.bz2
+#%else
+Source: %name-%version.tar.bz2
+#endif
 
 
 # Source2:  bzflag_ru_utf8.po
@@ -86,7 +86,7 @@ This package contains BZFlags standalone game server.
 #patch -p1
 #patch1 -p1
 
-# iconv %SOURCE2 -f utf8 -t koi8-r | catdoc -d us-ascii -s koi8-r | tr wW vV | sed \
+# iconv %%SOURCE2 -f utf8 -t koi8-r | catdoc -d us-ascii -s koi8-r | tr wW vV | sed \
 #-e 's/T[Zz]/C/g' \
 #-e 's/tz/c/g' \
 #-e 's/K[Hh]/H/g' \
@@ -105,7 +105,7 @@ This package contains BZFlags standalone game server.
 #-e 's/Щ/S^h\`/g' \
 
 #################################
-# cat %SOURCE2 | LC_ALL=ru_RU.utf8 sed \
+# cat %%SOURCE2 | LC_ALL=ru_RU.utf8 sed \
 # -e '!s!ь!\`!g' \
 # -e 's/ъ/\\"/g' \
 # -e 's/ё/yo/g' \
@@ -223,6 +223,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Thu Apr 29 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.22-alt1
+- 2.4.22
+
 * Mon Nov 06 2017 Michael Shigorin <mike@altlinux.org> 2.4.12-alt2
 - E2K: avoid lcc-unsupported option
 
