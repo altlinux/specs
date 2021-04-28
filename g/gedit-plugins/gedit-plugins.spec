@@ -8,7 +8,7 @@
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Plugins for GEdit
@@ -38,7 +38,6 @@ Requires: libvte3-gir >= %vte_ver
 AutoReqProv: nopython
 %define __python %nil
 
-# From configure.ac
 BuildRequires(pre): meson rpm-build-gir rpm-build-gnome
 BuildRequires: gnome-common libappstream-glib-devel
 BuildRequires: glib2-devel >= %glib_ver
@@ -91,6 +90,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Wed Apr 28 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
