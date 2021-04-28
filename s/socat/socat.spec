@@ -1,5 +1,5 @@
 Name: socat
-Version: 1.7.3.4
+Version: 1.7.4.1
 Release: alt1
 
 Summary: 'socket cat' - multipurpose relay for bidirectional data transfer
@@ -52,6 +52,9 @@ ln -s socat.1 %buildroot%_man1dir/procan.1
 %doc BUGREPORTS CHANGES EXAMPLES FAQ README SECURITY
 
 %changelog
+* Wed Apr 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.4.1-alt1
+- Automatically updated to 1.7.4.1.
+
 * Sun Sep 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.7.3.4-alt1
 - Automatically updated to 1.7.3.4.
 
