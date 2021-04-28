@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt4
+Release: alt5
 
 %define package_name		%real_name
 %define weight			1001
@@ -454,6 +454,7 @@ Group: Development/Python
 Requires: %name-modules = %version-%release
 Requires: %name-modules-distutils = %version-%release
 Requires: %name = %version-%release
+Requires: rpm-build-python
 Provides: %real_name-devel = %require_ver
 Obsoletes: %python_name-modules-dev <= %noversion_from
 Provides: lib%name-devel = %version-%release
@@ -923,7 +924,7 @@ EOF
 chmod +x python.sh
 
 %define __python %_builddir/Python-%version/python.sh
-%define _python_lib_path %(RPM_BUILD_ROOT=%buildroot LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/python -c "import sys,os; path=os.path.normpath(os.environ['RPM_BUILD_ROOT']) ; print ' '.join([ x[len(path):] for x in [ os.path.normpath(x) for x in sys.path] if x[0:len(path)]==path])")
+%define _python_lib_path %(RPM_BUILD_ROOT=%buildroot LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/%python_name -c "import sys,os; path=os.path.normpath(os.environ['RPM_BUILD_ROOT']) ; print ' '.join([ x[len(path):] for x in [ os.path.normpath(x) for x in sys.path] if x[0:len(path)]==path])")
 %add_python_req_skip bundlebuilder
 
 # startup user script
@@ -957,7 +958,11 @@ ln -sf idle%suffix_ver %buildroot%_bindir/idle
 ln -s pynche%suffix_ver %buildroot%_bindir/pynche
 
 rm -rf %buildroot%_libdir/%python_name/lib2to3/tests/
-rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
+rm %buildroot%_bindir/python
+rm %buildroot%_man1dir/python.1
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files
 
@@ -1158,6 +1163,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Wed Apr 28 2021 Dmitry V. Levin <ldv@altlinux.org> 2.7.18-alt5
+- python-dev: added rpm-build-python to requirements.
+
 * Thu Feb 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt4
 - python-dev: Removed dependency to libnsl2-devel (close #39727).
 - Built without libnsl LDFLAGS.
