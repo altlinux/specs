@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.0
+%define module_version	0.9.1
 %define module_release	alt1
 
 %define flavour		std-pae
@@ -9,6 +9,7 @@ BuildRequires(pre): kernel-headers-modules-std-pae
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
+%define module_datadir %_datadir/%module_name-%module_version/%kversion-%flavour-%krelease
 
 Summary: Linux Kernel Runtime Guard module
 Name: kernel-modules-%module_name-%flavour
@@ -66,9 +67,15 @@ echo "enable lkrg.service" > lkrg.preset
 
 %install
 install -D -p -m0644 p_lkrg.ko %buildroot%module_dir/p_lkrg.ko
-install -D -p -m0755 lkrg.init %buildroot%_initdir/lkrg
-install -D -p -m0644 scripts/bootup/systemd/lkrg.service %buildroot%_unitdir/lkrg.service
+install -D -p -m0755 lkrg.init %buildroot%module_datadir/lkrg.init
+install -D -p -m0644 scripts/bootup/systemd/lkrg.service %buildroot%module_datadir/lkrg.service
 install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
+install -D -p -m0644 scripts/bootup/lkrg.conf %buildroot%_sysconfdir/sysctl.d/lkrg.conf
+# ghost files
+mkdir -p %buildroot%_initdir
+touch %buildroot%_initdir/lkrg
+mkdir -p %buildroot%_unitdir
+touch %buildroot%_unitdir/lkrg.service
 
 %check
 # based on %%check of kernel-image-%%flavour.spec
@@ -174,20 +181,42 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
 }
 
 %post
+ln -frs %module_datadir/lkrg.init %_initdir/lkrg
+ln -frs %module_datadir/lkrg.service %_unitdir/lkrg.service
+
 %post_service lkrg
+
+%triggerun -- %name < 0.9.1-alt1
+if [ "$2" -gt 0 ]; then
+	echo "WARNING! Set all the LKRG settings in %_sysconfdir/lkrg.conf"
+	echo "Otherwise they WILL BE dropped to defaults during service reload"
+fi
 
 %preun
 %preun_service lkrg
 
 %files
+%doc README
+%config(noreplace) %_sysconfdir/sysctl.d/lkrg.conf
 %module_dir/p_lkrg.ko
-%_initdir/lkrg
-%_unitdir/lkrg.service
+%module_datadir/lkrg.init
+%module_datadir/lkrg.service
+%ghost %_initdir/lkrg
+%ghost %_unitdir/lkrg.service
 %_presetdir/30-lkrg.preset
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Tue Apr 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt1
+- Updated to v0.9.1.
+- Introduced %_sysconfdir/sysctl.d/lkrg.conf.
+- Avoided possible file conflicts with other version of the module:
+  + Marked SysVinit script and systemd service file with %%ghost;
+  + Moved actual files to version-uniq location;
+  + Made symlinks in %%post;
+- Packed README.
 
 * Fri Apr 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.0-alt1
 - Updated to v0.9.0.
