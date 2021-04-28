@@ -1,5 +1,5 @@
 Name: deepin-shortcut-viewer
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 Summary: Deepin Shortcut Viewer
 License: GPL-3.0+
@@ -18,7 +18,9 @@ The program displays a shortcut key window when a JSON data is passed.
 %setup
 
 %build
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt5 \
+    CONFIG+=nostrip \
+    PREFIX=%prefix
 %make_build
 
 %install
@@ -30,5 +32,8 @@ The program displays a shortcut key window when a JSON data is passed.
 %_bindir/%name
 
 %changelog
+* Wed Apr 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.3-alt1
+- New version (5.0.3) with rpmgs script.
+
 * Fri Jul 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.2-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
