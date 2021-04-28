@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt1_13
+Release:        alt2_13
 Summary:        Unicode Text Segmentation Package
 License:        GPLv2+ or Artistic clarified
 URL:            http://sf.net/projects/linefold/
@@ -62,7 +62,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 # Rename sombok.h to sombok-ARCH.h and install a sombok.h wrapper to avoid
 # a file conflict on multilib systems, bug #1853260
-mv %{buildroot}/%{_includedir}/sombok.h %{buildroot}/%{_includedir}/sombok-%{_arch}.h
+mv %{buildroot}/%{_includedir}/sombok.h %{buildroot}/%{_includedir}/sombok-$(echo %{_arch} | sed 's|i[3-9]86|i386|').h
 install -m 0644 %{SOURCE1} %{buildroot}/%{_includedir}/sombok.h
 
 
@@ -82,6 +82,9 @@ install -m 0644 %{SOURCE1} %{buildroot}/%{_includedir}/sombok.h
 
 
 %changelog
+* Wed Apr 28 2021 Slava Aseev <ptrnine@altlinux.org> 2.4.0-alt2_13
+- fix include name on i[3-9]86 architectures
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_13
 - update to new release by fcimport
 
