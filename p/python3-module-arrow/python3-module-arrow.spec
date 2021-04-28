@@ -1,9 +1,10 @@
 %define modname arrow
 %def_disable docs
+#24 failed, 1674 passed, 2 xfailed, 14 errors in 20.22s
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 Summary: Better dates & times for Python
@@ -38,6 +39,8 @@ work with dates and times with fewer imports and a lot less code.
 %prep
 %setup -n %modname-%version
 
+sed -i 's/pytest/py.test3/' tox.ini
+
 %build
 %python3_build_debug
 
@@ -52,6 +55,7 @@ cp -fR docs/_build/html/* man/
 %endif
 
 %check
+export PYTHONPATH=%buildroot%python3_sitelibdir
 tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 
 %files
@@ -60,6 +64,9 @@ tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 %{?_enable_docs: man/}
 
 %changelog
+* Wed Apr 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Sun Mar 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
