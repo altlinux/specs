@@ -7,8 +7,8 @@
 %define sddm_confdir %x11confdir/sddm
 
 Name: sddm
-Version: 0.18.1
-Release: alt11
+Version: 0.19.0
+Release: alt1
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -28,9 +28,6 @@ Source11: sddm-autologin.pam
 Source12: sddm-greeter.pam
 Source20: Xsetup
 Source21: Xstop
-# upstream
-Patch1: CVE-2020-28049.patch
-Patch2: nvidia-after-vt-switching.patch
 # SuSE
 Patch10: create_pid_file.patch
 # github issues
@@ -78,9 +75,6 @@ ability to create smooth, animated user interfaces.
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
-%patch2 -p1
-#
 %patch10 -p1
 #
 %patch100 -p1 -b .defaults
@@ -184,6 +178,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Wed Apr 28 2021 Oleg Solovyov <mcpain@altlinux.org> 0.19.0-alt1
+- new version
+
 * Wed Nov 11 2020 Oleg Solovyov <mcpain@altlinux.org> 0.18.1-alt11
 - fix pwdrenew dialog (Closes: 36975)
 
