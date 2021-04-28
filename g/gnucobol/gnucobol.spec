@@ -1,10 +1,11 @@
 Name: gnucobol
-Version: 2.2
+Version: 3.1.2
 Release: alt1
 
 Summary: GnuCOBOL (formely Open COBOL) - COBOL compiler
 
-License: GPLv2+ and LGPLv2+
+License: GPLv3+ and LGPLv3+ and GFDL-1.3
+
 Group: Development/Other
 Url: http://www.opencobol.org
 
@@ -13,10 +14,10 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 # Source:	http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 # Source-url: https://ftp.gnu.org/gnu/gnucobol/gnucobol-%version.tar.xz
 Source: %name-%version.tar
-
+Source3:        https://www.itl.nist.gov/div897/ctg/suites/newcob.val.Z
 # Automatically added by buildreq on Wed Jun 06 2012
 # optimized out: libtinfo-devel
-BuildRequires: libdb4-devel libgmp-devel libncurses-devel help2man
+BuildRequires: libdb4-devel libgmp-devel libncurses-devel help2man gettext libreadline-devel libjson-c-devel  libxml2-devel libncursesw-devel
 
 Requires: libcob = %version-%release
 Obsoletes: libcob-devel < %version
@@ -32,7 +33,7 @@ programs to C code and compiles it using GCC.
 
 %package -n libcob
 Summary: GnuCOBOL runtime library
-License: LGPLv2+
+License: LGPLv3+
 Group: Development/Other
 
 %description -n libcob
@@ -44,24 +45,31 @@ This package contains GnuCOBOL runtime library.
 %prep
 %setup
 # hack to work around break -frecord-gcc-switches
-subst 's!/-g/!/-g /!' ./configure.ac
-%autoreconf
-
+#subst 's!/-g/!/-g /!' ./configure.ac
+#autoreconf
+cp %{SOURCE3} tests/cobol85/
 %build
 %add_optflags %optflags_shared
-%configure --disable-rpath --disable-static --enable-debug
+#configure --disable-rpath --disable-static --enable-debug
+%configure --enable-hardening --with-db --with-xml2 --with-curses=ncursesw --with-json=json-c
 # get rid of RPATH
-#sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
-%make_build || %make
+#make_build || %make
+%make_build 
 
 %install
 %makeinstall_std
+find %{buildroot}/%{_libdir} -type f -name "*.*a" -exec rm -f {} ';'
+rm -rf %{buildroot}/%{_infodir}/dir
 
 %find_lang %name
 
 %check
-%make_build -k check
+#make_build -k check
+(make check CFLAGS="%optflags -O" || make check TESTSUITEFLAGS="--recheck --verbose" || echo "Warning, unexpected results")
+make test CFLAGS="%optflags -O"
+
 
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog NEWS README THANKS
@@ -81,6 +89,11 @@ subst 's!/-g/!/-g /!' ./configure.ac
 %_libdir/libcob.so.*
 
 %changelog
+* Wed Apr 28 2021 Ilya Mashkin <oddity@altlinux.ru> 3.1.2-alt1
+- 3.1.2
+- Change License to GPLv3+ and LGPLv3+ and GFDL
+- Update requires, sync spec with FC
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
 - new version (2.2) with rpmgs script
 - rename package from open-cobol to gnucobol
