@@ -1,12 +1,14 @@
 Name: pdfpc
 Version: 4.5.0
-Release: alt1
+Release: alt2
 Summary: A GTK based presentation viewer application for GNU/Linux
 
 Group: Other
 License: GPLv2+
 Url: https://github.com/pdfpc/pdfpc
 Source: %name-%version.tar
+
+Patch0: pdfpc-alt-gst-video-info-from-caps.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gst-plugins1.0-devel libgee0.8-devel libgtk+3-devel libgtk4-devel libpoppler-glib-devel libwebkit2gtk-devel vala libdiscount-devel libjson-glib-devel
@@ -25,6 +27,7 @@ which can be created using nearly any of today's presentation software.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
@@ -44,6 +47,10 @@ which can be created using nearly any of today's presentation software.
 %_datadir/pixmaps/%name
 
 %changelog
+* Wed Apr 28 2021 Egor Ignatov <egori@altlinux.org> 4.5.0-alt2
+- Fix FTBFS
+  + add gst-video-info-from-caps patch
+
 * Mon Dec 21 2020 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 
