@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.9
+%define ver_major 1.10
 %def_disable docs
 
 %ifnarch %valgrind_arches
@@ -87,6 +87,7 @@ developing applications that use %name.
 
 %install
 %meson_install
+# since 1.9 libwacom can read tablet and stylus files from /etc/libwacom
 mkdir -p %buildroot%_sysconfdir/%name
 
 %check
@@ -96,10 +97,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files
 %dir %_sysconfdir/%name
 %_bindir/%name-list-local-devices
+%_bindir/%name-list-devices
+%_bindir/%name-update-db
 %_bindir/%name-show-stylus
 %_libdir/*.so.*
 %_udevrulesdir/65-libwacom.rules
 %_man1dir/libwacom-list-local-devices.1*
+%_man1dir/libwacom-list-devices.1*
 %doc NEWS README* COPYING
 
 %files devel
@@ -118,6 +122,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Apr 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
+- 1.10
+
 * Wed Feb 24 2021 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
 - 1.9
 
