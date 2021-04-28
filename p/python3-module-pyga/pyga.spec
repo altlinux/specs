@@ -1,8 +1,9 @@
 %define oname pyga
+%def_disable check
 
 Name: python3-module-%oname
-Version: 2.5.0
-Release: alt2
+Version: 2.6.2
+Release: alt1
 
 Summary: Server side implemenation of Google Analytics in Python
 License: BSD
@@ -14,9 +15,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
-BuildRequires: python3-module-html5lib python3-module-pbr
+#BuildRequires: python3-module-html5lib python3-module-pbr
 BuildRequires: python3-module-pytest python3-module-unittest2
-BuildRequires: python-tools-2to3
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %py3_provides %oname
 
@@ -55,16 +56,8 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-## py2 -> py3
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-##
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -76,9 +69,7 @@ mkdir -p build/docs
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname
 
 %check
-%if 0
 %__python3 setup.py test
-%endif
 
 %files
 %doc *.rst RELEASES
@@ -94,6 +85,10 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname
 
 
 %changelog
+* Wed Apr 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt1
+- NMU: new version 2.6.2 (with rpmrb script)
+- NMU: cleanup spec
+
 * Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.5.0-alt2
 - python2 disabled
 
