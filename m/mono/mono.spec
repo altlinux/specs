@@ -8,8 +8,8 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
-Version: 5.20.1.19
-Release: alt8
+Version: 6.12.0.122
+Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -27,35 +27,60 @@ Source3: monolite.tar.gz
 Source4: mono-cert-sync.filetrigger
 
 # External dependencies (git submodules)
-Source5: %name-%version-external-api-doc-tools.tar
-Source6: %name-%version-external-api-doc-tools-external-Lucene.Net.Light.tar
-Source7: %name-%version-external-api-doc-tools-external-SharpZipLib.tar
-Source8: %name-%version-external-api-snapshot.tar
-Source9: %name-%version-external-aspnetwebstack.tar
-Source10: %name-%version-external-binary-reference-assemblies.tar
-Source11: %name-%version-external-bockbuild.tar
-Source12: %name-%version-external-boringssl.tar
-Source13: %name-%version-external-cecil.tar
-Source14: %name-%version-external-cecil-legacy.tar
-Source15: %name-%version-external-corefx.tar
-Source16: %name-%version-external-corert.tar
-Source17: %name-%version-external-ikdasm.tar
-Source18: %name-%version-external-ikvm.tar
-Source19: %name-%version-external-linker.tar
-Source20: %name-%version-external-linker-cecil.tar
-Source21: %name-%version-external-Newtonsoft.Json.tar
-Source22: %name-%version-external-nuget-buildtasks.tar
-Source23: %name-%version-external-nunit-lite.tar
-Source24: %name-%version-external-roslyn-binaries.tar
-Source25: %name-%version-external-rx.tar
-Source26: %name-%version-external-xunit-binaries.tar
+Source5:  %name-%version-external-api-doc-tools.tar
+Source6:  %name-%version-external-api-doc-tools-external-Lucene.Net.Light.tar
+Source7:  %name-%version-external-api-doc-tools-external-SharpZipLib.tar
+Source8:  %name-%version-external-api-snapshot.tar
+Source9:  %name-%version-external-aspnetwebstack.tar
+Source10: %name-%version-external-bdwgc.tar
+Source11: %name-%version-external-bdwgc-libatomic_ops.tar
+Source12: %name-%version-external-binary-reference-assemblies.tar
+Source13: %name-%version-external-bockbuild.tar
+Source14: %name-%version-external-boringssl.tar
+Source15: %name-%version-external-cecil.tar
+Source16: %name-%version-external-cecil-legacy.tar
+Source17: %name-%version-external-corefx.tar
+Source18: %name-%version-external-corert.tar
+Source19: %name-%version-external-helix-binaries.tar
+Source20: %name-%version-external-ikdasm.tar
+Source21: %name-%version-external-ikvm.tar
+Source22: %name-%version-external-illinker-test-assets.tar
+Source23: %name-%version-external-linker.tar
+Source24: %name-%version-external-linker-external-cecil.tar
+Source25: %name-%version-external-llvm-project.tar
+Source26: %name-%version-external-Newtonsoft.Json.tar
+Source27: %name-%version-external-nuget-buildtasks.tar
+Source28: %name-%version-external-nunit-lite.tar
+Source29: %name-%version-external-roslyn-binaries.tar
+Source30: %name-%version-external-rx.tar
+Source31: %name-%version-external-xunit-binaries.tar
 
 Patch1: %name-alt-linking1.patch
 Patch2: %name-alt-linking2.patch
 Patch3: %name-alt-monodoc-sourcesdir.patch
-Patch4: %name-upstream-crash-Use-safer-invalid-free-test-12864.patch
+Patch4: %name-alt-offline-build.patch
 Patch5: %name-alt-make-compat.patch
 Patch6: %name-alt-cmake-compat.patch
+
+# Patches from Fedora
+Patch100: mono-6.6.0-ignore-reference-assemblies.patch
+Patch101: mono-4.2.1-ppc.patch
+Patch102: mono-5.10.0-find-provides.patch
+Patch103: mono-4.2-fix-winforms-trayicon.patch
+Patch104: mono-6.6.0-aarch64.patch
+Patch105: mono-6.6.0-roslyn-binaries.patch
+Patch106: mono-5.18.0-use-mcs.patch
+Patch107: mono-5.18.0-reference-assemblies-fix.patch
+Patch108: mono-5.18.0-sharpziplib-parent-path-traversal.patch
+# Fix NRE bug in api-doc-tools: https://github.com/mono/api-doc-tools/pull/464
+Patch110: 0001-DocumentationEnumerator.cs-Declare-iface-and-ifaceMe.patch
+# Replace new Csharp features with old to allow mdoc to build
+# https://github.com/mono/api-doc-tools/pull/463
+Patch111: 0001-Replace-new-Csharp-features-with-old-ones.patch
+# Reenable mdoc build. To be upstreamed after Patch 10 and 11
+Patch112: 0001-Reenable-mdoc.exe-build.patch
+# fix issue with conflicts between i686 and x86_64 package (#1853724)
+Patch113: mono-6.6.0-fix-multi-arch-issue.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
@@ -69,11 +94,7 @@ BuildRequires: pkg-config
 BuildRequires: valgrind-devel
 BuildRequires: zlib-devel
 BuildRequires: perl-Pod-Usage
-
-# http://www.mono-project.com/docs/about-mono/releases/4.0.0/#npgsql
-#Obsoletes: mono-data-postgresql
-# http://www.mono-project.com/docs/about-mono/releases/4.0.0/#entityframework
-# Obsoletes: mono-entityframework
+BuildRequires: /usr/bin/python3 python3(json)
 
 # Yes, mono actually depends on itself, because
 # we deleted the bootstrapping binaries. If you
@@ -87,17 +108,16 @@ BuildRequires: %name-devel-full >= 5.0
 %endif
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
+# TODO: on each upgrade disable and recheck it
 %define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
 %define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | \
-	sed "s/mono\(Mono.Cecil\).*/mono\(Mono.Cecil\) = 0.10.3.0/" | \
-	sed "s/mono\(System.Collections.Immutable\).*/mono\(System.Collections.Immutable\) = 1.2.1.0/" | \
-	sed "s/mono\(System.IO.Compression\).*/mono\(System.IO.Compression\) = 4.0.0.0/" | \
-	sed "s/mono\(System.Security.Cryptography.Algorithms\).*/mono\(System.Security.Cryptography.Algorithms\) = 4.3.1.0/" | \
-	sed "s/mono\(System.Text.Encoding.CodePages\).*/mono\(System.Text.Encoding.CodePages\) = 4.1.0.0/" | \
-	sed "s/mono\(System.ValueTuple\).*/mono\(System.ValueTuple\) = 4.0.3.0/" | \
-	sed "s/mono\(System.Xml.XPath.XDocument\).*/mono\(System.Xml.XPath.XDocument\) = 4.1.1.0/" | \
-	sed "s/mono\(System.Diagnostics.StackTrace\).*/mono\(System.Diagnostics.StackTrace\) = 4.1.1.0/" | \
-	sed "/mono\(System.Runtime.Loader\).*/d"'
+	sed "s/mono\(Microsoft\.Build\.Framework\) = 15\.1/mono\(Microsoft.Build.Framework\) = 14.0/" | \
+	sed "s/mono\(Microsoft\.Build\.Tasks\.Core\) = 15\.1\.0\.0/mono\(Microsoft.Build.Tasks.Core\) = 14.0.0.0/" | \
+	sed "s/mono\(Microsoft\.Build\.Utilities\.Core\) = 15\.1\.0\.0/mono\(Microsoft.Build.Utilities.Core\) = 14.0.0.0/" | \
+	sed "s/mono\(Mono\.Cecil\) = 0\.10\.0\.0/mono\(Mono.Cecil\) = 0.11.0.0/" | \
+	sed "s/mono\(System\.Numerics\.Vectors\) = 4\.1/mono\(System.Numerics.Vectors\) = 4.0/" | \
+	sed  "/mono\(System\.Buffers\) = .*/d" | \
+	sed  "/mono\(System\.Runtime\.Loader\) = .*/d"'
 
 %description
 The Mono runtime implements a JIT engine for the ECMA CLI
@@ -205,7 +225,6 @@ Requires: %name-reactive-devel = %EVR
 Requires: %name-web-devel = %EVR
 Requires: %name-mvc-devel = %EVR
 Requires: %name-monodoc-devel = %EVR
-Requires: %name-nunit = %EVR
 Requires: %name-mono2-compat-devel = %EVR
 Conflicts: mono4-devel-full < %EVR
 Obsoletes: mono4-devel-full
@@ -266,7 +285,7 @@ assemblies: Microsoft.Vsa,
 System.Configuration.Install, System.Management, System.Messaging.
 
 %package reactive
-License: MIT License (or similar) ; Apache License 2.0
+License: MIT and Apache-2.0
 Summary: Reactive Extensions for Mono core libraries
 Group: Development/Other
 Requires: %name-core = %EVR
@@ -279,7 +298,7 @@ Reactive Extensions for Mono, this packages don't depend on
 desktop-specific features.
 
 %package reactive-winforms
-License: MIT License (or similar) ; Apache License 2.0
+License: MIT and Apache-2.0
 Summary: Reactive Extensions for Mono desktop-specific libraries
 Group: Development/Other
 Requires: %name-core = %EVR
@@ -443,20 +462,6 @@ Obsoletes: monodoc-devel
 %description monodoc-devel
 Development file for monodoc
 
-%package nunit
-Summary:        NUnit Testing Framework
-Group:          Development/Other
-Requires:       mono-core = %EVR
-
-%description nunit
-NUnit is a unit-testing framework for all .Net languages.  Initially
-ported from JUnit, the current release, version 2.2,  is the fourth
-major release of this  Unit based unit testing tool for Microsoft .NET.
-It is written entirely in C# and  has been completely redesigned to
-take advantage of many .NET language		 features, for example
-custom attributes and other reflection related capabilities. NUnit
-brings xUnit to all .NET languages.
-
 %package mono2-compat
 Summary:        A Library for embedding Mono in your Application
 Requires:       %name-core = %EVR
@@ -508,14 +513,41 @@ Development files for libmono.
 %nil
 %endif
 
+%ifnarch ppc64le
+%define dll_so_only() \
+%_monodir/4.5/%1.dll.so \
+%nil
+%else
+%define dll_so_only() \
+%nil
+%endif
+
 %prep
-%setup -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26
+%setup -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+
+%patch100 -p1
+%ifarch ppc64le
+%patch101 -p1
+%endif
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+pushd external/api-doc-tools
+%patch110 -p1
+%patch111 -p1
+popd
+%patch112 -p1
+%patch113 -p1
 
 %if_enabled bootstrap
 mkdir -p mcs/class/lib/monolite-linux
@@ -538,16 +570,21 @@ find . -type f -iname '*.cs' -print0 | xargs -0 \
         -e 's:"libgmodule-2.0.so":"libgmodule-2.0.so.0":g' \
         -e 's:"libglib-2.0.so":"libglib-2.0.so.0":g'
 
-# modifications for Mono 4
-%__subst "s#mono/2.0#mono/4.5#g" data/mono-nunit.pc.in
+# don't build mono-helix-client which requires the helix-binaries to build
+sed -i 's|mono-helix-client||g' mcs/tools/Makefile
 
-%__subst "s|python|python3|" mono/mini/Makefile* scripts/submodules/versions.mk
+# use v4.7.1 instead of v4.6
+sed -i 's|TARGET_NET_REFERENCE = v4.6|TARGET_NET_REFERENCE = $(BOOTSTRAP_BIN_PROFILE)|g' mcs/tools/upload-to-sentry/Makefile
 
-%if_enabled bootstrap
-export PATH=$PATH:mcs/class/lib/monolite-linux/
-%endif
+# use v4.7.1 instead of v4.7
+sed -i 's|BOOTSTRAP_BIN_PROFILE = v4.7|BOOTSTRAP_BIN_PROFILE = v4.7.1|g' mcs/build/profiles/build.make
+
+# Remove hardcoded lib directory for libMonoPosixHelper.so from the config
+sed -i 's|$mono_libdir/||g' data/config.in
 
 %build
+export LD_LIBRARY_PATH=$(pwd)/mono/native/.libs
+
 %add_optflags -fno-strict-aliasing
 
 NOCONFIGURE=yes sh ./autogen.sh
@@ -561,12 +598,19 @@ NOCONFIGURE=yes sh ./autogen.sh
 
 %make
 
+# rebuild the reference assemblies
+cd external/binary-reference-assemblies && if [ -d v4.7.1.tobuild ]; then rm -f v4.7.1 && mv v4.7.1.tobuild v4.7.1; fi && cd -
+find ./external/binary-reference-assemblies/v4.7.1/ -name \*.dll -print -delete
+BUILD_PATH=`pwd` && cd ./external/binary-reference-assemblies/ && MONO_PATH=$BUILD_PATH/mcs/class/lib/net_4_x-linux/ V=1 CSC="$BUILD_PATH/runtime/mono-wrapper $BUILD_PATH/mcs/class/lib/net_4_x-linux/mcs.exe" make -C v4.7.1
+
 %install
-%if_enabled bootstrap
-export PATH=$PATH:mcs/class/lib/monolite-linux/
-%endif
+export LD_LIBRARY_PATH=$(pwd)/mono/native/.libs
 
 %makeinstall_std
+
+# install the newly built reference assembly dlls
+mkdir -p %buildroot%_monodir/4.7.1-api
+cp external/binary-reference-assemblies/v4.7.1/*.dll %buildroot%_monodir/4.7.1-api
 
 rm -fv %buildroot%_bindir/mono-heapviz
 
@@ -611,10 +655,16 @@ rm -rfv %buildroot%_datadir/mono-2.0/mono/profiler
 mkdir -p  %buildroot%_sysconfdir/mono-2.0/
 mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 mkdir -p  %buildroot%_sysconfdir/mono-4.0/
-mkdir -p  %buildroot%_monodir/3.5-api/
-mkdir -p  %buildroot%_monodir/2.0-api/
-mkdir -p  %buildroot%_monodir/4.0-api/
-mkdir -p  %buildroot%_monodir/4.5-api/
+
+# create a symbolic link so that Fedora packages targetting Framework 4.5 will still build
+#ln -s 4.7.1-api %buildroot%_monodir/4.5-api
+# as requested in bug 1704861; we have had that link in F29 with Mono 4.8 as well.
+#ln -s 4.7.1-api %buildroot%_monodir/4.0-api
+
+# Actually, just copy these directories: migrating to symlinks is not supported in ALT yet.
+# TODO: when it's supported, use it
+cp -r %buildroot%_monodir/4.7.1-api %buildroot%_monodir/4.5-api
+cp -r %buildroot%_monodir/4.7.1-api %buildroot%_monodir/4.0-api
 
 # install file trigger
 install -pD -m755 %SOURCE4 %buildroot%_rpmlibdir/mono-cert-sync.filetrigger
@@ -638,7 +688,6 @@ done
 %dir %_sysconfdir/mono/4.5/
 %dir %_monodir
 %dir %_monodir/4.5
-%dir %_monodir/4.0
 %_bindir/mono
 %_bindir/mono-gdb.py
 %ifnarch aarch64
@@ -657,7 +706,7 @@ done
 %mono_bin mozroots
 %mono_bin setreg
 %mono_bin sn
-%_monodir/4.5/dim
+%_bindir/mono-hang-watchdog
 #_bindir/mono-heapviz
 %_bindir/mprof-report
 %_man1dir/certmgr.1*
@@ -674,12 +723,8 @@ done
 %_libdir/libMonoPosixHelper.so*
 %_libdir/*profiler*.so*
 %_libdir/libmono-btls-shared.so*
-%_libdir/*profiler*.so*
 %_libdir/libikvm-native.so*
 %_libdir/libmono-native.so*
-%_monodir/4.0/Mono.Posix.dll
-%_monodir/4.0/mscorlib.dll
-
 
 %dir %_monodir/gac
 %gac_dll Commons.Xml.Relaxng
@@ -749,36 +794,16 @@ done
 %dir %_monodir/gac/Mono.Btls.Interface
 %_monodir/gac/Mono.Btls.Interface/*
 %_monodir/4.5/Mono.Btls.Interface.dll
-%dll_so System.Collections.Immutable
-%dll_so System.Reflection.Metadata
-
-%dir %_monodir/msbuild
-%dir %_monodir/msbuild/15.0
-%dir %_monodir/msbuild/15.0/bin
-%dir %_monodir/msbuild/15.0/bin/Roslyn
-%_monodir/msbuild/15.0/bin/Roslyn/System.Collections.Immutable.dll
-%_monodir/msbuild/15.0/bin/Roslyn/System.Reflection.Metadata.dll
 
 %_libdir/libmonosgen-2.0.so*
 %ifnarch aarch64
 %_libdir/libmonoboehm-2.0.so*
 %endif
-%_monodir/2.0-api
-%_monodir/3.5-api
 %_monodir/4.0-api
 %_monodir/4.5-api
-%_monodir/4.5.1-api
-%_monodir/4.5.2-api
-%_monodir/4.6-api
-%_monodir/4.6.1-api
-%_monodir/4.6.2-api
-%_monodir/4.7-api
 %_monodir/4.7.1-api
-%_monodir/4.7.2-api
 
 # data
-%exclude %_monodir/*-api/Mono.Data.Tds.dll
-%exclude %_monodir/*-api/Novell.Directory.Ldap.dll
 %exclude %_monodir/*-api/System.Data.dll
 %exclude %_monodir/*-api/System.Data.Linq.dll
 %exclude %_monodir/*-api/System.Data.DataSetExtensions.dll
@@ -790,7 +815,6 @@ done
 %exclude %_monodir/*-api/System.EnterpriseServices.dll
 %exclude %_monodir/*-api/System.Runtime.DurableInstancing.dll
 %exclude %_monodir/*-api/System.Transactions.dll
-%exclude %_monodir/*-api/WebMatrix.Data.dll
 %exclude %_monodir/*/Facades/netstandard.dll
 %exclude %_monodir/*/Facades/System.Data.Common.dll
 
@@ -798,41 +822,23 @@ done
 %exclude %_monodir/*-api/System.Data.OracleClient.dll
 
 # data-sqlite
-%exclude %_monodir/*-api/Mono.Data.Sqlite.dll
 %exclude %_monodir/*/Facades/System.Data.SqlClient.dll
 
 # devel
 %exclude %_monodir/*-api/Microsoft.VisualBasic.dll
 %exclude %_monodir/*-api/Microsoft.Build.Engine.dll
 %exclude %_monodir/*-api/Microsoft.Build.Framework.dll
-%exclude %_monodir/*-api/Microsoft.Build.Tasks.dll
-%exclude %_monodir/*-api/Microsoft.Build.Tasks.v3.5.dll
 %exclude %_monodir/*-api/Microsoft.Build.Tasks.v4.0.dll
-%exclude %_monodir/*-api/Microsoft.Build.Utilities.dll
-%exclude %_monodir/*-api/Microsoft.Build.Utilities.v3.5.dll
 %exclude %_monodir/*-api/Microsoft.Build.Utilities.v4.0.dll
 %exclude %_monodir/*-api/Microsoft.Build.dll
 %exclude %_monodir/*-api/Microsoft.VisualC.dll
-%exclude %_monodir/*-api/Mono.C5.dll
-%exclude %_monodir/*-api/Mono.CSharp.dll
-%exclude %_monodir/*-api/Mono.CodeContracts.dll
-%exclude %_monodir/*-api/Mono.CompilerServices.SymbolWriter.dll
-%exclude %_monodir/*-api/Mono.Debugger.Soft.dll
-%exclude %_monodir/*-api/PEAPI.dll
-%exclude %_monodir/*-api/SMDiagnostics.dll
 %exclude %_monodir/*/Facades/System.Runtime.CompilerServices.VisualC.dll
-%exclude %_monodir/4.5/dim/Microsoft.CodeAnalysis.dll
-%exclude %_monodir/4.5/dim/Microsoft.CodeAnalysis.CSharp.dll
-%exclude %_monodir/4.5/dim/csc.exe*
-%exclude %_monodir/*/System.Deployment.dll
+%exclude %_monodir/*-api/System.Deployment.dll
 
 # dyndata
 %exclude %_monodir/*-api/System.Web.DynamicData.dll
 
 # extras
-%exclude %_monodir/*-api/Mono.Messaging.RabbitMQ.dll
-%exclude %_monodir/*-api/Mono.Messaging.dll
-%exclude %_monodir/*-api/RabbitMQ.Client.dll
 %exclude %_monodir/*-api/System.Configuration.Install.dll
 %exclude %_monodir/*-api/System.Management.dll
 %exclude %_monodir/*-api/System.Messaging.dll
@@ -846,31 +852,9 @@ done
 %exclude %_monodir/*-api/IBM.Data.DB2.dll
 %endif
 
-# locale-extras
-%exclude %_monodir/*-api/I18N.CJK.dll
-%exclude %_monodir/*-api/I18N.MidEast.dll
-%exclude %_monodir/*-api/I18N.Other.dll
-%exclude %_monodir/*-api/I18N.Rare.dll
-
 # mvc
 %exclude %_monodir/*-api/System.Web.Extensions.dll
 %exclude %_monodir/*-api/System.Web.Extensions.Design.dll
-%exclude %_monodir/*-api/System.Web.Mvc.dll
-
-# reactive
-%exclude %_monodir/*-api/System.Reactive.Core.dll
-%exclude %_monodir/*-api/System.Reactive.Debugger.dll
-%exclude %_monodir/*-api/System.Reactive.Experimental.dll
-%exclude %_monodir/*-api/System.Reactive.Interfaces.dll
-%exclude %_monodir/*-api/System.Reactive.Linq.dll
-%exclude %_monodir/*-api/System.Reactive.Observable.Aliases.dll
-%exclude %_monodir/*-api/System.Reactive.PlatformServices.dll
-%exclude %_monodir/*-api/System.Reactive.Providers.dll
-%exclude %_monodir/*-api/System.Reactive.Runtime.Remoting.dll
-
-# reactive-winforms
-%exclude %_monodir/*-api/System.Reactive.Windows.Forms.dll
-%exclude %_monodir/*-api/System.Reactive.Windows.Threading.dll
 
 # wcf
 %exclude %_monodir/*-api/System.IdentityModel.dll
@@ -888,26 +872,16 @@ done
 %exclude %_monodir/*/Facades/System.ServiceModel.Security.dll
 
 # web
-%exclude %_monodir/*-api/Microsoft.Web.Infrastructure.dll
-%exclude %_monodir/*-api/Mono.Http.dll
 %exclude %_monodir/*-api/System.ComponentModel.DataAnnotations.dll
-%exclude %_monodir/*-api/System.Net.Http.Formatting.dll
 %exclude %_monodir/*-api/System.Runtime.Remoting.dll
 %exclude %_monodir/*-api/System.Runtime.Serialization.Formatters.Soap.dll
 %exclude %_monodir/*-api/System.Web.dll
 %exclude %_monodir/*-api/System.Web.Abstractions.dll
 %exclude %_monodir/*-api/System.Web.ApplicationServices.dll
-%exclude %_monodir/*-api/System.Web.Http.dll
-%exclude %_monodir/*-api/System.Web.Http.SelfHost.dll
-%exclude %_monodir/*-api/System.Web.Http.WebHost.dll
 %exclude %_monodir/*-api/System.Web.Mobile.dll
-%exclude %_monodir/*-api/System.Web.Razor.dll
 %exclude %_monodir/*-api/System.Web.RegularExpressions.dll
 %exclude %_monodir/*-api/System.Web.Routing.dll
 %exclude %_monodir/*-api/System.Web.Services.dll
-%exclude %_monodir/*-api/System.Web.WebPages.dll
-%exclude %_monodir/*-api/System.Web.WebPages.Deployment.dll
-%exclude %_monodir/*-api/System.Web.WebPages.Razor.dll
 %exclude %_monodir/*-api/System.Workflow.Activities.dll
 %exclude %_monodir/*-api/System.Workflow.ComponentModel.dll
 %exclude %_monodir/*-api/System.Workflow.Runtime.dll
@@ -915,7 +889,6 @@ done
 
 # winforms
 %exclude %_monodir/*-api/Accessibility.dll
-%exclude %_monodir/*-api/Mono.WebBrowser.dll
 %exclude %_monodir/*-api/System.Design.dll
 %exclude %_monodir/*-api/System.Drawing.Design.dll
 %exclude %_monodir/*-api/System.Windows.Forms.dll
@@ -943,15 +916,14 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_sysconfdir/pki/mono/
 %_bindir/mono-test-install
 %mono_bin mono-api-info
+%mono_bin aprofutil
 %mono_bin illinkanalyzer
 %_bindir/mono-package-runtime
-%_bindir/monograph
 %_bindir/sgen-grep-binprot
 %_bindir/csi
 %mono_bin pdb2mdb
 %mono_bin csharp
 %_bindir/csc
-%_bindir/csc-dim
 %_bindir/dmcs
 %mono_bin mcs
 %mono_bin ccrewrite
@@ -959,21 +931,14 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_man1dir/mcs.1*
 %_man1dir/csharp.1*
 %_man1dir/pdb2mdb.1*
+%ifnarch ppc64le
 %_monodir/4.5/csc.*
+%endif
 %_monodir/4.5/mono-api-diff.exe
 %_monodir/4.5/mono-api-diff.exe.mdb
-%_monodir/4.5/csi.*
 %_bindir/vbc
-%_monodir/4.5/vbc.*
-%_monodir/4.5/VBCSCompiler.*
 %_monodir/4.5/mono-symbolicate.exe
 %_monodir/4.5/mono-symbolicate.exe.mdb
-%_monodir/4.5/Microsoft.CodeAnalysis.CSharp.Scripting.dll
-%_monodir/4.5/Microsoft.CodeAnalysis.Scripting.dll
-%_monodir/4.5/Microsoft.CodeAnalysis.VisualBasic.dll
-%_monodir/msbuild/15.0/bin/Roslyn/*
-%exclude %_monodir/msbuild/15.0/bin/Roslyn/System.Collections.Immutable.dll
-%exclude %_monodir/msbuild/15.0/bin/Roslyn/System.Reflection.Metadata.dll
 %_bindir/mono-symbolicate
 %mono_bin xbuild
 %_monodir/4.5/xbuild.rsp
@@ -996,7 +961,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_bindir/mono-find-provides
 %_bindir/mono-find-requires
 %_bindir/monodis
-%mono_bin monolinker
+%_bindir/monolinker
 %mono_bin mono-shlib-cop
 %mono_bin mono-xmltool
 %mono_bin monop
@@ -1035,6 +1000,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_man1dir/signcode.1*
 %_man1dir/xbuild.1*
 %_man1dir/mono-api-info.1*
+%_man1dir/aprofutil.1*
 %_man1dir/cccheck.1*
 %_man1dir/crlupdate.1*
 %_man1dir/illinkanalyzer.1*
@@ -1058,8 +1024,10 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %gac_dll System.Windows
 %gac_dll SMDiagnostics
 %gac_dll System.Deployment
-%dll_so Microsoft.CodeAnalysis
-%dll_so Microsoft.CodeAnalysis.CSharp
+%dll_so_only System.Collections.Immutable
+%dll_so_only System.Reflection.Metadata
+%dll_so_only Microsoft.CodeAnalysis
+%dll_so_only Microsoft.CodeAnalysis.CSharp
 %_monodir/4.5/Microsoft.Common.tasks
 %_monodir/4.5/MSBuild/Microsoft.Build*
 %_monodir/4.5/Microsoft.Build.xsd
@@ -1086,37 +1054,18 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_monodir/*-api/Microsoft.VisualBasic.dll
 %_monodir/*-api/Microsoft.Build.Engine.dll
 %_monodir/*-api/Microsoft.Build.Framework.dll
-%_monodir/*-api/Microsoft.Build.Tasks.dll
-%_monodir/*-api/Microsoft.Build.Tasks.v3.5.dll
 %_monodir/*-api/Microsoft.Build.Tasks.v4.0.dll
-%_monodir/*-api/Microsoft.Build.Utilities.dll
-%_monodir/*-api/Microsoft.Build.Utilities.v3.5.dll
 %_monodir/*-api/Microsoft.Build.Utilities.v4.0.dll
 %_monodir/*-api/Microsoft.Build.dll
 %_monodir/*-api/Microsoft.VisualC.dll
-%_monodir/*-api/Mono.C5.dll
-%_monodir/*-api/Mono.CSharp.dll
-%_monodir/*-api/Mono.CodeContracts.dll
-%_monodir/*-api/Mono.CompilerServices.SymbolWriter.dll
-%_monodir/*-api/Mono.Debugger.Soft.dll
-%_monodir/*-api/PEAPI.dll
-%_monodir/*-api/SMDiagnostics.dll
 %_monodir/*/Facades/System.Runtime.CompilerServices.VisualC.dll
-%_monodir/4.5/dim/Microsoft.CodeAnalysis.dll
-%_monodir/4.5/dim/Microsoft.CodeAnalysis.CSharp.dll
-%_monodir/4.5/dim/csc.exe*
-%_monodir/*/System.Deployment.dll
+%_monodir/*-api/System.Deployment.dll
 
 %files locale-extras
 %gac_dll I18N.CJK
 %gac_dll I18N.MidEast
 %gac_dll I18N.Other
 %gac_dll I18N.Rare
-
-%_monodir/*-api/I18N.CJK.dll
-%_monodir/*-api/I18N.MidEast.dll
-%_monodir/*-api/I18N.Other.dll
-%_monodir/*-api/I18N.Rare.dll
 
 %files extras
 %mono_bin mono-service
@@ -1133,9 +1082,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_monodir/4.5/RabbitMQ.Client.Apigen*
 %_man1dir/mono-service.1*
 
-%_monodir/*-api/Mono.Messaging.RabbitMQ.dll
-%_monodir/*-api/Mono.Messaging.dll
-%_monodir/*-api/RabbitMQ.Client.dll
 %_monodir/*-api/System.Configuration.Install.dll
 %_monodir/*-api/System.Management.dll
 %_monodir/*-api/System.Messaging.dll
@@ -1155,22 +1101,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %gac_dll System.Reactive.Providers
 %gac_dll System.Reactive.Runtime.Remoting
 
-%_monodir/*-api/System.Reactive.Core.dll
-%_monodir/*-api/System.Reactive.Debugger.dll
-%_monodir/*-api/System.Reactive.Experimental.dll
-%_monodir/*-api/System.Reactive.Interfaces.dll
-%_monodir/*-api/System.Reactive.Linq.dll
-%_monodir/*-api/System.Reactive.Observable.Aliases.dll
-%_monodir/*-api/System.Reactive.PlatformServices.dll
-%_monodir/*-api/System.Reactive.Providers.dll
-%_monodir/*-api/System.Reactive.Runtime.Remoting.dll
-
 %files reactive-winforms
 %gac_dll System.Reactive.Windows.Forms
 %gac_dll System.Reactive.Windows.Threading
-
-%_monodir/*-api/System.Reactive.Windows.Forms.dll
-%_monodir/*-api/System.Reactive.Windows.Threading.dll
 
 %files reactive-devel
 %_pkgconfigdir/reactive.pc
@@ -1233,26 +1166,16 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %gac_dll System.Workflow.ComponentModel
 %gac_dll System.Workflow.Runtime
 
-%_monodir/*-api/Microsoft.Web.Infrastructure.dll
-%_monodir/*-api/Mono.Http.dll
 %_monodir/*-api/System.ComponentModel.DataAnnotations.dll
-%_monodir/*-api/System.Net.Http.Formatting.dll
 %_monodir/*-api/System.Runtime.Remoting.dll
 %_monodir/*-api/System.Runtime.Serialization.Formatters.Soap.dll
 %_monodir/*-api/System.Web.dll
 %_monodir/*-api/System.Web.Abstractions.dll
 %_monodir/*-api/System.Web.ApplicationServices.dll
-%_monodir/*-api/System.Web.Http.dll
-%_monodir/*-api/System.Web.Http.SelfHost.dll
-%_monodir/*-api/System.Web.Http.WebHost.dll
 %_monodir/*-api/System.Web.Mobile.dll
-%_monodir/*-api/System.Web.Razor.dll
 %_monodir/*-api/System.Web.RegularExpressions.dll
 %_monodir/*-api/System.Web.Routing.dll
 %_monodir/*-api/System.Web.Services.dll
-%_monodir/*-api/System.Web.WebPages.dll
-%_monodir/*-api/System.Web.WebPages.Deployment.dll
-%_monodir/*-api/System.Web.WebPages.Razor.dll
 %_monodir/*-api/System.Workflow.Activities.dll
 %_monodir/*-api/System.Workflow.ComponentModel.dll
 %_monodir/*-api/System.Workflow.Runtime.dll
@@ -1283,7 +1206,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %gac_dll System.Windows.Forms.DataVisualization
 
 %_monodir/*-api/Accessibility.dll
-%_monodir/*-api/Mono.WebBrowser.dll
 %_monodir/*-api/System.Design.dll
 %_monodir/*-api/System.Drawing.Design.dll
 %_monodir/*-api/System.Windows.Forms.dll
@@ -1296,7 +1218,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 
 %_monodir/*-api/System.Web.Extensions.dll
 %_monodir/*-api/System.Web.Extensions.Design.dll
-%_monodir/*-api/System.Web.Mvc.dll
 
 %files mvc-devel
 %_pkgconfigdir/system.web.extensions.design_1.0.pc
@@ -1328,8 +1249,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %gac_dll WebMatrix.Data
 %_man1dir/sqlsharp.1*
 
-%_monodir/*-api/Mono.Data.Tds.dll
-%_monodir/*-api/Novell.Directory.Ldap.dll
 %_monodir/*-api/System.Data.dll
 %_monodir/*-api/System.Data.Linq.dll
 %_monodir/*-api/System.Data.DataSetExtensions.dll
@@ -1341,14 +1260,12 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_monodir/*-api/System.EnterpriseServices.dll
 %_monodir/*-api/System.Runtime.DurableInstancing.dll
 %_monodir/*-api/System.Transactions.dll
-%_monodir/*-api/WebMatrix.Data.dll
 %_monodir/*/Facades/netstandard.dll
 %_monodir/*/Facades/System.Data.Common.dll
 
 %files data-sqlite
 %gac_dll Mono.Data.Sqlite
 
-%_monodir/*-api/Mono.Data.Sqlite.dll
 %_monodir/*/Facades/System.Data.SqlClient.dll
 
 %files data-oracle
@@ -1370,6 +1287,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_datadir/monodoc
 %endif
 %mono_bin mdoc
+%_bindir/mdoc
 %_bindir/mod
 %_bindir/mdoc-*
 %_bindir/mdass*
@@ -1387,23 +1305,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %files  monodoc-devel
 %_pkgconfigdir/monodoc.pc
 
-%files nunit
-%_pkgconfigdir/mono-nunit.pc
-%_bindir/nunit-console
-%_bindir/nunit-console2
-%_bindir/nunit-console4
-%_monodir/4.5/nunit-console.exe
-%_monodir/4.5/nunit-console.exe.config
-%_monodir/4.5/nunit-console.exe.mdb
-%gac_dll nunit-console-runner
-%gac_dll nunit.core
-%gac_dll nunit.core.extensions
-%gac_dll nunit.core.interfaces
-%gac_dll nunit.framework
-%gac_dll nunit.framework.extensions
-%gac_dll nunit.mocks
-%gac_dll nunit.util
-
 %files mono2-compat
 %_sysconfdir/mono-2.0/
 %dir %_sysconfdir/mono/2.0
@@ -1418,6 +1319,10 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Tue Apr 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.122-alt1
+- Updated to upstream version 6.12.0.122 (Closes: #39899).
+- Imported changes and patches from Fedora.
+
 * Wed Nov 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.20.1.19-alt8
 - Repackaged some libraries (Closes: #39254).
 

@@ -2,7 +2,7 @@
 
 Name: keepass
 Version: 2.47
-Release: alt1
+Release: alt2
 
 Summary: Password manager
 
@@ -26,8 +26,9 @@ Patch2: keepass-2.35-fedora-doc.patch
 
 # Automatically added by buildreq on Wed Mar 27 2019
 # optimized out: fakeroot fontconfig fonts-bitmap-misc libX11-locales libgdk-pixbuf libwayland-client libwayland-server mono-core mono-data mono-data-oracle mono-data-sqlite mono-devel mono-dyndata mono-extras mono-locale-extras mono-monodoc mono-mvc mono-nunit mono-reactive mono-reactive-winforms mono-wcf mono-web mono-winforms mono-winfx python-base python-module-BeautifulSoup python-modules python-modules-compiler python-modules-email python-modules-encodings xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb
-BuildRequires: ImageMagick-tools msbuild xvfb-run
+BuildRequires: ImageMagick-tools xvfb-run
 BuildRequires: desktop-file-utils
+BuildRequires: mono-devel-full
 %if_with doc
 BuildRequires: archmage
 BuildRequires: python-module-pychm
@@ -68,11 +69,11 @@ find -name \*.png -print0 | xargs -0 mogrify -define png:format=png32
 ( cd Build && sh PrepMonoDev.sh )
 find . -name "*.sln" -print -exec sed -i 's/Format Version 10.00/Format Version 11.00/g' {} \;
 find . -name "*.csproj" -print -exec sed -i 's#ToolsVersion="3.5"#ToolsVersion="5.0"#g; s#<TargetFrameworkVersion>.*</TargetFrameworkVersion>##g; s#<PropertyGroup>#<PropertyGroup><TargetFrameworkVersion>v4.5</TargetFrameworkVersion>#g' {} \;
-msbuild /target:KeePass /property:Configuration=Release
+xbuild /target:KeePass /property:Configuration=Release
 for subdir in Images_App_HighRes Images_Client_16 Images_Client_HighRes; do
     xvfb-run -a mono Build/KeePass/Release/KeePass.exe -d:`pwd`/Ext/$subdir --makexspfile `pwd`/KeePass/Resources/Data/$subdir.bin
 done
-msbuild /target:KeePass /property:Configuration=Release
+xbuild /target:KeePass /property:Configuration=Release
 %if_with doc
 %__python -c 'import archmod.CHM; archmod.CHM.CHMDir("Docs").process_templates("Docs/Chm")'
 %endif
@@ -125,6 +126,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %endif
 
 %changelog
+* Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.47-alt2
+- Switched back to xbuild.
+
 * Fri Jan 22 2021 Oleg Solovyov <mcpain@altlinux.org> 2.47-alt1
 - new version: 2.47
 

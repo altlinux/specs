@@ -4,12 +4,14 @@ Name: xsp
 Url: https://www.mono-project.com
 License: X11/MIT
 Group: System/Servers
-Version: 4.6
+Version: 4.7.1
 Release: alt1
 Summary: Small Web Server Hosting ASP.NET
 
 # https://github.com/mono/xsp.git
 Source: %name-%version.tar
+
+Patch1: xsp-alt-build.patch
 
 BuildRequires(pre): rpm-build-mono
 BuildRequires: sqlite3 mono-full mono-devel-full pkg-config /proc
@@ -22,7 +24,7 @@ Provides:  mono4-xsp = %EVR
 Conflicts: mono4-xsp < %EVR
 Obsoletes: mono4-xsp < %EVR
 
-Provides: mono(fastcgi-mono-server4) = 4.6.0.0
+Provides: mono(fastcgi-mono-server4) = %{version}.0
 
 %description
 The XSP server is a small Web server that hosts the Mono System.Web
@@ -30,6 +32,7 @@ classes for running what is commonly known as ASP.NET.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 NOCONFIGURE=yes sh ./autogen.sh
@@ -73,6 +76,9 @@ install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-app
 %_man1dir/*
 
 %changelog
+* Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.1-alt1
+- Updated to upstream version 4.7.1.
+
 * Tue Jul 09 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6-alt1
 - Updated to upstream version 4.6.
 

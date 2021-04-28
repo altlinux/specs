@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_disable tests
-
 Name: monodevelop
-Version: 7.6.9.22
-Release: alt4
+Epoch: 1
+Version: 5.10.0.871
+Release: alt1
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -19,52 +18,38 @@ Source2: version.config
 
 # Following data is obtained after running autogen, configure and make
 Source3: buildinfo
-Source4: nuget-core.tar
-Source5: nuget-external-fsharpbinding.tar
-Source6: nuget-home.tar
-Source7: restored-targets-external.tar
+
+# Following file is taken from monodevelop-7.6.9.22
+Source4: monodevelop.appdata.xml
 
 # External dependencies (git submodules)
-Source10: RefactoringEssentials-%version.tar
-Source11: debugger-libs-%version.tar
-Source12: guiunit-%version.tar
-Source13: libgit-binary-%version.tar
-Source14: libgit-binary-libgit2-%version.tar
-Source15: libgit-binary-libssh2-%version.tar
-Source16: libgit2-%version.tar
-Source17: libgit2sharp-%version.tar
-Source18: macdoc-%version.tar
-Source19: mdtestharness-%version.tar
-Source20: mono-addins-%version.tar
-Source21: mono-tools-%version.tar
-Source22: monomac-%version.tar
-Source23: monomac-maccore-%version.tar
-Source24: nrefactory-%version.tar
-Source25: nuget-binary-%version.tar
-Source26: sharpsvn-binary-%version.tar
-Source27: xwt-%version.tar
+Source5:  %name-%version-main-external-cecil.tar
+Source6:  %name-%version-main-external-debugger-libs.tar
+Source7:  %name-%version-main-external-fsharpbinding.tar
+Source8:  %name-%version-main-external-guiunit.tar
+Source9:  %name-%version-main-external-ikvm.tar
+Source10: %name-%version-main-external-libgit2sharp.tar
+Source11: %name-%version-main-external-libgit-binary.tar
+Source12: %name-%version-main-external-libgit-binary-external-libgit2.tar
+Source13: %name-%version-main-external-libgit-binary-external-libssh2.tar
+Source14: %name-%version-main-external-mdtestharness.tar
+Source15: %name-%version-main-external-mono-addins.tar
+Source16: %name-%version-main-external-monomac.tar
+Source17: %name-%version-main-external-monomac-maccore.tar
+Source18: %name-%version-main-external-mono-tools.tar
+Source19: %name-%version-main-external-nrefactory.tar
+Source20: %name-%version-main-external-nuget-binary.tar
+Source21: %name-%version-main-external-sharpsvn-binary.tar
+Source22: %name-%version-main-external-xwt.tar
 
 Patch1: %name-fix-rpm-autoreq.patch
 Patch2: %name-disable-nuget-and-git.patch
 Patch3: %name-update-rpm-autoreq.patch
-
-# https://github.com/mono/monodevelop/issues/6221
-Patch4: %name-alt-fix-export-solution-issue.patch
-
 Patch5: %name-alt-desktop-translation.patch
 
-# monodis fails to process following files
-%add_findprov_skiplist %_libexecdir/%name/AddIns/MonoDevelop.Refactoring/System.Text.Encoding.CodePages.dll
-%add_findprov_skiplist %_libexecdir/%name/AddIns/MonoDevelop.UnitTesting/VsTestConsole/*
-%add_findprov_skiplist %_libexecdir/%name/bin/System.IO.Compression.dll
-%add_findprov_skiplist %_libexecdir/%name/bin/System.Runtime.InteropServices.RuntimeInformation.dll
-%add_findprov_skiplist %_libexecdir/%name/bin/System.Text.Encoding.CodePages.dll
-
-%add_findreq_skiplist  %_libexecdir/%name/AddIns/MonoDevelop.Refactoring/System.Text.Encoding.CodePages.dll
-%add_findreq_skiplist  %_libexecdir/%name/AddIns/MonoDevelop.UnitTesting/VsTestConsole/*
-%add_findreq_skiplist  %_libexecdir/%name/bin/System.IO.Compression.dll
-%add_findreq_skiplist  %_libexecdir/%name/bin/System.Runtime.InteropServices.RuntimeInformation.dll
-%add_findreq_skiplist  %_libexecdir/%name/bin/System.Text.Encoding.CodePages.dll
+# Patches from Fedora
+Patch101: %name-downgrade_to_mvc3.patch
+Patch102: %name-nuget-unbundle.patch
 
 # Remove missing dependencies
 %define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | \
@@ -74,26 +59,27 @@ Patch5: %name-alt-desktop-translation.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-mono >= 2.0.0
-BuildRequires: mono-devel-full msbuild
+BuildRequires: mono-devel-full
 BuildRequires: intltool /usr/bin/msgfmt
 BuildRequires: desktop-file-utils perl-XML-Parser shared-mime-info
-BuildRequires: /usr/bin/7z
 BuildRequires: /proc
 BuildRequires: xsp
 BuildRequires: autoconf automake cmake
-BuildRequires: fsharp libgtk-sharp2-devel libgnome-sharp-devel
+BuildRequires: libgtk-sharp2-devel libgnome-sharp-devel
 BuildRequires: libssh2-devel
-BuildRequires: referenceassemblies-pcl
+BuildRequires: mono-addins-devel
+BuildRequires: nunit2-devel
+BuildRequires: nuget-devel
+BuildRequires: newtonsoft-json-devel
 
 Requires: mono-core
 Requires: mono-web
 Requires: mono-devel-full
 Requires: pkg-config
 Requires: xsp
-Requires: git
-Requires: fsharp
-Requires: referenceassemblies-pcl
-Requires: msbuild
+Requires: mono-addins
+Requires: nunit2
+Requires: newtonsoft-json
 
 %description
 This is MonoDevelop which is intended to be a full-featured
@@ -101,32 +87,15 @@ integrated development environment (IDE) for mono and Gtk#.
 It was originally a port of SharpDevelop 0.98.
 
 %prep
-%setup
-
-pushd external/RefactoringEssentials          ; tar xf %SOURCE10 --strip-components=1 ; popd
-pushd external/debugger-libs                  ; tar xf %SOURCE11 --strip-components=1 ; popd
-pushd external/guiunit                        ; tar xf %SOURCE12 --strip-components=1 ; popd
-pushd external/libgit-binary                  ; tar xf %SOURCE13 --strip-components=1 ; popd
-pushd external/libgit-binary/external/libgit2 ; tar xf %SOURCE14 --strip-components=1 ; popd
-pushd external/libgit-binary/external/libssh2 ; tar xf %SOURCE15 --strip-components=1 ; popd
-pushd external/libgit2                        ; tar xf %SOURCE16 --strip-components=1 ; popd
-pushd external/libgit2sharp                   ; tar xf %SOURCE17 --strip-components=1 ; popd
-pushd external/macdoc                         ; tar xf %SOURCE18 --strip-components=1 ; popd
-pushd external/mdtestharness                  ; tar xf %SOURCE19 --strip-components=1 ; popd
-pushd external/mono-addins                    ; tar xf %SOURCE20 --strip-components=1 ; popd
-pushd external/mono-tools                     ; tar xf %SOURCE21 --strip-components=1 ; popd
-pushd external/monomac                        ; tar xf %SOURCE22 --strip-components=1 ; popd
-pushd external/monomac/maccore                ; tar xf %SOURCE23 --strip-components=1 ; popd
-pushd external/nrefactory                     ; tar xf %SOURCE24 --strip-components=1 ; popd
-pushd external/nuget-binary                   ; tar xf %SOURCE25 --strip-components=1 ; popd
-pushd external/sharpsvn-binary                ; tar xf %SOURCE26 --strip-components=1 ; popd
-pushd external/xwt                            ; tar xf %SOURCE27 --strip-components=1 ; popd
+%setup -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22
 
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
 %patch5 -p2
+
+%patch101 -p1
+%patch102 -p1
 
 cp %SOURCE2 ./
 
@@ -135,87 +104,17 @@ mkdir -p build/bin
 cp %SOURCE3 ./build/bin/buildinfo
 LANG=C date '+Build date: %%Y-%%m-%%d %%H:%%M:%%S%%:::z' >> ./build/bin/buildinfo
 
-# unpack nuget packages
-tar xf %SOURCE4
-mkdir -p packages
-pushd packages
-for i in ../nuget-core/*.nupkg ; do
-    name=$(basename ${i%%.nupkg})
-    mkdir $name
-    pushd $name
-    7z x -y ../$i
-    cp ../$i ./
-    popd
-done
-
-# unzip unpacks filenames with %% sign as is. Convert it. TODO: make a more generic solution when necessary
-find . -iname '*%%2B*' | while read file ; do
-    mv $file $(echo $file | sed -e 's:%%2B:+:g') ||:
-done
-popd
-
-tar xf %SOURCE5
-mkdir -p external/fsharpbinding/packages
-pushd external/fsharpbinding/packages
-for i in ../../../nuget-external-fsharpbinding/*.version.txt ; do
-    name=$(basename ${i%%.version.txt})
-    namelower=$(echo $name | tr A-Z a-z)
-    version=$(cat $i)
-    dir=$(dirname $i)
-    mkdir $name
-    pushd $name
-    # these nupkg file names are usually lowercase
-    7z x -y ../$dir/${namelower}.${version}.nupkg
-    cp ../$dir/${namelower}.${version}.nupkg ./${namelower}.${version}.nupkg
-    popd
-done
-
-# unzip unpacks filenames with %% sign as is. Convert it. TODO: make a more generic solution when necessary
-find . -iname '*%%2B*' | while read file ; do
-    mv $file $(echo $file | sed -e 's:%%2B:+:g') ||:
-done
-popd
-
-tar xf %SOURCE6
-mkdir -p nuget/packages
-pushd nuget/packages
-for i in ../../nuget-home/*.version.txt ; do
-    name=$(basename ${i%%.version.txt})
-    dir=$(dirname $i)
-    for version in $(cat $i) ; do
-        mkdir -p $name/$version
-        pushd $name/$version
-        7z x -y ../../$dir/${name}.${version}.nupkg
-        # copy additionally required files
-        cp ../../$dir/${name}.${version}.nupkg ./
-        cp ../../$dir/${name}.${version}.nupkg.sha512 ./
-        # nuspec file names are usually lowercase
-        for nuspec in ./*nuspec ; do
-            mv $nuspec $(echo $nuspec | tr A-Z a-z)
-        done
-        popd
-    done
-done
-
-# unzip unpacks filenames with %% sign as is. Convert it. TODO: make a more generic solution when necessary
-find . -iname '*%%2B*' | while read file ; do
-    mv $file $(echo $file | sed -e 's:%%2B:+:g') ||:
-done
-popd
-
-tar xf %SOURCE7
-
 find . -type f -print0 | xargs -0 \
     sed -i \
         -e 's:../version.config:version.config:g' \
         -e 's:..\\version.config:version.config:g' \
-        -e "s:@NUGETDIR@:$(pwd)/nuget/packages:g" \
-        -e "s:@RPMPROJECTDIR@:$(pwd):g"
+        %nil
 
 %__subst '/^Encoding=/d;
 	s/^Exec=monodevelop$/Exec=monodevelop %%F/;
 	s/^Categories=.*$/Categories=Development;IDE;/
 	' monodevelop.desktop
+
 %__subst "s|^pkgconfigdir *= \$(prefix)/lib/pkgconfig|pkgconfigdir = %_pkgconfigdir|" \
 	Makefile.am
 
@@ -229,22 +128,61 @@ sed -i \
     -e "s:@FULL_VERSION@:%version:g" \
     src/core/MonoDevelop.Core/BuildVariables.cs
 
+for f in tests/TestRunner/TestRunner.csproj tests/UserInterfaceTests/UserInterfaceTests.csproj src/addins/NUnit/NUnitRunner/NUnitRunner.csproj src/addins/NUnit/MonoDevelop.NUnit.csproj external/nrefactory/ICSharpCode.NRefactory.Tests/ICSharpCode.NRefactory.Tests.csproj
+do
+  echo $f
+  sed -i "s#<HintPath>.*nunit\..*</HintPath>##g" $f
+done
+
+sed -i "s#<HintPath>.*Newtonsoft\.Json\.dll</HintPath>#<Package>newtonsoft-json</Package><Private>True</Private>#g" tests/UserInterfaceTests/UserInterfaceTests.csproj
+
+# Delete shipped *.dll and *.exe files
+find -iname '*.dll' -exec rm -f {} \;
+find -iname '*.exe' -exec rm -f {} \;
+
+#Fixes for Mono 4
+sed -i "s#gmcs#mcs#g; s#dmcs#mcs#g" configure.in
+sed -i "s#mono-nunit#nunit#g" configure.in
+find . -name "*.sln" -print -exec sed -i 's/Format Version 10.00/Format Version 11.00/g' {} \;
+find . -name "*.csproj" -print -exec sed -i 's#ToolsVersion="3.5"#ToolsVersion="4.0"#g; s#<TargetFrameworkVersion>.*</TargetFrameworkVersion>##g; s#<PropertyGroup>#<PropertyGroup><TargetFrameworkVersion>v4.5</TargetFrameworkVersion>#g' {} \;
+
+# reference newtonsoft-json properly
+sed -i "s#-r:\${libdir}/bin/Newtonsoft.Json.dll#-r:/usr/lib/mono/newtonsoft-json/Newtonsoft.Json.dll#g" monodevelop.pc.in
+
 %build
+# git may crash monodevelop due to some components missing
+
 NOCONFIGURE=yes sh ./autogen.sh
-%configure  \
-	    --disable-update-mimedb --disable-update-desktopdb \
-        --enable-subversion \
-        --enable-git \
-        --enable-monoextensions \
-	    %{subst_enable tests}
+%configure \
+	--disable-update-mimedb \
+	--disable-update-desktopdb \
+	--disable-subversion \
+	--disable-git \
+	%nil
+
+pushd external/libgit2sharp/Lib/CustomBuildTasks
+xbuild CustomBuildTasks.csproj
+mv bin/Debug/* .
+popd
 
 %make
 
 %install
 %makeinstall_std
 
-# Following plugin causes monodevelop to crash, remove it
-rm -f %buildroot%_libexecdir/%name/bin/libe_sqlite3.so
+mkdir -p %buildroot%_libexecdir/%name/AddIns/NUnit
+ln -s ../../../mono/nunit2/nunit.core.dll %buildroot%_libexecdir/%name/AddIns/NUnit/
+ln -s ../../../mono/nunit2/nunit.core.interfaces.dll %buildroot%_libexecdir/%name/AddIns/NUnit/
+ln -s ../../../mono/nunit2/nunit.framework.dll %buildroot%_libexecdir/%name/AddIns/NUnit/
+ln -s ../../../mono/nunit2/nunit.util.dll %buildroot%_libexecdir/%name/AddIns/NUnit/
+
+install -Dpm644 %SOURCE4 %buildroot%_datadir/appdata/%{name}.appdata.xml
+
+# for some reason, build and installation of version control addons is not skipped
+rm -rf %buildroot%_libexecdir/%name/AddIns/VersionControl
+
+# changelog addon depends on version control addon, remove it too
+rm -rf %buildroot%_libexecdir/%name/AddIns/ChangeLogAddIn
 
 %find_lang %name
 
@@ -261,6 +199,10 @@ rm -f %buildroot%_libexecdir/%name/bin/libe_sqlite3.so
 %_man1dir/*
 
 %changelog
+* Tue Apr 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.10.0.871-alt1
+- Downgraded to version 5.10.0.871 to update mono.
+- Applied patches and changes from Fedora.
+
 * Fri Apr 23 2021 Vitaly Lipatov <lav@altlinux.ru> 7.6.9.22-alt4
 - NMU: fix 7z unpacking
 
