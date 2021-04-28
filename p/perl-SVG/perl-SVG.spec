@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-SVG
-Version: 2.85
+Version: 2.86
 Release: alt1
 
 Summary: SVG - Perl extension for generating Scalable Vector Graphics (SVG) documents
@@ -53,6 +53,9 @@ object, create and access javascript, and generate SMIL animation content.
 %perl_vendor_privlib/SVG.pm
 
 %changelog
+* Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 2.86-alt1
+- automated CPAN update
+
 * Sat Jul 04 2020 Igor Vlasenko <viy@altlinux.ru> 2.85-alt1
 - automated CPAN update
 
