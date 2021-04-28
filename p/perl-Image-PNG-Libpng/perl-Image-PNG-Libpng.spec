@@ -2,7 +2,7 @@
 %define module_name Image-PNG-Libpng
 
 Name: perl-Image-PNG-Libpng
-Version: 0.56
+Version: 0.57
 Release: alt1
 
 Summary: Perl interface to libpng
@@ -35,6 +35,8 @@ scripts for %module_name
 %prep
 %setup -n %module_name-%version
 
+rm -f get-pixel.pl nicemake.pl
+
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
@@ -51,6 +53,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 0.57-alt1
+- new version
+
 * Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
 - new version
 
