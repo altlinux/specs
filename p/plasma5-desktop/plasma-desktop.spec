@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.4
-Release: alt5
+Release: alt6
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -38,6 +38,7 @@ Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-def-krunners.patch
 Patch18: alt-users-use-gost-yescrypt.patch
 Patch19: alt-taskgroup-performance.patch
+Patch20: alt-fix-kdebug436216.patch
 # FC
 Patch100: plasma-desktop-python-shebang.patch
 
@@ -124,6 +125,7 @@ Common polkit files for %name
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 %patch100 -p1
 
 pushd kcms
@@ -211,6 +213,9 @@ popd
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Apr 28 2021 Oleg Solovyov <mcpain@altlinux.org> 5.21.4-alt6
+- Calculate cursor position relative to top-left corner of current screen
+
 * Mon Apr 26 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt5
 - don't arrange desktop icons by columns by default
 
