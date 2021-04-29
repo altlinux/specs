@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          aalto-xml
-Version:       1.0.0
-Release:       alt1_7jpp8
+Version:       1.2.2
+Release:       alt1_2jpp11
 Summary:       Ultra-high performance non-blocking XML processor (Stax/Stax2, SAX/SAX2)
 # Source files without license headers https://github.com/FasterXML/aalto-xml/issues/38
 # See https://github.com/FasterXML/jackson-modules-base/issues/18, from main developer:
@@ -21,6 +18,7 @@ Source0:       https://github.com/FasterXML/aalto-xml/archive/%{name}-%{version}
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.fasterxml:oss-parent:pom:)
+BuildRequires: mvn(com.fasterxml.woodstox:woodstox-core)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
@@ -67,9 +65,11 @@ mv release-notes/asl/LICENSE NOTICE
 
 %mvn_file : %{name}
 
-%build
+# Java 9 module support isn't needed
+%pom_remove_plugin :moditect-maven-plugin
 
-%mvn_build
+%build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -82,6 +82,9 @@ mv release-notes/asl/LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_7jpp8
 - new version
 
