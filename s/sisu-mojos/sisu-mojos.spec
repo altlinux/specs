@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sisu-mojos
-Version:        0.3.3
-Release:        alt1_2jpp8
+Version:        0.3.4
+Release:        alt1_3jpp11
 Summary:        Sisu plugin for Apache Maven
 License:        EPL-1.0
 URL:            http://www.eclipse.org/sisu
@@ -25,7 +22,6 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.slf4j:slf4j-nop)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 Obsoletes:      sisu-maven-plugin < 1:0.1
 Source44: import.info
@@ -45,24 +41,31 @@ This package contains %{summary}.
 %prep
 %setup -q -c
 mv releases/%{version}/* .
+
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 # Animal Sniffer is not useful in Fedora
 %pom_remove_plugin :animal-sniffer-maven-plugin
+
 %mvn_alias : org.sonatype.plugins:
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_3jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_2jpp8
 - new version
 
