@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-patch-plugin
 Version:        1.2
-Release:        alt1_10jpp8
+Release:        alt1_13jpp11
 Summary:        Maven Patch Plugin
 
 License:        ASL 2.0
@@ -24,8 +24,6 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-deploy-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-docck-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-install-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
@@ -46,7 +44,7 @@ API documentation for %{name}.
 %setup -q
 
 %build
-%mvn_build --post "install invoker:run" -- -Dmaven.repo.local=$PWD/.m2
+%mvn_build --post "install invoker:run" -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.repo.local=$PWD/.m2
 
 %install
 %mvn_install
@@ -59,6 +57,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt1_13jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_10jpp8
 - update
 
