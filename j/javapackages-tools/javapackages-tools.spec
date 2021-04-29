@@ -12,8 +12,8 @@ BuildRequires: source-highlight python3-module-nose python3-module-setuptools
 BuildRequires(pre): rpm-build-python3
 %add_python3_path /usr/share/java-utils/
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-%define fedora 30
+BuildRequires: jpackage-11-compat
+%define fedora 32
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -31,7 +31,7 @@ BuildRequires: jpackage-1.8-compat
 %global _python_bytecompile_extra 0
 
 %bcond_without asciidoc
-%bcond_without gradle
+%bcond_with gradle
 %bcond_with tests
 %bcond_with xmvn_javadoc
 
@@ -49,7 +49,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           javapackages-tools
 Version:        5.3.0
-Release:        alt1_4jpp8
+Release:        alt1_9jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -347,6 +347,9 @@ popd
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:5.3.0-alt1_9jpp8
+- use jvm_run() to avoid generating /usr/bin/run dependency
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:5.3.0-alt1_4jpp8
 - fc update
 
