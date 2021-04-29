@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,11 +9,11 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without  memoryfilesystem
+%bcond_with memoryfilesystem
 
 Name:           assertj-core
 Version:        3.8.0
-Release:        alt1_4jpp8
+Release:        alt1_7jpp11
 Summary:        Library of assertions similar to fest-assert
 License:        ASL 2.0
 URL:            http://joel-costigliola.github.io/assertj/
@@ -24,13 +21,14 @@ Source0:        https://github.com/joel-costigliola/assertj-core/archive/assertj
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(cglib:cglib-nodep)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %if %{with memoryfilesystem}
 BuildRequires:  mvn(com.github.marschall:memoryfilesystem)
 %endif
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.ow2.asm:asm)
 Source44: import.info
 
 %description
@@ -68,7 +66,7 @@ rm -r src/test/java/org/assertj/core/internal/{Paths*.java,paths}
 %pom_remove_dep com.tngtech.java:junit-dataprovider
 
 %build
-%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -82,6 +80,9 @@ rm -r src/test/java/org/assertj/core/internal/{Paths*.java,paths}
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 3.8.0-alt1_7jpp11
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1_4jpp8
 - new version
 
