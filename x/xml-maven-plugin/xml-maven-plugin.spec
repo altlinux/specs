@@ -3,16 +3,19 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:          xml-maven-plugin
-Version:       1.0.2
-Release:       alt1_3jpp8
-Summary:       Maven XML Plugin
-License:       ASL 2.0
-URL:           http://www.mojohaus.org/xml-maven-plugin/
-Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/xml-maven-plugin/%{version}/xml-maven-plugin-%{version}-source-release.zip
+Name:           xml-maven-plugin
+Summary:        Maven XML Plugin
+Version:        1.0.2
+Release:        alt1_5jpp11
+License:        ASL 2.0
+
+URL:            https://www.mojohaus.org/xml-maven-plugin/
+Source0:        https://repo1.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-core)
@@ -25,12 +28,11 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-resources)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(xml-resolver:xml-resolver)
-
-BuildArch:     noarch
 Source44: import.info
 
 %description
 A plugin for various XML related tasks like validation and transformation.
+
 
 %package javadoc
 Group: Development/Java
@@ -39,6 +41,7 @@ BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
+
 
 %prep
 %setup -q
@@ -51,19 +54,26 @@ done
 # Add the version
 sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.xsl
 
+
 %build
 %mvn_build -f
+
 
 %install
 %mvn_install
 
+
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
+
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt1_5jpp11
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp8
 - fc update & java 8 build
 
