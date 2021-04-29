@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kitty
-Version: 0.20.1
+Version: 0.20.2
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: fonts-ttf-gnu-freefont-mono
 BuildRequires: libXcursor-devel libXrandr-devel libXi-devel libXinerama-devel
 BuildRequires: python3-devel python3-module-sphinx-sphinx-build-symlink
 BuildRequires: libxkbcommon-x11-devel libGL-devel fontconfig-devel
@@ -27,8 +26,9 @@ BuildRequires: wayland-protocols libwayland-client-devel libwayland-cursor-devel
 BuildRequires: ncurses
 
 # For tests
-BuildRequires: kitty
 BuildRequires: /proc
+BuildRequires: kitty
+BuildRequires: fonts-ttf-gnu-freefont-mono
 
 %add_python3_path %_libexecdir/%name
 
@@ -105,6 +105,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_datadir/terminfo/*/*
 
 %changelog
+* Thu Apr 29 2021 Egor Ignatov <egori@altlinux.org> 0.20.2-alt1
+- Update sources to 0.20.2
+
 * Tue Apr 27 2021 Egor Ignatov <egori@altlinux.org> 0.20.1-alt1
 - Update sources to 0.20.1
 - Cleanup spec
