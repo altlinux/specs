@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt166
+Release: alt167
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -89,9 +89,7 @@ Source: rpm-%version-%release.tar
 BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel >= 4.2.1
 BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
 
-# For debugedit.
-BuildPreReq: elfutils-devel
-BuildRequires: librpm-devel
+BuildRequires: debugedit
 
 # Automatically added by buildreq on Thu Apr 23 2009 and edited manually.
 BuildRequires: libdb4.7-devel libelf-devel liblzma-devel libpopt-devel zlib-devel
@@ -346,7 +344,6 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %_bindir/relative
 %_rpmlibdir/rpmt
 %rpmattr %_rpmlibdir/rpmb
-%rpmattr %_rpmlibdir/debugedit
 %rpmattr %_rpmlibdir/debuginfo.*
 %rpmattr %_rpmlibdir/dump_ld_config
 %rpmattr %_rpmlibdir/filesize
@@ -415,6 +412,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Apr 29 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt167
+- Use external debugedit.
+
 * Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt166
 - Moved brp-bytecompile_python and brp-hardlink_pyo_pyc to rpm-build-python.
 
