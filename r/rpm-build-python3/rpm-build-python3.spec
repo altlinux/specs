@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.15
+Version: 0.1.16
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -139,6 +139,10 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.16-alt1
+- brp-bytecompile_python3: fixed typo made in the previous release
+  (closes: #40018).
+
 * Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.15-alt1
 - python3.prov, python3.req: enhanced error diagnostics.
 
