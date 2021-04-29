@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,13 +17,15 @@ BuildRequires: jpackage-generic-compat
 %bcond_without snakeyaml
 
 Name:           modello
-Version:        1.9.1
-Release:        alt1_8jpp8
-Epoch:          0
 Summary:        Modello Data Model toolkit
-# The majority of files are under MIT license, but some of them are
-# ASL 2.0 or BSD-licensed.
-License:        ASL 2.0 and BSD and MIT
+Epoch:          0
+Version:        1.10.0
+Release:        alt1_2jpp11
+# The majority of files are under MIT license, but some of them are ASL 2.0.
+# Some parts of the project are derived from the Exolab project,
+# and are licensed under a 5-clause BSD license.
+License:        MIT and ASL 2.0 and BSD
+
 URL:            http://codehaus-plexus.github.io/modello
 Source0:        http://repo2.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -44,14 +46,17 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
+
 %if %{with jackson}
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 %endif
+
 %if %{with snakeyaml}
 BuildRequires:  mvn(org.yaml:snakeyaml)
 %endif
+
 # Explicit javapackages-tools requires since modello script uses
 # /usr/share/java-utils/java-functions
 Requires:         javapackages-tools
@@ -67,19 +72,22 @@ from the single model, including Java POJOs, XML
 marshallers/unmarshallers, XSD and documentation.
 
 
-%package javadoc
+%package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 API documentation for %{name}.
+
 
 %prep
 %setup -q
 cp -p %{SOURCE1} LICENSE
+
 # We don't generate site; don't pull extra dependencies.
 %pom_remove_plugin :maven-site-plugin
+
 # Avoid using Maven 2.x APIs
 sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 
@@ -95,9 +103,11 @@ sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 %pom_remove_dep :modello-plugin-snakeyaml modello-maven-plugin
 %endif
 
+
 %build
 # skip tests because we have too old xmlunit in Fedora now (1.0.8)
-%mvn_build -f -- -Dmaven.version=3.1.1
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.version=3.1.1
+
 
 %install
 %mvn_install
@@ -107,6 +117,7 @@ sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
+
 %files -f .mfiles
 %doc LICENSE
 %{_bindir}/*
@@ -115,7 +126,11 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
+
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.0-alt1_2jpp11
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_8jpp8
 - new version
 
