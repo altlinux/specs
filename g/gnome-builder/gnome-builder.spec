@@ -19,7 +19,7 @@
 %def_without rls
 
 Name: gnome-builder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -62,10 +62,11 @@ AutoReqProv: nopython
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
 Requires(pre): %name-data = %EVR
+Requires: typelib(WebKit2) = 4.0
 
 %{?_with_autotools:Requires: automake autoconf libtool}
 Requires: meson git indent xmllint
-Requires: devhelp uncrustify ctags
+Requires: devhelp uncrustify %_bindir/ctags
 Requires: libpeas-python3-loader
 #%%{?_with_jedi:Requires: python3-module-jedi}
 
@@ -107,6 +108,15 @@ BuildArch: noarch
 %description data
 This package provides noarch data needed for Gnome Builder to work.
 
+%package clang
+Summary: Clang/LLVW dependent part for GNOME Builder
+Group: Development/GNOME and GTK+
+Requires: %name = %EVR
+
+%description clang
+This package provides files for Gnome Builder to work with Clang/LLVW.
+
+
 %prep
 %setup
 
@@ -127,7 +137,6 @@ This package provides noarch data needed for Gnome Builder to work.
 
 %files -f %name.lang
 %_bindir/%name
-%_libexecdir/%name-clang
 %_libexecdir/%name-git
 %dir %_libdir/%name
 
@@ -179,9 +188,6 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/python_gi_imports_completion.py
 %{?_with_rls:%_libdir/%name/plugins/rls.plugin
 %_libdir/%name/plugins/rls_plugin.py}
-#%_libdir/%name/plugins/rustup.plugin
-#%_libdir/%name/plugins/rustup_plugin.gresource
-#%_libdir/%name/plugins/rustup_plugin.py
 %_libdir/%name/plugins/stylelint.plugin
 %_libdir/%name/plugins/stylelint_plugin.py
 %{?_with_vala:%_libdir/%name/plugins/vala-pack.plugin
@@ -192,7 +198,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/waf.plugin
 %_libdir/%name/plugins/waf_plugin.py
 #%{?_with_autotools_templates:%_libdir/%name/plugins/autotools_templates/}
-#%{?_with_sysprof:%_libdir/%name/plugins/libsysprof-plugin.so}
+#%{?_with_sysprof:%_libdir/%name/plugins/sysprof-plugin.so}
 
 %_includedir/%name/
 %_includedir/%name-%ver_major/
@@ -201,6 +207,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %python3_sitelibdir_noarch/gi/overrides/Ide.py
 %python3_sitelibdir_noarch/gi/overrides/__pycache__/
 %doc README* AUTHORS NEWS
+
+%files clang
+%_libexecdir/%name-clang
 
 %files data
 %_desktopdir/%xdg_name.desktop
@@ -234,6 +243,11 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Thu Apr 29 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
+- 3.40.1
+- moved gnome-builder-clang to separate package
+  to optimize dependencies (ALT #39925)
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0
 
