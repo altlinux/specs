@@ -1,6 +1,6 @@
 %define module_name	lkrg
 %define module_version	0.9.1
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
 %define karch		aarch64 %arm %ix86 x86_64
@@ -199,15 +199,33 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
 }
 
 %post
-echo "All the LKRG settings should be only in %_sysconfdir/sysctl.d/lkrg.conf to prevent its lost during service reload"
-%post_service lkrg-%kversion-%flavour-%krelease
+if [ $1 -eq 1 ]; then
+	echo "All the LKRG settings should be only in %_sysconfdir/sysctl.d/lkrg.conf to prevent its lost during service reload"
+	/sbin/chkconfig --add lkrg-%kversion-%flavour-%krelease ||:
+else
+	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+fi
 
-# hack to keep LKRG running to prevent it stopping during remove-old-kernel
-%triggerun -- %name < 0.9.1-alt1
-%post_service lkrg-%kversion-%flavour-%krelease
+# {{{
+# hacks to keep LKRG running to prevent it stopping during remove-old-kernel
+%triggerun -- kernel-modules-lkrg-std-def < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+
+%triggerun -- kernel-modules-lkrg-un-def < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+
+%triggerun -- kernel-modules-lkrg-std-debug < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+
+%triggerun -- kernel-modules-lkrg-std-pae < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+# }}}
 
 %preun
-%preun_service lkrg-%kversion-%flavour-%krelease
+if [ $1 -eq 0 ]; then
+	/sbin/service lkrg-%kversion-%flavour-%krelease condstop
+	/sbin/chkconfig --del lkrg-%kversion-%flavour-%krelease ||:
+fi
 
 %files
 %doc README
@@ -221,10 +239,18 @@ echo "All the LKRG settings should be only in %_sysconfdir/sysctl.d/lkrg.conf to
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
 
+* Thu Apr 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt2
+- Fixed %%post and %%preun.
+- Added more workarounds to handle the previous module version incorrect
+  behavior during removing.
+
 * Tue Apr 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt1
 - Updated to v0.9.1.
 - Introduced %_sysconfdir/sysctl.d/lkrg.conf.
 - Versionified service files to avoid conflicts with other module versions.
+- Added workaround to handle the previous module version incorrect behavior
+  during removing.
+- Fixed tests.
 - Packed README.
 
 * Fri Apr 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.0-alt1
