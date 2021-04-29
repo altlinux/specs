@@ -3,7 +3,7 @@
 
 Name: libsysstat
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: Library used to query system info and statistics
 License: LGPL
@@ -32,7 +32,7 @@ which is used to query system info and statistics.
 %setup
 
 %build
-%ifarch e2k
+%ifarch %e2k
 %add_optflags -std=c++11
 %endif
 %cmake
@@ -51,6 +51,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/*/
 
 %changelog
+* Thu Apr 29 2021 Anton Midyukov <antohami@altlinux.org> 0.4.5-alt2
+- use macros for e2k arch
+
 * Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.4.5-alt1
 - new version 0.4.5
 
