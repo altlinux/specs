@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,8 +12,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without jna
 
 Name:           bcel
-Version:        6.3.1
-Release:        alt1_2jpp8
+Version:        6.4.1
+Release:        alt1_2jpp11
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
@@ -68,7 +68,7 @@ This package provides %{summary}.
 %if %{without jna}
 %mvn_build -f
 %else
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 %endif
 
 %install
@@ -82,6 +82,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:6.4.1-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:6.3.1-alt1_2jpp8
 - new version
 
