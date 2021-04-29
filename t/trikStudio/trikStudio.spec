@@ -7,7 +7,7 @@
 
 Name: trikStudio
 Version: 2021.1
-Release: alt1
+Release: alt2
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -120,7 +120,7 @@ fi
     CONFIG+=!nosanitizers \
 %endif
     CONFIG+=no_rpath \
-    PREFIX=%_prefix LIBDIR=%_libdir studio.pro
+    PREFIX=%_prefix LIBDIR=%_libdir TRIK_STUDIO_VERSION=%version studio.pro
 %make_build
 
 %install
@@ -187,6 +187,14 @@ popd
 %endif
 
 %changelog
+* Thu Apr 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 2021.1-alt2
+- Set TRIK_STUDIO_VERSION to package version for cmake build.
+- Add HomeLocation prefix in invariantPath() substitution for paths started with
+  .config and .local substrings for backward compatibility.
+- Remove user directories from system config options (set to default):
+  + pathToGeneratorRoot to ~/.local/share/trik-studio/
+  + pathToLogs to ~/.config/trik-studio/logs/
+
 * Mon Apr 26 2021 Evgeny Sinelnikov <sin@altlinux.org> 2021.1-alt1
 - Update to 2021.1
 
