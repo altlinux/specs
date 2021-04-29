@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.40.1
+Version: 0.41.0
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -56,6 +56,8 @@ install -pD -m755 python.req %buildroot%_rpmlibdir/python.req
 install -pD -m755 python.req.py %buildroot%_rpmlibdir/python.req.py
 install -pD -m755 python.req.files %buildroot%_rpmlibdir/python.req.files
 install -pD -m755 python.compileall.py %buildroot%_rpmlibdir/python.compileall.py
+install -pD -m755 brp-bytecompile_python %buildroot%_rpmlibdir/brp.d/080-bytecompile_python.brp
+install -pD -m755 brp-hardlink_pyo_pyc %buildroot%_rpmlibdir/brp.d/088-brp-hardlink_pyo_pyc.brp
 
 unset RPM_PYTHON
 
@@ -71,12 +73,17 @@ unset RPM_PYTHON
 
 %files
 %_sysconfdir/buildreqs/files/ignore.d/%name
+%_rpmlibdir/brp.d/080-bytecompile_python.brp
+%_rpmlibdir/brp.d/088-brp-hardlink_pyo_pyc.brp
 %_rpmlibdir/python.compileall.py
 %_rpmlibdir/python.req.py
 %_rpmlibdir/python.prov.py
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 0.41.0-alt1
+- Imported brp-bytecompile_python and brp-hardlink_pyo_pyc from rpm-build.
+
 * Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 0.40.1-alt1
 - python.prov, python.req: skip python invocation when invoked without arguments.
 

@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt165
+Release: alt166
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -415,6 +415,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt166
+- Moved brp-bytecompile_python and brp-hardlink_pyo_pyc to rpm-build-python.
+
 * Wed Apr 28 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt165
 - Replaced rpm-build-python with rpm-macros-python in rpm-build requirements.
 - Removed python-devel from BuildRequires.
