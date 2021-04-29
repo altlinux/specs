@@ -1,15 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		canl-java
 Version:	2.6.0
-Release:	alt1_1jpp8
+Release:	alt1_5jpp11
 Summary:	EMI Common Authentication library - bindings for Java
 
 #		The main parts of the code are BSD
@@ -22,6 +21,9 @@ URL:		https://github.com/eu-emi/%{name}/
 Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}/%{name}-%{version}.tar.gz
 #		Disable tests that require network connections
 Patch0:		%{name}-test.patch
+#		Adapt to bouncycastle 1.63. Still builds with older versions.
+#		https://github.com/eu-emi/canl-java/pull/102
+Patch1:		%{name}-tagged-seq.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
@@ -47,12 +49,18 @@ Javadoc documentation for EMI caNl.
 %prep
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
+%patch1 -p1
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
 
 # GPG signing requires a GPG key
 %pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
+
+# Remove maven-javadoc-plugin configuration
+# It doesn't change the content of the javadoc package anyway
+# And its presence causes the EPEL 8 build to fail
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
 
 # Do not create source jars
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
@@ -61,7 +69,7 @@ Javadoc documentation for EMI caNl.
 %pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -75,6 +83,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 2.6.0-alt1_5jpp11
+- update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_1jpp8
 - new version
 
