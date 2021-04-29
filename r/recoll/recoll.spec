@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.27.9
+Version: 1.31.0
 Release: alt1
 
 Summary: A personal full text search package
@@ -36,6 +36,7 @@ BuildRequires: libchm-devel
 BuildRequires: libxslt-devel
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: rpm-build-python
 
 %if_enabled qtgui
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
@@ -155,6 +156,10 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Thu Apr 29 2021 Michael Shigorin <mike@altlinux.org> 1.31.0-alt1
+- new version (watch file uupdate)
+- updated watch file (thanks, andy@ and debian)
+
 * Fri Oct 09 2020 Michael Shigorin <mike@altlinux.org> 1.27.9-alt1
 - new version (watch file uupdate)
 
