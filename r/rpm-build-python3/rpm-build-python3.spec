@@ -1,16 +1,17 @@
 Name: rpm-build-python3
-Version: 0.1.13.1
-Release: alt2
+Version: 0.1.14
+Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
-License: GPL
+License: GPLv2+
 Group: Development/Other
+Packager: Python Development Team <python@packages.altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
+Requires: rpm-macros-python3 = %EVR
 Requires: file >= 4.26-alt11
-Conflicts: rpm-build < 4.0.4-alt100.91
 # Since the .so handling code in python3.req.py with the help of
 # objdump is borrowed from rpm-build, we borrow the dependency, too
 # (in the form of a Conflicts not to encumber python3 users' envinronment;
@@ -33,6 +34,17 @@ BuildRequires: python3-dev
 
 %description
 These helper macros provide possibility to build python3 modules.
+
+%package -n rpm-macros-python3
+Summary: Set of RPM macros for packaging python3 modules and scripts
+Group: Development/Other
+BuildArch: noarch
+Conflicts: %name < %version
+# due to %%_is_libsuff and %%_libsuff macros.
+Conflicts: rpm-build < 4.0.4-alt112
+
+%description -n rpm-macros-python3
+This packages provides RPM macros for packaging python3 modules and scripts.
 
 %package -n tests-for-installed-python3-pkgs
 Summary: Tests that can be run to test any installed Python3 package
@@ -93,6 +105,8 @@ install -pD -m0755 brp-fix_python3_site-packages_location -T %buildroot%_rpmlibd
 
 #unset RPM_PYTHON
 
+%define _unpackaged_files_terminate_build 1
+
 %check
 rpm_builddir="$PWD"
 pushd %buildroot/%_rpmlibdir
@@ -101,21 +115,23 @@ pushd %buildroot/%_rpmlibdir
 "$rpm_builddir"/test_check-provs-importable.sh
 popd
 
-%files
+%files -n rpm-macros-python3
 %_rpmmacrosdir/python3
 %_rpmmacrosdir/python3.env
+%_rpmlibdir/python3.req
+%_rpmlibdir/python3.req.files
+%_rpmlibdir/python3.prov
+%_rpmlibdir/python3.prov.files
+
+%files
 %_sysconfdir/buildreqs/files/ignore.d/%name
 %_rpmlibdir/brp.d/096-bytecompile_python3.brp
 %_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
 %_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
 %_rpmlibdir/python3.compileall.py
-%_rpmlibdir/python3.req
 %_rpmlibdir/python3.req.py
 %_rpmlibdir/python3.req.constraint.py
-%_rpmlibdir/python3.req.files
-%_rpmlibdir/python3.prov
 %_rpmlibdir/python3.prov.py
-%_rpmlibdir/python3.prov.files
 
 %files -n tests-for-installed-python3-pkgs
 %_rpmlibdir/check-python3-provs-importable
@@ -123,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Wed Apr 28 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.14-alt1
+- Introduced rpm-macros-python3 subpackage and moved non-python files there.
+
 * Fri Jul 27 2018 Alexey Shabalin <shaba@altlinux.org> 0.1.13.1-alt2
 - define %%__python3 as full path /usr/bin/python3
 
