@@ -3,7 +3,7 @@
 
 Name: lxqt-build-tools
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
@@ -23,7 +23,7 @@ that used to lurk in liblxqt or got spread over other subprojects.
 
 %prep
 %setup
-%ifarch e2k
+%ifarch %e2k
 # lcc has -fwhole, to be tested though
 sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %endif
@@ -41,6 +41,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_bindir/*
 
 %changelog
+* Thu Apr 29 2021 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt2
+- use macros for e2k arch
+
 * Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - new version 0.9.0
 
