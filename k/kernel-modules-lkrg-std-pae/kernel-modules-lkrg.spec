@@ -1,6 +1,6 @@
 %define module_name	lkrg
 %define module_version	0.9.1
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-pae
 %define karch		%ix86
@@ -9,7 +9,6 @@ BuildRequires(pre): kernel-headers-modules-std-pae
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
-%define module_datadir %_datadir/%module_name-%module_version/%kversion-%flavour-%krelease
 
 Summary: Linux Kernel Runtime Guard module
 Name: kernel-modules-%module_name-%flavour
@@ -60,22 +59,41 @@ rm -rf %module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n %module_name-%module_version
 cp -a %SOURCE1 .
+sed -i 's,@KERNVFR@,%kversion-%flavour-%krelease,g' lkrg.init
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour modules M=$(pwd)
-echo "enable lkrg.service" > lkrg.preset
 
 %install
 install -D -p -m0644 p_lkrg.ko %buildroot%module_dir/p_lkrg.ko
-install -D -p -m0755 lkrg.init %buildroot%module_datadir/lkrg.init
-install -D -p -m0644 scripts/bootup/systemd/lkrg.service %buildroot%module_datadir/lkrg.service
-install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
 install -D -p -m0644 scripts/bootup/lkrg.conf %buildroot%_sysconfdir/sysctl.d/lkrg.conf
-# ghost files
-mkdir -p %buildroot%_initdir
-touch %buildroot%_initdir/lkrg
+install -D -p -m0755 lkrg.init %buildroot%_initdir/lkrg-%kversion-%flavour-%krelease
+
 mkdir -p %buildroot%_unitdir
-touch %buildroot%_unitdir/lkrg.service
+cat <<EOF >%buildroot%_unitdir/lkrg-%kversion-%flavour-%krelease.service
+[Unit]
+Description=Linux Kernel Runtime Guard
+DefaultDependencies=no
+After=systemd-modules-load.service
+Before=systemd-sysctl.service
+Before=sysinit.target shutdown.target
+Conflicts=shutdown.target
+ConditionKernelCommandLine=!nolkrg
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.d/init.d/lkrg-%kversion-%flavour-%krelease start
+ExecStop=/etc/rc.d/init.d/lkrg-%kversion-%flavour-%krelease stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sysinit.target
+EOF
+
+mkdir -p %buildroot%_presetdir
+cat <<EOF >%buildroot%_presetdir/30-lkrg-%kversion-%flavour-%krelease.preset
+enable lkrg-%kversion-%flavour-%krelease.service
+EOF
 
 %check
 # based on %%check of kernel-image-%%flavour.spec
@@ -151,7 +169,7 @@ exit:
 __EOF__
 mkdir -p proc
 cp -a %buildroot%module_dir/p_lkrg.ko p_lkrg.ko
-cp -a /lib/modules/%kversion-%kflavour-%krelease/kernel/fs/fuse/fuse.ko fuse.ko
+cp -a /lib/modules/%kversion-%flavour-%krelease/kernel/fs/fuse/fuse.ko fuse.ko
 find init fuse.ko p_lkrg.ko proc -print | cpio -H newc -o | gzip -8n > initrd.img.gz
 qemu_arch=%_arch
 qemu_opts=""
@@ -181,41 +199,58 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
 }
 
 %post
-ln -frs %module_datadir/lkrg.init %_initdir/lkrg
-ln -frs %module_datadir/lkrg.service %_unitdir/lkrg.service
-
-%post_service lkrg
-
-%triggerun -- %name < 0.9.1-alt1
-if [ "$2" -gt 0 ]; then
-	echo "WARNING! Set all the LKRG settings in %_sysconfdir/lkrg.conf"
-	echo "Otherwise they WILL BE dropped to defaults during service reload"
+if [ $1 -eq 1 ]; then
+	echo "All the LKRG settings should be only in %_sysconfdir/sysctl.d/lkrg.conf to prevent its lost during service reload"
+	/sbin/chkconfig --add lkrg-%kversion-%flavour-%krelease ||:
+else
+	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
 fi
 
+# {{{
+# hacks to keep LKRG running to prevent it stopping during remove-old-kernel
+%triggerun -- kernel-modules-lkrg-std-def < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+
+%triggerun -- kernel-modules-lkrg-un-def < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+
+%triggerun -- kernel-modules-lkrg-std-debug < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+
+%triggerun -- kernel-modules-lkrg-std-pae < 0.9.1-alt1
+/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+# }}}
+
 %preun
-%preun_service lkrg
+if [ $1 -eq 0 ]; then
+	/sbin/service lkrg-%kversion-%flavour-%krelease condstop
+	/sbin/chkconfig --del lkrg-%kversion-%flavour-%krelease ||:
+fi
 
 %files
 %doc README
 %config(noreplace) %_sysconfdir/sysctl.d/lkrg.conf
 %module_dir/p_lkrg.ko
-%module_datadir/lkrg.init
-%module_datadir/lkrg.service
-%ghost %_initdir/lkrg
-%ghost %_unitdir/lkrg.service
-%_presetdir/30-lkrg.preset
+%_initdir/lkrg-%kversion-%flavour-%krelease
+%_unitdir/lkrg-%kversion-%flavour-%krelease.service
+%_presetdir/30-lkrg-%kversion-%flavour-%krelease.preset
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
 
+* Thu Apr 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt2
+- Fixed %%post and %%preun.
+- Added more workarounds to handle the previous module version incorrect
+  behavior during removing.
+
 * Tue Apr 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt1
 - Updated to v0.9.1.
 - Introduced %_sysconfdir/sysctl.d/lkrg.conf.
-- Avoided possible file conflicts with other version of the module:
-  + Marked SysVinit script and systemd service file with %%ghost;
-  + Moved actual files to version-uniq location;
-  + Made symlinks in %%post;
+- Versionified service files to avoid conflicts with other module versions.
+- Added workaround to handle the previous module version incorrect behavior
+  during removing.
+- Fixed tests.
 - Packed README.
 
 * Fri Apr 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.0-alt1
