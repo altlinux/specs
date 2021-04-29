@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          struts
 Version:       1.3.10
-Release:       alt4_23jpp8
+Release:       alt4_26jpp11
 Summary:       Web application framework
 License:       ASL 2.0
 URL:           http://struts.apache.org/
@@ -19,6 +16,9 @@ URL:           http://struts.apache.org/
 # rm -r struts-1.3.10/src/core/src/main/resources/org/apache/struts/resources/web-app_2_3.dtd
 # tar czf struts-1.3.10-clean-src.tar.gz struts-1.3.10
 Source0:       %{name}-%{version}-clean-src.tar.gz
+
+# patch to enforce java 6 source and target versions
+Patch0:        struts-java-target.patch
 
 # fix build for junit servlet-3.0-api
 Patch1:        struts-1.3.10-fix-build.patch
@@ -81,6 +81,7 @@ This package contains javadoc for %{name}.
 find -name "*.jar" -delete
 find -name "*.class" -delete
 
+%patch0 -p1
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
@@ -120,7 +121,7 @@ cd src
 %build
 
 cd src
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 
@@ -137,6 +138,9 @@ rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3.10-alt4_26jpp11
+- update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_23jpp8
 - new version
 
