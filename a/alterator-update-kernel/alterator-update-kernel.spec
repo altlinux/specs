@@ -1,8 +1,8 @@
 %define mname update-kernel
 
 Name: alterator-update-kernel
-Version: 1.3
-Release: alt3
+Version: 1.4
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -55,6 +55,12 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Thu Apr 29 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt1
+- Refactoring.
+- Update xml file after refactoring.
+- Fix set_default_kernel.
+- Moving a message from the backend.
+
 * Thu Apr 22 2021 Ivan Savin <svn17@altlinux.org> 1.3-alt3
 - Add introspection file for alterator-dbus.
 
