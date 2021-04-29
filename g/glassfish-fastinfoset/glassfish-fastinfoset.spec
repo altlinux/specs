@@ -1,26 +1,23 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global srcname metro-fi
+
 Name:          glassfish-fastinfoset
-Version:       1.2.13
-Release:       alt1_11jpp8
+Version:       1.2.15
+Release:       alt1_2jpp11
 Summary:       Fast Infoset
 License:       ASL 2.0
-URL:           https://fi.java.net
-# svn export https://svn.java.net/svn/fi~svn/tags/fastinfoset-project-1.2.13/ glassfish-fastinfoset-1.2.13
-# find glassfish-fastinfoset-1.2.13/ -name '*.class' -delete
-# find glassfish-fastinfoset-1.2.13/ -name '*.jar' -delete
-# rm -rf glassfish-fastinfoset-1.2.13/roundtrip-tests
-# tar czf glassfish-fastinfoset-1.2.13-src-svn.tar.gz glassfish-fastinfoset-1.2.13
-Source0:       %{name}-%{version}-src-svn.tar.gz
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+
+# NOTE: The new upstream repository under the Eclipse EE4J umbrella is here:
+# https://github.com/eclipse-ee4j/jaxb-fi
+URL:           https://github.com/javaee/%{srcname}
+Source0:       %{url}/archive/%{version}-RELEASE/%{srcname}-%{version}.tar.gz
+
 # add xmlstreambuffer 1.5.x support
-Patch0:        %{name}-1.2.12-utilities-FastInfosetWriterSAXBufferProcessor.patch
+Patch0:        00-xmlstreambuffer-1.5.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.sun.xml.stream.buffer:streambuffer)
@@ -49,17 +46,24 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
-%patch0 -p0
+%setup -q -n %{srcname}-%{version}-RELEASE
 
-cp %{SOURCE1} .
+# clean up gunk from the upstream tarball
+rm -r FIME Japex JapexXMLDriverLibrary tools xml-data.zip.REMOVED.git-id
+find -name "*.jar" -print -delete
+mv code/* .
+rmdir code
+
+%patch0 -p1
+
+# presence of these files breaks the build
+find -name "module-info.java" -print -delete
 
 # Remove wagon-webdav
 %pom_xpath_remove "pom:build/pom:extensions"
 
 %pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin :maven-antrun-extended-plugin
-%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 
 %pom_disable_module roundtrip-tests
@@ -77,18 +81,23 @@ cp %{SOURCE1} .
 %mvn_file :FastInfosetUtilities %{name}-utilities
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference copyright.txt LICENSE-2.0.txt
+%doc --no-dereference copyright.txt LICENSE
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference copyright.txt LICENSE-2.0.txt
+%doc --no-dereference copyright.txt LICENSE
+%doc README.md
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.2.15-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_11jpp8
 - new version
 
