@@ -1,18 +1,20 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name woodstox
 
 Name:           woodstox-core
 Summary:        High-performance XML processor
-Version:        5.2.1
-Release:        alt1_1jpp8
+Version:        6.0.2
+Release:        alt1_2jpp11
 License:        ASL 2.0 or LGPLv2+ or BSD
 
 URL:            https://github.com/FasterXML/woodstox
 Source0:        %{url}/archive/%{name}-%{version}.tar.gz
+
+Patch0: 0001-Allow-building-against-OSGi-APIs-newer-than-R4.patch
 
 BuildArch:      noarch
 
@@ -20,11 +22,12 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml:oss-parent:pom:)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.java.dev.msv:msv-core)
-BuildRequires:  mvn(net.java.dev.msv:msv-rngconverter)
 BuildRequires:  mvn(net.java.dev.msv:xsdlib)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.felix:org.osgi.core)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
+BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
 Source44: import.info
 
 %description
@@ -47,6 +50,16 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{base_name}-%{name}-%{version}
 
+%patch0 -p1
+
+%pom_remove_plugin :nexus-staging-maven-plugin
+
+# we don't care about Java 9 modules (yet)
+%pom_remove_plugin :moditect-maven-plugin
+
+# replace felix-osgi-core with osgi-core
+%pom_change_dep -r :org.osgi.core org.osgi:osgi.core
+
 %mvn_alias ":{woodstox-core}" :@1-lgpl :@1-asl :wstx-asl :wstx-lgpl \
     org.codehaus.woodstox:@1 org.codehaus.woodstox:@1-asl \
     org.codehaus.woodstox:@1-lgpl org.codehaus.woodstox:wstx-lgpl \
@@ -56,7 +69,7 @@ This package contains the API documentation for %{name}.
 
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 
 %install
@@ -71,6 +84,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 6.0.2-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_1jpp8
 - new version
 
