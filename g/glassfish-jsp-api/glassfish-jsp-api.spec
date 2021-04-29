@@ -1,29 +1,19 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global artifactId javax.servlet.jsp-api
-%global jspspec 2.2
-%global reltag b01
-
 
 Name:       glassfish-jsp-api
-Version:    2.3.2
-Release:    alt1_0.11.b01jpp8
+Version:    2.3.3
+Release:    alt1_2jpp11
 Summary:    Glassfish J2EE JSP API specification
-
 License:    (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
-URL:        http://java.net/jira/browse/JSP
-Source0:    %{artifactId}-%{version}-%{reltag}.tar.xz
-# no source releases, but this will generate tarball for you from an
-# SVN tag
-Source1:    generate_tarball.sh
-Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
-Source3:    https://javaee.github.io/glassfish/LICENSE.html
+
+URL:        https://github.com/javaee/javaee-jsp-api
+Source0:    %{url}/archive/%{artifactId}-%{version}.tar.gz
+Source1:    http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:  noarch
 
@@ -49,35 +39,44 @@ BuildArch:      noarch
 %{summary}.
 
 %prep
-%setup -q -n %{artifactId}-%{version}-%{reltag}
+%setup -q -n javaee-jsp-api-%{artifactId}-%{version}
 
-cp -p %{SOURCE2} LICENSE-ASL-2.0.txt
-cp -p %{SOURCE3} LICENSE-CDDL+GPLv2.html
+cp -p %{SOURCE1} LICENSE-ASL-2.0.txt
 
+pushd api
 # Submited upstream: http://java.net/jira/browse/JSP-31
 sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 
 %pom_xpath_remove "pom:dependency[pom:groupId='javax.el' or pom:groupId='javax.servlet']/pom:scope"
 
+%pom_remove_plugin :maven-gpg-plugin
 # javadoc generation fails due to strict doclint in JDK 8
 %pom_remove_plugin :maven-javadoc-plugin
 
 %mvn_alias : javax.servlet:jsp-api
+popd
 
 %build
-%mvn_build
+pushd api
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+popd
 
 %install
+pushd api
 %mvn_install
+popd
 
-%files -f .mfiles
-%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
+%files -f api/.mfiles
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
+%files javadoc -f api/.mfiles-javadoc
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE
 
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 2.3.3-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.11.b01jpp8
 - new version
 
