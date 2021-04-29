@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name openaptx
 Name: lib%_name
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Epoch: 1
 
 Summary: Open Source implementation of aptX codec
 Group: System/Libraries
-License: LGPL-2.1-or-later
+License: LGPL-3.0-or-later
 Url: https://github.com/pali/libopenaptx
 
 %if_disabled snapshot
@@ -70,6 +70,9 @@ sed -i '/^LDFLAGS = -s/d' Makefile
 %exclude %_libdir/%name.a
 
 %changelog
+* Thu Apr 29 2021 Yuri N. Sedunov <aris@altlinux.org> 1:0.2.1-alt1
+- 0.2.1
+
 * Wed Feb 10 2021 Yuri N. Sedunov <aris@altlinux.org> 1:0.2.0-alt1
 - updated to 0.2.0-3-g5eb14ed from original libopenaptx repo
 
