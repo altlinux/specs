@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.42.0
+Version: 0.42.1
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -81,6 +81,9 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 0.42.1-alt1
+- python.prov, python.req: enhanced error diagnostics.
+
 * Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 0.42.0-alt1
 - Revert the change made in 0.40.1-alt1.
 - python.req.files: do not treat *.so as potential python extensions
