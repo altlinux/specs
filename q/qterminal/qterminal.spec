@@ -3,10 +3,10 @@
 
 Name: qterminal
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: Qt-based multitab terminal emulator
-License: GPL
+License: GPL-2.0
 Group: Terminals
 
 Url: http://github.com/qterminal/qterminal
@@ -36,7 +36,7 @@ at http://qterminal.sourceforge.net/
 %setup
 
 %build
-%ifarch e2k
+%ifarch %e2k
 %add_optflags -std=c++11
 %endif
 %cmake \
@@ -56,6 +56,10 @@ at http://qterminal.sourceforge.net/
 %_datadir/%name
 
 %changelog
+* Thu Apr 29 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt2
+- use macros for e2k arch
+- fix License tag
+
 * Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt1
 - new version 0.17.0
 
