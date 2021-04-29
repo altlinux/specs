@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 4.6.0
+Version: 4.7.1
 Release: alt1
 
 Summary: GeoIP update client code
@@ -45,6 +45,9 @@ export GOPATH="%go_path"
 %_bindir/%name
 
 %changelog
+* Thu Apr 29 2021 Egor Ignatov <egori@altlinux.org> 4.7.1-alt1
+- Update to version 4.7.1
+
 * Fri Feb 12 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt1
 - Update to version 4.6.0
 
