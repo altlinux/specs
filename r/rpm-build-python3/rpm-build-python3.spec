@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -139,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.15-alt1
+- python3.prov, python3.req: enhanced error diagnostics.
+
 * Wed Apr 28 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.14-alt1
 - Introduced rpm-macros-python3 subpackage and moved non-python files there.
 
