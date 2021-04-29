@@ -1,35 +1,35 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.2
+%define version 1.3.2
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 %global oname javax.annotation-api
-Name:          glassfish-annotation-api
-Version:       1.2
-Release:       alt1_15jpp8
-Summary:       Common Annotations API Specification (JSR 250)
-License:       CDDL or GPLv2 with exceptions
-# http://jcp.org/en/jsr/detail?id=250
-URL:           http://glassfish.java.net/
-# svn export https://svn.java.net/svn/glassfish~svn/tags/javax.annotation-api-1.2/ glassfish-annotation-api-1.2
-# tar czf glassfish-annotation-api-1.2-src-svn.tar.gz glassfish-annotation-api-1.2
-Source0:       %{name}-%{namedversion}-src-svn.tar.gz
+%global sname javax.annotation
 
-BuildRequires: jvnet-parent
-BuildRequires: glassfish-legal
+Name:          glassfish-annotation-api
+Version:       1.3.2
+Release:       alt1_2jpp11
+Summary:       Common Annotations API Specification (JSR 250)
+License:       CDDL-1.1 or GPLv2 with exceptions
+
+# NOTE: The new upstream repository under the Eclipse EE4J umbrella is here:
+# https://github.com/eclipse-ee4j/common-annotations-api
+# However, the new package provides a different groupId:artifactId.
+URL:           https://github.com/javaee/%{sname}
+Source0:       %{url}/archive/%{version}/%{sname}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-remote-resources-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: spec-version-maven-plugin
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(org.glassfish.build:spec-version-maven-plugin)
+# xmvn-builddep misses this one
+BuildRequires: mvn(org.glassfish:legal)
 
 BuildArch:     noarch
 Source44: import.info
@@ -46,28 +46,29 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n %{sname}-%{namedversion}
 
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :maven-gpg-plugin
+
 %mvn_file :%{oname} %{name}
 
 %build
-
-%mvn_build
-
-sed -i 's/\r//' target/classes/META-INF/LICENSE.txt
-cp -p target/classes/META-INF/LICENSE.txt .
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.3.2-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_15jpp8
 - new version
 
