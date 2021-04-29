@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             fusesource-pom
-Version:          1.11
-Release:          alt1_5jpp8
+Version:          1.12
+Release:          alt1_2jpp11
 Summary:          Parent POM for FuseSource Maven projects
 License:          ASL 2.0
 URL:              http://fusesource.com/
@@ -34,7 +31,7 @@ cp -p %{SOURCE1} LICENSE
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav-jackrabbit']]"
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -43,6 +40,9 @@ cp -p %{SOURCE1} LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.12-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_5jpp8
 - new version
 
