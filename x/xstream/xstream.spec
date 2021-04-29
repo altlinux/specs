@@ -2,10 +2,10 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -46,18 +46,20 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# Allow building with a minimal dependency set
-%bcond_with jp_minimal
+%bcond_with hibernate
 
 Name:           xstream
 Version:        1.4.11.1
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://x-stream.github.io/
 BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
+
+# patch pom.xml to target Java 8 / 1.8
+Patch0:         xstream-java-8-target.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -76,7 +78,7 @@ BuildRequires:  mvn(stax:stax-api)
 BuildRequires:  mvn(xpp3:xpp3)
 BuildRequires:  mvn(xpp3:xpp3_min)
 
-%if %{without jp_minimal}
+%if %{with hibernate}
 BuildRequires:  mvn(javassist:javassist)
 BuildRequires:  mvn(org.codehaus.jettison:jettison)
 BuildRequires:  mvn(org.hibernate:hibernate-core)
@@ -116,7 +118,7 @@ BuildArch: noarch
 %description    javadoc
 %{name} API documentation.
 
-%if %{without jp_minimal}
+%if %{with hibernate}
 %package        hibernate
 Group: Development/Java
 Summary:        hibernate module for %{name}
@@ -147,6 +149,8 @@ Parent POM for %{name}.
 %setup -qn %{name}-%{version}
 find . -name "*.class" -print -delete
 find . -name "*.jar" -print -delete
+
+%patch0 -p1
 
 # Require org.codehaus.xsite:xsite-maven-plugin
 %pom_disable_module xstream-distribution
@@ -185,7 +189,7 @@ find . -name "*.jar" -print -delete
 %pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-benchmark
 %pom_remove_plugin :maven-javadoc-plugin xstream-benchmark
 
-%if %{with jp_minimal}
+%if %{without hibernate}
 # Don't build hibernate module
 %pom_disable_module xstream-hibernate
 # Disable support for some lesser used XML backends
@@ -203,7 +207,7 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 
 %build
 # test skipped for unavailable test deps (com.megginson.sax:xml-writer)
-%mvn_build -f -s -- -Dversion.java.source=8
+%mvn_build -f -s
 
 %install
 %mvn_install
@@ -214,7 +218,7 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 
 %files parent -f .mfiles-%{name}-parent
 
-%if %{without jp_minimal}
+%if %{with hibernate}
 %files hibernate -f .mfiles-%{name}-hibernate
 %endif
 
@@ -224,6 +228,9 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4.11.1-alt1_5jpp8
+- update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4.11.1-alt1_2jpp8
 - new version
 
