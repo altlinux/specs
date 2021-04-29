@@ -3,19 +3,31 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global revision 572a0baa91d1
+
 Name:             decentxml
 Version:          1.4
-Release:          alt3_19jpp8
+Release:          alt3_21jpp11
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
-URL:              http://code.google.com/p/%{name}
+# Google Code has shut down.
+# URL:            http://code.google.com/p/decentxml
+URL:              https://bitbucket.org/digulla/%{name}
 BuildArch:        noarch
 
-Source0:          https://decentxml.googlecode.com/files/decentxml-1.4-src.zip
-# for running w3c conformance test suite
+# Google Code has shut down.
+# Source0:        https://decentxml.googlecode.com/files/decentxml-1.4-src.zip
+#
+# This version is equivalent to the last Google Code release, other than
+# folder structure due to how Bitbucket makes zip archives:
+#
+# decentxml-1.4 -> digulla-decentxml-572a0baa91d1
+Source0:          https://bitbucket.org/digulla/%{name}/get/r%{version}.zip
+
+# For running w3c conformance test suite.
 Source1:          http://www.w3.org/XML/Test/xmlts20031210.zip
 
 BuildRequires:  maven-local
@@ -28,7 +40,7 @@ Source44: import.info
 %description
 XML parser optimized for round-tripping and code reuse with main
 features being:
- * Allows 100% round-tripping, even for weird whitespace between
+ * Allows 100% round-tripping, even for weird white-space between
    attributes in the start tag or in the end tag
  * Suitable for building editors and filters which want/need to
    preserve the original file layout as much as possible
@@ -45,9 +57,10 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-# we are looking for xml conformance data one lever above so unzip
-# here and symlink there
+%setup -q -n digulla-%{name}-%{revision}
+
+# We are looking for xml conformance data one level above so unzip
+# here and symlink there.
 unzip %{SOURCE1}
 ln -sf %{name}-%{version}/xmlconf ../xmlconf
 sed -i -e "s|junit-dep|junit|g" pom.xml
@@ -63,18 +76,22 @@ sed -i '/not_wf_sa_16[89] /d' src/test/java/de/pdark/decentxml/XMLConformanceTes
 
 %build
 %mvn_file  : %{name}
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE README
+%doc --no-dereference LICENSE
+%doc README
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt3_21jpp11
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_19jpp8
 - fc update & java 8 build
 
