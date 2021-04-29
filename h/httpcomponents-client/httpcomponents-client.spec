@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,8 +17,8 @@ BuildRequires: jpackage-1.8-compat
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.7
-Release:           alt1_3jpp8
+Version:           4.5.10
+Release:           alt1_2jpp11
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
@@ -42,7 +42,6 @@ BuildRequires:     mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:     mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
 BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:     mvn(org.easymock:easymock)
 BuildRequires:     mvn(org.mockito:mockito-core)
 
 BuildRequires:     publicsuffix-list
@@ -101,9 +100,8 @@ rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
 
 # Don't compile/run httpclient-cache tests - they are incompatible with EasyMock 3.3
 %pom_remove_dep org.easymock:easymockclassextension
-for dep in org.easymock:easymockclassextension org.slf4j:slf4j-jcl; do
-    %pom_remove_dep $dep httpclient-cache
-done
+%pom_remove_dep org.slf4j:slf4j-jcl httpclient-cache
+%pom_remove_dep :::test httpclient-cache
 rm -rf httpclient-cache/src/test
 
 %pom_remove_plugin :download-maven-plugin httpclient
@@ -181,7 +179,7 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %build
 %mvn_file ":{*}" httpcomponents/@1
 
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -196,6 +194,9 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 4.5.10-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.5.7-alt1_3jpp8
 - update
 
