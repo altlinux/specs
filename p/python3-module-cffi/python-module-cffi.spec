@@ -1,22 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 %define modulename cffi
 
-Name: python-module-cffi
+%def_with check
+
+Name: python3-module-cffi
 Version: 1.14.5
 Release: alt2
 
 Summary: Foreign Function Interface for Python calling C code
 
-Group: Development/Python
+Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/%modulename/
 
 Source: https://files.pythonhosted.org/packages/93/1a/ab8c62b5838722f29f3daffcc8d4bd61844aa9b5f437341cc890ceee483b/%modulename-%version.tar.gz
 Patch: cffi-0.8.6-alt-link.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libffi-devel
 
-%py_requires pycparser
+%if_with check
+BuildRequires: gcc-c++
+BuildRequires: python3(pycparser)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
+
+%py3_requires pycparser
 
 %description
 Foreign Function Interface for Python calling C code.
@@ -27,17 +37,25 @@ Foreign Function Interface for Python calling C code.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
+
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
+cat > tox.ini <<EOF
+[testenv]
+commands = {envpython} -m pytest {posargs:.}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
 
 %files
-%python_sitelibdir/_cffi_backend.so
-%python_sitelibdir/%modulename/
-%python_sitelibdir/%modulename-%version-py%_python_version.egg-info/
+%python3_sitelibdir/_cffi_backend.cpython-%{python_version_nodots python3}.so
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
 * Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 1.14.5-alt2

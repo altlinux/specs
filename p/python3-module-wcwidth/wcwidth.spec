@@ -1,17 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname wcwidth
 
-Name: python-module-%oname
-Version: 0.1.9
-Release: alt2
+%def_with check
+
+Name: python3-module-%oname
+Version: 0.2.5
+Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/wcwidth/
 
 # https://github.com/jquast/wcwidth.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+%endif
 
 %description
 This API is mainly for Terminal Emulator implementors - any python
@@ -21,24 +32,28 @@ Terminal. It is implemented in python (no C library calls) and has no
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
-rm -r %buildroot%python_sitelibdir/%oname/tests
+%python3_install
 
 %check
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr --no-deps -s false -- -vra
 
 %files
-%doc README.rst LICENSE.txt
-%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
-%python_sitelibdir/%oname/
+%doc README.rst LICENSE
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname/
 
 %changelog
-* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.1.9-alt2
-- Built Python3 package from its ows src.
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.2.5-alt1
+- 0.1.9 -> 0.2.5.
 
 * Thu May 07 2020 Stanislav Levin <slev@altlinux.org> 0.1.9-alt1
 - 0.1.7 -> 0.1.9.

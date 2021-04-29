@@ -1,12 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define mname setuptools
+%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
 
 %def_with check
+%def_without bootstrap
 
 Name: python3-module-%mname
 Epoch: 1
 Version: 56.0.0
-Release: alt1
+Release: alt2
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -40,7 +42,11 @@ BuildRequires: python3(wheel)
 BuildPreReq: python3-dev
 %endif
 
-BuildArch: noarch
+# dependencies for build wheel
+%if_without bootstrap
+BuildRequires: python3(wheel)
+BuildRequires: python3(system_seed_wheels)
+%endif
 
 Provides: python3-module-distribute = %EVR
 Requires: python3-module-pkg_resources = %EVR
@@ -50,11 +56,17 @@ Requires: python3-dev
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
 
+# hide bundled packages
+%add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
+
 %package -n python3-module-pkg_resources
 Summary: Package Discovery and Resource Access for Python3 libraries
 Group: Development/Python3
 # Not separated yet:
 Conflicts: python3-module-%mname < 39.2.0-alt3
+
+# hide bundled packages
+%add_findprov_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
 
 %description
 Setuptools is a collection of enhancements to the Python3 distutils
@@ -77,9 +89,22 @@ whose purpose is preparing packages).
 
 This package contains pkg_resources for Python3.
 
+%if_without bootstrap
+%package wheel
+Summary: %summary
+Group: Development/Python3
+%py3_requires system_seed_wheels
+
+%description wheel
+Provides the seed package for virtualenv(packaged as wheel).
+%endif
+
 %prep
 %setup
 %autopatch -p1
+
+# never unbundle vendored packages
+# built wheel being installed into virtualenv will lack of unbundled packages
 
 # Remove bundled exes
 rm -f setuptools/*.exe
@@ -88,12 +113,21 @@ rm -f setuptools/*.exe
 sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 
 %build
-python3 bootstrap.py
 %global python3_setup_buildrequires %nil
 %python3_build_debug
 
 %install
 %python3_install
+
+# since we package python modules as arch dependent
+%if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
+mkdir -p %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+%endif
+
+%if_without bootstrap
+%{python3_setup:} bdist_wheel --dist-dir %buildroot%system_wheels_path/
+%endif
 
 %check
 export PIP_NO_BUILD_ISOLATION=no
@@ -121,7 +155,15 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -- --ignore pavement.py 
 # (In future, we could patch their requires.txt.)
 %python3_sitelibdir/setuptools-%version-*.egg-info
 
+%if_without bootstrap
+%files wheel
+%system_wheels_path/setuptools-%version-*.whl
+%endif
+
 %changelog
+* Sat Apr 24 2021 Stanislav Levin <slev@altlinux.org> 1:56.0.0-alt2
+- Built wheel package(for virtualenv).
+
 * Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 1:56.0.0-alt1
 - 54.2.0 -> 56.0.0.
 

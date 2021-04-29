@@ -3,87 +3,58 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 0.4.2
-Release: alt3
+Name: python3-module-%oname
+Version: 0.5.6
+Release: alt1
 Summary: parse_type extends the parse module (opposite of string.format())
 License: BSD
 Group: Development/Python
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/parse_type/
+Url: https://pypi.org/project/parse-type/
 
 # https://github.com/jenisys/parse_type.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(enum34)
-BuildRequires: python2.7(parse)
-BuildRequires: python2.7(pytest)
 BuildRequires: python3(parse)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
-%py_requires parse enum34
+%py3_requires parse
 
 %description
 Simplifies to build parse types based on the parse module.
 
-%package -n python3-module-%oname
-Summary: parse_type extends the parse module (opposite of string.format())
-Group: Development/Python3
-%py3_requires parse
-
-%description -n python3-module-%oname
-Simplifies to build parse types based on the parse module.
-
 %prep
 %setup
-
-rm -rf ../python3
-cp -fR . ../python3
+%autopatch -p1
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
--e '/^setenv =/a\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-%_bindir/tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 
 %files
-%doc *.rst
-%python_sitelibdir/parse_type/
-%python_sitelibdir/parse_type-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/parse_type/
 %python3_sitelibdir/parse_type-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.5.6-alt1
+- 0.4.2 -> 0.5.6.
+- Stopped build for Python2.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.4.2-alt3
 - Fixed testing against Pytest 5.
 

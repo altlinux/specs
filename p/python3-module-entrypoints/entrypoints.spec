@@ -1,19 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define oname entrypoints
 
-Name: python-module-%oname
+%def_with check
+
+Name: python3-module-%oname
 Version: 0.3
 Release: alt2
 Summary: Discover and load entry points from installed packages
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/entrypoints
 
 # https://github.com/takluyver/entrypoints.git
 Source: %name-%version.tar
 
-%py_requires configparser
+BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Discover and load entry points from installed packages.
@@ -22,16 +29,28 @@ Discover and load entry points from installed packages.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
+cat > tox.ini <<EOF
+[tox]
+envlist = py3
+
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
-%python_sitelibdir/entrypoints.py*
-%python_sitelibdir/entrypoints-%version-py%_python_version.egg-info/
+%python3_sitelibdir/entrypoints.py
+%python3_sitelibdir/__pycache__/entrypoints.cpython-*
+%python3_sitelibdir/entrypoints-%version-py%_python3_version.egg-info/
 
 %changelog
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.3-alt2

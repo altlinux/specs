@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname python_utils
 
-%def_without doc
+%def_with check
 
 Name: python3-module-%oname
-Version: 2.2.0
-Release: alt2
+Version: 2.5.6
+Release: alt1
 
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
@@ -15,14 +16,22 @@ BuildArch: noarch
 
 # https://github.com/WoLpH/python-utils.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest-runner
-BuildRequires: python3-module-pytest
-%if_with doc
-BuildRequires: python3-module-sphinx
+
+%if_with check
+# install_requires:
+BuildRequires: python3(six)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
+
+%py3_provides python-utils
 
 %description
 Python Utils is a collection of small Python functions and classes which
@@ -32,11 +41,7 @@ extending it.
 
 %prep
 %setup
-%if_with doc
-%patch1 -p1
-
-sed -i 's|sphinx-build|&-3|' docs/Makefile
-%endif
+%autopatch -p1
 
 %build
 %python3_build_debug
@@ -44,21 +49,20 @@ sed -i 's|sphinx-build|&-3|' docs/Makefile
 %install
 %python3_install
 
-%if_with doc
-%make -C docs html
-%endif
-
 %check
-%__python3 setup.py test
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 
 %files
 %doc *.rst
-%if_with doc
-%doc docs/_build/html
-%endif
-%python3_sitelibdir/*
+%python3_sitelibdir/python_utils/
+%python3_sitelibdir/python_utils-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 2.5.6-alt1
+- 2.2.0 -> 2.5.6.
+
 * Wed Apr 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.2.0-alt2
 - Build for python2 disabled.
 

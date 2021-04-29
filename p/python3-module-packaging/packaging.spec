@@ -1,99 +1,66 @@
+%define _unpackaged_files_terminate_build 1
 %define oname packaging
 
-%def_with docs
 %def_with check
 
 Name: python3-module-%oname
-Version: 19.0
-Release: alt3
+Version: 20.9
+Release: alt1
 
 Summary: Core utilities for Python packages
 
-License: ASLv2.0 or BSD
+License: Apache-2.0 or BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/packaging
 
-# Source-url: %__pypi_url %oname
+# Source-url: https://github.com/pypa/packaging.git
 Source: %name-%version.tar
-Patch0: packaging-19.0-Fix-testsuite-for-pytest-5.x.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-
-%if_with docs
-BuildRequires: python3-module-sphinx
-%endif
 
 %if_with check
-BuildRequires: python3(coverage)
 BuildRequires: python3(pretend)
 BuildRequires: python3(pyparsing)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
 Core utilities for Python packages.
 
-%if_with docs
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-%summary
-This package contains documentation for %oname
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-Core utilities for Python packages.
-
-This package contains pickles for %oname.
-%endif
-
 %prep
 %setup
-%patch0 -p1
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
 
 %build
 %python3_build_debug
 
 %install
 %python3_install
-%python3_prune
-
-%if_with docs
-export PYTHONPATH=$PWD
-%make -C docs html SPHINXBUILD=sphinx-build-3
-%endif
 
 %check
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+cat > tox.ini <<EOF
+[testenv]
+usedevelop=True
+commands =
+    pytest {posargs:-vra}
+EOF
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
 %doc *.rst LICENSE*
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
-%if_with docs
-%files docs
-%doc docs/_build/html/* tasks
-%endif
-
 %changelog
+* Fri Apr 23 2021 Stanislav Levin <slev@altlinux.org> 20.9-alt1
+- 19.0 -> 20.9.
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 19.0-alt3
 - build python3 package separately, cleanup spec
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.20.1
+Version: 3.23.0
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -22,18 +22,21 @@ BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: /proc
-BuildRequires: python3(flaky)
-BuildRequires: python3(freezegun)
-BuildRequires: python3(pathlib2)
-BuildRequires: python3(pip)
-BuildRequires: python3(psutil)
-BuildRequires: python3(pytest_mock)
-BuildRequires: python3(pytest_randomly)
-BuildRequires: python3(pytest-xdist)
-BuildRequires: python3(virtualenv)
+# install_requires
+BuildRequires: python3(filelock)
+BuildRequires: python3(packaging)
 BuildRequires: python3(six)
 BuildRequires: python3(toml)
-BuildRequires: python3(filelock)
+BuildRequires: python3(virtualenv)
+
+# testing
+BuildRequires: python3(flaky)
+BuildRequires: python3(freezegun)
+BuildRequires: python3(psutil)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_mock)
+BuildRequires: python3(pytest_randomly)
+BuildRequires: python3(pytest_xdist)
 %endif
 
 BuildArch: noarch
@@ -82,13 +85,6 @@ export TOX_LIMITED_SHEBANG=1
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 export TOXENV=py3
 
-sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
-
 %buildroot%_bindir/tox.py3 --sitepackages -vvr -- -m "not internet"
 
 %files
@@ -98,6 +94,9 @@ commands_pre =\
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Sat Apr 24 2021 Stanislav Levin <slev@altlinux.org> 3.23.0-alt1
+- 3.20.1 -> 3.23.0.
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 3.20.1-alt1
 - 3.15.0 -> 3.20.1.
 

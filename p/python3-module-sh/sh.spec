@@ -3,13 +3,13 @@
 %define oname sh
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.12.14
-Release: alt5
+Release: alt6
 Summary: Python subprocess interface
 License: MIT
 BuildArch: noarch
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/sh/
 
 # https://github.com/amoffat/sh.git
@@ -22,7 +22,6 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: python-module-coverage
 BuildRequires: python3-module-coverage
 BuildRequires: python3(tox)
 %endif
@@ -36,43 +35,18 @@ sh (previously pbs) is a full-fledged subprocess replacement for python
 
 sh is not a collection of system commands implemented in python.
 
-%package -n python3-module-%oname
-summary: python subprocess interface
-Group: Development/Python3
-
-%description -n python3-module-%oname
-sh (previously pbs) is a full-fledged subprocess replacement for python
-2.6 - 3.2 that allows you to call any program as if it were a function:
-
-  from sh import ifconfig
-  print ifconfig("eth0")
-
-sh is not a collection of system commands implemented in python.
-
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 sed -i -e 's:==:>=:g' \
 	requirements*.txt
 
-cp -fr . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 cat > tox.ini <<EOF
@@ -82,21 +56,19 @@ commands =
 EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py2,py3
-tox.py3 --sitepackages -o -vv -r
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
-%doc *.md
-%python_sitelibdir/sh.py*
-%python_sitelibdir/sh-%version-py*.egg-info/
-
-%files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/sh.py
 %python3_sitelibdir/__pycache__/sh.cpython-*.py*
 %python3_sitelibdir/sh-%version-py*.egg-info/
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.12.14-alt6
+- Built Python3 package from its ows src.
+
 * Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1.12.14-alt5
 - Fixed FTBFS.
 

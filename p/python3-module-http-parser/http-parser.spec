@@ -3,39 +3,30 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.0
-Release: alt1
+Release: alt2
 Summary: http request/response parser
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/http-parser/
 
 # https://github.com/benoitc/http-parser.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python2.7(Cython)
 BuildRequires: python3(Cython)
 
 %if_with check
-BuildRequires: python2.7(pytest)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
-%py_provides %oname
 
-%description
-HTTP request/response parser for Python compatible with Python 2.x
-(>=2.6), Python 3 and Pypy. If possible a C parser based on http-parser
-from Ryan Dahl will be used.
-
-%package -n python3-module-%oname
-Summary: http request/response parser
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+%description
 HTTP request/response parser for Python compatible with Python 2.x
 (>=2.6), Python 3 and Pypy. If possible a C parser based on http-parser
 from Ryan Dahl will be used.
@@ -46,55 +37,27 @@ from Ryan Dahl will be used.
 # regenerate with cython later
 rm -f http_parser/parser.c
 
-# remove extra deps
-for pkg in pytest-cov pytest-cache
-do
-    { grep -s -l "^[[:space:]]*${pkg}[[:space:]]*$" tox.ini | xargs \
-        sed -i -e "/^[[:space:]]*${pkg}[[:space:]]*$/d"; } || exit 1
-done
-
-cp -fR . ../python3
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py2: _PYTEST_BIN=%_bindir\/py.test\
-    py3: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
-
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py2,py3
-tox.py3 --sitepackages -vv -r
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 
 %files
-%doc NOTICE *.rst *.md THANKS examples
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc NOTICE *.rst *.md THANKS examples
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.9.0-alt2
+- Stopped build for Python2.
+
 * Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
 - 0.8.3 -> 0.9.0.
 
