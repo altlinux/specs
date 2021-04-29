@@ -2,18 +2,17 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name       beanutils
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.9.3
-Release:        alt1_6jpp8
+Version:        1.9.4
+Release:        alt1_2jpp11
 Summary:        Java utility methods for accessing and modifying the properties of arbitrary JavaBeans
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}
@@ -24,7 +23,9 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-collections:commons-collections-testframework)
 BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 Source44: import.info
 
 %description
@@ -53,8 +54,7 @@ sed -i 's/\r//' *.txt
 %mvn_file : %{short_name} %{short_name}-core %{short_name}-bean-collections
 
 %build
-# Some tests fail in Koji
-%mvn_build -f
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -67,6 +67,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.4-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.9.3-alt1_6jpp8
 - new version
 
