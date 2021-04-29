@@ -1,8 +1,8 @@
 # git describe --always upstream/citra
-%define git_desc 9ff97270cf
+%define git_desc 86b775bd8f
 
 Name: citra
-Version: 1703
+Version: 1704
 Release: alt1
 
 Summary: Nintendo 3DS emulator
@@ -38,20 +38,22 @@ Source9: enet.tar
 Source10: inih.tar
 # https://github.com/citra-emu/ext-libressl-portable.git
 Source11: libressl.tar
+# https://github.com/libusb/libusb.git
+Source12: libusb.tar
 # https://github.com/kinetiknz/cubeb.git
-Source12: cubeb.tar
+Source13: cubeb.tar
 # https://github.com/discordapp/discord-rpc.git
-Source13: discord-rpc.tar
+Source14: discord-rpc.tar
 # https://github.com/arun11299/cpp-jwt.git
-Source14: cpp-jwt.tar
+Source15: cpp-jwt.tar
 # https://github.com/wwylele/teakra.git
-Source15: teakra.tar
+Source16: teakra.tar
 # https://github.com/lvandeve/lodepng.git
-Source16: lodepng.tar
+Source17: lodepng.tar
 # https://github.com/facebook/zstd.git
-Source17: zstd.tar
+Source18: zstd.tar
 # https://github.com/arsenm/sanitizers-cmake.git
-Source18: sanitizers-cmake.tar
+Source19: sanitizers-cmake.tar
 
 BuildRequires: boost-asio-devel
 BuildRequires: ctest
@@ -62,6 +64,7 @@ BuildRequires: libSDL2-devel
 BuildRequires: libavformat-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
+BuildRequires: libusb-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-tools-devel
 
@@ -69,7 +72,7 @@ BuildRequires: qt5-tools-devel
 Citra is an open-source Nintendo 3DS emulator and debugger, written with portability in mind.
 
 %prep
-%setup -n %name-nightly-nightly-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14 -b 15 -b 16 -b 17 -b 18
+%setup -n %name-nightly-nightly-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14 -b 15 -b 16 -b 17 -b 18 -b 19
 
 %__mv -Tf ../boost externals/boost
 %__mv -Tf ../nihstro externals/nihstro
@@ -82,6 +85,7 @@ Citra is an open-source Nintendo 3DS emulator and debugger, written with portabi
 %__mv -Tf ../enet externals/enet
 %__mv -Tf ../inih externals/inih/inih
 %__mv -Tf ../libressl externals/libressl
+%__mv -Tf ../libusb externals/libusb/libusb
 %__mv -Tf ../cubeb externals/cubeb
 %__mv -Tf ../discord-rpc externals/discord-rpc
 %__mv -Tf ../cpp-jwt externals/cpp-jwt
@@ -101,6 +105,7 @@ Citra is an open-source Nintendo 3DS emulator and debugger, written with portabi
 %__mkdir externals/enet/.git
 %__mkdir externals/inih/inih/.git
 %__mkdir externals/libressl/.git
+%__mkdir externals/libusb/libusb/.git
 %__mkdir externals/cubeb/.git
 %__mkdir externals/discord-rpc/.git
 %__mkdir externals/cpp-jwt/.git
@@ -144,6 +149,9 @@ src/common/scm_rev.cpp.in
 %_man6dir/%name-qt.6*
 
 %changelog
+* Thu Apr 29 2021 Nazarov Denis <nenderus@altlinux.org> 1704-alt1
+- Version Nightly 1704
+
 * Sat Apr 24 2021 Nazarov Denis <nenderus@altlinux.org> 1703-alt1
 - Version Nightly 1703
 
