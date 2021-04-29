@@ -1,6 +1,6 @@
 Name:    guake
 Version: 3.7.0
-Release: alt1
+Release: alt2
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 
@@ -16,6 +16,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-gir
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
+BuildRequires: python3-module-pip
 BuildRequires: libgio
 BuildRequires: desktop-file-utils
 
@@ -62,6 +63,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Apr 29 2021 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt2
+- FTBFS: add python3-module-pip to build requirements.
+
 * Wed Feb 12 2020 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version.
 
