@@ -1,17 +1,16 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global vertag Final
 
 Name:           os-maven-plugin
 Version:        1.2.3
-Release:        alt1_11jpp8
+Release:        alt1_14jpp11
 Summary:        Maven plugin for generating platform-dependent properties
 License:        ASL 2.0
 URL:            https://github.com/trustin/os-maven-plugin/
@@ -30,7 +29,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -58,6 +56,9 @@ This package provides %{summary}.
 %patch0 -p1
 %patch1 -p1
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 # Remove Eclipse plugin (not needed in Fedora)
 %pom_remove_dep org.eclipse:ui
 %pom_remove_plugin :maven-jar-plugin
@@ -65,7 +66,7 @@ find -name EclipseStartup.java -delete
 find -name plugin.xml -delete
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -79,6 +80,9 @@ find -name plugin.xml -delete
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.2.3-alt1_14jpp11
+- update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_11jpp8
 - new version
 
