@@ -1,6 +1,6 @@
 Name: raze
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Raze is a fork of Build engine games backed by GZDoom tech
 License: GPLv2+
@@ -13,8 +13,9 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 ExclusiveArch: x86_64
 
 Source: %name-%version.tar
+Patch: 0001-Fix-file-paths.patch
 
-BuildRequires: cmake gcc-c++ rpm-macros-cmake glslang-devel libspirv-tools-devel bzip2 libvpx-devel 
+BuildRequires: cmake gcc-c++ rpm-macros-cmake glslang-devel libspirv-tools-devel bzip2 libvpx-devel
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz zmusic-devel libzmusiclite
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
 
@@ -27,20 +28,21 @@ It is also capable of playing Nam and WW2 GI.
 %prep
 %setup -n %name-%version
 
+%patch0 -p1
+
 %build
 %cmake_insource \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_SHARED_LINKER_FLAGS="" \
-	-DCMAKE_MODULE_LINKER_FLAGS="" \
-	-D DYN_GTK=OFF \
-	-DINSTALL_PK3_PATH=%_datadir/%name/
+   -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+   -D CMAKE_CXX_FLAGS="${CXXFLAGS} -ffile-prefix-map=\"$PWD\"=. -DSHARE_DIR=\\\"%_datadir/raze\\\"" \
+   -D DYN_GTK=OFF \
+   -D DYN_OPENAL=OFF \
+   -DINSTALL_PK3_PATH=%_datadir/%name/
 %make_build
 
 %install
 %makeinstall_std
 
-
-mkdir %buildroot%_datadir/%name/soundfonts
+mkdir -p %buildroot%_datadir/%name/soundfonts
 install -D -m 0644 soundfonts/%name.sf2 %buildroot%_datadir/%name/soundfonts
 
 # install menu entry
@@ -69,9 +71,11 @@ done
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.xpm
 %_datadir/%name/soundfonts/%name.sf2
+%_datadir/%name/%name.pk3
 
 %changelog
+* Thu Apr 29 2021 Artyom Bystrov <arbars@altlinux.org> 1.0.1-alt2
+- Add patch for fixing data paths (thanks to Arch Linux Team)
+
 * Wed Apr 14 2021 Artyom Bystrov <arbars@altlinux.org> 1.0.1-alt1
 - initial build for ALT Sisyphus
-
-
