@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.39.0
+Version: 0.40.0
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -14,6 +14,7 @@ BuildArch: noarch
 Packager: Python Development Team <python@packages.altlinux.org>
 
 Conflicts: rpm-build < 4.0.4-alt100.91
+Requires: rpm-macros-python = %EVR
 Requires: python2-base
 Requires: file >= 4.26-alt11
 
@@ -25,6 +26,15 @@ BuildRequires: python-dev python-modules-encodings
 %description
 These helper macros provide possibility to rebuild
 python modules by some Alt Linux Team Policy compatible way.
+
+%package -n rpm-macros-python
+Summary: Set of RPM macros for packaging python2 modules and scripts
+Group: Development/Other
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description -n rpm-macros-python
+This packages provides RPM macros for packaging python2 modules and scripts.
 
 %prep
 %setup
@@ -49,20 +59,27 @@ install -pD -m755 python.compileall.py %buildroot%_rpmlibdir/python.compileall.p
 
 unset RPM_PYTHON
 
-%files
+%define _unpackaged_files_terminate_build 1
+
+%files -n rpm-macros-python
 %_rpmmacrosdir/python
 %_rpmmacrosdir/python.env
-%_sysconfdir/buildreqs/files/ignore.d/%name
-%_rpmlibdir/python.compileall.py
 %_rpmlibdir/python.req
-%_rpmlibdir/python.req.py
 %_rpmlibdir/python.req.files
 %_rpmlibdir/python.prov
-%_rpmlibdir/python.prov.py
 %_rpmlibdir/python.prov.files
+
+%files
+%_sysconfdir/buildreqs/files/ignore.d/%name
+%_rpmlibdir/python.compileall.py
+%_rpmlibdir/python.req.py
+%_rpmlibdir/python.prov.py
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Wed Apr 28 2021 Dmitry V. Levin <ldv@altlinux.org> 0.40.0-alt1
+- Introduced rpm-macros-python subpackage and moved non-python files there.
+
 * Tue Nov 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.39.0-alt1
 - Fixed processing script files reported as 'python2 script text executable'.
 
