@@ -1,17 +1,14 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name commons-digester
 
 Name:          apache-%{short_name}
 Version:       2.1
-Release:       alt3_12jpp8
+Release:       alt3_15jpp11
 Summary:       XML to Java object mapping module
 License:       ASL 2.0
 URL:           http://commons.apache.org/digester/
@@ -48,7 +45,7 @@ This package contains the %{summary}.
 %mvn_file :%{short_name} %{short_name} %{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -60,6 +57,9 @@ This package contains the %{summary}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1-alt3_15jpp11
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt3_12jpp8
 - new version
 
