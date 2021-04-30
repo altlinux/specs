@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global vertag  M9
@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        2.0
-Release:        alt1_6.M9jpp8
+Release:        alt1_8.M9jpp11
 Epoch:          1
 License:        ASL 2.0
 URL:            https://github.com/paul-hammant/qdox
@@ -26,7 +26,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildRequires:  byaccj
 BuildRequires:  jflex
@@ -55,6 +54,9 @@ API docs for %{name}.
 find -name *.jar -delete
 rm -rf bootstrap
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 # We don't need these plugins
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-failsafe-plugin
@@ -72,7 +74,7 @@ jflex -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/lexer.flex
 jflex -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/commentlexer.flex
 
 # Build artifact
-%mvn_build -f -- -Dqdox.byaccj.executable=byaccj
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dqdox.byaccj.executable=byaccj
 
 # Inject OSGi manifests
 jar ufm target/%{name}-%{version}*.jar %{SOURCE1}
@@ -87,6 +89,9 @@ jar ufm target/%{name}-%{version}*.jar %{SOURCE1}
 %doc LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:2.0-alt1_8.M9jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_6.M9jpp8
 - update
 
