@@ -5,6 +5,7 @@
 %define kernel_base_version 5.12
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
+%add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
 
 # from hv_kvp_daemon.c
@@ -13,7 +14,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -29,8 +30,13 @@ BuildRequires: elfutils-devel
 BuildRequires: flex
 BuildRequires: libaudit-devel
 BuildRequires: libcap-devel
+BuildRequires: libcap-ng-devel
 BuildRequires: libdw-devel
+BuildRequires: libfuse-devel
+BuildRequires: libhugetlbfs-devel
 BuildRequires: liblzma-devel
+BuildRequires: libmnl-devel
+BuildRequires: libmount-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
 %endif
@@ -38,6 +44,7 @@ BuildRequires: libslang2-devel
 BuildRequires: libssl-devel
 BuildRequires: libzstd-devel
 BuildRequires: perl-devel
+BuildRequires: rsync
 BuildRequires: xmlto
 
 BuildRequires: %kernel_source = 1.0.0
@@ -178,6 +185,20 @@ Group: Development/Tools
 This package contains the bpftool, which allows inspection and simple
 manipulation of eBPF programs and maps.
 
+%package -n kselftests
+Summary: Linux Kernel Selftests
+Group: Development/Tools
+AutoReq: noperl,nopython,noshebang,nolib,noshell
+AutoProv: no
+
+%description -n kselftests
+The kernel contains a set of "self tests" under the tools/testing/selftests/
+directory. These are intended to be small tests to exercise individual code
+paths in the kernel. Tests are intended to be run after building, installing
+and booting a kernel.
+
+(This is experimental and internal use only testing package!)
+
 %prep
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
@@ -200,6 +221,10 @@ sed -i '/#include/a typedef struct { __u32 u[4]; } __vector128;' include/uapi/li
 
 # Fix `trace/beauty/generated/fsconfig_arrays.c:2:3: error: expected expression before ']' token'.
 sed -i 's/*+/*/' perf/trace/beauty/fsconfig.sh
+
+sed -i 's/-s/-g/' testing/selftests/size/Makefile
+sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
+sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
 
 %build
 cd %kernel_source/tools
@@ -278,7 +303,8 @@ make acpi
 	leds \
 	objtool \
 	tmon \
-	vm
+	vm \
+	selftests
 
 %install
 cd %kernel_source/tools
@@ -400,6 +426,11 @@ install -p -m755 objtool/fixdep			%buildroot%_bindir
 install -p -m755 objtool/objtool		%buildroot%_bindir
 install -p -m755 thermal/tmon/tmon		%buildroot%_bindir
 install -p -m755 thermal/tmon/tmon.8		%buildroot%_man8dir
+
+pushd testing/selftests
+mkdir -p %buildroot%_libexecdir/kselftests
+./kselftest_install.sh %buildroot%_libexecdir/kselftests
+popd
 
 %check
 # Simplistic test
@@ -547,7 +578,13 @@ fi
 %_datadir/bash-completion/completions/bpftool
 %_man8dir/bpftool*
 
+%files -n kselftests
+%_libexecdir/kselftests
+
 %changelog
+* Fri Apr 30 2021 Vitaly Chikunov <vt@altlinux.org> 5.12-alt2
+- Build kselftests.
+
 * Tue Apr 27 2021 Vitaly Chikunov <vt@altlinux.org> 5.12-alt1
 - Update to v5.12 (2021-04-25).
 
