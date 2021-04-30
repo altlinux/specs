@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -46,7 +46,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt5_19jpp8
+Release:        alt5_19jpp11
 Epoch:          0
 License:        LGPLv2+
 URL:            http://forge.objectweb.org/projects/monolog/
@@ -85,7 +85,7 @@ find . -name "*.jar" -exec rm {} \;
 %build
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
 export CLASSPATH=$(build-classpath asm2/asm2)
-ant -Dbuild.compiler=modern -Dbuild.sysclasspath=first jar jdoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbuild.compiler=modern -Dbuild.sysclasspath=first jar jdoc
 
 %install
 # jars
@@ -111,6 +111,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3.2-alt5_19jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt5_19jpp8
 - fc update
 
