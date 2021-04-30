@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name       pool
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.6
-Release:          alt2_19jpp8
+Release:          alt2_22jpp11
 Summary:          Apache Commons Pool Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
@@ -45,7 +42,7 @@ This package contains the API documentation for %{name}.
 %mvn_file : %{short_name} %{name}
 
 %build
-%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.pool
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dcommons.osgi.symbolicName=org.apache.commons.pool -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -58,6 +55,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.6-alt2_22jpp11
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_19jpp8
 - new version
 
