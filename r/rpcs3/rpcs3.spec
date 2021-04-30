@@ -1,24 +1,24 @@
-%def_enable clang
+%define clang_version 12
 
-%define git_ver 11838
-%define git_commit 8e4451d1ab2f973240a1547623a955a2fc3d6611
+%define git_ver 12199
+%define git_commit b8477a470f151ea46ec033b3c49987f5e8bec463
 
-%define glslang_commit 3ee5f2f1d3316e228916788b300d786bb574d337
+%define glslang_version 11.4.0
 %define asmjit_commit 723f58581afc0f4cb16ba13396ff77e425896847
-%define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
+%define pugixml_version 1.11.4
 %define hidapi_commit 8961cf86ebc4756992a7cd65c219c743e94bab19
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
 %define xx_hash_version 0.8.0
-%define llvm_commit 716bb292ba3b4e5c0ceff72fee911ed2b53232cf
+%define llvm_commit 4d88105d4a89f2f74518e3f1170af7bff2b00324
 %define cereal_commit 60c69df968d1c72c998cd5f23ba34e2e3718a84b
-%define faudio_commit 9c7d2d1430c9dbe4e67c871dfe003b331f165412
+%define faudio_version 21.04
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
 %define wolfssl_commit 39b5448601271b8d1deabde8a0d33dc64d2a94bd
 
 Name: rpcs3
-Version: 0.0.15
+Version: 0.0.16
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -32,12 +32,12 @@ ExclusiveArch: x86_64
 
 # https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
-# https://github.com/KhronosGroup/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
-Source1: glslang-%glslang_commit.tar
+# https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
+Source1: glslang-%glslang_version.tar
 # https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
 Source2: asmjit-%asmjit_commit.tar
-# https://github.com/zeux/pugixml/archive/%pugixml_commit/pugixml-%pugixml_commit.tar.gz
-Source3: pugixml-%pugixml_commit.tar
+# https://github.com/zeux/pugixml/archive/v%pugixml_version/pugixml-%pugixml_version.tar.gz
+Source3: pugixml-%pugixml_version.tar
 # https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
 Source4: hidapi-%hidapi_commit.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
@@ -48,8 +48,8 @@ Source6: xxHash-%xx_hash_version.tar
 Source7: llvm-mirror-%llvm_commit.tar
 # https://github.com/RPCS3/cereal/archive/%cereal_commit/cereal-%cereal_commit.tar.gz
 Source8: cereal-%cereal_commit.tar
-# https://github.com/FNA-XNA/FAudio/archive/%faudio_commit/FAudio-%faudio_commit.tar.gz
-Source9: FAudio-%faudio_commit.tar
+# https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
+Source9: FAudio-%faudio_version.tar
 # https://github.com/tcbrindle/span/archive/%span_commit/span-%span_commit.tar.gz
 Source10: span-%span_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
@@ -61,6 +61,7 @@ Source13: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
 
+BuildRequires: clang%clang_version.0
 BuildRequires: cmake >= 3.14.1
 BuildRequires: cvs
 BuildRequires: git-core
@@ -85,11 +86,8 @@ BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
-%if_enabled clang
-BuildRequires: llvm-common-clang >= 11.0.0
-BuildRequires: llvm-common-lld >= 11.0.0
-BuildRequires: llvm-common-util >= 11.0.0
-%endif
+BuildRequires: lld%clang_version.0
+BuildRequires: llvm%clang_version.0
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-module-yaml
@@ -106,15 +104,15 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 
 %patch0 -p1
 
-%__mv -Tf ../glslang-%glslang_commit Vulkan/glslang
+%__mv -Tf ../glslang-%glslang_version Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
-%__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
+%__mv -Tf ../pugixml-%pugixml_version 3rdparty/pugixml
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
 %__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
 %__mv -Tf ../cereal-%cereal_commit 3rdparty/cereal
-%__mv -Tf ../FAudio-%faudio_commit 3rdparty/FAudio
+%__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
 %__mv -Tf ../span-%span_commit 3rdparty/span
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version Vulkan/spirv-headers
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_version Vulkan/spirv-tools
@@ -135,19 +133,11 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
-%if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export LINKER="lld"
-export AR="llvm-ar"
-export RANLIB="llvm-ranlib"
-%else
-export CC="gcc"
-export CXX="g++"
-export LINKER="ld"
-export AR="ar"
-export RANLIB="ranlib"
-%endif
+export CC="clang-%clang_version"
+export CXX="clang++-%clang_version"
+export LINKER="lld-%clang_version"
+export AR="llvm-ar-%clang_version"
+export RANLIB="llvm-ranlib-%clang_version"
 
 %cmake \
 	-DCMAKE_LINKER:STRING="$LINKER" \
@@ -158,9 +148,7 @@ export RANLIB="ranlib"
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
 	-DUSE_SYSTEM_CURL:BOOL=TRUE \
 	-DUSE_SYS_LIBUSB:BOOL=TRUE \
-%if_enabled clang
 	-DLLVM_USE_LINKER:STRING="$LINKER" \
-%endif
 	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
 
@@ -179,6 +167,9 @@ export RANLIB="ranlib"
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat May 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.16-alt1
+- Version 0.0.16
+
 * Mon Mar 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.15-alt1
 - Version 0.0.15
 
