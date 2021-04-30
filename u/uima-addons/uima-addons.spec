@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          uima-addons
 Version:       2.3.1
-Release:       alt1_12jpp8
+Release:       alt2_12jpp8
 Summary:       Apache UIMA Addons components
 License:       ASL 2.0
 URL:           http://uima.apache.org/sandbox.html
@@ -103,6 +103,7 @@ This package contains javadoc for %{name}.
 %pom_disable_module Lucas
 %pom_disable_module Solrcas
 %pom_disable_module TikaAnnotator
+%pom_disable_module BSFAnnotator
 
 %pom_remove_dep org.mortbay.jetty:jetty SimpleServer
 rm -r SimpleServer/src/main/java/org/apache/uima/simpleserver/util/JettyUtils.java \
@@ -152,8 +153,7 @@ sed -i "s|<version>1.2.14</version>|<version>1.2.17</version>|" BSFAnnotator/pom
 %mvn_package ::pear: __noinstall
 
 %build
-
-%mvn_build
+%mvn_build -- -Dmaven.test.skip=true
 
 %install
 %mvn_install
@@ -167,6 +167,9 @@ sed -i "s|<version>1.2.14</version>|<version>1.2.17</version>|" BSFAnnotator/pom
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Apr 30 2021 Igor Vlasenko <viy@altlinux.org> 2.3.1-alt2_12jpp8
+- build w/o BSFAnnotation
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_12jpp8
 - new version
 
