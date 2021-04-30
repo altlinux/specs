@@ -1,15 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           munge-maven-plugin
 Version:        1.0
-Release:        alt1_13jpp8
+Release:        alt1_16jpp11
 Summary:        Munge Maven Plugin
 License:        CDDL-1.0
 URL:            http://github.com/sonatype/munge-maven-plugin
@@ -21,8 +20,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.sonatype.plugins:plugins-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 Source44: import.info
 
@@ -58,8 +55,11 @@ This package provides %{summary}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -73,6 +73,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_16jpp11
+- update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_13jpp8
 - new version
 
