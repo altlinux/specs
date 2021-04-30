@@ -8,10 +8,10 @@
 
 Name: lib%{_name}
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: GtkSourceView text widget library
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: http://www.gnome.org
 
@@ -35,7 +35,7 @@ Obsoletes: %{name}2 < %version-%release
 %define gtk_ver 2.12.0
 %define libxml2_ver 2.5.0
 
-BuildPreReq: rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome rpm-build-python
 
 # From configure.ac
 BuildPreReq: intltool >= %intltool_ver
@@ -97,7 +97,6 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the GtkSourceView library
 
-
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
@@ -109,6 +108,9 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+
+# fix shebang: python -> python2
+sed -i 's|\(#\!/usr/bin/env python\)$|\12|' data/language-specs/convert.py
 
 %build
 %add_optflags -Wno-error=format-nonliteral
@@ -125,7 +127,6 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 
 %install
 %makeinstall_std
-
 %find_lang %_name-%api_ver
 
 %files -f %_name-%api_ver.lang
@@ -152,6 +153,9 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 
 
 %changelog
+* Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt3
+- BR(pre): +rpm-build-python
+
 * Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt2
 - rebuilt with gcc7
 
