@@ -1,15 +1,12 @@
 Epoch: 1
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsr-305
 Version:        0
-Release:        alt4_0.24.20130910svnjpp8
+Release:        alt4_0.27.20130910svnjpp11
 Summary:        Correctness annotations for Java code
 
 # The majority of code is BSD-licensed, but some Java sources
@@ -55,18 +52,23 @@ cp %{SOURCE1} NOTICE-CC-BY
 %pom_disable_module sampleUses
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc ri/LICENSE NOTICE-CC-BY sampleUses
+%doc NOTICE-CC-BY sampleUses
+%doc --no-dereference ri/LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc ri/LICENSE NOTICE-CC-BY
+%doc NOTICE-CC-BY
+%doc --no-dereference ri/LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:0-alt4_0.27.20130910svnjpp11
+- update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:0-alt4_0.24.20130910svnjpp8
 - new version
 
