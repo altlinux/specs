@@ -1,6 +1,6 @@
 Name: rpmrebuild-arepo
-Version: 3.1.10
-Release: alt2
+Version: 3.1.11
+Release: alt1
 
 Summary: biarch repackager for Sisyphus packages
 License: GPL
@@ -17,24 +17,10 @@ Arepo repackages i586 files (mostly libraries) in i586-* packages suitable
 for installation on an x86_64 system. Installing these packages allows you
 to emulate a biarch environment.
 
-%package scripts
-Group: Development/Other
-Summary: Helper scripts for %name biarch repackager
-
-%description scripts
-Helper scripts for %name biarch repackager
-
 %prep
 %setup
 
-# fix python shebangs
-find . -type f -print0 |
-	xargs -r0 grep -lZ '^#![[:space:]]*%_bindir/.*python$' -- |
-	xargs -r0 sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python$@\1%__python@' --
-
 %install
-mkdir -p %buildroot%_bindir
-install -m755 arepo_pre.py %buildroot%_bindir/
 mkdir -p %buildroot%_sysconfdir
 install -m644 rpmrebuild-arepo.conf %buildroot%_sysconfdir
 mkdir -p %buildroot%_libexecdir/rpmrebuild/plugins/
@@ -45,10 +31,10 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %config(noreplace) %_sysconfdir/rpmrebuild-arepo.conf
 %_libexecdir/rpmrebuild/plugins/arepo.*
 
-%files scripts
-%_bindir/arepo_pre.py
-
 %changelog
+* Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 3.1.11-alt1
+- Dropped unused %name-scripts subpackage.
+
 * Thu Nov 21 2019 Dmitry V. Levin <ldv@altlinux.org> 3.1.10-alt2
 - Fixed python shebangs.
 
