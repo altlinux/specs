@@ -1,12 +1,9 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,11 +12,11 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without  avalon
+%bcond_with     avalon
 
 Name:           apache-commons-logging
 Version:        1.2
-Release:        alt1_17jpp8
+Release:        alt1_20jpp11
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 URL:            http://commons.apache.org/logging
@@ -64,6 +61,7 @@ logging implementation.
 %patch0 -p1
 %patch1 -p1
 
+
 %if %{with avalon}
 # Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
 %pom_remove_dep :avalon-framework
@@ -92,7 +90,7 @@ sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
 rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 
 %build
-%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.logging
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dcommons.osgi.symbolicName=org.apache.commons.logging
 
 # The build produces more artifacts from one pom
 %mvn_artifact %{SOURCE2} target/commons-logging-%{version}-api.jar
@@ -106,6 +104,9 @@ rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 %doc PROPOSAL.html RELEASE-NOTES.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_20jpp11
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_17jpp8
 - new version
 
