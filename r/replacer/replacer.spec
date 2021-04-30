@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          replacer
 Version:       1.6
-Release:       alt1_11jpp8
+Release:       alt1_13jpp11
 Summary:       Replacer Maven Mojo
 License:       MIT
 URL:           https://github.com/beiliubei/maven-replacer-plugin
@@ -18,7 +18,6 @@ BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(xerces:xercesImpl)
 
 BuildArch:     noarch
@@ -41,6 +40,9 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n maven-replacer-plugin-%{version}
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %pom_remove_plugin :dashboard-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
 
@@ -61,6 +63,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1_13jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_11jpp8
 - update
 
