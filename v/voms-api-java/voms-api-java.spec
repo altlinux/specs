@@ -1,15 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		voms-api-java
 Version:	3.3.0
-Release:	alt1_4jpp8
+Release:	alt1_7jpp11
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
@@ -24,7 +23,6 @@ BuildRequires:	mvn(eu.eu-emi.security:canl) >= 2.5
 BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(org.hamcrest:hamcrest-library)
 BuildRequires:	mvn(org.mockito:mockito-core)
-BuildRequires:	mvn(net.jcip:jcip-annotations)
 Requires:	mvn(eu.eu-emi.security:canl) >= 2.5
 Source44: import.info
 
@@ -50,6 +48,14 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %setup -q
 %patch0 -p1
 
+# Remove unused dependency
+%pom_remove_dep net.jcip:jcip-annotations
+
+# Remove maven-javadoc-plugin configuration
+# It doesn't change the content of the javadoc package anyway
+# And its presence causes the EPEL 8 build to fail
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
+
 # Do not create source jars
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
 
@@ -60,10 +66,10 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
-%mvn_install -J target/site/javadoc/apidocs
+%mvn_install
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
@@ -74,6 +80,9 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_7jpp11
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_4jpp8
 - new version
 
