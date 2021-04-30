@@ -17,11 +17,11 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_44jpp8
+Release:        alt2_47jpp8
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
-# this is http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+# this is http://downloads.sourceforge.net/%%{name}/%%{name}-%%{version}.tar.gz
 # with the included Microsoft Copyrighted Arial fonts removed
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-runtest.sh
@@ -44,12 +44,11 @@ BuildRequires:  swig
 BuildRequires:  bsh
 BuildRequires:  jdom
 BuildRequires:  xml-commons-apis
-
-BuildRequires:  jruby
 BuildRequires:  %{_bindir}/ruby
+BuildRequires:  gem
 
 Requires:       java
-Requires:       javapackages-tools
+Requires:       javapackages-filesystem
 Requires:       bsh
 Requires:       jdom
 Source44: import.info
@@ -76,10 +75,8 @@ Group: Development/Java
 Summary:        Some examples for %{name}
 BuildArch:      noarch
 Requires:       %{name} = %{version}-%{release}
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Bold.ttf
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Oblique.ttf
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf
+Requires:       font(dejavusans)
+Requires:       javapackages-tools
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -125,7 +122,7 @@ rm src/org/gljava/opengl/native/glew_wrap.c
 
 
 %build
-# We must add -D__%{_arch}__ to swigs arguments as swig doesn't do that itself.
+# We must add -D__%%{_arch}__ to swigs arguments as swig doesn't do that itself.
 # Special case ppc as the define is powerpc not ppc and both ppc and ppc64
 # must be set for ppc64, also add -D__LONG_DOUBLE_128__ which works around
 # swig barfing on bits/stdlib-ldbl.h
@@ -180,20 +177,18 @@ ant jar javadoc
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-# should be just %{_javadocdir}/%{name} but that is a ghosted symlink in older
-# versions and rpm does not grok replacing that with a dir
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+mkdir -p $RPM_BUILD_ROOT%{_jnidir}
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # jars
 install -m 644 lib/%{name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+  $RPM_BUILD_ROOT%{_jnidir}/%{name}.jar
 
 # native libraries
 install -m 755 lib/*.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 
 # javadoc
-cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # demo scripts
 install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}
@@ -220,11 +215,11 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 %files
 %doc README TODO docs/CHANGES_0_9_1
-%{_javadir}/%{name}.jar
+%{_jnidir}/%{name}.jar
 %{_libdir}/%{name}
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{name}
 
 %files demo
 %{_bindir}/%{name}-*.sh
@@ -232,6 +227,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Fri Apr 30 2021 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_47jpp8
+- update
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_44jpp8
 - fc update
 
