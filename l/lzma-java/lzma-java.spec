@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          lzma-java
 Version:       1.3
-Release:       alt1_6jpp8
+Release:       alt1_9jpp11
 Summary:       LZMA library for Java
 # Source files without license headers https://github.com/jponge/lzma-java/issues/13
 # Public Domain: ./src/main/java/lzma/sdk/*  ./src/test/java/lzma/*
@@ -19,7 +16,6 @@ Source0:       https://github.com/jponge/lzma-java/archive/%{name}-%{version}.ta
 BuildRequires: maven-local
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 # ./src/main/java/lzma/ http://www.7-zip.org/sdk.html
 Provides:      bundled(lzma-sdk-java) = 16.02
 BuildArch:     noarch
@@ -41,6 +37,9 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin :maven-release-plugin
 
@@ -48,7 +47,7 @@ This package contains javadoc for %{name}.
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -61,6 +60,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.3-alt1_9jpp11
+- update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_6jpp8
 - new version
 
