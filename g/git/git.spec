@@ -1,6 +1,6 @@
 Name: git
 Version: 2.29.3
-Release: alt1
+Release: alt2
 
 Summary: Git core and tools
 License: GPLv2
@@ -220,7 +220,7 @@ This package contains the Git documentation in text and HTML formats.
 Summary: Git contrib files
 Group: Development/Other
 BuildArch: noarch
-AutoReq: no
+AutoReqProv: no
 Requires: %name-core = %EVR
 
 %description contrib
@@ -528,6 +528,9 @@ popd
 %endif #doc
 
 %changelog
+* Fri Apr 30 2021 Dmitry V. Levin <ldv@altlinux.org> 2.29.3-alt2
+- git-contrib: fixed FTBFS by disabling automatic provides.
+
 * Fri Feb 12 2021 Dmitry V. Levin <ldv@altlinux.org> 2.29.3-alt1
 - 2.29.2 -> 2.29.3 (fixes: CVE-2021-21300).
 
