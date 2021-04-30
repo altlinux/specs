@@ -24,7 +24,7 @@
 
 Name: glib2
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -235,6 +235,8 @@ the functionality of the installed glib2/libgio packages.
 rm glib/pcre/*.[ch]
 %endif
 
+sed -i 's|\(#\!/usr/bin/env python\)$|\13|' {gobject,gio}/tests/taptestrunner.py
+
 install -p -m644 %_sourcedir/glib-compat.map glib/compat.map
 install -p -m644 %_sourcedir/glib-compat.lds glib/compat.lds
 install -p -m644 %_sourcedir/gobject-compat.map gobject/compat.map
@@ -440,6 +442,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.1-alt1.1
+- tests/taptestrunner.py: fixed shebang
+
 * Thu Apr 08 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.1-alt1
 - 2.68.1
 
