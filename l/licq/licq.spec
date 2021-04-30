@@ -15,11 +15,11 @@
 #
 #SSL used only for direct connections that are not available
 #since the IP addresses are hidden. So, disabled it.
-%def_without ssl
+%def_disable ssl
 
 #UI plugins
-%define with_qt4 1
-%define with_kde4 1
+%define with_qt5 1
+%define with_kde4 0
 # removed some time ago (near version 1.4)
 %define with_gtk 0
 # removed in 1.8.0
@@ -37,11 +37,12 @@
 %define with_osd 1
 %define with_aosd 1
 %define with_gpg 1
+%define with_dbus 0
 
 # name-version-release
 %define rname licq
 %define ver 1.8.2
-%define rlz alt3
+%define rlz alt4
 
 %define common_summary Multi-protocol IM-client (icq,jabber,msn) written on C++
 
@@ -77,9 +78,12 @@ Name: %rname
 Version: %ver
 Release: %rlz
 
-BuildRequires(pre): kde4libs-devel
+%if %with_kde4
+BuildRequires(pre): rpm-build-kf5
+%endif
 BuildRequires(pre): graphviz
 
+BuildRequires: cmake
 BuildRequires: freetype2-devel gcc-c++ chrpath
 BuildRequires: libart_lgpl-devel libexpat-devel libjpeg-devel
 BuildRequires: liblcms-devel libmng-devel kde-common-devel
@@ -92,11 +96,11 @@ BuildRequires: libssl-devel
 %if %with_console
 BuildRequires: libcdk-devel
 %endif
-%if %with_qt4
-BuildRequires: libqt4-devel
+%if %with_qt5
+BuildRequires: qt5-base-devel qt5-tools-devel
 %endif
 %if %with_kde4
-BuildRequires: kde4libs-devel
+BuildRequires: rpm-build-kf5
 %endif
 %if %socks
 BuildRequires: libdante-devel
@@ -142,6 +146,19 @@ Patch50: %name-%version-alt-gcc6.patch
 
 Patch200: licq-1.2.7-remove-pidfile.patch
 
+Patch300: 0001-Rename-qt4-gui-to-qt-gui-in-preparation-of-qt5-port.patch
+Patch301: 0002-Rename-plugin-to-qt-gui.patch
+Patch302: 0003-qt-gui-Code-cleanup-to-help-Qt5-migration.patch
+Patch303: 0004-qt-gui-make-it-possible-to-build-the-plugin-with-Qt5.patch
+Patch304: 0007-api-Add-util-to-run-external-commands.patch
+Patch305: 0008-auto-reply-Use-Licq-Exec-to-run-commands.patch
+Patch306: 0009-icq-Move-auto-response-generation-to-daemon.patch
+Patch307: 0010-Remove-support-for-utilities.patch
+Patch308: 0012-qt-gui-Remove-mass-message-function.patch
+Patch309: 0013-icq-Drop-support-for-sending-SMS.patch
+Patch310: 0014-qt-gui-Move-emoticon-selection-to-widgets-dir.patch
+Patch311: 0015-qt-gui-fix-translation-building-closes-45.patch
+
 #Errata
 #Patch500:
 
@@ -186,8 +203,8 @@ Requires: %name-osd = %version-%release
 %if %with_aosd
 Requires: %name-aosd = %version-%release
 %endif
-%if %with_qt4
-Requires: %name-qt4 = %version-%release
+%if %with_qt5
+Requires: %name-qt5 = %version-%release
 %else
 Requires: %name-ui
 %endif
@@ -211,8 +228,8 @@ Requires: %name-ui
 Group: Networking/Instant messaging
 Summary: %common_summary
 BuildArch: noarch
-%if %with_qt4
-Requires: %name-qt4 = %version-%release
+%if %with_qt5
+Requires: %name-qt5 = %version-%release
 %else
 Requires: %name-ui
 %endif
@@ -236,18 +253,17 @@ Provides: %name-plugin %name-ui
 Provides: licq-kde = %version-%release
 Obsoletes: licq-kde < %version-%release
 Requires: %name-common = %version-%release
-Requires: kde4libs >= %{get_version kde4libs}
-Requires: %name-qt4
+Requires: %name-qt5
 
-%package qt4
+%package qt5
 Summary: Qt4 based GUI plugin  for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin %name-ui
-Provides: licq-qt = %version-%release
-Obsoletes: licq-qt < %version-%release
+Provides: licq-qt = %EVR
+Obsoletes: licq-qt < %EVR
+Provides: licq-qt4 = %EVR
+Obsoletes: licq-qt4 < %EVR
 Requires: %name-common = %version-%release
-Requires: libqt4-core >= %{get_version libqt4-core}
-
 %package gtk
 Summary: GTK+ based GUI plugin for Licq
 Group: Networking/Instant messaging
@@ -339,9 +355,9 @@ RMS stands for the Remote Management Service. It is a plugin for Licq which
 enables you to "telnet" to your Licq box to perform various tasks. Security is
 implemented through basic username and password authentication.
 
-%description qt4
-This is the Qt4 based GUI for Licq.
-Install this and if you want a Qt4-based GUI for Licq.
+%description qt5
+This is the Qt based GUI for Licq.
+Install this and if you want a Qt-based GUI for Licq.
 
 %description gtk
 This is the GTK+ based GUI plugin for Licq.
@@ -405,91 +421,108 @@ Install this if you want to add this function to Licq.
 
 %setup -q -n %name
 
-%if_without ssl
-sed -i 's/"Enable secure communication channels" ON/"Enable secure communication channels" OFF/' CMakeLists.txt
-%endif
-
 #Errata
 #patch500 -p2
 
-pushd plugins
 %if %with_gtk
-    tar xfj %SOURCE5
+    tar xf %SOURCE5
     mv icqnd-* icqnd
+    ln -s ../../icqnd licq/plugins/icqnd
 %endif
+
+install -m 644 %SOURCE9 licq/share/utilities/tracepath.utility
+
+pushd licq
+%patch2 -p1
 popd
 
-install -m 644 %SOURCE9 share/utilities/tracepath.utility
-
-%patch2 -p1
-
 %if %with_osd
-pushd plugins/osd*
+pushd osd*
 %patch17 -p1
 popd
 %endif
 
-# with_qt4 || with_kde4
-pushd plugins/qt4-gui*
+# with_qt || with_kde
+pushd qt4-gui*
 %patch3 -p0
 %patch22 -p1
 popd
 
-%patch50 -p2
+%patch300 -p1
+%patch301 -p1
+%patch302 -p1
+%patch303 -p1
+%patch304 -p1
+%patch305 -p1
+%patch306 -p1
+%patch307 -p1
+%patch308 -p1
+%patch309 -p1
+%patch310 -p1
+%patch311 -p1
+
+%patch50 -p1
 
 %if %with_aosd
 %else
-    rm -rf plugins/aosd
+    rm -rf licq/plugins/aosd
 %endif
 %if %with_console
 %else
-    rm -rf plugins/console
+    rm -rf licq/plugins/console
+%endif
+%if %with_dbus
+%else
+    rm -rf licq/plugins/dbus
 %endif
 
-cd plugins/qt4-gui*
-
-%if %with_qt4
-cd ../qt4-gui*
-sed -i "s|\s*Name\s*=.*|Name=Licq [Qt4]|" share/misc/licq.desktop
-sed -i "s|\s*Exec\s*=.*|Exec=licq -p qt4-gui|" share/misc/licq.desktop
-sed -i 's|/applications)|/applications RENAME licq-qt4.desktop)|' share/misc/CMakeLists.txt
-#sed -i 's|set(USE_KDE.*|set(USE_KDE FALSE)|' CMakeLists.txt
-#sed -i 's|option(WITH_KDE.*|set(WITH_KDE FALSE)|' CMakeLists.txt
-find -type f -name CMakeLists.txt | \
-while read f; do sed -i 's|WITH_KDE|QT_WITH_KDE|' $f; done
-%endif
+sed -i 's|kde4|kf5|' qt-gui/share/misc/CMakeLists.txt
+rm -rf qt4-gui
+rm -rf licq/plugins/qt4-gui
+rm -rf licq/plugins/qt-gui
+ln -sf ../../qt-gui licq/plugins/qt-gui
 
 %if %with_kde4
-cd ..; cp -r qt4-gui* kde4-gui
-cd kde4-gui; rm -rf qt4-gui*
-sed -i "s|\s*Name\s*=.*|Name=Licq [KDE4]|" share/misc/licq.desktop
-sed -i "s|\s*Exec\s*=.*|Exec=licq -p kde4-gui|" share/misc/licq.desktop
-sed -i 's|Qt4-GUI|KDE4-GUI|' CMakeLists.txt
-sed -i 's|add_subdirectory(doc)||' CMakeLists.txt
-#sed -i 's|set(USE_KDE.*|set(USE_KDE TRUE)|' CMakeLists.txt
-#sed -i 's|option(WITH_KDE.*|set(WITH_KDE TRUE)|' CMakeLists.txt
-find -type f -name CMakeLists.txt | \
-while read f; do sed -i 's|QT_WITH_KDE|WITH_KDE|' $f; done
+cp -ar qt-gui kde-gui
+ln -sf ../../kde-gui licq/plugins/kde-gui
+sed -i "s|\s*Name\s*=.*|Name=Licq [KDE]|" kde-gui/share/misc/licq.desktop
+sed -i "s|\s*Exec\s*=.*|Exec=licq -p kde-gui|" kde-gui/share/misc/licq.desktop
+sed -i 's|add_subdirectory(doc)||' kde-gui/CMakeLists.txt
 %endif
 
-cd ../..
+%if %with_qt5
+sed -i "s|\s*Name\s*=.*|Name=Licq [Qt]|" qt-gui/share/misc/licq.desktop
+sed -i "s|\s*Exec\s*=.*|Exec=licq -p qt-gui|" qt-gui/share/misc/licq.desktop
+find ./qt-gui -type f -name CMakeLists.txt | \
+while read f; do
+    sed -i 's|WITH_KDE|QT_WITH_KDE|' $f
+done
+%endif
 
 ### BUILD ##########################################
 %build
 #add_optflags -D_FILE_OFFSET_BITS=64
 #export CFLAGS="%optflags" CXXFLAGS="%optflags" CPPFLAGS="%optflags"
 
-%K4cmake \
+pushd licq
+%K5cmake \
     -DINCLUDE_INSTALL_DIR=%_includedir \
-    -DWITH_KDE:BOOL=ON \
+    -DINSTALL_LIBDIR=%_libdir \
     -DQT_WITH_KDE:BOOL=OFF \
+    -DWITH_KDE:BOOL=ON \
+    -DWITH_QT5:BOOL=ON \
+    -DUSE_OPENSSL:BOOL=%{?_enable_ssl:ON}%{!?_enable_ssl:OFF} \
     -DBUILD_TESTS:BOOL=OFF \
-    -DBUILD_PLUGINS:BOOL=ON
-%K4make
+    -DBUILD_PLUGINS:BOOL=ON \
+    #
+%K5make
+popd
 
 ### INSTALL ##########################################
 %install
-%K4install
+pushd licq
+%K5install
+popd
 
 rm -rf %buildroot/%_datadir/licq/translations
 
@@ -558,16 +591,16 @@ popd
 %if %with_kde4
 ## kde4 plugin
 %files kde4
-%_libdir/licq/licq*kde4-gui*
-%_desktopdir/kde4/licq.desktop
+%_libdir/licq/licq*kde-gui*
+%_desktopdir/kf5/licq.desktop
 %endif
 
-%if %with_qt4
-## licq qt4 plugin
-%files qt4
-%_libdir/licq/licq*qt4-gui*
-%_datadir/licq/qt4-gui/
-%_desktopdir/licq-qt4.desktop
+%if %with_qt5
+## licq qt plugin
+%files qt5
+%_libdir/licq/licq*qt-gui*
+%_datadir/licq/qt-gui/
+%_desktopdir/licq.desktop
 %endif
 
 ## licq base
@@ -578,18 +611,18 @@ popd
 %endif
 %dir %_libdir/licq/
 %dir %_datadir/licq/
-%_datadir/licq/utilities/
+#%_datadir/licq/utilities/
 %_datadir/licq/sounds/
 %_miconsdir/licq.xpm
 %_niconsdir/licq.xpm
 %_liconsdir/licq.xpm
 %attr(0755,root,root) %_bindir/licq-viewurl.sh
-%doc doc/ upgrade/ README*
+%doc licq/doc/ licq/upgrade/ licq/README*
 %if !%no_some_docs
-%doc ChangeLog
+%doc licq/ChangeLog
 %endif
 %if %with_gpg
-%doc licq_gpg.conf
+%doc licq/licq_gpg.conf
 %endif
 
 %if %with_gtk
@@ -605,16 +638,16 @@ popd
 ## osd plugin
 %files osd -f licq_osd_plugin.lang
 %_libdir/licq/licq_osd.*
-%doc plugins/osd*/%{name}_osd.conf
-%doc plugins/osd*/{AUTHORS,TODO,README}
+%doc osd*/%{name}_osd.conf
+%doc osd*/{AUTHORS,TODO,README}
 %endif
 
 %if %with_osd
 ## aosd plugin
 %files aosd
 %_libdir/licq/licq_aosd.*
-#%doc plugins/aosd*/%{name}_osd.conf
-%doc plugins/aosd*/README
+#%doc aosd*/%{name}_osd.conf
+%doc aosd*/README
 %endif
 
 %if %with_icq
@@ -627,15 +660,15 @@ popd
 ## msn plugin
 %files msn
 %_libdir/licq/protocol_msn.*
-%doc plugins/msn*/owner.MSN_
-%doc plugins/msn*/README
+%doc msn*/owner.MSN_
+%doc msn*/README
 %endif
 
 %if %with_jabber
 ## jabber plugin
 %files jabber
 %_libdir/licq/protocol_jabber.*
-%doc plugins/jabber*/README
+%doc jabber*/README
 %endif
 
 ## devel
@@ -648,8 +681,8 @@ popd
 %files console
 %_menudir/licq-console
 %_libdir/licq/licq_console.*
-%doc plugins/console*/README
-%doc plugins/console*/%{name}_console.conf
+%doc console*/README
+%doc console*/%{name}_console.conf
 %endif
 
 
@@ -657,28 +690,32 @@ popd
 ## email plugin
 %files email
 %_libdir/licq/licq_forwarder.*
-%doc plugins/forwarder*/README
-%doc plugins/forwarder*/%{name}_forwarder.conf
+%doc forwarder*/README
+%doc forwarder*/%{name}_forwarder.conf
 %endif
 
 %if %with_auto_reply
 ## auto reply plugin
 %files autoreply
 %_libdir/licq/licq_autoreply.*
-%doc plugins/auto-reply*/README
-%doc plugins/auto-reply*/%{name}_autoreply.conf
+%doc auto-reply*/README
+%doc auto-reply*/%{name}_autoreply.conf
 %endif
 
 %if %with_rms
 ## remote management svcx
 %files rms
 %_libdir/licq/licq_rms.*
-%doc plugins/rms*/README
-%doc plugins/rms*/%{name}_rms.conf
+%doc rms*/README
+%doc rms*/%{name}_rms.conf
 %endif
 
 ########################################################
 %changelog
+* Fri Apr 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.8.2-alt4
+- build qt5 plugin
+- don't build kde4 plugin
+
 * Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt3
 - Rebuilt with boost-1.71.0.
 
