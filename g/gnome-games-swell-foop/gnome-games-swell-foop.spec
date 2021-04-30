@@ -7,7 +7,7 @@
 %define xdg_name org.gnome.SwellFoop
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The "Same Game" puzzle
@@ -61,6 +61,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
