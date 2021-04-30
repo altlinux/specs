@@ -2,28 +2,30 @@
 %define api_ver 2.0
 %define _name goocanvas
 %def_disable static
-%def_enable python
+%def_disable python
 %def_enable introspection
 
 Name: lib%{_name}2
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A canvas widget for GTK+3 that uses cairo for drawing
 Group: System/Libraries
 License: LGPLv2+
-Url: http://live.gnome.org/GooCanvas
+Url: https://live.gnome.org/GooCanvas
 
 #Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome
 # From configure.in
 BuildPreReq: libgtk+3-devel >= 3.2.0
 BuildPreReq: glib2-devel >= 2.28.0
 BuildPreReq: libcairo-devel >= 1.10.0
 BuildRequires: gtk-doc
-%{?_enable_python:BuildRequires: python-module-pygobject3-devel}
+%{?_enable_python:
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-module-pygobject3-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -90,13 +92,14 @@ This package provides Python language bindings for for the GooCanvas library.
 NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 %configure %{subst_enable static} \
-	--enable-gtk-doc
+	--enable-gtk-doc \
+	%{?_disable_python:--enable-python=no}
+%nil
 %make_build
 
 
 %install
-%make_install DESTDIR=%buildroot install
-
+%makeinstall_std
 %find_lang %{_name}2
 
 %files -f %{_name}2.lang
@@ -124,8 +127,10 @@ NOCONFIGURE=1 ./autogen.sh
 %python_sitelibdir/gi/overrides/*
 %endif
 
-
 %changelog
+* Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt2
+- disbaled useless goocanvas2 python2 module
+
 * Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
