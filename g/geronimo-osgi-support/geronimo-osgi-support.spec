@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global registry geronimo-osgi-registry
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-osgi-support
 Version:          1.0
-Release:          alt2_23jpp8
+Release:          alt2_26jpp11
 Summary:          OSGI spec bundle support
 License:          ASL 2.0 and W3C
 URL:              http://geronimo.apache.org/
@@ -19,11 +16,10 @@ URL:              http://geronimo.apache.org/
 Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{name}/%{version}/%{name}-%{version}-source-release.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    java-devel >= 1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    felix-osgi-core
-BuildRequires:    felix-osgi-compendium
+BuildRequires:    osgi-core
+BuildRequires:    osgi-compendium
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    maven-resources-plugin
 
@@ -52,6 +48,10 @@ sed -i 's/\r//' LICENSE NOTICE
 # Use parent pom files instead of unavailable 'genesis-java5-flava'
 %pom_set_parent org.apache.geronimo.specs:specs:1.4
 
+# Use latest OSGi implementation
+%pom_change_dep -r :org.osgi.core org.osgi:osgi.core
+%pom_change_dep -r :org.osgi.compendium org.osgi:osgi.cmpn
+
 # Remove itests due to unavailable dependencies
 %pom_disable_module geronimo-osgi-itesta
 %pom_disable_module geronimo-osgi-itestb
@@ -66,18 +66,21 @@ sed -i 's/\r//' LICENSE NOTICE
 %mvn_file ':{*}' @1
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_26jpp11
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_23jpp8
 - new version
 
