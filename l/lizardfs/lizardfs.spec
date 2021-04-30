@@ -10,10 +10,13 @@
 %def_without docs
 %def_without ganesha
 
+%add_findreq_skiplist %_sbindir/mfscgiserv
+%add_findprov_skiplist %_sbindir/mfscgiserv
+
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc3.37
+Release: alt0.rc3.38
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -412,6 +415,9 @@ popd
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Fri Apr 30 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.38
+- mfscgiserv deprecated, use lizardfs-cgiserver instead
+
 * Fri Apr 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.37
 - update to dd2413192d0dd00403ad409fcd9a4483c77281d3 from upstream
 
