@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.31.0
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -36,7 +36,6 @@ BuildRequires: libchm-devel
 BuildRequires: libxslt-devel
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: rpm-build-python
 
 %if_enabled qtgui
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
@@ -126,6 +125,10 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 # use /usr/bin/xdg-open
 rm -f %buildroot%_datadir/%name/filters/xdg-open
 
+# help rpm-build-python3 get over this (thx andy@)
+sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
+	%buildroot%_datadir/%name/filters/*.py
+
 %files
 %_bindir/*
 %_libdir/%name
@@ -156,6 +159,9 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Fri Apr 30 2021 Michael Shigorin <mike@altlinux.org> 1.31.0-alt2
+- python shebang related kludge
+
 * Thu Apr 29 2021 Michael Shigorin <mike@altlinux.org> 1.31.0-alt1
 - new version (watch file uupdate)
 - updated watch file (thanks, andy@ and debian)
