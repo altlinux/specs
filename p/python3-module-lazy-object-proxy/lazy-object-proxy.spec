@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: A fast and thorough lazy object proxy
@@ -14,6 +14,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/lazy-object-proxy/
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
@@ -23,6 +24,8 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_benchmark)
 BuildRequires: python3(pytest_cov)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_provides lazy-object-proxy
@@ -34,16 +37,7 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 
 %prep
 %setup
-
-# adjust deps
-grep -qsF 'pytest-travis-fold' tox.ini || exit 1
-grep -qsF 'Django' tox.ini || exit 1
-grep -qsF 'objproxies' tox.ini || exit 1
-sed -i \
--e '/pytest-travis-fold/d' \
--e '/Django/d' \
--e '/objproxies/d' \
-tox.ini
+%autopatch -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -53,19 +47,10 @@ tox.ini
 %python3_install
 
 %check
-sed -i -e '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
--e '/setenv =/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
 export PIP_NO_INDEX=YES
 export PIP_NO_BUILD_ISOLATION=no
 export TOXENV=py%{python_version_nodots python3}-cover
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages -vvr --no-deps --console-scripts -s false
 
 %files
 %doc AUTHORS.rst README.rst CHANGELOG.rst
@@ -76,6 +61,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/lazy_object_proxy-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
+- 1.5.1 -> 1.6.0.
+
 * Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
 - 1.4.2 -> 1.5.1.
 

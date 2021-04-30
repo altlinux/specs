@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.7.4
+Version: 2.8.2
 Release: alt1
 
 Summary: Python code static checker
@@ -18,6 +18,7 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest-runner
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: python3(lazy-object-proxy)
@@ -58,10 +59,11 @@ Additionally, it is possible to write plugins to add your own checks.
 %autopatch -p1
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
-
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 # do not pack tests
 rm -r %buildroot%python3_sitelibdir/pylint/test*
@@ -72,6 +74,7 @@ for i in $(ls); do
 done
 
 %check
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 tox.py3 --sitepackages --console-scripts -vvr --no-deps -- \
@@ -87,6 +90,9 @@ tox.py3 --sitepackages --console-scripts -vvr --no-deps -- \
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 2.8.2-alt1
+- 2.7.4 -> 2.8.2.
+
 * Tue Mar 30 2021 Stanislav Levin <slev@altlinux.org> 2.7.4-alt1
 - 2.7.2 -> 2.7.4.
 

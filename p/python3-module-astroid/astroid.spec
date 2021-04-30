@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.2
+Version: 2.5.6
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -57,8 +57,7 @@ rm %buildroot%python3_sitelibdir/astroid/test_utils.py
 
 %check
 export PIP_NO_INDEX=YES
-export PIP_NO_DEPS=YES
-export TOXENV=py%{python_version_nodots python3}-six
+export TOXENV=py3
 tox.py3 --sitepackages --no-deps -vvr -- tests -vra
 
 %files
@@ -67,6 +66,12 @@ tox.py3 --sitepackages --no-deps -vvr -- tests -vra
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 2.5.6-alt1
+- 2.5.3 -> 2.5.6.
+
+* Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 2.5.3-alt1
+- 2.5.2 -> 2.5.3.
+
 * Tue Mar 30 2021 Stanislav Levin <slev@altlinux.org> 2.5.2-alt1
 - 2.5.1 -> 2.5.2.
 
