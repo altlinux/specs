@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #in noarch? why...
@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:       fernflower
 Version:    183.5153.8
-Release:    alt1_4jpp8
+Release:    alt1_6jpp11
 Summary:    JIdea's java decompiler
 License:    ASL 2.0 
 URL:        https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine
@@ -27,7 +27,6 @@ Source2:    create-sources.sh
 Patch0:     remove_main.patch
 BuildArch:  noarch
 BuildRequires:  javapackages-tools
-BuildRequires:  gradle-local
 %if %{with_javadoc}
 BuildRequires:  zip
 %endif
@@ -68,7 +67,13 @@ find | grep "\\.jar$"   && exit 1
 %patch0
 
 %build
-%gradle_build --skip-install jar
+mkdir build
+javac  -target 1.8 -source 1.8 -d build `find src -type f`
+cd build
+jar -cf ../%{name}.jar  org
+cd ..
+mkdir build/libs
+mv %{name}.jar build/libs/
 %if %{with_javadoc}
 # this is sad. Javadoc is really 100% empty
 mkdir fernflower-javadoc 
@@ -103,6 +108,9 @@ cp %{name}.zip $RPM_BUILD_ROOT/%{_javadocdir}/
 %endif
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 183.5153.8-alt1_6jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 183.5153.8-alt1_4jpp8
 - fc update
 
