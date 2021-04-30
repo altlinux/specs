@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,7 +16,7 @@ BuildRequires: jpackage-1.8-compat
 Name:           snakeyaml
 Summary:        YAML parser and emitter for Java
 Version:        1.25
-Release:        alt1_1jpp8
+Release:        alt1_4jpp11
 License:        ASL 2.0
 
 URL:            https://bitbucket.org/asomov/%{name}
@@ -27,15 +27,17 @@ Source0:        %{url}/get/%{name}-%{version}.tar.gz
 # need to be removed and their use replaced by system libraries.
 # See rhbz#875777 and http://code.google.com/p/snakeyaml/issues/detail?id=175
 #
-# Remove use of bundled Base64 implementation
-Patch0:         0001-Replace-bundled-base64-implementation.patch
+# Replace use of bundled Base64 implementation with java.util.Base64
+Patch0:         0001-replace-bundled-base64coder-with-java.util.Base64.patch
 # We don't have gdata-java in Fedora any longer, use commons-codec instead
 Patch1:         0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
+# Fix a broken test, change backported from upstream:
+# https://bitbucket.org/asomov/snakeyaml/commits/345408c
+Patch2:         0003-fix-broken-test.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(biz.source_code:base64coder)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(joda-time:joda-time)
@@ -75,6 +77,7 @@ This package contains %{summary}.
 %setup -q -n asomov-%{name}-%{vertag}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %mvn_file : %{name}
 
@@ -91,8 +94,6 @@ rm -f src/test/java/examples/SpringTest.java
 
 # Replacement for bundled gdata-java-client
 %pom_add_dep commons-codec:commons-codec
-# Re-add bundled base64coder
-%pom_add_dep biz.source_code:base64coder
 
 # remove bundled stuff
 rm -rf target
@@ -113,7 +114,7 @@ rm src/test/java/org/yaml/snakeyaml/helpers/FileTestHelper.java
 
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 
 %install
@@ -128,6 +129,9 @@ rm src/test/java/org/yaml/snakeyaml/helpers/FileTestHelper.java
 
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.25-alt1_4jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1_1jpp8
 - new version
 
