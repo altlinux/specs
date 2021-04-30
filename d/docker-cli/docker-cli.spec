@@ -6,11 +6,11 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      2291f610ae73533e6e0749d4ef1e360149b1e46b
+%global commit      370c28948e3c12dce3d1df60b6f184990618553f
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    20.10.5
+Version:    20.10.6
 Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
@@ -24,7 +24,7 @@ Source0: %name-%version.tar
 Patch1: docker-cli-20.10.5-alt-fix-man-page-gen.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.3 libseccomp-devel
+BuildRequires: golang >= 1.3 libseccomp-devel gcc glibc-devel
 BuildRequires: go-md2man
 Conflicts: docker-ce < 20.10.0-alt1.rc2
 
@@ -53,7 +53,7 @@ export GOPATH="%go_path:$BUILDDIR"
 rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
 cp -alv -- vendor/* "$BUILDDIR/src"
 
-DISABLE_WARN_OUTSIDE_CONTAINER=1 make VERSION=%{version} GITCOMMIT=%{shortcommit}
+DISABLE_WARN_OUTSIDE_CONTAINER=1 make VERSION=%{version} GITCOMMIT=%{shortcommit} dynbinary
 DISABLE_WARN_OUTSIDE_CONTAINER=1 make manpages
 
 %install
@@ -91,6 +91,9 @@ install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/f
 %{_datadir}/fish/completions/docker.fish
 
 %changelog
+* Fri Apr 30 2021 Vladimir Didenko <cow@altlinux.org> 20.10.6-alt1
+- new release
+
 * Thu Mar 11 2021 Vladimir Didenko <cow@altlinux.org> 20.10.5-alt1
 - new release
 
