@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-osgi
 Version:        0.2.0
-Release:        alt1_17jpp8
+Release:        alt1_19jpp11
 # Maven-shared defines maven-osgi version as 0.3.0
 Epoch:          1
 Summary:        Library for Maven-OSGi integration
@@ -28,15 +25,11 @@ BuildRequires:  mvn(biz.aQute:bndlib)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-
-Obsoletes:      maven-shared-osgi < %{epoch}:%{version}-%{release}
-Provides:       maven-shared-osgi = %{epoch}:%{version}-%{release}
 Source44: import.info
 
 %description
 Library for Maven-OSGi integration.
 
-This is a replacement package for maven-shared-osgi
 
 %package javadoc
 Group: Development/Java
@@ -49,6 +42,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+
 cp -p %{SOURCE1} LICENSE
 
 sed -i 's/import aQute\.lib\.osgi/import aQute.bnd.osgi/g' src/main/java/org/apache/maven/shared/osgi/DefaultMaven2OsgiConverter.java
@@ -57,22 +51,27 @@ sed -i 's/import aQute\.lib\.osgi/import aQute.bnd.osgi/g' src/main/java/org/apa
 %pom_xpath_set "pom:plugin[pom:artifactId[text()='plexus-maven-plugin']]//pom:goal[text()='descriptor']" generate-metadata
 %pom_xpath_set "pom:artifactId[text()='plexus-maven-plugin']" plexus-component-metadata
 
+
 %build
 # Tests depend on binary JARs which were removed from sources
 %mvn_build -f
 
+
 %install
 %mvn_install
 
+
 %files -f .mfiles
-%doc LICENSE
-%dir %{_javadir}/%{name}
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2.0-alt1_19jpp11
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.2.0-alt1_17jpp8
 - fc update & java 8 build
 
