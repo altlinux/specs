@@ -5,7 +5,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
-Version:	0.11.4
+Version:	0.12.1
 Release:	alt1
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
@@ -22,17 +22,18 @@ Vcs:		https://github.com/iovisor/bpftrace.git
 Source:		%name-%version.tar
 ExclusiveArch:	x86_64 aarch64
 
-%define clang_version 10.0
-
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: libstdc++-devel
-BuildRequires: clang%clang_version-devel
-BuildRequires:  llvm%clang_version-devel
-BuildRequires:  llvm%clang_version-devel-static
-BuildRequires: clang%clang_version-devel-static
-BuildRequires:   lld%clang_version
+BuildRequires: libstdc++-devel-static
+BuildRequires: clangd >= 11
+BuildRequires: clang-devel >= 11
+BuildRequires: clang-tools >= 11
+BuildRequires:  llvm-devel >= 11
+BuildRequires:  llvm-devel-static >= 11
+BuildRequires: clang-devel-static >= 11
+BuildRequires:   lld >= 11
 BuildRequires: libbcc-devel
 BuildRequires: libelf-devel
 BuildRequires: binutils-devel
@@ -83,7 +84,7 @@ popd
 %check
 BUILD/src/bpftrace --version	 # not requires root
 vm-run BUILD/src/bpftrace --info # should be fast enough even w/o kvm
-[ -w /dev/kvm ] && vm-run BUILD/src/bpftrace -l '*_sleep_*'
+[ -w /dev/kvm ] && vm-run BUILD/src/bpftrace -l 'kprobe:*_sleep_*'
 if [ -w /dev/kvm ]; then
 	# Great run-time tests
 
@@ -101,9 +102,7 @@ if [ -w /dev/kvm ]; then
 	.gear/delete-blocks tracepoint_order tests/runtime/probe
 	.gear/delete-blocks uint64_t	tests/runtime/signed_ints
 	.gear/delete-blocks tracepoint:random:random_read tests/runtime/variable
-%ifarch x86_64
-	sed -i s/python/python3/	tests/runtime/json-output
-%else
+%ifarch aarch64
 	# TIMEOUT on aarch64
 	.gear/delete-blocks python	tests/runtime/json-output
 %endif
@@ -119,6 +118,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Fri Apr 30 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.1-alt1
+- Update to v0.12.1 (2021-04-16).
+- spec: Build with default Clang/LLVM (>= 11).
+
 * Mon Nov 30 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.4-alt1
 - Update to v0.11.4 (2020-11-13).
 
