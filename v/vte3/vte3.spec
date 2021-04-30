@@ -8,7 +8,7 @@
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %def_disable static
@@ -196,6 +196,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 0.64.1-alt1
+- 0.64.1
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.64.0-alt1
 - 0.64.0
 
