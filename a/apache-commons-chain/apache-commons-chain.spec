@@ -1,17 +1,14 @@
 Epoch: 1
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name chain
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_19jpp8
+Release:       alt1_22jpp11
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
@@ -85,7 +82,7 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 
 %build
 
-%mvn_build -- -Dmaven.compile.source=1.6 -Dmaven.compile.target=1.6
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -98,6 +95,9 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2-alt1_22jpp11
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_19jpp8
 - new version
 
