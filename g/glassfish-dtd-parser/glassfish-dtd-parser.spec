@@ -1,27 +1,25 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global srcname jaxb-dtd-parser
+
 Name:          glassfish-dtd-parser
-Version:       1.2
-Release:       alt2_0.19.20120120svnjpp8
+Version:       1.4
+Release:       alt1_2jpp11
 Summary:       Library for parsing XML DTDs
 License:       CDDL-1.1 and GPLv2 with exceptions
-Url:           http://java.net/projects/dtd-parser
-# svn export https://svn.java.net/svn/dtd-parser~svn/trunk/dtd-parser glassfish-dtd-parser-1.2-SNAPSHOT
-# find glassfish-dtd-parser-1.2-SNAPSHOT/ -name '*.jar' -delete
-# tar czf glassfish-dtd-parser-1.2-SNAPSHOT-src-svn.tar.gz glassfish-dtd-parser-1.2-SNAPSHOT
-Source0:       %{name}-%{version}-SNAPSHOT-src-svn.tar.gz
-BuildRequires: bsf
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: sonatype-oss-parent
+
+# NOTE: The new upstream repository under the Eclipse EE4J umbrella is here:
+# https://github.com/eclipse-ee4j/jaxb-dtd-parser
+URL:           https://github.com/javaee/%{srcname}
+Source0:       %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 
 BuildArch:     noarch
+
+BuildRequires: maven-local
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
 Source44: import.info
 
 %description
@@ -36,23 +34,32 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}-SNAPSHOT
+%setup -q -n %{srcname}-%{version}
+
+# builds fail if this file is present
+rm dtd-parser/src/module-info.java
 
 %build
-
+pushd dtd-parser
 %mvn_file :dtd-parser %{name}
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+popd
 
 %install
+pushd dtd-parser
 %mvn_install
+popd
 
-%files -f .mfiles
-%doc --no-dereference LICENSE.txt
+%files -f dtd-parser/.mfiles
+%doc --no-dereference LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%files javadoc -f dtd-parser/.mfiles-javadoc
+%doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.19.20120120svnjpp8
 - new version
 
