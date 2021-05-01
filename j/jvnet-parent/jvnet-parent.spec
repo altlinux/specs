@@ -1,26 +1,21 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jvnet-parent
-Version:        4
-Release:        alt1_12jpp8
 Summary:        Java.net parent POM file
-
+Version:        5
+Release:        alt1_2jpp11
 License:        ASL 2.0
+
 URL:            http://www.java.net
 Source0:        http://repo1.maven.org/maven2/net/java/%{name}/%{version}/%{name}-%{version}.pom
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-enforcer-plugin
 Source44: import.info
 
 
@@ -28,22 +23,31 @@ Source44: import.info
 Java.net parent POM file used by most Java.net subprojects such as
 Glassfish
 
+
 %prep
 cp -p %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
+
 # we provide correct version of maven, no need to enforce and pull in dependencies
 %pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+
 
 %install
 %mvn_install
 
+
 %files -f .mfiles
 %doc LICENSE
 
+
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 5-alt1_2jpp11
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 4-alt1_12jpp8
 - new version
 
