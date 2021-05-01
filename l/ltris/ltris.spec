@@ -1,12 +1,12 @@
 Name: ltris
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 Serial: 1
 
 Group: Games/Arcade
 Summary: Nice tetris clone
 URL: http://lgames.sourceforge.net/index.php?project=LTris
-License: GPL
+License: GPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source0: http://download.sourceforge.net/lgames/ltris-%version.tar.gz
@@ -79,6 +79,8 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %_liconsdir/%name.xpm
 
 %changelog
+* Sat May 01 2021 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.3-alt1
+- 1.2.3
 
 * Wed Feb 10 2021 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.2-alt2
 - add ltris.png
