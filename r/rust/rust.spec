@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.50.0
+Version: 1.51.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -9,17 +9,29 @@ License: Apache-2.0 and MIT
 URL: http://www.rust-lang.org/
 
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
-Source: rustc-src.tar
+Source: %name-%version.tar
 
 Patch1: rust-gdb.patch
 Patch2: rust-disable-lint-tests.patch
 
+Patch3: rustc-1.51.0-backport-pr81741.patch
+Patch4: rustc-1.51.0-backport-pr82289.patch
+Patch5: rustc-1.51.0-backport-pr82292.patch
+Patch6: rustc-1.51.0-backport-pr81910.patch
+Patch7: rustc-1.51.0-backport-pr81728.patch
+Patch8: rustc-1.51.0-backport-pr83629.patch
+
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 11.0
+%global llvm_version 12.0
+
+%define _unpackaged_files_terminate_build 1
 
 BuildPreReq: /proc
+
+# for gdb python binding
+BuildRequires(pre): rpm-build-python3
 
 BuildRequires: libstdc++-devel
 BuildRequires: curl
@@ -55,7 +67,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.49.0
+%define r_ver 1.50.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
@@ -108,6 +120,7 @@ Source6: https://static.rust-lang.org/dist/rust-%r_ver-powerpc64le-unknown-linux
 
 %define rust_triple %r_arch-unknown-linux-gnu%abisuff
 %define rustlibdir %_libdir/rustlib
+%define _libexecdir /usr/libexec
 
 # Since 1.12.0: striping debuginfo damages *.so files
 %if_without debuginfo
@@ -123,7 +136,8 @@ Group: Development/Other
 Summary: run rust compiler under gdb
 Requires: %name = %epoch:%version-%release
 Requires: gdb
-AutoReq: nopython
+AutoReq: nopython,nopython3
+AutoProv: nopython,nopython3
 
 %description gdb
 %summary
@@ -131,6 +145,8 @@ AutoReq: nopython
 %package doc
 Summary: Documentation for Rust
 Group: Development/Documentation
+# NOT BuildArch: noarch
+# Note, while docs are mostly noarch, some things do vary by target_arch.
 
 %description doc
 This package includes HTML documentation for the Rust programming language and
@@ -148,6 +164,9 @@ and ensure that you'll always get a repeatable build.
 %package cargo-doc
 Summary: Documentation for Cargo
 Group: Development/Documentation
+BuildArch: noarch
+# Cargo no longer builds its own documentation
+# https://github.com/rust-lang/cargo/pull/4904
 Requires: rust-doc = %epoch:%version-%release
 
 %description cargo-doc
@@ -204,10 +223,8 @@ feature for the Rust standard library. The RLS (Rust Language Server) uses this
 data to provide information about the Rust standard library.
 
 %prep
-%setup -n %{name}c-src
-
-%patch1 -p2
-%patch2 -p2
+%setup
+%autopatch -p1
 
 %if_with bootstrap
 tar xf %r_src
@@ -359,6 +376,9 @@ find %buildroot/%rustlibdir -maxdepth 1 -type f -delete
 # We don't actually need to ship any of those python scripts in rust-src anyway.
 find %buildroot/%rustlibdir/src -type f -name '*.py' -delete
 
+# Drop compiled python
+find %buildroot/%rustlibdir/etc -type f -name '*.pyc' -delete
+%add_python3_path %rustlibdir/etc
 
 %check
 . ./env.sh
@@ -406,6 +426,7 @@ rm -rf %rustdir
 %files cargo
 %doc src/tools/cargo/{LICENSE-APACHE,LICENSE-MIT,LICENSE-THIRD-PARTY,README.md}
 %_bindir/cargo
+%_libexecdir/cargo-credential-1password
 %_man1dir/cargo*.1*
 %_sysconfdir/bash_completion.d/cargo
 %_datadir/zsh/site-functions/_cargo
@@ -434,6 +455,16 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Sat May 01 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.51.0-alt1
+- New version (1.51.0).
+- Use llvm12.0.
+- Security fixes:
+  + CVE-2020-36323 rust: optimization for joining strings can cause uninitialized bytes to be exposed
+  + CVE-2021-28876 rust: panic safety issue in Zip implementation
+  + CVE-2021-28878 rust: memory safety violation in Zip implementation when next_back() and next() are used together
+  + CVE-2021-28879 rust: integer overflow in the Zip implementation can lead to a buffer overflow
+  + CVE-2021-31162 rust: double free in Vec::from_iter function if freeing the element panics
+
 * Fri Feb 26 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.50.0-alt1
 - New version (1.50.0).
 
