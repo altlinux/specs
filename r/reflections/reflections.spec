@@ -1,20 +1,15 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global githash 91af9aa088b9e29d36c44b53e63b378a2ba501cd
-
 Name:          reflections
-Version:       0.9.10
-Release:       alt1_8jpp8
+Version:       0.9.12
+Release:       alt1_1jpp11
 Summary:       Java run-time meta-data analysis
 License:       WTFPL
 URL:           https://github.com/ronmamo/reflections
-Source0:       https://github.com/ronmamo/reflections/archive/%{githash}/%{name}-%{githash}.tar.gz
+Source0:       https://github.com/ronmamo/reflections/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:annotations)
@@ -28,9 +23,6 @@ BuildRequires:  mvn(org.jsr-305:ri)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  java-atk-wrapper
-BuildRequires:  openjfx
-# due to openjfx
-ExclusiveArch: %{ix86} x86_64
 
 BuildArch:     noarch
 Source44: import.info
@@ -57,12 +49,11 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{githash}
+%setup -q -n %{name}-%{version}
 find -name "*.class" -print -delete
 find -name "*.jar" -print -delete
 
 # Unwanted
-%pom_remove_plugin :maven-clean-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-source-plugin
 # Use system maven default conf
@@ -78,7 +69,7 @@ find -name "*.jar" -print -delete
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -91,6 +82,9 @@ find -name "*.jar" -print -delete
 %doc --no-dereference COPYING.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_1jpp11
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1_8jpp8
 - new version
 
