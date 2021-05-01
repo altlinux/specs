@@ -1,26 +1,28 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           google-gson
-Version:        2.8.2
-Release:        alt1_3jpp8
+Version:        2.8.6
+Release:        alt1_3jpp11
 Summary:        Java lib for conversion of Java objects into JSON representation
 License:        ASL 2.0
 URL:            https://github.com/google/gson
 Source0:        https://github.com/google/gson/archive/gson-parent-%{version}.tar.gz
 Patch0:         osgi-export-internal.patch
+Patch1:         java-eight-build.patch
+
+# This commit added a dependency on templating-maven-plugin,
+# we don't want it nor need it, so we revert it
+# https://github.com/google/gson/commit/d84e26d
+Patch2:         no-templating-maven-plugin.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -40,6 +42,14 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n gson-gson-parent-%{version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
+# presence of these files breaks builds with Java 8
+find -name "module-info.java" -print -delete
 
 # Use felix maven-bundle-plugin only for OSGi metadata
 %pom_remove_plugin :bnd-maven-plugin gson
@@ -57,7 +67,7 @@ This package contains the API documentation for %{name}.
   </executions>" gson
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -70,6 +80,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 2.8.6-alt1_3jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_3jpp8
 - new version
 
