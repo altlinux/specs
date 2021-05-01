@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 5.4.2
+%define version 5.5.2
 # Component versions, taken from gradle.properties
 %global platform_version 1.%(v=%{version}; echo ${v:2})
 %global jupiter_version %{version}
@@ -21,8 +21,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with console
 
 Name:           junit5
-Version:        5.4.2
-Release:        alt1_2jpp8
+Version:        5.5.2
+Release:        alt1_2jpp11
 Summary:        Java regression testing framework
 License:        EPL-2.0
 URL:            http://junit.org/junit5/
@@ -160,6 +160,9 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 5.5.2-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 5.4.2-alt1_2jpp8
 - new version
 
