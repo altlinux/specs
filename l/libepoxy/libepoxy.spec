@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.5
 %def_enable x11
 %def_enable glx
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: libepoxy
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Direct Rendering Manager runtime library
@@ -82,6 +82,9 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir
 
 
 %changelog
+* Sat May 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.7-alt1
+- 1.5.7
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.6-alt1
 - updated to 1.5.6-2-g1403303
 
