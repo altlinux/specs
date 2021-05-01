@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20210121
-Release: alt1
+Release: alt2
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -29,7 +29,7 @@ BuildRequires: libxfs-devel
 # Idea is - all tests are optional, so we should not provide ready-to-go
 # ability to run any tests. Install required dependencies manually just
 # for the tests you want to run.
-AutoReq: off
+AutoReqProv: off
 %add_verify_elf_skiplist /usr/lib/ltp/testcases/*
 
 %description
@@ -92,6 +92,9 @@ fi
 %_man3dir/*.3.*
 
 %changelog
+* Sat May 01 2021 Vitaly Chikunov <vt@altlinux.org> 20210121-alt2
+- spec: Disable AutoReqProv.
+
 * Sun Jan 24 2021 Vitaly Chikunov <vt@altlinux.org> 20210121-alt1
 - Update to 20210121.
 
