@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt167
+Release: alt168
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -65,6 +65,7 @@ Requires: procps
 Requires: psmisc
 Requires: rpm-build-perl >= 0.76
 Requires: rpm-macros-python
+Requires: rpm-macros-python3
 Requires: rpmspec
 Requires: sed
 Requires: service
@@ -412,6 +413,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sat May 01 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt168
+- rpm-build: added rpm-macros-python3 to requirements.
+
 * Thu Apr 29 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt167
 - Use external debugedit.
 
