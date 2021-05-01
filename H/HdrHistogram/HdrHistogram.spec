@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          HdrHistogram
-Version:       2.1.9
-Release:       alt1_7jpp8
+Version:       2.1.11
+Release:       alt1_2jpp11
 Summary:       A High Dynamic Range (HDR) Histogram
 License:       BSD and CC0
 URL:           http://hdrhistogram.github.io/%{name}/
@@ -52,13 +49,14 @@ find  -name "*.jar"  -print -delete
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
 
 %pom_xpath_set "pom:plugin[pom:groupId = 'com.google.code.maven-replacer-plugin' ]/pom:artifactId" replacer
 
 %mvn_file :%{name} %{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -74,6 +72,9 @@ find  -name "*.jar"  -print -delete
 %doc --no-dereference COPYING.txt LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 2.1.11-alt1_2jpp11
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.9-alt1_7jpp8
 - new version
 
