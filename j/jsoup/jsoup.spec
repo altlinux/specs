@@ -1,23 +1,22 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsoup
-Version:        1.11.3
-Release:        alt1_4jpp8
 Summary:        Java library for working with real-world HTML
+Version:        1.12.1
+Release:        alt1_2jpp11
 License:        MIT
+
 URL:            http://jsoup.org/
-BuildArch:      noarch
 
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 # The sources contain non-free scraped web pages as test data
 Source1:        generate-tarball.sh
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -71,6 +70,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.12.1-alt1_2jpp11
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_4jpp8
 - new version
 
