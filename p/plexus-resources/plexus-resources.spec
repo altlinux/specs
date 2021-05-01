@@ -1,24 +1,22 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global namedversion 1.0-alpha-7
-
 Name:           plexus-resources
-Version:        1.0
-Release:        alt7_0.26.a7jpp8
 Summary:        Plexus Resource Manager
+Version:        1.1.0
+Release:        alt1_2jpp11
 License:        MIT
-URL:            https://github.com/codehaus-plexus/plexus-resources
+
+URL:            https://github.com/codehaus-plexus/%{name}
+Source0:        %{url}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
+
 BuildArch:      noarch
 
-# svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-resources-1.0-alpha-7/
-# tar caf plexus-resources-1.0-alpha-7-src.tar.xz plexus-resources-1.0-alpha-7
-Source0:        %{name}-%{version}-alpha-7-src.tar.xz
-
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
@@ -33,24 +31,28 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 API documentation for %{name}.
 
+
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n %{name}-%{name}-%{version}
 
 mkdir -p target/classes/META-INF/plexus
 cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 
 
+
 %build
 %mvn_file  : plexus/resources
 %mvn_build -f
+
 
 %install
 %mvn_install
@@ -59,7 +61,11 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 
 %files javadoc -f .mfiles-javadoc
 
+
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.0-alt1_2jpp11
+- new version
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.26.a7jpp8
 - fc update
 
