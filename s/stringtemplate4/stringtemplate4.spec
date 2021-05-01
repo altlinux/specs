@@ -1,28 +1,29 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
+BuildRequires: /usr/bin/xvfb-run
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           stringtemplate4
-Version:        4.0.8
-Release:        alt1_8jpp8
+Version:        4.3
+Release:        alt1_2jpp11
 Summary:        A Java template engine
 License:        BSD
 URL:            http://www.stringtemplate.org/
 BuildArch:      noarch
 
-Source0:        https://github.com/antlr/stringtemplate4/archive/%{version}.tar.gz
+Source0:        https://github.com/antlr/stringtemplate4/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.antlr:antlr-runtime) >= 3.5.2
 BuildRequires:  mvn(org.antlr:antlr3-maven-plugin) >= 3.5.2
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  fonts-type1-xorg
+BuildRequires:  xorg-xvfb xvfb-run
 Source44: import.info
-
 
 %description
 StringTemplate is a java template engine (with ports for
@@ -42,32 +43,24 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 
-%pom_remove_plugin :findbugs-maven-plugin
-%pom_remove_plugin :maven-gpg-plugin
-%pom_remove_plugin :maven-shade-plugin
-
-# Bug, should be reported upstream
-sed -i '/tmpdir =/s,;,+"/"&,' test/org/stringtemplate/v4/test/BaseTest.java
-# Tests fail for unknown reason
-sed -i /testUnknownNamedArg/s/@Test// test/org/stringtemplate/v4/test/TestGroups.java
-sed -i /testMissingImportString/s/@Test// test/org/stringtemplate/v4/test/TestGroupSyntaxErrors.java
-# Requires running X server
-rm -r test/org/stringtemplate/v4/test/TestEarlyEvaluation.java
 
 %build
-%mvn_build
+xvfb-run -a -n 1 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGES.txt contributors.txt README.txt
+%doc CHANGES.txt contributors.txt README.md
 %doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 4.3-alt1_2jpp11
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt1_8jpp8
 - new version
 
