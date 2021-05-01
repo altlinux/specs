@@ -1,29 +1,29 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.0.0
+%define version 1.0.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
+%global oname jboss-servlet-api_3.1_spec
 
 Name:             jboss-servlet-3.1-api
-Version:          1.0.0
-Release:          alt1_6jpp8
+Version:          1.0.2
+Release:          alt1_2jpp11
 Summary:          Java Servlet 3.1 API
 License:          (CDDL or GPLv2 with exceptions) and ASL 2.0
-Url:              http://www.jboss.org
-Source0:          https://github.com/jboss/jboss-servlet-api_spec/archive/jboss-servlet-api_3.1_spec-%{namedversion}.tar.gz
+
+URL:              https://github.com/jboss/jboss-servlet-api_spec
+Source0:          %{url}/archive/%{oname}-%{namedversion}.tar.gz
 Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:          http://repository.jboss.org/licenses/cddl.txt
 
 BuildRequires:    maven-local
-BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 
 BuildArch:        noarch
 Source44: import.info
@@ -40,13 +40,13 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jboss-servlet-api_spec-jboss-servlet-api_3.1_spec-%{namedversion}
+%setup -q -n jboss-servlet-api_spec-%{oname}-%{namedversion}
 
 cp %{SOURCE1} .
 cp %{SOURCE2} .
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -59,6 +59,9 @@ cp %{SOURCE2} .
 %doc --no-dereference LICENSE cddl.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_6jpp8
 - new version
 
