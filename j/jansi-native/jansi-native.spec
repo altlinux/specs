@@ -2,29 +2,32 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bits %{__isa_bits}
 %global debug_package %{nil}
 
+# jansi-native-1.8 tag is missing from git
+# https://github.com/fusesource/jansi-native/commit/5015ad0
+%global commit 5015ad023a55785dbe6ad19cc786c0533387feff
+
 Name:           jansi-native
-Version:        1.7
-Release:        alt1_8jpp8
+Version:        1.8
+Release:        alt1_2jpp11
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
-Source0:        https://github.com/fusesource/jansi-native/archive/jansi-native-%{version}.tar.gz
+Source0:        https://github.com/fusesource/jansi-native/archive/%{commit}/jansi-native-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.fusesource:fusesource-pom:pom:)
-BuildRequires:  mvn(org.fusesource.hawtjni:hawtjni-runtime) >= 1.9
 BuildRequires:  mvn(org.fusesource.hawtjni:maven-hawtjni-plugin) >= 1.9
+BuildRequires:  mvn(org.fusesource.hawtjni:hawtjni-runtime) >= 1.9
 Source44: import.info
 
 %description
@@ -42,14 +45,14 @@ BuildArch:        noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jansi-native-jansi-native-%{version}
+%setup -q -n jansi-native-%{commit}
 
 %mvn_alias :jansi-linux%{bits} :jansi-linux
 %mvn_file :jansi-linux%{bits} %{name}/jansi-linux%{bits} %{name}/jansi-linux
 
 %build
-%mvn_build
-%mvn_build -- -Dplatform=linux%{bits}
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dplatform=linux%{bits}
 
 %install
 %mvn_install
@@ -62,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference license.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.8-alt1_2jpp11
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_8jpp8
 - new version
 
