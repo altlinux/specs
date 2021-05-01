@@ -10,7 +10,7 @@
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
-%ifarch armh mipsel e2k
+%ifarch armh mipsel %e2k
 %def_disable fwupd
 %else
 %def_enable fwupd
@@ -30,7 +30,7 @@
 %else
 %def_disable valgrind
 %endif
-%ifarch e2k
+%ifarch %e2k
 %def_disable sysprof
 %else
 %def_enable sysprof
@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -184,6 +184,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat May 01 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0 (ported to upstream instead of libappstream-glib)
 
