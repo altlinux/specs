@@ -1,40 +1,33 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global checkout 20110809
+Name:           xsom
+Summary:        XML Schema Object Model (XSOM)
+Version:        20140514
+Release:        alt1_3jpp11
+License:        CDDL-1.1 or GPLv2 with exceptions
 
-Name: xsom
-Version: 0
-Release: alt2_21.20110809svnjpp8
-Summary: XML Schema Object Model (XSOM)
-License: CDDL-1.1 or GPLv2 with exceptions
-URL: http://xsom.java.net
-
-# svn export https://svn.java.net/svn/xsom~sources/tags/xsom-20110809 xsom-20110809svn
-# find xsom-20110809svn/ -name '*.class' -delete
-# find xsom-20110809svn/ -name '*.class' -delete
-# tar czf xsom-20110809svn.tar.gz xsom-20110809svn
-Source0: %{name}-%{checkout}svn.tar.gz
+# java.net is dead; upstream sources have been imported to GitHub though
+URL:            https://github.com/kohsuke/xsom
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 # We need this because one of the original tests tries to download
 # it from the website, but that doesn't work in Koji:
 Source1: http://docs.oasis-open.org/regrep/v3.0/schema/lcm.xsd
 
-Patch0: %{name}-%{checkout}svn-pom.patch
+# patch POM to drop tasks that rely on bundled JARs
+Patch0:         00-pom-changes.patch
 
+BuildRequires:  relaxngcc
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
-BuildRequires:  relaxngcc
 
-BuildArch: noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -47,15 +40,21 @@ object model works.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{checkout}svn
+%setup -q -n %{name}-%{name}-%{version}
 %patch0 -p1
+
+find -name "*.class" -print -delete
+find -name "*.jar" -print -delete
+
+# parent POM is not necessary
+%pom_remove_parent
 
 # Replace the URL of the XSD file used by the tests with its
 # absolute filesystem location:
@@ -64,22 +63,25 @@ sed -i \
   test/XSOMParserTest.java
 
 pushd lib
-  ln -sf `build-classpath relaxngcc` relaxngcc.jar
+ln -sf `build-classpath relaxngcc` relaxngcc.jar
 popd
 
 %build
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8 -P regenerate-sources
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc license.txt
+%doc --no-dereference license.txt copyright.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc --no-dereference license.txt copyright.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 20140514-alt1_3jpp11
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt2_21.20110809svnjpp8
 - new version
 
