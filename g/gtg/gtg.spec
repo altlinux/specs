@@ -2,7 +2,7 @@
 
 Name: gtg
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: A personal tasks and TODO list items organizer.
 License: GPL-3.0-or-later
@@ -46,6 +46,7 @@ need to do and need to know, from small tasks to large projects.
 # plugin.
 %filter_from_requires /texlive/d
 %filter_from_requires /texlive-collection-basic/d
+%filter_from_requires /pdftk/d
 
 %find_lang --with-gnome %name
 
@@ -59,6 +60,9 @@ need to do and need to know, from small tasks to large projects.
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sat May 01 2021 Igor Vlasenko <viy@altlinux.org> 0.5-alt2
+- NMU: removed depandency on pdftk
+
 * Tue Apr 06 2021 Vladimir Didenko <cow@altlinux.org> 0.5-alt1
 - New version
 
