@@ -2,7 +2,7 @@
 
 %define xdg_name org.gnome.FileRoller
 %define xdg_name1 org.gnome.ArchiveManager
-%define ver_major 3.38
+%define ver_major 3.40
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -10,7 +10,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -96,9 +96,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %meson \
     %{?_disable_magic:-Dmagic=false} \
     %{?_enable_packagekit:-Dpackagekit=true} \
-    %{?_enable_libarchive:-Dlibarchive=true} \
+    %{?_enable_libarchive:-Dlibarchive=enabled} \
     %{?_disable_nautilus_actions:-Dnautilus-actions=false} \
-    -Dnotification=true \
+    -Dnotification=enabled \
     -Dcpio='/bin/cpio'
 %meson_build
 
@@ -115,7 +115,7 @@ rm -f data/%xdg_name.desktop{,.in}
 %dir %_datadir/%name
 %_datadir/%name/*
 %_datadir/dbus-1/services/%xdg_name.service
-%_datadir/dbus-1/services/%xdg_name.ArchiveManager1.service
+%_datadir/dbus-1/services/org.gnome.ArchiveManager1.service
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name1}*.*
 %config %_datadir/glib-2.0/schemas/*
@@ -123,8 +123,10 @@ rm -f data/%xdg_name.desktop{,.in}
 %{?_enable_nautilus_actions:%_libdir/nautilus/extensions-%nau_api_ver/*.so}
 %doc AUTHORS NEWS README.md
 
-
 %changelog
+* Sat May 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
