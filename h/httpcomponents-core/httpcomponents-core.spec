@@ -3,26 +3,23 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           httpcomponents-core
 Summary:        Set of low level Java HTTP transport components for HTTP services
-Version:        4.4.10
-Release:        alt1_5jpp8
+Version:        4.4.12
+Release:        alt1_2jpp11
 License:        ASL 2.0
 URL:            http://hc.apache.org/
 Source0:        http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
-# Expired test certificates. Backported from upstream commit 8caeb927a.
-Patch0:         0001-Re-generated-expired-test-certificates.patch
-Patch1:         0002-Port-to-mockito-2.patch
+Patch0:         0001-Port-to-mockito-2.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -31,7 +28,6 @@ Source44: import.info
 
 Obsoletes: hc-httpcore < 4.1.1
 Provides: hc-httpcore = %version
-
 
 %description
 HttpCore is a set of low level HTTP transport components that can be
@@ -57,9 +53,7 @@ BuildArch: noarch
 
 %prep
 %setup -q
-
 %patch0 -p1
-%patch1 -p1
 
 # Random test failures on ARM -- 100 ms sleep is not eneough on this
 # very performant arch, lets make it 2 s
@@ -100,7 +94,7 @@ done
 %mvn_file ":{*}" httpcomponents/@1
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -112,6 +106,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 4.4.12-alt1_2jpp11
+- new version
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.10-alt1_5jpp8
 - build with new mockito
 
