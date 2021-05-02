@@ -1,6 +1,6 @@
 Name: supertuxkart
 Version: 1.2
-Release: alt2
+Release: alt3
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): libGLES
 # Automatically added by buildreq on Thu Jan 30 2020 (-bi)
 # optimized out: bash4 bashrc cmake-modules elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXrender-devel libcrypt-devel libglvnd-devel libharfbuzz-devel libogg-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base rpm-build-gir sh4 tzdata wayland-devel xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
-BuildRequires: bzlib-devel cmake gcc-c++ libGLEW-devel libXi-devel libXrandr-devel libXt-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfreetype-devel libfribidi-devel libjpeg-devel libmcpp-devel libopenal-devel libpng-devel libsqlite3-devel libssl-devel libvorbis-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-devel libxkbfile-devel poppler python-modules-compiler rpm-build-python3 libSDL2-devel
+BuildRequires: bzlib-devel cmake gcc-c++ libGLEW-devel libXi-devel libXrandr-devel libXt-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfreetype-devel libfribidi-devel libjpeg-devel libmcpp-devel libopenal-devel libpng-devel libsqlite3-devel libssl-devel libvorbis-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-devel libxkbfile-devel poppler rpm-build-python3 libSDL2-devel
 # use system libraries instead build-in
 BuildRequires: libwiiuse-devel libraqm-devel
 
@@ -30,6 +30,8 @@ SuperTuxCart is a kart racing game
 %prep
 %setup -n %name-%version
 %patch -p1
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' data/po/update_po_authors.py
 
 %build
 %cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DUSE_SYSTEM_ANGELSCRIPT=OFF -DBUILD_RECORDER=OFF -DCHECK_ASSETS=OFF
@@ -68,6 +70,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %exclude %_libdir/libwiiuse.a
 
 %changelog
+* Sun May 02 2021 Leontiy Volodin <lvol@altlinux.org> 1.2-alt3
+- Fixed build with python3.
+
 * Wed Feb 24 2021 Leontiy Volodin <lvol@altlinux.org> 1.2-alt2
 - Fixed build with last SDL2 (thanks debian for the patch).
 
