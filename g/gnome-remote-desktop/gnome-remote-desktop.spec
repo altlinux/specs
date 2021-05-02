@@ -9,7 +9,7 @@
 %def_enable rdp
 
 Name: gnome-remote-desktop
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -24,7 +24,7 @@ Vcs: https://gitlab.gnome.org/GNOME/gnome-remote-desktop.git
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.67.1
+%define glib_ver 2.68
 %define pw_api_ver 0.3
 %define pw_ver 0.3.22
 %define vnc_ver 0.9.11
@@ -69,6 +69,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README
 
 %changelog
+* Sun May 02 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
