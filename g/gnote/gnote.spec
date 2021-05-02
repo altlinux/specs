@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gnote
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Note-taking application
@@ -70,14 +70,14 @@ and consumes fewer resources.
 %_bindir/%name
 %_libdir/libgnote-*.so.*
 %_man1dir/%name.*
-%_desktopdir/%_rdn_name.desktop
+%_desktopdir/%rdn_name.desktop
 %_datadir/%name/
-%_iconsdir/hicolor/*/apps/%name.??g
+%_iconsdir/hicolor/*/apps/%rdn_name.*
 %_libdir/%name/
 %exclude %_libdir/%name/addins/*/*.la
 %_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%_rdn_name.gschema.xml
-%_datadir/metainfo/%_rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
 %doc README TODO NEWS AUTHORS
 
@@ -85,6 +85,9 @@ and consumes fewer resources.
 %exclude %_libdir/%name/*/*/*.la
 
 %changelog
+* Sun May 02 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
