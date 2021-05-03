@@ -1,25 +1,32 @@
+%def_enable snapshot
 %def_disable static
+# libsndfile & alsa for testing and examples
+%def_enable libsndfile
+%def_enable alsa
 %def_enable check
 
 Name: libsamplerate
-Version: 0.1.9
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Sample Rate Converter audio library
-License: BSD
+License: BSD-2-Clause
 Group: System/Libraries
-Url: http://www.mega-nerd.com/SRC
-Source: %url/%name-%version.tar.gz
+Url: http://libsndfile.github.io/libsamplerate/
 
-%if_enabled check
+%if_disabled snapshot
+Source: https://github.com/libsndfile/%name/releases/download/%version/%name-%version.tar.bz2
+%else
+Vcs: https://github.com/libsndfile/libsamplerate.git
+Source: %name-%version.tar
+%endif
+
+%if_enabled libsndfile
 %define libsndfile_ver 1.0.6
 Requires: libsndfile >= %libsndfile_ver
-
-BuildPreReq: libsndfile-devel >= %libsndfile_ver
-
-# Automatically added by buildreq on Mon Sep 13 2004
-BuildRequires: libfftw3-devel libsndfile-devel
+BuildRequires: libsndfile-devel >= %libsndfile_ver
 %endif
+BuildRequires: libalsa-devel libfftw3-devel
 
 %description
 libsamplerate is a Sample Rate Converter for audio. One example of where
@@ -62,19 +69,19 @@ This package contains utilites and example programs from %name package.
 %setup
 
 %build
-%autoreconf -I M4
+%autoreconf -I m4
 %configure \
-    %{subst_enable static}
-
+    %{subst_enable static} \
+    %{subst_enable libsndfile} \
+    %{subst_enable alsa}
+%nil
 %make_build
 
 %check
-%make -C tests check
+%make check
 
 %install
 %makeinstall_std
-
-rm -f doc/Makefile*
 
 %files
 %_libdir/*.so.*
@@ -84,18 +91,18 @@ rm -f doc/Makefile*
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%doc doc/*
 
 %if_enabled static
 %files devel-static
 %_libdir/*.a
 %endif
 
-%files utils
-%_bindir/*
-%{?_enable_check:%exclude %_bindir/sndfile-resample}
-
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- updated to 0.2.1-10-gaae58e2 (new Url/Vcs,
+  sndfile-resample moved to sndfile-tools package)
+- fixed License tag
+
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 0.1.9-alt2
 - BOOTSTRAP: introduce check knob to avoid extra BRs
   (needed for sndfile-resample and tests; on by default)
