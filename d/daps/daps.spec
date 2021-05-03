@@ -1,6 +1,6 @@
 Name:     daps
 Version:  3.0.0
-Release:  alt1
+Release:  alt2
 
 Summary:  DocBook Authoring and Publishing Suite (DAPS)
 License:  GPL-2.0 or GPL-3.0
@@ -11,6 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: ImageMagick
 BuildRequires: dia
 BuildRequires: docbook-dtds
@@ -84,5 +85,8 @@ Documentation for %name.
 %_datadir/doc/%name
 
 %changelog
+* Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
+- Add rpm-build-python3 to build requirements.
+
 * Thu May 14 2020 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus
