@@ -1,5 +1,5 @@
 Name: zorin-desktop-themes
-Version: 2.1.5
+Version: 3.2
 Release: alt1
 Summary: Zorin OS desktop themes
 
@@ -20,7 +20,7 @@ BuildArch: noarch
 %description
 The Zorin OS desktop theme provided in a variety of color combinations.
 
-%define themes Zorin-95 ZorinBlue-Dark ZorinBlue-Light ZorinGreen-Dark ZorinGreen-Light ZorinGrey-Dark ZorinGrey-Light ZorinOrange-Dark ZorinOrange-Light ZorinPurple-Dark ZorinPurple-Light ZorinRed-Dark ZorinRed-Light 
+%define themes ZorinBlue-Dark ZorinBlue-Light ZorinGreen-Dark ZorinGreen-Light ZorinGrey-Dark ZorinGrey-Light ZorinOrange-Dark ZorinOrange-Light ZorinPurple-Dark ZorinPurple-Light ZorinRed-Dark ZorinRed-Light 
 
 %{expand:%(\
     for theme in %{themes}; do \
@@ -46,6 +46,10 @@ mkdir -p %buildroot%_datadir/themes
 cp -a Zorin* %buildroot%_datadir/themes
 
 %changelog
+* Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
+- New version.
+- Remove deprecated theme Zorin-95.
+
 * Thu Sep 03 2020 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1
 - New version.
 
