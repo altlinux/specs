@@ -3,7 +3,7 @@
 
 Name: android-tools
 Version: 10.0.0
-Release: alt1.r36
+Release: alt2.r36
 
 Summary: Android Debug CLI tools
 License: APL
@@ -61,6 +61,7 @@ BuildRequires: libusb-devel libgtest-devel libsafe-iop-devel
 %if_enabled docs
 BuildRequires: pandoc
 %endif
+BuildRequires: rpm-build-python3
 
 %description
 This package contains following utilities:
@@ -273,6 +274,9 @@ done
 %aprefix
 
 %changelog
+* Mon May 03 2021 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt2.r36
+- add rpm-build-python3 as a build requirement
+
 * Fri Dec 18 2020 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt1.r36
 - updated to 10.0.0_r36
 - debian/create-snapshot updated
