@@ -1,6 +1,6 @@
 Name: cdemu-client
 Version: 3.2.4
-Release: alt1.1
+Release: alt1.2
 
 Summary: A simple command-line client to control CDEmu daemon
 License: GPLv2+
@@ -18,6 +18,7 @@ BuildPreReq: bash-completion
 BuildRequires: cmake
 BuildRequires: intltool
 BuildRequires: rpm-build-gir
+BuildRequires: rpm-build-python3
 
 Requires: cdemu-daemon >= 3.2.2
 
@@ -50,6 +51,9 @@ retrieving/setting devices' debug masks.
 %_datadir/bash-completion/completions/cdemu
 
 %changelog
+* Mon May 03 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1.2
+- Update build requires to fix FTBFS
+
 * Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1.1
 - Don't bzip sources to speedup rpmbuild -bp
 - Update build requires
