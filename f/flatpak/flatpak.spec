@@ -16,7 +16,7 @@
 
 Name: flatpak
 Version: 1.10.2
-Release: alt1
+Release: alt2
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
@@ -48,6 +48,7 @@ Requires: ostree >= %ostree_ver
 Requires: dconf
 Requires: fuse
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
 BuildRequires: pkgconfig(json-glib-1.0)
@@ -209,6 +210,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt2
+- BR: +rpm-build-python3
+
 * Thu Mar 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
 - 1.10.2
 

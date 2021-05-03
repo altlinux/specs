@@ -5,7 +5,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Parental controls implementation
@@ -21,7 +21,7 @@ Requires: polkit accountsservice
 %define gtk_ver 3.24
 %define accountsservice_ver 0.6.39
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-python3
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(dbus-1)
@@ -192,6 +192,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
+- 0.10.1
+- BR: +rpm-build-python3
+
 * Thu Dec 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
