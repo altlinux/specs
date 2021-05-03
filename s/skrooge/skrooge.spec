@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	2.24.6
+Version: 	2.25.0
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KF5
@@ -12,6 +12,7 @@ Source1:	%name.po
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-python3
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: grantlee5-devel
 BuildRequires: kf5-kactivities-devel
@@ -107,6 +108,10 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_datadir/%name
 
 %changelog
+* Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 2.25.0-alt1
+- new version 2.25.0
+- rebuild with rpm-build-python3
+
 * Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 2.24.6-alt1
 - new version 2.24.6
 
