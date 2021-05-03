@@ -1,4 +1,5 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
 %define Name GParted
 
 %def_with pic
@@ -7,7 +8,7 @@
 %def_disable check
 
 Name: gparted
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -42,7 +43,7 @@ Requires: mdadm dmraid dmsetup lvm2
 Requires: udftools >= 2.0
 # since 1.2.0 (optional)
 # exfatprogs conflicts with exfat-utils
-#Requires: exfatprogs
+Requires: exfatprogs >= 1.1.0
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
@@ -115,7 +116,7 @@ xvfb-run %make check
 %files -f %name.lang
 %doc AUTHORS ChangeLog.* README NEWS
 %_bindir/%name
-%_sbindir/%{name}bin
+%_libexecdir/%{name}bin
 %_man8dir/%name.8.*
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/%name.desktop
@@ -129,6 +130,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Tue Jan 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
