@@ -1,13 +1,16 @@
 %def_disable snapshot
 
-%define ver_major 0.57
+%define ver_major 0.58
 %define libname mesonbuild
+%define pkgdocdir %_docdir/%name-%version
+
 # pkexec may be used to "gain elevated privileges" during install
 %def_without polkit
+%def_enable docs
 %def_disable check
 
 Name: meson
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: High productivity build system
@@ -40,6 +43,7 @@ Requires: ninja-build >= 1.7
 BuildRequires(pre): rpm-build-python3
 BuildRequires: ninja-build python3-devel >= %python_ver python3-module-setuptools
 %{?_with_polkit:BuildRequires: libpolkit-devel}
+%{?_enable_docs:BuildRequires: hotdoc}
 %if_enabled check
 BuildRequires: gcc gcc-c++ gcc-fortran gcc-objc gcc-objc++
 BuildRequires: java-devel /proc
@@ -65,16 +69,36 @@ It aims to do this by providing simple, out-of-the-box support for modern
 software development tools and practices, such as unit tests, coverage
 reports, Valgrind, CCache and the like.
 
+%package doc
+Summary: Meson build system documetation
+Group: Development/Documentation
+Conflicts: %name < %version
+
+%description doc
+This package provides documentation for Meson build system.
+
 %prep
 %setup
 
 %build
 %python3_build
+%{?_enable_docs:
+pushd docs
+mkdir build
+export PYTHONPATH=%buildroot%python3_sitelibdir
+../meson.py build
+ninja -C build
+popd}
 
 %install
 %python3_install
 install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
+
+%{?_enable_docs:
+mkdir -p %buildroot%pkgdocdir
+cp -a "docs/build/Meson documentation-doc/html" \
+COPYING README.* %buildroot%pkgdocdir/}
 
 %check
 export LC_ALL=en_US.utf8
@@ -84,14 +108,23 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %_bindir/%name
 %python3_sitelibdir/%libname/
 %python3_sitelibdir/%name-%ver_major.*-*.egg-info/
-%{?_without_polkit:%exclude %_datadir/polkit-1/actions/com.mesonbuild.install.policy}
+%{?_without_polkit:
+%exclude %_datadir/polkit-1/actions/com.mesonbuild.install.policy}
 %_man1dir/%name.1.*
 %_rpmmacrosdir/%name
 %_rpmmacrosdir/%name.env
-%doc COPYING README.*
+%{?_disabled_docs:%doc COPYING README.*}
 
+%if_enabled docs
+%files doc
+%pkgdocdir/
+%endif
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
+- 0.58.0
+- new -doc subpackage
+
 * Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.57.2-alt1
 - 0.57.2
 

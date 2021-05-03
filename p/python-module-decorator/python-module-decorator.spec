@@ -1,22 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define oname decorator
+%define modname decorator
+%def_enable python2
 
-Name: python-module-%oname
-Version: 4.3.0
+Name: python-module-%modname
+Version: 4.4.2
 Release: alt1
+
 Summary: Better living through Python with decorators
-License: BSD
+License: BSD-style
 Group: Development/Python
 Url: http://pypi.python.org/pypi/decorator
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Vcs: https://github.com/micheles/decorator.git
 
-Source0: https://files.pythonhosted.org/packages/source/d/%oname/%oname-%version.tar.gz
+Source0: https://files.pythonhosted.org/packages/source/d/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
 
+%if_enabled python2
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
+%endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -40,11 +44,11 @@ since:
 
                      Michele Simionato <michele simionato at gmail com>
 
-%package -n python3-module-%oname
+%package -n python3-module-%modname
 Summary: Better living through Python 3 with decorators
 Group: Development/Python3
 
-%description -n python3-module-%oname
+%description -n python3-module-%modname
 Python decorators are an interesting example of why syntactic sugar
 matters. In principle, their introduction in Python changed nothing,
 since they do not provide any new functionality which was not already
@@ -64,37 +68,40 @@ since:
                      Michele Simionato <michele simionato at gmail com>
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-#install -Dm644 %SOURCE1 docs/README.rst
-
-rm -rf ../python3
-cp -a . ../python3
+%setup -n %modname-%version %{?_enable_python2:-a0
+mv %modname-%version py2build}
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
+
+%{?_enable_python2:
+pushd py2build
+%python_build
+popd}
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
+%{?_enable_python2:
+pushd py2build
+%python_install
+popd}
 
+%if_enabled python2
 %files
-%doc CHANGES.md LICENSE.txt docs/README.rst
 %python_sitelibdir/*
+%doc CHANGES.md LICENSE.txt README.rst
+%endif
 
-%files -n python3-module-%oname
-%doc CHANGES.md LICENSE.txt docs/README.rst
+%files -n python3-module-%modname
 %python3_sitelibdir/*
+%doc CHANGES.md LICENSE.txt README.rst
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
+- 4.4.2
+- made python2 build optional
+
 * Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 4.3.0-alt1
 - 4.3.0
 
