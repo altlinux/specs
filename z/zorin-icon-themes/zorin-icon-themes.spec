@@ -1,5 +1,5 @@
 Name: zorin-icon-themes
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 Summary: Zorin icon themes
 
@@ -10,6 +10,7 @@ URL: https://github.com/ZorinOS/zorin-icon-themes
 Source: %name-%version.tar
 
 BuildArch: noarch
+AutoReqProv: no
 
 %description
 The Zorin icon theme provided in a variety of color combinations.
@@ -35,6 +36,9 @@ mkdir -p %buildroot%_iconsdir
 cp -a Zorin* %buildroot%_iconsdir
 
 %changelog
+* Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 2.8.2-alt1
+- New version.
+
 * Thu Apr 29 2021 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt1
 - New version.
 
