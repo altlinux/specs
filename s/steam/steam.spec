@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.70
-Release: alt1
+Release: alt1.1
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -26,6 +26,8 @@ Requires: libGL
 Requires: libnsl1
 Requires: libnss
 Requires: xz
+
+BuildRequires: rpm-build-python3
 
 %description
 Steam is a software distribution service with an online store, automated
@@ -58,6 +60,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Mon May 03 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.70-alt1.1
+- Update build requires to fix FTBFS
+
 * Fri Apr 09 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.70-alt1
 - Version 1.0.0.70
 
