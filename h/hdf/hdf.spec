@@ -9,8 +9,8 @@ BuildRequires: /usr/bin/diff /usr/bin/makeinfo /usr/bin/neqn /usr/bin/tbl
 %endif
 
 Name: hdf
-Version: 4.2.14
-Release: alt2
+Version: 4.2.15
+Release: alt1
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 URL: https://portal.hdfgroup.org/
@@ -25,7 +25,7 @@ Patch5: hdf-destdir.patch
 # Install examples into the right location
 Patch6: hdf-examplesdir.patch
 # Add AArch64 definitions
-Patch8: hdf-4.2.10-aarch64.patch
+Patch8: hdf-aarch64.patch
 # ppc64le support
 # https://bugzilla.redhat.com/show_bug.cgi?id=1134385
 Patch9: hdf-ppc64le.patch
@@ -33,6 +33,8 @@ Patch9: hdf-ppc64le.patch
 # Fix syntax error on epel6 builds
 # Use only if java is disabled
 Patch10: hdf-avoid_syntax_error_el6.patch
+# Fix java build
+Patch11: hdf-build.patch
 
 # For destdir/examplesdir patches
 BuildRequires: automake, libtool, gcc, gcc-c++
@@ -62,7 +64,7 @@ HDF development headers and libraries.
 %prep
 %setup -q
 
-%patch0 -p1 -b .maxavailfiles
+#patch0 -p1 -b .maxavailfiles
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
@@ -71,6 +73,7 @@ HDF development headers and libraries.
 %patch6 -p1 -b .examplesdir
 %patch8 -p1 -b .aarch64
 %patch9 -p1 -b .ppc64le
+%patch11 -p1 -b .build
 
 ## Fix syntax error bacause 'CLASSPATH_ENV=$H4_CLASSPATH' line on epel6 builds
 # Use only if java is disabled
@@ -149,6 +152,9 @@ make -j1 check
 %{_docdir}/%{name}/examples/
 
 %changelog
+* Mon May 03 2021 Ilya Mashkin <oddity@altlinux.ru> 4.2.15-alt1
+- 4.2.15
+
 * Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 4.2.14-alt2
 - Fixed FTBFS.
 
