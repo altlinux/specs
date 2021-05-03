@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: gnome-backgrounds
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A collection of GNOME backgrounds
@@ -29,7 +29,6 @@ with the GNOME desktop.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -38,6 +37,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Mon Apr 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
