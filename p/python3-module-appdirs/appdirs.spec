@@ -1,8 +1,8 @@
 %define oname appdirs
 
 Name:       python3-module-%oname
-Version:    1.4.3
-Release:    alt2
+Version:    1.4.4
+Release:    alt1
 
 Summary:    Determining appropriate platform-specific dirs, e.g. a "user data dir"
 License:    MIT
@@ -11,7 +11,7 @@ Url:        https://pypi.python.org/pypi/appdirs/
 
 BuildArch:  noarch
 
-# https://github.com/ActiveState/appdirs.git
+Vcs: https://github.com/ActiveState/appdirs.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -40,6 +40,9 @@ dirs, e.g. a "user data dir".
 
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- updated to 1.4.4 required by hotdoc
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4.3-alt2
 - Build for python2 disabled.
 
