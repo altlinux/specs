@@ -3,14 +3,14 @@
 
 Name: a2jmidid
 Version: 9
-Release: alt1.git9f87918
+Release: alt2.git5b8f5d
 
 Summary: ALSA sequencer to JACK MIDI bridging
 License: GPL-2.0
 Group:   Sound
 URL:     https://github.com/linuxaudio/a2jmidid
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-python3
 BuildRequires: libjack-devel libalsa-devel libdbus-devel
 
 Source:  %name-%version-%release.tar
@@ -36,5 +36,8 @@ when using JACK 2. It can also bridge hardware ports.
 %doc %_man1dir/*
 
 %changelog
+* Mon May 03 2021 Ivan A. Melnikov <iv@altlinux.org> 9-alt2.git5b8f5d
+- new snapshot
+
 * Thu Jan 09 2020 Ivan A. Melnikov <iv@altlinux.org> 9-alt1.git9f87918
 - initial build
