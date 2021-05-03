@@ -36,7 +36,7 @@
 
 Name: efl
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -55,7 +55,7 @@ Patch1: efl-1.19.1-luajitfix.patch
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
 #Requires: LibreOffice
 
-BuildRequires(pre): meson rpm-macros-luajit
+BuildRequires(pre): meson rpm-macros-luajit rpm-build-python3
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel libgif-devel libwebp-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
@@ -420,6 +420,9 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt2
+- BR: +rpm-build-python3
+
 * Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt1
 - 1.25.1
 

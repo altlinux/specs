@@ -12,7 +12,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: GStreamer streaming media framework runtime
 License: LGPLv2+
@@ -28,7 +28,7 @@ Requires: lib%name = %version-%release
 
 %define glib_ver 2.44.0
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: flex gcc-c++ ghostscript-utils libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
@@ -107,7 +107,7 @@ Gstreamer plugins.
 %setup -n %_name-%version
 
 %build
-%ifarch e2k
+%ifarch %e2k
 # till lcc ~1.23
 export LIBS=-lcxa
 %endif
@@ -189,6 +189,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt2
+- BR: +rpm-build-python3
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 
