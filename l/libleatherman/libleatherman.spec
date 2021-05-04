@@ -1,6 +1,6 @@
 Name:    libleatherman
 Version: 1.12.4
-Release: alt1
+Release: alt2
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -13,6 +13,7 @@ Patch1: fedora-shared_nowide.patch
  
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
@@ -33,6 +34,8 @@ Requires: boost-locale-devel
 %description devel
 Development headers for leatherman.
 
+%add_python3_path %_libdir/cmake/leatherman/scripts/
+
 %prep
 %setup -n leatherman-%version
 %patch1 -p1
@@ -44,6 +47,8 @@ sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 # see also http://bugs.webkit.org/show_bug.cgi?id=29034 and mcst#5101
 sed -r -i.orig 's,reinterpret_cast<char\*\*\*>,(char***),g' ruby/src/api.cc
 %endif
+# Set correct python executable in shebang
+subst 's|#!.*python$|#!%__python3|' scripts/cpplint.py
 
 %build
 %cmake -GNinja \
@@ -65,6 +70,9 @@ sed -r -i.orig 's,reinterpret_cast<char\*\*\*>,(char***),g' ruby/src/api.cc
 %_libdir/cmake/leatherman
 
 %changelog
+* Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.12.4-alt2
+- FTBFS: Set correct python3 executable in script shebang.
+
 * Mon Dec 14 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.4-alt1
 - New version.
 
