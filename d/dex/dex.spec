@@ -1,16 +1,16 @@
 Name: dex
-Version: 0.8.0
-Release: alt1.git.3.g9e96e39
-Summary: DesktopEntry Execution
+Version: 0.9.0
+Release: alt1.git.17.g2ba905d
+Summary: Desktop Entry Execution
 Url: http://e-jc.de/dex/
 License: GPLv3
 Group:  System/Base
-# https://github.com/jceb/dex/archive/v0.8.0.tar.gz
+# https://github.com/jceb/dex/
 Source: %name-%version.tar
 Source44: %name.watch
 
 BuildArch: noarch
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx rpm-build-python3
 
 %description
 dex, DesktopEntry Execution, is a program to generate and execute DesktopEntry
@@ -34,5 +34,8 @@ mv %buildroot%_docdir/%name doc2install
 %_man1dir/*
 
 %changelog
+* Tue May 04 2021 Ildar Mulyukov <ildar@altlinux.ru> 0.9.0-alt1.git.17.g2ba905d
+- new version
+
 * Wed Feb 14 2018 Ildar Mulyukov <ildar@altlinux.ru> 0.8.0-alt1.git.3.g9e96e39
 - 1st version for Sisyphus
