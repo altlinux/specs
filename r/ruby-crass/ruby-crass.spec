@@ -2,7 +2,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.0.4
-Release: alt1.1
+Release: alt2
 
 Summary: A Ruby CSS parser that's fully compliant with the CSS Syntax Level 3 specification.
 License: MIT
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-build-python3
 BuildRequires: ruby-tool-setup
 
 %description
@@ -28,6 +29,8 @@ BuildArch: noarch
 
 %description doc
 Documentation files for %{name}.
+
+%add_python3_path %rubygem_gemdir/%pkgname-%version/test/css-parsing-tests/
 
 %prep
 %setup -n %pkgname-%version
@@ -55,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt2
+- FTBFS: Set correct python3 library directory for python scripts.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1.1
 - Rebuild with new Ruby autorequirements.
 
