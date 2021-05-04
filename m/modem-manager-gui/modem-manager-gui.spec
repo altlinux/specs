@@ -3,10 +3,10 @@ Summary:       Graphical interface for ModemManager
 Summary(de):   Grafische Oberfläche für ModemManager
 Summary(ru):   Графический интерфейс для ModemManager
 Version:       0.0.20
-Release:       alt1
+Release:       alt2
 
 Group:	       System/Configuration/Networking	
-License:       GPLv3
+License:       GPL-3.0+
 URL:           http://linuxonly.ru/cms/page.php?7
 
 Packager:      Andrey Cherepanov <cas@altlinux.org>
@@ -15,7 +15,8 @@ Packager:      Andrey Cherepanov <cas@altlinux.org>
 Source0:       http://download.tuxfamily.org/gsf/source/%{name}-%{version}.tar.gz
 Source1:       %name.watch
 
-BuildRequires: meson
+BuildRequires(pre): meson
+BuildRequires(pre): rpm-build-python3
 BuildRequires: pkgconfig
 BuildRequires: desktop-file-utils
 BuildRequires: gdbm-devel
@@ -70,7 +71,9 @@ Funktionen:
 - Сканирование доступных мобильных сетей.
 
 %prep
-%setup -q
+%setup
+# Set correct python3 executable in shebang
+subst 's|#!.*python3\?$|#!%__python3|' $(grep -Rl '#!.*python3\?$' *)
 
 %build
 %meson
@@ -101,6 +104,10 @@ mv %buildroot%_datadir/metainfo/%name.appdata.xml %buildroot%_datadir/appdata
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 0.0.20-alt2
+- FTBFS: Set correct python3 executable in shebang.
+- Fix License tag according to SPDX.
+
 * Mon Aug 03 2020 Andrey Cherepanov <cas@altlinux.org> 0.0.20-alt1
 - New version.
 
