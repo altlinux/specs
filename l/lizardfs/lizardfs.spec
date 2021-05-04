@@ -16,7 +16,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc3.38
+Release: alt0.rc3.39
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -36,6 +36,7 @@ Conflicts: moosefs
 ExcludeArch: armh
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): unzip
 %if_with docs
 BuildRequires: asciidoc-a2x
@@ -415,6 +416,9 @@ popd
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Tue May 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.39
+- BR: +rpm-build-python3
+
 * Fri Apr 30 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.38
 - mfscgiserv deprecated, use lizardfs-cgiserver instead
 
