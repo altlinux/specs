@@ -1,6 +1,6 @@
 Name: xboxdrv
 Version: 0.8.8
-Release: alt2
+Release: alt2.1
 
 Summary: Xbox/Xbox360 USB Gamepad Driver for Userspace
 License: GPLv3
@@ -18,6 +18,7 @@ BuildRequires: libX11-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
+BuildRequires: rpm-build-python
 BuildRequires: scons
 
 %description
@@ -53,6 +54,9 @@ works for you there is no need to try this driver.
 %_man1dir/%name.1*
 
 %changelog
+* Tue May 04 2021 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt2.1
+- Update build requires to fix FTBFS
+
 * Sat Jan 18 2020 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt2
 - Fix 60 seconds delay
 - Fix build with python
