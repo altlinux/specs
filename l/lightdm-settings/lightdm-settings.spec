@@ -1,6 +1,6 @@
 Name: lightdm-settings
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Summary: Configuration tool for the LightDM display manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -9,6 +9,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 BuildArch: noarch
 
+BuildPreReq: rpm-build-python3
 Requires: slick-greeter
 Requires: python3(xapp)
 Requires: python3(setproctitle)
@@ -45,6 +46,9 @@ chmod -c 0755 %{buildroot}%{_bindir}/%{name}			\
 %{_datadir}/polkit-1/actions/org.x.%{name}.policy
 
 %changelog
+* Wed May 5 2021 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt2
+- add rpm-build-python3 to the build requirements
+
 * Tue Jan 12 2021 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
