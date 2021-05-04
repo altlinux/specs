@@ -2,7 +2,7 @@
 
 Name: jack-audio-connection-kit
 Version: 1.9.14
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -21,7 +21,6 @@ Patch1: %name-doxygen.patch
 Provides: jackd = %epoch:%version-%release
 Obsoletes: jackd < %epoch:%version
 
-%add_python3_path %_bindir
 BuildRequires: rpm-build-python3
 
 BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel
@@ -159,6 +158,9 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Tue May 04 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.14-alt2.1
+- Remove python3 path /usr/bin. Not needed, it was enough rpm-build-python3
+
 * Tue May 04 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.14-alt2
 - Add python3 path /usr/bin (Fix FTBFS without rpm-build-python)
 
