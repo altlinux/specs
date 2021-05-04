@@ -1,6 +1,6 @@
 Name: connector
 Version: 1.9.6
-Release: alt1
+Release: alt2
 
 Summary: Remote desktop chooser
 License: GPL-2.0
@@ -9,6 +9,8 @@ Group: Networking/Remote access
 Url: http://myconnector.ru
 Source0: %name-%version.tar.gz
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
+
+BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 Requires: control
@@ -82,6 +84,9 @@ install -pDm644 kiosk/%name-kiosk.man %buildroot%_man1dir/%name-kiosk.1
 %_man1dir/%name-kiosk.*
 
 %changelog
+* Tue May 04 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.6-alt2
+- Added rpm-build-python3 to BR
+
 * Mon Jul 06 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.6-alt1
 - kiosk:
  + added SDDM support
