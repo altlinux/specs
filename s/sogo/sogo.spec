@@ -4,7 +4,7 @@
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
 Version: 5.1.0
-Release: alt2
+Release: alt3
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -38,9 +38,10 @@ Obsoletes: sogo3 < %EVR
 %filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
 %{!?sogo_major_version: %global sogo_major_version %(/bin/echo %version | /bin/cut -f 1 -d .)}
 
+BuildRequires(pre): rpm-build-apache2
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gnustep-make-devel
 BuildRequires: gnustep-base-devel
-BuildRequires(pre): rpm-build-apache2
 # To ignore a patched submodule:
 BuildPreReq: patchutils
 BuildRequires: gcc-objc
@@ -259,8 +260,8 @@ tar xf %SOURCE2
 %patch4 -p1
 %patch5 -p1
 
-# Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+# Set correct python3 executable in shebang
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 %build
 . /usr/share/GNUstep/Makefiles/GNUstep.sh
@@ -439,6 +440,9 @@ test -e "$dovecot_service" && %post_service dovecot
 %preun_service sogo
 
 %changelog
+* Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt3
+- Use python3 interpreter in python scripts.
+
 * Fri Apr 16 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt2
 - Restart dovecot if it is running on sogo update.
 
