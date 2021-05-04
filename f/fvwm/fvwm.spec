@@ -1,7 +1,7 @@
 Name: fvwm
 Version: 2.6.9
 #define cvsdate 20031019
-Release: alt1
+Release: alt2
 
 %def_with fribidi
 %def_with libstroke
@@ -51,6 +51,9 @@ Patch16: fvwm-2.6.8-alt-fvwmbug-printf.patch
 %{?_with_libstroke:BuildPreReq: libstroke-devel}
 
 BuildRequires: libpng-devel librsvg-devel imlib2-devel libXcursor-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libncurses-devel libreadline-devel perl-Tk perl-X11-Protocol perl-XML-Parser xsltproc
+
+# for fvwm-menu-desktop script
+BuildRequires: rpm-build-python3
 
 %description
 Fvwm is an ICCCM-compliant X window manager providing a 3D look for
@@ -356,6 +359,9 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_miconsdir/*.xpm
 
 %changelog
+* Tue May 04 2021 Vladislav Zavjalov <slazav@altlinux.org> 2.6.9-alt2
+- add BuildRequires: rpm-build-python3 (for fvwm-menu-desktop script)
+
 * Sat May 23 2020 Vladislav Zavjalov <slazav@altlinux.org> 2.6.9-alt1
 - upstream version 2.6.9
 - remove dependency on Perl4::CoreLibs::getcwd
