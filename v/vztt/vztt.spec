@@ -13,7 +13,7 @@
 
 Name: vztt
 Version: 7.0.80
-Release: alt1
+Release: alt2
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -34,6 +34,7 @@ Requires: lz4 gzip tar
 Requires: e2fsprogs
 Requires: python3-module-configobj
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libattr-devel
 BuildRequires: glibc-devel-static
 BuildRequires: libuuid-devel
@@ -104,6 +105,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Tue May 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.80-alt2
+- BR: +rpm-build-python3
+
 * Thu Apr 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.80-alt1
 - 7.0.80
 
