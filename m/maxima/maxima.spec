@@ -34,9 +34,9 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.43.2
-%define maxima_version 5.43.2
-Release: alt3
+Version: 5.44.0
+%define maxima_version 5.44.0
+Release: alt1
 
 Summary: Maxima Computer Algebra System
 License: GPL-2.0
@@ -52,6 +52,8 @@ Source7: breqn-0.94.tar.bz2
 %endif
 
 Patch1: maxima-alt-desktop-i18n.patch
+Patch4: maxima-ecl-ldflags.patch
+Patch5: maxima-5.40.0-pdf-manual-a4-paper-size.patch
 
 ## upstreamable patches
 # https://bugzilla.redhat.com/show_bug.cgi?id=837142
@@ -61,11 +63,13 @@ Patch50: maxima-5.37.1-clisp-noreadline.patch
 # Build the fasl while building the executable to avoid double initialization
 Patch51: maxima-5.30.0-build-fasl.patch
 
+
 ## Other maxima reference docs
 Source10: http://starship.python.net/crew/mike/TixMaxima/macref.pdf
 Source11: http://maxima.sourceforge.net/docs/maximabook/maximabook-19-Sept-2004.pdf
 
 BuildRequires(pre): rpm-macros-sbcl
+BuildRequires: python3-devel rpm-build-python3
 
 ExclusiveArch: %sbcl_arches %e2k ppc64le armh
 
@@ -255,8 +259,10 @@ tar jxf %SOURCE7 -C doc/maximabook
 %endif
 
 %patch1 -p2
+%patch4 -p1
+%patch5 -p1
 %patch50 -p1 -b .clisp-noreadline
-%patch51 -p1 -b .build-fasl
+#patch51 -p1 -b .build-fasl
 
 # Set new path to maxima-index.lisp
 subst 's|maxima::\*maxima-infodir\* |"%_datadir/maxima/%maxima_version/doc" |' src/cl-info.lisp
@@ -279,6 +285,8 @@ cp -pv /usr/share/gnu-config/* .
 
 
 %build
+export PYTHON=%{__python3}
+
 export SBCL_HOME=%_libdir/sbcl/
 %if %CVS_BUILD
 ./bootstrap
@@ -590,6 +598,13 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+
+* Tue May 04 2021 Ilya Mashkin <oddity@altlinux.ru> 5.44.0-alt1
+- 5.44.0
+- Add maxima-5.40.0-pdf-manual-a4-paper-size.patch
+- Add maxima-ecl-ldflags.patch
+- Add BR: python3-devel  rpm-build-python3
+
 * Sun Dec 27 2020 Michael Shigorin <mike@altlinux.org> 5.43.2-alt3
 - non-%%sbcl_arches: build with clisp
 - E2K: avoid emacs subpackage (missing so far)
