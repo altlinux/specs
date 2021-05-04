@@ -1,6 +1,6 @@
 Name: 	  laptop-mode-tools
 Version:  1.74
-Release:  alt1
+Release:  alt2
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL-2.0+
@@ -13,7 +13,11 @@ Source:   %name-%version.tar
 Patch1:   support-condrestart-in-initscript.patch
 
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+
 %filter_from_requires \,^/lib/udev/hotplug\.functions,d;\,^systemd$,d
+%add_python3_path %_datadir/%name
 
 %description
 Laptop mode is a Linux kernel feature that allows your laptop to save
@@ -56,8 +60,14 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install TMP
 %_tmpfilesdir/laptop-mode.conf
 %_datadir/polkit-1/actions/org.linux.lmt.gui.policy
 %_man8dir/*
+%_desktopdir/%name.desktop
+%_pixmapsdir/%name.svg
 
 %changelog
+* Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.74-alt2
+- FTBFS: Set correct python3 library directory for python scripts.
+- Package desktop file and pixmap.
+
 * Sun Jul 19 2020 Andrey Cherepanov <cas@altlinux.org> 1.74-alt1
 - New version.
 
