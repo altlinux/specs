@@ -1,8 +1,8 @@
 %define origname mpDris2
 Name: mpdris2
 Summary: provides MPRIS 2 support to mpd (Music Play Daemon)
-Version: 0.7
-Release: alt1.git.40.g19e8783
+Version: 0.9.1
+Release: alt1
 License: GPL3
 Group: Sound
 Url: https://github.com/eonpatapon/%origname
@@ -10,11 +10,12 @@ BuildArch: noarch
 
 # https://github.com/eonpatapon/mpDris2/
 Source: %name.tar
+Source44: %origname.watch
 
 Requires: mpd python3-module-mutagen python3-module-pygobject3 libnotify-gir
 # Automatically added by buildreq on Tue Nov 07 2017 (-bi)
-# optimized out: perl perl-XML-Parser python-base python3 rpm-build-python3
-BuildRequires: intltool python3-base
+# optimized out: perl perl-XML-Parser python-base python3
+BuildRequires: intltool rpm-build-python3
 
 %description
 mpDris2 is run in the user session and monitors a local or distant mpd server.
@@ -45,6 +46,9 @@ make
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Tue May 04 2021 Ildar Mulyukov <ildar@altlinux.ru> 0.9.1-alt1
+- new version
+
 * Tue Nov 07 2017 Ildar Mulyukov <ildar@altlinux.ru> 0.7-alt1.git.40.g19e8783
 - new git snapshot
 - moved to python3
