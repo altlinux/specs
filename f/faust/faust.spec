@@ -1,6 +1,6 @@
 Name: faust
 Version: 0.9.90
-Release: alt3.1
+Release: alt4
 
 Summary: FAUST is a compiled language for real-time audio signal processing
 License: GPL-2.0-or-later
@@ -12,7 +12,9 @@ Source: %name-%version.tar
 #Patch: %name-1.0-alt-makefile-fixes.patch
 Patch1: faust2md-pyhon3.patch
 
-BuildRequires(pre): gcc-c++ rpm-build-python3
+%add_python3_path %_libexecdir/%name
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: gcc-c++ rpm-build-python3
 
 %description
 FAUST is a compiled language for real-time audio signal processing.
@@ -158,6 +160,10 @@ rm -r %buildroot%_libexecdir/%name/iOS*
 %_libexecdir/%name
 
 %changelog
+* Tue May 04 2021 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt4
+- Add python3 path /usr/lib/faust (Fix FTBFS without
+  rpm-build-python)
+
 * Thu May 21 2020 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt3.1
 - Fix License tag
 
