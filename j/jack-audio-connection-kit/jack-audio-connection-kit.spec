@@ -2,7 +2,7 @@
 
 Name: jack-audio-connection-kit
 Version: 1.9.14
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -21,9 +21,12 @@ Patch1: %name-doxygen.patch
 Provides: jackd = %epoch:%version-%release
 Obsoletes: jackd < %epoch:%version
 
+%add_python3_path %_bindir
+BuildRequires: rpm-build-python3
+
 BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel
 BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel
-BuildRequires: python3
+
 BuildRequires: libopus-devel
 # FIXME: freebob seems obsoleted by ffado
 %{?_enable_firewire:BuildRequires: libfreebob-devel}
@@ -156,6 +159,9 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Tue May 04 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.14-alt2
+- Add python3 path /usr/bin (Fix FTBFS without rpm-build-python)
+
 * Wed May 06 2020 Anton Midyukov <antohami@altlinux.org> 1:1.9.14-alt1
 - Updated to 1.9.14
 - disable firewire
