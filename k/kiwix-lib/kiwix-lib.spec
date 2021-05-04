@@ -1,6 +1,6 @@
 Name:     kiwix-lib
 Version:  9.4.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Common code base for all Kiwix ports
 License:  GPL-3.0
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 
 BuildRequires(pre): meson
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: libcurl-devel
@@ -61,6 +62,9 @@ Group: Development/C++
 %_man1dir/*.1*
 
 %changelog
+* Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 9.4.1-alt2
+- Add rpm-build-python3 to detect python3 requirements.
+
 * Wed Nov 18 2020 Andrey Cherepanov <cas@altlinux.org> 9.4.1-alt1
 - New version.
 
