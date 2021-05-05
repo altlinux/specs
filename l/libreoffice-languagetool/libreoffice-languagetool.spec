@@ -3,7 +3,7 @@
 
 Name:       libreoffice-languagetool
 Version:    5.1
-Release:    alt1
+Release:    alt2
 
 Summary:    LibreOffice/OpenOffice.org extension for proofreading
 License:    LGPL-2.1
@@ -13,6 +13,7 @@ URL:        http://www.languagetool.org
 # XXX actually, .oxt
 Source0:    LanguageTool-%version.zip
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: unzip
 AutoReq: yes, noperl
 
@@ -36,6 +37,9 @@ unzip %SOURCE0 -d %buildroot%ext_dir/%ext_name
 %ext_dir/%ext_name
 
 %changelog
+* Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 5.1-alt2
+- FTBFS: Use rpm-build-python3 for autreq and autoprov.
+
 * Sat Sep 26 2020 Fr. Br. George <george@altlinux.ru> 5.1-alt1
 - New version 5.1
 
