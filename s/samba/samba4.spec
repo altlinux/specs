@@ -61,8 +61,8 @@
 %define _samba_mod_libdir  %_libdir/samba
 %define _samba_dc_libdir  %_libdir/samba-dc
 %define _samba_dc_mod_libdir  %_libdir/samba-dc
-%define _samba_piddir /var/run
-%define _samba_sockets_dir /var/run/samba
+%define _samba_piddir /run
+%define _samba_sockets_dir /run/samba
 
 %if_with separate_heimdal_server
 %add_python3_compile_include %_samba_dc_mod_libdir/python%_python3_version
@@ -70,8 +70,8 @@
 %endif
 
 Name:    samba
-Version: 4.14.2
-Release: alt3
+Version: 4.14.4
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -134,7 +134,9 @@ BuildRequires: zlib-devel
 BuildRequires: libarchive-devel >= 3.1.2
 BuildRequires: libjansson-devel
 BuildRequires: libgpgme-devel
+%ifnarch %e2k
 BuildRequires: liburing-devel >= 0.4
+%endif
 BuildRequires: /usr/bin/rpcgen
 BuildRequires: libtirpc-devel
 BuildRequires: libtasn1-devel
@@ -972,7 +974,7 @@ echo "d %_samba_piddir/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
 touch %buildroot%_sysconfdir/ctdb/nodes
 %endif
 
-install -m644 packaging/systemd/samba.conf.tmp %buildroot%_tmpfilesdir/%rname.conf
+echo "d %_samba_piddir/samba 755 root root" > %buildroot%_tmpfilesdir/%rname.conf
 
 # NetworkManager online/offline script
 install -d -m 0755 %buildroot%_sysconfdir/NetworkManager/dispatcher.d/
@@ -1289,7 +1291,6 @@ TDB_NO_FSYNC=1 %make_build test
 %config(noreplace) %_sysconfdir/security/limits.d/90-samba.conf
 %attr(0700,root,root) %dir /var/log/samba
 %attr(0700,root,root) %dir /var/log/samba/old
-%dir %_samba_piddir/winbindd
 %dir %_samba_sockets_dir
 %attr(755,root,root) %dir %_localstatedir/cache/samba
 %attr(710,root,root) %dir /var/lib/samba/private
@@ -1740,6 +1741,7 @@ TDB_NO_FSYNC=1 %make_build test
 %attr(750,root,wbpriv) %dir /var/lib/samba/winbindd_privileged
 %_unitdir/winbind.service
 %attr(755,root,root) %_initrddir/winbind
+%dir %_samba_piddir/winbindd
 %_sysconfdir/NetworkManager/dispatcher.d/30-winbind
 %if_with doc
 %_man8dir/winbindd.8*
@@ -1871,6 +1873,11 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Apr 30 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt1
+- Fix buffer overrun in sids_to_unixids() (Fixes: CVE-2021-20254)
+- Final migration to /run directory (Closes: 35891, 36652, 39992)
+- Avoid build problems on e2k
+
 * Mon Apr 12 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.2-alt3
 - Multiple build fixes:
   + Revert to use macros for e2k (due ALT#36315 was fixed).
