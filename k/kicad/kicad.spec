@@ -7,7 +7,7 @@ Name: kicad
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Version: 5.1.9
-Release: alt1
+Release: alt2
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 License: AGPL-3-or-later
@@ -33,7 +33,7 @@ BuildRequires: python-devel
 BuildRequires: libglm-devel
 BuildRequires: libuuid-devel
 BuildRequires: ngspice-devel
-BuildRequires: OCE-devel
+BuildRequires: opencascade-devel
 BuildRequires: openmpi-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
@@ -120,6 +120,7 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 
 %build
 %cmake \
+    -DKICAD_USE_OCC:BOOL=ON \
     -DKICAD_SCRIPTING=ON \
     -DKICAD_SCRIPTING_MODULES=ON \
     -DKICAD_SCRIPTING_WXPYTHON=ON \
@@ -170,6 +171,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/mime/packages/*
 
 %changelog
+* Tue May 04 2021 Anton Midyukov <antohami@altlinux.org> 1:5.1.9-alt2
+- Rebuild with opencascade
+
 * Sat Feb 13 2021 Anton Midyukov <antohami@altlinux.org> 1:5.1.9-alt1
 - new version 5.1.9
 

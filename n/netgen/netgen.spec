@@ -11,7 +11,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2004
+Version: 6.2.2102
 Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
@@ -38,19 +38,21 @@ Patch6: netgen-6.2-alt-unbundle-togl.patch
 Patch7: 0007-Add-missing-USE_JPEG-propagation.patch
 # Add missing -ldl
 Patch8: 0008-Add-missing-ldl.patch
-# Only include immintrin.h on x86 arches
-Patch9: 0009-immintrin.patch
 # Use system pybind11
 Patch10: netgen-6.2-alt-unbundle-pybind11.patch
+Patch11: netgen-alt-fix-return-type.patch
+Patch12: netgen-alt-fix-build-i586.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): ccmake
 
-# Automatically added by buildreq on Wed Jun 13 2018
-# optimized out: OCE-foundation OCE-modeling OCE-ocaf OCE-visualization cmake cmake-modules fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXres-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libstdc++-devel libx265-130 libxkbfile-devel mpi-selector openmpi-compat perl pkg-config python-base python-modules python3 python3-base tcl tcl-devel tk tk-devel xorg-proto-devel xorg-xf86miscproto-devel
+%ifarch aarch64
+BuildRequires: clang
+%endif
 BuildRequires: gcc-c++
-BuildRequires: ccmake
-BuildRequires: OCE-devel
+BuildRequires: opencascade-devel
+BuildRequires: tk-devel
 BuildRequires: libXmu-devel
 BuildRequires: libavformat-devel
 BuildRequires: libjpeg-devel
@@ -67,10 +69,10 @@ BuildRequires: %mpiimpl-devel
 %if_with shared_togl
 BuildRequires: tcl-togl-devel 
 %endif
+BuildRequires: git-core
+BuildRequires: libGLU-devel
 
 Requires: lib%name = %EVR tcl-tix
-
-ExclusiveArch: x86_64
 
 %add_findreq_skiplist %_datadir/%name/*
 %add_findprov_lib_path %_libdir/%mpiimpl/lib %_tcllibdir
@@ -191,8 +193,9 @@ This package contains Python bindings of NETGEN.
 %endif
 %patch7 -p1
 #%%patch8 -p1
-%patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %if_with shared_togl
 # Remove bundled togl
@@ -230,6 +233,10 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DNG_INSTALL_DIR_BIN=%_bindir \
     -DNG_INSTALL_DIR_INCLUDE=%_includedir/%name \
+%ifarch aarch64
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+%endif
     -DUSE_JPEG=1 \
     -DUSE_OCC=1 \
     -DPYBIND_INCLUDE_DIR=%_includedir \
@@ -316,6 +323,7 @@ sed -i 's|file(INSTALL DESTINATION "%_prefix/include/netgen/pybind11" TYPE FILE 
 #installing serial version
 %cmakeinstall_std NETGENDIR=%_bindir TCLLIBDIR=%_tcllibdir LIBTOGL=%_tcllibdir/libTogl%togl_ver.so TOPDIR=$PWD
 %add_findreq_skiplist %_datadir/%name/py_tutorials/*.py
+%add_findprov_skiplist %_datadir/%name/py_tutorials/*.py
 
 # Install icon and desktop file
 install -Dpm 0644 %SOURCE1 %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
@@ -373,6 +381,11 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Fri Apr 09 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2102-alt1
+- New version.
+- Build for all architectures.
+- Rebuild with opencascade.
+
 * Tue May 12 2020 Nikolai Kostrigin <nickel@altlinux.org> 6.2.2004-alt1
 - New version
 

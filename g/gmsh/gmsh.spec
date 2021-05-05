@@ -1,7 +1,7 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 4.6.0
-Release: alt3
+Release: alt3.1
 Group: Sciences/Mathematics
 License: GPLv2
 URL: https://gmsh.info/
@@ -18,7 +18,7 @@ BuildRequires: libXcursor-devel libXinerama-devel
 BuildRequires: libXext-devel libXfixes-devel libXrender-devel
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libjpeg-devel zlib-devel libpng-devel
-BuildRequires: libopenblas-devel liblapack-devel OCE-devel
+BuildRequires: libopenblas-devel liblapack-devel opencascade-devel
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -106,6 +106,9 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 4.6.0-alt3.1
+- NMU: rebuild with opencascade-devel
+
 * Sun Sep 20 2020 Vladislav Zavjalov <slazav@altlinux.org> 4.6.0-alt3
 - use libopenblas + liblapack instead of libatlas, remove ExclusiveArch
 - remove Requires: getdp (gmsh can be used without it)
