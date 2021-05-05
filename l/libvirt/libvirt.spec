@@ -169,7 +169,7 @@
 %endif
 
 Name: libvirt
-Version: 7.2.0
+Version: 7.3.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -276,6 +276,9 @@ Requires: dmidecode
 # libvirtd depends on 'messagebus' service
 Requires: dbus
 Requires: nc
+Obsoletes: %name-admin < 7.3.0
+Provides: %name-admin = %EVR
+Obsoletes: bash-completion-%name < 7.3.0
 
 %description daemon
 Server side daemon required to manage the virtualization capabilities
@@ -683,8 +686,7 @@ Requires: gettext
 # For virConnectGetSysinfo
 Requires: dmidecode
 Requires: gnutls-utils
-Provides: bash-completion-%name = %EVR
-Obsoletes: bash-completion-%name < 6.7.0-alt1
+Obsoletes: bash-completion-%name < 6.7.0
 # Needed for probing the power management features of the host.
 Conflicts: %name < 0.9.11
 
@@ -701,14 +703,6 @@ Requires: /etc/sasl2
 
 %description libs
 Shared libraries for accessing the libvirt daemon.
-
-%package admin
-Summary: Set of tools to control libvirt daemon
-Group: System/Servers
-Requires: %name-libs = %EVR
-
-%description admin
-The client side utilities to control the libvirt daemon.
 
 %package -n wireshark-plugin-%name
 Summary: Wireshark dissector plugin for libvirt RPC transactions
@@ -891,9 +885,6 @@ install -pD -m644 %SOURCE21 %buildroot/lib/tmpfiles.d/libvirtd.conf
 
 %find_lang %name
 
-# cleanup
-rm -f %buildroot/usr/share/libvirt/test-screenshot.png
-
 %if_without libvirtd
 rm -rf %buildroot%_man7dir
 %endif
@@ -913,11 +904,13 @@ VIR_TEST_DEBUG=1 %__meson_test --no-suite syntax-check --timeout-multiplier 10
 %post daemon
 %post_service virtlockd
 %post_service virtlogd
+%post_service libvirt-guests
 
 %preun daemon
 %preun_service libvirtd
 %preun_service virtlogd
 %preun_service virtlockd
+%preun_service libvirt-guests
 
 
 %triggerpostun daemon -- libvirt-daemon < 1.3.0
@@ -932,12 +925,6 @@ if [ $1 -ge 1 ] ; then
     fi
 fi
 
-%post client
-%post_service libvirt-guests
-
-%preun client
-%preun_service libvirt-guests
-
 %files
 
 %files docs
@@ -949,17 +936,11 @@ fi
 %_bindir/virsh
 %_bindir/virt-xml-validate
 %_bindir/virt-pki-validate
-%_bindir/virt-host-validate
 %_man1dir/virsh.*
 %_man1dir/virt-xml-validate.*
 %_man1dir/virt-pki-validate.*
-%_man1dir/virt-host-validate.*
-%_datadir/bash-completion/completions/*
+%_datadir/bash-completion/completions/virsh
 
-%config(noreplace) %_sysconfdir/sysconfig/libvirt-guests
-%_initdir/libvirt-guests
-%_libexecdir/libvirt-guests.sh
-%systemd_unitdir/libvirt-guests.service
 
 %files libs -f %name.lang
 %doc COPYING COPYING.LESSER
@@ -971,6 +952,7 @@ fi
 %dir %_localstatedir/lib/libvirt
 %_datadir/libvirt/schemas/*.rng
 %_datadir/libvirt/cpu_map
+%_datadir/libvirt/test-screenshot.png
 
 %if_with sasl
 %config(noreplace) %_sysconfdir/sasl2/libvirt.conf
@@ -983,11 +965,15 @@ fi
 %dir %attr(0700, root, root) %_logdir/libvirt
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config(noreplace) %_sysconfdir/sysconfig/virtproxyd
+%config(noreplace) %_sysconfdir/sysconfig/libvirt-guests
 %_tmpfilesdir/libvirtd.conf
 %_unitdir/libvirtd*
 %_unitdir/virtproxyd*
 %_unitdir/virt-guest-shutdown.target
+%_unitdir/libvirt-guests.service
 %_initdir/libvirtd
+%_initdir/libvirt-guests
+%_libexecdir/libvirt-guests.sh
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
 %config(noreplace) %_sysconfdir/libvirt/virtproxyd.conf
 %_sysctldir/*
@@ -1001,11 +987,18 @@ fi
 %_unitdir/virtlockd*
 %_libdir/%name/lock-driver/lockd.so
 %_sbindir/virtlockd
+%_bindir/virt-host-validate
 %_datadir/augeas/lenses/libvirt_lockd.aug
 %_datadir/augeas/lenses/virtlockd.aug
 %_datadir/augeas/lenses/tests/test_virtlockd.aug
 %_man8dir/virtlockd*
 %_man7dir/virkey*
+%_man1dir/virt-host-validate.*
+
+#virt-admin
+%_bindir/virt-admin
+%_man1dir/virt-admin.1*
+%_datadir/bash-completion/completions/virt-admin
 
 #virtlogd
 %config(noreplace) %_sysconfdir/libvirt/virtlogd.conf
@@ -1020,7 +1013,6 @@ fi
 %if_with qemu
 %_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
 %endif
-
 
 %_libexecdir/libvirt_iohelper
 %_bindir/virt-ssh-helper
@@ -1320,10 +1312,6 @@ fi
 %endif #if_with sanlock
 %endif #if_with libvirtd
 
-%files admin
-%_bindir/virt-admin
-%_man1dir/virt-admin.1*
-
 %if_with nss
 %files  -n nss-%name
 /%_lib/libnss_libvirt.so.*
@@ -1352,6 +1340,13 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed May 05 2021 Alexey Shabalin <shaba@altlinux.org> 7.3.0-alt1
+- 7.3.0
+- Merge libvirt-admin package into libvirt-daemon.
+- Move libvirt-guests script, init and unit from libvirt-client to libvirt-daemon.
+- Move virt-host-validate from libvirt-client to libvirt-daemon.
+- Add test-screenshot.png for tests in python package.
+
 * Tue Apr 06 2021 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt1
 - 7.2.0
 
