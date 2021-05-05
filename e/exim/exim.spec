@@ -1,6 +1,6 @@
 Name: exim
-Version: 4.94
-Release: alt2
+Version: 4.94.2
+Release: alt1
 Summary: Exim MTA
 Group: Networking/Mail
 License: GPLv2+
@@ -215,6 +215,9 @@ test -s mail-server.key || exim-mkcert
 %doc Readme.pod vmail-dovecot.txt
 
 %changelog
+* Tue Jul 07 2020 Gremlin from Kremlin <gremlin@altlinux.org> 4.94.2-alt1
+- update to 4.94.2 (fix CVE-2020-28007 ... CVE-2020-28026 and CVE-2021-27216)
+
 * Tue Jul 07 2020 Gremlin from Kremlin <gremlin@altlinux.org> 4.94-alt2
 - fix config permissions
 
