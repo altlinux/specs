@@ -3,7 +3,7 @@
 
 Name:	 getssl
 Version: 2.31
-Release: alt1
+Release: alt2
 
 Summary: Obtain SSL certificates from the letsencrypt.org ACME server
 License: GPL-3.0
@@ -13,11 +13,13 @@ Vcs: https://github.com/srvrco/getssl.git
 Source: %name-%version.tar
 BuildArch: noarch
 
+AutoReqProv: nopython nopython3
+
 # Why AutoReq did not notice curl?
 Requires: curl
 
 # Following tools are optional.
-%filter_from_requires /\(mysql\|scp\|ssh\|xxd\|gettext\)/d
+%filter_from_requires /\(mysql\|scp\|ssh\|xxd\|gettext\|python\)/d
 
 # getssl requires one of {dig,nslookup,drill,host}, but autoreq will
 # notice bind-utils, thus 'host'.
@@ -44,5 +46,8 @@ sed -i s/python/python3/ dns_scripts/dns_route53.py
 %_datadir/getssl
 
 %changelog
+* Wed May 05 2021 Vitaly Chikunov <vt@altlinux.org> 2.31-alt2
+- spec: AutoReqProv: nopythons.
+
 * Mon Nov 30 2020 Vitaly Chikunov <vt@altlinux.org> 2.31-alt1
 - First import of v2.31 (2020-11-29).
