@@ -2,7 +2,7 @@ Group: Office
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           calcurse
-Version:        4.7.0
+Version:        4.7.1
 Release:        alt1
 Summary:        Text-based personal organizer
 Packager:	Ilya Mashkin <oddity@altlinux.ru>
@@ -10,7 +10,7 @@ License:        BSD
 URL:            https://calcurse.org
 Source0:        https://calcurse.org/files/%{name}-%{version}.tar.gz
 
-BuildRequires:  gcc
+BuildRequires:  gcc rpm-build-python3
 BuildRequires:  gettext-tools libasprintf-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel autoconf automake asciidoc asciidoc-a2x
 Source44: import.info
 
@@ -44,6 +44,10 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Wed May 05 2021 Ilya Mashkin <oddity@altlinux.ru> 4.7.1-alt1
+- 4.7.1
+- Add BR: rpm-build-python3
+
 * Fri Mar 19 2021 Ilya Mashkin <oddity@altlinux.ru> 4.7.0-alt1
 - 4.7.0
 
