@@ -21,7 +21,7 @@
 
 Name: seamonkey
 Version: 2.53.7.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Web browser and mail reader
 License: MPL-2.0
@@ -102,7 +102,8 @@ BuildRequires: lld-devel
 BuildRequires: libdnet-devel libgtk+2-devel libgtk+3-devel libIDL-devel wget libarchive-devel libpixman-devel
 BuildRequires: libjpeg-devel libpng-devel libXinerama-devel libXext-devel
 BuildRequires: libXp-devel libXt-devel makedepend net-tools unzip libalsa-devel yasm libwireless-devel
-BuildRequires: xorg-cf-files zip libXft-devel libvpx5-devel
+BuildRequires: xorg-cf-files zip libXft-devel
+#BuildRequires: libvpx-devel
 BuildRequires: desktop-file-utils libcurl-devel libhunspell-devel libsqlite3-devel
 BuildRequires: autoconf_2.13 chrpath alternatives libGL-devel
 BuildRequires: libstartup-notification-devel libfreetype-devel fontconfig-devel libnotify-devel
@@ -468,6 +469,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.7.1-alt2
+- Build with bundled libvpx.
+
 * Sun Apr 18 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.7.1-alt1
 - New version.
 
