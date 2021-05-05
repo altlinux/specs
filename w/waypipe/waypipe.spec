@@ -1,5 +1,5 @@
 Name: waypipe
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: Network transparency agent for Wayland
@@ -21,6 +21,10 @@ Source: %name-%version-%release.tar
 %def_with with_zstd
 %def_with with_vaapi
 %def_disable with_systemtap
+%def_enable with_avx512f
+%def_enable with_avx2
+%def_enable with_sse3
+%def_enable with_neon_opts
 
 %define meson_subst_bool() %{expand:%%{?_enable_%{1}:-D%{1}=true}%%{?_disable_%{1}:-D%{1}=false}}
 %define meson_subst_feature() %{expand:%%{?_with_%{1}:-D%{1}=enabled}%%{?_without_%{1}:-D%{1}=disabled}}
@@ -75,6 +79,9 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Wed May 05 2021 Arseny Maslennikov <arseny@altlinux.org> 0.8.0-alt1
+- 0.7.2 -> 0.8.0.
+
 * Tue Mar 02 2021 Arseny Maslennikov <arseny@altlinux.org> 0.7.2-alt1
 - 0.6.1 -> 0.7.2.
 
