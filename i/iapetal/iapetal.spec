@@ -6,15 +6,15 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           iapetal
 Version:        1.4
-Release:        alt1_10
+Release:        alt2
 Summary:        A 2D space rescue game
-
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 License:        GPLv3+
 URL:            http://iapetal.sourceforge.net
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:        iapetal.desktop
 BuildArch:      noarch
-BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-file-utils rpm-build-python3
 Requires:       python3-module-pygame python3-module-pygobject3 icon-theme-hicolor
 Source44: import.info
 
@@ -57,6 +57,9 @@ desktop-file-install \
 %{_datadir}/appdata/iapetal.appdata.xml
 
 %changelog
+* Wed May 05 2021 Ilya Mashkin <oddity@altlinux.ru> 1.4-alt2
+- Add BR: rpm-build-python3
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_10
 - update to new release by fcimport
 
