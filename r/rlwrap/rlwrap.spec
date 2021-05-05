@@ -1,17 +1,17 @@
 Name: rlwrap
-Version: 0.43
-Release: alt2
+Version: 0.44
+Release: alt1
 Epoch: 1
 
 Summary: Line editor - readline wrapper
-License: GCL
+License: GPLv2+
 Group: Editors
 Url: https://github.com/hanslub42/rlwrap
-
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tar.gz
 Source1: rlwrap_cmucl_completions
 
-BuildRequires: libreadline-devel libncurses-devel perl-podlators
+BuildRequires: libreadline-devel libncurses-devel perl-podlators rpm-build-python3
 %add_perl_lib_path %_datadir/%name/filters
 
 %description
@@ -42,6 +42,11 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 %_datadir/%name
 
 %changelog
+* Wed May 05 2021 Ilya Mashkin <oddity@altlinux.ru> 1:0.44-alt1
+- 0.44
+- Add BR: rpm-build-python3
+- Update License to GPLv2+
+
 * Tue Feb 05 2019 Fr. Br. George <george@altlinux.ru> 1:0.43-alt2
 - Rebuild with libreadline.so.7
 
