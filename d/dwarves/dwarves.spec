@@ -7,7 +7,7 @@
 
 Name: dwarves
 Version: 1.20
-Release: alt1
+Release: alt2
 Summary: Debugging Information Manipulation Tools (pahole & friends)
 Group: Development/Tools
 Provides: pahole
@@ -19,10 +19,11 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: zlib-devel
 BuildRequires: elfutils-devel
-BuildRequires: libdw-devel
 BuildRequires: git-core
+BuildRequires: libdw-devel
+BuildRequires: rpm-build-python3
+BuildRequires: zlib-devel
 
 %description
 dwarves is a set of tools that use the debugging information inserted in
@@ -65,6 +66,7 @@ Debugging information processing library.
 Summary: Debugging information library development files
 Group: Development/C
 Requires: %libname%libver = %version-%release
+AutoReqProv: nocpp
 
 %description -n %libname%libver-devel
 Debugging information processing library development files.
@@ -102,6 +104,9 @@ pahole --packable pahole
 %_libdir/%{libname}*.so
 
 %changelog
+* Wed May 05 2021 Vitaly Chikunov <vt@altlinux.org> 1.20-alt2
+- spec: BR: rpm-build-python3.
+
 * Sun Feb 07 2021 Vitaly Chikunov <vt@altlinux.org> 1.20-alt1
 - Update to v1.20 (2021-02-02).
 
