@@ -45,7 +45,6 @@
 %def_enable seccomp
 %def_enable glusterfs
 %def_enable gtk
-%def_disable gtk_gl
 %def_enable gnutls
 %def_enable nettle
 %def_disable gcrypt
@@ -72,6 +71,7 @@
 %def_disable libpmem
 %def_enable libudev
 %def_enable libdaxctl
+%def_enable fuse
 %def_disable brlapi
 
 %define power64 ppc64 ppc64p7 ppc64le
@@ -129,8 +129,8 @@
 # }}}
 
 Name: qemu
-Version: 5.2.0
-Release: alt5
+Version: 6.0.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -169,7 +169,7 @@ BuildRequires: glib2-devel >= 2.48 libgio-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx
 BuildRequires: libcap-ng-devel
 BuildRequires: libxfs-devel
-BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
+BuildRequires: zlib-devel libcurl-devel >= 7.29.0 libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: python3-devel
@@ -221,6 +221,7 @@ BuildRequires: libslirp-devel
 %{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?_enable_libudev:BuildRequires: libudev-devel}
 %{?_enable_libdaxctl:BuildRequires: libdaxctl-devel}
+%{?_enable_fuse:BuildRequires: libfuse3-devel}
 # used by some linux user impls
 BuildRequires: libdrm-devel
 
@@ -391,12 +392,12 @@ User mode emulation.  In this mode, QEMU can launch Linux processes \
 compiled for one CPU on another CPU. \
 %%files %%{1}-%%{2} -f %%{1}-%%{2}.list
 
-%{expand:%(for i in %qemu_arches; do echo %%do_package_user user $i Requires: qemu-common; done)}
-%{expand:%(for i in %qemu_arches; do echo %%do_package_user user-binfmt $i Requires: qemu-user-$i Conflicts: qemu-user-static-binfmt-$i; done)}
+%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user $i Requires: qemu-common; done)}
+%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user-binfmt $i Requires: qemu-user-$i Conflicts: qemu-user-static-binfmt-$i; done)}
 
 %if_enabled user_static
-%{expand:%(for i in %qemu_arches; do echo %%do_package_user user-static $i; done)}
-%{expand:%(for i in %qemu_arches; do echo %%do_package_user user-static-binfmt $i Requires: qemu-user-static-$i Conflicts: qemu-user-binfmt-$i; done)}
+%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user-static $i; done)}
+%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user-static-binfmt $i Requires: qemu-user-static-$i Conflicts: qemu-user-binfmt-$i; done)}
 %endif
 
 %package img
@@ -506,6 +507,14 @@ Requires: %name-ui-spice-core = %EVR
 
 %description device-display-qxl
 This package provides the QXL display device for QEMU.
+
+%package device-display-virtio-gpu-ccw
+Group: Emulators
+Summary: QEMU virtio-gpu-ccw display device
+Requires: %name-common = %EVR
+
+%description device-display-virtio-gpu-ccw
+This package provides the virtio-gpu-ccw display device for QEMU.
 
 %global do_package_device_display() \
 %%package device-display-%%{1} \
@@ -690,7 +699,7 @@ export buildldflags="VL_LDFLAGS=-Wl,--build-id"
 run_configure() {
 # non-GNU configure
     ../configure \
-	--disable-git-update \
+	--with-git-submodules=ignore \
 	--prefix=%prefix \
 	--sysconfdir=%_sysconfdir \
 	--libdir=%_libdir \
@@ -743,6 +752,7 @@ run_configure \
 	--disable-glusterfs \
 	--disable-gnutls \
 	--disable-gtk \
+	--disable-gio \
 	--disable-guest-agent \
 	--disable-guest-agent-msi \
 	--disable-hax \
@@ -819,6 +829,7 @@ run_configure \
 	--disable-xfsctl \
 	--disable-xkbcommon \
 	--disable-zstd \
+	--disable-fuse \
 	--without-default-devices
 
 # Please do not touch this
@@ -912,6 +923,7 @@ run_configure \
 	%{subst_enable tools} \
 	%{subst_enable libpmem} \
 	%{subst_enable libdaxctl} \
+	%{subst_enable fuse} \
 	--enable-xkbcommon \
 	--extra-ldflags="$extraldflags" \
 	--disable-xen
@@ -1044,7 +1056,7 @@ for f in %buildroot%_binfmtdir/*.conf; do
 done
 
 # files list
-for i in %qemu_arches; do
+for i in %qemu_arches hexagon; do
     find %buildroot%_bindir/qemu-$i* \
         -type f \( ! -name "*static" ! -name "*-system-*" \) |
         sed -e 's#%{buildroot}##' |
@@ -1129,6 +1141,7 @@ fi
 %_man7dir/qemu-ga-ref.*
 %_man7dir/qemu-qmp-ref.*
 %_man7dir/qemu-cpu-models.*
+%_man7dir/qemu-storage-daemon-qmp-ref.*
 
 %files system -f %name.lang
 
@@ -1170,6 +1183,7 @@ fi
 %_man1dir/virtiofsd.*
 %_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
 %_bindir/qemu-storage-daemon
+%_man1dir/qemu-storage-daemon.*
 %if_enabled mpath
 %_bindir/qemu-pr-helper
 %_unitdir/qemu-pr-helper.service
@@ -1199,6 +1213,9 @@ fi
 %_libdir/qemu/hw-display-qxl.so
 %endif
 
+%files device-display-virtio-gpu-ccw
+%_libdir/qemu/hw-s390x-virtio-gpu-ccw.so
+
 %files guest-agent
 %_bindir/qemu-ga
 %_man8dir/qemu-ga.8*
@@ -1221,6 +1238,22 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Tue May 04 2021 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
+- 6.0.0
+- Fixes for the following security vulnerabilities:
+  + CVE-2020-17380
+  + CVE-2020-25085
+  + CVE-2020-35517
+  + CVE-2020-29443
+  + CVE-2021-3392
+  + CVE-2021-3409
+  + CVE-2021-3416
+  + CVE-2021-20181
+  + CVE-2021-20263
+  + CVE-2021-20221
+- Build with fuse.
+- Fixed execute fsfreeze hook (ALT #37000).
+
 * Mon Apr 12 2021 Ivan A. Melnikov <iv@altlinux.org> 5.2.0-alt5
 - Move qemu-user-static text segment to 0x60000000 (ALT #39178)
 - Drop qemu-aux dependency from qemu-user-static (ALT #39815)
@@ -1239,7 +1272,7 @@ fi
 - restore special CPU selection for ARM qemu-user-static
 
 * Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt1
-- 5.2.0
+- 5.2.0 (Fixes: CVE-2020-14364)
 - Drop ivshmem-tools package
 - Drop lm32 and unicore32 arches
 - Add new packages:
@@ -1253,10 +1286,10 @@ fi
   + qemu-ui-egl-headless
 
 * Thu Aug 13 2020 Alexey Shabalin <shaba@altlinux.org> 5.1.0-alt1
-- 5.1.0
+- 5.1.0 (Fixes: CVE-2020-13253, CVE-2020-13754, CVE-2020-10761, CVE-2020-13800, CVE-2020-10717)
 
 * Thu Apr 30 2020 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
-- 5.0.0
+- 5.0.0 (Fixes: VE-2018-12617, CVE-2020-1711)
 - drop bluez support
 - build emulator for RX
 
