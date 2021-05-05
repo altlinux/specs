@@ -8,7 +8,7 @@
 
 Name: nemo
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -44,7 +44,7 @@ Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.9.1
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses rpm-build-gir
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses rpm-build-gir rpm-build-python3
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
 # for %%check
@@ -184,6 +184,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue May 4 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt2
+- add rpm-build-python3 to the build requirements
+
 * Wed Mar 10 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt1
 - 4.8.6
 

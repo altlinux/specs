@@ -1,6 +1,6 @@
 Name: mintlocale
 Version: 1.5.7
-Release: alt1
+Release: alt2
 
 Summary: Language selection tool for Cinnamon
 License: GPLv2+
@@ -13,9 +13,11 @@ BuildArch: noarch
 
 Patch: %name-%version-%release.patch
 
+%add_python3_path %_prefix/lib/linuxmint
+
 Requires: iso-flag-png
 
-BuildPreReq: rpm-build-python
+BuildPreReq: rpm-build-python3
 BuildPreReq: rpm-build-gir
 BuildRequires: gobject-introspection
 
@@ -44,6 +46,10 @@ rm -f %buildroot%_bindir/add-remove-locales \
 
 echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/default_locale.template
 
+# In the UI we provide it is not possible to call APT-related code
+%filter_from_requires /python3(apt)/d
+%filter_from_requires /python3(mintcommon.aptdaemon)/d
+
 %files
 %_bindir/mintlocale
 # This utility is Mint specific and doesn't work in other distros
@@ -59,6 +65,9 @@ echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/def
 %doc debian/copyright debian/changelog
 
 %changelog
+* Thu Dec 3 2020 Vladimir Didenko <cow@altlinux.org> 1.5.7-alt2
+- add rpm-build-python3 to the build requirements
+
 * Thu Dec 3 2020 Vladimir Didenko <cow@altlinux.org> 1.5.7-alt1
 - new version
 

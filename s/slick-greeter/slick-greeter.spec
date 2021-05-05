@@ -3,7 +3,7 @@
 
 Name: slick-greeter
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -22,14 +22,15 @@ Requires: orca
 Provides: lightdm-greeter
 Provides: lightdm-slick-greeter
 
+BuildPreReq: rpm-build-python3
 BuildRequires: intltool gnome-common
 BuildRequires: glib2-devel
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(liblightdm-gobject-1)
-BuildRequires:	pkgconfig(libcanberra)
-BuildRequires:	pkgconfig(pixman-1)
+BuildRequires: pkgconfig(libcanberra)
+BuildRequires: pkgconfig(pixman-1)
 BuildRequires: lightdm-devel lightdm-gir-devel
-BuildRequires:	vala
+BuildRequires: vala
 BuildRequires: libcanberra-vala
 
 %description
@@ -82,6 +83,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man8/slick-greeter.8.*
 
 %changelog
+* Wed May 05 2021 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt2
+- add rpm-build-python3 to the build requirements
+
 * Tue Jan 12 2021 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
