@@ -3,7 +3,7 @@
 Name: doublecmd
 Summary: Twin-panel (commander-style) file manager
 Version: 0.9.10
-Release: alt1
+Release: alt2
 Epoch:   1
 Url: https://doublecmd.sourceforge.io
 
@@ -14,6 +14,7 @@ Source1: %name-qt.desktop
 License: GPLv2+ and LGPLv2+ and Expat and MPL-1.1 and MPL-2.0 and Apache-2.0 and BSD and Expat and Zlib
 Group: File tools
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: fpc >= 2.6.2
 BuildRequires: fpc-src
 %if_with gtk
@@ -30,8 +31,11 @@ BuildRequires: /proc
 Patch0: doublecmd-use-default-terminal.patch
 Patch1: doublecmd-not-install-zdli.patch
 Patch2: doublecmd-alt-build-in-one-thread.patch
+Patch3: doublecmd-alt-fix-py-scripts.patch
 
 ExclusiveArch: x86_64 aarch64
+
+%add_python3_path %_libdir/doublecmd/scripts
 
 %description
 Double Commander is a cross platform open source file manager with two panels
@@ -73,6 +77,7 @@ Common files for Double Commander
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 export MAKEOPTS="-XX"
@@ -145,6 +150,9 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.9.10-alt2
+- FTBFS: Set autoreq for Python scripts using rpm-build-python3.
+
 * Mon Feb 08 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.9.10-alt1
 - New version.
 
