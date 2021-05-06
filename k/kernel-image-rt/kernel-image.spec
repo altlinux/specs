@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.184
-%define kernel_rt_release	rt75
+%define kernel_sublevel		.189
+%define kernel_rt_release	rt78
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -440,6 +440,9 @@ vm-run --depmod cat /sys/kernel/realtime
 %endif
 
 %changelog
+* Thu May 06 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.189-alt1.rt78
+- Update to v4.19.189-rt78 (28 Apr 2021).
+
 * Tue Apr 06 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.184-alt1.rt75
 - Update to v4.19.184-rt75 (02 Apr 2021).
 
