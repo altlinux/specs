@@ -5,7 +5,7 @@
 
 Name: golang-github-burntsushi-xgbutil
 Version: 0
-Release: alt1.gitf7c97ce
+Release: alt2.gitf7c97ce
 Summary: Utility library to make use of the X Go Binding easier
 Group: Development/Other
 License: WTFPL
@@ -13,8 +13,9 @@ Url: https://github.com/BurntSushi/xgbutil
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: xgbutil-%version.tar.gz
+Patch: golang-github-burntsushi-xgbutil-ALT-python3.patch
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-python3
 # BuildRequires: golang(github.com/golang/freetype) golang(github.com/golang/freetype/truetype) golang(github.com/BurntSushi/graphics-go/graphics) golang(github.com/BurntSushi/xgb) golang(github.com/BurntSushi/xgb/shape) golang(github.com/BurntSushi/xgb/xinerama) golang(github.com/BurntSushi/xgb/xproto)
 BuildRequires: golang-github-freetype-devel golang-github-burntsushi-xgb-devel golang-github-burntsushi-graphics-devel
 
@@ -59,6 +60,7 @@ This package provides examples for %name package.
 
 %prep
 %setup -n xgbutil-%version
+%patch -p2
 find . -name "*.go" -exec sed -i "s|github.com/BurntSushi/freetype-go/freetype|github.com/golang/freetype|" "{}" +;
 sed -i 's|/usr/bin/env python2.7|/usr/bin/python3|' scripts/write-events
 
@@ -91,6 +93,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/_examples
 
 %changelog
+* Thu May 06 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.gitf7c97ce
+- Fixed build with python3.
+
 * Tue May 12 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.gitf7c97ce
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
