@@ -20,7 +20,7 @@
 # build as separate package
 %def_with libsmbclient
 %def_with libwbclient
-%def_with libnetapi
+%def_without libnetapi
 %def_with doc
 
 %def_with dc
@@ -53,8 +53,10 @@
 
 %ifarch %e2k
 %def_disable glusterfs
+%def_disable io_uring
 %else
 %def_enable glusterfs
+%def_enable io_uring
 %endif
 
 %define _samba_libdir  %_libdir
@@ -71,7 +73,7 @@
 
 Name:    samba
 Version: 4.14.4
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -134,7 +136,7 @@ BuildRequires: zlib-devel
 BuildRequires: libarchive-devel >= 3.1.2
 BuildRequires: libjansson-devel
 BuildRequires: libgpgme-devel
-%ifnarch %e2k
+%if_with io_uring
 BuildRequires: liburing-devel >= 0.4
 %endif
 BuildRequires: /usr/bin/rpcgen
@@ -307,6 +309,22 @@ Obsoletes: %dcname-common < 4.10
 Summary: Samba libraries
 Group: System/Libraries
 Requires: %name-common-libs = %version-%release
+%if_without ldb
+Requires: libldb = %ldb_version
+%endif
+
+%if_without libsmbclient
+Provides: libsmbclient = %version-%release
+Obsoletes: libsmbclient < %version-%release
+%endif
+%if_without libwbclient
+Provides: libwbclient = %version-%release
+Obsoletes: libwbclient < %version-%release
+%endif
+%if_without libnetapi
+Provides: libnetapi = %version-%release
+Obsoletes: libnetapi < %version-%release
+%endif
 
 %description libs
 The %rname-libs package contains the libraries needed by programs that
@@ -502,6 +520,19 @@ Group: Development/C
 Requires: %name-libs = %version-%release
 Provides: %dcname-devel = %version-%release
 Obsoletes: %dcname-devel < 4.10
+
+%if_without libsmbclient
+Provides: libsmbclient-devel = %version-%release
+Obsoletes: libsmbclient-devel < %version-%release
+%endif
+%if_without libwbclient
+Provides: libwbclient-devel = %version-%release
+Obsoletes: libwbclient-devel < %version-%release
+%endif
+%if_without libnetapi
+Provides: libnetapi-devel = %version-%release
+Obsoletes: libnetapi-devel < %version-%release
+%endif
 
 %description devel
 The %rname-devel package contains the header files for the libraries
@@ -735,12 +766,7 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 %define _libwbclient wbclient,
 %endif
 
-%define _libnetapi %nil
-%if_without libnetapi
-%define _libnetapi netapi,
-%endif
-
-%define _samba4_private_libraries %{_libsmbclient}%{_libwbclient}%{_libnetapi}
+%define _samba4_private_libraries %{_libsmbclient}%{_libwbclient}
 
 %undefine _configure_gettext
 
@@ -1116,6 +1142,24 @@ TDB_NO_FSYNC=1 %make_build test
 %_unitdir/nmb.service
 %_unitdir/smb.service
 
+%dir %_samba_mod_libdir/vfs
+%_samba_mod_libdir/vfs/*.so
+
+%if_with libcephfs
+%exclude %_samba_mod_libdir/vfs/ceph.so
+%endif
+
+%if_enabled glusterfs
+%exclude %_samba_mod_libdir/vfs/glusterfs.so
+%endif
+
+%if_with snapper
+%exclude %_samba_mod_libdir/vfs/snapper.so
+%endif
+
+%dir %_samba_mod_libdir/auth
+%_samba_mod_libdir/auth/unix.so
+
 %if_with dc
 %files -n admx-samba
 %_datadir/PolicyDefinitions/*.admx
@@ -1157,6 +1201,8 @@ TDB_NO_FSYNC=1 %make_build test
 %dir %_samba_dc_mod_libdir
 %_samba_dc_libdir/
 
+%files -n task-samba-dc-mitkrb5
+
 %files dc-mitkrb5
 %_altdir/samba-mit-dc
 %_samba_mod_libdir/sbin/samba
@@ -1165,9 +1211,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/sbin/samba_spnupdate
 %_samba_mod_libdir/sbin/samba_upgradedns
 %_samba_mod_libdir/sbin/samba_downgrade_db
+%endif #!separate_heimdal_server
 
-%files -n task-samba-dc-mitkrb5
-%endif
+%_samba_mod_libdir/auth/samba4.so
 
 %files dc-client
 %if_with separate_heimdal_server
@@ -1350,9 +1396,15 @@ TDB_NO_FSYNC=1 %make_build test
 %dir %_includedir/samba-4.0
 %_includedir/samba-4.0
 
-%exclude %_includedir/samba-4.0/netapi.h
 %exclude %_includedir/samba-4.0/private
 #%exclude %_includedir/samba-4.0/torture.h
+
+%if_with libnetapi
+%exclude %_includedir/samba-4.0/netapi.h
+%else
+%_samba_libdir/libnetapi.so
+%_pkgconfigdir/netapi.pc
+%endif
 
 %if_with libsmbclient
 %exclude %_includedir/samba-4.0/libsmbclient.h
@@ -1441,21 +1493,8 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libxattr-tdb-samba4.so
 
 %files libs
-%_samba_mod_libdir/auth
-%_samba_mod_libdir/vfs
+%dir %_samba_mod_libdir/pdb
 %_samba_mod_libdir/pdb
-
-%if_with libcephfs
-%exclude %_samba_mod_libdir/vfs/ceph.so
-%endif
-
-%if_enabled glusterfs
-%exclude %_samba_mod_libdir/vfs/glusterfs.so
-%endif
-
-%if_with libcephfs
-%exclude %_samba_mod_libdir/vfs/snapper.so
-%endif
 
 # libraries needed by the public libraries
 %_samba_mod_libdir/libMESSAGING-samba4.so
@@ -1531,6 +1570,35 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_libdir/libsamba-passdb.so.*
 %_samba_libdir/libsmbldap.so.*
 
+%if_with clustering_support
+%_samba_mod_libdir/libctdb-event-client-samba4.so
+%endif
+
+%if_with ldb
+%_samba_libdir/libldb.so.*
+%_samba_libdir/libpyldb-util.so.*
+%endif
+%if_with talloc
+%_samba_libdir/libtalloc.so.*
+%_samba_libdir/libpytalloc-util.so.*
+%endif
+%if_with tevent
+%_samba_libdir/libtevent.so.*
+%endif
+%if_with tdb
+%_samba_libdir/libtdb.so.*
+%endif
+
+%if_without libsmbclient
+%_samba_mod_libdir/libsmbclient.so
+%endif
+%if_without libwbclient
+%_samba_mod_libdir/libwbclient.so
+%endif
+%if_without libnetapi
+%_samba_libdir/libnetapi.so.*
+%endif
+
 %if_with libcephfs
 %files vfs-cephfs
 %_samba_mod_libdir/vfs/ceph.so
@@ -1549,32 +1617,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/vfs/snapper.so
 %_man8dir/vfs_snapper.8*
 %endif
-
-%if_with clustering_support
-%_samba_mod_libdir/libctdb-event-client-samba4.so
-%endif
-
-%if_with ldb
-%_samba_mod_libdir/libldb.so.*
-%_samba_mod_libdir/libpyldb-util.so.*
-%endif
-%if_with talloc
-%_samba_mod_libdir/libtalloc.so.*
-%_samba_mod_libdir/libpytalloc-util.so.*
-%endif
-%if_with tevent
-%_samba_mod_libdir/libtevent.so.*
-%endif
-%if_with tdb
-%_samba_mod_libdir/libtdb.so.*
-%endif
-%if_without libsmbclient
-%_samba_mod_libdir/libsmbclient.so.*
-%endif
-%if_without libnetapi
-%_samba_mod_libdir/libnetapi.so.*
-%endif
-
 
 %if_with dc
 %files dc-libs
@@ -1604,6 +1646,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/ldb
 %endif
 %endif
+%dir %_samba_mod_libdir/gensec
 %_samba_mod_libdir/gensec
 %_samba_mod_libdir/libdb-glue-samba4.so
 %if_without mitkrb5
@@ -1668,7 +1711,7 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n libwbclient-devel
 %dir %_includedir/samba-4.0
 %_includedir/samba-4.0/wbclient.h
-%_libdir/libwbclient.so
+%_samba_libdir/libwbclient.so
 %_pkgconfigdir/wbclient.pc
 %endif
 
@@ -1873,6 +1916,11 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu May 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt2
+- Fix backward compatibility to fixed version of libldb with CVE-2021-20254.
+- Replace auth and vfs libraries from samba-libs to samba-dc-libs and samba packages.
+- Build without separated libnetapi private library.
+
 * Fri Apr 30 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt1
 - Fix buffer overrun in sids_to_unixids() (Fixes: CVE-2021-20254)
 - Final migration to /run directory (Closes: 35891, 36652, 39992)
