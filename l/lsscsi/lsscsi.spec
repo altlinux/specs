@@ -1,9 +1,9 @@
 Name: lsscsi
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: List SCSI devices (or hosts) and associated information
-License: GPL
+License: GPLv2+
 Group: System/Kernel and hardware
 
 Url: http://sg.danny.cz/scsi/lsscsi.html
@@ -37,6 +37,10 @@ Author:
 %_man8dir/*
 
 %changelog
+* Thu May 06 2021 Michael Shigorin <mike@altlinux.org> 0.32-alt1
+- new version (watch file uupdate)
+- clarified License:
+
 * Sat Feb 22 2020 Michael Shigorin <mike@altlinux.org> 0.31-alt1
 - new version (watch file uupdate)
 - fixed bogus date in ancient changelog
