@@ -38,7 +38,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.16.3
+Version: 1.16.4
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -59,7 +59,7 @@ ExclusiveArch: %go_arches
 %add_debuginfo_skiplist %go_root
 %brp_strip_none %go_root/bin/*
 
-AutoReq: nocpp 
+AutoReq: nocpp
 
 Requires: %name-src = %version-%release
 
@@ -344,6 +344,11 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu May 06 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.4-alt1
+- New version (1.16.4).
+- Fixes:
+  + CVE-2021-31525
+
 * Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.3-alt1
 - New version (1.16.3).
 
