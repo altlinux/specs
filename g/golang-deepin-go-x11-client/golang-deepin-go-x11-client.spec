@@ -6,7 +6,7 @@
 
 Name: golang-deepin-go-x11-client
 Version: 0.6.4
-Release: alt1
+Release: alt2
 Summary: A X11 client Go bindings for Deepin Desktop Environment
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -15,7 +15,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/go-x11-client-%version.tar.gz
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-python3
 BuildRequires: golang-x-text-devel golang-gopkg-check-1-devel golang-github-stretchr-testify-devel
 # BuildRequires: golang-deepin-go-lib-devel
 # BuildRequires: golang(gopkg.in/check.v1) golang(golang.org/x/text/encoding/charmap) golang(github.com/stretchr/testify/assert)
@@ -71,6 +71,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Thu May 06 2021 Leontiy Volodin <lvol@altlinux.org> 0.6.4-alt2
+- Added rpm-build-python3 into BR.
+
 * Mon Mar 29 2021 Leontiy Volodin <lvol@altlinux.org> 0.6.4-alt1
 - New version (0.6.4) with rpmgs script.
 
