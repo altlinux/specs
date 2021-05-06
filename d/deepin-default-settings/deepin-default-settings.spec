@@ -2,7 +2,7 @@
 
 Name: deepin-default-settings
 Version: 2020.10.21
-Release: alt1
+Release: alt2
 Summary: deepin-default-settings
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -13,6 +13,7 @@ Source: %url/archive/%version/%repo-%version.tar.xz
 
 BuildArch: noarch
 
+BuildRequires: rpm-build-python3
 Requires: icon-theme-deepin
 
 %description
@@ -63,6 +64,9 @@ mv -f %buildroot/etc/binfmt.d/wine.conf %buildroot%_binfmtdir/wine.conf
 %_datadir/music/bensound-sunny.mp3
 
 %changelog
+* Thu May 06 2021 Leontiy Volodin <lvol@altlinux.org> 2020.10.21-alt2
+- Added rpm-build-python3 into BR.
+
 * Wed Nov 18 2020 Leontiy Volodin <lvol@altlinux.org> 2020.10.21-alt1
 - New version (2020.10.21) with rpmgs script.
 
