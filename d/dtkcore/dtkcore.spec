@@ -2,7 +2,7 @@
 
 Name: dtkcore
 Version: 5.4.13
-Release: alt1
+Release: alt2
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
 Group: Graphical desktop/Other
@@ -16,6 +16,7 @@ BuildRequires(pre): clang11.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
+BuildRequires: rpm-build-python3
 BuildRequires: git-core
 BuildRequires: glibc-core
 BuildRequires: fdupes
@@ -84,6 +85,9 @@ chmod +x %buildroot%_libdir/libdtk-%version/DCore/bin/dtk-translate.py
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Thu May 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt2
+- Added rpm-build-python3 into BR.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
 - New version (5.4.13) with rpmgs script.
 
