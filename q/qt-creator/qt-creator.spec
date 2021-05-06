@@ -2,12 +2,13 @@
 
 %def_with ClangCodeModel
 %define llvm_version 11.0
+%define qt_version 5.14.0
 
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.14.2
+Version: 4.15.0
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -32,19 +33,19 @@ Provides: qtcreator-clangcodemodel = %EVR
 Provides: qbs = 1.14.0
 Obsoletes: qbs < 1.14.0
 
-BuildRequires(pre): qt5-base-devel >= 5.9.0
+BuildRequires(pre): qt5-base-devel >= %qt_version
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
-BuildRequires: qt5-designer >= 5.9.0
-BuildRequires: qt5-script-devel >= 5.9.0
-BuildRequires: qt5-declarative-devel >= 5.9.0
+BuildRequires: qt5-designer >= %qt_version
+BuildRequires: qt5-script-devel >= %qt_version
+BuildRequires: qt5-declarative-devel >= %qt_version
 %ifnarch %e2k
 # NB: there's rpm-macros-qt5-webengine out there
-BuildRequires: qt5-webkit-devel >= 5.9.0
+BuildRequires: qt5-webkit-devel >= %qt_version
 %endif
-BuildRequires: qt5-x11extras-devel >= 5.9.0
-BuildRequires: qt5-xmlpatterns-devel >= 5.9.0
-BuildRequires: qt5-tools-devel >= 5.9.0
+BuildRequires: qt5-x11extras-devel >= %qt_version
+BuildRequires: qt5-xmlpatterns-devel >= %qt_version
+BuildRequires: qt5-tools-devel >= %qt_version
 %if_with ClangCodeModel
 BuildRequires: llvm%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel-static
@@ -164,6 +165,9 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Thu May 06 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.0-alt1
+- New version.
+
 * Mon Mar 22 2021 Andrey Cherepanov <cas@altlinux.org> 4.14.2-alt1
 - New version.
 
