@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.37
+Version: 1.37.1
 Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
@@ -21,7 +21,7 @@ BuildPreReq: desktop-file-utils
 
 # Automatically added by buildreq on Sat Nov 07 2020
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent pkg-config python-module-lxml python-modules python-modules-compiler python-modules-encodings python2-base sh4 shared-mime-info wayland-devel xorg-proto-devel
-BuildRequires: gcc-c++ git-core intltool libgtk+3-devel libgtk4-devel python-module-docutils time
+BuildRequires: gcc-c++ git-core intltool libgtk+3-devel libgtk4-devel python3-module-docutils time rpm-build-python3
 
 %description
 Geany is a small and lightweight integrated development environment.
@@ -57,6 +57,9 @@ use Geany.
 # hack out space in file name
 sed -i '/"untitled"/,/^$/s/\([^a-z]\) \([^a-z]\)/\1_\2/g' po/ru.po
 
+# hack in python version
+sed -i 's/env python$/env python3/' data/templates/files/main.py
+
 # Add some hello world examples
 # C++
 cat > data/templates/files/hello_world.cpp <<@@@
@@ -91,7 +94,9 @@ end.
 %build
 NOCONFIGURE=1 ./autogen.sh
 
-%configure --docdir=%_defaultdocdir/%name-%version --enable-html-docs
+%configure --docdir=%_defaultdocdir/%name-%version \
+            --enable-html-docs \
+            --with-python-command=python3
 
 %make_build --silent --no-print-directory
 
@@ -121,6 +126,10 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 1.37.1-alt1
+- Autobuild version bump to 1.37.1
+- Eliminate python2
+
 * Sat Nov 07 2020 Fr. Br. George <george@altlinux.ru> 1.37-alt1
 - Autobuild version bump to 1.37
 - Switch to GTK3
