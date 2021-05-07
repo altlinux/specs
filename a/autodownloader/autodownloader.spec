@@ -1,14 +1,14 @@
 Name: autodownloader
-Version: 0.3.0
-Release: alt1.qa1.1.2
+Version: 0.5.0
+Release: alt1
 Summary: GUI-tool to automate the download of certain files
 License: GPLv2+
 Group: Networking/File transfer
-Url: http://sourceforge.net/projects/autodownloader
-Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
-Packager: Fr. Br. George <george@altlinux.ru>
+Url: https://github.com/frenzymadness/AutoDownloader
+Source0: %name-%version.tar.gz
 BuildArch: noarch
-Requires: python-module-pygtk-libglade
+
+BuildRequires: rpm-build-python3
 
 %description
 Some software (usually games) requires certain data files to operate, sometimes
@@ -27,21 +27,24 @@ are not permitted to be (re)distributed unlike most files in Fedora.
 
 %prep
 %setup -q
-# Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+sed -i 's/env python$/env python3/' AutoDL.py
 
 %build
 # nothing to build pure python code only
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%buildroot
 
 %files
-%doc COPYING ChangeLog GladeWindow-license.txt README.txt TODO example.autodlrc
+%doc README* examples
+%_bindir/autodl
 %_datadir/autodl
 %_datadir/icons/hicolor/*/apps/autodl.png
 
 %changelog
+* Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 0.5.0-alt1
+- Build slightly updeted version from GH fork (python3 now)
+
 * Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1.qa1.1.2
 - FTBFS: set correct python2 executable in shebang.
 
