@@ -1,6 +1,6 @@
 Name: mathomatic
 Version: 16.0.5
-Release: alt4
+Release: alt5
 
 Summary: Small, portable symbolic math program
 License: LGPL
@@ -11,6 +11,8 @@ Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
 
 BuildRequires: libncurses-devel libreadline-devel
+
+BuildRequires: rpm-build-python3
 
 %description
 Mathomatic is a small, portable symbolic math program that can automatically
@@ -47,6 +49,9 @@ make test
 
 
 %changelog
+* Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 16.0.5-alt5
+- Fix python3 build
+
 * Sat Nov 09 2019 Fr. Br. George <george@altlinux.ru> 16.0.5-alt4
 - Rewrite some python3 scripts, drop 2to3
 
