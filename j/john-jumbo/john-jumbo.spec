@@ -1,6 +1,6 @@
 Name: john-jumbo
 Version: 1.9.0
-Release: alt3
+Release: alt4
 License: GPLv2
 Group: System/Base
 Url: http://www.openwall.com/john/
@@ -41,6 +41,8 @@ Summary: John the Ripper password cracker core
 # Automatically added by buildreq on Thu Jun 04 2020
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcrypt-devel libgpg-error perl pkg-config python-modules python2-base sh4 xz
 BuildRequires: bzlib-devel git-core libgmp-devel libgomp-devel libpcap-devel libssl-devel zlib-devel
+
+BuildRequires: rpm-build-python rpm-build-python3
 
 # TODO: this is actually Perl runtime requires, but findreq fails without them
 # Excarpted from rpm itself
@@ -224,6 +226,9 @@ rm %buildroot%jdata/john.conf && \
 %exclude %jlibexec/zip2john
 
 %changelog
+* Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 1.9.0-alt4
+- fix python2/3 findreq
+
 * Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 1.9.0-alt3
 - fix FTBFS on i586 due to -enalbe-default-pie
 
