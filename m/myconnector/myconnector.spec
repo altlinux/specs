@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.0.rc3
+Version:  2.1
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -71,7 +71,7 @@ Summary: Documentation for MyConnector
 Group:   Documentation
 
 %description docs
-This package contains MyConnector docs in reStructuredText and HTML formats.
+This package contains MyConnector docs (in Russian) in reStructuredText and HTML formats.
 
 %prep
 %setup
@@ -136,6 +136,17 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Fri May 07 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.1-alt1
+- Added Menu -> Find (Ctrl+F): set focus to search entry
+- Added focus on saved connection
+- Updated authentication window: added username and icon
+- FreeRDP: added a protocol security selection
+- bin/myconnector-check-xfreerdp-errors:
+ + added expired password verification
+ + added security protocol verification
+- FreeRDP/X2GO: added support empty password
+- Preferences: added deleting all saved passwords
+
 * Thu Feb 11 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.rc3-alt1
 - Added connection autostart
 - vncviewer: added listenning mode
