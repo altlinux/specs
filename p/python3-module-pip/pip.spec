@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
 
+%def_with check
 %def_without bootstrap
 
 Name: python3-module-pip
-Version: 21.0.1
+Version: 21.1.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -13,6 +14,7 @@ Group: Development/Python3
 Url: https://pip.pypa.io
 
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -20,6 +22,19 @@ BuildRequires(pre): rpm-build-python3
 %if_without bootstrap
 BuildRequires: python3(wheel)
 BuildRequires: python3(system_seed_wheels)
+%endif
+
+%if_with check
+BuildRequires: git-core
+BuildRequires: python3(cryptography)
+BuildRequires: python3(freezegun)
+BuildRequires: python3(pretend)
+BuildRequires: python3(pytest)
+BuildRequires: python3(scripttest)
+BuildRequires: python3(werkzeug)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 %endif
 
 Obsoletes: python3-module-pip-pickles
@@ -44,6 +59,7 @@ Packaged as wheel. Provides the seed package for virtualenv.
 
 %prep
 %setup
+%autopatch -p1
 
 # never unbundle vendored packages
 # built wheel being installed into virtualenv will lack of unbundled packages
@@ -64,6 +80,15 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %{python3_setup:} bdist_wheel --dist-dir %buildroot%system_wheels_path/
 %endif
 
+%check
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+export NO_LATEST_WHEELS=YES
+export TOX_TESTENV_PASSENV='NO_LATEST_WHEELS'
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
+    -m 'not network and unit'
+
 %files
 %doc *.txt *.rst
 %_bindir/pip
@@ -78,6 +103,11 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 %changelog
+* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 21.1.1-alt1
+- 21.0.1 -> 21.1.1
+  (Updated bundled urllib3 1.26.2 -> 1.26.4 to fix CVE-2021-28363).
+- Enabled testing (unit tests for now).
+
 * Fri Apr 23 2021 Stanislav Levin <slev@altlinux.org> 21.0.1-alt1
 - 20.1.1 -> 21.0.1.
 - Built wheel package(for virtualenv).

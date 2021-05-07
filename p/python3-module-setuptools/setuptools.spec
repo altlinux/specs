@@ -7,8 +7,8 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 56.0.0
-Release: alt2
+Version: 56.1.0
+Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -134,7 +134,8 @@ export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION'
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -- --ignore pavement.py -vra
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
+    --ignore pavement.py -vra
 
 %files
 %doc LICENSE *.rst
@@ -161,6 +162,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -- --ignore pavement.py 
 %endif
 
 %changelog
+* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 1:56.1.0-alt1
+- 56.0.0 -> 56.1.0.
+
 * Sat Apr 24 2021 Stanislav Levin <slev@altlinux.org> 1:56.0.0-alt2
 - Built wheel package(for virtualenv).
 

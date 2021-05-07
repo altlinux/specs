@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.23.0
+Version: 3.23.1
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -85,7 +85,7 @@ export TOX_LIMITED_SHEBANG=1
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 export TOXENV=py3
 
-%buildroot%_bindir/tox.py3 --sitepackages -vvr -- -m "not internet"
+%buildroot%_bindir/tox.py3 --sitepackages -vvr -s false -- -m "not internet"
 
 %files
 %_bindir/tox.py3
@@ -94,6 +94,9 @@ export TOXENV=py3
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 3.23.1-alt1
+- 3.23.0 -> 3.23.1.
+
 * Sat Apr 24 2021 Stanislav Levin <slev@altlinux.org> 3.23.0-alt1
 - 3.20.1 -> 3.23.0.
 
