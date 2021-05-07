@@ -1,5 +1,5 @@
 Name: nim-lang
-Version: 1.4.0
+Version: 1.4.6
 Release: alt1
 License: MIT
 Summary: A statically typed compiled systems programming language
@@ -12,6 +12,7 @@ Group: Development/Other
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl python2-base sh4
 BuildRequires(pre): /proc
 BuildRequires: parallel gcc-c++
+BuildRequires: rpm-build-python3
 
 %description
 Nim is a statically typed compiled systems programming language. It
@@ -31,7 +32,6 @@ echo 'will cite' | parallel --citation > /dev/null 2>&1 ||:
 
 # Hack out network example
 sed -i '/runnableExamples:/,/Pizza/s/^/###/' lib/pure/httpclient.nim
-
 
 %build
 sh build.sh
@@ -64,6 +64,9 @@ install -D tools/nim.zsh-completion %buildroot%_datadir/zsh/site-functions/_nim
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 1.4.6-alt1
+- Autobuild version bump to 1.4.6
+
 * Sun Oct 18 2020 Fr. Br. George <george@altlinux.ru> 1.4.0-alt1
 - Autobuild version bump to 1.4.0
 - Build Nimble separately
