@@ -2,11 +2,10 @@
 %define oname ipwhois
 
 %def_with check
-%def_with docs
 
 Name: python3-module-%oname
-Version: 1.1.0
-Release: alt3
+Version: 1.2.0
+Release: alt1
 
 Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
 License: BSD
@@ -27,15 +26,6 @@ BuildRequires: python3(dns)
 BuildRequires: python3(nose)
 %endif
 
-%if_with docs
-BuildRequires: python3(sphinx)
-BuildRequires: python3(sphinx_rtd_theme)
-%endif
-
-%add_python3_path %_bindir/
-%add_python3_compile_exclude %_bindir/
-
-
 %description
 ipwhois is a Python package focused on retrieving and parsing whois data
 for IPv4 and IPv6 addresses.
@@ -51,35 +41,10 @@ Features:
 * Useful set of utilities
 * BSD license
 
-%if_with docs
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-ipwhois is a Python package focused on retrieving and parsing whois data
-for IPv4 and IPv6 addresses.
-
-Features:
-* Parses a majority of whois fields in to a standard dictionary
-* IPv4 and IPv6 support
-* Referral whois support
-* Supports REST queries (useful if whois is blocked from your network)
-* Proxy support for REST queries
-* Recursive network parsing for IPs with parent/children networks listed
-* Python 2.6+ and 3.3+ supported
-* Useful set of utilities
-* BSD license
-
-This package contains pickles for %oname.
-%endif
-
 %prep
 %setup
 %patch -p1
 %patch1 -p1
-
-sed -i 's|sphinx-build|sphinx-build-3|' %oname/docs/Makefile
 
 %build
 %python3_build_debug
@@ -87,15 +52,8 @@ sed -i 's|sphinx-build|sphinx-build-3|' %oname/docs/Makefile
 %install
 %python3_install
 
-%if_with docs
-export PYTHONPATH=$PWD
-%make -C %oname/docs pickle
-%make -C %oname/docs html
-
-cp -fR ipwhois-docs/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
-
 %check
+export NO_INTERNET=YES
 nosetests3 -v -w ipwhois --exclude="(online|stress)"
 
 %files
@@ -103,16 +61,11 @@ nosetests3 -v -w ipwhois --exclude="(online|stress)"
 %_bindir/*
 %python3_sitelibdir/ipwhois/
 %python3_sitelibdir/*.egg-info/
-%if_with docs
-%doc ipwhois-docs/html
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-%endif
-
 
 %changelog
+* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt3
 - Unique addresses test fixed.
 
