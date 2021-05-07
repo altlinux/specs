@@ -1,12 +1,14 @@
 Name: ski
 Version: 6.13
-Release: alt1
+Release: alt2
 Url: http://www.catb.org/~esr/ski/
 Source0: %name-%version.tar.gz
 License: GPL
 Group: Games/Arcade
 Summary: a hotdogging game, evade the deadly Yeti on your jet-powered skis
 BuildArch: noarch
+
+BuildRequires: rpm-build-python3
 
 %description
 Imagine you are skiing down an infinite slope, facing such hazards as
@@ -40,6 +42,9 @@ install %name.6 %buildroot%_man6dir/
 %_gamesbindir/%name
 
 %changelog
+* Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 6.13-alt2
+- Fix python3 findprov
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 6.13-alt1
 - Autobuild version bump to 6.13
 - Sweitch to python3
