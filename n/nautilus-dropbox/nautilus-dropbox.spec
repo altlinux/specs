@@ -1,22 +1,23 @@
 Name: nautilus-dropbox
-Version: 2019.02.14
+Version: 2020.03.04
 Release: alt1
 
 Summary: Dropbox integration for Nautilus
 Summary(ru_RU.UTF-8): Интеграция Dropbox с Nautilus
 
-License: GPL, CC BY-ND 3.0
+License: GPL-3.0 and CC-BY-ND-3.0
 Group: Graphical desktop/GNOME
 Url: http://www.dropbox.com/
 
 Source: https://www.dropbox.com/download?dl=packages/%name-%version.tar
 
-BuildRequires:glib2-devel >= 2.14.0
-BuildRequires:gtk+2-devel >= 2.12.0
-BuildRequires:libnautilus-devel >= 2.20.0
-BuildRequires:pkg-config
-BuildRequires:python3-module-docutils
-BuildRequires:python3-module-pygobject3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: glib2-devel >= 2.14.0
+BuildRequires: gtk+2-devel >= 2.12.0
+BuildRequires: libnautilus-devel >= 2.20.0
+BuildRequires: pkg-config
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-pygobject3
 
 Requires:nautilus >= 2.16.0
 Requires: dropbox = %EVR
@@ -25,22 +26,22 @@ Requires: python3-module-gpg
 %define _unpackaged_files_terminate_build 1
 
 %description
-Nautilus Dropbox is an extension that integrates
-the Dropbox web service with your GNOME Desktop.
+Nautilus Dropbox is an extension that integrates the Dropbox web service with
+your GNOME Desktop.
 
 Check us out at http://www.dropbox.com/
 
 %description -l ru_RU.UTF-8
-Nautilus Dropbox - это расширения интегрирующее
-веб-сервис Dropbox с Вашим рабочим столом GNOME.
+Nautilus Dropbox - это расширения интегрирующее веб-сервис Dropbox с Вашим
+рабочим столом GNOME.
 
 Ищите нас на http://www.dropbox.com/
 
 %package -n dropbox
 Summary: Dropbox command-line utility
 Group: Networking/Other
-License: GPL
-Requires:wget >= 1.10.0
+License: GPL-3.0
+Requires: wget >= 1.10.0
 
 %description -n dropbox
 The *dropbox* command provides a command line interface to the Dropbox.
@@ -72,6 +73,10 @@ The *dropbox* command provides a command line interface to the Dropbox.
 %_man1dir/*.1*
 
 %changelog
+* Fri May 07 2021 Andrey Cherepanov <cas@altlinux.org> 2020.03.04-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Thu Sep 19 2019 Mikhail Efremov <sem@altlinux.org> 2019.02.14-alt1
 - Updated to 2019.02.14 (closes: #37198).
 
