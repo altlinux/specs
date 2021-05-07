@@ -1,6 +1,6 @@
 Name: klatexformula
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: Generating images from LaTeX equations
 License: GPLv2
@@ -10,12 +10,15 @@ Url: http://klatexformula.sourceforge.net/
 Source: %name-%version.tar.gz
 Patch: klatexformula-4.0.0-alt-qt-5.11.patch
 Patch1: klatexformula-4.1.0-alt-qt-5.15.patch
+Patch2: klatexformula-4.1.0-alt-python3.patch
 
 BuildRequires(pre): rpm-build-xdg
 
 # Automatically added by buildreq on Thu Aug 09 2018
 # optimized out: cmake-modules fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libX11-devel libgpg-error libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server python-base python-modules qt5-base-devel qt5-tools qt5-tools-devel sh3 xorg-proto-devel
 BuildRequires: cmake doxygen fonts-ttf-xorg graphviz libssl-devel qt5-svg-devel qt5-tools-devel-static qt5-x11extras-devel
+
+BuildRequires: rpm-build-python3
 
 %description
 KLatexFormula is an easy-to-use graphical application for generating
@@ -35,6 +38,7 @@ TODO: make shared version of %name-devel.
 %setup
 %patch -p2
 %patch1 -p1
+%patch2 -p2
 
 %build
 %ifarch %e2k
@@ -69,6 +73,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 4.1.0-alt2
+- Eliminate python2
+
 * Fri Sep 25 2020 Sergey V Turchin <zerg@altlinux.org> 4.1.0-alt1
 - new version
 
