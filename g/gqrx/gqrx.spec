@@ -1,6 +1,6 @@
 Name: gqrx
-Version: 2.12.1
-Release: alt2
+Version: 2.14.4
+Release: alt1
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
 License: GPL-3.0
@@ -10,7 +10,6 @@ Url: https://github.com/csete/gqrx
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch1: %name-%version-alt-boost-1.73.0-compat.patch
 
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -37,13 +36,15 @@ BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: boost-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
+BuildRequires: libsndfile-devel
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libunwind-devel
 
 %description
 %summary
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %cmake
@@ -76,6 +77,9 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Sat May 08 2021 Anton Midyukov <antohami@altlinux.org> 2.14.4-alt1
+- new version 2.14.4
+
 * Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.1-alt2
 - Rebuilt with boost-1.73.0.
 
