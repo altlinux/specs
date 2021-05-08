@@ -1,6 +1,6 @@
 Name: CanFestival-3-source
 Version: 2015.08.03
-Release: alt2
+Release: alt3
 
 Summary: Free CanOpen stack
 License: GPLv2+
@@ -13,7 +13,7 @@ Source: CanFestival-3-%version.tar
 
 Buildarch: noarch
 
-%add_python_req_skip gnosis
+AutoReqProv: no
 
 %description
 Free CanOpen stack.
@@ -37,6 +37,9 @@ cp -r * %buildroot%_prefix/src/CanFestival-3
 %_prefix/src/CanFestival-3
 
 %changelog
+* Sat May 08 2021 Anton Midyukov <antohami@altlinux.org> 2015.08.03-alt3
+- AutoReqProv: no
+
 * Fri Nov 22 2019 Anton Midyukov <antohami@altlinux.org> 2015.08.03-alt2
 - fix shebang for *.py
 
