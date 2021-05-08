@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.2.3
+Version: 6.2.4
 Release: alt1
 
 Summary: Python test framework
@@ -93,7 +93,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -108,6 +108,9 @@ tox.py3 --sitepackages -vvr
 %_bindir/pytest-3
 
 %changelog
+* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 6.2.4-alt1
+- 6.2.3 -> 6.2.4.
+
 * Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 6.2.3-alt1
 - 6.1.1 -> 6.2.3.
 

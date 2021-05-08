@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define oname py
 
-Name: py
-Version: 1.9.0
-Release: alt2
+Name: python3-module-%oname
+Version: 1.10.0
+Release: alt1
 
 Summary: Testing and distributed programming library
 License: MIT
-Group: Development/Tools
+Group: Development/Python3
 # Source-git: https://github.com/pytest-dev/py.git
 Url: https://github.com/pytest-dev/py
 
@@ -14,31 +15,23 @@ Source: %name-%version.tar
 Source2: move.list
 Patch: %name-%version-alt.patch
 
-BuildRequires: python2.7(setuptools_scm)
-BuildRequires: python2.7(apipkg)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(apipkg)
 
 BuildArch: noarch
-Requires: python-module-%name = %EVR
 
 %define move_list %(echo `cat %SOURCE2`)
+
+# The compiler package has been removed in Python 3
+%add_python3_req_skip compiler
+%py3_provides %move_list
+%py3_requires apipkg
+%py3_requires iniconfig
 
 %description
 The py lib has several namespaces which help with testing, generating
 and distributing code across machines.
-
-%package -n python-module-%name
-Summary: Python module of testing and distributed programming library
-Group: Development/Python
-Conflicts: %name
-%py_provides %move_list
-%py_requires apipkg
-%py_requires iniconfig
-
-%description -n python-module-%name
-The py lib has several namespaces which help with testing, generating
-and distributing code across machines.
-
-This package contains python module of %name lib.
 
 %prep
 %setup
@@ -52,16 +45,15 @@ rm -r py/_vendored_packages
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_build
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_install
+%python3_install
 
 # check the actual provides against predefined ones
 set -o pipefail
-PYTHONPATH="$(pwd)" python2 -c \
-"from __future__ import print_function; import py, apipkg;\
+PYTHONPATH="$(pwd)" python3 -c "import py, apipkg;\
 assert py.__version__==\"%version\";\
 modules=[ 'py.' + mod for mod in dir(py) if isinstance(getattr(py, mod), apipkg.ApiModule) ];\
 print(*modules, sep='\n')" | sort > move.actual.list
@@ -71,13 +63,14 @@ diff -y move.expected.list move.actual.list
 
 %check
 
-%files -n python-module-%name
-%doc AUTHORS CHANGELOG LICENSE *.rst
-%python_sitelibdir/py/
-%python_sitelibdir/py-*.egg-info/
+%files
+%doc CHANGELOG.rst README.rst LICENSE
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
-* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 1.9.0-alt2
+* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
+- 1.9.0 -> 1.10.0.
 - Built Python3 package from its own src.
 
 * Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1

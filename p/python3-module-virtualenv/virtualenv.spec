@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 20.4.4
+Version: 20.4.6
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -92,7 +92,7 @@ export PIP_FIND_LINKS=%system_wheels_path
 export NO_INTERNET=yes
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
 export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr
+tox.py3 --sitepackages --no-deps -vvr -s false
 
 %files
 %doc README.md
@@ -101,6 +101,9 @@ tox.py3 --sitepackages --no-deps -vvr
 %python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 20.4.6-alt1
+- 20.4.4 -> 20.4.6.
+
 * Fri Apr 23 2021 Stanislav Levin <slev@altlinux.org> 20.4.4-alt1
 - 20.1.0 -> 20.4.4.
 - Switched to system seed wheels.
