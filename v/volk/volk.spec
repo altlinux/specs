@@ -1,5 +1,5 @@
 Name: volk
-Version: 2.3.0
+Version: 2.4.1
 Release: alt1
 Summary: Vector-Optimized Library of Kernels
 License: GPLv3
@@ -7,6 +7,7 @@ Group: Development/C++
 Url: http://libvolk.org/
 
 Source: %name-%version.tar
+Source1: cpu_features.tar
 
 %description
 VOLK:
@@ -21,6 +22,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 BuildRequires: liborc-devel orc
 BuildRequires: boost-filesystem-devel
+BuildRequires: git-core
 
 %description -n lib%name
 VOLK:
@@ -52,7 +54,7 @@ Requires: lib%name = %version
 Python 3 module for VOLK.
 
 %prep
-%setup
+%setup -a 1
 
 %build
 %cmake \
@@ -63,6 +65,11 @@ Python 3 module for VOLK.
 
 %install
 %cmakeinstall_std
+
+# Not needed
+rm -f %buildroot%_bindir/list_cpu_features
+rm -f %buildroot%_libdir/libcpu_features.a
+rm -fr %buildroot%_libdir/cmake/CpuFeatures
 
 %files
 %_bindir/*
@@ -81,6 +88,9 @@ Python 3 module for VOLK.
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 05 2021 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Thu May 21 2020 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
 - new version 2.3.0
 

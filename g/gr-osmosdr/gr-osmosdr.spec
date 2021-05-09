@@ -1,17 +1,13 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
-Version: 0.2.0
-Release: alt2
+Version: 0.2.3
+Release: alt1.20210129
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: gr-osmosdr-0.1.1-pkgconfig-fix.patch
-Patch1: gr-osmosdr-0.1.4-gnuradio38-blocks-fix.patch
-Patch2: gr-osmosdr-0.1.4-python3-fix.patch
-Patch3: gr-osmosdr-0.2.0-alt-boost-1.73.0-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake gcc-c++
@@ -19,7 +15,7 @@ BuildRequires: gnuradio-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: doxygen
 BuildRequires: graphviz
-BuildRequires: swig
+BuildRequires: pybind11-devel
 BuildRequires: rtl-sdr-devel
 BuildRequires: uhd-devel
 BuildRequires: hackrf-devel
@@ -31,6 +27,9 @@ BuildRequires: liblog4cpp-devel
 BuildRequires: mpir-devel
 BuildRequires: libgmp-devel
 BuildRequires: libfftw3-devel
+BuildRequires: libsndfile-devel
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libunwind-devel
 
 %description
 Primarily gr-osmosdr supports the OsmoSDR hardware, but it also
@@ -58,11 +57,6 @@ Documentation files for gr-osmosdr.
 
 %prep
 %setup
-
-#patch0 -p1 -b .pkgconfig-fix
-#patch1 -p1 -b .gnuradio38-blocks-fix
-#patch2 -p1 -b .python3-fix
-%patch3 -p1
 
 # TODO fix the lib location nicer way
 %__subst 's|/lib/|/%_lib/|g' CMakeLists.txt
@@ -119,6 +113,9 @@ EOF
 %doc %_docdir/%name/xml
 
 %changelog
+* Sat May 08 2021 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt1.20210129
+- new snapshot
+
 * Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2
 - Rebuilt with boost-1.73.0.
 

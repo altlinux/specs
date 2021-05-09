@@ -7,8 +7,8 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.8.1.0
-Release: alt3
+Version: 3.9.1.0
+Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -17,10 +17,12 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
-Patch1: gnuradio-3.8.1-python3-fix.patch
-Patch2: gnuradio-3.8.1.0-alt-boost-1.73.0-compat.patch
+Patch1: gnuradio-3.9.1.0-python3-fix.patch
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-python3 rpm-build-gir
+%add_python3_path %_datadir/%name
+
+BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
+BuildRequires: rpm-build-python3 rpm-build-gir
 BuildRequires: gcc-c++ cmake
 BuildRequires: liborc-devel
 BuildRequires: libgtk+3-gir-devel
@@ -54,7 +56,15 @@ BuildRequires: python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-click-plugins
-BuildRequires: swig
+BuildRequires: python3-module-pyqtgraph
+BuildRequires: python3-module-scipy-devel
+BuildRequires: pybind11-devel
+BuildRequires: libsndfile-devel
+BuildRequires: libunwind-devel
+BuildRequires: mpir-devel
+BuildRequires: libgmp-devel
+BuildRequires: libnumpy-py3-devel
+BuildRequires: doxygen
 
 %if_enabled tests
 BuildRequires: pkgconfig(cppunit)
@@ -64,11 +74,8 @@ BuildRequires: doxygen python3-module-sphinx
 BuildRequires: /usr/bin/latex /usr/bin/dvips tex(dvips.def)
 %endif #docs
 BuildRequires: desktop-file-utils xdg-utils
-%add_python3_req_skip PyQt4 PyQt4.Qwt5
+%add_python3_req_skip PyQt5.Qwt
 %add_python3_req_skip gnuradio.ctrlport.GNURadio
-
-# skip requires on python2
-%set_findreq_skiplist %_datadir/%name/modtool/templates/*
 
 Obsoletes: gnuradio-data < 3.8
 Obsoletes: libgnuradio < 3.8
@@ -94,6 +101,7 @@ Summary: GNU Radio Examples
 Group: Engineering
 Buildarch: noarch
 Requires: %name = %EVR
+%add_findreq_skiplist %_datadir/%name/examples/*.grc
 
 %description examples
 GNU Radio Examples.
@@ -112,7 +120,6 @@ GNU Radio Headers.
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %cmake \
@@ -131,12 +138,20 @@ GNU Radio Headers.
 
 # Remove extraneous desktop/icon/mime files
 rm -r %buildroot%_datadir/%name/grc/freedesktop
-rm -r %buildroot%_datadir/icons/gnome
+#rm -r %buildroot%_datadir/icons/gnome
 
 # remove verify_elf problem files
 rm %buildroot%_datadir/%name/examples/audio/dial_tone
 rm %buildroot%_datadir/%name/examples/qt-gui/display_qt
 rm %buildroot%_datadir/%name/examples/uhd/tags_demo
+
+# fix *.grc files permissions
+find %buildroot%_datadir/ -name '*.grc' | xargs \
+	chmod 644
+
+# fix shebang
+find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
+	-e 's:/usr/bin/env python$:%__python3:'
 
 %files
 %_bindir/*
@@ -155,6 +170,7 @@ rm %buildroot%_datadir/%name/examples/uhd/tags_demo
 %exclude %_docdir/%name-%version/xml
 %exclude %_docdir/%name-%version/html
 %endif #docs
+%_datadir/metainfo/org.gnuradio.grc.metainfo.xml
 
 %if_enabled docs
 %files docs
@@ -173,6 +189,10 @@ rm %buildroot%_datadir/%name/examples/uhd/tags_demo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat May 08 2021 Anton Midyukov <antohami@altlinux.org> 3.9.1.0-alt1
+- new version 3.9.1.0
+- update buildrequires
+
 * Sat Nov 07 2020 Anton Midyukov <antohami@altlinux.org> 3.8.1.0-alt3
 - Rebuilt without pkgconfig(thrift)
 
