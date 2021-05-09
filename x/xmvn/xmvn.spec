@@ -21,7 +21,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           xmvn
 Version:        3.0.0
-Release:        alt1_23jpp8
+Release:        alt1_26jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -37,6 +37,8 @@ Patch4:         0001-Fix-configuration-of-aliased-plugins.patch
 Patch5:         0001-Don-t-use-JAXB-for-converting-bytes-to-hex-string.patch
 Patch6:         0001-Use-apache-commons-compress-for-manifest-injection-a.patch
 Patch7:         0001-port-to-gradle-4.4.1.patch
+Patch8:         0001-test-Fix-XML-namespace-in-installer-test-resources.patch
+Patch9:         0001-Port-to-Xmlunit-2.6.2.patch
 
 BuildRequires:  maven >= 3.5.0
 BuildRequires:  maven-local
@@ -50,7 +52,7 @@ BuildRequires:  maven-install-plugin
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  objectweb-asm
 BuildRequires:  modello
-BuildRequires:  xmlunit
+BuildRequires:  xmlunit-assertj
 BuildRequires:  apache-ivy
 BuildRequires:  junit
 BuildRequires:  easymock
@@ -244,6 +246,8 @@ This package provides %{summary}.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 # Bisect IT has no chances of working in local, offline mode, without
 # network access - it needs to access remote repositories.
@@ -400,6 +404,9 @@ popd
 %doc LICENSE NOTICE
 
 %changelog
+* Sun May 09 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_26jpp8
+- update
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_23jpp8
 - build with new gradle
 
