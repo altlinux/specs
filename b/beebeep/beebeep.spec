@@ -1,7 +1,7 @@
 Name:		beebeep
 Summary:	Secure Network Chat
-Version:	5.8.3
-Release:	alt0.svn1449
+Version:	5.8.4
+Release:	alt1
 Group:		Networking/Chat
 
 Url:		http://sourceforge.net/projects/beebeep/
@@ -51,6 +51,9 @@ convert -resize 16x16 src/images/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sat May 08 2021 Motsyo Gennadi <drool@altlinux.ru> 5.8.4-alt1
+- 5.8.4
+
 * Sat Nov 28 2020 Motsyo Gennadi <drool@altlinux.ru> 5.8.3-alt0.svn1449
 - svn stapshot 1449
 
