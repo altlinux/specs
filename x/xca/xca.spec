@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
@@ -13,7 +13,7 @@ Url: https://hohnstaedt.de/xca/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: qt5-base-devel qt5-tools
+BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: libltdl-devel openssl-devel linuxdoc-tools rpm-build-xdg OpenSP groff-base
 
 %description
@@ -31,6 +31,10 @@ presented.
 
 %build
 ./bootstrap
+
+%__subst "s|ITERATION=.*$|ITERATION=\"0\"|" configure
+%__subst "s|VERSIONHASH=.*$|VERSIONHASH=\"aaaaaaaaaaaa\"|" configure
+
 CFLAGS="%optflags" \
 CXXFLAGS="%optflags" \
 ./configure --prefix="%_prefix" \
@@ -45,15 +49,20 @@ mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
     mandir=%_mandir docdir=%_docdir/%name-%version datarootdir=%_datadir
 
 %files
-%doc AUTHORS doc/*.html
+%doc AUTHORS doc/html/*.html doc/qthelp/*.qhcp
 %_bindir/*
 %_datadir/xca
 %_desktopdir/xca*
 %_man1dir/xca*.1*
 %_xdgmimedir/packages/xca.xml
 %_pixmapsdir/xca*.xpm
+%_iconsdir/hicolor/*/*/*
+%_datadir/bash-completion/completions/xca
 
 %changelog
+* Sun May 09 2021 Pavel Nakonechnyi <zorg@altlinux.ru> 2.4.0-alt1
+- update to 2.4.0 release
+
 * Thu Apr 30 2020 Pavel Nakonechnyi <zorg@altlinux.ru> 2.3.0-alt1
 - update to 2.3.0 release
 
