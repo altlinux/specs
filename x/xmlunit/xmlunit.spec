@@ -1,10 +1,7 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
-# END SourceDeps(oneline)
 BuildRequires: docbook-simple
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -38,34 +35,35 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           xmlunit
-Version:        1.6
-Release:        alt1_9jpp8
-Epoch:          0
 Summary:        Provides classes to do asserts on xml
-License:        BSD
-Source0:        http://downloads.sourceforge.net/xmlunit/xmlunit-1.6-src.zip
-Source1:        http://repo1.maven.org/maven2/xmlunit/xmlunit/1.0/xmlunit-1.0.pom
-URL:            http://xmlunit.sourceforge.net/
-BuildRequires:  javapackages-local
-BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  junit
-BuildRequires:  xalan-j2
-BuildRequires:  xerces-j2
-BuildRequires:  xml-commons-apis
+Epoch:          0
+Version:        2.6.3
+Release:        alt1_1jpp8
+# xmlunit2 is licensed under ASL 2.0, xmlunit-legacy is still BSD-licensed
+License:        ASL 2.0 and BSD
 
-Requires:       junit
-Requires:       xalan-j2
-Requires:       xml-commons-apis
+URL:            https://www.xmlunit.org/
+Source0:        https://github.com/xmlunit/xmlunit/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
+
+Patch0:         0001-Disable-tests-requiring-network-access.patch
 
 BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.hamcrest:hamcrest-library)
+BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 %description
-XMLUnit extends JUnit to simplify unit testing of XML. It compares a control
-XML document to a test document or the result of a transformation, validates
-documents against a DTD, and (from v0.5) compares the results of XPath
-expressions.
+XMLUnit provides you with the tools to verify the XML you emit is the one you
+want to create. It provides helpers to validate against an XML Schema, assert
+the values of XPath queries or compare XML documents against expected outcomes.
+
 
 %package        javadoc
 Group: Development/Java
@@ -75,45 +73,86 @@ BuildArch: noarch
 %description    javadoc
 Javadoc for %{name}
 
+
+%package        assertj
+Group: Development/Java
+Summary:        Assertj for %{name}
+
+%description    assertj
+This package provides %{summary}.
+
+
+%package        core
+Group: Development/Java
+Summary:        Core package for %{name}
+
+%description    core
+This package provides %{summary}.
+
+
+%package        legacy
+Group: Development/Java
+Summary:        Legacy package for %{name}
+
+%description    legacy
+This package provides %{summary}.
+
+
+%package        matchers
+Group: Development/Java
+Summary:        Matchers for %{name}
+
+%description    matchers
+This package provides %{summary}.
+
+
+%package        placeholders
+Group: Development/Java
+Summary:        Placeholders for %{name}
+
+%description    placeholders
+This package provides %{summary}.
+
+
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-src
 
-sed -i /java.class.path/d build.xml
-# remove all binary libs and javadocs
-find . -name "*.jar" -exec rm -f {} \;
-rm -rf doc
+%patch0 -p1
 
-#Fix wrong-file-end-of-line-encoding
-sed -i 's/\r//g' README.txt LICENSE.txt
+%pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
+%pom_remove_plugin :maven-assembly-plugin
 
-%mvn_file : %{name}
+%mvn_alias "org.xmlunit:xmlunit-legacy" "xmlunit:xmlunit"
 # damn the net
 # TODO: why catalog does not work? it is ant xslt task
-sed -i 's,http://docbook.org/xml/simple/1.1b1/sdocbook.dtd,http://www.oasis-open.org/docbook/xml/simple/1.1/sdocbook.dtd,g' `grep -rl 'http://docbook.org/xml/simple/1.1b1/sdocbook.dtd' .`
+#sed -i 's,http://docbook.org/xml/simple/1.1b1/sdocbook.dtd,http://www.oasis-open.org/docbook/xml/simple/1.1/sdocbook.dtd,g' `grep -rl 'http://docbook.org/xml/simple/1.1b1/sdocbook.dtd' .`
+
 
 
 %build
-ant -Dbuild.compiler=modern -Dhaltonfailure=yes \
-    -Djunit.lib=$(build-classpath junit) \
-    -Dxmlxsl.lib= -Dtest.report.dir=test \
-    -Ddb5.xsl=%{_datadir}/sgml/docbook/xsl-ns-stylesheets \
-    jar javadocs
+%mvn_build -s
 
-%mvn_artifact %{SOURCE1} build/lib/%{name}-%{version}.jar
 
 %install
-%mvn_install -J build/doc/api/
-
-%check
-ant
+%mvn_install
 
 
-%files -f .mfiles
-%doc README.txt LICENSE.txt userguide/XMLUnit-Java.pdf
+%files -f .mfiles-xmlunit-parent
+%doc README.md CONTRIBUTING.md RELEASE_NOTES.md
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
+%files assertj -f .mfiles-xmlunit-assertj
+%files core -f .mfiles-xmlunit-core
+%files legacy -f .mfiles-xmlunit-legacy
+%files matchers -f .mfiles-xmlunit-matchers
+%files placeholders -f .mfiles-xmlunit-placeholders
+
 
 %changelog
+* Sun May 09 2021 Igor Vlasenko <viy@altlinux.ru> 0:2.6.3-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_9jpp8
 - new version
 
