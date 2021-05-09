@@ -8,13 +8,13 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 
 Name:           freedoom
 
-Version:        0.11.3
-Release:        alt1_6
+Version:        0.12.1
+Release:        alt1
 Summary:        Doom styled first person shooter game
 
 License:        BSD
 URL:            https://freedoom.github.io/
-Source0:        https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip
+Source0:        https://github.com/freedoom/freedoom/releases/download/v0.12.1/freedoom-0.12.1.zip
 Source1:        freedoom1.desktop
 Source2:        freedoom2.desktop
 Source3:        freedoom.png
@@ -75,6 +75,14 @@ mkdir -p %{buildroot}%{_datadir}/appdata
 install -p -m 644 %{SOURCE4} %{SOURCE5} %{buildroot}%{_datadir}/appdata
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.xml
 ln -s /usr/share/doom/freedoom2.wad %{buildroot}%{waddir}/freedoom.wad
+# create  cmdline launchers from desktop commands
+mkdir -p %{buildroot}/%{_bindir}
+echo "#!/bin/sh" > %{buildroot}/%{_bindir}/%{name}1
+echo "#!/bin/sh" > %{buildroot}/%{_bindir}/%{name}2
+cat  %{SOURCE1} | grep "Exec" | sed "s/Exec.//" >> %{buildroot}/%{_bindir}/%{name}1
+cat  %{SOURCE2} | grep "Exec" | sed "s/Exec.//" >> %{buildroot}/%{_bindir}/%{name}2
+chmod 755 %{buildroot}/%{_bindir}/%{name}1
+chmod 755 %{buildroot}/%{_bindir}/%{name}2
 
 
 %files
@@ -84,6 +92,7 @@ ln -s /usr/share/doom/freedoom2.wad %{buildroot}%{waddir}/freedoom.wad
 %{_datadir}/appdata/%{name}1.appdata.xml
 %{_datadir}/applications/%{name}1.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+%{_bindir}/%{name}1
 
 %files -n freedoom2
 %doc README.html CREDITS.txt
@@ -93,9 +102,13 @@ ln -s /usr/share/doom/freedoom2.wad %{buildroot}%{waddir}/freedoom.wad
 %{_datadir}/appdata/%{name}2.appdata.xml
 %{_datadir}/applications/%{name}2.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-
+%{_bindir}/%{name}2
 
 %changelog
+* Mon May 10 2021 Ilya Mashkin <oddity@altlinux.ru> 0.12.1-alt1
+- 0.12.1
+- added cmdline launchers from FC
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.11.3-alt1_6
 - update to new release by fcimport
 
