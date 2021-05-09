@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name maven
-%bcond_without  logback
+%bcond_with logback
 
 %global bundled_slf4j_version 1.7.25
 %global apphomedir %{_datadir}/%{name}%{?maven_version_suffix}
@@ -23,7 +23,7 @@ BuildRequires: jpackage-1.8-compat
 Name:           maven
 Epoch:          1
 Version:        3.5.4
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -312,6 +312,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Sun May 09 2021 Igor Vlasenko <viy@altlinux.org> 1:3.5.4-alt1_12jpp8
+- update
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.4-alt1_10jpp8
 - fixed build
 
