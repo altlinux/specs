@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,13 +10,13 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without  ssh
-%bcond_without  vfs
-%bcond_without  bouncycastle
+%bcond_with bouncycastle
+%bcond_with ssh
+%bcond_with vfs
 
 Name:           apache-ivy
 Version:        2.4.0
-Release:        alt1_16jpp8
+Release:        alt1_18jpp8
 Summary:        Java-based dependency manager
 
 License:        ASL 2.0
@@ -144,6 +141,14 @@ rm test/java/org/apache/ivy/util/url/HttpclientURLHandlerTest.java
 rm test/java/org/apache/ivy/plugins/resolver/IBiblioResolverTest.java
 rm test/java/org/apache/ivy/util/url/ArtifactoryListingTest.java
 
+%if %{without vfs}
+rm test/java/org/apache/ivy/plugins/repository/vfs/VfsRepositoryTest.java
+rm test/java/org/apache/ivy/plugins/repository/vfs/VfsResourceTest.java
+rm test/java/org/apache/ivy/plugins/repository/vfs/VfsTestHelper.java
+rm test/java/org/apache/ivy/plugins/repository/vfs/VfsURI.java
+rm test/java/org/apache/ivy/plugins/resolver/VfsResolverTest.java
+%endif
+
 # XXX Disable test which fails due to non-existing files
 rm test/java/org/apache/ivy/ant/IvyBuildListTest.java
 
@@ -172,6 +177,9 @@ echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun May 09 2021 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_18jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_16jpp8
 - new version
 
