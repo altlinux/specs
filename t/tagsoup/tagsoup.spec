@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: xalan-j2
 Requires: xalan-j2
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -40,15 +40,15 @@ BuildRequires: jpackage-generic-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt2_17jpp8
+Release:        alt2_19jpp8
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
 # AFL/GPLv2+ license for src/java/org/ccil/cowan/tagsoup/PYXScanner.java is
 # likely mixup of upstream but needs to be cleared up
 License:        ASL 2.0 and (GPLv2+ or AFL)
-Source0:        http://home.ccil.org/~cowan/XML/tagsoup/tagsoup-1.2.1-src.zip
-URL:            http://home.ccil.org/~cowan/XML/tagsoup/
-Source1:        http://repo1.maven.org/maven2/org/ccil/cowan/tagsoup/tagsoup/%{version}/tagsoup-%{version}.pom
+Source0:        http://vrici.lojban.org/~cowan/XML/tagsoup/tagsoup-1.2.1-src.zip
+URL:            http://vrici.lojban.org/~cowan/XML/tagsoup/
+Source1:        https://repo1.maven.org/maven2/org/ccil/cowan/tagsoup/tagsoup/%{version}/tagsoup-%{version}.pom
 # fix version
 Patch0:         tagsoup-1.2.1-man.patch
 BuildRequires:  javapackages-local
@@ -110,6 +110,9 @@ install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2.1-alt2_19jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_17jpp8
 - new version
 
