@@ -2,13 +2,15 @@
 
 Name:		fscryptctl
 Version:	1.0.0
-Release:	alt1
+Release:	alt2
 Summary:	A low-level tool for the management of Linux kernel filesystem encryption
 
 Group:		System/Kernel and hardware
 License:	Apache-2.0
 URL:		https://github.com/google/fscryptctl
 Source:     %name-%version.tar
+
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm python3-module-pytest e2fsprogs}}
 
 Requires:   kernel >= 5.4
 
@@ -36,10 +38,19 @@ wrapping, or PAM integration.
 %makeinstall_std \
     PREFIX="/usr"
 
+%check
+mkdir -p /usr/src/bin
+ln -sf /usr/bin/time /usr/src/bin/sudo
+sed -i '/mountpoint/s/--quiet/-q/' Makefile
+vm-run --kvm=cond --sbin make test-all
+
 %files
 %_bindir/%name
 %doc *.md
 
 %changelog
+* Mon May 10 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt2
+- spec: Run tests in %%check.
+
 * Sat May 08 2021 Andrew Savchenko <bircoph@altlinux.org> 1.0.0-alt1
 - Initial version
