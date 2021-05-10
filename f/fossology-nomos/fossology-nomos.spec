@@ -1,9 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
 Name: fossology-nomos
-Version: 3.9.0
-Release: alt2
+Version: 3.10.0
+Release: alt1
 
 Summary: Architecture for analyzing software, nomos standalone
 License: GPL-2.0-or-later
@@ -46,6 +47,7 @@ install -Dm0755 -p src/nomos/agent/nomossa %buildroot%_bindir/nomossa
 %check
 src/nomos/agent/nomossa LICENSE  | grep ' GPL-2\.0,LGPL-2\.1$'
 src/nomos/agent/nomossa Makefile | grep ' No_license_found$'
+# Crash test.
 src/nomos/agent/nomossa -d .gear
 
 %files
@@ -53,6 +55,9 @@ src/nomos/agent/nomossa -d .gear
 %_bindir/nomossa
 
 %changelog
+* Mon May 10 2021 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt1
+- Update to 3.10.0 (2021-05-07).
+
 * Thu Dec 10 2020 Vitaly Chikunov <vt@altlinux.org> 3.9.0-alt2
 - Fix build on gcc 10.2.1.
 
