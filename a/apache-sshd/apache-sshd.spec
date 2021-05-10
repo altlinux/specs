@@ -6,7 +6,7 @@ BuildRequires: jpackage-1.8-compat
 Epoch:          1
 Name:           apache-sshd
 Version:        2.2.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Apache SSHD
 
 # One file has ISC licensing:
@@ -16,6 +16,7 @@ URL:            http://mina.apache.org/sshd-project
 
 Source0:        https://archive.apache.org/dist/mina/sshd/%{version}/apache-sshd-%{version}-src.tar.gz
 
+# Avoid optional dep on tomcat native APR library
 Patch0:         0001-Avoid-optional-dependency-on-native-tomcat-APR-libra.patch
 
 BuildRequires:  maven-local
@@ -84,19 +85,23 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 %pom_xpath_inject "pom:configuration/pom:instructions" "<_nouses>true</_nouses>" .
 
 %build
-# tests require ch.ethz.ganymed:ganymed-ssh2
+# Can't run tests, they require ch.ethz.ganymed:ganymed-ssh2
 %mvn_build -f -- -Dworkspace.root.dir=$(pwd)
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc CHANGES.md
 %doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.2.0-alt1_4jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.2.0-alt1_2jpp8
 - new version
 
