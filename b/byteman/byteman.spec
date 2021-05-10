@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-9-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -25,7 +25,7 @@ BuildRequires: jpackage-9-compat
 
 Name:             byteman
 Version:          4.0.5
-Release:          alt1_3jpp9
+Release:          alt1_5jpp11
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
@@ -35,7 +35,7 @@ Source0:          https://github.com/bytemanproject/byteman/archive/%{version}.t
 BuildArch:        noarch
 
 # Byteman 4.x requires JDK 9+ to build. Require JDK 10 explicitly.
-BuildRequires:    java-9-openjdk-devel
+BuildRequires:    java-11-openjdk-devel
 BuildRequires:    maven-local
 BuildRequires:    maven-shade-plugin
 BuildRequires:    maven-source-plugin
@@ -50,7 +50,6 @@ BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    maven-verifier-plugin
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    java_cup
-BuildRequires:    jarjar
 BuildRequires:    objectweb-asm
 BuildRequires:    junit
 BuildRequires:    testng
@@ -154,7 +153,7 @@ sed -i "s|java-cup|java_cup|" tests/pom.xml
 %mvn_package ":byteman-dtest" dtest
 
 %build
-export JAVA_HOME=/usr/lib/jvm/java-9-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 # Use --xmvn-javadoc so as to avoid maven-javadoc-plugin issue
 # (fixed in 3.1.0, fedora has 3.0.1):
 # See https://issues.apache.org/jira/browse/MJAVADOC-555
@@ -226,6 +225,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 4.0.5-alt1_5jpp11
+- update
+
 * Sun Jul 14 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.5-alt1_3jpp9
 - new version
 
