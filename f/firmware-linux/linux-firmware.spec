@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20210403
-Release: alt2
+Release: alt3
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -56,18 +56,12 @@ firmware for LiquidIO II Smart NICs
 %setup -n %name-%version
 %patch -p1
 
-%build
-## *TODO* check these too
-rm -rf ess korg sb16 yamaha
-
-# Remove source files we don't need to install
-rm -f usbdux/*dux */*.asm *spec
-
 %install
-mkdir -p %buildroot/lib/firmware
-cp -a * %buildroot/lib/firmware
+DESTDIR=%buildroot FIRMWAREDIR=lib/firmware make install
 hardlink -cv %buildroot/lib/firmware
-rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
+
+## *TODO* check these too
+rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 
 %files
 %doc WHENCE LICEN?E.*
@@ -82,6 +76,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sat Apr 24 2021 Anton Midyukov <antohami@altlinux.org> 20210403-alt3
+- use Makefile for install (Closes: 39980)
+
 * Thu Apr 22 2021 Dmitry Terekhin <jqt4@altlinux.org> 20210403-alt2
 - brcm: Add symlinks for brcm devices
 
