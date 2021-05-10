@@ -2,15 +2,14 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           relaxngDatatype
 Version:        2011.1
-Release:        alt1_9jpp8
+Release:        alt1_12jpp8
 Summary:        RELAX NG Datatype API
 License:        BSD
 URL:            https://github.com/java-schema-utilities/relaxng-datatype-java
@@ -21,7 +20,6 @@ Source0:        https://github.com/java-schema-utilities/relaxng-datatype-java/a
 Source1:        copying.txt
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -42,6 +40,9 @@ This package provides %{summary}.
 
 cp -p %{SOURCE1} .
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %pom_xpath_remove "pom:build/pom:extensions"
 
 # For compatibility
@@ -61,6 +62,9 @@ cp -p %{SOURCE1} .
 %doc copying.txt
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2011.1-alt1_12jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2011.1-alt1_9jpp8
 - new version
 
