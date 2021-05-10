@@ -1,5 +1,5 @@
-%define		softver 75.0
-%define		buildver 3960.0
+%define		softver 77.0
+%define		buildver 4046.0
 
 Name:		opera64-dev
 Version:	%softver.%buildver
@@ -11,7 +11,6 @@ License:	Distributable
 Vendor:		Opera Software ASA
 Url:		http://www.opera.com/
 Source0:	opera-%softver.%buildver.x86_64.linux.tar.bz2
-Source1:	opera-lib_extra-libffmpeg.so
 
 ExclusiveArch:	x86_64
 
@@ -38,8 +37,6 @@ cp -a ./lib/* %buildroot%_libdir/
 cp -a ./share/* %buildroot%_datadir
 ln -s %_libdir/x86_64-linux-gnu/opera-developer/opera-developer %buildroot%_bindir/opera-developer
 subst 's|usr/lib/|%_libdir/|g' %buildroot%_datadir/lintian/overrides/opera-developer
-subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g' %buildroot%_libdir/*-linux-gnu/opera-developer/resources/pepper_flash_config.json
-cp -a %SOURCE1 %buildroot%_libdir/x86_64-linux-gnu/opera-developer/lib_extra/libffmpeg.so
 
 %post
 chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
@@ -54,6 +51,9 @@ chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Sun May 09 2021 Motsyo Gennadi <drool@altlinux.ru> 77.0.4046.0-alt1
+- 77.0.4046.0 snapshot
+
 * Sun Feb 14 2021 Motsyo Gennadi <drool@altlinux.ru> 75.0.3960.0-alt1
 - 75.0.3960.0 snapshot
 
