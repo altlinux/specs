@@ -1,5 +1,5 @@
 Name: zile
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: zile - emacs-like editor
@@ -36,6 +36,9 @@ Zile (emacs-like) editor.
 
 
 %changelog
+* Mon May 10 2021 Ilya Mashkin <oddity@altlinux.ru> 2.6.2-alt1
+- 2.6.2
+
 * Tue Apr 13 2021 Ilya Mashkin <oddity@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
