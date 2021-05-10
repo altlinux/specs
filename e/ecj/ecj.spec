@@ -1,22 +1,22 @@
 Group: Development/Java
 Obsoletes: ecj-standalone <= 3.4.2-alt4_0jpp6
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global qualifier R-4.12-201906051800
+%global qualifier S-4.14RC2a-201912100610
 
 Summary: Eclipse Compiler for Java
 Name: ecj
-Version: 4.12
-Release: alt1_2jpp8
+Version: 4.14
+Release: alt1_3jpp11
 URL: http://www.eclipse.org
 License: EPL-2.0
 
-Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}.jar
-Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.18.0/ecj-3.18.0.pom
+Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}RC2a.jar
+Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.20.0/ecj-3.20.0.pom
 # Extracted from https://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/%%{qualifier}/ecj-%%{version}.jar
 Source4: MANIFEST.MF
 # Java API stubs for newer JDKs
@@ -59,6 +59,7 @@ sed -i -e 's|debuglevel=\"lines,source\"|debug=\"yes\"|g' build.xml
 cp %{SOURCE1} pom.xml
 mkdir -p scripts/binary/META-INF/
 cp %{SOURCE4} scripts/binary/META-INF/MANIFEST.MF
+rm ./META-INF/ECLIPSE_.{SF,RSA}
 
 # JDTCompilerAdapter isn't used by the batch compiler
 rm -f org/eclipse/jdt/core/JDTCompilerAdapter.java
@@ -108,6 +109,9 @@ ln -s ecj/ecj.jar %buildroot%_javadir/ecj.jar
 %{_mandir}/man1/ecj*
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1:4.14-alt1_3jpp11
+- new version
+
 * Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_2jpp8
 - new version
 
