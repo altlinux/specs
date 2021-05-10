@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.6.4
-Release: alt3
+Version: 4.7.0
+Release: alt1
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -109,6 +109,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -
 %python3_sitelibdir/%oname/test*
 
 %changelog
+* Mon May 10 2021 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
+- Automatically updated to 4.7.0.
+
 * Wed Mar 03 2021 Grigory Ustinov <grenka@altlinux.org> 4.6.4-alt3
 - Enabled check.
 
