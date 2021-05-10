@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name       collections
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.2
-Release:        alt1_12jpp8
+Release:        alt1_16jpp8
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -79,16 +76,11 @@ sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 %mvn_file ':%{short_name}{,-testframework}' %{short_name}@1 %{name}@1
 
 %build
-# 2017-09-18 mizdebsk: Temporarly disable tests, they stopped working
-# after Maven Surefire upgrade to 2.20, need to investigate why.
-%mvn_build -- -DskipTests \
+%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 \
   -Dcommons.osgi.symbolicName=org.apache.commons.collections
 
-ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
-
-%mvn_artifact %{short_name}:%{short_name}-testframework:%{version} target/%{short_name}-testframework-%{version}.jar
-
 %install
+%mvn_artifact %{short_name}:%{short_name}-testframework:%{version} target/%{short_name}-testframework-%{version}.jar
 %mvn_install
 
 %files -f .mfiles
@@ -102,6 +94,9 @@ ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.2-alt1_16jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_12jpp8
 - new version
 
