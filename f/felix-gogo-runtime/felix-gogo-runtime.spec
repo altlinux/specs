@@ -7,9 +7,11 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           felix-gogo-runtime
 Version:        1.1.0
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        Apache Felix Gogo command line shell for OSGi
-License:        ASL 2.0
+# One file is also MIT licensed:
+#  src/main/java/org/apache/felix/gogo/runtime/Expression.java
+License:        ASL 2.0 and MIT
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 
 Source0:        http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
@@ -55,6 +57,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt1_5jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
 - explicit build with java8
 
