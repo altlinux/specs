@@ -1,25 +1,20 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          compress-lzf
-Version:       1.0.3
-Release:       alt1_10jpp8
+Version:       1.0.4
+Release:       alt1_2jpp11
 Summary:       Basic LZF codec, compatible with standard C LZF package
 License:       ASL 2.0
 URL:           https://github.com/ning/compress
-Source0:       https://github.com/ning/compress/archive/%{name}-%{version}.tar.gz
+Source0:       %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
+BuildRequires: mvn(com.fasterxml:oss-parent:pom:)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.apache.maven.surefire:surefire-testng)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: mvn(org.testng:testng)
 
 BuildArch:     noarch
@@ -43,9 +38,6 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n compress-%{name}-%{version}
 
-find . -name "*.class" -print -delete
-find . -name "*.jar" -type f -print -delete
-
 %pom_remove_plugin :maven-source-plugin
 %pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
 
@@ -54,8 +46,7 @@ find . -name "*.jar" -type f -print -delete
 %mvn_file : %{name}
 
 %build
-
-%mvn_build -- -Poffline-testing
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Poffline-testing -Dmaven.test.skip=true
 
 %install
 %mvn_install
@@ -68,6 +59,9 @@ find . -name "*.jar" -type f -print -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_2jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_10jpp8
 - new version
 
