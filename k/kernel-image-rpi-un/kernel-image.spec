@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	5.10
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.10
-%define kernel_sublevel .27
+%define kernel_sublevel .35
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -496,6 +496,13 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon May 10 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.35-alt1
+- Updated to 5.10.35 (still RPi-specific)
+- https://github.com/raspberrypi/linux.git rpi-5.10.y
+- commit 6867d7fa52e18525c79df3708e7ff05af10fd250
+- To allow put comments in iptables ruleset
+- CONFIG_NETFILTER_XT_MATCH_COMMENT=m
+
 * Wed Apr 07 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.27-alt1
 - Updated to 5.10.27 (still RPi-specific)
 - https://github.com/raspberrypi/linux.git rpi-5.10.y
