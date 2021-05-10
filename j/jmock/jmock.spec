@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jmock
 Version:       2.8.2
-Release:       alt3_7jpp8
+Release:       alt3_10jpp8
 Summary:       Java library for testing code with mock objects
 License:       BSD
 Url:           http://www.jmock.org/
@@ -29,7 +26,6 @@ BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires: mvn(org.hamcrest:hamcrest-library)
 BuildRequires: mvn(org.objenesis:objenesis)
 BuildRequires: mvn(org.ow2.asm:asm)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -99,6 +95,9 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-library-%{namedversion}
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %pom_remove_plugin :nexus-staging-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
@@ -126,8 +125,7 @@ sed -i "s|%classpath|$(build-classpath objectweb-asm/asm)|" %{name}/pom.xml
 rm jmock-legacy/src/test/java/org/jmock/test/acceptance/MockeryFinalizationAcceptanceTests.java
 
 %build
-
-%mvn_build -s -f
+%mvn_build -s
 
 %install
 %mvn_install
@@ -151,6 +149,9 @@ rm jmock-legacy/src/test/java/org/jmock/test/acceptance/MockeryFinalizationAccep
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt3_10jpp8
+- new version
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt3_7jpp8
 - fixed build
 
