@@ -1,5 +1,5 @@
 Name: 	 tellico
-Version: 3.4
+Version: 3.4.1
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -8,7 +8,10 @@ Group:   Graphical desktop/KDE
 Url:     http://tellico-project.org/
 # VCS:	 https://invent.kde.org/office/tellico.git
 
-Source:  %name-%version.tar
+Source: %name-%version.tar
+Source1: %name-po.tar
+Patch: %name-i18n.patch
+
 ExclusiveArch: %ix86 x86_64
 
 BuildRequires(pre): rpm-build-kf5
@@ -56,7 +59,9 @@ provides default templates for books, bibliographies, videos, music,
 video games, coins, stamps, trading cards, comic books, and wines.
 
 %prep
-%setup -q
+%setup
+tar xf %SOURCE1
+%patch -p1
 
 %build
 %K5init no_altplace
@@ -85,8 +90,14 @@ find %buildroot -type f -print0 |
 %_K5xdgmime/%name.xml
 %_K5xmlgui/%name
 %_datadir/metainfo/org.kde.tellico.appdata.xml
+%_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Mon May 10 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
+- New version.
+- Enable localization.
+- Package knsrc files.
+
 * Mon Mar 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.4-alt1
 - New version.
 
