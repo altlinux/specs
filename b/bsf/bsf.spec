@@ -1,15 +1,12 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           bsf
 Epoch:          1
 Version:        2.4.0
-Release:        alt3_32jpp8
+Release:        alt3_35jpp8
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
 URL:            http://commons.apache.org/bsf/
@@ -25,7 +22,6 @@ BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  apache-parent
 BuildRequires:  xalan-j2
-BuildRequires:  rhino
 BuildRequires:  apache-commons-logging
 Source44: import.info
 %add_findreq_skiplist /usr/share/bsf-*
@@ -74,7 +70,7 @@ find -name \*.jar -delete
 %mvn_alias : org.apache.bsf:
 
 %build
-export CLASSPATH=$(build-classpath apache-commons-logging rhino xalan-j2)
+export CLASSPATH=$(build-classpath apache-commons-logging xalan-j2)
 ant jar javadocs
 
 %mvn_artifact %{SOURCE1} build/lib/%{name}.jar
@@ -90,6 +86,9 @@ ant jar javadocs
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt3_35jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_32jpp8
 - new version
 
