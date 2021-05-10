@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           java_cup
 Version:        0.11b
-Release:        alt3_12jpp8
+Release:        alt4_12jpp8
 Epoch:          2
 Summary:        LALR parser generator for Java
 License:        MIT
@@ -102,6 +102,9 @@ jar ufm dist/java-cup-%{pkg_version}-runtime.jar %{SOURCE4}
 %doc --no-dereference licence.txt
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 2:0.11b-alt4_12jpp8
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2:0.11b-alt3_12jpp8
 - fc update
 
