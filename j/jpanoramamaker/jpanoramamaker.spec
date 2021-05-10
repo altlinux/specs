@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorv 5
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jpanoramamaker
 Version:        %{majorv}.%{minorv}
-Release:        alt1_11jpp8
+Release:        alt1_17jpp11
 Summary:        Tool for stitching photos to panorama in linear curved space
 BuildArch:      noarch
 
@@ -21,6 +21,7 @@ License:        BSD
 URL:            http://jpanoramamaker.wz.cz
 Source0:        http://jpanoramamaker.wz.cz/fedora/%{name}-%{version}.src.tar.gz
 Source1:        %{name}.appdata.xml
+Patch1:         bumpJdkVersion.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
@@ -52,9 +53,10 @@ Sometimes simple changing of order of image or lying a bit on position where the
 %setup -q -n %{name}-%{majorv}
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
+%patch1 -p1
 
 #add swing-layout to classpath
-sed -i 's-javac.classpath=\\-javac.classpath=/usr/share/java/swing\-layout.jar\:\\-g'  nbproject/project.properties
+sed -i 's-javac.classpath=\\-javac.classpath=/usr/share/java/swing\-layout/swing\-layout.jar\:\\-g'  nbproject/project.properties
 #remove copylibraries
 sed -i 's/<taskdef/<!--<taskdef/g' nbproject/build-impl.xml
 sed -i 's:</copylibs>:</copylibs>-->:g' nbproject/build-impl.xml
@@ -114,6 +116,9 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 5.6-alt1_17jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_11jpp8
 - fc update
 

@@ -1,21 +1,19 @@
-BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%define _without_gcj 1
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           swing-layout
 Version:        1.0.4
-Release:        alt2_13jpp8
+Release:        alt2_21jpp11
 Summary:        Natural layout for Swing panels
 License:        LGPLv2
 URL:            https://swing-layout.dev.java.net/
 # https://svn.java.net/svn/swing-layout~svn/trunk/
+# the above urls are dead, since the upstream project doesn't exist anymore
 Source0:        %{name}-%{version}-src.zip
 # from http://java.net/jira/secure/attachment/27303/pom.xml
 Source1:        %{name}-pom.xml
@@ -23,27 +21,16 @@ Source1:        %{name}-pom.xml
 Patch0:         %{name}-%{version}-project_properties.patch
 Patch1:         %{name}-%{version}-fix-incorrect-fsf-address.patch
 
-BuildRequires:  jpackage-utils >= 1.6
-BuildRequires:  java-devel >= 1.3
+BuildRequires:  junit >= 3.8.2
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  dos2unix
-Requires:       java >= 1.3
 
 BuildArch:      noarch
 Source44: import.info
 
 %description
 Extensions to Swing to create professional cross platform layout.
-
-%if 0
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc documentation for Swing Layout
-BuildArch: noarch
-
-%description javadoc
-Documentation for Swing Layout code.
-%endif
 
 %prep
 %setup -q
@@ -52,49 +39,29 @@ dos2unix releaseNotes.txt
 %patch1 -p0
 sed -i 's/\r//' COPYING
 
-cp -p %{SOURCE1} pom.xml
-sed -i "s|<version>1.0.3</version>|<version>%{version}</version>|" pom.xml
+cat %{SOURCE1} | sed "s|<version>1.0.3</version>|<version>%{version}</version>|"  >  %{name}.pom
 
 %build
 
-%{ant} jar \
-#   [javadoc] Loading source files for package org.jdesktop.layout...
-#   [javadoc] 1 error
-#   [javadoc] java.lang.IllegalStateException: endPosTable already set
-%if 0
- javadoc dist
-%endif
- 
+%{ant} jar 
+%mvn_artifact %{name}.pom dist/%{name}.jar
+
 %install
 
-mkdir -p %{buildroot}%{_javadir}
+%mvn_install -J dist/javadoc
 
-%if 0
-install -m 644 dist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-%else
-install -m 644 dist/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-%endif
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%if 0
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
-%endif
+%check
+%{ant} test
 
 %files -f .mfiles
 %doc releaseNotes.txt
-%doc COPYING
-
-%if 0
-%files javadoc
-%{_javadocdir}/%{name}
-%doc COPYING
-%endif
+%doc --no-dereference COPYING
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt2_21jpp11
+- new version
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_13jpp8
 - added BR: javapackages-local for javapackages 5
 
