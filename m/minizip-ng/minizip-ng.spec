@@ -4,7 +4,7 @@
 %filter_from_provides /^pkgconfig(%rname)/d
 
 Name: %rname-ng
-Version: %sover.1
+Version: %sover.2
 Release: alt1
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
@@ -101,22 +101,11 @@ developing applications that use %name.
 %setup
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DBUILD_SHARED_LIBS:BOOL=TRUE
-
-popd
-
-%make_build -C %_target_platform
+%cmake -DBUILD_SHARED_LIBS:BOOL=TRUE
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 
 %files -n lib%rname%sover
 %doc LICENSE README.md
@@ -130,6 +119,9 @@ popd
 %_libdir/lib%rname.so
 
 %changelog
+* Mon May 10 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.2-alt1
+- Version 3.0.2
+
 * Fri Mar 05 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.1-alt1
 - Version 3.0.1
 
