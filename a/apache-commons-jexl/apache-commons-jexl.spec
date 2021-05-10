@@ -2,10 +2,9 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global jarname commons-jexl
@@ -13,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_22jpp8
+Release:        alt2_25jpp8
 Summary:        Java Expression Language (JEXL)
 License:        ASL 2.0
 URL:            http://commons.apache.org/jexl
@@ -93,7 +92,7 @@ echo "
 %mvn_package :commons-jexl-aggegator __noinstall
 
 %build
-%mvn_build -- -f aggregator-pom.xml
+%mvn_build -- -f aggregator-pom.xml -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -108,6 +107,9 @@ echo "
 
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.1-alt2_25jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_22jpp8
 - new version
 
