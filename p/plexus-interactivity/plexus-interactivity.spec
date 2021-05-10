@@ -4,26 +4,22 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-interactivity
-Version:        1.0
-Release:        alt6_0.29.alpha6jpp8
-Epoch:          0
 Summary:        Plexus Interactivity Handler Component
+Epoch:          0
+Version:        1.0
+Release:        alt6_2jpp8
 License:        MIT
+
 URL:            https://github.com/codehaus-plexus/plexus-interactivity
-BuildArch:      noarch
-# svn export \
-#   http://svn.codehaus.org/plexus/plexus-components/tags/plexus-interactivity-1.0-alpha-6/
-# tar caf plexus-interactivity-1.0-alpha-6-src.tar.xz \
-#   plexus-interactivity-1.0-alpha-6
-Source0:        plexus-interactivity-1.0-alpha-6-src.tar.xz
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 Source1:        LICENSE.MIT
-Patch1:         plexus-interactivity-dependencies.patch
-Patch2:         plexus-interactivity-jline2.patch
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(jline:jline) >= 2
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
@@ -35,6 +31,7 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
+
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -43,12 +40,14 @@ BuildArch: noarch
 %description javadoc
 This package provides %{summary}.
 
+
 %package api
 Group: Development/Java
 Summary:        API for %{name}
 
 %description api
 API module for %{name}.
+
 
 %package jline
 Group: Development/Java
@@ -57,27 +56,39 @@ Summary:        jline module for %{name}
 %description jline
 jline module for %{name}.
 
+
 %prep
-%setup -q -n plexus-interactivity-1.0-alpha-6
-%patch1 -p1
-%patch2 -p1
+%setup -q -n %{name}-%{name}-%{version}
+
 
 cp %{SOURCE1} .
 
+# use jline2, not jline1
+%pom_change_dep jline:jline jline:jline:2.10 plexus-interactivity-jline
+sed -i "s!jline.ConsoleReader!jline.console.ConsoleReader!" \
+    plexus-interactivity-jline/src/main/java/org/codehaus/plexus/components/interactivity/jline/JLineInputHandler.java
+
+%pom_remove_plugin :maven-site-plugin
+
 %mvn_file ":{plexus}-{*}" @1/@2
 
-%build
 %mvn_package ":plexus-interactivity"
 
-%mvn_build -f -s
+
+%build
+%mvn_build -s
+
 
 %install
 %mvn_install
 
+
 %files -f .mfiles
 %doc --no-dereference LICENSE.MIT
+
 %files api -f .mfiles-plexus-interactivity-api
 %doc --no-dereference LICENSE.MIT
+
 %files jline -f .mfiles-plexus-interactivity-jline
 %doc --no-dereference LICENSE.MIT
 
@@ -86,6 +97,9 @@ cp %{SOURCE1} .
 
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt6_2jpp8
+- new version
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.29.alpha6jpp8
 - fc update
 
