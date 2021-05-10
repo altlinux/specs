@@ -20,7 +20,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           netty
 Version:        4.1.13
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
@@ -47,10 +47,8 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.fusesource.hawtjni:maven-hawtjni-plugin)
-BuildRequires:  mvn(org.javassist:javassist)
 BuildRequires:  mvn(org.jctools:jctools-core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.fasterxml:aalto-xml)
 BuildRequires:  mvn(com.github.jponge:lzma-java)
@@ -95,6 +93,9 @@ BuildArch: noarch
 %if %{with jp_minimal}
 %patch3 -p1
 %endif
+
+# remove unnecessary dependency on parent POM
+%pom_remove_parent . bom dev-tools
 
 # Missing Mavenized rxtx
 %pom_disable_module "transport-rxtx"
@@ -225,6 +226,9 @@ export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 4.1.13-alt1_14jpp8
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_12jpp8
 - update
 
