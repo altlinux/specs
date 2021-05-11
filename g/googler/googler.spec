@@ -1,7 +1,7 @@
 %global _unpacked_files_terminate_build 1
 
 Name:    googler
-Version: 3.7.1
+Version: 4.3.2
 Release: alt1
 
 Summary: Google Search, Google Site Search, Google News from the terminal
@@ -12,6 +12,8 @@ URL:     https://github.com/jarun/googler
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildArch: noarch
+
+BuildRequires: rpm-build-python3
 
 Source:  %name-%version.tar
 
@@ -38,6 +40,9 @@ install -Dm 644 auto-completion/fish/googler.fish %buildroot%_datadir/fish/vendo
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue May 11 2021 Mikhail Gordeev <obirvalger@altlinux.org> 4.3.2-alt1
+- new version 4.3.2
+
 * Fri Feb 15 2019 Grigory Ustinov <grenka@altlinux.org> 3.7.1-alt1
 - new version 3.7.1
 
