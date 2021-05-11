@@ -3,12 +3,16 @@
 %define vcid vimperator@mozdev.org
 %define mcid muttator@mozdev.org
 %define vciddir 	%firefox_noarch_extensionsdir/%vcid
+%ifnarch ppc64le
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
+%endif
 %define ver 3.16.0
 %define mver 1.3.1
-%define ft_release alt1
+%define ft_release alt1.1
 %define workdir %firefox_name-%vname-%ver
+%ifnarch ppc64le
 %define mworkdir %tbird_name-%mname-%mver
+%endif
 
 Name: %firefox_name-%vname
 Version: %ver
@@ -25,8 +29,12 @@ Source2: vim-plugin-%version.tar
 Requires: %firefox_name >= 3.0
 Requires: vim
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-BuildArch: noarch
-BuildRequires(pre): rpm-build-firefox rpm-build-thunderbird rpm-build-vim
+#BuildArch: noarch
+BuildRequires(pre): rpm-build-firefox
+%ifnarch ppc64le
+BuildRequires(pre): rpm-build-thunderbird
+%endif
+BuildRequires(pre): rpm-build-vim
 BuildRequires(pre): java-devel-default /proc
 BuildPreReq: zip python-modules
 
@@ -44,12 +52,13 @@ If you don't like Vimperator at all, you can uninstall it by typing :addons and
 removing/disabling it. If you like it, but can't remember the shortcuts, press
 F1 or :help.
 
+%ifnarch ppc64le
 %package -n %tbird_name-%mname
 Summary: Add-on for Thunderbird, which makes Thunderbird behave like Vim
 Version: %mver
 Release: %ft_release
 Group: Networking/Mail
-BuildArch: noarch
+#BuildArch: noarch
 Requires: %tbird_name >= %tbird_version
 
 %description -n %tbird_name-%mname
@@ -66,6 +75,7 @@ If you don't like Muttator at all, you can uninstall it by typing
 :addons and remove/disable it.
 If you like it, but can't remember the shortcuts, press F1 or :help to get this
 help window back.
+%endif
 
 %prep
 %setup -n %vname-%ver
@@ -92,32 +102,39 @@ popd
 
 %install
 install -d %buildroot%vciddir
-install -d %buildroot%mciddir
 install -d %buildroot%vim_syntax_dir
 install -d %buildroot%vim_ftdetect_dir
 cp -fR _%vname/* %buildroot%vciddir/
-cp -fR _%mname/* %buildroot%mciddir/
 install -m644 vim-plugin-%ver/syntax/%vname.vim \
 	%buildroot%vim_syntax_dir/
 install -m644 vim-plugin-%ver/ftdetect/%vname.vim \
 	%buildroot%vim_ftdetect_dir/
 
+%ifnarch ppc64le
+install -d %buildroot%mciddir
+cp -fR _%mname/* %buildroot%mciddir/
 install -m644 %mname/contrib/vim/syntax/%mname.vim \
 	%buildroot%vim_syntax_dir/
 install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 	%buildroot%vim_ftdetect_dir/
+%endif
 
 %files
 %vciddir
 %vim_syntax_dir/%vname.vim
 %vim_ftdetect_dir/%vname.vim
 
+%ifnarch ppc64le
 %files -n %tbird_name-%mname
 %mciddir
 %vim_syntax_dir/%mname.vim
 %vim_ftdetect_dir/%mname.vim
+%endif
 
 %changelog
+* Thu Mar 25 2021 Andrey Cherepanov <cas@altlinux.org> 3.16.0-alt1.1
+- thunderbird 78.9.0 is not built on ppc64le.
+
 * Sat Mar 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.16.0-alt1
 - New version
 

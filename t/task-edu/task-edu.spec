@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.4.3
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -218,7 +218,9 @@ Requires: color-prompt-and-man
 Requires: shutter
 Requires: screenkey
 # Mozilla
+%ifnarch ppc64le
 Requires: thunderbird
+%endif
 # Search
 Requires: recoll-full
 # Append all modules from xscreensaver
@@ -597,6 +599,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue May 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt2
+- Do not require thunderbird on ppc64le.
+
 * Wed Apr 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
 - Add touchegg to task-edu-teacher.
 
