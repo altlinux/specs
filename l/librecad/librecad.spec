@@ -1,20 +1,19 @@
 Name:     librecad
 Version:  2.2.0
-Release:  alt0.3.rc1
+Release:  alt0.4.rc1
 
 Summary:  Computer-aided design (CAD) system
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-Url: 	  http://www.librecad.org
 License:  GPLv2
 Group:    Graphics
 
+Url: 	  http://www.librecad.org
 Source:   librecad-%version.tar
 Patch0:    0001-Adding-DXF-.desktop-file.patch
 Patch1:   librecad-fix-desktop.patch
 Patch2:   librecad-fix-build-with-qt5.11.patch
 Patch3:   librecad-fix-build-with-qt5.15.patch
 Patch4:   alt-boost-1.76-compat.patch
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Requires: librecad-data
 
@@ -23,8 +22,9 @@ BuildRequires: libmuparser-devel
 BuildRequires: libfreetype-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
-BuildRequires: qt5-sql-mysql qt5-sql-odbc qt5-sql-postgresql
 BuildRequires: qt5-tools
+BuildRequires: qt5-sql-mysql qt5-sql-odbc qt5-sql-postgresql
+#BuildRequires: qt5-sql-interbase qt5-sql-sqlite3
 
 %description
 LibreCAD is an application for computer aided design (CAD) in two
@@ -69,6 +69,10 @@ Contains the plugins files for LibreCAD.
 %patch3 -p1
 %patch4 -p1
 find . -type f -executable -a \( -name '*.cpp' -o -name '*.h' \) | xargs -i{} chmod 644 {}
+
+%ifarch %e2k
+sed -i 's,-fext-numeric-literals,,g' librecad/src/src.pro
+%endif
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -126,6 +130,10 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Tue May 11 2021 Michael Shigorin <mike@altlinux.org> 2.2.0-alt0.4.rc1
+- E2K: avoid lcc-unsupported option
+- Minor spec cleanup
+
 * Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt0.3.rc1
 - Rebuilt with boost-1.76.0.
 
