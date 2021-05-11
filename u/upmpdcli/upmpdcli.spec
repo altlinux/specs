@@ -1,6 +1,6 @@
 Name: upmpdcli
 Version: 1.4.14
-Release: alt1
+Release: alt2
 
 Summary: UPnP front-end to the Music Player Daemon
 License: LGPLv2.1
@@ -17,7 +17,6 @@ Summary: %name plugins
 Group: Sound
 Requires: %name = %version-%release
 BuildArch: noarch
-AutoReq: yes, nopython
 
 %description
 %name implements an UPnP Media Renderer, using MPD to perform
@@ -79,6 +78,22 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip tidalapi tidalapi.models
 %add_python3_req_skip upmplgutils
 %add_python3_req_skip uprclindex uprclinit uprclsearch uprclutils
+# conditional(py2):
+%add_python3_req_skip ConfigParser
+%add_python3_req_skip Cookie
+%add_python3_req_skip StringIO
+%add_python3_req_skip cPickle
+%add_python3_req_skip httplib
+%add_python3_req_skip thread
+%add_python3_req_skip urlparse
+# runtime alternatives:
+%add_python3_req_skip aiohttp.wsgi
+%add_python3_req_skip diesel.protocols.wsgi
+%add_python3_req_skip fapws
+%add_python3_req_skip fapws._evwsgi
+%add_python3_req_skip google.appengine.ext.webapp
+%add_python3_req_skip rocket
+%add_python3_req_skip uvloop
 
 %files
 %config(noreplace) %attr(0640,root,_upmpd) %_sysconfdir/%name.conf
@@ -108,6 +123,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.14-alt2
+- fix build with recent changes in rpm-build-python*
+
 * Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.14-alt1
 - 1.4.14 released
 
