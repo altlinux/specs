@@ -21,7 +21,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.15.0.0
-Release: alt4
+Release: alt5
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -35,6 +35,7 @@ Source2: images.tar
 
 Patch: uhd-0.14.1.1-python3-fix.patch
 Patch2: %name-%version-alt-boost-1.73.0-compat.patch
+Patch3: %name-%version-alt-boost-1.76.0-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -99,6 +100,7 @@ sed -i 's|/usr/bin/env python|%__python3|' host/python/setup.py.in
 
 %patch -p1
 %patch2 -p1
+%patch3 -p1
 
 # fix python shebangs
 find . -type f -name "*.py" -exec sed -i '/^#!/ s|.*|#!%__python3|' {} \;
@@ -201,6 +203,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt5
+- Rebuilt with boost-1.76.0.
+
 * Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt4
 - Rebuilt without neon on armh.
 

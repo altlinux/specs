@@ -1,6 +1,6 @@
 Name: e4rat
 Version: 0.2.3
-Release: alt6
+Release: alt7
 
 Summary: e4rat is a toolset to accelerate the boot process as well as application startups
 
@@ -16,6 +16,7 @@ Patch1: e4rat-0.2.3-alt-use-boost-filesystem-v3.patch
 Patch2: %name-%version-alt-gcc6.patch
 Patch3: %name-%version-alt-toolchain-compat.patch
 Patch4: %name-%version-alt-boost-1.73.0-compat.patch
+Patch5: %name-%version-alt-boost-1.76.0-compat.patch
 
 # Automatically added by buildreq on Mon Mar 12 2012
 # optimized out: boost-devel cmake cmake-modules libcom_err-devel libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
@@ -43,6 +44,7 @@ types and/or earlier versions of extended filesystems are not supported.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 %cmake_insource
@@ -68,6 +70,9 @@ rm -f %buildroot%_libdir/libe4rat-core.a
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Apr 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.3-alt7
+- Rebuilt with boost-1.76.0.
+
 * Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.3-alt6
 - Rebuilt with boost-1.73.0.
 

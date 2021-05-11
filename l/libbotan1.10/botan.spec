@@ -11,7 +11,7 @@ Group: Development/C
 
 Name:           libbotan%{major_version}
 Version:        %{major_version}.17
-Release:        alt1_22
+Release:        alt2_22
 Summary:        Crypto library written in C++
 
 License:        BSD
@@ -128,7 +128,7 @@ make -f Makefile.python \
      CXX="g++ -std=c++11 ${CXXFLAGS:-%{optflags}}" %{?_smp_mflags} \
      PYTHON_INC="$(python3-config --includes)" \
      PYTHON_ROOT=. \
-     BOOST_PYTHON=boost_python3
+     BOOST_PYTHON=boost_python%{python_version_nodots python3}
 
 %install
 make install \
@@ -209,6 +209,9 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} ./check --validate
 
 
 %changelog
+* Fri Apr 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.17-alt2_22
+- Rebuilt with boost-1.76.0.
+
 * Thu Nov 05 2020 Igor Vlasenko <viy@altlinux.ru> 1.10.17-alt1_22
 - to Sisyphus as code-editor dep
 

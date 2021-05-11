@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define rname tagpy
 
 Name: python3-module-%rname
 Version: 2013.1
-Release: alt3
+Release: alt4.git.20130711
 
 Summary: TagPy is a set of Python bindings for TagLib. 
 License: GPL2+
@@ -13,9 +15,7 @@ Url: http://mathema.tician.de/software/tagpy
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: boost-devel-headers boost-python3-devel gcc-c++ libtag-devel
-
 
 %description
 TagPy is a set of Python bindings for Scott Wheeler's TagLib.
@@ -36,7 +36,8 @@ Just like TagLib, TagPy can:
 %build
 %__python3 configure.py \
     --taglib-inc-dir=%_includedir/taglib \
-    --boost-python-libname=boost_python3-mt
+    --boost-python-libname=boost_python%{python_version_nodots python3} \
+    %nil
 
 %python3_build_debug
 
@@ -47,8 +48,10 @@ Just like TagLib, TagPy can:
 %doc README*
 %python3_sitelibdir/*
 
-
 %changelog
+* Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2013.1-alt4.git.20130711
+- Rebuilt with boost-1.76.0.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 2013.1-alt3
 - Build for python2 disabled.
 

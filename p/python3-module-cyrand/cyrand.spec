@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname cyrand
 
 Name: python3-module-%oname
 Version: 0.3
-Release: alt2
+Release: alt3.git.20150228
 
 Summary: Wrapper to Boost random numbers
 License: Free
@@ -27,7 +29,7 @@ sampling library.
 %prep
 %setup
 
-sed -i 's|@IS3@|3|' setup.py
+sed -i "s|@IS3@|%{python_version_nodots python3}|" setup.py
 
 ln -s $(%__python3 -c 'import numpy; \
         print(numpy.get_include() + "/numpy-py3")') numpy
@@ -42,8 +44,10 @@ ln -s $(%__python3 -c 'import numpy; \
 %doc *.rst example
 %python3_sitelibdir/*
 
-
 %changelog
+* Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt3.git.20150228
+- Rebuilt with boost-1.76.0.
+
 * Tue Mar 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt2
 - Build for python2 disabled.
 

@@ -7,7 +7,7 @@ BuildRequires: boost-python-devel
 %define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt9_35.r1
+Release:        alt10_35.r1
 Summary:        3D OpenGL spaceflight simulator
 License:        GPLv2+
 URL:            http://vegastrike.sourceforge.net/
@@ -77,7 +77,7 @@ Yet danger lurks in the space beyond.
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
-sed -i 's/-lboost_python/-lboost_python27/g' Makefile.in
+sed -i 's/-lboost_python/-lboost_python27/g' Makefile.am
 # we want to use the system version of expat.h
 rm objconv/mesher/expat.h
 %patch33 -p2
@@ -136,6 +136,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Apr 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt10_35.r1
+- Rebuilt with boost-1.76.0.
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt9_35.r1
 - updated buildrequires
 

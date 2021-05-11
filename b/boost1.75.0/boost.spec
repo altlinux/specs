@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -14,17 +14,17 @@
 %def_with strict_deps
 # some packages aren't ready yet to use cmake files from boost,
 # particularly, packages using boost-python-devel
-%def_with cmake
+%def_without cmake
 
 # Add compatibility links for boost-python-devel and boost-python3-devel
 # TODO: consider removing them later
-%def_without python_compat_symlinks
+%def_with python_compat_symlinks
 
 # mpi
 %def_with mpi
 
 # long_double
-%ifarch %arm ppc64le
+%ifarch %arm
 %def_without long_double
 %else
 %def_with long_double
@@ -43,17 +43,15 @@
 %endif
 
 %define ver_maj 1
-%define ver_min 76
+%define ver_min 75
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
 
-%define _unpackaged_files_terminate_build 1
-
-Name: boost
+Name: boost%ver_maj.%ver_min.%ver_rel
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -86,7 +84,12 @@ Patch88: boost-1.73.0-fedora-cmakedir.patch
 # https://github.com/boostorg/locale/issues/52
 Patch94: boost-1.73-fedora-locale-empty-vector.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1923740
+# https://github.com/boostorg/build/issues/696
+Patch95: boost-1.75.0-boost-build-fix.patch
+
 Patch1000: boost-1.63.0-alt-python-paths.patch
+Patch1001: boost-1.75.0-alt-jam-fix-mips32-detection.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -1321,10 +1324,12 @@ applications. This package contains python module.
 %patch51 -p1
 %patch65 -p2
 %patch82 -p1
-%patch83 -p2
+%patch83 -p1
 %patch88 -p1
 %patch94 -p1
+%patch95 -p1
 %patch1000 -p1
+%patch1001 -p2
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -2010,10 +2015,8 @@ done
 
 
 %changelog
-* Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.76.0-alt1
-- Updated to upstream version 1.76.0.
-- Disabled compat python symlinks.
-- Enabled cmake support.
+* Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.75.0-alt4
+- Built boost-1.75.0 legacy libraries package.
 
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.75.0-alt3
 - Packaged boost-build instead of boost-jam.
