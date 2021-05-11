@@ -1,5 +1,5 @@
 Name: nano
-Version: 4.7
+Version: 5.7
 Release: alt1
 
 Summary: a user-friendly editor, a Pico clone with enhancements
@@ -8,7 +8,7 @@ Group: Editors
 Url: https://nano-editor.org/
 Packager: Artem Zolochevskiy <azol@altlinux.org>
 
-# https://www.nano-editor.org/dist/v4/nano-4.2.tar.xz
+# https://nano-editor.org/dist/v5/nano-5.7.tar.xz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -67,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Tue May 11 2021 Artem Zolochevskiy <azol@altlinux.org> 5.7-alt1
+- update to 5.7
+
 * Tue Jan 14 2020 Artem Zolochevskiy <azol@altlinux.org> 4.7-alt1
 - update to 4.7
 
