@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 14.2
-Release: alt3
+Release: alt4
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -172,6 +172,8 @@ This package contains development files for pulseaudio.
 %prep
 %setup
 echo %version > .tarball-version
+# behaviour changed in meson >= 0.58
+sed -ri '/^\s+implicit_include_directories/ s,false,true,' src/modules/meson.build
 
 %build
 %meson \
@@ -323,6 +325,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/vala/vapi/*
 
 %changelog
+* Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt4
+- fix build with meson >= 0.58
+
 * Wed Apr 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt3
 - do not require doxygen at build time
 
