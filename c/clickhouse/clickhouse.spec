@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clickhouse
-Version: 21.3.8.76
+Version: 21.3.10.1
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -265,6 +265,9 @@ rm -fv %buildroot%_prefix/lib/*.a
 %_datadir/clickhouse-test
 
 %changelog
+* Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.10.1-alt1
+- Updated to lts upstream version 21.3.10.1.
+
 * Thu Apr 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.8.76-alt1
 - Updated to lts upstream version 21.3.8.76.
 
