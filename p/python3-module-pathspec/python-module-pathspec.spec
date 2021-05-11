@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pathspec
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
 License: MPL-2.0-no-copyleft-exception
@@ -52,6 +52,9 @@ tox.py3 --sitepackages -vvr
 %doc *.rst
 
 %changelog
+* Tue May 11 2021 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1.
+
 * Mon Sep 14 2020 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.5.9 -> 0.8.0.
 

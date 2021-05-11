@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 20.8b1
+Version: 21.5b1
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -20,18 +20,22 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
+# install_requires=
+BuildRequires: python3(click)
+BuildRequires: python3(appdirs)
+BuildRequires: python3(toml)
+BuildRequires: python3(regex)
+BuildRequires: python3(pathspec)
+BuildRequires: python3(mypy_extensions)
+
+# tests
 BuildRequires: python3(aiohttp)
 BuildRequires: python3(aiohttp.test_utils)
 BuildRequires: python3(aiohttp_cors)
-BuildRequires: python3(appdirs)
-BuildRequires: python3(click)
 BuildRequires: python3(click.testing)
-BuildRequires: python3(mypy_extensions)
-BuildRequires: python3(pathspec)
-BuildRequires: python3(regex)
-BuildRequires: python3(toml)
+BuildRequires: python3(parameterized)
+BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
-BuildRequires: python3(typing_extensions)
 %endif
 
 %py3_provides black_primer
@@ -65,7 +69,7 @@ cat > tox.ini <<EOF
 [testenv]
 usedevelop=True
 commands =
-    {envpython} -m unittest {posargs}
+    {envpython} -m pytest {posargs} -m 'not python2'
 EOF
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -82,5 +86,8 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 11 2021 Stanislav Levin <slev@altlinux.org> 21.5b1-alt1
+- 20.8b1 -> 21.5b1.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 20.8b1-alt1
 - Initial build for Sisyphus.
