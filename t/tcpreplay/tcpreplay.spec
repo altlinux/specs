@@ -1,6 +1,6 @@
 Summary: A tool to replay captured network traffic
 Name: tcpreplay
-Version: 4.3.3
+Version: 4.3.4
 Release: alt1
 License: GPLv3
 Group: Networking/Other
@@ -43,6 +43,9 @@ files.
 %_man1dir/*
 
 %changelog
+* Tue May 11 2021 Anton Farygin <rider@altlinux.ru> 4.3.4-alt1
+- 4.3.4 (Fixes: CVE-2020-24266, CVE-2020-24265)
+
 * Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 4.3.3-alt1
 - 4.3.3
 
