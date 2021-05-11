@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.16.1
-Release: alt1
+Release: alt2
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -22,6 +22,8 @@ BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-deve
 %{?_enable_upower:BuildRequires: libupower-devel >= 0.99.4-alt2}
 BuildRequires: libcolord-devel
 BuildRequires: xorg-drv-libinput-devel
+# For xfce4-compose-mail script
+BuildRequires: rpm-build-python3
 
 Requires: libgarcon-settings-manager-menu
 Requires: xfce4-common
@@ -86,6 +88,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Tue May 11 2021 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt2
+- Fixed build: added rpm-build-python3 to BR.
+
 * Tue Apr 13 2021 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt1
 - Updated to 4.16.1.
 
