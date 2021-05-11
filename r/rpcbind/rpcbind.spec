@@ -1,6 +1,6 @@
 Name: rpcbind
-Version: 1.2.5
-Release: alt2
+Version: 1.2.6
+Release: alt1
 
 Summary: RPC port mapper
 License: BSD
@@ -87,6 +87,9 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt1
+- 1.2.6 released
+
 * Thu Aug 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.5-alt2
 - rebuilt without libwrap
 
