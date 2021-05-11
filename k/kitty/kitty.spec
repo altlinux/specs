@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kitty
-Version: 0.20.2
+Version: 0.20.3
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -100,11 +100,15 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*.png
 %_man1dir/*
+%_man5dir/*
 
 %files terminfo
 %_datadir/terminfo/*/*
 
 %changelog
+* Tue May 11 2021 Egor Ignatov <egori@altlinux.org> 0.20.3-alt1
+- Update sources to 0.20.3
+
 * Thu Apr 29 2021 Egor Ignatov <egori@altlinux.org> 0.20.2-alt1
 - Update sources to 0.20.2
 
