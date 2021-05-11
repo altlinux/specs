@@ -3,7 +3,7 @@
 
 Name: grpc
 Version: 1.35.0
-Release: alt1
+Release: alt2
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
 
@@ -159,6 +159,7 @@ srcdir=..
     -DgRPC_PROTOBUF_PROVIDER="package" \
     -DgRPC_BENCHMARK_PROVIDER="package" \
     -DgRPC_ABSL_PROVIDER="package" \
+    -DCMAKE_CXX_STANDARD=17 \
 #
 
 LD_LIBRARY_PATH="%_cmake_builddir" \
@@ -240,5 +241,8 @@ DESTDIR=%buildroot cmake --install "%_cmake_builddir" --verbose
 %endif
 
 %changelog
+* Tue May 11 2021 Slava Aseev <ptrnine@altlinux.org> 1.35.0-alt2
+- Fix build with libabseil (-DCMAKE_CXX_STANDARD=17)
+
 * Wed Jan 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.35.0-alt1
 - Initial build for ALT Sisyphus.
