@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-archiver
-Version:        3.4.0
-Release:        alt1_1jpp8
+Version:        3.5.0
+Release:        alt1_2jpp11
 Epoch:          0
 Summary:        Maven Archiver
 License:        ASL 2.0
@@ -28,9 +28,9 @@ BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver) >= 4.1.0
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver) >= 4.2.0
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation) >= 1.25
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.3.0
 Source44: import.info
 
 %description
@@ -50,7 +50,7 @@ Javadoc for %{name}.
 %patch0 -p1
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -62,6 +62,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:3.5.0-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.4.0-alt1_1jpp8
 - new version
 
