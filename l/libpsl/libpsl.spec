@@ -3,7 +3,7 @@
 
 Name: libpsl
 Version: 0.21.1
-Release: alt1
+Release: alt2
 
 Summary: C library for the Public Suffix List
 License: MIT
@@ -13,9 +13,9 @@ Vcs: https://github.com/rockdaboot/libpsl.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires: rpm-build-python3
 %if_disabled bootstrap
 BuildRequires: glib2-devel libgio-devel
-BuildRequires: python3
 %{?_enable_builtin:BuildRequires: libicu-devel}
 BuildRequires: libidn2-devel
 BuildRequires: libunistring-devel
@@ -153,6 +153,9 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Tue May 11 2021 Mikhail Efremov <sem@altlinux.org> 0.21.1-alt2
+- Fixed build: added rpm-build-python3 to BR.
+
 * Tue Jul 21 2020 Mikhail Efremov <sem@altlinux.org> 0.21.1-alt1
 - Add Vcs tag.
 - Don't use rpm-build-licenses.
