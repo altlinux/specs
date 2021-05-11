@@ -1,7 +1,7 @@
 # -*- mode: rpm-spec; mode: folding -*-
 Name: asterisk
 Version: 17.5.1
-Release: alt1
+Release: alt2
 
 Summary: Open source PBX
 License: GPLv2
@@ -19,6 +19,7 @@ BuildRequires: libcurl-devel libsrtp2-devel libjansson-devel
 BuildRequires: libiksemel-devel libldap-devel libradiusclient-ng-devel
 BuildRequires: libunixODBC-devel postgresql-devel zlib-devel
 BuildRequires: libnet-snmp-devel libsystemd-devel
+BuildRequires: rpm-build-python3
 
 Source0: %name-%version-%release.tar
 
@@ -283,6 +284,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.5.1-alt2
+- fix build with recent changes in rpm-build-python*
+
 * Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.5.1-alt1
 - 17.5.1 released
 
