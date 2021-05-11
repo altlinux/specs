@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: d-feet
-Version: %ver_major.15
+Version: %ver_major.16
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -13,7 +13,6 @@ License: GPLv2+
 Url: https://wiki.gnome.org/DFeet/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-0.3.15-alt-python_path.patch
 
 BuildArch: noarch
 
@@ -34,7 +33,6 @@ objects.
 
 %prep
 %setup
-%patch
 sed -i 's/\(pycodestyle\)-3/\1.py3/' src/tests/meson.build
 
 %build
@@ -57,9 +55,12 @@ sed -i 's/\(pycodestyle\)-3/\1.py3/' src/tests/meson.build
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc AUTHORS README NEWS
+%doc AUTHORS README* NEWS
 
 %changelog
+* Fri May 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
+- 0.3.16
+
 * Thu Aug 08 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1
 - 0.3.15
 

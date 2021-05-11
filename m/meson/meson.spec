@@ -11,7 +11,7 @@
 
 Name: meson
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -27,11 +27,17 @@ Source: %name-%version.tar
 Source1: %name.macros
 Source2: %name.env
 
+# https://github.com/mesonbuild/meson/pull/8757
+# https://github.com/mesonbuild/meson/commit/8ab822a8e5a05607a6afc6a5d860a8b8a76bca23.patch
+Patch: meson-0.58.0-up-install_scripts.patch
+
 BuildArch: noarch
 
 %define python_ver 3.6
 Requires: python3 >= %python_ver
 Requires: ninja-build >= 1.7
+# since 0.58.0 some builds fail for 64-bit without /proc, need investigate.
+Requires: /proc
 
 #grep -n "from __main__" -r *
 #mesonbuild/minstall.py:23:from __main__ import __file__ as main_file
@@ -79,6 +85,7 @@ This package provides documentation for Meson build system.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -121,6 +128,12 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1.1
+- quick fix for 64-bit: Requires: /proc
+- fixed gtk-doc generation
+- meson.macros: added %%__meson_{build,install} for builtin
+  "meson compile/install" commands
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
 - 0.58.0
 - new -doc subpackage

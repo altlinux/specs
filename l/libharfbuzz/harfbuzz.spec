@@ -1,15 +1,19 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 2.6
+%define ver_major 2.8
 %def_with graphite2
 %def_with icu
 %def_with gobject
 %def_enable introspection
 %def_enable gtk_doc
 
+%ifnarch armh
+%def_enable check
+%endif
+
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.1
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -18,10 +22,9 @@ License: MIT
 Url: http://harfbuzz.org/
 
 %if_disabled snapshot
-#Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.xz
 Source: https://github.com/%_name/%_name/archive/%version/%_name-%version.tar.gz
 %else
-# VCS: https://github.com/harfbuzz/harfbuzz.git
+Vcs: https://github.com/harfbuzz/harfbuzz.git
 Source: %_name-%version.tar
 %endif
 
@@ -30,6 +33,7 @@ BuildRequires: gtk-doc gcc-c++ glib2-devel libfreetype-devel libcairo-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_with_graphite2:BuildRequires: libgraphite2-devel}
 %{?_with_icu:BuildRequires: libicu-devel}
+%{?_enable_check:BuildRequires: python3-test fonttools}
 
 %description
 HarfBuzz is an implementation of the OpenType Layout engine.
@@ -116,7 +120,7 @@ export PYTHON=%__python3
         %{subst_with gobject} \
         %{subst_enable introspection} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
-
+%nil
 %make_build
 
 %install
@@ -176,6 +180,19 @@ export PYTHON=%__python3
 %endif
 
 %changelog
+* Wed May 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
+- 2.8.1
+
+* Wed Mar 24 2021 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
+* Sun Dec 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
+* Tue Sep 01 2020 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
+- 2.7.2
+- updated BR for %%check
+
 * Thu Jun 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6.8-alt1
 - updated to 2.6.8-5-g20d1fa367
 

@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -22,7 +22,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.26
+Version: %ver_major.27
 Release: alt1
 
 Summary: Media Sharing Server
@@ -64,7 +64,7 @@ BuildRequires: pkgconfig(gstreamer-plugins-base-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-net-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %endif
-%{?_enable_systemd:BuildRequires: libsystemd-devel}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_libcamera:BuildRequires: libcamera-devel libdrm-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
@@ -236,6 +236,9 @@ export LIB=%_lib
 
 
 %changelog
+* Thu May 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.27-alt1
+- 0.3.27
+
 * Fri Apr 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.26-alt1
 - updated to 0.3.26-11-gab7bc6ed
 
