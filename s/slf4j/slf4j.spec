@@ -2,7 +2,7 @@ Group: Development/Other
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
@@ -36,16 +36,15 @@ BuildRequires: jpackage-1.8-compat
 #
 
 Name:           slf4j
-Version:        1.7.25
-Release:        alt1_6jpp8
+Version:        1.7.30
+Release:        alt1_2jpp11
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
 License:        MIT and ASL 2.0
 URL:            http://www.slf4j.org/
-Source0:        http://www.slf4j.org/dist/%{name}-%{version}.tar.gz
+Source0:        https://github.com/qos-ch/%{name}/archive/v_%{version}/v_%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Patch0:         0001-Disallow-EventData-deserialization-by-default.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -144,9 +143,8 @@ Summary:        SLF4J Source JARs
 SLF4J Source JARs.
 
 %prep
-%setup -q
-%patch0 -p1
-find . -name "*.jar" | xargs rm
+%setup -q -n %{name}-v_%{version}
+find -name '*.jar' -delete
 cp -p %{SOURCE1} APACHE-LICENSE
 
 %pom_disable_module integration
@@ -187,7 +185,7 @@ find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
 # during build time, it is necessary to mark the imported package as an
 # optional one.
 # Reported upstream: http://bugzilla.slf4j.org/show_bug.cgi?id=283
-sed -i "/Import-Package/s/.$/;resolution:=optional&/" slf4j-api/src/main/resources/META-INF/MANIFEST.MF
+sed -i '/Import-Package/s/\}$/};resolution:=optional/' slf4j-api/src/main/resources/META-INF/MANIFEST.MF
 
 # Source JARs for are required by Maven 3.4.0
 %mvn_package :::sources: sources
@@ -234,6 +232,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.30-alt1_2jpp11
+- new version
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.25-alt1_6jpp8
 - fc update & java 8 build
 

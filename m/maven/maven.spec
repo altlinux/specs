@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,14 +16,14 @@ BuildRequires: jpackage-1.8-compat
 %define name maven
 %bcond_with logback
 
-%global bundled_slf4j_version 1.7.25
+%global bundled_slf4j_version 1.7.30
 %global apphomedir %{_datadir}/%{name}%{?maven_version_suffix}
 %global confdir %{_sysconfdir}/%{name}%{?maven_version_suffix}
 
 Name:           maven
 Epoch:          1
-Version:        3.5.4
-Release:        alt1_12jpp8
+Version:        3.6.1
+Release:        alt1_5jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -31,7 +31,7 @@ License:        ASL 2.0 and MIT
 URL:            http://maven.apache.org/
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/%{name}/%{name}-3/%{version}/source/apache-%{name}-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/%{name}/%{name}-3/%{version}/sources/apache-%{name}-%{version}-src.tar.gz
 Source1:        maven-bash-completion
 Source2:        mvn.1
 
@@ -39,9 +39,10 @@ Patch1:         0001-Adapt-mvn-script.patch
 # Downstream-specific, avoids dependency on logback
 # Used only when %%without logback is in effect
 Patch2:         0002-Invoke-logback-via-reflection.patch
+Patch3:         0003-MNG-6642-Revert-MNG-5995-Remove-dependency-to-maven-.patch
+Patch4:         0004-Use-non-shaded-HTTP-wagon.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava:20.0)
 BuildRequires:  mvn(com.google.inject:guice::no_aop:)
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(commons-jxpath:commons-jxpath)
@@ -60,15 +61,15 @@ BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-transport-wagon)
 BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-file)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-http::shaded:)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-http)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin) >= 1.10.0
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.2.0
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
@@ -79,7 +80,8 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-cipher)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-sec-dispatcher)
-BuildRequires:  mvn(xmlunit:xmlunit)
+BuildRequires:  mvn(org.xmlunit:xmlunit-core)
+BuildRequires:  mvn(org.xmlunit:xmlunit-matchers)
 
 BuildRequires:  slf4j-sources = %{bundled_slf4j_version}
 
@@ -109,7 +111,7 @@ Requires:       atinject
 Requires:       cdi-api
 Requires:       geronimo-annotation
 Requires:       google-guice
-Requires:       guava20
+Requires:       guava
 Requires:       hawtjni-runtime
 Requires:       httpcomponents-client
 Requires:       httpcomponents-core
@@ -152,6 +154,7 @@ Group: Development/Java
 Summary:        Core part of Maven
 # If XMvn is part of the same RPM transaction then it should be
 # installed first to avoid triggering rhbz#1014355.
+Requires: xmvn-minimal
 
 # Require full javapackages-tools since maven-script uses
 # /usr/share/java-utils/java-functions
@@ -177,6 +180,8 @@ BuildArch: noarch
 %setup -q -n apache-%{name}-%{version}
 
 %patch1 -p1
+%patch3 -p1
+%patch4 -p1
 
 # not really used during build, but a precaution
 find -name '*.jar' -not -path '*/test/*' -delete
@@ -212,7 +217,7 @@ sed -i "
 %mvn_alias :maven-resolver-provider :maven-aether-provider
 
 %build
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
 
 mkdir m2home
 (cd m2home
@@ -312,6 +317,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.1-alt1_5jpp11
+- new version
+
 * Sun May 09 2021 Igor Vlasenko <viy@altlinux.org> 1:3.5.4-alt1_12jpp8
 - update
 
