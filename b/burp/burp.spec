@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:		burp
-Version:	2.3.38
+Version:	2.4.0
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
@@ -85,6 +85,9 @@ install -D -p -m 0644 .gear/burp.service %buildroot%_unitdir/burp-server.service
 %preun_service burp-server
 
 %changelog
+* Tue May 11 2021 Vitaly Chikunov <vt@altlinux.org> 2.4.0-alt1
+- Update to 2.4.0 (2021-04-01).
+
 * Sun Nov 08 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.38-alt1
 - Update to 2.3.38 (2020-11-06).
 
