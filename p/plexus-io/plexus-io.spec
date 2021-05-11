@@ -1,13 +1,13 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-io
 Summary:        Plexus IO Components
-Version:        3.1.1
-Release:        alt1_1jpp8
+Version:        3.2.0
+Release:        alt1_2jpp11
 License:        ASL 2.0
 
 URL:            https://github.com/codehaus-plexus/%{name}
@@ -21,7 +21,7 @@ BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.3.0
 Source44: import.info
 
 %description
@@ -39,6 +39,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n plexus-io-plexus-io-%{version}
+
 cp %{SOURCE1} .
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
@@ -50,7 +51,7 @@ cp %{SOURCE1} .
 
 %build
 %mvn_file  : plexus/io
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 
 %install
@@ -65,6 +66,9 @@ cp %{SOURCE1} .
 
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.1.1-alt1_1jpp8
 - new version
 
