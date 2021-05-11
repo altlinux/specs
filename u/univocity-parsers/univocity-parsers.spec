@@ -1,21 +1,25 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           univocity-parsers
-Version:        2.5.5
-Release:        alt1_5jpp8
+Version:        2.8.3
+Release:        alt1_2jpp11
 Summary:        Collection of parsers for Java
 License:        ASL 2.0
+
 URL:            https://github.com/uniVocity/univocity-parsers
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+
 BuildArch:      noarch
 
-Source0:        https://github.com/uniVocity/univocity-parsers/archive/v%{version}.tar.gz
-
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.univocity:univocity-output-tester)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.hsqldb:hsqldb)
+BuildRequires:  mvn(org.testng:testng)
 Source44: import.info
 
 %description
@@ -39,8 +43,7 @@ API documentation for %{name}.
 %pom_remove_plugin :maven-javadoc-plugin
 
 %build
-# Tests require univocity-output-tester, which is not packaged yet.
-%mvn_build -f
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -52,6 +55,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.html
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 2.8.3-alt1_2jpp11
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_5jpp8
 - fc update & java 8 build
 
