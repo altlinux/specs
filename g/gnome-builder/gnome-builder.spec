@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define xdg_name org.gnome.Builder
 %define ver_major 3.40
@@ -19,7 +19,7 @@
 %def_without rls
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -55,9 +55,6 @@ Source: %name-%version.tar
 %define webkit_ver 2.26
 %define portal_ver 0.3
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
@@ -65,6 +62,7 @@ Requires(pre): %name-data = %EVR
 Requires: typelib(WebKit2) = 4.0
 
 %{?_with_autotools:Requires: automake autoconf libtool}
+#%{?_with_flatpak:Requires: flatpak-builder}
 Requires: meson git indent xmllint
 Requires: devhelp uncrustify %_bindir/ctags
 Requires: libpeas-python3-loader
@@ -119,6 +117,7 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 
 %prep
 %setup
+sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 
 %build
 %meson \
@@ -243,6 +242,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %endif
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.2-alt1
+- updated to 3.40.2-5-gb7eb24645
+
 * Thu Apr 29 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
 - 3.40.1
 - moved gnome-builder-clang to separate package
