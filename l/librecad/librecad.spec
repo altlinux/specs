@@ -1,6 +1,6 @@
 Name:     librecad
 Version:  2.2.0
-Release:  alt0.2.rc1
+Release:  alt0.3.rc1
 
 Summary:  Computer-aided design (CAD) system
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -14,6 +14,7 @@ Patch0:    0001-Adding-DXF-.desktop-file.patch
 Patch1:   librecad-fix-desktop.patch
 Patch2:   librecad-fix-build-with-qt5.11.patch
 Patch3:   librecad-fix-build-with-qt5.15.patch
+Patch4:   alt-boost-1.76-compat.patch
 
 Requires: librecad-data
 
@@ -66,6 +67,7 @@ Contains the plugins files for LibreCAD.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 find . -type f -executable -a \( -name '*.cpp' -o -name '*.h' \) | xargs -i{} chmod 644 {}
 
 %build
@@ -124,6 +126,9 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt0.3.rc1
+- Rebuilt with boost-1.76.0.
+
 * Fri Sep 25 2020 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt0.2.rc1
 - Fix build with Qt 5.15.
 

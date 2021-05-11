@@ -8,7 +8,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.8.1
-Release: alt2
+Release: alt3
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -170,6 +170,7 @@ pushd src
     --enable-non-distributable=yes \
     --with-realtime=uspace \
     --with-python=$(which python2) \
+    --with-boost-python=boost_python%{python_version_nodots python2} \
     %if_with docs
     --enable-build-documentation=pdf
     %endif
@@ -293,6 +294,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.1-alt3
+- Rebuilt with boost-1.76.0.
+
 * Thu Mar 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.1-alt2
 - Fixed build with gcc-10 and rebuilt with new boost libraries.
 
