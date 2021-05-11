@@ -7,7 +7,7 @@
 
 Name: control++
 Version: 0.20.4
-Release: alt1
+Release: alt2
 
 Summary: System configuration tool
 License: GPLv3
@@ -20,6 +20,7 @@ Packager: Alexey Appolonov <alexey@altlinux.org>
 Source: %{name}-%{version}.tar
 
 BuildRequires: gcc-c++
+BuildRequires: rpm-build-python3
 BuildRequires: libcontrol++-devel >= %{libcontrolppver}
 
 Requires: libcontrol++
@@ -111,9 +112,12 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon May 03 2021 Alexey Appolonov <alexey@altlinux.org> 0.20.4-alt2
+- Build update according with a latest modification of the build system.
+
 * Thu Jan 21 2021 Alexey Appolonov <alexey@altlinux.org> 0.20.4-alt1
-- Build with new version of libcontrol++ (the code was heavily refactored,
-  so be aware!).
+- Build with new version of libcontrol++ (the code is heavily refactored,
+  be aware!).
 
 * Wed Oct 07 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.3-alt3
 - Modified script of whitelist-formation that enables an ability to exclude
