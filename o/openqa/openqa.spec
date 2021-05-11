@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt1
+Release: alt2
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -223,8 +223,7 @@ rm -rf %buildroot%_sysconfdir/apparmor.d
 mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 
 %check
-# 01-test-utilities.t: https://progress.opensuse.org/issues/73162
-rm -f t/01-test-utilities.t
+# Skip tests not working currently, or flaky
 rm -f t/05-scheduler-full.t
 rm -f t/24-worker-overall.t
 rm -f t/25-cache-client.t
@@ -241,6 +240,10 @@ sed -i -e 's,unshare -r -n ,,g' t/40-openqa-clone-job.t t/32-openqa_client-scrip
 sed -i -e '/fails without network/d' t/32-openqa_client-script.t
 export CI=1
 export OPENQA_TEST_TIMEOUT_SCALE_CI=10
+# Skip container tests that would need additional requirements, e.g.
+# docker-compose. Also, these tests are less relevant (or not relevant) for
+# packaging
+export CONTAINER_TEST=0
 make test-with-database OGIT_CEILING_DIRECTORIES="/" BS_RUN=1 PROVE_ARGS='-r' CHECKSTYLE=0 TEST_PG_PATH=%buildroot/DB
 rm -rf %buildroot/DB
 
@@ -328,6 +331,7 @@ fi
 %_datadir/openqa/script/openqa-enqueue-bug-cleanup
 %_datadir/openqa/script/openqa-enqueue-result-cleanup
 %_datadir/openqa/script/openqa-gru
+%_datadir/openqa/script/openqa-rollback
 %_datadir/openqa/script/openqa-webui-daemon
 %_datadir/openqa/script/upgradedb
 %_datadir/openqa/script/modify_needle
@@ -434,6 +438,9 @@ fi
 %files single-instance
 
 %changelog
+* Wed May 12 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt2
+- update to current version
+
 * Mon Mar 15 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt1
 - update to current version
 
