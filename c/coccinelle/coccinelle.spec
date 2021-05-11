@@ -3,7 +3,7 @@
 
 Name:		coccinelle
 Version:	1.1.0
-Release:	alt1
+Release:	alt2
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
@@ -104,7 +104,7 @@ sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 %make_build EXTLIBDIR=`ocamlc -where`/extlib
 
 %install
-%make_build DESTDIR=%buildroot install
+%make DESTDIR=%buildroot install
 
 # relocate python module
 install -d %buildroot%python3_sitelibdir
@@ -164,6 +164,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Tue May 11 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt2
+- spec: Avoid make install race.
+
 * Wed Mar 03 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt1
 - Update to 1.1.0 (2021-02-24).
 
