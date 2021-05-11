@@ -1,10 +1,10 @@
 Name: korinf
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Korinf multidistro single source build system
 
-License: AGPLv3
+License: AGPL-3.0+
 Group: Development/Other
 Url: http://freesource.info/wiki/korinf
 
@@ -19,6 +19,11 @@ Requires: eepm >= 2.1.1
 Requires: etersoft-build-utils >= 2.7.14
 Requires: alien >= 8.86-alt3
 Requires: lsof
+
+# /usr/lib/rpm/python3.prov: ERROR: rpm-build-python3 is not installed, the following files cannot be processed:
+%add_python3_req_skip %_datadir/eterbuild/korinf/helpers/send_via_pyxmpp.py
+AutoProv: yes,nopython,nopython3
+AutoReq: yes,nopython,nopython3
 
 %description
 This package contains Korinf multidistro build system.
@@ -47,6 +52,23 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Tue May 11 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- hasher: clean code for using existed repo during build
+- add initial docker support
+- run_in_chroot(): add --interactive and use it
+- call end_umount() with target distro as param
+- add support for build distro_info as bootstrap
+- add PKGFORMAT as first arg of expand_filelist()
+- mount: add support for Docker using
+- fix init_home and run from verbose code
+- rename convert_rpm_to_target to convert_srpm_to_target
+- rename install_built to install_built_packages
+- rpm: use strict package name
+- deb: add missed remote_build support
+- install: drop backslashed quotes from run_in_chroot call
+- hasher: use -w for rpmbsh/rpmbs (don't use local rpm macros)
+- fix build
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - worker.sh: drop copying to copytsks
 - update list of systems
