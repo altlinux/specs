@@ -1,6 +1,6 @@
 Name: nfs
 Version: 2.5.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -14,6 +14,7 @@ BuildRequires: libblkid-devel libevent-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
 BuildRequires: rpcgen rpcsvc-proto-devel
+BuildRequires: rpm-build-python3
 
 %package -n libnfsidmap
 Summary: Name to user id mapping library
@@ -304,6 +305,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.5.3-alt2
+- rebuilt with explicit python3 req finder
+
 * Wed Feb 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.5.3-alt1
 - 2.5.3 released
 
