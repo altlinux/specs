@@ -53,7 +53,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -95,6 +95,7 @@ Patch19: clang-D96367-bring-reporter-back.patch
 BuildPreReq: /proc
 
 # Obtain %%__python3 at prep stage.
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-llvm-common
 
@@ -385,6 +386,7 @@ subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
+%define _cmake__builddir BUILD
 %cmake -G Ninja \
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
 	-DCMAKE_BUILD_TYPE=Release \
@@ -836,6 +838,9 @@ ninja -C BUILD check-all || :
 #doc %llvm_docdir/lldb
 
 %changelog
+* Tue May 11 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt2
+- Built with python2 in BTE to appease python2's findprov.
+
 * Fri Apr 16 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt1
 - 12.0.0.
 
