@@ -4,8 +4,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.22
-Release: alt2
+Version: 1.23
+Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -189,6 +189,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue May 11 2021 Vitaly Chikunov <vt@altlinux.org> 1.23-alt1
+- Improve `--udevd' support of mount.
+
 * Mon Apr 05 2021 Ivan A. Melnikov <iv@altlinux.org> 1.22-alt2
 - Fix checkinstall package on unsupported architectures
 
