@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           beust-jcommander
-Version:        1.71
-Release:        alt1_6jpp8
+Version:        1.78
+Release:        alt1_2jpp11
 Summary:        Java framework for parsing command line parameters
 License:        ASL 2.0
 URL:            http://jcommander.org/
@@ -18,14 +15,13 @@ BuildArch:      noarch
 Source0:        %{name}-%{version}.tar.gz
 # Adapted from earlier version that still shipped poms. It uses kobalt for building now
 Source1:        %{name}.pom
-# Cleaned up bundled jars hose licensing cannot be easily verified
+# Cleaned up bundled jars whose licensing cannot be easily verified
 Source2:        generate-tarball.sh
 
-Patch0: 0001-ParseValues-NullPointerException-patch.patch 
+Patch0:         0001-ParseValues-NullPointerException-patch.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.testng:testng)
 Source44: import.info
 
@@ -42,7 +38,7 @@ BuildArch: noarch
 This package contains the %{summary}.
 
 %prep
-%setup -q -n jcommander-%{version}
+%setup -q
 %patch0 -p1
 
 chmod -x license.txt
@@ -51,7 +47,7 @@ sed -i 's/@VERSION@/%{version}/g' pom.xml
 
 %build
 %mvn_file : %{name}
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -63,6 +59,9 @@ sed -i 's/@VERSION@/%{version}/g' pom.xml
 %doc license.txt notice.md
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 1.78-alt1_2jpp11
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.71-alt1_6jpp8
 - new version
 
