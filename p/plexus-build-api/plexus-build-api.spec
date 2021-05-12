@@ -6,7 +6,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt3_23jpp8
+Release:        alt3_27jpp8
 Summary:        Plexus Build API
 License:        ASL 2.0
 URL:            https://github.com/sonatype/sisu-build-api
@@ -19,11 +19,13 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 # Forwarded upstream: https://github.com/sonatype/sisu-build-api/pull/2
 Patch0:         %{name}-migration-to-component-metadata.patch
 
+# Port to plexus-utils 3.3.0 (implement a dummy method)
+Patch1:         %{name}-utils-3.3.0.patch
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.sonatype.spice:spice-parent:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.3.0
 Source44: import.info
 
 %description
@@ -42,11 +44,17 @@ API documentation for %{name}.
 cp -p %{SOURCE1} .
 
 %patch0 -p1
+%patch1 -p1
+
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
 
 %mvn_file : plexus/%{name}
 
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration"
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -58,6 +66,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_27jpp8
+- fc update
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt3_23jpp8
 - fc update
 

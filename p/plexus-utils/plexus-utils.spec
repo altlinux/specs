@@ -3,12 +3,12 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-utils
-Version:        3.2.0
-Release:        alt1_2jpp8
+Version:        3.3.0
+Release:        alt1_2jpp11
 Summary:        Plexus Common Utilities
 # ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
 # xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
@@ -25,13 +25,14 @@ BuildArch:      noarch
 Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:        http://apache.org/licenses/LICENSE-2.0.txt
 
-# https://github.com/codehaus-plexus/plexus-utils/issues/45
-Patch1:         0001-Follow-symlinks-in-NioFiles.copy.patch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+
+# some tests require "mvn" on $PATH
+BuildRequires:  maven
 Source44: import.info
 
 %description
@@ -53,9 +54,13 @@ Javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-%patch1 -p1
-
 cp %{SOURCE1} .
+
+# unpackaged dependencies for some tests
+%pom_remove_dep -r org.openjdk.jmh:jmh-core
+%pom_remove_dep -r org.openjdk.jmh:jmh-generator-annprocess
+rm src/test/java/org/codehaus/plexus/util/introspection/ReflectionValueExtractorTest.java
+rm src/test/java/org/codehaus/plexus/util/xml/Xpp3DomPerfTest.java
 
 %mvn_file : plexus/utils
 %mvn_alias : plexus:plexus-utils
@@ -76,7 +81,7 @@ cp %{SOURCE1} .
         </plugin>"
 
 %build
-%mvn_build -f
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -88,6 +93,9 @@ cp %{SOURCE1} .
 %doc NOTICE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:3.3.0-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.2.0-alt1_2jpp8
 - new version
 
