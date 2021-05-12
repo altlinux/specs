@@ -1,18 +1,17 @@
 Name: mimic
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: [ab]using Unicode to create tragedy
-License: %mit
+License: MIT
 Group: Text tools
 BuildArch: noarch
 
 URL: https://github.com/reinderien/mimic
-# https://github.com/reinderien/mimic.git
+Vcs: https://github.com/reinderien/mimic.git
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
@@ -62,6 +61,10 @@ Fun games to play with mimic:
 %python3_sitelibdir_noarch/%{name}*
 
 %changelog
+* Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt2
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+
 * Fri Jun 10 2016 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1
 - Fix version.
 - Set license.
