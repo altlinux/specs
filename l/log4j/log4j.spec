@@ -19,22 +19,28 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without  jp_minimal
 
 Name:           log4j
-Version:        2.11.1
-Release:        alt1_5jpp8
+Version:        2.13.0
+Release:        alt1_3jpp8
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
+
 URL:            http://logging.apache.org/%{name}
 Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz
 
+Patch1:         logging-log4j-LOG4J2-2745-LOG4J2-2744-slf4j.patch
+Patch2:         logging-log4j-Remove-unsupported-EventDataConverter.patch
+
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(com.lmax:disruptor)
 BuildRequires:  mvn(com.sun.mail:javax.mail)
+BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.logging:logging-parent:pom:)
+BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.jctools:jctools-core)
@@ -50,13 +56,10 @@ BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
 BuildRequires:  mvn(com.fasterxml.woodstox:woodstox-core)
 BuildRequires:  mvn(com.lmax:disruptor)
-BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(com.sun.mail:javax.mail)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet.jsp:jsp-api)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.commons:commons-csv)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.logging:logging-parent:pom:)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -74,6 +77,11 @@ BuildRequires:  mvn(sun.jdk:jconsole)
 # Explicit requires for javapackages-tools since log4j-jmx script
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
+
+# Also needs:
+# - Various Spring dependencies
+# - javax.jms
+# - io.fabric8.kubernetes-client
 %endif
 
 Obsoletes:      %{name}-osgi < 2.9.1-4
@@ -156,19 +164,23 @@ BuildArch: noarch
 
 %prep
 %setup -q -n apache-%{name}-%{version}-src
+%patch1 -p1
+%patch2 -p1
+
 
 %pom_remove_plugin -r :maven-site-plugin
 %pom_remove_plugin -r :maven-remote-resources-plugin
 %pom_remove_plugin -r :maven-doap-plugin
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-toolchains-plugin
+%pom_remove_plugin -r :revapi-maven-plugin
 
 # remove all the stuff we'll build ourselves
 find -name "*.jar" -o -name "*.class" -delete
 rm -rf docs/api
 
-%pom_disable_module %{name}-samples
 %pom_disable_module %{name}-distribution
+%pom_disable_module %{name}-samples
 
 # Apache Flume is not in Fedora yet
 %pom_disable_module %{name}-flume-ng
@@ -229,6 +241,8 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_disable_module %{name}-couchdb
 %pom_disable_module %{name}-cassandra
 %pom_disable_module %{name}-appserver
+%pom_disable_module %{name}-spring-cloud-config
+%pom_disable_module %{name}-kubernetes
 
 %pom_remove_dep -r :jackson-dataformat-yaml
 %pom_remove_dep -r :jackson-dataformat-xml
@@ -241,7 +255,9 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/{jackson,config/yaml,parser}
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/{db,mom,nosql}
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/layout/*{Csv,Jackson,Xml,Yaml,Json,Gelf}*.java
+rm log4j-1.2-api/src/main/java/org/apache/log4j/builders/layout/*Xml*.java
 rm log4j-api/src/main/java/org/apache/logging/log4j/util/Activator.java
+rm -r log4j-1.2-api/src/main/java/org/apache/log4j/or/jms
 %endif
 
 %mvn_alias :%{name}-1.2-api %{name}:%{name}
@@ -298,6 +314,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.13.0-alt1_3jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.11.1-alt1_5jpp8
 - update
 
