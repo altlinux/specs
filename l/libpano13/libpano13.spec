@@ -1,31 +1,32 @@
-Name: libpano13
-Version: 2.9.19
-Release: alt1.qa1
+%define _name pano13
+
+%def_disable java
+
+Name: lib%_name
+Version: 2.9.20
+Release: alt1
 
 Group: System/Libraries
 Summary: %name - library for panorama stitching programs. This is new generation and development version
-License: GPL
-Url: http://sourceforge.net/projects/panotools
-Packager: Sergei Epiphanov <serpiph@altlinux.ru>
+License: GPL-2.0
+Url: https://sourceforge.net/projects/panotools
 
-Source0: %name-%{version}.tar.gz
-Patch0: %name-configure.patch
+Source: https://sourceforge.net/projects/panotools/files/%name/%name-%version.tar.gz
 Patch1: %name.patch
 
-# Automatically added by buildreq on Mon Jan 15 2018
-# optimized out: perl python-base zlib-devel
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
+%{?_enable_java:BuildRequires: java-devel}
 
 %package devel
 Group: System/Libraries
 Summary: Devel package for %name
-Requires: %name = %version
+Requires: %name = %EVR
 Provides: %name.so
 
 %package programs
 Group: Graphics
 Summary: Programs built with %name
-Requires: %name = %version
+Requires: %name = %EVR
 Obsoletes: libpano12-programs panotools
 
 %description
@@ -61,11 +62,12 @@ panoinfo    - Display info from pano12 dll/library
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
+sed -i s'|BUG-REPORT-ADDRESS|https://bugzilla.altlinux.org/|' configure.ac
 #Off because MAX_FISHEYE_FOV value is equal 720, not 160
 %patch1 -p1
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
 %make_build
@@ -74,21 +76,34 @@ panoinfo    - Display info from pano12 dll/library
 %makeinstall_std
 
 %files
-%doc README README.linux AUTHORS NEWS
 %_libdir/*.so.*
+%doc README README.linux AUTHORS NEWS
 
 %files devel
-%dir %_includedir/pano13
-%_includedir/pano13/*
-%_pkgconfigdir/libpano13.pc
+%_includedir/%_name/
+%_pkgconfigdir/%name.pc
 %_libdir/*.so
 
 %files programs
-%doc doc/*.txt tools/README.PTmender
-%_bindir/*
+%_bindir/panoinfo
+%{?_enable_java:%_bindir/PTAInterpolate}
+%_bindir/PTblender
+%_bindir/PTcrop
+%_bindir/PTinfo
+%_bindir/PTmasker
+%_bindir/PTmender
+%_bindir/PToptimizer
+%_bindir/PTroller
+%_bindir/PTtiff2psd
+%_bindir/PTtiffdump
+%_bindir/PTuncrop
 %_man1dir/*
+%doc doc/*.txt tools/README.PTmender
 
 %changelog
+* Wed May 12 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.20-alt1
+- 2.9.20 (fixed CVE-2021-20307)
+
 * Mon Jan 15 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.9.19-alt1.qa1
 - Rebuilt without gcj.
 
