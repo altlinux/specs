@@ -15,12 +15,15 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without ssh
 
 Name:          apache-commons-vfs
-Version:       2.1
-Release:       alt1_16jpp8
+Version:       2.4.1
+Release:       alt1_2jpp8
 Summary:       Commons Virtual File System
 License:       ASL 2.0
 Url:           http://commons.apache.org/vfs/
 Source0:       http://www.apache.org/dist/commons/vfs/source/commons-vfs-%{version}-src.tar.gz
+
+# remove an unused import statement that breaks the build without hadoop
+Patch0:         00-remove-unused-import.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-httpclient:commons-httpclient)
@@ -30,6 +33,7 @@ BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.commons:commons-collections4)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 %if %{with hadoop}
 BuildRequires:  mvn(org.apache.hadoop:hadoop-common)
@@ -97,8 +101,10 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n commons-vfs-%{version}
+%patch0 -p1
 
 %pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :japicmp-maven-plugin
 
 # Convert from dos to unix line ending
 for file in LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt; do
@@ -108,7 +114,7 @@ for file in LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt; do
 done
 
 # Disable unwanted module
-%pom_disable_module dist
+%pom_disable_module commons-vfs2-distribution
 
 # Fix ant gId
 %pom_change_dep -r :ant org.apache.ant:
@@ -118,7 +124,7 @@ done
 # Remove unwanted dependency jackrabbit-{standalone,webdav}
 %pom_remove_dep -r org.apache.jackrabbit:
 
-rm -rf core/src/{main,test}/java/org/apache/commons/vfs2/provider/webdav
+rm -r commons-vfs2/src/{main,test}/java/org/apache/commons/vfs2/provider/webdav
 
 # Use old version of sshd-core
 %pom_remove_dep -r :sshd-core
@@ -126,7 +132,7 @@ rm -rf core/src/{main,test}/java/org/apache/commons/vfs2/provider/webdav
 # hadoop has been retired
 %if %{without hadoop}
 %pom_remove_dep -r org.apache.hadoop
-rm -r core/src/{main,test}/java/org/apache/commons/vfs2/provider/hdfs
+rm -r commons-vfs2/src/{main,test}/java/org/apache/commons/vfs2/provider/hdfs
 %endif
 
 # not really needed
@@ -135,13 +141,13 @@ rm -r core/src/{main,test}/java/org/apache/commons/vfs2/provider/hdfs
 
 %if %{without ssh}
 %pom_remove_dep -r :jsch
-rm -r core/src/{main,test}/java/org/apache/commons/vfs2/provider/sftp
+rm -r commons-vfs2/src/{main,test}/java/org/apache/commons/vfs2/provider/sftp
 rm examples/src/main/java/org/apache/commons/vfs2/libcheck/SftpCheck.java
 %endif
 
 %if %{without ftp}
 %pom_remove_dep -r :ftpserver-core
-rm -r core/src/{main,test}/java/org/apache/commons/vfs2/provider/ftps
+rm -r commons-vfs2/src/{main,test}/java/org/apache/commons/vfs2/provider/ftps
 %endif
 
 
@@ -183,6 +189,9 @@ install -p -m 644 commons-vfs %{buildroot}%{_sysconfdir}/ant.d/commons-vfs
 %config %{_sysconfdir}/ant.d/commons-vfs
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.4.1-alt1_2jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_16jpp8
 - update
 
