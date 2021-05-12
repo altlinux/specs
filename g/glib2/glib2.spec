@@ -23,8 +23,8 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -442,6 +442,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.2-alt1
+- 2.68.2
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.1-alt1.1
 - tests/taptestrunner.py: fixed shebang
 

@@ -1,5 +1,5 @@
 %define _name libwnck
-%define ver_major 3.36
+%define ver_major 40
 %define api_ver 3.0
 
 %def_enable introspection
@@ -117,6 +117,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon May 10 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0 (ported to Meson build system)
 
