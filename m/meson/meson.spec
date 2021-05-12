@@ -11,7 +11,7 @@
 
 Name: meson
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -30,6 +30,9 @@ Source2: %name.env
 # https://github.com/mesonbuild/meson/pull/8757
 # https://github.com/mesonbuild/meson/commit/8ab822a8e5a05607a6afc6a5d860a8b8a76bca23.patch
 Patch: meson-0.58.0-up-install_scripts.patch
+#https://github.com/mesonbuild/meson/pull/8761
+#https://github.com/mesonbuild/meson/commit/96e8e019303abe5626e737867e1249ab6eb53dff.patch
+Patch1: meson-0.58.0-up-nested_environment_variables.patch
 
 BuildArch: noarch
 
@@ -86,6 +89,7 @@ This package provides documentation for Meson build system.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %python3_build
@@ -127,7 +131,11 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %pkgdocdir/
 %endif
 
+
 %changelog
+* Wed May 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1.2
+- fixed #8727: "test() fails with nested environment variables"
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1.1
 - quick fix for 64-bit: Requires: /proc
 - fixed gtk-doc generation
