@@ -3,7 +3,7 @@
 
 Name: mediawiki
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -31,6 +31,7 @@ BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-mediawiki >= 0.5
 BuildRequires(pre): rpm-build-webserver-common
+BuildRequires(pre): rpm-build-python3
 
 BuildRequires: apache2-devel
 
@@ -418,6 +419,9 @@ exit 0
 %_mediawiki_settings_dir/50-PdfHandler.php
 
 %changelog
+* Wed May 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.35.2-alt2
+- fix build
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.35.2-alt1
 - new version 1.35.2 (with rpmrb script)
 - (T270453, CVE-2021-30153) (T270713, CVE-2021-30152)
