@@ -1,5 +1,5 @@
 Name: thunar
-Version: 4.16.6
+Version: 4.16.8
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -136,6 +136,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 4.16.8-alt1
+- Updated to 4.16.8.
+
 * Sun Mar 21 2021 Mikhail Efremov <sem@altlinux.org> 4.16.6-alt1
 - Updated to 4.16.6.
 
