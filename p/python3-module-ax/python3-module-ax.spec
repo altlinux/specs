@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue May 11 2021 Alexey Appolonov <alexey@altlinux.org> 0.16.1-alt1
+- Fix of the "CompareSVerWithSRange" function.
+
 * Sat Mar 06 2021 Alexey Appolonov <alexey@altlinux.org> 0.16.0-alt1
 - New function "DateTimeNow" that returns a string with a current date and time
   in a customizable format;
