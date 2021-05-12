@@ -1,14 +1,11 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             weld-parent
-Version:          34
-Release:          alt1_7jpp8
+Version:          39
+Release:          alt1_2jpp8
 Summary:          Parent POM for Weld
 License:          ASL 2.0
 URL:              http://weld.cdi-spec.org
@@ -30,7 +27,6 @@ Parent POM for Weld
 
 %pom_remove_plugin ":maven-enforcer-plugin"
 %pom_remove_plugin ":maven-remote-resources-plugin"
-%pom_remove_plugin ":maven-eclipse-plugin"
 %pom_remove_plugin ":buildnumber-maven-plugin"
 
 %build
@@ -42,6 +38,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 39-alt1_2jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 34-alt1_7jpp8
 - new version
 
