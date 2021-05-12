@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,12 +15,11 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 %bcond_with     equinox
 %bcond_with     groovy
-%bcond_with     spring
 
 Name:           xbean
 Summary:        Java plugin based web server
-Version:        4.14
-Release:        alt1_1jpp8
+Version:        4.15
+Release:        alt1_5jpp11
 License:        ASL 2.0
 
 URL:            http://geronimo.apache.org/xbean/
@@ -38,7 +37,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(log4j:log4j:1.2.12)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
@@ -50,23 +49,6 @@ BuildRequires:  mvn(org.eclipse:osgi)
 %if %{with groovy}
 BuildRequires:  mvn(org.codehaus.groovy:groovy-all)
 %endif
-
-%if %{with spring}
-BuildRequires:  mvn(ant:ant)
-BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.springframework:spring-beans)
-BuildRequires:  mvn(org.springframework:spring-context)
-BuildRequires:  mvn(org.springframework:spring-web)
-%endif
 Source44: import.info
 
 %description
@@ -77,39 +59,6 @@ repository. In addition, we include support for multiple IoC systems,
 support for running with no IoC system, JMX without JMX code,
 lifecycle and class loader management, and a rock solid Spring
 integration.
-
-
-%if %{with spring}
-# blueprint module fails to compile
-%package        blueprint
-Group: Development/Java
-Summary:        Schema-driven namespace handler for Apache Aries Blueprint
-
-%description    blueprint
-This package provides %{summary}.
-
-%package        classloader
-Group: Development/Java
-Summary:        A flexibie multi-parent classloader
-
-%description    classloader
-This package provides %{summary}.
-
-%package        spring
-Group: Development/Java
-Summary:        Schema-driven namespace handler for spring contexts
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    spring
-This package provides %{summary}.
-
-%package        -n maven-%{name}-plugin
-Group: Development/Java
-Summary:        XBean plugin for Apache Maven
-
-%description    -n maven-%{name}-plugin
-This package provides %{summary}.
-%endif
 
 
 %package        javadoc
@@ -134,6 +83,9 @@ rm src/site/site.xml
 %pom_remove_parent
 %pom_remove_dep mx4j:mx4j
 
+# use osgi-core instead of felix-osgi-core
+%pom_change_dep -r :org.osgi.core org.osgi:osgi.core
+
 # Unshade ASM
 %pom_remove_dep -r :xbean-asm7-shaded
 %pom_remove_dep -r :xbean-finder-shaded
@@ -144,20 +96,21 @@ rm src/site/site.xml
 %pom_xpath_remove 'pom:scope[text()="provided"]' xbean-reflect xbean-asm-util
 sed -i 's/org\.apache\.xbean\.asm7/org.objectweb.asm/g' `find xbean-reflect -name '*.java'`
 
-# Prevent modules depending on springframework from building.
-%if %{without spring}
-   %pom_remove_dep org.springframework:
-   #%%pom_disable_module xbean-blueprint
-   %pom_disable_module xbean-classloader
-   %pom_disable_module xbean-spring
-   %pom_disable_module maven-xbean-plugin
-%else
-   %mvn_package :xbean-classloader classloader
-   %mvn_package :xbean-spring spring
-   %mvn_package :maven-xbean-plugin maven-xbean-plugin
-%endif
-# blueprint FTBFS, disable for now
+# Springframework is not available in Fedora
+%pom_remove_dep org.springframework:
 %pom_disable_module xbean-blueprint
+%pom_disable_module xbean-classloader
+%pom_disable_module xbean-spring
+%pom_disable_module maven-xbean-plugin
+
+# Disable uneeded modules that cannot be built on JDK 11
+%pom_disable_module xbean-classpath
+
+# Disable one test that fails on JDK 11
+sed -i '/testGetBytecode/i@org.junit.Ignore' xbean-finder/src/test/java/org/apache/xbean/finder/archive/MJarJarArchiveTest.java
+
+# Unused import which is not available in OpenJDK 11
+sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/java/org/apache/xbean/propertyeditor/PropertyEditors.java
 
 %if %{without equinox}
   %pom_remove_dep :xbean-bundleutils xbean-finder
@@ -172,16 +125,13 @@ sed -i 's/org\.apache\.xbean\.asm7/org.objectweb.asm/g' `find xbean-reflect -nam
 # maven-xbean-plugin invocation makes no sense as there are no namespaces
 %pom_remove_plugin :maven-xbean-plugin xbean-classloader
 
-# As auditing tool RAT is useful for upstream only.
+# Remove plugins useful for upstream only.
 %pom_remove_plugin :apache-rat-plugin
-
-# disable copy of internal aries-blueprint
-sed -i "s|<Private-Package>|<!--Private-Package>|" xbean-blueprint/pom.xml
-sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
+%pom_remove_plugin :maven-source-plugin
 
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 
 %install
@@ -189,27 +139,16 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 
 
 %files -f .mfiles
-%doc LICENSE NOTICE
-
-%if %{with spring}
-%files blueprint -f .mfiles-blueprint
-%doc LICENSE NOTICE %{name}-blueprint/target/restaurant.xsd*
-
-%files classloader -f .mfiles-classloader
-%doc LICENSE NOTICE
-
-%files spring -f .mfiles-spring
-%doc LICENSE NOTICE
-
-%files -n maven-%{name}-plugin -f .mfiles-maven-%{name}-plugin
-%doc LICENSE NOTICE
-%endif
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:4.15-alt1_5jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:4.14-alt1_1jpp8
 - new version
 
