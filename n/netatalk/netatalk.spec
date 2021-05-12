@@ -1,6 +1,6 @@
 Name: netatalk
 Version: 3.1.12
-Release: alt4
+Release: alt5
 
 Summary: Open Source Apple Filing Protocol(AFP) File Server
 
@@ -12,7 +12,9 @@ Source0: http://download.sourceforge.net/netatalk/netatalk-%version.tar.bz2
 Source1: netatalk.pam-system-auth
 Patch0: netatalk-3.0.1-basedir.patch
 Patch1: netatalk-3.1.12-alt-mysql8-transition.patch
+Patch2: netatalk-3.1.12-afpstats-python3-compat.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel
 BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel
 BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel
@@ -40,6 +42,7 @@ rm -frv libevent/
 
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 
 # Avoid re-running the autotools
 touch -r aclocal.m4 configure configure.ac macros/gssapi-check.m4
@@ -126,6 +129,9 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.12-alt5
+- Fixed FTBFS.
+
 * Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.12-alt4
 - Fixed FTBFS with -fcommon
 
