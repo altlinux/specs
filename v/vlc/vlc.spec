@@ -5,7 +5,7 @@
 %def_enable wayland
 
 Name: vlc
-Version: 3.0.12.1
+Version: 3.0.14
 Release: alt1
 
 Summary: VLC media player
@@ -48,6 +48,7 @@ BuildRequires: libchromaprint-devel libvncserver-devel
 BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel qt5-svg-devel
 BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel protobuf-compiler 
 BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
+BuildRequires: libdav1d-devel libSDL_image-devel libsystemd-devel
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
 %{?_enable_goom:BuildRequires: libgoom-devel}
 %{?_enable_firewire:BuildRequires: libdc1394-devel libraw1394-devel libavc1394-devel}
@@ -869,6 +870,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libcdg_plugin.so
 %vlc_plugindir/codec/libcvdsub_plugin.so
 %vlc_plugindir/codec/libddummy_plugin.so
+%vlc_plugindir/codec/libdav1d_plugin.so
 %vlc_plugindir/codec/libdca_plugin.so
 %vlc_plugindir/codec/libdvbsub_plugin.so
 %vlc_plugindir/codec/libedummy_plugin.so
@@ -881,6 +883,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libomxil_vout_plugin.so
 %vlc_plugindir/codec/librawvideo_plugin.so
 %vlc_plugindir/codec/librtpvideo_plugin.so
+%vlc_plugindir/codec/libsdl_image_plugin.so
 %vlc_plugindir/codec/libscte18_plugin.so
 %vlc_plugindir/codec/libscte27_plugin.so
 %vlc_plugindir/codec/libspdif_plugin.so
@@ -957,6 +960,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/keystore/libsecret_plugin.so
 
 %dir %vlc_plugindir/logger
+%vlc_plugindir/logger/libsd_journal_plugin.so
 %vlc_plugindir/logger/libconsole_logger_plugin.so
 %vlc_plugindir/logger/libfile_logger_plugin.so
 %vlc_plugindir/logger/libsyslog_plugin.so
@@ -1401,6 +1405,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Wed May 12 2021 Anton Farygin <rider@altlinux.ru> 3.0.14-alt1
+- 3.0.14
+- built with SDL_image for SDL based image decoding
+- built with libdav1d for AV1 decoding support without ffmpeg
+- built journal plugin for native journald logging support
+
 * Mon Dec 28 2020 Anton Farygin <rider@altlinux.ru> 3.0.12.1-alt1
 - 3.0.12.1
 
