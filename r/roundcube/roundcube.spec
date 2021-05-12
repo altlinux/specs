@@ -2,7 +2,7 @@
 %define rel %nil
 Name: roundcube
 Version: 1.4.11
-Release: alt1
+Release: alt2
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -53,9 +53,10 @@ Obsoletes: roundcube-plugin-acl
 
 AutoReq: yes,nomingw32,noshell
 
+#add_python3_path %_datadir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*
-%add_python_req_skip %_datadir/%name/plugins/*
-%add_python_compile_exclude %_datadir/%name/plugins/*
+%add_python3_req_skip %_datadir/%name/plugins/*
+%add_python3_compile_exclude %_datadir/%name/plugins/*
 
 %description
 RoundCube Webmail is a browser-based multilingual IMAP client with an application-like user interface.
@@ -129,6 +130,8 @@ ln -s  %_docdir/%name-%version %buildroot%_datadir/%name/doc
 
 install -pD -m0644 %SOURCE1 %buildroot%apache2_extra_available/%name.conf
 
+rm -fv %buildroot%_datadir/roundcube/plugins/password/helpers/chpass-wrapper.py
+
 %post apache2
 service httpd2 condreload
 
@@ -152,6 +155,9 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Wed May 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.11-alt2
+- fix build
+
 * Mon Feb 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.11-alt1
 - new version 1.4.11 (with rpmrb script)
 - fix cross-site scripting (XSS) via HTML messages with malicious CSS content
