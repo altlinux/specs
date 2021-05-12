@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:             snappy-java
 Version:          1.1.2.4
-Release:          alt2_11jpp8
+Release:          alt2_14jpp8
 Summary:          Fast compressor/decompresser
 License:          ASL 2.0
 URL:              http://xerial.org/snappy-java/
@@ -34,8 +34,8 @@ BuildRequires:    libsnappy-devel
 BuildRequires:    maven-local
 BuildRequires:    mvn(com.sun:tools)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:    mvn(org.apache.felix:org.osgi.core)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:    mvn(org.osgi:osgi.core)
 
 Requires:         libsnappy
 Source44: import.info
@@ -69,8 +69,10 @@ find -name "*.h" -print -delete
 %patch1 -p1
 
 cp %{SOURCE1} pom.xml
-%pom_change_dep org.osgi: org.apache.felix::1.4.0
 %pom_xpath_remove "pom:dependency[pom:scope = 'test']"
+
+# use osgi-core instead of felix-osgi-core
+%pom_change_dep :org.osgi.core org.osgi:osgi.core
 
 # Build JNI library
 %pom_add_plugin org.apache.maven.plugins:maven-antrun-plugin . '
@@ -161,6 +163,9 @@ export CXXFLAGS
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2.4-alt2_14jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_11jpp8
 - explicit build with java8
 
