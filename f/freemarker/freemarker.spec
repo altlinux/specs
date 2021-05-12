@@ -14,12 +14,12 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with jp_minimal
 
 Name:           freemarker
-Version:        2.3.28
-Release:        alt1_4jpp8
+Version:        2.3.29
+Release:        alt1_2jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
 URL:            https://freemarker.apache.org/
-Source0:        https://github.com/apache/incubator-freemarker/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/apache/freemarker/archive/v%{version}/%{name}-%{version}.tar.gz
 
 # Remove JSP 2.0 API usage
 Patch1:         jsp-api.patch
@@ -116,9 +116,11 @@ rm src/main/java/freemarker/ext/xml/_Dom4jNavigator.java
 %mvn_file org.%{name}:%{name} %{name}
 
 %build
+export LANG=C.UTF-8
 ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
 
 %install
+export LANG=C.UTF-8
 %mvn_artifact build/pom.xml build/%{name}.jar
 %mvn_install -J build/api
 
@@ -130,6 +132,9 @@ ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.29-alt1_2jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.3.28-alt1_4jpp8
 - update
 
