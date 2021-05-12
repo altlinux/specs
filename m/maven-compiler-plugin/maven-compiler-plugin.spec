@@ -3,18 +3,21 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-compiler-plugin
 Version:        3.8.1
-Release:        alt1_2jpp8
+Release:        alt1_4jpp11
 Summary:        Maven Compiler Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-compiler-plugin
 BuildArch:      noarch
 
 Source0:        http://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
+
+# port to plexus-languages 1.0.3
+Patch0:         00-plexus-languages-1.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -46,6 +49,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %mvn_build -f
@@ -60,6 +64,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.8.1-alt1_4jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.8.1-alt1_2jpp8
 - new version
 
