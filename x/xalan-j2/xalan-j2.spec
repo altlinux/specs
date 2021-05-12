@@ -1,12 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,11 +38,11 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%global cvs_version 2_7_1
+%global cvs_version 2_7_2
 
 Name:           xalan-j2
-Version:        2.7.1
-Release:        alt4_39jpp8
+Version:        2.7.2
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
@@ -53,18 +52,14 @@ URL:            http://xalan.apache.org/
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-serializer-MANIFEST.MF
-Source2:        http://repo1.maven.org/maven2/xalan/xalan/2.7.1/xalan-2.7.1.pom
-Source3:        http://repo1.maven.org/maven2/xalan/serializer/2.7.1/serializer-2.7.1.pom
+Source2:        http://repo1.maven.org/maven2/xalan/xalan/%{version}/xalan-%{version}.pom
+Source3:        http://repo1.maven.org/maven2/xalan/serializer/%{version}/serializer-%{version}.pom
 Source4:        xsltc-%{version}.pom
 Source5:        %{name}-MANIFEST.MF
 # Remove bundled binaries which cannot be easily verified for licensing
 Source6:        generate-tarball.sh
 
 Patch0:         %{name}-noxsltcdeps.patch
-# Fix CVE-2014-0107: insufficient constraints in secure processing
-# feature (oCERT-2014-002).  Generated form upstream revisions 1581058
-# and 1581426.
-Patch2:         %{name}-CVE-2014-0107.patch
 
 BuildArch:      noarch
 
@@ -138,7 +133,6 @@ Demonstrations and samples for %{name}.
 %prep
 %setup -q -n xalan-j_%{cvs_version}
 %patch0 -p0
-%patch2 -p1
 
 find . -name '*.jar' -delete
 find . -name '*.class' -delete
@@ -233,6 +227,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %{_datadir}/%{name}
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_2jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_39jpp8
 - new version
 
