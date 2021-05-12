@@ -58,17 +58,17 @@ BuildRequires: jpackage-1.8-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20190610
+%global addver  .v20191120
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
 # thermostat needs: server, jaas, webapp
 # above modules need: jmx, xml
-%bcond_with     jp_minimal
+%bcond_without  jp_minimal
 
 Name:           jetty
-Version:        9.4.19
-Release:        alt1_1.v20190610jpp8
+Version:        9.4.24
+Release:        alt1_3.v20191120jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -81,7 +81,7 @@ Source5:        %{name}.service
 # MIT license text taken from Utf8Appendable.java
 Source6:        LICENSE-MIT
 
-Patch1:         0001-Fedora-jetty.home.patch
+Patch1:         0001-Distro-jetty.home.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
@@ -135,7 +135,6 @@ BuildRequires:  mvn(org.mongodb:mongo-java-driver)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.springframework:spring-beans)
 
 BuildRequires:  mvn(org.mortbay.jetty.alpn:alpn-boot)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-artifact-remote-resources)
@@ -144,13 +143,13 @@ BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-policy)
 #BuildRequires:  mvn(org.eclipse.jetty.toolchain.setuid:jetty-setuid-java)
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  glassfish-el
-BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 BuildRequires:  junit5
 
 # duplicate providers, choose one
 BuildRequires:  jboss-websocket-1.0-api
 Requires:       jboss-websocket-1.0-api
-%endif # without jp_minimal
+%endif
 
 BuildArch:      noarch
 
@@ -183,7 +182,6 @@ Requires:       %{name}-security = %{version}-%{release}
 Requires:       %{name}-server = %{version}-%{release}
 Requires:       %{name}-servlet = %{version}-%{release}
 Requires:       %{name}-servlets = %{version}-%{release}
-Requires:       %{name}-spring = %{version}-%{release}
 Requires:       %{name}-start = %{version}-%{release}
 Requires:       %{name}-unixsocket = %{version}-%{release}
 Requires:       %{name}-util = %{version}-%{release}
@@ -215,10 +213,8 @@ Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-g
 
 Provides:       group(%username) = %jtuid
 Provides:       user(%username) = %jtuid
-%endif # without jp_minimal
+%endif
 
-# (Added in F25)
-Obsoletes:      %{name}-monitor < 9.4.0-0.4
 # Hazelcast in Fedora is too old for jetty to build against (Added in F29)
 Obsoletes:      %{name}-hazelcast < 9.4.18-1
 # Infinispan in Fedora is too old for jetty to build against (Added in F31)
@@ -228,6 +224,49 @@ Obsoletes:      %{name}-osgi-alpn < 9.4.18-1
 Obsoletes:      %{name}-osgi-boot < 9.4.18-1
 Obsoletes:      %{name}-osgi-boot-jsp < 9.4.18-1
 Obsoletes:      %{name}-osgi-boot-warurl < 9.4.18-1
+# Spring framework removed from Fedora (Added in F32)
+Obsoletes:      %{name}-spring < 9.4.24-1
+
+%if %{with jp_minimal}
+# Remove left-over packages that would have broken deps when built in minimal mode
+Obsoletes:      %{name}-project < 9.4.20-1
+Obsoletes:      %{name}-annotations < 9.4.20-1
+Obsoletes:      %{name}-ant < 9.4.20-1
+Obsoletes:      %{name}-cdi < 9.4.20-1
+Obsoletes:      %{name}-deploy < 9.4.20-1
+Obsoletes:      %{name}-fcgi-client < 9.4.20-1
+Obsoletes:      %{name}-fcgi-server < 9.4.20-1
+Obsoletes:      %{name}-http-spi < 9.4.20-1
+Obsoletes:      %{name}-jaspi < 9.4.20-1
+Obsoletes:      %{name}-jndi < 9.4.20-1
+Obsoletes:      %{name}-jsp < 9.4.20-1
+Obsoletes:      %{name}-jstl < 9.4.20-1
+Obsoletes:      %{name}-jspc-maven-plugin < 9.4.20-1
+Obsoletes:      %{name}-maven-plugin < 9.4.20-1
+Obsoletes:      %{name}-plus < 9.4.20-1
+Obsoletes:      %{name}-proxy < 9.4.20-1
+Obsoletes:      %{name}-quickstart < 9.4.20-1
+Obsoletes:      %{name}-rewrite < 9.4.20-1
+Obsoletes:      %{name}-servlets < 9.4.20-1
+Obsoletes:      %{name}-start < 9.4.20-1
+Obsoletes:      %{name}-unixsocket < 9.4.20-1
+Obsoletes:      %{name}-util-ajax < 9.4.20-1
+Obsoletes:      %{name}-websocket-api < 9.4.20-1
+Obsoletes:      %{name}-websocket-client < 9.4.20-1
+Obsoletes:      %{name}-websocket-common < 9.4.20-1
+Obsoletes:      %{name}-websocket-server < 9.4.20-1
+Obsoletes:      %{name}-websocket-servlet < 9.4.20-1
+Obsoletes:      %{name}-javax-websocket-client-impl < 9.4.20-1
+Obsoletes:      %{name}-javax-websocket-server-impl < 9.4.20-1
+Obsoletes:      %{name}-alpn-client < 9.4.20-1
+Obsoletes:      %{name}-alpn-server < 9.4.20-1
+Obsoletes:      %{name}-http2-client < 9.4.20-1
+Obsoletes:      %{name}-http2-common < 9.4.20-1
+Obsoletes:      %{name}-http2-hpack < 9.4.20-1
+Obsoletes:      %{name}-http2-http-client-transport < 9.4.20-1
+Obsoletes:      %{name}-http2-server < 9.4.20-1
+Obsoletes:      %{name}-nosql < 9.4.20-1
+%endif
 Source44: import.info
 Source45: jetty.init
 
@@ -463,13 +502,6 @@ Summary:        servlets module for Jetty
 %description    servlets
 %{extdesc} %{summary}.
 
-%package        spring
-Group: Networking/WWW
-Summary:        spring module for Jetty
-
-%description    spring
-%{extdesc} %{summary}.
-
 %package        start
 Group: Networking/WWW
 Summary:        start module for Jetty
@@ -610,7 +642,7 @@ Summary:        jstl module for Jetty
 %description    jstl
 %{extdesc} %{summary}.
 
-%endif # without jp_minimal
+%endif
 
 %package        javadoc
 Group: Development/Java
@@ -658,9 +690,6 @@ find . -name "*.class" -exec rm {} \;
 %pom_change_dep -r org.mortbay.jasper:apache-jsp org.apache.tomcat:tomcat-jasper
 
 %pom_add_dep 'org.junit.jupiter:junit-jupiter-engine:${junit.version}' tests/test-sessions/test-sessions-common
-
-# Old version of jetty not available for tests, so use this version
-%pom_change_dep 'org.eclipse.jetty:jetty-util' 'org.eclipse.jetty:jetty-util:${project.version}' tests/test-webapps/test-servlet-spec/test-spec-webapp
 
 # provided by glassfish-jsp-api that has newer version
 %pom_change_dep -r javax.servlet.jsp:jsp-api javax.servlet.jsp:javax.servlet.jsp-api
@@ -715,6 +744,9 @@ sed -i '/^\s*\*.*<script>/d' jetty-util/src/main/java/org/eclipse/jetty/util/res
 %pom_remove_dep :infinispan-remote-query jetty-home
 %pom_xpath_remove "pom:execution[pom:id='unpack-infinispan-config']" jetty-home
 
+# Springframework not available in Fedora
+%pom_disable_module jetty-spring
+
 # Not currently able to build tests, so can't build benchmarks
 %pom_disable_module jetty-jmh
 
@@ -758,7 +790,6 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_disable_module jetty-annotations
 %pom_disable_module jetty-jndi
 %pom_disable_module jetty-cdi
-%pom_disable_module jetty-spring
 %pom_disable_module jetty-proxy
 %pom_disable_module jetty-jaspi
 %pom_disable_module jetty-rewrite
@@ -772,12 +803,14 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_disable_module jetty-http-spi
 %pom_disable_module jetty-alpn
 %pom_disable_module jetty-home
+%pom_disable_module jetty-openid
 
-%endif # with jp_minimal
+%endif
 
 %build
 %mvn_package :jetty-home __noinstall
 %mvn_package :jetty-distribution __noinstall
+%mvn_package :build-resources __noinstall
 
 # Separate package for POMs
 %if %{without jp_minimal}
@@ -817,6 +850,10 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 
 %install
 %mvn_install
+
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/default/jetty`
+touch $RPM_BUILD_ROOT/etc/default/jetty
+install -D -m 755 %{S:45} %buildroot%_initdir/%name
 
 # jp_minimal version doesn't contain main package
 %if %{without jp_minimal}
@@ -904,10 +941,6 @@ do
     touch %buildroot"$rpm404_ghost"
 done
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/default/jetty`
-touch $RPM_BUILD_ROOT/etc/default/jetty
-install -D -m 755 %{S:45} %buildroot%_initdir/%name
-
 
 # NOTE: %if %{without jp_minimal} still in effect
 
@@ -930,7 +963,7 @@ exit 0
 %preun
 %preun_service jetty
 
-%endif # without jp_minimal
+%endif
 %files client -f .mfiles-jetty-client
 %files continuation -f .mfiles-jetty-continuation
 %files jaas -f .mfiles-jetty-jaas
@@ -945,8 +978,17 @@ exit 0
 %files http -f .mfiles-jetty-http
 %files security -f .mfiles-jetty-security
 
+%if %{with jp_minimal}
+%files
+# Empty metapackage in minimal mode
+%config(noreplace,missingok) /etc/default/jetty
+%_initdir/%name
+%endif
+
 %if %{without jp_minimal}
 %files -f .mfiles
+%config(noreplace,missingok) /etc/default/jetty
+%_initdir/%name
 %{_tmpfilesdir}/%{name}.conf
 %config(noreplace) %attr(644, root, root) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{confdir}
@@ -959,8 +1001,6 @@ exit 0
 %ghost %dir %attr(755, jetty, jetty) %{rundir}
 %{appdir}
 %{_unitdir}/%{name}.service
-%config(noreplace,missingok) /etc/default/jetty
-%_initdir/%name
 
 %files project -f .mfiles-project
 %doc README.md VERSION.txt
@@ -1002,13 +1042,15 @@ exit 0
 %files http2-http-client-transport -f .mfiles-http2-http-client-transport
 %files http2-server -f .mfiles-http2-server
 %files nosql -f .mfiles-jetty-nosql
-%files spring -f .mfiles-jetty-spring
-%endif # without jp_minimal
+%endif
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 9.4.24-alt1_3.v20191120jpp8
+- fc update
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 9.4.19-alt1_1.v20190610jpp8
 - new version
 
