@@ -8,8 +8,8 @@ BuildRequires: jpackage-1.8-compat
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.18
-Release:        alt1_6jpp8
+Version:        1.19
+Release:        alt1_2jpp8
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-compress/
@@ -27,7 +27,7 @@ BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.tukaani:xz)
 Source44: import.info
 
@@ -69,6 +69,9 @@ rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCas
 %pom_remove_dep :slf4j-api::test
 rm src/test/java/org/apache/commons/compress/OsgiITest.java
 
+# use osgi-core instead of felix-osgi-core
+%pom_change_dep :org.osgi.core org.osgi:osgi.core
+
 # Remove test that requires powermock
 %pom_remove_dep org.powermock:
 %pom_add_dep org.mockito:mockito-core::test
@@ -89,6 +92,9 @@ rm src/test/java/org/apache/commons/compress/compressors/z/ZCompressorInputStrea
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.19-alt1_2jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.18-alt1_6jpp8
 - update
 
