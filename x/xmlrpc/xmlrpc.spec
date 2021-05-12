@@ -5,26 +5,34 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_23jpp8
+Release:        alt7_24jpp8
 Epoch:          1
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
-URL:            http://ws.apache.org/xmlrpc/
+URL:            https://ws.apache.org/xmlrpc/
 BuildArch:      noarch
 
-Source0:        http://www.apache.org/dist/ws/xmlrpc/sources/apache-xmlrpc-%{version}-src.tar.bz2
-Patch0:         %{name}-client-addosgimanifest.patch
-Patch1:         %{name}-common-addosgimanifest.patch
-Patch2:         %{name}-javax-methods.patch
-Patch3:         %{name}-server-addosgimanifest.patch
-Patch4:         %{name}-disallow-deserialization-of-ex-serializable-tags.patch
-Patch5:         %{name}-disallow-loading-external-dtd.patch
+Source0:        https://archive.apache.org/dist/ws/xmlrpc/sources/apache-xmlrpc-%{version}-src.tar.bz2
+
+# Fix build against modern servlet API by implementing missing interfaces
+Patch0: 0001-Javax-Servlet-API.patch
+# Add OSGi metadata so that xmlrpc can be used in OSGi runtimes
+Patch1: 0002-Add-OSGi-metadata.patch
+# CVE-2016-5003 - Disallow deserialization of <ex:serializable> tags by default
+Patch2: 0003-disallow-deserialization-of-ex-serializable-tags.patch
+# CVE-2016-5002 - isallow loading of external DTD
+Patch3: 0004-disallow-loading-external-dtd.patch
+# Jakarta Commons HttpClient is obsolete and should not be used, one of the other
+# provider implementations should by used instead by clients of xmlrpc
+Patch4: 0005-Remove-dep-on-ancient-commons-httpclient.patch
+# CVE-2019-17570 - Deserialization of server-side exception from faultCause in XMLRPC error response
+Patch5: 0006-Fix-for-CVE-2019-17570.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(commons-httpclient:commons-httpclient)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.ws.commons.util:ws-commons-util)
 Source44: import.info
 
@@ -32,13 +40,10 @@ Source44: import.info
 %description
 Apache XML-RPC is a Java implementation of XML-RPC, a popular protocol
 that uses XML over HTTP to implement remote procedure calls.
-Apache XML-RPC was previously known as Helma XML-RPC. If you have code
-using the Helma library, all you should have to do is change the import
-statements in your code from helma.xmlrpc.* to org.apache.xmlrpc.*.
 
 %package javadoc
 Group: Development/Java
-Summary:    Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -46,45 +51,32 @@ Javadoc for %{name}.
 
 %package common
 Group: Development/Java
-Summary:    Common classes for XML-RPC client and server implementations
-# Provide xmlrpc is not here because it would be useless due to different jar names
-Obsoletes:  %{name} < 3.1.3
-Obsoletes:  %{name}3-common < 3.1.3-13
-Provides:   %{name}3-common = 3.1.3-13
+Summary: Common classes for XML-RPC client and server implementations
 
 %description common
 %{summary}.
 
 %package client
 Group: Development/Java
-Summary:    XML-RPC client implementation
-Obsoletes:  %{name}3-client < 3.1.3-13
-Provides:   %{name}3-client = 3.1.3-13
+Summary: XML-RPC client implementation
 
 %description client
 %{summary}.
 
 %package server
 Group: Development/Java
-Summary:    XML-RPC server implementation
-Obsoletes:  %{name}3-server < 3.1.3-13
-Provides:   %{name}3-server = 3.1.3-13
+Summary: XML-RPC server implementation
 
 %description server
 %{summary}.
 
 %prep
 %setup -q -n apache-%{name}-%{version}-src
+
+%patch0 -p1
+%patch1 -p1
 %patch2 -p1
-pushd client
-%patch0 -b .sav
-popd
-pushd common
-%patch1 -b .sav
-popd
-pushd server
-%patch3 -b .sav
-popd
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 
@@ -92,14 +84,13 @@ sed -i 's/\r//' LICENSE.txt
 
 %pom_disable_module dist
 %pom_remove_dep jaxme:jaxmeapi common
-# This dep is no longer supplied by ws-commons-util
 %pom_add_dep junit:junit:3.8.1:test
 
 %mvn_file :{*} @1
 %mvn_package :*-common %{name}
 
 %build
-# FIXME: ignore test failure because server part needs network
+# ignore test failure because server part needs network
 %mvn_build -s -- -Dmaven.test.failure.ignore=true
 
 %install
@@ -116,6 +107,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1:3.1.3-alt7_24jpp8
+- fc update
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_23jpp8
 - fc update
 
