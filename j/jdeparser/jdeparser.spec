@@ -1,32 +1,26 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 2.0.0
+%define version 2.0.3
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jdeparser
-Version:          2.0.0
-Release:          alt1_6jpp8
+Version:          2.0.3
+Release:          alt1_2jpp8
 Summary:          Source generator library for Java
 License:          ASL 2.0
 URL:              https://github.com/jdeparser/jdeparser2
 # old repos https://github.com/jdeparser/jdeparser
-Source0:          https://github.com/jdeparser/jdeparser2/archive/%{namedversion}.tar.gz
+Source0:          %{url}/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    graphviz libgraphviz
 BuildRequires:    maven-local
-BuildRequires:    mvn(jdepend:jdepend)
 BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
-BuildRequires:    mvn(org.jboss.apiviz:apiviz)
 Source44: import.info
 
 %description
@@ -59,6 +53,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_2jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_6jpp8
 - new version
 
