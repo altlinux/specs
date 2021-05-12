@@ -1,7 +1,7 @@
 %def_with check
 
 Name: ethtool
-Version: 5.10
+Version: 5.12
 Release: alt1
 Epoch: 1
 
@@ -49,12 +49,6 @@ install -pDm644 ethtool.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %check
 make check
 
-%post
-%post_service %name
-
-%preun
-%preun_service %name
-
 %files
 %doc AUTHORS NEWS README.ALT
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -64,6 +58,9 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Wed May 12 2021 Anton Farygin <rider@altlinux.ru> 1:5.12-alt1
+- 5.12
+
 * Fri Jan 22 2021 Anton Farygin <rider@altlinux.org> 1:5.10-alt1
 - 5.10
 
