@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name:    crash
-Version: 7.2.9
-Release: alt2
+Version: 7.3.0
+Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -61,6 +61,9 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_libdir/crash
 
 %changelog
+* Wed May 12 2021 Vitaly Chikunov <vt@altlinux.org> 7.3.0-alt1
+- Update to 7.3.0 (2021-04-27).
+
 * Mon Nov 30 2020 Vitaly Chikunov <vt@altlinux.org> 7.2.9-alt2
 - Add usage note to %%description.
 
