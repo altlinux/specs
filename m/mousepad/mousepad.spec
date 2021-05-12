@@ -1,5 +1,5 @@
 Name: mousepad
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
@@ -13,9 +13,9 @@ Vcs: https://gitlab.xfce.org/apps/mousepad.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 4.14.0
-BuildRequires: libxfconf-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.14.0
 BuildRequires: libgtk+3-devel intltool libgtksourceview4-devel
+BuildRequires: libgspell-devel
 
 Obsoletes: xfce-mousepad < %version
 Provides: xfce-mousepad = %version-%release
@@ -45,6 +45,7 @@ Mousepad - простой текстовый редактор для Xfce осн
 %configure \
 	--enable-maintainer-mode \
 	--enable-gtksourceview4 \
+	--enable-plugin-gspell \
 	--enable-debug=minimum
 %make_build
 
@@ -55,13 +56,23 @@ Mousepad - простой текстовый редактор для Xfce осн
 %files -f mousepad.lang
 %doc NEWS README.md
 %_bindir/*
+%_libdir/*.so
+%_libdir/*.so.*
+%_libdir/%name/
 %_datadir/polkit-1/actions/*.policy
-%_datadir/glib-2.0/schemas/org.xfce.mousepad.gschema.xml
+%_datadir/glib-2.0/schemas/*.gschema.xml
 %_datadir/metainfo/*.xml
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 
+%exclude %_libdir/%name/plugins/*.la
+
 %changelog
+* Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 0.5.5-alt1
+- Enabled gspell plugin.
+- Dropped libxconf-devel from BR.
+- Updated to 0.5.5.
+
 * Tue Apr 06 2021 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
 - Built with libgtksourceview4.
 - Updated to 0.5.4.
