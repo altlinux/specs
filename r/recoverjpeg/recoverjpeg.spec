@@ -1,6 +1,6 @@
 Name: recoverjpeg
 Version: 2.6.3
-Release: alt2
+Release: alt3
 
 Summary: Recover jpeg pictures and mov movies from damaged devices
 License: GPLv2
@@ -11,6 +11,7 @@ Source0: http://www.rfc1149.net/download/%name/%name-%version.tar.gz
 Source1: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 
 %add_findreq_skiplist  %_bindir/sort-pictures
@@ -47,6 +48,9 @@ sed -i 's|#! /usr/bin/python|#!/usr/bin/python3|' scripts/remove-duplicates
 
 
 %changelog
+* Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 2.6.3-alt3
+- Fixed FTBFS.
+
 * Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.6.3-alt2
 - python2 -> python3
 
