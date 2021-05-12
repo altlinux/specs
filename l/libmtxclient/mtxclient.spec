@@ -2,7 +2,7 @@
 
 Name: libmtxclient
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: Client API library for the Matrix protocol, built on top of Boost.Asio
 
@@ -66,6 +66,9 @@ library.
 %_libdir/*.so
 
 %changelog
+* Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt2
+- Rebuilt with boost-1.76.0.
+
 * Sun Feb 14 2021 Paul Wolneykien <manowar@altlinux.org> 0.4.1-alt1
 - Explicitly require stdc++fs (patch).
 - Added libstdc++-devel-static to build dependencies.
