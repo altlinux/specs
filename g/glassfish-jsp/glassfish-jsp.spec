@@ -1,115 +1,113 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global artifactId javax.servlet.jsp
 %global jspspec 2.3
-%global reltag b02
 
 Name:       glassfish-jsp
-Version:    2.3.3
-Release:    alt1_0.14.b02jpp8
+Version:    2.3.4
+Release:    alt1_3jpp8
 Summary:    Glassfish J2EE JSP API implementation
+# Classes in package "org.apache.jasper" are Apache licensed
 License:    (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
-URL:        http://glassfish.org
-BuildArch:  noarch
+URL:        https://github.com/javaee/javaee-jsp-api
 
-Source0:    %{artifactId}-%{version}-%{reltag}.tar.xz
-# no source releases, but this will generate tarball for you from an
-# SVN tag
-Source1:    generate_tarball.sh
-Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
-Source3:    https://javaee.github.io/glassfish/LICENSE.html
+Source0:    https://github.com/javaee/javaee-jsp-api/archive/%{artifactId}-%{version}.tar.gz
+Source1:    http://www.apache.org/licenses/LICENSE-2.0.txt
 
+# JSP can do byte-code compilation at runtime, if we enable the Eclipse compiler support
 Patch0:     %{name}-build-eclipse-compilers.patch
+# Fix compilation errors due to unimplemented interfaces in newer servlet APIs
 Patch1:     %{name}-port-to-servlet-3.1.patch
+
+BuildArch:  noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet.jsp:javax.servlet.jsp-api)
 BuildRequires:  mvn(net.java:jvnet-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.eclipse.jdt:core)
 BuildRequires:  mvn(org.glassfish:javax.el)
 
 Provides:   jsp = %{jspspec}
 Provides:   jsp%{jspspec}
-
 Provides:   javax.servlet.jsp
-# make sure the symlinks will be correct
-Requires:  glassfish-jsp-api
 Source44: import.info
 
 %description
 This project provides a container independent implementation of JSP
-2.3. The main goals are:
-  * Improves current implementation: bug fixes and performance
-    improvements
-  * Provides API for use by other tools, such as Netbeans
-  * Provides a sandbox for new JSP features; provides a reference
-    implementation of next JSP spec.
-
+specification %{jspspec}.
 
 %package javadoc
 Group: Development/Java
-Summary:    API documentation for %{name}
+Summary: API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %prep
-%setup -q -n %{artifactId}-%{version}-%{reltag}
+%setup -q -n javaee-jsp-api-%{artifactId}-%{version}
+
+cp -p %{SOURCE1} LICENSE-ASL-2.0.txt
+
+pushd impl
 %patch0 -p1
 %patch1 -p1
 
 %pom_add_dep org.eclipse.jdt:core::provided
-
-cp -p %{SOURCE2} LICENSE-ASL-2.0.txt
-cp -p %{SOURCE3} LICENSE-CDDL+GPLv2.html
 
 %mvn_alias : "org.eclipse.jetty.orbit:org.apache.jasper.glassfish"
 
 # compat symlink
 %mvn_file : %{name}/javax.servlet.jsp %{name}
 
-# javadoc generation fails due to strict doclint in JDK 8
+# Plugins not needed for RPM builds:
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-source-plugin
+popd
 
 %build
+pushd impl
 %mvn_build
+popd
 
 %install
+pushd impl
 %mvn_install
+popd
 
-# install j2ee api symlinks
+# Install j2ee api symlinks
 install -d -m 755 %{buildroot}%{_javadir}/javax.servlet.jsp/
 pushd %{buildroot}%{_javadir}/javax.servlet.jsp/
 for jar in ../%{name}/*jar; do
     ln -sf $jar .
 done
-# copy jsp-api so that build-classpath will include dep as well
+# Copy jsp-api so that deps can be included as well
 build-jar-repository -p . glassfish-jsp-api
 xmvn-subst -R %{buildroot} -s .
 popd
 
-%files -f .mfiles
+%files -f impl/.mfiles
 %{_javadir}/javax.servlet.jsp
-%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
-
+%files javadoc -f impl/.mfiles-javadoc
+%doc --no-dereference LICENSE-ASL-2.0.txt LICENSE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.3.4-alt1_3jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.14.b02jpp8
 - new version
 
