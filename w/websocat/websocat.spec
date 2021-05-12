@@ -1,5 +1,5 @@
 Name: websocat
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Netcat, curl and socat for WebSockets
@@ -15,6 +15,7 @@ Source99: websocat.watch
 
 BuildRequires(pre): /proc
 BuildRequires(pre): rust-cargo
+BuildRequires: libssl-devel
 BuildRequires: perl-Pod-Usage
 
 %description
@@ -32,19 +33,31 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --release --features=ssl
+cargo build \
+	--release \
+	--features=seqpacket,signal_handler,ssl,unix_stdio \
+	--no-default-features \
+	#
 
 %install
 install -pm755 -D target/release/websocat %buildroot%_bindir/websocat
 
 %check
 cargo test
+./test.sh
 
 %files
 %_bindir/websocat
 %doc doc.md moreexamples.md
 
 %changelog
+* Wed May 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.1-alt1
+- Updated to v1.8.1.
+- Built against OpenSSL libs.
+- Built with the following features: seqpacket, signal_handler, ssl and
+  unix_stdio.
+- Fixed %%check.
+
 * Sat Apr 17 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt1
 - Updated to v1.8.0.
 
