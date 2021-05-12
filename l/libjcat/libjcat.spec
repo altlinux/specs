@@ -1,6 +1,6 @@
 Summary: Library for reading Jcat files
 Name: libjcat
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
@@ -17,7 +17,6 @@ BuildRequires: libgnutls-devel
 BuildRequires: gnutls-utils
 BuildRequires: libgpgme-devel
 BuildRequires: vala vala-tools
-BuildRequires: help2man
 BuildRequires: /proc
 
 %description
@@ -87,6 +86,9 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Wed May 12 2021 Anton Farygin <rider@altlinux.ru> 0.1.7-alt1
+- 0.1.7
+
 * Thu Feb 25 2021 Anton Farygin <rider@altlinux.org> 0.1.6-alt1
 - 0.1.6
 
