@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          pdfbox
-Version:       2.0.16
+Version:       2.0.19
 Release:       alt1_1jpp8
 Summary:       Apache PDFBox library for working with PDF documents
 License:       ASL 2.0
@@ -224,6 +224,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.19-alt1_1jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.16-alt1_1jpp8
 - new version
 
