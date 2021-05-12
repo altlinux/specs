@@ -1,7 +1,7 @@
 # TODO: see spec from PLD with separate packages
 Name: global
 Version: 6.6.5
-Release: alt1
+Release: alt2
 
 Summary: Source code tag system
 
@@ -20,6 +20,7 @@ Source: http://tamacom.com/global/global-%version.tar
 BuildRequires: ctags glibc-devel libltdl7-devel libncurses-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+BuildRequires: rpm-build-python3
 
 %description
 GNU GLOBAL is a source code tag system that works the same way across
@@ -80,6 +81,9 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Wed May 12 2021 Vitaly Lipatov <lav@altlinux.ru> 6.6.5-alt2
+- fix build
+
 * Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 6.6.5-alt1
 - new version 6.6.5 (with rpmrb script)
 
