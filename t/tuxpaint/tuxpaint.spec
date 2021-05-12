@@ -1,6 +1,6 @@
 Name: tuxpaint
 Version: 0.9.25
-Release: alt1
+Release: alt2
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -14,6 +14,7 @@ Source1: %name.desktop
 
 Patch1: tuxpaint-0.23-e2k-fix_bad_elf_symbol.patch
 
+BuildRequires(pre): rpm-build-python
 BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel
 BuildRequires: libSDL_pango-devel libSDL_ttf-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
@@ -110,6 +111,9 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt2
+- Fixed FTBFS.
+
 * Fri Jan 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt1
 - Build new version.
 
