@@ -4,17 +4,19 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          plexus-pom
-Version:       5.0
-Release:       alt1_6jpp8
+Version:       5.1
+Release:       alt1_2jpp8
 Summary:       Root Plexus Projects POM
 License:       ASL 2.0
+
 URL:           https://github.com/codehaus-plexus/plexus-pom
-Source0:       https://github.com/codehaus-plexus/plexus-pom/archive/plexus-%{version}.tar.gz
+Source0:       %{url}/archive/plexus-%{version}.tar.gz
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+
 BuildArch:     noarch
 
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 Source44: import.info
 
 %description
@@ -24,12 +26,14 @@ Plexus packages.
 
 %prep
 %setup -q -n plexus-pom-plexus-%{version}
+
 # * require: org.codehaus.plexus plexus-stylus-skin 1.0
 # org.apache.maven.wagon wagon-webdav-jackrabbit 1.0
 %pom_remove_plugin :maven-site-plugin
 
 %pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
+
 cp -p %{SOURCE1} LICENSE
 
 %build
@@ -42,6 +46,9 @@ cp -p %{SOURCE1} LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_2jpp8
+- new version
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_6jpp8
 - fc update
 
