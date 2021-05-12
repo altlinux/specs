@@ -8,12 +8,17 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           maven-resolver
 Epoch:          1
-Version:        1.3.3
+Version:        1.4.1
 Release:        alt1_2jpp8
 License:        ASL 2.0
 Summary:        Apache Maven Artifact Resolver library
 URL:            http://maven.apache.org/resolver/
 Source0:        http://archive.apache.org/dist/maven/resolver/%{name}-%{version}-source-release.zip
+
+# keep deprecated and removed aether CacheUtils for a while longer
+# some packages still depend on this and things break without it
+Patch0:         00-keep-deprecated-aether-CacheUtils.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -125,6 +130,7 @@ This package provides %{summary}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 # tests require jetty 7
 %pom_remove_dep :::test maven-resolver-transport-http
@@ -187,6 +193,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1:1.4.1-alt1_2jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_2jpp8
 - new version
 
