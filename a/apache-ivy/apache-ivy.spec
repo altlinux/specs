@@ -16,7 +16,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           apache-ivy
 Version:        2.4.0
-Release:        alt1_18jpp8
+Release:        alt1_20jpp8
 Summary:        Java-based dependency manager
 
 License:        ASL 2.0
@@ -48,9 +48,6 @@ BuildRequires:  bouncycastle-pg
 BuildRequires:  apache-commons-httpclient
 BuildRequires:  jsch
 BuildRequires:  jakarta-oro
-BuildRequires:  apache-commons-parent
-BuildRequires:  sonatype-oss-parent
-BuildRequires:  apache-parent
 BuildRequires:  ivy-local >= 4
 %if %{with ssh}
 BuildRequires:  jsch-agent-proxy-connector-factory
@@ -177,6 +174,9 @@ echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_20jpp8
+- fc update
+
 * Sun May 09 2021 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_18jpp8
 - update
 
