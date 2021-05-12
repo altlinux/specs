@@ -3,19 +3,19 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          morfologik-stemming
 Version:       2.0.1
-Release:       alt1_9jpp8
+Release:       alt2_9jpp8
 Summary:       Morfologik stemming library
 License:       BSD
 URL:           http://morfologik.blogspot.com/
 Source0:       https://github.com/morfologik/morfologik-stemming/archive/%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(com.beust:jcommander)
+BuildRequires: mvn(com.beust:jcommander:1)
 BuildRequires: mvn(com.carrotsearch:hppc)
 BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(commons-cli:commons-cli)
@@ -86,6 +86,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.0.1-alt2_9jpp8
+- fixed build with new beust-jcommander 1.78
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_9jpp8
 - new version
 
