@@ -1,22 +1,43 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-parent
-Version:        27
-Release:        alt1_7jpp8
+Version:        33
+Release:        alt1_3jpp8
 Summary:        Apache Maven parent POM
 License:        ASL 2.0
+
 URL:            http://maven.apache.org
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+# Upstream removed plexus-javadoc after the 33 release
+# https://github.com/apache/maven-parent/commit/6b8b4446a11799cb38826881cdef5b13a7b8834e
+Patch0:         6b8b444.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  apache-parent
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+
+# explicitly require maven-plugin-tools-javadoc
+Requires:       mvn(org.apache.maven.plugin-tools:maven-plugin-tools-javadoc)
+
+# this package obsoletes maven-shared and maven-plugins-pom
+Provides:       maven-shared = %{version}-%{release}
+Obsoletes:      maven-shared < 22-9
+
+Provides:       maven-plugins-pom = %{version}-%{release}
+Obsoletes:      maven-plugins-pom < 28-9
 Source44: import.info
 
 %description
@@ -24,9 +45,13 @@ Apache Maven parent POM file used by other Maven projects.
 
 %prep
 %setup -q
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-checkstyle-plugin
+%patch0 -p1
+
 %pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
+%pom_remove_plugin :maven-scm-publish-plugin
+%pom_remove_plugin :maven-site-plugin
 
 %build
 %mvn_build
@@ -38,6 +63,9 @@ Apache Maven parent POM file used by other Maven projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 33-alt1_3jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 27-alt1_7jpp8
 - new version
 
