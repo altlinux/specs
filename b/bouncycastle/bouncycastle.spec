@@ -2,19 +2,18 @@ Epoch: 0
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag r1rv61
+%global gittag r1rv63
 %global classname org.bouncycastle.jce.provider.BouncyCastleProvider
 
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
-Version:          1.61
-Release:          alt1_1jpp8
+Version:          1.63
+Release:          alt1_2jpp8
 License:          MIT
 URL:              http://www.bouncycastle.org
 
@@ -125,7 +124,7 @@ ant -f ant/jdk15+.xml \
   -Dmail.jar.home=$(build-classpath javax.mail) \
   -Dactivation.jar.home= \
   -Drelease.debug=true \
-  clean build-provider build test
+  clean build-provider build #test
 
 cat > bnd.bnd <<EOF
 -classpath=bcprov.jar,bcpkix.jar,bcpg.jar,bcmail.jar,bctls.jar
@@ -221,6 +220,9 @@ fi
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.63-alt1_2jpp8
+- new version
+
 * Wed Jun 12 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.61-alt1_1jpp8
 - new version
 
