@@ -1,6 +1,6 @@
 Name: thinksaber
 Version: 0.4
-Release: alt2
+Release: alt3
 
 Summary: Turn your HDAPS-enabled Thinkpad into Jedi's Lightsabre
 License: GPL-2.0
@@ -13,6 +13,8 @@ Source2: thinksaber.sysconfig
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
 
 %define tsdir %_datadir/%name
 
@@ -49,6 +51,9 @@ install -pDm644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 0.4-alt3
+- Fixed FTBFS.
+
 * Fri Jan 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.4-alt2
 - Transferred to python3.
 - Fixed license.
