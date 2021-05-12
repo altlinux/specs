@@ -1,5 +1,5 @@
 Name: rp-pppoe
-Version: 3.14
+Version: 3.15
 Release: alt1
 
 License: GPLv2+
@@ -19,7 +19,6 @@ Source7: %name-MINI-HOWTOs.tar
 Patch0: %name-%version-%release.patch
 
 BuildPreReq: ppp
-Provides: rp-pppoe
 
 # Automatically added by buildreq on Wed Oct 12 2005
 BuildRequires: libpcap-devel
@@ -52,9 +51,9 @@ Summary(ru_RU.UTF-8): PPP через Ethernet (поддержка xDSL)
 Group: Networking/Other
 Requires: ppp >= 2.3.7
 Requires: openresolv
-Requires: %name-base = %version-%release
-Provides: rp-pppoe
-Obsoletes: rp-pppoe
+Requires: %name-base = %EVR
+Provides: rp-pppoe = %EVR
+Obsoletes: rp-pppoe < %EVR
 
 %description client
 PPPoE (Point-to-Point Protocol over Ethernet) is a protocol used by
@@ -76,8 +75,8 @@ Summary: PPP Over Ethernet (xDSL support)
 Summary(ru_RU.UTF-8): PPP через Ethernet (поддержка xDSL)
 Group: Networking/Other
 Requires: ppp >= 2.3.7
-Conflicts: %name-base < %version-%release
-Conflicts: %name-base > %version-%release
+Conflicts: %name-base < %EVR
+Conflicts: %name-base > %EVR
 
 %description server
 pppoe-server is a user-space server for PPPoE (Point-to-Point Protocol over Ethernet)
@@ -187,6 +186,10 @@ EOF
 %post_control pppoe-wrapper
 
 %changelog
+* Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 3.15-alt1
+- Used versioned provides/obsoletes for rp-pppoe.
+- Updated to 3.15.
+
 * Fri Jul 10 2020 Mikhail Efremov <sem@altlinux.org> 3.14-alt1
 - Don't use rpm-build-licenses.
 - Updated to 3.14.
