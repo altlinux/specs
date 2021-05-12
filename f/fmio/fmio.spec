@@ -2,7 +2,7 @@
 
 Name: fmio
 Version: 2.0.8
-Release: alt4
+Release: alt5
 
 Summary: fmio, FM radio card manipulation utility
 License: BSD
@@ -23,6 +23,7 @@ Patch2: fmio-2.0.8-dyn.asp.patch
 Patch3: fmio-2.0.8-nodirectio.patch
 Patch4: fmio-2.0.8-alt-v4l.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libXext-devel libXpm-devel
 BuildRequires: libv4l-devel
 
@@ -103,6 +104,9 @@ install -pm644 %SOURCE2 README.fedora
 
 
 %changelog
+* Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.8-alt5
+- Fixed FTBFS.
+
 * Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.8-alt4
 - Fixed FTBFS with -fcommon.
 
