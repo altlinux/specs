@@ -4,12 +4,12 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-core
-Version:       2.9.9
-Release:       alt1_1jpp8
+Version:       2.10.2
+Release:       alt1_2jpp8
 Summary:       Core part of Jackson
 License:       ASL 2.0
-URL:           https://github.com/FasterXML/jackson-core/
-Source0:       https://github.com/FasterXML/jackson-core/archive/%{name}-%{version}.tar.gz
+URL:           https://github.com/FasterXML/jackson-core
+Source0:       %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
@@ -41,6 +41,8 @@ This package contains API documentation for %{name}.
 
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin"
+%pom_remove_plugin "org.jacoco:jacoco-maven-plugin"
+%pom_remove_plugin "org.moditect:moditect-maven-plugin"
 
 cp -p src/main/resources/META-INF/LICENSE .
 cp -p src/main/resources/META-INF/NOTICE .
@@ -62,6 +64,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.9.9-alt1_1jpp8
 - new version
 
