@@ -1,6 +1,6 @@
 Name: trustme
 Version: 0.7
-Release: alt6
+Release: alt7
 
 Summary: Encrypted notepad
 License: %gpl2only
@@ -13,10 +13,9 @@ Patch1: trustme-commit-on-lock.patch
 Patch2: trustme-multiple-db.patch
 
 
-#optimized out: fontconfig glibc-pthread libX11-locales libgpg-error libgtk+2-common python-base python-module-pycairo python-module-pygobject python-modules
+BuildRequires(pre): rpm-build-licenses rpm-build-python
 BuildRequires: libgcrypt python-module-pygtk python-modules-encodings python-module-gcrypt
 
-BuildPreReq: rpm-build-licenses
 BuildRequires: desktop-file-utils
 
 %description
@@ -53,6 +52,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/%name.png
 
 %changelog
+* Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 0.7-alt7
+- Fixed FTBFS.
+
 * Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 0.7-alt6
 - Fixed python shebang.
 
