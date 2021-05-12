@@ -4,17 +4,25 @@
 %_K5if_ver_gteq %ubt_id M90
 %def_enable obsolete_kde4
 %add_findreq_skiplist %_datadir/lokalize/scripts/*.py
+%add_findreq_skiplist %_datadir/lokalize/scripts/*/*.py
+%add_findprov_skiplist %_datadir/lokalize/scripts/*.py
+%add_findprov_skiplist %_datadir/lokalize/scripts/*/*.py
+%add_python3_path %_datadir/lokalize
 %else
 %def_disable obsolete_kde4
 %add_findreq_skiplist %_K5data/lokalize/scripts/*.py
+%add_findreq_skiplist %_K5data/lokalize/scripts/*/*.py
+%add_findprov_skiplist %_K5data/lokalize/scripts/*.py
+%add_findprov_skiplist %_K5data/lokalize/scripts/*/*.py
+%add_python3_path %_K5data/lokalize
 %endif
 
 
 %define rname lokalize
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
-%K5init %{?_enable_obsolete_kde4:no_altplace}
+Release: alt2
+%K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Development/Tools
 Summary: Computer-aided translation system
@@ -84,6 +92,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
+- fix package
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
