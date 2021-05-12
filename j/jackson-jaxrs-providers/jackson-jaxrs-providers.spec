@@ -9,15 +9,18 @@ BuildRequires: jpackage-1.8-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with jp_minimal
+%bcond_without jp_minimal
 
 Name:          jackson-jaxrs-providers
-Version:       2.9.8
-Release:       alt2_1jpp8
+Version:       2.10.2
+Release:       alt1_2jpp8
 Summary:       Jackson JAX-RS providers
 License:       ASL 2.0
+
 URL:           https://github.com/FasterXML/jackson-jaxrs-providers
-Source0:       https://github.com/FasterXML/jackson-jaxrs-providers/archive/%{name}-%{version}.tar.gz
+Source0:       %{url}/archive/%{name}-%{version}.tar.gz
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
@@ -25,15 +28,8 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations)
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(javax.ws.rs:javax.ws.rs-api)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
-BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
-BuildRequires:  mvn(org.ow2.asm:asm)
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-cbor)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile)
@@ -44,7 +40,12 @@ BuildRequires:  mvn(org.glassfish.jersey.core:jersey-server)
 BuildRequires:  mvn(org.jboss.resteasy:resteasy-jaxrs)
 %endif
 
-BuildArch:      noarch
+%if %{with jp_minimal}
+Obsoletes:      jackson-jaxrs-cbor-provider < 2.10.0-1
+Obsoletes:      jackson-jaxrs-smile-provider < 2.10.0-1
+Obsoletes:      jackson-jaxrs-xml-provider < 2.10.0-1
+Obsoletes:      jackson-jaxrs-yaml-provider < 2.10.0-1
+%endif
 Source44: import.info
 
 %description
@@ -124,6 +125,8 @@ cp -p xml/src/main/resources/META-INF/LICENSE .
 cp -p xml/src/main/resources/META-INF/NOTICE .
 sed -i 's/\r//' LICENSE NOTICE
 
+%pom_remove_plugin -r :moditect-maven-plugin
+
 # Disable jar with no-meta-inf-services classifier, breaks build
 %pom_remove_plugin :maven-jar-plugin cbor
 %pom_remove_plugin :maven-jar-plugin json
@@ -155,7 +158,7 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %if %{with jp_minimal}
 %mvn_build -s -f
 %else
-%mvn_build -s -f
+%mvn_build -s
 %endif
 
 %install
@@ -183,6 +186,9 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
+- new version
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt2_1jpp8
 - build with new jersey
 
