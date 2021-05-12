@@ -7,7 +7,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.4.16
+Version: 7.4.19
 Release: alt1
 
 %define php7_name      %name
@@ -307,6 +307,7 @@ EOF
 mkdir -p %buildroot%_usrsrc/php7-devel/{ext,sapi,main,conf}
 cp -dpR php.ini* %buildroot%_usrsrc/php7-devel/conf
 cp -dpR ext/*    %buildroot%_usrsrc/php7-devel/ext
+find %buildroot%_usrsrc/php7-devel/ext/ -type f -perm 0600 -delete
 cp -dpR sapi/*   %buildroot%_usrsrc/php7-devel/sapi
 
 # Add necessary files to build any sapi packages.
@@ -442,6 +443,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Tue May 11 2021 Anton Farygin <rider@altlinux.ru> 7.4.19-alt1
+- 7.4.19
+
 * Tue Mar 09 2021 Anton Farygin <rider@altlinux.org> 7.4.16-alt1
 - 7.4.16
 
