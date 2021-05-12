@@ -7,8 +7,8 @@
 %define libssh libssh
 
 Name: libssh
-Version: 0.9.3
-Release: alt2
+Version: 0.9.5
+Release: alt1
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
@@ -112,6 +112,10 @@ install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 %_libdir/*.so
 
 %changelog
+* Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.5-alt1
+- new version
+- security (fixes: CVE-2020-16135)
+
 * Wed Mar 04 2020 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt2
 - track library soname version
 
