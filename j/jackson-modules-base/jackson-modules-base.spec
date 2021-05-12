@@ -12,12 +12,13 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with    jp_minimal
 
 Name:          jackson-modules-base
-Version:       2.9.8
+Version:       2.10.2
 Release:       alt1_2jpp8
 Summary:       Jackson modules: Base
 License:       ASL 2.0
+
 URL:           https://github.com/FasterXML/jackson-modules-base
-Source0:       https://github.com/FasterXML/jackson-modules-base/archive/%{name}-%{version}.tar.gz
+Source0:       %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -30,9 +31,12 @@ BuildRequires:  mvn(com.google.inject:guice)
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.thoughtworks.paranamer:paranamer)
 %endif
+# xmvn-builddep misses this one:
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.glassfish.jaxb:jaxb-runtime)
 BuildRequires:  mvn(org.mockito:mockito-all)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.ow2.asm:asm)
@@ -116,6 +120,12 @@ This package contains API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+# no need for Java 9 module stuff
+%pom_remove_plugin -r :moditect-maven-plugin
+
+# move to "old" glassfish-jaxb-api artifactId
+%pom_change_dep -r jakarta.xml.bind:jakarta.xml.bind-api javax.xml.bind:jaxb-api
+
 # Disable bundling of asm
 %pom_remove_plugin ":maven-shade-plugin" afterburner mrbean paranamer
 %pom_xpath_remove "pom:properties/pom:osgi.private" mrbean paranamer
@@ -190,6 +200,9 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_2jpp8
 - new version
 
