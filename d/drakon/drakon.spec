@@ -1,7 +1,7 @@
 %define oname drakon_editor
 Name: drakon
 Version: 1.31
-Release: alt1
+Release: alt2
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
 
@@ -11,6 +11,8 @@ Url: http://drakon-editor.sourceforge.net/
 
 # Source-url: http://prdownloads.sf.net/drakon-editor/%oname%{version}.zip
 Source: %name-%version.tar
+
+AutoProv:yes,nopython,nopython3
 
 %add_findreq_skiplist %_datadir/%name/examples/*
 %add_findreq_skiplist %_datadir/%name/testdata/*
@@ -76,6 +78,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/
 
 %changelog
+* Wed May 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.31-alt2
+- disable python provides
+
 * Wed May 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1.31-alt1
 - new version 1.31 (with rpmrb script) (ALT bug #36768)
 
