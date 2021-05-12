@@ -1,26 +1,25 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/xprop imake java-devel-default libXt-devel pkgconfig(dbus-1) xorg-cf-files
+BuildRequires: /usr/bin/jar /usr/bin/java /usr/bin/javac /usr/bin/xprop imake libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global major_version 0.33
-%global minor_version 2.1
+%global major_version 0.38
+%global minor_version 0
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt2_0.pre01jpp8
+Release:    alt1_1jpp11
 Summary:    Java ATK Wrapper
 
 License:    LGPLv2+
-URL:        http://git.gnome.org/browse/java-atk-wrapper
-Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{name}-%{version}.tar.gz
+URL:        https://gitlab.gnome.org/GNOME/java-atk-wrapper
+Source0:    https://download.gnome.org/sources/%{name}/%{major_version}/%{name}-%{version}.tar.xz
 # this is a fedora-specific file
 # needed to explain how to use java-atk-wrapper with different java runtimes
 Source1:    README.fedora
-Patch1:		removeNotExistingManifestInclusion.patch
 
 
 BuildRequires:	gcc
@@ -29,7 +28,7 @@ BuildRequires:	clang
 BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
-BuildRequires:  libgtk+2-devel
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:  xorg-utils
 BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
@@ -53,11 +52,9 @@ change of underlying communication mechanism.
 
 %prep
 %setup -q
-%patch1
 
 %build
-sh autogen.sh
-%configure
+%configure --disable-Werror
 %make_build
 cp %{SOURCE1} .
 
@@ -85,6 +82,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so \
 
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt1_1jpp11
+- new version
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.33.2.1-alt2_0.pre01jpp8
 - updated buildrequires
 
