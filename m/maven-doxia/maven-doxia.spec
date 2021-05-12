@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,13 +13,12 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without itext
-%bcond_without markdown
-%bcond_without fop
+%bcond_with    itext
+%bcond_with    fop
 
 Name:           maven-doxia
-Version:        1.7
-Release:        alt2_10jpp8
+Version:        1.9
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -31,20 +30,14 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia/%{ver
 # https://issues.apache.org/jira/browse/DOXIA-53
 Patch1:         0001-Fix-itext-dependency.patch
 
-# Accepted upstream: DOXIA-504, https://issues.apache.org/jira/browse/DOXIA-504
-Patch2:         0002-Update-to-Plexus-Container-1.5.5.patch
-
 # Don't run bad tests which rely on ordering in set (they fail with Java 8)
-Patch3:         0003-Disable-tests-which-rely-on-ordering-in-set.patch
-
-# Not upstreamable due to higher Java version of fop's dependencies
-Patch4:         0004-Port-to-fop-2.0.patch
+Patch2:         0002-Disable-tests-which-rely-on-ordering-in-set.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
@@ -53,7 +46,8 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(xmlunit:xmlunit)
+BuildRequires:  mvn(org.xmlunit:xmlunit-core)
+BuildRequires:  mvn(org.xmlunit:xmlunit-matchers)
 
 %if %{with fop}
 BuildRequires:  mvn(commons-collections:commons-collections)
@@ -66,14 +60,16 @@ BuildRequires:  mvn(org.apache.xmlgraphics:fop)
 BuildRequires:  mvn(com.lowagie:itext)
 %endif
 
-%if %{with markdown}
-BuildRequires:  mvn(org.pegdown:pegdown)
-%endif
-
 Obsoletes:      maven-doxia-book < %{epoch}:%{version}-%{release}
 Obsoletes:      maven-doxia-maven-plugin < %{epoch}:%{version}-%{release}
+%if %{without fop}
+Obsoletes:      maven-doxia-module-fo < %{epoch}:%{version}-%{release}
+%endif
+%if %{without itext}
+Obsoletes:      maven-doxia-module-itext < %{epoch}:%{version}-%{release}
+%endif
+Obsoletes:      maven-doxia-module-markdown < %{epoch}:%{version}-%{release}
 Source44: import.info
-
 
 %description
 Doxia is a content generation framework which aims to provide its
@@ -81,7 +77,6 @@ users with powerful techniques for generating static and dynamic
 content. Doxia can be used to generate static sites in addition to
 being incorporated into dynamic content generation systems like blogs,
 wikis and content management systems.
-
 
 %package core
 Group: Development/Java
@@ -143,15 +138,6 @@ Summary: iText module for %{name}
 This package provides %{summary}.
 %endif
 
-%if %{with markdown}
-%package module-markdown
-Group: Development/Java
-Summary: Markdown module for %{name}
-
-%description module-markdown
-This package provides %{summary}.
-%endif
-
 %package module-latex
 Group: Development/Java
 Summary: Latex module for %{name}
@@ -194,6 +180,13 @@ Summary: XHTML module for %{name}
 %description module-xhtml
 This package provides %{summary}.
 
+%package module-xhtml5
+Group: Development/Java
+Summary: XHTML5 module for %{name}
+
+%description module-xhtml5
+This package provides %{summary}.
+
 %package sink-api
 Group: Development/Java
 Summary: Sink-api module for %{name}
@@ -224,13 +217,13 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
-
 %prep
 %setup -q -n doxia-%{version}
+
+find -name '*.java' -exec sed -i 's/\r//' {} +
+find -name '*.xml' -exec sed -i 's/\r//' {} +
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 # we don't have clirr-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin pom.xml
@@ -246,30 +239,24 @@ API documentation for %{name}.
 # requires network
 rm doxia-core/src/test/java/org/apache/maven/doxia/util/XmlValidatorTest.java
 
-# FIXME fails
-rm doxia-modules/doxia-module-markdown/src/test/java/org/apache/maven/doxia/module/markdown/MarkdownParserTest.java
-
 %mvn_package :::tests: tests
+
+%pom_disable_module doxia-module-markdown doxia-modules
 
 %if %{without itext}
 %pom_disable_module doxia-module-itext doxia-modules
-%endif
-%if %{without markdown}
-%pom_disable_module doxia-module-markdown doxia-modules
 %endif
 %if %{without fop}
 %pom_disable_module doxia-module-fo doxia-modules
 %endif
 
 %build
-%mvn_build -s -f
+%mvn_build -s
 
 %install
 %mvn_install
 
-
 %files -f .mfiles-doxia
-%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 %files core -f .mfiles-doxia-core
 %files logging-api -f .mfiles-doxia-logging-api
@@ -284,24 +271,24 @@ rm doxia-modules/doxia-module-markdown/src/test/java/org/apache/maven/doxia/modu
 %if %{with itext}
 %files module-itext -f .mfiles-doxia-module-itext
 %endif
-%if %{with markdown}
-%files module-markdown -f .mfiles-doxia-module-markdown
-%endif
 %files module-latex -f .mfiles-doxia-module-latex
 %files module-rtf -f .mfiles-doxia-module-rtf
 %files modules -f .mfiles-doxia-modules
 %files module-twiki -f .mfiles-doxia-module-twiki
 %files module-xdoc -f .mfiles-doxia-module-xdoc
 %files module-xhtml -f .mfiles-doxia-module-xhtml
+%files module-xhtml5 -f .mfiles-doxia-module-xhtml5
 %files sink-api -f .mfiles-doxia-sink-api
 %files test-docs -f .mfiles-doxia-test-docs
-#%files tests -f .mfiles-tests
+%files tests -f .mfiles-tests
 %doc LICENSE NOTICE
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
-
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9-alt1_4jpp8
+- new version
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt2_10jpp8
 - build w/o tests - support for fop 2.4
 
