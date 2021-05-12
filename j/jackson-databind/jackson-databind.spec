@@ -4,19 +4,19 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-databind
-Version:       2.9.9.3
-Release:       alt1_1jpp8
+Version:       2.10.2
+Release:       alt1_2jpp8
 Summary:       General data-binding package for Jackson (2.x)
 License:       ASL 2.0 and LGPLv2+
+
 URL:           https://github.com/FasterXML/jackson-databind/
-Source0:       https://github.com/FasterXML/jackson-databind/archive/%{name}-%{version}.tar.gz
+Source0:       %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 
-# TODO: Revert back to version macro when versions align again.
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= 2.9.9
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= 2.9.9
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= 2.9.9
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.powermock:powermock-api-mockito)
@@ -43,8 +43,9 @@ This package contains API documentation for %{name}.
 
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin"
+%pom_remove_plugin "org.jacoco:jacoco-maven-plugin"
+%pom_remove_plugin "org.moditect:moditect-maven-plugin"
 
-cp -p src/main/resources/META-INF/LICENSE .
 cp -p src/main/resources/META-INF/NOTICE .
 sed -i 's/\r//' LICENSE NOTICE
 
@@ -77,6 +78,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.9.9.3-alt1_1jpp8
 - new version
 
