@@ -46,7 +46,7 @@ BuildRequires: jpackage-11-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt5_19jpp11
+Release:        alt6_19jpp11
 Epoch:          0
 License:        LGPLv2+
 URL:            http://forge.objectweb.org/projects/monolog/
@@ -111,6 +111,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3.2-alt6_19jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3.2-alt5_19jpp11
 - update
 
