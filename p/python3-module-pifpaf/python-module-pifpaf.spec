@@ -2,9 +2,9 @@
 
 Summary: Suite of tools and fixtures to manage daemons for testing
 Name: python3-module-%oname
-Version: 2.5.0
+Version: 3.1.5
 Release: alt1
-Url: https://github.com/jd/pifpaf
+Url: https://pypi.org/project/pifpaf
 Source: %oname-%version.tar.gz
 License: Apache-2.0
 Group: Development/Python3
@@ -12,7 +12,7 @@ Group: Development/Python3
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-pbr
+BuildRequires: python3-module-pbr
 BuildRequires: python3-module-cliff
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-six
@@ -55,6 +55,9 @@ export LANG=en_US.UTF-8
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt1
+- Build new version.
+
 * Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
 - Build new version.
 - Fix license.
