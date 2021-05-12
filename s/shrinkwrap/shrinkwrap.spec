@@ -3,29 +3,21 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.2.3
-%global namedreltag %{nil}
-%global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
-Version:       1.2.3
-Release:       alt2_8jpp8
-Summary:       A simple mechanism to assemble Java archives
+Version:       1.2.6
+Release:       alt1_2jpp8
+Summary:       Java API for Archive Manipulation
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
 License:       ASL 2.0
-Url:           http://arquillian.org/modules/shrinkwrap-shrinkwrap/
-Source0:       https://github.com/shrinkwrap/shrinkwrap/archive/%{namedversion}.tar.gz
+
+URL:           http://arquillian.org/modules/shrinkwrap-shrinkwrap/
+Source0:       https://github.com/shrinkwrap/shrinkwrap/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(jdepend:jdepend)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.jboss:jboss-parent:pom:)
-BuildRequires: mvn(org.jboss.apiviz:apiviz)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -122,7 +114,8 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q
+
 
 %pom_disable_module dist
 
@@ -136,6 +129,7 @@ This package contains javadoc for %{name}.
 %pom_xpath_remove "pom:profiles" impl-base 
 
 %pom_remove_plugin -r :maven-checkstyle-plugin
+%pom_remove_plugin -r :maven-release-plugin
 %pom_remove_plugin -r org.eclipse.m2e:lifecycle-mapping
 
 # Convert from dos to unix line ending
@@ -147,7 +141,6 @@ rm LICENSE.orig
 %mvn_package :%{name}-impl-base::tests: %{name}-impl-base
 
 %build
-
 %mvn_build -s
 
 %install
@@ -180,6 +173,9 @@ rm LICENSE.orig
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1.2.6-alt1_2jpp8
+- new version
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt2_8jpp8
 - fc update
 
