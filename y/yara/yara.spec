@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: yara
-Version: 4.0.5
+Version: 4.1.0
 Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
@@ -11,7 +11,6 @@ Summary: The pattern matching swiss knife for malware researchers (and everyone 
 Url: http://virustotal.github.io/yara/
 Vcs: https://github.com/virustotal/yara
 # Docs: https://yara.readthedocs.io/
-Requires: libyara4 = %EVR
 ExclusiveArch: %ix86 x86_64
 
 Source: %name-%version.tar
@@ -65,8 +64,8 @@ Development files for YARA.
 rm -f %buildroot%_libdir/libyara.a
 
 %check
+LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
 %make_build check
-%buildroot%_bindir/yara --version
 
 %files
 %doc AUTHORS CONTRIBUTORS README.md COPYING
@@ -82,6 +81,9 @@ rm -f %buildroot%_libdir/libyara.a
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Wed May 12 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.0-alt1
+- Update to v4.1.0 (2021-04-19).
+
 * Sun Feb 07 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.5-alt1
 - Update to v4.0.5 (2021-02-05).
 
