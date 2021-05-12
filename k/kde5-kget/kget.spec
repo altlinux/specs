@@ -5,11 +5,11 @@
 
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
-%K5init
+Release: alt2
+%K5init no_appdata
 
 Group: Networking/File transfer
-Summary: Downloader for KDE
+Summary: Download Manager for KDE
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
@@ -34,7 +34,7 @@ BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-deve
 BuildRequires: kf5-solid-devel kf5-sonnet-devel
 
 %description
-Dolphin is a file manager for KDE focusing on usability.
+KGet is a versatile and user-friendly download manager.
 
 %package common
 Summary: %name common package
@@ -109,6 +109,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
+- fix package description
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
