@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.1
+Version:  2.1.1
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -136,6 +136,9 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Thu May 13 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.1.1-alt1
+- Fixed saving the password from authentication window
+
 * Fri May 07 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.1-alt1
 - Added Menu -> Find (Ctrl+F): set focus to search entry
 - Added focus on saved connection
