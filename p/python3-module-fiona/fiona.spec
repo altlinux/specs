@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 1.8.17
-Release: alt2
+Version: 1.8.19
+Release: alt1
 Summary: Fiona reads and writes spatial data files
 License: BSD
 Group: Development/Python3
@@ -18,7 +18,6 @@ Patch: use_sphinx-apidoc-3.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: libgdal-devel gcc-c++
-BuildRequires: python3-devel
 BuildRequires: python3-module-Cython python3-module-pytest
 BuildRequires: python3-module-sphinx
 
@@ -112,6 +111,9 @@ python3 setup.py test
 %doc docs/_build/html docs/*.txt
 
 %changelog
+* Thu May 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.19-alt1
+- Automatically updated to 1.8.19.
+
 * Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.17-alt2
 - fix build
 
