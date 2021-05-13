@@ -1,6 +1,6 @@
 Name: libcontrol++
 Version: 0.25.0
-Release: alt1
+Release: alt2
 
 Summary: control++ common classes and functions library
 License: GPLv3
@@ -56,6 +56,9 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu May 13 2021 Alexey Appolonov <alexey@altlinux.org> 0.25.0-alt2
+- Build with debuginfo enabled.
+
 * Mon Feb 15 2021 Alexey Appolonov <alexey@altlinux.org> 0.25.0-alt1
 - New function 'Join' that joins elements of an iterable;
 - New function 'Split' that splits given string into a vector of substrings;
