@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,33 +12,32 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without snappy
 
 Name:           plexus-archiver
-Version:        4.1.0
-Release:        alt1_1jpp8
+Version:        4.2.1
+Release:        alt1_2jpp11
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
-URL:            http://codehaus-plexus.github.io/plexus-archiver
-BuildArch:      noarch
 
-Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/plexus-archiver-%{version}.tar.gz
+URL:            https://github.com/codehaus-plexus/plexus-archiver
+Source0:        %{url}/archive/plexus-archiver-%{version}.tar.gz
 
 Patch0:         0001-Remove-support-for-snappy.patch
 
+BuildArch:      noarch
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default) >= 2.1.0
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io) >= 3.2.0
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.3.0
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 %if %{with snappy}
 BuildRequires:  mvn(org.iq80.snappy:snappy)
 %endif
-
-# Missing from xmvn-builddep
 BuildRequires:  mvn(org.tukaani:xz)
 Source44: import.info
 
@@ -72,8 +71,11 @@ rm -f src/main/java/org/codehaus/plexus/archiver/tar/SnappyTarFile.java
 rm -f src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTarSnappyFileResourceCollection.java
 %endif
 
+# looks like this test hasn't been ported to plexus-containers 2+ yet:
+rm src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
+
 %build
-%mvn_build -f
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.test.skip=true
 
 %install
 %mvn_install
@@ -85,6 +87,9 @@ rm -f src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTarSnappyFileResour
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2.1-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:4.1.0-alt1_1jpp8
 - new version
 
