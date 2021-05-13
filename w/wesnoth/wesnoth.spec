@@ -4,6 +4,8 @@ BuildRequires: boost-devel-headers
 ####### wesnoth >= 1.12  ##############
 BuildRequires: libvorbis-devel
 #######################################
+# py2 scripts: remove after migration
+BuildRequires: rpm-build-python
 
 %define _unpackaged_files_terminate_build 1
 %def_with build_using_scons
@@ -36,7 +38,7 @@ BuildRequires: libvorbis-devel
 #define wesdesktopsuffix %nil
 
 Name: wesnoth%wessuffix
-Version: 1.14.15
+Version: 1.14.16
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -709,6 +711,9 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.14.16-alt1
+- new version
+
 * Sun Jan 17 2021 Igor Vlasenko <viy@altlinux.ru> 1.14.15-alt1
 - new version
 
