@@ -1,6 +1,6 @@
 Name:     daps
-Version:  3.0.0
-Release:  alt2
+Version:  3.1.1
+Release:  alt1
 
 Summary:  DocBook Authoring and Publishing Suite (DAPS)
 License:  GPL-2.0 or GPL-3.0
@@ -85,6 +85,12 @@ Documentation for %name.
 %_datadir/doc/%name
 
 %changelog
+* Wed May 12 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt1
+- New version.
+
+* Tue May 11 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
 - Add rpm-build-python3 to build requirements.
 
