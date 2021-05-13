@@ -1,6 +1,8 @@
+%define _sbindir /sbin
+
 Name: exfatprogs
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary:  Official utilities for exFAT file system
 Group: System/Kernel and hardware
@@ -11,10 +13,11 @@ Vcs: https://github.com/exfatprogs/exfatprogs.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Conflicts: exfat-utils
+Obsoletes: exfat-utils
+Provides: %_sbindir/dump.exfat %_sbindir/exfatlabel %_sbindir/fsck.exfat
+Provides: %_sbindir/mkfs.exfat %_sbindir/tune.exfat
 
 %{?_enable_check:BuildRequires: losetup}
-
 %description
 As new exfat filesystem is merged into linux-5.7 kernel, exfatprogs is
 created as an official userspace utilities that contain all of the standard
@@ -44,6 +47,12 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Thu May 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt2
+- moved utilities to /sbin (ALT #40043)
+
+* Thu May 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1.1
+- Obsoletes: exfat-utils (ALT #40035)
+
 * Wed Apr 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
