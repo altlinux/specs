@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		freeplane
 Version:	1.3.15
-Release:	alt2_7jpp8
+Release:	alt3_7jpp8
 Summary:	Mind mapping, knowledge management and project management tool
 Group:		Office
 License:	GPLv2+
@@ -31,6 +31,7 @@ Source90:	%{__fp_github}/freeplane_framework/lib/knopflerfish/framework.jar
 Source91:	%{__fp_github}/freeplane/lib/idw-gpl.jar
 Source92:	%{__fp_github}/freeplane_plugin_script/lib/jsyntaxpane.jar
 Source33:	groovy-1.8.jar
+Source34:	SimplyHTML.jar
 # 3rd-party .jars still kept in the package:
 # freeplane: knopflerfish, idw-gpl
 # freeplane_plugin_script: jsyntaxpane (see Source.. above)
@@ -67,7 +68,7 @@ BuildRequires:	jmapviewer >= 1.03
 #BuildRequires:	knopflerfish
 BuildRequires:	objectweb-asm3 >= 3.3.1
 BuildRequires:	rhino
-BuildRequires:	SimplyHTML >= 0.16.7
+#BuildRequires:	SimplyHTML >= 0.16.7
 BuildRequires:	xerces-j2
 BuildRequires:	xml-commons-apis >= 1.4
 
@@ -95,7 +96,7 @@ Requires:	jmapviewer >= 1.03
 #Requires:	knopflerfish
 Requires:	objectweb-asm3 >= 3.3.1
 Requires:	rhino
-Requires:	SimplyHTML >= 0.16.7
+#Requires:	SimplyHTML >= 0.16.7
 Requires:	xerces-j2
 Requires:	xml-commons-apis >= 1.4
 Source44: import.info
@@ -155,8 +156,8 @@ sed -i 's/lookandfeel = default/lookandfeel = com.sun.java.swing.plaf.gtk.GTKLoo
 
 %build
 mkdir lib
-install -m 644 %{SOURCE33} lib/groovy-1.8.jar
-CLASSPATH=`pwd`/lib/groovy-1.8.jar
+install -m 644 %{SOURCE33} %{SOURCE34} lib/
+CLASSPATH=`pwd`/lib/groovy-1.8.jar:`pwd`/lib/SimplyHTML.jar
 for cp in \
     avalon-framework-api \
     objectweb-asm3/asm-distroshaded \
@@ -164,7 +165,6 @@ for cp in \
     commons-lang \
     commons-io \
     commons-codec \
-    SimplyHTML/SimplyHTML \
     felix/org.osgi.core \
     jlatexmath \
     JMapViewer \
@@ -255,7 +255,7 @@ popd
 
 # bundled lib
 cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.core/lib/ \
-	%{SOURCE33}
+	%{SOURCE33} %{SOURCE34}
 
 %files
 %doc README.%{product_distribution}
@@ -269,6 +269,9 @@ cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.core/lib/ \
 
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt3_7jpp8
+- bundled SimplyHTML to fix build
+
 * Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt2_7jpp8
 - bundled groovy 1.8 to fix build
 
