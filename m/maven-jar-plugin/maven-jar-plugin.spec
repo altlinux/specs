@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-jar-plugin
-Version:        3.1.2
-Release:        alt1_2jpp8
+Version:        3.2.0
+Release:        alt1_2jpp11
 Summary:        Maven JAR Plugin
 
 License:        ASL 2.0
@@ -19,16 +19,20 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 BuildArch: noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven:maven-archiver) >= 3.5.0
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:file-management)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver) >= 4.2.0
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.3.0
 Source44: import.info
 
 %description
@@ -48,8 +52,7 @@ API documentation for %{name}.
 %setup -q
 
 %build
-# Test class MockArtifact doesn't override method getMetadata
-%mvn_build -f -- -DmavenVersion=3.1.2
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -62,6 +65,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_2jpp8
 - new version
 
