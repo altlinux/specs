@@ -2,7 +2,7 @@ Group: Development/Other
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -12,7 +12,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt3_26jpp11
+Release:          alt4_26jpp8
 Summary:          Java Persistence 2.0 (JSR 317) API
 License:          EPL and BSD
 URL:              http://www.hibernate.org/
@@ -52,7 +52,7 @@ This package contains the API documentation for %{name}.
 sed -i 's/\r//' src/main/javadoc/jdstyle.css
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build
 
 %install
 # Fixing wrong-file-end-of-line-encoding
@@ -67,6 +67,9 @@ sed -i 's/\r//' target/site/apidocs/jdstyle.css
 %doc --no-dereference license.txt
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt4_26jpp8
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt3_26jpp11
 - update
 
