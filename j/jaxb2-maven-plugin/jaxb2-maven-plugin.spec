@@ -8,35 +8,32 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          jaxb2-maven-plugin
 Version:       1.6
-Release:       alt1_10jpp8
+Release:       alt1_12jpp8
 Summary:       JAXB-2 Maven Plugin
 License:       ASL 2.0
 Url:           http://www.mojohaus.org/jaxb2-maven-plugin/
 # Source code avialable @ https://github.com/mojohaus/jaxb2-maven-plugin
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildRequires: mojo-parent
-BuildRequires: glassfish-jaxb
-BuildRequires: mvn(org.apache.maven:maven-artifact)
+BuildRequires: maven-local
+BuildRequires: mvn(aopalliance:aopalliance)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.sf.cglib:cglib)
+BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven:maven-artifact:2.2.1)
 BuildRequires: mvn(org.apache.maven:maven-compat)
 BuildRequires: mvn(org.apache.maven:maven-core)
-BuildRequires: mvn(org.apache.maven:maven-model)
+BuildRequires: mvn(org.apache.maven:maven-model:2.2.1)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires: mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires: mvn(org.codehaus.plexus:plexus-compiler-api)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.glassfish.jaxb:jaxb-jxc)
+BuildRequires: mvn(org.glassfish.jaxb:jaxb-xjc)
 BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
-
-# test deps
-BuildRequires: aopalliance
-BuildRequires: cglib
-BuildRequires: junit
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: xmlunit
-
-BuildRequires: maven-local
-BuildRequires: maven-invoker-plugin
-BuildRequires: maven-plugin-plugin
+BuildRequires: mvn(xmlunit:xmlunit)
 
 BuildArch:     noarch
 Source44: import.info
@@ -64,7 +61,6 @@ sed -i 's/\r//' LICENSE.txt
 %pom_add_dep org.apache.maven:maven-compat
 
 # missing build deps
-# om_add_dep org.glassfish.jaxb:jaxb-runtime
 %pom_xpath_set "pom:dependencies/pom:dependency[pom:artifactId ='jaxb-jxc']/pom:groupId" org.glassfish.jaxb
 %pom_xpath_set "pom:dependencies/pom:dependency[pom:artifactId ='jaxb-xjc']/pom:groupId" org.glassfish.jaxb
 
@@ -78,7 +74,6 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_file :%{name} %{name}
 
 %build
-
 %mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
@@ -91,6 +86,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1_12jpp8
+- fixed build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_10jpp8
 - fc update
 
