@@ -3,7 +3,7 @@
 
 Name: guitarix
 Version: 0.42.0
-Release: alt1
+Release: alt2
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPL-2.0-or-later
@@ -11,6 +11,7 @@ Url: https://sourceforge.net/projects/guitarix
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.appdata.xml
+Patch0: %name-glib-2.68.patch
 
 BuildRequires: gcc-c++
 BuildRequires: faust-devel
@@ -93,6 +94,7 @@ guitarix, but can also be used by any other ladspa host.
 
 %prep
 %setup
+%patch0 -p2
 
 # fix shebang
 find . -type f -print0 |
@@ -164,6 +166,9 @@ install -p -m644 %SOURCE1 %buildroot%_datadir/metainfo
 %_libdir/lv2/*
 
 %changelog
+* Thu May 13 2021 Slava Aseev <ptrnine@altlinux.org> 0.42.0-alt2
+- NMU: fix build with GLib 2.68
+
 * Tue Dec 22 2020 Anton Midyukov <antohami@altlinux.org> 0.42.0-alt1
 - new version 0.42.0
 
