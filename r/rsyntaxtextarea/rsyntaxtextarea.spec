@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           rsyntaxtextarea
 Version:        3.1.1
-Release:        alt1_2jpp11
+Release:        alt2_2jpp11
 Summary:        A syntax highlighting, code folding text editor for Java Swing applications
 
 License:        BSD
@@ -59,7 +59,7 @@ popd
 %build
 d=`mktemp -d`
 f=`find %{upname}/src/main/java -type f | grep \.java$`
-javac -d $d $f
+javac  -target 1.8 -source 1.8 -d $d $f
 cp -rv %{upname}/src/main/resources/* $d
 l=`pwd`
 pushd $d
@@ -81,6 +81,9 @@ popd
 
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt2_2jpp11
+- built for java8
+
 * Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_2jpp11
 - new version
 
