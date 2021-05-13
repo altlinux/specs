@@ -1,28 +1,28 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global upname RSyntaxTextArea
 
 Name:           rsyntaxtextarea
-Version:        2.6.1
-Release:        alt1_6jpp8
+Version:        3.1.1
+Release:        alt1_2jpp11
 Summary:        A syntax highlighting, code folding text editor for Java Swing applications
 
 License:        BSD
 URL:            https://github.com/bobbylight/%{upname}
 Source0:        https://github.com/bobbylight/%{upname}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source1:        pom.xml
 
-# This patch removes upstream's dependency on gradle coveralls plugin.
-Patch0:         %{name}-no-coveralls.patch
-# This patch enables proper Arduino Support
-Patch1:         %{name}-arduino.patch
+BuildRequires:  maven-local
+
+
+# Apply workaround until gradle doesn't exists in repos
+Provides:       mvn(com.fifesoft:rsyntaxtextarea)
+Provides:       osgi(com.fifesoft.rsyntaxtextarea)
 
 BuildArch:      noarch
-
-BuildRequires:  gradle-local
-Requires:       java
 Source44: import.info
 
 %description
@@ -32,46 +32,58 @@ programming languages, code folding, search and replace, and has add-on
 libraries for code completion and spell checking. Syntax highlighting for
 additional languages can be added via tools such as JFlex.
 
-%package javadoc
+%package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{upname}
-BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 This package contains the API documentation for %{name}.
 
 
 %prep
 %setup -q -n %{upname}-%{version}
-%patch0 -p1
-%patch1 -p2
+
+
+# Drop included jars
 find . -name "*.jar" -delete
+
+pushd %{upname}
 for file in src/main/dist/%{upname}.License.txt src/main/dist/readme.txt; do
- sed "s|\r||g" $file > $file.new && \
- touch -r $file $file.new && \
- mv $file.new $file
+    sed "s|\r||g" $file > $file.new && \
+    touch -r $file $file.new && \
+    mv $file.new $file
 done
+popd
 
 
 %build
-# We skip unit tests because they require an X11 server.
-%gradle_build --skip-tests
-
+d=`mktemp -d`
+f=`find %{upname}/src/main/java -type f | grep \.java$`
+javac -d $d $f
+cp -rv %{upname}/src/main/resources/* $d
+l=`pwd`
+pushd $d
+jar -cf $l/%{name}.jar *
+popd
+%mvn_artifact %{SOURCE1} %{name}.jar
 
 %install
-%mvn_install -J build/docs/javadoc/
+%mvn_install
+
+
 
 
 %files -f .mfiles
-%doc --no-dereference src/main/dist/%{upname}.License.txt
-%doc src/main/dist/readme.txt
+%doc --no-dereference %{upname}/src/main/dist/%{upname}.License.txt
+%doc %{upname}/src/main/dist/readme.txt
+%{_datadir}/java/%{name}/%{name}.jar
 
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference src/main/dist/%{upname}.License.txt
 
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_2jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1_6jpp8
 - fc update
 
