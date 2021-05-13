@@ -2,13 +2,13 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 21.04.0
+Version: 21.04.1
 Release: alt1
 
 Summary: KDE Partition Manager
 License: GPLv3
 Group: Graphical desktop/KDE
-Url: https://www.kde.org/applications/system/kdepartitionmanager/
+Url: https://apps.kde.org/%name
 
 %if_disabled snapshot
 #Source: https://github.com/KDE/%name/archive/v%version/%name-%version.tar.gz
@@ -65,6 +65,9 @@ file systems.
 %doc README*
 
 %changelog
+* Thu May 13 2021 Yuri N. Sedunov <aris@altlinux.org> 21.04.1-alt1
+- 21.04.1
+
 * Thu Apr 22 2021 Yuri N. Sedunov <aris@altlinux.org> 21.04.0-alt1
 - 21.04.0
 
