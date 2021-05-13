@@ -1,6 +1,6 @@
 Name: pcb2gcodeGUI
-Version: 1.3.2
-Release: alt1.1
+Version: 1.3.3
+Release: alt1
 Summary: A GUI for pcb2gcode
 
 Group: Engineering
@@ -55,6 +55,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu May 13 2021 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt1
+- new version 1.3.3
+
 * Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1.1
 - Rebuilt for aarch64
 
