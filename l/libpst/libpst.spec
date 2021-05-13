@@ -1,7 +1,8 @@
-Name: libpst
-Version: 0.6.68
-Release: alt2.2
+%define _unpackaged_files_terminate_build 1
 
+Name: libpst
+Version: 0.6.76
+Release: alt1
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
 Group: System/Libraries
@@ -12,13 +13,12 @@ Source100: libpst.watch
 Patch1: %name-%version-alt-known-fields.patch
 
 BuildRequires(pre): rpm-build-licenses
-
+BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Tue Aug 04 2009
-BuildRequires: ImageMagick-tools boost-python-devel gcc-c++ libgd2-devel
+BuildRequires: ImageMagick-tools gcc-c++ libgd3-devel zlib-devel
+BuildRequires: python3-devel boost-python3-devel
 BuildRequires: libgsf-devel
 BuildRequires: xmlto doxygen graphviz
-
-BuildPreReq: rpm-build-python
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -40,7 +40,7 @@ import to an LDAP server.
 %package devel
 Summary: Development files for libpst
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides header and libraries for build programs
@@ -49,7 +49,7 @@ against libpst
 %package tools
 Summary: libpst tools
 Group: File tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 Tools to cope with PST (Outlook Personal Folders) files:
@@ -62,7 +62,7 @@ Tools to cope with PST (Outlook Personal Folders) files:
 %package docs
 Summary: libpst documentation
 Group: Documentation
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 # License for xml/MAPI_definitions.pdf is GFDL1.1 with no invariant sections etc.,
 # therefore it must be GPL2-compatible. (In case that file is packaged.)
@@ -70,11 +70,11 @@ BuildArch: noarch
 %description docs
 Developer's documentation for libpst
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python interface to libpst (for reading Outlook files)
-Group: Development/Python
+Group: Development/Python3
 
-%description  -n python-module-%name
+%description  -n python3-module-%name
 Python interface to libpst (for reading Outlook files)
 
 %prep
@@ -82,14 +82,13 @@ Python interface to libpst (for reading Outlook files)
 %patch1 -p1
 
 %build
-# add hack for proper python-2 detection
-export ac_cv_path_PYTHON=$(which python2)
-
 %autoreconf
 %configure \
 	--enable-libpst-shared \
-	--disable-static
-%make_build -C xml/
+	--disable-static \
+	--with-boost-python=boost_python%{python_version_nodots python3} \
+	%nil
+
 %make_build
 
 %install
@@ -98,6 +97,9 @@ export ac_cv_path_PYTHON=$(which python2)
 # Some reverse-engineered documentation:
 mkdir -p %buildroot%pkgdocdir/format-documentation
 install -m0644 xml/*.pdf -t %buildroot%pkgdocdir/format-documentation/
+
+# remove unpackaged files
+rm -f %buildroot%_libdir/python*/site-packages/*.la
 
 %files
 %_libdir/*.so.*
@@ -120,10 +122,14 @@ install -m0644 xml/*.pdf -t %buildroot%pkgdocdir/format-documentation/
 # LICENSE etc.
 %exclude %pkgdocdir/[A-Z]*
 
-%files -n python-module-%name
-%python_sitelibdir/*.so
+%files -n python3-module-%name
+%python3_sitelibdir/*.so
 
 %changelog
+* Thu May 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.76-alt1
+- Updated to upstream version 0.6.76.
+- Rebuilt with python-3.
+
 * Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.68-alt2.2
 - Rebuilt with boost-1.71.0.
 
