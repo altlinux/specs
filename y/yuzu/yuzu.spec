@@ -1,8 +1,8 @@
 # git describe upstream/yuzu
-%define git_descr mainline-636-4845-gfc9cd297b1
+%define git_descr mainline-636-5283-g9a5a85eb04a
 
 Name: yuzu
-Version: 567
+Version: 620
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -44,28 +44,30 @@ Source12: xbyak.tar
 Source13: opus.tar
 # https://git.ffmpeg.org/ffmpeg.git
 Source14: ffmpeg.tar
+# https://github.com/libsdl-org/SDL.git
+Source15: SDL.tar
 # https://github.com/arsenm/sanitizers-cmake.git
-Source15: sanitizers-cmake.tar
+Source16: sanitizers-cmake.tar
 # https://github.com/KhronosGroup/SPIRV-Headers.git
-Source16: SPIRV-Headers.tar
-
-Patch0: %name-alt-boost-headers.patch
+Source17: SPIRV-Headers.tar
 
 BuildRequires: boost-asio-devel
 BuildRequires: boost-context-devel
-BuildRequires: boost-devel-headers
 BuildRequires: catch2-devel
 BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: glslang
 BuildRequires: libSDL2-devel
+BuildRequires: libXext-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavcodec-devel
+BuildRequires: libdrm-devel
+BuildRequires: libesd-devel
 BuildRequires: libfmt-devel
-BuildRequires: libgnutls-devel
+BuildRequires: libgbm-devel
 BuildRequires: libjack-devel
 BuildRequires: liblz4-devel
-BuildRequires: libnettle-devel
+BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
@@ -75,21 +77,20 @@ BuildRequires: libzstd-devel
 BuildRequires: llvm-common-clang-tools
 BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
+BuildRequires: pipewire-libs-devel
+BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
 BuildRequires: python3-module-mpl_toolkits
 BuildRequires: qt5-tools-devel
 BuildRequires: zlib-devel
 
-BuildPreReq: libidn2-devel
-BuildPreReq: libp11-kit-devel
-BuildPreReq: libtasn1-devel
+BuildPreReq: libwayland-cursor-devel
 
 %description
 %name is an open source Nintendo Switch emulator/debugger.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14 -b 15 -b 16
-%patch0 -p1
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14 -b 15 -b 16 -b 17
 
 %__mv -Tf ../inih externals/inih/inih
 %__mv -Tf ../cubeb externals/cubeb
@@ -105,6 +106,7 @@ BuildPreReq: libtasn1-devel
 %__mv -Tf ../xbyak externals/xbyak
 %__mv -Tf ../opus externals/opus/opus
 %__mv -Tf ../ffmpeg externals/ffmpeg
+%__mv -Tf ../SDL externals/SDL
 %__mv -Tf ../sanitizers-cmake externals/cubeb/cmake/sanitizers-cmake
 %__mv -Tf ../SPIRV-Headers externals/sirit/externals/SPIRV-Headers
 
@@ -122,6 +124,7 @@ BuildPreReq: libtasn1-devel
 %__mkdir externals/xbyak/.git
 %__mkdir externals/opus/opus/.git
 %__mkdir externals/ffmpeg/.git
+%__mkdir externals/SDL/.git
 
 # Enforce package versioning in GUI
 sed -i \
@@ -132,6 +135,7 @@ sed -i \
 src/common/scm_rev.cpp.in
 
 %build
+%add_optflags -I%_includedir/libzip
 %cmake \
 	-DENABLE_QT_TRANSLATION:BOOL=ON \
 	-GNinja \
@@ -150,6 +154,9 @@ DESTDIR=%buildroot ninja install -C BUILD
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu May 13 2021 Nazarov Denis <nenderus@altlinux.org> 620-alt1
+- Version 620
+
 * Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 567-alt1
 - Version 567
 
