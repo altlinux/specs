@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          hibernate-jpa-2.1-api
 Version:       1.0.0
-Release:       alt1_8jpp8
+Release:       alt2_8jpp8
 Summary:       Java Persistence 2.1 (JSR 338) API
 License:       EPL and BSD
 URL:           http://www.hibernate.org/
@@ -68,6 +68,9 @@ sed -i 's/\r//' src/main/javadoc/jdstyle.css
 %doc --no-dereference license.txt
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.0.0-alt2_8jpp8
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_8jpp8
 - fc update
 
