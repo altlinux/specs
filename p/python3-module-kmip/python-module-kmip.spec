@@ -1,12 +1,12 @@
 %define  oname kmip
 
 Name:    python3-module-%oname
-Version: 0.9.1
-Release: alt2
+Version: 0.10.0
+Release: alt1
 
 Summary: Open source Python implementation of the KMIP specification.
 
-License: ASL 2.0
+License: Apache-2.0
 Group:   Development/Python3
 URL:     https://github.com/OpenKMIP/PyKMIP
 BuildArch: noarch
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-python3
 Conflicts: python-module-%oname
 
 Source:  %oname-%version.tar
+
+Patch: fix-exception-using-py2-format.patch
 
 %description
 PyKMIP is a Python implementation of the Key Management Interoperability
@@ -34,6 +36,7 @@ for conducting cryptographic operations. Supported object types include:
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 %build
 %python3_build
@@ -49,6 +52,10 @@ for conducting cryptographic operations. Supported object types include:
 
 
 %changelog
+* Thu May 13 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
+- Automatically updated to 0.10.0.
+- Fix license tag.
+
 * Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.1-alt2
 - Porting on Python3.
 
