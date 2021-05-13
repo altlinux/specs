@@ -17,11 +17,11 @@ BuildRequires: jpackage-1.8-compat
 # adding "--with its" to rpmbuild or mock invocation.
 %bcond_with its
 
-%bcond_without gradle
+%bcond_with gradle
 
 Name:           xmvn
 Version:        3.0.0
-Release:        alt1_26jpp8
+Release:        alt2_26jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -404,6 +404,9 @@ popd
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt2_26jpp8
+- build w/o gradle
+
 * Sun May 09 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_26jpp8
 - update
 
