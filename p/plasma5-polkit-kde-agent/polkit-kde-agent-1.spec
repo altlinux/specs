@@ -9,8 +9,8 @@
 %define rname polkit-kde-agent-1
 
 Name: plasma5-polkit-kde-agent
-Version: 5.21.4
-Release: alt4
+Version: 5.21.5
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -94,6 +94,9 @@ KF5 library
 %endif
 
 %changelog
+* Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
+- new version
+
 * Thu Apr 08 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt4
 - fix to build with old ECM
 

@@ -1,8 +1,8 @@
 %define rname bluedevil
 
 Name: plasma5-%rname
-Version: 5.21.4
-Release: alt3
+Version: 5.21.5
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -14,8 +14,6 @@ License: GPL-2.0-or-later
 Requires: bluez >= 5.0 obexd
 
 Source: %rname-%version.tar
-
-Patch0: alt-kio-fix-sendfile.patch
 
 # Automatically added by buildreq on Fri Feb 27 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs shared-mime-info
@@ -69,7 +67,6 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
-%patch0 -p2
 
 %build
 %K5build \
@@ -113,6 +110,9 @@ else
 fi
 
 %changelog
+* Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
+- new version
+
 * Fri Apr 16 2021 Egor Ignatov <egori@altlinux.org> 1:5.21.4-alt3
 - Update mime database after install
 

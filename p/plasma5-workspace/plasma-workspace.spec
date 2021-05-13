@@ -34,8 +34,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.21.4
-Release: alt5
+Version: 5.21.5
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -60,6 +60,7 @@ Requires: plasma5-polkit-kde-agent plasma5-kwin plasma5-kactivitymanagerd
 Source: %rname-%version.tar
 Source1: freememorynotifier.po
 Source2: libkicker-ru-add.po
+Source3: plasma_lookandfeel_org.kde.lookandfeel-ru-add.po
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
 Patch102: alt-def-wallpaper-image.patch
@@ -281,6 +282,9 @@ install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 msgcat --use-first po/ru/libkicker.po %SOURCE2 > po/ru/libkicker.po.tmp
 cat po/ru/libkicker.po.tmp > po/ru/libkicker.po
 rm -f po/ru/libkicker.po.tmp
+msgcat --use-first po/ru/plasma_lookandfeel_org.kde.lookandfeel.po %SOURCE3 > po/ru/plasma_lookandfeel_org.kde.lookandfeel.po.tmp
+cat po/ru/plasma_lookandfeel_org.kde.lookandfeel.po.tmp > po/ru/plasma_lookandfeel_org.kde.lookandfeel.po
+rm -f po/ru/plasma_lookandfeel_org.kde.lookandfeel.po.tmp
 
 # disable krunners by default
 for d in runners/*/*.desktop ; do
@@ -477,6 +481,9 @@ done
 
 
 %changelog
+* Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
+- new version
+
 * Fri Apr 23 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt5
 - clean requires
 
