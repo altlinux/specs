@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt1
+Release: alt2
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -60,8 +60,8 @@ BuildRequires: /usr/bin/qemu-system-i386
 #BuildRequires: /usr/bin/qemu-img
 BuildRequires: qemu-img qemu-aux
 BuildRequires: perl(Mojo/File.pm)
-BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm) yamllint
-BuildRequires: perl(Mojolicious.pm)
+BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm) yamllint perl(Inline/Python.pm)
+BuildRequires: perl(Mojolicious.pm) python3-module-setuptools
 BuildPreReq: cmake rpm-macros-cmake ninja-build rpm-macros-ninja-build ctest
 Requires: qemu-kvm
 Requires: tesseract
@@ -74,6 +74,8 @@ Requires: qemu >= 2.0.0
 ExclusiveArch: i586 x86_64 ppc64le aarch64
 
 %add_perl_lib_path %buildroot%_libexecdir/os-autoinst
+%add_python3_lib_path %_libexecdir/os-autoinst
+%add_python3_req_skip perl
 
 %description
 The OS-autoinst project aims at providing a means to run fully
@@ -100,9 +102,13 @@ This package contains Open vSwitch support for os-autoinst.
 sed  -i 's/ my $thisversion = qx{git -C $dirname rev-parse HEAD};/ my $thisversion = "%version";/' isotovideo
 sed  -i 's/ chomp(my $git_hash = qx{git rev-parse HEAD});/ chomp(my $git_hash = "%version");/' OpenQA/Isotovideo/Utils.pm
 sed -e 's,/bin/env python,/bin/python3,' -i crop.py
-rm -f t/10-terminal.t 
-rm -f t/14-isotovideo.t
-rm -f t/28-signalblocker.t
+# don't require qemu within OBS
+# and exclude known flaky tests in OBS check
+# https://progress.opensuse.org/issues/52652
+# 07-commands: https://progress.opensuse.org/issues/60755
+for i in 07-commands 10-terminal 13-osutils 14-isotovideo 18-qemu-options 18-backend-qemu 28-signalblocker 99-full-stack; do
+    rm -f t/$i.t
+done
 
 %build
 #mkdir -p m4
@@ -131,6 +137,9 @@ export CI=1
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Mon Apr 12 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt2
+- update to current version
+
 * Mon Mar 15 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt1
 - update to current version
 
