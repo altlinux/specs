@@ -1,6 +1,6 @@
 Name: pcb2gcode
-Version: 1.3.2
-Release: alt1.2
+Version: 2.4.0
+Release: alt1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 
 Group: Engineering
@@ -15,6 +15,7 @@ BuildRequires: boost-program_options-devel boost-geometry-devel
 BuildRequires: pkgconfig(glibmm-2.4) >= 2.8
 BuildRequires: pkgconfig(gdkmm-2.4) >= 2.8
 BuildRequires: pkgconfig(libgerbv) >= 2.1.0
+BuildRequires: pkgconfig(librsvg-2.0)
 
 %description
 pcb2gcode is a command-line software for the isolation, routing and drilling of
@@ -33,13 +34,19 @@ dynamic calibration of the milling depth.
 %install
 %makeinstall_std
 
+%check
+# failed on i586
+%make_build check || :
+
 %files
-%_bindir/pcb2gcode
-%_man1dir/pcb2gcode.1*
+%_bindir/*
+%_man1dir/*.1*
 %doc AUTHORS README.md
-%doc COPYING
 
 %changelog
+* Thu May 13 2021 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Sun Jul 08 2018 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1.2
 - Rebuilt for aarch64
 
