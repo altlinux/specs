@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.82.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -14,6 +14,7 @@ Source: %rname-%version.tar
 Source1: kwalletd5.po
 Patch2: alt-def-blowfish.patch
 Patch3: alt-create-wallet.patch
+Patch4: alt-secrets-api.patch
 
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libgpg-error libgpg-error-devel libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
@@ -27,6 +28,10 @@ BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel 
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-kdoctools
+BuildRequires: libqca-qt5-devel
+
+# For secrets API tests
+BuildRequires: qca-qt5-ossl
 
 %description
 This framework contains two main components:
@@ -67,11 +72,16 @@ KF5 library
 %setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 cat %SOURCE1 >> po/ru/kwalletd5.po
 
 %build
-%K5build
+%K5cmake -DBUILD_TESTING=ON
+%K5make
+
+%check
+BUILD/bin/fdo_secrets_test
 
 %install
 %K5install
@@ -89,6 +99,7 @@ cat %SOURCE1 >> po/ru/kwalletd5.po
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
 %_datadir/dbus-1/services/*.service
+%_K5dbus_srv/*.service
 
 %files devel
 %_K5inc/kwallet_version.h
@@ -104,6 +115,9 @@ cat %SOURCE1 >> po/ru/kwalletd5.po
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Thu May 13 2021 Slava Aseev <ptrnine@altlinux.org> 5.82.0-alt2
+- Introduce Secret Service API
+
 * Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.82.0-alt1
 - new version
 
