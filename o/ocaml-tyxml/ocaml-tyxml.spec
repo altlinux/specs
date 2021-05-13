@@ -1,8 +1,8 @@
 %def_enable check
 %define libname tyxml
 Name:           ocaml-%libname
-Version:        4.4.0
-Release:        alt4
+Version:        4.5.0
+Release:        alt1
 Summary:        TyXML is a library for building statically correct HTML5 and SVG documents
 License:        LGPLv2.1 with OCaml-LGPL-linking-exception
 Group:          Development/ML
@@ -55,6 +55,9 @@ mkdir -p %buildroot%_libdir/ocaml/
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu May 13 2021 Anton Farygin <rider@altlinux.ru> 4.5.0-alt1
+- 4.5.0
+
 * Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 4.4.0-alt4
 - cleanup BR
 - built clean library without addittonal modules
