@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		freeplane
 Version:	1.3.15
-Release:	alt1_7jpp8
+Release:	alt2_7jpp8
 Summary:	Mind mapping, knowledge management and project management tool
 Group:		Office
 License:	GPLv2+
@@ -30,6 +30,7 @@ Source80:	freeplane.1.xml
 Source90:	%{__fp_github}/freeplane_framework/lib/knopflerfish/framework.jar
 Source91:	%{__fp_github}/freeplane/lib/idw-gpl.jar
 Source92:	%{__fp_github}/freeplane_plugin_script/lib/jsyntaxpane.jar
+Source33:	groovy-1.8.jar
 # 3rd-party .jars still kept in the package:
 # freeplane: knopflerfish, idw-gpl
 # freeplane_plugin_script: jsyntaxpane (see Source.. above)
@@ -58,7 +59,7 @@ BuildRequires:	batik
 BuildRequires:	felix-osgi-core
 BuildRequires:	fop
 BuildRequires:	gnu-regexp >= 1.1.4
-BuildRequires:	groovy18 >= 1.8
+#BuildRequires:	groovy18 >= 1.8
 BuildRequires:	jgoodies-common >= 1.6
 BuildRequires:	jgoodies-forms >= 1.2
 BuildRequires:	jlatexmath >= 1.0.2
@@ -86,7 +87,7 @@ Requires:	batik
 Requires:	felix-osgi-core
 Requires:	fop
 Requires:	gnu-regexp >= 1.1.4
-Requires:	groovy18 >= 1.8
+#Requires:	groovy18 >= 1.8
 Requires:	jgoodies-common >= 1.6
 Requires:	jgoodies-forms >= 1.2
 Requires:	jlatexmath >= 1.0.2
@@ -153,7 +154,9 @@ sed -i 's/lookandfeel = default/lookandfeel = com.sun.java.swing.plaf.gtk.GTKLoo
 	freeplane/viewer-resources/freeplane.properties
 
 %build
-CLASSPATH=
+mkdir lib
+install -m 644 %{SOURCE33} lib/groovy-1.8.jar
+CLASSPATH=`pwd`/lib/groovy-1.8.jar
 for cp in \
     avalon-framework-api \
     objectweb-asm3/asm-distroshaded \
@@ -166,7 +169,6 @@ for cp in \
     jlatexmath \
     JMapViewer \
     batik-all \
-    groovy-1.8 \
     js \
     pdf-transcoder \
     xerces \
@@ -251,6 +253,10 @@ pushd freeplane/dist/doc
     sed -i 's/\r$//' history_en.txt freeplaneTutorial*.mmfilter
 popd
 
+# bundled lib
+cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.core/lib/ \
+	%{SOURCE33}
+
 %files
 %doc README.%{product_distribution}
 %doc freeplane/dist/doc/*
@@ -263,6 +269,9 @@ popd
 
 
 %changelog
+* Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt2_7jpp8
+- bundled groovy 1.8 to fix build
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.15-alt1_7jpp8
 - sisyphus build
 
