@@ -1,12 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -52,8 +51,8 @@ BuildRequires: jpackage-generic-compat
 %global ant_home %{_datadir}/ant
 
 Name:           ant
-Version:        1.10.5
-Release:        alt1_5jpp8
+Version:        1.10.6
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -66,7 +65,6 @@ Source2:        apache-ant-1.8.ant.conf
 Source3:        ant.asciidoc
 
 BuildRequires:  javapackages-local
-BuildRequires:  java-devel >= 1.8.0
 BuildRequires:  ant >= 1.10.2
 BuildRequires:  ant-junit
 
@@ -330,6 +328,14 @@ Optional apache xalan2 tasks for %{name}.
 %description apache-xalan2 -l fr
 Taches apache xalan2 optionelles pour %{name}.
 
+%package imageio
+Group: Development/Java
+Summary:        Optional imageio tasks for %{name}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description imageio
+Optional imageio tasks for %{name}.
+
 %package javamail
 Group: Development/Java
 Summary:        Optional javamail tasks for %{name}
@@ -569,6 +575,7 @@ echo "log4j12 ant/ant-apache-log4j" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/ap
 echo "oro ant/ant-apache-oro" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-oro
 echo "regexp ant/ant-apache-regexp" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-regexp
 echo "xalan-j2 xalan-j2-serializer ant/ant-apache-xalan2" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-xalan2
+echo "ant/ant-imageio" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/imageio
 echo "javamail jaf ant/ant-javamail" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/javamail
 echo "jdepend ant/ant-jdepend" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/jdepend
 echo "jsch ant/ant-jsch" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/jsch
@@ -683,6 +690,10 @@ LC_ALL=C.UTF-8 %{ant} test
 %{ant_home}/lib/%{name}-apache-xalan2.jar
 %config(noreplace) %{_sysconfdir}/%{name}.d/apache-xalan2
 
+%files imageio -f .mfiles-imageio
+%{ant_home}/lib/%{name}-imageio.jar
+%config(noreplace) %{_sysconfdir}/%{name}.d/imageio
+
 %files javamail -f .mfiles-javamail
 %{ant_home}/lib/%{name}-javamail.jar
 %config(noreplace) %{_sysconfdir}/%{name}.d/javamail
@@ -735,6 +746,9 @@ LC_ALL=C.UTF-8 %{ant} test
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.6-alt1_2jpp8
+- new version
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.10.5-alt1_5jpp8
 - new version
 
