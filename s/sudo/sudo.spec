@@ -1,7 +1,7 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.6p1
+Version: 1.9.7
 Release: alt1
 Epoch: 1
 
@@ -240,6 +240,12 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.7-alt1
+- Update to latest stable release
+
+* Fri May 14 2021 Nikolai Kostrigin <nickel@altlinux.org> 1:1.9.6p1-alt2
+- Fix missing word typo in Russian translation file
+
 * Thu Mar 25 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.6p1-alt1
 - Update to latest bugfix release of the sudo 1.9
 
