@@ -1,5 +1,5 @@
 Name: chrooted
-Version: 0.3.11
+Version: 0.3.12
 Release: alt1
 
 Summary: The chrooted environment helper
@@ -35,6 +35,12 @@ install -pm644 update_chrooted.8 %buildroot%_man8dir/
 
 install -Dpm755 resolvconf %buildroot%_sysconfdir/hooks/resolv.conf.d/update_chrooted
 
+# install config file
+mkdir -p %buildroot%_sysconfdir/sysconfig/
+cat <<EOF >%buildroot%_sysconfdir/sysconfig/chrooted
+#DISABLE_HARDLINKS=no
+EOF
+
 # Generate shell functions provides list.
 (
 	echo '# shell functions provides list'
@@ -48,6 +54,7 @@ install -Dpm755 resolvconf %buildroot%_sysconfdir/hooks/resolv.conf.d/update_chr
 /sbin/update_chrooted -f all
 
 %files
+%config(noreplace) %_sysconfdir/sysconfig/chrooted
 %_sysconfdir/hooks/resolv.conf.d/*
 /sbin/*
 %_sbindir/*
@@ -55,6 +62,11 @@ install -Dpm755 resolvconf %buildroot%_sysconfdir/hooks/resolv.conf.d/update_chr
 %config %_chrootdir
 
 %changelog
+* Wed May 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.12-alt1
+- Added config file installed to %%_sysconfdir/chrooted.
+- Added support for DISABLE_HARDLINKS config option that makes update_chrooted
+  copy files instead of hardlinking.
+
 * Fri Apr 03 2020 Dmitry V. Levin <ldv@altlinux.org> 0.3.11-alt1
 - Copy: always dereference symbolic links in SOURCE
   (by Alexey Shabalin; closes: #33591).
