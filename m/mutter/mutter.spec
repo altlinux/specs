@@ -16,7 +16,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -135,6 +135,7 @@ Summary: GObject introspection devel data for the Mutter library
 Group: System/Libraries
 Requires: lib%name-devel = %EVR
 Requires: lib%name-gir = %EVR
+#BuildArch: noarch
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Mutter library.
@@ -163,6 +164,9 @@ the functionality of the installed Mutter.
 %prep
 %setup -n %name-%version%beta
 %patch
+# Also disable KMS modifiers for radeon
+echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
+>> data/61-%name.rules
 
 %build
 %meson \
@@ -224,6 +228,10 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Fri May 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.1-alt1
+- 40.1
+- data/61-mutter.rules: disabled KMS modifiers for radeon driver
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.0-alt1
 - 40.0
 
