@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		fscrypt
-Version:	0.3.0.0.4.677ae75
+Version:	0.3.0.0.5.e479779
 Release:	alt1
 Summary:	A high-level tool for the management of Linux kernel filesystem encryption
 
@@ -14,6 +14,7 @@ Source:     %name-%version.tar
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
 BuildRequires: libpam0-devel
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm e2fsprogs expect keyutils}}
 
 %description
 Fscrypt is a high-level tool for the management of Linux filesystem
@@ -38,6 +39,13 @@ provides a uniform interface for creating and modifying encrypted directories.
 rm -r %buildroot/%_datadir/pam-configs
 install -Dm0644 .gear/%name.pam %buildroot%_sysconfdir/pam.d/%name
 
+%check
+sed -i 's/go test /\0 -mod=vendor /' Makefile
+mkdir -p /usr/src/bin
+ln -sf /usr/bin/time /usr/src/bin/sudo
+vm-run --kvm=cond --sbin --udevd \
+	make test-setup test test-teardown
+
 %files
 %_bindir/%name
 /%_lib/security/*.so
@@ -46,5 +54,8 @@ install -Dm0644 .gear/%name.pam %buildroot%_sysconfdir/pam.d/%name
 %doc *.md
 
 %changelog
+* Fri May 14 2021 Vitaly Chikunov <vt@altlinux.org> 0.3.0.0.5.e479779-alt1
+- Run tests in %%check.
+
 * Fri May 07 2021 Andrew Savchenko <bircoph@altlinux.org> 0.3.0.0.4.677ae75-alt1
 - Initial version
