@@ -3,8 +3,8 @@
 %def_with tests
 
 Name: bear
-Version: 3.0.7
-Release: alt1
+Version: 3.0.11
+Release: alt1.gitdfa9e262
 
 Summary: Tool that generates a compilation database for clang tooling
 
@@ -16,10 +16,7 @@ Packager: Maxim Knyazev <mattaku@altlinux.org>
 
 Source: %name-%version.tar
 
-# Fedora ppl have submitted the patch to upstream:
-# https://github.com/rizsotto/Bear/pull/348
-# Good for them!
-Patch1: fedora-bear.libexec-subdir.patch
+Patch1: %name-3.0.11-alt-protobuf-include.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -51,14 +48,11 @@ themselves and do not require this tool. Others, including plain Make, do not.
 %patch1 -p1
 
 %build
-%define _cmake_builddir %_target_platform
-mkdir -p "%_cmake_builddir"
-srcdir=.. # %%cmake does "pushd BUILD"
-%cmake -S $srcdir -B "$srcdir/%_cmake_builddir"
-cmake --build "%_cmake_builddir" --verbose -j%__nprocs
+%cmake
+%cmake_build VERBOSE=1
 
 %install
-DESTDIR=%buildroot cmake --install "%_cmake_builddir" --verbose
+%cmakeinstall_std
 
 for i in CODE_OF_CONDUCT.md CONTRIBUTING.md COPYING INSTALL.md README.md; do
     rm -f %buildroot%_docdir/Bear/$i
@@ -68,10 +62,13 @@ done
 %define _libexecdir %_prefix/libexec
 %_bindir/*
 %_man1dir/*.1*
-%_libexecdir/bear
+%_libexecdir/%name
 %doc COPYING README.md
 
 %changelog
+* Thu May 13 2021 Vladimir Didenko <cow@altlinux.org> 3.0.11-alt1.gitdfa9e262
+- New version.
+
 * Wed Jan 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.0.7-alt1
 - 2.4.3 -> 3.0.7.
 
