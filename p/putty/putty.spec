@@ -1,6 +1,6 @@
 Name: putty
 Version: 0.75
-Release: alt1
+Release: alt2
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -29,12 +29,22 @@ sed -i 's|g_strncasecmp|g_ascii_strncasecmp|g' unix/gtkfont.c
 sed -i 's|g_strcasecmp|g_ascii_strcasecmp|g' unix/gtkfont.c
 
 %build
+%add_optflags -Wall -Werror -Wstrict-aliasing -Wno-unused
+%ifarch %e2k
+# lcc 1.25.15: ftbfs workaround ('unreachable' macro ignored)
+# reported upstream and as mcst#6021
+%add_optflags -Wno-error=return-type -Wno-error=maybe-uninitialized
+# glib2 deprecation warnings
+%add_optflags -Wno-error=deprecated-declarations
+%endif
+
 cd unix
 # no $DISPLAY at buildtime. Define RELEASE/SNAPSHOT/SVN_REV here.
 %configure \
 	--disable-gtktest \
-	CFLAGS="-Wall -Werror -Wstrict-aliasing -Wno-unused -DRELEASE=%version" \
+	CFLAGS="%optflags -DRELEASE=%version" \
 	LIBS="-lm"
+
 %make_build
 
 mkdir -p %buildroot{%_bindir,%_man1dir}
@@ -57,6 +67,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 0.75-alt2
+- E2K: ftbfs wokaround (reported upstream; mcst#6021)
+
 * Sat May 08 2021 Michael Shigorin <mike@altlinux.org> 0.75-alt1
 - new version (watch file uupdate)
 - explicit -lm
