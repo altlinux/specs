@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.20
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
 %define karch x86_64 %ix86
@@ -133,13 +133,13 @@ mkdir -p %buildroot/%module_dir
 install -pD -m644 kernel-source-%guest_module_name-%module_version/vboxguest.ko \
     %buildroot%module_dir/vboxguestvbox.ko
 install -pD -m644 kernel-source-%vfs_module_name-%module_version/vboxsf.ko \
-    %buildroot%module_dir/
+    %buildroot%module_dir/vboxsfvbox.ko
 install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko \
     %buildroot%module_dir/vboxvideovbox.ko
 
 %files
 %defattr(644,root,root,755)
-%module_dir
+%module_dir/vboxsfvbox.ko
 %exclude %module_dir/vboxvideovbox.ko
 %exclude %module_dir/vboxguestvbox.ko
 
