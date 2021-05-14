@@ -1,14 +1,28 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define rname kdialog
+
+%_K5if_ver_gteq %ubt_id M100
+%def_enable obsolete_kde4
+%else
+%def_disable obsolete_kde4
+%endif
 
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
-%K5init
+Release: alt2
+%K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Graphical desktop/KDE
 Summary: Utility to display GUI dialog boxes from shell scripts
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+%if_enabled obsolete_kde4
+Provides: kde4base-kdialog = %version-%release
+Obsoletes: kde4base-kdialog < %version-%release
+%endif
 
 Source: %rname-%version.tar
 
@@ -43,6 +57,9 @@ The syntax is very much inspired from the "dialog" command
 #%_K5dbus_iface/org.kde.kdialog.ProgressDialog.xml
 
 %changelog
+* Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
+- obsolete kde4base-kdialog
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
