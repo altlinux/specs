@@ -11,26 +11,26 @@
 %define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
 Url: http://www.kde.org/
 License: GPLv2
 
-Requires: %name-dolphin        = %version-%release
+#Requires: %name-dolphin        = %version-%release
 %if_enabled kappfinder
-Requires: %name-kappfinder     = %version-%release
+#Requires: %name-kappfinder     = %version-%release
 %endif
-Requires: %name-kdepasswd      = %version-%release
-Requires: %name-kdialog        = %version-%release
-Requires: %name-keditbookmarks = %version-%release
-Requires: %name-kfind          = %version-%release
-Requires: %name-konqueror      = %version-%release
-Requires: kde4-konsole
-#Requires: kde4-kwrite
-Requires: %name-nsplugins      = %version-%release
-Requires: %name-plasma-applets = %version-%release
+#Requires: %name-kdepasswd      = %version-%release
+#Requires: %name-kdialog        = %version-%release
+#Requires: %name-keditbookmarks = %version-%release
+#Requires: %name-kfind          = %version-%release
+#Requires: %name-konqueror      = %version-%release
+#Requires: kde4-konsole
+##Requires: kde4-kwrite
+#Requires: %name-nsplugins      = %version-%release
+#Requires: %name-plasma-applets = %version-%release
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/kdebase-%version.tar
 Patch4: kdebase-4.3.3-alt-userpasswd.patch
@@ -83,7 +83,7 @@ Common files for %name package
 %package dolphin
 Group: File tools
 Summary: The file manager for KDE
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 %description dolphin
 Dolphin is a file manager for KDE focusing on usability.
@@ -105,7 +105,7 @@ of file management.
 %package kappfinder
 Group: Graphical desktop/KDE
 Summary: Applications finding tool
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 %description kappfinder
 Utility to find applications not included to menu
@@ -113,7 +113,7 @@ Utility to find applications not included to menu
 %package kdepasswd
 Group: Graphical desktop/KDE
 Summary: User account configuration
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 Requires: shadow-change
 %if_enabled userpasswd
@@ -136,7 +136,7 @@ The syntax is very much inspired from the "dialog" command
 %package keditbookmarks
 Group: Graphical desktop/KDE
 Summary: Utility to edit KDE bookmarks
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 %description keditbookmarks
 Utility to edit KDE bookmarks
@@ -144,7 +144,7 @@ Utility to edit KDE bookmarks
 %package kfind
 Group: File tools
 Summary: KDE utility to find files
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 %description kfind
 KDE utility to find files
@@ -152,7 +152,7 @@ KDE utility to find files
 %package kinfocenter
 Group: Graphical desktop/KDE
 Summary: System information center for KDE
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 %description kinfocenter
 System information center for KDE
@@ -161,7 +161,7 @@ System information center for KDE
 Group: Networking/WWW
 Summary: The file manager and web browser for KDE
 PreReq(post,preun): alternatives >= 0.2
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 Requires: indexhtml
 #Requires: %req_design_graphics
@@ -192,7 +192,7 @@ The file manager and web browser easy for use.
 %package kwrite
 Group: Editors
 Summary: Text editor for KDE
-Requires: kde4base-runtime-core
+#Requires: kde4base-runtime-core
 Requires: %name-common = %version-%release
 %description kwrite
 Text editor for KDE
@@ -614,6 +614,9 @@ done
 
 
 %changelog
+* Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt6
+- relax requires
+
 * Tue Oct 08 2019 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt5
 - clean requires
 
