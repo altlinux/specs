@@ -1,11 +1,11 @@
-
 Name: http-parser
 Version: 2.9.4
-Release: alt1
-Summary: HTTP request/response parser for C
+Release: alt2
 
-Group: System/Libraries
+Summary: HTTP request/response parser for C
 License: MIT
+Group: System/Libraries
+
 Url: http://github.com/joyent/http-parser
 Source: %name-%version.tar
 
@@ -38,9 +38,13 @@ Requires: lib%name = %version-%release
 Development headers and libraries for http-parser.
 
 %prep
-%setup -q
+%setup
 
 %build
+%ifarch %e2k
+# lcc 1.25: workaround ftbfs induced by d9275da4 commit (reported upstream)
+sed -i 's,-Werror,& -Wno-error=sign-compare,' Makefile
+%endif
 %make library
 
 %install
@@ -65,6 +69,10 @@ EOF
 %_libdir/libhttp_parser.so
 
 %changelog
+* Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 2.9.4-alt2
+- E2K: ftbfs workaround
+- minor spec cleanup
+
 * Sat May 09 2020 Alexey Shabalin <shaba@altlinux.org> 2.9.4-alt1
 - new version 2.9.4
 
@@ -77,13 +85,13 @@ EOF
 * Wed Jan 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt1
 - 2.9.0
 
-* Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 2.8.1-alt1%ubt
+* Thu Apr 12 2018 Alexey Shabalin <shaba@altlinux.ru> 2.8.1-alt1
 - 2.8.1
 
-* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.8.0-alt1%ubt
+* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.8.0-alt1
 - 2.8.0
 
-* Fri Apr 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.7.0-alt1%ubt
+* Fri Apr 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.7.0-alt1
 - Enable unified build tag aka ubt macros
 
 * Fri Jul 08 2016 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1
