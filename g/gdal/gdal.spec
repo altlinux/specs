@@ -9,7 +9,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.0.4
-Release: alt1.2
+Release: alt1.3
 Group: Sciences/Geosciences
 
 License: MIT
@@ -24,6 +24,7 @@ Patch3: %name-1.7.1-alt-inst_docs.patch
 Patch5: %name-alt-libproj.so_name.patch
 Patch6: %name-alt-python3.patch
 Patch7: %name-2.2.3-alt-mysql8-transition.patch
+Patch8: %name-3.0.4-arch-jpeg2000-issue-vendor.patch
 
 %define libname lib%name
 
@@ -112,15 +113,12 @@ Perl modules for GDAL/OGR.
 #patch0 -p1
 %patch2 -p2
 %patch3 -p2
-#%patch5 -p2
+#patch5 -p2
 %patch6 -p2
 %patch7 -p0
+%patch8 -p2
 
 %build
-# hack! remove!
-#add_optflags -fpermissive
-CXXFLAGS="$CXXFLAGS -fpermissive" ; export CXXFLAGS ;
-# end hack
 %add_optflags -fno-strict-aliasing -I%_includedir/netcdf
 %ifarch %e2k
 # lcc 1.23 can't do those __builtin_functions (mcst#3588)
@@ -251,11 +249,14 @@ sed -i 's|__bool__ = __nonzero__||' \
 %files -n perl-Geo-GDAL
 %perl_vendor_archlib/Geo
 %perl_vendor_autolib/Geo
-# %exclude %perl_vendor_archlib/Geo/*.dox
-# %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
+#exclude %perl_vendor_archlib/Geo/*.dox
+#exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 %endif
 
 %changelog
+* Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 3.0.4-alt1.3
+- fixed ftbfs with archlinux patch, dropped -fpermissive quick hack
+
 * Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1.2
 - NMU: fixed build (build w/o python2) (closes: #38911)
 - TODO: remove -fpermissive quick hack
@@ -389,7 +390,7 @@ sed -i 's|__bool__ = __nonzero__||' \
 - packaged utils binaries, not wrappers (#23397)
 - packaged docs and mans
 
-* Wed Apr 22 2010 Egor Vyscrebentsov <evyscr@altlinux.org> 1.7.1-alt1
+* Thu Apr 22 2010 Egor Vyscrebentsov <evyscr@altlinux.org> 1.7.1-alt1
 - new version: 1.7.1
 - enabled perl bindings
 - fixed python bindings
