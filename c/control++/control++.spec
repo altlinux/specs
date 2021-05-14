@@ -7,7 +7,7 @@
 
 Name: control++
 Version: 0.20.4
-Release: alt2
+Release: alt3
 
 Summary: System configuration tool
 License: GPLv3
@@ -112,6 +112,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu May 13 2021 Alexey Appolonov <alexey@altlinux.org> 0.20.4-alt3
+- Build with debuginfo enabled.
+
 * Mon May 03 2021 Alexey Appolonov <alexey@altlinux.org> 0.20.4-alt2
 - Build update according with a latest modification of the build system.
 
