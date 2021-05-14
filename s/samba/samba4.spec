@@ -73,7 +73,7 @@
 
 Name:    samba
 Version: 4.14.4
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1602,20 +1602,26 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with libcephfs
 %files vfs-cephfs
 %_samba_mod_libdir/vfs/ceph.so
+%if_with doc
 %_man8dir/vfs_ceph.8*
 %_man8dir/vfs_ceph_snapshots.8*
+%endif
 %endif
 
 %if_enabled glusterfs
 %files vfs-glusterfs
 %_samba_mod_libdir/vfs/glusterfs.so
+%if_with doc
 %_man8dir/vfs_glusterfs.8*
+%endif
 %endif
 
 %if_with snapper
 %files vfs-snapper
 %_samba_mod_libdir/vfs/snapper.so
+%if_with doc
 %_man8dir/vfs_snapper.8*
+%endif
 %endif
 
 %if_with dc
@@ -1916,6 +1922,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt3
+- Update with latest fixes (Samba#14695, Samba#14696)
+
+* Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 4.14.4-alt2.1
+- Fix doc knob
+
 * Thu May 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt2
 - Fix backward compatibility to fixed version of libldb with CVE-2021-20254.
 - Replace auth and vfs libraries from samba-libs to samba-dc-libs and samba packages.
