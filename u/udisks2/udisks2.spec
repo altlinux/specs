@@ -27,7 +27,7 @@
 
 Name: %{_name}2
 Version: 2.9.2
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -40,6 +40,8 @@ Source: https://github.com/storaged-project/%_name/releases/download/%_name-%ver
 Source: %_name-%version.tar
 %endif
 Source1: %name.control
+# 1c13dc6421355: "Use the mkfs command to format exfat partitions"
+Patch: udisks-2.9.2-up-mkexfat.patch
 
 Obsoletes: %_name
 
@@ -202,10 +204,10 @@ This package contains UDisks module for VDO management.
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 sed -i 's/mkfs\.vfat/mkfs.fat/
         s/fsck\.vfat/fsck.fat/
         s/dosfslabel/fatlabel/' src/udiskslinuxfsinfo.c src/tests/dbus-tests/*.py
-
 %build
 %autoreconf
 %configure --disable-static \
@@ -349,6 +351,10 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri May 14 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.2-alt2
+- applied upstream fix to use mkfs.exfat instead of mkexfatfs
+  not available in exfatprogs (ALT #40054)
+
 * Fri Feb 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.2-alt1
 - 2.9.2
 
