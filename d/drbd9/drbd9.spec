@@ -1,5 +1,5 @@
 Name: drbd9
-Version: 9.1.1
+Version: 9.1.2
 Release: alt1
 %define githash 93eb226a33f425ededd08a9cc82e372494475cb8
 
@@ -60,6 +60,9 @@ make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Fri May 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.1.2-alt1
+- 9.1.2
+
 * Fri Mar 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.1.1-alt1
 - 9.1.1
 
