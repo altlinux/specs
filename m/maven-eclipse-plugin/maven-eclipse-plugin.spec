@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt6_20jpp8
+Release:        alt7_20jpp8
 Summary:        Maven Eclipse Plugin
 
 License:        ASL 2.0
@@ -46,6 +46,7 @@ BuildRequires: jdom
 BuildRequires: dom4j
 BuildRequires: xom
 BuildRequires: saxpath
+BuildRequires: mvn(xmlunit:xmlunit)
 Source44: import.info
 %filter_from_requires /mvn\\(org\\.eclipse\\.core:resources\\)/d
 
@@ -103,6 +104,9 @@ ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
 %doc LICENSE NOTICE
 
 %changelog
+* Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 2.9-alt7_20jpp8
+- fixed build
+
 * Thu May 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.9-alt6_20jpp8
 - fc 28 update
 
