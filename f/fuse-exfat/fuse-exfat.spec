@@ -3,14 +3,14 @@
 Name: fuse-exfat
 Summary: Free exFAT file system implementation
 Version: 1.3.0
-Release: alt1
+Release: alt2
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/relan/exfat
 
 Source: https://github.com/relan/exfat/releases/download/v%version/%name-%version.tar.gz
 
-Requires: exfat-utils = %version
+Requires: exfatprogs
 
 BuildRequires: libfuse-devel
 
@@ -36,6 +36,9 @@ ln -s mount.exfat-fuse.8 %buildroot%_man8dir/mount.exfat.8
 %_man8dir/*.8*
 
 %changelog
+* Fri May 14 2021 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt2
+- Requires exfatprogs instead exfat-utils
+
 * Sat Mar 28 2020 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - 1.3.0
 - Fixed License tag
