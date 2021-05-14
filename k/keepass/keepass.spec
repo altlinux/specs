@@ -1,8 +1,8 @@
 %def_without doc
 
 Name: keepass
-Version: 2.47
-Release: alt2
+Version: 2.48.1
+Release: alt1
 
 Summary: Password manager
 
@@ -126,6 +126,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %endif
 
 %changelog
+* Fri May 14 2021 Oleg Solovyov <mcpain@altlinux.org> 2.48.1-alt1
+- new version: 2.48.1
+
 * Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.47-alt2
 - Switched back to xbuild.
 
