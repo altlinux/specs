@@ -1,7 +1,11 @@
 %define rname baloo
 
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+
 Name: kf5-%rname
-Version: 5.81.0
+Version: 5.82.0
 Release: alt1
 %K5init altplace
 
@@ -82,6 +86,9 @@ KF5 library
 
 %install
 %K5install
+for p in baloo_file baloo_file_extractor; do
+    ln -sfr %buildroot/%_K5libexecdir/$p %buildroot/%_K5bin/$p
+done
 %find_lang %name --all-name
 
 %files common -f %name.lang
@@ -90,14 +97,14 @@ KF5 library
 
 %files
 %_K5bin/baloo*
+%_K5libexecdir/baloo*
 #%_K5libexecdir/kauth/*baloo*
 %_K5plug/kf5/kded/baloosearchmodule.so
 %_K5plug/kf5/kio/*.so
 %_K5qml/org/kde/baloo/
 %_K5start/baloo*.desktop
 %_K5srv/*.protocol
-#%_K5conf_dbus_sysd/*.conf
-#%_K5dbus_sys_srv/*.service
+%_unitdir_user/*.service
 
 #%files -n polkit-kde-baloo
 #%_datadir/polkit-1/actions/*baloo*filewatch*.policy
@@ -117,6 +124,9 @@ KF5 library
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.82.0-alt1
+- new version
+
 * Mon Apr 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.81.0-alt1
 - new version
 
