@@ -8,7 +8,7 @@
 
 Name: caribou
 Version: %ver_major.22
-Release: alt2
+Release: alt3
 
 Summary: A simplified in-place on-screen keyboard
 Group: Graphical desktop/GNOME
@@ -29,6 +29,8 @@ Patch6: %name-0.4.22-alt-fix-comparision.patch
 # https://gitlab.gnome.org/GNOME/caribou/-/merge_requests/3
 # https://github.com/linuxmint/cinnamon-screensaver/issues/354
 Patch7: %name-0.4.22-alt-remove-xkbkeytypesmask.patch
+# https://gitlab.gnome.org/GNOME/caribou/-/merge_requests/4
+Patch8: %name-0.4.22-vala-cleanups.patch
 
 Provides: on-screen-keyboard
 Requires: lib%name = %version-%release
@@ -94,6 +96,7 @@ GObject introspection devel data for the Caribou library.
 #%%patch5 -p2
 %patch6 -p2 -b .bool_comparision
 %patch7 -p1 -b .remove-xkbkeytypesmask
+%patch8 -p1 -b .vala-cleanups
 
 %build
 %autoreconf
@@ -148,6 +151,9 @@ GObject introspection devel data for the Caribou library.
 %_girdir/Caribou-%api_ver.gir
 
 %changelog
+* Fri May 14 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.22-alt3
+- fix FTBFS related to vala build system
+
 * Mon Jan 18 2021 Vladimir Didenko <cow@altlinux.org> 0.4.22-alt2
 - fix crash when some symbols are pressed
 
