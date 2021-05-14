@@ -62,7 +62,7 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 6.1.20
+Version: 6.1.22
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -936,6 +936,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.22-alt1
+- Update to latest relase with regression fixes
+
 * Wed Apr 21 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.20-alt1
 - Update to latest maintenance release.
 

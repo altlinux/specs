@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version  6.1.20
-%define module_release	alt2
+%define module_version  6.1.22
+%define module_release	alt1
 
 %define flavour		std-def
 %define karch x86_64 %ix86
@@ -152,6 +152,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.22-alt1
+- Updated template for virtualbox 6.1.22
 
 * Wed Apr 21 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.20-alt1
 - Updated template for virtualbox 6.1.20
