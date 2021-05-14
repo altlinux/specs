@@ -3,8 +3,8 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%sover
 
 Name: egl-wayland
-Version: 1.1.6
-Release: alt1.2
+Version: 1.1.7
+Release: alt1
 Epoch: 1
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ License: MIT
 
 Source0: %name-%version.tar
 Source1: 10_nvidia_wayland.json
-Patch: alt-ftbfs.patch
+Patch1: alt-ftbfs.patch
 
 # Automatically added by buildreq on Fri Jul 12 2019 (-bi)
 # optimized out: elfutils glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-server perl pkg-config python-base python-modules python3 python3-base python3-dev rpm-build-python3 sh4 wayland-devel xorg-proto-devel
@@ -42,7 +42,7 @@ Wayland EGL External Platform library development package
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
 %autoreconf
 
 %build
@@ -70,6 +70,9 @@ install -pDm644 %SOURCE1 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.7-alt1
+- new version
+
 * Thu Apr 15 2021 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt1.2
 - E2K: *workaround* ftbfs with lcc
 
