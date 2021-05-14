@@ -1,19 +1,21 @@
-Summary:	Audio/Video converter
-Name:		mystiq
-Version:	20.03.23
-Release:	alt1
-License:	GPLv3
-Group:		Video
-Url:		https://mystiqapp.com/
-Source0:	MystiQ-%version.tar.gz
+Name: mystiq
+Version: 20.03.23
+Release: alt2
 
-Requires:	/usr/bin/ffmpeg /usr/bin/ffprobe /usr/bin/sox
+Summary: Audio/Video converter
+License: GPLv3
+Group: Video
 
-BuildPreReq:	extra-cmake-modules
+Url: https://mystiqapp.com/
+Source: MystiQ-%version.tar.gz
+
+BuildPreReq: extra-cmake-modules
 
 # Automatically added by buildreq on Fri May 01 2020 (-bi)
 # optimized out: elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python-modules qt5-base-devel qt5-tools sh4 xz
 BuildRequires: qt5-charts-devel qt5-declarative-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel
+
+Requires: /usr/bin/ffmpeg /usr/bin/ffprobe /usr/bin/sox
 
 %description
 MystiQ is a GUI for FFmpeg, a powerful media converter.
@@ -31,6 +33,10 @@ chmod -x mystiq.desktop icons/mystiq.svg
 %build
 lrelease-qt5 *.pro
 qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix DEFINES+=NO_NEW_VERSION_CHECK
+%ifarch %e2k
+# unsupported as of lcc 1.25.15
+sed -i 's,-fno-fat-lto-objects,,' Makefile
+%endif
 %make_build
 
 %install
@@ -45,5 +51,8 @@ make INSTALL_ROOT=%buildroot install
 %_man1dir/*
 
 %changelog
+* Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 20.03.23-alt2
+- E2K: avoid lcc-unsupported option
+
 * Fri May 01 2020 Motsyo Gennadi <drool@altlinux.ru> 20.03.23-alt1
 - initial build
