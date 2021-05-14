@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          jmock
 Version:       2.8.2
-Release:       alt3_10jpp8
+Release:       alt4_10jpp8
 Summary:       Java library for testing code with mock objects
 License:       BSD
 Url:           http://www.jmock.org/
@@ -26,6 +26,7 @@ BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires: mvn(org.hamcrest:hamcrest-library)
 BuildRequires: mvn(org.objenesis:objenesis)
 BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(xmlunit:xmlunit)
 
 BuildArch:     noarch
 Source44: import.info
@@ -149,6 +150,9 @@ rm jmock-legacy/src/test/java/org/jmock/test/acceptance/MockeryFinalizationAccep
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt4_10jpp8
+- fixed build
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt3_10jpp8
 - new version
 
