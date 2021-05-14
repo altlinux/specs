@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.11
-%define kernel_sublevel .19
+%define kernel_sublevel .21
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -665,6 +665,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri May 14 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.21-alt1
+- v5.11.21  (Fixes: CVE-2021-23133, CVE-2021-23134, CVE-2021-3491)
+
+* Wed May 12 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.20-alt1
+- v5.11.20  (Fixes: CVE-2021-20288)
+
 * Fri May 07 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.11.19-alt1
 - v5.11.19
 
