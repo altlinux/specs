@@ -1,5 +1,5 @@
 Name: daq
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 Summary: Data Acquisition Library
 License: GPLv2
@@ -70,6 +70,9 @@ find $RPM_BUILD_ROOT -type f -name "*.a" -delete -print
 %_libdir/*.so
 
 %changelog
+* Sat May 15 2021 Ilya Mashkin <oddity@altlinux.ru> 2.0.7-alt1
+- 2.0.7
+
 * Sat Mar 13 2021 Ilya Mashkin <oddity@altlinux.ru> 2.0.6-alt1
 - 2.0.6
 
