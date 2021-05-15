@@ -1,6 +1,6 @@
 Name: btfs
 Version: 2.24
-Release: alt1
+Release: alt2
 
 Summary: A bittorrent filesystem based on FUSE
 
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Thu Jun 23 2016
 # optimized out: boost-asio-devel boost-devel boost-devel-headers libssl-devel libstdc++-devel libtorrent-rasterbar8 perl pkg-config python-base python-modules python3 python3-base
 BuildRequires: gcc-c++ libcurl-devel libfuse-devel libtorrent-rasterbar-devel
+
+BuildRequires: rpm-build-python3
 
 %description
 With BTFS, you can mount any .torrent file or magnet link and then use it
@@ -42,6 +44,9 @@ Applications like vlc and mplayer can also work without changes.
 %_man1dir/*
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.24-alt2
+- add BR: rpm-build-python3
+
 * Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.24-alt1
 - new version 2.24 (with rpmrb script)
 
