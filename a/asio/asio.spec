@@ -8,14 +8,14 @@ BuildRequires: gcc-c++ perl(Date/Format.pm)
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           asio
-Version:        1.10.8
-Release:        alt1_6
+Version:        1.18.1
+Release:        alt1
 Summary:        A cross-platform C++ library for network programming
-
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:          Development/C++
 License:        Boost Software License
 URL:            https://think-async.com
-Source0:        https://github.com/chriskohlhoff/%{name}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit}.tar.gz
+Source0:        %{name}-%{version}.tar.bz2
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -40,10 +40,10 @@ that provides developers with a consistent asynchronous I/O model using a
 modern C++ approach.
 
 %prep
-%setup -q -n %{name}-%{commit}/%{name}
+%setup -q 
 
 %build
-./autogen.sh
+#./autogen.sh
 %configure
 %make_build
 
@@ -51,13 +51,16 @@ modern C++ approach.
 make install DESTDIR=%{buildroot}
 
 %files devel
-%doc src/doc/*
-%doc LICENSE_1_0.txt
+%doc doc/*
+%doc LICENSE*
 %dir %{_includedir}/asio
 %{_includedir}/asio/*
 %{_includedir}/asio.hpp
 
 %changelog
+* Sat May 15 2021 Ilya Mashkin <oddity@altlinux.ru> 1.18.1-alt1
+- 1.18.1
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.8-alt1_6
 - NMU: update to new version by fcimport
 - requiest by oddity@
