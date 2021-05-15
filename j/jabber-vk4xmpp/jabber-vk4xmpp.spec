@@ -2,7 +2,7 @@
 
 Name: jabber-vk4xmpp
 Version: 0.20160725
-Release: alt2
+Release: alt3
 
 Summary: VKontakte jabber transport
 
@@ -23,6 +23,8 @@ BuildArch: noarch
 
 # FIXME: how to fix find-requires?
 Requires: python-modules-sqlite3 python-module-xmpp python-module-simplejson
+
+BuildRequires: rpm-build-python
 
 %description
 VKontakte jabber transport
@@ -71,6 +73,9 @@ install -D systemd/vk4xmpp.service %buildroot%_unitdir/%name
 %dir %attr (0770,%fuser,root) %_runtimedir/%name/
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.20160725-alt3
+- add BR: rpm-build-python
+
 * Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 0.20160725-alt2
 - add alt adopted conf file
 - fix config for ALT Linux
