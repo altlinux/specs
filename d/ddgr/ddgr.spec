@@ -1,6 +1,6 @@
 Name: ddgr
 Version: 1.9
-Release: alt1
+Release: alt2
 
 Summary: DuckDuckGo from the terminal
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python3
+BuildRequires: rpm-build-python3
 
 %description
 ddgr is a cmdline utility to search DuckDuckGo from the terminal.
@@ -63,6 +63,9 @@ make test
 %_datadir/zsh/site-functions/_ddgr
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt2
+- use BR: rpm-build-python3
+
 * Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt1
 - new version 1.9 (with rpmrb script)
 
