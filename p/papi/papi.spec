@@ -1,6 +1,6 @@
 Name: papi
 Version: 6.0.0
-Release: alt1
+Release: alt2
 
 Summary: Performance Application Programming Interface
 
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Requires: lib%name = %EVR
 
 BuildRequires: /proc
+BuildRequires: rpm-build-python3
 BuildRequires: libncurses-devel gcc-fortran libsensors3-devel libgomp-devel
 BuildRequires: libltdl-devel doxygen graphviz
 
@@ -134,6 +135,9 @@ rm -f %buildroot%_libdir/*.a
 %_docdir/%name
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt2
+- add BR: rpm-build-python3
+
 * Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt1
 - new version 6.0.0 (with rpmrb script)
 
