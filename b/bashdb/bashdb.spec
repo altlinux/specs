@@ -3,7 +3,7 @@
 
 Name: bashdb
 Version: %{bashversion}_%oversion
-Release: alt1
+Release: alt2
 
 Summary: BASH with Debugger and Improved Debug Support and Error Handling
 
@@ -23,6 +23,8 @@ Requires: %_libexecdir/bash
 # manually removed: tetex-core
 # Automatically added by buildreq on Thu Aug 07 2008
 BuildRequires: gcc-c++ bash-devel
+
+BuildRequires: rpm-build-python3
 
 %description
 The Bash Debugger Project contains patched sources to BASH that enable
@@ -62,6 +64,9 @@ mv -f -- %buildroot/%_datadir/%name/builtin/* %buildroot%_libexecdir/bash
 %_man1dir/*
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.4_1.0.1-alt2
+- add BR: rpm-build-python3
+
 * Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 4.4_1.0.1-alt1
 - new version (4.4_1.0.1) with rpmgs script
 
