@@ -1,7 +1,7 @@
 ## SPEC file for innotop
 
 Name: innotop
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 
 Summary: a 'top' clone for MySQL with special attention paid to InnoDB
@@ -64,6 +64,9 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Sat May 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.13.0-alt1
+- New version
+
 * Thu Apr 18 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.12.0-alt1
 - New version, support for MySQL 8.0
 
