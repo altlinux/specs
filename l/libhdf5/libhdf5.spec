@@ -6,16 +6,16 @@
 
 Name: lib%oname
 Version: 1.10.6
-Release: alt1
-Summary: Hierarchical Data Format 5 library
-Group: System/Libraries
-License: Nearly BSD, but changed sources must be marked
-Url: http://www.hdfgroup.org/HDF5/
+Release: alt2
 
+Summary: Hierarchical Data Format 5 library
+License: Nearly BSD, but changed sources must be marked
+Group: System/Libraries
+
+Url: http://www.hdfgroup.org/HDF5/
 # https://github.com/HDFGroup/hdf5.git
 Source: %name-%version.tar
-
-Patch1: %name-alt-disable-rpath.patch
+Patch: %name-alt-disable-rpath.patch
 
 # Automatically added by buildreq on Sat Sep 15 2007
 BuildRequires: gcc-c++ libssl-devel zlib-devel
@@ -91,15 +91,23 @@ This package contains examples for HDF5.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
 %ifarch %e2k
 # unsupported by lcc as of 1.21.21
-sed -i -e 's,-Wlogical-op,,' \
+sed -i	-e 's,-Wlogical-op,,' \
 	-e 's,-Wvla,,' \
 	-e 's,-Wsync-nand,,' \
 	-e 's,-Wdouble-promotion,,' \
-	CMakeLists.txt config/gnu-flags
+	-e 's,-Wnull-dereference,,' \
+	-e 's,-Whsa,,' \
+	-e 's,-Wnormalized,,' \
+	-e 's,-Walloc-zero,,' \
+	-e 's,-Walloca,,' \
+	-e 's,-Wformat-overflow=2,,' \
+	-e 's,-Wrestrict,,' \
+	CMakeLists.txt config/gnu-flags \
+	config/cmake/HDFCompilerFlags.cmake
 %endif
 
 %build
@@ -162,6 +170,9 @@ EOF
 %_datadir/hdf5_examples
 
 %changelog
+* Sat May 15 2021 Michael Shigorin <mike@altlinux.org> 1.10.6-alt2
+- E2K: avoid lcc-unsupported options
+
 * Wed Apr 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.6-alt1
 - Updated to upstream version 1.10.6.
 - Removed alternatives.
