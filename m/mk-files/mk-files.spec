@@ -1,6 +1,6 @@
 Name: mk-files
 Version: 20191111
-Release: alt1
+Release: alt2
 
 Summary: Support files for bmake, the NetBSD make(1) tool
 
@@ -13,6 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/mk-%version.tar
 
 BuildArch: noarch
+
+BuildRequires: rpm-build-python3
 
 #Requires: bmake
 
@@ -40,6 +42,9 @@ env FORCE_BSD_MK=%buildroot/nonexistent \
 %_datadir/mk/*
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 20191111-alt2
+- add BR: rpm-build-python3
+
 * Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 20191111-alt1
 - new version 20191111 (with rpmrb script)
 
