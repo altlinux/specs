@@ -1,5 +1,5 @@
 Name: prosody
-Version: 0.11.8
+Version: 0.11.9
 Release: alt1
 
 Summary: Modern XMPP communication server
@@ -67,6 +67,10 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Sat May 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.9-alt1
+- Updated to 0.11.9 (fixed CVE-2021-32917, CVE-2021-32918, CVE-2021-32919,
+  CVE-2021-32920 and CVE-2021-32921).
+
 * Wed Mar 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.8-alt1
 - Updated to 0.11.8.
 
