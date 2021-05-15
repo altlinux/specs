@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%define lvm2version 2.03.11
-%define dmversion 1.02.175
+%define lvm2version 2.03.12
+%define dmversion 1.02.177
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -493,6 +493,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Sat May 15 2021 Alexey Shabalin <shaba@altlinux.org> 2.03.12-alt1
+- 2.03.12
+
 * Sun Feb 14 2021 Alexey Shabalin <shaba@altlinux.org> 2.03.11-alt1
 - 2.03.11
 
