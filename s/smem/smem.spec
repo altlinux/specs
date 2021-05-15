@@ -1,6 +1,6 @@
 Name: smem
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: Report application memory usage in a meaningful way
 
@@ -15,6 +15,7 @@ Source1: http://www.selenic.com/smem/index.html
 
 Conflicts: secure_delete
 
+BuildRequires: rpm-build-python3
 
 %description
 smem is a tool that can give numerous reports on memory usage
@@ -54,6 +55,9 @@ install -pDm644 smem.8 %buildroot%_man8dir/smem.8
 
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt3
+- add BR: rpm-build-python3
+
 * Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5-alt2
 - python2 -> python3
 
