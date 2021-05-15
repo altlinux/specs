@@ -1,9 +1,9 @@
 Name: pflogsumm
-Version: 1.1.3
+Version: 1.1.5
 Release: alt1
 
 Summary: Postfix Log Entry Summarizer
-License: GPL
+License: GPLv2+
 Group: Monitoring
 
 Url: http://jimsun.linxnet.com/postfix_contrib.html
@@ -63,6 +63,11 @@ install -pD -m0644 %SOURCE3 %buildroot%_var/www/cgi-bin/%name/.htaccess
 %_var/www/cgi-bin/%name/.htaccess
 
 %changelog
+
+* Sat May 15 2021 Ilya Mashkin <oddity@altlinux.ru> 1.1.5-alt1
+- 1.1.5
+- Update License to GPLv2+
+
 * Mon Feb 16 2015 Ilya Mashkin <oddity@altlinux.ru> 1.1.3-alt1
 - 1.1.3
 
