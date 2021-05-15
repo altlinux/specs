@@ -2,7 +2,7 @@
 
 Name: cifs-utils
 Version: 6.12
-Release: alt1
+Release: alt2
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -15,7 +15,7 @@ Patch2: cifs-utils-alt-python3.patch
 
 BuildRequires(pre): rpm-macros-pam0
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
-BuildRequires: python-module-docutils
+BuildRequires: python3-module-docutils rpm-build-python3
 Requires: keyutils
 Conflicts: samba-client < 3.6.0-alt1
 
@@ -108,6 +108,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Sat May 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.12-alt2
+- Rebuild with python3 only
+
 * Thu Jan 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.12-alt1
 - Update to latest release 6.12
 - Add use SUDO_UID env variable for cruid
