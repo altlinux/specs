@@ -1,7 +1,7 @@
 # Spec file for Apache2 HTTP Server Request Library
 
 Name:    apache2-mod_apreq
-Version: 2.15
+Version: 2.16
 Release: alt1
 
 Summary: Apache2 HTTP request library
@@ -173,6 +173,9 @@ rm -f %buildroot%_man3dir/todo*
 %perl_vendor_archlib/Apache2*
 
 %changelog
+* Sat May 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.16-alt1
+- New version
+
 * Thu Mar 18 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.15-alt1
 - New version
   - CVE-2019-12412 Fix a NULL pointer dereference when parsing
