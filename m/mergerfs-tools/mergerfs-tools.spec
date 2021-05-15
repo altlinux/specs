@@ -1,6 +1,6 @@
 Name: mergerfs-tools
 Version: 0.2git
-Release: alt1
+Release: alt2
 
 Summary: Optional tools to help manage data in a mergerfs pool
 
@@ -15,6 +15,8 @@ Provides: mergerfs-fsck = %version
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+BuildRequires: rpm-build-python3
 
 %description
 Optional tools to help manage data in a mergerfs pool.
@@ -41,6 +43,9 @@ make install INSTALLBINDIR=%buildroot%_bindir
 %_bindir/mergerfs.mktrash
 
 %changelog
+* Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2git-alt2
+- add BR: rpm-build-python3
+
 * Tue Dec 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.2git-alt1
 - git 91d8c43fd32690a52b2c660021c48d7dc29b5995
 
