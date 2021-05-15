@@ -3,7 +3,7 @@
 %define real_name Template-Alloy
 
 Name: perl-Template-Alloy
-Version: 1.020
+Version: 1.022
 Release: alt1
 
 Summary: TT2/3, HT, HTE, Tmpl, and Velocity Engine
@@ -49,6 +49,9 @@ the commandline.
 %perl_vendor_privlib/Template/Alloy*
 
 %changelog
+* Sat May 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.022-alt1
+- New version
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.020-alt1
 - New version
 
