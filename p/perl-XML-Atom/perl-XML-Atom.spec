@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Atom
 Name: perl-%dist
-Version: 0.42
-Release: alt2
+Version: 0.43
+Release: alt1
 
 Summary: Atom API and Feed Support
 License: GPL or Artistic
@@ -17,7 +17,7 @@ BuildArch: noarch
 %add_findreq_skiplist */XML/Atom/Server.pm
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Class-Data-Inheritable perl-DateTime perl-Digest-SHA1 perl-Pod-Escapes perl-XML-LibXML perl-XML-XPath perl-devel perl(Module/Build/Tiny.pm)
+BuildRequires: perl-Class-Data-Inheritable perl-DateTime perl-Digest-SHA1 perl-Pod-Escapes perl-XML-LibXML perl-XML-XPath perl-devel perl(Module/Build/Tiny.pm) perl(Digest/SHA.pm)
 
 %description
 Atom is a syndication, API, and archiving format for weblogs and other
@@ -41,6 +41,9 @@ API.
 %perl_vendor_privlib/XML
 
 %changelog
+* Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 0.43-alt1
+- automated CPAN update
+
 * Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2
 - fixed build
 
