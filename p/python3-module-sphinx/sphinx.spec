@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 3.5.4
+Version: 4.0.1
 Release: alt1
 
 Summary: Tool for producing documentation for Python projects
@@ -253,6 +253,9 @@ PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt1
+- Major version update
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.5.4-alt1
 - NMU: new version 3.5.4 (with rpmrb script)
 
