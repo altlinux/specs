@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(MRO/Compat.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.005
+Version: 0.007
 Release: alt1
 Summary: introspect overloaded operators
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE
+%doc README Changes
 %perl_vendor_privlib/D*
 
 %changelog
+* Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 0.007-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.005-alt1
 - automated CPAN update
 
