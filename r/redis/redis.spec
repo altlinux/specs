@@ -1,6 +1,6 @@
 Name: redis
-Version: 5.0.8
-Release: alt2
+Version: 5.0.12
+Release: alt1
 
 Summary: Redis is an advanced key-value store
 
@@ -22,6 +22,8 @@ Source6: redis-server.logrotate
 Source7: redis.init
 Source8: redis.sysconfig
 Source9: redis.service
+
+Patch1: %name-5.0.8-alt-mips32.patch
 
 # for check section
 BuildPreReq: tcl >= 8.5
@@ -60,6 +62,7 @@ for Windows currently.
 %prep
 %setup
 %patch0 -p1
+%patch1
 
 sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Makefile
 
@@ -160,6 +163,12 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sun May 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 5.0.12-alt1
+- New version
+- Security fixes:
+  + CVE-2021-21309: integer overflow on 32-bit systems
+- Fix NMU: move local codebase changes to a patch
+
 * Mon Mar 29 2021 Ivan A. Melnikov <iv@altlinux.org> 5.0.8-alt2
 - Link with libatomic on %%mips32
 
