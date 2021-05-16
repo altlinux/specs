@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Exception-Class
 Name: perl-%dist
-Version: 1.44
+Version: 1.45
 Release: alt1
 
 Summary: A module that allows you to declare real exception classes in Perl
@@ -36,6 +36,9 @@ class, Exception::Class::Base, that can be easily extended.
 %perl_vendor_privlib/Exception
 
 %changelog
+* Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 1.45-alt1
+- automated CPAN update
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt1
 - automated CPAN update
 
