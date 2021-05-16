@@ -1,22 +1,24 @@
 %define packagename python3-module-pymunk
 
 Name: pymunk
-Version: 5.5.0
-Release: alt3
+Version: 6.0.0
+Release: alt1
 
 Summary: Empty package %packagename
 License: MIT
 Group: Development/Python3
 
-Source: %name-%version.tar
+Source: %name-%version.zip
+Patch: pymunk-6.0.0-mockdoc.patch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 unzip
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinxcontrib-qthelp
 BuildRequires: python3-module-sphinxcontrib-htmlhelp
 BuildRequires: python3-module-sphinxcontrib-jsmath
 BuildRequires: python3-module-sphinxcontrib-devhelp
 BuildRequires: python3-module-sphinxcontrib-applehelp
+BuildRequires: python3-module-sphinxcontrib-aafig
 
 %add_python3_req_skip py2exe ctypeslib
 
@@ -43,6 +45,10 @@ Example files for %packagename
 
 %prep
 %setup
+%patch -p1
+
+# XXX too old?
+sed -i 's/def load_tests/def load_tests_xxx/' pymunk/tests/doctests.py
 
 %build
 export CFLAGS="-fPIC -O2 -g"
@@ -54,7 +60,7 @@ make -C docs/src SPHINXBUILD=sphinx-build-3 BUILDDIR=../../build html
 %python3_install
 
 %check
-%__python3 setup.py check
+python3 setup.py test
 
 %files examples
 %doc examples
@@ -63,9 +69,11 @@ make -C docs/src SPHINXBUILD=sphinx-build-3 BUILDDIR=../../build html
 %doc *txt build/html
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-*
-%python3_sitelibdir/pymunkoptions
 
 %changelog
+* Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 6.0.0-alt1
+- Autobuild version bump to 6.0.0
+
 * Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 5.5.0-alt3
 - Build with separate sphinx extensions required
 
