@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-CGI-Lite
-Version: 3.02
+Version: 3.03
 Release: alt1
 
 Summary: Process and decode WWW forms and cookies
@@ -47,9 +47,12 @@ behind the decoding process.
 
 %files
 %perl_vendor_privlib/CGI*
-%doc CHANGES README TODO examples
+%doc CHANGES README examples
 
 %changelog
+* Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 3.03-alt1
+- automated CPAN update
+
 * Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 3.02-alt1
 - automated CPAN update
 
