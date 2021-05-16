@@ -1,11 +1,13 @@
 Name: python3-module-sphinxcontrib-aafig
 Version: 1.2.0
-Release: alt1
+Release: alt2
 License: ALT-Public-Domain
 Source: sphinxcontrib-aafig-%version.tar.gz
 Group: Development/Python3
 BuildArch: noarch
 Summary: Aafigure support for sphinx
+
+Requires: python3(aafigure)
 
 %description
 This package contains the aafigure Sphinx extension.
@@ -33,6 +35,9 @@ documentation.
 %python3_sitelibdir_noarch/sphinxcontrib_*
 
 %changelog
+* Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 1.2.0-alt2
+- Fix requirements
+
 * Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
 - Autobuild version bump to 1.2.0
 
