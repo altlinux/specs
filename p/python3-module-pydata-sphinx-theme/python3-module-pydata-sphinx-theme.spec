@@ -1,7 +1,7 @@
 %define  modulename pydata-sphinx-theme
 
 Name:    python3-module-%modulename
-Version: 0.6.0
+Version: 0.6.3
 Release: alt1
 
 Summary: Bootstrap-based sphinx theme from the PyData community
@@ -35,5 +35,8 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Sun May 16 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt1
+- Automatically updated to 0.6.3.
+
 * Mon Apr 12 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus.
