@@ -12,8 +12,8 @@
 %def_enable test
 
 Name: perl-Catalyst-Plugin-Static-Simple
-Version: 0.36
-Release: alt2
+Version: 0.37
+Release: alt1
 
 Summary: %m_name - Make serving static pages painless
 
@@ -45,10 +45,14 @@ without requiring a single line of code from you.
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/Catalyst*
 %doc Changes
 
 %changelog
+* Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 0.37-alt1
+- automated CPAN update
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.36-alt2
 - fixed build
 
