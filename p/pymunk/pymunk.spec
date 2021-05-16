@@ -2,7 +2,7 @@
 
 Name: pymunk
 Version: 5.5.0
-Release: alt2
+Release: alt3
 
 Summary: Empty package %packagename
 License: MIT
@@ -12,6 +12,11 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinxcontrib-qthelp
+BuildRequires: python3-module-sphinxcontrib-htmlhelp
+BuildRequires: python3-module-sphinxcontrib-jsmath
+BuildRequires: python3-module-sphinxcontrib-devhelp
+BuildRequires: python3-module-sphinxcontrib-applehelp
 
 %add_python3_req_skip py2exe ctypeslib
 
@@ -61,6 +66,9 @@ make -C docs/src SPHINXBUILD=sphinx-build-3 BUILDDIR=../../build html
 %python3_sitelibdir/pymunkoptions
 
 %changelog
+* Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 5.5.0-alt3
+- Build with separate sphinx extensions required
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.5.0-alt2
 - Build for python2 disabled.
 
