@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -18,6 +18,11 @@ Url: http://sphinx-doc.org
 
 BuildArch: noarch
 
+%py3_requires sphinxcontrib.applehelp
+%py3_requires sphinxcontrib.devhelp
+%py3_requires sphinxcontrib.htmlhelp
+%py3_requires sphinxcontrib.jsmath
+%py3_requires sphinxcontrib.qthelp
 %py3_requires alabaster
 %py3_requires requests
 
@@ -253,6 +258,9 @@ PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt2
+- Add popular sphinxcontribs to requirelents
+
 * Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt1
 - Major version update
 
