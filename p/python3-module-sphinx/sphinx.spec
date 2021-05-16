@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 4.0.1
-Release: alt2
+Release: alt3
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -64,6 +64,8 @@ BuildRequires: python3-module-SQLAlchemy >= 1.0.8-alt2
 # These 2 must be recent to pass the tests:
 BuildRequires: python3-module-Pygments >= 2.1.3
 BuildRequires: python3-module-alabaster >= 0.7.6-alt2.git20150703
+# Tox test suite
+BuildRequires: python3-module-Cython python3-module-pytest-cov python3-module-tox
 %endif
 
 %description
@@ -225,7 +227,12 @@ export TESTS_NO_NETWORK=1
 
 # disable remote tests
 rm -f tests/test_build_linkcheck.py
-PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
+export TESTS_NO_NETWORK=yes
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV="PIP_NO_BUILD_ISOLATION TESTS_NO_NETWORK"
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false -- -vra
 
 %files
 %_bindir/*
@@ -258,6 +265,9 @@ PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt3
+- Switch to tox check
+
 * Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt2
 - Add popular sphinxcontribs to requirelents
 
