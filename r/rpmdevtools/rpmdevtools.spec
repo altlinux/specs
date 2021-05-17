@@ -1,7 +1,7 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-emacs
-BuildRequires: /usr/bin/pod2man
+BuildRequires: /usr/bin/pod2man rpm-build-python3
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/pod2man
 
 Name:           rpmdevtools
 Version:        8.10
-Release:        alt1
+Release:        alt2
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -122,6 +122,9 @@ popd
 
 
 %changelog
+* Mon May 17 2021 Igor Vlasenko <viy@altlinux.org> 8.10-alt2
+- fixed build
+
 * Tue Jan 14 2020 Igor Vlasenko <viy@altlinux.ru> 8.10-alt1
 - new version
 
