@@ -1,12 +1,21 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define rname konsole
+
+%_K5if_ver_gteq %ubt_id M100
+%def_enable obsolete_kde4
+%else
+%def_disable obsolete_kde4
+%endif
 
 %define sover 20
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
 Version: 20.12.3
-Release: alt1
-%K5init
+Release: alt2
+%K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -16,6 +25,10 @@ License: GPLv2+ / LGPLv2+
 Requires(post,preun): alternatives >= 0.2
 Provides: xvt, %_x11bindir/xvt
 #Requires: fonts-bitmap-misc
+%if_enabled obsolete_kde4
+Provides: kde4-konsole = %version-%release
+Obsoletes: kde4-konsole < %version-%release
+%endif
 
 Source: %rname-%version.tar
 Patch10: alt-no-transparency.patch
@@ -81,12 +94,16 @@ KF5 library
 
 %build
 %K5build \
+%if_disabled obsolete_kde4
     -DDATA_INSTALL_DIR=%_K5data \
+%endif
     #
 
 %install
 %K5install
+%if_disabled obsolete_kde4
 %K5install_move data konsole khotkeys knsrcfiles
+%endif
 %find_lang %name --with-kde --all-name
 
 # install alternatives
@@ -109,19 +126,37 @@ __EOF__
 %_K5lib/libkdeinit5_konsole.so
 %_K5plug/konsole*.so
 %_K5xdgapp/org.kde.konsole.desktop
+%if_enabled obsolete_kde4
+%_datadir/konsole/
+%else
 %_K5data/konsole/
+%endif
+%if_enabled obsolete_kde4
+%_datadir/khotkeys/konsole.khotkeys
+%else
 %_K5data/khotkeys/konsole.khotkeys
+%endif
 %_K5srv/*.desktop
 %_K5srv/ServiceMenus/konsole*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*
+%if_enabled obsolete_kde4
+%_datadir/knsrcfiles/*konsole*
+%else
 %_K5data/knsrcfiles/*konsole*
+%endif
+%if_enabled obsolete_kde4
+%_datadir/metainfo/org.kde.konsole*.*.xml
+%endif
 
 %files -n %libkonsoleprivate
 %_K5lib/libkonsoleprivate.so.*
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
+- obsolete kde4-konsole
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
@@ -197,44 +232,44 @@ __EOF__
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
-* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1
 - new version
 
-* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Mon Aug 21 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
+* Mon Aug 21 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2
 - fix tabdrag (ALT#33507)
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Wed Jul 05 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
+* Wed Jul 05 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2
 - set Monospace font by default to scale with hi resolution
 - intense bold fonts by default
 
-* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1
 - new version
 
-* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
-* Thu Jan 12 2017 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2%ubt
+* Thu Jan 12 2017 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2
 - update code from upstream
 
 * Thu Nov 24 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
