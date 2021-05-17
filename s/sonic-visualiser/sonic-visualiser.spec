@@ -1,5 +1,5 @@
 Name: sonic-visualiser
-Version: 4.2
+Version: 4.3
 Release: alt1
 
 Summary: Application for viewing and analysing the contents of music audio files
@@ -14,7 +14,6 @@ Source0: %name-%version.tar
 Source1: %name.xml
 
 Patch0: sonic-visualiser-system-dataquay.patch
-Patch1: sonic-visualiser-3.3-test_fix.patch
 
 BuildRequires: bzlib-devel capnproto-devel dataquay-minefeld-devel
 BuildRequires: libfftw3-devel libfishsound-devel libid3tag-devel
@@ -22,6 +21,7 @@ BuildRequires: libjack-devel liblo-devel liblrdf-devel libmad-devel
 BuildRequires: liboggz-devel libportaudio2-devel libpulseaudio-devel
 BuildRequires: librubberband-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libsord-devel qt5-svg-devel libopusfile-devel
+BuildRequires: meson
 
 %description
 Sonic Visualiser is an application for viewing and analysing the
@@ -37,22 +37,17 @@ file.
 
 %prep
 %setup
+# Make sure, that we use system dataquay
+rm -rfv dataquay
 %patch0 -p2
-%patch1 -p2
-
-# disable fileio tests om ppc64le
-%ifarch ppc64le
-sed -i '/[[:space:]]sub_test_svcore_data_fileio[[:space:]]/d' sonic-visualiser.pro
-%endif
 
 %build
-%autoreconf
-%configure --enable-debug
-%make_build
+%add_optflags %(pkg-config --libs dataquay)
+%meson
+%meson_build
 
 %install
-export INSTALL_ROOT=%buildroot
-%makeinstall_std
+%meson_install
 
 # plugin dir
 install -dm 755 %buildroot%_libdir/vamp
@@ -74,6 +69,7 @@ install -Dm 644 x-sonicvisualiser-layer.desktop %buildroot/%_datadir/mimelnk/app
 %files
 %doc CHANGELOG README.md COPYING
 %_bindir/%name
+%_bindir/piper-convert
 %_bindir/piper-vamp-simple-server
 %_bindir/vamp-plugin-load-checker
 %dir %_libdir/vamp
@@ -86,6 +82,9 @@ install -Dm 644 x-sonicvisualiser-layer.desktop %buildroot/%_datadir/mimelnk/app
 %_datadir/mimelnk/application/x-sonicvisualiser*
 
 %changelog
+* Mon May 17 2021 Grigory Ustinov <grenka@altlinux.org> 4.3-alt1
+- Build new version.
+
 * Wed Sep 09 2020 Sergey V Turchin <zerg@altlinux.org> 4.2-alt1
 - New version.
 
