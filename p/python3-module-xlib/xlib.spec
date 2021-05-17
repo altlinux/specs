@@ -1,22 +1,23 @@
 %define oname xlib
 
+# There is no display in hasher
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: Python X Library
 
 Group: Development/Python3
-License: LGPL
+License: LGPLv2.1
 Url: https://github.com/python-xlib/python-xlib
 
 Source: %name-%version.tar
 
 BuildRequires: /usr/bin/texi2html
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: python3-module-six
@@ -69,6 +70,9 @@ py.test3 -vv
 %doc examples doc/html/*.html
 
 %changelog
+* Mon May 17 2021 Grigory Ustinov <grenka@altlinux.org> 0.30-alt1
+- Automatically updated to 0.30.
+
 * Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 0.29-alt1
 - Automatically updated to 0.29.
 
