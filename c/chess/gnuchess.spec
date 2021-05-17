@@ -1,5 +1,5 @@
 Name: chess
-Version: 6.2.7
+Version: 6.2.8
 Release: alt1
 
 %define real_name gnu%name
@@ -11,7 +11,11 @@ URL: http://www.gnu.org/software/chess/
 
 # repacked http://ftp.gnu.org/gnu/chess/gnuchess-%version.tar.gz
 Source: %real_name-%version.tar
-Source1: book_1.00.pgn
+Source1: book_1.02.pgn
+Source98: %real_name.watch
+Source99: upstream-signing-key.asc
+
+Patch1: gnuchess-6.2.7-cve-2021-30184.patch
 
 Provides: %real_name = %version
 Obsoletes: %real_name
@@ -33,6 +37,7 @@ install the xboard package and the X Window System.
 
 %prep
 %setup  -n %real_name-%version
+%patch1 -p0
 
 %build
 %configure --with-pluginsdir=%_gamesdatadir/%real_name/plugins
@@ -57,6 +62,12 @@ install -pm644 src/book.bin %buildroot%_datadir/%real_name/
 %_infodir/%real_name.info.*
 
 %changelog
+* Mon May 17 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.8-alt1
+- Updated to 6.2.8.
+- Updated book to 1.02.
+- Fixed CVE-2021-30184.
+- Packed watch and upstream public signing key to sourcerpm.
+
 * Fri Aug 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.7-alt1
 - Updated to 6.2.7.
 - Fixed license field.
