@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.4.13
-Release: alt2
+Version: 5.4.15
+Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
 Group: Graphical desktop/Other
@@ -10,9 +10,10 @@ Url: https://github.com/linuxdeepin/dtkcore
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtkcore-5.4.15-ALT-gcc10.patch
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -28,9 +29,18 @@ BuildRequires: dtk5-common
 %description
 Deepin tool kit core modules.
 
+%package -n dtk5-core
+Summary: %summary
+Group: Graphical desktop/Other
+
+%description -n dtk5-core
+Deepin tool kit core modules.
+Binaries for %name.
+
 %package -n libdtk5-core
 Summary: Libraries for %name
 Group: System/Libraries
+Requires: dtk5-core
 
 %description -n libdtk5-core
 Deepin tool kit core modules.
@@ -46,6 +56,7 @@ Header files and libraries for %name.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %qmake_qt5 \
@@ -59,7 +70,7 @@ Header files and libraries for %name.
     LIB_INSTALL_DIR=%_libdir \
     unix:LIBS+="-ldl" \
     DEEPIN_OS_TYPE=Desktop \
-    DEEPIN_OS_VERSION=20.2 \
+    DEEPIN_OS_VERSION=20.2.1 \
 #
 %make_build
 
@@ -68,8 +79,11 @@ Header files and libraries for %name.
 chmod +x %buildroot%_libdir/libdtk-%version/DCore/bin/dtk-license.py
 chmod +x %buildroot%_libdir/libdtk-%version/DCore/bin/dtk-translate.py
 
-%files -n libdtk5-core
+%files -n dtk5-core
 %doc README.md LICENSE
+%_bindir/qdbusxml2cpp-fix
+
+%files -n libdtk5-core
 %_libdir/lib%name.so.5*
 %dir %_libdir/libdtk-5*/
 %_libdir/libdtk-5*/DCore/
@@ -85,6 +99,9 @@ chmod +x %buildroot%_libdir/libdtk-%version/DCore/bin/dtk-translate.py
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Mon May 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.15-alt1
+- New version (5.4.15) with rpmgs script.
+
 * Thu May 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt2
 - Added rpm-build-python3 into BR.
 

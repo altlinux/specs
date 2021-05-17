@@ -1,19 +1,20 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.4.16
+Version: 5.4.20
 Release: alt1
 Summary: Deepin tool kit widget modules
-License: LGPL-3.0+
+License: LGPL-3.0+ and GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: dtkwidget-5.4.10-gcc10.patch
+Patch1: dtkwidget-5.4.20-qt5.15.patch
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %endif
 BuildRequires: qt5-linguist
 BuildRequires: qt5-base-devel-static
@@ -59,13 +60,10 @@ Header files and libraries for %name.
 %prep
 %setup
 %patch -p2
-sed -i 's|lrelease|lrelease-qt5|' \
-    tools/translate_generation.sh \
-    tools/translate_generation.py
+%patch1 -p2
 sed -i "s|'/lib'|'/%_lib'|" conanfile.py
 
 %build
-# help find (and prefer) qt5 utilities, e.g. qmake, lrelease
 export PATH=%{_qt5_bindir}:$PATH
 %qmake_qt5 \
 %if_enabled clang
@@ -97,6 +95,9 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/lib%name.so
 
 %changelog
+* Mon May 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.20-alt1
+- New version (5.4.20) with rpmgs script.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.16-alt1
 - New version (5.4.16) with rpmgs script.
 
