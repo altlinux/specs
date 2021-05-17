@@ -1,7 +1,7 @@
 %define rname taglib
 
 Name: libtag
-Version: 1.11.1
+Version: 1.12
 Release: alt1
 
 Summary: TagLib, is well, a library for reading and editing audio meta data
@@ -20,7 +20,8 @@ Patch2: taglib-1.8-ds-rusxmms-r2.patch
 # ALT
 Patch10: taglib-1.8-alt-versioning.patch
 
-BuildRequires: gcc-c++ librcc-devel zlib-devel
+BuildRequires: gcc-c++ zlib-devel
+#BuildRequires: librcc-devel
 BuildRequires: doxygen graphviz cmake kde-common-devel
 
 %description
@@ -91,6 +92,12 @@ install -m0644 %SOURCE2 ./
 %_includedir/taglib/*.tcc
 
 %changelog
+* Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 1.12-alt1
+- new version
+
+* Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 1.11.1-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 1.11.1-alt1
 - new version
 
