@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.21.1.vz7.174.13
-%define orelease 1160.21.1.vz7.174.13
+#     rh7-3.10.0-1160.21.1.vz7.174.14
+%define orelease 1160.21.1.vz7.174.14
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -587,6 +587,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Mon May 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.21.1.vz7.174.14
+- fix lazytime optimization and set this mount option by default
+
 * Thu May 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.21.1.vz7.174.13
 - Build rh7-3.10.0-1160.21.1.vz7.174.13
 
