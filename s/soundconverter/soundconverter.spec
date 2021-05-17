@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soundconverter
-Version: 3.1.0
+Version: 4.0.0
 Release: alt1
 
 Summary: A simple sound converter application for GNOME
@@ -11,9 +11,7 @@ Group: Sound
 
 Url: https://github.com/kassoulet/soundconverter
 Source: %name-%version.tar
-Patch: drop-unity.patch
-# http://launchpadlibrarian.net/492275868/ru.po
-Patch1: 0001-Update-russian-translation.patch
+Patch: soundconverter-4.0.0-drop-unity.patch
 
 BuildArch: noarch
 
@@ -72,6 +70,9 @@ rm -r %buildroot%_datadir/doc/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Wed Jan 13 2021 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
+- New version 4.0.0
+
 * Fri Aug 07 2020 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - New version 3.1.0
 - Update russian translation (Thanks Olesya Gerasimenko)
