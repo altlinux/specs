@@ -5,7 +5,7 @@
 %define rname kactivitymanagerd
 
 Name: plasma5-kactivitymanagerd
-Version: 5.21.4
+Version: 5.21.5
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -63,6 +63,9 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 %_unitdir_user/*.service
 
 %changelog
+* Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
+- new version
+
 * Tue Apr 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.4-alt1
 - new version
 
