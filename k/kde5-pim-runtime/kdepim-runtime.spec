@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init altplace
 
@@ -30,6 +30,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel qt5-webengine-devel qt5-xmlpatterns-devel
 BuildRequires: qt5-speech-devel qt5-networkauth-devel
 BuildRequires: libqca-qt5-devel
+BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: xsltproc libsasl2-devel boost-devel
 #BuildRequires: libkolab-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kf5-kholidays-devel
@@ -166,6 +167,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Wed Mar 10 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

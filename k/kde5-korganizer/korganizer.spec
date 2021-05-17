@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -91,7 +91,7 @@ Requires: %name-common = %version-%release
 %files common -f %name.lang
 %doc LICENSES/*
 %_K5srvtyp/*.desktop
-%_K5icon/*/*/actions/*
+#%_K5icon/*/*/actions/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -127,12 +127,13 @@ Requires: %name-common = %version-%release
 %_K5icon/*/*/apps/quickview.*
 %_K5dbus_srv/*korga*.service
 
-#%files devel
+%files devel
 #%_K5inc/korganizer_version.h
 #%_K5inc/korganizer/
-#%_K5link/lib*.so
+%_K5link/lib*.so
 #%_K5lib/cmake/korganizer
 #%_K5archdata/mkspecs/modules/qt_korganizer.pri
+%_K5dbus_iface/org.kde.*.xml
 
 %files -n %libkorganizer_core
 %_K5lib/libkorganizer_core.so.%pim_sover
@@ -145,6 +146,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Wed Mar 10 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
