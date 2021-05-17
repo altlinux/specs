@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     12
 %define postgresql_minor     6
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -52,7 +52,7 @@ Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 
-BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
+BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel
 %if_without devel
 BuildRequires: postgresql-devel
@@ -548,10 +548,10 @@ fi
 %_libdir/pgsql/hstore_plperl.so
 %_datadir/%PGSQL/extension/hstore_plperl*.sql
 %_datadir/%PGSQL/extension/hstore_plperl*.control
-%_libdir/pgsql/hstore_plpython2.so
-%_datadir/%PGSQL/extension/hstore_plpython2u-*.sql
+%_libdir/pgsql/hstore_plpython3.so
+%_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
 %_datadir/%PGSQL/extension/hstore_plpythonu-*.sql
-%_datadir/%PGSQL/extension/hstore_plpython2u.control
+%_datadir/%PGSQL/extension/hstore_plpython3u.control
 %_datadir/%PGSQL/extension/hstore_plpythonu.control
 %_libdir/pgsql/insert_username.so
 %_datadir/%PGSQL/extension/insert_username-*.sql
@@ -566,9 +566,9 @@ fi
 %_datadir/%PGSQL/extension/jsonb_plperl.control
 %_datadir/%PGSQL/extension/jsonb_plperlu-*.sql
 %_datadir/%PGSQL/extension/jsonb_plperlu.control
-%_libdir/pgsql/jsonb_plpython2.so
-%_datadir/%PGSQL/extension/jsonb_plpython2u-*.sql
-%_datadir/%PGSQL/extension/jsonb_plpython2u.control
+%_libdir/pgsql/jsonb_plpython3.so
+%_datadir/%PGSQL/extension/jsonb_plpython3u-*.sql
+%_datadir/%PGSQL/extension/jsonb_plpython3u.control
 %_datadir/%PGSQL/extension/jsonb_plpythonu-*.sql
 %_datadir/%PGSQL/extension/jsonb_plpythonu.control
 %_libdir/pgsql/lo.so
@@ -577,9 +577,9 @@ fi
 %_libdir/pgsql/ltree.so
 %_datadir/%PGSQL/extension/ltree-*.sql
 %_datadir/%PGSQL/extension/ltree.control
-%_libdir/pgsql/ltree_plpython2.so
-%_datadir/%PGSQL/extension/ltree_plpython2u-*.sql
-%_datadir/%PGSQL/extension/ltree_plpython2u.control
+%_libdir/pgsql/ltree_plpython3.so
+%_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
+%_datadir/%PGSQL/extension/ltree_plpython3u.control
 %_datadir/%PGSQL/extension/ltree_plpythonu-*.sql
 %_datadir/%PGSQL/extension/ltree_plpythonu.control
 %_libdir/pgsql/mchar.so
@@ -736,11 +736,9 @@ fi
 %files -f plpython-%postgresql_major.lang python
 %dir %docdir
 %dir %_libdir/%PGSQL
-%_libdir/%PGSQL/plpython2.so
-%_datadir/%PGSQL/extension/plpython2u-*.sql
-%_datadir/%PGSQL/extension/plpython2u.control
-%_datadir/%PGSQL/extension/plpythonu-*.sql
-%_datadir/%PGSQL/extension/plpythonu.control
+%_libdir/%PGSQL/plpython3.so
+%_datadir/%PGSQL/extension/plpython3u-*.sql
+%_datadir/%PGSQL/extension/plpython3u.control
 
 %if_with devel
 %files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
@@ -782,6 +780,9 @@ fi
 %endif
 
 %changelog
+* Mon May 17 2021 Alexei Takaseev <taf@altlinux.org> 12.6-alt2
+- Fixes CVE-2021-32027, CVE-2021-32028, CVE-2021-32029
+
 * Wed Apr 07 2021 Alexei Takaseev <taf@altlinux.org> 12.6-alt1
 - 12.6
 - Update 1C patch
