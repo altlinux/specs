@@ -6,7 +6,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt3
+Release: alt4
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -26,7 +26,7 @@ BuildRequires: python3-module-scipy-devel python3-module-mpi4py-devel
 #BuildRequires: scilab
 %endif
 
-BuildPreReq: libqhull-devel libmuparser-devel libmumps-devel
+BuildPreReq: libmuparser-devel libmumps-devel
 BuildPreReq: liblapack-devel
 #libsuperlu-devel
 
@@ -68,11 +68,11 @@ export CFLAGS="%optflags" CXXFLAGS="%optflags"
 	--enable-boost \
 	--enable-mumps \
 	--with-mumps="dmumps zmumps smumps cmumps mumps_common pord" \
-	--enable-qhull \
 	--with-blas=openblas \
 	--with-pic \
 	--with-matlab-toolbox-dir=%_datadir/getfem_toolbox \
 	--enable-python3 \
+#	--enable-qhull \
 	#
 CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[:space:]]*=||"`
 %make_build CFLAGS="$CUT_CFLAGS"
@@ -107,6 +107,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Sat May 15 2021 Grigory Ustinov <grenka@altlinux.org> 5.3-alt4
+- Disable qhull support, because it doesn't build with new qhull.
+
 * Thu Apr 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3-alt3
 - Rebuilt with new mumps.
 

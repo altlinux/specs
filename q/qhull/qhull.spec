@@ -1,9 +1,9 @@
-%define somver 6
-%define sover %somver.2.1.1446
+%define somver 8
+%define sover %somver.0.2
 
 Name: qhull
-Version: 2012.1
-Release: alt1.qa1
+Version: 2020.2
+Release: alt1
 
 Summary: General dimension convex hull programs
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -105,28 +105,29 @@ This package contains the HTML documentation.
 export CFLAGS="%optflags_shared"
 export CXXFLAGS="%optflags_shared"
 cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX:STRING=64 \
-%endif
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_C_FLAGS:STRING="%optflags %optflags_shared" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags %optflags_shared" \
-	-DCMAKE_Fortran_FLAGS:STRING="%optflags %optflags_shared" \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DCMAKE_SKIP_RPATH:BOOL=ON \
-	.
+    %if %_lib == lib64
+    -DLIB_SUFFIX:STRING=64 \
+    %endif
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+    -DINCLUDE_INSTALL_DIR="%_includedir" \
+    -DLIB_INSTALL_DIR="%_libdir" \
+    -DBIN_INSTALL_DIR="%_bindir" \
+    -DMAN_INSTALL_DIR="%_mandir/man1/" \
+    -DBUILD_STATIC_LIBS=OFF \
+    .
 %make_build
 
 %install
 %makeinstall_std
 
+# Fixup wrong location
+%if "%_lib" != "lib"
+    mv %buildroot%_prefix/lib/cmake %buildroot%_libdir/
+    mv %buildroot%_prefix/lib/pkgconfig %buildroot%_libdir/
+%endif
+
 install -m755 user_eg* %buildroot%_bindir
-
-ln -s %_includedir/lib%name %buildroot%_includedir/%name
-
-%pre -n lib%name-devel
-rm -fR %_includedir/%name
 
 %files
 %doc Announce.txt COPYING.txt File_id.diz README.txt REGISTER.txt
@@ -138,12 +139,17 @@ rm -fR %_includedir/%name
 
 %files -n lib%name-devel
 %_libdir/*.so
+%_libdir/cmake/*
+%_pkgconfigdir/*
 %_includedir/*
 
 %files doc
 %doc %_docdir/%name
 
 %changelog
+* Tue May 11 2021 Grigory Ustinov <grenka@altlinux.org> 2020.2-alt1
+- Build new version.
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2012.1-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 

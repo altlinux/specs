@@ -3,18 +3,22 @@
 # TODO: Move mpl-data to share?
 # TODO: gtk3 knob too?
 %define oname matplotlib
-%define major 2.2
+%define major 3.4
 
+%ifnarch riscv64
+%def_with qt4
+%endif
+%def_with qt5
 %def_with wx
 
-Name: python-module-%oname
-Version: %major.3
-Release: alt9
+Name: python3-module-%oname
+Version: %major.2
+Release: alt1
 
 Summary: Matlab(TM) style python plotting package
 
 License: see LICENSE
-Group: Development/Python
+Group: Development/Python3
 Url: http://matplotlib.sourceforge.net
 # https://github.com/matplotlib/matplotlib.git
 Packager: Python Development Team <python@packages.altlinux.org>
@@ -22,25 +26,23 @@ Packager: Python Development Team <python@packages.altlinux.org>
 Source: %oname-%version.tar
 Source1: setup.cfg
 
-Patch1: %oname-alt-deps-detection.patch
+Patch1: matplotlib-Set-FreeType-version-to-2.10.2-and-update-tolerances.patch
 Patch2: %oname-alt-version.patch
-Patch3: %oname-2.2.3-remove-unused-matplotlib.testing-import.patch
-
-%setup_python_module pylab
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gcc-c++ libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel
-BuildRequires: python-module-pycairo python-module-pygobject3 python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil
-%{?!_without_check:BuildRequires: python-module-numpy-testing}
-%{?_with_wx:BuildRequires: python-module-wx}
-Requires: %name-gtk3
+BuildRequires: gcc-c++ libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel libqhull-devel
 
-# hack for unknown deps
-%add_python_req_skip AppKit Foundation PyObjCTools numarray paint _Py
-%add_python_req_skip _winreg builtins
-%py_requires functools32
-%py_requires numpy pytz six subprocess32 backports.functools_lru_cache
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
+%{?_with_qt4:BuildRequires: python3-module-PyQt4}
+%{?_with_qt5:BuildRequires: python3-module-PyQt5}
+
+Requires: python3-module-%oname-gtk3
+Requires: python3-module-mpl_toolkits = %EVR
+%add_python3_req_skip AppKit Foundation PyObjCTools numarray paint _Py
+%add_python3_req_skip _winreg builtins distutils
 
 %description
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -51,29 +53,59 @@ in python scripts, interactively from the python shell (ala matlab
 or mathematica), in web application servers generating dynamic
 charts, or embedded in GTK or WX applications; see backends.
 
+
+%package qt5
+Summary: qt5 backend for %oname
+Group: Development/Python3
+Requires: %name = %version-%release
+%py3_requires PyQt5
+
+%description qt5
+qt5 backend for %oname.
+
+%package qt4
+Summary: qt4 backend for %oname
+Group: Development/Python3
+Requires: %name = %version-%release
+%py3_requires PyQt4
+#fix me!!!
+#matplotlib.backends.backend_qt4* needed matplotlib.backends.backend_qt5
+Requires: %name-qt5 = %version-%release
+
+%description qt4
+qt4 backend for %oname.
+
 %package cairo
 Summary: Cairo backend for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 #py_provides backend_cairo
-%py_requires cairo
+%py3_requires cairo
 
 %description cairo
 Cairo backend for %oname.
 
+%package nbagg
+Summary: Interactive figures in the IPython notebook
+Group: Development/Python3
+Requires: %name = %version-%release
+
+%description nbagg
+Interactive figures in the IPython notebook.
+
 %package gtk3
 Summary: gtk3 backend for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name-cairo = %version-%release
 Requires: typelib(Gtk) = 3.0
-Requires: python-module-pygobject3
+Requires: python3-module-pygobject3
 
 %description gtk3
 gtk3 backend for %oname.
 
 %package wx
 Summary: wx backend for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description wx
@@ -81,33 +113,33 @@ ex backend for %oname.
 
 %package tk
 Summary: tk backend for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-%py_requires _tkinter
+%py3_requires _tkinter
 
 %description tk
 tk backend for %oname.
 
 %package sphinxext
 Summary: sphinxext extension for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description sphinxext
 sphinxext extension for %oname.
 
-%package -n python-module-mpl_toolkits
+%package -n python3-module-mpl_toolkits
 Summary: mpl_toolkits extension for %oname
-Group: Development/Python
+Group: Development/Python3
 
-%description -n python-module-mpl_toolkits
+%description -n python3-module-mpl_toolkits
 mpl_toolkits extension for %oname.
 
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+
 sed -i -e "s|@VERSION@|%version|g" setup.py setupext.py
 subst "s,/usr/lib/,%_libdir/,g" setupext.py
 
@@ -115,105 +147,129 @@ sed -i "s|@TOP@|$PWD|" doc/conf.py \
 
 install -p -m644 %SOURCE1 .
 
-echo -e "[versioneer]\nparentdir_prefix=python-module-matplotlib-" >> setup.cfg
+echo -e "[versioneer]\nparentdir_prefix=python3-module-matplotlib-" >> setup.cfg
+
+echo -e "[libs]\nsystem_freetype = True\nsystem_qhull = True" >> setup.cfg
 
 %build
 %add_optflags -fno-strict-aliasing -fpermissive
-
-#sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
 %if_without wx
 sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
 %endif
-%python_build_debug
+export CC=g++
+%python3_build_debug
 
 %install
-
-%python_install
-cp -fR lib/mpl_toolkits %buildroot%python_sitelibdir/
+%python3_install
+cp -fR lib/mpl_toolkits %buildroot%python3_sitelibdir/
 
 # don't package tests
-rm -r %buildroot%python_sitelibdir/%oname/testing
-rm -r %buildroot%python_sitelibdir/mpl_toolkits/tests
+rm -r %buildroot%python3_sitelibdir/%oname/testing
+rm -r %buildroot%python3_sitelibdir/%oname/tests
+rm -r %buildroot%python3_sitelibdir/mpl_toolkits/tests
 
 # Use gtk by default
 subst "s|WXAgg|GTK3Cairo|g" \
-	%buildroot%python_sitelibdir/%oname/mpl-data/matplotlibrc
+	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
+
+export PYTHONPATH=%buildroot%python3_sitelibdir
 
 sed -i 's|^\(backend\).*|\1 : GTK3Cairo|' \
-	%buildroot%python_sitelibdir/%oname/mpl-data/matplotlibrc
+	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
 
 # fonts
 
 %define reduce_fonts cmex10.ttf cmmi10.ttf cmr10.ttf cmsy10.ttf
 
 %pre
-rm -f %python_sitelibdir/%oname/mpl-data/fonts/ttf/Vera*.ttf
+rm -f %python3_sitelibdir/%oname/mpl-data/fonts/ttf/Vera*.ttf
 for i in %reduce_fonts
 do
-	rm -f %python_sitelibdir/%oname/mpl-data/fonts/ttf/$i
+	rm -f %python3_sitelibdir/%oname/mpl-data/fonts/ttf/$i
 done
 
 %files
 %doc README.rst
-%python_sitelibdir/*.py*
-%python_sitelibdir/*.egg-info
-%dir %python_sitelibdir/matplotlib/
-%python_sitelibdir/matplotlib-*-nspkg.pth
-%python_sitelibdir/matplotlib/*.py*
-%python_sitelibdir/matplotlib/*.so
-%python_sitelibdir/mpl_toolkits/
-%python_sitelibdir/matplotlib/projections/
-%python_sitelibdir/matplotlib/mpl-data/
-%python_sitelibdir/matplotlib/cbook/
-%python_sitelibdir/matplotlib/backends/
-%exclude %python_sitelibdir/matplotlib/backends/backend_gtk*
-%exclude %python_sitelibdir/matplotlib/backends/backend_gdk*
-%exclude %python_sitelibdir/matplotlib/backends/backend_cairo*
-%exclude %python_sitelibdir/matplotlib/backends/backend_wx*
-%exclude %python_sitelibdir/matplotlib/backends/wx*
-%exclude %python_sitelibdir/matplotlib/backends/backend_tk*
-%exclude %python_sitelibdir/matplotlib/backends/tk*
-%exclude %python_sitelibdir/matplotlib/backends/_tkagg*
-%exclude %python_sitelibdir/matplotlib/backends/backend_qt?*
-%exclude %python_sitelibdir/matplotlib/backends/qt*_compat.*
-%exclude %python_sitelibdir/matplotlib/backends/backend_macosx.*
-%exclude %python_sitelibdir/matplotlib/backends/backend_nbagg*
-%exclude %python_sitelibdir/matplotlib/backends/qt_editor
-%python_sitelibdir/matplotlib/tri
-%python_sitelibdir/matplotlib/compat
-%python_sitelibdir/matplotlib/axes
-%python_sitelibdir/matplotlib/style
-%exclude %python_sitelibdir/mpl_toolkits
+%python3_sitelibdir/*.py*
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/*.egg-info
+%dir %python3_sitelibdir/matplotlib/
+%python3_sitelibdir/matplotlib-*-nspkg.pth
+%python3_sitelibdir/matplotlib/*.py*
+%python3_sitelibdir/matplotlib/*.so
+%python3_sitelibdir/matplotlib/__pycache__
+%python3_sitelibdir/matplotlib/_api
+%python3_sitelibdir/mpl_toolkits/
+%python3_sitelibdir/matplotlib/projections/
+%python3_sitelibdir/matplotlib/mpl-data/
+%python3_sitelibdir/matplotlib/cbook/
+%python3_sitelibdir/matplotlib/backends/
+%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_cairo*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_wx*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_tk*
+%exclude %python3_sitelibdir/matplotlib/backends/_tkagg*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_qt?*
+%exclude %python3_sitelibdir/matplotlib/backends/qt*_compat.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_macosx.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_nbagg*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_cairo*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_wx*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tk*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_macosx.*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg*
+%exclude %python3_sitelibdir/matplotlib/backends/qt_editor
+%python3_sitelibdir/matplotlib/tri
+%python3_sitelibdir/matplotlib/compat
+%python3_sitelibdir/matplotlib/axes
+%python3_sitelibdir/matplotlib/style
+%exclude %python3_sitelibdir/mpl_toolkits
 
 %files cairo
-%python_sitelibdir/matplotlib/backends/backend_cairo*
+%python3_sitelibdir/matplotlib/backends/backend_cairo*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_cairo*
+
+%files nbagg
+%python3_sitelibdir/matplotlib/backends/backend_nbagg*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg*
 
 %files gtk3
-%python_sitelibdir/matplotlib/backends/backend_gtk3*
+%python3_sitelibdir/matplotlib/backends/backend_gtk3*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3*
 
-%if_with wx
-%files wx
-%python_sitelibdir/matplotlib/backends/backend_wx*
-%python_sitelibdir/matplotlib/backends/wx*
+%files tk
+%python3_sitelibdir/matplotlib/backends/backend_tk*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_tk*
+%python3_sitelibdir/matplotlib/backends/_tkagg*
+
+%if_with qt5
+%files qt5
+%python3_sitelibdir/matplotlib/backends/backend_qt5*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5*
+%python3_sitelibdir/matplotlib/backends/qt*_compat.*
+%python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
+%python3_sitelibdir/matplotlib/backends/qt_editor
 %endif
 
-# problem with checking?
-%files tk
-%python_sitelibdir/matplotlib/backends/backend_tk*
-%python_sitelibdir/matplotlib/backends/tk*
-%python_sitelibdir/matplotlib/backends/_tkagg*
+%if_with qt4
+%files qt4
+%python3_sitelibdir/matplotlib/backends/backend_qt4*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
+%endif
 
 %files sphinxext
-%python_sitelibdir/%oname/sphinxext
+%python3_sitelibdir/%oname/sphinxext
 
-%files -n python-module-mpl_toolkits
-%python_sitelibdir/mpl_toolkits
-#needed fix NameError: name 'gtk_git' is not defined
+%files -n python3-module-mpl_toolkits
+%python3_sitelibdir/mpl_toolkits
 
 %changelog
-* Tue May 11 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.3-alt9
-- Drop python3 support.
-- Build without qt4 and qt5 subpackages (Closes: #38047).
+* Tue May 11 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt1
+- Build new version (Closes: #40034).
+- Drop python2 support.
 
 * Thu Jan 14 2021 Nikita Ermakov <arei@altlinux.org> 2.2.3-alt8
 - Disable Qt4 for riscv64.
