@@ -1,58 +1,64 @@
 Name: kraft
-Version: 0.58
-Release: alt3
+Version: 0.96
+Release: alt1
 
 Summary: Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
-License: GPL, LGPL
+License: GPL-2.0
 Group: Office
-Url: http://www.volle-kraft-voraus.de/
+# VCS: https://github.com/dragotin/kraft
+URL: http://www.volle-kraft-voraus.de/
 
-Source0: kraft-%version.tar.bz2
-Patch: kraft-fix-l10n-build-with-cmake.patch
-Patch1: port-to-python3.patch
+Source0: kraft-%version.tar
 
-BuildRequires(pre): kde4libs-devel rpm-build-python3
-BuildRequires: cmake gcc-c++ python3-tools
-BuildRequires: kde4pimlibs-devel libctemplate-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-python3
+BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: qt5-declarative-devel
+BuildRequires: kf5-kconfig-devel
+BuildRequires: kf5-ki18n-devel
+BuildRequires: kf5-kcontacts-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-kcodecs-devel
+BuildRequires: libctemplate-devel
+BuildRequires: grantlee5-devel
 
-Requires: akonadi libctemplate trmltools
+Requires: libctemplate trmltools akonadi
 %py3_requires reportlab
 
-
 %description
-Kraft is software for helping people drinving small businesses
-in their daily communication with customers.
+Kraft is free software to help to handle documents like quotes and invoices in
+your small business.
 
 %prep
-%setup -n %name-%version
-%patch -p2
-%patch1 -p2
-
-sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
-$(find /usr/lib*/python%_python3_version/Tools/scripts/reindent.py) \
-                               $(find ./ -name '*.py')
+%setup -q -n %name-%version
+subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' src/CMakeLists.txt
 
 %build
-sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION \
-    ${LIB_INSTALL_DIR}|' src/CMakeLists.txt
-
-%K4build -DCMAKE_SKIP_RPATH=1
+%K5init no_altplace
+%K5build -DCMAKE_SKIP_RPATH=1
 
 %install
-%K4install
-%K4find_lang --with-kde %name
+%K5install
+%find_lang --with-kde %name
 
 %files -f %name.lang
-%doc AUTHORS COPYING INSTALL README TODO
+%doc AUTHORS README.md TODO Changes.txt
 %_bindir/*
-%_K4datadir/apps/*
-%_K4xdg_apps/*
-%_K4cfg/*
+%_datadir/%name
+%_K5cfg/*
+%_K5xdgapp/*.desktop
 %_iconsdir/*/*/*/*.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_K5xmlgui/%name
+%_datadir/metainfo/*.appdata.xml
 
+%changelog 
+* Mon May 17 2021 Andrey Cherepanov <cas@altlinux.org> 0.96-alt1
+- New version (from upstream git tag).
+- Build with Qt5/KF5 (ALT #40014).
+- Fix License tag according to SPDX.
 
-%changelog
 * Thu Mar 05 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.58-alt3
 - Porting to python3.
 
