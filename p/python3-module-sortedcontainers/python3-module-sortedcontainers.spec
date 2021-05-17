@@ -1,7 +1,7 @@
 %define modname sortedcontainers
 
 Name: python3-module-%modname
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Python SortedContainers module
@@ -35,6 +35,9 @@ written in pure-Python, and fast as C-extensions.
 
 
 %changelog
+* Mon May 17 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
