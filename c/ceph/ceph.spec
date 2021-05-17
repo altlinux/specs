@@ -1,4 +1,4 @@
-%define git_version 27917a557cca91e4da407489bbaa64ad4352cc02
+%define git_version ce065eabfa5ce81323b009786bdf5bb03127cbe1
 %define _unpackaged_files_terminate_build 1
 
 %def_with ocf
@@ -41,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 15.2.11
+Version: 15.2.12
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -1502,6 +1502,9 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Sat May 15 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.12-alt1
+- 15.2.12 (Fixes: CVE-2021-3531, CVE-2021-3524, CVE-2021-3509)
+
 * Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.11-alt1
 - 15.2.11 (Fixes: CVE-2021-20288).
 
