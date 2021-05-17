@@ -73,7 +73,7 @@
 
 Name:    samba
 Version: 4.14.4
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1922,6 +1922,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon May 17 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt4
+- winbindd: Fix a startup race with allocate_gid (Samba#14678)
+
 * Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt3
 - Update with latest fixes (Samba#14695, Samba#14696)
 
