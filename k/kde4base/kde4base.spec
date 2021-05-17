@@ -2,6 +2,7 @@
 %define req_design_graphics design-graphics >= 3.1.4
 %def_disable kappfinder
 %def_disable userpasswd
+%def_disable kdialog
 
 %add_findpackage_path %_kde4_bindir
 
@@ -11,7 +12,7 @@
 %define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -558,8 +559,10 @@ done
 %_K4doc/en/kdepasswd
 %endif
 
+%if_enabled kdialog
 %files kdialog
 %_K4bindir/kdialog
+%endif
 
 %files keditbookmarks
 %_K4bindir/kbookmarkmerger
@@ -614,6 +617,9 @@ done
 
 
 %changelog
+* Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt7
+- don't package kdialog
+
 * Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt6
 - relax requires
 
