@@ -1,6 +1,8 @@
+# due to kcmshell4
+%filter_from_requires /^kde4base-runtime-core/d
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-alternatives rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-alternatives rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(xkbcommon)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -12,7 +14,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.8
-Release:		alt2_1
+Release:		alt2_2
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -21,10 +23,7 @@ BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		qt5-declarative-devel qt5-designer qt5-tools libgtk+3-devel libgtk+2-devel
-%ifnarch riscv64
-BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html
-%endif
+BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel, libicu67
 BuildRequires:		libX11-devel libXvMC-devel xorg-proto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
@@ -154,17 +153,11 @@ This package contains table engine for Fcitx.
 sed -i '1s,env bash,env bash4,' data/script/fcitx-diagnose.sh
 
 %build
-mkdir -p build
-pushd build
-%{fedora_cmake} .. -DENABLE_GTK3_IM_MODULE=On -DENABLE_QT_IM_MODULE=On -DENABLE_OPENCC=On -DENABLE_LUA=On -DENABLE_GIR=On -DENABLE_XDGAUTOSTART=Off \
-%ifarch riscv64
--DENABLE_QT=OFF
-%endif
-
-make VERBOSE=1 %{?_smp_mflags}
+%{fedora_v2_cmake} -DENABLE_GTK3_IM_MODULE=On -DENABLE_QT_IM_MODULE=On -DENABLE_OPENCC=On -DENABLE_LUA=On -DENABLE_GIR=On -DENABLE_XDGAUTOSTART=Off
+%fedora_v2_cmake_build 
 
 %install
-%makeinstall_std INSTALL="install -p" -C build
+%fedora_v2_cmake_install 
 
 find %{buildroot}%{_libdir} -name '*.la' -delete -print
 
@@ -315,6 +308,9 @@ EOF
 %endif
 
 %changelog
+* Mon May 17 2021 Igor Vlasenko <viy@altlinux.org> 4.2.9.8-alt2_2
+- build w/o kde4
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 4.2.9.8-alt2_1
 - updated buildrequires
 
