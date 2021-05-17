@@ -24,13 +24,13 @@
 
 Name: LibreOffice-still
 %define hversion 7.0
-%define urelease 5.2
+%define urelease 6.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -662,6 +662,9 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon May 17 2021 Andrey Cherepanov <cas@altlinux.org> 7.0.6.2-alt1
+- New version.
+
 * Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 7.0.5.2-alt3
 - Use python3 autoreq for python scripts.
 
