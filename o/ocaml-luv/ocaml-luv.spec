@@ -1,8 +1,8 @@
 %def_with check
 %define  modulename luv
 Name:    ocaml-%modulename
-Version: 0.5.7
-Release: alt2
+Version: 0.5.8
+Release: alt1
 Summary: Binding to libuv for ocaml: cross-platform asynchronous I/O
 License: MIT
 Group:   Development/ML
@@ -59,6 +59,9 @@ export TRAVIS=true
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon May 17 2021 Anton Farygin <rider@altlinux.ru> 0.5.8-alt1
+- 0.5.8
+
 * Fri Mar 12 2021 Anton Farygin <rider@altlinux.org> 0.5.7-alt2
 - libuv-1.41.0-alt2 was built without assertions and this change made it
   possible to enable tests
