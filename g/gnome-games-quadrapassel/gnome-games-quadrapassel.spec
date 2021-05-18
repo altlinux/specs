@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name quadrapassel
-%define ver_major 3.38
+%define ver_major 40
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
@@ -55,6 +55,9 @@ GNOME version of the popular russian game Tetris.
 
 
 %changelog
+* Tue May 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
