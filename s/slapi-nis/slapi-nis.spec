@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: slapi-nis
-Version: 0.56.6
+Version: 0.56.7
 Release: alt1
 
 Summary: NIS Server and Schema Compatibility plugins for Directory Server
@@ -71,6 +71,9 @@ sed -i -e 's,%_libdir/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
 %exclude %_libdir/dirsrv/plugins/*.la
 
 %changelog
+* Tue May 18 2021 Stanislav Levin <slev@altlinux.org> 0.56.7-alt1
+- 0.56.6 -> 0.56.7 (fixes: CVE-2021-3480).
+
 * Thu Feb 04 2021 Stanislav Levin <slev@altlinux.org> 0.56.6-alt1
 - 0.56.3 -> 0.56.6.
 
