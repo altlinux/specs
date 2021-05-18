@@ -1,6 +1,6 @@
 
 %global import_path github.com/containernetworking/plugins
-%global commit e13bab99e54b4a34375450518d7db7a3da825e44
+%global commit fa48f7515b50272b7106702a662fadbf2ead3d18
 #%%global shortcommit %(c=%commit; echo ${c:0:7})
 
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
@@ -53,6 +53,9 @@ install -m0755 bin/* %buildroot%cni_dir/
 %cni_dir/*
 
 %changelog
+* Tue May 18 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
+- new version 0.9.1
+
 * Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
 - new version 0.9.0
 
