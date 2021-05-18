@@ -4,15 +4,13 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
 %def_enable glib
 %def_enable qt5
-%ifnarch riscv64
-%def_enable qt4
-%endif
+%def_disable qt4
 %def_enable devel
 %def_enable utils
 %def_enable xpdfheaders
@@ -29,18 +27,18 @@
 %endif
 
 %define rname poppler
-%define somajor 97
+%define somajor 110
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
-%define major 0
-%define minor 86
-%define bugfix 1
+%define major 21
+%define minor 05
+%define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -282,9 +280,9 @@ statically linked libpoppler-based software
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
-%patch10 -p2
-%patch11 -p1
+#%patch1 -p1
+%patch10 -p1
+#%patch11 -p1
 
 install -m 0644 %SOURCE1 cmake/modules/
 
@@ -346,7 +344,7 @@ make install DESTDIR=%buildroot -C BUILD
 %files -n %poppler_glib_devel_name
 %_includedir/poppler/glib/
 %_libdir/libpoppler-glib.so
-%_pkgconfigdir/poppler-cairo.pc
+#%_pkgconfigdir/poppler-cairo.pc
 %_pkgconfigdir/poppler-glib.pc
 %endif
 %endif
@@ -392,14 +390,12 @@ make install DESTDIR=%buildroot -C BUILD
 %files -n %poppler_devel_name
 %dir %_includedir/poppler
 %_includedir/poppler/*.h
-#%_includedir/poppler/Function.cc
 %_includedir/poppler/fofi
 %_includedir/poppler/splash/
 %_includedir/poppler/goo/
 %_libdir/libpoppler.so
 %_pkgconfigdir/poppler.pc
-%_pkgconfigdir/poppler-splash.pc
-#%_datadir/gtk-doc/html/poppler
+#%_pkgconfigdir/poppler-splash.pc
 
 %if_enabled static
 %files -n %{poppler_devel_name}-static
@@ -409,8 +405,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 0.86.1-alt3
-- build only compat library
+* Tue May 18 2021 Sergey V Turchin <zerg@altlinux.org> 21.05.0-alt1
+- new version
 
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 0.86.1-alt2
 - fix build requires
