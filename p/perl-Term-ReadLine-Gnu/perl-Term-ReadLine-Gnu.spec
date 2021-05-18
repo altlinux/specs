@@ -3,7 +3,7 @@
 %define _without_test 1
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.40
+Version: 1.42
 Release: alt1
 
 Summary: Perl interface to the GNU Readline library
@@ -75,6 +75,9 @@ expect -c '
 %perl_vendor_autolib/Term
 
 %changelog
+* Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 1.42-alt1
+- new version
+
 * Wed Feb 24 2021 Igor Vlasenko <viy@altlinux.org> 1.40-alt1
 - new version
 
