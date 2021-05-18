@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 1.1.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Fast and easy syntax highlighting for selected languages, written in Ruby
 License: MIT
@@ -16,6 +16,10 @@ Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+
+# Do not run python.{prov,req}, it exists for highlighting test only
+%add_findprov_skiplist %ruby_sitelibdir/%{pkgname}*/test/executable/source.py
+%add_findreq_skiplist  %ruby_sitelibdir/%{pkgname}*/test/executable/source.py
 
 %description
 CodeRay is a Ruby library for syntax highlighting.
@@ -58,6 +62,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue May 18 2021 Slava Aseev <ptrnine@altlinux.org> 1.1.2-alt1.2
+- Fix FTBFS due to python.{prov,req}
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1.1
 - Rebuild with new Ruby autorequirements.
 
