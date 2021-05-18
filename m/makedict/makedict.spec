@@ -1,6 +1,6 @@
 Name: makedict
 Version: 0.4.1_beta1
-Release: alt3.git.ga70119
+Release: alt4.git.ga70119
 
 Summary: XDXF based converter from any dictionary format to any
 
@@ -16,6 +16,8 @@ Source: %name.tar
 # Automatically added by buildreq on Fri May 31 2013
 # optimized out: cmake-modules libstdc++-devel pkg-config
 BuildRequires: cmake ctest discount gcc-c++ glib2-devel libexpat-devel zlib-devel
+
+BuildRequires: rpm-build-python
 
 %description
 XDXF based converter from any dictionary format to any.
@@ -46,6 +48,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Mon May 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.1_beta1-alt4.git.ga70119
+- add BR: rpm-build-python
+
 * Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.1_beta1-alt3.git.ga70119
 - use python2
 
