@@ -1,8 +1,11 @@
 Group: Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: rpm-build-python3
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           zchunk
-Version:        1.1.9
+Version:        1.1.11
 Release:        alt1_1
 Summary:        Compressed file format that allows easy deltas
 License:        BSD and MIT
@@ -91,6 +94,9 @@ install contrib/gen_xml_dictionary %{buildroot}%{_libexecdir}/zck_gen_xml_dictio
 %{_includedir}/zck.h
 
 %changelog
+* Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 1.1.11-alt1_1
+- new version
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 1.1.9-alt1_1
 - update to new release by fcimport
 
