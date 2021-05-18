@@ -1,6 +1,6 @@
 Name: libdrm
-Version: 2.4.105
-Release: alt2
+Version: 2.4.106
+Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -62,6 +62,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Tue May 18 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.106-alt1
+- 2.4.106
+
 * Fri Apr 30 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.105-alt2
 - updated to master git.40f73d0b
 
