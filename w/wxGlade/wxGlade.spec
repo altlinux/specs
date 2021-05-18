@@ -2,20 +2,21 @@
 
 Name: wxGlade
 Summary: A GUI builder for wxWindows/wxPython
-Version: 0.7.2
-Release: alt3
+Version: 1.0.2
+Release: alt1
 License: MIT
 Group: Development/Other
 Url: http://wxglade.sourceforge.net/
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
-Source: http://heanet.dl.sourceforge.net/project/wxglade/wxglade/%version/%name-%version.tar.gz
-Patch: wxGlade-0.7.2-fix-shebang-python2.patch
+# Source-url: https://github.com/wxGlade/wxGlade/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-python3
 BuildRequires: ImageMagick-tools
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: rpm-build-python
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: rpm-build-python3
 BuildArch: noarch
 
 %description
@@ -34,22 +35,24 @@ is the right tool.
 
 %prep
 %setup
-%patch -p2
-chmod a-x CREDITS.txt
-chmod a-x LICENSE.txt
-chmod a-x docs/src/manual.xml
 
 %build
-%python_build
+%python3_build
 
 %install
-%__python setup.py install --prefix=%prefix -O1 --skip-build --root=%buildroot
+%python3_install
+
+# create run script
+cat > %buildroot%_bindir/wxglade << EOF
+#!/bin/sh
+%__python3 %python3_sitelibdir/wxglade/wxglade.py
+EOF
 
 # icons
 mkdir -p %buildroot{%_iconsdir,%_miconsdir,%_liconsdir}
-convert -resize 32x32 icons/icon.xpm %buildroot%_iconsdir/%name.png
-convert -resize 16x16 icons/icon.xpm %buildroot%_miconsdir/%name.png
-convert -resize 48x48 icons/icon.xpm %buildroot%_liconsdir/%name.png
+convert -resize 32x32 icons/icon.png %buildroot%_iconsdir/%name.png
+convert -resize 16x16 icons/icon.png %buildroot%_miconsdir/%name.png
+convert -resize 48x48 icons/icon.png %buildroot%_liconsdir/%name.png
 
 # menu entry
 mkdir -p %buildroot%_desktopdir
@@ -57,7 +60,7 @@ cat > %buildroot%_desktopdir/%name.desktop << EOF
 [Desktop Entry]
 Name=%name
 Comment=A GUI builder for wxWindows/wxPython
-Exec=wxglade
+Exec=%_bindir/wxglade
 Icon=%name
 Terminal=false
 Type=Application
@@ -65,17 +68,18 @@ Categories=Development;GUIDesigner;
 EOF
 
 # docs handled by doc section
-rm -rf %buildroot%_docdir/wxglade
+rm -rf %buildroot%_docdir/wxglade/*
+cp -r docs/html %buildroot%_docdir/wxglade/
 
-# fix attr
-chmod a+x %buildroot%python_sitelibdir/wxglade/{xrc2wxg,wxglade,templates_ui,msgdialog}.py
+# remove script for windows
+rm %buildroot/%python3_sitelibdir/wxglade/msw.py
 
 %files
-%doc docs CHANGES.txt README.txt TODO.txt CREDITS.txt LICENSE.txt
+%doc README.txt
+%doc %_docdir/wxglade/
 %_bindir/wxglade
-%_man1dir/wxglade.1*
-%python_sitelibdir/wxglade
-%python_sitelibdir/%name-%version-py%__python_version.egg-info
+%python3_sitelibdir/wxglade
+%python3_sitelibdir/%name-%version-py%__python3_version.egg-info
 %_desktopdir/%name.desktop
 %_iconsdir/%name.png
 %_miconsdir/%name.png
@@ -83,6 +87,10 @@ chmod a+x %buildroot%python_sitelibdir/wxglade/{xrc2wxg,wxglade,templates_ui,msg
 %_datadir/wxglade
 
 %changelog
+* Tue May 18 2021 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1
+- new version (1.0.2) with rpmgs script
+- cleanup spec
+
 * Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt3
 - Fix shebang python2
 
