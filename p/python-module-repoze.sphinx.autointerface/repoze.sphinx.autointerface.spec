@@ -1,13 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define oname repoze.sphinx.autointerface
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.8
-#Release: alt2.1.1
+Release: alt2
 Summary: Auto-generate Sphinx API docs from Zope interfaces
 License: BSD
 Group: Development/Python
@@ -129,6 +127,9 @@ touch %buildroot%python3_sitelibdir/repoze/sphinx/__init__.py
 %endif
 
 %changelog
+* Tue May 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt2
+- build python2 module only
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
 - automated PyPI update
 
