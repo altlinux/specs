@@ -1,13 +1,14 @@
 Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives
+BuildRequires: rpm-build-python3
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        4.6.1
+Version:        4.7.1
 Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
@@ -15,11 +16,25 @@ License:        GPLv2+
 URL:            http://modules.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/modules/modules-%{version}.tar.bz2
 
+BuildRequires:  libtcl tcl
+BuildRequires:  dejagnu
+BuildRequires:  sed
+BuildRequires:  less
+BuildRequires:  coreutils
+BuildRequires:  libprocps procps
+# specific requirements to build compat version and extension library
 BuildRequires:  gcc
-BuildRequires:  tcl-devel, tclx, libX11-devel
-BuildRequires:  dejagnu, sed, procps, coreutils, man, less
-Requires:       libtcl tcl, sed, procps, man, less
-Provides:	environment(modules)
+BuildRequires:  tcl-devel
+# specific requirements to build compat version
+BuildRequires:  libX11-devel
+BuildRequires:  tclx
+Requires:       libtcl tcl
+Requires:       sed
+Requires:       less
+Requires:       libprocps procps
+Requires:       man-db
+Requires(post): coreutils
+Provides:       environment(modules)
 Source44: import.info
 
 %description
@@ -80,16 +95,18 @@ Install this package if you want to create RPM packages that use GNAT.
            --etcdir=%{_sysconfdir}/%{name} \
            --bindir=%{_datadir}/Modules/bin \
            --libexecdir=%{_libdir}/Modules/libexec \
-           --docdir=%{_docdir}/%{name}-%version \
+           --mandir=%{_mandir} \
            --vimdatadir=%{vimdatadir} \
            --enable-multilib-support \
            --enable-compat-version \
+           --disable-doc-install \
            --enable-dotmodulespath \
            --disable-set-shell-startup \
            --with-python=/usr/bin/python3 \
            --with-initconf-in=etcdir \
            --with-modulepath=%{_datadir}/Modules/modulefiles:%{_sysconfdir}/modulefiles:%{_datadir}/modulefiles \
            --with-quarantine-vars='LD_LIBRARY_PATH LD_PRELOAD'
+
 %make_build
 
 
@@ -101,18 +118,16 @@ mkdir -p %{buildroot}%{_datadir}/modulefiles
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
 mkdir -p %{buildroot}%{_bindir}
 
-# Set up for alternatives.
+# setup for alternatives
 touch %{buildroot}%{_sysconfdir}/profile.d/modules.{csh,sh}
 touch %{buildroot}%{_bindir}/modulecmd
 # remove modulecmd wrapper as it will be handled by alternatives
 rm -f %{buildroot}%{_datadir}/Modules/bin/modulecmd
-mv %{buildroot}%{_mandir}/man1/module{,-c}.1
-mv %{buildroot}%{_mandir}/man4/modulefile{,-c}.4
 
-# Major utilities go to regular bin dir.
+# major utilities go to regular bin dir
 mv %{buildroot}%{_datadir}/Modules/bin/envml %{buildroot}%{_bindir}/
 
-# Rename compat docs to find them in files section.
+# rename compat docs to find them in files section
 mv compat/ChangeLog ChangeLog-compat
 mv compat/NEWS NEWS-compat
 
@@ -121,12 +136,12 @@ mv {doc/build/,}MIGRATING.txt
 mv {doc/build/,}CONTRIBUTING.txt
 mv {doc/build/,}diff_v3_v4.txt
 mv {doc/,}example.txt
-rm -f %{buildroot}%{_docdir}/%{name}/{COPYING.GPLv2,ChangeLog-compat,INSTALL{,-win}.txt,NEWS-compat}
 
 cp -p script/createmodule.sh %{buildroot}%{_datadir}/Modules/bin
 
+# install the rpm config file
 install -Dpm 644 contrib/rpm/macros.%{name} %{buildroot}/%{_rpmmacrosdir}/%{name}
-for rpm404_ghost in %{_sysconfdir}/profile.d/modules.csh %{_sysconfdir}/profile.d/modules.sh %{_bindir}/modulecmd %{_mandir}/man1/module.1.gz %{_mandir}/man4/modulefile.4.gz
+for rpm404_ghost in %{_sysconfdir}/profile.d/modules.csh %{_sysconfdir}/profile.d/modules.sh %{_bindir}/modulecmd
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
@@ -135,8 +150,6 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_en
 %{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/profile.sh	40
 %{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/profile.csh	%{_datadir}/Modules/init/profile.sh
 %{_bindir}/modulecmd	%{_libdir}/Modules/libexec/modulecmd.tcl	%{_datadir}/Modules/init/profile.sh
-%{_mandir}/man1/module.1.gz	%{_mandir}/man1/module-c.1.gz	%{_datadir}/Modules/init/profile.sh
-%{_mandir}/man4/modulefile.4.gz	%{_mandir}/man4/modulefile-c.4.gz	%{_datadir}/Modules/init/profile.sh
 EOF
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_environment-modules-compat<<EOF
 %{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/profile-compat.sh	10
@@ -145,9 +158,8 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_en
 EOF
 
 
+
 %post
-[ ! -L %{_mandir}/man1/module.1.gz ] && rm -f %{_mandir}/man1/module.1.gz
-[ ! -L %{_mandir}/man4/modulefile.4.gz ] && rm -f %{_mandir}/man4/modulefile.4.gz
 [ ! -L %{_sysconfdir}/profile.d/modules.sh ] &&  rm -f %{_sysconfdir}/profile.d/modules.sh
 [ ! -L %{_sysconfdir}/profile.d/modules.csh ] &&  rm -f %{_sysconfdir}/profile.d/modules.csh
 [ ! -L %{_bindir}/modulecmd ] &&  rm -f %{_bindir}/modulecmd
@@ -179,8 +191,8 @@ fi
 %{_datadir}/Modules/modulefiles
 %{_datadir}/modulefiles
 %{_mandir}/man1/ml.1*
-%{_mandir}/man1/module-c.1*
-%{_mandir}/man4/modulefile-c.4*
+%{_mandir}/man1/module.1*
+%{_mandir}/man4/modulefile.4*
 %{vimdatadir}/ftdetect/modulefile.vim
 %{vimdatadir}/ftplugin/modulefile.vim
 %{vimdatadir}/syntax/modulefile.vim
@@ -198,6 +210,9 @@ fi
 
 
 %changelog
+* Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 4.7.1-alt1_1
+- new version
+
 * Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 4.6.1-alt1_1
 - update to new release by fcimport
 
