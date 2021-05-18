@@ -12,7 +12,7 @@
 %define llvm_version      11.0
 
 Name: 	 thunderbird
-Version: 78.10.1
+Version: 78.10.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -650,6 +650,12 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue May 18 2021 Andrey Cherepanov <cas@altlinux.org> 78.10.2-alt1
+- New version (78.10.2).
+- Security fixes:
+  + CVE-2021-29957 Partial protection of inline OpenPGP message not indicated
+  + CVE-2021-29956 Thunderbird stored OpenPGP secret keys without master password protection
+
 * Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 78.10.1-alt1
 - New version (78.10.1).
 - Security fixes:
