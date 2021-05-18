@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gl2ps
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 Summary: OpenGL to PostScript printing library
 License: LGPLv2+
@@ -11,7 +11,7 @@ Url: http://geuz.org/gl2ps/#tth_sEc5
 # https://gitlab.onelab.info/gl2ps/gl2ps.git
 Source: %name-%version.tar
 
-Patch1: %name-%version-upstream.patch
+Patch1: %name-%version-alt-build.patch
 
 BuildRequires: cmake zlib-devel libpng-devel ghostscript-utils
 BuildRequires: libGLU-devel libGLUT-devel libXi-devel libXmu-devel
@@ -81,16 +81,12 @@ This package contains development documentation for GL2PS.
 %patch1 -p1
 
 %build
-%cmake_insource \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo"
+%cmake
 
-%make_build VERBOSE=1
+%cmake_build VERBOSE=1
 
 %install
-%makeinstall_std
-
-# remove static libraries
-rm -f %buildroot%_libdir/*.a
+%cmakeinstall_std
 
 %files -n lib%name
 %doc README.txt TODO.txt
@@ -104,6 +100,9 @@ rm -f %buildroot%_libdir/*.a
 %_docdir/%name
 
 %changelog
+* Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt1
+- Updated to upstream version 1.4.2.
+
 * Wed Sep 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1
 - Updated to upstream version 1.4.0.
 

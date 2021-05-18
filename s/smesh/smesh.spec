@@ -2,7 +2,7 @@
 
 Name:     smesh
 Version:  8.3.0.4
-Release:  alt1
+Release:  alt2
 
 Summary:  OpenCascade based MESH framework
 License:  LGPL-2.1
@@ -16,6 +16,7 @@ Patch1:   smesh-install.patch
 Patch2:   smesh-alt-return-type.patch
 Patch3:   smesh-alt-link-with-dl.patch
 Patch4:   smesh-alt-cmake-pathes.patch
+Patch5:   smesh-alt-vtk-compat.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -24,7 +25,7 @@ BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-polygon-devel
 BuildRequires: opencascade-devel
-BuildRequires: libvtk8.2-devel
+BuildRequires: libvtk-devel
 %if_with netgen
 BuildRequires: libnetgen-devel netgen
 %endif
@@ -70,6 +71,7 @@ Development files and headers for libsmesh.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %cmake -GNinja \
@@ -91,6 +93,9 @@ Development files and headers for libsmesh.
 %_libdir/cmake/SMESHConfig.cmake
 
 %changelog
+* Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.3.0.4-alt2
+- Rebuilt with VTK-9.0.1.
+
 * Fri Jun 26 2020 Andrey Cherepanov <cas@altlinux.org> 8.3.0.4-alt1
 - New version.
 

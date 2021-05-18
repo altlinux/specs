@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Matlab(TM) style python plotting package
 
@@ -27,7 +27,6 @@ Source: %oname-%version.tar
 Source1: setup.cfg
 
 Patch1: matplotlib-Set-FreeType-version-to-2.10.2-and-update-tolerances.patch
-Patch2: %oname-alt-version.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-gir
@@ -57,7 +56,7 @@ charts, or embedded in GTK or WX applications; see backends.
 %package qt5
 Summary: qt5 backend for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_requires PyQt5
 
 %description qt5
@@ -66,11 +65,11 @@ qt5 backend for %oname.
 %package qt4
 Summary: qt4 backend for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_requires PyQt4
 #fix me!!!
 #matplotlib.backends.backend_qt4* needed matplotlib.backends.backend_qt5
-Requires: %name-qt5 = %version-%release
+Requires: %name-qt5 = %EVR
 
 %description qt4
 qt4 backend for %oname.
@@ -78,7 +77,7 @@ qt4 backend for %oname.
 %package cairo
 Summary: Cairo backend for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 #py_provides backend_cairo
 %py3_requires cairo
 
@@ -88,7 +87,7 @@ Cairo backend for %oname.
 %package nbagg
 Summary: Interactive figures in the IPython notebook
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description nbagg
 Interactive figures in the IPython notebook.
@@ -96,7 +95,7 @@ Interactive figures in the IPython notebook.
 %package gtk3
 Summary: gtk3 backend for %oname
 Group: Development/Python3
-Requires: %name-cairo = %version-%release
+Requires: %name-cairo = %EVR
 Requires: typelib(Gtk) = 3.0
 Requires: python3-module-pygobject3
 
@@ -106,7 +105,7 @@ gtk3 backend for %oname.
 %package wx
 Summary: wx backend for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description wx
 ex backend for %oname.
@@ -114,7 +113,7 @@ ex backend for %oname.
 %package tk
 Summary: tk backend for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py3_requires _tkinter
 
 %description tk
@@ -123,7 +122,7 @@ tk backend for %oname.
 %package sphinxext
 Summary: sphinxext extension for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description sphinxext
 sphinxext extension for %oname.
@@ -138,25 +137,19 @@ mpl_toolkits extension for %oname.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
-sed -i -e "s|@VERSION@|%version|g" setup.py setupext.py
-subst "s,/usr/lib/,%_libdir/,g" setupext.py
-
-sed -i "s|@TOP@|$PWD|" doc/conf.py \
+# fix version info
+sed -i \
+	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
+	lib/%oname/_version.py
 
 install -p -m644 %SOURCE1 .
 
-echo -e "[versioneer]\nparentdir_prefix=python3-module-matplotlib-" >> setup.cfg
-
-echo -e "[libs]\nsystem_freetype = True\nsystem_qhull = True" >> setup.cfg
-
 %build
-%add_optflags -fno-strict-aliasing -fpermissive
+%add_optflags -fno-strict-aliasing
 %if_without wx
 sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
 %endif
-export CC=g++
 %python3_build_debug
 
 %install
@@ -267,6 +260,10 @@ done
 %python3_sitelibdir/mpl_toolkits
 
 %changelog
+* Tue May 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt2
+- Fixed version detection.
+- Cleaned up sources and spec.
+
 * Tue May 11 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt1
 - Build new version (Closes: #40034).
 - Drop python2 support.

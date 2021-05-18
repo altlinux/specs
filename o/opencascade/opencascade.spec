@@ -1,6 +1,6 @@
 Name: opencascade
 Version: 7.5.0
-Release: alt1
+Release: alt2
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
@@ -12,6 +12,7 @@ Url: http://www.opencascade.org
 # https://www.opencascade.com/sites/default/files/private/occt/OCC_%%{version}_release/%%{name}-%%{version}.tgz
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
+Patch2: opencascade-alt-arm-build.patch
 
 Requires: lib%name = %version-%release
 Requires: %name-data = %version-%release
@@ -23,7 +24,7 @@ BuildRequires: tcl-devel tcl-tix libfltk-devel tk-devel libXmu-devel
 BuildRequires: java-devel-default libcoin3d-devel libfreetype-devel
 BuildRequires: libftgl-devel fontconfig-devel libXi-devel
 BuildRequires: libgl2ps-devel zlib-devel libfreeimage-devel
-BuildRequires: libXext-devel libvtk8.2-devel doxygen graphviz
+BuildRequires: libXext-devel libvtk-devel doxygen graphviz
 
 %description
 Open CASCADE Technology (OCCT) is a suite for 3D surface and solid
@@ -77,6 +78,9 @@ This package contains documentation for Open CASCADE.
 %prep
 %setup
 %patch1 -p1
+%ifarch %arm
+%patch2 -p2
+%endif
 
 # Remove executable bit from sources and documentation files
 find src doc -type f -exec chmod -x {} \;
@@ -90,6 +94,7 @@ export DESTDIR="%buildroot"
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DUSE_TBB=False \
        -DUSE_VTK=True \
+       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.0 \
        -DINSTALL_DIR_LIB=%_lib \
        -DINSTALL_DIR_CMAKE=%_lib/cmake/%name
 %ninja_build
@@ -125,6 +130,9 @@ cp -a doc/* %buildroot%_datadir/doc/%name/
 %_datadir/doc/%name
 
 %changelog
+* Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.5.0-alt2
+- Rebuilt with VTK-9.0.1.
+
 * Mon Nov 30 2020 Andrey Cherepanov <cas@altlinux.org> 7.5.0-alt1
 - New version.
 

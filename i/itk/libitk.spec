@@ -2,11 +2,10 @@
 
 %define soname 1
 %define itkver 5.0
-%define vtkver 8.2
 
 Name: itk
 Version: 5.0.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -20,7 +19,7 @@ Patch: %name-%version-alt.patch
 BuildRequires: gcc-c++ cmake
 BuildRequires: gdcm-devel castxml graphviz libhdf5-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel
-BuildRequires: libvxl-devel libvtk%vtkver-devel zlib-devel
+BuildRequires: libvxl-devel libvtk-devel zlib-devel
 BuildRequires: libblas-devel liblapack-devel libnetcdf-devel jsoncpp-devel
 BuildRequires: libexpat-devel dcmtk
 
@@ -40,7 +39,7 @@ Registration is the task of aligning or developing correspondences between \
 data. For example, in the medical environment, a CT scan may be aligned with  \
 a MRI scan in order to combine the information contained in both.
 
-%description 
+%description
 %_description
 
 %package -n lib%name%soname
@@ -62,7 +61,7 @@ Requires: libfftw3-devel
 Requires: libXext-devel
 Requires: libxml2-devel
 Requires: libnetcdf-devel
-Requires: libvtk%vtkver-devel
+Requires: libvtk-devel
 Requires: libvxl-devel
 %description -n lib%name-devel
 This package contains development files for ITK.
@@ -88,7 +87,7 @@ This package contains source code of ITK examples.
 Summary: Documentation for ITK
 Group: Documentation
 BuildArch: noarch
-%description doc 
+%description doc
 This package contains documentation for ITK.
 %_description
 
@@ -224,6 +223,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %_libdir/cmake/%name/Modules/ITKVtkGlue.cmake
 
 %changelog
+* Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt4
+- Rebuilt with VTK-9.0.1.
+
 * Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt3
 - Updated build dependencies.
 

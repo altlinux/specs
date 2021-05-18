@@ -9,14 +9,12 @@
 %define build_parallel_jobs 7
 %endif
 
-%define vtkver 8.2
-
 # Last number in version is computed by command:
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
 Version: 0.19.2
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -32,6 +30,8 @@ Source1: freecad.1
 Patch1: %name-remove-3rdParty.patch
 %endif
 Patch2: %name-0.18.4-alt-boost-1.73.0-compat.patch
+Patch3: freecad-0.19.2-upstream-vtk9-compat.patch
+Patch4: freecad-0.19.2-alt-boost-link.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -79,7 +79,7 @@ BuildRequires: eigen3
 BuildRequires: libnumpy-py3-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: gdb
-BuildRequires: libvtk%{vtkver}-devel vtk%{vtkver}-examples vtk%{vtkver}-python
+BuildRequires: libvtk-devel vtk-examples vtk-python3
 BuildRequires: libhdf5-devel
 BuildRequires: libmed-devel libspnav-devel
 BuildRequires: python3-module-matplotlib-qt5
@@ -146,6 +146,8 @@ This package contains documentation for FreeCAD.
 rm -rf src/3rdParty
 %endif
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -238,6 +240,9 @@ sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod
 %ldir/doc
 
 %changelog
+* Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.19.2-alt2
+- Rebuilt with VTK-9.0.1.
+
 * Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.19.2-alt1
 - New version.
 - Build with opencascade instead of obsoleted OCE.
