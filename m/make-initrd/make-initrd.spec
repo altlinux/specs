@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -17,8 +17,7 @@ BuildRequires: bzlib-devel
 BuildRequires: liblzma-devel
 BuildRequires: libzstd-devel
 BuildRequires: libelf-devel
-BuildRequires: libshell
-BuildRequires: make-initrd-busybox
+BuildRequires: libtirpc-devel
 
 Provides: make-initrd(crc32c) = 1
 
@@ -30,14 +29,14 @@ Obsoletes: make-initrd2
 Provides: kinit-utils = %version-%release
 Obsoletes: kinit-utils
 
+Provides: make-initrd-busybox = %version-%release
+Obsoletes: make-initrd-busybox
+
 Requires: bash libshell make sed module-init-tools coreutils findutils grep glibc-utils
 Requires: chrooted-resolv service util-linux
 
 # Feature qemu
 Requires: pciutils
-
-# setsid, timeout, start-stop-daemon
-Requires: make-initrd-busybox >= 1.32.1-alt3
 
 # depinfo
 Requires: libkmod >= 8-alt1
@@ -48,9 +47,6 @@ Requires: tar
 # Move /dev from initrd to the real system.
 # 167: udevadm info --run
 Requires: udev >= 167-alt1
-
-# installkernel
-Requires: bootloader-utils >= 0.4.10-alt1
 
 # blkid
 Requires: util-linux >= 2.17.2-alt1
@@ -67,6 +63,7 @@ make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
 %package devmapper
 Summary: device-mapper module for %name
 Group: System/Base
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: dmsetup >= 1.02.44-alt3
 AutoReq: noshell, noshebang
@@ -77,6 +74,7 @@ device-mapper module for %name
 %package lvm
 Summary: LVM module for %name
 Group: System/Base
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: %name-devmapper = %version-%release
 Requires: lvm2
@@ -88,6 +86,7 @@ LVM module for %name
 %package luks
 Summary: LUKS module for %name
 Group: System/Base
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: %name-devmapper = %version-%release
 Requires: cryptsetup
@@ -99,6 +98,7 @@ LUKS module for %name
 %package nfs
 Summary: NFS module for %name
 Group: System/Base
+BuildArch: noarch
 AutoReq: noshell, noshebang
 
 %description nfs
@@ -107,6 +107,7 @@ NFS module for %name
 %package multipath
 Summary: multipath module for %name
 Group: System/Base
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: %name-devmapper = %version-%release
 Requires: multipath-tools
@@ -118,6 +119,7 @@ Multipath module for %name
 %package plymouth
 Summary: plymouth module for %name
 Group: System/Base
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: plymouth
 Requires: plymouth-plugin-label
@@ -130,6 +132,7 @@ plymouth module for %name
 %package mdadm
 Summary: mdadm module for %name
 Group: System/Base
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: mdadm
 AutoReq: noshell, noshebang
@@ -151,12 +154,25 @@ CPU microcode autoloading module for %name
 %package iscsi
 Summary: iSCSI module for %name
 Group: System/Base
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: open-iscsi
 AutoReq: noshell, noshebang
 
 %description iscsi
 iSCSI module for %name
+
+%package kickstart
+Summary: kickstart module for %name
+Group: System/Base
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: btrfs-progs coreutils cpio e2fsprogs eject mount rsync sfdisk tar unzip util-linux wget
+AutoReq: noshell, noshebang
+
+%description kickstart
+Kickstart module for %name
+
 
 %prep
 %setup -q
@@ -168,11 +184,19 @@ iSCSI module for %name
 	--with-bootdir=/boot \
 	--with-runtimedir=/lib/initrd \
 	--with-kbddir=/lib/kbd \
+	--with-busybox \
+	--with-libelf \
+	--with-zlib \
+	--with-bzip2 \
+	--with-lzma \
+	--with-zstd \
 	#
 make
 
 %install
 %make_install DESTDIR=%buildroot install
+
+mkdir -p %buildroot%_datadir/%name/features/kickstart/data/root
 
 %triggerin -- %name < 0.8.1-alt1
 c="%_sysconfdir/initrd.mk"
@@ -200,6 +224,7 @@ fi
 %exclude %_datadir/%name/features/ucode
 %exclude %_datadir/%name/guess/ucode
 %exclude %_datadir/%name/features/iscsi
+%exclude %_datadir/%name/features/kickstart
 %doc Documentation/*.md
 
 %files devmapper
@@ -232,7 +257,34 @@ fi
 %files iscsi
 %_datadir/%name/features/iscsi
 
+%files kickstart
+%_datadir/%name/features/kickstart
+
 %changelog
+* Tue May 18 2021 Alexey Gladkov <legion@altlinux.ru> 2.17.0-alt1
+- Switch from upstream git tree to release tarballs.
+- Runtime:
+  + Import halt/reboot/poweroff from sysvinit.
+  + ueventd: Added the ability to stop processing events in the queue.
+  + The stop_daemon should not show stopped pids.
+  + Open rdshell by Alt-Uparrow hotkey.
+- New feature:
+  + kickstart: New feature for automated execution of actions.
+- Feature mdadm:
+  + Examine only arrays where mountpoints are located (ALT#40005).
+- Feature luks:
+  + Remove only one new line in plain text key mode.
+- Feature lkrg:
+  + Add nolkrg and noearlylkrg cmdline options (thx Vladimir D. Seleznev).
+- Feature plymouth:
+  + Improve portability.
+  + Run plymouth helpers only if feature is enabled.
+- Utilities:
+  + depinfo: Check compression suffixes when looking for firmware (ALT#40006).
+  + depinfo: Explore versioned subdirectories in the firmware search.
+- Misc:
+  + Rewrite tests.
+
 * Mon Apr 12 2021 Alexey Gladkov <legion@altlinux.ru> 2.16.0-alt1
 - Runtime:
   + ueventd tries to process events again if it did not work the first time.
