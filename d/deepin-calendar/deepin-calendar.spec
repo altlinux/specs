@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.8.0.19
+Version: 5.8.2
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -73,6 +73,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/calendar/
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.2-alt1
+- New version (5.8.2) with rpmgs script.
+
 * Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.0.19-alt1
 - New version (5.8.0.19) with rpmgs script.
 - Fixed build with dtk 5.4.13.

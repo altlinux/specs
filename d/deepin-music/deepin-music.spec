@@ -3,7 +3,7 @@
 %define repo dmusic
 
 Name: deepin-music
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+ and LGPL-2.1+
@@ -14,7 +14,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 BuildRequires(pre): libgomp10-devel
@@ -104,6 +104,9 @@ export READELF="llvm-readelf"
 %_libdir/*.a
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 6.1.4-alt1
+- New version (6.1.4) with rpmgs script.
+
 * Wed Apr 14 2021 Leontiy Volodin <lvol@altlinux.org> 6.1.2-alt1
 - New version (6.1.2) with rpmgs script.
 

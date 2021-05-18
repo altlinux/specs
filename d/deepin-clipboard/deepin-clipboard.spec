@@ -2,7 +2,7 @@
 %def_disable clang
 
 Name: deepin-clipboard
-Version: 5.3.15
+Version: 5.3.16
 Release: alt1
 Summary: Clipboard for DDE
 License: GPL-3.0+
@@ -31,12 +31,11 @@ Requires: lcov
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|' \
-    translate_generation.sh
 #sed -i 's|/usr/bin/qdbus|/usr/bin/qdbus-qt5|' \
 #	dde-clipboard/com.deepin.dde.Clipboard.service
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
 %if_enabled clang
 	QMAKE_STRIP= -spec linux-clang \
@@ -60,6 +59,9 @@ sed -i 's|lrelease|lrelease-qt5|' \
 %_datadir/dbus-1/services/com.deepin.dde.Clipboard.service
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.16-alt1
+- New version (5.3.16) with rpmgs script.
+
 * Tue Apr 13 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.15-alt1
 - New version (5.3.15) with rpmgs script.
 

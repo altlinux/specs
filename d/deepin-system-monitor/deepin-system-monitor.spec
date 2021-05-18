@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 5.8.0.27
+Version: 5.8.6
 Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
@@ -12,7 +12,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -60,6 +60,7 @@ export AR="llvm-ar"
 %endif
 %cmake \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
     -DLIB_INSTALL_DIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
@@ -83,6 +84,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/*/*
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.6-alt1
+- New version (5.8.6) with rpmgs script.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.0.27-alt1
 - New version (5.8.0.27) with rpmgs script.
 

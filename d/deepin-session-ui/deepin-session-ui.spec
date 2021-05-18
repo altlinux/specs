@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.4.6
+Version: 5.4.7
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -14,7 +14,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -49,8 +49,8 @@ This project include those sub-project:
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i 's|lupdate|lupdate-qt5|' lupdate.sh
+# sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
+# sed -i 's|lupdate|lupdate-qt5|' lupdate.sh
 #sed -i 's|default_background.jpg|deepin/desktop.jpg|' \
 #    widgets/fullscreenbackground.cpp \
 #    lightdm-deepin-greeter/logintheme.qrc \
@@ -74,6 +74,7 @@ sed -i 's|/lib/deepin-daemon|/libexec/deepin-daemon|' \
 sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifications/notifications.pro
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
@@ -123,6 +124,9 @@ sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifica
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.7-alt1
+- New version (5.4.7) with rpmgs script.
+
 * Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.6-alt1
 - New version (5.4.6) with rpmgs script.
 

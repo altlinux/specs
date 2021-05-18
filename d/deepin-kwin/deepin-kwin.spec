@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-kwin
-Version: 5.3.7
-Release: alt3.git4d0141c
+Version: 5.3.9
+Release: alt1
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -50,7 +50,7 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%patch -p2
+# %patch -p2
 %patch1 -R -p1
 %patch2 -p1
 # %patch3 -p1
@@ -103,6 +103,11 @@ ln -s %_libdir/libkwin.so.5 libs/libkwin.so
 %install
 %ninja_install -C BUILD
 chmod +x %buildroot%_bindir/kwin_no_scale
+# install debian/dde-kwin.postinst %%buildroot%%_datadir/kwin/scripts/
+# chmod 755 %%buildroot%%_datadir/kwin/scripts/dde-kwin.postinst
+
+# %%post
+# bash -x %%_datadir/kwin/scripts/dde-kwin.postinst
 
 %files
 %doc CHANGELOG.md LICENSE
@@ -134,6 +139,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.9-alt1
+- New version (5.3.9) with rpmgs script.
+
 * Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.7-alt3.git4d0141c
 - Fixed build with dtk 5.4.13.
 
