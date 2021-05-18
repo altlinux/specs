@@ -1,3 +1,4 @@
+AutoReqProv: yes,nopython
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/octave-config makeinfo texinfo
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /usr/bin/octave-config makeinfo texinfo
 %define octpkg dicom
 Name: octave-%octpkg
 Version: 0.4.0
-Release: alt1
+Release: alt2
 Summary: dicom: file io for medical images and other data
 
 Group: Sciences/Mathematics
@@ -49,6 +50,9 @@ Digital communications in medicine (DICOM) file io.
 %endif
 
 %changelog
+* Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 0.4.0-alt2
+- fixed build
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1
 - regenerated from template by package builder
 
