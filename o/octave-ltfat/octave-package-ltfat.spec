@@ -1,3 +1,4 @@
+AutoReqProv: yes,nopython
 # BEGIN SourceDeps(oneline):
 BuildRequires: libportaudio2-devel makeinfo
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: libportaudio2-devel makeinfo
 %define octpkg ltfat
 Name: octave-%octpkg
 Version: 2.3.1
-Release: alt3
+Release: alt4
 Summary: The Large Time-Frequency Analysis Toolbox
 
 Group: Sciences/Mathematics
@@ -51,6 +52,9 @@ The Large Time/Frequency Analysis Toolbox (LTFAT) is a
 %endif
 
 %changelog
+* Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 2.3.1-alt4
+- fixed build
+
 * Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt3
 - FTBFS: fix build with Octave 6.x.
 
