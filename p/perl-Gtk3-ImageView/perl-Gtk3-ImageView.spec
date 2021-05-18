@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 # needed xvfb-run
 %def_disable test
 
 Name: perl-Gtk3-ImageView
-Version: 6
+Version: 9
 Release: alt1
 
 Summary: Image viewer widget for GTK 3
@@ -13,7 +14,7 @@ Url: https://metacpan.org/release/Gtk3-ImageView
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://cpan.metacpan.org/authors/id/R/RA/RATCLIFFE/Gtk3-ImageView-%version.tar
+Source0: http://www.cpan.org/authors/id/A/AS/ASOKOLOV/Gtk3-ImageView-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -62,7 +63,7 @@ specified image and provides hooks to allow additional tools, e.g. painter,
 to be created and used.
 
 %prep
-%setup -n Gtk3-ImageView-%version
+%setup -q -n Gtk3-ImageView-%{version}
 # Bareword "Gtk3::Gdk::Display::get_default" not allowed while "strict subs"
 sed -i -e "3iuse Gtk3;" lib/Gtk3/ImageView/Tool.pm
 
@@ -82,6 +83,9 @@ sed -i -e "3iuse Gtk3;" lib/Gtk3/ImageView/Tool.pm
 #_man3dir/*
 
 %changelog
+* Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 9-alt1
+- automated CPAN update
+
 * Thu Dec 03 2020 Vitaly Lipatov <lav@altlinux.ru> 6-alt1
 - initial build for ALT Sisyphus
 
