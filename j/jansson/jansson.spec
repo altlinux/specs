@@ -2,7 +2,7 @@
 
 Name: jansson
 Version: 2.13.1
-Release: alt1
+Release: alt2
 
 Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
@@ -82,6 +82,9 @@ It features:
 %endif
 
 %changelog
+* Tue May 18 2021 Slava Aseev <ptrnine@altlinux.org> 2.13.1-alt2
+- fix FTBFS by applying upstream commit 798d40c3f3
+
 * Tue Feb 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.13.1-alt1
 - 2.13.1 released
 
