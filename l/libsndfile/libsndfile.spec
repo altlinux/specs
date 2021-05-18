@@ -1,6 +1,6 @@
 Name: libsndfile
-Version: 1.0.30
-Release: alt2
+Version: 1.0.31
+Release: alt1
 
 Summary: A library to handle various audio file formats
 Group: System/Libraries
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # Was: %url/files/%name-%version.tar.gz
 # Now: https://github.com/libsndfile/libsndfile.git
-Source: %name-%version.tar
+Source: %name-%version.tar.bz2
 
 Patch0: libsndfile-1.0.30-system-gsm.patch
 Patch1: libsndfile-1.0.25-zerodivfix.patch
@@ -19,7 +19,7 @@ BuildRequires: gcc-c++ libalsa-devel libflac-devel libsqlite3-devel libvorbis-de
 BuildRequires: autogen
 BuildRequires: libopus-devel
 # for check
-BuildRequires: python-modules
+BuildRequires: python3-module-setuptools
 
 %description
 %name is a C library for reading and writing sound files such as
@@ -60,7 +60,7 @@ rm -r src/GSM610
 
 %install
 %make DESTDIR=%buildroot \
-      htmldir=%_docdir/%name-devel-%version/html install
+      docdir=%_docdir/%name-devel-%version/html install
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -81,6 +81,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/*.1*
 
 %changelog
+* Tue May 18 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.0.31-alt1
+- 1.0.31
+
 * Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.30-alt2
 - Updated build dependencies for external libraries detection.
 
