@@ -1,8 +1,8 @@
 %global repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.4.17
-Release: alt2
+Version: 5.4.23
+Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -140,6 +140,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.23-alt1
+- New version (5.4.23) with rpmgs script.
+
 * Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.17-alt2
 - Fixed build with dtk 5.4.13.
 

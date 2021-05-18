@@ -1,5 +1,5 @@
 Name: deepin-pw-check
-Version: 5.0.11
+Version: 5.0.13
 Release: alt1
 Summary: Verify the validity of the password for DDE
 License: GPL-3.0+
@@ -97,5 +97,8 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.13-alt1
+- New version (5.0.13) with rpmgs script.
+
 * Tue Mar 23 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.11-alt1
 - Initial build for ALT Sisyphus.

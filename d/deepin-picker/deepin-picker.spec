@@ -1,5 +1,5 @@
 Name: deepin-picker
-Version: 5.0.14
+Version: 5.0.16
 Release: alt1
 Summary: Color picker tool for deepin
 License: GPL-3.0+
@@ -8,7 +8,6 @@ Url: https://github.com/linuxdeepin/deepin-picker
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-picker_5.0.6_alt_qt5.15.patch
 
 BuildRequires(pre): desktop-file-utils
 BuildRequires: qt5-linguist dtk5-widget-devel libX11-devel libxcb-devel libxcbutil-devel libXext-devel libXtst-devel qt5-base-devel qt5-svg-devel qt5-x11extras-devel
@@ -19,11 +18,11 @@ Simplest color picker.
 
 %prep
 %setup
-# %patch -p2
-%__subst 's|=lupdate|=lupdate-qt5|;s|=lrelease|=lrelease-qt5|' %name.pro
-%__subst 's|Picker;||' %name.desktop
+# sed -i 's|=lupdate|=lupdate-qt5|;s|=lrelease|=lrelease-qt5|' %%name.pro
+sed -i 's|Picker;||' %name.desktop
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
     CONFIG+=nostrip \
     PREFIX=%_prefix
@@ -31,9 +30,6 @@ Simplest color picker.
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
-
-%check
-desktop-file-validate %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc README.md
@@ -45,6 +41,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dbus-1/services/com.deepin.Picker.service
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.16-alt1
+- New version (5.0.16) with rpmgs script.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.14-alt1
 - New version (5.0.14) with rpmgs script.
 

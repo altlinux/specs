@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.4.7
+Version: 5.4.10
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -15,7 +15,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-dock-5.3.64-alt-fix-underlinked.patch
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %endif
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
@@ -55,11 +55,11 @@ Header files and libraries for %name.
 %patch -p2
 
 sed -i '/TARGETS/s|lib|%_lib|' plugins/*/CMakeLists.txt
-sed -E '/dpkg-architecture|EXIT/d' CMakeLists.txt
+sed -E '/dpkg-architecture|EXIT_CODE/d' CMakeLists.txt
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i 's|/usr/lib/deepin-daemon|/usr/libexec/deepin-daemon|' \
     plugins/show-desktop/showdesktopplugin.cpp \
-    frame/panel/mainpanelcontrol.cpp
+    frame/window/mainpanelcontrol.cpp
 sed -i 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|' dde-dock.pc.in
 sed -i 's|/usr/lib|%_libdir|' \
     frame/controller/dockpluginscontroller.cpp \
@@ -96,6 +96,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.10-alt1
+- New version (5.4.10) with rpmgs script.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.7-alt1
 - New version (5.4.7) with rpmgs script.
 

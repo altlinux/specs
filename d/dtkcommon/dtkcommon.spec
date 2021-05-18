@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 5.5.2
+Version: 5.5.3
 Release: alt1
 Summary: Deepin desktop schemas
 License: LGPL-3.0+ and GPL-3.0+
@@ -12,7 +12,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -60,5 +60,8 @@ sed -i 's|$$PREFIX/lib/$$ARCH|%_libdir|; s|$$PREFIX/lib/$(ARCH)|%_libdir|' \
 %_datadir/glib-2.0/schemas/com.deepin.dtk.gschema.xml
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.3-alt1
+- New version (5.5.3) with rpmgs script.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.2-alt1
 - Initial build for ALT Sisyphus.

@@ -2,7 +2,7 @@
 %def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.7.4
+Version: 5.7.8
 Release: alt1
 Summary: Image viewer for Deepin
 License: GPL-3.0+
@@ -13,7 +13,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++ libgomp10-devel
 %endif
@@ -35,6 +35,13 @@ Requires: deepin-qt5integration
 
 %description
 %summary.
+
+%package devel
+Summary: Development package for %name
+Group: Development/KDE and QT
+
+%description devel
+Development libraries for %name.
 
 %prep
 %setup
@@ -82,10 +89,16 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/image-viewer/
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_qt5_plugindir/imageformats/libxraw.so
+%_qt5_plugindir/imageformats/libxraw.so.*
 %_datadir/dbus-1/services/com.deepin.ImageViewer.service
 
+%files devel
+%_qt5_plugindir/imageformats/libxraw.so
+
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.8-alt1
+- New version (5.7.8) with rpmgs script.
+
 * Thu Apr 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.4-alt1
 - New version (5.7.4) with rpmgs script.
 

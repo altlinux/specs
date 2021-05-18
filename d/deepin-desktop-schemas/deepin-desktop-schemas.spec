@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 5.9.8
+Version: 5.9.11
 Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
@@ -60,6 +60,9 @@ make test
 %exclude %_datadir/deepin-appstore/
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.11-alt1
+- New version (5.9.11) with rpmgs script.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.8-alt1
 - New version (5.9.8) with rpmgs script.
 

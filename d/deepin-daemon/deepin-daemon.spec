@@ -3,7 +3,7 @@
 %global repo dde-daemon
 
 Name: deepin-daemon
-Version: 5.13.10
+Version: 5.13.12
 Release: alt1
 Epoch: 1
 Summary: Daemon handling the DDE session settings
@@ -293,6 +293,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.12-alt1
+- New version (5.13.12) with rpmgs script.
+
 * Tue Apr 27 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.10-alt1
 - New version (5.13.10) with rpmgs script.
 
