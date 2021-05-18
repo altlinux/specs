@@ -7,7 +7,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           felix-framework
 Version:        5.6.0
-Release:        alt1_8jpp8
+Release:        alt2_8jpp8
 Summary:        Apache Felix Framework
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -51,7 +51,7 @@ rm src/test/java/org/apache/felix/framework/ConcurrencyTest.java
 sed -i "/testgetOsNameWithAliases/s//ignore_&/" $(find -name NativeLibraryClauseTest.java)
 
 %build
-%mvn_build
+%mvn_build -f
 
 %install
 %mvn_install
@@ -64,6 +64,9 @@ sed -i "/testgetOsNameWithAliases/s//ignore_&/" $(find -name NativeLibraryClause
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 5.6.0-alt2_8jpp8
+- fixed build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_8jpp8
 - fc update
 
