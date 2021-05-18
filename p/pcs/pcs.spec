@@ -3,7 +3,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.10.8
-Release:       alt1
+Release:       alt2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -76,6 +76,10 @@ mkdir -p %buildroot%_libexecdir/pcs
 mkdir -p %buildroot%_localstatedir/pcsd
 mkdir -p %buildroot%_logdir/pcsd
 mkdir -p %buildroot%_sysconfdir/sysconfig/
+# Disable python2 requirement
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *) \
+$(find ./ -name '*.py')
+
 %ruby_install
 %makeinstall_std \
      BUNDLE_PYAGENTX_SRC_DIR=pcs/bundled/tmp/pyagentx-%pyagentx_version \
@@ -137,6 +141,9 @@ install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Tue May 18 2021 Pavel Vasenkov <pav@altlinux.org> 1:0.10.8-alt2
+- Disable python2 requirement
+
 * Tue Feb 02 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.10.8-alt1
 - New version.
 
