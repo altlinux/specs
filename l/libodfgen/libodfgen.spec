@@ -1,6 +1,6 @@
 
 Name: libodfgen
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 Summary: An ODF generator library
 Group: System/Libraries
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
 BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0)
+BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: doxygen
 
 %description
@@ -52,6 +53,9 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 18 2021 Alexey Shabalin <shaba@altlinux.org> 0.1.8-alt1
+- new version 0.1.8
+
 * Fri Aug 24 2018 Alexey Shabalin <shaba@altlinux.org> 0.1.7-alt1
 - 0.1.7
 
