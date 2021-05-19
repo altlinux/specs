@@ -3,12 +3,10 @@
 %def_disable bootstrap
 %def_disable docs
 
-%define vtkver 8.2
-
 %define oname mayavi
 
 Name:           Mayavi
-Version:        4.7.2
+Version:        4.7.3
 Release:        alt1
 Summary:        Scientific data 3-dimensional visualizer
 
@@ -28,9 +26,9 @@ Patch3: %name-alt-no-docs.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: libnumpy-py3-devel
-BuildRequires: python3-module-vtk%vtkver /proc
+BuildRequires: python3-module-vtk /proc
 BuildRequires: desktop-file-utils
-BuildRequires: vtk%vtkver-python3
+BuildRequires: vtk-python3
 BuildRequires: libGL-devel libGLU-devel
 %if_enabled docs
 BuildRequires: python3-module-setupdocs
@@ -210,6 +208,9 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %endif
 
 %changelog
+* Thu May 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.3-alt1
+- Updated to upstream version 4.7.3.
+
 * Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.2-alt1
 - Updated to upstream version 4.7.2.
 

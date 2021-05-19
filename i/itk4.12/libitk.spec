@@ -3,11 +3,10 @@
 %define oname itk
 %define soname 1
 %define itkver 4.12
-%define vtkver 8.2
 
 Name: %oname%itkver
 Version: 4.12.2
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -17,11 +16,12 @@ Url: https://itk.org
 # https://github.com/InsightSoftwareConsortium/ITK
 Source: %name-%version.tar
 Patch: %oname-%version-alt-build.patch
+Patch1: %oname-%version-alt-vtk9.0-compat.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: gdcm-devel castxml graphviz libhdf5-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel
-BuildRequires: libvxl-devel libvtk%vtkver-devel zlib-devel
+BuildRequires: libvxl-devel libvtk-devel zlib-devel
 BuildRequires: libblas-devel liblapack-devel libnetcdf-devel jsoncpp-devel
 BuildRequires: libexpat-devel dcmtk
 
@@ -71,7 +71,7 @@ Requires: libfftw3-devel
 Requires: libXext-devel
 Requires: libxml2-devel
 Requires: libnetcdf-devel
-Requires: libvtk%vtkver-devel
+Requires: libvtk-devel
 Requires: libvxl-devel
 Conflicts: lib%oname-devel
 %description -n lib%name-devel
@@ -106,6 +106,7 @@ This package contains documentation for ITK.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 # Save an unbuilt copy of the Example's sources for %%doc
 mkdir itk-examples
@@ -200,6 +201,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.%soname
 
 %changelog
+* Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.2-alt4
+- Rebuilt with VTK-9.0.1.
+
 * Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.2-alt3
 - Updated build dependencies.
 
