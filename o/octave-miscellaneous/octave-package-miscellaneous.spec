@@ -6,7 +6,7 @@ BuildRequires: makeinfo
 Epoch: 4
 Name: octave-%octpkg
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: Miscellaneous functions
 
 Group: Sciences/Mathematics
@@ -31,6 +31,7 @@ BuildRequires: units
 BuildRequires: libtinfo-devel libncurses-devel
 # Depends: octave (>= 3.6.0), general (>= 1.3.1)
 Requires: octave >= 3.6.0 octave(general) >= 1.3.1
+AutoReqProv: yes,nopython
 
 
 %description
@@ -55,6 +56,9 @@ subst 's,/usr/bin/python,%__python,' inst/physical_constant.py
 %endif
 
 %changelog
+* Wed May 19 2021 Igor Vlasenko <viy@altlinux.org> 4:1.3.0-alt2
+- fixed build
+
 * Wed Feb 19 2020 Andrey Cherepanov <cas@altlinux.org> 4:1.3.0-alt1
 - New version.
 
