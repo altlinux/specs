@@ -2,40 +2,26 @@
 %define mname yieldfrom
 %define oname %mname.urllib3
 
-%def_without python2
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.4
-Release: alt2
+Release: alt3
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/yieldfrom.urllib3/
 
 # https://github.com/rdbhost/yieldfromUrllib3.git
 Source: %oname-%version.zip
 
 BuildRequires: unzip
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(asyncio) python-module-nose
-BuildRequires: python-module-yieldfrom.http.client
-BuildRequires: python-module-tornado
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-nose
 BuildRequires: python3-module-yieldfrom.http.client
 BuildRequires: python3-module-tornado
 BuildRequires: python3-module-pycares python3-module-zope
-%endif
 
-%py_provides %oname
-Requires: python-module-%mname = %EVR
-%py_requires asyncio
-%py_requires yieldfrom.http.client
+Requires: python3-module-%mname = %EVR
 
 %description
 Yieldfrom is a project to port various useful Python 3 libraries, both
@@ -46,108 +32,34 @@ as possible.
 
 This package is a port of the Urllib3 package.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
-Group: Development/Python3
-Requires: python3-module-%mname = %EVR
-%python3_req_hier
-
-%description -n python3-module-%oname
-Yieldfrom is a project to port various useful Python 3 libraries, both
-standard library and otherwise, to work under Asyncio. The intention is
-to have the port be as alike as possible to the original, so that the
-learning curve is minimal, and to make porting dependent modules as easy
-as possible.
-
-This package is a port of the Urllib3 package.
-%endif
-
-%package -n python-module-%mname
-Summary: Core files of %mname
-Group: Development/Python
-%py_provides %mname
-%py_requires pkg_resources
-
-%description -n python-module-%mname
-Core files of %mname.
-
-%if_with python3
 %package -n python3-module-%mname
 Summary: Core files of %mname
 Group: Development/Python3
 
 %description -n python3-module-%mname
 Core files of %mname.
-%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_libdir" != "%_libexecdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-install -d %buildroot%python_sitelibdir/%mname
-install -p -m644 %mname/__init__.py \
-	%buildroot%python_sitelibdir/%mname/
-%if_with python3
-pushd ../python3
+install -d %buildroot%pytho3_sitelibdir/%mname
 install -p -m644 %mname/__init__.py \
 	%buildroot%python3_sitelibdir/%mname/
-popd
-%endif
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
-%doc *.txt *.rst
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/%mname/__init__.py*
-%endif
-
-%files -n python-module-%mname
-%dir %python_sitelibdir/%mname
-%python_sitelibdir/%mname/__init__.py*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
@@ -160,9 +72,12 @@ popd
 %python3_sitelibdir/%mname/__init__.*
 %python3_sitelibdir/%mname/__pycache__/__init__.*
 %python3_sitelibdir/*.pth
-%endif
 
 %changelog
+* Wed May 19 2021 Slava Aseev <ptrnine@altlinux.org> 0.1.4-alt3
+- Fix FTBFS
+- Remove python2 build
+
 * Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt2
 - Fixed build.
 
