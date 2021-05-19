@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 #undefine XXX__libtoolize
 #define unstable 1
 %def_disable static
@@ -5,7 +6,7 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
@@ -23,10 +24,11 @@ Source3: pcsc-lite.tmpfiles
 Requires: libpcsclite = %version-%release
 %{?_enable_polkit:Requires: polkit}
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-licenses perl-podlators
 BuildRequires: flex
 BuildRequires: pkgconfig(libudev)
-BuildRequires: python2-base
+
 %{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111}
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 
@@ -76,7 +78,7 @@ Static libraries for libpcsclite
 %prep
 %setup
 subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
-subst 's|%_bindir/python$|%__python|' src/spy/pcsc-spy
+subst 's|/usr/bin/python$|%__python3|' src/spy/pcsc-spy
 
 %build
 %autoreconf
@@ -109,6 +111,9 @@ ln -s ../pcscd.socket %buildroot%_unitdir/sockets.target.wants
 mkdir -p %buildroot/lib/tmpfiles.d
 install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 
+# remove default installed docs
+rm -rf %buildroot/%_defaultdocdir/pcsc-lite
+
 %preun
 %preun_service pcscd
 
@@ -116,7 +121,7 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %post_service pcscd
 
 %files
-%doc AUTHORS COPYING HELP NEWS README* SECURITY TODO doc/README.DAEMON doc/README.polkit
+%doc AUTHORS COPYING HELP NEWS README* SECURITY TODO doc/README.polkit
 %dir %_sysconfdir/reader.conf.d
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
@@ -153,6 +158,10 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Wed May 19 2021 Slava Aseev <ptrnine@altlinux.org> 1.9.1-alt1
+- New version
+- Use python3 in pcsc-spy
+
 * Mon Jun 15 2020 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
 - New version.
 
