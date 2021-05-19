@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.3.3
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -608,6 +608,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Tue May 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 6.3.3-alt2
+- merge changelog with p9
+
 * Fri Dec 11 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt1
 - pve-manager 6.3-3
 - pve-container 3.3-2
@@ -621,6 +624,9 @@ __EOF__
 - pve-acme 1.0.6
 
 * Fri Oct 09 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.2.4-alt2
+- fixed booting VM on Kunpeng-920
+
+* Fri Oct 09 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.2.4-alt1.M90P.1
 - fixed booting VM on Kunpeng-920
 
 * Mon Aug 24 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.2.4-alt1
