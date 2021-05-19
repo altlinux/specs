@@ -1,6 +1,6 @@
 Name: opam
 Version: 2.0.8
-Release: alt1
+Release: alt2
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
@@ -13,7 +13,6 @@ BuildRequires: hevea
 BuildRequires: ocaml-cppo_ocamlbuild-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-mccs-devel
-BuildRequires: ocaml-odoc
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-cudf-devel
@@ -87,6 +86,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Wed May 19 2021 Anton Farygin <rider@altlinux.ru> 2.0.8-alt2
+- removed ocaml-odoc from BR
+
 * Mon Apr 05 2021 Anton Farygin <rider@altlinux.org> 2.0.8-alt1
 - 2.0.8
 
