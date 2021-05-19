@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -35,10 +35,9 @@ Patch13: alt-def-taskman.patch
 Patch14: alt-def-desktop-icons.patch
 Patch15: alt-menu-add-tooltip.patch
 Patch16: alt-kicker-custom-btn-img-size.patch
-Patch17: alt-def-krunners.patch
-Patch18: alt-users-use-gost-yescrypt.patch
-Patch19: alt-taskgroup-performance.patch
-Patch20: alt-kxkb-indicator-uppercase.patch
+Patch17: alt-users-use-gost-yescrypt.patch
+Patch18: alt-taskgroup-performance.patch
+Patch19: alt-kxkb-indicator-uppercase.patch
 # FC
 Patch100: plasma-desktop-python-shebang.patch
 
@@ -50,6 +49,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel
 BuildRequires: scim-devel libibus-devel libgio-devel glib2-devel
+BuildRequires: packagekit-qt-devel
 BuildRequires: libudev-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel
 BuildRequires: libxcbutil-devel libxcbutil-image-devel libxkbcommon-devel
@@ -85,6 +85,13 @@ Provides: kf5-plasma-desktop-common = %EVR
 Obsoletes: kf5-plasma-desktop-common < %EVR
 %description common
 %name common package
+
+%package maxi
+Summary: %name maximum package
+Group: System/Configuration/Packaging
+Requires: %name
+%description maxi
+%name maximum package.
 
 %package devel
 Group: Development/KDE and QT
@@ -126,12 +133,21 @@ Common polkit files for %name
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
-%patch20 -p1
 %patch100 -p1
 
 pushd kcms
     tar xvf %SOURCE1
 popd
+
+# disable krunners by default
+for d in runners/*/*.desktop ; do
+    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
+done
+# enable some krunners by default
+for d in plasma-desktop
+do
+    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
+done
 
 #Fix translate in Input Method Panel (kimpanel) widget.
 #If the po-file is called differently than "plasma_applet_org.kde.plasma.kimpanel.po", the kimpanel widget menu will be in English only.
@@ -167,6 +183,7 @@ popd
 #%config(noreplace) %_K5xdgconf/*
 %_K5dbus/system.d/*.conf
 %_K5bin/*
+%exclude %_K5bin/*emojier*
 %_K5exec/*
 %_K5libexecdir/kauth/*
 %_K5lib/libkdeinit5_*.so
@@ -180,6 +197,7 @@ popd
 %_K5qml/org/kde/plasma/activityswitcher/
 %_K5qml/org/kde/activities/settings/
 %_K5xdgapp/*
+%exclude %_K5xdgapp/*emojier*
 %_K5start/*.desktop
 %_K5cfg/*
 %_K5conf_up/*
@@ -201,10 +219,16 @@ popd
 %_K5data/plasma/services/*
 %_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kglobalaccel/*.desktop
+%exclude %_K5data/kglobalaccel/*emojier*.desktop
 %_K5data/knsrcfiles/*.knsrc
 %_K5dbus_sys_srv/*.service
 %_datadir/accounts/providers/kde/*.provider
 %_datadir/accounts/services/kde/*.service
+
+%files maxi
+%_K5bin/*emojier*
+%_K5xdgapp/*emojier*
+%_K5data/kglobalaccel/*emojier*.desktop
 
 %files -n polkit-kde-plasma-desktop
 %_datadir/polkit-1/actions/*kcmclock*.policy
@@ -214,6 +238,9 @@ popd
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt2
+- split ibus emojier into separate subpackage
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 
