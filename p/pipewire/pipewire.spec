@@ -22,7 +22,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.27
+Version: %ver_major.28
 Release: alt1
 
 Summary: Media Sharing Server
@@ -130,6 +130,7 @@ export LIB=%_lib
 
 %install
 %meson_install
+mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %find_lang %name
 
 %check
@@ -147,18 +148,27 @@ export LIB=%_lib
 %{?_enable_examples:%_bindir/%name-media-session}
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
-%_sysconfdir/%name/%name.conf
 %dir %_sysconfdir/%name/media-session.d
-%config(noreplace) %_sysconfdir/%name/client.conf
-%config(noreplace) %_sysconfdir/%name/client-rt.conf
-%config(noreplace) %_sysconfdir/%name/jack.conf
-%config(noreplace) %_sysconfdir/%name/media-session.d/alsa-monitor.conf
-%config(noreplace) %_sysconfdir/%name/media-session.d/bluez-monitor.conf
-%config(noreplace) %_sysconfdir/%name/media-session.d/media-session.conf
-%config(noreplace) %_sysconfdir/%name/media-session.d/v4l2-monitor.conf
-%config(noreplace) %_sysconfdir/%name/pipewire-pulse.conf
-%_sysconfdir/%name/media-session.d/with-jack
-%_sysconfdir/%name/media-session.d/with-pulseaudio
+%dir %_sysconfdir/%name/filter-chain
+%dir %_datadir/%name
+%_datadir/%name/%name.conf
+%_datadir/%name/client.conf
+%_datadir/%name/client-rt.conf
+%_datadir/%name/jack.conf
+%_datadir/%name/pipewire-pulse.conf
+%dir %_datadir/%name/media-session.d
+%_datadir/%name/media-session.d/alsa-monitor.conf
+%_datadir/%name/media-session.d/bluez-monitor.conf
+%_datadir/%name/media-session.d/media-session.conf
+%_datadir/%name/media-session.d/v4l2-monitor.conf
+%_datadir/%name/media-session.d/with-jack
+%_datadir/%name/media-session.d/with-pulseaudio
+%dir %_datadir/%name/filter-chain
+%_datadir/%name/filter-chain/demonic.conf
+%_datadir/%name/filter-chain/sink-dolby-surround.conf
+%_datadir/%name/filter-chain/sink-eq6.conf
+%_datadir/%name/filter-chain/sink-matrix-spatialiser.conf
+%_datadir/%name/filter-chain/source-rnnoise.conf
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
 %if_enabled systemd
@@ -236,6 +246,9 @@ export LIB=%_lib
 
 
 %changelog
+* Wed May 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.28-alt1
+- 0.3.28
+
 * Thu May 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.27-alt1
 - 0.3.27
 
