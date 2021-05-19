@@ -4,7 +4,7 @@
 %define libkf5mailcommon libkf5mailcommon%sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init
 
@@ -23,7 +23,7 @@ BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-tools-devel-static 
 BuildRequires: libgpgme-devel libassuan-devel libldap-devel libsasl2-devel xsltproc
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel
 BuildRequires: kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-mailimporter-devel
-BuildRequires: kde5-messagelib-devel kde5-pimcommon-devel
+BuildRequires: kde5-messagelib-devel kde5-pimcommon-devel kde5-libkleo-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel
@@ -86,6 +86,9 @@ KF5 library
 %_K5lib/libKF5MailCommon.so.*
 
 %changelog
+* Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Wed Mar 10 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

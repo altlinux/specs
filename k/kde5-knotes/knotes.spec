@@ -5,7 +5,7 @@
 %define libnotesharedprivate libnotesharedprivate%pim_sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -117,6 +117,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Wed Mar 10 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

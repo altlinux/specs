@@ -16,7 +16,7 @@
 %define libfolderconfiguresettings libfolderconfiguresettings%sover
 
 Name: kde5-pim-addons
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init
 
@@ -42,6 +42,8 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-webengine-devel
 BuildRequires: libpoppler-qt5-devel libdiscount-devel
 BuildRequires: libsasl2-devel libgpgme-devel libassuan-devel
+BuildRequires: libqtkeychain-qt5-devel
+BuildRequires: kde5-libkleo-devel
 BuildRequires: kde5-libkgapi-devel kde5-kaddressbook-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel
 BuildRequires: kde5-calendarsupport-devel kde5-eventviews-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-libksieve-devel
@@ -283,6 +285,9 @@ KF5 library
 %_K5lib/libfolderconfiguresettings.so.*
 
 %changelog
+* Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Wed Mar 10 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
