@@ -1,6 +1,6 @@
 Name: ocaml-extlib
 Version: 1.7.8
-Release: alt1
+Release: alt2
 Summary: extended standard library for OCaml
 License: LGPLv2 with OCaml-LGPL-linking-exception
 Group: Development/ML
@@ -48,7 +48,7 @@ popd
 %make doc
 
 %install
-mkdir -p mkdir -p %buildroot%_libdir/ocaml
+mkdir -p %buildroot%_libdir/ocaml
 %makeinstall OCAMLFIND_INSTFLAGS="-destdir %buildroot%_libdir/ocaml/"
 
 %check
@@ -70,6 +70,9 @@ make test
 %_libdir/ocaml/extlib/*.mli
 
 %changelog
+* Wed May 19 2021 Anton Farygin <rider@altlinux.ru> 1.7.8-alt2
+- fixed typo in install section
+
 * Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 1.7.8-alt1
 - 1.7.8
 
