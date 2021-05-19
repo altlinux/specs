@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.4.5
-Release: alt1
+Release: alt2
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -191,7 +191,7 @@ install -d %buildroot%_sysconfdir/cron.d
 cat <<EOF >%buildroot%_sysconfdir/cron.d/sa-update
 # you can switch "space" to "tab" between minutes and hours
 # for stop randomization when when spamassasin installing
-30 01 * * *    root    %_bindir/sa-update && service spamd condrestart
+30 01 * * *    root    %_bindir/sa-update && ( service spamd status >/dev/null 2>&1 && service spamd condrestart >/dev/null )
 EOF
 
 #warning: Installed (but unpackaged) file(s) found:
@@ -264,6 +264,9 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Wed May 19 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.5-alt2
+- sa-update cron: don't trigger spamd update if missing.
+
 * Thu Mar 25 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.5-alt1
 - 3.4.5 (fixes: CVE-2020-1946)
 - remove dkim patch (fixed by upstream).
