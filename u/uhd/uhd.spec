@@ -21,7 +21,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.15.0.0
-Release: alt5
+Release: alt6
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -46,7 +46,6 @@ BuildRequires: python3-module-Cheetah
 BuildRequires: python3-module-docutils doxygen libpcap-devel
 BuildRequires: python3-module-mako
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
-Requires: tkinter
 
 %description
 The UHD is the universal hardware driver for Ettus Research products.
@@ -203,6 +202,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Wed May 19 2021 Anton Midyukov <antohami@altlinux.org> 3.15.0.0-alt6
+- Drop requires tkinter
+
 * Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt5
 - Rebuilt with boost-1.76.0.
 
