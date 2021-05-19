@@ -1,14 +1,14 @@
 
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
-%def_enable bootstrap
+%def_disable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
 Version: 5.15.2
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -36,9 +36,9 @@ Patch11: alt-runqttools-with-qt5-suffix.patch
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-ubt rpm-macros-qt5
-%ifnarch %e2k
+#ifnarch %e2k
 BuildRequires: clang-devel llvm-devel
-%endif
+#endif
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel
 %if_enabled qtconfig
 BuildRequires: /usr/bin/convert
@@ -163,6 +163,9 @@ Requires: libqt5-core = %_qt5_version
 %patch10 -p1
 %endif
 %patch11 -p1
+
+# don't add rpath
+sed -i '/QMAKE_RPATHDIR/d' src/qdoc/qdoc.pro
 
 %build
 # needed for documentation generation
@@ -354,6 +357,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Mon Apr 26 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
+- build docs
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 
