@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.5.5
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -17,10 +17,12 @@ Obsoletes: italc3
 
 Source: %name-%version.tar
 Source1: %name-%version-3rdparty.tar
+Source2: veyon-config-dm-login.sh
 
 Patch1: Unbundle-some-libraries-and-fix-build-alt.patch
 Patch2: alt-qt-translation.patch
 Patch3: alt-fix-builtindirectory-computers-list-display.patch
+Patch4: alt-fix-dm-login.patch
 
 BuildRequires: rpm-build-kf5
 BuildRequires: extra-cmake-modules
@@ -87,6 +89,7 @@ rm -rf ./3rdparty
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %cmake
@@ -94,6 +97,7 @@ rm -rf ./3rdparty
 
 %install
 %cmakeinstall_std
+%__install -D -m 0755 %SOURCE2 %buildroot%_datadir/%name/
 
 %files
 %doc COPYING README.md
@@ -108,6 +112,9 @@ rm -rf ./3rdparty
 %_datadir/%name
 
 %changelog
+* Thu May 13 2021 Egor Ignatov <egori@altlinux.org> 4.5.5-alt2
+- fix login with sddm and lightdm (Closes: #39892)
+
 * Tue Apr 27 2021 Egor Ignatov <egori@altlinux.org> 4.5.5-alt1
 - new version
 - Import fix to #37952 as a patch
