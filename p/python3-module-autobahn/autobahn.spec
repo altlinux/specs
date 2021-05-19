@@ -1,8 +1,8 @@
 %define oname autobahn
 
 Name: python3-module-%oname
-Version: 18.5.2
-Release: alt6
+Version: 21.3.1
+Release: alt1
 
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
@@ -12,14 +12,11 @@ Url: https://github.com/tavendo/AutobahnPython
 # https://github.com/tavendo/AutobahnPython.git
 Source: %name-%version.tar
 
-# https://github.com/crossbario/autobahn-python/commit/9b6fb57e5c87a5e29cd880f752a30b9409d480c6
-Patch: ensure-python37-compat.patch
-
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 
-%py3_requires twisted.internet twisted.web twisted.words
+#py3_requires twisted.internet twisted.web twisted.words
 
 %description
 Autobahn WebSockets for Python provides an implementation of the
@@ -28,7 +25,6 @@ servers.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %python3_build_debug
@@ -41,11 +37,19 @@ servers.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# drop xbr protocol support
+rm -r %buildroot/%python3_sitelibdir/autobahn/xbr
+rm -r %buildroot/%python3_sitelibdir/autobahn/asyncio/xbr
+rm -r %buildroot/%python3_sitelibdir/autobahn/twisted/xbr
+
 %files
 %doc *.md *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 19 2021 Anton Midyukov <antohami@altlinux.org> 21.3.1-alt1
+- new version
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 18.5.2-alt6
 - NMU: drop tests subpackage and unitest2 requires
 

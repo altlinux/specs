@@ -1,6 +1,6 @@
 Name: libflatbuffers
 Version: 1.12.0
-Release: alt2
+Release: alt3
 
 Summary: Memory Efficient Serialization Library
 License: APL
@@ -9,6 +9,9 @@ Url: https://google.github.io/flatbuffers/
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-setuptools
 BuildRequires: cmake ctest gcc-c++
 
 %package devel
@@ -26,6 +29,14 @@ compatibility.
 %description devel
 %desc
 This package contains development part of FlatBuffers.
+
+%package -n python3-module-flatbuffers
+Summary: Python3 files for %name
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description -n python3-module-flatbuffers
+This package contains python files for %name.
 
 %prep
 %setup
@@ -46,11 +57,23 @@ cmake  	-DCMAKE_BUILD_TYPE=Release \
 
 %make_build
 
+pushd python
+%python3_build
+popd
+
 %check
 make test
 
 %install
 %makeinstall_std
+pushd python
+%python3_install
+popd
+[ %python3_sitelibdir = %python3_sitelibdir_noarch ] ||
+  (
+    mkdir -p %buildroot%python3_sitelibdir
+    mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir
+  )
 
 %files
 %_libdir/lib*.so.*
@@ -61,7 +84,13 @@ make test
 %_libdir/cmake/flatbuffers
 %_libdir/*.so
 
+%files -n python3-module-flatbuffers
+%python3_sitelibdir/*
+
 %changelog
+* Thu May 20 2021 Anton Midyukov <antohami@altlinux.org> 1.12.0-alt3
+- build python3-module-flatbuffers
+
 * Sat Apr 17 2021 Michael Shigorin <mike@altlinux.org> 1.12.0-alt2
 - E2K: workaround ftbfs with (stricter) lcc
 
