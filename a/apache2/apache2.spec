@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.46
-Release: alt3
+Version: 2.4.47
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -72,18 +72,14 @@ Patch2: apache2-2.4.25-alt-apachectl.patch
 Patch3: apache2-2.4.27-alt-httpd.conf.patch
 Patch4: apache2-2.4.35-tlv1.2-default.patch
 
-# Upstream patches:
-Patch6: apache2-2.4.41-r1870095.patch
-
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildRequires(pre): libaprutil1-devel 
 BuildRequires(pre): rpm-build-licenses
-BuildPreReq: rpm-macros-webserver-cgi-bin-control
-BuildPreReq: rpm >= 4.0.4-alt100.62
+BuildRequires(pre): rpm-macros-webserver-cgi-bin-control
 # For use -z sed option
-BuildPreReq: sed >= 1:4.2.2-alt1
+BuildRequires: sed >= 1:4.2.2-alt1
 
 Requires: %name-base = %EVR
 Requires: %_bindir/ab2
@@ -95,24 +91,24 @@ Requires: webserver-icons
 # Modules by default
 Requires: %name-mod_cache_disk >= %EVR
 
-BuildPreReq: webserver-common
+BuildRequires: webserver-common
 
 # Automatically added by buildreq on Fri Mar 31 2006
 BuildRequires: zlib-devel
 
-BuildPreReq: rpm-macros-alternatives
-BuildPreReq: pkg-config
-BuildPreReq: libgdbm-devel
-BuildPreReq: libexpat-devel
-BuildPreReq: libpcre-devel
-BuildPreReq: openldap-common libldap-devel
-BuildPreReq: libsasl2-devel libsasl2-plugin-gssapi
-BuildPreReq: openssl
+BuildRequires: rpm-macros-alternatives
+BuildRequires: pkg-config
+BuildRequires: libgdbm-devel
+BuildRequires: libexpat-devel
+BuildRequires: libpcre-devel
+BuildRequires: openldap-common libldap-devel
+BuildRequires: libsasl2-devel libsasl2-plugin-gssapi
+BuildRequires: openssl
 #following is required by dbmmanage
-BuildPreReq: perl-DBM perl-Digest-SHA1 zlib-devel
+BuildRequires: perl-DBM perl-Digest-SHA1 zlib-devel
 
 #Fix libtool use
-BuildPreReq: libtool >= 3:2.2.6
+BuildRequires: libtool >= 3:2.2.6
 
 %description
 Apache is a powerful, full-featured, efficient and freely-available
@@ -129,7 +125,7 @@ Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер 
 Group: System/Servers
 
 Provides: webserver
-Provides: httpd
+Provides: httpd = %EVR
 Provides: %name-common = %EVR
 Provides: %apache_configs_name = %apache_configs_version
 Provides: %apache_configs_dirs_name = %apache_configs_dirs_version
@@ -175,7 +171,7 @@ Conflicts: apache2-htcacheclean <= 2.2.22-alt11
 
 Obsoletes: %name-init
 Obsoletes: %name-common < %EVR
-PreReq: webserver-common
+Requires(pre): webserver-common
 Requires: %name-mods >= %version-%release
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
@@ -227,7 +223,7 @@ Summary(ru_RU.UTF-8): Модули для инсталляции %name
 Group: System/Servers
 Conflicts: apache2 < 2.2.4-alt17
 Conflicts: apache2-base <= 2.2.22-alt15
-PreReq: %name-base = %EVR
+Requires(pre): %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -259,8 +255,8 @@ This is a hack to run proxified Apache2 in case Apache1 is running.
 Summary: High speed threaded model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Высокоскоростная нитевая модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-base = %EVR
-PreReq: alternatives >= 0.4
+Requires(pre): %name-base = %EVR
+Requires(pre): alternatives >= 0.4
 Provides: %name-mmn = %mmn
 Provides: %_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
@@ -276,8 +272,8 @@ has a smaller memory footprint than the prefork MPM.
 Summary: Traditional model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Традиционная модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-base = %EVR
-PreReq: alternatives >= 0.4
+Requires(pre): %name-base = %EVR
+Requires(pre): alternatives >= 0.4
 Provides: %name-mmn = %mmn
 Provides: %_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
@@ -297,8 +293,8 @@ It is not as fast, but is considered to be more stable.
 Summary: Event driven model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Событийная модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-base = %EVR
-PreReq: alternatives >= 0.4
+Requires(pre): %name-base = %EVR
+Requires(pre): alternatives >= 0.4
 Provides: %name-mmn = %mmn
 Provides: %_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
@@ -332,7 +328,7 @@ Summary: Module development tools for the Apache web server
 Summary(ru_RU.UTF-8): Средства разработки модулей для веб-сервера Apache
 Group: Development/C
 Obsoletes: secureweb-devel
-PreReq: %name-base = %EVR
+Requires(pre): %name-base = %EVR
 Requires: %name-httpd = %EVR
 
 Provides: %apache2_includedir
@@ -379,7 +375,7 @@ This package contains the Apache server documentation in HTML format.
 Summary: Apache Manual for www
 Summary(ru_RU.UTF-8): Документация по Apache для www
 Group: Books/Other
-PreReq: %name-base = %EVR
+Requires(pre): %name-base = %EVR
 Requires: %docdir/manual
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
@@ -399,7 +395,7 @@ Summary: manual-addons dir
 Summary(ru_RU.UTF-8): Каталог manual-addons
 Group: Books/Other
 BuildArch: noarch
-PreReq: webserver-common
+Requires(pre): webserver-common
 
 %description manual-addons
 This package contains the manual-addons dir for Apache server.
@@ -427,8 +423,8 @@ Summary: cgi-bin/test-cgi for Apache
 Summary(ru_RU.UTF-8): cgi-bin/test-cgi для Apache
 Group: System/Servers
 BuildArch: noarch
-PreReq: webserver-common
-PreReq: %_sysconfdir/control.d/webserver-cgi-bin-functions
+Requires(pre): webserver-common
+Requires(pre): %_sysconfdir/control.d/webserver-cgi-bin-functions
 Provides: webserver-cgi-bin-test-cgi
 Conflicts: apache-cgi-bin-test-cgi
 Conflicts: apache2-cgi-bin < 2.2.9-alt10
@@ -447,8 +443,8 @@ Summary: cgi-bin/printenv for Apache
 Summary(ru_RU.UTF-8): cgi-bin/printenv для Apac`he
 Group: System/Servers
 BuildArch: noarch
-PreReq: webserver-common
-PreReq: %_sysconfdir/control.d/webserver-cgi-bin-functions
+Requires(pre): webserver-common
+Requires(pre): %_sysconfdir/control.d/webserver-cgi-bin-functions
 Provides: webserver-cgi-bin-printenv
 Conflicts: apache-cgi-bin-printenv
 Conflicts: apache2-cgi-bin < 2.2.9-alt10
@@ -484,7 +480,7 @@ Summary: html for Apache
 Summary(ru_RU.UTF-8): html для Apache
 Group: System/Servers
 BuildArch: noarch
-PreReq: webserver-common
+Requires(pre): webserver-common
 Provides: webserver-html
 Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 Conflicts: apache-html
@@ -500,7 +496,7 @@ Summary: icons for Apache
 Summary(ru_RU.UTF-8): icons для Apache
 Group: System/Servers
 BuildArch: noarch
-PreReq: webserver-common
+Requires(pre): webserver-common
 Provides: webserver-icons
 Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 Conflicts: apache-icons
@@ -511,7 +507,7 @@ This package contains the Apache server icons dir.
 %package mod_ssl
 Group: System/Servers
 Summary: SSL/TLS module for the Apache HTTP server
-PreReq: %name-base = %EVR
+Requires(pre): %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
@@ -530,7 +526,7 @@ Security (TLS) protocols.
 %package mod_ldap
 Group: System/Servers
 Summary: Modules LDAP support for the Apache HTTP server
-PreReq: %name-base = %EVR
+Requires(pre): %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -546,7 +542,7 @@ mod_authnz_ldap -- Allows an LDAP directory to be used to store the database
 %package mod_cache_disk
 Group: System/Servers
 Summary: Module supported content cache storage for the Apache HTTP server
-PreReq: %name-base = %EVR
+Requires(pre): %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -611,7 +607,7 @@ Summary: Suexec binary for Apache
 Summary(ru_RU.UTF-8): Программа suexec для Apache
 Summary(uk_UA.UTF-8): Програма suexec для Apache
 Group: System/Servers
-PreReq: %name-base = %EVR
+Requires(pre): %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -679,7 +675,6 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 %patch2 -p1
 %patch3 -p1 -b .orig
 %patch4 -p2
-%patch6 -p1
 
 # generate ALTLinux Apache layout
 echo "
@@ -1518,6 +1513,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Apr 30 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.47-alt1
+- 2.4.47
+
 * Tue Mar 30 2021 Slava Aseev <ptrnine@altlinux.org> 1:2.4.46-alt3
 - fixed FTBFS due to openldap package renaming
 
