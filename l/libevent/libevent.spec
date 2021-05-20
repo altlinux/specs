@@ -1,6 +1,6 @@
 Name: libevent
 Version: 2.1.8
-Release: alt2
+Release: alt3
 
 Summary: Abstract asynchronous event notification library
 # arc4random.c is ISC, the rest is BSD-3-Clause.
@@ -17,6 +17,9 @@ Source1: libevent.so
 Source2: Makefile.sample
 # git://git.altlinux.org/gears/l/%name.git
 Patch: %name-%version-%release.patch
+
+# For event_rpcgen.py
+BuildRequires(pre): rpm-build-python
 
 BuildRequires: libssl-devel zlib-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: python-modules}}
@@ -120,6 +123,9 @@ install -p -m644 *.3 %buildroot%_man3dir/
 %endif
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.1.8-alt3
+- Fixed FTBFS due to missing rpm-build-python
+
 * Thu Mar 28 2019 Dmitry V. Levin <ldv@altlinux.org> 2.1.8-alt2
 - Replaced libevent.so symlink with a linker script that results
   to -levent being substituted with -levent_core -levent_extra
