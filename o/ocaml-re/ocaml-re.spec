@@ -1,7 +1,7 @@
-%set_verify_elf_method textrel=relaxed
+%def_with check
 Name: ocaml-re
 Version: 1.9.0
-Release: alt2
+Release: alt3
 Summary: A regular expression library for OCaml
 
 License: LGPLv2 with exceptions
@@ -10,9 +10,10 @@ Source0: ocaml-re-%version.tar
 Patch0: %name-%version-alt.patch
 Group: Development/ML
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: ocaml-ocamldoc
 BuildRequires: dune
+%if_with check
+BuildRequires: ocaml-ounit-devel
+%endif
 
 %description
 A pure OCaml regular expression library. Supports Perl-style regular
@@ -36,32 +37,24 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-dune build -p re --verbose
+%dune_build -p re
 
 %install
-dune install --destdir %buildroot --libdir=%_libdir/ocaml
+%dune_install
 
-%files
+%check 
+sed -si 's,oUnit,ounit2,' lib_test/fort_unit/dune
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc CHANGES.md README.md
-%_libdir/ocaml/re
-%exclude %_libdir/ocaml/re/*.a
-%exclude %_libdir/ocaml/re/*.cmxa
-%exclude %_libdir/ocaml/re/*.cmx
-%exclude %_libdir/ocaml/re/*.mli
-%exclude %_libdir/ocaml/re/*/*.a
-%exclude %_libdir/ocaml/re/*/*.cmxa
-%exclude %_libdir/ocaml/re/*/*.cmx
 
-%files devel
-%_libdir/ocaml/re/*.a
-%_libdir/ocaml/re/*.cmx
-%_libdir/ocaml/re/*.cmxa
-%_libdir/ocaml/re/*.mli
-%_libdir/ocaml/re/*/*.a
-%_libdir/ocaml/re/*/*.cmx
-%_libdir/ocaml/re/*/*.cmxa
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu May 20 2021 Anton Farygin <rider@altlinux.ru> 1.9.0-alt3
+- simplified specfile with rpm-build-ocaml 1.4
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 1.9.0-alt2
 - built as release (dune build -p) against incomplete dependencies
   in devel packages
