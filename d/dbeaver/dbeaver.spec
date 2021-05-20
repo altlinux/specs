@@ -1,5 +1,5 @@
 Name: dbeaver
-Version: 21.0.4
+Version: 21.0.5
 Release: alt1
 
 Summary: Universal Database Manager
@@ -21,11 +21,10 @@ Patch0: %name-alt-arch.patch
 Patch1: %name-alt-autoupdate.patch
 
 BuildRequires: /proc
-BuildRequires: libsecret
+BuildRequires: java-11-openjdk-headless
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
@@ -108,6 +107,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Thu May 20 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.5-alt1
+- Version 21.0.5
+
 * Mon May 03 2021 Nazarov Denis <nenderus@altlinux.org> 21.0.4-alt1
 - Version 21.0.4
 
