@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.52.0
+Version: 1.52.1
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -60,7 +60,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.51.0
+%define r_ver 1.52.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
@@ -448,6 +448,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Thu May 20 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.52.1-alt1
+- New version (1.52.1).
+
 * Sat May 08 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.52.0-alt1
 - New version (1.52.0).
 
