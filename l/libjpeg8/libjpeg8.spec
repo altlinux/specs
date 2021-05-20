@@ -1,6 +1,6 @@
 Name: libjpeg8
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 Summary: The MMX/SSE accelerated JPEG compression/decompression library
 License: IJG and BSD-3-Clause and Zlib
 Group: System/Libraries
@@ -27,11 +27,12 @@ chmod -x README.md
     -GNinja \
     -DENABLE_STATIC=false \
     -DWITH_TURBOJPEG=false \
-    -DWITH_JPEG8=true
-%ninja_build
+    -DWITH_JPEG8=true \
+    #
+cmake --build . -j%__nprocs
 
 %install
-%ninja_install
+DESTDIR=%buildroot cmake --install .
 find %buildroot -name "*.la" -delete
 
 # We need only shared library for this package, so we will remove
@@ -50,6 +51,9 @@ rm -rf %buildroot%_libdir/cmake/libjpeg-turbo/*.cmake
 %_libdir/libjpeg.so.8*
 
 %changelog
+* Thu May 20 2021 Leontiy Volodin <lvol@altlinux.org> 2.1.0-alt1.1
+- NMU: spec: adapted to new cmake macros (altlinux.org/CMakeMigration2021).
+
 * Mon Apr 26 2021 Leontiy Volodin <lvol@altlinux.org> 2.1.0-alt1
 - New version (2.1.0) with rpmgs script.
 - Fixes:
