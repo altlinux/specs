@@ -13,7 +13,7 @@
 
 Name:    python3-module-%oname
 Version: 0.812
-Release: alt1
+Release: alt2
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -147,6 +147,9 @@ tox.py3 --sitepackages -vvr -- -vv $TESTS
 %endif
 
 %changelog
+* Thu May 20 2021 Fr. Br. George <george@altlinux.ru> 0.812-alt2
+- Fix tempfile.TemporaryDirectory() naming in tests
+
 * Tue Mar 23 2021 Stanislav Levin <slev@altlinux.org> 0.812-alt1
 - 0.790 -> 0.812.
 
