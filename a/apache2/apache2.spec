@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.47
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -49,13 +49,9 @@ Source42: htcacheclean-run.control.sh
 Source43: htcacheclean-mode.control.sh
 
 # RPM FileTrigger
-Source50: 00-apache2-common.filetrigger
-Source51: zz80-apache2-base.filetrigger
 Source52: 90-apache2-base-a2chkconfig.filetrigger
 Source53: 90-apache2-base-httpd.filetrigger
 Source54: 90-apache2-htcacheclean.filetrigger
-Source55: zz90-apache2-htcacheclean.filetrigger
-Source56: zzzz-apache2-common.filetrigger
 
 # scripts for condstopstart-web
 Source60: server-condstop.sh
@@ -72,7 +68,7 @@ Patch2: apache2-2.4.25-alt-apachectl.patch
 Patch3: apache2-2.4.27-alt-httpd.conf.patch
 Patch4: apache2-2.4.35-tlv1.2-default.patch
 
-BuildRequires(pre): rpm-macros-apache2 >= 3.12
+BuildRequires(pre): rpm-macros-apache2 >= 3.13
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildRequires(pre): libaprutil1-devel 
@@ -126,6 +122,7 @@ Group: System/Servers
 
 Provides: webserver
 Provides: httpd = %EVR
+Provides: httpd2 = %EVR
 Provides: %name-common = %EVR
 Provides: %apache_configs_name = %apache_configs_version
 Provides: %apache_configs_dirs_name = %apache_configs_dirs_version
@@ -800,8 +797,6 @@ s|@vhosts_dir@|%apache2_vhostdir|g
 s|@htcacheclean_cachepath@|%apache2_htcacheclean_cachepath|g
 s|@SERVER@|%apache2_dname|g
 s|@LOCKFILE@|%apache2_httpdlockfile|g
-s|@RPMTRIGGERDIR@|%apache2_rpmfiletriggerdir|g
-s|@RPMTRIGGERSTARTFILE@|%apache2_rpmhttpdstartfile|g
 s|@RUNDIR@|%condstopstart_webrundir|g
 s|%%apache2_branch|%apache2_branch|g
 s|%%apache2_sslcertshfunctions|%apache2_sslcertshfunctions|g
@@ -1011,13 +1006,9 @@ install -d %buildroot%_datadir/%name/cgi-bin/
 mv %buildroot%apache2_cgibindir/* %buildroot%_datadir/%name/cgi-bin/
 
 # Install RPM FileTrigger
-install -pD %SOURCE50 %buildroot%_rpmlibdir/00-%apache2_name.filetrigger
-install -pD %SOURCE51 %buildroot%_rpmlibdir/zz80-%apache2_name-base.filetrigger
 install -pD %SOURCE52 %buildroot%_rpmlibdir/90-%apache2_name-base-a2chkconfig.filetrigger
 install -pD %SOURCE53 %buildroot%_rpmlibdir/90-%apache2_name-base-httpd.filetrigger
 install -pD %SOURCE54 %buildroot%_rpmlibdir/90-%apache2_name-htcacheclean.filetrigger
-install -pD %SOURCE55 %buildroot%_rpmlibdir/zz90-%apache2_name-htcacheclean.filetrigger
-install -pD %SOURCE56 %buildroot%_rpmlibdir/zzzz-%apache2_name.filetrigger
 
 # Install scripts for condstopstart-web
 install -pD %SOURCE60 %buildroot%condstopstart_webdir/%apache2_dname-condstop
@@ -1137,9 +1128,6 @@ if [ ! -e %apache2_conf ] && \
 		[ -e %apache2_conf.rpmnew ]; then
 	mv %apache2_conf.rpmnew %apache2_conf
 fi
-if [ $1 -eq 1 ]; then
-	%post_service %apache2_dname
-fi
 exit 0
 
 
@@ -1172,9 +1160,6 @@ exit 0
 %post_apache2_rpmrenamevarinconfig %_sysconfdir/sysconfig/%apache2_htcacheclean_dname OPTIONS HTCACHECLEAN_OPTIONS
 %post_control -s auto htcacheclean-run
 %post_control -s daemon htcacheclean-mode
-if [ $1 -eq 1 ]; then
-	%post_service %apache2_htcacheclean_dname
-fi
 exit 0
 
 %pre cgi-bin-test-cgi
@@ -1352,8 +1337,6 @@ exit 0
 
 %_bindir/httxt2dbm*
 
-%_rpmlibdir/*-%apache2_name.filetrigger
-%_rpmlibdir/*-%apache2_name-base.filetrigger
 %_rpmlibdir/*-%apache2_name-base-*.filetrigger
 
 %condstopstart_webdir/%apache2_dname-cond*
@@ -1461,7 +1444,6 @@ exit 0
 %_unitdir/%apache2_htcacheclean_dname.service
 %config %_initdir/%apache2_htcacheclean_dname
 %config %_sysconfdir/cron.daily/%apache2_htcacheclean_dname
-
 %_rpmlibdir/*-%apache2_name-htcacheclean.filetrigger
 
 %files ab
@@ -1513,6 +1495,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu May 20 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.47-alt2
+- simplified filetriggers
+- restart httpd only at the end of the update transaction (in filetriggers)
+
 * Fri Apr 30 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.47-alt1
 - 2.4.47
 
