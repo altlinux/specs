@@ -1,8 +1,8 @@
 %define _sbindir /sbin
 
 Name: exfatprogs
-Version: 1.1.1
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
 Summary:  Official utilities for exFAT file system
 Group: System/Kernel and hardware
@@ -47,6 +47,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Thu May 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Thu May 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt2
 - moved utilities to /sbin (ALT #40043)
 
