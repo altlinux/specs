@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.47
-Release: alt2
+Release: alt3
 Epoch: 1
 
 License: %asl
@@ -97,7 +97,7 @@ BuildRequires: pkg-config
 BuildRequires: libgdbm-devel
 BuildRequires: libexpat-devel
 BuildRequires: libpcre-devel
-BuildRequires: openldap-common libldap-devel
+BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel libsasl2-plugin-gssapi
 BuildRequires: openssl
 #following is required by dbmmanage
@@ -1495,6 +1495,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu May 20 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.47-alt3
+- removed openldap-common from BuildRequires
+
 * Thu May 20 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.47-alt2
 - simplified filetriggers
 - restart httpd only at the end of the update transaction (in filetriggers)
