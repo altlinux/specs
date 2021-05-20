@@ -1,7 +1,7 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 4.0
+Version: 4.1
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -20,6 +20,7 @@ BuildRequires: libnss-devel asciidoctor lynx libseccomp-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libnettle-devel
 BuildRequires: makeinfo control
+BuildRequires: pps-tools-devel
 # for tests
 BuildRequires: /proc gcc-c++
 
@@ -136,6 +137,12 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Mon May 17 2021 Anton Farygin <rider@altlinux.ru> 4.1-alt1
+- 4.1
+
+* Wed Mar 10 2021 Anton Farygin <rider@altlinux.org> 4.0-alt2
+- build with PPS support (closes: #39773)
+
 * Wed Oct 28 2020 Anton Farygin <rider@altlinux.ru> 4.0-alt1
 - 4.0
 - built with gnutls and nettle to enable NTS support
