@@ -1,37 +1,21 @@
 %define oname itsdangerous
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 1.1.0
+Name: python3-module-%oname
+Version: 2.0.1
 Release: alt1
 Summary: Various helpers to pass trusted data to untrusted environments and back
 License: BSD-3-Clause
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/itsdangerous/
 
 # https://github.com/mitsuhiko/itsdangerous.git
 Source: %oname-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
 %description
-It's Dangerous
-   ... so better sign this
-
-Various helpers to pass data to untrusted environments and to get it
-back safe and sound.
-
-%package -n python3-module-%oname
-Summary: Various helpers to pass trusted data to untrusted environments and back
-Group: Development/Python3
-
-%description -n python3-module-%oname
 It's Dangerous
    ... so better sign this
 
@@ -41,39 +25,24 @@ back safe and sound.
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.rst docs/*.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc README.rst docs/*.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu May 20 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version.
+- Build only for Python3.
+
+* Wed May 12 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 - Fix License tag according to SPDX.
