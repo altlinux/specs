@@ -2,7 +2,7 @@
 
 Name: cgal
 Version: 5.0.2
-Release: alt1.1
+Release: alt1.2
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -12,6 +12,7 @@ Url: https://www.cgal.org/
 Source: CGAL-%version.tar
 Source1: CGAL-%version-doc_html.tar
 
+BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
 BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
 BuildRequires: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
@@ -86,6 +87,9 @@ popd
 %doc %_docdir/%{name}*
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 5.0.2-alt1.2
+- Fixed build due to missing rpm-build-python
+
 * Thu Jul 23 2020 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1.1
 - NMU: exclude armh from build architectures.
 
