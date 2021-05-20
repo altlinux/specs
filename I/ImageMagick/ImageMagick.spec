@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.12
-%define drelease	7
+%define drelease	13
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		7
@@ -16,13 +16,12 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: ImageMagick
 Group: Graphics
 Url: http://www.imagemagick.org/
-
 Packager: Anton Farygin <rider@altlinux.ru>
 # ftp://ftp.imagemagick.org/pub/ImageMagick/ imported to our git
 Source0: %name-%dversion-%drelease.tar
@@ -163,7 +162,6 @@ touch config.rpath
 rm PerlMagick/t/composite.t
 rm PerlMagick/t/filter.t
 rm PerlMagick/t/montage.t
-subst 's,2.69,2.68,' configure.ac
 %ifarch %e2k
 sed -i 's,-lomp,-fopenmp,g' configure* # -lomp was wrong in the first place
 %endif
@@ -272,6 +270,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu May 20 2021 Anton Farygin <rider@altlinux.ru> 6.9.12.13-alt1
+- 6.9.12.13
+
 * Fri Apr 16 2021 Michael Shigorin <mike@altlinux.org> 6.9.12.7-alt2
 - E2K: use -fopenmp instead of -lomp but still --disable-openmp
 
