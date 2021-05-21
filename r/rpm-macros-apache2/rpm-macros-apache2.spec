@@ -7,7 +7,7 @@
 %def_enable apache_ru_compat
 
 Name: rpm-macros-%macrosname
-Version: 3.13
+Version: 3.13.1
 Release: alt1
 
 Summary: RPM macros to Apache2 Web server
@@ -75,6 +75,9 @@ find %buildroot%_rpmmacrosdir/ -type f -print0 \
 %_rpmmacrosdir/%macrosname-compat
 
 %changelog
+* Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 3.13.1-alt1
+- returned back macro %post_apache2conf
+
 * Mon May 17 2021 Anton Farygin <rider@altlinux.ru> 3.13-alt1
 - removed all macros, which is suitable for post-script in rpm specfile
 - removed branch suffix for release/version (is not needed anymore)
