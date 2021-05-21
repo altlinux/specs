@@ -7,12 +7,15 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name: libhugetlbfs
 Version: 2.20
-Release: alt2_8
+Release: alt2_9
 Summary: A library which provides easy access to huge pages of memory
 License: LGPLv2+
 URL: https://github.com/libhugetlbfs/libhugetlbfs
 Source0: https://www.mgebm.net/~emunson/%{name}-%{version}.tar.gz
 Patch0: build_flags.patch
+
+# For huge_page_setup_helper.py
+BuildRequires(pre): rpm-build-python
 
 BuildRequires: gcc
 BuildRequires: glibc-devel
@@ -117,6 +120,9 @@ sed -i 1s,python,python2, %buildroot%_bindir/huge_page_setup_helper.py
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.20-alt2_9
+- fixed build due to missing rpm-build-python
+
 * Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 2.20-alt2_8
 - fixed build
 
