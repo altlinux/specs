@@ -1,5 +1,5 @@
 Name: powertop
-Version: 2.13
+Version: 2.14
 Release: alt1
 Epoch: 1
 
@@ -12,9 +12,8 @@ Source0: %name-%version.tar
 Source1: %name.service
 Source2: %name.init
 Source100: %name.watch
+Patch0: %name-%version-%release.patch
 
-# Automatically added by buildreq on Tue May 15 2012
-# optimized out: libncurses-devel libstdc++-devel libtinfo-devel pkg-config xz
 BuildRequires: gcc-c++ libncursesw-devel libnl-devel libpci-devel zlib-devel
 BuildRequires: autoconf-archive
 
@@ -33,6 +32,7 @@ Please note that it also runs just fine with e.g. AMD CPUs. :)
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -66,6 +66,9 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Tue Apr 20 2021 Anton Farygin <rider@altlinux.ru> 1:2.14-alt1
+- 2.14
+
 * Fri Jun 26 2020 Anton Farygin <rider@altlinux.ru> 1:2.13-alt1
 - 2.13
 
