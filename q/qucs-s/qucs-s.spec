@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: qucs-s
-Version: 0.0.21
+Version: 0.0.22
 Release: alt1
 
 Summary: Circuit simulator
@@ -12,7 +15,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Buildrequires (pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libqt4-devel
-Requires: %name-data = %version-%release
+BuildRequires: rpm-build-python3
+Requires: %name-data = %EVR
 Requires: qucs
 Requires: ngspice
 
@@ -30,9 +34,10 @@ window.
 Group: Education
 Summary: Data files for %name, a circuit simulator
 Buildarch: noarch
+%add_python3_path %_datadir/%name/python
 
 %description data
-Data files  for %name, a circuit simulator.
+Data files for %name, a circuit simulator.
 
 %prep
 %setup
@@ -60,6 +65,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Fri May 21 2021 Anton Midyukov <antohami@altlinux.org> 0.0.22-alt1
+- new version 0.0.22
+
 * Fri Nov 02 2018 Anton Midyukov <antohami@altlinux.org> 0.0.21-alt1
 - new version 0.0.21
 
