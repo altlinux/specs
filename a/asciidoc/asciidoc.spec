@@ -1,6 +1,6 @@
 Name: asciidoc
 Version: 8.6.9
-Release: alt1.2
+Release: alt1.3
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 Group: Text tools
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-vim
+BuildRequires(pre): rpm-build-vim rpm-build-python
 %define _unpackaged_files_terminate_build 1
 %define docdir %_docdir/%name-%version
 
@@ -135,6 +135,9 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %vim_syntax_dir/*.vim
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 8.6.9-alt1.3
+- Fix FTBFS due to missing rpm-build-python
+
 * Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 8.6.9-alt1.2
 - FTBFS: set correct python2 executable in shebang.
 
