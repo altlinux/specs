@@ -4,7 +4,7 @@ Summary: Tools for Linux kernel block layer cache
 Name: bcache-tools
 Version: 1.0.8
 Epoch: 1
-Release: alt3
+Release: alt4
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://bcache.evilpiepirate.org/
@@ -27,6 +27,7 @@ Patch1: bcache-status-rootgc.patch
 # Fix bcache-status shebang
 Patch2: bcache-status-python3.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libuuid-devel libblkid-devel
 
 %description
@@ -86,6 +87,9 @@ install -p  -m 755 bcache-status %buildroot%_sbindir/bcache-status
 %_man8dir/bcache-status.8.*
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 1:1.0.8-alt4
+- Fix FTBFS due to missing rpm-build-python3
+
 * Mon Jun 15 2020 Nikita Ermakov <arei@altlinux.org> 1:1.0.8-alt3
 - Reorganize repo a little bit:
   + Move patches to the .gear/ subdirectory.
