@@ -1,6 +1,6 @@
 Name:     altsp-test-progs
 Version:  2.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Programs for tests for ALT SP OS
 License:  GPLv2+
@@ -11,6 +11,7 @@ Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source:   %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ make
 
 %description
@@ -43,6 +44,9 @@ cp -ar autoinstall %buildroot%_libdir/%name-%version
 %doc AUTHORS NEWS README ejector.sh
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.0-alt2
+- fix FTBFS due to missing rpm-build-python3
+
 * Wed Jan 15 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.0-alt1
 - build 2.0 version into Sisyphus
 
