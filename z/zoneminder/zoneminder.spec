@@ -2,7 +2,7 @@
 %define zmgroup _webserver
 
 Name: zoneminder
-Version: 1.34.26
+Version: 1.36.0
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -11,18 +11,25 @@ Url: http://www.zoneminder.com
 Source: %name-%version-alt.tar
 Source1: Crud-%version.tar
 Source2: CakePHP-Enum-Behavior-%version.tar
-Source3: zoneminder.conf
-Source4: README.alt
-Source5: README-nginx-ru.alt
-Source6: nginx-zoneminder.conf.sample
-Source7: zm-fcgi.inc
-Source8: php7-fpm-zoneminder.conf
+Source3: RtspServer-%version.tar
+Source4: zoneminder.conf
+Source5: README.alt
+Source6: README-nginx-ru.alt
+Source7: nginx-zoneminder.conf.sample
+Source8: zm-fcgi.inc
+Source9: php7-fpm-zoneminder.conf
 Patch1: zoneminder-1.32.3-alt-mysql8-transition.patch
 
 Conflicts: zm <= 1.22.3
 BuildRequires(pre): rpm-macros-webserver-common
-Requires: libgnutls libgnutls-openssl zlib perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww ffmpeg perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable php7-pdo_mysql php7-openssl su perl-Data-Entropy perl-Crypt-Eksblowfish perl-Sys-Mmap webserver perl-Pod-Usage perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU
-Requires: perl-SOAP-WSDL perl-Class-Std-Fast perl-Data-UUID perl-IO-Socket-Multicast perl-Digest-SHA
+Requires: libgnutls libgnutls-openssl zlib ffmpeg
+Requires: php7-pdo_mysql php7-openssl php7-gd
+Requires: su
+Requires: perl-Data-Entropy perl-Crypt-Eksblowfish perl-Sys-Mmap webserver perl-Pod-Usage 
+Requires: perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU 
+Requires: perl-SOAP-WSDL perl-Class-Std-Fast perl-Data-UUID perl-IO-Socket-Multicast 
+Requires: perl-Digest-SHA perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww
+Requires: perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable
 AutoReq: noperl
 BuildRequires: bzlib-devel ffmpeg gcc-c++ libavresample-devel libswresample-devel libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel libuuid-devel libselinux-devel libblkid-devel libmp4v2
 
@@ -56,11 +63,12 @@ Zoneminder configuration file and requires for nginx
 
 %prep
 %setup -n %name-%version-alt
-%patch1 -p1
+#patch1 -p1
 tar xvf %SOURCE1 --strip 1 -C web/api/app/Plugin/Crud
 tar xvf %SOURCE2 --strip 1 -C web/api/app/Plugin/CakePHP-Enum-Behavior
-cp %SOURCE4 README.alt
-cp %SOURCE5 README-nginx-ru.alt
+tar xvf %SOURCE3 --strip 1 -C dep/RtspServer
+cp %SOURCE5 README.alt
+cp %SOURCE6 README-nginx-ru.alt
 
 cat <<EOF >> db/zm_create.sql.in
 use mysql;
@@ -68,7 +76,6 @@ grant select,insert,update,delete on zm.* to 'zmuser'@localhost identified by 'z
 EOF
 
 ./utils/zmeditconfigdata.sh ZM_OPT_CAMBOZOLA yes
-./utils/zmeditconfigdata.sh ZM_UPLOAD_FTP_LOC_DIR /var/spool/zoneminder-upload
 ./utils/zmeditconfigdata.sh ZM_OPT_CONTROL yes
 ./utils/zmeditconfigdata.sh ZM_CHECK_FOR_UPDATES no
 ./utils/zmeditconfigdata.sh ZM_DYN_SHOW_DONATE_REMINDER no
@@ -94,10 +101,10 @@ done
 install -D -m 755 BUILD/scripts/zm %buildroot%_initdir/zoneminder
 install -D -m 644 BUILD/misc/zoneminder.service %buildroot/%_unitdir/%name.service
 install -D -m 644 BUILD/misc/zoneminder-tmpfiles.conf %buildroot/%_tmpfilesdir/zoneminder.conf
-install -D -m 644 %SOURCE3 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
-install -D -m 644 %SOURCE6 %buildroot%_sysconfdir/nginx/sites-enabled.d/nginx-zoneminder.conf.sample
-install -D -m 644 %SOURCE7 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
-install -D -m 644 %SOURCE8 %buildroot%_sysconfdir/fpm/fpm.d/fpm-zm.conf
+install -D -m 644 %SOURCE4 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
+install -D -m 644 %SOURCE7 %buildroot%_sysconfdir/nginx/sites-enabled.d/nginx-zoneminder.conf.sample
+install -D -m 644 %SOURCE8 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
+install -D -m 644 %SOURCE9 %buildroot%_sysconfdir/fpm/fpm.d/fpm-zm.conf
 mkdir -p %buildroot/%_cachedir/%name
 
 cp -aR web/api %buildroot%_datadir/%name/www/api
@@ -130,7 +137,7 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_initdir/zoneminder
 %_bindir/*
 %_datadir/%name
-%_man8dir/zoneminder*
+%_man8dir/zm*
 %perl_vendorlib/ZoneMinder*
 %perl_vendorlib/ONVIF*
 %perl_vendorlib/WSDiscovery*
@@ -156,6 +163,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 1.36.0-alt1
+- 1.36.0
+
 * Thu Apr 22 2021 Anton Farygin <rider@altlinux.ru> 1.34.26-alt1
 - 1.34.26
 
