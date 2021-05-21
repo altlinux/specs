@@ -1,5 +1,5 @@
 Name:    python3-module-libusb1
-Version: 1.8
+Version: 1.9.2
 Release: alt1
 
 Summary: Python 3 ctype-based wrapper around libusb1
@@ -41,5 +41,8 @@ sed -i 's/\(^\s\+git_refnames = \).*$/\1"%version"/' usb1/_version.py
 %doc README.rst
 
 %changelog
+* Sat May 22 2021 Anton Midyukov <antohami@altlinux.org> 1.9.2-alt1
+- new version 1.9.2
+
 * Tue May 19 2020 Anton Midyukov <antohami@altlinux.org> 1.8-alt1
 - Initial build for Sisyphus
