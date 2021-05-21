@@ -7,7 +7,7 @@
 
 Name:		lxd
 Version:	4.10
-Release:	alt1
+Release:	alt2
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -29,6 +29,8 @@ Source13:	lxd-startup.service
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
+# For test/deps/import-busybox
+BuildRequires(pre): rpm-build-python3
 
 Requires:	shadow-submap
 Requires:	lxc-libs
@@ -167,6 +169,9 @@ help2man %buildroot%_bindir/lxd-benchmark -n "The container lightervisor - bench
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 4.10-alt2
+- Fix FTBFS due to python3.{prov,req}
+
 * Sat Jan 16 2021 Alexey Shabalin <shaba@altlinux.org> 4.10-alt1
 - New version.
 
