@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.19
+Version: 1.3.20
 Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
@@ -142,10 +142,8 @@ ln -s gnulib-%name-%version .gnulib
 
 %make INSTALLDIRS=vendor
 
-# temporary disabled tests due to "pthread and as-needed" problem in gcc
-# see alt bugzilla #34935
-#check
-#make check
+%check
+make check
 
 %install
 %make install INSTALLDIRS=vendor DESTDIR=%buildroot
@@ -232,6 +230,9 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 1.3.20-alt1
+- 1.3.20
+
 * Mon Sep 21 2020 Anton Farygin <rider@altlinux.ru> 1.3.19-alt1
 - 1.3.19
 
