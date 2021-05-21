@@ -5,8 +5,8 @@
 %define docdir %_docdir/%name-%version
 
 Name: php7-%php7_extension
-Version: 4.3.0
-Release: alt2
+Version: 4.3.4
+Release: alt1
 
 Summary: 2D graph plotting library for PHP
 License: %qpl1
@@ -144,22 +144,6 @@ find %buildroot%_sysconfdir -type f -print0 \
 		-e 's@%%extensiondir([-[:space:]/.,:}%%])@%extensiondir\1@g' \
 		-e 's@%%name([-[:space:]/.,:}%%])@%name\1@g'
 
-%post examples-apache2
-%_sbindir/a2chkconfig >/dev/null
-%post_apache2conf
-
-%postun examples-apache2
-%_sbindir/a2chkconfig >/dev/null
-%postun_apache2conf
-
-%post doc-apache2
-%_sbindir/a2chkconfig >/dev/null
-%post_apache2conf
-
-%postun doc-apache2
-%_sbindir/a2chkconfig >/dev/null
-%postun_apache2conf
-
 %files
 %doc %docdir/
 %exclude %docdir/html/
@@ -186,6 +170,10 @@ find %buildroot%_sysconfdir -type f -print0 \
 %config(noreplace) %apache2_mods_start/100-%name-doc.conf
 
 %changelog
+* Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 4.3.4-alt1
+- 4.3.4
+- removed all rpm post scripts (they moved to filetriggers from apache package)
+
 * Mon Jul 27 2020 Anton Farygin <rider@altlinux.ru> 4.3.0-alt2
 - removed requirement for nonfree ms-ttf fonts (closes: #29430)
 
