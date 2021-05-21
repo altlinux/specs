@@ -1,7 +1,7 @@
 %define  modulename ppx_sexp_message
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt3
+Version: 0.14.1
+Release: alt1
 Summary: A ppx rewriter for easy construction of s-expressions
 License: MIT
 Group:   Development/ML
@@ -45,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt3
 - added upstream patch against ppxlib 0.22
 
