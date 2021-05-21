@@ -1,7 +1,9 @@
+# This spec is backported to ALTLinux p8 automatically by rpmbph script from etersoft-build-utils.
+#
 %define  modulename crossbar
 
 Name:    python3-module-%modulename
-Version: 18.7.2
+Version: 21.3.1
 Release: alt1
 
 Summary: Crossbar.io - WAMP application router
@@ -40,11 +42,16 @@ rm -fr %buildroot%prefix/COPYRIGHT
 rm -fr %buildroot%prefix/LICENSE*
 
 %files
-%doc COPYRIGHT LICENSE*
 %_bindir/%modulename
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed May 19 2021 Anton Midyukov <antohami@altlinux.org> 21.3.1-alt1
+- new version 21.3.1
+
+* Mon Aug 27 2018 Anton Midyukov <antohami@altlinux.org> 18.7.2-alt0.M80P.1
+- backport to ALTLinux p8 (by rpmbph script)
+
 * Wed Aug 22 2018 Anton Midyukov <antohami@altlinux.org> 18.7.2-alt1
 - Initial build for Sisyphus
