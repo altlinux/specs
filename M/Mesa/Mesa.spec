@@ -10,6 +10,7 @@
 %define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
+%define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel
 %define virgl_arches %ix86 x86_64 aarch64 ppc64le mipsel
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
@@ -66,13 +67,16 @@
 %ifarch %vulkan_radeon_arches
 %vulkan_drivers_add amd
 %endif
+%ifarch %vulkan_virtio_arches
+%vulkan_drivers_add virtio-experimental
+%endif
 %ifarch %armsoc_arches
 %vulkan_drivers_add freedreno
 %vulkan_drivers_add broadcom
 %endif
 
 Name: Mesa
-Version: 21.1.0
+Version: 21.1.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -93,6 +97,7 @@ BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-dev
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0 clang-devel >= 11.0.0
+BuildRequires: glslang rpm-build-python3
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -171,8 +176,6 @@ processing units.
 %package -n xorg-dri-swrast
 Summary: Mesa software rendering libraries
 Group: System/X11
-Provides: xorg-dri-virgl
-Obsoletes: xorg-dri-virgl < %epoch:%version-%release
 
 %description -n xorg-dri-swrast
 Mesa software rendering libraries
@@ -222,6 +225,15 @@ Group: System/X11
 %description -n xorg-dri-armsoc
 DRI drivers for various SoCs
 
+%package -n xorg-dri-virtio
+Summary: VirtIO DRI driver
+Group: System/X11
+Provides: xorg-dri-virgl
+Obsoletes: xorg-dri-virgl < %epoch:%version-%release
+
+%description -n xorg-dri-virtio
+DRI driver for VirtIO
+
 %package -n mesa-dri-drivers
 Summary: Mesa-based DRI drivers
 Group: System/X11
@@ -247,6 +259,9 @@ Requires: xorg-dri-armsoc = %epoch:%version-%release
 %ifarch %svga_arches
 Requires: xorg-dri-vmwgfx = %epoch:%version-%release
 %endif
+%ifarch %virgl_arches
+Requires: xorg-dri-virtio = %epoch:%version-%release
+%endif
 
 %description -n mesa-dri-drivers
 Mesa-based DRI drivers
@@ -263,6 +278,7 @@ Mesa-based DRI drivers
 	-Ddri-drivers='%{?dri_drivers}' \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
+	-Dvulkan-layers=overlay \
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=true \
 %endif
@@ -419,9 +435,6 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %ifarch %dri_megadriver_arches
 %_libdir/X11/modules/dri/libmesa_dri_drivers.so
 %endif
-%ifarch %virgl_arches
-%_libdir/X11/modules/dri/virtio_gpu_dri.so
-%endif
 %ifarch %gallium_pipe_arches
 %dir %_libdir/gallium-pipe
 %_libdir/gallium-pipe/pipe_swrast.so
@@ -432,6 +445,24 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 %ifarch %vdpau_arches
 %_libdir/vdpau/libvdpau_gallium.so.1.0.0
+%endif
+%ifarch %vulkan_virtio_arches
+%_bindir/mesa-overlay-control.py
+%_libdir/libvulkan_virtio.so
+%_libdir/libVkLayer_MESA_overlay.so
+%dir %_datadir/vulkan
+%dir %_datadir/vulkan/explicit_layer.d
+%_datadir/vulkan/explicit_layer.d/VkLayer_MESA*.json
+%endif
+
+%ifarch %virgl_arches
+%files -n xorg-dri-virtio
+%_libdir/X11/modules/dri/virtio_gpu_dri.so
+%ifarch %vulkan_virtio_arches
+%dir %_datadir/vulkan
+%dir %_datadir/vulkan/icd.d
+%_datadir/vulkan/icd.d/virtio_icd*.json
+%endif
 %endif
 
 %ifarch %intel_arches
@@ -497,6 +528,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri May 21 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.1.1-alt1
+- 21.1.1
+
 * Wed May 12 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.1.0-alt1
 - 21.1.0
 
