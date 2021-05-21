@@ -5,7 +5,7 @@
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
 Version: 4.8.0
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -166,6 +166,9 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 echo %version > .version
 cp .version .tarball-version
 mkdir -p m4
+
+# Use python3 explicitly
+sed -i '1 i #!%__python3' heartbeat/ocf.py
 
 %build
 export PYTHON=%__python3
@@ -345,6 +348,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 4.8.0-alt2
+- fix FTBFS due to python.{req,prov}
+
 * Wed Mar 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
