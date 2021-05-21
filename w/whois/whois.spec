@@ -1,5 +1,5 @@
 Name: whois
-Version: 5.5.7
+Version: 5.5.9
 Release: alt1
 
 Summary: Intelligent WHOIS client
@@ -34,12 +34,17 @@ gzip -9k debian/changelog
 
 %build
 %make_build \
-	CFLAGS='%optflags' CONFIG_FILE=/etc/whois.conf \
+	CFLAGS="%optflags $(getconf LFS_CFLAGS)" \
+	CONFIG_FILE=/etc/whois.conf \
 	HAVE_ICONV=1
 
 %install
 %make_install install BASEDIR=%buildroot
 install -Dpm644 whois.conf %buildroot/etc/whois.conf
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %find_lang %name
 
@@ -54,6 +59,9 @@ install -Dpm644 whois.conf %buildroot/etc/whois.conf
 %_mandir/man?/mkpasswd.*
 
 %changelog
+* Sat Mar 27 2021 Dmitry V. Levin <ldv@altlinux.org> 5.5.9-alt1
+- v5.5.7 -> v5.5.9.
+
 * Sat Oct 03 2020 Dmitry V. Levin <ldv@altlinux.org> 5.5.7-alt1
 - v5.5.6 -> v5.5.7.
 
