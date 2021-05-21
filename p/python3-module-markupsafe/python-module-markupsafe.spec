@@ -1,25 +1,19 @@
 %define oname markupsafe
 
-%def_without python3
+Name: python3-module-%oname
+Version: 2.0.1
+Release: alt1
+Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
-Name: python-module-%oname
-Version: 1.1.1
-Release: alt2
-Summary: implements a XML/HTML/XHTML Markup safe string for Python
-
-Group: Development/Python
+Group: Development/Python3
 License: BSD-3-Clause
 Url: http://pypi.python.org/pypi/MarkupSafe
 
 Source: %oname-%version.tar
-Packager: Vladimir Lettiev <crux@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-%endif
 
 %description
 MarkupSafe implements a text object that escapes characters so it is
@@ -28,22 +22,9 @@ replaced so that they display as the actual characters. This mitigates
 injection attacks, meaning untrusted user input can safely be displayed
 on a page.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: implements a XML/HTML/XHTML Markup safe string for Python 3
-Group: Development/Python3
-
-%description -n python3-module-%oname
-MarkupSafe implements a text object that escapes characters so it is
-safe to use in HTML and XML. Characters that have special meanings are
-replaced so that they display as the actual characters. This mitigates
-injection attacks, meaning untrusted user input can safely be displayed
-on a page.
-%endif
-
 %package tests
 Summary: Tests for MarkupSafe
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -53,41 +34,24 @@ This package contains tests for MarkupSafe.
 
 %prep
 %setup -q -n %oname-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.rst
-%python_sitelibdir/markupsafe
-%python_sitelibdir/MarkupSafe-%version-py?.?.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
-%doc README.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
-* Fri May 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt2
-- Build old version compatible with python2 without python3 support.
+* Thu May 20 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version.
+- Build only for Python3.
+
+* Wed May 12 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
 
 * Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - New version.
