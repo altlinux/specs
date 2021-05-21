@@ -1,7 +1,7 @@
 %define  modulename treq
-Name:    python-module-%modulename
-Version: 18.6.0
-Release: alt4
+Name:    python3-module-%modulename
+Version: 21.1.0
+Release: alt1
 
 Summary: Python requests like API built on top of Twisted's HTTP client.
 License: MIT
@@ -24,17 +24,6 @@ Agents.
 It provides a simple, higher level API for making HTTP requests when using
 Twisted.
 
-%package -n python3-module-%modulename
-Summary: Python requests like API built on top of Twisted's HTTP client.
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-treq is an HTTP library inspired by requests but written on top of Twisted's
-Agents.
-
-It provides a simple, higher level API for making HTTP requests when using
-Twisted.
-
 %prep
 %setup -n %modulename-%version
 
@@ -47,11 +36,14 @@ Twisted.
 rm -rf %buildroot%python3_sitelibdir/%modulename/test
 rm -rf %buildroot%python3_sitelibdir/%modulename/testing.py
 
-%files -n python3-module-%modulename
+%files
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed May 19 2021 Anton Midyukov <antohami@altlinux.org> 21.1.0-alt1
+- new version
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 18.6.0-alt4
 - NMU: drop testing.py in additional to removed tests
 
