@@ -3,7 +3,7 @@
 
 Name: apache2-mod_php7
 Version: %php7_version
-Release: %php7_release.2
+Release: %php7_release.3
 
 Summary: The php7 HTML-embedded scripting language for use with Apache2
 
@@ -115,11 +115,6 @@ done
 %preun
 %php7_sapi_preun
 
-%postun
-if [ $1 = 0 ]; then
-	%post_apache2conf
-fi
-
 %files
 %config(noreplace) %apache2_mods_available/*
 %config(noreplace) %apache2_mods_start/*
@@ -135,6 +130,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with new PHP
+
+* Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 7.4.19-alt1
+- removed %%post_apache2conf from %%postun
 
 * Tue Mar 29 2016 Anton Farygin <rider@altlinux.org> 5.6.19.20160303-alt1
 - Rebuild with php5-5.6.19.20160303-alt1
