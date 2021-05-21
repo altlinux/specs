@@ -50,7 +50,7 @@
 
 Name: mariadb
 Version: 10.4.17
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -121,6 +121,9 @@ Patch102: mariadb-10.4.16-alt-link-with-latomic-if-needed.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
+
+# For myrocks_hotbackup.py
+BuildRequires(pre): rpm-build-python
 
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
 BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
@@ -1015,6 +1018,9 @@ fi
 %endif
 
 %changelog
+* Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 10.4.17-alt2
+- fix FTBFS due to missing rpm-build-python
+
 * Thu Nov 12 2020 Alexey Shabalin <shaba@altlinux.org> 10.4.17-alt1
 - 10.4.17
 - backport fix for MDEV-24096, MDEV-24121, MDEV-24134
