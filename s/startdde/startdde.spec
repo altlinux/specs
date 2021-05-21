@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.8.7
-Release: alt2
+Version: 5.8.9
+Release: alt1
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -81,6 +81,9 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/glib-2.0/schemas/com.deepin.dde.startdde.gschema.xml
 
 %changelog
+* Fri May 21 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.9-alt1
+- New version (5.8.9) with rpmgs script.
+
 * Tue Apr 27 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.7-alt2
 - Fixed build with deepin-polkit-agent.
 
