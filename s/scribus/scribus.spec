@@ -1,9 +1,9 @@
 Name: scribus
-Version: 1.5.6.1
-Release: alt2
+Version: 1.5.7
+Release: alt1
 Epoch: 1
 
-Summary: DeskTop Publishing application written in Qt
+Summary: Desktop Publishing application written in Qt
 
 Group: Publishing
 License: GPLv2+
@@ -15,6 +15,8 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 # Source-url: http://prdownloads.sf.net/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
+
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
 BuildRequires: libpoppler-devel libpoppler-cpp-devel
 BuildRequires: qt5-imageformats qt5-declarative-devel qt5-tools-devel
@@ -57,9 +59,15 @@ Requires: %name-doc >= %epoch:%version
 Requires: %name-data >= %epoch:%version
 Requires: aspell-en
 
+AutoProv:no
+
 %add_verify_elf_skiplist %_libdir/%name/plugins/*.so
 %add_findreq_skiplist %_datadir/%name/samples/*
 %add_findreq_skiplist %_datadir/%name/scripts/*
+%add_findprov_skiplist %_datadir/%name/samples/*
+%add_findprov_skiplist %_datadir/%name/scripts/*
+%add_python3_path %_datadir/%name/samples
+%add_python3_path %_datadir/%name/scripts
 
 %description
 Scribus is an desktop open source page layout program with
@@ -128,6 +136,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %install
 %cmakeinstall_std
+chmod -R  0755 %buildroot%_libdir/%name/plugins/*.so
 
 pushd %buildroot%_docdir/%name
 for i in $(ls ChangeLog*); do
@@ -148,7 +157,6 @@ popd
 %_datadir/mime/packages/scribus.xml
 %_iconsdir/hicolor/*/apps/scribus.png
 %_libdir/%name/
-%attr(0755,root,root) %_libdir/%name/plugins/*.so
 %_man1dir/*
 %exclude %_mandir/de
 %exclude %_mandir/pl
@@ -173,6 +181,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Fri May 21 2021 Slava Aseev <ptrnine@altlinux.org> 1:1.5.7-alt1
+- new version (1.5.7) with rpmgs script
+- fix build due to python3.{req,prov}, spec fixes (@lav)
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.6.1-alt2
 - fix build with podofo 0.9.7
 - pack ru docs
