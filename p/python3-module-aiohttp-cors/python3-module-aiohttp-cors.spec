@@ -1,30 +1,22 @@
 %define oname aiohttp-cors
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: CORS support for aiohttp
 License: ASL 2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/aio-libs/aiohttp-cors
 
 Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 
 %description
-aiohttp_cors library implements Cross Origin Resource Sharing (CORS) support for
-aiohttp asyncio-powered asynchronous HTTP server.
-
-%package -n python3-module-%oname
-Summary: CORS support for aiohttp
-Group: Development/Python3
-
-%description -n python3-module-%oname
-aiohttp_cors library implements Cross Origin Resource Sharing (CORS) support for
-aiohttp asyncio-powered asynchronous HTTP server.
+aiohttp_cors library implements Cross Origin Resource Sharing (CORS)
+support for aiohttp asyncio-powered asynchronous HTTP server.
 
 %prep
 %setup -n %oname-%version
@@ -40,6 +32,9 @@ aiohttp asyncio-powered asynchronous HTTP server.
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 22 2021 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt2
+- rename srpm to python3-module-aiohttp-cors
+
 * Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
 - New version 0.7.0
 
