@@ -8,8 +8,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.0.1
-Release: alt4
+Version: 4.0.2
+Release: alt1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -149,7 +149,7 @@ This packages contains RPM macros for build with Sphinx.
 %prep
 %setup -n sphinx-%version
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 
 install -pm644 %SOURCE1 .
 
@@ -248,7 +248,6 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %python3_sitelibdir/*.egg-info
 
 %files devel
-
 %files tests
 %sphinx3_dir/tests
 %sphinx3_dir/testing
@@ -267,6 +266,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sat May 22 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.2-alt1
+- Autobuild version bump to 4.0.2
+
 * Mon May 17 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt4
 - Stop creating a section directory on build manpage by default
 
