@@ -1,14 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name libmediaart
 %define ver_major 1.9
 %define api_ver 2.0
 %def_enable introspection
-%def_enable docs
+%def_enable gtk_doc
+%def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: Library for handling media art (2.0 API)
 Group: System/Libraries
@@ -24,11 +25,14 @@ Source: %_name-%version.tar
 Obsoletes: %_name < %version
 Provides: %_name = %version-%release
 
-BuildRequires: meson gcc-c++ libgio-devel >= 2.38 libgdk-pixbuf-devel zlib-devel
+%define meson_ver 0.56.2
+%define glib_ver 2.38
+
+BuildRequires: meson >= %meson_ver gcc-c++ libgio-devel >= %glib_ver libgdk-pixbuf-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
-BuildRequires: libvala-devel vala-tools intltool gtk-doc
-# for check
-BuildRequires: /proc dbus-tools-gui
+BuildRequires: libvala-devel vala-tools
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
 LibMediaArt is a library tasked with managing, extracting and handling
@@ -84,7 +88,7 @@ This package contains development documentation for LibMediaArt library.
 
 %build
 %meson \
-	%{?_enable_docs:-Dwith-docs=yes} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
 	-Dimage_library=gdk-pixbuf
 %meson_build
 
@@ -92,6 +96,7 @@ This package contains development documentation for LibMediaArt library.
 %meson_install
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -113,12 +118,15 @@ This package contains development documentation for LibMediaArt library.
 %_girdir/MediaArt-%api_ver.gir
 %endif
 
-%if_enabled docs
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
 
 %changelog
+* Sat May 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.9.5-alt1
+- 1.9.5
+
 * Thu Feb 14 2019 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt2
 - updated to 1.9.4-2-ged015a5 (fixed BGO #792272 and related ALT #36091)
 
