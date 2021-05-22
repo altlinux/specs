@@ -1,30 +1,29 @@
 %define oname pytest-aiohttp
 
-Name: python-module-%oname
-Version: 0.1.3
-Release: alt2.1
+Name: python3-module-%oname
+Version: 0.3.0
+Release: alt1
 Summary: pytest plugin for aiohttp support
 License: ASL 2.0
-Group: Development/Python
-Url: https://pypi.python.org/pypi/pytest-aiohttp
+Group: Development/Python3
+Url: https://github.com/aio-libs/pytest-aiohttp/
+# Source-url: %url/archive/v%version/%oname-%version.tar.gz
+Source: %oname-%version.tar
 
-Source: https://pypi.python.org/packages/89/b1/a486d9e969de578c373bb48ca907cbfa337653dd9fb8b8f61143053399b3/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-pytest-runner python3(aiohttp) python3(aiohttp.test_utils)
-BuildRequires: python3-module-chardet
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3(aiohttp)
+BuildRequires: python3(cchardet)
+BuildRequires: python3(aiohttp.test_utils)
+#BuildRequires: python3-module-pytest-runner
 
 %description
 pytest plugin for aiohttp support
 
-%package -n python3-module-%oname
-Summary: pytest plugin for aiohttp support
-Group: Development/Python3
-%add_python3_req_skip aiohttp.pytest_plugin
-
-%description -n python3-module-%oname
-pytest plugin for aiohttp support
+#%add_python3_req_skip aiohttp.pytest_plugin
 
 %prep
 %setup -n %oname-%version
@@ -36,13 +35,17 @@ pytest plugin for aiohttp support
 %python3_install
 
 %check
-python3 setup.py test
+%__python3 setup.py test
 
 %files -n python3-module-%oname
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 22 2021 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
+- new version (0.3.0) with rpmgs script
+- cleanup spec
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.3-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
