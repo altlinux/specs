@@ -1,6 +1,6 @@
 Name: yandex-browser-updater
 Version: 1.6
-Release: alt1
+Release: alt2
 Summary: Script for automation installing and updating yandex browser
 License: MIT
 Group: Other
@@ -9,6 +9,7 @@ Source: %name-%version.tar
 Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-python3
 Requires: python3-module-BeautifulSoup4
 Requires: python3-module-tqdm
 
@@ -25,6 +26,9 @@ Requires: python3-module-tqdm
 %_sbindir/%name
 
 %changelog
+* Sat May 22 2021 Alexander Makeenkov <amakeenk@altlinux.org> 1.6-alt2
+- BuildRequires(pre): added rpm-build-python3 for fix FTBFS
+
 * Fri May 29 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.6-alt1
 - Version updated to 1.6
 
