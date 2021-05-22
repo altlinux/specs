@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -41,6 +41,7 @@ BuildRequires: libxml2-devel libsqlite3-devel zlib-devel
 BuildRequires: docbook-dtds docbook-style-xsl
 BuildRequires: gtk-doc xml-common xsltproc
 BuildRequires: glib-networking libpsl-devel >= %psl_ver
+BuildRequires: libbrotli-devel libnghttp2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
@@ -162,6 +163,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat May 22 2021 Yuri N. Sedunov <aris@altlinux.org> 2.99.6-alt1
+- 2.99.6
+
 * Tue Apr 20 2021 Yuri N. Sedunov <aris@altlinux.org> 2.99.4-alt1
 - 2.99.4
 
