@@ -1,5 +1,5 @@
 Name: trackballs
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Steer a marble ball through a labyrinth
@@ -7,7 +7,7 @@ License: GPLv2+
 Group: Games/Arcade
 Url: https://trackballs.github.io/
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 Requires: %name-game = %version-%release
 Requires: %name-music >= 2:1.4
@@ -66,8 +66,13 @@ level editor and high quality soundeffects and background music.
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 %doc AUTHORS.md FAQ.md NEWS.md README.md TODO.md
+%_datadir/doc/%name/*
 
 %changelog
+* Sun May 23 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+- add documentation
+
 * Thu Nov 22 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt1
 - 1.3.1 released
 
