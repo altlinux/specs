@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 13.2.0
-Release: alt1
+Release: alt2
 
 Summary: A module wrapper for os.path
 License: MIT
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(toml)
 
 %if_with check
 BuildRequires: python3(appdirs)
@@ -76,6 +77,9 @@ export TOXENV=py%{python_version_nodots python3}
 %python3_sitelibdir/path-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun May 23 2021 Michael Shigorin <mike@altlinux.org> 13.2.0-alt2
+- Fixed BR:
+
 * Tue Apr 21 2020 Stanislav Levin <slev@altlinux.org> 13.2.0-alt1
 - 12.0.1 -> 13.2.0.
 
