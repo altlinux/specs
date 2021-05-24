@@ -1,10 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %mips32
+%define optflags_debug -g1
+%endif
+
 %define soname 8.0
 
 Name: openvdb
 Version: 8.0.0
-Release: alt1
+Release: alt2
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -12,6 +16,8 @@ URL: http://www.openvdb.org/
 
 # https://github.com/AcademySoftwareFoundation/openvdb
 Source: %name-%version.tar
+
+Patch1: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-complete
@@ -77,6 +83,7 @@ This package contains the Python module.
 
 %prep
 %setup
+%autopatch -p1
 
 # Hardcoded values
 sed -i \
@@ -125,6 +132,11 @@ rm -fr %buildroot%_datadir/doc
 %_libdir/cmake/*
 
 %changelog
+* Mon May 24 2021 Ivan A. Melnikov <iv@altlinux.org> 8.0.0-alt2
+- Fix build on mipsel:
+  + link with -latomic;
+  + reduce debuginfo level to -g1 to avoid OOM in compiler.
+
 * Tue Jan 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.0-alt1
 - Updated to upstream version 8.0.0.
 
