@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8192fu
 Version: 5.8.6.2
-Release: alt1
+Release: alt2.git4ac3c39
 
 Summary: RTL8192FU driver for Linux kernel
 License: GPL-2.0
@@ -28,5 +28,8 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon May 24 2021 Andrey Cherepanov <cas@altlinux.org> 5.8.6.2-alt2.git4ac3c39
+- Upstream fix for kernel 5.12.
+
 * Fri Apr 09 2021 Andrey Cherepanov <cas@altlinux.org> 5.8.6.2-alt1
 - Initial build for Sisyphus.
