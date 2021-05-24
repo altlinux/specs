@@ -1,18 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libndp
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Library for Neighbor Discovery Protocol
-License: %lgpl2plus
+License: LGPLv2.1+
 Group: System/Libraries
 URL: http://libndp.org/
-# https://github.com/jpirko/libndp.git
+Vcs: https://github.com/jpirko/libndp.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 %description
 This package contains a library which provides a wrapper
@@ -20,7 +18,7 @@ for IPv6 Neighbor Discovery Protocol.
 
 %package utils
 Summary: Utils for %name
-License: %lgpl2plus
+License: LGPLv2.1+
 Group: System/Base
 Requires: %name = %version-%release
 
@@ -63,6 +61,11 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon May 24 2021 Mikhail Efremov <sem@altlinux.org> 1.8-alt1
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.8.
+
 * Wed Jun 27 2018 Mikhail Efremov <sem@altlinux.org> 1.7-alt1
 - Updated to 1.7.
 
