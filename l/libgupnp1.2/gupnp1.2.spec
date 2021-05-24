@@ -9,14 +9,15 @@
 %def_enable check
 
 Name: lib%_name%ver_major
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gupnp.org/
 
+Vcs: https://gitlab.gnome.org/GNOME/gupnp.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
@@ -119,6 +120,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon May 24 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt2
 - BR: +rpm-build-python3
 
