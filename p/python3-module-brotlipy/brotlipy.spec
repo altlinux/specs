@@ -1,36 +1,22 @@
 %define modname brotlipy
 
-Name: python-module-%modname
+Name: python3-module-%modname
 Version: 0.7.0
-Release: alt2.qa1
+Release: alt3
 
 Summary: Library contains Python bindings for the reference Brotli
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/python-hyper/brotlipy/
 
 Source: %modname-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-setuptools python-devel
-BuildRequires: gcc-c++ python-module-sphinx
-BuildRequires: python-module-cffi 
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-dev
-BuildPreReq: python3-module-cffi python3-module-sphinx
-
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: gcc-c++ python3-module-sphinx
+BuildRequires: python3-module-cffi
 
 %description
-This library contains Python bindings for the reference Brotli 
-encoder/decoder, available here. This allows Python software to 
-use the Brotli compression algorithm directly from Python code.
-
-%package -n python3-module-%modname
-Summary: Library contains Python bindings for the reference Brotli
-Group: Development/Python3
-
-%description -n python3-module-%modname
 This library contains Python bindings for the reference Brotli 
 encoder/decoder, available here. This allows Python software to 
 use the Brotli compression algorithm directly from Python code.
@@ -49,48 +35,31 @@ This package contains documentation for %name
 %prep
 %setup -n %modname-%version
 
-rm -rf ../python3
-cp -fR . ../python3
-
 rm -rf *deb
 
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 export PYTHONPATH=$PWD
-%make -C docs man
+%make SPHINXBUILD="sphinx-build-3" -C docs man
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
-python setup.py test
-
-pushd ../python3
 python3 setup.py test
-popd
 
 %files
-%doc LICENSE *.rst
-%python_sitelibdir/*
-
-%files -n python3-module-%modname
 %doc LICENSE *.rst
 %python3_sitelibdir/*
 
 %files docs
 %doc docs/build/*
 
-
 %changelog
+* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt3
+- Drop python2 support.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2.qa1
 - NMU: applied repocop patch
 
