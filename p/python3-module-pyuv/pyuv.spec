@@ -1,48 +1,32 @@
 %define oname pyuv
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: Python interface for libuv
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyuv/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/saghul/pyuv.git
 # branch: v1.x
 Source: %name-%version.tar
 
 BuildRequires(pre): /dev/pts /proc
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 pyuv is a Python module which provides an interface to libuv. libuv is a
 high performance asynchronous networking and platform abstraction
 library.
 
-%package -n python3-module-%oname
-Summary: Python interface for libuv
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-pyuv is a Python module which provides an interface to libuv. libuv is a
-high performance asynchronous networking and platform abstraction
-library.
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 pyuv is a Python module which provides an interface to libuv. libuv is a
@@ -66,63 +50,39 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc AUTHORS ChangeLog *.rst TODO examples
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS ChangeLog *.rst TODO examples
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt2
+- Drop python2 support.
+
 * Tue Feb 16 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Build new version for python3.9.
 
