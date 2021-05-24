@@ -1,9 +1,9 @@
 Name: rtlsdr-scanner
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: A cross platform Python frequency scanning GUI for the OsmoSDR rtl-sdr library
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Communications
 URL: https://github.com/EarToEarOak/RTLSDR-Scanner
 
@@ -16,35 +16,43 @@ Source1: rtlsdr-scanner-16x16.png
 Source2: rtlsdr-scanner-32x32.png
 Source3: rtlsdr-scanner-48x48.png
 Source4: rtlsdr-scanner-96x96.png
+Source5: rtlsdr_scan.png
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
+# Fedora patchs
+Patch0: rtlsdr-scanner-1.3.2-fedora.patch
+Patch1: rtlsdr-scanner-1.3.2-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: desktop-file-utils
 
 Requires: rtl-sdr
-Requires: wxPython >= 3.0
-%py_requires matplotlib.backends.backend_wx
 
 %description
 %summary
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 # rtlsdr-scanner
 cat>%name<<END
 #!/bin/sh
-%_bindir/python2 %python_sitelibdir/rtlsdr_scanner
+%_bindir/python3 %python3_sitelibdir/rtlsdr_scanner
 END
 
 mkdir -p %buildroot%_bindir
 install -m 755 %name %buildroot%_bindir/%name
+
+# Install resources to correct location
+install -Dpm 0644 -t %buildroot%_datadir/%name/res rtlsdr_scanner/res/*
 
 # desktop file
 mkdir -p %buildroot%_desktopdir
@@ -63,11 +71,16 @@ install -Dpm 0644 %SOURCE4 %buildroot%_iconsdir/hicolor/96x96/apps/%name.png
 %doc readme.md COPYING doc/Manual.pdf
 %_bindir/%name
 %_desktopdir/%name.desktop
+%_datadir/%name
 %_iconsdir/hicolor/*/apps/%name.png
-%python_sitelibdir/rtlsdr_scanner/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/rtlsdr_scanner/
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Apr 14 2020 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt2
+- switch to python3 (Closes: 38255)
+- fix license tag
+
 * Tue Dec 25 2018 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
 - new version 1.3.2
 
