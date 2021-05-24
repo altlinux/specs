@@ -10,7 +10,7 @@
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.3.22
+Version: 1.4.3.23
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -393,6 +393,9 @@ fi
 %endif
 
 %changelog
+* Mon May 24 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.23-alt1
+- 1.4.3.22 -> 1.4.3.23.
+
 * Mon Mar 22 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.22-alt1
 - 1.4.3.21 -> 1.4.3.22.
 
