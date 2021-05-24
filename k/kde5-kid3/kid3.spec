@@ -3,8 +3,8 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.8.2
-Release: alt2
+Version: 3.8.6
+Release: alt1
 %K5init altplace
 
 Group: Sound
@@ -14,7 +14,6 @@ Url: http://kid3.sourceforge.net/
 
 Source: kid3-%{version}.tar
 Source1: ru.po
-Patch1: kid3-3.0.2-alt-desktop_ru.patch
 
 # Automatically added by buildreq on Fri Nov 13 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gtk-update-icon-cache id3lib kf5-kdoctools-devel libEGL-devel libGL-devel libavcodec-devel libavutil-devel libflac-devel libgpg-error libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl-parent pkg-config python-base python3 python3-base qt5-base-devel qt5-tools ruby ruby-stdlibs xml-common xml-utils zlib-devel
@@ -124,12 +123,11 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 
-tmp_file=`mktemp`
-msgcat --use-first translations/po/ru/kid3_qt.po %SOURCE1 >"$tmp_file"
-cat "$tmp_file" >translations/po/ru/kid3_qt.po
-rm -f "$tmp_file"
+#tmp_file=`mktemp`
+#msgcat --use-first translations/po/ru/kid3_qt.po %SOURCE1 >"$tmp_file"
+#cat "$tmp_file" >translations/po/ru/kid3_qt.po
+#rm -f "$tmp_file"
 
 find -type f -name CMakeLists.txt | \
 while read f ; do
@@ -137,6 +135,12 @@ while read f ; do
 	sed -i "s|${l}|${l}5|" $f
     done
 done
+
+# setup soname
+for d in core gui ; do
+    echo "set_target_properties(kid3-${d}5 PROPERTIES SOVERSION \${CPACK_PACKAGE_VERSION_MAJOR} VERSION \${KID3_VERSION})" >> src/${d}/CMakeLists.txt
+done
+
 
 %build
 %K5cmake \
@@ -179,8 +183,8 @@ done
 %doc AUTHORS NEWS README ChangeLog
 %_K5bin/%rname
 %_K5xmlgui/kid3/
-%_K5xdgapp/net.sourceforge.kid3.desktop
-%_K5icon/hicolor/*/apps/%rname.*
+%_K5xdgapp/*.kid3.desktop
+%_K5icon/hicolor/*/apps/kid3.*
 
 %files -n %rname-ui-qt5
 %doc AUTHORS NEWS README ChangeLog
@@ -188,7 +192,7 @@ done
 %_K5bin/%rname-qt
 %doc %_docdir/kde5-kid3/
 %_iconsdir/*/*/apps/kid3-qt.*
-%_desktopdir/net.sourceforge.kid3-qt.desktop
+%_desktopdir/*.kid3-qt.desktop
 
 %files -n %rname-ui-cli5
 %doc AUTHORS NEWS README ChangeLog
@@ -202,9 +206,13 @@ done
 %_libdir/libkid3-gui5.so.*
 
 #%files devel
+#%_K5link/lib*.so
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Mon May 24 2021 Sergey V Turchin <zerg@altlinux.org> 3.8.6-alt1
+- new version
+
 * Wed Apr 15 2020 Sergey V Turchin <zerg@altlinux.org> 3.8.2-alt2
 - fix russian GenericName in menu-item
 
