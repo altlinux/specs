@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.21.1.vz7.174.14
-%define orelease 1160.21.1.vz7.174.14
+#     rh7-3.10.0-1160.21.1.vz7.174.15
+%define orelease 1160.21.1.vz7.174.15
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -587,6 +587,12 @@ grep beancounter boot.log
 
 
 %changelog
+* Sun May 23 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.21.1.vz7.174.15
+- fix panic on 3.10.0-1160.21.1.vz7.174.13 in nf_tables
+- ploop: Use preallocation for ext4
+- ploop: Fix leak of discard kreq
+- net: sched: sch_teql: fix null-pointer dereference
+
 * Mon May 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.21.1.vz7.174.14
 - fix lazytime optimization and set this mount option by default
 
