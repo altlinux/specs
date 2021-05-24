@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %major.2
-Release: alt2
+Release: alt3
 
 Summary: Matlab(TM) style python plotting package
 
@@ -31,6 +31,7 @@ Patch1: matplotlib-Set-FreeType-version-to-2.10.2-and-update-tolerances.patch
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel libqhull-devel
+BuildRequires: python3-module-wx
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
@@ -253,6 +254,11 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
 %endif
 
+%if_with wx
+%files wx
+%python3_sitelibdir/matplotlib/backends/backend_wx*
+%endif
+
 %files sphinxext
 %python3_sitelibdir/%oname/sphinxext
 
@@ -260,6 +266,9 @@ done
 %python3_sitelibdir/mpl_toolkits
 
 %changelog
+* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt3
+- Add wx subpackage (Closes: #40062).
+
 * Tue May 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt2
 - Fixed version detection.
 - Cleaned up sources and spec.
