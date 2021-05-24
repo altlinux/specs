@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.4
-Release: alt2
+Release: alt3
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -22,6 +22,9 @@ BuildPreReq: gnustep-gui-devel gnustep-gui inotify-tools-devel
 Requires: lib%name = %version-%release
 Requires: gnustep-systempreferences
 Requires: gnustep-back
+
+# File conflict with %_bindir/mdfind
+Conflicts: samba-client
 
 %description
 GWorkspace is a clone of the NeXT workspace manager with some added
@@ -150,6 +153,9 @@ sed -i 's,@PATH@,%_libdir/GNUstep/Applications/GWorkspace.app,' %buildroot%_bind
 %doc Documentation/*
 
 %changelog
+* Mon May 24 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt3
+- Add conflict to samba-client (ALT #40073).
+
 * Tue Jan 05 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt2
 - FTBFS: fix build with GCC 10.
 
