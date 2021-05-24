@@ -1,6 +1,6 @@
 %define rname kio-extras
 
-%define molletnetwork_sover 20
+%define molletnetwork_sover 21
 %define libmolletnetwork libmolletnetwork5%molletnetwork_sover
 %define kioarchive_sover 5
 %define libkioarchive libkioarchive%kioarchive_sover
@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init altplace
 
@@ -105,7 +105,7 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-#%doc COPYING.LIB README.md
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 %_K5xdgmime/*.xml
 
@@ -143,6 +143,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

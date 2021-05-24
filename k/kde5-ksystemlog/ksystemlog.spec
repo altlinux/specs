@@ -1,7 +1,7 @@
 %define rname ksystemlog
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init
 
@@ -18,7 +18,7 @@ Patch1: alt-modes.patch
 #BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel kf5-kio-devel kf5-ktextwidgets-devel libsystemd-devel python-module-google python3-dev ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: libsystemd-devel
+BuildRequires: libsystemd-devel libaudit-devel
 BuildRequires: kf5-karchive-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel
 BuildRequires: kf5-kio-devel kf5-ktextwidgets-devel
 
@@ -43,6 +43,7 @@ who want to quickly see problems occuring on their server.
 
 %files -f %name.lang
 %doc COPYING*
+%_datadir/qlogging-categories5/*.*categories
 %_K5bin/ksystemlog
 #%_K5data/ksystemlog/
 #%_K5icon/*/*/apps/ksystemlog.*
@@ -50,6 +51,9 @@ who want to quickly see problems occuring on their server.
 %_K5xmlgui/ksystemlog/
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

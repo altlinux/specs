@@ -2,7 +2,7 @@
 
 %define rname konversation
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %define beta %nil
 %K5init no_altplace
@@ -65,7 +65,8 @@ sed -i \
   %buildroot/%_datadir/%rname/scripting_support/python/konversation/*.py
 
 %files -f %rname.lang
-%doc AUTHORS README NEWS ChangeLog
+%doc AUTHORS README ChangeLog
+%doc LICENSES/*
 %_K5bin/*
 %_K5xdgapp/org.kde.%rname.desktop
 %_K5icon/hicolor/*/*/*.*
@@ -79,6 +80,9 @@ sed -i \
 
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

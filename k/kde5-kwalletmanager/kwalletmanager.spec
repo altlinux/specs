@@ -1,7 +1,7 @@
 %define rname kwalletmanager
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init altplace
 
@@ -61,7 +61,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_bindir/kwalletmanager5
 %_K5bin/kwalletmanager5
 %_K5icon/*/*/apps/kwalletmanager.*
@@ -80,6 +80,9 @@ KF5 library
 
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

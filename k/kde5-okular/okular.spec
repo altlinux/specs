@@ -14,8 +14,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 20.12.3
-Release: alt3
+Version: 21.04.1
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -204,6 +204,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Wed Apr 21 2021 Oleg Solovyov <mcpain@altlinux.org> 20.12.3-alt3
 - update patch
 

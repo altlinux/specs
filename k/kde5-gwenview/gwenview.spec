@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init
 
@@ -79,16 +79,15 @@ KF5 library
 
 %files
 %_K5bin/*
-%_K5plug//kf5/parts/gvpart.so
+%_K5plug/kf5/parts/gvpart.so
+%_K5plug/kf5/kfileitemaction/*.so
 %_K5xdgapp/*.desktop
 %_K5data/gwenview/
 %_K5data/solid/actions/gwenview*.desktop
-#%_K5data/gvpart/
 %_K5icon/*/*/apps/gwenview.*
-%_K5srv/ServiceMenus/*.desktop
+#%_K5srv/ServiceMenus/*.desktop
 %_K5srv/*.desktop
-%_K5xmlgui/*
-#%_K5srvtyp/*
+#%_K5xmlgui/*
 %_K5conf_up/*gwenview*
 
 %files devel
@@ -103,6 +102,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

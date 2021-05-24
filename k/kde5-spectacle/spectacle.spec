@@ -5,8 +5,8 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 20.12.3
-Release: alt2
+Version: 21.04.1
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -71,7 +71,7 @@ developing applications that use %name.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/spectacle
 %_K5conf_bin/*spectacle*
 %_K5conf_up/*spectacle*
@@ -88,6 +88,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Thu Apr 01 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
 - load kimageannotator translations
 

@@ -10,8 +10,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 20.12.3
-Release: alt2
+Version: 21.04.1
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Graphical desktop/KDE
@@ -57,6 +57,9 @@ The syntax is very much inspired from the "dialog" command
 #%_K5dbus_iface/org.kde.kdialog.ProgressDialog.xml
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
 - obsolete kde4base-kdialog
 

@@ -9,12 +9,12 @@
 %def_disable obsolete_kde4
 %endif
 
-%define sover 20
+%define sover 21
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 20.12.3
-Release: alt2
+Version: 21.04.1
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -114,7 +114,7 @@ __EOF__
 
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -154,6 +154,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
 - obsolete kde4-konsole
 

@@ -1,12 +1,12 @@
 %define rname ark
 
-%define sover 20
+%define sover 21
 %define libkerfuffle libkerfuffle%sover
 
 %def_disable libzip
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init altplace
 
@@ -80,7 +80,6 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %files common -f %name.lang
 %doc COPYING*
 %dir %_K5plug/kf5/kfileitemaction/
-#%_K5xdgmime/kerfuffle5.xml
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -88,11 +87,10 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5plug/arkpart.so
 %_K5plug/kf5/kio_dnd/extracthere.so
 %_K5plug/kf5/kfileitemaction/*.so
-%_K5xmlgui/ark/
+#%_K5xmlgui/ark/
 %_K5xdgapp/*ark*.desktop
 %_K5srv/ark*.desktop
 %_K5cfg/*ark*.kcfg
-#%_K5srv/ServiceMenus/ark_*.desktop
 %_K5icon/hicolor/*/apps/ark.*
 #
 %_K5plug/kerfuffle/
@@ -110,6 +108,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

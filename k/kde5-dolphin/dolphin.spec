@@ -1,11 +1,16 @@
 %define rname dolphin
 
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+%define service_name plasma-dolphin
+
 %define sover 5
 %define libdolphinprivate libdolphinprivate%sover
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init
 
@@ -18,8 +23,7 @@ Requires: kf5-kio
 #Requires: kf5-kio-extras
 
 Source: %rname-%version.tar
-Patch1: alt-dbus-service.patch
-Patch2: alt-close-inactive-panel.patch
+Patch2: alt-def-general.patch
 Patch3: alt-def-toolbar.patch
 Patch4: alt-fix-unmounting-during-preview-generation.patch
 
@@ -75,7 +79,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
@@ -104,9 +107,8 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 #    --add-mime-type=x-scheme-handler/applications \
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_datadir/locale/*/LC_SCRIPTS/dolphin/
-
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -114,6 +116,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5bin/*
 %_K5lib/libkdeinit5_dolphin.so
 %_K5plug/*dolphin*.so
+%_K5plug/kf5/parts/*dolphin*.so
 %_K5xdgapp/*dolphin*.desktop
 %_K5cfg/dolphin*
 %_K5srv/*.desktop
@@ -121,6 +124,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5data/kglobalaccel/*dolphin*
 %_K5data/knsrcfiles/*
 %_K5dbus_srv/org.kde.dolphin.FileManager1.service
+%_unitdir_user/%service_name.service
 
 %files devel
 %_K5inc/?olphin*
@@ -136,6 +140,12 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
+* Tue May 18 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
+- don't remember open folders and tabs by default
+
 * Thu Mar 11 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
