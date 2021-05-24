@@ -1,4 +1,4 @@
-Group: System/Libraries
+Group: Development/Python3
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -9,9 +9,9 @@ BuildRequires: python3-module-setuptools
 %global srcname pyaudio
 %global sum Python bindings for PortAudio
 
-Name:		python-module-pyaudio
+Name:		python3-module-pyaudio
 Version:	0.2.11
-Release:	alt1_6
+Release:	alt1_7
 License:	MIT
 Url:		http://people.csail.mit.edu/hubert/pyaudio/
 Source0:	https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-0.2.11.tar.gz
@@ -27,16 +27,7 @@ PyAudio provides Python bindings for PortAudio, the cross-platform audio I/O
 library. With PyAudio, you can easily use Python to play and record audio on
 a variety of platforms.
 
-%package -n python3-module-pyaudio
-Group: System/Libraries
-
-Summary:	%{sum}
 %{?python_provide:%python_provide python3-%{srcname}}
-
-%description -n python3-module-pyaudio
-PyAudio provides Python bindings for PortAudio, the cross-platform audio I/O
-library. With PyAudio, you can easily use Python to play and record audio on
-a variety of platforms.
 
 %prep
 %setup -q -n PyAudio-%{version}
@@ -50,7 +41,7 @@ rm -rf packaging
 %install
 %python3_install
 
-%files -n python3-module-pyaudio
+%files
 %doc README CHANGELOG
 %{python3_sitelibdir}/*.py*
 %{python3_sitelibdir}/__pycache__/*.py*
@@ -58,6 +49,9 @@ rm -rf packaging
 %{python3_sitelibdir}/*egg-info
 
 %changelog
+* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.11-alt1_7
+- rename package and spec refactoring
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_6
 - update to new release by fcimport
 
