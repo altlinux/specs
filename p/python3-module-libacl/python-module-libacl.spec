@@ -1,14 +1,12 @@
 %define oname libacl
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.3
-Release: alt1.1
+Release: alt2
 
 Summary: POSIX.1e ACLs for python
 License: LGPLv2.1+
-Group: Development/Python
+Group: Development/Python3
 
 URL: http://pylibacl.sourceforge.net/
 
@@ -17,28 +15,11 @@ URL: http://pylibacl.sourceforge.net/
 Source: %name-%version.tar
 Patch: libacl-0.5.2-alt-doc.patch
 
-#BuildPreReq: libacl-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-%endif
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: libacl-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel python3-module-setuptools rpm-build-python3 time
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: libacl-devel time python3-module-sphinx
 
 %description
-python-libacl is a C extension module for Python which implements
-POSIX ACLs manipulation. It is a wrapper on top of the systems's
-acl C library - see acl(5).
-
-%package -n python3-module-%oname
-Summary: POSIX.1e ACLs for python
-Group: Development/Python3
-
-%description -n python3-module-%oname
 python-libacl is a C extension module for Python which implements
 POSIX ACLs manipulation. It is a wrapper on top of the systems's
 acl C library - see acl(5).
@@ -47,46 +28,30 @@ acl C library - see acl(5).
 %setup
 %patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+# Fix shebang
+sed -i "s/\(env python\)/\13/" setup.py
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make doc
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make SPHINXBUILD="sphinx-build-3" doc
 
 %files
-%python_sitelibdir/*
-%doc NEWS README doc/html
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
 %doc NEWS README doc/html
-%endif
 
 %changelog
+* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt2
+- Drop python2 support.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
