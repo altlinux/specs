@@ -3,12 +3,12 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.3
-Release:   alt1
+Release:   alt2
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
 
-# https://github.com/hughsie/PackageKit.git
+# https://github.com/PackageKit/PackageKit.git
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
@@ -31,6 +31,11 @@ BuildRequires: vala-tools
 BuildRequires: libgtk+3-devel
 
 BuildRequires: boost-devel
+
+# It provides the stuff needed to run the APT backend: the download methods
+# (/usr/lib*/apt/methods/), conf files (/etc/apt/), and cache dirs
+# (/var/cache/apt/archives/).
+Requires: apt
 
 %add_findreq_skiplist  %_datadir/vala/vapi/*
 %add_findprov_skiplist %_datadir/vala/vapi/*
@@ -138,7 +143,7 @@ popd
 
 # enable packagekit-offline-updates.service here for now, till we
 # decide how to do it upstream after the meson conversion:
-# https://github.com/hughsie/PackageKit/issues/401
+# https://github.com/PackageKit/PackageKit/issues/401
 # https://bugzilla.redhat.com/show_bug.cgi?id=1833176
 mkdir -p %{buildroot}%{_unitdir}/system-update.target.wants/
 ln -sf ../packagekit-offline-update.service %{buildroot}%{_unitdir}/system-update.target.wants/packagekit-offline-update.service
@@ -156,6 +161,15 @@ rm -f %buildroot%_datadir/PackageKit/helpers/aptcc/pkconffile.nodiff
 touch %buildroot%_localstatedir/PackageKit/upgrade_lock
 
 %find_lang PackageKit
+
+# We have to choose against which executable to verify the symbols
+# in the backend modules. I've chosen the one that rarely gets to be used
+# (packagekit-direct), so that it receives more "testing" and problems like
+# https://github.com/PackageKit/PackageKit/issues/477 don't stay unnoticed.
+#export RPM_LD_PRELOAD_packagekit=%buildroot%_libexecdir/packagekitd
+export RPM_LD_PRELOAD_packagekit=%buildroot%_libexecdir/packagekit-direct
+export RPM_FILES_TO_LD_PRELOAD_packagekit='%_libdir/packagekit-backend/*.so'
+%set_verify_elf_method strict
 
 %post
 SYSTEMCTL=systemctl
@@ -259,6 +273,10 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon May 24 2021 Ivan Zakharyaschev <imz@altlinux.org> 1.2.3-alt2
+- Fixed /usr/lib/packagekit-direct (that didn't work, because
+  it couldn't load the APT backend).
+
 * Thu Mar 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.3-alt1
 - Updated to upstream version 1.2.3.
 
