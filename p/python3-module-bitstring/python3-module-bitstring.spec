@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 3.1.5
-Release: alt2
+Release: alt3
 
 Summary: A Python module to help you manage your bits
 License: MIT
@@ -43,8 +43,11 @@ and navigated in, similar to a file or stream.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon May 24 2021 Anton Midyukov <antohami@altlinux.org> 3.1.5-alt3
+- fix changelog
+
 * Mon May 24 2021 Anton Midyukov <antohami@altlinux.org> 3.1.5-alt2
-- rename srpm to python3-module-aiofiles
+- rename srpm to python3-module-bitstring
 - drop python2 subpackage
 
 * Wed Aug 22 2018 Anton Midyukov <antohami@altlinux.org> 3.1.5-alt1
