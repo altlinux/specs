@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210512
+Version: 20210518
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,11 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon May 24 2021 Cronbuild Service <cronbuild@altlinux.org> 20210518-alt1
+- upstream changes (GIT f846292):
+  + nvidia: fix symlinks for tu104/tu106 acr unload firmware (thx Ben Skeggs)
+  + rtw88: 8822c: Update normal firmware to v9.9.10 (thx Chin-Yen Lee)
+
 * Mon May 17 2021 Cronbuild Service <cronbuild@altlinux.org> 20210512-alt1
 - upstream changes (GIT 55d9649):
   + iwlwifi: update 8000 family firmwares (thx Luca Coelho)
