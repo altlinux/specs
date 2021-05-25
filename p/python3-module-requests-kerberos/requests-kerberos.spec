@@ -3,12 +3,12 @@
 %define mname requests-kerberos
 %def_with check
 
-Name: python-module-%mname
+Name: python3-module-%mname
 Version: 0.12.0
-Release: alt3
+Release: alt4
 Summary: A Kerberos authentication handler for python-requests
-License: %mit
-Group: Development/Python
+License: MIT
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/requests-kerberos
 
 # https://github.com/requests/requests-kerberos.git
@@ -16,42 +16,22 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
-BuildRequires: python-module-kerberos
 BuildRequires: python3-module-kerberos
 
 %if_with check
-BuildRequires: python-module-mock
-BuildRequires: python-module-requests
-BuildRequires: python-module-pytest
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-pytest
 %endif
 
-Requires: python-module-requests >= 1.1
-Requires: python-module-kerberos
-
-%py_provides %mname
-
-%description
-Requests is an HTTP library, written in Python, for human beings. This
-library adds optional Kerberos/GSSAPI authentication support and
-supports mutual authentication.
-
-%package -n python3-module-%mname
-Summary: A Kerberos authentication handler for python-requests
-Group: Development/Python3
 Requires: python3-module-requests >= 1.1
 Requires: python3-module-kerberos
+
 %py3_provides %mname
 %add_python3_req_skip requests.packages.urllib3
 
-%description -n python3-module-%mname
+%description
 Requests is an HTTP library, written in Python, for human beings. This
 library adds optional Kerberos/GSSAPI authentication support and
 supports mutual authentication.
@@ -59,38 +39,25 @@ supports mutual authentication.
 %prep
 %setup
 %patch -p1
-rm -rf ../python3
-cp -a . ../python3
 
 %build
-%python_build_debug
-pushd ../python3
-%python3_build_debug
-popd
+%python3_build
 
 %install
-%python_install
-pushd ../python3
 %python3_install
-popd
 
 %check
-python -m pytest --verbose
-pushd ../python3
 python3 -m pytest --verbose
-popd
 
 %files
-%doc AUTHORS README.rst HISTORY.rst LICENSE
-%python_sitelibdir/requests_kerberos
-%python_sitelibdir/requests_kerberos-%version-*.egg-info
-
-%files -n python3-module-%mname
 %doc AUTHORS README.rst HISTORY.rst LICENSE
 %python3_sitelibdir/requests_kerberos
 %python3_sitelibdir/requests_kerberos-%version-*.egg-info
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt4
+- Drop python2 support.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
