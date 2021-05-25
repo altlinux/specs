@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.11.31
-%define src_version 9.11.31
+Version: 9.11.32
+%define src_version 9.11.32
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -426,6 +426,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Mon May 24 2021 Stanislav Levin <slev@altlinux.org> 9.11.32-alt1
+- 9.11.31 -> 9.11.32.
+
 * Thu Apr 29 2021 Stanislav Levin <slev@altlinux.org> 9.11.31-alt1
 - 9.11.28 -> 9.11.31 (fixes: CVE-2021-25214, CVE-2021-25215, CVE-2021-25216).
 
