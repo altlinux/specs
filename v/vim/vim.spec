@@ -53,7 +53,7 @@
 Name: vim
 %define branch 8.2
 Version: %branch.0011
-Release: alt2
+Release: alt3
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -540,6 +540,7 @@ PLTHOME=%_libdir/plt2; export PLTHOME
 make -C src shadow
 cd src/shadow
 %configure \
+	--enable-fail-if-missing \
 	--exec-prefix=/ \
 	--with-features=tiny \
 	--with-x=no \
@@ -559,7 +560,9 @@ mv src/shadow src/build-minimal
 %endif
 # }}}
 
-common_opts="--with-features=huge \
+common_opts=" \
+	--enable-fail-if-missing \
+	--with-features=huge \
 	--disable-rpath \
 	--enable-cscope \
 	%{subst_enable gpm} \
@@ -693,7 +696,8 @@ pushd %buildroot%_datadir/vim/tools
     # i need to make a choice :(.
     subst 's|#!/usr/bin/nawk|#!/usr/bin/gawk|' mve.awk
     subst 's,#!/bin/csh.*.*,#!/bin/sh,' vim132
-    chmod a-x vimspell* ref*
+    subst '1s,#!/usr/bin/python.*,#!/usr/bin/python3,' demoserver.py
+    chmod a-x vimspell* ref* demoserver.py
 popd
 
 # {{{2 post-install cleanup
@@ -1067,6 +1071,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue May 25 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.0011-alt3
+- %name-common: changed demoserver.py shebang to python3.
+
 * Wed Apr 08 2020 Dmitry V. Levin <ldv@altlinux.org> 4:8.2.0011-alt2
 - Disabled ruby support:
   vim is too important to have its build environment contaminated with ruby.
