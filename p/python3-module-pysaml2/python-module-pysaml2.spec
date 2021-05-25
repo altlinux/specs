@@ -1,38 +1,22 @@
 %define sname pysaml2
 %add_findreq_skiplist %python3_sitelibdir/saml2/s2repoze/plugins/*
 
-Name: python-module-%sname
+Name: python3-module-%sname
 Version: 4.6.5
-Release: alt1
+Release: alt2
 Summary: PySAML2 - SAML2 in Python
-License: ASL 2.0
+License: Apache-2.0
 
 Url: https://idpy.org
-Group: Development/Python
+Group: Development/Python3
 
 Source: https://pypi.python.org/packages/source/p/%sname/%sname-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 
 %description
-PySAML2 is a pure python implementation of SAML Version 2 Standard.
-It contains all necessary pieces for building a SAML2 service provider
-or an identity provider. The distribution contains examples of both.
-Originally written to work in a WSGI environment there are extensions
-that allow you to use it with other frameworks.
-
-%package -n python3-module-%sname
-Summary: PySAML2 - SAML2 in Python
-Group: Development/Python3
-
-%description -n python3-module-%sname
 PySAML2 is a pure python implementation of SAML Version 2 Standard.
 It contains all necessary pieces for building a SAML2 service provider
 or an identity provider. The distribution contains examples of both.
@@ -62,38 +46,21 @@ sed -i '1,3{d;q}' "$source"
 touch --ref="$source".ts "$source"
 rm "$source".ts
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-mv %buildroot%_bindir/make_metadata.py %buildroot%_bindir/make_metadata.py2
-mv %buildroot%_bindir/mdexport.py %buildroot%_bindir/mdexport.py2
-mv %buildroot%_bindir/merge_metadata.py %buildroot%_bindir/merge_metadata.py2
-mv %buildroot%_bindir/parse_xsd2.py %buildroot%_bindir/parse_xsd2.py2
-
-pushd ../python3
 %python3_install
-popd
 
 %files
 %doc README.rst
-%_bindir/*.py2
-%python_sitelibdir/*
-
-%files -n python3-module-%sname
-%doc README.rst
-%_bindir/*.py
+%_bindir/*
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 4.6.5-alt2
+- Drop python2 support.
+
 * Wed Dec 19 2018 Alexey Shabalin <shaba@altlinux.org> 4.6.5-alt1
 - 4.6.5
 - add python3 package
