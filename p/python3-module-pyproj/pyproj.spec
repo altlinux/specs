@@ -1,34 +1,20 @@
 %define oname pyproj
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.9.6
-Release: alt1
+Release: alt2
 Summary: Pyrex generated python interface to PROJ.4 library
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyproj/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jswhit/pyproj.git
 Source: %oname-%version.tar.gz
 
-BuildRequires(pre): rpm-build-python
-#BuildPreReq: libproj-devel python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-numpy
-%setup_python_module %oname
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python-tools-2to3
-#BuildPreReq: python3-module-setuptools-tests
-#BuildPreReq: python3-module-numpy
-%endif
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 python3-devel rpm-build-python3 time
-BuildRequires: python-module-Cython python3-module-Cython
+BuildRequires: time
+BuildRequires: python3-module-Cython
+BuildRequires: /usr/bin/2to3
 
 %description
 Pyrex generated python interface to PROJ.4 library
@@ -51,47 +37,9 @@ Input coordinates can be given as python arrays, lists/tuples, scalars
 or numpy/Numeric/numarray arrays. Optimized for objects that support the
 Python buffer protocol (regular python and numpy array objects).
 
-%package -n python3-module-%oname
-Summary: Pyrex generated python interface to PROJ.4 library
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Pyrex generated python interface to PROJ.4 library
-
-Performs cartographic transformations and geodetic computations.
-
-The Proj class can convert from geographic (longitude,latitude) to
-native map projection (x,y) coordinates and vice versa, or from one map
-projection coordinate system directly to another.
-
-The Geod class can perform forward and inverse geodetic, or Great
-Circle, computations. The forward computation involves determining
-latitude, longitude and back azimuth of a terminus point given the
-latitude and longitude of an initial point, plus azimuth and distance.
-The inverse computation involves determining the forward and back
-azimuths and distance given the latitudes and longitudes of an initial
-and terminus point.
-
-Input coordinates can be given as python arrays, lists/tuples, scalars
-or numpy/Numeric/numarray arrays. Optimized for objects that support the
-Python buffer protocol (regular python and numpy array objects).
-
-%package -n python3-module-%oname-tests
-Summary: Tests for pyrex generated python interface to PROJ.4 library
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-Pyrex generated python interface to PROJ.4 library
-
-Performs cartographic transformations and geodetic computations.
-
-This package contains tests for pyrex generated python interface to
-PROJ.4 library.
-
 %package tests
 Summary: Tests for pyrex generated python interface to PROJ.4 library
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -105,59 +53,32 @@ PROJ.4 library.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-install -d %buildroot%python_sitelibdir/%oname/test
-install -p -m644 test/* %buildroot%python_sitelibdir/%oname/test
-chmod +x %buildroot%python_sitelibdir/%oname/data/test*
-
-%if_with python3
-pushd ../python3
 %python3_install
 install -d %buildroot%python3_sitelibdir/%oname/test
 install -p -m644 test/* %buildroot%python3_sitelibdir/%oname/test
 chmod +x %buildroot%python3_sitelibdir/%oname/data/test*
-popd
-%endif
 
 %files
-%doc Changelog LICENSE* *.md docs
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test
-%exclude %python_sitelibdir/%oname/data/test*
-
-%files tests
-%python_sitelibdir/*/test
-%python_sitelibdir/%oname/data/test*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc Changelog LICENSE* *.md docs
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
 %exclude %python3_sitelibdir/%oname/data/test*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test
 %python3_sitelibdir/%oname/data/test*
-%endif
 
 %changelog
+* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.6-alt2
+- Drop python2 support.
+
 * Fri Apr 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.6-alt1
 - Build new version for python3.7.
 
