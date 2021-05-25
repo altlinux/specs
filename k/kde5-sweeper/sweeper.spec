@@ -1,9 +1,9 @@
 %define rname sweeper
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: System Cleaner for KDE
@@ -61,8 +61,12 @@ Requires: %name-common = %version-%release
 %_K5bin/sweeper
 %_K5xdgapp/org.kde.sweeper.desktop
 %_K5xmlgui/sweeper/
+%_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

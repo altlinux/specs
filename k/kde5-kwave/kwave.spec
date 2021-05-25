@@ -1,13 +1,13 @@
 %define rname kwave
 
-%define sover 20
+%define sover 21
 %define libkwavegui libkwavegui%sover
 %define libkwave libkwave%sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Sound
 Summary: Simple Sound Editor
@@ -100,6 +100,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

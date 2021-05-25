@@ -4,9 +4,9 @@
 %define libkolourpaint libkolourpaint_lgpl%sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Graphics
 Summary: Paint program
@@ -83,6 +83,9 @@ KF5 library
 %_K5lib/libkolourpaint_lgpl.so.*
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

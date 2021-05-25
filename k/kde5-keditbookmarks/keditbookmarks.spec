@@ -4,9 +4,9 @@
 %define libkbookmarkmodel_private libkbookmarkmodel_private%kbookmarkmodel_private_sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Utility to edit KDE bookmarks
@@ -67,13 +67,16 @@ Requires: %name-common = %EVR
 %_K5bin/keditbookmarks
 %_K5xdgapp/org.kde.keditbookmarks.desktop
 %_K5cfg/keditbookmarks.kcfg
-%_K5xmlgui/keditbookmarks/
+#%_K5xmlgui/keditbookmarks/
 
 %files -n %libkbookmarkmodel_private
 %_K5lib/libkbookmarkmodel_private.so.%kbookmarkmodel_private_sover
 %_K5lib/libkbookmarkmodel_private.so.*
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

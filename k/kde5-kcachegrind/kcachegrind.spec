@@ -3,9 +3,9 @@
 %define rname kcachegrind
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Summary: GUI to profilers such as Valgrind
 License: %gpl2only
@@ -36,7 +36,7 @@ sed -i -e '/add_subdirectory([[:space:]]*cgview[[:space:]]*)\|add_subdirectory([
 # fix shebang
 sed -i \
   -e "s|^#![[:space:]]*/usr/bin/env python$|#!%{__python3}|g" \
-  converters/hotshot2calltree.cmake
+  converters/hotshot2calltree.in
 
 %build
 %K5build
@@ -49,7 +49,7 @@ sed -i \
 %K5find_qtlang %name --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/dprof2calltree
 %_K5bin/hotshot2calltree
 %_K5bin/kcachegrind
@@ -62,6 +62,9 @@ sed -i \
 %_K5data/%rname/
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

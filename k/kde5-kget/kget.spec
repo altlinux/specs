@@ -4,8 +4,8 @@
 %define libkgetcore libkgetcore%sover
 
 Name: kde5-%rname
-Version: 20.12.3
-Release: alt2
+Version: 21.04.1
+Release: alt1
 %K5init no_appdata
 
 Group: Networking/File transfer
@@ -109,6 +109,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt2
 - fix package description
 

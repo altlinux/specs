@@ -4,7 +4,7 @@
 %define libkdebugsettings libkdebugsettings%sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -58,10 +58,12 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data kdebugsettings
 %find_lang %name --with-kde --all-name
 
 
 %files common -f %name.lang
+%_K5data/kdebugsettings/
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -73,6 +75,9 @@ KF5 library
 %_K5lib/libkdebugsettings.so.%sover
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

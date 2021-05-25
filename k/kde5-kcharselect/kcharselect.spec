@@ -1,9 +1,9 @@
 %define rname kcharselect
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init altplace
+%K5init altplace no_appdata
 
 Group: Text tools
 Summary: KDE Character Selector
@@ -65,6 +65,9 @@ KF5 library
 #%_K5xmlgui/kcharselect/
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

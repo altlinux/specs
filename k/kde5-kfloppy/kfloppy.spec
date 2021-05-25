@@ -1,9 +1,9 @@
 %define rname kfloppy
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: System/Configuration/Hardware
 Summary: Floppy disks formater
@@ -42,6 +42,9 @@ Format a floppy disks.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

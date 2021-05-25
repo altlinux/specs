@@ -4,9 +4,9 @@
 %define libkmixcore libkmixcore%sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
-%K5init altplace
+%K5init altplace  no_appdata
 
 Group: Sound
 Summary: KDE sound mixer
@@ -71,14 +71,16 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING*
+%_datadir/qlogging-categories5/*.*categories
 
 %files
 %config(noreplace) %_K5xdgconf/*
 %_K5bin/*
 %_K5plug/kf5/kded/*kmix*.so
-%_K5plug/plasma/dataengine/plasma_engine_mixer.so
-%_K5data/plasma/services/mixer.operations
+#%_K5plug/plasma/dataengine/plasma_engine_mixer.so
+#%_K5data/plasma/services/mixer.operations
 %_K5data/kmix/
+%_K5cfg/*kmix*.kcfg
 %_K5xmlgui/kmix/
 %_K5xdgapp/*kmix.desktop
 %_K5srv/*.desktop
@@ -93,6 +95,9 @@ KF5 library
 %_K5lib/libkmixcore.so.%sover
 
 %changelog
+* Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
