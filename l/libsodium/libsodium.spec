@@ -1,43 +1,57 @@
-#============================================================================
-# Please do not edit!
-# Created by specgen utility from files in specs/ subdir
-#============================================================================
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: libsodium
-Summary: %name
-Version: 1.0.16
+Summary: A modern, portable, easy to use crypto library
+Version: 1.0.18
 Release: alt1
-License: ISC license
+License: ISC
 Group: System/Libraries
-Packager: Denis Smirnov <mithraen@altlinux.ru>
+Url: https://libsodium.org/
+# 'stable' branch is recommended.
+Vcs: https://github.com/jedisct1/libsodium
+# Docs: https://doc.libsodium.org/
+# Docs vcs: https://github.com/jedisct1/libsodium-doc
+
 Source: %name-%version.tar
-Source100: %name.watch
-Url: https://download.libsodium.org/libsodium/releases/
 
-%package devel
-Summary: %summary
-Group: System/Libraries
+%description
+Sodium is a new, easy-to-use software library for encryption, decryption,
+signatures, password hashing and more.
 
-%description devel
-%summary
+It is a portable, cross-compilable, installable, packageable fork of
+NaCl, with a compatible API, and an extended API to improve usability
+even further.
 
-%package devel-static
-Summary: %summary
-Group: System/Libraries
-Requires: %name-devel
+Its goal is to provide all of the core operations needed to build
+higher-level cryptographic tools.
 
-%description devel-static
-%summary
+The design choices emphasize security and ease of use. But despite the
+emphasis on high security, primitives are faster across-the-board than
+most implementations.
 
 %package -n libsodium23
 Summary: %summary
 Group: System/Libraries
 
 %description -n libsodium23
-%summary
+%summary.
 
-%description
-%name
+%package devel
+Summary: Development files for libsodium
+Group: Development/C
 
+%description devel
+%summary.
+
+%package devel-static
+Summary: Development files for libsodium
+Group: Development/C
+Requires: %name-devel
+
+%description devel-static
+%summary.
 
 %prep
 %setup
@@ -50,9 +64,13 @@ Group: System/Libraries
 %install
 %makeinstall
 
+%check
+%make_build check
+
 %files devel
+%doc AUTHORS LICENSE README.markdown THANKS
 %_libdir/libsodium.so
-%_libdir/pkgconfig/%name.pc
+%_libdir/pkgconfig/libsodium.pc
 %_includedir/sodium.h
 %_includedir/sodium
 
@@ -63,6 +81,9 @@ Group: System/Libraries
 %_libdir/libsodium.so.23*
 
 %changelog
+* Tue May 25 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.18-alt1
+- Update to 1.0.18 (2019-05-30).
+
 * Sun Feb 11 2018 Denis Smirnov <mithraen@altlinux.ru> 1.0.16-alt1
 - new version 1.0.16
 
@@ -98,4 +119,3 @@ Group: System/Libraries
 
 * Wed Jun 25 2014 Denis Smirnov <mithraen@altlinux.ru> 0.5.0-alt1
 - first build for Sisyphus
-
