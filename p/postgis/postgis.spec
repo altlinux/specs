@@ -1,7 +1,7 @@
 %define pg_ver 13
 
 Name: postgis
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
@@ -98,6 +98,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %doc %_datadir/doc/postgresql/extension/README.address_standardizer
 
 %changelog
+* Tue May 25 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.2-alt1
+- New version.
+
 * Mon Feb 01 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt1
 - New version.
 
