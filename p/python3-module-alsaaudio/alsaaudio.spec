@@ -1,78 +1,42 @@
 %define oname pyalsaaudio
-%def_with python3
 
-Name: python-module-alsaaudio
+Name: python3-module-alsaaudio
 Version: 0.8.4
-Release: alt1
+Release: alt2
 
 Summary: Wrapper for accessing the ALSA API from Python
 
 License: PSF
-Group: Development/Python
+Group: Development/Python3
 Url: http://pyalsaaudio.sourceforge.net/
-
-%setup_python_module %oname
-%define _python_egg_info %python_sitelibdir/%oname-%version-py%_python_version.egg-info
 
 # Source-url: https://pypi.io/packages/source/p/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Jan 09 2009
-BuildRequires: libalsa-devel python-devel
-%if_with python3
+BuildRequires: libalsa-devel
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
 
 %description
 This package contains wrappers for accessing the ALSA API from Python. It
 is currently fairly complete for PCM devices and Mixer access. MIDI
 sequencer support is low on our priority list, but volunteers are welcome.
 
-%if_with python3
-%package -n python3-module-alsaaudio
-Summary: Wrapper for accessing the ALSA API from Python 3
-Group: Development/Python3
-
-%description -n python3-module-alsaaudio
-This package contains wrappers for accessing the ALSA API from Python 3. It
-is currently fairly complete for PCM devices and Mixer access. MIDI
-sequencer support is low on our priority list, but volunteers are welcome.
-%endif
-
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%python_sitelibdir/alsaaudio.so
-%_python_egg_info
-
-%if_with python3
-%files -n python3-module-alsaaudio
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.4-alt2
+- Drop python2 support.
+
 * Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.8.4-alt1
 - build new version
 
