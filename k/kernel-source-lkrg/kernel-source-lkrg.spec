@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.9.1
+%define module_version 0.9.1.0.6.gita516ef4
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -50,6 +50,9 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue May 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.6.gita516ef4-alt1
+- Updated to v0.9.1-6-ga516ef4.
+
 * Tue Apr 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt1
 - Updated to v0.9.1.
 

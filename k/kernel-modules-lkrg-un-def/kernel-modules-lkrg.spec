@@ -1,6 +1,6 @@
 %define module_name	lkrg
-%define module_version	0.9.1
-%define module_release	alt2
+%define module_version	0.9.1.0.6.gita516ef4
+%define module_release	alt1
 
 %define flavour		un-def
 %define karch		aarch64 %arm %ix86 x86_64
@@ -238,6 +238,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Tue May 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.6.gita516ef4-alt1
+- Updated to v0.9.1-6-ga516ef4.
+- Added support for nolkrg kernel parameter.
 
 * Thu Apr 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt2
 - Fixed %%post and %%preun.
