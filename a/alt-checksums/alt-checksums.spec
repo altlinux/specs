@@ -1,6 +1,6 @@
 Name:     alt-checksums
-Version:  1.0 
-Release:  alt2
+Version:  1.1 
+Release:  alt1
 
 Summary:  ALT SP checksumming for sp distros.
 License:  MIT
@@ -33,6 +33,7 @@ install -Dm 0700  alt-gensum-chk %buildroot%_sbindir/alt-gensum-chk
 
 mkdir -p %buildroot%_docdir
 install -Dm 0600 README.md  %buildroot%_docdir
+install -Dm 0600 README.rus.md  %buildroot%_docdir
 install -Dm 0600 COPYING.md  %buildroot%_docdir
 
 mkdir -p %buildroot%_unitdir
@@ -45,6 +46,9 @@ install -Dm 0600 alt-checksum.service %buildroot%_unitdir
 %doc *.md
 
 %changelog
+* Tue May 25 2021 Denis Medvedev <nbr@altlinux.org> 1.1-alt1
+- added Russian readme
+
 * Tue Dec 01 2020 Denis Medvedev <nbr@altlinux.org> 1.0-alt2
 - fix of file presense test.
 
