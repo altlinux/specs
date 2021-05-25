@@ -2,78 +2,42 @@
 
 %define oname cgen
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2017.1
-Release: alt1.qa1
+Release: alt2
 Summary: C/C++ source generation from an AST
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: http://pypi.python.org/pypi/cgen/
 
 # https://github.com/inducer/cgen.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-%endif
 
-%py_requires decorator
+%py3_requires decorator
 
 %description
 C/C++ source generation from an AST.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: C/C++ source generation from an AST (Python 3)
-Group: Development/Python3
-%py3_requires decorator
-
-%description -n python3-module-%oname
-C/C++ source generation from an AST.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc LICENSE README.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE README.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 2017.1-alt2
+- Drop python2 support.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2017.1-alt1.qa1
 - NMU: applied repocop patch
 
