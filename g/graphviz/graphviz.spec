@@ -18,7 +18,7 @@
 
 Name: graphviz
 Version: 2.41.2
-Release: alt4
+Release: alt5
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -371,6 +371,9 @@ rm -f %buildroot%_man3dir/*.1
 # - enable/fix/test language bindings
 
 %changelog
+* Tue May 25 2021 Michael Shigorin <mike@altlinux.org> 2.41.2-alt5
+- viewer: avoid hitting menu (ALT#40094); thx zerg@
+
 * Tue Sep 29 2020 Michael Shigorin <mike@altlinux.org> 2.41.2-alt4
 - E2K: hardwired arch list workaround for libsuffix
   (patch proposed upstream)
