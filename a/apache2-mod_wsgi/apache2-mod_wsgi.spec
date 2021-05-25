@@ -3,8 +3,8 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 4.7.1
-Release: alt2
+Version: 4.8.0
+Release: alt1
 
 Summary: Python WSGI module for Apache2
 Group: System/Servers
@@ -69,6 +69,9 @@ echo -e '<IfModule !wsgi_module>\n\tLoadModule wsgi_module %apache2_moduledir/mo
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Tue May 25 2021 Stanislav Levin <slev@altlinux.org> 4.8.0-alt1
+- 4.7.1 -> 4.8.0.
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 4.7.1-alt2
 - Stopped Python2 package build (Python2 EOL).
 
