@@ -1,7 +1,7 @@
 
 Summary: Cloud image management utilities
 Name: cloud-utils
-Version: 0.31
+Version: 0.32
 Release: alt1
 License: GPLv3
 Group: System/Configuration/Boot and Init
@@ -20,6 +20,7 @@ Requires: file
 Requires: util-linux
 Requires: qemu-img
 Requires: /usr/bin/qemu-img
+BuildRequires(pre): rpm-build-python3
 
 %description
 This package provides a useful set of utilities for managing cloud images.
@@ -58,7 +59,7 @@ package to grow the root partition on first boot.
 rm -f %buildroot%_bindir/*ubuntu*
 
 %files
-%doc ChangeLog
+%doc README.md ChangeLog
 %_bindir/*
 %_man1dir/*
 %exclude %_bindir/growpart
@@ -70,10 +71,14 @@ rm -f %buildroot%_bindir/*ubuntu*
 %_man1dir/growpart.*
 
 %changelog
+* Tue May 25 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.32-alt1
+- 0.32
+- FTBFS: rpm-build-python3
+
 * Thu Jan 17 2019 Alexey Shabalin <shaba@altlinux.org> 0.31-alt1
 - 0.31
 
-* Thu Sep 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1%ubt
+* Thu Sep 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1
 - 0.30
 
 * Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 0.29-alt1.20161024
