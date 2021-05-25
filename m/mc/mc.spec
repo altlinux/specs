@@ -4,7 +4,7 @@
 
 Name: mc
 Version: 4.8.25
-Release: alt2
+Release: alt3
 
 # '-gitYYYYMMDD' or ''
 %define ver_date ''
@@ -42,6 +42,10 @@ Patch102: mc-4.8.20-alt-forceexec.patch
 # http://www.midnight-commander.org/ticket/34
 Patch103: mc-4.8.24-alt-extfs-udar.patch
 
+# https://src.fedoraproject.org/rpms/mc/raw/rawhide/f/mc-python3.patch
+# https://github.com/MidnightCommander/mc/pull/149
+Patch104: mc-4.8.25-python3.patch
+
 Conflicts: %name-data
 Conflicts: %name-locales
 Conflicts: %name-doc
@@ -52,6 +56,7 @@ Obsoletes: %name-doc
 
 Requires: rpm >= 4.13
 
+BuildRequires: rpm-build-python3
 BuildPreReq: glib2-devel libe2fs-devel
 BuildPreReq: groff-base cvs libX11-devel unzip
 BuildPreReq: libslang2-devel libmount-devel
@@ -99,6 +104,7 @@ needed for working additional components (some vfs for example).
 #patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch104 -p1
 
 %build
 cat <<EOF > version.h
@@ -113,6 +119,7 @@ sed 's|@@VERSION@@|%version-%release%ver_date|' -i version.h
 ./autogen.sh
 
 %configure %{?_with_smb:--enable-vfs-smb --with-smb-configdir=%_sysconfdir/samba} \
+	PYTHON=%__python3 \
 	--enable-extcharset \
 	--enable-vfs-undelfs
 
@@ -204,6 +211,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Tue May 25 2021 Slava Aseev <ptrnine@altlinux.org> 4.8.25-alt3
+- use python3 for python scripts (particularly for uc1541 and s3+)
+
 * Fri Nov 06 2020 Michael Shigorin <mike@altlinux.org> 4.8.25-alt2
 - srpm_cleanup related ftbfs fixup
 
