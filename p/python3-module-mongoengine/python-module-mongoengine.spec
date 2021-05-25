@@ -1,76 +1,41 @@
 %define module_name mongoengine
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 0.10.0
-Release: alt2.2
+Release: alt3
 Summary: A Python Document-Object Mapper for working with MongoDB
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://hmarr.com/mongoengine/
 
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-rednose python-module-colorama
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-rednose python3-module-colorama
-%endif
 
 %description
 MongoEngine is a Python Object-Document Mapper for working with MongoDB.
 MongoEngine is an ORM-like layer on top of PyMongo.
 
-%package -n python3-module-%module_name
-Summary: A Python Document-Object Mapper for working with MongoDB
-Group: Development/Python3
-
-%description -n python3-module-%module_name
-MongoEngine is a Python Object-Document Mapper for working with MongoDB.
-MongoEngine is an ORM-like layer on top of PyMongo.
-
 %prep
-%setup -q
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-rm -rf %buildroot%python_sitelibdir/tests
-
-%if_with python3
-pushd ../python3
 %python3_install
 rm -rf %buildroot%python3_sitelibdir/tests
-popd
-%endif
 
 %files
-%python_sitelibdir/%module_name
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%module_name
 %python3_sitelibdir/%module_name
 %python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt3
+- Drop python2 support.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.10.0-alt2.2
 - (NMU) rebuild with python3.6
 
