@@ -1,52 +1,32 @@
 %define oname PasteDeploy
 %def_without bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
 
 License: MIT/X11
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://github.com/Pylons/pastedeploy
 
 Source: %oname-%version.tar
 
-Conflicts: python-module.paste.deploy
-Obsoletes: python-module.paste.deploy
-%py_provides %oname
-
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pytest-runner
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pytest-runner
-
-%py_requires Paste
-
-
-%description
-This tool provides code to load WSGI applications and servers from
-URIs; these URIs can refer to Python Eggs for INI-style configuration
-files. Paste Script provides commands to serve applications based on
-this configuration file.
-
-%package -n python3-module-%oname
-Summary: Load, configure, and compose WSGI applications and servers (Python 3)
-Group: Development/Python3
 %py3_provides %oname
 %py3_requires Paste
 %if_with bootstrap
 %add_python3_req_skip paste.script.templates
 %endif
 
-%description -n python3-module-%oname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pytest-runner
+
+%description
 This tool provides code to load WSGI applications and servers from
 URIs; these URIs can refer to Python Eggs for INI-style configuration
 files. Paste Script provides commands to serve applications based on
@@ -55,32 +35,20 @@ this configuration file.
 %prep
 %setup -n %oname-%version
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%python_sitelibdir/paste/deploy
-%python_sitelibdir/%oname-*
-
-%files -n python3-module-%oname
 %python3_sitelibdir/paste/deploy
 %python3_sitelibdir/%oname-*
 
 %changelog
+* Tue May 25 2021 Anton Midyukov <antohami@altlinux.org> 1:2.0.1-alt2
+- build python3 module only
+
 * Wed Feb 06 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.0.1-alt1
 - 2.0.1
 
