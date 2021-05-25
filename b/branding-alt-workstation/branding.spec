@@ -15,13 +15,17 @@
 %define design_graphics_abi_minor 0
 %define design_graphics_abi_bugfix 0
 
+#alterantives weights
+%define alterator_browser_weight 53
+%define artworks_weight 000012000053
+
 %define data_cur_dir %_datadir/branding-data-current
 
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.1
-Release: alt2
+Version: 9.1.900
+Release: alt1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -193,6 +197,8 @@ Requires(post): libgio
 # To avoid install check conflicts
 Requires: %name-graphics = %EVR
 Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
+# Due to /usr/share/install3/lightdm-gtk-greeter.conf
+Conflicts: branding-simply-linux-system-settings
 
 %description mate-settings
 MATE settings for %distro_name
@@ -240,7 +246,7 @@ Requires(post): indexhtml-common
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' ./configure
 make
 
 %install
@@ -359,6 +365,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue May 25 2021 Mikhail Efremov <sem@altlinux.org> 9.1.900-alt1
+- graphics: Fix duplicate alternatives.
+- mate-settings: Conflict with branding-simply-linux-system-settings.
+- alterator: Fix duplicate alternatives.
+
 * Mon Nov 23 2020 Mikhail Efremov <sem@altlinux.org> 9.1-alt2
 - bootloader,graphics,release: Drop self provides/obsoletes.
 - alterator,release: Fix license tag.
