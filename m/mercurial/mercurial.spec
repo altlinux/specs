@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 5.7.1
+Version: 5.8
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -136,6 +136,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 5.8-alt1
+- 5.8.
+
 * Fri Mar 19 2021 Grigory Ustinov <grenka@altlinux.org> 5.7.1-alt1
 - 5.7.1.
 

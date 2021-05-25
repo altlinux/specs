@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 5.7.1
+Version: 5.8
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -12,6 +12,7 @@ Group: Development/Other
 Url: https://tortoisehg.bitbucket.io
 
 Source: %name-%version.tar
+Patch: tortoisehg-5.8-fix_building_docs.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -48,6 +49,7 @@ Note that the nautilus extension has been deprecated upstream.
 
 %prep
 %setup
+%patch -p2
 
 cat > tortoisehg/util/config.py << EOT
 bin_path     = "%_bindir"
@@ -69,8 +71,9 @@ rm %buildroot%python3_sitelibdir/hgext3rd/__init__.*
 mkdir -p %buildroot%_sysconfdir/mercurial/hgrc.d
 install -pm0644 contrib/mergetools.rc %buildroot%_sysconfdir/mercurial/hgrc.d/thgmergetools.rc
 
-ln -s tortoisehg/icons/scalable/apps/thg.svg %buildroot%_datadir/pixmaps/thg_logo.svg
 desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
+
+rm -f %buildroot/%_datadir/doc/tortoisehg/COPYING.txt
 
 %if_without nautilus
 rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
@@ -95,6 +98,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 5.8-alt1
+- Build new version.
+
 * Fri Mar 19 2021 Grigory Ustinov <grenka@altlinux.org> 5.7.1-alt1
 - Build new version.
 
