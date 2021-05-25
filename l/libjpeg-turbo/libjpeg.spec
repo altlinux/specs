@@ -1,6 +1,6 @@
 Name: libjpeg-turbo
 Version: 2.0.6
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -17,6 +17,7 @@ Source4: jpeginfo.c
 Patch0: libjpeg-turbo-alt-rdjpgcom-i18n.patch
 Patch1: libjpeg-turbo-alt-versioning.patch
 Patch2: libjpeg-turbo-fedora-noinst.patch
+Patch2000: %name-e2k-simd.patch
 
 %def_enable static
 
@@ -100,6 +101,9 @@ This package contains development files for the turbojpeg library.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 install -pm644 %_sourcedir/{jpegexiforient,jpeginfo}.c .
 install -pm755 %_sourcedir/exifautotran .
@@ -173,6 +177,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Tue May 25 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.0.6-alt2
+- added SIMD patch for Elbrus
+
 * Wed Feb 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.0.6-alt1
 - 2.0.6 released (fixes: CVE-2020-13790)
 
