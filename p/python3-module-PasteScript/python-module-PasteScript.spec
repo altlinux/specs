@@ -4,13 +4,13 @@
 
 %def_without bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Epoch:   1
 Version: 2.0.2
-Release: alt1
+Release: alt2
 Summary: A pluggable command-line frontend
 License: MIT/X11
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/PasteScript/
 
 BuildArch: noarch
@@ -19,37 +19,18 @@ Source: %oname-%version.tar
 
 Patch1: %oname-%version-alt-deps.patch
 
-Conflicts: python-module-paste.script
-Obsoletes: python-module-paste.script
-%py_provides %oname
+%py3_provides %oname
 
 %if_without bootstrap
-BuildRequires: python-module-PasteDeploy
 BuildRequires: python3-module-PasteDeploy
-BuildRequires: python-module-paste
 BuildRequires: python3-module-paste
-BuildRequires: python2.7(Cheetah)
 BuildRequires: python3(Cheetah)
 %endif
 
-BuildRequires: python-module-sphinx python-module-Pygments
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx python3-module-Pygments
-
-%if_without bootstrap
-%py_requires Cheetah
-%endif
-
-%description
-A pluggable command-line frontend, including commands to setup
-package file layouts.
-
-%package -n python3-module-%oname
-Summary: A pluggable command-line frontend (Python 3)
-Group: Development/Python3
-%py3_provides %oname
 %add_python3_req_skip new
+
 %if_with bootstrap
 %add_python3_req_skip paste.deploy paste.deploy.converters paste.translogger
 %add_python3_req_skip paste.util paste.util.template paste.wsgilib
@@ -59,7 +40,7 @@ Group: Development/Python3
 %py3_requires Cheetah
 %endif
 
-%description -n python3-module-%oname
+%description
 A pluggable command-line frontend, including commands to setup
 package file layouts.
 
@@ -67,39 +48,29 @@ package file layouts.
 %setup -n %oname-%version
 %patch1 -p2
 
-cp -a . ../python3
-
 %build
 export PYTHONPATH=$PWD
-pushd ../python3
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/test_logging_config.py scripts/paster
+sed -i 's|\(sphinx-build\)|\1-3|' regen-docs
 %python3_build
-popd
 
-%python_build
 ./regen-docs
 
 %install
-pushd ../python3
 %python3_install
 mv %buildroot%_bindir/paster %buildroot%_bindir/paster3
-popd
-
-%python_install
 
 %files
 %doc docs/_build/*
-%python_sitelibdir/paste/script
-%python_sitelibdir/%oname-*
-%_bindir/paster
-
-%files -n python3-module-%oname
-%_bindir/paster3
 %python3_sitelibdir/paste/script
 %python3_sitelibdir/%oname-*
+%_bindir/paster3
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 1:2.0.2-alt2
+- Drop python2 support.
+
 * Thu Aug 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.0.2-alt1
 - Updated to upstream version 2.0.2.
 
