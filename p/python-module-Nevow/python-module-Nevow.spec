@@ -1,5 +1,5 @@
 %define version 0.14.2
-%define release alt1
+%define release alt2
 %setup_python_module Nevow
 
 %def_without python3
@@ -20,7 +20,8 @@ Patch1: Nevow-0.10.0-fix-twisted.plugins.patch
 Patch2: Nevow-0.11.1-alt-python3.patch
 
 BuildPreReq: rpm-build-python
-BuildRequires: python-module-Cython python-module-twisted
+BuildRequires: python-module-Cython
+#python-module-twisted
 BuildRequires: python-module-twisted-core-gui
 BuildRequires: python-module-twisted-core-test
 BuildRequires: python-devel python-module-setuptools
@@ -138,6 +139,9 @@ install -D -p -m 0644 doc/man/nevow-xmlgettext.1 %buildroot%_man1dir/nevow-xmlge
 %endif
 
 %changelog
+* Tue May 25 2021 Anton Midyukov <antohami@altlinux.org> 0.14.2-alt2
+- fix buildrequires
+
 * Mon Sep 05 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
 - 0.14.2
 
