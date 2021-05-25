@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		15ae5548ce
+%define svnrev		c60195b3f9
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 
 
 Name: zabbix
-Version: 5.0.11
+Version: 5.0.12
 Release: alt1
 Epoch: 1
 
@@ -490,12 +490,6 @@ bzip2 ChangeLog
 %preun_service zabbix_pgsql
 %endif
 
-%post phpfrontend-apache2
-%post_apache2_rpma2chkconfigfile
-
-%postun phpfrontend-apache2
-%post_apache2_rpma2chkconfigfile
-
 %post proxy
 %post_service zabbix_proxy
 
@@ -638,6 +632,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue May 25 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.12-alt1
+- 5.0.12
+
 * Tue Apr 27 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.11-alt1
 - 5.0.11
 
