@@ -2,7 +2,7 @@
 
 Name: withlock
 Version: 0.5
-Release: alt2
+Release: alt3
 Summary: Locking wrapper script
 Group: System/Servers
 License: Apache-2.0
@@ -11,6 +11,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Patch0: withlockpython3.patch
+
+BuildRequires: rpm-build-python3 
 
 %description
 withlock is a locking wrapper script to make sure that some program
@@ -38,6 +40,9 @@ install -m 0644 withlock.1 %buildroot%_man1dir
 %_man1dir/withlock.1*
 
 %changelog
+* Tue May 25 2021 Alexandr Antonov <aas@altlinux.org> 0.5-alt3
+- Fix build for python3
+
 * Tue Mar 10 2020 Alexandr Antonov <aas@altlinux.org> 0.5-alt2
 - switch to python3
 
