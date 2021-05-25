@@ -2,13 +2,13 @@
 
 %define oname django-compressor
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.2
-Release: alt1
+Release: alt2
 
 Summary: Compresses linked and inline JavaScript or CSS into single cached files
 
-Group: Development/Python
+Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/%pypi_name
 
@@ -16,25 +16,16 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar.gz
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-django
-BuildRequires: python-module-versiontools
-BuildRequires: python-module-rcssmin >= 1.0.6
-BuildRequires: python-module-rjsmin >= 1.0.12
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-django
 BuildRequires: python3-module-versiontools
 BuildRequires: python3-module-rcssmin >= 1.0.6
 BuildRequires: python3-module-rjsmin >= 1.0.12
 
-Requires: python-module-django-appconf >= 1.0
-Requires: python-module-versiontools
-Requires: python-module-rcssmin  >= 1.0.6
-Requires: python-module-rjsmin >= 1.0.12
+Requires: python3-module-django-appconf >= 1.0
+Requires: python3-module-versiontools
+Requires: python3-module-rcssmin  >= 1.0.6
+Requires: python3-module-rjsmin >= 1.0.12
 
 %description
 Django Compressor combines and compresses linked and inline Javascript
@@ -46,41 +37,10 @@ configurable compilers and filters.
 
 %package tests
 Summary: Tests of %oname
-Group: Development/Python
-Requires: python-module-%oname = %EVR
+Group: Development/Python3
+Requires: %name = %EVR
 
 %description tests
-Django Compressor combines and compresses linked and inline Javascript
-or CSS in a Django templates into cacheable static files by using the
-``compress`` template tag.  HTML in between ``{%% compress js/css %%}``
-and ``{%% endcompress %%}`` is parsed and searched for CSS or JS. These
-styles and scripts are subsequently processed with optional,
-configurable compilers and filters.
-
-This package contein tests.
-
-%package -n python3-module-%oname
-Summary: Compresses linked and inline JavaScript or CSS into single cached files
-Group: Development/Python3
-Requires: python3-module-django-appconf >= 1.0
-Requires: python3-module-versiontools
-Requires: python3-module-rcssmin  >= 1.0.6
-Requires: python3-module-rjsmin >= 1.0.12
-
-%description -n python3-module-%oname
-Django Compressor combines and compresses linked and inline Javascript
-or CSS in a Django templates into cacheable static files by using the
-``compress`` template tag.  HTML in between ``{%% compress js/css %%}``
-and ``{%% endcompress %%}`` is parsed and searched for CSS or JS. These
-styles and scripts are subsequently processed with optional,
-configurable compilers and filters.
-
-%package -n python3-module-%oname-tests
-Summary: Tests of %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
 Django Compressor combines and compresses linked and inline Javascript
 or CSS in a Django templates into cacheable static files by using the
 ``compress`` template tag.  HTML in between ``{%% compress js/css %%}``
@@ -96,43 +56,26 @@ This package contein tests.
 # Remove bundled egg-info
 rm -rf %pypi_name.egg-info
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc README.rst LICENSE
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/test_settings.py
-
-%files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/test_settings.py
-
-%files -n python3-module-%oname
 %doc README.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/test_settings.py
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/test_settings.py
 
 %changelog
+* Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 2.2-alt2
+- Drop python2 support
+
 * Mon Feb 18 2019 Alexey Shabalin <shaba@altlinux.org> 2.2-alt1
 - 2.2
 
