@@ -1,50 +1,24 @@
 %define oname netifaces
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.10.9
-Release: alt1
-
-%setup_python_module %oname
+Release: alt2
 
 Summary: Portable network interface information
 
 License: MIT License
-Group: Development/Python
+Group: Development/Python3
 Url: http://alastairs-place.net/netifaces
 
 #Source: http://alastairs-place.net/projects/netifaces/netifaces-%version.tar
 # Source-url: https://pypi.io/packages/source/n/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
-
-%description
-netifaces provides a (hopefully portable-ish) way for Python programmers to
-get access to a list of the network interfaces on the local machine, and to
-obtain the addresses of those network interfaces.
-
-The package has been tested on Mac OS X, Windows XP, Windows Vista, Linux
-and Solaris.  On Windows, it is currently not able to retrieve IPv6
-addresses, owing to shortcomings of the Windows API.
-
-It should work on other UNIX-like systems provided they implement
-either getifaddrs() or support the SIOCGIFxxx socket options, although the
-data provided by the socket options is normally less complete.
-
-%package -n python3-module-%oname
-Summary: Portable network interface information
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+%description
 netifaces provides a (hopefully portable-ish) way for Python programmers to
 get access to a list of the network interfaces on the local machine, and to
 obtain the addresses of those network interfaces.
@@ -60,41 +34,21 @@ data provided by the socket options is normally less complete.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.rst
-%python_sitelibdir/%modulename-*.egg-info
-%python_sitelibdir/%modulename.so
-
-%if_with python3
-%files -n python3-module-%oname
-%doc README.rst
-%python3_sitelibdir/%modulename-*.egg-info
-%python3_sitelibdir/%modulename.*.so
-%endif
+%python3_sitelibdir/%oname-*.egg-info
+%python3_sitelibdir/%oname.*.so
 
 %changelog
+* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.9-alt2
+- Drop python2 support.
+
 * Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 0.10.9-alt1
 - new version 0.10.9 (with rpmrb script)
 
