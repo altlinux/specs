@@ -1,12 +1,12 @@
 %define modname Cython
 %def_disable debugger
 
-Name: python-module-%modname
+Name: python3-module-%modname
 Version: 0.29.23
 Release: alt2
 
-Summary: C-extensions for Python
-Group: Development/Python
+Summary: C-extensions for Python 3
+Group: Development/Python3
 License: Apache-2.0
 Url: http://www.cython.org
 
@@ -14,15 +14,13 @@ Vcs: https://github.com/cython/cython.git
 Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
 #Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
 
-Provides: %modname = %EVR
-Conflicts: python-module-Cython0.18
+%add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools python-module-json
-%add_python_req_skip IPython
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-distribute
 
 %description
-Cython is a language that makes writing C extensions for the Python
+Cython is a language that makes writing C extensions for the Python 3
 language as easy as Python itself. Cython is based on the well-known
 Pyrex, but supports more cutting edge functionality and optimizations.
 
@@ -37,16 +35,15 @@ code.
 
 %package tests
 Summary: Cython test suit
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-Conflicts: python-module-Cython0.18-tests
 
 %description tests
 Cython is a language that makes writing C extensions for the Python
 language as easy as Python itself. Cython is based on the well-known
 Pyrex, but supports more cutting edge functionality and optimizations.
 
-The Cython language is very close to the Python2 language, but Cython
+The Cython language is very close to the Python3 language, but Cython
 additionally supports calling C functions and declaring C types on
 variables and class attributes. This allows the compiler to generate
 very efficient C code from Cython code.
@@ -59,7 +56,7 @@ This package provides modules for testing Cython using unittest.
 
 %package debugger
 Summary: Cython debugger
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 Requires: gdb
 
@@ -68,13 +65,13 @@ Cython is a language that makes writing C extensions for the Python
 language as easy as Python itself. Cython is based on the well-known
 Pyrex, but supports more cutting edge functionality and optimizations.
 
-The Cython language is very close to the Python2 language, but Cython
+The Cython language is very close to the Python3 language, but Cython
 additionally supports calling C functions and declaring C types on
 variables and class attributes. This allows the compiler to generate
 very efficient C code from Cython code.
 
 This makes Cython the ideal language for wrapping for external C
-libraries, and for fast C modules that speed up the execution of Python
+libraries, and for fast C modules that speed up the execution of Python 3
 code.
 
 This package provides modules for debugging Cython programms.
@@ -83,38 +80,41 @@ This package provides modules for debugging Cython programms.
 %setup -n %modname-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 for f in cy{thon{,ize},gdb}; do
-mv %buildroot/%_bindir/$f %buildroot/%_bindir/"$f"2;
+ln -s $f %buildroot/%_bindir/"$f"3;
 done
 
 %files
-%_bindir/cython2
-%_bindir/cythonize2
-%python_sitelibdir/pyximport/
-%python_sitelibdir/%modname/
-%python_sitelibdir/%modname-*egg-info
-%python_sitelibdir/cython.py*
-%doc *.txt Demos Tools docs
+%_bindir/cython
+%_bindir/cythonize
+%_bindir/cython3
+%_bindir/cythonize3
+%python3_sitelibdir/%modname/
+%python3_sitelibdir/pyximport/
+%python3_sitelibdir/cython.py
+%python3_sitelibdir/__pycache__/cython.*
+%python3_sitelibdir/*egg-info
 
-%exclude %python_sitelibdir/%modname/Tests
-%exclude %python_sitelibdir/%modname/Debugger
+%exclude %python3_sitelibdir/%modname/Tests
+%exclude %python3_sitelibdir/%modname/Debugger
 
 %files tests
-%python_sitelibdir/%modname/Tests
+%python3_sitelibdir/%modname/Tests
 
 %if_enabled debugger
 %files debugger
-%python_sitelibdir/%modname/Debugger
-%_bindir/cygdb2
+%python3_sitelibdir/%modname/Debugger
+%_bindir/cygdb
+%_bindir/cygdb3
 %endif
 
 %changelog
 * Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.23-alt2
-- python2 only package
+- python3-only package
 
 * Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.23-alt1
 - 0.29.23
