@@ -1,12 +1,13 @@
 
 %define rname cfitsio
-%define sover 9
+
+%define sover 4
 %define libname libcfitsio%sover
 %define devame libcfitsio-devel
 
-Name: cfitsio
-Version: 3.490
-Release: alt1
+Name: cfitsio%sover
+Version: 3.380
+Release: alt3
 %define sversion %(echo %version | tr -d .)
 
 Group: System/Libraries
@@ -16,11 +17,11 @@ Summary: Library for accessing files in FITS format for C and Fortran
 Url: http://heasarc.gsfc.nasa.gov/docs/software/fitsio/
 
 Source: %rname-%version.tar
-# FC
+# SuSE
 Patch1: cfitsio-zlib.patch
-Patch2: cfitsio-ldflags.patch
-Patch3: cfitsio-pkgconfig.patch
-Patch4: cfitsio-noversioncheck.patch
+# FC
+Patch5: cfitsio-pkgconfig.patch
+Patch6: cfitsio-noversioncheck.patch
 # ALT
 Patch10: cfitsio-3.360-autotools.patch
 
@@ -90,9 +91,8 @@ the cfits library.
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 %patch10 -p0
 #autoreconf
 
@@ -102,8 +102,6 @@ rm adler32.c crc32.c deflate.c infback.c inffast.c inflate.c inflate.h \
 inftrees.c inftrees.h zlib.h deflate.h trees.c trees.h uncompr.c zconf.h \
 zutil.c zutil.h crc32.h  inffast.h  inffixed.h 
 popd
-
-sed -i 's|-Wl,-rpath,\\${CFITSIO_LIB}||' configure
 
 %build
 %configure --disable-static --enable-shared --enable-reentrant --with-bzip2
@@ -121,12 +119,13 @@ install -d %buildroot/{%_bindir,%_libdir,%_includedir/%name}
 install
 install -m755 f{,un}pack %buildroot/%_bindir/
 
-%files
-%_bindir/*
-
 %files -n %libname
 %_libdir/*.so.%sover
 %_libdir/*.so.*
+
+%if 0
+%files
+%_bindir/*
 
 %files -n %devame
 %_libdir/*.so
@@ -136,10 +135,11 @@ install -m755 f{,un}pack %buildroot/%_bindir/
 
 #%files -n %devame-static
 #%_libdir/*.a
+%endif
 
 %changelog
-* Wed May 26 2021 Sergey V Turchin <zerg@altlinux.org> 3.490-alt1
-- new version
+* Wed May 26 2021 Sergey V Turchin <zerg@altlinux.org> 3.380-alt3
+- build only library
 
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 3.380-alt2
 - fix requires
