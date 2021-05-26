@@ -1,7 +1,7 @@
 %define rname kalgebra
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -47,7 +47,7 @@ however, one does not need to know MathML to use KAlgebra.
 
 %files -f %name.lang
 %_K5bin/*algebra*
-%_K5data/kalgebramobile/
+#%_K5data/kalgebramobile/
 %_K5xdgapp/*algebra*.desktop
 %_K5data/plasma/plasmoids/org.kde.graphsplasmoid/
 %_K5srv/graphsplasmoid.desktop
@@ -55,6 +55,9 @@ however, one does not need to know MathML to use KAlgebra.
 %_K5icon/*/*/apps/*algebra.*
 
 %changelog
+* Tue May 25 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

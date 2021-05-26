@@ -1,7 +1,7 @@
 %define rname kturtle
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -52,6 +52,9 @@ and... programming.
 %_K5data/kturtle/
 
 %changelog
+* Tue May 25 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

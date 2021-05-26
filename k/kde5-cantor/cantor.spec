@@ -1,6 +1,6 @@
 %define rname cantor
 
-%def_enable python2
+%def_disable python2
 %def_enable python3
 %def_disable luajit
 
@@ -10,8 +10,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 20.12.3
-Release: alt2
+Version: 21.04.1
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -100,6 +100,7 @@ KF5 library
 %install
 %K5install
 %K5install_move data cantor knsrcfiles
+mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -116,6 +117,7 @@ KF5 library
 %_K5icon/*/*/apps/*.*
 %_K5xmlgui/cantor/
 %_K5data/knsrcfiles/*cantor*.knsrc
+%_K5xdgmime/*cantor*.xml
 
 %files devel
 #%_K5inc/cantor_version.h
@@ -132,6 +134,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Tue May 25 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Tue Mar 23 2021 Egor Ignatov <egori@altlinux.org> 20.12.3-alt2
 - fix octave backend
 

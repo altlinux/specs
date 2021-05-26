@@ -1,7 +1,7 @@
 %define rname kbruch
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -62,7 +62,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/kbruch
 %_K5data/kbruch/
 %_K5xmlgui/kbruch/
@@ -81,6 +81,9 @@ KF5 library
 #%_K5lib/libKF5Bruch.so.*
 
 %changelog
+* Tue May 25 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
