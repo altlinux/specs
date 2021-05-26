@@ -1,12 +1,12 @@
 Name: seaview
-Version: 5.0
+Version: 5.0.4
 Release: alt1
 Summary: Graphical multiple sequence alignment editor
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Sciences/Biology
 License: GPLv2+
 Url: http://pbil.univ-lyon1.fr/software/seaview.html
-Source0: ftp://pbil.univ-lyon1.fr/pub/mol_phylogeny/seaview/seaview_%version.tar.gz
+Source0: ftp://pbil.univ-lyon1.fr/pub/mol_phylogeny/seaview/seaview-%version.tar.gz
 Source1: seaview.desktop
 Patch0:         seaview-chris.patch
 
@@ -59,6 +59,9 @@ install -m 644 seaview.1 $RPM_BUILD_ROOT/%_mandir/man1
 %_man1dir/*
 
 %changelog
+* Thu May 27 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0.4-alt1
+- 5.0.4
+
 * Tue Mar 16 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0-alt1
 - 5.0
 
