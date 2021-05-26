@@ -1,6 +1,6 @@
 Name: hunspell-kk
-Version: 0.1
-Release: alt2
+Version: 1.1
+Release: alt1
 Summary: Kazakh Language Dictionary for Hunspell
 Summary(ru_RU.UTF-8): Орфографический cловарь казахского языка для Hunspell
 Summary(kk_KZ.UTF-8): Hunspell арналған Орфографиялық қазақ тілі сөздігі
@@ -41,7 +41,7 @@ cat dictionaries/kz.aff \
 tail -n +2 dictionaries/kz.dic \
 	| tr -d '\r' \
 	| sed "s| */|/|" \
-	| LANG=kk_KZ.UTF-8 sort \
+	| LANG=kk_KZ.UTF-8 sort -u \
 	| tee kk_KZ.dic.words \
 	| wc -l > kk_KZ.dic
 cat kk_KZ.dic.words >> kk_KZ.dic
@@ -55,6 +55,9 @@ install -m 644 kk_KZ.??? %buildroot%_datadir/myspell/
 %doc README_kz.txt
 
 %changelog
+* Wed May 26 2021 Ildar Mulyukov <ildar@altlinux.ru> 1.1-alt1
+- align version to FC's etc. Closes: #34700
+
 * Sat Oct 24 2009 Ildar Mulyukov <ildar@altlinux.ru> 0.1-alt2
 - fixed words order and cleaned up files
 
