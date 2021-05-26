@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 17.0.0
-Release: alt3
+Release: alt4
 
 Summary: Python API and CLI for OpenStack Nova
 
@@ -86,17 +86,17 @@ sed -i '/warning-is-error/d' setup.cfg
 export PYTHONPATH="$PWD"
 
 # generate html docs
-sphinx-build-3 doc/source html
+#sphinx-build-3 doc/source html
 # generate man page
-sphinx-build-3 -b man doc/source man
+#sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
-rm -rf html/.{doctrees,buildinfo}
+#rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
 
 # install man page
-install -p -D -m 644 man/nova.1 %buildroot%_man1dir/nova.1
+#install -p -D -m 644 man/nova.1 %buildroot%_man1dir/nova.1
 
 # install bash completion
 install -p -D -m 644 tools/nova.bash_completion \
@@ -105,7 +105,7 @@ install -p -D -m 644 tools/nova.bash_completion \
 %files
 %doc *.rst LICENSE
 %_bindir/nova
-%_man1dir/nova*
+#_man1dir/nova*
 %_sysconfdir/bash_completion.d/nova*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -114,9 +114,12 @@ install -p -D -m 644 tools/nova.bash_completion \
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc LICENSE html
+#doc LICENSE html
 
 %changelog
+* Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt4
+- Fixed FTBFS (disabled docs).
+
 * Mon Jul 06 2020 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt3
 - Solved installation conflict (Closes: #38677).
 
