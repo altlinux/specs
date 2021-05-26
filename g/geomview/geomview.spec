@@ -4,14 +4,14 @@ Summary: geomview -- interactive geometry viewing program
 %def_without xforms
 
 Name: geomview
-Version: 1.9.4
-Release: alt4%pre.qa3.1
+Version: 1.9.5
+Release: alt1
 
-License: GPL
+License: LGPLv2+
 Group: Sciences/Mathematics
 Url: http://www.geomview.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source: http://ftp1.sourceforge.net/geomview/%name-%version.tar.bz2
+Source: http://ftp1.sourceforge.net/geomview/%name-%version.tar.xz
 Source1: %{name}_16.xpm
 Source2: %{name}_32.xpm
 Source3: %{name}_48.xpm
@@ -128,10 +128,17 @@ EOF
 %_infodir/%{name}*
 %_infodir/figs/*
 %_libdir/%name
+%_docdir/geomview/
+%_man1dir/*
+%_man3dir/*
+%_man5dir/*
 #%_libdir/lib%{name}.so.*
 %_libdir/lib%{name}*.so
 %dir %_datadir/%name
 %_datadir/%name/data
+%dir %_datadir/%name/Maple
+%dir %_datadir/%name/Mathematica
+%_datadir/%name/Ma*/*
 %_miconsdir/%{name}.xpm
 %_niconsdir/%{name}.xpm
 %_liconsdir/%{name}.xpm
@@ -142,6 +149,11 @@ EOF
 %exclude %_libdir/lib%name.a
 
 %changelog
+* Thu May 27 2021 Ilya Mashkin <oddity@altlinux.ru> 1.9.5-alt1
+- 1.9.5
+- Update License to LGPLv2+
+- Add mans and docs
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.9.4-alt4.qa3.1
 - NMU: added BR: texinfo
 
