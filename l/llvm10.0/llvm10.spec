@@ -20,7 +20,7 @@
 
 Name: %llvm_name
 Version: 10.0.1
-Release: alt3
+Release: alt4
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -46,11 +46,13 @@ Patch12: Support-Check-for-atomics64-when-deciding-if-latomic.patch
 Patch13: dsymutil-Explicitly-link-against-libatomic-when-nece.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch15: llvm-upstream-D85007.patch
+Patch16: hwasan_symbolize-python3.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
 
 BuildRequires(pre): cmake >= 3.4.3
+BuildRequires: rpm-build-python3 rpm-build-python
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: chrpath libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: python3-module-recommonmark zip zlib-devel binutils-devel ninja-build
@@ -237,6 +239,7 @@ mv compiler-rt-%version.src projects/compiler-rt
 %patch13 -p1
 %patch14 -p1
 %patch15 -p2
+%patch16 -p1
 
 %build
 %cmake -G Ninja \
@@ -441,6 +444,10 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue May 25 2021 Slava Aseev <ptrnine@altlinux.org> 10.0.1-alt4
+- Port hwasan_symbolize to python3
+- Fix build due to missing rpm-build-python*
+
 * Tue Apr 27 2021 Slava Aseev <ptrnine@altlinux.org> 10.0.1-alt3
 - Living in harmony with sisyphus_check on ix86 (backported from llvm12.0)
 
