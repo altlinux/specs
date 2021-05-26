@@ -5,7 +5,7 @@
 
 Name: nut
 Version: 2.7.4
-Release: alt4
+Release: alt5
 
 Summary: Network UPS Tools
 License: GPL
@@ -68,7 +68,7 @@ Patch109: nut-2.6.5-rmpidf.patch
 PreReq: shadow-utils
 PreReq: libupsclient = %EVR
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-python
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig libtool-common
 BuildRequires: libltdl-devel
@@ -645,6 +645,9 @@ fi
 %python3_sitelibdir/__pycache__/PyNUT.*
 
 %changelog
+* Wed May 26 2021 Slava Aseev <ptrnine@altlinux.org> 2.7.4-alt5
+- Fix build due to missing rpm-build-python
+
 * Wed Feb 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.4-alt4
 - Packaged PyNUT GUI into nut-client package (Closes: #39720).
 - Disabled stripping debuginfo.
