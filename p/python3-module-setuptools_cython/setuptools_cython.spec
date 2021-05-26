@@ -2,80 +2,44 @@
 
 %define oname setuptools_cython
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2.1
-Release: alt2
+Release: alt3
 Summary: Cython setuptools integration
 License: GPLv2
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/setuptools_cython/
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools python-module-Cython
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-Cython
-%endif
+BuildRequires: python3-module-Cython
 
-%py_provides %oname
-%py_requires setuptools Cython
+%py3_provides %oname
+%py3_requires setuptools Cython
 
 %description
 Allows compiling Cython extensions in setuptools by putting
 setuptools_cython in your setup_requires.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Cython setuptools integration
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires setuptools Cython
-
-%description -n python3-module-%oname
-Allows compiling Cython extensions in setuptools by putting
-setuptools_cython in your setup_requires.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc PKG-INFO
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc PKG-INFO
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt3
+- Drop python2 support.
+
 * Mon May 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.1-alt2
 - NMU: rebuilt to regenerate dependencies.
 
