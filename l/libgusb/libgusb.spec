@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: libgusb
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -16,7 +16,7 @@ Group: System/Libraries
 License: LGPL-2.1
 Url: https://gitorious.org/gusb/
 
-# VCS: https://github.com/hughsie/libgusb.git
+Vcs: https://github.com/hughsie/libgusb.git
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
 BuildRequires(pre): meson
@@ -83,6 +83,7 @@ applications that use GUsb library.
 %meson_install
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -110,6 +111,9 @@ applications that use GUsb library.
 %endif
 
 %changelog
+* Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
+- 0.3.7
+
 * Sat Mar 13 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - 0.3.6
 
