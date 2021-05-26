@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: %bname
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 Epoch: 1
 
@@ -29,6 +29,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 
 # From configure.ac
 %define glib_ver 2.52.0
+%define pango_ver 1.44
 %define gtk3_ver 3.10.0
 %define libxml2_ver 2.7.0
 %define cairo_ver 1.15.12
@@ -37,8 +38,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define rust_ver 1.40
 
 # From configure.ac
-BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfreetype-devel >= %freetype_ver
@@ -190,6 +192,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.50.6-alt1
+- 2.50.6
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.50.5-alt1
 - 2.50.5
 
