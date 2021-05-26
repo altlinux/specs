@@ -18,8 +18,8 @@ BuildRequires: jpackage-1.8-compat
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        7.7.0
-Release:        alt1_1jpp8
+Version:        8.1.1
+Release:        alt1_4jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -28,12 +28,6 @@ Source0:        https://archive.apache.org/dist/lucene/solr/%{version}/solr-%{ve
 
 Patch0:         0001-Disable-ivy-settings.patch
 Patch1:         0002-Dependency-generation.patch
-
-# io.sgr:s2-geometry-library-java is not present on Fedora
-# This patch reverts these two commits:
-#   https://github.com/apache/lucene-solr/commit/e3032dd3fcc28570c5f9d2dab4961b5b07555912
-#   https://github.com/apache/lucene-solr/commit/e0d6465af94b6c6f7b8d570dee97c98de572c876
-Patch2:         0003-Remove-dep-on-missing-google-geometry-library.patch
 
 BuildRequires:  ant
 BuildRequires:  ivy-local
@@ -44,31 +38,46 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
-BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.sourceforge.nekohtml:nekohtml)
 BuildRequires:  mvn(org.antlr:antlr4-runtime)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
-BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:  mvn(org.carrot2:morfologik-fsa)
-BuildRequires:  mvn(org.carrot2:morfologik-polish)
-BuildRequires:  mvn(org.carrot2:morfologik-stemming)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-continuation)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-http)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-io)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
-BuildRequires:  mvn(org.locationtech.spatial4j:spatial4j)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(xerces:xercesImpl)
 %endif
 
 Provides:       %{name}-core = %{epoch}:%{version}-%{release}
+
+# Obsolete since F32
+# Required deps were removed from fedora
+Obsoletes: %{name}-benchmark < 8.1.1-3
+Obsoletes: %{name}-demo < 8.1.1-3
+Obsoletes: %{name}-facet < 8.1.1-3
+Obsoletes: %{name}-replicator < 8.1.1-3
+Obsoletes: %{name}-spatial < 8.1.1-3
+Obsoletes: %{name}-spatial-extras < 8.1.1-3
+Obsoletes: %{name}-spatial3d < 8.1.1-3
+
+%if %{with jp_minimal}
+# Remove left-over packages that would have broken deps when built in minimal mode
+Obsoletes: %{name}-parent < 8.1.1-3
+Obsoletes: %{name}-solr-grandparent < 8.1.1-3
+Obsoletes: %{name}-test-framework < 8.1.1-3
+Obsoletes: %{name}-expressions < 8.1.1-3
+Obsoletes: %{name}-analyzers-phonetic < 8.1.1-3
+Obsoletes: %{name}-analyzers-icu < 8.1.1-3
+Obsoletes: %{name}-analyzers-nori < 8.1.1-3
+Obsoletes: %{name}-analyzers-kuromoji < 8.1.1-3
+Obsoletes: %{name}-analyzers-stempel < 8.1.1-3
+%endif
 
 BuildArch:      noarch
 Source44: import.info
@@ -82,9 +91,12 @@ cross-platform.
 %package analysis
 Group: Development/Java
 Summary:      Lucene Common Analyzers
-# Obsoletes added in F30
+# Obsoletes since F30
 # This module was removed upstream and no replacement exists
-Obsoletes:    %{name}-analyzers-uima < %{version}-%{release}
+Obsoletes: %{name}-analyzers-uima < 8.1.1-3
+# Obsolete since F32
+# Required deps were removed from fedora
+Obsoletes: %{name}-analyzers-morfologik < 8.1.1-3
 
 %description analysis
 Lucene Common Analyzers.
@@ -152,6 +164,34 @@ Summary:      Lucene Sandbox Module
 %description sandbox
 Lucene Sandbox Module.
 
+%package backward-codecs
+Group: Development/Java
+Summary:      Lucene Backward Codecs Module
+
+%description backward-codecs
+Codecs for older versions of Lucene.
+
+%package codecs
+Group: Development/Java
+Summary:      Codecs and postings formats for Apache Lucene
+
+%description codecs
+Codecs and postings formats for Apache Lucene.
+
+%package classification
+Group: Development/Java
+Summary:      Lucene Classification Module
+
+%description classification
+Lucene Classification Module.
+
+%package suggest
+Group: Development/Java
+Summary:      Lucene Suggest Module
+
+%description suggest
+Lucene Suggest Module.
+
 %if %{without jp_minimal}
 %package parent
 Group: Development/Java
@@ -166,27 +206,6 @@ Summary:      Lucene Solr grandparent POM
 
 %description solr-grandparent
 Lucene Solr grandparent POM.
-
-%package backward-codecs
-Group: Development/Java
-Summary:      Lucene Backward Codecs Module
-
-%description backward-codecs
-Codecs for older versions of Lucene.
-
-%package benchmark
-Group: Development/Java
-Summary:      Lucene Benchmarking Module
-
-%description benchmark
-Lucene Benchmarking Module.
-
-%package replicator
-Group: Development/Java
-Summary:      Lucene Replicator Module
-
-%description replicator
-Lucene Replicator Module.
 
 %package test-framework
 Group: Development/Java
@@ -203,62 +222,6 @@ Summary:      Lucene Expressions Module
 Dynamically computed values to sort/facet/search on based on a pluggable
 grammar.
 
-%package demo
-Group: Development/Java
-Summary:      Lucene Demo Module
-
-%description demo
-Demo for Apache Lucene Java.
-
-%package classification
-Group: Development/Java
-Summary:      Lucene Classification Module
-
-%description classification
-Lucene Classification Module.
-
-%package suggest
-Group: Development/Java
-Summary:      Lucene Suggest Module
-
-%description suggest
-Lucene Suggest Module.
-
-%package facet
-Group: Development/Java
-Summary:      Lucene Facets Module
-
-%description facet
-Package for Faceted Indexing and Search.
-
-%package spatial
-Group: Development/Java
-Summary:      Geospatial indexing APIs for Apache Lucene
-
-%description spatial
-Geospatial indexing APIs for Apache Lucene.
-
-%package spatial-extras
-Group: Development/Java
-Summary:      Spatial Strategies for Apache Lucene
-
-%description spatial-extras
-Spatial Strategies for Apache Lucene.
-
-%package spatial3d
-Group: Development/Java
-Summary:      Lucene Spatial 3D
-
-%description spatial3d
-Spatial shapes implemented using 3D planar geometry
-
-%package codecs
-Group: Development/Java
-Summary:      Codecs and postings formats for Apache Lucene
-
-%description codecs
-Codecs and postings formats for Apache Lucene.
-
 %package analyzers-phonetic
 Group: Development/Java
 Summary:      Lucene Phonetic Filters
@@ -273,14 +236,6 @@ Summary:      Lucene ICU Analysis Components
 %description analyzers-icu
 Provides integration with ICU (International Components for Unicode) for
 stronger Unicode and internationalization support.
-
-%package analyzers-morfologik
-Group: Development/Java
-Summary:      Lucene Morfologik Polish Lemmatizer
-
-%description analyzers-morfologik
-A dictionary-driven lemmatizer for Polish (includes morphosyntactic
-annotations).
 
 %package analyzers-nori
 Group: Development/Java
@@ -303,7 +258,7 @@ Summary:      Lucene Stempel Analyzer
 %description analyzers-stempel
 Lucene Stempel Analyzer.
 
-%endif # without jp_minimal
+%endif
 
 %package javadoc
 Group: Development/Java
@@ -318,7 +273,6 @@ BuildArch: noarch
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 rm -rf solr
 
@@ -329,9 +283,6 @@ sed -i -e "/<Export-Package>/a<_nouses>true</_nouses>" dev-tools/maven/pom.xml.t
 
 # make the target public
 sed -i 's/-filter-pom-templates/filter-pom-templates/' lucene/common-build.xml
-
-# suggest provides spellchecker
-%mvn_alias :%{name}-suggest :%{name}-spellchecker
 
 # compatibility with existing packages
 %mvn_alias :%{name}-analyzers-common :%{name}-analyzers
@@ -352,15 +303,6 @@ for pom in `find build/poms/%{name} -name pom.xml`; do
 done
 %pom_disable_module src/test core
 %pom_disable_module src/test codecs
-
-# unresolvable test dep
-%pom_remove_dep org.locationtech.spatial4j:spatial4j::test spatial-extras
-
-# currently unavailable in Fedora
-%pom_remove_dep ua.net.nlp:morfologik-ukrainian-search analysis/morfologik
-
-# test deps
-%pom_add_dep org.antlr:antlr-runtime::test demo
 
 popd
 
@@ -394,25 +336,26 @@ mv lucene/build/poms/pom.xml .
 %pom_remove_plugin -r :forbiddenapis
 %pom_remove_plugin -r :buildnumber-maven-plugin
 
-%if %{with jp_minimal}
+# don't build modules for which deps are not in fedora or not new enough in fedora
 pushd lucene
-%pom_disable_module backward-codecs
-%pom_disable_module codecs
-%pom_disable_module test-framework
 %pom_disable_module benchmark
-%pom_disable_module classification
 %pom_disable_module demo
-%pom_disable_module expressions
 %pom_disable_module facet
 %pom_disable_module replicator
 %pom_disable_module spatial
 %pom_disable_module spatial-extras
 %pom_disable_module spatial3d
-%pom_disable_module suggest
 
+%pom_disable_module opennlp analysis
+%pom_disable_module morfologik analysis
+popd
+
+%if %{with jp_minimal}
+pushd lucene
+%pom_disable_module test-framework
+%pom_disable_module expressions
 %pom_disable_module icu analysis
 %pom_disable_module kuromoji analysis
-%pom_disable_module morfologik analysis
 %pom_disable_module phonetic analysis
 %pom_disable_module stempel analysis
 %pom_disable_module nori analysis
@@ -421,11 +364,6 @@ popd
 %mvn_package :lucene-parent __noinstall
 %mvn_package :lucene-solr-grandparent __noinstall
 %endif
-
-# OpenNLP is not new enough in Fedora, always disable for now
-pushd lucene
-%pom_disable_module opennlp analysis
-popd
 
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -s -f
@@ -451,25 +389,17 @@ popd
 %files queries -f .mfiles-%{name}-queries
 %files queryparser -f .mfiles-%{name}-queryparser
 %files sandbox -f .mfiles-%{name}-sandbox
+%files backward-codecs -f .mfiles-%{name}-backward-codecs
+%files codecs -f .mfiles-%{name}-codecs
+%files classification -f .mfiles-%{name}-classification
+%files suggest -f .mfiles-%{name}-suggest
 %if %{without jp_minimal}
 %files parent -f .mfiles-%{name}-parent
 %files solr-grandparent -f .mfiles-%{name}-solr-grandparent
-%files benchmark -f .mfiles-%{name}-benchmark
-%files backward-codecs -f .mfiles-%{name}-backward-codecs
-%files replicator -f .mfiles-%{name}-replicator
 %files test-framework -f .mfiles-%{name}-test-framework
 %files expressions -f .mfiles-%{name}-expressions
-%files demo -f .mfiles-%{name}-demo
-%files classification -f .mfiles-%{name}-classification
-%files suggest -f .mfiles-%{name}-suggest
-%files facet -f .mfiles-%{name}-facet
-%files spatial -f .mfiles-%{name}-spatial
-%files spatial-extras -f .mfiles-%{name}-spatial-extras
-%files spatial3d -f .mfiles-%{name}-spatial3d
-%files codecs -f .mfiles-%{name}-codecs
 %files analyzers-phonetic -f .mfiles-%{name}-analyzers-phonetic
 %files analyzers-icu -f .mfiles-%{name}-analyzers-icu
-%files analyzers-morfologik -f .mfiles-%{name}-analyzers-morfologik
 %files analyzers-nori -f .mfiles-%{name}-analyzers-nori
 %files analyzers-kuromoji -f .mfiles-%{name}-analyzers-kuromoji
 %files analyzers-stempel -f .mfiles-%{name}-analyzers-stempel
@@ -479,6 +409,9 @@ popd
 %doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
 
 %changelog
+* Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:8.1.1-alt1_4jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.7.0-alt1_1jpp8
 - new version
 
