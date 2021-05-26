@@ -1,27 +1,19 @@
 %define oname wsgifilter
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2.1
-Release: alt2.svn20090925.2
+Release: alt3.svn20090925
 Summary: Framework for building output-filtering WSGI middleware
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://pythonpaste.org/wsgifilter/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://svn.pythonpaste.org/Paste/WSGIFilter/trunk
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%setup_python_module %oname
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
-%endif
 
 %description
 A framework (in the form of an abstract base class) for building
@@ -38,36 +30,6 @@ Features:
 
 * Does all the hard stuff with WSGI output filtering.
 
-%package -n python3-module-%oname
-Summary: Framework for building output-filtering WSGI middleware
-Group: Development/Python3
-
-%description -n python3-module-%oname
-A framework (in the form of an abstract base class) for building
-output-filtering WSGI middleware.
-
-Features:
-
-* You can filter just some content types (e.g., text/html) with low
-  overhead for unfiltered output.
-
-* Handles issues of decoding and encoding responses using the
-  `HTTPEncode <http://pythonpaste.org/httpencode/>`_ system of
-  formats.
-
-* Does all the hard stuff with WSGI output filtering.
-
-%package -n python3-module-%oname-examples
-Summary: Examples for framework for building output-filtering WSGI middleware
-Group: Development/Documentation
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-examples
-A framework (in the form of an abstract base class) for building
-output-filtering WSGI middleware.
-
-This package contains examples for framework.
-
 %package examples
 Summary: Examples for framework for building output-filtering WSGI middleware
 Group: Development/Documentation
@@ -82,48 +44,26 @@ This package contains examples for framework.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc docs/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/examples
-
-%files examples
-%python_sitelibdir/*/examples
-
-%if_with python3
-%files -n python3-module-%oname
 %doc docs/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/examples
 
 %files -n python3-module-%oname-examples
 %python3_sitelibdir/*/examples
-%endif
 
 %changelog
+* Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt3.svn20090925
+- Drop python2 support.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1-alt2.svn20090925.2
 - (NMU) rebuild with python3.6
 
