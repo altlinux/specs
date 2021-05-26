@@ -1,31 +1,24 @@
 %define origname Cheetah
 
-%def_with python3
-
 Summary: Template engine and code-generator
-Name: python-module-%origname
+Name: python3-module-%origname
 Version: 3.2.3
-Release: alt2
+Release: alt3
 Source0: Cheetah-%version.tar
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 URL: http://cheetahtemplate.org/
 # https://github.com/CheetahTemplate3/cheetah3
 #BuildArch: noarch
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-markdown python-module-setuptools time
-BuildRequires: python-module-sphinx
-
-#BuildPreReq: python-module-markdown python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-distribute python3-module-setuptools
+BuildRequires: time
+BuildPreReq: python3-module-distribute
 BuildPreReq: python3-module-markdown
 BuildPreReq: python3-module-sphinx
-%endif
+
+Conflicts: python-module-Cheetah < %EVR
+Obsoletes: python-module-Cheetah < %EVR
 
 %description
 Cheetah is an open source template engine and code generation tool, written
@@ -34,36 +27,9 @@ frameworks. Web development is its principle use, but Cheetah is very
 flexible and is also being used to generate C++ game code, Java, sql,
 form emails and even Python code.
 
-%if_with python3
-%package -n python3-module-%origname
-Summary: Template engine and code-generator (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%origname
-Cheetah is an open source template engine and code generation tool, written
-in Python 3. It can be used standalone or combined with other tools and
-frameworks. Web development is its principle use, but Cheetah is very
-flexible and is also being used to generate C++ game code, Java, sql,
-form emails and even Python 3 code.
-
-%package -n python3-module-%origname-tests
-Summary: Tests for Cheetah, template engine and code-generator (Python 3)
-Group: Development/Python3
-Requires: python3-module-%origname = %version-%release
-
-%description -n python3-module-%origname-tests
-Cheetah is an open source template engine and code generation tool, written
-in Python. It can be used standalone or combined with other tools and
-frameworks. Web development is its principle use, but Cheetah is very
-flexible and is also being used to generate C++ game code, Java, sql,
-form emails and even Python code.
-
-This package contains tests for Cheetah.
-%endif
-
 %package tests
 Summary: Tests for Cheetah, template engine and code-generator
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -77,59 +43,31 @@ This package contains tests for Cheetah.
 
 %prep
 %setup -n Cheetah-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 export PYTHONPATH=$PWD
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 mkdir man
 cp -fR docs/_build/html/* man/
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i py3_$i
-done
-popd
-%endif
 
-%python_install --optimize=2 --record=INSTALLED_FILES
-
-%files -f INSTALLED_FILES
+%files
 %doc *.rst man/
-%exclude %python_sitelibdir/Cheetah/Tests
-
-%files tests
-%python_sitelibdir/Cheetah/Tests
-%exclude %python_sitelibdir/Cheetah/Tests/Performance.py*
-
-%files -n python3-module-%origname-tests
-%python3_sitelibdir/Cheetah/Tests
-%exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
-
-%files -n python3-module-%origname
-%doc *.rst man/
-%_bindir/py3_*
+%_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/Cheetah/Tests
 
-
+%files tests
+%python3_sitelibdir/Cheetah/Tests
+%exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
 %changelog
+* Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.2.3-alt3
+- Drop python2 support.
+
 * Tue Sep 3 2019 Vladimir Didenko <cow@altlinux.org> 3.2.3-alt2
 - Don't use 2to3 conversion because it breaks python3 package
 
