@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.8.2
-Release: alt1
+Release: alt2
 
 Summary: Python code static checker
 License: GPLv2+
@@ -90,6 +90,9 @@ tox.py3 --sitepackages --console-scripts -vvr --no-deps -- \
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.2-alt2
+- Fixed FTBFS (cherry-picked 6f246a03346ea4f592c4d70002382eab1e89d219).
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 2.8.2-alt1
 - 2.7.4 -> 2.8.2.
 
