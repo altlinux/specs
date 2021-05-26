@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.1.1
+Version: 6.0.1
 Release: alt1
 
 Summary: The Zope publisher publishes Python objects on the web (Python3)
@@ -18,8 +18,6 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-zope.browser
@@ -36,6 +34,7 @@ BuildRequires: python3-module-zope.deferredimport
 BuildRequires: python3-module-zope.hookable
 BuildRequires: python3-module-zope.deprecation
 BuildRequires: python3-module-zope.event
+BuildRequires: python3-module-multipart
 %endif
 
 %py3_requires zope.browser
@@ -104,6 +103,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 1:6.0.1-alt1
+- Automatically updated to 6.0.1.
+
 * Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 1:5.1.1-alt1
 - NMU: 4.3.2 -> 5.1.1
 - Remove python2 module build
