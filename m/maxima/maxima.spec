@@ -34,8 +34,8 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.44.0
-%define maxima_version 5.44.0
+Version: 5.45.0
+%define maxima_version 5.45.0
 Release: alt1
 
 Summary: Maxima Computer Algebra System
@@ -497,7 +497,7 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %doc AUTHORS
 %doc README
 %doc README.external
-%doc README.lisps
+%doc README-lisps.md
 %doc %_docdir/maxima-%version/intromax.html
 %doc %_docdir/maxima-%version/implementation
 
@@ -598,6 +598,8 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Thu May 27 2021 Ilya Mashkin <oddity@altlinux.ru> 5.45.0-alt1
+- 5.45.0
 
 * Tue May 04 2021 Ilya Mashkin <oddity@altlinux.ru> 5.44.0-alt1
 - 5.44.0
