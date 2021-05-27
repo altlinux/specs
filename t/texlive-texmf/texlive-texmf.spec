@@ -96,7 +96,7 @@ Packager: Igor Vlasenko <viy@altlinux.org>
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt5_7
+Release:	alt6_7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -1053,9 +1053,13 @@ find . %buildroot -type f -print0 |
 
 
 #-----------------------------------------------------------------------
-
+rm -f %buildroot%_man1dir/psutils.*
+rm -f %buildroot%_man1dir/psjoin.*
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 2019-alt6_7
+- removed conflict with psutils man pages
+
 * Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 2019-alt5_7
 - fixed build
 
