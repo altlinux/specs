@@ -2,7 +2,7 @@
 %define dist XML-LibXML
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.0206
+Version: 2.0207
 Release: alt1
 
 Summary: Perl binding for libxml2
@@ -10,8 +10,8 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar
-Patch: %name-%version-%release.patch
+Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
+Patch: XML-LibXML-2.0207-alt-at-autoreq.patch
 
 Provides: perl-XML-LibXML-Common = 0.13-alt99
 Obsoletes: perl-XML-LibXML-Common < 0.13-alt99
@@ -37,7 +37,7 @@ the DOM tree.  It also provides an XML::XPath-like findnodes() interface,
 providing access to the XPath API in libxml2.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %if_with bootstrap
@@ -66,6 +66,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 2.0207-alt1
+- automated CPAN update
+
 * Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 2.0206-alt1
 - new version
 
