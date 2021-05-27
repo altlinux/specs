@@ -2,7 +2,7 @@
 
 Name: alsa-tools
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPLv2+
@@ -27,6 +27,7 @@ Provides: /etc/default/ld10k1
 
 BuildRequires: gcc-c++ libgtk+2-devel libgtk+3-devel
 BuildRequires: libalsa-devel >= %basever
+BuildRequires: rpm-build-python
 
 %define udevdir /lib/udev
 
@@ -171,6 +172,9 @@ sed -i 's,env python,&2,' %buildroot%_bindir/hwmixvolume
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Thu May 27 2021 Michael Shigorin <mike@altlinux.org> 1.2.2-alt2
+- explicit BR: rpm-build-python
+
 * Fri Feb 21 2020 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
 - 1.2.2
 - hwmixvolume: python2
