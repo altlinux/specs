@@ -1,17 +1,20 @@
+%def_with check
 Name: psutils
-Version: 1.23
-Release: alt2
+Version: 2.05
+Release: alt1
 Epoch: 2
-
+%add_perl_lib_path %_datadir/%name
 Summary: PostScript utilities
-License: freeware
+License: GPLv3
 Group: Publishing
-BuildRequires: gnulib
-Requires: /usr/bin/paperconf
-
+BuildArch: noarch
+BuildRequires: gnulib help2man
+%if_with check
+BuildRequires: paper
+%endif
+BuildRequires: perl(IPC/Run3.pm)
 Url: https://github.com/rrthomas/psutils
 Source0: %name-%version.tar
-Patch0: psutils-1.23-paperconf.patch
 
 %description
 psutils contains some utilities for manipulating PostScript documents.
@@ -20,8 +23,6 @@ into signatures for booklet printing, and page merging for n-up printing.
 
 %prep
 %setup 
-%patch0 -p1
-
 
 %build
 ./bootstrap --skip-git --gnulib-srcdir=/usr/share/gnulib
@@ -31,12 +32,20 @@ into signatures for booklet printing, and page merging for n-up printing.
 %install
 %makeinstall 
 
+%check
+%make check
+
 %files
-%doc LICENSE README
+%doc COPYING README
 %_bindir/*
+%_datadir/%name
 %_man1dir/*
 
 %changelog
+* Tue May 25 2021 Anton Farygin <rider@altlinux.ru> 2:2.05-alt1
+- 1.23 -> 2.05
+- fixed License tag
+
 * Sun Nov 11 2018 Anton Farygin <rider@altlinux.ru> 2:1.23-alt2
 - fixed URL
 
