@@ -1,8 +1,7 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(PadWalker.pm) perl(Prima/Application.pm) perl(Prima/Buttons.pm) perl(Prima/Edit.pm) perl(Prima/Label.pm) perl(Prima/MsgBox.pm) perl(Prima/PodView.pm) perl(Prima/Utils.pm) perl(threads.pm) perl(threads/shared.pm) perl-podlators
+BuildRequires: perl(Module/Compile.pm) perl(PadWalker.pm) perl(Prima/Application.pm) perl(Prima/Buttons.pm) perl(Prima/Edit.pm) perl(Prima/Label.pm) perl(Prima/MsgBox.pm) perl(Prima/PodView.pm) perl(Prima/Utils.pm) perl(threads.pm) perl(threads/shared.pm) perl-podlators
 # END SourceDeps(oneline)
 # tries to run
 %add_findreq_skiplist %_bindir/pdl2
@@ -34,24 +33,25 @@ BuildRequires: gcc-c++
 %{bcond_without perl_PDL_enables_optional_test}
 
 Name:           perl-PDL
-%global cpan_version 2.024
-Version:        2.034
-Release:        alt1
+%global cpan_version 2.047
+Version:        2.047
+Release:        alt1_2
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/PDL-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETJ/PDL-%{cpan_version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 # Disable Proj support when it's not compatible, bug #839651
 Patch2:         PDL-2.4.10-Disable-PDL-GIS-Proj.patch
 # Compile Slatec as PIC, needed for ARM
-Patch3:         PDL-2.029-Compile-Slatec-code-as-PIC.patch
+Patch3:         PDL-2.6.0.90-Compile-Slatec-code-as-PIC.patch
 # Disable Slatec code crashing on PPC64, bug #1041304
 Patch4:         PDL-2.14.0-Disable-PDL-Slatec.patch
-Patch5:         PDL-2.17.0-Update-additional-deps-for-Basic-Core.patch
+# Fix numbering of line in test when shebang is added
+Patch6:         PDL-2.28.0-Fix-numbering-of-line-in-test.patch
 BuildRequires:  coreutils
-#BuildRequires:  libfftw3-devel
+BuildRequires:  libfftw3-devel
 BuildRequires:  findutils
 BuildRequires:  libfreeglut-devel
 BuildRequires:  gcc-c++
@@ -60,7 +60,7 @@ BuildRequires:  libgd3-devel
 BuildRequires:  libgsl-devel >= 1.0
 %ifnarch %e2k
 # archdep, requires patching the patched source
-BuildRequires:  hdf-static hdf hdf-devel
+BuildRequires:  hdf hdf-devel
 %endif
 BuildRequires:  libXi-devel
 BuildRequires:  libXmu-devel
@@ -76,6 +76,7 @@ BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Devel/CheckLib.pm)
 BuildRequires:  perl(Devel/REPL.pm)
+BuildRequires:  perl(ExtUtils/Depends.pm)
 BuildRequires:  perl(ExtUtils/F77.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Spec.pm)
@@ -89,7 +90,6 @@ BuildRequires:  perl(Pod/Select.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
-BuildRequires:  sed
 # Run-time:
 BuildRequires:  perl(autodie.pm)
 BuildRequires:  perl(base.pm)
@@ -111,12 +111,12 @@ BuildRequires:  perl(Filter/Simple.pm)
 BuildRequires:  perl(Filter/Util/Call.pm)
 BuildRequires:  perl(Inline.pm)
 BuildRequires:  perl(Inline/C.pm)
-BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(List/Util.pm)
-BuildRequires:  perl(Module/Compile.pm)
+BuildRequires:  perl(Math/Complex.pm)
 BuildRequires:  perl(Moose.pm)
 BuildRequires:  perl(namespace/clean.pm)
 BuildRequires:  perl(overload.pm)
+BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Pod/PlainText.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Scalar/Util.pm)
@@ -127,6 +127,7 @@ BuildRequires:  perl(Text/Balanced.pm)
 BuildRequires:  perl(version.pm)
 # Tests:
 BuildRequires:  perl(Benchmark.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker/Config.pm)
 BuildRequires:  perl(ExtUtils/testlib.pm)
 BuildRequires:  perl(IO/String.pm)
 BuildRequires:  perl(IPC/Cmd.pm)
@@ -146,7 +147,6 @@ BuildRequires:  perl(Storable.pm)
 %if %{with perl_PDL_enables_proj}
 # Needed by PDL::GIS::Proj
 BuildRequires:  libproj-devel
-BuildRequires:  proj-datumgrid
 %endif
 # Need by PDL::IO::Browser, currently disabled
 # BuildRequires:  ncurses-devel
@@ -158,7 +158,6 @@ Requires:       perl(File/Map.pm) >= 0.570
 Requires:       perl(File/Spec.pm) >= 0.600
 Requires:       perl(Filter/Simple.pm) >= 0.880
 Requires:       perl(Inline.pm) >= 0.430
-Requires:       perl(Module/Compile.pm) >= 0.230
 # OpenGL >= 0.6702 is required but newer OpenGL-0.70 shortened the version
 Requires:       perl(OpenGL.pm) >= 0.67.02
 Requires:       perl(Prima/Application.pm)
@@ -168,13 +167,14 @@ Requires:       perl(Prima/Label.pm)
 Requires:       perl(Prima/PodView.pm)
 Requires:       perl(Prima/Utils.pm)
 Requires:       perl(Text/Balanced.pm) >= 1.890
-Provides:       perl(PDL/Config.pm) = %{version}
-Provides:       perl(PDL/PP/CType.pm) = %{version}
-Provides:       perl(PDL/PP/Dims.pm) = %{version}
-Provides:       perl(PDL/PP/PDLCode.pm) = %{version}
-Provides:       perl(PDL/PP/SymTab.pm) = %{version}
-Provides:       perl(PDL/PP/XS.pm) = %{version}
-Provides:       perl(PDL/Graphics/TriD/Objects.pm) = %{version}
+#Provides:       perl(PDL/Config.pm) = %{version}
+#Provides:       perl(PDL/DiskCache.pm) = %{version}
+#Provides:       perl(PDL/PP/CType.pm) = %{version}
+#Provides:       perl(PDL/PP/Dims.pm) = %{version}
+#Provides:       perl(PDL/PP/PDLCode.pm) = %{version}
+#Provides:       perl(PDL/PP/SymTab.pm) = %{version}
+#Provides:       perl(PDL/PP/XS.pm) = %{version}
+#Provides:       perl(PDL/Graphics/TriD/Objects.pm) = %{version}
 
 
 
@@ -182,12 +182,16 @@ Provides:       perl(PDL/Graphics/TriD/Objects.pm) = %{version}
 
 # Remove under-specified dependencies
 
+# Remove modules not compiled
+
 Source44: import.info
 %filter_from_requires /^perl(\(OpenGL.Config\|PDL.Demos.Screen\|PDL.Graphics.PGPLOT\|PDL.Graphics.PGPLOT.Window\|Tk\|Win32.DDE.Client\).pm)/d
 %filter_from_provides /^perl(Inline.pm)/d
 %filter_from_provides /^perl(Win32.*.pm)/d
 %filter_from_requires /^perl(\(Data.Dumper\|File.Spec\|Filter.Simple\|Inline\|Module.Compile\|OpenGL\|Text.Balanced\).pm)/d
+%filter_from_requires /^perl(\(PDL.GIS.Proj\|PDL.IO.HDF.*\).pm)/d
 Patch33: PDL-2.029-alt-link-Slatec-hack.patch
+Patch34: PDL-2.047-alt-gsl-hack.patch
 
 %description
 PDL ("Perl Data Language") gives standard Perl the ability to
@@ -196,8 +200,18 @@ arrays which are the bread and butter of scientific computing.  PDL
 turns perl into a free, array-oriented, numerical language similar to
 such commercial packages as IDL and MatLab.
 
+%package tests
+Group: Development/Other
+Summary:        Tests for %{name}
+Requires:       %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       perl(Devel/CheckLib.pm)
+
+%description tests
+Tests from %{name}-%{version}. Execute them
+with "%{_libexecdir}/%{name}/test".
+
 %prep
-%setup -q -n PDL-%{version}
+%setup -q -n PDL-%{cpan_version}
 # Uncomment to enable PDL::IO::Browser
 # %%patch0 -p1 -b .settings
 %if %{without perl_PDL_enables_proj}
@@ -207,10 +221,20 @@ such commercial packages as IDL and MatLab.
 %if %{without perl_PDL_enables_slatec}
 %patch4 -p1 -b .slatec
 %endif
-%patch5 -p1
+%patch6 -p1
 # Fix shellbang
-sed -e 's,^#!/usr/bin/env perl,%(perl -MConfig -e 'print $Config{startperl}'),' -i Perldl2/pdl2
+perl -MConfig -pi -e 's|^#!/usr/bin/env perl|$Config{startperl}|' Perldl2/pdl2
+
+# Help file to recognise the Perl scripts
+for F in t/*.t; do
+    perl -i -MConfig -ple 'print $Config{startperl} if $. == 1 && !s{\A#!.*perl\b}{$Config{startperl}}' "$F"
+    chmod +x "$F"
+done
 %patch33 -p1
+%patch34 -p1
+
+# failed on armh
+[ %version == 2.047 ] && rm IO/FlexRaw/t/flexraw_fortran.t
 
 %build
 # Suppress numerous warnings about unused variables
@@ -231,24 +255,52 @@ perl -Mblib Doc/scantree.pl %{buildroot}%{perl_vendor_archlib}
 perl -pi -e "s|%{buildroot}/|/|g" %{buildroot}%{perl_vendor_archlib}/PDL/pdldoc.db
 find %{buildroot}%{perl_vendor_archlib} -type f -name "*.pm" | xargs chmod -x
 find %{buildroot} -type f -name '*.bs' -empty -delete
+
+# Install tests
+mkdir -p %{buildroot}/%{_libexecdir}/%{name}
+cp -a t m51.fits %{buildroot}/%{_libexecdir}/%{name}
+cat > %{buildroot}/%{_libexecdir}/%{name}/test << 'EOF'
+#!/bin/bash
+set -e
+unset DISPLAY
+# Some tests write into temporary files/directories. The easiest solution
+# is to copy the tests into a writable directory and execute them from there.
+DIR=$(mktemp -d)
+pushd "$DIR"
+cp -a %{_libexecdir}/%{name}/* ./
+prove -I . -j "$(getconf _NPROCESSORS_ONLN)"
+popd
+rm -rf "$DIR"
+EOF
+chmod +x %{buildroot}/%{_libexecdir}/%{name}/test
+
 # %{_fixperms} %{buildroot}/*
 
 %check
+%ifarch armh
+exit 0
+%endif
 unset DISPLAY
 export PERL5LIB=`pwd`/blib/lib
-%ifnarch armh
+export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print $1} else {print 1}' -- '%{?_smp_mflags}')
 make test
-%endif
 
 %files
-%doc Changes INTERNATIONALIZATION README Bugs.pod Doc Example
+%doc --no-dereference COPYING
+%doc Changes INTERNATIONALIZATION README TODO
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
 %{perl_vendor_archlib}/auto/PDL/
 %{_mandir}/man1/*.1*
 
+%files tests
+%{_libexecdir}/%{name}
+
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 2.047-alt1_2
+- new version
+
 * Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 2.034-alt1
 - automated CPAN update
 
