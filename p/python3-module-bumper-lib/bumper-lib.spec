@@ -1,54 +1,34 @@
 %define oname bumper-lib
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 Summary: A library to bump / pin your dependency requirements
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/bumper-lib/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-url: https://pypi.io/packages/source/b/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-requests python-module-simplejson
-BuildRequires: python-module-sphinx-devel
+%py3_provides bumper
 
-%py_provides bumper
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-requests python3-module-simplejson
-%endif
+BuildRequires: python3-module-sphinx
 
 %description
 A library to bump / pin your dependency requirements. This is used by
 the bumper and workspace-tools package.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: A library to bump / pin your dependency requirements
-Group: Development/Python3
-%py3_provides bumper
-
-%description -n python3-module-%oname
-A library to bump / pin your dependency requirements. This is used by
-the bumper and workspace-tools package.
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 A library to bump / pin your dependency requirements. This is used by
@@ -72,65 +52,41 @@ subst "s|'setuptools-git'|'setuptools'|" setup.py
 # drop unneeded module wheel
 subst "s|, 'wheel'||" setup.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 export PYTHONPATH=$PWD/src
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 # AttributeError: module '__main__' has no attribute 'test'
 #python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Thu May 27 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.4-alt2
+- Drop python2 support
+
 * Mon Jul 01 2019 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
 - build new version
 - switch to build from tarball, enable python3 module
