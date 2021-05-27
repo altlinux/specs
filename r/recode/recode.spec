@@ -5,7 +5,7 @@
 
 Name: recode
 Version: 3.6
-Release: alt12
+Release: alt13
 
 Summary: The `recode' library converts files between character sets and usages
 License: GPL
@@ -16,14 +16,16 @@ Source: %url/archives/%name-%version%beta.tar.gz
 Patch0: recode4python.patch
 Patch1: recode-3.6-debian-boolsize.patch
 Patch2: recode-3.6-alt-unicode-in-docs.patch
+Patch3: recode-3.6-alt-e2k.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
 BuildRequires: chrpath
 
-Summary(ru_RU.KOI8-R): Библиотека recode конвертирует файлы из разных кодировок
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+
+Summary(ru_RU.UTF-8): п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟ recode п╨п╬п╫п╡п╣я─я┌п╦я─я┐п╣я┌ я└п╟п╧п╩я▀ п╦п╥ я─п╟п╥п╫я▀я┘ п╨п╬п╢п╦я─п╬п╡п╬п╨
 
 %description
 The `recode' program is a handy front-end to the `recode' library;
@@ -72,6 +74,9 @@ files to allow you to develop applications using the `recode' libraries.
 #patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%ifarch %e2k
+%patch3 -p1
+%endif
 
 %build
 rm acinclude.m4 m4/libtool.m4 m4/flex.m4
@@ -105,9 +110,14 @@ chrpath -d %buildroot%_bindir/%name
 %endif
 
 # TODO:
-# - keep an eye on 3.7 (now in beta) and eventually 4.0
+# - keep an eye on 3.7 (now in beta) and eventually 4.0 // if upstream's there
+# - configure.in:18: error: automatic de-ANSI-fication support has been removed
 
 %changelog
+* Thu May 27 2021 Michael Shigorin <mike@altlinux.org> 3.6-alt13
+- re-added lcc build fix by sem@ (3.6-alt11.1.1.E2K.1)
+- converted spec to utf-8
+
 * Tue Mar 09 2021 Ivan A. Melnikov <iv@altlinux.org> 3.6-alt12
 - Fix build
 
