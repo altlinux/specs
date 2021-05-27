@@ -2,7 +2,7 @@
 %define module Test-Differences
 
 Name: perl-%module
-Version: 0.67
+Version: 0.68
 Release: alt1
 Epoch: 1
 
@@ -13,7 +13,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source0: http://www.cpan.org/authors/id/D/DC/DCANTRELL/Test-Differences-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DC/DCANTRELL/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Text-
 Test strings and data structures and show differences if not ok.
 
 %prep
-%setup -q -n Test-Differences-%{version}
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ Test strings and data structures and show differences if not ok.
 %perl_vendor_privlib/Test
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 1:0.68-alt1
+- automated CPAN update
+
 * Thu Mar 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.67-alt1
 - automated CPAN update
 
