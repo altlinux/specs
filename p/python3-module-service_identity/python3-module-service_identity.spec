@@ -1,27 +1,24 @@
 %define oname service_identity
-%define package_name service-identity
 
-Name: python-module-%package_name
-Version: 18.1.0
-Release: alt2
+Name: python3-module-%oname
+Version: 21.1.0
+Release: alt1
 
-Summary: Service identity verification for pyOpenSSL
+Summary: Service identity verification for pyOpenSSL (Python 3)
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/pyca/service_identity
 
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
 # Source-url: https://pypi.python.org/packages/source/s/service_identity/service_identity-1.0.0.tar.gz
 Source: %oname-%version.tar
 BuildArch: noarch
-Provides: python-module-service_identity = %version-%release
-Obsoletes: python-module-service_identity <= 18.1.0
+Provides: python3-module-service-identity = %version-%release
+Obsoletes: python3-module-service-identity <= 18.1.0
 
-BuildPreReq: rpm-build-python
-BuildRequires: python-module-setuptools
-
-%setup_python_module %oname
+BuildPreReq: rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
 Use this package if you use pyOpenSSL and don't want to be MITMed.
@@ -34,19 +31,19 @@ other relevant RFCs too.
 %setup -n %oname-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%doc AUTHORS.rst LICENSE README.rst
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.egg-*
 
 %changelog
-* Thu May 27 2021 Vladimir Didenko <cow@altlinux.org> 18.1.0-alt2
-- build python3 package as a standalone package
+* Thu May 27 2021 Vladimir Didenko <cow@altlinux.org> 21.1.0-alt1
+- build python3 version as a standalone version
+- rename package to python3-module-service_identity
 
 * Fri Feb 15 2019 Vladimir Didenko <cow@altlinux.org> 18.1.0-alt1
 - new version
