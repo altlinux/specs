@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-MySQL
-Version:        0.06
-Release:        alt1_12
+Version:        0.0701
+Release:        alt1
 Summary:        Parse and format MySQL dates and times
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Format-MySQL
-Source0:        https://cpan.metacpan.org/modules/by-module/DateTime/DateTime-Format-MySQL-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/X/XM/XMIKEW/DateTime-Format-MySQL-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -49,11 +50,13 @@ perl Build.PL --installdirs=vendor
 ./Build test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 0.0701-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_12
 - update to new release by fcimport
 
