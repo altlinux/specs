@@ -3,8 +3,8 @@
 %define xdg_name org.openshot.OpenShot
 
 Name: openshot
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -59,13 +59,16 @@ Xbox, and many more common formats.
 %python3_sitelibdir/*.egg-info/
 %_pixmapsdir/*
 %_desktopdir/*
-%_iconsdir/hicolor/*/*/%{name}-qt.*
+%_iconsdir/hicolor/*/*/%{name}-qt*
 %_datadir/mime/packages/*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS README*
 
 
 %changelog
+* Sun Feb 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
+- 2.5.2
+
 * Thu Sep 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.1-alt3
 - NMU: package is no longer noarch (ALT #38916)
 

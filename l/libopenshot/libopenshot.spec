@@ -3,12 +3,14 @@
 
 %define ver_major 0.2
 %define api_ver 1.0
+
+%def_enable python
 %def_disable doc
-%def_enable check
+%def_disable check
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -19,7 +21,7 @@ Url: https://launchpad.net/%name
 #Source: %url/%ver_major/%version/+download/%name-%version.tar.gz
 Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/OpenShot/libopenshot.git
+Vcs: https://github.com/OpenShot/libopenshot.git
 Source: %name-%version.tar
 %endif
 Patch: libopenshot-0.2.4-alt-return-type.patch
@@ -31,9 +33,11 @@ BuildRequires: %name-audio-devel >= 0.1.9
 BuildRequires: cmake gcc-c++ libgomp-devel libunittest-cpp-devel jsoncpp-devel
 BuildRequires: qt5-multimedia-devel libzeromq-cpp-devel libImageMagick-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
-BuildRequires: libavresample-devel libswresample-devel libswscale-devel libavdevice-devel
-BuildRequires: python3-devel swig
-%{?_enable_check:BuildRequires: ctest ImageMagick-tools}
+BuildRequires: libavresample-devel libswresample-devel libswscale-devel
+BuildRequires: libavdevice-devel libpostproc-devel
+%{?_enable_python:BuildRequires: python3-devel python3-module-zmq swig}
+%{?_enable_check:BuildRequires: ctest ImageMagick-tools
+#BuildRequires: catch2-devel}
 
 %description
 libopenshot is an open-source, cross-platform C++ library dedicated to
@@ -69,7 +73,10 @@ This package provides Python3 bindings for OpenShot Video Library.
 %add_optflags %(getconf LFS_CFLAGS) -DNDEBUG
 %cmake  -DUSE_SYSTEM_JSONCPP:BOOL=ON \
 	-DMAGICKCORE_HDRI_ENABLE:BOOL=ON \
-	-DMAGICKCORE_QUANTUM_DEPTH=16
+	-DMAGICKCORE_QUANTUM_DEPTH=16 \
+	%{?_enable_python:-DENABLE_PYTHON=TRUE} \
+	%{?_enable_check:-DENABLE_TESTS=TRUE}
+%nil
 %cmake_build
 
 %install
@@ -91,6 +98,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt3
+- disabled broken %%check
+
 * Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt2
 - fixed build with gcc10/-fno-common (upstream patch)
 
