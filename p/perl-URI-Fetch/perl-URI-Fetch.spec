@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist URI-Fetch
 Name: perl-%dist
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Smart URI fetching/caching
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/URI-Fetch-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ syndication feeds (RSS, Atom, and others), in an intelligent,
 bandwidth- and time-saving way.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __BTE
 # requires network
@@ -40,6 +40,9 @@ rm t/01-fetch.t
 %perl_vendor_privlib/URI
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
