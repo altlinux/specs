@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name gst-plugins
 %define ver_major 1.18
 %define api_ver 1.0
@@ -21,7 +21,7 @@
 
 Name: %_name-base%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -204,6 +204,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt2
+- updated to 1.18.4-16-g0f86fca8d
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 
