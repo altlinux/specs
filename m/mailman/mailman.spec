@@ -3,7 +3,7 @@
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
 Version: 2.1.34.0.3.1d42a
-Release: alt1
+Release: alt2
 Epoch: 5
 
 %define mm_user %name
@@ -275,14 +275,6 @@ else
 	%_prefix/bin/update &> /dev/null ||:
 fi
 
-%post apache2
-%apache2_sbindir/a2chkconfig
-%post_apache2conf
-
-%postun apache2
-%apache2_sbindir/a2chkconfig
-%postun_apache2conf
-
 %preun
 %preun_service mailman
 
@@ -384,6 +376,10 @@ fi
 %docdir/mailman-*
 
 %changelog
+* Thu May 27 2021 Anton Farygin <rider@altlinux.ru> 5:2.1.34.0.3.1d42a-alt2
+- Fixed FTBFS: removed %%post scripts for apache2 due to changes
+  in rpm-build-apache2 and apache2 with migration post-scripts to filetriggers.
+
 * Thu Oct 22 2020 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.34.0.3.1d42a-alt1
 - 2.1.33-4-g0f97bcba -> 2.1.34-3-g1d42a8b8.
 
