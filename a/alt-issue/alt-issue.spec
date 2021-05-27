@@ -1,14 +1,16 @@
 Name: alt-issue
-Version: 1.0
+Version: 1.1
 Release: alt1
 
-Summary: Create issue.d banners for ALT servers
+Summary: Create issue.d banners for ALT distros
 License: GPLv2
 Group: System/Configuration/Other
 
 Url: http://wiki.sisyphus.ru/
 Source: %name-%version.tar
 BuildArch: noarch
+
+Obsoletes: %name-server-v < %EVR
 
 %description
 %summary.
@@ -17,25 +19,16 @@ BuildArch: noarch
 Summary: Create informational banner for ALT Server installation
 License: GPLv2
 Group: System/Configuration/Other
-Conflicts: %name-server-v
+Requires: %name = %EVR
 
 %description server
 Create informational banner for ALT Server installation.
-
-%package server-v
-Summary: Create informational banner for ALT Server-V installation
-License: GPLv2
-Group: System/Configuration/Other
-Conflicts: %name-server
-
-%description server-v
-Create informational banner for ALT Server-V installation.
 
 %package server-pve
 Summary: Create informational banner for PVE installation
 License: GPLv2
 Group: System/Configuration/Other
-Requires: %name-server-v = %EVR
+Requires: %name-server = %EVR
 
 %description server-pve
 Create informational banner for PVE installation.
@@ -45,18 +38,14 @@ Create informational banner for PVE installation.
 %install
 mkdir -p %buildroot%_sysconfdir/issue.d
 
-# Server:
-cat > %buildroot%_sysconfdir/issue.d/00server.issue <<EOF
-Welcome to ALT Server!
+# Welcome:
+cat > %buildroot%_sysconfdir/issue.d/00alt.issue <<EOF
+Welcome to \R!
 
-Hostname: \n
-IP: \4
 EOF
 
-# Server-V:
-cat > %buildroot%_sysconfdir/issue.d/00server-v.issue <<EOF
-Welcome to ALT Server-V!
-
+# Server:
+cat > %buildroot%_sysconfdir/issue.d/00server.issue <<EOF
 Hostname: \n
 IP: \4
 EOF
@@ -64,26 +53,26 @@ EOF
 # PVE:
 cat > %buildroot%_sysconfdir/issue.d/pve.issue <<EOF
 
-Use https://\4:8006/ to configure your PVE server.
+Use https://\4:8006/ to manage your PVE server.
 
 EOF
 
-%post server
+%post
 touch %_sysconfdir/issue
 
-%post server-v
-touch %_sysconfdir/issue
+%files
+%_sysconfdir/issue.d/00alt.issue
 
 %files server
 %_sysconfdir/issue.d/00server.issue
-
-%files server-v
-%_sysconfdir/issue.d/00server-v.issue
 
 %files server-pve
 %_sysconfdir/issue.d/pve.issue
 
 %changelog
+* Thu May 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1-alt1
+- change package structure, use \R macros
+
 * Mon May 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt1
 - initial build for ALT
 
