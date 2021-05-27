@@ -1,48 +1,34 @@
-Name: python-module-aiodns
+Name: python3-module-aiodns
 Version: 1.1.1
-Release: alt1
+Release: alt2
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Summary: Asynchronous DNS resolutions
 Source0: https://pypi.python.org/packages/3b/45/dcee156eabca900af3a1bab8acb9531636b13db4b677d44ba468a43969e0/aiodns-%{version}.tar.gz
 BuildArch: noarch
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python3-devel python3-module-setuptools
-%py_requires trollius
 
 %description
 Aiodns provides a simple way for doing asynchronous DNS resolutions with
 a synchronous looking interface by using pycares.
 
-%package -n python3-module-aiodns
-BuildArch: noarch
-Group: Development/Python3
-Summary: Asynchronous DNS resolutions
-
-%description -n python3-module-aiodns
-Aiodns provides a simple way for doing asynchronous DNS resolutions with
-a synchronous looking interface by using pycares.
-
 %prep
-%setup -q -n aiodns-%{version}
+%setup -n aiodns-%{version}
 
 %build
-%python_build -b build2
-%python3_build -b build3
+%python3_build
 
 %install
-rm -f build && ln -s build2 build && %python_install
-rm -f build && ln -s build3 build && %python3_install
+%python3_install
 
 %files
-%python_sitelibdir_noarch/*
-
-%files -n python3-module-aiodns
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu May 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
+- Drop python2 support.
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1
 - automated PyPI update
 
