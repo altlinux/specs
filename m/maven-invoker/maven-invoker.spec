@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-invoker
-Version:        2.2
-Release:        alt1_9jpp8
+Version:        3.0.1
+Release:        alt1_2jpp11
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-invoker/
@@ -49,13 +49,12 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
-
 %prep
 %setup -q
 %patch1 -p1
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -68,6 +67,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt1_2jpp11
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_9jpp8
 - new version
 
