@@ -36,7 +36,11 @@
 %def_enable libcdio
 %def_enable libcodec2
 %def_enable libdav1d
+%ifarch %e2k
+%def_disable libdc1394
+%else
 %def_enable libdc1394
+%endif
 %def_enable libdrm
 %def_disable libflite
 %def_enable libfontconfig
@@ -146,7 +150,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.4
-Release:	alt2
+Release:	alt4
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -157,6 +161,7 @@ Url:		http://ffmpeg.org
 # https://git.ffmpeg.org/ffmpeg.git
 Source:		%name-%version.tar
 Patch:		%name-%version-%release.patch
+Patch2000: %name-e2k-simd.patch
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 %ifarch %ix86 x86_64
@@ -557,6 +562,9 @@ This package contains static development files for libswscale.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 xz Changelog
@@ -697,10 +705,15 @@ xz Changelog
 	--extra-cflags="%optflags" \
 	--extra-version='%release' \
 	#
-%make_build
+%make_build all checkasm
 
 %install
 %makeinstall_std
+
+%check
+%ifnarch armh
+tests/checkasm/checkasm
+%endif
 
 %files
 %doc README.md
@@ -862,6 +875,13 @@ xz Changelog
 %endif
 
 %changelog
+* Wed May 26 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:4.4-alt4
+- disabled checkasm for armh due to segfault
+
+* Wed May 26 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:4.4-alt3
+- e2k: added SIMD patch, disabled libdc1394
+- added checkasm run
+
 * Thu Apr 22 2021 Ivan A. Melnikov <iv@altlinux.org> 2:4.4-alt2
 - enable cuvid on supported architectures only
 - link with libatomic on %%mips32
