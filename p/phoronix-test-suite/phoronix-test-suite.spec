@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: phoronix-test-suite
-Version: 9.8.0
+Version: 10.4.0
 Release: alt1
 Summary: An Automated, Open-Source Testing Framework
 Summary(ru_RU.UTF8): Автоматизированная среда тестирования с открытым исходным кодом
@@ -24,6 +24,7 @@ Requires: php7-gd
 Requires: php7-pdo_sqlite
 Requires: php7-posix
 Requires: php7-curl
+Requires: php7-sockets
 Requires: hicolor-icon-theme
 
 %description
@@ -70,8 +71,12 @@ mv %buildroot/%_prefix/%_unitdir/* %buildroot/%_unitdir
 %_datadir/appdata/%name.appdata.xml
 %_unitdir/phoromatic-server.service
 %_unitdir/phoromatic-client.service
+%_unitdir/phoronix-result-server.service
 
 %changelog
+* Wed May 26 2021 Evgeny Sinelnikov <sin@altlinux.org> 10.4.0-alt1
+- Update to latest release
+
 * Wed Jul 22 2020 Nikita Obukhov <nickf@altlinux.org> 9.8.0-alt1
 - Initial build
 
