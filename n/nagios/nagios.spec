@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt15
+Release: alt16
 
 Summary: Services and network monitoring system
 License: GPL
@@ -396,6 +396,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 3.0.6-alt16
+- rebuild for girar bug #38332
+
 * Wed Jan 27 2021 Paul Wolneykien <manowar@altlinux.org> 3.0.6-alt15
 - Fixes:
   + CVE-2017-12847 Kill arbitrary processes by leveraging access to PID file.
