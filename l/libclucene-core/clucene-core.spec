@@ -1,7 +1,8 @@
 %define rname clucene-core
+
 Name: libclucene-core
 Version: 2.3.3.4
-Release: alt5
+Release: alt6
 
 Summary: CLucene is a C++ port of Lucene.
 License: LGPL / Apache2
@@ -69,6 +70,10 @@ as it is written in C++.
 %patch21 -p2
 
 %build
+%ifarch %e2k
+# lcc 1.25.15 barfs on googletest's testing::<unnamed>::TestNameIs::operator()
+%add_optflags -Wno-error=unused-function
+%endif
 %Kcmake \
     -DBUILD_CONTRIBS_LIB:BOOL=ON \
     -DLUCENE_SYS_INCLUDES:PATH=%_libdir
@@ -98,6 +103,9 @@ make -C BUILD*
 #%_libdir/lib*.a
 
 %changelog
+* Fri May 28 2021 Michael Shigorin <mike@altlinux.org> 2.3.3.4-alt6
+- E2K: ftbfs workaround
+
 * Mon Mar 15 2021 Sergey V Turchin <zerg@altlinux.org> 2.3.3.4-alt5
 - disable multiprocessor build
 
