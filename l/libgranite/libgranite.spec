@@ -1,11 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_disable docs
+%def_enable check
 
 %define _name granite
 %define rdn_name io.elementary.%_name
-%define ver_major 5.5
+%define ver_major 6.0
 %define api_ver 1.0
-%define sover 5
+%define sover 6
 
 Name: libgranite
 Version: %ver_major.0
@@ -23,11 +24,14 @@ Source: %url/archive/%version/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
+%define glib_ver 2.50
 %define gtk_ver 3.22
+%define vala_ver 0.40
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: vala-tools libgtk+3-devel >= %gtk_ver libgee0.8-devel
-BuildRequires: gobject-introspection-devel
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: vala-tools >= %vala_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libgee0.8-devel gobject-introspection-devel
 BuildRequires: libgtk+3-gir-devel libgee0.8-gir-devel
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
 
@@ -101,9 +105,13 @@ GObject introspection devel data for the granite library.
 %meson_install
 %find_lang %_name
 
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
+
 %files -f %_name.lang
 %doc README*
-%_libdir/*.so.*
+%_libdir/*.so.%{sover}*
 %_datadir/metainfo/%_name.appdata.xml
 
 %files devel
@@ -127,6 +135,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Thu Jul 02 2020 Yuri N. Sedunov <aris@altlinux.org> 5.5.0-alt1
 - updated to 5.5.0-2-g5bab90be
 

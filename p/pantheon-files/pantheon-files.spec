@@ -9,7 +9,7 @@
 
 Name: pantheon-files
 Version: %ver_major.0
-Release: alt1
+Release: alt3
 
 Summary: The file manager of the Pantheon desktop
 License: GPL-3.0
@@ -30,9 +30,10 @@ Provides: %rdn_name = %version-%release
 #Suggests: tumbler-plugins-extra
 Requires: polkit zeitgeist tumbler elementary-icon-theme
 
-%define granite_ver 5.2.5
+%define granite_ver 6.0.0
 
 BuildRequires(pre): meson
+BuildRequires: flatpak-builder
 BuildRequires: intltool libappstream-glib-devel
 BuildRequires: vala-tools libsqlite3-devel libgtk+3-devel
 BuildRequires: libgee0.8-devel libgranite-devel
@@ -81,7 +82,6 @@ This package provides Vala language bindings for the pantheon-files.
 %doc AUTHORS README*
 %_bindir/*
 %_libdir/*.so.*
-%_libdir/gtk-3.0/modules/libpantheon-filechooser-module.so
 %_libdir/%rdn_name/
 %_desktopdir/%rdn_name.desktop
 %_datadir/dbus-1/services/%rdn_name.service
@@ -111,6 +111,13 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt3
+- updated to 4.5.0-425-g447d98bfc
+- updated BR
+
+* Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt2
+- updated to 4.5.0-316-geb881f351
+
 * Fri Dec 04 2020 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
 - updated to 4.5.0-133-g96fe89cfd
 
