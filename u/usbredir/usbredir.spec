@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: usbredir
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 Summary: USB network redirection protocol libraries
 Group: System/Libraries
@@ -9,8 +9,6 @@ License: LGPLv2+
 Url: http://gitlab.freedesktop.org/spice/usbredir
 
 Source: %name-%version.tar
-Patch0001: 0001-Fix-generated-by-meson-libusbredirhostpc.patch
-Patch0002: 0002-Add-local-directory-to-include-search-path-for-meson.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -74,12 +72,10 @@ A simple usb-host tcp server, using libusbredirhost.
 
 %prep
 %setup
-%patch0001 -p1
-%patch0002 -p1
 
 %build
 %meson
-%meson_build
+%meson_build 
 
 %install
 %meson_install
@@ -101,6 +97,9 @@ A simple usb-host tcp server, using libusbredirhost.
 %_man1dir/usbredirserver.*
 
 %changelog
+* Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
+- new version 0.10.0
+
 * Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
 - new version 0.9.0
 
