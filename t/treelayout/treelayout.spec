@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 
 Name:          treelayout
 Version:       1.0.3
-Release:       alt1_10jpp11
+Release:       alt1_13jpp11
 Summary:       Efficient and customizable Tree Layout Algorithm in Java
 License:       BSD
 URL:           http://treelayout.sourceforge.net/
@@ -49,15 +49,20 @@ cp -p %{SOURCE1} .
 # sonatype-oss-parent is deprecated in Fedora
 %pom_remove_parent %{core} %{core}.demo %{core}.netbeans %{core}.netbeans.demo
 
-# fix non ASCII chars
-native2ascii -encoding UTF8 \
-  %{core}/src/main/java/org/abego/treelayout/package-info.java \
-  %{core}/src/main/java/org/abego/treelayout/package-info.java
+# update the source and target JDK
+sed -i 's/1\.5/1.8/g' $(find . -name pom.xml)
+
+# fix non ASCII chars for JDK 8 and earlier
+if [ -x %{_bindir}/native2ascii ]; then
+  native2ascii -encoding UTF8 \
+    %{core}/src/main/java/org/abego/treelayout/package-info.java \
+    %{core}/src/main/java/org/abego/treelayout/package-info.java
+fi
 
 %mvn_package :%{core}.project __noinstall
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -74,6 +79,9 @@ native2ascii -encoding UTF8 \
 %doc --no-dereference %{core}/src/LICENSE.TXT
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_13jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_10jpp11
 - update
 
