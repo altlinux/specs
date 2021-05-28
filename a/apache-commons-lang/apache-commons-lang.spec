@@ -1,28 +1,26 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-
 %global base_name       lang
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt5_24jpp8
+Release:        alt5_32jpp11
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Patch1:         0002-Fix-FastDateFormat-for-Java-7-behaviour.patch
+
+URL:            https://commons.apache.org/%{base_name}
+Source0:        https://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Patch0:         0000-Fix-FastDateFormat-for-Java-7-behaviour.patch
 
 BuildArch:      noarch
+
 BuildRequires:  maven-local
 BuildRequires:  apache-commons-parent
 BuildRequires:  maven-surefire-provider-junit
@@ -52,21 +50,32 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch1 -p1
+%patch0 -p1
+
 sed -i 's/\r//' *.txt *.html
-
-# "enum" is used as a Java identifier, which is prohibited in Java >= 1.5
-%pom_add_plugin org.apache.maven.plugins:maven-javadoc-plugin . "
-    <configuration><source>1.3</source></configuration>"
-
 
 %mvn_file  : %{name} %{short_name}
 %mvn_alias : org.apache.commons: %{base_name}:%{base_name}
-# this package needs to be compiled with -source 1.3 option
-%mvn_config buildSettings/compilerSource 1.3
+
+# remove org.apache.commons.lang.enum package
+# "enum" is a keyword since Java 4 and cannot be used as an identifier
+rm -r src/main/java/org/apache/commons/lang/enum/
+rm -r src/test/java/org/apache/commons/lang/enum/
+rm src/test/java/org/apache/commons/lang/enums/EnumTest.java
+
+# convert some stray ISO-8859-1 characters to UTF-8
+iconv -f ISO-8859-1 -t UTF-8 \
+    src/main/java/org/apache/commons/lang/Entities.java > \
+    src/main/java/org/apache/commons/lang/Entities.java.utf-8
+mv src/main/java/org/apache/commons/lang/Entities.java.utf-8 \
+    src/main/java/org/apache/commons/lang/Entities.java
 
 %build
-%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.lang
+%mvn_build -f -- \
+    -Dcommons.osgi.symbolicName=org.apache.commons.lang \
+    -Dmaven.compiler.source=1.8 \
+    -Dmaven.compiler.target=1.8 \
+    -Dsource=1.8
 
 %install
 %mvn_install
@@ -79,6 +88,9 @@ sed -i 's/\r//' *.txt *.html
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:2.6-alt5_32jpp11
+- fixed build
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_24jpp8
 - new version
 
