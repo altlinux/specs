@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 Name:           jsoup
 Summary:        Java library for working with real-world HTML
 Version:        1.12.1
-Release:        alt1_2jpp11
+Release:        alt1_3jpp11
 License:        MIT
 
 URL:            http://jsoup.org/
@@ -56,8 +56,13 @@ API documentation for %{name}.
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 
+# Expose internal packages in the OSGi metadata, clearly marking them as such
+# using the x-internal attribute
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-bundle-plugin']/pom:configuration/pom:instructions" \
+  "<_exportcontents>*.internal;x-internal:=true,*</_exportcontents>"
+
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -70,6 +75,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.12.1-alt1_3jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.12.1-alt1_2jpp11
 - new version
 
