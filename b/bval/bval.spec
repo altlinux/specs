@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-1.8-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
+%define fedora 32
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.1.1
+%define version 2.0.3
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 
@@ -26,8 +26,8 @@ BuildRequires: jpackage-1.8-compat
 %endif
 
 Name:          bval
-Version:       1.1.1
-Release:       alt3_7jpp8
+Version:       2.0.3
+Release:       alt1_0jpp11
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
@@ -41,7 +41,7 @@ BuildRequires: mvn(javax.annotation:javax.annotation-api)
 BuildRequires: mvn(javax.el:javax.el-api)
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.inject:javax.inject)
-BuildRequires: mvn(javax.validation:validation-api:1)
+BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache:apache:pom:)
@@ -55,6 +55,8 @@ BuildRequires: mvn(org.apache.commons:commons-weaver-maven-plugin)
 %endif
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-interceptor_3.0_spec)
+BuildRequires: mvn(org.apache.tomcat:tomcat-jasper-el)
+BuildRequires: mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
 BuildRequires: mvn(org.apache.geronimo.specs:specs-parent:pom:)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
@@ -62,10 +64,13 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires: mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires: mvn(org.codehaus.mojo:jaxb2-maven-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-report-plugin)
 BuildRequires: mvn(org.freemarker:freemarker)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires: mvn(org.mockito:mockito-core)
 BuildRequires: mvn(xpp3:xpp3)
+#BuildRequires: openjfx-devel
+#BuildRequires: java-1.8.0-openjdk-openjfx
 
 BuildArch:     noarch
 Source44: import.info
@@ -83,13 +88,6 @@ Summary:       Apache BVal :: Extras
 %description extras
 BVal - non-JSR303 routines and constraints.
 
-%package json
-Group: Development/Java
-Summary:       Apache BVal :: JSON
-
-%description json
-BVal - Optional JSON Component.
-
 %package jsr
 Group: Development/Java
 Summary:       Apache BVal :: JSR 349
@@ -104,13 +102,6 @@ Summary:       Apache BVal :: Parent POM
 %description parent
 Apache BVal Parent POM.
 
-%package xstream
-Group: Development/Java
-Summary:       Apache BVal :: XStream
-
-%description xstream
-BVal XML Metadata with XStream.
-
 %package javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}
@@ -123,10 +114,13 @@ This package contains javadoc for %{name}.
 %setup -q -n %{name}-parent-%{namedversion}
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
+# The old schemas break a build for some reason
+rm bval-jsr/src/main/xsd/validation-configuration-1.0.xsd
+rm bval-jsr/src/main/xsd/validation-configuration-1.1.xsd
+rm bval-jsr/src/main/xsd/validation-mapping-1.0.xsd
+rm bval-jsr/src/main/xsd/validation-mapping-1.1.xsd
 
 %pom_disable_module bval-tck
-# org.hibernate.beanvalidation.tck:beanvalidation-tck-tests:1.1.3.Final
-%pom_disable_module bval-tck11
 %pom_disable_module bundle
 
 %pom_xpath_remove pom:Embed-Dependency bundle
@@ -135,81 +129,85 @@ find . -name "*.jar" -delete
 %pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:jdepend-maven-plugin
 %pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r :maven-site-plugin
+%pom_remove_plugin -r :maven-scm-publish-plugin
+%pom_remove_plugin -r :sigtest-maven-plugin
 
-# NoClassDefFoundError: org/xmlpull/v1/XmlPullParserFactory
-%pom_add_dep xpp3:xpp3:1.1.4c:test %{name}-json
-%pom_add_dep xpp3:xpp3:1.1.4c:test %{name}-xstream
+%pom_remove_dep -r org.glassfish:javax.el
+%pom_remove_dep -r de.odysseus.juel:juel-api
 
 %if %{without commons-weaver}
 # Remove commons-weaver support
 %pom_remove_plugin -r :commons-weaver-maven-plugin
 %pom_remove_dep -r :commons-weaver-privilizer-api
 sed -i '/Privilizing/d' \
- bval-core/src/main/java/org/apache/bval/model/MetaBean.java \
- bval-core/src/main/java/org/apache/bval/util/BValVersion.java \
- bval-core/src/main/java/org/apache/bval/util/FieldAccess.java \
- bval-core/src/main/java/org/apache/bval/util/MethodAccess.java \
- bval-core/src/main/java/org/apache/bval/util/reflection/Reflection.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/AnnotationConstraintBuilder.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/AnnotationProcessor.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/ApacheFactoryContext.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/ApacheValidatorFactory.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/BeanDescriptorImpl.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/ClassValidator.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/ConfigurationImpl.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/ConstraintAnnotationAttributes.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/ConstraintDefaults.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/DefaultMessageInterpolator.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/DefaultValidationProviderResolver.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/JsrMetaBeanFactory.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/resolver/DefaultTraversableResolver.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/xml/AnnotationProxyBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/util/Methods.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/util/AnnotationProxyBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/util/AnnotationsManager.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/job/ComputeConstraintValidatorClass.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/descriptor/MetadataReader.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/descriptor/PropertyD.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/metadata/HierarchyBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/metadata/XmlBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/metadata/ClassLoadingValidatorMappingProvider.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/metadata/ReflectionBuilder.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationMappingParser.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/MappingValidator.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationParser.java \
- bval-xstream/src/main/java/org/apache/bval/xml/XMLMetaBeanManager.java
+ bval-jsr/src/main/java/org/apache/bval/util/reflection/Reflection.java \
+ bval-jsr/src/main/java/org/apache/bval/util/BValVersion.java
 sed -i '/Privileged/d' \
- bval-jsr/src/main/java/org/apache/bval/jsr/AnnotationConstraintBuilder.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/ApacheValidatorFactory.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/ConfigurationImpl.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/xml/AnnotationProxyBuilder.java \
  bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationMappingParser.java \
- bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationParser.java
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationParser.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ParticipantFactory.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/util/AnnotationProxyBuilder.java \
 %endif
 
-%pom_change_dep -r :geronimo-annotation_1.2_spec javax.annotation:javax.annotation-api:1.2
 %pom_change_dep -r :geronimo-atinject_1.0_spec javax.inject:javax.inject:1
 %pom_change_dep -r :geronimo-interceptor_1.2_spec :geronimo-interceptor_3.0_spec
 # https://bugzilla.redhat.com/show_bug.cgi?id=1276632
-%pom_change_dep -r :geronimo-jcdi_1.1_spec javax.enterprise:cdi-api:1.1
+%pom_change_dep -r :geronimo-jcdi_2.0_spec javax.enterprise:cdi-api:2.0
 %pom_change_dep -r :geronimo-jpa_2.0_spec org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Draft-16
 
-%pom_change_dep -r :tomcat-el-api javax.el:javax.el-api:3.0.0
-
-%mvn_alias :bval-jsr :bval-jsr303
+#jsr requires openjfx
+#mvn_alias :bval-jsr :bval-jsr303
+%pom_disable_module bval-jsr
+%pom_disable_module bval-extras
 %mvn_package ":{*}::tests:" @1
 
 %build
 
-%mvn_build -s -- -Dri -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip.exec=true
+%mvn_build -f -s -j -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dri -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install 
 
-%files -f .mfiles-%{name}-core
+%files
 %doc CHANGES.txt README.txt RELEASE-NOTES.adoc
 %doc --no-dereference LICENSE NOTICE
 
-%files extras -f .mfiles-%{name}-extras
-%files json -f .mfiles-%{name}-json
-%files jsr -f .mfiles-%{name}-jsr
+#files extras -f .mfiles-%{name}-extras
+#files jsr -f .mfiles-%{name}-jsr
 %files parent -f .mfiles-%{name}-parent
 %doc --no-dereference LICENSE NOTICE
-%files xstream -f .mfiles-%{name}-xstream
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+#files javadoc -f .mfiles-javadoc
+#%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_0jpp11
+- new version, build w/o jsr and extras due to openjfx dependency
+
 * Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_7jpp8
 - support of glassfish-jaxb
 
