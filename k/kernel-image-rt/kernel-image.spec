@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
-%define kernel_base_version	4.19
-%define kernel_sublevel		.189
-%define kernel_rt_release	rt78
+%define kernel_base_version	5.10
+%define kernel_sublevel		.35
+%define kernel_rt_release	rt39
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -87,6 +87,7 @@ BuildRequires: lzma-utils
 BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel
+BuildRequires: rsync
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15}}
 Provides: kernel-modules-eeepc-%flavour = %version-%release
@@ -122,9 +123,7 @@ AutoReqProv: no
 
 %description
 This package contains the Linux kernel %kernel_base_version%kernel_sublevel \
-with PREEMPT_RT patches (%kernel_extra_version).
-
-This kernel uses most vanilla config as possible to achieve better stability.
+with PREEMPT_RT patches (%kernel_extra_version) with some OSADL patches.
 
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
@@ -188,8 +187,15 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1 -s
 
-# ALT glibc contains strlcpy, so we need disable it there:
-sed -i /strlcpy/d tools/include/linux/string.h
+# OSADL patches
+## https://www.osadl.org/NMI-SysRq.sysysrequest-via-nmi-polling.0.html
+patch -p1 -s < add-nmi-callback-and-raw-parport-driver.patch # SETPARPORT_RAW
+## https://www.osadl.org/Latency-histograms.latencyhist.0.html
+patch -p1 -s < latency-histograms.patch # PREEMPTIRQ_EVENTS *_HIST
+## https://www.osadl.org/Ping-SysRq.sysysrequest-via-ping.0.html
+patch -p1 -s < net-ipv4-icmp-ping-sysrq.patch
+## https://www.osadl.org/Precise-load-measurement.precise-system-load.0.html
+patch -p1 -s < sched-add-per-cpu-load-measurement.patch # CPU_IDLERUNTIME
 
 # fix -rt suffix
 rm -f localversion*
@@ -239,6 +245,15 @@ FORBID="TRANSPARENT_HUGEPAGE
 for opt in $FORBID; do
 	grep CONFIG_$opt= .config && exit 1
 done
+
+grep ^CONFIG_PREEMPT_RT=y .config
+
+# Check options from OSADL patches are enabled.
+grep SETPARPORT_RAW .config
+grep CONFIG_MISSED_TIMER_OFFSETS_HIST .config
+grep CONFIG_WAKEUP_LATENCY_HIST .config
+grep CONFIG_SWITCHTIME_HIST .config
+grep CPU_IDLERUNTIME .config
 
 %make_build %make_target
 %make_build modules
@@ -342,7 +357,7 @@ KbuildFiles="
 	scripts/recordmcount.c
 	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
-	scripts/module-common.lds
+	scripts/module.lds
 	scripts/subarch.include
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
@@ -440,6 +455,9 @@ vm-run --depmod cat /sys/kernel/realtime
 %endif
 
 %changelog
+* Wed May 26 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.35-alt1.rt39
+- Update to v5.10.35-rt39 (12 May 2021).
+
 * Thu May 06 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.189-alt1.rt78
 - Update to v4.19.189-rt78 (28 Apr 2021).
 
