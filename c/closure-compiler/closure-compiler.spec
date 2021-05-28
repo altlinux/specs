@@ -11,7 +11,7 @@ Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %%(printf %%.7s %%commit)
 Version:    20160315
-Release:    alt1_11jpp8
+Release:    alt2_11jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -74,7 +74,7 @@ rm -rf lib/*
 </instructions></configuration>" pom-main.xml
 
 %build
-%mvn_build -f
+%mvn_build -f -j
 
 xsltproc \
         --nonet \
@@ -99,10 +99,13 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 %doc --no-dereference COPYING
 %doc README.md
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference COPYING
+#%files javadoc -f .mfiles-javadoc
+#%doc --no-dereference COPYING
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1:20160315-alt2_11jpp8
+- disabled javadoc to fix build
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_11jpp8
 - update
 
