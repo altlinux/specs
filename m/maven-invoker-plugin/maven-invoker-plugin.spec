@@ -1,90 +1,69 @@
+
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
+
+Name: maven-invoker-plugin
+Version: 3.2.1
+Summary: Maven Invoker Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-invoker-plugin/
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with     groovy
+Release: alt0.1jpp
 
-Name:           maven-invoker-plugin
-Version:        1.10
-Release:        alt1_11jpp8
-Summary:        Maven Invoker Plugin
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
-BuildArch:      noarch
+Packager: Igor Vlasenko <viy@altlinux.org>
+Provides: maven-invoker-plugin = 3.2.1-2.fc32
+Provides: mvn(org.apache.maven.plugins:maven-invoker-plugin) = 3.2.1
+Provides: mvn(org.apache.maven.plugins:maven-invoker-plugin:pom:) = 3.2.1
+Requires: java-headless
+Requires: javapackages-filesystem
+Requires: mvn(commons-io:commons-io)
+Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
+Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-impl)
+Requires: mvn(org.apache.maven.shared:maven-artifact-transfer)
+Requires: mvn(org.apache.maven.shared:maven-invoker)
+Requires: mvn(org.apache.maven.shared:maven-script-interpreter)
+Requires: mvn(org.apache.maven.shared:maven-shared-utils)
+Requires: mvn(org.apache.maven:maven-artifact)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-settings)
+Requires: mvn(org.beanshell:bsh)
+Requires: mvn(org.codehaus.plexus:plexus-i18n)
+Requires: mvn(org.codehaus.plexus:plexus-interpolation)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch: noarch
+Source: maven-invoker-plugin-3.2.1-2.fc32.cpio
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.beanshell:bsh)
-%if %{with groovy}
-BuildRequires:  mvn(org.codehaus.groovy:groovy)
-%endif
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-Source44: import.info
 
 %description
 The Maven Invoker Plugin is used to run a set of Maven projects. The plugin
 can determine whether each project execution is successful, and optionally
 can verify the output generated from a given project execution.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
 %prep
-%setup -q 
-
-%if %{without groovy}
-%pom_remove_dep ':${groovy-artifactId}'
-%endif
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f 
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 3.2.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_11jpp8
 - update
 

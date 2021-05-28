@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shade-plugin
 Version:        3.2.1
-Release:        alt1_1jpp8
+Release:        alt1_3jpp11
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
@@ -63,11 +63,8 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %pom_remove_dep 'com.google.guava:guava:'
 %pom_add_dep 'com.google.guava:guava'
 
-sed -i 's/import org\.apache\.maven\.shared\.transfer\.artifact\.\(.*\)/import org.apache.maven.shared.artifact.\1/' src/main/java/org/apache/maven/plugins/shade/mojo/ShadeMojo.java
-sed -i 's/import org\.apache\.maven\.shared\.transfer\.artifact\.\(.*\)/import org.apache.maven.shared.artifact.\1/' src/test/java/org/apache/maven/plugins/shade/mojo/ShadeMojoTest.java
-
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -79,6 +76,9 @@ sed -i 's/import org\.apache\.maven\.shared\.transfer\.artifact\.\(.*\)/import o
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.2.1-alt1_3jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_1jpp8
 - new version
 

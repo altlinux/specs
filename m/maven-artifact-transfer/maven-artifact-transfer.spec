@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-artifact-transfer
-Version:        0.9.0
-Release:        alt1_6jpp8
+Version:        0.11.0
+Release:        alt1_2jpp11
 Epoch:          1
 Summary:        Apache Maven Artifact Transfer
 License:        ASL 2.0
@@ -32,6 +32,7 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.eclipse.aether:aether-api)
 BuildRequires:  mvn(org.eclipse.aether:aether-impl)
 BuildRequires:  mvn(org.eclipse.aether:aether-util)
+BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 Source44: import.info
 
@@ -61,7 +62,7 @@ This package provides %{summary}.
 find -name Maven30\*.java -delete
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -73,6 +74,9 @@ find -name Maven30\*.java -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 1:0.11.0-alt1_2jpp11
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.9.0-alt1_6jpp8
 - new version
 

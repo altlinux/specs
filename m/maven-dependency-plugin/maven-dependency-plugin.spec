@@ -1,20 +1,23 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-dependency-plugin
 Version:        3.1.1
-Release:        alt1_2jpp8
+Release:        alt1_5jpp11
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
 BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+# port to maven-artifact-transfer 0.11.0
+Patch0:         00-maven-artifact-transfer-0.11.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(classworlds:classworlds)
@@ -34,7 +37,7 @@ BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.apache.maven.shared:file-management)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer) >= 0.11.0
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-analyzer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
@@ -63,6 +66,7 @@ BuildArch: noarch
 
 %prep
 %setup -q
+%patch0 -p1
 
 %pom_remove_plugin :maven-enforcer-plugin
 
@@ -83,6 +87,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_5jpp11
+- update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_2jpp8
 - new version
 

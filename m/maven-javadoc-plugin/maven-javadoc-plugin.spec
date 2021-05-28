@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-javadoc-plugin
-Version:        3.0.1
-Release:        alt1_3jpp8
+Version:        3.1.1
+Release:        alt1_0jpp11
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
@@ -35,7 +35,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer) >= 0.11.0
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
@@ -65,10 +65,8 @@ API documentation for %{name}.
 
 %patch1 -p1
 
-%pom_remove_plugin :maven-enforcer-plugin
-
 %build
-%mvn_build -f -- -DmavenVersion=3.5.0
+%mvn_build -j -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -DmavenVersion=3.5.0
 
 %install
 %mvn_install
@@ -76,10 +74,13 @@ API documentation for %{name}.
 %files -f .mfiles
 %doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+#%files javadoc -f .mfiles-javadoc
+#%doc LICENSE NOTICE
 
 %changelog
+* Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_0jpp11
+- bootstrap
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_3jpp8
 - new version
 
