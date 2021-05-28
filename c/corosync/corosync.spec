@@ -10,7 +10,7 @@
 %define _localstatedir %_var
 
 Name: corosync
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
@@ -204,6 +204,9 @@ ln -r -s \
 %endif
 
 %changelog
+* Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.3-alt1
+- 3.1.3
+
 * Sat Apr 24 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
 - 3.1.2
 
