@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.3.3
-Release: alt3.op2
+Release: alt4.op2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -328,6 +328,59 @@ chmod 755 %buildroot/usr/lib/cups/backend/ipp
 
 %preun
 %preun_service cups
+
+%triggerun -- %name < 2.3.3-alt2.op2
+if [ $2 -gt 0 ]; then
+# This is cups upgrade.
+	SYSTEMCTL=/bin/systemctl
+	if /sbin/sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1 ; then
+# collect service states
+		enable_lpd_socket=0
+		enable_cups_path=0
+		enable_cups_service=0
+		enable_cups_socket=0
+
+		if "$SYSTEMCTL" is-enabled org.cups.cups-lpd.socket >/dev/null 2>&1 ; then
+			enable_lpd_socket=1
+		fi
+
+		if "$SYSTEMCTL" is-enabled org.cups.cupsd.path >/dev/null 2>&1 ; then
+			enable_cups_path=1
+		fi
+
+		if "$SYSTEMCTL" is-enabled org.cups.cupsd.service >/dev/null 2>&1 ; then
+			enable_cups_service=1
+		fi
+
+		if "$SYSTEMCTL" is-enabled org.cups.cupsd.socket >/dev/null 2>&1 ; then
+			enable_cups_socket=1
+		fi
+
+# disable services with old names
+		"$SYSTEMCTL" disable org.cups.cups-lpd.socket ||:
+		"$SYSTEMCTL" disable org.cups.cupsd.path ||:
+		"$SYSTEMCTL" disable org.cups.cupsd.service ||:
+		"$SYSTEMCTL" disable org.cups.cupsd.socket ||:
+
+# re-enable services with new names
+		if [ $enable_lpd_socket -eq 1 ] ; then
+			"$SYSTEMCTL" enable cups-lpd.socket
+		fi
+
+		if [ $enable_cups_path -eq 1 ] ; then
+			"$SYSTEMCTL" enable cups.path
+		fi
+
+		if [ $enable_cups_service -eq 1 ] ; then
+			"$SYSTEMCTL" enable cups.service
+		fi
+
+		if [ $enable_cups_socket -eq 1 ] ; then
+			"$SYSTEMCTL" enable cups.socket
+		fi
+	fi
+fi
+
 %files
 %doc README*
 %_docdir/%name
@@ -383,6 +436,9 @@ chmod 755 %buildroot/usr/lib/cups/backend/ipp
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Thu May 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt4.op2
+- Added service migration script (Closes: #40107)
+
 * Thu Apr 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt3.op2
 - Removed dpkg-architecture call from cups-config.
 
