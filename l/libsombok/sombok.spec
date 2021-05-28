@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt2_14
+Release:        alt3_14
 Summary:        Unicode Text Segmentation Package
 License:        GPLv2+ or Artistic clarified
 URL:            http://sf.net/projects/linefold/
@@ -64,7 +64,11 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 # a file conflict on multilib systems, bug #1853260
 mv %{buildroot}/%{_includedir}/sombok.h %{buildroot}/%{_includedir}/sombok-%{_arch}.h
 install -m 0644 %{SOURCE1} %{buildroot}/%{_includedir}/sombok.h
-# sombok-arm.h is included in wrapper
+
+# not all sombok-arch.h are included in wrapper
+%ifarch %ix86
+ln -s sombok-%{_arch}.h %buildroot%_includedir/sombok-i386.h ||:
+%endif
 %ifarch armh
 ln -s sombok-armh.h %buildroot%_includedir/sombok-arm.h
 %endif
@@ -86,6 +90,9 @@ ln -s sombok-armh.h %buildroot%_includedir/sombok-arm.h
 
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt3_14
+- fix for i586
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt2_14
 - fix for armh
 
