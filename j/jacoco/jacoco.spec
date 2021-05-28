@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /osgi(org.apache.ant*/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      jacoco
-Version:   0.7.8
-Release:   alt1_8jpp8
+Version:   0.8.3
+Release:   alt1_4jpp11
 Summary:   Java Code Coverage for Eclipse 
 License:   EPL
 URL:       http://www.eclemma.org/jacoco/
@@ -29,12 +29,12 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-tools-javadoc)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.apache.maven.shared:file-management)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jacoco:org.jacoco.build:pom:)
 BuildRequires:  mvn(org.ow2.asm:asm-debug-all)
@@ -68,7 +68,7 @@ A Jacoco plugin for maven.
 
 # Make it work with ASM 6.0
 # TODO: forward upstream
-sed -i '/org.objectweb.asm/s/version="[^"]*"/bundle-version="[5.1.0,7.0.0)"/' $(find -name \*.MF)
+#sed -i '/org.objectweb.asm/s/version="[^"]*"/bundle-version="[5.1.0,7.0.0)"/' $(find -name \*.MF)
 
 %pom_disable_module ../org.jacoco.examples org.jacoco.build
 %pom_disable_module ../org.jacoco.doc org.jacoco.build
@@ -80,11 +80,15 @@ sed -i '/org.objectweb.asm/s/version="[^"]*"/bundle-version="[5.1.0,7.0.0)"/' $(
 
 sed -i -e "s|nb-configuration.xml|nb-configuration.xml,build.xml, pom.xml|g" org.jacoco.build/pom.xml
 
-# Remove problematic plugin, which old patch tried to correct, completely
-%pom_remove_plugin org.codehaus.groovy.maven:gmaven-plugin ./org.jacoco.build/pom.xml
+# Remove unnecessary dependency on maven-javadoc-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
 
 # Remove enforcer plugin that causes build failure of 'Jacoco :: Maven Plugin'
 %pom_remove_plugin -f -r org.apache.maven.plugins:maven-enforcer-plugin
+
+%pom_remove_plugin -f -r com.github.genthaler:beanshell-maven-plugin
+%pom_remove_plugin -f -r com.diffplug.spotless:spotless-maven-plugin
+%pom_remove_plugin -f -r org.apache.felix:maven-bundle-plugin
 
 # Add execution config for maven.antrun.plugin
 %pom_xpath_inject pom:plugin[pom:artifactId=\'maven-antrun-plugin\']/pom:executions '<execution>
@@ -101,9 +105,10 @@ sed -i -e "s|nb-configuration.xml|nb-configuration.xml,build.xml, pom.xml|g" org
              </configuration>
            </execution>' org.jacoco.build/pom.xml
 
+for x in `find | grep "/pom.xml$"` ; do sed -i "s|<manifestFile>.*/META-INF/MANIFEST.MF</manifestFile>||" $x  ; done
 
 %build
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build --xmvn-javadoc -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 # workaround missing premain in agent.rt RH1151442. Not sure where to fix this in build.
 # TODO, fix in build itself
@@ -131,6 +136,9 @@ echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0.8.3-alt1_4jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_8jpp8
 - fc update
 
