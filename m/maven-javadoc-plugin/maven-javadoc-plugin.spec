@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           maven-javadoc-plugin
 Version:        3.1.1
-Release:        alt1_0jpp11
+Release:        alt2_3jpp11
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
@@ -66,7 +66,7 @@ API documentation for %{name}.
 %patch1 -p1
 
 %build
-%mvn_build -j -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -DmavenVersion=3.5.0
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DmavenVersion=3.5.0
 
 %install
 %mvn_install
@@ -74,10 +74,13 @@ API documentation for %{name}.
 %files -f .mfiles
 %doc LICENSE NOTICE
 
-#%files javadoc -f .mfiles-javadoc
-#%doc LICENSE NOTICE
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt2_3jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_0jpp11
 - bootstrap
 
