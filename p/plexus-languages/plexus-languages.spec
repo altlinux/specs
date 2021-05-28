@@ -5,8 +5,8 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           plexus-languages
 Summary:        Plexus Languages
-Version:        1.0.3
-Release:        alt1_2jpp11
+Version:        1.0.5
+Release:        alt1_6jpp11
 License:        ASL 2.0
 
 URL:            https://github.com/codehaus-plexus/plexus-languages
@@ -40,10 +40,11 @@ language features.
 
 cp %{SOURCE1} .
 
+%pom_remove_plugin :maven-enforcer-plugin
 
 %build
 # we don't have mockito 2 yet + many tests rely on bundled test jars/classes
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -55,6 +56,9 @@ cp %{SOURCE1} .
 
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt1_6jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_2jpp11
 - new version
 
