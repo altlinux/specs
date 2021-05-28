@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 Name:           httpcomponents-core
 Summary:        Set of low level Java HTTP transport components for HTTP services
 Version:        4.4.12
-Release:        alt1_2jpp11
+Release:        alt2_4jpp11
 License:        ASL 2.0
 URL:            http://hc.apache.org/
 Source0:        http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
@@ -94,7 +94,7 @@ done
 %mvn_file ":{*}" httpcomponents/@1
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -106,6 +106,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 4.4.12-alt2_4jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 4.4.12-alt1_2jpp11
 - new version
 
