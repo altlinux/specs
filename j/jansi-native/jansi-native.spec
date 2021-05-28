@@ -16,7 +16,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jansi-native
 Version:        1.8
-Release:        alt1_2jpp11
+Release:        alt1_5jpp11
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
@@ -50,9 +50,22 @@ This package contains the API documentation for %{name}.
 %mvn_alias :jansi-linux%{bits} :jansi-linux
 %mvn_file :jansi-linux%{bits} %{name}/jansi-linux%{bits} %{name}/jansi-linux
 
+# remove hard-coded compiler settings
+%pom_remove_plugin :maven-compiler-plugin
+
+# fix javadoc generation for java 11
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_xpath_inject pom:pluginManagement/pom:plugins "<plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration>
+<source>1.8</source>
+<detectJavaApiLink>false</detectJavaApiLink>
+</configuration>
+</plugin>"
+
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dplatform=linux%{bits}
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dplatform=linux%{bits}
 
 %install
 %mvn_install
@@ -65,6 +78,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference license.txt
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.8-alt1_5jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.8-alt1_2jpp11
 - new version
 
