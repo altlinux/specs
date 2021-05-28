@@ -4,53 +4,49 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-archetype
-Version:        2.4
-Release:        alt1_10jpp8
+Version:        3.1.2
+Release:        alt1_3jpp11
 Summary:        Maven project templating toolkit
 
 # Most of the code is under ASL 2.0, but some bundled jdom sources are
 # under ASL 1.1
 License:        ASL 2.0 and ASL 1.1
 URL:            https://maven.apache.org/archetype/
-Source0:        http://repo.maven.apache.org/maven2/org/apache/maven/archetype/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        http://archive.apache.org/dist/maven/archetype/%{name}-%{version}-source-release.zip
 
-Patch1:         0001-Add-Maven-3-compatibility.patch
-Patch2:         0002-Fix-jetty-namespace.patch
-Patch3:         0003-Port-to-current-plexus-utils.patch
+# We only use groovy for running a post generation script,
+# removing this continues the old behaviour of ignoring it
+Patch1: 0001-Avoid-reliance-on-groovy.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(jdom:jdom)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.sourceforge.jchardet:jchardet)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-file)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-http)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.apache.velocity:velocity)
-BuildRequires:  mvn(org.beanshell:bsh)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
@@ -94,7 +90,7 @@ within your organization.
 
 %package javadoc
 Group: Development/Java
-Summary:        API documentation for %{name}
+Summary: API documentation for %{name}
 BuildArch: noarch
 
 %description    javadoc
@@ -102,55 +98,48 @@ BuildArch: noarch
 
 %package catalog
 Group: Development/Java
-Summary:        Maven Archetype Catalog model
+Summary: Maven Archetype Catalog model
 
 %description catalog
 %{summary}.
 
 %package descriptor
 Group: Development/Java
-Summary:        Maven Archetype Descriptor model
+Summary: Maven Archetype Descriptor model
 
 %description descriptor
 %{summary}.
 
-%package registry
-Group: Development/Java
-Summary:        Maven Archetype Registry model
-
-%description registry
-%{summary}.
-
 %package common
 Group: Development/Java
-Summary:        Maven Archetype common classes
+Summary: Maven Archetype common classes
+# Registry module was obsoleted and removed by upstream F31
+Obsoletes: %{name}-registry <= 3.1.1-1
 
 %description common
 %{summary}.
 
 %package packaging
 Group: Development/Java
-Summary:        Maven Archetype packaging configuration for archetypes
+Summary: Maven Archetype packaging configuration for archetypes
 
 %description packaging
 %{summary}.
 
 %package -n %{name}-plugin
 Group: Development/Java
-Summary:        Maven Plugin for using archetypes
+Summary: Maven plug-in for using archetypes
 
 %description -n %{name}-plugin
 %{summary}.
 
 %prep
 %setup -q
-
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
-# useless in packaging
+# Not needed for RPM builds
 %pom_remove_plugin -r :apache-rat-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
 
 # Add OSGI info to catalog and descriptor jars
 pushd archetype-models/archetype-catalog
@@ -186,42 +175,41 @@ pushd archetype-models/archetype-descriptor
       </plugin>"
 popd
 
+# Remove ivy as a runtime dep
+%pom_remove_dep org.apache.ivy:ivy archetype-common
 
-# groovy is not really needed
-%pom_remove_dep org.codehaus.groovy:groovy maven-archetype-plugin/pom.xml
-
-%pom_disable_module archetype-testing
-%pom_remove_plugin org.apache.maven.plugins:maven-antrun-plugin archetype-common/pom.xml
-
+# Disable processing of test resources using ant
+%pom_remove_plugin org.apache.maven.plugins:maven-antrun-plugin archetype-common
 
 %build
 %mvn_package :archetype-models maven-archetype
-# we don't have cargo so skip tests for now
-%mvn_build -s -f
+# Tests are skipped due to missing test dependencies
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dsource=1.8 -DdetectJavaApiLink=false
 
 %install
 %mvn_install
 
-
 %files -f .mfiles-maven-archetype
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %files catalog -f .mfiles-archetype-catalog
 
 %files descriptor -f .mfiles-archetype-descriptor
 
-%files registry -f .mfiles-archetype-registry
-
 %files common -f .mfiles-archetype-common
+%doc --no-dereference LICENSE NOTICE
 
 %files packaging -f .mfiles-archetype-packaging
 
 %files -n %{name}-plugin -f .mfiles-maven-archetype-plugin
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:3.1.2-alt1_3jpp11
+- fixed build
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_10jpp8
 - fc update & java 8 build
 
