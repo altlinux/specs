@@ -1,25 +1,32 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 3.0.0_M2
+%global upstream_version %(echo '%{version}' | tr '_' '-')
+
 Name:           maven-enforcer
-Version:        1.4.1
-Release:        alt1_10jpp8
+Version:        3.0.0_M2
+Release:        alt1_3jpp8
 Summary:        Maven Enforcer
 License:        ASL 2.0
 URL:            http://maven.apache.org/enforcer
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/enforcer/enforcer/%{version}/enforcer-%{version}-source-release.zip
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/enforcer/enforcer/%{upstream_version}/enforcer-%{upstream_version}-source-release.zip
 
 # TODO forward upstream
 # https://issues.apache.org/jira/browse/MENFORCER-267
 Patch0:         0001-Port-to-Maven-3-API.patch
+
+# port to maven-artifact-transfer 0.11.0
+Patch1:         0002-Port-to-artifact-transfer-0.11.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
@@ -78,8 +85,16 @@ This component contains the standard Enforcer Rules.
 
 
 %prep
-%setup -q -n enforcer-%{version}
+%setup -q -n enforcer-%{upstream_version}
+
+# Use Unix line endings
+find -name '*.java' -exec sed -i 's/\r//' {} \;
+find -name 'pom.xml' -exec sed -i 's/\r//' {} \;
+
 %patch0 -p1
+%patch1 -p1
+
+%pom_remove_plugin :maven-enforcer-plugin
 
 # Avoid dependency cycle
 %pom_xpath_inject pom:build/pom:pluginManagement/pom:plugins "
@@ -113,6 +128,9 @@ sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-compon
 %doc LICENSE NOTICE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M2-alt1_3jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_10jpp8
 - new version
 
