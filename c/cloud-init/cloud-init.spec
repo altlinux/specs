@@ -1,7 +1,7 @@
 %def_enable check
 
 Name:    cloud-init
-Version: 20.4
+Version: 21.2
 Release: alt1
 
 Summary: Cloud instance init scripts
@@ -145,6 +145,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed May 26 2021 Mikhail Gordeev <obirvalger@altlinux.org> 21.2-alt1
+- Update to 21.2
+
 * Wed Dec 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 20.4-alt1
 - Update to 20.4
 - Enable check
