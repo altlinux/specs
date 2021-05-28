@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 Name:           plexus-resources
 Summary:        Plexus Resource Manager
 Version:        1.1.0
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 License:        MIT
 
 URL:            https://github.com/codehaus-plexus/%{name}
@@ -51,7 +51,7 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 
 %build
 %mvn_file  : plexus/resources
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -63,6 +63,9 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.0-alt1_4jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.0-alt1_2jpp11
 - new version
 
