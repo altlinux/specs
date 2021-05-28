@@ -130,7 +130,7 @@
 
 Name: qemu
 Version: 6.0.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1238,6 +1238,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt2
+- Update udev rules and control facilities.
+
 * Tue May 04 2021 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
 - 6.0.0
 - Fixes for the following security vulnerabilities:
