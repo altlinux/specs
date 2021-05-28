@@ -10,7 +10,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             decentxml
 Version:          1.4
-Release:          alt3_21jpp11
+Release:          alt3_24jpp11
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
 # Google Code has shut down.
@@ -70,13 +70,16 @@ sed -i '/not_wf_sa_16[89] /d' src/test/java/de/pdark/decentxml/XMLConformanceTes
 
 %pom_remove_plugin :maven-javadoc-plugin
 
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+
 # Don't use deprecated "attached" goal of Maven Assembly Plugin, which
 # was removed in version 3.0.0.
 %pom_xpath_set "pom:plugin[pom:artifactId='maven-assembly-plugin']/pom:executions/pom:execution/pom:goals/pom:goal[text()='attached']" single
 
 %build
 %mvn_file  : %{name}
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -89,6 +92,9 @@ sed -i '/not_wf_sa_16[89] /d' src/test/java/de/pdark/decentxml/XMLConformanceTes
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt3_24jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt3_21jpp11
 - update
 
