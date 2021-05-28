@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:             hawtjni
 Version:          1.17
-Release:          alt1_2jpp11
+Release:          alt2_6jpp11
 Summary:          Code generator that produces the JNI code
 # Maven plugin is under ASL 2.0.
 # stdint.h, shipped in JAR as resource, used only with M$ VC++, is under BSD.
@@ -16,14 +16,18 @@ License:          ASL 2.0 and EPL-1.0 and BSD
 URL:              http://hawtjni.fusesource.org/
 Source0:          https://github.com/fusesource/hawtjni/archive/%{name}-project-%{version}.tar.gz
 
+# trivially port from commons-lang to commons-lang3
+Patch0:           00-port-to-commons-lang3.patch
+
 BuildArch:        noarch
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(commons-cli:commons-cli)
-BuildRequires:    mvn(commons-lang:commons-lang)
+BuildRequires:    mvn(org.apache.commons:commons-lang3)
 BuildRequires:    mvn(org.apache.maven:maven-archiver)
 BuildRequires:    mvn(org.apache.maven:maven-artifact)
 BuildRequires:    mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:    mvn(org.apache.maven:maven-compat)
 BuildRequires:    mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:    mvn(org.apache.maven:maven-project)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
@@ -74,9 +78,10 @@ This package allows to use HawtJNI from a maven plugin.
 
 %prep
 %setup -q -n %{name}-%{name}-project-%{version}
+%patch0 -p1
 
-# this dependency seems to be missing
-%pom_add_dep commons-lang:commons-lang hawtjni-generator
+# This package needs maven compat for ArtifactResolver class
+%pom_add_dep org.apache.maven:maven-compat hawtjni-maven-plugin
 
 %pom_disable_module hawtjni-example
 %pom_remove_plugin -r :maven-shade-plugin
@@ -91,7 +96,7 @@ This package allows to use HawtJNI from a maven plugin.
 %pom_remove_plugin :maven-javadoc-plugin hawtjni-runtime
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -107,6 +112,9 @@ This package allows to use HawtJNI from a maven plugin.
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.17-alt2_6jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.17-alt1_2jpp11
 - new version
 
