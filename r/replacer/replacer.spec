@@ -5,7 +5,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:          replacer
 Version:       1.6
-Release:       alt1_13jpp11
+Release:       alt1_17jpp11
 Summary:       Replacer Maven Mojo
 License:       MIT
 URL:           https://github.com/beiliubei/maven-replacer-plugin
@@ -14,8 +14,8 @@ Source0:       https://github.com/beiliubei/maven-replacer-plugin/archive/%{vers
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(xerces:xercesImpl)
@@ -46,11 +46,26 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :dashboard-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
 
+# remove hard-coded compiler settings
+%pom_remove_plugin :maven-compiler-plugin
+
+%pom_xpath_inject pom:build/pom:plugins "<plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration><source>\${maven.compiler.source}</source><detectJavaApiLink>false</detectJavaApiLink></configuration>
+</plugin>"
+
+# trivial port to commons-lang3
+%pom_change_dep :commons-lang org.apache.commons:commons-lang3:3.8.1
+
+for i in $(find -name "*.java"); do
+    sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" $i;
+done
+
 %mvn_file :%{name} %{name}
 %mvn_alias :%{name} com.google.code.maven-replacer-plugin:maven-replacer-plugin
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -63,6 +78,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1_17jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1_13jpp11
 - update
 
