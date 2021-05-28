@@ -3,13 +3,9 @@
 %define _localstatedir /var
 %def_with maxmind
 
-%ifarch %ix86 %arm %mips32
-%def_disable check
-%endif
-
 Name: ocserv
 Version: 1.1.2
-Release: alt2
+Release: alt3
 Summary: OpenConnect SSL VPN server
 Group: System/Servers
 License: GPLv2+
@@ -134,6 +130,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt3
+- fixed check on 32-bit arches (glebfm@)
+
 * Sun May 16 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt2
 - disable check for 32-bit arches
 
