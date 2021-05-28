@@ -74,12 +74,12 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 247
+%define ver_major 248
 
 Name: systemd
 Epoch: 1
 Version: %ver_major.3
-Release: alt2
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -112,6 +112,9 @@ Source36: 99-default-disable.preset
 Source37: 85-networkd.preset
 Source38: 85-timesyncd.preset
 
+Source44: 10-oomd-defaults.conf
+Source45: 10-oomd-root-slice-defaults.conf
+Source46: 10-oomd-user-service-defaults.conf
 
 # simpleresolv
 Source68: altlinux-simpleresolv.path
@@ -167,7 +170,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.33
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
 %{?_enable_openssl:BuildRequires: pkgconfig(openssl) >= 1.1.0}
 %{?_enable_p11kit:BuildRequires: pkgconfig(p11-kit-1) >= 0.23.3}
-%{?_enable_qrencode:BuildRequires: libqrencode-devel}
+%{?_enable_qrencode:BuildRequires: libqrencode-devel >= 4}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl) >= 7.32.0}
@@ -352,7 +355,7 @@ systemd-logind.service, and hence the systemd control group hierarchy.
 
 %package -n pam_%{name}_home
 Group: System/Base
-Summary: Automatically mount home directories managed by systemd-homed.service on login 
+Summary: Automatically mount home directories managed by systemd-homed.service on login
 Requires: dbus >= %dbus_ver
 
 %description -n pam_%{name}_home
@@ -416,8 +419,9 @@ This package contains dbus services and utils from systemd:
  - systemd-hostnamed and hostnamectl
  - systemd-localed and localectl
  - systemd-logind and loginctl
- - systemd-machine and machinectl
+ - systemd-oomd and oomctl
  - systemd-timedated and timedatectl
+ - systemd-userdbd and userdbctl
 
 %package networkd
 Group: System/Base
@@ -431,6 +435,16 @@ Provides: network-config-subsystem
 systemd-networkd is a system service that manages networks.
 It detects and configures network devices as they appear,
 as well as creating virtual network devices.
+
+%package oomd-defaults
+Group: System/Base
+Summary: Configuration files for systemd-oomd
+BuildArch: noarch
+Requires: %name = %EVR
+ 
+%description oomd-defaults
+A set of drop-in files for systemd units to enable action from systemd-oomd,
+a userspace out-of-memory (OOM) killer.
 
 %package timesyncd
 Group: System/Configuration/Other
@@ -538,13 +552,17 @@ Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
 Requires: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
-Requires: udev-rules = %EVR
-Requires: udev-hwdb = %EVR
 Requires: systemd-utils = %EVR
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Provides: udev-extras = %EVR
 Obsoletes: udev-extras < %EVR
+Provides: udev-rules = %EVR
+Obsoletes: udev-rules < %EVR
+Provides: %_sysconfdir/udev/rules.d /lib/udev/rules.d
+Provides: udev-hwdb = %EVR
+Obsoletes: udev-hwdb < %EVR
+Provides: %_sysconfdir/udev/hwdb.d /lib/udev/hwdb.d
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 Conflicts: make-initrd < 2.2.10
@@ -558,29 +576,6 @@ sysfs. /sbin/hotplug provides a notification to userspace when any
 device is added or removed from the system. Using these two features,
 a userspace implementation of a dynamic /dev is now possible that can
 provide a very flexible device naming policy
-
-%package -n udev-rules
-Summary: Rule files for udev
-Group: System/Configuration/Hardware
-License: GPLv2+
-Provides: %_sysconfdir/udev/rules.d /lib/udev/rules.d
-BuildArch: noarch
-
-%description -n udev-rules
-This package contains the default set of rule files used by udev,
-which control names and permission of device files in /dev.  Rule
-files which have corresponding symlinks in /lib/udev/initramfs-rules.d
-are also used by the make-initrd package when creating initramfs images
-
-%package -n udev-hwdb
-Summary: Hardware database for udev
-Group: System/Configuration/Hardware
-License: GPLv2+
-Provides: %_sysconfdir/udev/hwdb.d /lib/udev/hwdb.d
-BuildArch: noarch
-
-%description -n udev-hwdb
-This package contains internal hardware database for udev.
 
 %package -n libudev1
 Summary: Shared library to access udev device information
@@ -655,6 +650,7 @@ library or other libraries from libsystemd.
 	%{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
 	%{?_enable_static_libudev:-Dstatic-libudev=pic} \
 	-Dstandalone-binaries=true \
+	-Dxinitrcdir=%_sysconfdir/X11/xinit.d \
 	-Drpmmacrosdir=no \
 	-Drootlibdir=/%_lib \
 	-Dpamlibdir=/%_lib/security \
@@ -731,6 +727,11 @@ library or other libraries from libsystemd.
 	%{?_enable_apparmor:-Dapparmor=true} \
 	%{?_enable_utmp:-Dutmp=true} \
 	%{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
+	-Doomd=true \
+	-Dfallback-hostname=localhost \
+	-Ddefault-dnssec=no \
+	-Ddefault-mdns=no \
+	-Ddefault-llmnr=resolve \
 	-Ddefault-hierarchy=%hierarchy \
 %ifnarch mipsel
 	-Db_lto=true \
@@ -744,7 +745,6 @@ library or other libraries from libsystemd.
 	-Dcertificate-root=/etc/pki/tls \
 	-Ddocdir=%_defaultdocdir/%name-%version
 
-%meson_build version.h
 %meson_build
 
 %install
@@ -881,6 +881,11 @@ install -m 0644 %SOURCE36 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE37 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE38 %buildroot/lib/systemd/system-preset/
 
+# systemd-oomd default configuration
+install -D -m 0644 -t %buildroot/lib/systemd/oomd.conf.d/ %SOURCE44
+install -D -m 0644 -t %buildroot%_unitdir/-.slice.d/ %SOURCE45
+install -D -m 0644 -t %buildroot%_unitdir/user@.service.d/ %SOURCE46
+
 mkdir -p %buildroot%_sysconfdir/systemd/network
 
 # The following services are currently installed by initscripts
@@ -979,6 +984,9 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
 
 %pre
 groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
+groupadd -r -f systemd-oom >/dev/null 2>&1 ||:
+useradd -g systemd-omm -c 'systemd Userspace OOM Killer' \
+    -d /var/empty -s /dev/null -r -l -M systemd-omm >/dev/null 2>&1 ||:
 
 %post
 # Move old stuff around in /var/lib
@@ -1235,6 +1243,7 @@ groupadd -r -f render >/dev/null 2>&1 ||:
 groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 %post -n udev
+udevadm hwdb --update &>/dev/null
 %post_service udevd
 
 %preun -n udev
@@ -1334,6 +1343,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 %dir %_unitdir
 %_unitdir/*
+
+%exclude %_unitdir/-.slice.d/10-oomd-root-slice-defaults.conf
+%exclude %_unitdir/user@.service.d/10-oomd-user-service-defaults.conf
 
 %if_enabled networkd
 %exclude %_unitdir/*networkd*
@@ -1450,6 +1462,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_man8dir/systemd-quota*
 %_man8dir/systemd-random-seed*
 %_man8dir/systemd-rc-local-generator*
+%_man8dir/rc-local.service*
 %_man8dir/systemd-repart*
 %_man8dir/systemd-remount*
 %_man8dir/systemd-rfkill*
@@ -1502,7 +1515,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
 %endif
 
-%ghost %dir %_logdir/journal
+%ghost %dir %attr(2755, root, systemd-journal) %verify(not mode) %_logdir/journal
 %ghost %attr(0700,root,root) %dir %_logdir/private
 %ghost %attr(0700,root,root) %dir %_localstatedir/cache/private
 %ghost %attr(0700,root,root) %dir %_localstatedir/lib/private
@@ -1606,6 +1619,11 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %dir /lib/systemd
 /lib/systemd/libsystemd-shared-%ver_major.so
 
+/lib/modprobe.d/README
+/lib/sysctl.d/README
+/lib/sysusers.d/README
+/lib/tmpfiles.d/README
+
 /sbin/systemctl
 /bin/systemctl
 %_bindir/systemctl
@@ -1657,6 +1675,13 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 /sbin/systemd-machine-id-setup
 %_man8dir/systemd-machine-id-*
+
+/bin/systemd-sysext
+%_man8dir/systemd-sysext.*
+
+/usr/bin/systemd-cryptenroll
+%_man1dir/systemd-cryptenroll.*
+%_man5dir/veritytab.*
 
 %if_enabled firstboot
 /sbin/systemd-firstboot
@@ -1718,6 +1743,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/systemd/systemd-timedated
 %dir /lib/systemd/ntp-units.d
 %dir %_sysconfdir/systemd/ntp-units.d
+/bin/oomctl
+/lib/systemd/systemd-oomd
+%config(noreplace) %_sysconfdir/systemd/oomd.conf
 
 %_datadir/bash-completion/completions/*
 %exclude %_datadir/bash-completion/completions/udevadm
@@ -1733,6 +1761,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_mandir/*/*locale*
 %_mandir/*/*timedate*
 %_man5dir/*LogControl1*
+%_mandir/*/*oom*
 
 %if_enabled networkd
 %files networkd
@@ -1783,6 +1812,11 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_man5dir/systemd.positive.*
 %_man5dir/systemd.network.*
 %endif
+
+%files oomd-defaults
+/lib/systemd/oomd.conf.d/10-oomd-defaults.conf
+%_unitdir/-.slice.d/10-oomd-root-slice-defaults.conf
+%_unitdir/user@.service.d/10-oomd-user-service-defaults.conf
 
 %files container
 %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
@@ -1970,23 +2004,19 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 %files -n udev
 %dir %_sysconfdir/udev
+%dir %_sysconfdir/udev/rules.d
+%dir %_sysconfdir/udev/hwdb.d
 %config(noreplace) %_sysconfdir/udev/*.conf
 %ghost %_sysconfdir/udev/hwdb.bin
+%config(noreplace) %_sysconfdir/udev/rules.d/*
 %config(noreplace) %_sysconfdir/scsi_id.config
 %_initdir/udev*
 %_unitdir/*udev*
 %_unitdir/*/*udev*
-%dir /lib/udev
 %dir /lib/systemd/network
 /lib/systemd/network/*.link
 %_tmpfilesdir/static-nodes-permissions.conf
-/lib/udev/udevd
-/lib/udev/ata_id
-/lib/udev/cdrom_id
-/lib/udev/fido_id
-/lib/udev/mtd_probe
-/lib/udev/scsi_id
-/lib/udev/v4l_id
+/lib/udev
 /sbin/udevadm
 /sbin/udevd
 /sbin/systemd-hwdb
@@ -2001,12 +2031,6 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_datadir/bash-completion/completions/udevadm
 %_datadir/zsh/site-functions/_udevadm
 
-%files -n udev-rules
-%dir %_sysconfdir/udev/rules.d
-%config(noreplace) %_sysconfdir/udev/rules.d/*
-/lib/udev/initramfs-rules.d
-/lib/udev/rules.d
-
 # systemd
 %exclude /lib/udev/rules.d/70-uaccess.rules
 %exclude /lib/udev/rules.d/71-seat.rules
@@ -2014,11 +2038,20 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %exclude /lib/udev/rules.d/90-vconsole.rules
 %exclude /lib/udev/rules.d/99-systemd.rules
 
-%files -n udev-hwdb
-%dir %_sysconfdir/udev/hwdb.d
-/lib/udev/hwdb.d
-
 %changelog
+* Thu May 27 2021 Alexey Shabalin <shaba@altlinux.org> 1:248.3-alt1
+- 248.3
+- Create systemd-oomd-defaults subpackage to install unit drop-ins that will
+  configure systemd-oomd to monitor and act.
+- Build systemd-resolved with:
+  + DNSSEC disabled by default
+  + mDNS disabled by default
+  + LLMNR support in resolve-only mode by default.
+- Merge udev-rules and udev-hwdb to udev package.
+
+* Fri May 07 2021 Alexey Shabalin <shaba@altlinux.org> 1:248.2-alt1
+- 248.2
+
 * Wed Feb 10 2021 Alexey Shabalin <shaba@altlinux.org> 1:247.3-alt2
 - Add efi_pstore kernel module requires to systemd-pstore.service
 
