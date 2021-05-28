@@ -19,7 +19,7 @@ BuildRequires: jpackage-11-compat
 Name:           xbean
 Summary:        Java plugin based web server
 Version:        4.15
-Release:        alt1_5jpp11
+Release:        alt2_5jpp11
 License:        ASL 2.0
 
 URL:            http://geronimo.apache.org/xbean/
@@ -131,7 +131,7 @@ sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/
 
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -146,6 +146,9 @@ sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/
 
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:4.15-alt2_5jpp11
+- fixed build
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:4.15-alt1_5jpp11
 - new version
 
