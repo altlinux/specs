@@ -1,13 +1,13 @@
 %define shortname indi
 
-
 Name: indilib
-Version: 1.7.5
-Release: alt4
+Version: 1.8.9
+Release: alt1
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
 %add_verify_elf_skiplist %_libdir/libindiAlignmentDriver.so.%version
+%add_verify_elf_skiplist %_libdir/libindilx200.so.%version
 
 Group: Development/C
 Summary: Library to control astronomical devices
@@ -19,12 +19,13 @@ Conflicts: kde4edu-kstars < 4.1.60
 Conflicts: kdeedu-kstars <= 3.5.10-alt2
 
 # http://nchc.dl.sourceforge.net/sourceforge/indi/
-Source: lib%{shortname}_%version.tar
+Source: %{shortname}-%version.tar
 
 # Automatically added by buildreq on Wed Oct 05 2011 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config zlib-devel
 #BuildRequires: boost-devel-headers cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel-static
 BuildRequires: boost-devel cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel
+BuildRequires: libfftw3-devel
 BuildRequires: libusb-devel libjpeg-devel libgsl-devel libcurl-devel libtheora-devel
 BuildRequires: kde-common-devel
 
@@ -74,7 +75,7 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
   This package contains files need to build applications using indilib.
 
 %prep
-%setup -q -n lib%{shortname}_%version
+%setup -n %{shortname}-%version
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -name '*.cpp' -o -name '*.hpp' |
@@ -82,19 +83,15 @@ find -type f -name '*.cpp' -o -name '*.hpp' |
 %endif
 
 %build
-pushd libindi
 %Kbuild \
     -DUDEVRULES_INSTALL_DIR=%_udevrulesdir \
     #
-popd
 
 %install
-pushd libindi
 %Kinstall
-popd
 
 %files common
-%doc libindi/ChangeLog libindi/README
+%doc ChangeLog README
 # an essential part of libindi according to FindINDI.cmake
 %_datadir/%shortname/
 
@@ -109,6 +106,8 @@ popd
 %_libdir/libindiAlignmentDriver.so.1.*
 %_libdir/libindidriver.so.1
 %_libdir/libindidriver.so.1.*
+%_libdir/libindilx200.so.1
+%_libdir/libindilx200.so.1.*
 # an essential part of libindi according to FindINDI.cmake
 %_libdir/%shortname/
 
@@ -123,6 +122,9 @@ popd
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Fri May 28 2021 Sergey V Turchin <zerg@altlinux.org> 1.8.9-alt1
+- new version
+
 * Mon Dec 07 2020 Sergey V Turchin <zerg@altlinux.org> 1.7.5-alt4
 - don't package static libs into -devel subpackage
 
