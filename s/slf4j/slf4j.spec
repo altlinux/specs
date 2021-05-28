@@ -37,7 +37,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           slf4j
 Version:        1.7.30
-Release:        alt1_2jpp11
+Release:        alt1_6jpp11
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
@@ -49,10 +49,10 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(ch.qos.cal10n:cal10n-api)
-BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javassist:javassist)
 BuildRequires:  mvn(log4j:log4j:1.2.17)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -156,6 +156,8 @@ cp -p %{SOURCE1} APACHE-LICENSE
 %pom_xpath_inject "pom:project/pom:properties" "
     <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>"
 
+%pom_xpath_set "pom:project/pom:properties/pom:required.jdk.version" "1.6"
+
 # Fix javadoc links
 %pom_xpath_remove "pom:links"
 %pom_xpath_inject "pom:plugin[pom:artifactId[text()='maven-javadoc-plugin']]/pom:configuration" "
@@ -178,6 +180,12 @@ find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
       <phase>skip</phase>
     </execution>" slf4j-api
 
+# trivial port to commons-lang3
+%pom_change_dep :commons-lang org.apache.commons:commons-lang3:3.8.1 slf4j-ext
+
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    slf4j-ext/src/main/java/org/slf4j/ext/MDCStrLookup.java
+
 # The general pattern is that the API package exports API classes and does
 # not require impl classes. slf4j was breaking that causing "A cycle was
 # detected when generating the classpath slf4j.api, slf4j.nop, slf4j.api."
@@ -197,7 +205,7 @@ sed -i '/Import-Package/s/\}$/};resolution:=optional/' slf4j-api/src/main/resour
 %mvn_package :%{name}-nop
 
 %build
-%mvn_build -f -s
+%mvn_build -f -s -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dsource=1.6
 
 %install
 # Compat symlinks
@@ -232,6 +240,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.30-alt1_6jpp11
+- fixed build
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.30-alt1_2jpp11
 - new version
 
