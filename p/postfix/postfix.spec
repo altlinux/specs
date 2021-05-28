@@ -1,10 +1,10 @@
 Name: postfix
-Version: 2.11.11
-Release: alt4
+Version: 3.6.0
+Release: alt1
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
-License: IBM Public License
+License: EPL-2.0 and IPL-1.0
 Group: System/Servers
 Url: http://www.postfix.org/
 
@@ -58,7 +58,7 @@ Patch: postfix-%version-%release.patch
 %define libpostfix lib%name-%version.so
 %define libpostfix_dict lib%{name}_dict-%version.so
 
-%define _buildaltdir %_builddir/%name-%version/extra
+%define _buildaltdir %_builddir/%name-%version/%name-%version/extra
 
 Provides: MTA, MailTransportAgent
 Provides: smtpd, smtpdaemon, %name-smtpd
@@ -160,30 +160,13 @@ Group: System/Servers
 Various postfix testing tools
 
 %prep
-%setup
+%setup -cT -a0
+cd %name-%version
 %patch -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl @libdir@ -- |
 	xargs -r0 sed -i 's,@libdir@,%_libdir,g' --
-
-%if_with tls
-rm -rf src/*-tls
-for i in smtp smtpd; do
-	cp -a src/$i src/$i-tls
-done
-%endif #with tls
-
-# Add some makefile targets where appropriate.
-sed -i 's/^update /&objs dicts xsasls /' Makefile.in
-sed -i 's/^# do not edit below this line/objs: $(OBJS)\n\nobjs-print: objs\n\tls $(OBJS)\n\n&/' \
-	src/*/Makefile.in
-
-# Change program names for smtp and smtpd.
-sed -i 's/^PROG[[:space:]]*=.*/&-std/' src/{smtp,smtpd}/Makefile.in
-%if_with tls
-sed -i 's/^PROG[[:space:]]*=.*/&-tls/' src/{smtp,smtpd}-tls/Makefile.in
-%endif #with tls
 
 # Remove license, makedefs.out, html documentation, man pages, readme files and sample files from master list.
 sed -i '/\(LICENSE\|makedefs\.out\|\(html\|manpage\|readme\|sample\)_directory\)/ d' conf/%name-files
@@ -194,11 +177,6 @@ sed -i s,@LIB@,%_lib, conf/%name-files
 
 # Fix build with util-linux-ng.
 sed -i 's/col -bx |/LANG=en_US &/' proto/Makefile.in
-
-# More std/tls tweaks for filelist.
-sed -i 's,^.*/\(smtp\|smtpd\),&-std,' conf/%name-files
-# comment out tls.*
-sed -i 's/[^#]*tls/#&/' conf/%name-files
 
 if [ "%_libexecdir" != "/usr/libexec" ]; then
 	find -type f -print0 |
@@ -211,10 +189,25 @@ install -pm644 %_buildaltdir/mynetworks conf/
 touch conf/mydestination
 
 # Set executable bit on scripts we are going to execute later.
-chmod a+x postfix-install %_buildaltdir/*.sh
+chmod a+x postfix-install
 
 # Force documentation re-generation
 touch -t 01010000 man/*/* html/*
+
+%if_with tls
+cp -a . ../%name-%version-tls
+
+sed -i 's/^PROG[[:space:]]*=.*/&-tls/' ../%name-%version-tls/src/{smtp,smtpd}/Makefile.in
+%endif
+
+# Change program names for smtp and smtpd.
+sed -i 's/^PROG[[:space:]]*=.*/&-std/' src/{smtp,smtpd}/Makefile.in
+
+# More std/tls tweaks for filelist.
+sed -i 's,^.*/\(smtp\|smtpd\),&-std,' conf/%name-files
+
+# comment out tls.*
+sed -i 's/[^#]*tls/#&/' conf/%name-files
 
 ### BUILD ###
 %build
@@ -225,7 +218,7 @@ CCARGS="\
  -DDEF_CONFIG_DIR=\\\"%config_directory\\\" \
  -DDEF_DAEMON_DIR=\\\"%daemon_directory\\\" \
  -DDEF_DATA_DIR=\\\"%data_directory\\\" \
- -DDEF_PLUGIN_DIR=\\\"%plugin_directory\\\" \
+ -DDEF_SHLIB_DIR=\\\"%plugin_directory\\\" \
  -DDEF_HTML_DIR=\\\"%html_directory\\\" \
  -DDEF_MAILQ_PATH=\\\"%mailq_path\\\" \
  -DDEF_MANPAGE_DIR=\\\"%manpage_directory\\\" \
@@ -247,186 +240,146 @@ AUXLIBS=
 CCARGS="$CCARGS -DUSE_SASL_AUTH"
 %endif #with sasl
 
+%if_with cyrus
+CCARGS="$CCARGS -DUSE_CYRUS_SASL -I%{_includedir}/sasl"
+%endif #with cyrus
+
 %if_with cdb
 DICT_ARGS="$DICT_ARGS -DHAS_CDB"
 DICT_LIBS="$DICT_LIBS -lcdb"
+AUXLIBS_CDB="$(pkg-config --libs libcdb)"
 %endif #with cdb
 
 %if_with ldap
 DICT_ARGS="$DICT_ARGS -DHAS_LDAP"
 DICTS="$DICTS \$(DICT_LDAP)"
+AUXLIBS_LDAP="-lldap -llber"
 %endif #with ldap
 
 %if_with mysql
 DICT_ARGS="$DICT_ARGS -DHAS_MYSQL -I%_includedir/mysql"
 DICTS="$DICTS \$(DICT_MYSQL)"
+AUXLIBS_MYSQL="$(mysql_config --libs) -lm"
 %endif #with mysql
 
 %if_with pcre
-DICT_ARGS="$DICT_ARGS -DHAS_PCRE `pcre-config --cflags`"
+DICT_ARGS="$DICT_ARGS -DHAS_PCRE $(pcre-config --cflags)"
 DICTS="$DICTS \$(DICT_PCRE)"
+AUXLIBS_PCRE="$(pcre-config --libs)"
 %endif #with pcre
 
 %if_with pgsql
 DICT_ARGS="$DICT_ARGS -DHAS_PGSQL -I%_includedir/pgsql"
 DICTS="$DICTS \$(DICT_PGSQL)"
+AUXLIBS_PGSQL="-L$(pg_config --libdir) -lpq"
 %endif #with pgsql
 
 %if_with tls
 # USE_TLS is used by smtp, smtpd, tls and tlsmgr
 TLS_ARGS="-DUSE_TLS $(pkg-config libssl --cflags)"
 TLS_LIBS='-lssl -lcrypto'
-TLS_DIRS='src/tls src/tlsmgr src/tlsproxy src/smtp-tls src/smtpd-tls'
 %endif #with tls
 
-## Shared build model; suggested by mjt.
-pushd src
-
-# 0. Prepare.
-make	-C .. \
+make -C %name-%version \
 	tidy makefiles \
+	shared=yes pie=yes dynamicmaps=yes \
 	SYSLIBS="$SYSLIBS" \
 	AUXLIBS="$AUXLIBS" \
-	CCARGS="$CCARGS $DICT_ARGS -UUSE_TLS" \
+	AUXLIBS_PCRE="$AUXLIBS_PCRE" \
+	AUXLIBS_CDB="$AUXLIBS_CDB" \
+	AUXLIBS_LDAP="$AUXLIBS_LDAP" \
+	AUXLIBS_MYSQL="$AUXLIBS_MYSQL" \
+	AUXLIBS_PGSQL="$AUXLIBS_PGSQL" \
+	AUXLIBS_SQLITE="$AUXLIBS_SQLITE" \
+	CCARGS="$CCARGS $DICT_ARGS" \
 	OPT="$OPT" \
-	DEBUG=
-
-# 1. build all static libs objects with %optflags_shared.
-%make_build -C .. \
-	update \
-	DEBUG='%optflags_shared' PROG= \
-	DIRS='$(LIB_DIRS)'
-
-# 2. separate libs objects into dict-dependent and others.
-for a in */*.a; do
-	ar t "$a" |
-		sed -ne "s,.*,${a%%/*}/&,p"
-done | sort -u >postfix_all_obj.list
-%_buildaltdir/lorder.sh `cat postfix_all_obj.list` |
-	sort -u |
-	sort -k2,2 >postfix_lorder.list
-printf '%%s\n%%s\n' util/dict_{c,}db.o |
-	%_buildaltdir/oclosure.sh postfix_lorder.list >postfix_dict_obj.list
-join -v1 postfix_all_obj.list postfix_dict_obj.list >postfix_common_obj.list
-
-# 3. build %libpostfix shared library.
-gcc -shared -o ../lib/%libpostfix \
-	-Wl,-O1 -Wl,-soname,%libpostfix \
-	`cat postfix_common_obj.list` \
-	$SYSLIBS
-ln -s %libpostfix ../lib/libpostfix.so
-
-# 4. build %libpostfix_dict shared library.
-gcc -shared -o ../lib/%libpostfix_dict \
-	-Wl,-O1 -Wl,-soname,%libpostfix_dict \
-	`cat postfix_dict_obj.list` \
-	../lib/libpostfix.so $DICT_LIBS
-ln -s %libpostfix_dict ../lib/libpostfix_dict.so
-
-# 5.1 build libtls.a.
-%make_build -C .. DIRS=src/tls update
-
-# 5.2 build applications objects.
-%make_build -C .. objs
-
-# 6. build dict-dependent applications with %libpostfix and %libpostfix_dict.
-dict_build_dirs=
-for d in *; do
-	[ -f "$d/Makefile" ] || continue
-	%_buildaltdir/lorder.sh `cat postfix_dict_obj.list` \
-	             `MAKEFLAGS= make -C "$d" -s objs-print |sed -e "s,^,$d/,"` |
-		sort -u |
-		sort -k2,2 |
-		join -1 1 -2 2 -o 2.1 postfix_dict_obj.list - |
-		sort -u |join -v1 - postfix_dict_obj.list |
-		fgrep -qs "$d"/ || continue
-	dict_build_dirs="$dict_build_dirs src/$d"
-done
-%make_build -C .. \
-	LIBS='../../lib/libpostfix_dict.so ../../lib/libpostfix.so ../../lib/libtls.a' \
-	DIRS="$dict_build_dirs" \
-	SYSLIBS= \
-	AUXLIBS= \
+	DEBUG= \
+	SHLIB_RPATH= \
 	#
 
-# 7. build other applications with %libpostfix only.
-%make_build -C .. \
-	LIBS=../../lib/libpostfix.so \
-	SYSLIBS= \
-	AUXLIBS= \
+%make_build -C %name-%version \
+	static_libtls=yes \
+	%{?_with_sasl:XSASLS='$(DOVECOT_PLUGIN)%{?_with_cyrus: $(CYRUS_PLUGIN)}'} \
 	#
 
-# 8. build dicts.
-%make_build -C .. dicts \
-	DIRS="src/util src/global" \
-	DEBUG='%optflags_shared' \
-	LIBS='../../lib/libpostfix_dict.so ../../lib/libpostfix.so' \
-	SYSLIBS= \
-	AUXLIBS= \
-	DICTS="$DICTS" \
+%if_with tls
+make -C %name-%version-tls \
+	tidy makefiles \
+	shared=yes pie=yes dynamicmaps=yes \
+	SYSLIBS="$SYSLIBS" \
+	AUXLIBS="$AUXLIBS $TLS_LIBS" \
+	AUXLIBS_PCRE="$AUXLIBS_PCRE" \
+	AUXLIBS_CDB="$AUXLIBS_CDB" \
+	AUXLIBS_LDAP="$AUXLIBS_LDAP" \
+	AUXLIBS_MYSQL="$AUXLIBS_MYSQL" \
+	AUXLIBS_PGSQL="$AUXLIBS_PGSQL" \
+	AUXLIBS_SQLITE="$AUXLIBS_SQLITE" \
+	CCARGS="$CCARGS $DICT_ARGS $TLS_ARGS" \
+	OPT="$OPT" \
+	DEBUG= \
+	SHLIB_RPATH= \
 	#
 
-# 9. build xsasl plugins.
-%if_with sasl
-%make_build -C .. xsasls \
-	DIRS='src/xsasl' \
-	DEBUG='%optflags_shared' \
-	LIBS='../../lib/libpostfix.so' \
-	SYSLIBS= \
-	AUXLIBS= \
-	XSASLS='$(XSASL_DOVECOT)%{?_with_cyrus: $(XSASL_CYRUS)}' \
+%make_build -C %name-%version-tls \
+	%{?_with_sasl:XSASLS='$(DOVECOT_PLUGIN)%{?_with_cyrus: $(CYRUS_PLUGIN)}'} \
 	#
-%endif #with sasl
-
-popd # src
+%endif
 
 # SMP build seems to be broken here.
 for d in proto man html; do
-	make -C $d -f Makefile.in clobber
+	make -C %name-%version/$d -f Makefile.in clobber
 done
-make manpages
+make -C %name-%version manpages
 
-%if_with tls
-make	makefiles \
-	DIRS="$TLS_DIRS" \
-	SYSLIBS= \
-	AUXLIBS= \
-	CCARGS="$CCARGS $TLS_ARGS" \
-	OPT="$OPT" \
-	DEBUG=
-
-%make_build \
-	DIRS="$TLS_DIRS" \
-	LIBS='../../lib/libpostfix_dict.so ../../lib/libpostfix.so ../../lib/libtls.a' \
-	SYSLIBS="$TLS_LIBS $DICT_LIBS $SYSLIBS" \
-	AUXLIBS= \
-	#
-%endif #with tls
-
+cd %name-%version
 install -pm644 /usr/share/sendmail-common/aliases conf/
 mkdir -p libexec/postqueue
 mv bin/postqueue libexec/postqueue/
+cd -
 
 ### INSTALL ###
 %install
 mkdir -p %buildroot{%ROOT,%_bindir,%_sbindir,%_libdir,%daemon_directory/postqueue,%plugin_directory,%_mandir}
 
-# Install shared libraries and dictionaries.
-install -p -m644 lib/%libpostfix lib/%libpostfix_dict %buildroot%_libdir/
-install -p -m644 src/*/dict_*.so src/xsasl/xsasl_*.so \
-	%buildroot%plugin_directory/ ||:
-
 :>%name.files
-# Postfix's postfix-install script accept various parameters both in
-# command line and as environment variables.  Better to reset environment
-# here, so no locally-set variable will give any surprise.
-env -i "LD_LIBRARY_PATH=%buildroot%_libdir" \
-	./postfix-install -non-interactive \
-		install_root=%buildroot \
-		tempdir=%_tmppath
+
+make -C %name-%version non-interactive-package \
+       %{?_with_sasl:XSASLS='$(XSASL_DOVECOT)%{?_with_cyrus: $(XSASL_CYRUS)}'} \
+       install_root=%buildroot \
+       shlib_directory=%{plugin_directory} \
+       config_directory=%{config_directory} \
+       meta_directory=%{config_directory} \
+       daemon_directory=%{daemon_directory} \
+       command_directory=%{command_directory} \
+       queue_directory=%{queue_directory} \
+       data_directory=%{data_directory} \
+       sendmail_path=%{sendmail_path} \
+       newaliases_path=%{newaliases_path} \
+       mailq_path=%{mailq_path} \
+       mail_owner=%{mail_owner} \
+       setgid_group=%{setgid_group} \
+       manpage_directory=%{manpage_directory} \
+       sample_directory=%{readme_directory} \
+       readme_directory=%{readme_directory} \
+       tempdir=%_tmppath \
+       static_libtls=yes \
+       #
+
+for p in ldap mysql pcre pgsql; do
+	install -p -m644 %name-%version/lib/dict_$p.so \
+		%buildroot%plugin_directory/
+done
+%if_with sasl
+install -p -m644 %name-%version/lib/xsasl_*.so \
+	%buildroot%plugin_directory/
+%endif
+
+install -pm644 %name-%version/lib/libpostfix-*.so %buildroot%_libdir/
+
+cat %name-%version/%name.files > %name.files
 
 # install testing tools
-install bin/*-* %buildroot%_bindir/
+install %name-%version/bin/*-* %buildroot%_bindir/
 
 # install minimal main.cf
 mv %buildroot%config_directory/main.cf{,.dist}
@@ -439,8 +392,9 @@ done
 ln -snf smtp %buildroot%daemon_directory/lmtp
 
 %if_with tls
-install -pm755 libexec/{*-tls,tlsmgr,tlsproxy} %buildroot%daemon_directory/
-install -pm755 bin/posttls* %buildroot%_bindir/
+install -pm755 %name-%version-tls/libexec/{*-tls,tlsmgr,tlsproxy,postfix-tls-script} %buildroot%daemon_directory/
+install -pm755 %name-%version-tls/bin/posttls* %buildroot%_bindir/
+install -pm644 %name-%version-tls/lib/libpostfix-tls.so %buildroot%_libdir/
 %endif #with tls
 
 # Finish postqueue install.
@@ -482,25 +436,25 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 ln -rsnf %buildroot%config_directory/aliases %buildroot%_sysconfdir/
 
 # Install manpages
-cp -a man/man{1,5,8} %buildroot%manpage_directory/
+cp -a %name-%version/man/man{1,5,8} %buildroot%manpage_directory/
 
 # Install qshape and rmail.
-install -p -m755 auxiliary/qshape/qshape.pl %buildroot%_bindir/qshape
-install -p -m755 auxiliary/rmail/rmail %buildroot%_bindir/
+install -p -m755 %name-%version/auxiliary/qshape/qshape.pl %buildroot%_bindir/qshape
+install -p -m755 %name-%version/auxiliary/rmail/rmail %buildroot%_bindir/
 
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
 
-cp -a html examples *README* COMPATIBILITY HISTORY LICENSE PORTING RELEASE_NOTES \
-	%buildroot%docdir/
+(cd %name-%version; cp -a html examples *README* COMPATIBILITY HISTORY LICENSE PORTING RELEASE_NOTES \
+	%buildroot%docdir/)
 xz -9 %buildroot%docdir/HISTORY
 %if_with tls
 mkdir -p %buildroot%docdir/tls
-cp -a TLS_* %buildroot%docdir/
+cp -a %name-%version/TLS_* %buildroot%docdir/
 xz -9 %buildroot%docdir/TLS_CHANGES
 %endif #with tls
 
-install -pm644 IPv6-ChangeLog %buildroot%docdir/
+install -pm644 %name-%version/IPv6-ChangeLog %buildroot%docdir/
 xz -9 %buildroot%docdir/IPv6-ChangeLog
 
 # Install README_FILES.
@@ -523,6 +477,9 @@ mksock %buildroot%ROOT/dev/log
 
 # Remove sendmail-common files
 rm %buildroot%_bindir/{mailq,newaliases}
+
+# Package plugins separately
+sed '/\/postfix-[^-.]*\.so/d' -i %name.files
 
 ### RUNTIME SCRIPTS ###
 
@@ -572,6 +529,7 @@ fi
 rm -f %config_directory/{access,aliases,canonical,relocated,transport,virtual}.{,c}db
 %_libexecdir/postfix/post-install \
 	config_directory=%config_directory \
+	meta_directory=%config_directory \
 	daemon_directory=%daemon_directory \
 	upgrade-package
 if [ $1 -ge 2 ]; then
@@ -596,15 +554,17 @@ fi
 for n in smtp smtpd; do
       ln -snf "$n"-tls %daemon_directory/"$n"
 done
-sed -i 's/^#\(.*tls\)/\1/' %daemon_directory/%name-files
-%_libexecdir/postfix/post-install upgrade-package
+sed -i 's/^#\(.*tls\)/\1/' %config_directory/%name-files
+%_libexecdir/postfix/post-install \
+	meta_directory=%config_directory \
+	upgrade-package
 
 %preun tls
 if [ $1 = 0 ]; then
 	for n in smtp smtpd; do
 	      ln -snf "$n"-std %daemon_directory/"$n"
 	done
-	sed -i 's/[^#]*tls/#&/' %daemon_directory/%name-files
+	sed -i 's/[^#]*tls/#&/' %config_directory/%name-files
 fi
 %endif #with tls
 
@@ -625,10 +585,10 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %attr(-,root,root) %daemon_directory/smtp
 %attr(-,root,root) %daemon_directory/smtpd
 %_unitdir/%name.service
+%_libdir/libpostfix-*.so
+%exclude %_libdir/libpostfix-tls.so
 %_rpmlibdir/%name.filetrigger
 %_sysconfdir/syslog.d/%name
-%_libdir/%libpostfix
-%_libdir/%libpostfix_dict
 %attr(700,root,root) %verify(not mode,group) %dir %daemon_directory/postqueue
 %command_directory/postqueue
 %dir %plugin_directory
@@ -700,15 +660,20 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %files tls
 %_sbindir/postfix-generate-ssl-certificate
 %_mandir/man8/*tls*
+%_libdir/libpostfix-tls.so
 %dir %daemon_directory
 %daemon_directory/*-tls
 %daemon_directory/tlsmgr
 %daemon_directory/tlsproxy
+%daemon_directory/postfix-tls-script
 %dir %docdir
 %docdir/TLS_*
 %endif #with tls
 
 %changelog
+* Sat May 29 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.0-alt1
+- Updated to 3.6.0.
+
 * Wed Dec 02 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.11.11-alt4
 - Fixed build with gcc 10.x.
 
