@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gerbera
-Version: 1.6.4
+Version: 1.8.1
 Release: alt1
 
 Summary: UPnP Media Server
@@ -15,7 +15,7 @@ Requires: %name-data = %EVR
 
 BuildRequires: cmake >= 3.14
 BuildRequires: gcc-c++
-BuildRequires: libupnp-devel >= 1.12.1
+BuildRequires: libupnp-devel >= 1.14.0
 BuildRequires: libfmt-devel
 BuildRequires: libspdlog-devel >= 1.4
 BuildRequires: libuuid-devel
@@ -32,7 +32,7 @@ BuildRequires: libavformat-devel
 BuildRequires: libavutil-devel
 BuildRequires: libffmpegthumbnailer-devel
 BuildRequires: zlib-devel
-BuildRequires: libmatroska-devel
+BuildRequires: libebml-devel libmatroska-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libmysqlclient-devel
 
@@ -55,19 +55,20 @@ Data files for the Gerbera media server.
 
 %build
 %cmake \
-    -DWITH_JS=1 \
-    -DWITH_MYSQL=0 \
-    -DWITH_CURL=1 \
-    -DWITH_TAGLIB=1 \
-    -DWITH_MAGIC=1 \
-    -DWITH_AVCODEC=1 \
-    -DWITH_EXIF=1 \
-    -DWITH_EXIV2=1 \
-    -DWITH_FFMPEGTHUMBNAILER=1 \
-    -DWITH_INOTIFY=1 \
-    -DWITH_SYSTEMD=1 \
-    -DWITH_MYSQL=1 \
-    -DUPNP_HAS_REUSEADDR=1
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DWITH_JS=YES \
+    -DWITH_MYSQL=YES \
+    -DWITH_CURL=YES \
+    -DWITH_TAGLIB=YES \
+    -DWITH_MAGIC=YES \
+    -DWITH_AVCODEC=YES \
+    -DWITH_EXIF=YES \
+    -DWITH_EXIV2=YES \
+    -DWITH_FFMPEGTHUMBNAILER=YES \
+    -DWITH_INOTIFY=YES \
+    -DWITH_SYSTEMD=YES \
+    -DWITH_MYSQL=YES \
+    -DUPNP_HAS_REUSEADDR=YES
 
 %cmake_build
 
@@ -123,6 +124,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %config(noreplace) %_datadir/%name/js/common.js
 
 %changelog
+* Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
+- new version 1.8.1
+
 * Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.4-alt1
 - new version 1.6.4
 
