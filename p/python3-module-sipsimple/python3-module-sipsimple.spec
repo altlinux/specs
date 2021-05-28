@@ -1,26 +1,25 @@
-%define  modulename sipsimple
-%def_enable bundled_pjsip
+%define modulename sipsimple
 
-Name:    python-module-%modulename
-Version: 3.5.0
-Release: alt2
+Name: python3-module-%modulename
+Version: 4.0.1
+Release: alt1
 
 Summary: SIP SIMPLE implementation for Python
 License: GPL-3.0+
-Group:   Development/Python
+Group: Development/Python3
 
-Url:     https://github.com/AGProjects/python-sipsimple
-Source: python-%modulename-%version.tar
+Url: https://github.com/AGProjects/python3-sipsimple
+Source: python3-%modulename-%version.tar
 Patch: python-module-sipsimple-alt-add-arch-webrtc-defines.patch
 Patch1: pj-attr-gcc10.patch
+
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-distribute
+BuildRequires: python3-module-setuptools_cython
 BuildRequires: gcc-c++
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
-BuildRequires: python-module-setuptools_cython
-%if_enabled bundled_pjsip
 BuildRequires: libavformat-devel
 BuildRequires: libswscale-devel
 BuildRequires: libvpx-devel
@@ -28,9 +27,6 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libssl-devel
 BuildRequires: libv4l-devel
 BuildRequires: libalsa-devel
-%else
-BuildRequires: libpjsip-devel
-%endif
 
 %description
 SIP SIMPLE client SDK is a Software Development Kit for easy development
@@ -39,7 +35,7 @@ Messaging, File Transfers, Desktop Sharing and Presence.  Other media
 types can be easily added by using an extensible high-level API.
 
 %prep
-%setup -n python-%modulename-%version
+%setup -n python3-%modulename-%version
 %patch -p1
 %patch1 -p2
 cp -at deps/pjsip/ -- /usr/share/gnu-config/config.*
@@ -51,16 +47,28 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %endif
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%doc AUTHORS README
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*.egg-info
+
 
 %changelog
+* Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- New version.
+
+* Wed May 26 2021 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- New version.
+- Build only python3 module.
+
+* Sun May 23 2021 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt3
+- Package module for python3.
+
 * Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt2
 - Fix build by gcc10.
 - Fix License tag.

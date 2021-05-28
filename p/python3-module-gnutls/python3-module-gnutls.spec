@@ -1,23 +1,22 @@
 %define  modulename gnutls
 
-Name:    python-module-%modulename
-Version: 3.1.3
+Name:    python3-module-%modulename
+Version: 3.1.8
 Release: alt1
 
 Summary: GnuTLS bindings for Python
-License: LGPLv2+
-Group:   Development/Python
-URL:     https://github.com/AGProjects/python-gnutls
+License: LGPL-2.1+
+Group:   Development/Python3
+URL:     https://github.com/AGProjects/python3-gnutls
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires: rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev python3-module-setuptools
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source: python3-%modulename-%version.tar
 
 %description
 This package provides a high level object oriented wrapper around libgnutls,
@@ -37,24 +36,19 @@ as it has direct access to all the GnuTLS internals and is also very easy to
 extend without any need to write C code or recompile anything.
 
 %prep
-%setup -n %modulename-%version
+%setup -n python3-%modulename-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%doc README
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*.egg-info
 
 %changelog
-* Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt1
-- New version.
-
-* Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.2-alt1
-- New version.
-
-* Thu Mar 01 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt1
-- Initial build in Sisyphus
+* Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.8-alt1
+- Initial build for Sisyphus

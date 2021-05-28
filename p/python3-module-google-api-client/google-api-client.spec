@@ -2,36 +2,26 @@
 
 %def_with python3
 
-Name: python-module-%oname
-Version: 1.7.12
+Name: python3-module-%oname
+Version: 2.6.0
 Release: alt1
 Summary: Google API Client Library for Python
-License: ASL
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/google-api-python-client/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/google/google-api-python-client.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-httplib2 >= 0.8
-BuildRequires: python-module-oauth2client >= 1.4.6
-BuildRequires: python-module-six >= 1.6.1
-BuildRequires: python-module-uritemplate >= 0.6
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-httplib2 >= 0.8
 BuildRequires: python3-module-oauth2client >= 1.4.6
 BuildRequires: python3-module-six >= 1.6.1
 BuildRequires: python3-module-uritemplate >= 0.6
-#BuildRequires: python-tools-2to3
-%endif
 
-%add_python_req_skip google.appengine.api
 %add_python3_req_skip google.appengine.api
 
 %description
@@ -49,55 +39,74 @@ Plus, Moderator, and many other Google APIs.
 This package contains documentation for Google API Client Library for
 Python.
 
-%package -n python3-module-%oname
-Summary: Google API Client Library for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-The Google API Client for Python is a client library for accessing the
-Plus, Moderator, and many other Google APIs.
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
 rm -f docs/build
 
 %files
-%doc CHANGELOG *.md
-%python_sitelibdir/*
+%doc CHANGELOG.md README.md
+%python3_sitelibdir/*
 
 %files docs
 %doc docs/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGELOG *.md
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Wed May 26 2021 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- New version.
+
+* Thu May 20 2021 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+- Build only module for python3.
+
+* Thu May 13 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
+- New version.
+
+* Thu Apr 29 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
+- New version.
+
+* Fri Apr 16 2021 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version.
+
+* Thu Apr 01 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version.
+
+* Mon Mar 08 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
+- New version.
+
+* Thu Nov 19 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.8-alt1
+- New version.
+
+* Fri Oct 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.5-alt1
+- New version.
+
+* Wed Oct 21 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.4-alt1
+- New version.
+
+* Wed Sep 30 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.3-alt1
+- New version.
+
+* Fri Sep 25 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.2-alt1
+- New version.
+
+* Fri Sep 18 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.1-alt1
+- New version.
+
+* Thu Jun 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt1
+- New version.
+- Fix License tag according to SPDX.
+
+* Thu May 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.8.2-alt1
+- New version.
+
+* Sat Mar 14 2020 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
+- New version.
+
 * Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.7.12-alt1
 - New version.
 

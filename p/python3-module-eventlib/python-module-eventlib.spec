@@ -1,27 +1,28 @@
 %define  modulename eventlib
 
-Name:    python-module-%modulename
-Version: 0.2.3
-Release: alt2
+Name:    python3-module-%modulename
+Version: 0.3.0
+Release: alt1
 
 Summary: Networking library for SIP SIMPLE Client SDK
 License: MIT
-Group:   Development/Python
-URL:     https://github.com/AGProjects/python-eventlib
+Group:   Development/Python3
+URL:     https://github.com/AGProjects/python3-eventlib
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev
+BuildRequires: python3-module-distribute
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
-Patch1:  alt-remove-obsoleted-hubs.patch
+Source: %modulename-%version.tar
+Patch1: alt-remove-obsoleted-hubs.patch
+Patch2: eventlib-replace-popen2-by-subprocess.patch
 
-%add_python_req_skip stackless
-%py_requires greenlet
+%add_python3_req_skip stackless py.magic
+%py3_requires greenlet
 
 %description
 Eventlib is a networking library written in Python. It achieves high
@@ -35,18 +36,26 @@ io operations appear blocking at the source code level.
 rm -f eventlib/support/stackles{ss,pypys}.py
 rm -f eventlib/hubs/{libev,libevent}.py
 %patch1 -p1
+%patch2 -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed May 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
+- New version.
+
+* Wed May 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.2.5-alt1
+- New version.
+- Build as Python3 module.
+
 * Sat Mar 10 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt2
 - Add requirements of greenlet python module.
 

@@ -1,7 +1,7 @@
 %define modulename application
 
 Name:    python3-module-%modulename
-Version: 3.0.0
+Version: 3.0.3
 Release: alt1
 
 Summary: Basic building blocks for Python applications
@@ -45,6 +45,9 @@ logic itself.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt1
+- new version 3.0.3
+
 * Sun Sep 06 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
 - new version 3.0.0 (with rpmrb script)
 

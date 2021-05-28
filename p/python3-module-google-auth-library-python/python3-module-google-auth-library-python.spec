@@ -1,7 +1,7 @@
 %define  modulename google-auth-library-python
 
 Name:    python3-module-%modulename
-Version: 1.6.3
+Version: 1.30.1
 Release: alt1
 
 Summary: Google Auth Python Library
@@ -18,8 +18,11 @@ BuildArch: noarch
 
 Source:  %modulename-%version.tar
 
+%add_python3_req_skip requests.packages.urllib3.util.ssl_
+
 %description
-%summary
+This library simplifies using Google's various server-to-server authentication
+mechanisms to access Google APIs.
 
 %prep
 %setup -n %modulename-%version
@@ -35,5 +38,8 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.30.1-alt1
+- New version.
+
 * Sat Apr 27 2019 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt1
 - Initial build for Sisyphus

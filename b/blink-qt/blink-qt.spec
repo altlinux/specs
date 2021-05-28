@@ -1,5 +1,5 @@
 Name:    blink-qt
-Version: 3.2.1
+Version: 4.1.0
 Release: alt1
 
 Summary: Blink SIP Client
@@ -9,28 +9,22 @@ URL:     http://icanblink.com/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libvncserver-devel
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
-BuildRequires: python-module-application >= 2.0.0
-BuildRequires: python-module-cjson
-BuildRequires: python-module-Cython
-BuildRequires: python-module-enum34
-BuildRequires: python-module-eventlib
-BuildRequires: python-module-gnutls
-BuildRequires: python-module-google-api-client >= 1.6.5
-BuildRequires: python-module-lxml
-BuildRequires: python-module-oauth2client
-BuildRequires: python-module-PyQt5 >= 5.0
-BuildRequires: python-module-sipsimple >= 3.0.0
-BuildRequires: python-module-twisted-core
-BuildRequires: python-module-zope.interface
+BuildRequires: python3-dev
+BuildRequires: python3-module-distribute
+BuildRequires: python3-module-Cython
+BuildRequires: python3-module-PyQt5 >= 5.0
 
-%py_requires service_identity twisted.names
+%py3_requires service_identity twisted.names
+%filter_from_provides /^python3(blink.*/d
+%filter_from_requires /^python3(blink.*/d
 
-Source:  %name-%version.tar
-Patch1:  alt-desktop-l10n.patch
+Conflicts: python3-module-blink
+
+Source: %name-%version.tar
+Patch1: alt-desktop-l10n.patch
+Patch2: blink-qt-disable-__main__-import.patch
 
 %description
 Fully featured, easy to use SIP client with a Qt based UI Blink is a
@@ -42,12 +36,15 @@ Instant Messaging, File Transfers, Desktop Sharing and Presence.
 %prep
 %setup -n %name-%version
 %patch1 -p1
+%patch2 -p1
+# Set correct python3 executable in shebang
+grep -Rl '#!.*python2$' * | xargs -n1 -i{} subst 's|#!.*python2$|#!%__python3|' "{}"
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 install -Dm 0644 debian/blink.desktop %buildroot%_desktopdir/blink.desktop
 install -Dm 0644 debian/blink.xpm %buildroot%_pixmapsdir/blink.xpm
 install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
@@ -58,11 +55,18 @@ install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 %_datadir/blink
 %_desktopdir/blink.desktop
 %_pixmapsdir/blink.xpm
-%python_sitelibdir/blink/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/blink/
+%python3_sitelibdir/*.egg-info
 %_man1dir/blink.1*
 
 %changelog
+* Fri May 21 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
+- New version.
+
+* Fri Mar 12 2021 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+- Build with Python3.
+
 * Thu Mar 05 2020 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt1
 - New version.
 - Fix license tag according to SPDX.

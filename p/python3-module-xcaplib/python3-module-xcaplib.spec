@@ -1,23 +1,25 @@
-%define  modulename xcaplib
+%define modulename xcaplib
 
-Name:    python-module-%modulename
-Version: 1.2.2
+Name:    python3-module-%modulename
+Version: 2.0.0
 Release: alt1
 
 Summary: XCAP (RFC4825) client library
 License: LGPLv2+
-Group:   Development/Python
-URL:     https://github.com/AGProjects/python-xcaplib
+Group:   Development/Python3
+URL:     https://github.com/AGProjects/python3-xcaplib
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires: rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev python3-module-setuptools
 
 BuildArch: noarch
 
-Source:  python-%modulename-%version.tar
+Source: python3-%modulename-%version.tar
+Patch: xcaplib-fix-urllib.request.HTTPHandler-inheritance.patch
+
+Conflicts: python-module-xcaplib
 
 %description
 XCAP protocol, defined in RFC 4825, allows a client to read, write, and
@@ -32,26 +34,21 @@ The XCAP client example script provided by this package can be used to
 manage documents on an XCAP server.
 
 %prep
-%setup -n python-%modulename-%version
+%setup -n python3-%modulename-%version
+%patch -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc README examples TODO
 %_bindir/xcapclient
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*.egg-info
 
 %changelog
-* Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
-- New version.
-
-* Fri Oct 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
-- New version.
-
-* Fri Mar 02 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+* Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
