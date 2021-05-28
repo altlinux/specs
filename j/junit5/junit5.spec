@@ -22,7 +22,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           junit5
 Version:        5.5.2
-Release:        alt1_2jpp11
+Release:        alt2_2jpp11
 Summary:        Java regression testing framework
 License:        EPL-2.0
 URL:            http://junit.org/junit5/
@@ -133,7 +133,7 @@ done
 %mvn_package :aggregator __noinstall
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 # Build docs.  Ignore exit asciidoc -- it fails for some reason, but
 # still produces readable docs.
@@ -160,6 +160,9 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Sat May 29 2021 Igor Vlasenko <viy@altlinux.org> 5.5.2-alt2_2jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 5.5.2-alt1_2jpp11
 - new version
 
