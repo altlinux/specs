@@ -1,31 +1,37 @@
-
+%filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^.etc.java.xmvn.conf/d
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
 
-Name: xmvn
+Name: xmvn-bisect
 Version: 3.1.0
-Summary: Local Extensions for Apache Maven
+Summary: XMvn Bisect
 License: ASL 2.0
 Url: https://fedora-java.github.io/xmvn/
 Group: Development/Java
 Release: alt0.1jpp
 
 Packager: Igor Vlasenko <viy@altlinux.org>
-Requires: maven
-Requires: xmvn-minimal
+Provides: mvn(org.fedoraproject.xmvn:xmvn-bisect) = 3.1.0
+Provides: mvn(org.fedoraproject.xmvn:xmvn-bisect:pom:) = 3.1.0
+Requires: javapackages-filesystem
+Requires: javapackages-tools
+Requires: mvn(com.beust:jcommander)
+Requires: mvn(org.apache.maven.shared:maven-invoker)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
 
 BuildArch: noarch
-Source: xmvn-3.1.0-2.fc32.cpio
+Source: xmvn-bisect-3.1.0-2.fc32.cpio
 
 
 %description
-This package provides extensions for Apache Maven that can be used to
-manage system artifact repository and use it to resolve Maven
-artifacts in offline mode, as well as Maven plugins to help with
-creating RPM packages containing Maven artifacts.
+This package provides XMvn Bisect, which is a debugging tool that can
+diagnose build failures by using bisection method.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+
+sed -i 1s,/usr/bin/bash,/bin/bash, usr/bin/*
 
 %build
 cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list

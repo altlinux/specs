@@ -2,27 +2,30 @@
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
 
-Name: xmvn
+Name: xmvn-connector-aether
 Version: 3.1.0
-Summary: Local Extensions for Apache Maven
+Summary: XMvn Connector for Maven Resolver
 License: ASL 2.0
 Url: https://fedora-java.github.io/xmvn/
 Group: Development/Java
 Release: alt0.1jpp
 
 Packager: Igor Vlasenko <viy@altlinux.org>
-Requires: maven
-Requires: xmvn-minimal
+Provides: mvn(org.fedoraproject.xmvn:xmvn-connector-aether) = 3.1.0
+Provides: mvn(org.fedoraproject.xmvn:xmvn-connector-aether:pom:) = 3.1.0
+Requires: javapackages-filesystem
+Requires: mvn(org.fedoraproject.xmvn:xmvn-api)
+Requires: mvn(org.fedoraproject.xmvn:xmvn-core)
 
 BuildArch: noarch
-Source: xmvn-3.1.0-2.fc32.cpio
+Source: xmvn-connector-aether-3.1.0-2.fc32.cpio
 
 
 %description
-This package provides extensions for Apache Maven that can be used to
-manage system artifact repository and use it to resolve Maven
-artifacts in offline mode, as well as Maven plugins to help with
-creating RPM packages containing Maven artifacts.
+This package provides XMvn Connector for Maven Resolver, which
+provides integration of Maven Resolver with XMvn.  It provides an
+adapter which allows XMvn resolver to be used as Maven workspace
+reader.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}

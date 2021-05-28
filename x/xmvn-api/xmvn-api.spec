@@ -2,27 +2,26 @@
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
 
-Name: xmvn
+Name: xmvn-api
 Version: 3.1.0
-Summary: Local Extensions for Apache Maven
+Summary: XMvn API
 License: ASL 2.0
 Url: https://fedora-java.github.io/xmvn/
 Group: Development/Java
 Release: alt0.1jpp
 
 Packager: Igor Vlasenko <viy@altlinux.org>
-Requires: maven
-Requires: xmvn-minimal
+Provides: mvn(org.fedoraproject.xmvn:xmvn-api) = 3.1.0
+Provides: mvn(org.fedoraproject.xmvn:xmvn-api:pom:) = 3.1.0
+Requires: javapackages-filesystem
 
 BuildArch: noarch
-Source: xmvn-3.1.0-2.fc32.cpio
+Source: xmvn-api-3.1.0-2.fc32.cpio
 
 
 %description
-This package provides extensions for Apache Maven that can be used to
-manage system artifact repository and use it to resolve Maven
-artifacts in offline mode, as well as Maven plugins to help with
-creating RPM packages containing Maven artifacts.
+This package provides XMvn API module which contains public interface
+for functionality implemented by XMvn Core.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}

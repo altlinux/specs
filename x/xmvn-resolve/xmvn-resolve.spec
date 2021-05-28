@@ -1,31 +1,40 @@
+%filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^.etc.java.xmvn.conf/d
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
 
-Name: xmvn
+Name: xmvn-resolve
 Version: 3.1.0
-Summary: Local Extensions for Apache Maven
+Summary: XMvn Resolver
 License: ASL 2.0
 Url: https://fedora-java.github.io/xmvn/
 Group: Development/Java
 Release: alt0.1jpp
 
 Packager: Igor Vlasenko <viy@altlinux.org>
-Requires: maven
-Requires: xmvn-minimal
+Provides: mvn(org.fedoraproject.xmvn:xmvn-resolve) = 3.1.0
+Provides: mvn(org.fedoraproject.xmvn:xmvn-resolve:pom:) = 3.1.0
+Requires: javapackages-filesystem
+Requires: javapackages-tools
+Requires: mvn(com.beust:jcommander)
+Requires: mvn(org.fedoraproject.xmvn:xmvn-api)
+Requires: mvn(org.fedoraproject.xmvn:xmvn-core)
 
 BuildArch: noarch
-Source: xmvn-3.1.0-2.fc32.cpio
+Source: xmvn-resolve-3.1.0-2.fc32.cpio
 
 
 %description
-This package provides extensions for Apache Maven that can be used to
-manage system artifact repository and use it to resolve Maven
-artifacts in offline mode, as well as Maven plugins to help with
-creating RPM packages containing Maven artifacts.
+This package provides XMvn Resolver, which is a very simple
+commald-line tool to resolve Maven artifacts from system repositories.
+Basically it's just an interface to artifact resolution mechanism
+implemented by XMvn Core.  The primary intended use case of XMvn
+Resolver is debugging local artifact repositories.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+sed -i 1s,/usr/bin/bash,/bin/bash, usr/bin/*
 
 %build
 cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list

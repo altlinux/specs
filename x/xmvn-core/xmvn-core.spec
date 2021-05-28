@@ -2,27 +2,27 @@
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
 
-Name: xmvn
+Name: xmvn-core
 Version: 3.1.0
-Summary: Local Extensions for Apache Maven
+Summary: XMvn Core
 License: ASL 2.0
 Url: https://fedora-java.github.io/xmvn/
 Group: Development/Java
 Release: alt0.1jpp
 
 Packager: Igor Vlasenko <viy@altlinux.org>
-Requires: maven
-Requires: xmvn-minimal
+Provides: mvn(org.fedoraproject.xmvn:xmvn-core) = 3.1.0
+Provides: mvn(org.fedoraproject.xmvn:xmvn-core:pom:) = 3.1.0
+Requires: javapackages-filesystem
 
 BuildArch: noarch
-Source: xmvn-3.1.0-2.fc32.cpio
+Source: xmvn-core-3.1.0-2.fc32.cpio
 
 
 %description
-This package provides extensions for Apache Maven that can be used to
-manage system artifact repository and use it to resolve Maven
-artifacts in offline mode, as well as Maven plugins to help with
-creating RPM packages containing Maven artifacts.
+This package provides XMvn Core module, which implements the essential
+functionality of XMvn such as resolution of artifacts from system
+repository.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}

@@ -2,30 +2,55 @@
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
 
-Name: xmvn
+Name: xmvn-minimal
 Version: 3.1.0
-Summary: Local Extensions for Apache Maven
+Summary: Dependency-reduced version of XMvn
 License: ASL 2.0
 Url: https://fedora-java.github.io/xmvn/
 Group: Development/Java
 Release: alt0.1jpp
 
 Packager: Igor Vlasenko <viy@altlinux.org>
-Requires: maven
-Requires: xmvn-minimal
+Requires: apache-commons-cli
+Requires: apache-commons-lang3
+Requires: atinject
+Requires: google-guice
+Requires: guava
+Requires: maven-lib
+Requires: maven-lib
+Requires: maven-resolver-api
+Requires: maven-resolver-impl
+Requires: maven-resolver-spi
+Requires: maven-resolver-util
+Requires: maven-wagon-provider-api
+Requires: plexus-cipher
+Requires: plexus-classworlds
+Requires: plexus-containers-component-annotations
+Requires: plexus-interpolation
+Requires: plexus-sec-dispatcher
+Requires: plexus-utils
+Requires: sisu-inject
+Requires: sisu-plexus
+Requires: slf4j
+Requires: xmvn-api
+Requires: xmvn-connector-aether
+Requires: xmvn-core
+Requires: jansi-native
 
 BuildArch: noarch
-Source: xmvn-3.1.0-2.fc32.cpio
+Source: xmvn-minimal-3.1.0-2.fc32.cpio
 
 
 %description
-This package provides extensions for Apache Maven that can be used to
-manage system artifact repository and use it to resolve Maven
-artifacts in offline mode, as well as Maven plugins to help with
-creating RPM packages containing Maven artifacts.
+This package provides minimal version of XMvn, incapable of using
+remote repositories.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+sed -i 1s,/usr/bin/sh,/bin/sh, usr/share/xmvn/bin/mvn*
+
+rm usr/share/xmvn/lib/jansi-linux.jar
+ln -s /usr/lib/java/jansi-native/jansi-linux.jar usr/share/xmvn/lib/
 
 %build
 cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
