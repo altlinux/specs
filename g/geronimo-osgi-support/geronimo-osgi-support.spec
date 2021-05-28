@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             geronimo-osgi-support
 Version:          1.0
-Release:          alt2_26jpp11
+Release:          alt2_28jpp11
 Summary:          OSGI spec bundle support
 License:          ASL 2.0 and W3C
 URL:              http://geronimo.apache.org/
@@ -66,7 +66,7 @@ sed -i 's/\r//' LICENSE NOTICE
 %mvn_file ':{*}' @1
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -78,6 +78,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_28jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_26jpp11
 - update
 
