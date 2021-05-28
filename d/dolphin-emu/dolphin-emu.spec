@@ -1,10 +1,10 @@
 # git describe upstream | sed 's/-g[0-9a-f]*\(+*\)$/\1/'
-%define git_version 5.0-13963
+%define git_version 5.0-14095
 # git show-ref --heads --hash upstream
-%define git_commit 5513d5f4f732fb1e436765ab87e7d60ba02b1ad6
+%define git_commit f60d29f2b79f6e8cca6c00c9b6e8cbfbb0fde6ef
 
 Name: dolphin-emu
-Version: 5.0.13963
+Version: 5.0.14095
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -20,7 +20,6 @@ ExclusiveArch: x86_64 aarch64
 Source: dolphin-%version.tar
 Patch0: %name-alt-git.patch
 
-BuildPreReq: llvm-common-devel-static
 BuildPreReq: pkgconfig(expat)
 BuildPreReq: pkgconfig(libbrotlicommon)
 BuildPreReq: pkgconfig(libpcre)
@@ -30,7 +29,7 @@ BuildRequires: cmake
 BuildRequires: libcubeb-devel
 BuildRequires: libmbedtls-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: llvm-common-devel
+BuildRequires: llvm12.0-devel-static
 BuildRequires: pkgconfig(Qt5)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bzip2)
@@ -100,6 +99,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Fri May 28 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.14095-alt1
+- Version 5.0-14095
+
 * Wed Apr 07 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.13963-alt1
 - Version 5.0-13963
 
