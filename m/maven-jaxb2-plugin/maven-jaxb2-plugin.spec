@@ -1,30 +1,28 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Version 0.14.0 is available, but requires Java 9
+
 Name:          maven-jaxb2-plugin
-Version:       0.13.0
-Release:       alt1_8jpp8
+Version:       0.13.3
+Release:       alt1_3jpp8
 Summary:       Provides the capability to generate java sources from schemas
 License:       BSD and ASL 2.0
-URL:           http://java.net/projects/maven-jaxb2-plugin/pages/Home
-Source0:       https://github.com/highsource/maven-jaxb2-plugin/archive/%{version}.tar.gz
+URL:           https://github.com/highsource/%{name}
+Source0:       %{url}/archive/%{version}.tar.gz
 # Don't try to use an internal bundled resolver, as this is not available in
 # Fedora:
 Patch0:        %{name}-0.13.0-dont-use-internal-resolver.patch
 # Adapt for Maven 3:
 Patch1:        %{name}-0.13.0-adapt-for-maven-3.patch
-# Remove the enconding option as the version of the XJC compiler that we build
+# Remove the encoding option as the version of the XJC compiler that we build
 # in Fedora doesn't have it:
-Patch2:        %{name}-0.13.0-remove-enconding-option.patch
+Patch2:        %{name}-0.13.0-remove-encoding-option.patch
 
 BuildArch:     noarch
-BuildRequires: java-headless
 BuildRequires: maven-local
 BuildRequires: mvn(com.sun.codemodel:codemodel)
 BuildRequires: mvn(junit:junit)
@@ -35,12 +33,10 @@ BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.glassfish.jaxb:jaxb-runtime)
 BuildRequires: mvn(org.glassfish.jaxb:jaxb-xjc)
 BuildRequires: mvn(org.slf4j:slf4j-api)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
 BuildRequires: mvn(xml-resolver:xml-resolver)
 Source44: import.info
@@ -48,6 +44,8 @@ Source44: import.info
 %description
 This Maven 2 plugin wraps the JAXB 2.x XJC compiler and provides the capability
 to generate Java sources from XML Schemas.
+
+Also see the jaxb2-maven-plugin package.
 
 %package javadoc
 Group: Development/Java
@@ -63,6 +61,11 @@ The API documentation of %{name}.
 %patch1 -p1
 %patch2 -p1
 
+
+
+# Remove parent
+%pom_remove_parent
+
 # use glassfish-jaxb = 2.0.5
 %pom_disable_module plugin-2.0
 # use glassfish-jaxb = 2.1.13
@@ -73,13 +76,13 @@ The API documentation of %{name}.
 %pom_add_dep com.sun.codemodel:codemodel:2.6 plugin
 %pom_add_dep com.sun.codemodel:codemodel:2.6 plugin-2.2
 
-%build
-
 # rename java files with everything commented out, helpmojo can't handle those:
-(cd plugin-core/src/main/java/org/jvnet/jaxb2/maven2/resolver/tools/;
- mv DelegatingReaderWrapper.java DelegatingReaderWrapper.java_
- mv DelegatingInputStreamWrapper.java DelegatingInputStreamWrapper.java_
-)
+cd plugin-core/src/main/java/org/jvnet/jaxb2/maven2/resolver/tools/
+mv DelegatingReaderWrapper.java DelegatingReaderWrapper.java_
+mv DelegatingInputStreamWrapper.java DelegatingInputStreamWrapper.java_
+
+
+%build
 %mvn_build
 
 %install
@@ -93,6 +96,9 @@ The API documentation of %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:0.13.3-alt1_3jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.13.0-alt1_8jpp8
 - new version
 
