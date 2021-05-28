@@ -5,12 +5,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          mckoi
 Version:       1.0.4
-Release:       alt2_17jpp8
+Release:       alt3_17jpp11
 Summary:       Open Source Java SQL Database
 License:       GPLv2
 URL:           http://mckoi.com/database/
@@ -62,8 +62,8 @@ unzip -qq src.zip
 
 # contrib require org.jboss.system
 # fix generics support for java 7
-sed -i "s|<source>1.3</source>|<source>1.5</source>|" pom.xml
-sed -i "s|<target>1.3</target>|<target>1.5</target>|" pom.xml
+sed -i "s|<source>1.3</source>|<source>1.7</source>|" pom.xml
+sed -i "s|<target>1.3</target>|<target>1.7</target>|" pom.xml
 
 sed -i "s|../mckoidb.jar:../gnu-regexp-1.0.8.jar|../target/MckoiSQLDB-%{version}.jar:%{_javadir}/gnu-regexp.jar|" test/*.sh
 chmod 755 test/*.sh
@@ -113,6 +113,9 @@ sh ./runLocalTest.sh
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.4-alt3_17jpp11
+- fixed build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_17jpp8
 - new version
 
