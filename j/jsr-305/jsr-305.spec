@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           jsr-305
 Version:        0
-Release:        alt4_0.27.20130910svnjpp11
+Release:        alt4_0.30.20130910svnjpp11
 Summary:        Correctness annotations for Java code
 
 # The majority of code is BSD-licensed, but some Java sources
@@ -23,6 +23,8 @@ BuildArch:      noarch
 Source0:        jsr-305-20130910svn.tgz
 # File containing URL to CC-BY license text
 Source1:        NOTICE-CC-BY.txt
+
+Patch0:         %{name}-java8.patch
 
 BuildRequires:  maven-local
 Source44: import.info
@@ -43,6 +45,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 cp %{SOURCE1} NOTICE-CC-BY
+%patch0 -p1
 
 %mvn_file :ri %{name}
 %mvn_alias :ri com.google.code.findbugs:jsr305
@@ -52,7 +55,7 @@ cp %{SOURCE1} NOTICE-CC-BY
 %pom_disable_module sampleUses
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -66,6 +69,9 @@ cp %{SOURCE1} NOTICE-CC-BY
 %doc --no-dereference ri/LICENSE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1:0-alt4_0.30.20130910svnjpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:0-alt4_0.27.20130910svnjpp11
 - update
 
