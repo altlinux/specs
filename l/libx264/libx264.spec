@@ -1,6 +1,6 @@
 Name: libx264
 Version: 148
-Release: alt2
+Release: alt3
 
 Summary: H.264 codec shared library
 License: GPL
@@ -8,6 +8,7 @@ Group: System/Libraries
 Url: http://www.videolan.org/x264.html
 
 Source: %name-%version-%release.tar
+Patch2000: %name-e2k-simd.patch
 
 BuildRequires: yasm libX11-devel
 
@@ -64,6 +65,9 @@ software.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %define _optlevel 3
@@ -74,12 +78,12 @@ export ASFLAGS=' '
 
 %configure \
 	--disable-cli \
-    	--enable-debug \
+	--enable-debug \
 	--enable-pic \
 	--enable-shared \
 	--bit-depth=8
 
-%make_build 
+%make_build all checkasm
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -87,6 +91,9 @@ export ASFLAGS=' '
 %ifnarch x86_64
 %set_verify_elf_method textrel=relaxed
 %endif
+
+%check
+./checkasm
 
 %files
 %doc doc/*.txt AUTHORS
@@ -99,6 +106,10 @@ export ASFLAGS=' '
 %_libdir/libx264.so
 
 %changelog
+* Thu Apr 15 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 148-alt3
+- added SIMD patch for Elbrus
+- added checkasm run
+
 * Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 148-alt2
 - updated to d32d7bf
 
