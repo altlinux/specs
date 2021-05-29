@@ -1,5 +1,5 @@
 Name: gzdoom
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -89,6 +89,13 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat May 29 2021 Artyom Bystrov <arbars@altlinux.org> 4.6.0-alt1
+- Widescreen graphics for Heretic and Hexen
+- Sprite shadows like in the Build engine. Both in software and hardware renderer.
+- 16 bit channel PNG files can be read
+- DEHEXTRA working properly now
+- various enhancements and fixes for ZScript.
+
 * Sun Apr 04 2021 Artyom Bystrov <arbars@altlinux.org> 4.5.0-alt1
 - Update version to 4.5.0
 
