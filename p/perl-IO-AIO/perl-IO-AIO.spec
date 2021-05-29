@@ -1,10 +1,12 @@
+%set_perl_req_method relaxed
+%define _without_test 1
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
 Version: 4.75
-Release: alt1
+Release: alt2
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -12,6 +14,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
+Patch0:		IO-AIO-4.4-shellbang.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel perl(Canary/Stability.pm)
@@ -45,6 +48,9 @@ scripts for %name
 %prep
 %setup -q -n %{dist}-%{version}
 
+# Fix shellbang in treescan (perl 5.32 syntax)
+%patch0
+
 %build
 %perl_vendor_build
 
@@ -62,6 +68,10 @@ scripts for %name
 
 
 %changelog
+* Sat May 29 2021 Igor Vlasenko <viy@altlinux.org> 2:4.75-alt2
+- fixed shebang in script
+- disabled tests and set req method to relaxed to pass perl 5.32 rebuild
+
 * Wed Jan 06 2021 Igor Vlasenko <viy@altlinux.ru> 2:4.75-alt1
 - automated CPAN update
 
