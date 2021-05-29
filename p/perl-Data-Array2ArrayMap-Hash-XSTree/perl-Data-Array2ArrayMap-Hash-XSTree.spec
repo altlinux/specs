@@ -1,13 +1,13 @@
-#################### WARNING! ######################
-# this spec file is for ALT Linux distro only.     #
-# other distro may have problems with rpm macro!!! #
-####################################################
+#################### WARNING! #####################
+# this spec file is for ALT Linux distro only.    #
+# other distros may have problems with rpm macro! #
+###################################################
 
 %define module Data-Array2ArrayMap-Hash-XSTree
 
 Name: perl-%module
-Version: 0.13
-Release: alt4.2
+Version: 0.14
+Release: alt1
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -24,7 +24,7 @@ BuildRequires: perl-Clone perl-devel
 
 %prep
 %setup -q -n %module-%version
-mv t/test_Hash.t t/test_Hash.t.failed
+#mv t/test_Hash.t t/test_Hash.t.failed
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ mv t/test_Hash.t t/test_Hash.t.failed
 %perl_vendor_autolib/Data
 
 %changelog
+* Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.2
 - rebuild with new perl 5.28.1
 
