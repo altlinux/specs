@@ -12,8 +12,8 @@ BuildRequires: jpackage-11-compat
 %bcond_without snappy
 
 Name:           plexus-archiver
-Version:        4.2.1
-Release:        alt1_2jpp11
+Version:        4.2.2
+Release:        alt1_3jpp11
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
@@ -75,7 +75,7 @@ rm -f src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTarSnappyFileResour
 rm src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.test.skip=true
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -87,6 +87,9 @@ rm src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2.2-alt1_3jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2.1-alt1_2jpp11
 - new version
 
