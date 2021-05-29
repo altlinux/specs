@@ -1,12 +1,12 @@
 %define modulename pika
 
 Name: python3-module-%modulename
-Version: 1.1.0
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Pika is a pure-Python implementation of the AMQP 0-9-1 protocol.
 
-License: MPLv2.0
+License: BSD-3-Clause
 Group: Development/Python3
 Url: http://github.com/pika/pika
 
@@ -66,6 +66,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc build/sphinx/html/*
 
 %changelog
+* Sat May 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
+- Automatically updated to 1.2.0.
+
 * Thu May 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt2
 - Drop python2 support.
 
