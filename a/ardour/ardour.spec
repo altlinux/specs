@@ -3,7 +3,7 @@
 %define name2 ardour6
 
 Name:    ardour
-Version: 6.6
+Version: 6.7
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -13,11 +13,6 @@ Group:   Sound
 Url:     http://ardour.org
 Source:  %name-%version.tar
 Source1: ardour6.desktop
-
-Patch1: 0001-Remove-volatile-atomic-re-display-flags-in-GUI-threa.patch
-Patch2: 0002-gcc-11-compat-volatile-atomic-variables-1-2.patch
-Patch3: 0003-gcc-11-compat-volatile-atomic-variables-2-2.patch
-Patch4: 0004-Correctly-detect-glib-volatile-atomic.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -89,14 +84,9 @@ See the online user manual at http://en.flossmanuals.net/ardour/index/
 %prep
 %setup
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
 # Generate revision number
-#echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
-#echo 'namespace ARDOUR { const char* revision = "%%version"; }' >> libs/ardour/revision.cc
+echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
+echo 'namespace ARDOUR { const char* revision = "6.7"; const char* date = "'$(date --rfc-3339=date)'"; }' >> libs/ardour/revision.cc
 
 %build
 %__python ./waf configure \
@@ -140,6 +130,10 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png \
 %_iconsdir/ardour6.png
 
 %changelog
+* Fri May 28 2021 Grigory Ustinov <grenka@altlinux.org> 6.7-alt1
+- Build new version.
+- Switch to building from git.
+
 * Wed Feb 24 2021 Grigory Ustinov <grenka@altlinux.org> 6.6-alt1
 - Build new version (thx to cas@).
 
