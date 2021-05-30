@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 Name:           xsom
 Summary:        XML Schema Object Model (XSOM)
 Version:        20140514
-Release:        alt1_3jpp11
+Release:        alt2_3jpp11
 License:        CDDL-1.1 or GPLv2 with exceptions
 
 # java.net is dead; upstream sources have been imported to GitHub though
@@ -19,6 +19,7 @@ Source1: http://docs.oasis-open.org/regrep/v3.0/schema/lcm.xsd
 
 # patch POM to drop tasks that rely on bundled JARs
 Patch0:         00-pom-changes.patch
+Patch33:	xsom-no-target-15.patch
 
 BuildRequires:  relaxngcc
 BuildRequires:  maven-local
@@ -49,6 +50,7 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 %patch0 -p1
+%patch33 -p1
 
 find -name "*.class" -print -delete
 find -name "*.jar" -print -delete
@@ -79,6 +81,9 @@ popd
 %doc --no-dereference license.txt copyright.txt
 
 %changelog
+* Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 20140514-alt2_3jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 20140514-alt1_3jpp11
 - new version
 
