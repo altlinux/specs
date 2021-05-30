@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: libbpf
-Version: 0.3
+Version: 0.4.0
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -42,7 +42,7 @@ Static libbpf library.
 
 %build
 cd src
-%make_build
+%make_build CFLAGS="%optflags -fPIC" V=1
 
 %install
 cd src
@@ -61,6 +61,12 @@ cd src
 %_libdir/libbpf.a
 
 %changelog
+* Mon May 31 2021 Vitaly Chikunov <vt@altlinux.org> 0.4.0-alt1
+- Update to v0.4.0 (2021-05-22).
+
+* Mon Jan 25 2021 Vitaly Chikunov <vt@altlinux.org> 0.3-alt2
+- Re-compile with `-fPIC'.
+
 * Thu Jan 07 2021 Vitaly Chikunov <vt@altlinux.org> 0.3-alt1
 - Update to v0.3 (2021-01-02).
 
