@@ -1,6 +1,6 @@
 Name: libclc
 Version: 11.0.1
-Release: alt1
+Release: alt1.1
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
 Group: System/Libraries
@@ -58,7 +58,7 @@ export CFLAGS=" -D__extern_always_inline=inline"
 %cmake_build
 
 %install
-%make -C BUILD DESTDIR=%buildroot install
+%cmake_install
 
 %files
 %doc LICENSE.TXT README.TXT CREDITS.TXT
@@ -69,6 +69,9 @@ export CFLAGS=" -D__extern_always_inline=inline"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Mar 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 11.0.1-alt1
 - 11.0.1
 

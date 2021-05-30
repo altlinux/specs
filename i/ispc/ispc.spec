@@ -3,7 +3,7 @@
 
 Name: ispc
 Version: 1.15.0
-Release: alt2
+Release: alt3
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
 Group: Development/C
@@ -82,11 +82,11 @@ This package will try to build all %name examples.
 %ifarch %ix86
   # Workaround https://github.com/ispc/ispc/issues/2066
   # /usr/include/gnu/stubs.h:10:11: fatal error: 'gnu/stubs-64.h' file not found
-  sed -i s/-m64/-m32/g ./BUILD/CMakeFiles/ispc.dir/build.make
+  sed -i s/-m64/-m32/g %_cmake__builddir/CMakeFiles/ispc.dir/build.make
   # There is similar problem on armh with `gnu/stubs-soft.h'.
 %endif
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %pre checkinstall
 set -ex
@@ -99,7 +99,7 @@ make -j$(nproc)
 simple/simple
 
 %install
-%cmake_install DESTDIR=%buildroot install
+%cmake_install
 
 mkdir -p %buildroot%docdir
 cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
@@ -114,7 +114,7 @@ cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
 
 %check
 banner check
-PATH=BUILD/bin:$PATH
+PATH=%_cmake__builddir/bin:$PATH
 # Increase timeout from 10 to 100 or beekeeper will sometimes fail.
 sed -i /run_command/s/10/100/ run_tests.py
 # Tests are from .travis.yml
@@ -135,6 +135,9 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.15.0-alt3
+- NMU: spec: adapt to new cmake macros.
+
 * Fri Apr 23 2021 Vitaly Chikunov <vt@altlinux.org> 1.15.0-alt2
 - Use latest Clang/LLVM (11.0).
 - Enable x86 and aarch64.

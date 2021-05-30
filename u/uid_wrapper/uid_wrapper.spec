@@ -2,7 +2,7 @@
 
 Name: uid_wrapper
 Version: 1.2.8
-Release: alt1
+Release: alt1.1
 
 Summary: A wrapper for privilege separation
 License: GPLv3+
@@ -37,13 +37,13 @@ development/testing.
 %cmake \
   -DUNIT_TESTING=ON
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-pushd BUILD
+pushd %_cmake__builddir
 LD_LIBRARY_PATH=$(pwd)/tests %make test || \
     { find Testing -name "*.log" | xargs cat; exit 2; }
 popd
@@ -58,6 +58,9 @@ popd
 %_man1dir/uid_wrapper.1*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.8-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Feb 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.2.8-alt1
 - Update to latest release
 

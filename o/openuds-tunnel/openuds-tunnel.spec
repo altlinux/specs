@@ -3,7 +3,7 @@
 
 Name: openuds-tunnel
 Version: 2.5.0
-Release: alt2
+Release: alt2.1
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
 Group: Networking/Remote access
@@ -91,9 +91,9 @@ passwd: files uds
 %cmake_build
 
 %install
-#%%cmakeinstall_std
-install -p -D -m 644 BUILD/src/libnss_uds.so %buildroot/%_lib/libnss_uds.so.2
-install -p -D -m 644 BUILD/src/pam_uds.so %buildroot/%_lib/security/pam_uds.so
+#%%cmake_install
+install -p -D -m 644 %_cmake__builddir/src/libnss_uds.so %buildroot/%_lib/libnss_uds.so.2
+install -p -D -m 644 %_cmake__builddir/src/pam_uds.so %buildroot/%_lib/security/pam_uds.so
 
 # Tmcat webapps
 mkdir -p %buildroot%_datadir/tomcat
@@ -160,6 +160,9 @@ update_chrooted all
 %appdir/%name
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2.5.0-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Jan 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.5.0-alt2
 - Fixed sshd_uds.service
 

@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.7
-Release: alt4
+Release: alt4.1
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -77,17 +77,17 @@ export QT_DOC_DIR=%_docdir/qt-%qt4_ver
     #
 
 %cmake_build
-%cmake_build doxygen-doc
+%cmake_build --target doxygen-doc
 
 %install
-%make install DESTDIR=%buildroot -C BUILD
+%cmake_install
 
 %files -n lib%name
 %doc AUTHORS COPYING HACKING NEWS README
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
-%doc BUILD*/doc/html
+%doc %{_cmake__builddir}*/doc/html
 %_libdir/cmake/TelepathyQt4/
 %_libdir/cmake/TelepathyQt4Farstream/
 %_libdir/cmake/TelepathyQt4Service/
@@ -99,6 +99,9 @@ export QT_DOC_DIR=%_docdir/qt-%qt4_ver
 #%_libdir/lib*.a
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.7-alt4.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt4
 - NMU: remove rpm-build-ubt from BR:
 

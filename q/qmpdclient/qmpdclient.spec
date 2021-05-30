@@ -1,6 +1,6 @@
 Name: qmpdclient
 Version: 1.2.2
-Release: alt1.git20130519.1
+Release: alt1.git20130519.2
 
 Summary: Qt4-based mpd client
 License: %gpl2plus
@@ -35,10 +35,10 @@ sed -i 's,Icon=%{name}64.png,Icon=%name,' %name.desktop
 %build
 export PATH=$PATH:%_qt4dir/bin
 %cmake
-%make_build -C BUILD VERBOSE=1
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 for i in 16 22 48 64; do
     install -pD -m644 icons/${i}x$i/qmpdclient.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/%name.png
 done
@@ -68,6 +68,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS Changelog INSTALL README THANKSTO
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.2-alt1.git20130519.2
+- NMU: spec: adapted to new cmake macros.
+
 * Sun May 31 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1.git20130519.1
 - FTBFS: buid with libqt4-sql-sqlite3.
 

@@ -1,6 +1,6 @@
 Name: libtweeny
 Version: 3.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: An inbetweening library for complex animations (C++)
 
@@ -37,13 +37,15 @@ applications that use %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
-rm -fv BUILD/doc/man/man3/_usr_src_RPM_BUILD*
-mv BUILD/doc/man/man3/tweeny_tween_\ T\ _.3 \
-   BUILD/doc/man/man3/tweeny_tween_T_.3
-for f in BUILD/doc/man/man3/*.3; do \
+%cmake_install
+cd %_cmake__builddir
+rm -fv doc/man/man3/_usr_src_RPM_BUILD*
+mv doc/man/man3/tweeny_tween_\ T\ _.3 \
+   doc/man/man3/tweeny_tween_T_.3
+for f in doc/man/man3/*.3; do \
 	install -D -m0644 $f %buildroot%_man3dir/${f##*/}; \
 done
+cd -
 install -D -m0644 README.md %buildroot%_datadir/doc/%name-devel-%version/README.md
 install -D -m0644 LICENSE %buildroot%_datadir/doc/%name-devel-%version/LICENSE
 	
@@ -54,6 +56,9 @@ install -D -m0644 LICENSE %buildroot%_datadir/doc/%name-devel-%version/LICENSE
 %_datadir/doc/%name-devel-%version
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.1.1-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Feb 14 2021 Paul Wolneykien <manowar@altlinux.org> 3.1.1-alt1
 - Fresh up to v3.1.1.
 

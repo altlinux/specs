@@ -1,6 +1,6 @@
 Name: lshw
 Version: B.02.19.2
-Release: alt2
+Release: alt2.1
 
 Summary: Hardware Lister
 License: GPL-2.0
@@ -61,10 +61,10 @@ This package provides graphical (GTK+) front-end to lshw.
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %cmake -DNOLOGO=ON -DHWDATA=OFF -DPOLICYKIT=ON -DBUILD_SHARED_LIBS=OFF -GNinja
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 patch -p0 -d %buildroot < %PATCH1
 
 ln -s gtk-lshw %buildroot%_sbindir/lshw-gui
@@ -101,6 +101,9 @@ install -Dpm0644 %SOURCE102 %buildroot%_man1dir/lshw-gtk.1
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> B.02.19.2-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon May 25 2020 Andrey Cherepanov <cas@altlinux.org> B.02.19.2-alt2
 - Fix build with rpm-build-ninja.
 

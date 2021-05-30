@@ -1,7 +1,7 @@
 Summary: FAT filesystem explore, extract, repair, and forensic tool
 Name: fatcat
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: MIT
 Group: File tools
@@ -34,7 +34,7 @@ fatcat is a tool to explore, extract, repair and forensic FAT filesystem.
 %cmake_build
 
 %install
-install -D -m 755 BUILD/fatcat %buildroot%_bindir/fatcat
+install -D -m 755 %_cmake__builddir/fatcat %buildroot%_bindir/fatcat
 install -D -m 644 man/fatcat.1 %buildroot%_man1dir/fatcat.1
 
 %files
@@ -42,6 +42,9 @@ install -D -m 644 man/fatcat.1 %buildroot%_man1dir/fatcat.1
 %_man1dir/fatcat.1*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Nov 16 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - new version
 

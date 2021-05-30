@@ -1,6 +1,6 @@
 Name: sqliteman
 Version: 1.2.2
-Release: alt1.qa7
+Release: alt1.qa8
 
 Url: http://sqliteman.com/
 License: GPL
@@ -31,12 +31,10 @@ contains the most complette feature set of all tools available.
 %cmake \
 	-DQSCINTILLA_NAMES=qscintilla2_qt4
 
-cd BUILD
-%make_build
+%cmake_build
 
 %install
-cd BUILD
-%makeinstall_std
+%cmake_install
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Development \
 	--add-category=Database \
@@ -48,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/sqliteman/
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.2-alt1.qa8
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1.qa7
 - Rebuilt with qscintilla2 2.10.1.
 

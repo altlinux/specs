@@ -9,7 +9,7 @@
 
 Name: hypre
 Version: 2.20.0
-Release: alt1
+Release: alt1.1
 
 Summary: Scalable algorithms for solving linear systems of equations
 
@@ -124,8 +124,9 @@ cd src
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+cd src
 
-%makeinstall_std -C src/BUILD
+%cmake_install
 
 install -d %buildroot%_includedir/%name
 mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
@@ -153,6 +154,9 @@ rm -f %buildroot%_libdir/libsidl*
 %endif
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.20.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt1
 - new version (2.20.0) with rpmgs script
 - cleanup spec, build from tarball, don't pack empty hypre package

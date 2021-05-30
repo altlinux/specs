@@ -9,7 +9,7 @@
 
 Name:    auditd-plugin-clickhouse
 Version: 20210217.4.1
-Release: alt1
+Release: alt2
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
 License: GPLv3+
@@ -37,12 +37,12 @@ Plugin for Auditd daemon for sending data into Clickhouse database
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 mkdir -pv %buildroot%_localstatedir/auditd-plugin-clickhouse
 
 %check
-pushd BUILD
+pushd %_cmake__builddir
 ctest
 popd
 
@@ -55,6 +55,9 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 20210217.4.1-alt2
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Feb 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 20210217.4.1-alt1
 - Updated config file locations for audit-3.0 compatibility.
 

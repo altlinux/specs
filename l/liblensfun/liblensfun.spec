@@ -2,7 +2,7 @@
 
 Name: liblensfun
 Version: 0.3.2
-Release: alt5
+Release: alt5.1
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
 Group: System/Libraries
@@ -53,11 +53,11 @@ adapters in lensfun.
 	-DBUILD_DOC:BOOL=ON
 
 %cmake_build
-%cmake_build man
+%cmake_build -t man
 
 %install
-%cmakeinstall_std
-pushd BUILD/apps/
+%cmake_install
+pushd %_cmake__builddir/apps/
 %python3_install
 popd
 
@@ -80,6 +80,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.3.2-alt5.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Apr 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt5
 - Replaced gksudo with pkexec.
 

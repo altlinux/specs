@@ -7,7 +7,7 @@
 Summary: A MySQL database connector for C++
 Name: mysql-connector-c++
 Version: 1.1.11
-Release: alt1
+Release: alt1.1
 Group: System/Libraries
 License: GPLv2
 Url: http://dev.mysql.com/downloads/connector/cpp/
@@ -109,9 +109,9 @@ cp -pr examples _doc_examples
 %cmake_build
 
 %install
-cp BUILD/cppconn/config.h  cppconn/config.h
+cp %_cmake__builddir/cppconn/config.h  cppconn/config.h
 
-%makeinstall_std -C BUILD
+%cmake_install
 rm -fr %buildroot%prefix/BUILDINFO
 rm -fr %buildroot%prefix/LICENSE
 rm -fr %buildroot%prefix/INSTALL
@@ -131,6 +131,9 @@ rm -f %buildroot%_libdir/libmysqlcppconn-static.a
 %_libdir/*.so
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.11-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Dec 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.11-alt1
 - NMU: updated to version 1.1.11.
 

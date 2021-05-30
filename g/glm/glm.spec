@@ -1,6 +1,6 @@
 Name: glm
 Version: 0.9.9.6
-Release: alt1
+Release: alt1.1
 License: MIT
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
 Group: Development/C++
@@ -65,7 +65,7 @@ This package contains the GLM in HTML and PDF formats.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 find %buildroot -name '*.la' -exec rm -f {} ';'
 find %buildroot -name CMakeLists.txt -exec rm -f {} ';'
@@ -79,7 +79,7 @@ mv %buildroot%_pkgconfigdir %buildroot%_datadir/pkgconfig
 rmdir %buildroot%_libdir
 
 %check
-%make_build -C BUILD test
+%cmake_build --target test
 
 %files -n lib%name-devel
 %_includedir/%name/
@@ -92,6 +92,9 @@ rmdir %buildroot%_libdir
 %doc doc/api/
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.9.6-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Mar 24 2020 Anton Midyukov <antohami@altlinux.org> 0.9.9.6-alt1
 - new version 0.9.9.6
 

@@ -2,7 +2,7 @@
 
 Name: libyajl1
 Version: 1.0.11
-Release: alt3
+Release: alt3.1
 
 Summary: Yet Another JSON Library
 Group: System/Legacy libraries
@@ -34,10 +34,10 @@ Development headers for Yet Another JSON Library (YAJL).
 
 %build
 %cmake
-%make_build -C BUILD VERBOSE=1
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %files
 %_libdir/libyajl.so.*
@@ -47,6 +47,9 @@ Development headers for Yet Another JSON Library (YAJL).
 %_libdir/libyajl.so
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.11-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Jun 04 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.0.11-alt3
 - return devel package (ALT #27558)
 

@@ -1,6 +1,6 @@
 Name: CGenius
 Version: 2.6.3.1
-Release: alt1.git.11.gb3efc3da2
+Release: alt1.git.11.gb3efc3da2.1
 
 Summary: the clone of Commander Keen
 License: GPL2
@@ -76,15 +76,15 @@ rm -rf Build dlls
 %cmake \
 	-DGAMES_SHAREDIR=/usr/share/games \
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 install -m644 -D src/CGLogo.png %buildroot%_iconsdir/hicolor/512x512/apps/CGLogo.png
 cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 
 %files
-%doc BUILD/README* hqp/Readme* COPYRIGHT changelog.txt
+%doc %_cmake__builddir/README* hqp/Readme* COPYRIGHT changelog.txt
 %_gamesbindir/*
 %_desktopdir/*.desktop
 %_gamesdatadir/commandergenius
@@ -99,6 +99,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.6.3.1-alt1.git.11.gb3efc3da2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Nov 27 2020 Ildar Mulyukov <ildar@altlinux.ru> 2.6.3.1-alt1.git.11.gb3efc3da2
 - new version
 

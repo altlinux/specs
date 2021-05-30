@@ -1,6 +1,6 @@
 Name: catch2
 Version: 2.13.4
-Release: alt1
+Release: alt1.1
 
 Summary: C++ Unit Test framework ("all in one header")
 
@@ -45,10 +45,10 @@ but is packaged up as a single header for extra convenience.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-cd BUILD
+cd %_cmake__builddir
 ctest -V
 
 %files devel
@@ -61,6 +61,9 @@ ctest -V
 %_datadir/pkgconfig/catch2.pc
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.13.4-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Mar 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.13.4-alt1
 - new version 2.13.4
 

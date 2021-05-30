@@ -2,7 +2,7 @@
 
 Name: yajl
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Yet Another JSON Library
 Group: Development/C
@@ -41,15 +41,15 @@ Development headers for Yet Another JSON Library (YAJL).
 
 %build
 %cmake
-%make_build -C BUILD VERBOSE=1
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 mkdir -p %buildroot%_pkgconfigdir
 mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
 
 %check
-%make -C BUILD test
+%cmake_build --target test
 
 %files
 %doc README TODO
@@ -65,6 +65,9 @@ mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2.1.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 

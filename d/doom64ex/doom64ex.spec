@@ -1,6 +1,6 @@
 Name: doom64ex
 Version: 2.5.1
-Release: alt2
+Release: alt2.1
 
 Summary: Doom64EX is a project aimed to recreate Doom64 as close as possible
 Summary(ru_RU.UTF-8): Doom64EX - проект, суть которого - воссоздание игры Doom64 настолько точно, насколько это возможно
@@ -50,15 +50,15 @@ Doom 64 EX позволяет создавать свои модификации
 
 %build
 %cmake
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 desktop-file-install --dir %buildroot%_desktopdir %SOURCE1
 mkdir -p %buildroot%_iconsdir/hicolor/48x48/apps/
 install -pDm644 %SOURCE2 %buildroot%_iconsdir/hicolor/48x48/apps/
 install -pDm644 %SOURCE3 %buildroot%_man6dir/%name.6
-install -pDm644 ./BUILD/%name.pk3 %buildroot%_gamesdatadir/%name.pk3
+install -pDm644 ./%_cmake__builddir/%name.pk3 %buildroot%_gamesdatadir/%name.pk3
 
 %files
 %doc README.md AUTHORS COPYING LICENSE
@@ -69,6 +69,9 @@ install -pDm644 ./BUILD/%name.pk3 %buildroot%_gamesdatadir/%name.pk3
 %_man6dir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.5.1-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Apr 06 2020 Artyom Bystrov <arbars@altlinux.org> 2.5.1-alt2
 - fix missing doom64ex.pk3
 

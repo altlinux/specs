@@ -1,7 +1,7 @@
 Summary: Translations for kicad
 Name: kicad-i18n
 Version: 5.1.9
-Release: alt1
+Release: alt1.1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
@@ -19,15 +19,18 @@ Translations for kicad
 
 %build
 %cmake -DKICAD_I18N_UNIX_STRICT_PATH=ON ..
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 %find_lang kicad
 
 %files -f kicad.lang
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 5.1.9-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Feb 13 2021 Anton Midyukov <antohami@altlinux.org> 5.1.9-alt1
 - new version 5.1.9
 - Update URL tag

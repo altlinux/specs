@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.2.13.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -162,11 +162,11 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Move man pages to the right directory
 mkdir -p %buildroot%_man1dir
-cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
+cp -a %_cmake__builddir/src/doc/*.1 %buildroot%_man1dir
 
 %files -n lib%oname%soname
 %doc CHANGES.md README.md
@@ -200,6 +200,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.2.13.1-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Apr 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.13.1-alt1
 - Updated to upstream version 2.2.13.1.
 

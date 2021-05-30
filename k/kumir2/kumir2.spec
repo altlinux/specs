@@ -2,7 +2,7 @@
 
 Name: kumir2
 Version: 2.1.0
-Release: alt10.git42b99b78
+Release: alt10.git42b99b78.1
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -81,10 +81,10 @@ export PATH=%_qt5_bindir:$PATH
 	-DGIT_TIMESTAMP=20200922 \
 	-DGIT_TAG=2.1.0-rc10 \
 	-DGIT_BRANCH=master
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 %files
 %_bindir/*
@@ -104,6 +104,9 @@ export PATH=%_qt5_bindir:$PATH
 %endif
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.1.0-alt10.git42b99b78.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Mar 05 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt10.git42b99b78
 - New snapshot.
 

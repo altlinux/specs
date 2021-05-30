@@ -1,6 +1,6 @@
 Name: vidalia
 Version: 0.3.1
-Release: alt1
+Release: alt1.1
 Summary: GUI controller for the Tor Onion Routing Network
 Group: Networking/Other
 License: GPLv2+
@@ -42,10 +42,10 @@ export PATH=%_qt4dir/bin:$PATH
 %__subst '/torcontrol/a \ \ z' src/vidalia/CMakeLists.txt
 %cmake
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%make_install install INSTALL="install -p" DESTDIR=%buildroot -C BUILD
+%cmake_install
 
 install -Dpm0644 doc/%name.1 \
 	%buildroot%_man1dir/%name.1
@@ -63,6 +63,9 @@ chmod -x contrib/*
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.3.1-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Feb 12 2021 Ilya Mashkin <oddity@altlinux.ru> 0.3.1-alt1
 - 0.3.1
 

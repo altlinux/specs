@@ -3,7 +3,7 @@
 %define oname qtspell
 Name: libqtspell
 Version: 0.8.5
-Release: alt2
+Release: alt2.1
 
 Summary: Spell checking for Qt text widgets
 License: GPLv3+
@@ -92,25 +92,23 @@ that use %name.
 %add_optflags -std=c++11
 %endif
 
+%define _cmake__builddir build-qt4
 %cmake -DUSE_QT5=OFF
 %cmake_build
-%cmake_build doc
-mv BUILD build-qt4
+%cmake_build -t doc
 
+%define _cmake__builddir build-qt5
 %cmake -DUSE_QT5=ON
 %cmake_build
-mv BUILD build-qt5
 
 %install
 # install qt4 build
-rm -rf BUILD
-cp -al build-qt4 BUILD
-%cmakeinstall_std
+%define _cmake__builddir build-qt4
+%cmake_install
 
 # install qt5 build
-rm -rf BUILD
-cp -al build-qt5 BUILD
-%cmakeinstall_std
+%define _cmake__builddir build-qt5
+%cmake_install
 
 %files qt4
 %doc COPYING
@@ -139,6 +137,9 @@ cp -al build-qt5 BUILD
 %doc build-qt4/doc/html
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.8.5-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed May 08 2019 Michael Shigorin <mike@altlinux.org> 0.8.5-alt2
 - E2K: explicit -std=c++11
 

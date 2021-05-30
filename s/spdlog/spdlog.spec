@@ -1,6 +1,6 @@
 Name: spdlog
 Version: 1.8.5
-Release: alt1
+Release: alt1.1
 
 Summary: Super fast C++ logging library
 
@@ -49,13 +49,13 @@ applications that use %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 # enable external libfmt using
 %__subst "s|// #define SPDLOG_FMT_EXTERNAL|#define SPDLOG_FMT_EXTERNAL|" %buildroot%_includedir/spdlog/tweakme.h
 
 %check
 export LD_LIBRARY_PATH=$(pwd)/BUILD
-%cmake_build test
+%cmake_build --target test
 
 %files -n lib%name
 %_libdir/libspdlog.so.*
@@ -69,6 +69,9 @@ export LD_LIBRARY_PATH=$(pwd)/BUILD
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.8.5-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.5-alt1
 - new version 1.8.5 (with rpmrb script)
 

@@ -1,6 +1,6 @@
 Name: cvise
 Version: 2.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -83,7 +83,7 @@ and report bugs in compilers and other tools that process C/C++ or OpenCL code.
 #make -C BUILD test
 
 %install
-%cmakeinstall_std
+%cmake_install
 rm -rfv %buildroot%_datadir/cvise/tests/
 
 
@@ -99,6 +99,9 @@ rm -rfv %buildroot%_datadir/cvise/tests/
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.0.0-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2
 - add temp. BR to build with clang 11
 

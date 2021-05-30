@@ -1,6 +1,6 @@
 Name: xmount
 Version: 0.7.6
-Release: alt2
+Release: alt2.1
 Summary: A on-the-fly convert for multiple hard disk image types
 
 Group: Archiving/Other
@@ -45,14 +45,12 @@ chmod -x src/xmount.*
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SKIP_RPATH=ON \
-    ..
+    #
 
-cd BUILD
-%make_build
+%cmake_build
 
 %install
-cd BUILD
-%makeinstall_std
+%cmake_install
 
 %files
 %doc AUTHORS ChangeLog NEWS README ROADMAP TODO COPYING
@@ -62,6 +60,9 @@ cd BUILD
 
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.7.6-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Nov 15 2019 Artyom Bystrov <arbars@altlinux.org> 0.7.6-alt2
 - initial build for ALT Sisyphus
 

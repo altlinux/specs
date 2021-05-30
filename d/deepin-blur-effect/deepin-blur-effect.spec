@@ -2,7 +2,7 @@
 
 Name: deepin-blur-effect
 Version: 1.1.3
-Release: alt1.git1d96617
+Release: alt1.git1d96617.1
 Summary: Offscreen image blurring tool for Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -31,16 +31,19 @@ export CFLAGS+="-Wall -pedantic"
 %cmake \
     -GNinja \
 #
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 %files
 %doc LICENSE README.md
 %_bindir/blur_image
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.3-alt1.git1d96617.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Mar 29 2021 Leontiy Volodin <lvol@altlinux.org> 1.1.3-alt1.git1d96617
 - Initial build for ALT Sisyphus.
 - Built from commit 1d96617c21d54e40bd157eea87ef541a28543972.

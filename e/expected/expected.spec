@@ -1,6 +1,6 @@
 Name: expected
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: C++11/14/17 std::expected with functional-style extensions
 
@@ -48,10 +48,10 @@ coding with expected cleaner.
     -DEXPECTED_BUILD_TESTS=OFF \
     -DEXPECTED_BUILD_PACKAGE=OFF \
     ..
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 %files -n lib%name-devel
 %doc README.md
@@ -60,6 +60,9 @@ coding with expected cleaner.
 %_datadir/cmake/tl-%name
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
 

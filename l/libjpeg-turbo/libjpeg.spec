@@ -1,6 +1,6 @@
 Name: libjpeg-turbo
 Version: 2.0.6
-Release: alt2
+Release: alt2.1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -124,17 +124,17 @@ local: *;
 EOF
 
 %build
-%cmake
+%cmake -G'Unix Makefiles'
 %cmake_build
 make jpegexiforient
 bzip2 -9fk libjpeg.txt structure.txt usage.txt
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir make -k -CBUILD test
-LD_LIBRARY_PATH=%buildroot%_libdir ./jpeginfo BUILD/*.jpg >/dev/null
+LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test -- -k
+LD_LIBRARY_PATH=%buildroot%_libdir ./jpeginfo %_cmake__builddir/*.jpg >/dev/null
 
 %install
-%cmakeinstall_std
+%cmake_install
 %__cc %optflags -D_GNU_SOURCE -I%buildroot%_includedir jpeginfo.c -L%buildroot%_libdir -ljpeg -o jpeginfo
 install -pm755 exifautotran jpegexiforient jpeginfo %buildroot%_bindir/
 # do not package unwanted libturbojpeg files
@@ -177,6 +177,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Thu May 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2:2.0.6-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue May 25 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.0.6-alt2
 - added SIMD patch for Elbrus
 

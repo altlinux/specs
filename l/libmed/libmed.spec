@@ -1,6 +1,6 @@
 Name:     libmed
 Version:  4.1.0
-Release:  alt2
+Release:  alt2.1
 
 Summary:  Library to store and exchange meshed data or computation result in MED format
 License:  GPLv3 and LGPLv3
@@ -49,7 +49,7 @@ Utilities for work with MED format.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Remove test-suite files
 rm -rf %buildroot%_bindir/testc
@@ -58,7 +58,7 @@ rm -rf %buildroot%_bindir/testpy
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-pushd BUILD
+pushd %_cmake__builddir
 ctest
 popd
 
@@ -76,6 +76,9 @@ popd
 %_bindir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 4.1.0-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Apr 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt2
 - Fixed build dependencies.
 

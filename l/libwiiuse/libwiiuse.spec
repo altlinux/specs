@@ -1,6 +1,6 @@
 Name: libwiiuse
 Version: 0.15.5
-Release: alt2
+Release: alt2.1
 Summary: The wiiuse library is used to access and control multiple Nintendo Wiimotes
 License: GPL-3.0-or-later
 Group: System/Libraries
@@ -40,10 +40,10 @@ dos2unix CHANGELOG.mkd README.mkd
 
 %build
 %cmake -GNinja
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 # Can't use make install as it is a pathetic copy into fixed paths and won't
 # work on x86_64
 # install -Dpm 0755 BUILD/src/libwiiuse.so %%buildroot%%_libdir/libwiiuse.so.0
@@ -66,6 +66,9 @@ rm -rf %buildroot%_docdir/wiiuse
 %_bindir/wiiuseexample-sdl
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.15.5-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Aug 11 2020 Leontiy Volodin <lvol@altlinux.org> 0.15.5-alt2
 - Removed chrpath from BR.
 - Built with ninja instead make.

@@ -1,6 +1,6 @@
 Name: ffmpegthumbnailer
 Version: 2.2.0
-Release: alt3
+Release: alt3.1
 
 Summary: Lightweight video thumbnailer that can be used by file managers
 License: GPLv2
@@ -51,7 +51,7 @@ developers to generate thumbnails in their projects
 %cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %files
 %doc AUTHORS ChangeLog README
@@ -68,6 +68,9 @@ developers to generate thumbnails in their projects
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.2.0-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Jun 14 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt3
 - rebuilt with recent ffmpeg
 

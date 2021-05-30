@@ -10,7 +10,7 @@
 
 Name: blender
 Version: 2.92.0
-Release: alt1
+Release: alt1.1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -256,7 +256,7 @@ popd
 
 BLENDER_SYSTEM_SCRIPTS="$(pwd)/release/scripts" \
 BLENDER_SYSTEM_DATAFILES="$(pwd)/release/datafiles" \
-"$(pwd)/BUILD/bin/blender" --background --python doc/python_api/sphinx_doc_gen.py -noaudio
+"$(pwd)/%_cmake__builddir/bin/blender" --background --python doc/python_api/sphinx_doc_gen.py -noaudio
 
 pushd doc/python_api
 sphinx-build sphinx-in BPY_API
@@ -264,7 +264,7 @@ popd
 %endif
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 mkdir -p %buildroot%_datadir/metainfo
 install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
@@ -286,6 +286,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.92.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Feb 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.92.0-alt1
 - Updated to upstream version 2.92.0.
 - Updated build and runtime dependencies.

@@ -1,6 +1,6 @@
 Name:           resolv_wrapper
 Version:        1.1.7
-Release:        alt1
+Release:        alt1.1
 
 Summary:        A wrapper for dns name resolving or dns faking
 License:        BSD
@@ -39,13 +39,13 @@ development/testing.
 %cmake \
   -DUNIT_TESTING=ON
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-pushd BUILD
+pushd %_cmake__builddir
 %make test
 
 LD_PRELOAD=src/libpam_wrapper.so bash -c '>/dev/null'
@@ -61,6 +61,9 @@ popd
 %_man1dir/resolv_wrapper.1*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.7-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Feb 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.1.7-alt1
 - Initial build for ALT Sisyphus
 

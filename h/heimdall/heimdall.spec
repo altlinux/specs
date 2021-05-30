@@ -2,7 +2,7 @@
 
 Name:    heimdall
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 
 Summary: tool suite to flash firmware onto Samsung smartphones
 
@@ -57,7 +57,7 @@ This package contains graphic frontend to the Heimdall utility.
 
 %install
 mkdir -p -- %buildroot%_bindir
-install -m 0755 BUILD/bin/* %buildroot%_bindir/
+install -m 0755 %_cmake__builddir/bin/* %buildroot%_bindir/
 
 mkdir -p -- %buildroot%_udevrulesdir
 install -m 0664 %name/60-%name.rules %buildroot%_udevrulesdir/
@@ -74,6 +74,9 @@ install -m 0664 %name/60-%name.rules %buildroot%_udevrulesdir/
 %_bindir/%name-frontend
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.4.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.4.2-alt1
 - New version (Closes: 33468)
 

@@ -2,7 +2,7 @@
 
 Name: xournalpp
 Version: 1.0.20
-Release: alt1
+Release: alt1.1
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
 
@@ -50,10 +50,10 @@ sed -i 's|tlh-AA|tlh|g' po/tlh.po
 
 %cmake_build
 
-make -C BUILD test
+%cmake_build --target test
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %find_lang %name
 
@@ -62,7 +62,7 @@ rm -r %buildroot%_datadir/%name/ui/icons/hicolor/update-icon-cache.sh
 rm -r %buildroot%_datadir/%name/ui/iconsDark/hicolor/update-icon-cache.sh
 
 %check
-make -C BUILD test
+%cmake_build --target test
 
 %files -f %name.lang
 %doc README.md AUTHORS
@@ -84,6 +84,9 @@ make -C BUILD test
 %_datadir/%name/ui
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.20-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 1.0.20-alt1
 - Autobuild version bump to 1.0.20
 

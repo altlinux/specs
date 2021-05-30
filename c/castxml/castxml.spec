@@ -2,7 +2,7 @@
 
 Name:    castxml
 Version: 0.4.3
-Release: alt1
+Release: alt1.1
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
 License: Apache-2.0
@@ -63,13 +63,13 @@ export CXX=clang++
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 rm -f %buildroot%_datadir/doc/%name/LICENSE
 rm -f %buildroot%_datadir/doc/%name/NOTICE
 
 %check
-pushd BUILD
+pushd %_cmake__builddir
 ctest
 popd
 
@@ -86,6 +86,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Mar 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.3-alt1
 - Updated to upstream release version 0.4.3.
 

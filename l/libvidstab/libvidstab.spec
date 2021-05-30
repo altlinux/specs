@@ -1,6 +1,6 @@
 Name: libvidstab
 Version: 1.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: Video stabilization library
 License: GPL
@@ -27,14 +27,10 @@ Development files for Vidstab framework.
 
 %build
 %cmake
-pushd BUILD
-%make_build
-popd
+%cmake_build
 
 %install
-pushd BUILD
-%make DESTDIR=%buildroot install
-popd
+%cmake_install
 
 %files
 %_libdir/libvidstab.so.*
@@ -45,6 +41,9 @@ popd
 %_pkgconfigdir/vidstab.pc
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.0-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Nov 21 2018 Oleg Solovyov <mcpain@altlinux.org> 1.1.0-alt2
 - rebuilt with libgomp8
 

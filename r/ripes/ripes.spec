@@ -1,6 +1,6 @@
 Name: ripes
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 Source: %name-%version.tar.gz
 Summary: A graphical 5-stage RISC-V pipeline simulator
 Group: Emulators
@@ -34,7 +34,7 @@ sed -i 's@N/A@%version-%release@' src/version/version.cmake
 
 %install
 # XXX no make install is provided
-install -D BUILD/Ripes %buildroot%_bindir/Ripes
+install -D %_cmake__builddir/Ripes %buildroot%_bindir/Ripes
 cp -a appdir/usr %buildroot
 
 %files
@@ -44,6 +44,9 @@ cp -a appdir/usr %buildroot
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2.1.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Oct 09 2020 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - Autobuild version bump to 2.1.0
 

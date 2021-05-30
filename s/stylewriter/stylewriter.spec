@@ -1,6 +1,6 @@
 Name: stylewriter
 Version: 0.9.9.1
-Release: alt1.git20170426
+Release: alt1.git20170426.1
 License: GPL
 Group: System/Configuration/Printing
 
@@ -21,13 +21,16 @@ This is a driver for certain types of Apple StyleWriter printers.
 
 %install
 install -d %buildroot%_bindir
-install -m0755 BUILD/lpstyl %buildroot%_bindir
+install -m0755 %_cmake__builddir/lpstyl %buildroot%_bindir
 
 %files
 %doc scripts README* printcap* styl.ppd
 %_bindir/*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.9.1-alt1.git20170426.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 0.9.9.1-alt1.git20170426
 - Initial build for ALT
 

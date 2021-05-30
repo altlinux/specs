@@ -1,7 +1,7 @@
 Summary: libcodec2 is a library for the codec2 low bit rate speech codec
 Name: libcodec2
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 License: LGPL2.1
 Group: System/Libraries
 Url: http://rowetel.com/codec2.html
@@ -25,10 +25,10 @@ codec2 development files.
 
 %build
 %cmake
-%make -C BUILD
+%cmake_build
 
 %install
-make -C BUILD install DESTDIR=%buildroot
+%cmake_install
 
 # Create and install pkgconfig file
 mkdir -p %buildroot%_libdir/pkgconfig
@@ -55,6 +55,9 @@ EOF
 %_libdir/pkgconfig/codec2.pc
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Jun 29 2020 Anton Farygin <rider@altlinux.ru> 0.9.2-alt1
 - 0.9.2
 

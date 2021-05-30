@@ -1,7 +1,7 @@
 %define luaver 5.1
 Name: wxlua
 Version: 3.0.0.8
-Release: alt1
+Release: alt1.1
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -100,11 +100,11 @@ make -C bindings \
 
 %cmake_build
 if [ -x /usr/bin/doxygen ]; then
-	%cmake_build wxLua_doxygen
+	%cmake_build --target wxLua_doxygen
 fi
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 mkdir -p \
 	%buildroot%_desktopdir/ \
@@ -144,6 +144,9 @@ mv %buildroot%_datadir/%name/samples docs2distribute-apps/
 %endif
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 3.0.0.8-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Apr 26 2020 Ildar Mulyukov <ildar@altlinux.ru> 3.0.0.8-alt1
 - redistributed files among packages
 - new version, compatible with wxWidgets 3.1.3

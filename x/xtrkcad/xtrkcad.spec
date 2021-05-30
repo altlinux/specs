@@ -1,6 +1,6 @@
 Name: xtrkcad
 Version: 4.0.3a
-Release: alt3
+Release: alt3.1
 Group: Games/Educational
 License: GPL
 Summary: XTrkCad Model Railroad CAD
@@ -32,9 +32,8 @@ car inventory.
 %build
 %add_optflags -fcommon
 %cmake
-cd BUILD
-%make_build
-cat > %name.desktop <<@@@
+%cmake_build
+cat > %_cmake__builddir/%name.desktop <<@@@
 [Desktop Entry]
 Type=Application
 Name=XTrackCAD
@@ -48,9 +47,8 @@ Categories=Game;Simulation;
 
 %install
 install -D app/doc/png.d/bnewcar.png %buildroot%_niconsdir/%name.png
-cd BUILD
-%makeinstall DESTDIR=%buildroot
-install -D %name.desktop %buildroot%_desktopdir/%name.desktop
+%cmake_install
+install -D %_cmake__builddir/%name.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc README app/lib/*.txt
@@ -61,6 +59,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 4.0.3a-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Apr 05 2021 Grigory Ustinov <grenka@altlinux.org> 4.0.3a-alt3
 - Fixed FTBFS with -fcommon.
 

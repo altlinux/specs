@@ -5,7 +5,7 @@
 
 Name: 	 gnucash
 Version: 4.5
-Release: alt1
+Release: alt1.1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -157,10 +157,10 @@ cp %SOURCE9 gnucash/gnome
        -DGENERATE_SWIG_WRAPPERS=ON \
        -DGMOCK_ROOT=%_builddir/%name-%version/gtest \
        -DGTEST_ROOT=%_builddir/%name-%version/gtest
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 mv %buildroot%_libdir/lib* %buildroot%_libdir/gnucash/
 
@@ -209,6 +209,9 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %files quotes
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 4.5-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Mar 29 2021 Andrey Cherepanov <cas@altlinux.org> 4.5-alt1
 - New version.
 

@@ -1,6 +1,6 @@
 Name:           librabbitmq-c
 Version:        0.9.0
-Release:        alt1
+Release:        alt1.1
 Summary:        This is a C-language AMQP client library for use with AMQP servers speaking protocol versions 0-9-1
 Group:          System/Libraries
 License:        MIT
@@ -41,11 +41,11 @@ tar -xf %SOURCE1
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 rm -f %buildroot%_libdir/*.a
 
 %check
-pushd BUILD
+pushd %_cmake__builddir
 	ctest -VV
 popd
 
@@ -62,6 +62,9 @@ popd
 %_man7dir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Mar 01 2019 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

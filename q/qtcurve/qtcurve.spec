@@ -4,7 +4,7 @@
 
 Name:    qtcurve
 Version: 1.9.0
-Release: alt1.git%git_rev
+Release: alt1.git%git_rev.1
 Epoch:   2
 
 Summary: A set of widget styles for GTK+ and Qt widget toolkits
@@ -124,10 +124,10 @@ This is a set of widget styles for KF5
 %cmake  -GNinja \
 	-DENABLE_QT5:BOOL=%{?_enable_qt5:ON}%{!?_enable_qt5:OFF} \
 	-DQTC_QT4_ENABLE_KDE:BOOL=OFF
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 # unpackaged files
 rm -fv %buildroot%_libdir/libqtcurve-{cairo,utils}.so
@@ -163,6 +163,9 @@ mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/t
 %endif
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2:1.9.0-alt1.git7d856c17.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Sep 28 2020 Andrey Cherepanov <cas@altlinux.org> 2:1.9.0-alt1.git7d856c17
 - New version from https://github.com/KDE/qtcurve.
 - Fix project URL and License.

@@ -4,7 +4,7 @@
 
 Name: superlu
 Version: 5.2.2
-Release: alt1
+Release: alt1.1
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
 Group: Sciences/Mathematics
@@ -95,10 +95,10 @@ This package contains documentation for SuperLU.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-cd BUILD
+cd %_cmake__builddir
 ctest
 
 %files -n lib%name%sover
@@ -119,6 +119,9 @@ ctest
 %doc FORTRAN
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 5.2.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Nov 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.2-alt1
 - Updated to upstream version 5.2.2 (Closes: #39217).
 

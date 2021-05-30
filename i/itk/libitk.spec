@@ -5,7 +5,7 @@
 
 Name: itk
 Version: 5.0.0
-Release: alt4
+Release: alt4.1
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -135,7 +135,10 @@ rm -rf Modules/ThirdParty/VNL/src/
 rm -rf Modules/ThirdParty/DoubleConversion/src
 
 %build
+# XXX: itk-examples (ex-Examples) for some reason are linked with the build
+# artifact dir in the runpath, so we pass -DCMAKE_SKIP_RPATH=ON.
 %cmake \
+       %_cmake_skip_rpath \
        -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
        -DCMAKE_VERBOSE_MAKEFILE=ON \
        -DCMAKE_CXX_FLAGS:STRING="-std=gnu++11 %{optflags}" \
@@ -175,12 +178,12 @@ rm -rf Modules/ThirdParty/DoubleConversion/src
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Don't install test driver as example
-rm -f BUILD/bin/itkTestDriver
+rm -f %_cmake__builddir/bin/itkTestDriver
 
-install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
+install -D -m755 -t %buildroot%_libdir/%name-examples/ %_cmake__builddir/bin/*
 
 %files -n lib%name%soname
 %_libdir/lib*.so.%soname
@@ -223,6 +226,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %_libdir/cmake/%name/Modules/ITKVtkGlue.cmake
 
 %changelog
+* Thu May 27 2021 Arseny Maslennikov <arseny@altlinux.org> 5.0.0-alt4.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt4
 - Rebuilt with VTK-9.0.1.
 

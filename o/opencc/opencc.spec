@@ -1,6 +1,6 @@
 Name:       opencc
 Version:    1.1.2
-Release:    alt1
+Release:    alt1.1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    Apache-2.0
@@ -53,19 +53,19 @@ developing applications that use %{name}.
 
 %build
 %cmake -GNinja -DBUILD_DOCUMENTATION=ON
-export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
 # Build in four threads to prevent race condition
 %define __nprocs 4
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 rm -f %buildroot%_libdir/*.a
 
 %find_lang %name
 
 %check
-make test -C BUILD
+# the target does nothing...
+%cmake_build --target test
 
 %files -f %{name}.lang
 %doc AUTHORS LICENSE README.md
@@ -86,6 +86,9 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Apr 25 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.2-alt1.1
+- NMU: spec: adapt to new cmake macros.
+
 * Thu Mar 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - New version.
 

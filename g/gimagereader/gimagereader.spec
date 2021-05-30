@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.3.1
-Release: alt5
+Release: alt5.1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -143,34 +143,31 @@ EOF
 subst "s|/usr/bin/python$|%__python3|" gtk/data/uigen.py
 
 %build
+%define _cmake__builddir build-gtk
 %cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
 %cmake_build
-mv BUILD build-gtk
 
 %if_with qt4
+%define _cmake__builddir build-qt4
 %cmake -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
 %cmake_build
-mv BUILD build-qt4
 %endif
 
+%define _cmake__builddir build-qt5
 %cmake -DINTERFACE_TYPE=qt5 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
 %cmake_build
-mv BUILD build-qt5
 
 %install
-rm -rf BUILD
-cp -al build-gtk BUILD
-%cmakeinstall_std
+%define _cmake__builddir build-gtk
+%cmake_install
 
 %if_with qt4
-rm -rf BUILD
-cp -al build-qt4 BUILD
-%cmakeinstall_std
+%define _cmake__builddir build-qt4
+%cmake_install
 %endif
 
-rm -rf BUILD
-cp -al build-qt5 BUILD
-%cmakeinstall_std
+%define _cmake__builddir build-qt5
+%cmake_install
 
 %find_lang %name
 rm -rfv %buildroot%_datadir/locale/{sr_Cyrl,sr_Latn}/
@@ -209,6 +206,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.3.1-alt5.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Oct 17 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt5
 - fix build: use python3 for uigen.py, update BR
 

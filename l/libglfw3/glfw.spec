@@ -1,6 +1,6 @@
 Name: libglfw3
 Version: 3.3
-Release: alt1
+Release: alt1.1
 Summary: A cross-platform multimedia library
 License: zlib
 Group: System/Libraries
@@ -40,10 +40,10 @@ find . -type f | xargs sed -i 's/\r//'
 
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=ON
-%make_build -C BUILD all
+%cmake_build --target all
 
 %install
-%makeinstall -C BUILD DESTDIR=%buildroot PREFIX=%prefix LIBDIR=%_lib
+%cmake_install
 
 %files
 %doc README.md
@@ -56,6 +56,10 @@ find . -type f | xargs sed -i 's/\r//'
 %_libdir/cmake/glfw3/*.cmake
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.3-alt1.1
+- Build with GLFW_USE_WAYLAND=ON.
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Jul 18 2019 Fr. Br. George <george@altlinux.ru> 3.3-alt1
 - Autobuild version bump to 3.3
 

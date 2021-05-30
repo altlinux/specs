@@ -1,7 +1,7 @@
 %global soname   2
 Name: cctz
 Version: 2.3
-Release: alt2
+Release: alt2.1
 License: ASL 2.0
 Summary: Translating between absolute and civil times using time zone rules
 Group: Development/C++
@@ -44,15 +44,14 @@ Development files for %name library.
 %patch0 -p1
 
 %build
-rm -f BUILD
 %cmake -DVERSION=%version -DSOVERSION=%soname
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-cd BUILD
+cd %_cmake__builddir
 LD_LIBRARY_PATH=./ ctest -V
 
 %files
@@ -68,6 +67,9 @@ LD_LIBRARY_PATH=./ ctest -V
 %_libdir/cmake/cctz
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.3-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Feb 27 2021 Anton Farygin <rider@altlinux.org> 2.3-alt2
 - run tests with tzdata, distributed with cctz
 

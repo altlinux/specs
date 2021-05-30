@@ -6,7 +6,7 @@
 
 Name: cmake
 Version: 3.19.7
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform, open-source make system
 
@@ -303,6 +303,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat Apr 24 2021 Arseny Maslennikov <arseny@altlinux.org> 3.19.7-alt3
+- macros: add a macro to allow cmake command name substitution
+- macros: allow easy override of build artifact directory
+
 * Fri Apr 23 2021 Vitaly Lipatov <lav@altlinux.ru> 3.19.7-alt2
 - drop requires dump from cmake-modules
 - build without bundled sources
@@ -328,7 +332,7 @@ popd
 
 * Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.4-alt1
 - new version 3.18.4 (with rpmrb script)
-- drop FindJNI.cmake patch (applied in upstream 3.81.4)
+- drop FindJNI.cmake patch (applied in upstream 3.18.4)
 
 * Sat Sep 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.3-alt2
 - add aarch64 dir support in FindJNI.cmake (ALT bug 38992)

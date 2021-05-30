@@ -1,6 +1,6 @@
 Name: doxygen
 Version: 1.8.17
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -83,6 +83,7 @@ pdf formats.
 ## ALT apply patches
 
 %build
+%define _cmake__builddir BUILD
 export QTDIR=%_libdir/qt4
 export PATH="$QTDIR/bin:$PATH"
 #./configure --prefix %prefix --release --with-doxywizard
@@ -95,8 +96,8 @@ export PATH="$QTDIR/bin:$PATH"
 	-DDOC_INSTALL_DIR=share/doc/%name-%version \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix
 #cmake_build docs
-%cmake_build VERBOSE=1
-%cmake_build docs VERBOSE=1
+%cmake_build
+%cmake_build -t docs
 #cmake_build pdf
 
 %install
@@ -138,6 +139,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1:1.8.17-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon May 18 2020 Nikita Ermakov <arei@altlinux.org> 1:1.8.17-alt2
 - Use Qt5 instead of Qt4 for doxygen-wizard
 

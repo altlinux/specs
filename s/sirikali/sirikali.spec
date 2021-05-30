@@ -1,7 +1,7 @@
 # TODO: build with external lxqt_wallet, with kwallet support
 Name: sirikali
 Version: 1.4.8
-Release: alt1
+Release: alt1.1
 
 Summary: A Qt/C++ GUI front end to ecryptfs-simple,cryfs,gocryptfs,securefs and encfs
 License: GPL-2.0+
@@ -66,10 +66,10 @@ find -type f -print0 -name '*.cpp' -o -name '*.h' |
 	-DNOKDESUPPORT=true \
 	-DNOSECRETSUPPORT=false \
 	-DCMAKE_BUILD_TYPE=RELEASE
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %files
 %_bindir/%name
@@ -85,6 +85,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.h' |
 %_datadir/metainfo/sirikali.appdata.xml
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.4.8-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.8-alt1
 - new version 1.4.8 (with rpmrb script)
 

@@ -1,6 +1,6 @@
 Name: ledger
 Version: 3.1.aed3709
-Release: alt5
+Release: alt5.1
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
@@ -108,10 +108,10 @@ This package contains emacs libraries to ease use of ledger.
 # 15.08.2015: disabled due ledger3.info install bug
 # -DBUILD_DOCS=yes
 # don't use parallel build
-%make -C BUILD
+%cmake_build -j1
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc LICENSE.md README.md
@@ -133,6 +133,9 @@ This package contains emacs libraries to ease use of ledger.
 #%_emacslispdir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.1.aed3709-alt5.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.aed3709-alt5
 - Rebuilt with boost-1.71.0
 

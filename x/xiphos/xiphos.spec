@@ -1,6 +1,6 @@
 Name: xiphos
 Version: 4.2.1
-Release: alt2
+Release: alt2.1
 Summary: Bible Study Software
 Url: http://xiphos.org/
 Group: Text tools
@@ -34,14 +34,10 @@ export CXXFLAGS="$CXXFLAGS `pkg-config --cflags dbus-glib-1`"
 %cmake -DWEBKIT1=ON \
        -DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
        ..
-pushd BUILD
-%make_build
-popd
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
-popd
+%cmake_install
 
 %files
 %_bindir/*
@@ -55,6 +51,9 @@ popd
 %_man1dir/%{name}*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 4.2.1-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Apr 16 2021 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt2
 - Fixed FTBFS.
 

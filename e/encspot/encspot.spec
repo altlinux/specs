@@ -1,6 +1,6 @@
 Name: encspot
 Version: 2.01
-Release: alt1
+Release: alt1.1
 
 Summary: guesses encoder used to create MP3 file
 
@@ -27,13 +27,11 @@ them. Encspot also displays the contents of the LAME header (if present).
 
 %build
 %cmake
-cd BUILD
-%make_build
+%cmake_build
 
 %install
 install -m644 -D %name.1 %buildroot%_man1dir/%name.1
-cd BUILD
-%makeinstall_std
+%cmake_install
 
 %files
 %doc LICENSE README
@@ -41,5 +39,8 @@ cd BUILD
 %_man1dir/%{name}*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.01-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Mar 25 2012 Vitaly Lipatov <lav@altlinux.ru> 2.01-alt1
 - initial build for ALT Linux Sisyphus

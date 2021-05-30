@@ -1,6 +1,6 @@
 Name:           nss_wrapper
 Version:        1.1.11
-Release:        alt1
+Release:        alt1.1
 License:        BSD
 Group:          Development/Other
 Summary:        A wrapper for the user, group and hosts NSS API
@@ -45,15 +45,13 @@ development/testing.
 %cmake \
   -DUNIT_TESTING=ON
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-pushd BUILD
-%make test
-popd
+%cmake_build --target test
 
 %files
 %doc AUTHORS README.md CHANGELOG LICENSE
@@ -66,6 +64,9 @@ popd
 %_mandir/man1/nss_wrapper.1*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.11-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Feb 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.1.11-alt1
 - Update to latest release.
 

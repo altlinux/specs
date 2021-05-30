@@ -2,7 +2,7 @@
 %def_without system_spdlog
 Name: fuse-cryfs
 Version: 0.9.11
-Release: alt2
+Release: alt2.1
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -64,16 +64,19 @@ find . -type f | xargs sed -i \
 
 %build
 %cmake -DBUILD_TESTING=off -DBoost_INCLUDE_DIRS=%_includedir/boost -DBoost_USE_STATIC_LIBS=off -DCMAKE_BUILD_TYPE=RELEASE
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %files
 %_bindir/cryfs
 %_man1dir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.11-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Mar 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.11-alt2
 - Rebuilt with boost-1.75.0.
 

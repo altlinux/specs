@@ -2,7 +2,7 @@
 
 Name: json-c
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: JSON implementation in C
 License: MIT
@@ -59,7 +59,7 @@ This package contains development part of JSON-C
   -DENABLE_RDRAND:BOOL=OFF \
   -DENABLE_THREADING:BOOL=ON
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -74,7 +74,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %check
 export LD_LIBRARY_PATH=%buildroot/%_lib
-pushd BUILD
+pushd %_cmake__builddir
 ctest --output-on-failure
 popd
 
@@ -88,6 +88,9 @@ popd
 %_libdir/cmake/%name
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.15-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Jan 20 2021 Alexey Shabalin <shaba@altlinux.org> 0.15-alt1
 - Updated to 0.15.
 

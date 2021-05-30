@@ -2,7 +2,7 @@
 
 Name: biblesync
 Version: 1.2.0
-Release: alt2
+Release: alt2.1
 Summary: A Cross-platform library for sharing Bible navigation
 Group: System/Libraries
 License: Public Domain
@@ -43,10 +43,10 @@ that use %name.
 	-DLIBDIR=%_libdir \
 	-DBIBLESYNC_SOVERSION=%__soversion \
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %files
 %doc AUTHORS COPYING ChangeLog* README* WIRESHARK
@@ -59,6 +59,9 @@ that use %name.
 %_man7dir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.0-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Jun 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
 - just rebuild
 

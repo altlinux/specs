@@ -1,6 +1,6 @@
 Name: wxMaxima
 Version: 21.04.0
-Release: alt1
+Release: alt1.1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -53,10 +53,10 @@ find -type f -name '*.cpp' -o -name '*.h' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
 %add_optflags -std=c++11
 %endif
 %cmake -GNinja
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 # icons
 install -pD -m644 data/wxmaxima-16.xpm %buildroot%_miconsdir/%name.xpm
 install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
@@ -82,6 +82,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 21.04.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Apr 16 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.0-alt1
 - New version.
 

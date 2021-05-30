@@ -1,6 +1,6 @@
 Name: meandmyshadow
 Version: 0.4.1
-Release: alt3.1
+Release: alt3.2
 License: GPLv3
 Summary: Puzzle/platform game with two protagonists performing shared task
 Url: http://meandmyshadow.sourceforge.net/
@@ -35,12 +35,12 @@ sed -i '/OpenGL REQUIRED/aINCLUDE(FindX11)' CMakeLists.txt
 
 %build
 %cmake -DHARDWARE_ACCELERATION=True
-%make_build -C BUILD
+%cmake_build
 
 
 %install
-cp -al data BUILD
-%makeinstall DESTDIR=%buildroot -C BUILD
+cp -al data %_cmake__builddir
+%cmake_install
 
 for i in icons/*/%name.png; do
   d=$(basename $(dirname $i))
@@ -58,6 +58,9 @@ done
 %_datadir/%name/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.1-alt3.2
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt3.1
 - NMU: Rebuild with new openssl 1.1.0.
 

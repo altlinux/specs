@@ -1,6 +1,6 @@
 Name: supertuxkart
 Version: 1.2
-Release: alt3
+Release: alt3.1
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
@@ -13,7 +13,7 @@ Source: %name-%version-src.tar.gz
 #Patch: supertuxkart-0.9.3-debian-irrlicht.patch
 Patch: supertuxkart-1.2-debian-ftbfs_sdl.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): cmake rpm-build-ninja
 # for aarch64 support
 BuildRequires(pre): libGLES
 # Automatically added by buildreq on Thu Jan 30 2020 (-bi)
@@ -35,11 +35,11 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' data/po/update_po_authors.p
 
 %build
 %cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DUSE_SYSTEM_ANGELSCRIPT=OFF -DBUILD_RECORDER=OFF -DCHECK_ASSETS=OFF
-%ninja_build -C BUILD
+%cmake_build
 
 %install
 #install -d %%buildroot%%_niconsdir
-%ninja_install -C BUILD
+%cmake_install
 
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories
@@ -70,6 +70,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %exclude %_libdir/libwiiuse.a
 
 %changelog
+* Sun May 09 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun May 02 2021 Leontiy Volodin <lvol@altlinux.org> 1.2-alt3
 - Fixed build with python3.
 

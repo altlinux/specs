@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.12.0
-Release: alt4
+Release: alt4.1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -51,6 +51,7 @@ tar -cjf ../%name-%version.tar.bz2 ../%name-%version
 
 %build
 %cmake \
+      -G'Unix Makefiles' \
       -DCMAKE_SKIP_RPATH:BOOL=FALSE \
       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=FALSE \
       -DBUILD_DRIVER=FALSE \
@@ -66,7 +67,7 @@ tar -cjf ../%name-%version.tar.bz2 ../%name-%version
 %cmake_build
 
 %install
-make install/fast DESTDIR=%buildroot -C BUILD
+make install/fast DESTDIR=%buildroot -C %_cmake__builddir
 
 install -Dpm 644 alt-linux/%name.tmpfiles %buildroot%_tmpfilesdir/%name.conf
 install -d %buildroot%_sysconfdir/{rc.d/init.d,sysconfig,logrotate.d}
@@ -104,6 +105,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12.0-alt4.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt4
 - Applied security fixes from upstream (Fixes: CVE-2020-15173).
 

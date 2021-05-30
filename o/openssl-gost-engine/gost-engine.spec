@@ -1,6 +1,6 @@
 Name: openssl-gost-engine
 Version: 1.1.0.3.0.255.ge3af41d.p1
-Release: alt3
+Release: alt3.1
 
 License: BSD-style
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
@@ -54,8 +54,8 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_man1dir
 mkdir -p %buildroot$enginesdir
 
-cp BUILD/bin/gost.so %buildroot$enginesdir/
-cp BUILD/bin/gost*sum %buildroot%_bindir/
+cp %_cmake__builddir/bin/gost.so %buildroot$enginesdir/
+cp %_cmake__builddir/bin/gost*sum %buildroot%_bindir/
 cp gost*sum.1 %buildroot%_man1dir/
 
 # Install the control scripts
@@ -64,7 +64,7 @@ install -D -p -m0755 %_sourcedir/openssl-gost.control \
 
 %check
 CTEST_OUTPUT_ON_FAILURE=1 \
-	make test -C BUILD ARGS="--verbose"
+	%cmake_build -t test
 
 %files
 %_libdir/openssl/engines-1.1/gost.so
@@ -75,6 +75,9 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Jun 01 2020 Paul Wolneykien <manowar@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt3
 - Fix for the "openssl-gost' control: Don't override the main section
   (closes: 37922).

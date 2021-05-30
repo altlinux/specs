@@ -16,7 +16,7 @@
 
 Name: OpenSceneGraph
 Version: 3.4.1
-Release: alt2
+Release: alt2.1
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -76,7 +76,7 @@ sed -i "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 # Supposed to take OpenSceneGraph data
 mkdir -p %buildroot%_datadir/OpenSceneGraph
 
@@ -113,7 +113,7 @@ Requires: pkgconfig
 Development files for OpenSceneGraph
 
 %files -n lib%name-devel
-%doc BUILD/doc/OpenSceneGraphReferenceDocs
+%doc %_cmake__builddir/doc/OpenSceneGraphReferenceDocs
 %_includedir/osg*
 %_pkgconfigdir/openscenegraph*.pc
 %_libdir/libosg*.so
@@ -353,12 +353,15 @@ Requires: libOpenThreads = %version-%release
 Development files for OpenThreads
 
 %files -n libOpenThreads-devel
-%doc BUILD/doc/OpenThreadsReferenceDocs
+%doc %_cmake__builddir/doc/OpenThreadsReferenceDocs
 %_pkgconfigdir/openthreads.pc
 %_libdir/libOpenThreads.so
 %_includedir/OpenThreads
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.4.1-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Aug 04 2019 Michael Shigorin <mike@altlinux.org> 3.4.1-alt2
 - E2K:
   + disable examples build (some of them fail to link)

@@ -4,7 +4,7 @@
 %define rname quazip
 Name: quazip-qt5
 Version: 1.1
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Qt/C++ wrapper for the minizip library
@@ -64,7 +64,7 @@ done
 
 
 %install
-%make install -C BUILD DESTDIR=%buildroot
+%cmake_install
 
 
 %files -n %libquazip
@@ -80,6 +80,9 @@ done
 %_pkgconfigdir/quazip*-qt*.pc
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Nov 18 2020 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
 - initial build
 

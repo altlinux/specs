@@ -12,7 +12,7 @@
 
 Name: libproxy
 Version: 0.4.17
-Release: alt1
+Release: alt1.1
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
@@ -186,15 +186,13 @@ developing applications that use %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 #In case all modules are disabled
 mkdir -p %buildroot%modilesdir
 
 %check
-pushd BUILD
-%make test
-popd
+%cmake_build -t test
 
 %files
 %_libdir/*.so.*
@@ -266,6 +264,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 0.4.17-alt1
 - 0.4.17
 - Build withot pacrunner mozjs.

@@ -1,6 +1,6 @@
 Name: libchipmunk
 Version: 7.0.3
-Release: alt2
+Release: alt2.1
 Summary: Physics engine for 2D games
 
 Group: System/Libraries
@@ -48,10 +48,10 @@ Demo binary and source for %name
 sed -i 's@target_link_libraries(chipmunk m)@target_link_libraries(chipmunk m pthread)@' src/CMakeLists.txt
 
 %cmake -DBUILD_STATIC=False -DINSTALL_STATIC=False -DINSTALL_DEMOS=True
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall -C BUILD DESTDIR=$RPM_BUILD_ROOT
+%cmake_install
 
 %files
 %doc *.txt README.*
@@ -67,6 +67,9 @@ sed -i 's@target_link_libraries(chipmunk m)@target_link_libraries(chipmunk m pth
 %_bindir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 7.0.3-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 7.0.3-alt2
 - Fix gcc10 build
 

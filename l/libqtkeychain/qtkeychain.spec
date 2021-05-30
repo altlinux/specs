@@ -1,6 +1,6 @@
 Name: libqtkeychain
 Version: 0.9.1
-Release: alt3
+Release: alt3.1
 
 %define sover 1
 %define libqtkeychain libqtkeychain%sover
@@ -59,7 +59,7 @@ QTDIR="%_qt4dir" \
 
 %install
 PATH=$PATH:%_qt4dir/bin \
-make install DESTDIR=%buildroot -C BUILD
+%cmake_install
 
 %find_lang --with-qt qtkeychain
 
@@ -78,6 +78,9 @@ make install DESTDIR=%buildroot -C BUILD
 %_datadir/qt4/mkspecs/qt_QtKeychain.pri
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.1-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Aug 28 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt3
 - remove libqtkeychain-qt5
 

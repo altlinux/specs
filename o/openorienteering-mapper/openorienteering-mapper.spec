@@ -4,7 +4,7 @@
 
 Name: openorienteering-mapper
 Version: 0.9.4
-Release: alt1
+Release: alt1.1
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -67,13 +67,11 @@ sed -i 's|"assistant"|"assistant-qt5"|g' src/gui/util_gui.cpp
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 %find_lang %name --with-qt
 
 %check
-pushd BUILD/test
-make test
-popd
+cmake --build %_cmake__builddir/test -j%__nprocs
 
 %files -f %name.lang
 %doc COPYING INSTALL.md README.md
@@ -87,6 +85,9 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.4-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Nov 27 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.9.4-alt1
 - New version
 

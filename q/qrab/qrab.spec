@@ -2,7 +2,7 @@
 
 Name:     qrab
 Version:  0.4
-Release:  alt2
+Release:  alt2.1
 
 Summary:  yet another QR code reader
 License:  GPLv3
@@ -28,14 +28,10 @@ so it can be easily pasted to i.e. spreadsheet application.
 
 %build
 %cmake
-cd BUILD
-%make_build
-cd -
+%cmake_build
 
 %install
-cd BUILD
-%makeinstall_std
-cd -
+%cmake_install
 
 %files
 %_bindir/*
@@ -43,6 +39,9 @@ cd -
 %_pixmapsdir/qrab.png
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Aug 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.4-alt2
 - Fixed FTBFS.
 

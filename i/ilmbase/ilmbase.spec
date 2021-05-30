@@ -3,7 +3,7 @@
 %define libsover 25
 Name: ilmbase
 Version: 2.5.6
-Release: alt1
+Release: alt1.1
 
 %define common %name%libsover-common
 %define libhalf libhalf%libsover
@@ -116,7 +116,7 @@ developing applications with %name
 %cmake_build
 
 %install
-make -C BUILD install DESTDIR=%buildroot
+%cmake_install
 
 # create compatibility symlinks
 #for f in %buildroot/%_libdir/lib*.so ; do
@@ -159,6 +159,9 @@ make -C BUILD install DESTDIR=%buildroot
 %_libdir/cmake/IlmBase/
 
 %changelog
+* Thu May 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.5.6-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed May 26 2021 Sergey V Turchin <zerg@altlinux.org> 2.5.6-alt1
 - new version
 

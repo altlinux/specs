@@ -2,7 +2,7 @@
 
 Name: %_name-engine
 Version: 1.11
-Release: alt1
+Release: alt1.1
 
 Summary: A simple game engine for single-player 2D action RPGs
 License: %gpl3plus
@@ -33,14 +33,10 @@ the common, reusable code.
 
 %build
 %cmake -DBINDIR=bin -DDATADIR=share/%_name
-cd BUILD
-%make_build VERBOSE=1
-cd -
+%cmake_build
 
 %install
-cd BUILD
-%makeinstall_std
-cd -
+%cmake_install
 
 %files
 %_bindir/%_name
@@ -50,6 +46,9 @@ cd -
 %_man6dir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.11-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Aug 16 2019 Mikhail Efremov <sem@altlinux.org> 1.11-alt1
 - Use gnu++11 flag.
 - Use verbose output for make.

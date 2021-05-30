@@ -4,7 +4,7 @@
 
 Name:    libfann
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 Summary: Fast artificial neural network library
 License: LGPL
 Group:   System/Libraries 
@@ -32,12 +32,10 @@ a lot of documentation is available at http://fann.sourceforge.net/
 
 %build
 %cmake -DPKGCONFIG_INSTALL_DIR=/%_lib/pkgconfig
-cd BUILD
-%make
+%cmake_build
 
 %install
-cd BUILD
-%makeinstall_std
+%cmake_install
 rm -f %buildroot/%_libdir/lib*fann.a
 
 %package devel
@@ -58,6 +56,9 @@ Development headers of FANN (Fast artificial neural network library)
 %_includedir/*.h
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.2.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Jan 23 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
 - New version 2.2.0
 - Clean spec file

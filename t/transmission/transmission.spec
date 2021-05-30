@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 3.00
-Release: alt2
+Release: alt2.1
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -135,7 +135,7 @@ Daemonised BitTorrent client
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # made alternatives entries
 mkdir -p %buildroot/%_altdir
@@ -159,7 +159,7 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%dname
 install -pD -m644 %SOURCE3 %buildroot%systemd_unitdir/transmission-daemon.service
 
 mkdir -p %buildroot/%_sysconfdir/transmission-daemon/
-BUILD/daemon/transmission-daemon -d 2> %buildroot/%_sysconfdir/transmission-daemon/settings.json
+%_cmake__builddir/daemon/transmission-daemon -d 2> %buildroot/%_sysconfdir/transmission-daemon/settings.json
 sed -i 's,/usr/src/,/var/lib/transmission-daemon/,' %buildroot/%_sysconfdir/transmission-daemon/settings.json
 
 mkdir -p %buildroot/%_sysconfdir/sysconfig/
@@ -169,7 +169,7 @@ mkdir -p %buildroot/%_logdir/%dname
 mkdir -p %buildroot/%_localstatedir/%dname
 
 %check
-pushd BUILD
+pushd %_cmake__builddir
 ctest
 popd
 
@@ -236,6 +236,9 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 3.00-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Sep 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.00-alt2
 - Switched to cmake build system.
 - Removed wxGTK from spec.

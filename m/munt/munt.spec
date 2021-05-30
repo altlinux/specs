@@ -1,6 +1,6 @@
 Name: munt
 Version: 2.2.0
-Release: alt1.git.5.gb414aeb
+Release: alt1.git.5.gb414aeb.1
 Summary: MT-32, CM-32L and LAPC-I synthesiser modules emulator
 Group: Sound
 Url: http://munt.sourceforge.net/
@@ -37,14 +37,14 @@ synthesiser module.
 %cmake \
 	-Dmunt_WITH_MT32EMU_QT=FALSE \
 
-make -C BUILD
+%cmake_build
 make -C mt32emu_alsadrv/ mt32d \
-	INCLUDES=-I../BUILD/mt32emu/include \
+	INCLUDES=-I../%_cmake__builddir/mt32emu/include \
 	CXXFLAGS="-O2 -Wno-write-strings -Wno-unused-result -Wno-deprecated-declarations \
-		-L../BUILD/mt32emu"
+		-L../%_cmake__builddir/mt32emu"
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 mv %buildroot%_docdir/munt doc
 mkdir doc/alsadrv/
 cp -a mt32emu_alsadrv/*.txt doc/alsadrv/
@@ -57,6 +57,9 @@ install -m755 mt32emu_alsadrv/mt32d %buildroot%_bindir/
 %exclude %_libdir
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.2.0-alt1.git.5.gb414aeb.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Aug 21 2017 Ildar Mulyukov <ildar@altlinux.ru> 2.2.0-alt1.git.5.gb414aeb
 - initial build for ALT Linux Sisyphus
 - only smf2wav and alsadrv are built, no QT, no GUI

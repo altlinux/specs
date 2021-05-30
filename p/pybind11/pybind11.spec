@@ -2,7 +2,7 @@
 #based on fedora spec
 Name: pybind11
 Version: 2.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -66,16 +66,16 @@ This package contains the Python 3 files.
 %endif
 
 %build
+%define _cmake__builddir python3/BUILD
 mkdir -p python3
-pushd python3
-%cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%_bindir/python3 ../..
+%cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%_bindir/python3
 %cmake_build
-popd
 
 %python3_build_debug
 
 %install
-%makeinstall_std -C python3/BUILD
+%define _cmake__builddir python3/BUILD
+%cmake_install
 # Force install to arch-ful directories instead.
 PYBIND11_USE_CMAKE=true %python3_install "--install-purelib" "%python3_sitelibdir"
 
@@ -85,7 +85,8 @@ rm -rf %buildroot%_includedir/python*
 %ifarch %e2k
 export SKIP_E2K=1
 %endif
-make -C python3/BUILD/tests check -j$NPROCS
+%define _cmake__builddir python3/BUILD/tests
+%cmake_build --target check
 
 %files devel
 %doc README.rst LICENSE docs/*
@@ -98,6 +99,9 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2.6.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Feb 01 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.6.2-alt1
 - New version
 

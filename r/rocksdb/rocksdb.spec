@@ -14,7 +14,7 @@
 
 Name: rocksdb
 Version: 6.14.6
-Release: alt1
+Release: alt1.1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 # License is changed from "BSD-plus-Patents" (BSD-3-Clause) to GPL-2.0 AND Apache-2.0 in 2017.
@@ -117,10 +117,8 @@ rm build_tools/gnu_parallel
 #%%make_build shared_lib
 
 %install
-%cmakeinstall_std
+%cmake_install
 #%%makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
-install -D -p -m755 BUILD/tools/ldb      %buildroot/%_bindir/ldb
-install -D -p -m755 BUILD/tools/sst_dump %buildroot/%_bindir/sst_dump
 
 %files -n %name-tools
 %_bindir/ldb
@@ -138,6 +136,9 @@ install -D -p -m755 BUILD/tools/sst_dump %buildroot/%_bindir/sst_dump
 %_libdir/*.a
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 6.14.6-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 6.14.6-alt1
 - 6.14.6
 

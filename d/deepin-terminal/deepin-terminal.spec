@@ -1,6 +1,6 @@
 Name: deepin-terminal
 Version: 5.4.0.20
-Release: alt1
+Release: alt1.1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
 Group: Terminals
@@ -85,10 +85,10 @@ sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 %find_lang %name
 
 %files -f %name.lang
@@ -120,6 +120,9 @@ sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.
 %_includedir/terminalwidget5/
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 5.4.0.20-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.0.20-alt1
 - New version (5.4.0.20) with rpmgs script.
 

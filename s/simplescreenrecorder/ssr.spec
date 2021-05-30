@@ -3,7 +3,7 @@
 
 Name: simplescreenrecorder
 Version: 0.4.3
-Release: alt1
+Release: alt1.1
 
 Summary: Simple Screen Recording with OpenGL capture
 License: GPL-3.0 and ISC and GPL-3.0+ and Zlib
@@ -69,10 +69,10 @@ sed -i 's,^#ifdef __x86_64__,#if defined (__x86_64__) || defined (__e2k__),' \
 %endif
     -DCMAKE_BUILD_TYPE=Release \
     -DWITH_QT5=TRUE
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 rm -f %buildroot%_libdir/*.la
 
 %files
@@ -87,10 +87,13 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Dec 28 2020 Leontiy Volodin <lvol@altlinux.org> 0.4.3-alt1
 - 0.4.3
 - Updated source link.
-- Built with ninja instead make.
+- Built with ninja instead of make.
 - Features:
     + Added V4L2 support (most webcams and capture cards).
     + Added option to mark recorded area on screen during recording.

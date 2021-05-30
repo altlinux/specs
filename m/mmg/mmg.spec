@@ -3,7 +3,7 @@
 
 Name: mmg
 Version: 5.5.2
-Release: alt1
+Release: alt1.1
 Summary: Surface and volume remeshers
 
 License: LGPLv3+
@@ -166,10 +166,10 @@ applications that use mmg3d
 %cmake -DBUILD_SHARED_LIBS=ON
 
 %cmake_build
-%cmake_build doc
+%cmake_build -t doc
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Install suffix-less symlinks
 ln -s mmg2d_O3 %buildroot/%_bindir/mmg2d
@@ -211,7 +211,7 @@ install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 %_libdir/libmmg2d.so
 
 %files -n mmg2d-devel-doc
-%doc BUILD/doc/mmg2d/html
+%doc %_cmake__builddir/doc/mmg2d/html
 
 %files -n mmgs
 %doc AUTHORS README.md LICENSE COPYING COPYING.LESSER
@@ -229,7 +229,7 @@ install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 %_libdir/libmmgs.so
 
 %files -n mmgs-devel-doc
-%doc BUILD/doc/mmgs/html
+%doc %_cmake__builddir/doc/mmgs/html
 
 %files -n mmg3d
 %doc AUTHORS README.md LICENSE COPYING COPYING.LESSER
@@ -247,9 +247,12 @@ install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 %_libdir/libmmg3d.so
 
 %files -n mmg3d-devel-doc
-%doc BUILD/doc/mmg3d/html
+%doc %_cmake__builddir/doc/mmg3d/html
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 5.5.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Jan 12 2021 Danil Shein <dshein@altlinux.org> 5.5.2-alt1
 - Initial build for Sisyphus
 

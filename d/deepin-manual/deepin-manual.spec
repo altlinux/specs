@@ -2,7 +2,7 @@
 
 Name: deepin-manual
 Version: 5.7.0.7
-Release: alt1
+Release: alt1.1
 Summary: Help files for DDE
 License: GPL-3.0+ and (BSD-3-Clause and Qt.Commercial) and ISC
 Group: Graphical desktop/Other
@@ -35,10 +35,10 @@ Data files for %name.
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_BUILD_TYPE=Release
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 %files
 %doc LICENSE README.md CHANGELOG.md
@@ -53,5 +53,8 @@ Data files for %name.
 %_datadir/%name/
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 5.7.0.7-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Sep 10 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.0.7-alt1
 - Initial build for ALT Sisyphus.

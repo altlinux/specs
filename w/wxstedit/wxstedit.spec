@@ -2,7 +2,7 @@
 
 Name: wxstedit
 Version: 1.6.0
-Release: alt5.r3169.3
+Release: alt5.r3169.4
 
 Summary: sample program for the wxWidgets's wxStyledTextCtrl Scintilla wrapper
 License: wxWidgets License
@@ -89,17 +89,17 @@ sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
 # -std=c++03 by default as of lcc 1.23.20
 %add_optflags -std=c++11
 %endif
-%cmake
-%make_build -C BUILD
-#%%make_build -C BUILD wxStEdit_doxygen
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo %_cmake_skip_rpath
+%cmake_build
+#%%cmake_build --target wxStEdit_doxygen
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 mkdir -p \
 	%buildroot%_bindir/ \
 	%buildroot%_desktopdir/ \
 	%buildroot%_niconsdir/
-install -p -m 755 BUILD/bin/*/* %buildroot%_bindir/
+install -p -m 755 %_cmake__builddir/bin/*/* %buildroot%_bindir/
 install -p -m 644 %SOURCE1 %buildroot%_desktopdir/
 install -p -m 644 art/pencil32.xpm %buildroot%_niconsdir/
 pushd %buildroot%_libdir/
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.6.0-alt5.r3169.4
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 1.6.0-alt5.r3169.3
 - E2K: explicit -std=c++11
 - minor spec cleanup

@@ -2,7 +2,7 @@
 
 Name: strawberry
 Version: 0.9.3
-Release: alt1
+Release: alt1.1
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
@@ -81,10 +81,10 @@ export AR="ar"
   -DBUILD_WERROR=OFF \
   -DUSE_SYSTEM_TAGLIB=ON
 
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 %check
 desktop-file-validate %buildroot%_desktopdir/org.strawberrymusicplayer.strawberry.desktop
@@ -102,6 +102,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Apr 19 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.3-alt1
 - New version (0.9.3) with rpmgs script.
 

@@ -2,7 +2,7 @@
 
 Name: SimGear
 Version: %origver
-Release: alt1
+Release: alt1.1
 
 Summary: Simulator Construction Tools
 License: GPLv2+
@@ -90,10 +90,10 @@ mv version simgear_version
 	-DSIMGEAR_SHARED=ON \
 	-DSYSTEM_EXPAT=ON \
 	-DENABLE_TESTS=OFF
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files -n libsimgear
 %doc AUTHORS README* Thanks
@@ -105,6 +105,9 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2020.3.8-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Mar 31 2021 Michael Shigorin <mike@altlinux.org> 2020.3.8-alt1
 - 2020.3.8
 - drop patch4 (fixed upstream)

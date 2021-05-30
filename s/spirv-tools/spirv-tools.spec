@@ -1,11 +1,11 @@
 %define sover 0
 %define git %nil
 %define build_type RelWithDebInfo
-%define _cmake %cmake -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+%define _cmake %cmake -S . -B BUILD -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: spirv-tools
 Version: 2020.4
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -92,6 +92,9 @@ ninja -C BUILD install
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1:2020.4-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 1:2020.4-alt2
 - Rollback to 2020.4-alt1 (ALT #39672)
 

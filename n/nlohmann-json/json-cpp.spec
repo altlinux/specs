@@ -2,7 +2,7 @@
 
 Name: nlohmann-json
 Version: 3.8.0
-Release: alt3
+Release: alt3.1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -53,17 +53,20 @@ sed -i -e '/unit-unicode.cpp/ d' test/CMakeLists.txt
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-ln -sf ../json_test_data-2.0.0 BUILD/json_test_data
-%cmake_build test
+ln -sf ../json_test_data-2.0.0 %_cmake__builddir/json_test_data
+%cmake_build --target test
 
 %files devel
 %_includedir/nlohmann
 %_libdir/cmake/nlohmann_json
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 3.8.0-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Sep 10 2020 Ivan A. Melnikov <iv@altlinux.org> 3.8.0-alt3
 - Skip test-unicode on mips*, as it timeouts.
 

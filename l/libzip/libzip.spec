@@ -5,7 +5,7 @@
 
 Name: libzip
 Version: 1.7.3
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: C library for reading, creating, and modifying zip archives
@@ -59,10 +59,10 @@ sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
     -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_INSTALL_INCLUDEDIR=include/libzip \
     #
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install -C BUILD
+%cmake_install
 
 
 %files -n %utilsname
@@ -85,6 +85,9 @@ sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
 %_man3dir/*ZIP*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.7.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Sep 02 2020 Sergey V Turchin <zerg@altlinux.org> 1.7.3-alt1
 - new version
 

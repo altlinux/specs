@@ -1,6 +1,6 @@
 Name: shake
 Version: 1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Userspace filesystem defragmenter
 
@@ -32,10 +32,10 @@ http://mydebianblog.blogspot.com/2008/05/linux_19.html
 
 %build
 %cmake
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %files
 %_bindir/shake
@@ -43,6 +43,9 @@ http://mydebianblog.blogspot.com/2008/05/linux_19.html
 %_man8dir/*
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - new version 1.0 (with rpmrb script)
 

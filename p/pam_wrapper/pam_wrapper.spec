@@ -1,6 +1,6 @@
 Name: pam_wrapper
 Version: 1.1.3
-Release: alt1
+Release: alt1.1
 Summary: A tool to test PAM applications and PAM modules
 License: GPLv3+
 Url: http://cwrap.org/
@@ -80,14 +80,14 @@ the header files for libpamtest
   -DUNIT_TESTING=ON
 
 %cmake_build
-cmake --build BUILD --target doc
+%cmake_build --target doc
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-make -C BUILD test
+%cmake_build --target test
 
 %files
 %_libdir/libpam_wrapper.so*
@@ -118,12 +118,15 @@ make -C BUILD test
 %_includedir/libpamtest.h
 
 %files -n libpamtest-doc
-%doc BUILD/doc/html
+%doc %_cmake__builddir/doc/html
 
 %files -n python3-module-libpamtest
 %python3_sitelibdir/pypamtest.so
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Aug 13 2020 Anton Farygin <rider@altlinux.ru> 1.1.3-alt1
 - first build for ALT (based on specfile from Fedora)
 

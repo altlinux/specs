@@ -1,6 +1,6 @@
 Name: deepin-turbo
 Version: 0.0.5
-Release: alt1
+Release: alt1.1
 Summary: A daemon that helps to launch applications faster
 License: LGPL-2.1
 Group: Graphical desktop/Other
@@ -36,10 +36,10 @@ sed -i 's|/usr/lib/binfmt.d|%_binfmtdir|' src/booster-desktop/CMakeLists.txt
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DCMAKE_BUILD_TYPE=Debug
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 %files
 %doc CHANGELOG COPYING.LESSER README.md
@@ -55,6 +55,9 @@ sed -i 's|/usr/lib/binfmt.d|%_binfmtdir|' src/booster-desktop/CMakeLists.txt
 %_libdir/lib%name.so
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.0.5-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Apr 19 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.5-alt1
 - New version (0.0.5) with rpmgs script.
 

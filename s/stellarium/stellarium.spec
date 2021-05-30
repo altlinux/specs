@@ -1,6 +1,6 @@
 Name: stellarium
 Version: 0.21.0
-Release: alt1
+Release: alt1.1
 
 Summary: Astronomical Sky Simulator
 
@@ -36,12 +36,10 @@ find -type f -print0 | xargs -r0 -- sed -i '1s/^\xEF\xBB\xBF//'
 
 %build
 %cmake -DQT5_LIBS=%_libdir/qt5 -DCMAKE_INSTALL_PREFIX=/usr
-%make_build -C BUILD VERBOSE=1
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
-popd
+%cmake_install
 
 # See ALT 25353
 find %buildroot -name 'DejaVuSans*.ttf' -delete
@@ -60,6 +58,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %_datadir/mime/packages/stellarium.xml
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.21.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.21.0-alt1
 - Build new version.
 

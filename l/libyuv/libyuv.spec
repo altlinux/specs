@@ -1,7 +1,7 @@
 Name: libyuv
 Summary: YUV conversion and scaling functionality library
 Version: 0.0.1433
-Release: alt2
+Release: alt2.1
 License: BSD
 Group: Development/C
 Url: http://code.google.com/p/libyuv/
@@ -39,10 +39,10 @@ Additional header files for development with %name.
     %add_optflags -msse2
 %endif
 %cmake
-%make -C BUILD
+%cmake_build
 
 %install
-%make -C BUILD install DESTDIR=%buildroot
+%cmake_install
 
 %files
 %doc AUTHORS LICENSE PATENTS
@@ -55,6 +55,9 @@ Additional header files for development with %name.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.0.1433-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1433-alt2
 - fixed build on aarch64
 

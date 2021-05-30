@@ -6,7 +6,7 @@
 
 Name: tidy
 Version: 5.4
-Release: alt3.20%ver
+Release: alt3.20%ver.1
 Epoch: 20171110
 
 Summary: HTML Tidy helps keep webpages clean
@@ -117,10 +117,10 @@ find -name '*.c' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
   -DCMAKE_BUILD_TYPE:STRING=Release
   #
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall -C BUILD DESTDIR=%buildroot
+%cmake_install
 install -pDm644 %SOURCE2 %buildroot%_man1dir/tidy.1
 mv htmldoc/api _api
 %if_enabled static
@@ -148,6 +148,9 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 20171110:5.4-alt3.20170301.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Mar 30 2019 Michael Shigorin <mike@altlinux.org> 20171110:5.4-alt3.20170301
 - fix build on e2k (strip UTF8 BOM)
 

@@ -4,7 +4,7 @@
 
 Name: liboqs
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
@@ -67,7 +67,7 @@ sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
 #   OQS_KEM_DEFAULT="OQS_KEM_alg_ntruprime_ntrulpr653" L2
 #   OQS_SIG_DEFAULT="OQS_SIG_alg_sphincs_haraka_192f_simple" L3
 # with (claimed) NIST security level not less than before.
-%cmake \
+%cmake -B build \
 	-GNinja \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS=ON \
@@ -75,15 +75,14 @@ sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
 	-DOQS_USE_CPU_EXTENSIONS=ON \
 	-DOQS_KEM_DEFAULT="OQS_KEM_alg_ntruprime_ntrulpr653" \
 	-DOQS_SIG_DEFAULT="OQS_SIG_alg_sphincs_haraka_192f_simple"
-%ninja_build -C BUILD
+%ninja_build -C build
 
 %install
-%ninja_install -C BUILD
+%ninja_install -C build
 
 %check
 banner tests
 # Tests require lowercase 'build' dir.
-mv BUILD build
 export LD_LIBRARY_PATH=$PWD/build/lib
 # https://github.com/open-quantum-safe/liboqs/wiki/Minimal-example-of-a-post-quantum-signature
   cc -Ibuild/include -Lbuild/lib tests/example_sig.c -o example_sig -loqs
@@ -104,6 +103,9 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.5.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Mar 12 2021 Vitaly Chikunov <vt@altlinux.org> 0.5.0-alt1
 - Update to 0.5.0 (2021-03-10).
 

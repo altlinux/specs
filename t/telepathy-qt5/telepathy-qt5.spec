@@ -10,7 +10,7 @@
 
 Name: telepathy-qt5
 Version: 0.9.8
-Release: alt1
+Release: alt1.1
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -108,10 +108,10 @@ export QT_DOC_DIR=%_qt5_docdir
     #
 
 %cmake_build
-%cmake_build doxygen-doc
+%cmake_build --target doxygen-doc
 
 %install
-%make install DESTDIR=%buildroot -C BUILD
+%cmake_install
 
 %files common
 %doc AUTHORS COPYING HACKING NEWS README
@@ -129,7 +129,7 @@ export QT_DOC_DIR=%_qt5_docdir
 %_libdir/libtelepathy-qt5-service.so.*
 
 %files devel
-%doc BUILD*/doc/html
+%doc %{_cmake__builddir}*/doc/html
 %_libdir/cmake/TelepathyQt5*/
 %_libdir/lib*.so
 %_pkgconfigdir/TelepathyQt5*.pc
@@ -139,6 +139,9 @@ export QT_DOC_DIR=%_qt5_docdir
 #%_libdir/lib*.a
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.8-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Apr 27 2020 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt1
 - new version
 

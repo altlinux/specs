@@ -2,7 +2,7 @@
 
 Name: barrier
 Version: 2.3.3
-Release: alt2
+Release: alt2.1
 
 Summary: Keyboard and mouse sharing solution
 License: GPLv2
@@ -81,8 +81,9 @@ cat <<END> %buildroot%_datadir/metainfo/%name.appdata.xml
 END
 
 %check
-./BUILD/bin/unittests
-xvfb-run --server-args='-extension GLX -screen 0 1280x1024x24 -noreset' ./BUILD/bin/integtests
+cd %_cmake__builddir
+./bin/unittests
+xvfb-run --server-args='-extension GLX -screen 0 1280x1024x24 -noreset' ./bin/integtests
 
 %files -f %name.lang
 %doc LICENSE ChangeLog res/Readme.txt doc/barrier.conf.example*
@@ -94,6 +95,9 @@ xvfb-run --server-args='-extension GLX -screen 0 1280x1024x24 -noreset' ./BUILD/
 %_man1dir/barriers.1*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.3.3-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Dec 03 2020 Danil Shein <dshein@altlinux.org> 2.3.3-alt2
 - fixed integration tests failing in highly loaded build environment
 

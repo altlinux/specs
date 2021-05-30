@@ -1,7 +1,7 @@
 %define SVN r36
 Name: qxkb
 Version: 0.4.4
-Release: alt1%SVN
+Release: alt1%SVN.1
 License: GPLv2
 Url: http://qxkb.googlecode.com
 # svn checkout http://qxkb.googlecode.com/svn/trunk/ qxkb-read-only 
@@ -24,10 +24,10 @@ This is bugfix %SVN build.
 
 %build
 %cmake
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmake_install
 
 %files
 %doc COPYING NEWS README TODO
@@ -37,8 +37,11 @@ This is bugfix %SVN build.
 %_datadir/pixmaps/%name.png
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.4-alt1r36.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Jul 29 2012 Fr. Br. George <george@altlinux.ru> 0.4.4-alt1r36
-Bugfix SVN r63 update
+- Bugfix SVN r63 update
 
 * Sun Jul 29 2012 Fr. Br. George <george@altlinux.ru> 0.4.4-alt1
 - Initial build from Mageia spec

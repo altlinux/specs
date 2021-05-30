@@ -4,7 +4,7 @@
 
 Name: opencpn
 Version: 5.2.4
-Release: alt1
+Release: alt1.1
 Summary: A free and open source software for marine navigation
 
 Group: Other
@@ -86,12 +86,10 @@ sed -i 's|po/opencpn_zh_CN.po zh_TW|po/opencpn_zh_CN.po zh_CN|' CMakeLists.txt
 %build
 #add_optflags %(pkg-config --cflags pango)
 %cmake -DBUNDLE_DOCS=1 -DBUNDLE_TCDATA=1 -DBUNDLE_GSHHS=1
-cd BUILD
-make
+%cmake_build
 
 %install
-cd BUILD
-make install DESTDIR=%buildroot
+%cmake_install
 cp -f %SOURCE1 %buildroot%_datadir/applications
 
 # It is copied from %%_builddir by %%doc macro, so removed from %%buildroot
@@ -116,7 +114,7 @@ rm -rf %buildroot/%_datadir/doc
 %dir %_libdir/%name
 %_libdir/opencpn/*_pi.so
 
-%files data -f BUILD/%name.lang
+%files data -f %name.lang
 %doc data/doc/*
 %_man1dir/opencpn.*
 
@@ -161,6 +159,9 @@ rm -rf %buildroot/%_datadir/doc
 %_datadir/%name/license.html
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 5.2.4-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Feb 07 2021 Sergey Y. Afonin <asy@altlinux.org> 5.2.4-alt1
 - New version
 - added opencpn-5.2.4-dashboard.cpp.patch

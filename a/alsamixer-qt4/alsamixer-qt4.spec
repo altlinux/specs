@@ -1,7 +1,7 @@
 
 Name: alsamixer-qt4
 Version: 0.6.0
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: GUI mixer application for ALSA
 License: GPLv3
@@ -27,10 +27,10 @@ aspects of sound playback and recording on the hardware level.
 
 %build
 %cmake
-%make_build -CBUILD VERBOSE=1
+%cmake_build
 
 %install
-%makeinstall_std -CBUILD
+%cmake_install
 
 pushd %buildroot%_docdir/%{name}*/
 rm -f COPYING
@@ -60,6 +60,9 @@ EOF
 %doc %_docdir/*
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.6.0-alt1.qa2
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
