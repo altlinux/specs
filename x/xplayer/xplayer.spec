@@ -2,8 +2,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xplayer
-Version: 2.2.5
-Release: alt2
+Version: 2.4.0
+Release: alt1
 Summary: Xplayer is a generic media player.
 Group: Video
 License: %gpl2only
@@ -18,7 +18,7 @@ Requires: lib%name = %version-%release
 Requires: %name-video-thumbnailer = %version-%release
 Requires: dconf gnome-icon-theme gstreamer%gst_api_ver
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-python3
 BuildRequires: gcc-c++ gnome-common gsettings-desktop-schemas-devel gst-plugins-bad1.0 gst-plugins-base1.0
 BuildRequires: gst-plugins-good1.0 gstreamer1.0-utils gtk-doc intltool itstool libSM-devel
 BuildRequires: libclutter-gst3.0-devel libclutter-gtk3-devel libgrilo-devel libgtk+3-gir-devel
@@ -273,6 +273,8 @@ Requires: iso-codes
 This package provides a video thumbnailer from Xplayer package that can be
 used by other applications like filemanagers.
 
+%add_python3_path %_libdir/%name/plugins
+
 %prep
 %setup -q
 %patch -p1
@@ -401,6 +403,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_man1dir/%name-video-thumbnailer.1.*
 
 %changelog
+* Sun May 30 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.4.0-alt1
+- 2.4.0 (closes: #40103)
+
 * Thu Feb 27 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.2.5-alt2
 - split plugins
 
