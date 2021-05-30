@@ -3,7 +3,7 @@
 Summary:	Mouse and keyboard sharing utility
 Name:		synergy1
 Version:	1.12.0
-Release:	alt1
+Release:	alt2
 License:	GPLv2
 Group:		Accessibility
 URL:		http://synergy-project.org/
@@ -39,10 +39,10 @@ tar -xf %SOURCE1
 
 %build
 %cmake
-%cmake_build VERBOSE=1 WITH_TEST=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 install -D -m0644 doc/synergy.conf.alt %buildroot%_sysconfdir/synergy.conf
 install -D -m0644 doc/synergys.man %buildroot/%_man1dir/synergys.1
 install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
@@ -61,6 +61,9 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 %_man1dir/synergyc*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12.0-alt2
+- NMU: spec: adapt to new cmake macros.
+
 * Sat Sep 05 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.12.0-alt1
 - Update to new release
 

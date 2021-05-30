@@ -21,7 +21,7 @@
 Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer
 Name: obexftp
 Version: 0.24.2
-Release: alt2.5
+Release: alt2.6
 
 License: GPLv2
 Group: Communications
@@ -148,10 +148,11 @@ Ruby bindings for obexftp.
 
 %build
 %cmake
-%cmake_build all doc RUBY="ruby -rvendor-specific"
+export RUBY="ruby -rvendor-specific"
+%cmake_build -t all doc
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %if_enabled ruby
 install -Dm 0755 %buildroot/usr/lib/ruby/vendor_ruby/*/*/obexftp.so %buildroot%ruby_sitearchdir/obexftp.so
@@ -205,6 +206,9 @@ rm -f %buildroot/usr/lib/ruby/vendor_ruby/*/*/obexftp.so
 %endif
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.24.2-alt2.6
+- NMU: spec: adapted to new cmake macros.
+
 * Sun May 31 2020 Andrey Cherepanov <cas@altlinux.org> 0.24.2-alt2.5
 - FTBFS: build without Ruby support.
 
