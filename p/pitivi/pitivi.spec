@@ -11,8 +11,8 @@
 %define xdg_name org.pitivi.Pitivi
 
 Name: pitivi
-Version: %ver_major.01
-Release: alt2
+Version: %ver_major.05
+Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -25,9 +25,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libdir/%name/python
 
 # should be provided by python3-module-gst1.0
@@ -83,6 +80,9 @@ newbies and professionals alike.
 
 
 %changelog
+* Sun May 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.05-alt1
+- 2021.05
+
 * Mon Feb 01 2021 Grigory Ustinov <grenka@altlinux.org> 2021.01-alt2
 - Drop useless patch.
 
