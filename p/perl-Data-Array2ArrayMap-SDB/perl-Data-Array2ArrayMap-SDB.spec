@@ -1,13 +1,13 @@
 #################### WARNING! ######################
 # this spec file is for ALT Linux distro only.     #
-# other distro may have problems with rpm macro!!! #
+# other distros may have problems with rpm macro!! #
 ####################################################
 
 %define module Data-Array2ArrayMap-SDB
 
 Name: perl-%module
-Version: 0.16
-Release: alt1
+Version: 0.17
+Release: alt2
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -15,6 +15,9 @@ Summary: Perl && C++/XS module to access static db (SDB) files.
 License: GPL or Artistic
 Group: Development/Perl
 Source: %module-%version.tar.gz
+
+# TODO: fix tests on armh
+ExcludeArch: armh
 
 # Automatically added by buildreq on Tue Oct 18 2011
 BuildRequires: gcc-c++ perl-devel
@@ -31,6 +34,12 @@ header files for mapsdb library (access to static db (SDB) files).
 
 %prep
 %setup -q -n %module-%version
+
+%ifarch %arm
+# disable gcc'
+# note: parameter passing for argument of type 'int8' changed in GCC 7.1
+%add_optflags -Wno-psabi
+%endif
 
 %build
 %perl_vendor_build
@@ -50,6 +59,12 @@ cp -a sdblib %buildroot%_includedir/mapsdb
 %_includedir/mapsdb
 
 %changelog
+* Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 0.17-alt2
+- no armh build yet
+
+* Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- new version
+
 * Thu Feb 14 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - new version
 
