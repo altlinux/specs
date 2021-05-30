@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20210121
-Release: alt2
+Version: 20210524
+Release: alt1
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -13,6 +13,8 @@ Url: http://linux-test-project.github.io/
 Vcs: https://github.com/linux-test-project/ltp.git
 
 Source: %name-%version.tar
+BuildRequires: rpm-build-python3
+BuildRequires: banner
 BuildRequires: libacl-devel
 BuildRequires: libaio-devel
 BuildRequires: libcap-devel
@@ -33,15 +35,36 @@ AutoReqProv: off
 %add_verify_elf_skiplist /usr/lib/ltp/testcases/*
 
 %description
-The Linux Test Project has a goal to deliver test suites to the open source
-community that validate the reliability, robustness, and stability of Linux.
+The Linux Test Project has a goal to deliver test suites to the
+open source community that validate the reliability, robustness,
+and stability of Linux.
 
-The LTP testsuite contains a collection of tools for testing the Linux kernel
-and related features. Our goal is to improve the Linux kernel and system
-libraries by bringing test automation to the testing effort. Interested open
-source contributors are encouraged to join.
+The LTP testsuite contains a collection of tools for testing the
+Linux kernel and related features. Our goal is to improve the Linux
+kernel and system libraries by bringing test automation to the testing
+effort. Interested open source contributors are encouraged to join.
 
-Testing Linux, one syscall at a time.
+Testing Linux, one syscall at a time (tm).
+
+%package open-posix-testsuite
+Summary: Open POSIX Test Suite
+Group: Development/Tools
+AutoReqProv: off
+
+%description open-posix-testsuite
+The POSIX Test Suite is an open source test suite with the goal of
+performing conformance, functional, and stress testing of the IEEE
+1003.1-2001 System Interfaces specification in a manner that is
+agnostic to any given implementation.
+
+%package realtime-testsuite
+Summary: Testsuite for real-time Linux
+Group: Development/Tools
+AutoReqProv: off
+
+%description realtime-testsuite
+Realtime tests is an open-source testsuite for testing real-time Linux.
+This testsuite is maintained by the IBM Real-Time team.
 
 %prep
 %setup
@@ -52,19 +75,26 @@ Testing Linux, one syscall at a time.
 %add_optflags -Wno-unused-parameter -Wno-unused-result -Wno-old-style-declaration
 %build
 %autoreconf
-%configure \
-	--prefix=/usr/lib/ltp \
-	--with-open-posix-testsuite \
-	--with-realtime-testsuite
+%configure --prefix=/usr/lib/ltp
+banner ltp
 %make_build --output-sync=none
+banner posix
+%make_build --output-sync=none -C testcases/open_posix_testsuite
+banner rt
+cd testcases/realtime
+%autoreconf
+%configure --prefix=/usr/lib/realtime_testsuite
+%make_build
 
 %install
-%makeinstall_std -j%__nprocs --output-sync=none
-find %buildroot/usr/lib/ltp -perm /g+w | xargs chmod g-w
+%makeinstall_std -s -j%__nprocs --output-sync=none
+mkdir -p %buildroot/usr/lib/openposix_testsuite/bin
+%makeinstall_std -s --output-sync=none -C testcases/open_posix_testsuite prefix=/usr/lib/openposix_testsuite
+%makeinstall_std -s --output-sync=none -C testcases/realtime prefix=/usr/lib/realtime_testsuite
+find %buildroot/usr/lib/{ltp,openposix_testsuite,realtime_testsuite} -perm /g+w | xargs chmod g-w
 # Create output dirs (will have tmp-like permissions).
 mkdir %buildroot/usr/lib/ltp/{output,results}
-
-# EZ-Lanucher.
+# EZ-Lanucher for LTP.
 mkdir -p %buildroot/%_bindir
 cat > %buildroot/%_bindir/runltp <<-EOF
 	#!/bin/sh
@@ -91,7 +121,20 @@ fi
 %_man1dir/*.1.*
 %_man3dir/*.3.*
 
+%files open-posix-testsuite
+%doc testcases/open_posix_testsuite/{AUTHORS,README,COPYING,NEWS,QUICK-START}
+%doc testcases/open_posix_testsuite/Documentation
+/usr/lib/openposix_testsuite
+
+%files realtime-testsuite
+%doc testcases/realtime/{00_Descriptions.txt,README,COPYING,doc}
+/usr/lib/realtime_testsuite
+
 %changelog
+* Mon May 31 2021 Vitaly Chikunov <vt@altlinux.org> 20210524-alt1
+- Update to 20210524.
+- spec: Split into multiple packages.
+
 * Sat May 01 2021 Vitaly Chikunov <vt@altlinux.org> 20210121-alt2
 - spec: Disable AutoReqProv.
 
