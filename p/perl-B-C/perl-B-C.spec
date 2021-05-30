@@ -1,9 +1,10 @@
+%filter_from_requires /^perl.utf8_heavy.pl./d
 %define _unpackaged_files_terminate_build 1
 # hack for perl 5.26.1 migration
 %def_without test
 Name: perl-B-C
 Version: 1.57
-Release: alt2
+Release: alt3
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -42,6 +43,9 @@ BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel %{perl_libd
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 1.57-alt3
+- perl(utf8_heavy.pl) marked as optional dependency
+
 * Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.57-alt2
 - migration to libdb4.8
 
