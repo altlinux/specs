@@ -2,7 +2,7 @@
 
 Name:    iceb
 Version: 20.3
-Release: alt1
+Release: alt1.1
 
 Summary: Free financial accounting system (console)
 
@@ -35,14 +35,14 @@ Free financial accounting system.
 
 %build
 %cmake -GNinja
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 install -d %buildroot%_bindir
-find BUILD/buhg -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
-#find BUILD/additionally/other -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
+find %_cmake__builddir/buhg -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
+#find %_cmake__builddir/additionally/other -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
 
 install -d %buildroot%_desktopdir
 cp -a desktop/applications/*.desktop %buildroot%_desktopdir
@@ -62,6 +62,9 @@ rm -rf %buildroot/lib/terminfo
 %_libexecdir/cups/filter/iceb_ps
 
 %changelog
+* Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 20.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat May 29 2021 Cronbuild Service <cronbuild@altlinux.org> 20.3-alt1
 - new version 20.3
 

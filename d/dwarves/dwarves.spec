@@ -7,7 +7,7 @@
 
 Name: dwarves
 Version: 1.20
-Release: alt2
+Release: alt3
 Summary: Debugging Information Manipulation Tools (pahole & friends)
 Group: Development/Tools
 Provides: pahole
@@ -79,11 +79,11 @@ Debugging information processing library development files.
 %cmake_build
 
 %install
-%cmake_install install DESTDIR=%buildroot
+%cmake_install
 chmod a+x %buildroot%_datadir/dwarves/runtime/python/ostra.py
 
 %check
-cd BUILD
+cd %_cmake__builddir
 export LD_LIBRARY_PATH=$PWD PATH=$PWD:$PATH
 # Pahole examples @ https://lwn.net/Articles/335942/
 pahole -C tag pahole
@@ -104,6 +104,9 @@ pahole --packable pahole
 %_libdir/%{libname}*.so
 
 %changelog
+* Thu May 13 2021 Arseny Maslennikov <arseny@altlinux.org> 1.20-alt3
+- NMU: spec: adapted to new cmake macros.
+
 * Wed May 05 2021 Vitaly Chikunov <vt@altlinux.org> 1.20-alt2
 - spec: BR: rpm-build-python3.
 

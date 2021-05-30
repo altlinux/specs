@@ -1,6 +1,6 @@
 Name: fish
 Version: 3.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -51,7 +51,8 @@ done
 rm -f %buildroot%_datadir/fish/completions/docker.fish
 
 %check
-%cmake_build test SHOW_INTERACTIVE_LOG=1
+export SHOW_INTERACTIVE_LOG=1
+%cmake_build --target test
 
 %post
 grep -q %_bindir/fish %_sysconfdir/shells ||
@@ -74,6 +75,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 3.2.2-alt1.1
+- NMU: spec: adapt to new cmake macros.
+
 * Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.2-alt1
 - 3.2.2
 

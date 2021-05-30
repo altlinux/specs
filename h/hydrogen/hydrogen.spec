@@ -3,7 +3,7 @@
 
 Name: hydrogen
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Hydrogen Drum Machine
 License: GPL
@@ -21,7 +21,7 @@ BuildRequires: desktop-file-utils
 
 %description
 Hydrogen is a sample based drum machine with:
- Graphical user interface based on QT 
+ Graphical user interface based on QT
  Sample based real-time audio engine
  Oss Audio driver
  Jack Audio driver
@@ -37,10 +37,10 @@ Hydrogen is a sample based drum machine with:
 
 %build
 %cmake -DWANT_RUBBERBAND=ON
-%cmake_build DESTDIR=%buildroot
+%cmake_build
 
 %install
-%cmakeinstall_std prefix=%_prefix
+%cmake_install
 
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Midi \
@@ -60,6 +60,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.2-alt1.1
+- NMU: spec: adapt to new cmake macros.
+
 * Mon Apr 12 2021 Ivan A. Melnikov <iv@altlinux.org> 1.0.2-alt1
 - 1.0.2
 

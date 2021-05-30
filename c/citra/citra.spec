@@ -3,7 +3,7 @@
 
 Name: citra
 Version: 1704
-Release: alt1
+Release: alt1.1
 
 Summary: Nintendo 3DS emulator
 License: GPLv2
@@ -136,7 +136,8 @@ src/common/scm_rev.cpp.in
 %cmakeinstall_std
 
 %check
-%make -C BUILD test
+cd %_cmake__builddir
+ctest
 
 %files
 %_bindir/%name
@@ -149,6 +150,9 @@ src/common/scm_rev.cpp.in
 %_man6dir/%name-qt.6*
 
 %changelog
+* Sun May 02 2021 Arseny Maslennikov <arseny@altlinux.org> 1704-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Apr 29 2021 Nazarov Denis <nenderus@altlinux.org> 1704-alt1
 - Version Nightly 1704
 

@@ -3,7 +3,7 @@
 
 Name: %realname
 Version: 2.3.4
-Release: alt1
+Release: alt1.1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -68,14 +68,14 @@ sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
 	-DICESOUND="ALSA,OSS" \
 	-DENABLE_LTO=on \
 	-DXTERMCMD=xvt
-pushd BUILD
-%make_build
-popd
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
-popd
+# This step seems to be necessary for some reason. Executables have to be
+# relinked before installation into buildroot; cmake --install alone does not
+# invoke the re-link step.
+DESTDIR=%buildroot %cmake_build -t install
+%cmake_install
 
 mkdir -p %buildroot%_sysconfdir/menu-methods
 install -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%realname
@@ -118,9 +118,12 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_man5dir/*
 %_datadir/xsessions/*.desktop
 
-%doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
+%doc AUTHORS NEWS README.ALT README.md %_cmake__builddir/*.html icewm-old-changelog.bz2
 
 %changelog
+* Thu May 13 2021 Arseny Maslennikov <arseny@altlinux.org> 3:2.3.4-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri May 07 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.3.4-alt1
 - 2.3.4
 
