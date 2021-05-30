@@ -3,7 +3,7 @@
 
 Name: zoneminder
 Version: 1.36.1
-Release: alt1
+Release: alt1.1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -84,11 +84,11 @@ EOF
 %build
 %cmake -DZM_TARGET_DISTRO="alt" -DPCRE_INCLUDE_DIR=/usr/include/pcre -DZM_SYSTEMD=ON -DZM_WEB_USER=%{zmuser} -DZM_WEB_GROUP=%{zmgroup}
 
-make %{?_smp_mflags} -C BUILD
+%cmake_build
 
 %install
 install -d %buildroot%_var/run
-%make_install -C BUILD install DESTDIR=%buildroot
+%cmake_install
 rm -rf %buildroot%prefix/%_lib/perl5/vendor_perl/*.*/*-*
 rm -rf %buildroot%prefix/%_lib/perl5/*.*/*-*
 
@@ -98,9 +98,9 @@ for dir in events images temp
 do
 	install -m 755 -d %buildroot%_localstatedir/zoneminder/$dir
 done
-install -D -m 755 BUILD/scripts/zm %buildroot%_initdir/zoneminder
-install -D -m 644 BUILD/misc/zoneminder.service %buildroot/%_unitdir/%name.service
-install -D -m 644 BUILD/misc/zoneminder-tmpfiles.conf %buildroot/%_tmpfilesdir/zoneminder.conf
+install -D -m 755 %_cmake__builddir/scripts/zm %buildroot%_initdir/zoneminder
+install -D -m 644 %_cmake__builddir/misc/zoneminder.service %buildroot/%_unitdir/%name.service
+install -D -m 644 %_cmake__builddir/misc/zoneminder-tmpfiles.conf %buildroot/%_tmpfilesdir/zoneminder.conf
 install -D -m 644 %SOURCE4 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
 install -D -m 644 %SOURCE7 %buildroot%_sysconfdir/nginx/sites-enabled.d/nginx-zoneminder.conf.sample
 install -D -m 644 %SOURCE8 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
@@ -163,6 +163,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 1.36.1-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue May 25 2021 Anton Farygin <rider@altlinux.ru> 1.36.1-alt1
 - 1.36.1
 
