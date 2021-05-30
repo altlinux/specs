@@ -2,7 +2,7 @@
 
 Name: deepin-system-monitor
 Version: 5.8.6
-Release: alt1
+Release: alt1.1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
 Group: Monitoring
@@ -64,10 +64,10 @@ export AR="llvm-ar"
     -DLIB_INSTALL_DIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 %find_lang %name
 
 %check
@@ -84,6 +84,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/*/*
 
 %changelog
+* Wed May 19 2021 Arseny Maslennikov <arseny@altlinux.org> 5.8.6-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.6-alt1
 - New version (5.8.6) with rpmgs script.
 

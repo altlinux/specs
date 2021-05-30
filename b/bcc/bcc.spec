@@ -21,7 +21,7 @@
 
 Name:		bcc
 Version:	0.19.0
-Release:	alt1
+Release:	alt1.1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -182,7 +182,7 @@ export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 	-DUSINGISYSTEM:BOOL=no \
 	-DPYTHON_CMD=python3 \
 	%{?lua_config}
-%cmake_build VERBOSE=1
+%cmake_build
 
 %ifarch x86_64
 %make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool
@@ -192,7 +192,7 @@ export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 %set_verify_elf_method relaxed
 pathfix.py -pni %__python3 tools
 
-%cmake_install install DESTDIR=%buildroot VERBOSE=1
+%cmake_install
 
 # Cannot make noarch package because bcc exists not on all arches
 install -d %buildroot/%python3_sitelibdir
@@ -266,6 +266,9 @@ fi
 %endif
 
 %changelog
+* Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 0.19.0-alt1.1
+- NMU: spec: migrate to new cmake macros.
+
 * Tue Apr 27 2021 Vitaly Chikunov <vt@altlinux.org> 0.19.0-alt1
 - Update to v0.19.0 (2021-03-19).
 - Build using clang/llvm 12.

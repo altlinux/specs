@@ -2,7 +2,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.9
-Release: alt1
+Release: alt1.1
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -102,19 +102,21 @@ export PATH=$PATH:%_libdir/pastix/bin
 	-DGOOGLEHASH_COMPILE="g++ %optflags" \
 	-DMETIS_INCLUDE_DIRS=%_includedir/metis
 
-%ninja_build -C BUILD
+%cmake_build
 %ifnarch %e2k
-%ninja_build -C BUILD doc
+%cmake_build -t doc
 %endif
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 install -d %buildroot%_bindir
 %ifnarch %e2k
-rm -fR BUILD/doc/examples/CMakeFiles BUILD/doc/examples/*.out \
-	BUILD/doc/examples/*.cmake
-install -m755 BUILD/doc/examples/* %buildroot%_bindir
+cd %_cmake__builddir
+rm -fR doc/examples/CMakeFiles doc/examples/*.out \
+	doc/examples/*.cmake
+install -m755 doc/examples/* %buildroot%_bindir
+cd -
 %endif
 
 %files
@@ -128,10 +130,13 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc doc/examples/*
 
 %files docs
-%doc BUILD/doc/html/*
+%doc %_cmake__builddir/doc/html/*
 %endif
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.3.9-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 3.3.9-alt1
 - New version.
 

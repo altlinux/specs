@@ -6,7 +6,7 @@
 
 Name:		bpftrace
 Version:	0.12.1
-Release:	alt1
+Release:	alt2
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -68,11 +68,11 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 	-DOFFLINE_BUILDS:BOOL=ON \
 	-DALLOW_UNSAFE_PROBE:BOOL=ON \
 
-%cmake_build bpftrace
+%cmake_build
 
 %install
 %set_verify_elf_method relaxed
-%cmake_install install DESTDIR=%buildroot
+%cmake_install
 find %buildroot%_datadir/%name/tools -name '*.bt' | xargs chmod a+x
 
 # Fix man pages.
@@ -82,9 +82,9 @@ pushd %buildroot%_man8dir
 popd
 
 %check
-BUILD/src/bpftrace --version	 # not requires root
-vm-run BUILD/src/bpftrace --info # should be fast enough even w/o kvm
-[ -w /dev/kvm ] && vm-run BUILD/src/bpftrace -l 'kprobe:*_sleep_*'
+%_cmake__builddir/src/bpftrace --version	 # not requires root
+vm-run %_cmake__builddir/src/bpftrace --info # should be fast enough even w/o kvm
+[ -w /dev/kvm ] && vm-run %_cmake__builddir/src/bpftrace -l 'kprobe:*_sleep_*'
 if [ -w /dev/kvm ]; then
 	# Great run-time tests
 
@@ -106,7 +106,7 @@ if [ -w /dev/kvm ]; then
 	# TIMEOUT on aarch64
 	.gear/delete-blocks python	tests/runtime/json-output
 %endif
-	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/BUILD/src/
+	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/%_cmake__builddir/src/
 	vm-run --sbin tests/runtime-tests.sh
 fi
 
@@ -118,6 +118,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Wed May 12 2021 Arseny Maslennikov <arseny@altlinux.org> 0.12.1-alt2
+- NMU: spec: adapt to new cmake macros.
+
 * Fri Apr 30 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.1-alt1
 - Update to v0.12.1 (2021-04-16).
 - spec: Build with default Clang/LLVM (>= 11).
