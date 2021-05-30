@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        90.0.4430.72
+Version:        91.0.4472.77
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -84,10 +84,7 @@ Patch018: 0018-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch019: 0019-Move-offending-function-to-chromeos-only.patch
 Patch020: 0020-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 Patch021: 0021-ALT-Disable-NOMERGE-attribute.patch
-Patch022: 0022-IWYU-add-missing-cstdint-for-uint32_t.patch
-Patch023: 0023-add-missing-static-constexpr-member-definition.patch
-Patch024: 0024-IWYU-include-limits-for-std-numeric_limits.patch
-Patch025: 0025-IWYU-include-missing-cstring-for-strlen.patch
+Patch022: 0022-IWYU-include-limits-for-std-numeric_limits.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -132,6 +129,7 @@ BuildRequires:  pkgconfig(libavformat)
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavutil)
 %endif
+BuildRequires:  pkgconfig(libcurl)
 BuildRequires:  pkgconfig(freetype2)
 BuildRequires:  pkgconfig(fontconfig)
 BuildRequires:  pkgconfig(expat)
@@ -204,9 +202,6 @@ tar -xf %SOURCE1
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
-%patch023 -p1
-%patch024 -p1
-%patch025 -p1
 ### Finish apply patches
 
 # lost sources
@@ -462,6 +457,31 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri May 28 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.4472.77-alt1
+- New version (91.0.4472.77).
+- Security fixes:
+  - CVE-2021-21212: Insufficient data validation in networking.
+  - CVE-2021-30521: Heap buffer overflow in Autofill.
+  - CVE-2021-30522: Use after free in WebAudio.
+  - CVE-2021-30523: Use after free in WebRTC.
+  - CVE-2021-30524: Use after free in TabStrip.
+  - CVE-2021-30525: Use after free in TabGroups.
+  - CVE-2021-30526: Out of bounds write in TabStrip.
+  - CVE-2021-30527: Use after free in WebUI.
+  - CVE-2021-30528: Use after free in WebAuthentication.
+  - CVE-2021-30529: Use after free in Bookmarks.
+  - CVE-2021-30530: Out of bounds memory access in WebAudio.
+  - CVE-2021-30531: Insufficient policy enforcement in Content Security Policy.
+  - CVE-2021-30532: Insufficient policy enforcement in Content Security Policy.
+  - CVE-2021-30533: Insufficient policy enforcement in PopupBlocker.
+  - CVE-2021-30534: Insufficient policy enforcement in iFrameSandbox.
+  - CVE-2021-30535: Double free in ICU.
+  - CVE-2021-30536: Out of bounds read in V8.
+  - CVE-2021-30537: Insufficient policy enforcement in cookies.
+  - CVE-2021-30538: Insufficient policy enforcement in content security policy.
+  - CVE-2021-30539: Insufficient policy enforcement in content security policy.
+  - CVE-2021-30540: Incorrect security UI in payments.
+
 * Thu Apr 15 2021 Alexey Gladkov <legion@altlinux.ru> 90.0.4430.72-alt1
 - New version (90.0.4430.72).
 - Security fixes:
