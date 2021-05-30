@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -78,6 +78,9 @@ all standard file operations and some extra features like FTP support.
 
 
 %changelog
+* Sun May 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
+- 1.12.2
+
 * Sat Apr 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
 
