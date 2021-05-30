@@ -8,7 +8,7 @@
 
 Name: libinstpatch
 Version: 1.1.6
-Release: alt1
+Release: alt1.1
 
 Summary: MIDI instrument patch library
 Group: System/Libraries
@@ -57,10 +57,10 @@ This package includes the development libraries and header files for
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-%make -C BUILD test
+%cmake_build -t test
 
 %files
 %_libdir/%name-%api_ver.so.*
@@ -73,6 +73,9 @@ This package includes the development libraries and header files for
 %doc examples/*.c
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1.1
+- rebuild with new cmake macros
+
 * Tue Jan 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
 - 1.1.6
 

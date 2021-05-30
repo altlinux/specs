@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: 3.2.1
-Release: alt3
+Release: alt3.1
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
@@ -87,7 +87,7 @@ license.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 # always install glut.h and freeglut.pc
 install -m644 include/GL/glut.h %buildroot%_includedir/GL
 ln -s glut.pc %buildroot%_pkgconfigdir/%_name.pc
@@ -98,7 +98,7 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %endif
 
 %check
-%make -C BUILD test
+%cmake_build -t test
 
 %files
 %if_enabled replace_glut
@@ -122,6 +122,9 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt3.1
+- rebuild with new cmake macros
+
 * Mon Dec 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt3
 - fixed build with gcc10/-fno-common
 

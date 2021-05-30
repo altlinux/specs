@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt3
+Release: alt3.1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -80,11 +80,11 @@ This package provides Python3 bindings for OpenShot Video Library.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make -C BUILD test
+%cmake_build -t test
 
 %files
 %_libdir/%name.so.*
@@ -98,8 +98,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/*
 
 %changelog
+* Sun May 30 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt3.1
+- rebuild with new cmake macros
+
 * Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt3
-- disabled broken %%check
+- disabled broken %check
 
 * Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt2
 - fixed build with gcc10/-fno-common (upstream patch)

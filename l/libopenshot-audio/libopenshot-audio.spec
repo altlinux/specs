@@ -8,14 +8,14 @@
 
 Name: %_name-audio
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenShot Audio Library
 Group: System/Libraries
 License: GPL-3.0
 Url: https://launchpad.net/%_name
 
-#VCS: https://github.com/OpenShot/libopenshot-audio.git
+Vcs: https://github.com/OpenShot/libopenshot-audio.git
 #Source: %url/%ver_major/%libopenshot_ver/+download/%name-%version.tar.gz
 Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.gz
 
@@ -45,7 +45,7 @@ that are needed to write applications that use %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -62,6 +62,9 @@ make -C BUILD test
 %_libdir/%name.so
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1.1
+- rebuild with new cmake macros
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 

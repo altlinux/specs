@@ -5,14 +5,14 @@
 
 Name: %_name-qt5
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Qt XMPP library
 License: LGPL-2.1-or-later
 Group: Development/KDE and QT
 Url: https://github.com/%_name-project/%_name
 
-#VCS: https://github.com/qxmpp-project/qxmpp.git
+Vcs: https://github.com/qxmpp-project/qxmpp.git
 Source: %url/archive/v%version/%_name-%version.tar.gz
 
 Conflicts: lib%_name
@@ -106,13 +106,13 @@ details.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 mkdir -p %buildroot%_defaultdocdir/%_name
 install -m644 AUTHORS CHANGELOG.md README.md %buildroot%_defaultdocdir/%_name/
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make -C BUILD test
+%cmake_build -t test
 
 %files -n lib%name
 %_libdir/lib%_name.so.*
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1.1
+- rebuild with new cmake macros
+
 * Thu Mar 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 

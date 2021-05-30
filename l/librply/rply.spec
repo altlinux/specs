@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 1.1.3
-Release: alt1
+Release: alt1.1
 
 Summary: A library to read and write PLY files
 Group: System/Libraries
@@ -33,14 +33,15 @@ efficient, and well tested. The highlights are:
 %patch -p1
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 	-DCMAKE_VERBOSE_MAKEFILE=ON
 
-pushd BUILD
+pushd %_cmake__builddir
 %make_build
 
 %install
-pushd BUILD
+pushd %_cmake__builddir
 %make DESTDIR=%buildroot install
 
 %files
@@ -62,6 +63,9 @@ Rply Library Header Files and Link Libraries
 %_datadir/%_name/
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1.1
+- rebuild with new cmake macros
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
 - 1.1.3
 

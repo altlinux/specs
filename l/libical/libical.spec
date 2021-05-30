@@ -13,7 +13,7 @@
 
 Name: libical
 Version: 3.0.10
-Release: alt1
+Release: alt1.1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -139,10 +139,10 @@ library.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
+LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 
 %files
 %_libdir/libical.so.*
@@ -198,6 +198,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.10-alt1.1
+- rebuild with new cmake macros
+
 * Sun Apr 18 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.10-alt1
 - 3.0.10
 

@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 1.2.6
-Release: alt1
+Release: alt1.1
 
 Summary: A library that implements the EBU R 128 standard for loudness normalization
 Group: Sound
@@ -45,10 +45,10 @@ developing applications that use %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-%make -C BUILD test
+%cmake_build -t test
 
 %files
 %_libdir/%name.so.*
@@ -61,6 +61,9 @@ developing applications that use %name.
 
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1.1
+- rebuild with new cmake macros
+
 * Sun Feb 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
 - 1.2.6
 

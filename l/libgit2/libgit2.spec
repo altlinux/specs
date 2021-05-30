@@ -3,7 +3,7 @@
 
 Name: libgit2
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: linkable library for Git
 License: GPL-2.0
@@ -49,10 +49,10 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-%make -C BUILD test
+%cmake_build -t test
 
 %files
 %_libdir/%name.so.*
@@ -67,6 +67,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1.1
+- rebuild with new cmake macros
+
 * Fri Oct 30 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 

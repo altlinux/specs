@@ -5,7 +5,7 @@
 
 Name: lib%_name
 Version: 1.3.14
-Release: alt2
+Release: alt2.1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -67,15 +67,15 @@ Includes and definitions for developing with Graphite2.
 %cmake_build
 
 %if_enabled docs
-%make docs -C BUILD
+%cmake_build -t docs
 sed -i -e 's!<a id="id[a-z]*[0-9]*"></a>!!g' BUILD/doc/manual.html
 %endif
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
+LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 
 %files
 %_libdir/%name.so.*
@@ -92,6 +92,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt2.1
+- rebuild with new cmake macros
+
 * Wed Apr 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt2
 - updated E2K patches/fixes from git.e2k:/gears/l/libgraphite2.git
 

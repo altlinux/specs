@@ -4,7 +4,7 @@
 
 Name: dino
 Version: 0.2.0
-Release: alt2
+Release: alt2.1
 
 Summary: Modern Jabber/XMPP client
 License: GPL-3.0
@@ -55,10 +55,10 @@ This package provides libraries and headers needed to develop Dino plugins.
 %build
 %cmake
 # SMP-incompatible build
-%make -C BUILD
+%cmake_build -j1
 
 %install
-%cmakeinstall_std
+%cmake_install
 %find_lang --all-name --output=%name.lang %name
 
 
@@ -92,6 +92,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_vapidir/*
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2.1
+- rebuild with new cmake macros
+
 * Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
 - fixed build with vala >= 0.50.4 (upstream patch)
 

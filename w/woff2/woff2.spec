@@ -1,14 +1,14 @@
 Name: woff2
 Version: 1.0.2
-Release: alt2
+Release: alt2.1
 
 Summary: WOFF2 compress/decompress tools
 Group: File tools
-License: Apache 2.0
+License: MIT
 Url: https://github.com/google/woff2
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/google/woff2.git
+Vcs: https://github.com/google/woff2.git
 Source: %name-%version.tar
 #Source: %url/archive/v%version/%name-%version.tar.gz
 
@@ -57,13 +57,16 @@ libraries.
 %setup
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=%_libdir
+%cmake \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DCMAKE_SKIP_RPATH:BOOL=ON
+%nil
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 mkdir -p %buildroot%_bindir/
-cp -a BUILD/woff2_* %buildroot%_bindir/
+cp -a %_cmake__builddir/woff2_* %buildroot%_bindir/
 
 %files
 %_bindir/woff2_compress
@@ -83,6 +86,9 @@ cp -a BUILD/woff2_* %buildroot%_bindir/
 
 
 %changelog
+* Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2.1
+- rebuild with new cmake macros
+
 * Wed Jan 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
 - new lib%%name{,-devel} subpackages
 
