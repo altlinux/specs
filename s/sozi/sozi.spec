@@ -1,6 +1,6 @@
 Name: sozi
 Version: 12.09
-Release: alt1
+Release: alt2
 
 Summary: Makes SVG animated presentations that can be played in a browser
 
@@ -18,6 +18,7 @@ Requires: inkscape
 BuildRequires: cmake
 # FIXME: cmake requires a C++ compiler
 BuildRequires: gcc-c++
+BuildRequires: rpm-build-python
 
 BuildArch: noarch
 
@@ -56,6 +57,9 @@ export NPROCS=1
 %doc README samples
 
 %changelog
+* Sun May 30 2021 Paul Wolneykien <manowar@altlinux.org> 12.09-alt2
+- Fixed building in new environment: require rpm-build-python.
+
 * Tue Feb 26 2019 Paul Wolneykien <manowar@altlinux.org> 12.09-alt1
 - Fixed multithread build errors.
 - Fresh up to version 12.09.
