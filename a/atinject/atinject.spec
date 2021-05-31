@@ -3,12 +3,12 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atinject
 Version:        1
-Release:        alt7_32.20100611svn86jpp8
+Release:        alt7_35.20100611svn86jpp11
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
 URL:            http://code.google.com/p/atinject/
@@ -25,9 +25,6 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        MANIFEST.MF
 Source2:        MANIFEST-TCK.MF
 Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
-
-# Compile with source/target 1.5
-Patch0:         %{name}-target-1.5.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  junit
@@ -57,8 +54,6 @@ cp %{SOURCE3} LICENSE
 mkdir lib
 build-jar-repository -p lib junit
 
-%patch0 -p1
-
 # Fix dep in TCK pom
 sed -i -e 's/pom\.groupId/project.groupId/' tck-pom.xml
 
@@ -73,7 +68,8 @@ sed -i -e 's/pom\.groupId/project.groupId/' tck-pom.xml
 set -e
 alias rm=:
 alias xargs=:
-alias javadoc='javadoc -Xdoclint:none'
+alias javac="javac -source 1.8 -target 1.8"
+alias javadoc="javadoc -source 1.8 -Xdoclint:none"
 . ./build.sh
 
 # Inject OSGi manifests required by Eclipse.
@@ -94,6 +90,9 @@ mv build/tck/javadoc build/javadoc/tck
 %files tck -f .mfiles-tck
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1-alt7_35.20100611svn86jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_32.20100611svn86jpp8
 - fc update
 
