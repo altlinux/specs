@@ -3,18 +3,19 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-mapping
 Version:        3.0.0
-Release:        alt1_10jpp8
+Release:        alt1_11jpp11
 Summary:        Apache Maven Mapping
 License:        ASL 2.0
-URL:            http://maven.apache.org/shared/%{name}/
-BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:            https://maven.apache.org/shared/maven-mapping/
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -39,7 +40,7 @@ This package provides %{summary}.
 %setup -q
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -51,6 +52,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_11jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_10jpp8
 - fc update
 
