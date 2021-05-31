@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           colossus
@@ -12,7 +12,7 @@ Name:           colossus
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_13jpp8
+Release:        alt1_16jpp11
 Summary:        Allows people to play Titan against each other or AIs
 
 License:        GPLv2
@@ -40,7 +40,7 @@ BuildRequires:  ant
 BuildRequires:  jdom
 BuildRequires:  desktop-file-utils
 BuildRequires:  zip
-Requires:       java >= 1.6.0
+Requires:       java
 Requires:       jpackage-utils
 Requires:       jdom
 Requires(post):  coreutils
@@ -68,8 +68,15 @@ This package contains the API documentation for %{name}.
 
 %build
 
+# Create file for local build properties
+cp /dev/null local_build.properties
+
 # Tell colossus' build process where to look for needed jar files
-echo "libs.dir=%{_javadir}" > local_build.properties
+echo "libs.dir=%{_javadir}" >> local_build.properties
+
+# Override 1.5 requirement to work with Java 11
+echo "source.level=1.8" >> local_build.properties
+echo "target.level=1.8" >> local_build.properties
 
 # Tell colossus some build info that the game will display
 mkdir -p build/ant/classes/META-INF
@@ -80,7 +87,7 @@ build.timestamp=%{revdate}
 username=rpmbuild
 EOF
 
-ant jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar
 
 # The supplied build.xml adds a classpath to the manifest that needs to
 # be removed.
@@ -105,9 +112,9 @@ cat <<EOF > fixup.xml
 </project>
 EOF
 
-ant -f fixup.xml
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f fixup.xml
 
-ant -lib %{_javadir}/jdom.jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -lib %{_javadir}/jdom.jar javadoc
 
 # Allow for simple command to run colossus
 echo -e "#!/bin/sh\njava -cp %{_javadir}/jdom.jar:%{_javadir}/colossus.jar net.sf.colossus.appmain.Start" > %{name}
@@ -182,6 +189,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.14.0-alt1_16jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_13jpp8
 - fc update
 
