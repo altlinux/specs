@@ -2,7 +2,7 @@
 %define oname rebulk
 
 Name: python3-module-%oname
-Version: 2.0.1
+Version: 3.0.1
 Release: alt1
 Summary: Rebulk - define simple search patterns in bulk to perform advanced matching on any string
 License: MIT
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/rebulk
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest-runner
 BuildRequires: python3-module-six
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pylint
 
 %description
 ReBulk is a python library that performs advanced searches in strings
@@ -53,7 +53,7 @@ This package contains tests for %oname.
 python3 setup.py test
 
 %files
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
 
@@ -61,6 +61,9 @@ python3 setup.py test
 %python3_sitelibdir/*/test
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Automatically updated to 2.0.1.
 - Drop python2 support.
