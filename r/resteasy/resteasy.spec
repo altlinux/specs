@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           resteasy
 Version:        3.0.26
-Release:        alt1_2jpp8
+Release:        alt1_5jpp11
 Summary:        Framework for RESTful Web services and Java applications
 License:        ASL 2.0 and CDDL
 URL:            http://resteasy.jboss.org/
@@ -21,12 +21,14 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(log4j:log4j)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
 
 # Jackson 2
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider)
@@ -173,6 +175,9 @@ find -name '*.jar' -print -delete
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api providers/jaxb
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api providers/jackson2
 
+# add dependencies for EE APIs that were removed in Java 11
+%pom_add_dep javax.xml.bind:jaxb-api resteasy-jaxrs
+
 %pom_remove_plugin :maven-clean-plugin
 
 %mvn_package ":resteasy-jaxrs" core
@@ -184,39 +189,6 @@ find -name '*.jar' -print -delete
 %mvn_package ":resteasy-jaxb-provider" jaxb-provider
 %mvn_package ":resteasy-client" client
 
-# Fixing JDK7 ASCII issues
-files='
-resteasy-jaxrs/src/main/java/org/jboss/resteasy/annotations/Query.java
-resteasy-jaxrs/src/main/java/org/jboss/resteasy/core/QueryInjector.java
-resteasy-jsapi/src/main/java/org/jboss/resteasy/jsapi/JSAPIWriter.java
-resteasy-jsapi/src/main/java/org/jboss/resteasy/jsapi/JSAPIServlet.java
-resteasy-jsapi/src/main/java/org/jboss/resteasy/jsapi/ServiceRegistry.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/AddLinks.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/ELProvider.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/LinkELProvider.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/LinkResource.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/LinkResources.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/ParentResource.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/RESTServiceDiscovery.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/ResourceFacade.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/ResourceID.java
-resteasy-links/src/main/java/org/jboss/resteasy/links/ResourceIDs.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthConsumer.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthException.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthFilter.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthMemoryProvider.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthProvider.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthProviderChecker.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthRequestToken.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthServlet.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthToken.java
-security/resteasy-oauth/src/main/java/org/jboss/resteasy/auth/oauth/OAuthValidator.java
-'
-
-for f in ${files}; do
-native2ascii -encoding UTF8 ${f} ${f}
-done
-
 # Disable useless artifacts generation, package __noinstall do not work
 %pom_add_plugin org.apache.maven.plugins:maven-source-plugin . '
 <configuration>
@@ -224,7 +196,7 @@ done
 </configuration>'
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -252,6 +224,9 @@ done
 %doc --no-dereference License.html
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_5jpp11
+- update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_2jpp8
 - new version
 
