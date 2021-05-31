@@ -10,7 +10,7 @@
 
 Name: qpid
 Version: 1.39.0
-Release: alt2
+Release: alt2.1
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -222,6 +222,8 @@ find . -type f | xargs sed -i \
 
 %build
 %cmake_insource \
+	-G'Unix Makefiles' \
+	%_cmake_skip_rpath \
 	-DENABLE_WARNINGS:BOOL=OFF \
 	-DENABLE_WARNING_ERROR:BOOL=OFF \
 	-DDOC_INSTALL_DIR:PATH=%_pkgdocdir \
@@ -417,6 +419,9 @@ rm -f %buildroot%_bindir/*.bat
 %doc %_pkgdocdir
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.39.0-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.39.0-alt2
 - Rebuilt with boost-1.71.0.
 

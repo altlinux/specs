@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt2
+Release: alt2.1
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -113,15 +113,15 @@ done
 %build
 #mkdir -p m4
 %cmake -DSYSTEMD_SERVICE_DIR:STRING="%_unitdir" -GNinja
-%ninja_build -C BUILD
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%ninja_install -C BUILD install-openvswitch
+%ninja_install -C "%_cmake__builddir" install-openvswitch
 rm %buildroot%_libexecdir/os-autoinst/crop.py*
 
 %check
 export CI=1
-%ninja_build -C BUILD check-pkg-build
+%ninja_build -C "%_cmake__builddir" check-pkg-build
 
 %files
 %_docdir/*
@@ -137,6 +137,9 @@ export CI=1
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 4.6-alt2.1
+- NMU: spec: adapt to new cmake macros.
+
 * Mon Apr 12 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt2
 - update to current version
 
