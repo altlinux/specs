@@ -3,12 +3,12 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cortado
 Version:        0.6.0
-Release:        alt1_19jpp8
+Release:        alt1_22jpp11
 Summary:        Java media framework
 URL:            http://www.theora.org/cortado/
 # The codecs are all LGPLv2+, the jst framework is mixed, the player applet GPL
@@ -49,13 +49,13 @@ sed -i "s/’/'/g" src/com/fluendo/jheora/Quant.java
 
 
 %build
-javac `find stubs -name "*.java"`
+javac  -target 1.8 -source 1.8 -source 1.8 -target 1.8 `find stubs -name "*.java"`
 export CLASSPATH=stubs:%{_javadir}/jogg.jar:%{_javadir}/jorbis.jar:.
-javac `find src -name "*.java"`
+javac  -target 1.8 -source 1.8 -source 1.8 -target 1.8 `find src -name "*.java"`
 pushd src
 jar cf %{name}.jar `find -name "*.class"`
 popd
-javadoc -d doc -public `find src -name "*.java"`
+javadoc -source 1.8 -d doc -public `find src -name "*.java"`
 
 
 %install
@@ -75,6 +75,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.6.0-alt1_22jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_19jpp8
 - fc update
 
