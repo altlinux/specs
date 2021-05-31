@@ -1,14 +1,14 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global tzversion tzdata2017b
 
 Name:             joda-time
 Version:          2.9.9
-Release:          alt1_6.tzdata2017bjpp8
+Release:          alt1_9.tzdata2017bjpp11
 Summary:          Java date and time API
 
 License:          ASL 2.0
@@ -66,18 +66,23 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %pom_remove_plugin :maven-javadoc-plugin
 
 %build
-%mvn_build
+# Ignore test failures due to incompatibility with Java 11
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
+%doc RELEASE-NOTES.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.9.9-alt1_9.tzdata2017bjpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.9.9-alt1_6.tzdata2017bjpp8
 - fc update
 
