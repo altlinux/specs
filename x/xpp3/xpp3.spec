@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global oversion 1.1.4c
@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        XML Pull Parser
 Name:           xpp3
 Version:        1.1.4
-Release:        alt1_20.cjpp8
+Release:        alt1_26.cjpp11
 License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
 Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-%{oversion}_src.tgz
@@ -64,9 +64,13 @@ sed -i 's|depends="junit_main,junit_addons"|depends="junit_main"|' build.xml
 # relax javadoc linting
 sed -i '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
 
+# allow building on JDK 11
+sed -i -e '/source="1.2" target="1.1"/s/1\../1.8/g' build.xml
+
 %build
 export CLASSPATH=$(build-classpath junit)
-ant xpp3 junit apidoc
+export ANT_OPTS="-Dfile.encoding=iso-8859-1"
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  xpp3 junit apidoc
 
 # Add OSGi metadata
 jar ufm build/%{name}-%{oversion}.jar %{SOURCE4}
@@ -82,20 +86,20 @@ jar ufm build/%{name}-%{oversion}.jar %{SOURCE4}
 # Javadocs
 %mvn_install -J doc/api
 
-ln -s xpp3_min.jar %buildroot%_javadir/xpp3-minimal.jar
-
 %files -f .mfiles
 %doc README.html doc/*.txt doc/*.html
 %doc --no-dereference LICENSE.txt
 
 %files minimal -f .mfiles-minimal
 %doc --no-dereference LICENSE.txt
-%_javadir/xpp3-minimal.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.1.4-alt1_26.cjpp11
+- update
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_20.cjpp8
 - build with new gradle
 
