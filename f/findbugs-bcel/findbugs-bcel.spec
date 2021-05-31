@@ -3,7 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # This is a snapshot of the BCEL trunk for FindBugs 3.0.
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           findbugs-bcel
 Version:        6.0
-Release:        alt1_0.17.20140707svn1547656jpp8
+Release:        alt1_0.21.20140707svn1547656jpp11
 Summary:        Byte Code Engineering Library for FindBugs
 
 License:        ASL 2.0
@@ -52,14 +52,14 @@ BuildArch: noarch
 %build
 mkdir classes
 find src/main/java -type f -name '*.java' | \
-xargs javac -g -d classes -source 1.5 -encoding ISO8859-1
+xargs javac -g -d classes -source 1.8 -target 1.8 -encoding ISO8859-1
 cd classes
 jar cf findbugs-bcel.jar org
 cd ..
 
 mkdir javadoc
 find src/main/java -type f -name '*.java' | xargs javadoc -sourcepath src/main/java \
-  -classpath classes -source 1.5 -encoding ISO8859-1 -d javadoc -Xdoclint:none
+  -classpath classes -source 1.8 -encoding ISO8859-1 -d javadoc -Xdoclint:none
 
 %install
 
@@ -92,6 +92,9 @@ fi ||:
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 6.0-alt1_0.21.20140707svn1547656jpp11
+- update
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.17.20140707svn1547656jpp8
 - fixed build with new java
 
