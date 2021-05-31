@@ -8,8 +8,8 @@
 %def_disable devel
 
 Name: unit
-Version: 1.22.0
-Release: alt2
+Version: 1.24.0
+Release: alt1
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -27,7 +27,7 @@ BuildRequires: libpcre-devel
 %{?_enable_perl:BuildRequires: perl-devel perl-base}
 %{?_enable_php:BuildRequires: php7 php7-devel php-base}
 
-Provides: nginx-unit
+Provides: nginx-unit = %EVR
 
 %description
 NGINX Unit is a polyglot app server, a reverse proxy, and a static
@@ -147,6 +147,7 @@ build/tests
 
 %files
 %doc CHANGES LICENSE README COPYRIGHT
+%_man8dir/*.8*
 %_sbindir/unitd
 %_initdir/unit
 %systemd_unitdir/unit.service
@@ -184,6 +185,9 @@ build/tests
 %endif
 
 %changelog
+* Mon May 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.24.0-alt1
+- Update to 1.24.0 (2021-05-27).
+
 * Sat Apr 10 2021 Michael Shigorin <mike@altlinux.org> 1.22.0-alt2
 - E2K: workaround interpreter header glitches found by lcc
 - Minor spec cleanup
