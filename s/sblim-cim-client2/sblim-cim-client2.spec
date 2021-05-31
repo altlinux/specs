@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -16,12 +16,13 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_12jpp8
+Release:        alt1_16jpp11
 Summary:        Java CIM Client library
 
 License:        EPL
 URL:            http://sourceforge.net/projects/sblim/
 Source0:        http://downloads.sourceforge.net/project/sblim/%{name}/%{version}/%{name}-%{version}-src.zip
+Patch0:         sblim-cim-client2-2.2.5-fix-for-java-11-openjdk.patch
 
 BuildArch:      noarch
 
@@ -61,6 +62,7 @@ Manual and sample code for %{name}.
 
 %prep
 %setup -q -n %{project_folder}
+%patch0 -p1 -b .fix-for-java-11-openjdk
 
 dos2unixConversion() {
         fileName=$1
@@ -80,7 +82,7 @@ dosFiles2unix 'smpl/org/sblim/cimclient/samples/*'
 
 %build
 export ANT_OPTS="-Xmx256m"
-ant \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
         -Dbuild.compiler=modern \
         -DManifest.version=%{version}\
         package java-doc
@@ -124,6 +126,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.2.5-alt1_16jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_12jpp8
 - fc update
 
