@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-velocity
 Version:        1.2
-Release:        alt1_8jpp8
+Release:        alt1_11jpp11
 Summary:        Plexus Velocity Component
 License:        ASL 2.0
 URL:            https://codehaus-plexus.github.io/plexus-velocity/
@@ -42,8 +42,11 @@ find -name '*.jar' -delete
 
 cp -p %{SOURCE1} LICENSE
 
+# Make provided scope on plexus-containers
+%pom_change_dep :plexus-container-default org.codehaus.plexus:plexus-container-default::provided
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -55,6 +58,9 @@ cp -p %{SOURCE1} LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_11jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_8jpp8
 - fc update
 
