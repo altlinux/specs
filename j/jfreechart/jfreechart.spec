@@ -5,13 +5,20 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-%define fedora 30
+BuildRequires: jpackage-11-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Disable swt by default
+%bcond_with swt
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_13jpp8
+Release:        alt1_16jpp11
 Summary:        Java chart library
 
 License:        LGPLv2+
@@ -23,7 +30,7 @@ BuildRequires:  maven-local
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  mvn(org.jfree:jcommon) >= 1.0.23
 BuildRequires:  mvn(javax.servlet:javax.servlet-api) >= 2.5
-%if 0%{?fedora}
+%if %{with swt}
 BuildRequires:  eclipse-swt
 %endif
 BuildRequires:  sonatype-oss-parent
@@ -36,7 +43,7 @@ Source44: import.info
 JFreeChart is a free 100% Java chart library that makes it easy for
 developers to display professional quality charts in their applications.
 
-%if 0%{?fedora}
+%if %{with swt}
 %package swt
 Group: Development/Other
 Summary:        Swt extension for jfreechart
@@ -47,19 +54,6 @@ Requires:       eclipse-swt jpackage-utils
 Experimental swt extension for jfreechart.
 %endif
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadocs for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
-
-%description javadoc -l fr
-Javadoc pour %{name}.
 
 %prep
 %setup -q
@@ -92,18 +86,17 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %pom_change_dep javax.servlet:servlet-api: javax.servlet:javax.servlet-api:
 
 %pom_add_plugin org.apache.felix:maven-bundle-plugin . "$MVN_BUNDLE_PLUGIN_EXTRA_XML"
-%pom_add_plugin org.apache.maven.plugins:maven-javadoc-plugin . "<configuration><excludePackageNames>org.jfree.chart.fx*</excludePackageNames></configuration>"
 # Change to packaging type bundle so as to be able to use it
 # as an OSGi bundle.
 %pom_xpath_set "pom:packaging" "bundle"
 
 %build
 # Ignore failing test: SegmentedTimelineTest
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
 
-%if 0%{?fedora}
+%if %{with swt}
 # /usr/lib/java/swt.jar is an arch independent path to swt
-ant -f ant/build-swt.xml \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f ant/build-swt.xml \
         -Dswt.jar=/usr/lib/java/swt.jar \
         -Djcommon.jar=$(build-classpath jcommon) \
         -Djfreechart.jar=target/jfreechart-%{version}.jar
@@ -112,7 +105,7 @@ ant -f ant/build-swt.xml \
 %install
 %mvn_install
 
-%if 0%{?fedora}
+%if %{with swt}
 install -m 644 lib/swtgraphics2d.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/swtgraphics2d.jar
 install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-swt.jar
 %endif
@@ -120,15 +113,16 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %files -f .mfiles
 %doc ChangeLog NEWS README.txt
 
-%if 0%{?fedora}
+%if %{with swt}
 %files swt
 %{_javadir}/%{name}/swtgraphics2d*.jar
 %{_javadir}/%{name}/%{name}-swt*.jar
 %endif
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.19-alt1_16jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_13jpp8
 - fc update
 
