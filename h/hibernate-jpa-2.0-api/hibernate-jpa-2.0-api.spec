@@ -2,7 +2,7 @@ Group: Development/Other
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt4_26jpp8
+Release:          alt4_29jpp11
 Summary:          Java Persistence 2.0 (JSR 317) API
 License:          EPL and BSD
 URL:              http://www.hibernate.org/
@@ -48,15 +48,13 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :maven-source-plugin
 
-# Fixing wrong-file-end-of-line-encoding
-sed -i 's/\r//' src/main/javadoc/jdstyle.css
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
-# Fixing wrong-file-end-of-line-encoding
-sed -i 's/\r//' target/site/apidocs/jdstyle.css
 %mvn_install
 
 %files -f .mfiles
@@ -67,6 +65,9 @@ sed -i 's/\r//' target/site/apidocs/jdstyle.css
 %doc --no-dereference license.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt4_29jpp11
+- update
+
 * Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt4_26jpp8
 - new version
 
