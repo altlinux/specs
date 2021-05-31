@@ -1,18 +1,20 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jargs
 Version:        1.0
-Release:        alt2_25jpp8
+Release:        alt2_28jpp11
 Summary:        Java command line option parsing suite
 
 License:        BSD
 URL:            http://jargs.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 Source1:        https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/net/sf/jargs/1.0/jargs-1.0.pom
+#               Update source and target for JDK 11
+Patch0:         %{name}-java-version.patch
 BuildArch:      noarch
 
 BuildRequires:  javapackages-local
@@ -38,11 +40,12 @@ Initially, parsing compatible with GNU-style 'getopt' is provided.
 
 %prep
 %setup -q
+%patch0 -p1
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 
 %build
-%ant runtimejar javadoc
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  runtimejar javadoc
 
 
 %install
@@ -61,6 +64,9 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt2_28jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_25jpp8
 - fc update
 
