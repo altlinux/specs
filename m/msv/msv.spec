@@ -1,13 +1,13 @@
 Group: Development/Java
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          msv
 Epoch:         1
 Version:       2013.6.1
-Release:       alt1_16jpp8
+Release:       alt1_19jpp11
 Summary:       Multi-Schema Validator
 License:       BSD and ASL 1.1
 URL:           http://msv.java.net/
@@ -153,6 +153,10 @@ done
 %pom_xpath_replace "pom:dependency[pom:groupId[text()='com.sun.xml.bind.jaxb']]/pom:groupId" "<groupId>isorelax</groupId>"
 %pom_xpath_replace "pom:dependency[pom:groupId[text()='com.sun.xml.bind.jaxb']]/pom:groupId" "<groupId>isorelax</groupId>" msv
 
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration/pom:source'
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration/pom:target'
+
 # Change encoding of non utf-8 files
 for m in $(find . -name copyright.txt) ; do
   iconv -f iso-8859-1 -t utf-8 < $m > $m.utf8
@@ -171,7 +175,7 @@ done
 %mvn_package ":%{name}{,-core}::{}:" %{name}-msv
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -241,6 +245,9 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:2013.6.1-alt1_19jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:2013.6.1-alt1_16jpp8
 - fc update
 
