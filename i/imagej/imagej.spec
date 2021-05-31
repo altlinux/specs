@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           imagej
 Version:        1.50
-Release:        alt1_9.hjpp8
+Release:        alt1_12.hjpp11
 Summary:        Image Processing and Analysis in Java
 
 License:        Public Domain
@@ -24,6 +24,8 @@ Source4:        imagej.png
 patch0:         %{name}-%{version}-patch0.patch
 # modify imagej.sh for fedora compatibility
 patch1:         %{name}-%{version}-patch1.patch
+# set javac source / target version to 1.8 to fix building with Java 11
+Patch2:         imagej-1.50-patch2.patch
 BuildArch:      noarch
 
 
@@ -62,13 +64,16 @@ rm -rf __MACOSX
 #get and patch unix-script.txt
 cp %{SOURCE3} ./imagej.sh
 %patch1 -p1 -b .patch1
+cd source
+%patch2 -p1 -b .patch2
+cd ..
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 %build
 cd source
-ant build javadocs
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  build javadocs
 cd ..
 
 %install
@@ -130,6 +135,9 @@ desktop-file-install --vendor=""                     \
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.50-alt1_12.hjpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_9.hjpp8
 - fc update
 
