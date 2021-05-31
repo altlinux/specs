@@ -1,6 +1,6 @@
 Name: deepin-clone
 Version: 5.0.10
-Release: alt1
+Release: alt1.1
 Summary: Disk and partition backup/restore tool
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -41,10 +41,10 @@ export PATH=%_qt5_bindir:$PATH
     -DDISABLE_DFM_PLUGIN=YES \
     -DVERSION=%version \
     -DAPP_VERSION=%version
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 chmod +x %buildroot%_bindir/deepin-clone-pkexec
 chmod +x %buildroot%_sbindir/deepin-clone-ionice
 
@@ -63,6 +63,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/polkit-1/actions/com.deepin.pkexec.%name.policy
 
 %changelog
+* Mon May 31 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.10-alt1.1
+- NMU: spec: adapted to new cmake macros (altlinux.org/CMakeMigration2021).
+
 * Mon Apr 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.10-alt1
 - New version (5.0.10) with rpmgs script.
 - Built with cmake and ninja instead qmake and make.
