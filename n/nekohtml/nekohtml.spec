@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
@@ -39,7 +39,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           nekohtml
 Version:        1.9.22
-Release:        alt1_11jpp8
+Release:        alt1_15jpp11
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
@@ -56,8 +56,7 @@ Patch1:         0002-Jar-paths.patch
 # Add proper attributes to MANIFEST.MF file so bundle can be used by other OSGI bundles.
 Patch2:         0003-Add-OSGi-attributes.patch
 
-Requires:       bcel
-Requires:       xerces-j2 >= 0:2.7.1
+Requires:       xerces-j2
 Requires:       xml-commons-apis
 # Explicit requires for javapackages-tools since nekohtml-filter script
 # uses /usr/share/java-utils/java-functions
@@ -65,9 +64,7 @@ Requires:       javapackages-tools
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  bcel
-BuildRequires:  bcel-javadoc
-BuildRequires:  xerces-j2 >= 0:2.7.1
+BuildRequires:  xerces-j2
 BuildRequires:  xerces-j2-javadoc
 BuildRequires:  xml-commons-apis
 
@@ -112,6 +109,9 @@ Demonstrations and samples for %{name}.
 find -name "*.jar" -delete
 sed -i 's/\r$//g' *.txt doc/*.html
 
+# disable javadoc linting
+sed -i -e '/<\/javadoc>/i<arg value="-Xdoclint:none"\/>' build.xml
+
 # cannonization test fails on some whitespace, TODO investigate
 rm data/meta/test-meta-encoding3.html
 
@@ -121,7 +121,7 @@ rm data/meta/test-meta-encoding3.html
 
 %build
 export CLASSPATH=$(build-classpath bcel xerces-j2 xml-commons-apis)
-%{ant} \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcompile.source=1.8 -Dcompile.target=1.8 \
     -Dbuild.sysclasspath=first \
     -Dlib.dir=%{_javadir} \
     -Djar.file=%{name}.jar \
@@ -157,6 +157,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files demo -f .mfiles-demo
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.22-alt1_15jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_11jpp8
 - fc update
 
