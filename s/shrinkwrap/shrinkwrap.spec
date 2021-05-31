@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          shrinkwrap
 Version:       1.2.6
-Release:       alt1_2jpp8
+Release:       alt1_5jpp11
 Summary:       Java API for Archive Manipulation
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
@@ -15,6 +15,7 @@ URL:           http://arquillian.org/modules/shrinkwrap-shrinkwrap/
 Source0:       https://github.com/shrinkwrap/shrinkwrap/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
+BuildRequires: mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
@@ -121,12 +122,18 @@ This package contains javadoc for %{name}.
 
 # remove env.JAVA"x"_HOME
 %pom_xpath_remove "pom:requireProperty"
+
 # Option UseSplitVerifier support was removed in 8.0
 # <argLine>-XX:-UseSplitVerifier</argLine>
 %pom_xpath_remove "pom:configuration/pom:argLine" 
 %pom_xpath_remove "pom:configuration/pom:jvm" api
 %pom_xpath_remove "pom:configuration/pom:jvm" impl-base
 %pom_xpath_remove "pom:profiles" impl-base 
+
+%pom_add_dep jakarta.activation:jakarta.activation-api impl-base
+
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
 
 %pom_remove_plugin -r :maven-checkstyle-plugin
 %pom_remove_plugin -r :maven-release-plugin
@@ -137,11 +144,17 @@ sed -i.orig 's|\r||g' LICENSE
 touch -r LICENSE.orig LICENSE
 rm LICENSE.orig
 
+# remove a few tests that are broken with Java 9+ class loading changes
+rm impl-base/src/test/java/org/jboss/shrinkwrap/impl/base/spec/EnterpriseArchiveImplTestCase.java
+rm impl-base/src/test/java/org/jboss/shrinkwrap/impl/base/spec/JavaArchiveImplTestCase.java
+rm impl-base/src/test/java/org/jboss/shrinkwrap/impl/base/spec/ResourceAdapterArchiveImplTestCase.java
+rm impl-base/src/test/java/org/jboss/shrinkwrap/impl/base/spec/WebArchiveImplTestCase.java
+
 %mvn_package :%{name}-api::tests: %{name}-api
 %mvn_package :%{name}-impl-base::tests: %{name}-impl-base
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -173,6 +186,9 @@ rm LICENSE.orig
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.6-alt1_5jpp11
+- update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1.2.6-alt1_2jpp8
 - new version
 
