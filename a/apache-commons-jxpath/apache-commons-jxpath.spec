@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-jxpath
 Version:        1.3
-Release:        alt3_34jpp8
+Release:        alt3_37jpp11
 Summary:        Simple XPath interpreter
 License:        ASL 2.0
 URL:            http://commons.apache.org/jxpath/
@@ -21,9 +21,7 @@ BuildRequires:  mvn(commons-beanutils:commons-beanutils)
 BuildRequires:  mvn(javax.servlet:jsp-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(jdom:jdom)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xml-apis:xml-apis)
 Source44: import.info
@@ -53,7 +51,7 @@ This package contains the API documentation for %{name}.
 
 %build
 # we are skipping tests because we don't have com.mockrunner in repos yet
-%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.jxpath
+%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.jxpath -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -65,6 +63,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_37jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_34jpp8
 - fc update
 
