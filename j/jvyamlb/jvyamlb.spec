@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global git_commit e0fdedc
@@ -15,12 +15,14 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jvyamlb
 Version:        0.2.5
-Release:        alt1_20jpp8
+Release:        alt1_23jpp11
 Summary:        YAML processor for JRuby
 
 License:        MIT
 URL:            http://github.com/%{cluster}/%{name}
 Source0:        %{url}/tarball/%{version}/%{cluster}-%{name}-%{git_commit}.tar.gz
+
+Patch0:         javac-1.8.patch
 
 BuildArch:      noarch
 
@@ -44,6 +46,7 @@ YAML processor extracted from JRuby.
 
 %prep
 %setup -q -n %{cluster}-%{name}-%{git_commit}
+%patch0 -p1
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -52,7 +55,7 @@ build-jar-repository -s -p lib joda-time bytelist jcodings
 
 
 %build
-%ant
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 
 %install
@@ -70,6 +73,9 @@ cp -p lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:0.2.5-alt1_23jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_20jpp8
 - fc update
 
