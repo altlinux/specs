@@ -1,10 +1,10 @@
 Name: uperf
-Version: 1.0.5
-Release: alt1.1
+Version: 1.0.7
+Release: alt1
 
 Summary: A network performance tool
 
-License: GPL
+License: GPLv3
 Group: Networking/Other
 Url: http://uperf.org/
 
@@ -36,9 +36,12 @@ various networking patterns.
 %_datadir/%name/*.xml
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt1
+- Build new version.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
-* Wed Feb 25 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.5-alt1
+* Sat Feb 25 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.5-alt1
 - added .spec file
 - fixed build warnings
