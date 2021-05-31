@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,7 +16,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           antlr32
 Version:        3.2
-Release:        alt1_23jpp8
+Release:        alt1_28jpp11
 Summary:        ANother Tool for Language Recognition
 
 License:        BSD
@@ -80,6 +80,7 @@ Maven plug-in for creating ANTLR-generated parsers.
 Group: Development/Java
 Summary:     Command line tool for creating ANTLR-generated parsers
 Requires:    %{name}-java = %{version}-%{release}
+Requires:    stringtemplate >= 3.2
 
 %description tool
 Command line tool for creating ANTLR-generated parsers.
@@ -87,7 +88,6 @@ Command line tool for creating ANTLR-generated parsers.
 %package     java
 Group: Development/Java
 Summary:     Java run-time support for ANTLR-generated parsers
-Requires:    stringtemplate >= 3.2
 
 %description java
 Java run-time support for ANTLR-generated parsers.
@@ -122,6 +122,14 @@ find -name "._*" -delete
 %pom_xpath_remove pom:build/pom:extensions runtime/Java
 %pom_xpath_remove pom:build/pom:extensions antlr3-maven-plugin
 
+# remove compiler plugin configurations that break builds with Java 11
+%pom_remove_plugin -r :maven-compiler-plugin
+
+# Avoid unnecessary dep on stringtemplate from the runtime sub-package
+# It's only needed there for the DotGraph utility, it's not an actual runtime dep
+%pom_xpath_inject "pom:dependency[pom:artifactId='stringtemplate']" "<optional>true</optional>" runtime/Java
+%pom_add_dep org.antlr:stringtemplate:3.2 tool
+
 # separate artifacts into sub-packages
 %mvn_package :antlr tool
 %mvn_package :antlr-master java
@@ -153,7 +161,7 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 %endif
 
 # a small number of tests always fail for reasons I don't fully understand
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -171,6 +179,9 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 %doc --no-dereference tool/LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2-alt1_28jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_23jpp8
 - update
 
