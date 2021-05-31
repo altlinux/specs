@@ -3,7 +3,7 @@
 Summary: Prolog interpreter and compiler
 Name: swi-prolog
 Version: 8.2.1
-Release: alt1
+Release: alt1.1
 License: LGPLv2+
 Group: Development/Other
 Requires: %name-nox
@@ -98,26 +98,28 @@ CMake files for SWI Prolog
 sed -i '/set(SWIPL_INSTALL_PREFIX[ 	]*lib/s/ lib/ %_lib/' CMakeLists.txt
 
 %build
-%cmake -DSWIPL_VERSIONED_DIR=yes -DSWIPL_INSTALL_IN_SHARE=yes
-%make_build -C BUILD libswipl V=1 VERBOSE=1
-LD_LIBRARY_PATH=`pwd`/BUILD/src %make_build -C BUILD V=1 VERBOSE=1
+%cmake -DSWIPL_VERSIONED_DIR=yes -DSWIPL_INSTALL_IN_SHARE=yes \
+    -G'Unix Makefiles'
+%cmake_build -t libswipl
+export LD_LIBRARY_PATH=`pwd`/%_cmake__builddir/src
+%cmake_build
 
 # XXX this gone while switching to cmake
-cc -g -pthread packages/xpce/src/unx/client.c -o BUILD/xpce-client
+cc -g -pthread packages/xpce/src/unx/client.c -o %_cmake__builddir/xpce-client
 
 %install
 # TODO verify against swipl.so
 %add_verify_elf_skiplist %_libdir/swipl-%version/*
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 # XXX
-install -D BUILD/xpce-client %buildroot%_bindir/xpce-client
+install -D %_cmake__builddir/xpce-client %buildroot%_bindir/xpce-client
 install -D packages/xpce/man/xpce-client.1 %buildroot%_man1dir/xpce-client.1
 test %_lib != lib && mv %buildroot%_prefix/lib/cmake %buildroot%_libdir/
 ln -rs %buildroot%_libdir/swipl-%version/lib/*/lib* %buildroot%_libdir/
 
 %if_with test
 %check
-cd BUILD
+cd %_cmake__builddir
 LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 %endif
 
@@ -170,6 +172,9 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 %exclude %_datadir/swipl-%version/doc/packages/odbc.html
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 8.2.1-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Oct 25 2020 Fr. Br. George <george@altlinux.ru> 8.2.1-alt1
 - Major version up
 

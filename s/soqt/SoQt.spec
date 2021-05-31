@@ -1,6 +1,6 @@
 Name: soqt
 Version: 1.6.0
-Release: alt3
+Release: alt3.1
 Summary: Qt GUI component toolkit library for Coin
 License: BSD-3-Clause
 Group: Development/Tools
@@ -85,6 +85,7 @@ tar xf %SOURCE2
 tar xf %SOURCE3
 
 %build
+%define _cmake__builddir BUILD
 %cmake -GNinja \
        -DSOQT_BUILD_DOCUMENTATION=TRUE \
        -DSOQT_BUILD_DOC_MAN=TRUE
@@ -115,6 +116,9 @@ rm -rf %buildroot%_man3dir/misc.3*
 %doc %_defaultdocdir/SoQt
 
 %changelog
+* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.6.0-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Jan 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt3
 - FTBFS: fix build with cmake 3.19.
 
