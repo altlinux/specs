@@ -1,6 +1,6 @@
 Name:    coin3d
 Version: 4.0.0
-Release: alt2
+Release: alt2.2
 Summary: OpenGL-based, 3D graphics library
 License: BSD-3-Clause
 Group:   System/Libraries
@@ -127,6 +127,7 @@ This package contains architecture independent files of Coin3D.
 %patch4 -p1
 
 %build
+%define _cmake__builddir BUILD
 %cmake -GNinja \
        -DCOIN_BUILD_DOCUMENTATION=TRUE \
        -DCOIN_BUILD_DOCUMENTATION_MAN=TRUE \
@@ -158,6 +159,9 @@ This package contains architecture independent files of Coin3D.
 %_datadir/Coin4
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.0.0-alt2.2
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Jan 05 2021 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt2
 - FTBFS: fix build with cmake 3.19.
 
