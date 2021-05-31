@@ -1,6 +1,6 @@
 Name: neovim-qt
 Version: 0.2.16.1
-Release: alt2
+Release: alt3
 
 Summary: Neovim client library and GUI, in Qt5.
 
@@ -33,7 +33,7 @@ Neovim client library and GUI, in Qt5.
 	-DNVIM_VERSION_RELEASE=%release \
 	-DUSE_SYSTEM_MSGPACK=ON \
 	#
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -47,6 +47,9 @@ Neovim client library and GUI, in Qt5.
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 0.2.16.1-alt3
+- Fix build with a new cmake macros
+
 * Mon Sep 14 2020 Vladimir Didenko <cow@altlinux.org> 0.2.16.1-alt2
 - Add neovim to dependencies (closes: #38933)
 

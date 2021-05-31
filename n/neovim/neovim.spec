@@ -1,6 +1,6 @@
 Name: neovim
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: heavily refactored vim fork
 
@@ -66,7 +66,7 @@ This package contains runtime files.
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DNVIM_VERSION_RELEASE=%release \
 	#
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -91,6 +91,9 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 0.4.4-alt2
+- Fix build with a new cmake macros
+
 * Thu Aug 6 2020 Vladimir Didenko <cow@altlinux.org> 0.4.4-alt1
 - New version
 - Fix license name

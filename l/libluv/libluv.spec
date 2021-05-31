@@ -2,7 +2,7 @@
 
 Name: libluv
 Version: 1.41.0
-Release: alt1
+Release: alt2
 
 Summary: libuv bindings for luajit
 
@@ -40,7 +40,7 @@ libluv header and build tools.
     -DBUILD_SHARED_LIBS=ON \
     -DSHAREDLIBS_INSTALL_LIB_DIR=%_libdir
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -55,6 +55,9 @@ libluv header and build tools.
 
 
 %changelog
+* Mon May 31 2021 Vladimir Didenko <cow@altlinux.ru> 1.41.0-alt2
+- fix build with a new cmake macros
+
 * Tue Apr 20 2021 Vladimir Didenko <cow@altlinux.ru> 1.41.0-alt1
 - new version
 
