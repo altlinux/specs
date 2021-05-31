@@ -2,13 +2,13 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           aopalliance
 Epoch:          0
 Version:        1.0
-Release:        alt6_21jpp8
+Release:        alt6_24jpp11
 Summary:        Java/J2EE AOP standards
 License:        Public Domain
 URL:            http://aopalliance.sourceforge.net/
@@ -42,7 +42,7 @@ larger AOP community.
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-%{ant} -Dbuild.sysclasspath=only jar javadoc
+%{ant} -Dbuild.sysclasspath=only jar javadoc -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
 
 # Inject OSGi manifest required by Eclipse.
 jar umf %{SOURCE2} build/%{name}.jar
@@ -56,6 +56,9 @@ jar umf %{SOURCE2} build/%{name}.jar
 %files -f .mfiles
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt6_24jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_21jpp8
 - fc update
 
