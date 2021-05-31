@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           CardManager
 Version:        3
-Release:        alt1_14jpp8
+Release:        alt1_17jpp11
 Summary:        Java application to allows you to play any, especially collectible, card game
 
 License:        BSD
@@ -18,6 +18,7 @@ Source0:        http://cardmanager.wz.cz/CardManager_sources%{version}.zip
 Source1:        %{name}.appdata.xml
 Patch0:         removeManifestEntries.patch
 Patch1:         jdk8-javadoc.patch
+Patch2:         bumpJdk.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
@@ -56,10 +57,11 @@ find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 %patch0
 %patch1
+%patch2
 
 %build
 
-ant
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 %install
 
@@ -102,6 +104,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3-alt1_17jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3-alt1_14jpp8
 - fc update
 
