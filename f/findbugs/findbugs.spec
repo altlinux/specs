@@ -6,14 +6,14 @@ BuildRequires: perl(FileHandle.pm) unzip
 # END SourceDeps(oneline)
 BuildRequires: tex(pdftex.def)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global noupdatechecks_version 20140707gitcce19ac
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_20jpp8
+Release:        alt1_23jpp11
 Summary:        Find bugs in Java code
 
 License:        LGPLv2+
@@ -54,6 +54,8 @@ Patch3:         findbugs-manual.patch
 Patch4:         findbugs-dom4j.patch
 
 Patch5:         findbugs-javadoc.patch
+
+Patch6:         findbugs-java11.patch
 
 BuildArch:      noarch
 
@@ -138,6 +140,7 @@ README.fedora for more information.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 cp -p %{SOURCE2} README.fedora
 
@@ -150,10 +153,10 @@ rm -f src/gui/edu/umd/cs/findbugs/gui2/OSXAdapter.java
 
 %build
 # Build the class files and docs
-ant docs build
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  docs build
 
 # Build the javadocs
-ant apiJavadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  apiJavadoc
 
 # Build the architecture PDF
 pushd design/architecture
@@ -168,7 +171,7 @@ popd
 
 # Build the noUpdateChecks plugin
 pushd plugins/noUpdateChecks
-ant plugin-jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  plugin-jar
 popd
 
 %install
@@ -254,6 +257,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.1-alt1_23jpp11
+- update
+
 * Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_20jpp8
 - fixed pom for gradle
 
