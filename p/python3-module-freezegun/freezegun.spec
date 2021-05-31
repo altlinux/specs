@@ -3,14 +3,13 @@
 %define oname freezegun
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.3.15
-Release: alt1
+Release: alt2
 Summary: Let your Python tests travel through time
-License: ASLv2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.org/project/freezegun/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/spulec/freezegun.git
 Source: %name-%version.tar
@@ -19,9 +18,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(dateutil)
-BuildRequires: python2.7(mock)
-BuildRequires: python2.7(pytest)
 BuildRequires: python3(dateutil)
 BuildRequires: python3(mock)
 BuildRequires: python3(pytest)
@@ -29,14 +25,6 @@ BuildRequires: python3(sqlite3)
 %endif
 
 %description
-FreezeGun is a library that allows your python tests to travel through
-time by mocking the datetime module.
-
-%package -n python3-module-%oname
-Summary: Let your Python tests travel through time
-Group: Development/Python3
-
-%description -n python3-module-%oname
 FreezeGun is a library that allows your python tests to travel through
 time by mocking the datetime module.
 
@@ -48,45 +36,26 @@ sed -i -e '/.*cover.*/d' \
        -e 's/pytest==.*/pytest/' \
        requirements.txt
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-# asyncio is Python3.4+ only module
-rm %buildroot%python_sitelibdir/%oname/_async.py
-rm %buildroot%python_sitelibdir/%oname/_async_coroutine.py
-
-pushd ../python3
 %python3_install
 # not used in Python3.6+, causes problems
 rm %buildroot%python3_sitelibdir/%oname/_async_coroutine.py
-popd
 
 %check
-py.test -vra
-pushd ../python3
 py.test3 -vra
-popd
 
 %files
-%doc *.rst
-%python_sitelibdir/freezegun/
-%python_sitelibdir/freezegun-*.egg-info/
-
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/freezegun/
 %python3_sitelibdir/freezegun-*.egg-info/
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.15-alt2
+- Drop python2 support.
+
 * Thu Apr 09 2020 Ivan A. Melnikov <iv@altlinux.org> 0.3.15-alt1
 - 0.3.12 -> 0.3.15.
 
