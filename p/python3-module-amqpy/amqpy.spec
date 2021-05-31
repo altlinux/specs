@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.12.4
-Release: alt1.git20160226.1.1.1
+Release: alt2.git20160226
 Summary: Pure-Python 3 AMQP client library
 License: MIT
 Group: Development/Python3
@@ -16,13 +16,14 @@ Patch: 0.12.4-amqpy-Add-rabbitmq-pytest-mark.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-module-sphinx-devel python3-module-sphinx
+BuildRequires(pre): rpm-macros-sphinx3
+BuildPreReq: python3-module-sphinx
 
 %if_with check
 BuildRequires: python3(tox)
 %endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 amqpy is a pure-Python AMQP 0.9.1 client library for Python >= 3.2.0
@@ -53,7 +54,7 @@ This package contains tests for %oname.
 %setup
 %patch -p1
 
-%prepare_sphinx docs
+%prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
 
 %build
@@ -62,7 +63,7 @@ ln -s ../objects.inv docs/source/
 %install
 %python3_install
 
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 mv docs/build/html docs_html
 
 %check
@@ -86,6 +87,9 @@ tox.py3 --sitepackages -p auto -o -v -- amqpy/ -m 'not rabbitmq' -vra
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 0.12.4-alt2.git20160226
+- Transfer building docs on sphinx3.
+
 * Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 0.12.4-alt1.git20160226.1.1.1
 - Added missing dep on Pytest.
 
