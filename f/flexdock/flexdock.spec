@@ -4,12 +4,12 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		    flexdock
 Version:        1.2.4
-Release:	    alt1_11jpp8
+Release:	    alt1_14jpp11
 Summary:	    Docking framework for Java Swing GUI apps
 
 
@@ -23,6 +23,8 @@ Source0:	    http://forge.scilab.org/index.php/p/flexdock/downloads/get/%{name}-
 Patch1:		    flexdock-0001-nojmf.patch
 #Modifies the build process  -- fedora specific
 Patch2:		    flexdock-0002-fedora-build.patch
+#Set javac source and target version to 1.8 to fix builds with Java 11
+Patch3:         flexdock-0003-java-1.8.patch
 
 BuildRequires:	ant
 BuildRequires:	jpackage-utils
@@ -48,6 +50,7 @@ Swing applications.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 #Override the build file's default hard-coded paths
 echo "sdk.home=%{java_home}" > workingcopy.properties
@@ -67,7 +70,7 @@ do
 done
 
 %build
-ant jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar
 
 %install
 mkdir -p %{buildroot}%{_javadir}
@@ -78,6 +81,9 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2.4-alt1_14jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1_11jpp8
 - fc update
 
