@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           maven-compiler-plugin
 Version:        3.8.1
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Maven Compiler Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-compiler-plugin
@@ -17,7 +17,10 @@ BuildArch:      noarch
 Source0:        http://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
 
 # port to plexus-languages 1.0.3
-Patch0:         00-plexus-languages-1.0.patch
+Patch0:         0001-plexus-languages-1.0.patch
+
+# Taken from upstream commit: https://github.com/apache/maven-compiler-plugin/commit/116b98153ef5ce7b13c0275324baa28bca8bc887
+Patch1:         0002-MCOMPILER-359-Fix-for-NPE.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -50,9 +53,10 @@ API documentation for %{name}.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -64,6 +68,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.8.1-alt1_7jpp11
+- update
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.8.1-alt1_4jpp11
 - update
 
