@@ -2,7 +2,7 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # should be consistent across one release
@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           sat4j
 Version:        2.3.5
-Release:        alt1_16jpp8
+Release:        alt1_20jpp11
 Summary:        A library of SAT solvers written in Java
 
 License:        EPL-1.0 or LGPLv2
@@ -18,7 +18,8 @@ URL:            http://www.sat4j.org/
 # Created by sh sat4j-fetch.sh
 Source0:        sat4j-%{version}.tar.xz
 Source1:        sat4j-fetch.sh
-Patch0:         sat4j-classpath.patch
+
+Patch0:         0001-Fix-runtime-classpath-and-minimum-BREE.patch
 
 BuildRequires:  ant
 BuildRequires:  javapackages-local
@@ -34,11 +35,12 @@ without worrying about the details.
 
 %prep
 %setup -q -n sat4j-%{version}
-%patch0
+%patch0 -p1
 
 %build
-ant -Dbuild.compiler=modern -Drelease=%{version} \
- -Dtarget=1.5 -DBUILD_DATE=%{build_date} p2 
+export ANT_OPTS="-Dfile.encoding=iso-8859-1"
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbuild.compiler=modern -Drelease=%{version} \
+ -Dtarget=1.8 -Dsource=1.8 -DBUILD_DATE=%{build_date} p2
 
 %mvn_artifact "org.ow2.sat4j:org.ow2.sat4j.core::%{version}" dist/%{version}/org.sat4j.core.jar
 %mvn_artifact "org.ow2.sat4j:org.ow2.sat4j.pb::%{version}" dist/%{version}/org.sat4j.pb.jar
@@ -52,6 +54,9 @@ ant -Dbuild.compiler=modern -Drelease=%{version} \
 # No %%doc files as the about.html is in the jar
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.3.5-alt1_20jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_16jpp8
 - update
 
