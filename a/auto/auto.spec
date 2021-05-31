@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 Name:           auto
 Summary:        Collection of source code generators for Java
 Version:        1.5.4
-Release:        alt1_2jpp11
+Release:        alt1_6jpp11
 License:        ASL 2.0
 
 URL:            https://github.com/google/auto
@@ -19,9 +19,7 @@ Source0:        auto-value-%{version}.tar.gz
 Source1:        gen_auto_tarball.sh
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(com.squareup:javapoet)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-java)
 
 BuildArch:      noarch
 Source44: import.info
@@ -88,12 +86,21 @@ find -name '*.jar' -print -delete
 %pom_remove_plugin :maven-shade-plugin value
 %pom_remove_plugin :maven-invoker-plugin value
 
+# Broader guava compatibility
+sed -i -e 's/23.5-jre/20.0/' pom.xml
+sed -i -e 's/toImmutableMap/toMap/' -e 's/static com.google.common.collect.ImmutableMap/static java.util.stream.Collectors/' \
+  -e '/elementValues/s/ImmutableMap/Map/' \
+  common/src/main/java/com/google/auto/common/SimpleAnnotationMirror.java
+sed -i -e 's/toImmutableSet/toSet/' -e 's/static com.google.common.collect.ImmutableSet/static java.util.stream.Collectors/' \
+  -e '/ImmutableSet</s/ImmutableSet/Set/' \
+  service/src/main/java/com/google/auto/service/processor/AutoServiceProcessor.java
+
 %mvn_package :build-only __noinstall
 
 
 %build
 # skip test suite because of unpackaged dependencies for tests
-%mvn_build -sf -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -f build-pom.xml
+%mvn_build -sf -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -f build-pom.xml
 
 
 %install
@@ -122,6 +129,9 @@ find -name '*.jar' -print -delete
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.4-alt1_6jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.5.4-alt1_2jpp11
 - new version
 
