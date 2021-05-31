@@ -1,5 +1,7 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+# Build artifact directory path sometimes affects documentation generation.
+%define _cmake__builddir BUILD
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
@@ -21,7 +23,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.15.0.0
-Release: alt6
+Release: alt6.1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -107,6 +109,7 @@ find . -type f -name "*.py" -exec sed -i '/^#!/ s|.*|#!%__python3|' {} \;
 %build
 pushd host
 %cmake %{?have_neon} \
+        %_cmake_skip_rpath \
         -DENABLE_GPSD=ON \
         -DENABLE_E300=ON \
         -DENABLE_PYTHON3=ON \
@@ -120,13 +123,13 @@ pushd tools/uhd_dump
 popd
 
 %check
-pushd host/BUILD
-%make_build test
+pushd host
+%cmake_build --target test
 popd
 
 %install
 pushd host
-%cmakeinstall_std
+%cmake_install
 popd
 
 # Fix udev rules and use dynamic ACL management for device
@@ -202,6 +205,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 3.15.0.0-alt6.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed May 19 2021 Anton Midyukov <antohami@altlinux.org> 3.15.0.0-alt6
 - Drop requires tkinter
 

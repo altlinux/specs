@@ -2,7 +2,7 @@
 
 Name:       hedgewars
 Version:    1.0.0
-Release:    alt3
+Release:    alt4
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -27,7 +27,8 @@ Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
 
 
 # Automatically added by buildreq on Fri Aug 30 2019
-BuildRequires: cmake fpc-units-gtk2 fpc-units-misc fpc-units-net
+BuildRequires(pre): cmake
+BuildRequires: fpc-units-gtk2 fpc-units-misc fpc-units-net
 %{?_with_server:
 BuildRequires: ghc8.6.4-common ghc8.6.4-entropy ghc8.6.4-hslogger
 BuildRequires: ghc8.6.4-random ghc8.6.4-regex-tdfa ghc8.6.4-sandi ghc8.6.4-sha
@@ -112,7 +113,8 @@ rm -r misc/liblua
 %build
 %add_optflags -fcommon
 %remove_optflags -frecord-gcc-switches
-%cmake_insource -DPHYSFS_SYSTEM=1 \
+%cmake_insource -G'Unix Makefiles' -DPHYSFS_SYSTEM=1 \
+%_cmake_skip_rpath \
 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir" \
 -DFONTS_DIRS="/usr/share/fonts/ttf/wqy-zenhei;/usr/share/fonts/ttf/dejavu" \
 %{?_with_server: -DNOSERVER=0}
@@ -153,6 +155,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.0-alt4
+- NMU: fixed FTBFS: skip rpaths.
+
 * Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt3
 - Fixed FTBFS on %%ix86.
 

@@ -3,7 +3,7 @@
 
 Name: grpc
 Version: 1.35.0
-Release: alt2
+Release: alt3
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
 
@@ -145,10 +145,8 @@ Python3 bindings for gRPC library.
 
 %build
 rm -f Makefile
-%define _cmake_builddir %_target_platform
 rm -f BUILD
-srcdir=..
-%cmake -S "$srcdir" -B "$srcdir/%_cmake_builddir" \
+%cmake \
     -DBUILD_SHARED_LIBS:BOOL=on \
     -DgRPC_INSTALL_LIBDIR="$(relative %_libdir/ %_prefix/)" \
     -DgRPC_INSTALL_PKGCONFIGDIR="$(relative %_pkgconfigdir/ %_prefix/)" \
@@ -162,8 +160,8 @@ srcdir=..
     -DCMAKE_CXX_STANDARD=17 \
 #
 
-LD_LIBRARY_PATH="%_cmake_builddir" \
-    cmake --build "%_cmake_builddir" --verbose -j%__nprocs
+export LD_LIBRARY_PATH="%_cmake_builddir"
+%cmake_build
 
 %if_with python3_bindings
 # build python module
@@ -176,7 +174,7 @@ export CFLAGS="%optflags"
 %endif
 
 %install
-DESTDIR=%buildroot cmake --install "%_cmake_builddir" --verbose
+%cmake_install
 
 %if_with python3_bindings
 %py3_install
@@ -241,6 +239,9 @@ DESTDIR=%buildroot cmake --install "%_cmake_builddir" --verbose
 %endif
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.35.0-alt3
+- spec: Fixed FTBFS.
+
 * Tue May 11 2021 Slava Aseev <ptrnine@altlinux.org> 1.35.0-alt2
 - Fix build with libabseil (-DCMAKE_CXX_STANDARD=17)
 
