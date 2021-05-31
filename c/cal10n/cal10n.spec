@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cal10n
 Version:        0.8.1
-Release:        alt1_10jpp8
+Release:        alt1_13jpp11
 Summary:        Compiler assisted localization library (CAL10N)
 License:        MIT
 URL:            http://cal10n.qos.ch
@@ -67,6 +67,9 @@ find . -name \*.jar -delete
 %pom_disable_module maven-%{name}-plugin-smoke
 %mvn_package :*-{plugin} @1
 
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+
 # Disable default-jar execution of maven-jar-plugin, which is causing
 # problems with version 3.0.0 of the plugin.
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
@@ -76,7 +79,7 @@ find . -name \*.jar -delete
     </execution>" cal10n-api
 
 %build
-%mvn_build -- -Dproject.build.sourceEncoding=ISO-8859-1
+%mvn_build -- -Dproject.build.sourceEncoding=ISO-8859-1 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -91,6 +94,9 @@ find . -name \*.jar -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:0.8.1-alt1_13jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_10jpp8
 - fc update
 
