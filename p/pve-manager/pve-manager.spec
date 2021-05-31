@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.3.3
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -76,7 +76,7 @@ Patch42: qemu-server-aarch64.patch
 Patch43: pve-mini-journalreader-getopt.patch
 Patch45: qemu-server-xhci.patch
 Patch46: pve-manager-timezone.patch
-Patch47: qemu-server-pci-rng-audio.patch
+Patch47: qemu-server-pci-rng-audio-M90P.patch
 Patch50: pve-container-ENV.patch
 Patch51: pve-manager-ver-v.patch
 
@@ -608,6 +608,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Mon May 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt3
+- qemu-server: naming network interfaces as in branch p9
+
 * Tue May 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 6.3.3-alt2
 - merge changelog with p9
 
