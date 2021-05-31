@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,7 +39,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           javacc
 Version:        7.0.4
-Release:        alt1_4jpp8
+Release:        alt1_7jpp11
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -102,7 +102,7 @@ build-jar-repository -p bootstrap javacc
 
 # There is maven pom which doesn't really work for building. The tests don't
 # work either (even when using bundled jars).
-ant jar javadoc
+ant jar javadoc -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
 
 # The pom dependencies are also wrong
 %mvn_artifact --skip-dependencies pom.xml target/javacc-%{version}.jar
@@ -135,6 +135,9 @@ ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:7.0.4-alt1_7jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:7.0.4-alt1_4jpp8
 - fc update
 
