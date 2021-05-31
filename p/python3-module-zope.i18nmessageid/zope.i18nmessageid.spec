@@ -1,6 +1,5 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.i18nmessageid
-%define fname python3-module-%oname
 %define descr \
 This package provides facilities for *declaring* messages within \
 program source text;  translation of the messages is the responsiblity \
@@ -8,52 +7,45 @@ of the 'zope.i18n' package.
 
 %def_with check
 
-Name: %fname
+Name: python3-module-%oname
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
-%if ""==""
 Summary: Message Identifiers for internationalization
 Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
 
 License: ZPL-2.1
 # Source-git https://github.com/zopefoundation/zope.i18nmessageid.git
 Url: http://pypi.python.org/pypi/zope.i18nmessageid
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
-BuildRequires: python3-dev python-module-sphinx python3-module-sphinx-devel python3-module-setuptools
+BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
+BuildRequires: python3-module-sphinx
 
 %if_with check
 BuildRequires: python3-module-zope.testing python3-module-zope.testrunner
 %endif
 
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-BuildArch: noarch
-%endif
-
 %description
 %descr
 
-%if ""!=""
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+%descr
+
 This package contains documentation for %oname.
 
-%package -n %fname-pickles
+%package pickles
 Summary: Pickles for Zope Configuration Markup Language (ZCML)
 Group: Development/Python3
 
-%description -n %fname-pickles
+%description pickles
 %descr
 
 This package contains pickles for %oname.
-
-%else
 
 %package tests
 Summary: Tests for %oname
@@ -65,33 +57,25 @@ Requires: %name = %EVR
 
 This package contains tests for %oname.
 
-%endif
-
 %prep
 %setup
-%if ""!=""
-%prepare_sphinx .
+
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
-%endif
 
 %build
-%if ""==""
 %add_optflags -fno-strict-aliasing
 %python3_build
-%else
-%make -C docs pickle
-%make -C docs html
-%endif
+
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
 %install
-%if ""==""
 %python3_install
-%else
+
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
 
-%if ""==""
 %check
 # coverage is the extra dep
 grep -qs "^[[:space:]]*'coverage',[[:space:]]*$" setup.py || exit 1
@@ -104,20 +88,21 @@ python3 setup.py test -v
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/zope/i18nmessageid/tests.*
+%exclude %python3_sitelibdir/*/pickle
 
 %files tests
 %python3_sitelibdir/zope/i18nmessageid/tests.*
 
-%else
-
-%files
+%files docs
 %doc docs/_build/html
 
-%files -n %fname-pickles
+%files pickles
 %python3_sitelibdir/*/pickle
-%endif
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt2
+- Drop specsubst scheme.
+
 * Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
 - 5.0.0 -> 5.0.1.
 
