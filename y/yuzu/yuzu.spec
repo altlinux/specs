@@ -3,7 +3,7 @@
 
 Name: yuzu
 Version: 620
-Release: alt1
+Release: alt1.1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -140,10 +140,10 @@ src/common/scm_rev.cpp.in
 	-DENABLE_QT_TRANSLATION:BOOL=ON \
 	-GNinja \
 	-Wno-dev
-ninja -j %__nprocs -vvv -C BUILD
+%cmake_build
 
 %install
-DESTDIR=%buildroot ninja install -C BUILD
+%cmake_install
 
 %files
 %doc CONTRIBUTING.md README.md
@@ -154,6 +154,9 @@ DESTDIR=%buildroot ninja install -C BUILD
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 620-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu May 13 2021 Nazarov Denis <nenderus@altlinux.org> 620-alt1
 - Version 620
 
