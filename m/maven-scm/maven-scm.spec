@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,7 +39,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           maven-scm
 Version:        1.10.0
-Release:        alt1_6jpp8
+Release:        alt1_9jpp11
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 URL:            http://maven.apache.org/scm
@@ -56,8 +56,8 @@ Patch3:         0003-Port-to-current-plexus-utils.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
@@ -121,6 +121,13 @@ Javadoc for %{name}.
 %pom_disable_module maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-cvs
 sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META-INF/plexus/components.xml
 
+# Port to commons-lang3
+%pom_change_dep -r :commons-lang org.apache.commons:commons-lang3:3.8.1
+sed -i "s/org\.apache\.commons\.lang\./org.apache.commons.lang3./" \
+    maven-scm-providers/maven-scm-providers-git/maven-scm-provider-gitexe/src/main/java/org/apache/maven/scm/provider/git/gitexe/command/status/GitStatusConsumer.java \
+    maven-scm-providers/maven-scm-providers-svn/maven-scm-provider-svnexe/src/main/java/org/apache/maven/scm/provider/svn/svnexe/command/checkout/SvnCheckOutConsumer.java \
+    maven-scm-providers/maven-scm-providers-svn/maven-scm-provider-svnexe/src/main/java/org/apache/maven/scm/provider/svn/svnexe/command/remoteinfo/SvnRemoteInfoCommand.java
+
 # Tests are skipped anyways, so remove dependency on mockito.
 %pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-jazz
 %pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-accurev
@@ -142,7 +149,7 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 # Don't build and unit run tests because
 # * accurev tests need porting to a newer hamcrest
 # * vss tests fail with the version of junit in fedora
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -157,6 +164,9 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.0-alt1_9jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.10.0-alt1_6jpp8
 - fc update
 
