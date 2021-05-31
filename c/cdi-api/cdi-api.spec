@@ -13,14 +13,14 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.2
-%bcond_without asciidoc
+%bcond_with asciidoc
 
 %global namedreltag .NOTHING
 %global namedversion %{version}%{?namedreltag}
 
 Name:             cdi-api
 Version:          1.2
-Release:          alt1_12jpp8
+Release:          alt2_12jpp8
 Summary:          CDI API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
@@ -96,6 +96,9 @@ cd api
 %doc --no-dereference spec/src/main/doc/license-jcp.%{adoc}
 
 %changelog
+* Mon May 31 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt2_12jpp8
+- build w/o asciidoc (python2)
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_12jpp8
 - fc update
 
