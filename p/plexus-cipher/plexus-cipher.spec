@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-cipher
 Version:        1.7
-Release:        alt3_18jpp8
+Release:        alt3_21jpp11
 Summary:        Plexus Cipher: encryption/decryption Component
 License:        ASL 2.0
 # project moved to GitHub and it looks like there is no official website anymore
@@ -52,9 +52,16 @@ API documentation for %{name}.
 
 %mvn_file : plexus/%{name}
 
+sed -i -e "s|1.5|1.8|" pom.xml
+# Fix javadoc generation on java 11
+%pom_xpath_inject pom:build/pom:plugins "<plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration><source>1.8</source></configuration>
+</plugin>" 
+
 %build
 # Tests depend on sisu-guice
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -66,6 +73,9 @@ API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.7-alt3_21jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_18jpp8
 - fc update
 
