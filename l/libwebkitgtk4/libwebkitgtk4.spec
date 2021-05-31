@@ -12,11 +12,6 @@
 %define bwrap_bin %_bindir/bwrap
 
 %def_enable ninja
-%if_enabled ninja
-# redefine cmake macros
-%define cmake_build ninja-build %_smp_mflags -C BUILD
-%define cmakeinstall_std DESTDIR=%buildroot ninja-build -C BUILD install
-%endif
 %def_disable gtkdoc
 %def_enable gold
 %def_enable x11
@@ -32,7 +27,7 @@
 
 Name: libwebkitgtk4
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -278,7 +273,7 @@ export PYTHON=%__python3
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 %if_disabled gigacage
 install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %endif
@@ -342,6 +337,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon May 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1.1
+- adapted to new cmake macros
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1
 - 2.32.1
 
