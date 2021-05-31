@@ -1,28 +1,33 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-%define fedora 30
+BuildRequires: jpackage-11-compat
+%define fedora 33
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		java-sleep
 Version:	2.1
-Release:	alt1_18jpp8
+Release:	alt1_21jpp11
 Summary:	Multi-paradigm scripting language for Java
 
 License:	LGPLv2+ and BSD
 URL:		http://sleep.dashnine.org/
-Source0:	http://sleep.dashnine.org/download/sleep21-lgpl.tgz
+Source0:	http://sleep.dashnine.org/download/sleep21-bsd.zip
 # Patch to allow bootstrapping sleep.jar without sleep-engine.jar
 Patch0:		sleep-bootstrap.patch
+# Bump target version to 1.6 for JDF 11 support
+Patch1:         sleep-target.patch
+# Fix docs target
+Patch2:         java-sleep-docs.patch
 BuildArch:	noarch
 
 BuildRequires:	jpackage-utils
 BuildRequires:	ant-contrib
 Requires:	jpackage-utils
-%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
+%if 0%{?fedora} || 0%{?rhel} >= 7
 %else
 Requires:	java
 %endif
@@ -50,8 +55,10 @@ This package contains the API documentation for %{name}.
 
 
 %prep
-%setup -q -n sleep
+%setup -q -n sleep-master
 %patch0 -p1 -b .bootstrap
+%patch1 -p1 -b .target
+%patch2 -p1 -b .docs
 find -name \*.jar -delete
 sed -i -e 's/\r//' *.txt
 # Fix FSF address
@@ -61,17 +68,17 @@ sed -i -e 's/59 Temple Place, Suite 330/51 Franklin Street, Fifth Floor/' \
 
 %build
 # Build without sleep-engine components
-ant -Dbootstrap=true
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbootstrap=true
 # Build sleep-engine.jar
-ant -f jsr223/build.xml
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f jsr223/build.xml
 # Build in the sleep-engine components
-ant
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 # Build the test data jars
-ant -f tests/data/build.xml
-ant -f tests/data2/build.xml
-ant -f tests/data3/build.xml
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f tests/data/build.xml
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f tests/data2/build.xml
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f tests/data3/build.xml
 # Build docs
-ant docs
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  docs
 
 
 %install
@@ -98,6 +105,9 @@ java -jar sleep.jar runtests.sl
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt1_21jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_18jpp8
 - fc update
 
