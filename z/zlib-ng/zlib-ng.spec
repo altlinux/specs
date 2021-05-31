@@ -1,6 +1,6 @@
 Name: zlib-ng
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: Zlib replacement with optimizations
 License: Zlib
@@ -48,7 +48,7 @@ developing application that use %name.
 %cmakeinstall_std
 
 %check
-%make -C BUILD test
+%make -C %_cmake__builddir test
 
 %files
 %doc FAQ.zlib PORTING.md README.md doc/*.txt
@@ -63,6 +63,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Mon May 31 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1.1
+- Adapted to new cmake macros
+
 * Thu May 13 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
