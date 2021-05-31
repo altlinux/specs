@@ -3,7 +3,7 @@
 
 Name:     ArxLibertatis
 Version:  1.2
-Release:  alt1.20200607
+Release:  alt1.20200607.1
 
 Summary:  Cross-platform port of Arx Fatalis, a first-person role-playing game
 License:  GPL-3.0-or-later
@@ -50,13 +50,13 @@ Developments files for %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Remove unpackages files
 rm -r %buildroot%_datadir/blender
 
 %check
-%cmake_build check
+%cmake_build --target check
 
 %files
 %_bindir/*
@@ -73,5 +73,8 @@ rm -r %buildroot%_datadir/blender
 %_includedir/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2-alt1.20200607.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Jun 13 2020 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20200607
 - Initial build for Sisyphus

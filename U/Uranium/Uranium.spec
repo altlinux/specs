@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 4.8
-Release: alt2
+Release: alt2.1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -59,10 +59,10 @@ related applications.
 # see https://github.com/Ultimaker/Uranium/commit/862a246bdfd7e25541b04a35406957612c6f4bb7
 %cmake -DLIB_SUFFIX:STR=
 %cmake_build
-%cmake_build doc
+%cmake_build --target doc
 
 %install
-%cmakeinstall_std
+%cmake_install
 mv %buildroot/%_datadir/cmake-* %buildroot/%_datadir/cmake
 
 # Sanitize the location of locale files
@@ -92,6 +92,9 @@ python3 -m pytest -v
 %doc html LICENSE
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.8-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Apr 20 2021 Anton Midyukov <antohami@altlinux.org> 4.8-alt2
 - merge with p9
 

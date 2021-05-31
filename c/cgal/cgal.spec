@@ -2,7 +2,7 @@
 
 Name: cgal
 Version: 5.0.2
-Release: alt1.2
+Release: alt1.3
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -64,10 +64,10 @@ Thid package contains development documentation for CGAL.
 	-DWITH_examples:BOOL=false \
 	%nil
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 install -d %buildroot%_docdir/%name
 cp -fR doc_html %buildroot%_docdir/%name
@@ -87,6 +87,9 @@ popd
 %doc %_docdir/%{name}*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 5.0.2-alt1.3
+- NMU: spec: adapted to new cmake macros.
+
 * Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 5.0.2-alt1.2
 - Fixed build due to missing rpm-build-python
 
