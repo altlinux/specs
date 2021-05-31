@@ -1,9 +1,11 @@
+%define zm_builddir %{?_cmake__builddir:%_cmake__builddir}%{!?_cmake__builddir:BUILD}
+
 %define zmuser apache2
 %define zmgroup _webserver
 
 Name: zoneminder
-Version: 1.36.1
-Release: alt1.1
+Version: 1.36.3
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -98,9 +100,9 @@ for dir in events images temp
 do
 	install -m 755 -d %buildroot%_localstatedir/zoneminder/$dir
 done
-install -D -m 755 %_cmake__builddir/scripts/zm %buildroot%_initdir/zoneminder
-install -D -m 644 %_cmake__builddir/misc/zoneminder.service %buildroot/%_unitdir/%name.service
-install -D -m 644 %_cmake__builddir/misc/zoneminder-tmpfiles.conf %buildroot/%_tmpfilesdir/zoneminder.conf
+install -D -m 755 %zm_builddir/scripts/zm %buildroot%_initdir/zoneminder
+install -D -m 644 %zm_builddir/misc/zoneminder.service %buildroot/%_unitdir/%name.service
+install -D -m 644 %zm_builddir/misc/zoneminder-tmpfiles.conf %buildroot/%_tmpfilesdir/zoneminder.conf
 install -D -m 644 %SOURCE4 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
 install -D -m 644 %SOURCE7 %buildroot%_sysconfdir/nginx/sites-enabled.d/nginx-zoneminder.conf.sample
 install -D -m 644 %SOURCE8 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
@@ -163,6 +165,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon May 31 2021 Anton Farygin <rider@altlinux.ru> 1.36.3-alt1
+- 1.36.3
+
 * Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 1.36.1-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
