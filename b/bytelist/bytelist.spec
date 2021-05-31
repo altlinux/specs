@@ -3,7 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global  git_commit d0ec879
@@ -14,12 +14,14 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt2_19jpp8
+Release:        alt2_22jpp11
 Summary:        A java library for lists of bytes
 
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/%{cluster}/%{name}
 Source0:        http://download.github.com/%{cluster}-%{name}-%{version}-0-g%{git_commit}.tar.gz
+
+Patch0:         00-set-javac-1.8-source-target.patch
 
 BuildArch:      noarch
 
@@ -41,6 +43,7 @@ A small java library for manipulating lists of bytes.
 
 %prep
 %setup -q -n %{cluster}-%{name}-%{git_commit}
+%patch0 -p1
 
 find -name '*.class' -delete
 find -name '*.jar' -delete
@@ -51,7 +54,7 @@ echo "See %{url} for more info about the %{name} project." > README.txt
 
 export CLASSPATH=$(build-classpath junit jcodings)
 mkdir -p lib
-%ant
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 
 %install
@@ -74,6 +77,9 @@ export CLASSPATH=$(build-classpath junit jcodings)
 %doc README.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.8-alt2_22jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_19jpp8
 - fc update
 
