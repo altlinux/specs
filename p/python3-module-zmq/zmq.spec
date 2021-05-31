@@ -1,21 +1,21 @@
 %define oname zmq
 
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python3-module-%oname
-Version: 20.0.0
+Version: 22.1.0
 Release: alt1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python3
-License: LGPLv3+ and ASL 2.0
+License: LGPLv3+ and BSD-3-Clause
 Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-nose python3-module-Cython
 BuildRequires: libzeromq-devel
+BuildRequires: python3-module-Cython
 %if_without bootstrap
 BuildPreReq: python3-module-numpy
 %endif
@@ -93,6 +93,11 @@ subst "s|/usr/local/include|%_includedir|" setup.cfg
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 22.1.0-alt1
+- Automatically updated to 22.1.0.
+- Build without bootstrap.
+- Fix license.
+
 * Thu Dec 03 2020 Grigory Ustinov <grenka@altlinux.org> 20.0.0-alt1
 - Automatically updated to 20.0.0.
 - Transfer to python3.
