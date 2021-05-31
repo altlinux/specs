@@ -1,8 +1,9 @@
 %define _name lucene++
+%def_enable check
 
 Name: lib%_name
 Version: 3.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
@@ -14,6 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: cmake gcc-c++ zlib-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-asio-devel boost-interprocess-devel
+%{?_enable_check:BuildRequires: libgmock-devel}
 
 %description
 An up to date C++ port of the popular Java Lucene library,
@@ -33,12 +35,20 @@ search engine written in C++
 %patch -p1
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release"
-
-%cmake_build %_name %_name-contrib
+%add_optflags %(getconf LFS_CFLAGS)
+%cmake \
+    -DCMAKE_BUILD_TYPE:STRING="Release" \
+    %{?_disable_check:-DENABLE_TEST=FALSE} \
+    -DBUILD_GMOCK=FALSE} \
+    -DINSTALL_GTEST=FALSE
+%nil
+%cmake_build -t %_name %_name-contrib
 
 %install
-%cmakeinstall_std
+%cmake_install
+
+%check
+#%%cmake_build -t test
 
 %files
 %_libdir/%name.so.*
@@ -54,6 +64,9 @@ search engine written in C++
 %_libdir/cmake/%{name}*
 
 %changelog
+* Mon May 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1.1
+- adapted to new cmake macros
+
 * Tue Jan 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
 - updated to rel_3.0.8-8-g8c2ce8d
 - fixed License tag
