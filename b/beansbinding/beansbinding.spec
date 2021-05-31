@@ -4,18 +4,19 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_22jpp8
+Release:        alt1_25jpp11
 Summary:        Beans Binding (JSR 295) reference implementation
 
 License:        LGPLv2+
 URL:            https://beansbinding.dev.java.net/
 Source0:        https://beansbinding.dev.java.net/files/documents/6779/73673/beansbinding-1.2.1-src.zip
 Patch0:         disable-doclint.patch
+Patch1:         new-source-target.patch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
@@ -43,11 +44,12 @@ Javadoc for %{name}.
 %prep
 %setup -q -c -n %{name}-%{version}
 %patch0 -p1
+%patch1 -p1
 # remove all binary libs
 find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 rm -f
 
 %build
-%{ant} dist
+%{ant} -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  dist
 
 %install
 # jar
@@ -65,6 +67,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_25jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_22jpp8
 - fc update
 
