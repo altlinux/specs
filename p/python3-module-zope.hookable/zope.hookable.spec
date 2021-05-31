@@ -1,5 +1,4 @@
 %define oname zope.hookable
-%define fname python3-module-%oname
 %define descr \
 Support the efficient creation of hookable objects, which are callable \
 objects that are meant to be replaced by other callables, at least \
@@ -10,107 +9,92 @@ it hookable. Later, someone can modify what it does by calling its \
 sethook method and changing its implementation.  All users of the \
 function, including those that imported it, will see the change.
 
-Name: %fname
+Name: python3-module-%oname
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
-%if ""==""
 Summary: Hookable object support
 Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
 
 License: ZPL-2.1
 Url: http://pypi.python.org/pypi/zope.hookable/
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
 
 %py3_requires zope
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel python3-module-setuptools rpm-build-python3 time
-
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-BuildArch: noarch
-%endif
 
 %description
 %descr
 
-%if ""!=""
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+%descr
+
 This package contains documentation for %oname.
 
-%package -n %fname-pickles
+%package pickles
 Summary: Pickles for zope.hookable
 Group: Development/Python
 
-%description -n %fname-pickles
+%description pickles
 %descr
 
 This package contains pickles for zope.hookable.
-%else
-%package -n %fname-tests
+
+%package tests
 Summary: Tests for zope.hookable
 Group: Development/Python
 Requires: %name = %version-%release
 %py3_requires zope.testing
 
-%description -n %fname-tests
+%description tests
 %descr
 
 This package contains tests for zope.hookable.
-%endif
 
 %prep
 %setup
-%if ""!=""
-%prepare_sphinx .
+
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
-%endif
 
 %build
-%if ""==""
 %python3_build
-%else
+
 export PYTHONPATH=$PWD/src
-%make -C docs pickle
-%make -C docs html
-%endif
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
 %install
-%if ""==""
 %python3_install
-%else
+
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
 
-%if ""==""
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/pickle
 
-%files -n %fname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
 
-%else
-
-%files
+%files docs
 %doc docs/_build/html/*
 
-%files -n %fname-pickles
+%files pickles
 %python3_sitelibdir/*/pickle
 
-%endif
-
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt2
+- Drop specsubst scheme.
+
 * Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
 - 5.0.0 -> 5.0.1.
 
