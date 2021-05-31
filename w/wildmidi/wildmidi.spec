@@ -4,7 +4,7 @@
 
 Name: wildmidi
 Version: 0.4.3
-Release: alt1
+Release: alt1.1
 Summary: WildMidi Open Source Midi Sequencer
 Group: Sound
 
@@ -29,7 +29,8 @@ WildMidi is a software midi play which has a core softsynth library that can be 
 %cmake_build
 
 %install
-%cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
+#cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
+%cmake_install
 
 %files
 %_bindir/%name
@@ -69,6 +70,9 @@ This package contains development files for wildmidi
 %_man3dir/*.3*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Dec 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.3-alt1
 - Updated to upstream version 0.4.3 (Fixes: CVE-2017-1000418).
 
