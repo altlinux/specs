@@ -5,19 +5,17 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:          reflections
 Version:       0.9.12
-Release:       alt1_1jpp11
+Release:       alt1_4jpp11
 Summary:       Java run-time meta-data analysis
 License:       WTFPL
 URL:           https://github.com/ronmamo/reflections
 Source0:       https://github.com/ronmamo/reflections/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.code.findbugs:annotations)
 BuildRequires:  mvn(com.google.code.gson:gson)
-BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-vfs2)
+BuildRequires:  mvn(org.dom4j:dom4j)
 BuildRequires:  mvn(org.javassist:javassist)
 BuildRequires:  mvn(org.jsr-305:ri)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
@@ -69,7 +67,7 @@ find -name "*.jar" -print -delete
 
 %build
 
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -82,6 +80,9 @@ find -name "*.jar" -print -delete
 %doc --no-dereference COPYING.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_4jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_1jpp11
 - new version
 
