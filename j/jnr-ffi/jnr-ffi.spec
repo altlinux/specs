@@ -1,15 +1,18 @@
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:     jnr-ffi
 Version:  2.1.8
-Release:  alt1_3jpp8
+Release:  alt1_9jpp11
 Summary:  Java Abstracted Foreign Function Layer
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
 Source0:  https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
+
+# Taken from https://github.com/jnr/jnr-ffi/commit/edda8cfe60b77ceeba301d20db0f5c996b958f5a
+Patch1:   0001-Convert-int-to-boolean-like-C-does-nonzero-is-true.patch
 
 BuildRequires:  gcc
 
@@ -26,12 +29,9 @@ BuildRequires:  mvn(org.ow2.asm:asm-analysis)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.ow2.asm:asm-tree)
 BuildRequires:  mvn(org.ow2.asm:asm-util)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
-
-# don't obsolete/provide jaffl, gradle is using both jaffl and jnr-ffi...
 
 %description
 An abstracted interface to invoking native functions from java
@@ -46,18 +46,20 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch1 -p1
 
 # remove all builtin jars
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 # Unnecessary for RPM builds
+%pom_remove_parent
 %pom_remove_plugin ":maven-javadoc-plugin"
 
 # don't fail on unused parameters... (TODO: send patch upstream)
 sed -i 's|-Werror||' libtest/GNUmakefile
 
 %build
-%mvn_build -f -- -Dasm.version=7.0
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dasm.version=7.0
 
 %install
 %mvn_install
@@ -69,6 +71,9 @@ sed -i 's|-Werror||' libtest/GNUmakefile
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.1.8-alt1_9jpp11
+- update
+
 * Sat Jul 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.8-alt1_3jpp8
 - fc update & java 8 build
 
