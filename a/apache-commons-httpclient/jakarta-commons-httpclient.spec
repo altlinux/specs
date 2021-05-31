@@ -1,29 +1,30 @@
 Group: Development/Java
 %define oldname jakarta-commons-httpclient
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name httpclient
 
 Name:           apache-commons-httpclient
 Version:        3.1
-Release:        alt6_33jpp8
+Release:        alt6_36jpp11
 Summary: Jakarta Commons HTTPClient implements the client side of HTTP standards
 License:        ASL 2.0 and (ASL 2.0 or LGPLv2+)
 URL:            http://jakarta.apache.org/commons/httpclient/
 Epoch:          1
 Source0:        http://archive.apache.org/dist/httpcomponents/commons-httpclient/source/commons-httpclient-3.1-src.tar.gz
 Source1:        http://repo.maven.apache.org/maven2/commons-httpclient/commons-httpclient/%{version}/commons-httpclient-%{version}.pom
-Patch0:         %{oldname}-disablecryptotests.patch
+Patch0:         0000-disable-crypto-tests.patch
 # Add OSGi MANIFEST.MF bits
-Patch1:         %{oldname}-addosgimanifest.patch
-Patch2:         %{oldname}-encoding.patch
+Patch1:         0001-add-osgi-manifest.patch
+Patch2:         0002-encoding.patch
 # CVE-2012-5783: missing connection hostname check against X.509 certificate name
 # https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1422573
-Patch3:         %{oldname}-CVE-2012-5783.patch
-Patch4:         %{oldname}-CVE-2014-3577.patch
-Patch5:         %{oldname}-CVE-2015-5262.patch
+Patch3:         0003-CVE-2012-5783.patch
+Patch4:         0004-CVE-2014-3577.patch
+Patch5:         0005-CVE-2015-5262.patch
+Patch6:         0006-java-1.8.patch
 
 BuildArch:      noarch
 
@@ -96,17 +97,13 @@ mkdir lib # duh
 build-jar-repository -p lib commons-codec commons-logging junit
 rm -rf docs/apidocs docs/*.patch docs/*.orig docs/*.rej
 
-%patch0
-
-pushd src/conf
-sed -i 's/\r//' MANIFEST.MF
-%patch1
-popd
-
-%patch2
-%patch3 -p2
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Use javax classes, not com.sun ones
 # assume no filename contains spaces
@@ -122,7 +119,7 @@ popd
 %mvn_file ":{*}" jakarta-@1 "@1" commons-%{short_name}3
 
 %build
-ant \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
   -Dbuild.sysclasspath=first \
   -Djavadoc.j2sdk.link=%{_javadocdir}/java \
   -Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
@@ -158,6 +155,9 @@ ln -s %{_javadocdir}/%{oldname} dist/docs/apidocs
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:3.1-alt6_36jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_33jpp8
 - fc update
 
