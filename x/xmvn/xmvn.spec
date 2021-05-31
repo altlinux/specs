@@ -21,7 +21,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           xmvn
 Version:        3.1.0
-Release:        alt1_2jpp11
+Release:        alt1_7jpp11
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 
@@ -36,6 +36,8 @@ Patch1:         0001-Prefer-namespaced-metadata-when-duplicates-are-found.patch
 Patch2:         0002-Make-xmvn-subst-honor-settings-for-ignoring-duplicat.patch
 # Downstream bug-fix patch from modular branch:
 Patch3:         0003-Fix-requires-generation-for-self-depending-packages.patch
+# Submitted upstream: https://github.com/fedora-java/xmvn/pull/57
+Patch4:         0004-Honour-source-parameter.patch
 
 BuildArch:      noarch
 
@@ -241,6 +243,7 @@ This package provides %{summary}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Bisect IT has no chances of working in local, offline mode, without
 # network access - it needs to access remote repositories.
@@ -281,9 +284,9 @@ cp -aL ${maven_home} target/dependency/apache-maven-$mver
 
 %build
 %if %{with its}
-%mvn_build -s -j -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Prun-its
+%mvn_build -s -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Prun-its
 %else
-%mvn_build -s -j -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
 %endif
 
 tar --delay-directory-restore -xvf target/*tar.bz2
@@ -397,6 +400,9 @@ popd
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_7jpp11
+- update
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_2jpp11
 - normal build
 
