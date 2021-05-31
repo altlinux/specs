@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          jboss-jaxrs-2.0-api
 Version:       1.0.0
-Release:       alt1_10jpp8
+Release:       alt1_13jpp11
 Summary:       JAX-RS 2.0: The Java API for RESTful Web Services
 # ASL 2.0 src/main/java/javax/ws/rs/core/GenericEntity.java
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -21,6 +21,7 @@ Source0:       https://github.com/jboss/jboss-jaxrs-api_spec/archive/%{oname}-%{
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
+BuildRequires: mvn(javax.xml.bind:jaxb-api)
 
 BuildArch:     noarch
 Source44: import.info
@@ -42,6 +43,9 @@ This package contains javadoc for %{name}.
 # Unneeded plugin
 %pom_remove_plugin :maven-source-plugin
 
+# Fix JDK11 build, add missing javax.xml.bind
+%pom_add_dep javax.xml.bind:jaxb-api
+
 %mvn_file :%{oname} %{name}
 
 # remove after upgrading narayana
@@ -49,7 +53,7 @@ This package contains javadoc for %{name}.
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -61,6 +65,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.0-alt1_13jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_10jpp8
 - fc update
 
