@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name       collections
@@ -9,13 +9,14 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.2
-Release:        alt1_16jpp8
+Release:        alt1_20jpp11
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 
 Patch0:         0001-Port-to-Java-8.patch
+Patch1:         0001-Port-to-Java-11.patch
 
 BuildArch:      noarch
 
@@ -68,6 +69,7 @@ find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
 
 %patch0 -p1
+%patch1 -p1
 
 # Fix file eof
 sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
@@ -94,6 +96,9 @@ sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.2-alt1_20jpp11
+- update
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.2-alt1_16jpp8
 - new version
 
