@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global pkg_version     11b
@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           java_cup
 Version:        0.11b
-Release:        alt4_12jpp8
+Release:        alt4_15jpp11
 Epoch:          2
 Summary:        LALR parser generator for Java
 License:        MIT
@@ -71,14 +71,18 @@ rm -rf java_cup-%{version}/bin/JFlex.jar
 rm -rf java_cup-%{version}/bin/java-cup-11.jar
 %endif
 
+# Use source/target 1.6 for Java 11
+sed -i 's/source="1.5"/source="1.6"/' build.xml
+sed -i 's/target="1.5"/target="1.6"/' build.xml
+
 %build
 %if ! %{with_bootstrap}
 export CLASSPATH=$(build-classpath java_cup java_cup-runtime jflex)
 %endif
 
-ant -Dcupversion=20150326 -Dsvnversion=65
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcupversion=20150326 -Dsvnversion=65
 find -name parser.cup -delete
-ant javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  javadoc
 
 # inject OSGi manifests
 jar ufm dist/java-cup-%{pkg_version}.jar %{SOURCE2}
@@ -102,6 +106,9 @@ jar ufm dist/java-cup-%{pkg_version}-runtime.jar %{SOURCE4}
 %doc --no-dereference licence.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2:0.11b-alt4_15jpp11
+- update
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 2:0.11b-alt4_12jpp8
 - new version
 
