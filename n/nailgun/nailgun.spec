@@ -3,14 +3,14 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define debug_package %{nil}
 
 Name:     nailgun
 Version:  0.9.1
-Release:  alt2_13jpp8
+Release:  alt2_16jpp11
 Summary:  Framework for running Java from the cli without the JVM startup overhead
 License:  ASL 2.0
 URL:      http://martiansoftware.com/nailgun/
@@ -19,7 +19,6 @@ URL:      http://martiansoftware.com/nailgun/
 Source0:  %{name}-%{name}-all-%{version}.zip
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 BuildArch: noarch
 
@@ -43,11 +42,17 @@ This package contains the API documentation for %{name}.
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
+# drop unnecessary dependency on deprecated parent POM
+%pom_remove_parent
+
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
 
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -58,6 +63,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_16jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_13jpp8
 - fc update
 
