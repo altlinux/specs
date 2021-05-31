@@ -3,7 +3,7 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           testng
 Version:        6.14.3
-Release:        alt1_9jpp8
+Release:        alt1_13jpp11
 Summary:        Java-based testing framework
 License:        ASL 2.0
 URL:            http://testng.org/
@@ -43,7 +43,6 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 %if %{with groovy}
 BuildRequires:  mvn(org.assertj:assertj-core) >= 3.8.0
 BuildRequires:  mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
@@ -116,9 +115,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %if %{with groovy} && %{with snakeyaml}
 # A couple of parallelisation tests are *sometimes* failing, so let's ignore failures
 # because they do complete successfully most of the time
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
 %else
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 %endif
 
 %install
@@ -132,6 +131,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:6.14.3-alt1_13jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:6.14.3-alt1_9jpp8
 - update
 
