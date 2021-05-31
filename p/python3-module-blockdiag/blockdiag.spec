@@ -1,21 +1,23 @@
 %define srcname blockdiag
 
 Name:    python3-module-%srcname
-Version: 1.5.4
+Version: 2.0.1
 Release: alt1
 
 Summary: Generate block-diagram images from text
 
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: http://blockdiag.com/
 
-Source: %srcname-%version.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+
+Conflicts: python-module-blockdiag < %EVR
+Obsoletes: python-module-blockdiag < %EVR
 
 %description
 blockdiag and its family generate diagram images from simply text file.
@@ -35,22 +37,21 @@ Features:
 Enjoy documentation with blockdiag !
 
 %prep
-%setup -n %srcname-%version
+%setup
 
 %build
 %python3_build
 
 %install
 %python3_install
-%if "3"=="3"
-mv %buildroot%_bindir/blockdiag %buildroot%_bindir/blockdiag3
-%endif
-
 
 %files
-%_bindir/blockdiag3
-%python3_sitelibdir/%{srcname}*
+%_bindir/blockdiag
+%python3_sitelibdir/*
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Build new version.
+
 * Mon Sep 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.5.4-alt1
 - Initial build for Sisyphus.
