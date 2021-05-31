@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           json_simple
 Version:        1.1.1
-Release:        alt2_20jpp8
+Release:        alt2_23jpp11
 Summary:        Simple Java toolkit for JSON
 License:        ASL 2.0
 URL:            http://code.google.com/p/json-simple/
@@ -53,21 +53,28 @@ find . -type f -exec sed -i 's/\r//' {} \;
 
 %patch0 -p1
 
+# Remove hard-coded compiler settings
+%pom_remove_plugin :maven-compiler-plugin
+
 %mvn_file : %{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc AUTHORS.txt ChangeLog.txt LICENSE.txt README.txt
+%doc --no-dereference LICENSE.txt
+%doc AUTHORS.txt ChangeLog.txt README.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt2_23jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_20jpp8
 - fc update
 
