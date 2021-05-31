@@ -6,14 +6,14 @@ BuildRequires: unzip
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:        Web Services Description Language Toolkit for Java
 Name:           wsdl4j
 Epoch:          0
 Version:        1.6.3
-Release:        alt1_16jpp8
+Release:        alt1_19jpp11
 License:        CPL
 URL:            http://sourceforge.net/projects/wsdl4j
 BuildArch:      noarch
@@ -46,10 +46,14 @@ Javadoc for %{name}.
 %prep
 %setup -q -n %{name}-1_6_3
 
+# Set source/target to 1.6 for building with Java 11
+sed -i 's/<javac/<javac source="1.6" target="1.6"/' build.xml
+sed -i 's/<javadoc/<javadoc source="1.6"/' build.xml
+
 %mvn_file ":{*}" @1
 
 %build
-ant compile javadocs
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  compile javadocs
 # inject OSGi manifests
 jar ufm build/lib/%{name}.jar %{SOURCE1}
 
@@ -70,6 +74,9 @@ ln -sf ../qname.jar %{buildroot}%{_javadir}/javax.wsdl/
 %doc --no-dereference license.html
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.6.3-alt1_19jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_16jpp8
 - fc update
 
