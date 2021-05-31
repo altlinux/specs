@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,7 +21,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          log4j12
 Version:       1.2.17
-Release:       alt1_26jpp8
+Release:       alt1_30jpp11
 Summary:       Java logging package
 License:       ASL 2.0
 URL:           http://logging.apache.org/log4j/1.2/
@@ -34,9 +34,11 @@ Patch0:        0001-logfactor5-changed-userdir.patch
 Patch1:        0009-Fix-tests.patch
 Patch2:        0010-Fix-javadoc-link.patch
 Patch3:        0001-Backport-fix-for-CVE-2017-5645.patch
+Patch4:        0001-Fix-tests-java11.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(ant-contrib:ant-contrib)
+BuildRequires: mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires: mvn(javax.mail:mail)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.ant:ant-junit)
@@ -74,6 +76,7 @@ rm -rf docs/api
 %patch1 -p1 -b .fix-tests
 %patch2 -p1 -b .xlink-javadoc
 %patch3 -p1
+%patch4 -p1
 
 # Remove unavailable plugin
 %pom_remove_plugin :clirr-maven-plugin
@@ -87,13 +90,15 @@ rm -rf docs/api
 # Remove openejb from dependencies
 %pom_remove_dep org.apache.openejb:javaee-api
 
+%pom_remove_dep sun.jdk:tools
+
 # Fix ant gId
 sed -i.ant "s|groupId>ant<|groupId>org.apache.ant<|g" pom.xml
 
-sed -i.javac "s|1.4|1.6|g" pom.xml build.xml
-sed -i.javac "s|1.4|1.6|g" pom.xml build.xml
-sed -i.javac "s|1.1|1.6|g" tests/build.xml
-sed -i.javac "s|1.1|1.6|g" tests/build.xml
+sed -i.javac "s|1.4|1.8|g" pom.xml build.xml
+sed -i.javac "s|1.4|1.8|g" pom.xml build.xml
+sed -i.javac "s|1.1|1.8|g" tests/build.xml
+sed -i.javac "s|1.1|1.8|g" tests/build.xml
 
 # Fix OSGi manifest
 sed -i.javax.jmdns "s|javax.jmdns.*;resolution:=optional,|!javax.jmdns.*,|g" pom.xml
@@ -123,6 +128,7 @@ mkdir -p tests/lib/
   ln -s `build-classpath jakarta-oro`
   ln -s `build-classpath javamail/mail`
   ln -s `build-classpath junit`
+  ln -s `build-classpath jakarta-activation/jakarta.activation-api`
 )
 
 %mvn_compat_version log4j:log4j 1.2.17 1.2.16 1.2.15 1.2.14 1.2.13 1.2.12 12
@@ -137,8 +143,7 @@ sed -i '/TelnetAppenderTest/d' tests/src/java/org/apache/log4j/CoreTestSuite.jav
 %mvn_file log4j:log4j log4j %{name}
 
 %build
-
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dsource=1.8
 
 %install
 %mvn_install -X
@@ -197,6 +202,9 @@ fi
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.17-alt1_30jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_26jpp8
 - fc update
 
