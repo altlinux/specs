@@ -3,12 +3,12 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           buildnumber-maven-plugin
 Version:        1.3
-Release:        alt1_14jpp8
+Release:        alt1_17jpp11
 Summary:        Build Number Maven Plugin
 License:        MIT and ASL 2.0
 URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-%{version}
@@ -16,6 +16,8 @@ BuildArch: 	noarch
 
 Source0:        http://central.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+Patch0:         00-remove-broken-build-config.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -71,6 +73,8 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
+
 cp -p %{SOURCE1} .
 
 %pom_remove_dep com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava
@@ -82,7 +86,7 @@ cp -p %{SOURCE1} .
 %pom_add_dep junit:junit::test
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -94,6 +98,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.3-alt1_17jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_14jpp8
 - fc update
 
