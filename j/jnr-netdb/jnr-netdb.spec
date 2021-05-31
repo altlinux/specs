@@ -1,11 +1,11 @@
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    jnr-netdb
 Version: 1.1.6
-Release: alt1_7jpp8
+Release: alt1_10jpp11
 Summary: Network services database access for java
 License: ASL 2.0
 URL:     https://github.com/jnr/%{name}/
@@ -35,8 +35,18 @@ Javadoc for %{name}.
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
+# Fix javadoc generation on java 11
+%pom_xpath_inject pom:project "<build><plugins><plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration>
+<source>1.6</source>
+<detectJavaApiLink>false</detectJavaApiLink>
+</configuration>
+</plugin></plugins></build>"
+
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -48,6 +58,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_10jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_7jpp8
 - fc update
 
