@@ -1,84 +1,45 @@
 %define _unpackaged_files_terminate_build 1
 %define oname infinity
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4
-Release: alt3
+Release: alt4
 Summary: All-in-one infinity value for Python. Can be compared to any object
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/infinity/
 
 # https://github.com/kvesteri/infinity.git
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-Pygments python-module-six
-BuildPreReq: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Pygments python3-module-six
 BuildPreReq: python3-module-pytest
-%endif
 
 %description
-All-in-one infinity value for Python. Can be compared to any object.
-
-%package -n python3-module-%oname
-Summary: All-in-one infinity value for Python. Can be compared to any object
-Group: Development/Python3
-
-%description -n python3-module-%oname
 All-in-one infinity value for Python. Can be compared to any object.
 
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-py.test
-%if_with python3
-pushd ../python3
 py.test3
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt4
+- Drop python2 support.
+
 * Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 1.4-alt3
 - Added missing dep on Pytest.
 
