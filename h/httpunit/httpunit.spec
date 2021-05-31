@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -38,7 +38,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt7_29jpp8
+Release:        alt7_32jpp11
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -51,6 +51,7 @@ Source3:        https://raw.github.com/apache/tomcat/TOMCAT_7_0_42/java/javax/se
 Source4:        https://raw.github.com/apache/tomcat/TOMCAT_7_0_42/java/javax/servlet/resources/web-app_2_4.xsd
 # sources 2-4 are licensed under ASL 2.0
 Source5:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Patch0:         %{name}-javac-1.8.patch
 Patch1:         %{name}-rhino-1.7.7.patch
 Patch2:         %{name}-servlettest.patch
 Patch3:         %{name}-servlet31.patch
@@ -66,6 +67,7 @@ BuildRequires:  glassfish-servlet-api
 BuildRequires:  javamail >= 0:1.3
 BuildRequires:  rhino
 BuildRequires:  javapackages-local
+BuildRequires:  jakarta-activation
 
 Requires:       junit >= 0:3.8
 Requires:       glassfish-servlet-api
@@ -104,6 +106,7 @@ Documentation for %{name}
 
 %prep
 %setup -q
+%patch0 -p1
 # patch to work with rhino 1.7.7
 %patch1 -p1
 # add META-INF
@@ -136,9 +139,9 @@ install -m 644 %{SOURCE5} LICENSE-ASL
 
 
 %build
-export CLASSPATH=$(build-classpath javamail)
+export CLASSPATH=$(build-classpath javamail jakarta-activation)
 export ANT_OPTS="-Dfile.encoding=iso-8859-1"
-ant -Dbuild.compiler=modern -Dbuild.sysclasspath=last \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbuild.compiler=modern -Dbuild.sysclasspath=last \
   jar javadocs test servlettest
 
 %install
@@ -165,6 +168,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7-alt7_32jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_29jpp8
 - fc update
 
