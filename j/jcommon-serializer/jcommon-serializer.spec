@@ -3,12 +3,12 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_21jpp8
+Release: alt1_24jpp11
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.tar.gz
@@ -17,6 +17,7 @@ BuildRequires: ant jpackage-utils libbase >= 1.0.0
 Requires: jpackage-utils libbase >= 1.0.0
 BuildArch: noarch
 Patch1: jcommon-serializer-0.3.0-depends.patch
+Patch2: jcommon-serializer-0.3.0-java11.patch
 Source44: import.info
 
 %description
@@ -36,11 +37,12 @@ Javadoc for %{name}.
 %prep
 %setup -q
 %patch1 -p1 -b .depends
+%patch2 -p1 -b .java11
 find . -name "*.jar" -exec rm -f {} \;
 build-jar-repository -s -p lib libbase commons-logging-api
 
 %build
-ant compile javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  compile javadoc
 
 %install
 
@@ -58,6 +60,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_24jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_21jpp8
 - fc update
 
