@@ -3,29 +3,30 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cambozola
 Version:        0.936
-Release:        alt1_10jpp8
+Release:        alt1_13jpp11
 Summary:        A viewer for multipart jpeg streams
-
 License:        GPLv2+
 URL:            http://www.charliemouse.com/code/cambozola/index.html
 Source0:        http://www.andywilcock.com/code/cambozola/%{name}-latest.tar.gz
 
-
 #patch to add javadoc generation in build.xml
-Patch0:         %{name}-%{version}-add_javadoc.patch
-
+Patch0:         %{name}-add-javadoc.patch
+# Update target/source flags for JDK11 compatibility
+# https://fedoraproject.org/wiki/Changes/Java11#copr_preliminary_rebuild
+Patch1:         %{name}-source-target.patch
 
 BuildArch:      noarch
+
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
-%if 0%{?el6}
-BuildRequires:  ant-nodeps
-%endif
+BuildRequires:  findutils
+%{?el6:BuildRequires:  ant-nodeps}
+
 Requires:       jpackage-utils
 Requires:       java
 Source44: import.info
@@ -46,41 +47,42 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
+%patch1 -p1
+
 
 # Remove pre-built JAR and class files
 find -name '*.jar' -exec rm -f '{}' \;
 find -name '*.class' -exec rm -f '{}' \;
 
 %build
-ant javadoc
-ant
-
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  javadoc
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 %install
-
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+mkdir -p %{buildroot}%{_javadir}
 cp -p dist/%{name}.jar   \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+  %{buildroot}%{_javadir}/%{name}.jar
 cp -p dist/%{name}-server.jar   \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-server.jar
+  %{buildroot}%{_javadir}/%{name}-server.jar
 
 # javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -rp javadoc/*  \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+  %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-server.jar
 %doc LICENSE README.html
 
-
 %files javadoc
 %{_javadocdir}/%{name}
 
-
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.936-alt1_13jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_10jpp8
 - fc update
 
