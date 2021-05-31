@@ -3,19 +3,21 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global shortname looks
 
 Name:           jgoodies-looks
 Version:        2.6.0
-Release:        alt1_11jpp8
+Release:        alt1_14jpp11
 Summary:        Free high-fidelity Windows and multi-platform appearance
 
 License:        BSD
 URL:            http://www.jgoodies.com/freeware/looks/
 Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
+# Fix build with JDK 11
+Patch0:         %{name}-2.6.0-jdk11.patch
 
 # Fontconfig and DejaVu fonts needed for tests
 BuildRequires:  fonts-ttf-dejavu
@@ -62,8 +64,13 @@ mv src/main/java/com/jgoodies/looks/plastic/icons/ src/main/resources/com/jgoodi
 mkdir -p src/main/resources/com/jgoodies/looks/common
 mv src/main/java/com/jgoodies/looks/common/*.png src/main/resources/com/jgoodies/looks/common/
 
+%patch0 -p0 -b .jdk11
+
 # Delete prebuild JARs
 find -name "*.jar" -exec rm {} \;
+
+# Drop Windows L&F support files (unsupported on JDK 11)
+rm -r src/main/java/com/jgoodies/looks/windows/
 
 # Fix wrong end-of-line encoding
 for file in LICENSE.txt RELEASE-NOTES.txt; do
@@ -76,7 +83,7 @@ done
 
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -92,6 +99,9 @@ done
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.6.0-alt1_14jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_11jpp8
 - fc update
 
