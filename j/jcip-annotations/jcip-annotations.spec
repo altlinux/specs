@@ -4,12 +4,12 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jcip-annotations
 Version:        1
-Release:        alt3_27.20060626jpp8
+Release:        alt3_30.20060626jpp11
 Summary:        Java annotations for multithreaded software
 
 License:        CC-BY
@@ -62,11 +62,11 @@ sed -i 's/\r//' net/jcip/annotations/package.html
 
 %build
 mkdir classes
-find . -name '*.java' | xargs %javac -g -source 1.5 -target 1.5 -d classes
+find . -name '*.java' | xargs %javac -g -source 1.8 -target 1.8 -d classes
 cd classes
 %jar cf ../%{name}.jar net
 cd ..
-%javadoc -Xdoclint:none -d docs -source 1.5 net.jcip.annotations
+%javadoc -Xdoclint:none -d docs -source 1.8 net.jcip.annotations
 
 %install
 mkdir -p %{buildroot}%{_javadir}
@@ -87,6 +87,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1-alt3_30.20060626jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1-alt3_27.20060626jpp8
 - fc update
 
