@@ -1,6 +1,6 @@
 Name: m4b-tool
 Version: 0.4.2
-Release: alt2
+Release: alt3
 
 Summary: m4b-tool is a command line utility to merge, split and chapterize audiobook files such as mp3, ogg, flac, m4a or m4b
 
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
 
+Patch: 35f6fe997f0543d3f6ef6ca400738f94ff9c29ce.patch
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
@@ -20,6 +22,7 @@ BuildArch: noarch
 #composer
 # fdkaac
 BuildRequires: ffmpeg mp4v2-utils php7 php7-intl php7-mbstring git-core
+Requires: ffmpeg mp4v2-utils
 
 %description
 m4b-tool is a is a wrapper for ffmpeg and mp4v2 to merge,
@@ -29,6 +32,7 @@ nearly all audio formats should be supported, e.g. mp3, aac, ogg, alac and flac.
 
 %prep
 %setup -a1
+%patch -p1
 
 # Build need git repo
 git init
@@ -53,6 +57,10 @@ install -m755 dist/m4b-tool.phar %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri May 28 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt3
+- add patch fix issue https://github.com/sandreas/m4b-tool/issues/47
+- add Requires: ffmpeg mpeg4ip-tools
+
 * Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt2
 - fix vendor dir packing
 
