@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           java-mersenne-twister
 Version:        22
-Release:        alt1_9jpp8
+Release:        alt1_13jpp11
 Summary:        Mersenne Twister random number generator in Java
 
 License:        BSD
@@ -48,12 +48,12 @@ cp -p %{SOURCE1} ec/util
 
 %build
 # Build the JAR
-javac -source 1.6 -target 1.6 ec/util/*.java
+javac  -target 1.8 -source 1.8 -source 1.6 -target 1.6 ec/util/*.java
 jar cf mersenne-twister.jar ec/util/*.class
 
 # Build the documentation
 mkdir doc
-javadoc -d doc -source 1.6 ec/util/*.java
+javadoc -Xdoclint:none -d doc -source 1.6 ec/util/*.java
 
 %install
 # Install the JAR
@@ -71,6 +71,9 @@ cp -a doc %{buildroot}%{_javadocdir}/mersenne-twister
 %{_javadocdir}/mersenne-twister
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 22-alt1_13jpp11
+- update
+
 * Tue Oct 08 2019 Igor Vlasenko <viy@altlinux.ru> 22-alt1_9jpp8
 - new version
 
