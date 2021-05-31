@@ -4,11 +4,12 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
+%define fedora 33
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		voms-api-java
 Version:	3.3.0
-Release:	alt1_7jpp11
+Release:	alt1_11jpp11
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
@@ -16,6 +17,9 @@ URL:		https://wiki.italiangrid.it/VOMS
 Source0:	https://github.com/italiangrid/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 #		Disable tests using non-local network interface
 Patch0:		%{name}-no-local.patch
+#		Add source version to javadoc configuration
+#		Backported from upstream git
+Patch1:		%{name}-javadoc-source.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
@@ -47,14 +51,20 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 # Remove unused dependency
 %pom_remove_dep net.jcip:jcip-annotations
 
-# Remove maven-javadoc-plugin configuration
-# It doesn't change the content of the javadoc package anyway
-# And its presence causes the EPEL 8 build to fail
+# Use default location for javadoc output
+%pom_xpath_remove "//pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:outputDirectory"
+%pom_xpath_remove "//pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:reportOutputDirectory"
+
+%if %{?fedora}%{!?fedora:0} >= 33 || %{?rhel}%{!?rhel:0} >= 8
+# F33+ and EPEL8+ doesn't use the maven-javadoc-plugin to generate javadoc
+# Remove maven-javadoc-plugin configuration to avoid build failure
 %pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
+%endif
 
 # Do not create source jars
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
@@ -66,7 +76,7 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -80,6 +90,9 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_11jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_7jpp11
 - update
 
