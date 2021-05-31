@@ -20,6 +20,7 @@
 %endif
 
 %define rname ring-project
+%define _cmake__builddir BUILD
 %define _libexecdir %prefix/libexec
 %define builddir %_builddir/%name-%version
 %define ring_sover 0
@@ -29,7 +30,7 @@
 
 Name: ring-project
 Version: 20201118
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -360,6 +361,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Mon May 31 2021 Sergey V Turchin <zerg@altlinux.org> 20201118-alt3
+- fix to build with new cmake
+
 * Wed Nov 25 2020 Sergey V Turchin <zerg@altlinux.org> 20201118-alt2
 - obsolete ring-client-kde5
 
