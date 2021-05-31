@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xz-java
 Version:        1.8
-Release:        alt1_6jpp8
+Release:        alt1_9jpp11
 Summary:        Java implementation of XZ data compression
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
@@ -39,6 +39,9 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -c %{name}-%{version}
 
+# disable javadoc linting
+sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
+
 %mvn_file : %{name} xz
 
 %build
@@ -46,7 +49,7 @@ This package contains the API documentation for %{name}.
 # package-list from oracle.com. Create a dummy package-list to prevent that.
 mkdir -p extdoc && touch extdoc/package-list
 
-ant maven
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  maven -Dsourcever=1.8
 
 %install
 %mvn_artifact build/maven/xz-%{version}.pom build/jar/xz.jar
@@ -61,6 +64,9 @@ ant maven
 %doc --no-dereference COPYING
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.8-alt1_9jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_6jpp8
 - fc update
 
