@@ -3,12 +3,12 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_29jpp8
+Release:       alt3_32jpp11
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -78,6 +78,14 @@ iconv -f iso8859-1 -t utf-8 LICENSE.dom-documentation.txt > \
 iconv -f iso8859-1 -t utf-8 LICENSE.dom-software.txt > \
   LICENSE.dom-sof.temp && mv -f LICENSE.dom-sof.temp LICENSE.dom-software.txt
 
+# disable javadoc linting
+sed -i -e '/javadoc packagenames/aadditionalparam="-Xdoclint:none"' build.xml
+
+# in Java 9+ a single underscore is no longer a valid identifier
+sed -i -e 's/\(Throwable\|Exception\) _/\1 ex/' \
+  src/javax/xml/validation/SchemaFactoryFinder.java \
+  src/javax/xml/xpath/XPathFactoryFinder.java
+
 # remove bogus section from poms
 cp %{SOURCE3} %{SOURCE4} .
 sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
@@ -87,7 +95,7 @@ sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
 %mvn_alias :xml-apis-ext xerces:dom3-xml-apis
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 jar javadoc
 
 # inject OSGi manifests
 jar ufm build/xml-apis.jar %{SOURCE1}
@@ -116,6 +124,9 @@ rm -rf build/docs/javadoc
 %{_javadocdir}/*
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.4.01-alt3_32jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_29jpp8
 - fc update
 
