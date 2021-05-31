@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          forbidden-apis
 Version:       2.5
-Release:       alt1_4jpp8
+Release:       alt1_8jpp11
 Summary:       Policeman's Forbidden API Checker
 License:       ASL 2.0
 URL:           https://github.com/policeman-tools/forbidden-apis
@@ -19,7 +19,6 @@ Patch1:        fix-gradle-maven-build.patch
 
 BuildArch:     noarch
 
-BuildRequires: gradle-local
 BuildRequires: ivy-local
 BuildRequires: maven-local
 BuildRequires: ant
@@ -39,7 +38,6 @@ signatures and fail build (Apache Ant, Apache Maven, or Gradle).
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-BuildArch: noarch
 
 %description javadoc
 This package contains API documentation for %{name}.
@@ -78,9 +76,10 @@ sed -i -e '/uri="antlib:org.apache.maven.artifact.ant/d' build.xml
 # Don't need to run RAT for RPM builds
 sed -i -e '/apache-rat/d' ivy.xml
 sed -i -e '/uri="antlib:org.apache.rat.anttasks/d' build.xml
+rm -rf src/main/java/de/thetaphi/forbiddenapis/gradle src/test/gradle
 
 %build
-ant -Divy.mode=local jar documentation test-junit
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local jar
 
 %install
 # Add deps on unbundled jars, taken from ivy.xml
@@ -104,10 +103,11 @@ install -pm 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %doc README.md
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_8jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_4jpp8
 - fc update
 
