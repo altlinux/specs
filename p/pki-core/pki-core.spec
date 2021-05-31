@@ -13,7 +13,7 @@
 
 Name: pki-core
 Version: 10.10.5
-Release: alt1
+Release: alt2
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -434,7 +434,7 @@ set +o pipefail
     -DTHEME=dogtag \
      ..
 
-%cmake_build all
+%cmake_build -t all
 
 %install
 %cmakeinstall_std
@@ -472,7 +472,7 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 export PIP_NO_INDEX=YES
 export TOXENV=lint3,pep8py3,py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
-%cmake_build test
+%cmake_build -t test
 
 %pre -n pki-server
 %define pki_username pkiuser
@@ -753,6 +753,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Mon May 31 2021 Stanislav Levin <slev@altlinux.org> 10.10.5-alt2
+- Fixed FTBFS(new CMake policy).
+
 * Wed Mar 03 2021 Stanislav Levin <slev@altlinux.org> 10.10.5-alt1
 - 10.10.4 -> 10.10.5.
 
