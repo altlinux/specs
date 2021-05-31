@@ -3,7 +3,7 @@
 
 Name: plasma5-phone-components
 Version: 5.21.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -12,7 +12,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
-Patch1: alt-kwinwrapper.patch
+Patch1: alt-startplasma.patch
 Patch2: alt-def-shell.patch
 Patch3: alt-no-dialer.patch
 
@@ -85,9 +85,12 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_K5data//kwin/scripts/org.kde.phone.multitasking/
 %_K5data/plasma/shells/org.kde.plasma.phoneshell/
 %_K5notif/*.notifyrc
-%_datadir/wayland-sessions/plasma-mobile.desktop
+%_datadir/xsessions/plasma-mobile.desktop
 
 %changelog
+* Mon May 31 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt2
+- fix install xsession file
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 
