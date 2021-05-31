@@ -4,12 +4,12 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sqljet
 Version:        1.1.10
-Release:        alt3_14jpp8
+Release:        alt3_18jpp11
 Summary:        Pure Java SQLite
 
 License:        GPLv2
@@ -38,9 +38,8 @@ Java application to read and modify SQLite databases.
 
 %package        javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary:        Javadoc for %{name} 
 BuildArch: noarch
-
 %description    javadoc
 API documentation for %{name}.
 
@@ -67,7 +66,7 @@ EOF
 
 %build
 export CLASSPATH=$(build-classpath antlr32/antlr-runtime-3.2 antlr32/antlr-3.2 antlr stringtemplate easymock3 junit hamcrest-core)
-ant jars osgi javadoc pom
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jars osgi javadoc pom
 
 %install
 %mvn_artifact pom.xml build/sqljet.jar
@@ -82,6 +81,9 @@ ant jars osgi javadoc pom
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.10-alt3_18jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_14jpp8
 - fc update
 
