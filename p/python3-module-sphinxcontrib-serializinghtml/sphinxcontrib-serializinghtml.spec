@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 
 Summary: Sphinx extension for serialized HTML
@@ -48,6 +48,9 @@ HTML files (json and pickle).
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.5-alt1
+- Automatically updated to 1.1.5.
+
 * Mon Mar 02 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1
 - Build new version.
 - Build with check.
