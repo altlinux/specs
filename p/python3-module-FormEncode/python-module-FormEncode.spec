@@ -1,70 +1,30 @@
 %define modulename FormEncode
 
-%def_with python3
 %def_with doc
 
-%if_with python3
-%define py3name python3-module-%modulename
-%define py3dir %py3name-%version
-%endif
-
-Name: python-module-%modulename
+Name: python3-module-%modulename
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Epoch: 1
-
-%setup_python_module %modulename
 
 Summary: HTML form validation, generation, and convertion package for Python
 License: PSF
-Group: Development/Python
+Group: Development/Python3
 
 URL: http://formencode.org
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
 # git://github.com/formencode/formencode.git
 Source0: %name-%version.tar
 
-#BuildPreReq: %py_dependencies setuptools
-#BuildPreReq: python-module-docutils python-module-sphinx-devel
-#BuildPreReq: python-module-pycountry
-#BuildPreReq: python-module-nose
-#BuildPreReq: python-module-dns
-
-%if_with python3
-#BuildPreReq: rpm-build-python3
-#BuildPreReq: python-tools-2to3
-#BuildPreReq: python3-devel
-#BuildPreReq: python3-module-distribute
-#BuildPreReq: python3-module-docutils
-#BuildPreReq: python3-module-nose
-#BuildPreReq: python3-module-pycountry
-#BuildPreReq: python3-module-dns
-%endif
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-alabaster python-module-dns python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pycountry python3-module-dns python3-module-html5lib python3-module-nose python3-module-sphinx rpm-build-python3 time
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-dns python3-module-sphinx
 
 %description
 FormEncode validates and converts nested structures. It allows for
 a declarative form of defining the validation, and decoupled processes
 for filling and generating forms.
-
-%if_with python3
-%package -n %py3name
-Summary: HTML form validation, generation, and convertion package for Python 3
-Group: Development/Python3
-BuildArch: noarch
-
-%description -n %py3name
-FormEncode validates and converts nested structures. It allows for
-a declarative form of defining the validation, and decoupled processes
-for filling and generating forms.
-
-%endif
 
 %package doc
 Summary: This package contains documentation and examples for FormEncode
@@ -77,7 +37,7 @@ for filling and generating forms.
 
 %package pickles
 Summary: This package contains pickles for FormEncode
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 FormEncode validates and converts nested structures. It allows for
@@ -86,51 +46,30 @@ for filling and generating forms.
 
 %prep
 %setup
-%if_with python3
-rm -rf ../%py3dir
-cp -a . ../%py3dir
-%endif
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 
 %build
-%python_build
-%if_with python3
-pushd ../%py3dir
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-rm -rf %buildroot%python_sitelibdir/docs
-%if_with python3
-pushd ../%py3dir
 %python3_install
 rm -rf %buildroot%python3_sitelibdir/docs
-popd
-%endif
 
 %if_with doc
 pushd docs
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make html
-%make pickle
-cp -fR _build/pickle %buildroot%python_sitelibdir/formencode/
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make SPHINXBUILD="sphinx-build-3" html
+%make SPHINXBUILD="sphinx-build-3" pickle
+cp -fR _build/pickle %buildroot%python3_sitelibdir/formencode/
 popd
 %endif
 
 %files
 %doc docs/*.txt
-%python_sitelibdir/*
-%if_with doc
-%exclude %python_sitelibdir/*/pickle
-%endif
-
-%if_with python3
-%files -n %py3name
-%doc ../%py3dir/docs/*.txt
 %python3_sitelibdir/*
+%if_with doc
+%exclude %python3_sitelibdir/*/pickle
 %endif
 
 %if_with doc
@@ -138,10 +77,13 @@ popd
 %doc docs/_build/html examples
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 %endif
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.3.1-alt2
+- Drop python2 support.
+
 * Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:1.3.1-alt1
 - Version updated to 1.3.1
 
