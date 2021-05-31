@@ -5,7 +5,7 @@
 
 Name: zoneminder
 Version: 1.36.3
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -20,7 +20,6 @@ Source6: README-nginx-ru.alt
 Source7: nginx-zoneminder.conf.sample
 Source8: zm-fcgi.inc
 Source9: php7-fpm-zoneminder.conf
-Patch1: zoneminder-1.32.3-alt-mysql8-transition.patch
 
 Conflicts: zm <= 1.22.3
 BuildRequires(pre): rpm-macros-webserver-common
@@ -65,7 +64,6 @@ Zoneminder configuration file and requires for nginx
 
 %prep
 %setup -n %name-%version-alt
-#patch1 -p1
 tar xvf %SOURCE1 --strip 1 -C web/api/app/Plugin/Crud
 tar xvf %SOURCE2 --strip 1 -C web/api/app/Plugin/CakePHP-Enum-Behavior
 tar xvf %SOURCE3 --strip 1 -C dep/RtspServer
@@ -90,7 +88,7 @@ EOF
 
 %install
 install -d %buildroot%_var/run
-%cmake_install
+%cmakeinstall_std
 rm -rf %buildroot%prefix/%_lib/perl5/vendor_perl/*.*/*-*
 rm -rf %buildroot%prefix/%_lib/perl5/*.*/*-*
 
@@ -165,6 +163,10 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon May 31 2021 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2
+- removed include to upstream patch with MySQL-8 support
+- used cmakeinstall_std for compatability with old ALT repositories
+
 * Mon May 31 2021 Anton Farygin <rider@altlinux.ru> 1.36.3-alt1
 - 1.36.3
 
