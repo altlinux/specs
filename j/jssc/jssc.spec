@@ -3,13 +3,13 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:	Java Simple Serial Connector
 Name:		jssc
 Version:	2.8.0
-Release:	alt1_14jpp8
+Release:	alt1_17jpp11
 License:	GPLv3+
 URL:		http://jssc.scream3r.org
 Source:		https://github.com/scream3r/java-simple-serial-connector/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -62,13 +62,11 @@ rm -rf src/cpp/*.h
 %build
 # compile classes
 mkdir -p classes/
-(cd src/java; javac -d ../../classes/ -encoding UTF-8 jssc/*.java)
+(cd src/java; javac -h ../cpp -d ../../classes/ -encoding UTF-8 jssc/*.java)
 (cd classes; jar -cf ../jssc.jar jssc/*.class)
 # generate javadoc
 mkdir -p javadoc/
 (cd src/java; javadoc -Xdoclint:none -d ../../javadoc/ -encoding UTF-8 jssc/*.java)
-# generate jni header
-(cd classes; javah -jni -d ../src/cpp -encoding UTF-8 jssc.SerialNativeInterface)
 # compile native library
 g++ %{optflags} %{?__global_ldflags} -std=c++11 -fPIC -shared \
     -D jSSC_NATIVE_LIB_VERSION=\"$(echo %{version} | sed 's/\([1-9]\.[0-9]\).*/\1/')\" \
@@ -101,6 +99,9 @@ ln -srf %{buildroot}%{jni}/%{jniFullSoName} %{buildroot}%{jni}/%{jniSoName}
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.8.0-alt1_17jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_14jpp8
 - fc update
 
