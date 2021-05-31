@@ -1,13 +1,13 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary: A Java template engine
 Name: stringtemplate
 Version: 3.2.1
-Release: alt2_21jpp8
+Release: alt2_24jpp11
 URL: http://www.stringtemplate.org/
 Source0: http://www.stringtemplate.org/download/stringtemplate-%{version}.tar.gz
 # Build jUnit tests + make the antlr2 generated code before preparing sources
@@ -41,11 +41,13 @@ API documentation for %{name}.
 %prep
 %setup -q
 %patch0
+sed -i -e 's/source="1.4"/source="1.8"/g' build.xml
+sed -i -e 's/target="1.4"/target="1.8"/g' build.xml
 
 %build
 rm -rf lib target
-ant jar
-ant javadocs -Dpackages= -Djavadocs.additionalparam="-Xdoclint:none"
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  javadocs -Dpackages= -Djavadocs.additionalparam="-Xdoclint:none"
 
 %install
 %mvn_artifact pom.xml build/%{name}.jar
@@ -61,6 +63,9 @@ ant javadocs -Dpackages= -Djavadocs.additionalparam="-Xdoclint:none"
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.1-alt2_24jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_21jpp8
 - fc update
 
