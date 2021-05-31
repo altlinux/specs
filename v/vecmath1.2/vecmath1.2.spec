@@ -3,17 +3,18 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           vecmath1.2
 Version:        1.14
-Release:        alt1_23jpp8
+Release:        alt1_26jpp11
 Summary:        Free version of vecmath from the Java3D 1.2 specification
 License:        MIT
 URL:            http://www.objectclub.jp/download/vecmath_e
 Source0:        http://www.objectclub.jp/download/files/vecmath//%{name}-%{version}.tar.gz
 Patch0:         vecmath1.2-1.14-javadoc-fixes.patch
+Patch1:         vecmath1.2-1.14-javac-1.8.patch
 BuildArch:      noarch
 Requires:       javapackages-filesystem
 # Necessary due to architecture change to noarch
@@ -41,6 +42,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 find -name *.jar -delete
 find -name *.class -delete
 
@@ -70,6 +72,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.14-alt1_26jpp11
+- update
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_23jpp8
 - fixed build
 
