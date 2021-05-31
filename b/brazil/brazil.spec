@@ -4,12 +4,12 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      brazil
 Version:   2.3
-Release:   alt3_22jpp8
+Release:   alt3_25jpp11
 Summary:   Extremely small footprint Java HTTP stack
 License:   SPL
 URL:       https://github.com/mbooth101/brazil
@@ -59,7 +59,7 @@ grep -lR -e ^\#\!/bin/sh               samples | xargs chmod 755
 
 %build
 cp -p %{SOURCE2} build.xml
-ant all
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  all
 
 %install
 # jars
@@ -86,6 +86,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3-alt3_25jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_22jpp8
 - fc update
 
