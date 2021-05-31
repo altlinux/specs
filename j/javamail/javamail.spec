@@ -6,12 +6,12 @@ BuildRequires: unzip
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javamail
 Version:        1.5.2
-Release:        alt1_11jpp8
+Release:        alt1_14jpp11
 Summary:        Java Mail API
 License:        CDDL-1.0 or GPLv2 with exceptions
 URL:            http://www.oracle.com/technetwork/java/javamail
@@ -27,6 +27,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  java-1.8.0-openjdk-devel
 
 # Adapted from the classpathx-mail (and JPackage glassfish-javamail) Provides.
 Provides:       javamail-monolithic = %{version}-%{release}
@@ -81,8 +82,9 @@ add_dep javax.mail mailapijar
 %mvn_file "com.sun.mail:{javax.mail}" %{name}/@1 %{name}/mail
 
 %build
+#export JAVA_HOME="/usr/lib/jvm/java-1.8.0"
 # Some tests fail on Koji due to networking limitations
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -99,6 +101,9 @@ ln -sf ../%{name}/javax.mail.jar %{buildroot}%{_javadir}/javax.mail/
 %doc mail/src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt1_14jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_11jpp8
 - fc update
 
