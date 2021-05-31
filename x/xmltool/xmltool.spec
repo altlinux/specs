@@ -1,13 +1,13 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-%define fedora 31
+BuildRequires: jpackage-11-compat
+%define fedora 33
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmltool
 Version:        3.3
-Release:        alt4_24jpp8
+Release:        alt4_28jpp11
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 License:        ASL 2.0
@@ -59,10 +59,12 @@ sed -i 's/\r//' LICENSE.txt
 %pom_xpath_remove "pom:build/pom:extensions"
 %pom_remove_plugin com.google.code.maven-license-plugin:maven-license-plugin
 
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
 
 %build
 # Disable tests because they require an internet connection to run!
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -74,6 +76,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.3-alt4_28jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt4_24jpp8
 - update
 
