@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           antlrworks
 Version:        1.5.2
-Release:        alt1_14jpp8
+Release:        alt1_18jpp11
 Summary:        Grammar development environment for ANTLR v3 grammars
 
 License:        BSD
@@ -25,10 +25,10 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.jgoodies:jgoodies-forms)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.antlr:antlr)
 BuildRequires:  mvn(org.antlr:antlr-runtime)
 BuildRequires:  mvn(org.antlr:stringtemplate)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Requires:       graphviz libgraphviz
 # Owns /usr/share/icons/hicolor
 Requires:       icon-theme-hicolor
@@ -55,19 +55,25 @@ encountered by grammar developers.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
+%patch0
+%patch1
 
 
 # Remove MacOSX-specific code
 rm -r src/org/antlr/xjlib/appkit/app/MacOS/
 
+# remove unnecessary dependency on deprecated parent pom
+%pom_remove_parent
+
 %pom_remove_dep com.apple:AppleJavaExtensions
 %pom_change_dep com.jgoodies:forms com.jgoodies:jgoodies-forms
 
+# remove maven-compiler-plugin configuration that's broken with Java 11
+%pom_remove_plugin :maven-compiler-plugin
+
 
 %build
-%mvn_build -j
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 
 %install
@@ -106,6 +112,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt1_18jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_14jpp8
 - fc update
 
