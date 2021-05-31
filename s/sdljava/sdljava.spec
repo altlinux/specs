@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: ruby-stdlibs zlib-devel
 BuildRequires: bsh
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_47jpp8
+Release:        alt2_50jpp11
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
@@ -46,6 +46,8 @@ BuildRequires:  jdom
 BuildRequires:  xml-commons-apis
 BuildRequires:  %{_bindir}/ruby
 BuildRequires:  gem
+# To generate the replacement font symlinks for the sdljava-demo testdata
+BuildRequires:  font(dejavusans) fontconfig
 
 Requires:       java
 Requires:       javapackages-filesystem
@@ -154,7 +156,7 @@ if [ -z "$ARCH_DEFINE" ]; then
   export ARCH_DEFINE="-D__%{_arch}__"
 fi
 
-export JAVA_HOME=%{_jvmdir}/java
+#export JAVA_HOME=%{_jvmdir}/java
 
 pushd src/sdljava/native
 make CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fPIC"
@@ -169,7 +171,7 @@ pushd src/org/gljava/opengl/native/ftgl
 make CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fPIC"
 popd
 
-ant jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
 
 
 %install
@@ -203,13 +205,13 @@ popd
 
 #test data
 cp -a testdata $RPM_BUILD_ROOT%{_datadir}/%{name}
-ln -s ../../fonts/ttf/dejavu/DejaVuSans.ttf \
+ln -s $(fc-match -f "%{file}" "sans") \
   $RPM_BUILD_ROOT%{_datadir}/%{name}/testdata/arial.ttf
-ln -s ../../fonts/ttf/dejavu/DejaVuSans-Bold.ttf \
+ln -s $(fc-match -f "%{file}" "sans:bold") \
   $RPM_BUILD_ROOT%{_datadir}/%{name}/testdata/arialbd.ttf
-ln -s ../../fonts/ttf/dejavu/DejaVuSans-Oblique.ttf \
+ln -s $(fc-match -f "%{file}" "sans:italic") \
   $RPM_BUILD_ROOT%{_datadir}/%{name}/testdata/ariali.ttf
-ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
+ln -s $(fc-match -f "%{file}" "sans:bold:italic") \
   $RPM_BUILD_ROOT%{_datadir}/%{name}/testdata/arialbi.ttf
 
 
@@ -227,6 +229,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_50jpp11
+- update
+
 * Fri Apr 30 2021 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_47jpp8
 - update
 
