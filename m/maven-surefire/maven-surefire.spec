@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           maven-surefire
 Version:        2.22.0
-Release:        alt1_6jpp8
+Release:        alt1_9jpp11
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
@@ -66,7 +66,7 @@ BuildRequires:  mvn(org.junit.platform:junit-platform-launcher)
 %endif
 
 # PpidChecker relies on /usr/bin/ps to check process uptime
-Requires:       procps
+Requires:       libprocps procps
 Source44: import.info
 
 %description
@@ -191,6 +191,9 @@ sed -i /-Xdoclint:all/d pom.xml
 
 %pom_add_dep com.google.code.findbugs:jsr305 surefire-api
 
+# This package needs maven compat for ArtifactResolver class
+%pom_add_dep org.apache.maven:maven-compat maven-surefire-common
+
 %build
 %mvn_package ":*{surefire-plugin,report-plugin}*" @1
 %mvn_package ":*junit-platform*" junit5
@@ -222,6 +225,9 @@ sed -i /-Xdoclint:all/d pom.xml
 %doc --no-dereference LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.22.0-alt1_9jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.22.0-alt1_6jpp8
 - fc update
 
