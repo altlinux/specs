@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_24jpp8
+Release:        alt7_27jpp11
 Epoch:          1
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
@@ -31,11 +31,11 @@ Patch5: 0006-Fix-for-CVE-2019-17570.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.ws.commons.util:ws-commons-util)
 Source44: import.info
-
 
 %description
 Apache XML-RPC is a Java implementation of XML-RPC, a popular protocol
@@ -86,12 +86,22 @@ sed -i 's/\r//' LICENSE.txt
 %pom_remove_dep jaxme:jaxmeapi common
 %pom_add_dep junit:junit:3.8.1:test
 
+%pom_remove_plugin :maven-javadoc-plugin
+
+# Add missing dep when building against Java 11
+%pom_add_dep javax.xml.bind:jaxb-api:2.2.12
+
+# don't hard code source and target levels
+sed -i -e '/<source>/d' \
+       -e '/<target>/d' pom.xml
+
 %mvn_file :{*} @1
 %mvn_package :*-common %{name}
 
 %build
 # ignore test failure because server part needs network
-%mvn_build -s -- -Dmaven.test.failure.ignore=true
+%mvn_build -s -- -Dmaven.test.failure.ignore=true \
+  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -107,6 +117,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:3.1.3-alt7_27jpp11
+- update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1:3.1.3-alt7_24jpp8
 - fc update
 
