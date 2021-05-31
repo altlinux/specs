@@ -1,13 +1,13 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global githash cb6709646eed97c271d73f50ad750cc43c8e052a
 Name:             paranamer
 Version:          2.8
-Release:          alt1_12jpp8
+Release:          alt1_15jpp11
 Summary:          Java library for accessing non-private method's parameter names at run-time
 License:          BSD
 URL:              https://github.com/paul-hammant/paranamer
@@ -115,15 +115,19 @@ chmod -x LICENSE.txt
 # Unavailable test deps
 %pom_remove_dep -r net.sourceforge.f2j:
 %pom_xpath_remove -r "pom:dependency[pom:classifier = 'javadoc' ]"
+
 # package org.netlib.blas does not exist
 rm -r %{name}/src/test/com/thoughtworks/paranamer/JavadocParanamerTest.java
+
 # testRetrievesParameterNamesFromBootstrapClassLoader java.lang.AssertionError:
 #       Should not find names for classes loaded by the bootstrap class loader.
 rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCase.java
 
-%build
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
 
-%mvn_build -s
+%build
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -152,6 +156,9 @@ rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCa
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8-alt1_15jpp11
+- update
+
 * Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_12jpp8
 - fc update for new xbean
 
