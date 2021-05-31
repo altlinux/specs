@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -35,7 +35,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           dom4j
 Version:        2.0.0
-Release:        alt1_9jpp8
+Release:        alt1_12jpp11
 Epoch:          0
 Summary:        Open Source XML framework for Java
 License:        BSD
@@ -44,6 +44,8 @@ BuildArch:      noarch
 
 Source0:        https://github.com/%{name}/%{name}/archive/v%{version}.tar.gz
 Source1:        https://repo1.maven.org/maven2/org/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+
+Patch0:         00-fix-java11-compilation.patch
 
 Obsoletes:      %{name}-demo < 2.0.0
 Obsoletes:      %{name}-manual < 2.0.0
@@ -76,6 +78,7 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %mvn_alias org.%{name}:%{name} %{name}:%{name}
 %mvn_file : %{name}/%{name} %{name}
@@ -96,7 +99,7 @@ rm src/test/java/org/dom4j/util/PerThreadSingletonTest.java
 
 %build
 export LANG=en_US.ISO8859-1
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -109,6 +112,9 @@ export LANG=en_US.ISO8859-1
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.0-alt1_12jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_9jpp8
 - fc update
 
