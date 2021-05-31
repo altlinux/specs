@@ -9,7 +9,7 @@
 
 Name: rawtherapee
 Version: 5.8%{?_enable_snapshot:.%git_distance}
-Release: alt1
+Release: alt1.1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
@@ -17,7 +17,7 @@ Group: Graphics
 URL: https://www.rawtherapee.com
 
 %if_enabled snapshot
-#VCS: https://github.com/Beep6581/RawTherapee
+Vcs: https://github.com/Beep6581/RawTherapee
 Source: rawtherapee-%version.tar
 %else
 # use full archive not git-archive to avoid dancing around version
@@ -61,14 +61,14 @@ subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
 %build
 %define optflags -O3 -g
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 	%{?_disable_snapshot:-DCACHE_NAME_SUFFIX=""} \
 	%{?_enable_snapshot:-DCACHE_NAME_SUFFIX="5-dev"}
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 
@@ -85,6 +85,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon May 31 2021 Yuri N. Sedunov <aris@altlinux.org> 5.8-alt1.1
+- adapted to new cmake macros
+
 * Wed Feb 05 2020 Yuri N. Sedunov <aris@altlinux.org> 5.8-alt1
 - 5.8
 
