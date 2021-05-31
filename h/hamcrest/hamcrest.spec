@@ -2,7 +2,7 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2008, JPackage Project
@@ -37,7 +37,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           hamcrest
 Version:        1.3
-Release:        alt3_27jpp8
+Release:        alt3_30jpp11
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -127,12 +127,17 @@ ln -sf $(build-classpath testng-jdk15) lib/integration/
 
 sed -i 's/\r//' LICENSE.txt
 
+# Set target to 1.6 to build with Java 11
+sed -i 's/target="1.5"/target="1.6"/' build.xml
+# Disable checking of remote javadoc links
+sed -i '/link offline/ d' build.xml
+
 %build
 export CLASSPATH=$(build-classpath qdox)
 export OPT_JAR_LIST="junit ant/ant-junit"
 # The unit-test goal is switched off as some tests fail with JDK 7
 # see https://github.com/hamcrest/JavaHamcrest/issues/30
-ant -Dant.build.javac.source=1.5 -Dversion=%{version} -Dbuild.sysclasspath=last clean core generator library bigjar javadoc
+ant -Dant.build.javac.source=1.6 -Dversion=%{version} -Dbuild.sysclasspath=last clean core generator library bigjar javadoc
 
 # inject OSGi manifests
 jar ufm build/%{name}-core-%{version}.jar %{SOURCE8}
@@ -172,6 +177,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_30jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_27jpp8
 - fc update
 
