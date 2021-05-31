@@ -1,35 +1,26 @@
 %define oname whoosh
-%define fname python3-module-%oname
 %define descr \
 Whoosh is a fast, featureful full-text indexing and searching library \
 implemented in pure Python. Programmers can use it to easily add search \
 functionality to their applications and websites. Every part of how \
 Whoosh works can be extended or replaced to meet your needs exactly.
 
-Name: %fname
+Name: python3-module-%oname
 Version: 2.7.4
-Release: alt1
+Release: alt2
 
-%if ""==""
 Summary: Fast pure-Python indexing and search library
 Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
 
 License: BSD
 URL: https://bitbucket.org/mchaput/whoosh/wiki/Home
 # hg clone https://bitbucket.org/mchaput/whoosh
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-Buildrequires: python-module-sphinx-pickles python3-module-setuptools time
+BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-%if "3"=="3"
 %add_python3_req_skip google
 %add_python3_req_skip google.appengine.api
 %add_python3_req_skip google.appengine.ext
@@ -40,71 +31,31 @@ BuildArch: noarch
 # ImportError: No module named 'google'
 %filter_from_provides /^python3(whoosh.support.bench)/d
 # ImportError: cannot import name 'find_object'
-%endif
-
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-%endif
 
 %description
 %descr
 
-%if ""!=""
-This package contains documentation for %oname.
-
-%package -n %fname-pickles
-Summary: Pickles for whoosh
-Group: Development/Python3
-
-%description -n %fname-pickles
-%descr
-
-This package contains pickles for %oname.
-
-%else
-
 %package tests
 Summary: Tests for %oname
 Group: Development/Python3
-Requires: %fname = %version-%release
-%if "3"=="3"
+Requires: %name = %version-%release
 %py3_requires nose
-%endif
 
 %description tests
 %descr
 
 This package contains tests for %oname.
 
-%endif
-
 %prep
 %setup
-%if ""!=""
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
-%endif
 
 %build
-%if ""==""
 %python3_build
-%else
-mkdir docs/source/_static
-%generate_pickles docs/source docs/source %oname
-sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
-%endif
 
 %install
-%if ""!=""
-mkdir -p %buildroot%python3_sitelibdir/%oname/
-cp -fR pickle %buildroot%python3_sitelibdir/%oname/
-%else
 %python3_install
 cp -fR src/whoosh/query src/whoosh/matching %buildroot%python3_sitelibdir/%oname/
-%endif
 
-%if ""==""
 %files
 %doc *.txt
 %python3_sitelibdir/*
@@ -114,16 +65,11 @@ cp -fR src/whoosh/query src/whoosh/matching %buildroot%python3_sitelibdir/%oname
 %doc tests
 %python3_sitelibdir/%oname/util/testing.py*
 
-%else
-
-%files
-%doc html/*
-
-%files -n %fname-pickles
-%python3_sitelibdir/%oname/pickle
-%endif
-
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 2.7.4-alt2
+- Drop specsubst scheme.
+- Build without docs.
+
 * Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.4-alt1
 - Build new version.
 
