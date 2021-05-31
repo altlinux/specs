@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           t-digest
 Version:        3.0
-Release:        alt1_11jpp8
+Release:        alt1_15jpp11
 Summary:        A new data structure for on-line accumulation of statistics
 License:        ASL 2.0
 URL:            %{url}
@@ -50,7 +50,7 @@ This package contains the API documentation for %{name}.
 
 %build
 #skipping tests, they requires currently unpacked depndences
-%mvn_build  --force
+%mvn_build --force
 
 %install
 %mvn_install
@@ -59,10 +59,13 @@ This package contains the API documentation for %{name}.
 %doc README.md
 %doc --no-dereference LICENSE NOTICES
 
-%files javadoc -f .mfiles-javadoc
+%files javadoc  -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICES
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_15jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_11jpp8
 - fc update
 
