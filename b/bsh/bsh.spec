@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -48,7 +48,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           bsh
 Version:        2.0
-Release:        alt1_16.b6jpp8
+Release:        alt1_19.b6jpp11
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 URL:            http://www.beanshell.org/
@@ -62,6 +62,12 @@ Source1:        %{name}-desktop.desktop
 # Remove bundled jars which cannot be easily verified for licensing
 # Remove code marked as SUN PROPRIETARY/CONFIDENTAIL
 Source2:        generate-tarball.sh
+
+# compatibility with Java 11:
+# - set javac / javadoc source and target values to 1.8
+Patch0:         0000-source-target-1.8.patch
+# - remove references to invisible symbols and methods
+Patch1:         0001-java-11-compatibility.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
@@ -128,6 +134,8 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n beanshell-%{version}%{reltag}
+%patch0 -p1
+%patch1 -p1
 
 sed -i 's,org.apache.xalan.xslt.extensions.Redirect,http://xml.apache.org/xalan/redirect,' docs/manual/xsl/*.xsl
 
@@ -139,7 +147,7 @@ sed -i 's,org.apache.xalan.xslt.extensions.Redirect,http://xml.apache.org/xalan/
 mkdir lib
 build-jar-repository lib bsf javacc junit glassfish-servlet-api
 
-ant test dist
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  test dist
 
 %install
 %mvn_artifact pom.xml dist/%{name}-%{version}%{reltag}.jar
@@ -193,6 +201,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0-alt1_19.b6jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_16.b6jpp8
 - fc update
 
