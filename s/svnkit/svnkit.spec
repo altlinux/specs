@@ -12,7 +12,7 @@ BuildRequires: jpackage-11-compat
 Epoch:   1
 Name:    svnkit
 Version: 1.8.12
-Release: alt1_7jpp11
+Release: alt1_9jpp11
 Summary: Pure Java library to manage Subversion working copies and repositories
 
 # License located at https://svnkit.com/license.html
@@ -21,9 +21,9 @@ URL:            https://www.svnkit.com/
 Source0:        https://www.svnkit.com/org.tmatesoft.svn_%{version}.src.zip
 
 # POMs
-Source1:        http://repo1.maven.org/maven2/org/tmatesoft/svnkit/svnkit/%{version}/svnkit-%{version}.pom
-Source2:        http://repo1.maven.org/maven2/org/tmatesoft/svnkit/svnkit-cli/%{version}/svnkit-cli-%{version}.pom
-Source3:        http://repo1.maven.org/maven2/org/tmatesoft/svnkit/svnkit-javahl16/%{version}/svnkit-javahl16-%{version}.pom
+Source1:        https://repo1.maven.org/maven2/org/tmatesoft/svnkit/svnkit/%{version}/svnkit-%{version}.pom
+Source2:        https://repo1.maven.org/maven2/org/tmatesoft/svnkit/svnkit-cli/%{version}/svnkit-cli-%{version}.pom
+Source3:        https://repo1.maven.org/maven2/org/tmatesoft/svnkit/svnkit-javahl16/%{version}/svnkit-javahl16-%{version}.pom
 
 # Custom aggregator pom to avoid reliance on gradle
 Source4:        svnkit-parent.pom
@@ -33,12 +33,11 @@ Source4:        svnkit-parent.pom
 #  $ svn export https://svn.apache.org/repos/asf/subversion/tags/1.8.1/subversion/bindings/javahl/src/ javahl-1.8.1
 Source5:        javahl-%{svn_version}.tar.gz
 
-# Just in SRPM due to nailgun comes included in svnkit upstream sources:
-Source10:       https://www.apache.org/licenses/LICENSE-2.0.txt
-Source11:       https://www.apache.org/licenses/LICENSE-1.1.txt
+# License for the above JavaHL API:
+Source6:        https://www.apache.org/licenses/LICENSE-2.0.txt
 
 # svnkit's trilead-ssh2 does not throw InterruptedException from Session.waitForCondition()
-# Fedora's trilead-ssh2 trhows ...
+# Fedora's trilead-ssh2 does ...
 Patch1:         svnkit-1.8.5-SshSession-unreported-exception.patch
 
 BuildArch:      noarch
@@ -47,7 +46,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.jcraft:jsch.agentproxy.connector-factory)
 BuildRequires:  mvn(com.jcraft:jsch.agentproxy.svnkit-trilead-ssh2)
 BuildRequires:  mvn(com.trilead:trilead-ssh2)
-BuildRequires:  mvn(de.regnis.q.sequence:sequence-library) >= 1.0.3
+BuildRequires:  mvn(de.regnis.q.sequence:sequence-library)
 BuildRequires:  mvn(net.java.dev.jna:jna)
 BuildRequires:  mvn(net.java.dev.jna:jna-platform)
 BuildRequires:  mvn(org.tmatesoft.sqljet:sqljet)
@@ -101,10 +100,12 @@ cp -pr %{SOURCE3} svnkit-javahl16/pom.xml
 cp -pr %{SOURCE4} pom.xml
 
 # Build against the bundled version of the JavaHL API source
+cp -pr %{SOURCE6} ASL-2.0.txt
 (cd svnkit-javahl16/src/main/java/ &&  tar xf %{SOURCE5} --strip-components=1 --skip-old-files)
 %pom_remove_dep ":svn-javahl-api" svnkit-javahl16
 %pom_remove_dep ":svn-javahl-tests" svnkit-javahl16
 
+# Generate properties file
 rev="t$(date -u +%Y%m%d%H%M)"
 cat > svnkit/src/main/resources/svnkit.build.properties <<EOF
 svnkit.version=%{version}
@@ -125,7 +126,8 @@ EOF
 %build
 # Upstream builds with ignore test failures set to true, so I guess we shouldn't expect them to work...
 # Let's skip tests for now.
-%mvn_build -s -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.buildVersion.baseVersion=%{version}
+%mvn_build -s -f -- -Dproject.buildVersion.baseVersion=%{version} \
+  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dsource=1.8 -DdetectJavaApiLink=false
 
 %install
 %mvn_install
@@ -141,7 +143,8 @@ mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 %files -f .mfiles-svnkit
-%doc --no-dereference LICENSE.txt README.txt CHANGES.txt
+%doc --no-dereference LICENSE.txt ASL-2.0.txt
+%doc README.txt CHANGES.txt
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %files cli -f .mfiles-svnkit-cli
@@ -150,9 +153,12 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %files javahl -f .mfiles-svnkit-javahl16
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE.txt ASL-2.0.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.8.12-alt1_9jpp11
+- update
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 1:1.8.12-alt1_7jpp11
 - update
 
