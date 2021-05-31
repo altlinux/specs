@@ -1,7 +1,7 @@
 %define oname sphinxcontrib-htmlhelp
 
 Name:           python3-module-%oname
-Version:        1.0.2
+Version:        2.0.0
 Release:        alt1
 
 Summary:        No description=(
@@ -15,8 +15,6 @@ Source0:        %oname-%version.tar
 BuildArch:      noarch
 
 BuildRequires:  gettext
-BuildRequires:  python3-dev
-BuildRequires:  python3-module-setuptools
 
 %description
 Really no description=(
@@ -37,6 +35,9 @@ Really no description=(
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Mon Apr 29 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - new version 1.0.2
 
