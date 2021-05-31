@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           geronimo-parent-poms
 Version:        1.6
-Release:        alt3_29jpp8
+Release:        alt3_33jpp11
 Summary:        Parent POM files for geronimo-specs
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -35,16 +35,30 @@ cp -p %{SOURCE1} LICENSE
 %pom_remove_plugin :maven-idea-plugin
 %mvn_alias : org.apache.geronimo.specs:specs
 
+# source/target of 1.5 is not supported in fedora
+sed -i -e 's/>1\.5</>1.8</' pom.xml
+%pom_xpath_inject pom:build "
+<pluginManagement><plugins><plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration>
+<source>1.8</source>
+<detectJavaApiLink>false</detectJavaApiLink>
+</configuration>
+</plugin></plugins></pluginManagement>"
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt3_33jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_29jpp8
 - fc update
 
