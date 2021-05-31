@@ -5,7 +5,7 @@ BuildRequires: unzip
 BuildRequires: xalan-j2
 Requires: xalan-j2
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -40,7 +40,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt2_19jpp8
+Release:        alt2_22jpp11
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
 # AFL/GPLv2+ license for src/java/org/ccil/cowan/tagsoup/PYXScanner.java is
@@ -51,6 +51,7 @@ URL:            http://vrici.lojban.org/~cowan/XML/tagsoup/
 Source1:        https://repo1.maven.org/maven2/org/ccil/cowan/tagsoup/tagsoup/%{version}/tagsoup-%{version}.pom
 # fix version
 Patch0:         tagsoup-1.2.1-man.patch
+Patch1:         sourceTargetJdk8.patch
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  ant-apache-xalan2
@@ -83,11 +84,12 @@ find . -name '*.class' -delete
 find . -name "*.jar" -delete
 
 %patch0 -p0
+%patch1 -p1
 
 %build
 
 export CLASSPATH=$(build-classpath xalan-j2-serializer xalan-j2)
-ant \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
   -Dtagsoup.version=%{version} \
   -Dj2se.apiurl=%{_javadocdir}/java \
   dist docs-api
@@ -96,7 +98,7 @@ ant \
 %mvn_file : %{name}
 %mvn_artifact %{SOURCE1} dist/lib/%{name}-%{version}.jar
 
-%mvn_install -J docs/api
+%mvn_install
 
 mkdir -p %{buildroot}%{_mandir}/man1
 install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
@@ -106,10 +108,13 @@ install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 %doc CHANGES README TODO %{name}.txt
 %doc --no-dereference LICENSE
 
-%files javadoc -f .mfiles-javadoc
+%files javadoc
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2.1-alt2_22jpp11
+- update
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2.1-alt2_19jpp8
 - new version
 
