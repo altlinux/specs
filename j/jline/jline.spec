@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jline
 Version:          2.14.6
-Release:          alt1_6jpp8
+Release:          alt1_10jpp11
 Summary:          JLine is a Java library for handling console input
 License:          BSD
 URL:              https://github.com/jline/jline2
@@ -23,9 +23,6 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
-BuildRequires:  mvn(org.powermock:powermock-api-easymock)
-BuildRequires:  mvn(org.powermock:powermock-module-junit4)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 Obsoletes: jline2 < %{version}-%{release}
 Provides: jline2 = %{version}-%{release}
@@ -50,6 +47,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n jline2-jline-%{version}
+
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
 
 # Remove maven-shade-plugin usage
 %pom_remove_plugin "org.apache.maven.plugins:maven-shade-plugin"
@@ -77,11 +77,19 @@ This package contains the API documentation for %{name}.
 mkdir -p target/generated-sources/annotations
 mkdir -p target/generated-test-sources/test-annotations
 
-# nondeterministic
+# drop a nondeterministic test
 find -name TerminalFactoryTest.java -delete
+# it's also the only test that uses powermock, so drop the powermock dependency
+%pom_remove_dep org.powermock:
+
+# Fix javadoc generation on java 11
+%pom_xpath_inject pom:build/pom:plugins "<plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration><source>1.8</source></configuration>
+</plugin>" 
 
 %build
-%mvn_build
+%mvn_build --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -91,6 +99,9 @@ find -name TerminalFactoryTest.java -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.14.6-alt1_10jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.14.6-alt1_6jpp8
 - fc update
 
