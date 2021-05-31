@@ -1,12 +1,12 @@
 Epoch: 0
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: jcommon
 Version: 1.0.23
-Release: alt1_11jpp8
+Release: alt1_14jpp11
 Summary: JFree Java utility classes
 License: LGPLv2+
 # Github: https://github.com/jfree/jcommon
@@ -21,6 +21,8 @@ BuildRequires: maven-plugin-bundle
 BuildRequires: sonatype-oss-parent
 Requires: jpackage-utils
 BuildArch: noarch
+
+Patch0: javadoc-11.patch
 Source44: import.info
 
 %description
@@ -42,6 +44,7 @@ Javadoc pour %{name}.
 
 %prep
 %setup -q
+%patch0 -b javadoc-11
 find . -name "*.jar" -exec rm -f {} \;
 MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
         <configuration>
@@ -61,9 +64,14 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 # Change to packaging type bundle so as to be able to use it
 # as an OSGi bundle.
 %pom_xpath_set "pom:packaging" "bundle"
+# temporary while java 11 is being bootstrapped to become the default
+# undo javadoc-11.patch while javac is still 1.8.0
+if [ "`javac -version 2>&1 | cut -d_ -f 1`" = "javac 1.8.0" ]; then
+  sed -i -e /maven.compiler.release/d pom.xml
+fi
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -74,6 +82,9 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.23-alt1_14jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_11jpp8
 - fc update
 
