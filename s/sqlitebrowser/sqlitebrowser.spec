@@ -5,7 +5,7 @@
 
 Name: sqlitebrowser
 Version: 3.12.0
-Release: alt1
+Release: alt1.1
 
 Summary: Official home of the DB Browser for SQLite (DB4S) project
 License: GPLv3+ or MPLv2.0
@@ -86,13 +86,13 @@ rm -rfv libs/json/
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.desktop.appdata.xml
 desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 
 %check
-%cmake_build test
+%cmake_build --target test
 
 %files
 %doc README.md LICENSE
@@ -102,6 +102,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 3.12.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 3.12.0-alt1
 - NMU: new version (3.12.0) with rpmgs script via gear-uupdate (ALT bug 38707)
 

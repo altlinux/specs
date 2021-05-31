@@ -8,7 +8,7 @@
 
 Name: teeworlds
 Version: 0.7.5
-Release: alt1
+Release: alt1.1
 Summary: Cute little buggers with guns
 License: distributable
 Group: Games/Arcade
@@ -83,10 +83,10 @@ rm -rf src/engine/external/{wavpack,zlib,pnglite}
 
 %build
 %cmake
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 install -Dpm0644 -t %buildroot%_datadir/metainfo other/%{name}.appdata.xml
 install -Dpm0644 -t %buildroot%_desktopdir other/%{name}.desktop
@@ -202,6 +202,9 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%name/server-ict
 %_datadir/teeworlds
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.7.5-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Jun 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.5-alt1
 - Updated to upstream version 0.7.5.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: virtualgl
 Version: 2.6.5
-Release: alt1
+Release: alt1.1
 
 %define vgl_name vgl
 
@@ -93,11 +93,11 @@ rm doc/LICENSE-*.txt
 	-DVGL_SYSTEMFLTK=1 \
 	-DVGL_FAKEOPENCL=1 \
 	-DVGL_FAKEXCB=1 ..
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
 mkdir -p %buildroot%_libdir/%vgl_name
-%cmakeinstall_std
+%cmake_install
 mkdir -p %buildroot%_sbindir
 install -pD -m 755 %SOURCE1 %buildroot%_sbindir
 mkdir -p %buildroot%_localstatedir/%vgl_name
@@ -145,6 +145,9 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.6.5-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Nov 18 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.6.5-alt1
 - new version
 

@@ -1,6 +1,6 @@
 Name: sdcv
 Version: 0.5.3
-Release: alt1
+Release: alt1.1
 
 Summary: A console version of StarDict the international dictionary
 
@@ -42,15 +42,15 @@ sed -i 's/;34m/;36m/' src/libwrapper.cpp
     -DWITH_READLINE=YES \
     -DBUILD_TESTS=YES
 
-%cmake_build VERBOSE=1
-%cmake_build VERBOSE=1 lang
+%cmake_build
+%cmake_build --target lang
 
 %install
-%cmakeinstall_std
+%cmake_install
 %find_lang %name
 
 %check
-pushd BUILD
+pushd %_cmake__builddir
 ctest
 popd
 
@@ -60,6 +60,9 @@ popd
 %_mandir/uk/man1/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.5.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Apr 03 2021 Andrew Savchenko <bircoph@altlinux.org> 0.5.3-alt1
 - Version bump.
 - Use upstream patch for synonyms binsearch speedup.

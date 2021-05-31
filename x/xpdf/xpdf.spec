@@ -2,7 +2,7 @@
 
 Name: xpdf
 Version: 4.03
-Release: alt1
+Release: alt1.1
 
 Summary: The PDF viewer and tools
 License: GPLv2 or GPLv3
@@ -148,7 +148,7 @@ mycmakeargs=(
 )
 %cmake "${mycmakeargs[@]}"
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 # xpdf upstream provides only svg icon, so generate png icons
 sizes="16 22 24 32 36 48 64 72 96 128 192 256 384 512 1024"
@@ -159,7 +159,7 @@ for i in $sizes; do
 done
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 desktop-file-install --dir %buildroot%_desktopdir %{SOURCE1}
 
@@ -221,6 +221,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.03-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Jan 30 2021 Andrew Savchenko <bircoph@altlinux.org> 4.03-alt1
 - Version bump
 - Many bugfixes, including security, including, but not limited to:

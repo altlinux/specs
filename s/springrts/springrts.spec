@@ -4,7 +4,7 @@
 
 Name: springrts
 Version: 105.0
-Release: alt1
+Release: alt1.1
 
 Summary: Real time strategy game engine with many mods
 License: GPL-2.0+ and BSD-3-Clause
@@ -106,10 +106,10 @@ echo %version > VERSION
 	-DAI_TYPES=NATIVE \
 	%nil
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std VERBOSE=1
+%cmake_install
 
 # Move icons into proper Freedesktop hicolor theme
 mkdir -p %buildroot%_liconsdir
@@ -147,6 +147,9 @@ sed -i -e '/NoDisplay=true/d' \
 %_man6dir/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 105.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Apr 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 105.0-alt1
 - Updated to upstream version 105.0.
 - Updated packaging scheme and license.
