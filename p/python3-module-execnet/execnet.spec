@@ -1,6 +1,5 @@
 %define _unpackaged_files_terminate_build 1
 %define oname execnet
-%define fname python3-module-%oname
 %define descr \
 execnet provides carefully tested means to ad-hoc interact with Python \
 interpreters across version, platform and network barriers. It provides \
@@ -10,29 +9,14 @@ a minimal and fast API targetting the following uses: \
 * write and deploy hybrid multi-process applications \
 * write scripts to administer multiple hosts
 
-%if ""!=""
-%def_without check
-%else
 %def_with check
-%if "3"=="3"
-# test relies on fact that if there is /usr/bin/python2 than all stdlib modules
-# are installed. Unfortunately, this is wrong for ALT.
-# Disable or remove on removal Python2 from base build environment
-%def_with py3_check_python2
-%endif
-%endif
 
-Name: %fname
+Name: python3-module-%oname
 Version: 1.7.0
-Release: alt2
+Release: alt3
 
-%if ""==""
 Summary: Rapid multi-Python deployment
 Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
 
 License: MIT
 Url: https://pypi.python.org/pypi/execnet/
@@ -40,74 +24,59 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 BuildArch: noarch
 
-%if ""==""
 %py3_provides %oname
+
 %add_python3_req_skip win32event win32evtlogutil win32service
 %add_python3_req_skip win32serviceutil register
-%if "3"=="3"
 # hasn't got version for Python3
 %add_python3_req_skip rlcompleter2
-%endif
+
 %filter_from_provides /^python3(execnet\.script\.shell)/d
 # IndexError: list index out of range
 %filter_from_provides /^python3(execnet\.script\.socketserverservice)/d
 # No module named 'win32serviceutil'
 %filter_from_provides /^python3(execnet\.script\.quitserver)/d
 # No module named 'execnet.quitserver'
-%if "3"=="3"
 %filter_from_provides /^python3(execnet\.script\.xx)/d
 # depends from rlcompleter2
-%endif
-%endif
 
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-%endif
-
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-apipkg
-# one of the python3 tests requires python with 'apipkg' module
-BuildRequires: python-module-apipkg
+BuildRequires: python3-module-sphinx
 
 %if_with check
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-pytest-timeout
-%if_with py3_check_python2
-BuildRequires: python-modules-encodings
-%endif
-%endif
-
-%if ""!=""
-BuildRequires: python-module-alabaster
-BuildRequires: python-module-html5lib
-BuildRequires: python-module-objects.inv
 %endif
 
 %description
 %descr
-%if ""!=""
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+%descr
 
 This package contains documentation for %oname.
 
-%package -n %fname-pickles
+%package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
 
-%description -n %fname-pickles
+%description pickles
 %descr
 
 This package contains pickles for %oname.
-%endif
 
 %prep
 %setup
 %patch -p1
-%if ""!=""
-%prepare_sphinx .
+
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
-%endif
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -116,17 +85,16 @@ ln -s ../objects.inv doc/
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
+export PYTHONPATH=$PWD
+%make SPHINXBUILD="sphinx-build-3" -C doc pickle
+%make SPHINXBUILD="sphinx-build-3" -C doc html
+
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%if ""==""
 %python3_install
-%else
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C doc pickle
-%make -C doc html
+
 mkdir -p %buildroot%python3_sitelibdir/%oname
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
 
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -137,29 +105,24 @@ commands_pre =\
     cp %_bindir\/py.test3 \{envbindir\}\/pytest\
     sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
-%if "3"=="3"
 TOXENV=py%{python_version_nodots python3} tox.py3 --sitepackages -rv
-%else
-TOXENV=py%{python_version_nodots python} tox --sitepackages -rv
-%endif
-
-%if ""==""
 
 %files
 %doc CHANGELOG.rst *.txt
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info*
+%exclude %python3_sitelibdir/*/pickle
 
-%else
-
-%files
+%files docs
 %doc doc/_build/html/*
 
-%files -n %fname-pickles
+%files pickles
 %python3_sitelibdir/*/pickle
-%endif
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt3
+- Drop specsubst scheme.
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
 - Fixed FTBFS.
 
