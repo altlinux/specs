@@ -1,15 +1,12 @@
 Epoch: 1
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven2
 Version:        2.2.1
-Release:        alt6_61jpp8
+Release:        alt6_66jpp11
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0
 URL:            http://maven.apache.org
@@ -179,8 +176,11 @@ for pom in $(grep -l ">test<" $(find -name pom.xml | grep -v /test/)); do
     %pom_xpath_remove "pom:dependency[pom:scope[text()='test']]" $pom
 done
 
+# Remove outdated maven-compiler-plugin configuration
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+
 %build
-%mvn_build -f -s -- -P all-models
+%mvn_build -f -s -- -P all-models -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -220,6 +220,9 @@ done
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:2.2.1-alt6_66jpp11
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_61jpp8
 - new version
 
