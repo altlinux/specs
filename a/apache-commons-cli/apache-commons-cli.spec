@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-cli
 Version:        1.4
-Release:        alt1_8jpp8
+Release:        alt1_11jpp11
 Summary:        Command Line Interface Library for Java
 License:        ASL 2.0
 URL:            http://commons.apache.org/cli/
@@ -39,8 +39,14 @@ command line arguments and options.
 %mvn_alias : org.apache.commons:commons-cli
 %mvn_file : commons-cli %{name}
 
+# Fix javadoc generation on java 11
+%pom_xpath_inject pom:pluginManagement/pom:plugins "<plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration><source>1.6</source></configuration>
+</plugin>" 
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -50,6 +56,9 @@ command line arguments and options.
 %doc README.md RELEASE-NOTES.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4-alt1_11jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_8jpp8
 - fc update
 
