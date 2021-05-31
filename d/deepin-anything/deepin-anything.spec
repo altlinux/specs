@@ -1,7 +1,7 @@
 %define _sysusersdir %_prefix/lib/sysusers.d
 
 Name: deepin-anything
-Version: 5.0.7
+Version: 5.0.9
 Release: alt1
 Summary: Global search tool for Deepin
 License: GPL-3.0+
@@ -76,6 +76,9 @@ rm -rf %buildroot/usr/src/deepin-anything-0.0/
 %_datadir/dbus-1/interfaces/com.deepin.anything.xml
 
 %changelog
+* Mon May 31 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.9-alt1
+- New version (5.0.9) with rpmgs script.
+
 * Mon Feb 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.7-alt1
 - New version (5.0.7) with rpmgs script.
 
