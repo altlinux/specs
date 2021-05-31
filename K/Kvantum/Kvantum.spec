@@ -1,5 +1,5 @@
 Name: Kvantum
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
@@ -11,8 +11,8 @@ Url: https://github.com/tsujan/Kvantum
 Source: %name-%version.tar.gz
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake libX11-devel libXext-devel libqt4-devel qt5-base-devel qt5-tools-devel qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel desktop-file-utils icon-theme-hicolor
+BuildPreReq: rpm-build-ninja desktop-file-utils
+BuildRequires: gcc-c++ cmake libX11-devel libXext-devel libqt4-devel qt5-base-devel qt5-tools-devel qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel icon-theme-hicolor
 Requires: %name-data
 
 %description
@@ -49,11 +49,11 @@ This package contains the data needed for Kvantum.
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%cmake_insource -GNinja
-%ninja_build
+%cmake -GNinja
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 
 # desktop-file-validate doesn't recognize LXQt
 sed -i "s|LXQt|X-LXQt|" %buildroot%_desktopdir/kvantummanager.desktop
@@ -87,6 +87,10 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %_datadir/themes/Kv*/*
 
 %changelog
+* Mon May 31 2021 Leontiy Volodin <lvol@altlinux.org> 0.20.0-alt1
+- 0.20.0
+- NMU: spec: adapted to new cmake macros (altlinux.org/CMakeMigration2021)
+
 * Sat Mar 13 2021 Leontiy Volodin <lvol@altlinux.org> 0.19.0-alt1
 - 0.19.0
 
