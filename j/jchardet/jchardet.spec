@@ -4,18 +4,18 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jchardet
 Version:        1.1
-Release:        alt2_19jpp8
+Release:        alt2_22jpp11
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 URL:            http://jchardet.sourceforge.net/
-Source0:        http://download.sourceforge.net/jchardet/%{version}/jchardet-%{version}.zip
-Source1:        http://repo1.maven.org/maven2/net/sourceforge/%{name}/%{name}/1.0/%{name}-1.0.pom
+Source0:        https://download.sourceforge.net/jchardet/%{version}/jchardet-%{version}.zip
+Source1:        https://repo1.maven.org/maven2/net/sourceforge/%{name}/%{name}/1.0/%{name}-1.0.pom
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -46,6 +46,9 @@ cp %{SOURCE1} pom.xml
 # fix up the provided version
 %pom_xpath_set /pom:project/pom:version %{version}
 
+# remove hard-coded compiler configuration
+%pom_remove_plugin :maven-compiler-plugin
+
 # remove distributionManagement.status from pom (maven stops build
 # when it's there)
 %pom_xpath_remove pom:distributionManagement
@@ -55,7 +58,7 @@ mkdir -p src/main/java/org/mozilla/intl/chardet
 mv src/*java src/main/java/org/mozilla/intl/chardet
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -69,6 +72,9 @@ mv src/*java src/main/java/org/mozilla/intl/chardet
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1-alt2_22jpp11
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_19jpp8
 - fc update & java 8 build
 
