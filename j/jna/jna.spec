@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jna
 Version:        5.4.0
-Release:        alt1_2jpp8
+Release:        alt1_7jpp11
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -60,11 +60,6 @@ BuildRequires:  libX11-devel
 BuildRequires:  libXt-devel
 %if %{with reflections}
 BuildRequires:  reflections
-%endif
-
-%ifarch %{arm}
-# Speed up builds on 32bit arm
-#BuildRequires: java-1.8.0-openjdk-aarch32-devel
 %endif
 Source44: import.info
 
@@ -120,7 +115,6 @@ build-jar-repository -s -p lib junit reflections
 build-jar-repository -s -p lib junit
 rm test/com/sun/jna/StructureFieldOrderInspector.java
 rm test/com/sun/jna/StructureFieldOrderInspectorTest.java
-rm contrib/platform/test/com/sun/jna/platform/StructureFieldOrderTest.java
 %endif
 ln -s $(xmvn-resolve ant:ant:1.10.5) lib/ant.jar
 
@@ -128,19 +122,12 @@ cp lib/native/aix-ppc64.jar lib/clover.jar
 
 
 %build
-# Ensure we get the jit on arm
-%ifarch %{arm}
-export JAVA_HOME=$(ls -d %{_jvmdir}/java-1.8.0-openjdk-aarch32*)
-%else
-export JAVA_HOME=%{_jvmdir}/java
-%endif
-
 # We pass -Ddynlink.native which comes from our patch because
 # upstream doesn't want to default to dynamic linking.
 # -Drelease removes the .SNAPSHOT suffix from maven artifact names
 #ant -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true native compile javadoc jar contrib-jars
-ant -Drelease -Dcompatibility=1.6 -Dplatform.compatibility=1.6\
- -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true native dist
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Drelease -Dcompatibility=1.6 -Dplatform.compatibility=1.6\
+ -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -DCC=gcc native dist
 # remove compiled contribs
 find contrib -name build -exec rm -rf {} \; || :
 
@@ -175,6 +162,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 5.4.0-alt1_7jpp11
+- update
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_2jpp8
 - new version
 
