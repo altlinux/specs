@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
@@ -16,7 +16,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_42jpp8
+Release:        alt1_46jpp11
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -45,15 +45,14 @@ Patch9:         %{name}-1.0.3-libpng15.patch
 Patch10:        %{name}-class-version15.patch
 Patch11:        %{name}-use-system-extgl.patch
 Patch12:        %{name}-gcc6.patch
+Patch13:        %{name}-openjdk11.patch
 BuildRequires:  gcc-c++
 BuildRequires:  ant sdljava dom4j vecmath1.2 swig xml-commons-apis
 BuildRequires:  libGLU-devel libdevil-devel libXxf86vm-devel libjpeg-devel
-BuildRequires:  libpng-devel libXext-devel libXrandr-devel libXcursor-devel
+BuildRequires:  libpng-devel libpng17-tools libXext-devel libXrandr-devel libXcursor-devel
 BuildRequires:  libXt-devel libXrender-devel libvorbis-devel desktop-file-utils
-# Make sure we get the normal openjdk and not the incomplete aarch32 version
-BuildRequires:  java-1.8.0-openjdk-devel
 BuildRequires:  libappstream-glib
-Requires:       sdljava dom4j vecmath1.2 java >= 1.6.0 jpackage-utils
+Requires:       sdljava dom4j vecmath1.2 java jpackage-utils
 Requires:       icon-theme-hicolor autodownloader
 # These are dynamically opened by lwjgl:
 Requires:       libopenal1
@@ -143,6 +142,7 @@ popd
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 cp %{SOURCE7} .
 sed -i 's/\r//' license.txt
 # we use the system versions of these
@@ -152,7 +152,7 @@ rm -r libsrc/irrlicht-0.14-patched/libpng libsrc/irrlicht-0.14-patched/zlib \
 
 %build
 export RPM_OPT_FLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE"
-export JAVA_HOME=/usr/lib/jvm/java-openjdk
+#export JAVA_HOME=/usr/lib/jvm/java-openjdk
 
 # special case ix86 as all of ix86 should look in the i386 jre lib subdir
 %ifarch %{ix86}
@@ -187,13 +187,13 @@ popd
 
 # build lwjgl
 pushd libsrc/lwjgl
-ant jars
-ant compile_native
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jars
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  compile_native
 popd
 
 # build bolzplatz itself
 mkdir classes
-javac -d classes -encoding iso-8859-1 \
+javac  -target 1.8 -source 1.8 -d classes -encoding iso-8859-1 \
   -cp `build-classpath dom4j sdljava vecmath1.2`:./libsrc/jirr-dev/lib/irrlicht.jar:./libsrc/lwjgl/libs/lwjgl.jar \
   `find ./src -name '*.java'`
 jar cf %{name}.jar -C classes .
@@ -245,6 +245,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_46jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_42jpp8
 - fc update
 
