@@ -1,5 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
+# TODO: remove later this fix for documentation
+%define _cmake__builddir BUILD
+
 %def_without openmp
 %def_without unicap
 %def_with swig
@@ -38,7 +41,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.5.1
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -270,9 +273,9 @@ popd >/dev/null
 
 rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
-mkdir -pv BUILD/downloads/xfeatures2d
-cp %_builddir/%bname-xfeatures2d-boostdesc-%version/* BUILD/downloads/xfeatures2d/
-cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
+mkdir -pv %_cmake__builddir/downloads/xfeatures2d
+cp %_builddir/%bname-xfeatures2d-boostdesc-%version/* %_cmake__builddir/downloads/xfeatures2d/
+cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfeatures2d/
 
 %build
 %cmake \
@@ -311,8 +314,8 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	-DOPENCV_SKIP_CMAKE_CXX_STANDARD:BOOL=ON \
 	%nil
 
-%cmake_build VERBOSE=1
-%cmake_build VERBOSE=1 opencv_docs
+%cmake_build
+%cmake_build -t opencv_docs
 
 %install
 %cmakeinstall_std install_docs
@@ -360,6 +363,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/quality
 
 %changelog
+* Mon May 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.1-alt2
+- Fixed build with new cmake macros (Closes: #40128).
+
 * Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.1-alt1
 - Updated to upstream version 4.5.1.
 
