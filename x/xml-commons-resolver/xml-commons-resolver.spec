@@ -1,12 +1,12 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xml-commons-resolver
 Epoch:          0
 Version:        1.2
-Release:        alt1_29jpp8
+Release:        alt1_32jpp11
 Summary:        Resolver subproject of xml-commons
 License:        ASL 2.0
 URL:            http://xerces.apache.org/xml-commons/components/resolver/
@@ -61,7 +61,7 @@ sed -i 's/\r//' KEYS LICENSE.resolver.txt NOTICE-resolver.txt
 %mvn_file : xml-commons-resolver xml-resolver
 
 %build
-%ant -f resolver.xml jar javadocs
+%ant -f resolver.xml jar javadocs -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
 %mvn_artifact %{SOURCE5} build/resolver.jar
 
 %install
@@ -92,6 +92,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc LICENSE.resolver.txt NOTICE-resolver.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_32jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_29jpp8
 - fc update
 
