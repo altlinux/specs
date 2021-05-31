@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
 %define module_version          1.12.0
-%define module_release          alt2
+%define module_release          alt3
 
 %define flavour		std-def
 %define karch	%ix86 x86_64 aarch64 ppc64le
@@ -45,10 +45,11 @@ tar -jxvf %kernel_src/%module_name-%module_version.tar.bz2
 
 %build
 %cmake \
+      -G 'Unix Makefiles' \
       -DKDIR=%_usrsrc/linux-%kversion-%flavour \
       -DBUILD_IPOE_DRIVER=TRUE \
       -DBUILD_VLAN_MON_DRIVER=TRUE \
-      ..
+      -B BUILD
 
 make -C BUILD/drivers/ipoe
 make -C BUILD/drivers/vlan_mon
@@ -64,6 +65,9 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon May 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.12.0-alt3
+- NMU: FTBFS: cmake
 
 * Sun Jan 26 2020 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt2
 - ipoe,vlan_mon: add support for kernels 5.2+
