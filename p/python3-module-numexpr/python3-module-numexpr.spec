@@ -2,7 +2,7 @@
 
 Name:           python3-module-%oname
 Version:        2.6.2
-Release:        alt5
+Release:        alt6
 Epoch:          1
 
 Summary:        Fast numerical array expression evaluator for Python and NumPy
@@ -18,9 +18,9 @@ Patch1:         %oname-%version-alt-config.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-setuptools
+BuildRequires: libnumpy-py3-devel python3-module-numpy-testing
 
-BuildRequires: gcc-c++ libnumpy-devel liblapack-devel
+BuildRequires: gcc-c++ liblapack-devel
 
 Requires: /proc
 
@@ -71,6 +71,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1:2.6.2-alt6
+- Fixed Build Requires.
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.2-alt5
 - build python3 separately, without tests subpackage
 
