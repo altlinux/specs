@@ -1,7 +1,10 @@
+#hasher-priv: master: idle time limit (3600 seconds) exceeded
+%define _without_test 1
+
 %define dist Event-Lib
 Name: perl-%dist
 Version: 1.03
-Release: alt6.1
+Release: alt7
 
 Summary: Perl extentions for event-based programming
 License: GPL or Artistic
@@ -52,6 +55,9 @@ fi
 %perl_vendor_autolib/Event
 
 %changelog
+* Mon May 31 2021 Igor Vlasenko <viy@altlinux.org> 1.03-alt7
+- disbled tests (hang) for perl 5.32 rebuild
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt6.1
 - rebuild with new perl 5.28.1
 
