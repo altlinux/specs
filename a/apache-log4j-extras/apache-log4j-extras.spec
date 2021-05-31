@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -19,13 +19,15 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          apache-log4j-extras
 Version:       1.2.17.1
-Release:       alt1_15jpp8
+Release:       alt1_18jpp11
 Summary:       Apache Extras Companion for Apache log4j
-
 License:       ASL 2.0
+
 URL:           http://logging.apache.org/log4j/extras
 Source0:       https://github.com/apache/log4j-extras/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+
 BuildArch:     noarch
+
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
@@ -34,6 +36,7 @@ BuildRequires: mvn(org.apache.geronimo.specs:specs:pom:)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 BuildRequires: mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires: mvn(org.hsqldb:hsqldb)
+
 Requires:      mvn(log4j:log4j:1.2.17)
 Source44: import.info
 
@@ -66,12 +69,15 @@ find . -name '*.jar' -delete
 
 %pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId='hsqldb']/pom:groupId" org.hsqldb
 
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+
 %build
 %if %{without javadoc}
 args="-j"
 %endif
 # Tests disabled because of failures
-%mvn_build $args -- -DskipTests
+%mvn_build $args -- -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -86,6 +92,9 @@ args="-j"
 %endif
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.17.1-alt1_18jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.17.1-alt1_15jpp8
 - fc update
 
