@@ -3,8 +3,8 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-%define fedora 31
+BuildRequires: jpackage-11-compat
+%define fedora 33
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # The gaxis module requires axis version 1.x
@@ -23,7 +23,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_15jpp8
+Release:	alt1_20jpp11
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -70,6 +70,9 @@ Patch9:		%{name}-remove-unused-FORCE_SSLV3_AND_CONSTRAIN_CIPHERSUITES.patch
 #		Adapt to changes in bouncycastle 1.61
 #		https://github.com/jglobus/JGlobus/pull/168
 Patch10:	%{name}-adapt-to-changes-in-PrivateKeyInfo-class.patch
+#		Update source and target for JDK 11
+#		Add maven-javadoc-plugin configuration for JDK 11
+Patch11:	%{name}-java-version.patch
 
 BuildArch:	noarch
 
@@ -220,6 +223,7 @@ This package contains the API documentation for %{name}.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # Do not package test classes
 %mvn_package org.jglobus:container-test-utils __noinstall
@@ -232,6 +236,12 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin org.apache.maven.plugins:maven-release-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
 
+%if %{?fedora}%{!?fedora:0} >= 33 || %{?rhel}%{!?rhel:0} >= 8
+# F33+ and EPEL8+ doesn't use the maven-javadoc-plugin to generate javadoc
+# Remove maven-javadoc-plugin configuration to avoid build failure
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
+%endif
+
 %if ! %{gaxismodule}
 %pom_disable_module axis
 %endif
@@ -242,7 +252,7 @@ This package contains the API documentation for %{name}.
 
 %build
 # Many tests requires network connections and a valid proxy certificate
-%mvn_build -f -s -- -Ptomcat7 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Ptomcat7 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -279,6 +289,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt1_20jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_15jpp8
 - update
 
