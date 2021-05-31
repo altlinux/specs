@@ -1,12 +1,12 @@
 Epoch: 1
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ws-commons-util
 Version:        1.0.2
-Release:        alt1_11jpp8
+Release:        alt1_14jpp11
 Summary:        Common utilities from the Apache Web Services Project
 
 License:        ASL 2.0
@@ -62,11 +62,14 @@ BuildArch: noarch
 # This dep is supplied by the JRE
 %pom_remove_dep "xml-apis:xml-apis"
 
+# Remove hard-coded compiler configuration
+%pom_remove_plugin :maven-compiler-plugin
+
 # Avoid unnecessary runtime dependency on junit, used for tests only
 %pom_xpath_inject 'pom:dependency[pom:artifactId="junit"]' "<scope>test</scope>"
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -78,6 +81,9 @@ BuildArch: noarch
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0.2-alt1_14jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_11jpp8
 - fc update
 
