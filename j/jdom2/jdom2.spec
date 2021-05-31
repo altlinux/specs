@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_15jpp8
+Release:       alt1_19jpp11
 Summary:       Java manipulation of XML made easy
 License:       Saxpath
 URL:           http://www.jdom.org/
@@ -22,11 +22,11 @@ Source4:       generate-tarball.sh
 # Disable gpg signatures
 # Process contrib and junit pom files
 Patch0:        0001-Adapt-build.patch
+Patch1:        0002-More-adapt-build-javac-1.8.patch
 
 BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: ant-junit
-BuildRequires: isorelax
 BuildRequires: jaxen
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
@@ -60,6 +60,7 @@ This package contains javadoc for %{name}.
 %setup -q -n jdom-JDOM-%{version}
 
 %patch0 -p1
+%patch1 -p1
 
 cp -p %{SOURCE1} maven/contrib.pom
 cp -p %{SOURCE2} maven/junit.pom
@@ -70,10 +71,13 @@ sed -i 's/\r//' LICENSE.txt README.txt
 sed -i.coverage "s|coverage, jars|jars|" build.xml
 
 mkdir lib
-build-jar-repository lib xerces-j2 xml-commons-apis jaxen junit isorelax xalan-j2 xalan-j2-serializer
+build-jar-repository lib xerces-j2 xml-commons-apis jaxen junit xalan-j2 xalan-j2-serializer
+
+# drop optional isorelax verifier support from contrib
+rm -r contrib/src/java/org/jdom2/contrib/schema
 
 %build
-ant -Dversion=%{version} -Dj2se.apidoc=%{_javadocdir}/java maven
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dversion=%{version} -Dj2se.apidoc=%{_javadocdir}/java maven
 
 # Make jar into an OSGi bundle
 bnd wrap --output build/package/jdom-%{version}.bar --properties %{SOURCE3} \
@@ -94,6 +98,9 @@ mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_19jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_15jpp8
 - fc update
 
