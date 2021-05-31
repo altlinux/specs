@@ -7,9 +7,12 @@
 # tests require approximately 500Mb of video data and run really long (up to a few hours)
 %def_disable check
 
+# TODO: remove later this fix for documentation
+%define _cmake__builddir BUILD
+
 Name: lib%oname
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -99,8 +102,8 @@ echo -n %version > version
 # just add test data and correspondingly modify test data path
 # NOTE: running tests may take very long time
 export LIBAOM_TEST_DATA_PATH=$(pwd)/.gear/testdata
-export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/BUILD/third_party/googletest/src/googletest
-%make -C BUILD runtests
+export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/googletest/src/googletest
+%make -C %_cmake__builddir runtests
 
 %files -n %libname
 %doc LICENSE PATENTS README.md
@@ -119,9 +122,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/BUILD/third_party/googletest/sr
 %_bindir/*
 
 %files docs
-%doc BUILD/docs/html
+%doc %_cmake__builddir/docs/html
 
 %changelog
+* Mon May 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt2
+- Fixed build with new cmake macros (Closes: #40126).
+
 * Fri Apr 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt1
 - Updated to upstream version 3.0.0.
 
