@@ -4,6 +4,7 @@
 
 %define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
+%define _cmake__builddir BUILD
 
 %def_without shared_togl
 %define togl_ver 2.1
@@ -12,7 +13,7 @@
 
 Name: netgen
 Version: 6.2.2102
-Release: alt1
+Release: alt1.1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -262,7 +263,7 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
     -DUSE_MPEG=OFF \
 %endif
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 ############################################################################
 ############################      MPI ver ##################################
@@ -381,6 +382,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Wed May 05 2021 Arseny Maslennikov <arseny@altlinux.org> 6.2.2102-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Apr 09 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2102-alt1
 - New version.
 - Build for all architectures.
