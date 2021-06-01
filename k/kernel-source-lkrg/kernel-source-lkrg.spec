@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.9.1.0.6.gita516ef4
+%define module_version 0.9.1.0.8.git0fba5fe
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -32,12 +32,32 @@ file) based on the unauthorized credentials.
 
 This package contains the LKRG sources.
 
+%package -n lkrg-config
+Summary: Systemwide config file for Linux Kernel Runtime Guard module
+BuildArch: noarch
+Group: System/Configuration/Other
+
+%description -n lkrg-config
+Linux Kernel Runtime Guard (LKRG) is a loadable kernel module that performs
+runtime integrity checking of the Linux kernel and detection of security
+vulnerability exploits against the kernel. As controversial as this concept is,
+LKRG attempts to post-detect and hopefully promptly respond to unauthorized
+modifications to the running Linux kernel (integrity checking) or to
+credentials (such as user IDs) of the running processes (exploit
+detection). For process credentials, LKRG attempts to detect the exploit and
+take action before the kernel would grant the process access (such as open a
+file) based on the unauthorized credentials.
+
+This package contains a systemwide config file fo Linux Kernel Runtime Guard.
+
 %prep
 %setup -q -c
 
 %install
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
+mkdir -p %buildroot%_sysconfdir/sysctl.d
+cp -a %module_name-%version/scripts/bootup/lkrg.conf %buildroot%_sysconfdir/sysctl.d/lkrg.conf
 
 %check
 # Just a test build on un-def kernel.
@@ -49,7 +69,16 @@ done
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
+%files -n lkrg-config
+%config(noreplace) %_sysconfdir/sysctl.d/lkrg.conf
+
 %changelog
+* Sat May 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.8.git0fba5fe-alt1
+- Updated to v0.9.1-8-g0fba5fe.
+
+* Thu May 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.6.gita516ef4-alt2
+- Added lkrg-config subpackage.
+
 * Tue May 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.6.gita516ef4-alt1
 - Updated to v0.9.1-6-ga516ef4.
 

@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.1.0.6.gita516ef4
+%define module_version	0.9.1.0.8.git0fba5fe
 %define module_release	alt1
 
 %define flavour		std-debug
@@ -41,6 +41,16 @@ Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
+Requires: lkrg-config >= %module_version
+
+# Conflicts due %_sysconfdir/lkrg.conf. These conflicts should be at
+# lkrg-config package, but sisyphus_check does not allow dependencies to kernel
+# modules in ordinary packages.
+Conflicts: kernel-modules-lkrg-std-def = 0.9.1
+Conflicts: kernel-modules-lkrg-un-def = 0.9.1
+Conflicts: kernel-modules-lkrg-std-pae = 0.9.1
+Conflicts: kernel-modules-lkrg-std-debug = 0.9.1
+
 ExclusiveArch: %karch
 
 %description
@@ -66,7 +76,6 @@ sed -i 's,@KERNVFR@,%kversion-%flavour-%krelease,g' lkrg.init
 
 %install
 install -D -p -m0644 p_lkrg.ko %buildroot%module_dir/p_lkrg.ko
-install -D -p -m0644 scripts/bootup/lkrg.conf %buildroot%_sysconfdir/sysctl.d/lkrg.conf
 install -D -p -m0755 lkrg.init %buildroot%_initdir/lkrg-%kversion-%flavour-%krelease
 
 mkdir -p %buildroot%_unitdir
@@ -209,16 +218,51 @@ fi
 # {{{
 # hacks to keep LKRG running to prevent it stopping during remove-old-kernel
 %triggerun -- kernel-modules-lkrg-std-def < 0.9.1-alt1
-/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+if [ "$2" -gt 0 ]; then
+	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+fi
 
 %triggerun -- kernel-modules-lkrg-un-def < 0.9.1-alt1
-/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+if [ "$2" -gt 0 ]; then
+	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+fi
 
 %triggerun -- kernel-modules-lkrg-std-debug < 0.9.1-alt1
-/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+if [ "$2" -gt 0 ]; then
+	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+fi
 
 %triggerun -- kernel-modules-lkrg-std-pae < 0.9.1-alt1
-/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+if [ "$2" -gt 0 ]; then
+	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+fi
+# }}}
+
+# {{{
+# Warning about the conflicted module version
+%triggerpostun -- kernel-modules-lkrg-std-def <= 0.9.1.0.8.git0fba5fe
+if [ "$2" -gt 0 ]; then
+	echo "Warning! Conflicted LKRG module version 0.9.1 for std-def kernel flavor removed."
+	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
+fi
+
+%triggerpostun -- kernel-modules-lkrg-un-def <= 0.9.1.0.8.git0fba5fe
+if [ "$2" -gt 0 ]; then
+	echo "Warning! Conflicted LKRG module version 0.9.1 for un-def kernel flavor removed."
+	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
+fi
+
+%triggerpostun -- kernel-modules-lkrg-std-debug <= 0.9.1.8.git0fba5fe
+if [ "$2" -gt 0 ]; then
+	echo "Warning! Conflicted LKRG module version 0.9.1 for std-debug kernel flavor removed."
+	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
+fi
+
+%triggerpostun -- kernel-modules-lkrg-std-pae <= 0.9.1.8.git0fba5fe
+if [ "$2" -gt 0 ]; then
+	echo "Warning! Conflicted LKRG module version 0.9.1 for std-pae kernel flavor removed."
+	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
+fi
 # }}}
 
 %preun
@@ -229,7 +273,6 @@ fi
 
 %files
 %doc README
-%config(noreplace) %_sysconfdir/sysctl.d/lkrg.conf
 %module_dir/p_lkrg.ko
 %_initdir/lkrg-%kversion-%flavour-%krelease
 %_unitdir/lkrg-%kversion-%flavour-%krelease.service
@@ -238,6 +281,14 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Sat May 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.8.git0fba5fe-alt1
+- Updated to v0.9.1-8-g0fba5fe.
+- Added explicit conflicts with LKRG module version 0.9.1.
+
+* Thu May 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.6.gita516ef4-alt2
+- Moved %%_sysconfdir/sysctl.d/lkrg.conf to lkrg-config package.
+- Added dependency to lkrg-config package.
 
 * Tue May 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.6.gita516ef4-alt1
 - Updated to v0.9.1-6-ga516ef4.
