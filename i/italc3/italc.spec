@@ -33,7 +33,7 @@
 
 Name: italc3
 Version: 3.0.3
-Release: alt3
+Release: alt3.1
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -79,6 +79,7 @@ Conflicts: italc2 < 3.0.0
 BuildRequires(pre): rpm-macros-branch rpm-build-licenses rpm-macros-cmake
 BuildRequires: /proc
 BuildRequires: cmake
+BuildRequires: make
 BuildRequires: GraphicsMagick-ImageMagick-compat
 BuildRequires: icoutils
 
@@ -245,12 +246,12 @@ tar xf %SOURCE1
 %patch36 -p1
 
 %build
-%cmake -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
-%cmake_build update-locales VERBOSE=1
-%cmake_build VERBOSE=1
+%cmake -G'Unix Makefiles' -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
+%make_build VERBOSE=1 -C "%_cmake__builddir" update-locales
+%make_build VERBOSE=1 -C "%_cmake__builddir"
 
 %install
-%cmakeinstall_std
+%makeinstall_std VERBOSE=1 -C "%_cmake__builddir"
 
 # Install iTALC.conf
 install -m 644 -pD %SOURCE10 "%buildroot%_sysconfdir/xdg/iTALC Solutions/iTALC.conf"
@@ -360,6 +361,9 @@ cp imc/imc.1 ica/ica.1 ima/italc.1 %buildroot%_man1dir
 %_iconsdir/hicolor/*x*/apps/italc.png
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 3.0.3-alt3.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt3
 - Apply patches from Debian (fixes CVE-2018-15127, CVE-2018-20019, CVE-2018-20020, CVE-2018-20021, CVE-2018-20022, CVE-2018-20023, CVE-2018-20024, CVE-2018-20748, CVE-2018-20748, CVE-2018-20748, CVE-2018-20748, CVE-2018-20749, CVE-2018-20750, CVE-2018-7225, CVE-2019-15681).
 
