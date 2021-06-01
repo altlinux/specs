@@ -1,17 +1,17 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-components-pom
 Summary:        Plexus Components POM
-Version:        4.0
-Release:        alt1_1jpp8
+Version:        6.4
+Release:        alt1_1jpp11
 License:        ASL 2.0
 
 URL:            https://github.com/codehaus-plexus/plexus-components
-Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-components/%{version}/plexus-components-%{version}.pom
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-components/%{version}/plexus-components-%{version}.pom
+Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
@@ -30,7 +30,7 @@ cp -p %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -39,6 +39,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 6.4-alt1_1jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1jpp8
 - new version
 
