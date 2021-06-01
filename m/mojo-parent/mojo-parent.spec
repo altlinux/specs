@@ -1,18 +1,19 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mojo-parent
-Version:        40
-Release:        alt1_10jpp8
+Version:        50
+Release:        alt1_3jpp11
 Summary:        Codehaus MOJO parent project pom file
-
 License:        ASL 2.0
-URL:            http://www.mojohaus.org/mojo-parent/
+
+URL:            https://www.mojohaus.org/mojo-parent/
 Source0:        https://github.com/mojohaus/mojo-parent/archive/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -23,8 +24,10 @@ Codehaus MOJO parent project pom file
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+
 # Cobertura plugin is executed only during clean Maven phase.
 %pom_remove_plugin :cobertura-maven-plugin
+
 # Not needed in Fedora.
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-site-plugin
@@ -32,17 +35,24 @@ Codehaus MOJO parent project pom file
 
 cp %SOURCE1 .
 
+
 %build
 %mvn_alias : org.codehaus.mojo:mojo
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
 
+
 %files -f .mfiles
 %doc LICENSE-2.0.txt
 
+
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:50-alt1_3jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:40-alt1_10jpp8
 - fc update
 
