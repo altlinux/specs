@@ -1,5 +1,5 @@
 Name: libisc-export-dhcp
-Version: 9.11.15
+Version: 9.11.32
 Release: alt1
 
 Summary: ISC BIND 9.9.x exportable libraries to build ISC DHCP
@@ -109,6 +109,9 @@ done;
 %_libdir/lib*-export.so
 
 %changelog
+* Tue Jun 01 2021 Mikhail Efremov <sem@altlinux.org> 9.11.32-alt1
+- Updated to 9.11.32.
+
 * Fri Jan 24 2020 Mikhail Efremov <sem@altlinux.org> 9.11.15-alt1
 - Build without python.
 - Fixed build without gssapi.

@@ -3,13 +3,13 @@
 # vim600: set fdm=marker:
 
 %define patchlevel %nil
-#define patchlevel -P1
+%define patchlevel -P1
 
 %define _unpackaged_files_terminate_build 1
 
 Name: dhcp
-Version: 4.4.2
-Release: alt2
+Version: 4.4.2.P1
+Release: alt1
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -84,9 +84,7 @@ Patch0036: 0036-dhclient-Don-t-hang-before-returning.patch
 Patch0037: 0037-dhcrelay-fix-relaying-of-return-packets.patch
 Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
 Patch0039: 0039-fix-spelling-mistakes.patch
-
-# Patch from upstream git
-Patch1001: fix-gcc10-build.patch
+Patch0040: 0040-Fixed-gcc-10-compilation-issues.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -240,8 +238,7 @@ server
 %patch0037 -p2
 %patch0038 -p2
 %patch0039 -p2
-
-%patch1001 -p1
+%patch0040 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -568,6 +565,9 @@ fi
 # }}}
 
 %changelog
+* Tue Jun 01 2021 Mikhail Efremov <sem@altlinux.org> 1:4.4.2.P1-alt1
+- Updated to 4.4.2-P1 (fixes: CVE-2021-25217).
+
 * Fri Dec 04 2020 Mikhail Efremov <sem@altlinux.org> 1:4.4.2-alt2
 - Fixed build with gcc-10.
 - Used useradd -N instead of -n.
