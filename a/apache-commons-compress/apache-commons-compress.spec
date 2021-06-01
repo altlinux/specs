@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name       compress
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.19
-Release:        alt1_2jpp8
+Version:        1.20
+Release:        alt1_4jpp11
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-compress/
@@ -77,10 +77,13 @@ rm src/test/java/org/apache/commons/compress/OsgiITest.java
 %pom_add_dep org.mockito:mockito-core::test
 rm src/test/java/org/apache/commons/compress/compressors/z/ZCompressorInputStreamTest.java
 
+# Generate Java 8 level bytecode when built on Java 11
+%pom_xpath_replace "pom:maven.compiler.release" "<maven.compiler.release>8</maven.compiler.release>"
+
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : commons:
-%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.compress
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.compress
 
 %install
 %mvn_install
@@ -92,6 +95,9 @@ rm src/test/java/org/apache/commons/compress/compressors/z/ZCompressorInputStrea
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.20-alt1_4jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.19-alt1_2jpp8
 - new version
 
