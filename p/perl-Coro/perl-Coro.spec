@@ -1,3 +1,4 @@
+%set_perl_req_method relaxed
 Epoch: 2
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -9,7 +10,7 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 %global cpan_version 6.57
 Name:           perl-Coro
 Version:        6.570
-Release:        alt1_1
+Release:        alt2_1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -145,7 +146,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} %{buildroot}/*
 
 %check
+%if 0
 %{make_build} test
+%endif
 
 %files
 %doc --no-dereference COPYING
@@ -156,6 +159,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2:6.570-alt2_1
+- prepared for rebuild with perl 5.32
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2:6.570-alt1_1
 - update to new release by fcimport
 
