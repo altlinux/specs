@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Hijri to Gregorian dates converter
@@ -46,6 +46,9 @@ using the Umm al-Qura calendar of Saudi Arabia.
 
 
 %changelog
+* Tue Jun 01 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Thu Nov 05 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - first build for Sisyphus
 
