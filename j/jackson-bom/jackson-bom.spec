@@ -1,21 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-bom
-Version:       2.10.2
-Release:       alt1_2jpp8
+Version:       2.11.2
+Release:       alt1_1jpp11
 Summary:       Bill of materials POM for Jackson projects
 License:       ASL 2.0
+
 URL:           https://github.com/FasterXML/jackson-bom
 Source0:       %{url}/archive/%{name}-%{version}.tar.gz
-# Upstream chooses not to include licenses with their pom only projects:
-# https://github.com/FasterXML/jackson-parent/issues/1
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:) >= 2.10
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:) >= 2.11
 
 BuildArch:      noarch
 Source44: import.info
@@ -26,9 +24,6 @@ A "bill of materials" POM for Jackson dependencies.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-cp -p %{SOURCE1} LICENSE
-sed -i 's/\r//' LICENSE
-
 # Disable plugins not needed during RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin" base
 %pom_remove_plugin ":nexus-staging-maven-plugin" base
@@ -37,7 +32,7 @@ sed -i 's/\r//' LICENSE
 %pom_change_dep "javax.activation:javax.activation-api" "jakarta.activation:jakarta.activation-api" base
 
 %build
-%mvn_build -j
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -47,6 +42,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
 - new version
 
