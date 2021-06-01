@@ -1,11 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_without tests
+
 Name:           univocity-parsers
-Version:        2.8.3
-Release:        alt1_2jpp11
+Version:        2.9.0
+Release:        alt1_1jpp11
 Summary:        Collection of parsers for Java
 License:        ASL 2.0
 
@@ -15,11 +23,13 @@ Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.univocity:univocity-output-tester)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+%if %{with tests}
+BuildRequires:  mvn(com.univocity:univocity-output-tester)
 BuildRequires:  mvn(org.hsqldb:hsqldb)
 BuildRequires:  mvn(org.testng:testng)
+%endif
 Source44: import.info
 
 %description
@@ -43,7 +53,11 @@ API documentation for %{name}.
 %pom_remove_plugin :maven-javadoc-plugin
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%if %{with tests}
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%else
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%endif
 
 %install
 %mvn_install
@@ -55,6 +69,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.html
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.9.0-alt1_1jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 2.8.3-alt1_2jpp11
 - new version
 
