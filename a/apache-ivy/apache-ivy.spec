@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,45 +15,46 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with vfs
 
 Name:           apache-ivy
-Version:        2.4.0
-Release:        alt1_20jpp8
+Version:        2.5.0
+Release:        alt1_1jpp11
 Summary:        Java-based dependency manager
-
 License:        ASL 2.0
-URL:            http://ant.apache.org/ivy
-Source0:        http://www.apache.org/dist/ant/ivy/%{version}/%{name}-%{version}-src.tar.gz
+
+URL:            https://ant.apache.org/ivy
+Source0:        https://www.apache.org/dist/ant/ivy/%{version}/%{name}-%{version}-src.tar.gz
+
 BuildArch:      noarch
 
 # Non-upstreamable.  Add /etc/ivy/ivysettings.xml at the end list of
 # settings files Ivy tries to load.  This file will be used only as
 # last resort, when no other setting files exist.
-Patch0:         %{name}-global-settings.patch
-# sent upstream: IVY-1521
-Patch1:         port-to-bc-1.52.patch
+Patch0:         00-global-settings.patch
 
-Provides:       ivy = %{version}-%{release}
+# Disable generating a code coverage report during build.
+Patch1:         01-disable-jacoco-coverage-report.patch
 
 BuildRequires:  ant
-BuildRequires:  ant-contrib
-BuildRequires:  ant-junit
-BuildRequires:  ant-testutil
+BuildRequires:  httpcomponents-client
+BuildRequires:  ivy-local >= 4
+BuildRequires:  jakarta-oro
+
 %if %{with vfs}
 BuildRequires:  apache-commons-vfs
 %endif
-BuildRequires:  apache-commons-lang
+
 %if %{with bouncycastle}
 BuildRequires:  bouncycastle
 BuildRequires:  bouncycastle-pg
 %endif
-BuildRequires:  apache-commons-httpclient
-BuildRequires:  jsch
-BuildRequires:  jakarta-oro
-BuildRequires:  ivy-local >= 4
+
 %if %{with ssh}
+BuildRequires:  jsch
 BuildRequires:  jsch-agent-proxy-connector-factory
 BuildRequires:  jsch-agent-proxy-core
 BuildRequires:  jsch-agent-proxy-jsch
 %endif
+
+Provides:       ivy = %{version}-%{release}
 Source44: import.info
 AutoReqProv: yes,noosgi
 Obsoletes: ivy < 2
@@ -66,6 +67,7 @@ tool, Apache Ivy works particularly well with Apache Ant providing a number
 of powerful Ant tasks ranging from dependency resolution to dependency
 reporting and publication.
 
+
 %package javadoc
 Group: Development/Java
 Summary:        API Documentation for ivy
@@ -74,10 +76,13 @@ BuildArch: noarch
 %description javadoc
 JavaDoc documentation for %{name}
 
+
 %prep
 %setup -q
-%patch0 -p1
+%patch0
 %patch1 -p1
+
+find -name '*.jar' -delete
 
 # Don't hardcode sysconfdir path
 sed -i 's:/etc/ivy/:%{_sysconfdir}/ivy/:' src/java/org/apache/ivy/ant/IvyAntSettings.java
@@ -96,84 +101,68 @@ rm src/java/org/apache/ivy/plugins/resolver/*{Ssh,SFTP}*.java
 rm src/java/org/apache/ivy/plugins/signer/bouncycastle/OpenPGPSignatureGenerator.java
 %endif
 
-%mvn_alias : jayasoft:ivy
-%mvn_file : %{name}/ivy ivy
-
-# Fix messed-up encodings
-for F in README LICENSE NOTICE
-do
-        sed 's/\r//' $F |iconv -f iso8859-1 -t utf8 >$F.utf8
-        touch -r $F $F.utf8
-        mv $F.utf8 $F
-done
-# ant-trax has been obsoleted, use main ant package
-sed -i s/ant-trax/ant/ ivy.xml
-
-# Fedora bouncycastle packages provide -jdk16 artifacts only
-sed -i /bouncycastle/s/jdk14/jdk16/ ivy.xml
-
-# Port from commons-vfs 1.x to 2.x
-%if %{with vfs}
-sed -i "s/commons.vfs/&2/" {src,test}/java/org/apache/ivy/plugins/repository/vfs/*
-%else
+%if %{without vfs}
+# Remove dependency on commons-vfs
 sed -i /commons-vfs/d ivy.xml
 rm -rf src/java/org/apache/ivy/plugins/repository/vfs
 rm -rf src/java/org/apache/ivy/plugins/resolver/VfsResolver.java
 %endif
 
+# Remove test dependencies
+%pom_remove_dep :junit
+%pom_remove_dep :hamcrest-core
+%pom_remove_dep :hamcrest-library
+%pom_remove_dep :ant-testutil
+%pom_remove_dep :ant-launcher
+%pom_remove_dep :ant-junit
+%pom_remove_dep :ant-junit4
+%pom_remove_dep :ant-contrib
+%pom_remove_dep :xmlunit 
+
+%mvn_alias : jayasoft:ivy
+%mvn_file : %{name}/ivy ivy
+
 # Remove prebuilt documentation
-rm -rf doc build/doc
+rm -rf asciidoc
 
 # Publish artifacts through XMvn
 sed -i /ivy:publish/s/local/xmvn/ build.xml
-
-# Disable tests which fail due to networking being disabled during build
-sed -i 's/\(\s*public void\) \(testFixedMdMultipleExtends().*\)/\1 _disabled_\2/' test/java/org/apache/ivy/core/report/ResolveReportTest.java
-rm test/java/org/apache/ivy/plugins/resolver/BintrayResolverTest.java
-rm test/java/org/apache/ivy/plugins/resolver/MirroredURLResolverTest.java
-rm -rf test/java/org/apache/ivy/osgi/updatesite
-rm test/java/org/apache/ivy/core/settings/OnlineXmlSettingsParserTest.java
-rm test/java/org/apache/ivy/util/url/BasicURLHandlerTest.java
-rm test/java/org/apache/ivy/util/url/HttpclientURLHandlerTest.java
-rm test/java/org/apache/ivy/plugins/resolver/IBiblioResolverTest.java
-rm test/java/org/apache/ivy/util/url/ArtifactoryListingTest.java
-
-%if %{without vfs}
-rm test/java/org/apache/ivy/plugins/repository/vfs/VfsRepositoryTest.java
-rm test/java/org/apache/ivy/plugins/repository/vfs/VfsResourceTest.java
-rm test/java/org/apache/ivy/plugins/repository/vfs/VfsTestHelper.java
-rm test/java/org/apache/ivy/plugins/repository/vfs/VfsURI.java
-rm test/java/org/apache/ivy/plugins/resolver/VfsResolverTest.java
-%endif
-
-# XXX Disable test which fails due to non-existing files
-rm test/java/org/apache/ivy/ant/IvyBuildListTest.java
-
-# XXX Disable test which fails due to wrong ordering in the .xml file
-sed -i 's/\(\s*public void\) \(testExtraInfosFromMaven().*\)/\1 _disabled_\2/' test/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriterTest.java
 
 # girar noarch diff
 sed -i -e s,yyyyMMddHHmmss,yyyyMMddHH, build.xml
 
 
+
 %build
-%ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc publish-local test
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
+    -Divy.mode=local \
+    -Dtarget.ivy.bundle.version=%{version} \
+    -Dtarget.ivy.bundle.version.qualifier= \
+    -Dtarget.ivy.version=%{version} \
+    jar javadoc publish-local
+
 
 %install
-%mvn_install -J build/doc/reports/api
+%mvn_install -J build/reports/api
 
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 
+
 %files -f .mfiles
-%{_sysconfdir}/ant.d/%{name}
-%doc README
 %doc --no-dereference LICENSE NOTICE
+%doc README.adoc
+
+%{_sysconfdir}/ant.d/%{name}
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
+
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.5.0-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_20jpp8
 - fc update
 
