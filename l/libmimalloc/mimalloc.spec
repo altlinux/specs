@@ -1,6 +1,6 @@
 Name: 		libmimalloc
 Version:	1.0
-Release:	alt1
+Release:	alt1.1
 Summary:	A general purpose allocator with excellent performance
 Source:		%name-%version.tar
 Group:		System/Libraries
@@ -44,19 +44,20 @@ Requires:	%name = %version-%release
 
 %build
 mkdir -p BUILD_{release,secure,debug}
-BUILD_release=
+BUILD_release=-DCMAKE_BUILD_TYPE=RelWithDebInfo
 BUILD_secure=-DSECURE=ON
 BUILD_debug=-DCMAKE_BUILD_TYPE=Debug
+%define _cmake__builddir $D
 for D in BUILD_*; do
-  rm -f BUILD && ln -s $D BUILD
-  %cmake `eval echo '\$'$D`
+  %cmake $(eval echo '$'$D)
   %cmake_build
 done
 
 %install
+%define _cmake__builddir $D
 for D in BUILD_*; do
   rm -f BUILD && ln -s $D BUILD
-  %makeinstall -C BUILD DESTDIR=%buildroot
+  %cmake_install
 done
 
 # XXX this is supposed to be but not
@@ -75,7 +76,7 @@ mv %buildroot%_libdir/include/* %buildroot%_includedir/
 %check
 cd test
 
-# XXX main.cpp includes misterious rcmalloc.h
+# XXX main.cpp includes mysterious rcmalloc.h
 for f in main-override.cpp *.c; do
   cc $f -I %buildroot%_includedir -L %buildroot%_libdir -lmimalloc-debug
   LD_LIBRARY_PATH=%buildroot%_libdir ./a.out
@@ -95,6 +96,9 @@ done
 %_libdir/*.a
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0-alt1.1
+- NMU: spec: adapted to new CMake macros.
+
 * Sun Jun 23 2019 Fr. Br. George <george@altlinux.ru> 1.0-alt1
 - Initial build for ALT
 

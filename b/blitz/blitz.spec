@@ -5,7 +5,7 @@
 Name: blitz
 Summary: C++ class library for scientific computing
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 Group: Sciences/Mathematics
 License: LGPLv3 or BSD-3-Clause or Artistic-2.0
 URL: https://github.com/blitzpp/blitz
@@ -20,6 +20,7 @@ Requires: lib%name = %EVR
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel
 BuildRequires: cmake
 BuildRequires: ctest
+BuildRequires: rpm-build-python3
 %if_with doc
 BuildRequires: doxygen graphviz
 # explicitly added texinfo for info files
@@ -100,24 +101,25 @@ export CXX="g++ -pthread"
 	-DBZ_THREADSAFE:BOOL=ON \
 	%nil
 
+%cmake_build
 %if_with doc
-%cmake_build VERBOSE=1 blitz-doc
+%cmake_build -t blitz-doc
 %endif
 
-%cmake_build testsuite
-%cmake_build examples
+%cmake_build -t testsuite
+%cmake_build -t examples
 
 %install
 export CC="gcc -pthread"
 export CXX="g++ -pthread"
 
-%cmakeinstall_std
+%cmake_install
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
 
-%cmake_build check-testsuite
-%cmake_build check-examples
+%cmake_build -t check-testsuite
+%cmake_build -t check-examples
 
 %files
 %doc COPYING* COPYRIGHT LEGAL LICENSE
@@ -144,6 +146,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc examples
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.2-alt1.1
+- NMU:
+  + Built with python3 as a build requirement.
+  + Adapted spec to new cmake macros.
+
 * Wed Feb 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
 - Updated to upstream version 1.0.2.
 
