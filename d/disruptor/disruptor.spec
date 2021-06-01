@@ -1,18 +1,16 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          disruptor
-Version:       3.3.6
-Release:       alt1_8jpp8
+Version:       3.4.2
+Release:       alt1_3jpp11
 Summary:       Concurrent Programming Framework
 License:       ASL 2.0
-URL:           http://lmax-exchange.github.io/disruptor/
+URL:           https://lmax-exchange.github.io/disruptor/
 Source0:       https://github.com/LMAX-Exchange/disruptor/archive/%{version}/%{name}-%{version}.tar.gz
-Source1:       http://repo1.maven.org/maven2/com/lmax/%{name}/%{version}/%{name}-%{version}.pom
-# see http://www.jmock.org/threading-synchroniser.html
-Patch0:        disruptor-3.3.2-jmock.patch
+Source1:       https://repo1.maven.org/maven2/com/lmax/%{name}/%{version}/%{name}-%{version}.pom
 
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
@@ -42,11 +40,10 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
+
 # Cleanup
 find . -name "*.class" -print -delete
 find . -name "*.jar" -type f -print -delete
-
-%patch0 -p1
 
 cp -p %{SOURCE1} pom.xml
 
@@ -83,7 +80,7 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -96,6 +93,9 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 %doc --no-dereference LICENCE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.4.2-alt1_3jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_8jpp8
 - fc update
 
