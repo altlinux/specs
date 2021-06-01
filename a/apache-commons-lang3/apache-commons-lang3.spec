@@ -1,20 +1,25 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global srcname commons-lang3
+
 Name:           apache-commons-lang3
-Version:        3.8.1
-Release:        alt1_5jpp8
+Version:        3.11
+Release:        alt1_1jpp11
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
-URL:            http://commons.apache.org/lang
+
+URL:            https://commons.apache.org/lang
+Source0:        https://archive.apache.org/dist/commons/lang/source/%{srcname}-%{version}-src.tar.gz
+
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
-
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:) >= 47
+BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 Source44: import.info
 
@@ -35,33 +40,51 @@ therefore created differently named artifact and jar files. This is
 the new version, while apache-commons-lang is the compatibility
 package.
 
-%{?javadoc_package}
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 
 %prep
-%setup -q -n commons-lang3-%{version}-src
+%setup -q -n %{srcname}-%{version}-src
 
+
+# remove unnecessary maven plugins
+%pom_remove_plugin :maven-javadoc-plugin
 
 %mvn_file : %{name} commons-lang3
 
-# testParseSync() test fails on ARM and PPC64LE for unknown reason
-sed -i 's/\s*public void testParseSync().*/@org.junit.Ignore\n&/' \
-    src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
-
-# non-deterministic tests fail randomly
-rm src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
 
 %build
-# FIXME tests run against current system version of commons-lang3, not the one being built
-%mvn_build -f
+# test dependencies are not all packaged for fedora:
+# - org.easymock:easymock 4.2
+# - org.junit-pioneer:junit-pioneer
+# - org.openjdk.jmh:jmh-core
+# - org.openjdk.jmh:jmh-generator-annprocess
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES.txt
 
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE.txt NOTICE.txt
+
+
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.11-alt1_1jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.8.1-alt1_5jpp8
 - fc update
 
