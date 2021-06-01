@@ -1,7 +1,6 @@
 Group: Development/Java
-BuildRequires: docbook-simple
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -37,8 +36,8 @@ BuildRequires: jpackage-1.8-compat
 Name:           xmlunit
 Summary:        Provides classes to do asserts on xml
 Epoch:          0
-Version:        2.6.3
-Release:        alt1_1jpp8
+Version:        2.7.0
+Release:        alt1_4jpp11
 # xmlunit2 is licensed under ASL 2.0, xmlunit-legacy is still BSD-licensed
 License:        ASL 2.0 and BSD
 
@@ -50,7 +49,12 @@ Patch0:         0001-Disable-tests-requiring-network-access.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
+BuildRequires:  mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.assertj:assertj-core)
@@ -122,16 +126,16 @@ This package provides %{summary}.
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
 
-%mvn_alias "org.xmlunit:xmlunit-legacy" "xmlunit:xmlunit"
-# damn the net
-# TODO: why catalog does not work? it is ant xslt task
-#sed -i 's,http://docbook.org/xml/simple/1.1b1/sdocbook.dtd,http://www.oasis-open.org/docbook/xml/simple/1.1/sdocbook.dtd,g' `grep -rl 'http://docbook.org/xml/simple/1.1b1/sdocbook.dtd' .`
+# Add deps to EE APIs removed in Java 11
+%pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api . xmlunit-core
+%pom_change_dep com.sun.xml.bind:jaxb-core com.sun.xml.bind:jaxb-impl . xmlunit-core
+%pom_add_dep com.sun.istack:istack-commons-runtime::test xmlunit-core
 
+%mvn_alias "org.xmlunit:xmlunit-legacy" "xmlunit:xmlunit"
 
 
 %build
-%mvn_build -s
-
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -150,6 +154,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.0-alt1_4jpp11
+- new version
+
 * Sun May 09 2021 Igor Vlasenko <viy@altlinux.ru> 0:2.6.3-alt1_1jpp8
 - new version
 
