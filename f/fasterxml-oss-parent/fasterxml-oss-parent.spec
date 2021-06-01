@@ -1,16 +1,18 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global oname oss-parent
+%global srcname oss-parent
+
 Name:          fasterxml-oss-parent
-Version:       38
-Release:       alt1_2jpp8
+Version:       40
+Release:       alt1_1jpp11
 Summary:       FasterXML parent pom
 License:       ASL 2.0
-URL:           http://fasterxml.com/
-Source0:       https://github.com/FasterXML/oss-parent/archive/oss-parent-%{version}.tar.gz
+
+URL:           https://github.com/FasterXML/oss-parent
+Source0:       %{url}/archive/%{srcname}-%{version}.tar.gz
 
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
@@ -30,10 +32,12 @@ and extension.
 This package contains the parent pom file for FasterXML.com projects.
 
 %prep
-%setup -q -n %{oname}-%{oname}-%{version}
+%setup -q -n %{srcname}-%{srcname}-%{version}
 
 # Stuff unnecessary for RPM builds
+%pom_remove_plugin :jacoco-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-pmd-plugin
 %pom_remove_plugin :maven-scm-plugin
 %pom_remove_plugin :maven-site-plugin
@@ -42,19 +46,8 @@ This package contains the parent pom file for FasterXML.com projects.
 %pom_remove_plugin :taglist-maven-plugin
 %pom_xpath_remove "pom:build/pom:extensions"
 
-# remove unavailable com.google.doclava doclava 1.0.3
-%pom_xpath_remove "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']" '
-<configuration>
-  <encoding>UTF-8</encoding>
-  <quiet>true</quiet>
-  <source>${javac.src.version}</source>
-  <additionalJOption>-J-Xmx1024m</additionalJOption>
-  <maxmemory>${javadoc.maxmemory}</maxmemory>
-</configuration>'
-
 %build
-%mvn_build -j
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -64,6 +57,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 40-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 38-alt1_2jpp8
 - new version
 
