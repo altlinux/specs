@@ -1,11 +1,11 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          plexus-pom
-Version:       5.1
-Release:       alt1_2jpp8
+Version:       6.4
+Release:       alt1_1jpp11
 Summary:       Root Plexus Projects POM
 License:       ASL 2.0
 
@@ -27,17 +27,14 @@ Plexus packages.
 %prep
 %setup -q -n plexus-pom-plexus-%{version}
 
-# * require: org.codehaus.plexus plexus-stylus-skin 1.0
-# org.apache.maven.wagon wagon-webdav-jackrabbit 1.0
+%pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin :maven-site-plugin
-
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
+%pom_remove_plugin :taglist-maven-plugin
 
 cp -p %{SOURCE1} LICENSE
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -46,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 6.4-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_2jpp8
 - new version
 
