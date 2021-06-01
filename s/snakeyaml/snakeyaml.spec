@@ -9,13 +9,13 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global vertag 8450addf3473
+%global vertag e91772b1bc0b
 
 %bcond_with spring
 
 Name:           snakeyaml
 Summary:        YAML parser and emitter for Java
-Version:        1.25
+Version:        1.26
 Release:        alt1_4jpp11
 License:        ASL 2.0
 
@@ -31,16 +31,12 @@ Source0:        %{url}/get/%{name}-%{version}.tar.gz
 Patch0:         0001-replace-bundled-base64coder-with-java.util.Base64.patch
 # We don't have gdata-java in Fedora any longer, use commons-codec instead
 Patch1:         0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
-# Fix a broken test, change backported from upstream:
-# https://bitbucket.org/asomov/snakeyaml/commits/345408c
-Patch2:         0003-fix-broken-test.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(joda-time:joda-time)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -77,7 +73,6 @@ This package contains %{summary}.
 %setup -q -n asomov-%{name}-%{vertag}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %mvn_file : %{name}
 
@@ -94,6 +89,10 @@ rm -f src/test/java/examples/SpringTest.java
 
 # Replacement for bundled gdata-java-client
 %pom_add_dep commons-codec:commons-codec
+
+# Unnecessary test-time only dependency
+%pom_remove_dep joda-time:joda-time
+rm -rf src/test/java/examples/jodatime
 
 # remove bundled stuff
 rm -rf target
@@ -114,7 +113,7 @@ rm src/test/java/org/yaml/snakeyaml/helpers/FileTestHelper.java
 
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -129,6 +128,9 @@ rm src/test/java/org/yaml/snakeyaml/helpers/FileTestHelper.java
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.26-alt1_4jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.25-alt1_4jpp11
 - update
 
