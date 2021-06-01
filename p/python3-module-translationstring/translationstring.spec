@@ -2,10 +2,10 @@
 
 Name: python3-module-%oname
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Summary: Utility library for i18n relied on by various Repoze packages
-License: BSD-like
+License: BSD-4-Clause
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/translationstring
 BuildArch: noarch
@@ -13,8 +13,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: pylons_sphinx_theme python3-module-sphinx
-
+BuildRequires: python3-module-sphinx
 
 %description
 A library used by various Repoze packages for internationalization
@@ -115,8 +114,11 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %files pickles
 %python3_sitelibdir/%oname/pickle
 
-
 %changelog
+* Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt3
+- Fixed Build Requires.
+- Fixed license tag.
+
 * Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt2
 - build for python2 disabled
 
