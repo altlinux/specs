@@ -7,16 +7,15 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-javadoc-plugin
-Version:        3.1.1
-Release:        alt2_3jpp11
+Version:        3.2.0
+Release:        alt1_3jpp11
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
-BuildArch:      noarch
 
+URL:            https://maven.apache.org/plugins/maven-javadoc-plugin
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Patch1:         0001-Port-to-current-plexus-utils.patch
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -44,6 +43,7 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-java)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
@@ -63,10 +63,8 @@ API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch1 -p1
-
 %build
-%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DmavenVersion=3.5.0
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DmavenVersion=3.6.0
 
 %install
 %mvn_install
@@ -78,6 +76,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_3jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt2_3jpp11
 - new version
 
