@@ -1,42 +1,35 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global srcname build-helper-maven-plugin
+
 Name:           maven-plugin-build-helper
-Version:        1.9.1
-Release:        alt1_11jpp8
+Version:        3.2.0
+Release:        alt1_2jpp11
 Summary:        Build Helper Maven Plugin
 License:        MIT
-URL:            http://mojo.codehaus.org/build-helper-maven-plugin/
-BuildArch: noarch
 
-# The source tarball has been generated from upstream VCS:
-# svn export https://svn.codehaus.org/mojo/tags/build-helper-maven-plugin-%{version} %{name}-%{version}
-# tar caf %{name}-%{version}.tar.xz %{name}-%{version}
-Source0:        %{name}-%{version}.tar.xz
+URL:            https://www.mojohaus.org/build-helper-maven-plugin/
+Source0:        https://github.com/mojohaus/%{srcname}/archive/%{srcname}-%{version}.tar.gz
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 Provides: mojo-maven2-plugin-build-helper = %version
 Obsoletes: mojo-maven2-plugin-build-helper = 17
-
 
 
 %description
@@ -52,24 +45,25 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q
-
-%pom_add_dep org.apache.maven:maven-compat
+%setup -q -n %{srcname}-%{srcname}-%{version}
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference header.txt
-%dir %{_javadir}/%{name}
+%doc --no-dereference LICENSE.txt
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference header.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_2jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_11jpp8
 - fc update
 
