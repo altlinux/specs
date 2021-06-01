@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,8 +16,8 @@ BuildRequires: jpackage-1.8-compat
 
 Name:       plexus-compiler
 Epoch:      0
-Version:    2.8.5
-Release:    alt1_1jpp8
+Version:    2.8.8
+Release:    alt1_1jpp11
 Summary:    Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
@@ -26,16 +26,17 @@ URL:        https://github.com/codehaus-plexus/plexus-compiler
 BuildArch:  noarch
 
 Source0:    https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:    http://www.apache.org/licenses/LICENSE-2.0.txt
+Source1:    https://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:    LICENSE.MIT
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 %if %{with eclipse}
-BuildRequires:  mvn(org.eclipse.tycho:org.eclipse.jdt.core)
+BuildRequires:  mvn(org.eclipse.jdt:ecj)
 %endif
 Source44: import.info
 
@@ -89,6 +90,9 @@ cp %{SOURCE2} LICENSE.MIT
 # don't build/install compiler-test module, it needs maven2 test harness
 %pom_disable_module plexus-compiler-test
 
+# disable integration tests (they require plexus-compiler-test)
+%pom_disable_module plexus-compiler-its
+
 # don't install sources jars
 %mvn_package ":*::sources:" __noinstall
 
@@ -98,12 +102,14 @@ cp %{SOURCE2} LICENSE.MIT
 # don't generate requires on test dependency (see #1007498)
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='plexus-compiler-test']]" plexus-compilers
 
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :animal-sniffer-maven-plugin
 
 %build
 # Tests are skipped because of unavailable plexus-compiler-test artifact
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -118,6 +124,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.8-alt1_1jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.8.5-alt1_1jpp8
 - new version
 
