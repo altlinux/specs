@@ -1,13 +1,11 @@
 %define oname port-for
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4
-Release: alt2
+Release: alt3
 Summary: Utility that helps with local TCP ports managment
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/port-for/
 BuildArch: noarch
 
@@ -15,11 +13,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-module-mock python-module-pytest
-%if_with python3
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 /usr/bin/2to3
 BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest
-%endif
 
 %description
 port-for is a command-line utility and a python library that helps with
@@ -29,33 +24,10 @@ It can find an unused TCP localhost port and remember the association.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-port-for is a command-line utility and a python library that helps with
-local TCP ports management.
-
-It can find an unused TCP localhost port and remember the association.
-
-This package contains tests for %oname.
-
-%package -n python3-module-%oname
-Summary: Utility that helps with local TCP ports managment
-Group: Development/Python3
-
-%description -n python3-module-%oname
-port-for is a command-line utility and a python library that helps with
-local TCP ports management.
-
-It can find an unused TCP localhost port and remember the association.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
 port-for is a command-line utility and a python library that helps with
 local TCP ports management.
 
@@ -67,69 +39,38 @@ This package contains tests for %oname.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 pushd %buildroot%_bindir
 for i in $(ls); do
 	2to3 -w -n $i
 	mv $i $i.py3
 done
 popd
-%endif
-
-%python_install
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests.*
-
-%files tests
-%python_sitelibdir/*/tests.*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests.*
 %python3_sitelibdir/*/*/tests.*
-%endif
 
 %changelog
+* Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.4-alt3
+- Drop python2 support.
+
 * Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt2
 - Fixed build.
 
