@@ -2,7 +2,7 @@
 
 Name: cmark
 Version: 0.29.0
-Release: alt1
+Release: alt1.1
 Summary: CommonMark parsing and rendering
 License: BSD and MIT
 Group: Text tools
@@ -50,11 +50,11 @@ This package provides the cmark library.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%cmake_build test
+%cmake_build --target test
 
 %files
 %doc COPYING
@@ -74,6 +74,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.29.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Jul 25 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.29.0-alt1
 - Updated to upstream version 0.29.0.
 

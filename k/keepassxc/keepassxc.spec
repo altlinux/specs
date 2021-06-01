@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.6.4
-Release:  alt1
+Release:  alt1.1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -67,10 +67,10 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
   -DWITH_XC_YUBIKEY=ON
 %endif
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -85,6 +85,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.6.4-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Feb 01 2021 Pavel Nakonechnyi <zorg@altlinux.org> 2.6.4-alt1
 - Updated to v2.6.4.
 

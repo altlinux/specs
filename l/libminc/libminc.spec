@@ -2,7 +2,7 @@
 
 Name: libminc
 Version: 2.4.3
-Release: alt2
+Release: alt2.1
 
 Group: System/Libraries
 Summary: The core library and API of the MINC toolkit 
@@ -48,10 +48,10 @@ This package contains development files for libminc.
     -DLIBMINC_MINC1_SUPPORT=OFF \
     -DLIBMINC_BUILD_EZMINC_EXAMPLES=OFF \
     %nil
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc README COPYING NEWS ChangeLog
@@ -63,6 +63,9 @@ This package contains development files for libminc.
 %_includedir/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.4.3-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.3-alt2
 - Updated build dependencies.
 

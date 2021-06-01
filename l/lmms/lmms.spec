@@ -5,7 +5,7 @@
 
 Name: lmms
 Version: 1.2.2
-Release: alt2
+Release: alt2.1
 
 Summary: Linux MultiMedia Studio
 License: GPL-2.0-or-later
@@ -99,10 +99,10 @@ find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
     -DWANT_VST_NOWINE:BOOL=ON \
     -DWANT_CARLA:BOOL=OFF
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 rm -fr %buildroot%_datadir/bash-completion/completions/lmms
 
@@ -126,6 +126,9 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.2-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri Jul 17 2020 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt2
 - Build without libsoundio on e2k, riscv64
 

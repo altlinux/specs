@@ -2,7 +2,7 @@
 
 Name: %{_name}2
 Version:  2.0.3
-Release:  alt1
+Release:  alt1.1
 Summary: KeePassX Password Safe - light-weight cross-platform password manager
 Group: File tools
 License: %gpl2plus
@@ -28,7 +28,7 @@ uses a highly encrypted database locked with one master key.
 KeePassX saves many different information: user names, passwords,
 urls, comments and  file attachments in one single database.  The
 entries could be  sorted in groups, with user-defined  titles and
-icons specified for each entry or group. Also KeePassX  offers an 
+icons specified for each entry or group. Also KeePassX  offers an
 utility for secure password generation.
 
 The complete database is always encrypted either with AES  (alias
@@ -43,10 +43,10 @@ in KeePass Password Safe.
 %cmake \
   -DWITH_CXX11=ON
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
@@ -57,6 +57,9 @@ in KeePass Password Safe.
 %_datadir/%_name
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.0.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Dec 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.3-alt1
 - 2.0.3
 

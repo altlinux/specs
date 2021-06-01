@@ -1,6 +1,6 @@
 Name: klatexformula
 Version: 4.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: Generating images from LaTeX equations
 License: GPLv2
@@ -49,10 +49,10 @@ TODO: make shared version of %name-devel.
 	-DKLF_LIBKLFBACKEND_AUTO_STATIC=False \
 	..
 
-%cmake_build all doc
+%cmake_build --target all doc
 
 %install
-%cmakeinstall_std
+%cmake_install
 for N in %buildroot/%_datadir/pixmaps/kla*.png; do
   SZ="${N##*-}"; SZ="${SZ%%.*}"
   install -D $N %buildroot%_iconsdir/hicolor/${SZ}x${SZ}/apps/%name.png
@@ -73,6 +73,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.1.0-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 4.1.0-alt2
 - Eliminate python2
 

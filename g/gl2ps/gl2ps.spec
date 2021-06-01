@@ -2,7 +2,7 @@
 
 Name: gl2ps
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 Summary: OpenGL to PostScript printing library
 License: LGPLv2+
 Group: Graphics
@@ -83,10 +83,10 @@ This package contains development documentation for GL2PS.
 %build
 %cmake
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files -n lib%name
 %doc README.txt TODO.txt
@@ -100,6 +100,9 @@ This package contains development documentation for GL2PS.
 %_docdir/%name
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.4.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt1
 - Updated to upstream version 1.4.2.
 

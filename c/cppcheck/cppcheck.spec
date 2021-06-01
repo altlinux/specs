@@ -3,7 +3,7 @@
 
 Name: cppcheck
 Version: 2.2
-Release: alt1
+Release: alt1.1
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
@@ -70,6 +70,7 @@ rm -r externals/tinyxml
 %add_optflags -I%_includedir/pcre
 
 %cmake \
+	-G'Unix Makefiles' \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DUSE_MATCHCOMPILER:BOOL=ON \
 	-DHAVE_RULES:BOOL=ON \
@@ -98,7 +99,7 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-htmlreport
 
 %check
-%cmake_build check
+%cmake_build --target check
 
 %files
 %doc readme.txt man/*.html
@@ -118,6 +119,9 @@ install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-ht
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 2.2-alt1
 - 2.2
 - cleanup spec

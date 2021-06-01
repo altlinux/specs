@@ -1,6 +1,6 @@
 Name: mfgtools
 Version: 1.4.43
-Release: alt1
+Release: alt1.1
 
 Summary: Freescale/NXP I.MX Chip image deploy tools
 License: BSD
@@ -41,10 +41,10 @@ sed -i 's,-no-pie,,' uuu/CMakeLists.txt
 
 %build
 %cmake
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 mkdir -p %buildroot%_sysconfdir/udev/rules.d/
 cat <<EOT >> %buildroot%_sysconfdir/udev/rules.d/99-uuu.rules
@@ -78,6 +78,9 @@ EOT
 %_sysconfdir/udev/rules.d/*
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.4.43-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Oct 29 2020 Pavel Nakonechnyi <zorg@altlinux.org> 1.4.43-alt1
 - updated to 1.4.43
 

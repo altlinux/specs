@@ -2,7 +2,7 @@
 
 Name: nitrokey-app
 Version: 0.6.3
-Release: alt2
+Release: alt2.1
 License: %gpl3only
 Summary: Nitrokey's Application
 Url: https://www.nitrokey.com/
@@ -36,10 +36,10 @@ diff -u data/40-nitrokey.rules{_,} ||:
 %cmake \
 	-DHAVE_LIBAPPINDICATOR:BOOL=FALSE \
 	#
-%cmake_build V=1 VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 mkdir -p %buildroot%_udevrulesdir
 mv %buildroot/usr/lib/udev/rules.d/40-nitrokey.rules \
@@ -77,6 +77,9 @@ groupadd -r _cryptodev ||:
 %doc OTP_full_specification.txt README.md
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.6.3-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt2
 - Updated build dependencies.
 

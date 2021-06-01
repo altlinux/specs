@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.7
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -132,10 +132,10 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags"
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 chmod -R  0755 %buildroot%_libdir/%name/plugins/*.so
 
 pushd %buildroot%_docdir/%name
@@ -181,6 +181,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1:1.5.7-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Fri May 21 2021 Slava Aseev <ptrnine@altlinux.org> 1:1.5.7-alt1
 - new version (1.5.7) with rpmgs script
 - fix build due to python3.{req,prov}, spec fixes (@lav)

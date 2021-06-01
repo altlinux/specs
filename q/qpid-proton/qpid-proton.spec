@@ -4,7 +4,7 @@
 
 Name: qpid-proton
 Version: 0.28.0
-Release: alt1
+Release: alt1.1
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -130,10 +130,10 @@ cp -a . ../python3
     -DPYTHON_INCLUDE_DIR=%python_includedir \
     -DPYTHON_LIBRARY=%__libpython
 
-%cmake_build generated_c_files
-%cmake_build VERBOSE=1
+%cmake_build --target generated_c_files
+%cmake_build
 
-(cd BUILD/python/dist; %python_build)
+(cd %_cmake__builddir/python/dist; %python_build)
 
 pushd ../python3
 %cmake \
@@ -144,19 +144,19 @@ pushd ../python3
     -DPYTHON_INCLUDE_DIR=%__python3_includedir \
     -DPYTHON_LIBRARY=%__libpython3
 
-%cmake_build generated_c_files
-%cmake_build VERBOSE=1
+%cmake_build --target generated_c_files
+%cmake_build
 
-(cd BUILD/python/dist; %python3_build)
+(cd %_cmake__builddir/python/dist; %python3_build)
 popd
 
 %install
-%cmakeinstall_std
-(cd BUILD/python/dist; %python_install)
+%cmake_install
+(cd %_cmake__builddir/python/dist; %python_install)
 
 pushd ../python3
-%cmakeinstall_std
-(cd BUILD/python/dist; %python3_install)
+%cmake_install
+(cd %_cmake__builddir/python/dist; %python3_install)
 popd
 
 find %buildroot%proton_datadir/examples/python -name "*.py" -exec sed -i 's/!\/usr\/bin\/env python/!\/usr\/bin\/python3/' {} \;
@@ -217,6 +217,9 @@ rm -rf %buildroot%proton_datadir/CMakeLists.txt
 %endif
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.28.0-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Jul 20 2019 Alexey Shabalin <shaba@altlinux.org> 0.28.0-alt1
 - new version 0.28.0
 

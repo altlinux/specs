@@ -1,6 +1,6 @@
 Name: juffed
 Version: 0.10
-Release: alt3.git7746772
+Release: alt3.git7746772.1
 
 Summary: Simple tabbed text editor
 License: GPL-2.0+
@@ -10,8 +10,9 @@ URL: https://github.com/Mezomish/juffed
 Source:	%name-%version.tar
 Patch1:	%name-%version-fedora-cmake.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): cmake rpm-macros-ninja-build
 BuildRequires: gcc-c++
+BuildRequires: ninja-build
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: libqscintilla2-qt5-devel
@@ -42,15 +43,15 @@ for details.
 #patch1 -p1
 
 %build
-%cmake \
+%cmake -GNinja \
 	-DUSE_QT5=TRUE \
 	-DUSE_ENCA=TRUE \
 	-DQSCINTILLA_NAMES=qscintilla2_qt5
 
-%cmake_build VERBOSE=0
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%cmakeinstall_std
+%ninja_install -C "%_cmake__builddir"
 #chrpath -d %buildroot%_bindir/%name
 #chrpath -d %buildroot%_libdir/libjuff.so
 #mkdir -p %buildroot/%_libdir/%name/plugins
@@ -71,6 +72,9 @@ for details.
 %_includedir/%name
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.10-alt3.git7746772.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Dec 09 2019 Andrey Cherepanov <cas@altlinux.org> 0.10-alt3.git7746772
 - New version from upstream git https://github.com/Mezomish/juffed.
 - Build with Qt5 (ALT #37589).
