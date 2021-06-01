@@ -8,8 +8,8 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-archetype
-Version:        3.1.2
-Release:        alt1_3jpp11
+Version:        3.2.0
+Release:        alt1_1jpp11
 Summary:        Maven project templating toolkit
 
 # Most of the code is under ASL 2.0, but some bundled jdom sources are
@@ -22,14 +22,21 @@ Source0:        http://archive.apache.org/dist/maven/archetype/%{name}-%{version
 # removing this continues the old behaviour of ignoring it
 Patch1: 0001-Avoid-reliance-on-groovy.patch
 
+# Taken from https://github.com/apache/maven-archetype/commit/e4eed30d1c0c6eabf45c49194ff6f0d8a4e4d5a7
+Patch2: 0002-declare-dependencies.patch
+
+# Port to commons-lang3
+Patch3: 0003-Port-to-commons-lang3.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(jdom:jdom)
 BuildRequires:  mvn(net.sourceforge.jchardet:jchardet)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
@@ -45,11 +52,13 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
+BuildRequires:  mvn(org.jdom:jdom)
 Source44: import.info
 Provides: maven-archetype2 = %version
 Obsoletes: maven-archetype2 < %version
@@ -136,6 +145,8 @@ Summary: Maven plug-in for using archetypes
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # Not needed for RPM builds
 %pom_remove_plugin -r :apache-rat-plugin
@@ -207,6 +218,9 @@ popd
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_1jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:3.1.2-alt1_3jpp11
 - fixed build
 
