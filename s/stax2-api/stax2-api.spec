@@ -4,19 +4,19 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             stax2-api
-Version:          4.2
-Release:          alt1_2jpp11
+Version:          4.2.1
+Release:          alt1_4jpp11
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD
 
-URL:              https://github.com/FasterXML/%{name}
+URL:              https://github.com/FasterXML/stax2-api
 Source0:          %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml:oss-parent:pom:)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    maven-local
+BuildRequires:    mvn(com.fasterxml:oss-parent:pom:)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 Source44: import.info
 
 %description
@@ -27,16 +27,17 @@ StAX specification (if they do). As such, it is intended
 to be freely implementable by all StAX implementations same way
 as StAX, but without going through a formal JCP process.
 
-%package javadoc
+%package          javadoc
 Group: Development/Java
 Summary:          API documentation for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description      javadoc
 This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+
 
 %pom_xpath_remove pom:Import-Package
 
@@ -46,16 +47,20 @@ This package contains the API documentation for %{name}.
 
 %build
 %mvn_file :%{name} %{name}
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 4.2.1-alt1_4jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 4.2-alt1_2jpp11
 - new version
 
