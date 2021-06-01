@@ -1,29 +1,38 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global patchlvl 8
+%global buildver 217
+%global patchlvl 21
 
 Name:           trilead-ssh2
-Version:        217
-Release:        alt1_12.jenkins8jpp8
+Version:        %{buildver}.%{patchlvl}
+Release:        alt1_3jpp11
 Summary:        SSH-2 protocol implementation in pure Java
 
-# project is under BSD, but some parts are MIT licensed
+# Project is under BSD, but some parts are MIT licensed
 # see LICENSE.txt for more information
-License:        BSD and MIT
+# One file is ISC licensed: The bundled implementation of BCrypt.java
+# One file is RSA licensed: src/com/trilead/ssh2/crypto/digest/MD5.java
+License:        BSD and MIT and ISC and RSA
+
+# Jenkins fork is used because the original sources of this library,
+# "ganymed" and then "trilead" are both defunct and the original
+# project sites are unavailable. However Jenkins project continues
+# to maintain it
 URL:            https://github.com/jenkinsci/trilead-ssh2
-Source0:        https://github.com/jenkinsci/%{name}/archive/%{name}-build%{version}-jenkins-%{patchlvl}.tar.gz
+Source0:        https://github.com/jenkinsci/trilead-ssh2/archive/%{name}-build-%{buildver}-jenkins-%{patchlvl}.tar.gz
+
+# Source of bundled BCrypt implementation, taken from:
+# https://mvnrepository.com/artifact/org.connectbot.jbcrypt/jbcrypt/1.0.0
+Source1:  BCrypt.java
+Provides: bundled(jbcrypt) = 1.0.0
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.i2p.crypto:eddsa)
 
 BuildArch:      noarch
 Source44: import.info
@@ -45,27 +54,38 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{name}-build%{version}-jenkins-%{patchlvl}
+%setup -q -n %{name}-%{name}-build-%{buildver}-jenkins-%{patchlvl}
+
+# jbcrypt is not available in Fedora, it is bundled instead
+mkdir -p src/org/mindrot/jbcrypt
+cp -p %{SOURCE1} src/org/mindrot/jbcrypt
+%pom_remove_dep "org.connectbot.jbcrypt:jbcrypt"
+
+# test dependency not available in Fedora
+%pom_remove_dep "org.testcontainers:testcontainers"
 
 # compat symlink/alias
 %mvn_file  : %{name}/%{name} %{name}
 %mvn_alias : "org.tmatesoft.svnkit:trilead-ssh2" "com.trilead:trilead-ssh2"
 
 %build
-%mvn_build
+# Skip tests due to unavailability of test deps
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE.txt HISTORY.txt README.txt
+%doc --no-dereference LICENSE.txt
+%doc HISTORY.txt README.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
-
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:217.21-alt1_3jpp11
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:217-alt1_12.jenkins8jpp8
 - new version
 
