@@ -1,37 +1,33 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 2.0.1
+%define version 2.2.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logging-tools
-Version:          2.0.1
-Release:          alt1_8jpp8
+Version:          2.2.1
+Release:          alt1_3jpp11
 Summary:          JBoss Logging I18n Annotation Processor
 # Not available license file https://issues.jboss.org/browse/LOGTOOL-107
 # ./annotations/src/main/java/org/jboss/logging/annotations/*.java: Apache (v2.0)
 License:          ASL 2.0 and LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-logging-tools
-Source0:          https://github.com/jboss-logging/jboss-logging-tools/archive/%{namedversion}.tar.gz
+Source0:          %{url}/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
+Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    mvn(org.apache.maven.surefire:surefire-testng)
+BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.jdeparser:jdeparser)
 BuildRequires:    mvn(org.jboss.logging:jboss-logging)
 BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
-BuildRequires:    mvn(org.testng:testng)
 Source44: import.info
-
 
 %description
 This pacakge contains JBoss Logging I18n Annotation Processor
@@ -45,21 +41,37 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jboss-logging-tools-%{namedversion}
+%setup -q -n %{name}-%{namedversion}
 
-%pom_disable_module processor-tests
+cp %{SOURCE1} .
+
+# roaster is not packaged for Fedora, so:
+# - Remove the dependency
+# - Remove the test that requires it
+%pom_remove_dep -r org.jboss.forge.roaster:
+rm processor/src/test/java/org/jboss/logging/processor/generated/GeneratedSourceAnalysisTest.java
+
+# Skip docs module
+%pom_disable_module docs
 
 %build
-# @ random java.lang.ArrayIndexOutOfBoundsException: 0
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc --no-dereference LICENSE-2.0.txt
+%doc README.adoc
+
 %files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE-2.0.txt
+%doc README.adoc
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.2.1-alt1_3jpp11
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_8jpp8
 - new version
 
