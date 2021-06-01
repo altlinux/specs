@@ -3,20 +3,21 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-common-artifact-filters
-Version:        3.0.1
-Release:        alt1_8jpp8
+Version:        3.1.0
+Release:        alt1_3jpp11
 Summary:        Maven Common Artifact Filters
 License:        ASL 2.0
-URL:            http://maven.apache.org/shared/
-BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:            https://maven.apache.org/shared/
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 Patch0:         0001-Remove-Maven-3.0-specific-code.patch
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -25,11 +26,11 @@ BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.eclipse.aether:aether-api)
-BuildRequires:  mvn(org.eclipse.aether:aether-util)
 Source44: import.info
 
 %description
@@ -54,7 +55,7 @@ This package contains javadoc for %{name}.
 find -name SonatypeAether\*.java -delete
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -66,6 +67,9 @@ find -name SonatypeAether\*.java -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_3jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_8jpp8
 - fc update
 
