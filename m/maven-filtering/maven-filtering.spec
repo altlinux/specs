@@ -3,27 +3,33 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:             maven-filtering
-Version:          3.1.1
-Release:          alt1_9jpp8
-Summary:          Shared component providing resource filtering
-License:          ASL 2.0
-URL:              http://maven.apache.org/shared/%{name}/index.html
-BuildArch:        noarch
+Name:           maven-filtering
+Version:        3.2.0
+Release:        alt1_1jpp11
+Summary:        Shared component providing resource filtering
+License:        ASL 2.0
 
-Source0:          http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:            https://maven.apache.org/shared/%{name}/index.html
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 Source44: import.info
 
@@ -31,6 +37,7 @@ Source44: import.info
 These Plexus components have been built from the filtering process/code in 
 Maven Resources Plugin. The goal is to provide a shared component for all 
 plugins that needs to filter resources.
+
 
 %package javadoc
 Group: Development/Java
@@ -40,15 +47,19 @@ BuildArch: noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 
+
 %prep
 %setup -q
 
+
 %build
 # Tests use a package that is no longer present in plexus-build-api (v0.0.7)
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
@@ -56,7 +67,11 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
+
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_1jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_9jpp8
 - fc update
 
