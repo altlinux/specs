@@ -1,6 +1,6 @@
 Name:    libleatherman
 Version: 1.12.4
-Release: alt2
+Release: alt2.1
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -54,10 +54,10 @@ subst 's|#!.*python$|#!%__python3|' scripts/cpplint.py
 %cmake -GNinja \
        -DLEATHERMAN_SHARED=TRUE \
        -DENABLE_CXX_WERROR=OFF
-%ninja_build -C BUILD
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%ninja_install -C BUILD
+%ninja_install -C "%_cmake__builddir"
 
 %files
 %doc *.md
@@ -70,6 +70,9 @@ subst 's|#!.*python$|#!%__python3|' scripts/cpplint.py
 %_libdir/cmake/leatherman
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12.4-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.12.4-alt2
 - FTBFS: Set correct python3 executable in script shebang.
 

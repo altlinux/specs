@@ -4,7 +4,7 @@
 
 Name: convert3d
 Version: 1.1.0
-Release: alt2.git61a9bf2
+Release: alt2.git61a9bf2.1
 Summary: Convert 3D images between common file formats
 Group: Sciences/Medicine
 License: GPLv3
@@ -70,6 +70,7 @@ This package contains development files.
 
 %build
 %cmake \
+	%_cmake_skip_rpath \
 	-DBUILD_GUI:BOOL=ON \
 	%nil
 
@@ -96,6 +97,9 @@ This package contains development files.
 %_includedir/*
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.0-alt2.git61a9bf2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2.git61a9bf2
 - rebuild with new gbcm
 
