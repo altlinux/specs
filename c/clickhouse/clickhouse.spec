@@ -2,7 +2,7 @@
 
 Name: clickhouse
 Version: 21.3.12.2
-Release: alt1
+Release: alt1.1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -204,10 +204,10 @@ fi
 %endif
 	%nil
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 install -Dm0644 debian/clickhouse-server.cron.d %buildroot%_sysconfdir/cron.d/clickhouse-server
 install -Dm0644 debian/clickhouse.limits %buildroot%_sysconfdir/security/limits.d/clickhouse.conf
 install -Dm0644 debian/clickhouse-server.service %buildroot%_unitdir/clickhouse-server.service
@@ -265,6 +265,9 @@ rm -fv %buildroot%_prefix/lib/*.a
 %_datadir/clickhouse-test
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 21.3.12.2-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu May 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.12.2-alt1
 - Updated to lts upstream version 21.3.12.2.
 

@@ -3,7 +3,7 @@
 
 Name: dcmtk
 Version: 3.6.6
-Release: alt1
+Release: alt1.1
 Summary: DCMTK - DICOM Toolkit
 License: MIT
 Group: Graphics
@@ -61,7 +61,7 @@ Headers for building software that uses %name.
 	-DDCMTK_INSTALL_DATDIC:STRING=share/libdcmtk12 \
 	-DDCMTK_USE_CXX11_STL:BOOL=ON \
 	-DDCMTK_ENABLE_CXX11:BOOL=ON
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -83,6 +83,9 @@ Headers for building software that uses %name.
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 3.6.6-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue Apr 20 2021 Anton Farygin <rider@altlinux.ru> 3.6.6-alt1
 - 3.6.6
 
