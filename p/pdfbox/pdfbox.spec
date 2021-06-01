@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          pdfbox
-Version:       2.0.19
-Release:       alt1_1jpp8
+Version:       2.0.21
+Release:       alt1_1jpp11
 Summary:       Apache PDFBox library for working with PDF documents
 License:       ASL 2.0
 URL:           http://pdfbox.apache.org/
@@ -30,6 +30,8 @@ BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.bouncycastle:bcmail-jdk15on)
 BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: fonts-ttf-google-noto-emoji
@@ -156,7 +158,7 @@ rm fontbox/src/test/java/org/apache/fontbox/cff/CFFParserTest.java \
    pdfbox/src/test/java/org/apache/pdfbox/pdfparser/TestPDFParser.java \
    pdfbox/src/test/resources/input/rendering/{FANTASTICCMYK.ai,HOTRODCMYK.ai} \
    preflight/src/test/java/org/apache/pdfbox/preflight/TestIsartorBavaria.java
-ln -s %{_datadir}/fonts/liberation/LiberationSans-Regular.ttf pdfbox/src/test/resources/org/apache/pdfbox/ttf/LiberationSans-Regular.ttf
+ln -s %{_datadir}/fonts/liberation-sans/LiberationSans-Regular.ttf pdfbox/src/test/resources/org/apache/pdfbox/ttf/LiberationSans-Regular.ttf
 sed -i -e 's/\(testCIDFontType2VerticalSubset\)/ignore_\1/' pdfbox/src/test/java/org/apache/pdfbox/pdmodel/font/TestFontEmbedding.java
 sed -i -e 's/\(testStructureTreeMerge\)/ignore_\1/'  pdfbox/src/test/java/org/apache/pdfbox/multipdf/PDFMergerUtilityTest.java
 sed -i -e '/testPDFBOX4115/i\@org.junit.Ignore' pdfbox/src/test/java/org/apache/pdfbox/pdmodel/font/PDFontTest.java
@@ -187,11 +189,13 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %mvn_file :xmpbox xmpbox
 %mvn_file :fontbox fontbox
 
+%pom_add_dep jakarta.activation:jakarta.activation-api
+
 %build
 # Integration tests all require internet access to download test resources, so skip
 # Use compat version of lucene
 # Ignore test failures on F28 and earlier due to liberation fonts being too old
-%mvn_build -s -- -DskipITs -Dlucene.version=4 -Dmaven.test.failure.ignore=true
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DskipITs -Dlucene.version=4 -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -224,6 +228,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.21-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.19-alt1_1jpp8
 - new version
 
