@@ -6,7 +6,7 @@
 %def_without libzfs
 %def_without selinux
 %def_with libradosstriper
-%ifarch x86_64 aarch64
+%ifarch x86_64 aarch64 ppc64le
 %def_with lttng
 %else
 %def_without lttng
@@ -41,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 15.2.12
+Version: 15.2.13
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -420,6 +420,7 @@ service as well as the OpenStack Object Storage ("Swift") API.
 %package immutable-object-cache
 Summary: Ceph daemon for immutable object cache
 Group: System/Base
+Requires: ceph-base = %EVR
 Requires: librados2 = %EVR
 %description -n ceph-immutable-object-cache
 Daemon for immutable object cache.
@@ -1274,6 +1275,8 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %_bindir/radosgw-es
 %_bindir/radosgw-token
 %_bindir/radosgw-object-expirer
+%_bindir/rgw-gap-list
+%_bindir/rgw-gap-list-comparator
 %_bindir/rgw-orphan-list
 %_mandir/man8/ceph-diff-sorted.8*
 %_mandir/man8/radosgw.8*
@@ -1502,6 +1505,9 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.13-alt1
+- 15.2.13
+
 * Sat May 15 2021 Alexey Shabalin <shaba@altlinux.org> 15.2.12-alt1
 - 15.2.12 (Fixes: CVE-2021-3531, CVE-2021-3524, CVE-2021-3509)
 
