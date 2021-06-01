@@ -8,12 +8,12 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           maven-assembly-plugin
 Summary:        Maven Assembly Plugin
-Version:        3.2.0
-Release:        alt1_2jpp11
+Version:        3.3.0
+Release:        alt1_3jpp11
 License:        ASL 2.0
 
-URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:            https://maven.apache.org/plugins/maven-assembly-plugin/
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch:      noarch
 
@@ -26,6 +26,7 @@ BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:file-management)
@@ -63,7 +64,7 @@ This package provides %{summary}.
 %build
 # Tests need easymockclassextension version 2.x, which is incompatible
 # with easymockclassextension version 3.x we have in Fedora.
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -78,6 +79,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_3jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_2jpp11
 - new version
 
