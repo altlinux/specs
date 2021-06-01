@@ -1,22 +1,21 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:             weld-parent
-Version:          39
-Release:          alt1_2jpp8
-Summary:          Parent POM for Weld
-License:          ASL 2.0
-URL:              http://weld.cdi-spec.org
-Source0:          https://github.com/weld/parent/archive/%{version}.tar.gz
+Name:           weld-parent
+Version:        41
+Release:        alt1_1jpp11
+Summary:        Parent POM for Weld
+License:        ASL 2.0
 
-BuildArch:        noarch
+URL:            http://weld.cdi-spec.org
+Source0:        https://github.com/weld/parent/archive/%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:    maven-local
-BuildRequires:    mvn(org.apache.maven.plugins:maven-install-plugin)
-BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 Source44: import.info
 
 %description
@@ -25,12 +24,13 @@ Parent POM for Weld
 %prep
 %setup -q -n parent-%{version}
 
-%pom_remove_plugin ":maven-enforcer-plugin"
-%pom_remove_plugin ":maven-remote-resources-plugin"
-%pom_remove_plugin ":buildnumber-maven-plugin"
+%pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-remote-resources-plugin
+%pom_remove_plugin :maven-source-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -38,6 +38,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 41-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 39-alt1_2jpp8
 - new version
 
