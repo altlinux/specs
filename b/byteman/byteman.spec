@@ -24,12 +24,12 @@ BuildRequires: jpackage-11-compat
 %global bindir %{apphomedir}/bin
 
 Name:             byteman
-Version:          4.0.5
-Release:          alt1_5jpp11
+Version:          4.0.11
+Release:          alt1_3jpp11
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
-# wget -O 4.0.5.tar.gz https://github.com/bytemanproject/byteman/archive/4.0.5.tar.gz
+# wget -O 4.0.11.tar.gz https://github.com/bytemanproject/byteman/archive/4.0.11.tar.gz
 Source0:          https://github.com/bytemanproject/byteman/archive/%{version}.tar.gz
 
 BuildArch:        noarch
@@ -47,11 +47,13 @@ BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-surefire-provider-testng
 BuildRequires:    maven-surefire-provider-junit
+BuildRequires:    maven-surefire-provider-junit5
 BuildRequires:    maven-verifier-plugin
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    java_cup
 BuildRequires:    objectweb-asm
 BuildRequires:    junit
+BuildRequires:    junit5
 BuildRequires:    testng
 # JBoss modules byteman plugin requires it
 BuildRequires:    mvn(org.jboss.modules:jboss-modules)
@@ -63,6 +65,7 @@ Provides:         bundled(java_cup) = 1:0.11b-8
 
 # Related pieces removed via pom_xpath_remove macros
 Patch1:           remove_submit_integration_test_verification.patch
+Patch2:           tests_pom_xml.patch
 Source44: import.info
 %filter_from_requires /^%{mvn_javacup_or_asm_matcher}|%{java_headless_matcher}$/d
 
@@ -122,6 +125,7 @@ sed -i "s|java-cup|java_cup|" tests/pom.xml
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-failsafe-plugin']/pom:executions/pom:execution[pom:id='submit.TestSubmit']" agent
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-failsafe-plugin']/pom:executions/pom:execution[pom:id='submit.TestSubmit.compiled']" agent
 %patch1 -p2
+%patch2 -p2
 
 # Remove Submit integration test invocations (tests)
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-failsafe-plugin']/pom:executions/pom:execution[pom:id='submit.TestSubmit']" tests
@@ -153,7 +157,7 @@ sed -i "s|java-cup|java_cup|" tests/pom.xml
 %mvn_package ":byteman-dtest" dtest
 
 %build
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+#export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 # Use --xmvn-javadoc so as to avoid maven-javadoc-plugin issue
 # (fixed in 3.1.0, fedora has 3.0.1):
 # See https://issues.apache.org/jira/browse/MJAVADOC-555
@@ -225,6 +229,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 4.0.11-alt1_3jpp11
+- new version
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 4.0.5-alt1_5jpp11
 - update
 
