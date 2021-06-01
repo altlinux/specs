@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
-Version: 8.0.20
-Release: alt5
+Version: 8.0.25
+Release: alt1
 
 Summary: A MySQL visual database modeling tool
 
@@ -11,7 +11,7 @@ Url: http://wb.mysql.com
 # Source-url: https://cdn.mysql.com/Downloads/MySQLGUITools/mysql-workbench-community-%version-src.tar.gz
 Source0: %name-%version.tar
 # TODO: build with external antlr4-runtime (>= 4.7.1)
-Source1: antlr-4.7.1-complete.jar
+Source1: antlr-4.9.1-complete.jar
 
 # https://www.mysql.com/support/supportedplatforms/workbench.html
 ExclusiveArch: %ix86 x86_64
@@ -22,7 +22,7 @@ Patch3: mysql-workbench-6.3.4-c++11.patch
 Patch4: %name-6.3.4-alt-gcc6.patch
 Patch5: mysql-workbench-community-6.3.10-32bit.patch
 Patch7: mysql-workbench-8.0.17.suppress-unsupported.patch
-Patch8: %name-%version-alt-boost-1.73.0-compat.patch
+Patch8: %name-8.0.20-alt-boost-1.73.0-compat.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -36,18 +36,25 @@ Provides: mysql-query-browser = %version-%release
 Obsoletes: mysql-query-browser < %version-%release
 
 # "_mforms" and "grt" are accessable from "MySQL Workbench GRT Shell" only.
-%add_python_req_skip _mforms grt mforms
+%add_python3_req_skip _mforms grt mforms
 
 # internal Workbench's libraries
-%add_python_req_skip wb workbench cairo_utils wb_common
+%add_python3_req_skip wb workbench cairo_utils wb_common
+
+%add_python3_req_skip workbench.change_tracker workbench.client_utils workbench.db_driver
+%add_python3_req_skip workbench.db_utils workbench.exceptions workbench.graphics.cairo_utils
+%add_python3_req_skip workbench.graphics.canvas workbench.graphics.charting workbench.log
+%add_python3_req_skip workbench.notifications workbench.os_utils workbench.plugins
+%add_python3_req_skip workbench.tcp_utils workbench.template workbench.ui workbench.utils
 
 # shell_snippets.py is not pure Python
 %add_findreq_skiplist */mysql-workbench/shell_snippets.py
 
 # templates only
 %add_findreq_skiplist */mysql-workbench/script_templates/*
-
 %add_findreq_skiplist */mysql-workbench/libraries/grt_python_debugger.py
+
+%add_python3_path %_libdir/mysql-workbench/modules
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -101,7 +108,7 @@ BuildRequires: libtiff-devel libpng-devel libepoxy-devel
 #BuildRequires: libwayland-cursor-devel libwayland-egl-devel
 #BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel libXcomposite-devel
 #BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
-BuildRequires: libssh-devel >= 0.8.5
+#BuildRequires: libssh-devel >= 0.8.5
 
 # 8.0.19
 BuildRequires: libthai-devel libdatrie-devel rapidjson
@@ -109,8 +116,14 @@ BuildRequires: libthai-devel libdatrie-devel rapidjson
 # 8.0.20
 BuildRequires: libbrotli-devel libgcrypt-devel libuuid-devel
 
-BuildRequires: python-devel
+# 8.0.25
+BuildRequires: libssh-devel >= 0.9.5
+BuildRequires: libffi-devel bzlib-devel libselinux-devel
+BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel
+BuildRequires: libXcomposite-devel libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: at-spi2-atk-devel libdbus-devel libat-spi2-core-devel libXtst-devel
 
+BuildRequires: python3-dev
 BuildRequires: libantlr4-devel
 
 %description
@@ -169,14 +182,10 @@ sed -i "s/ -Wno-deprecated-copy//g" CMakeLists.txt
     -DWITH_ANTLR_JAR=%SOURCE1 \
 #
 
-cd BUILD
-#make_build VERBOSE=1
-%make_build
+%cmake_build
 
 %install
-pushd %_builddir/%name-%version/BUILD
-make install DESTDIR=%buildroot
-popd
+%cmake_install
 
 mkdir -p %buildroot%_niconsdir
 cp %_builddir/%name-%version/images/icons/MySQLWorkbench-32.png %buildroot%_niconsdir/mysql-workbench.png
@@ -186,14 +195,14 @@ cp %_builddir/%name-%version/images/icons/MySQLPlugin-32.png %buildroot%_iconsdi
 cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-model.png
 
 %files
-%exclude %_libdir/mysql-workbench/modules/*.py?
+#exclude %_libdir/mysql-workbench/modules/*.py?
 
 %exclude %_datadir/applications/*.desktop
 %exclude %_datadir/mysql-workbench/*
 
 %doc License.txt README.md AUTHORS
-%exclude %_datadir/doc/mysql-workbench/License.txt
-%exclude %_datadir/doc/mysql-workbench/README.md
+%exclude %_datadir/doc/mysql-workbench-community/License.txt
+%exclude %_datadir/doc/mysql-workbench-community/README.md
 
 %_bindir/mysql-workbench
 %_bindir/mysql-workbench-bin
@@ -218,6 +227,12 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Tue Jun 01 2021 Sergey Y. Afonin <asy@altlinux.org> 8.0.25-alt1
+- Updated to last release
+- Updated antlr jar to antlr-4.9.1-complete.jar from http://www.antlr4.org/download/
+- switched to python3-dev
+- spec: adapted to altlinux.org/CMakeMigration2021 (thanks to arseny@altlinux)
+
 * Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 8.0.20-alt5
 - NMU: improve build requires, drop -Werror again
 
