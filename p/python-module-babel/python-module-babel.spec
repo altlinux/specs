@@ -5,7 +5,7 @@
 
 Name:    python-module-%oname
 Version: 2.6.0
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -20,7 +20,6 @@ Source1: CLDR.tar
 
 BuildArch: noarch
 BuildRequires: python-module-setuptools python-module-sphinx-devel
-BuildRequires: python-module-freezegun
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
@@ -71,6 +70,9 @@ mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel.py2
 %endif
 
 %changelog
+* Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 1:2.6.0-alt3
+- Fixed Build Requires.
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.0-alt2
 - build only python2 module
 
