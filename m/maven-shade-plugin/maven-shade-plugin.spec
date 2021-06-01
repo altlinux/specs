@@ -7,19 +7,21 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shade-plugin
-Version:        3.2.1
+Version:        3.2.4
 Release:        alt1_3jpp11
-Summary:        This plugin provides the capability to package the artifact in an uber-jar
+Summary:        Maven plugin for packaging artifacts in an uber-jar
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/%{name}
-BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:            https://maven.apache.org/plugins/%{name}
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
@@ -64,7 +66,7 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %pom_add_dep 'com.google.guava:guava'
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -76,6 +78,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.4-alt1_3jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.2.1-alt1_3jpp11
 - update
 
