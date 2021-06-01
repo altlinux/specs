@@ -12,7 +12,7 @@
 
 Name: lib%oname
 Version: 3.0.0
-Release: alt2
+Release: alt3
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -21,8 +21,12 @@ Url: http://aomedia.org/
 # https://aomedia.googlesource.com/aom/
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
+Patch2000: %name-e2k-simd.patch
 
 BuildRequires: cmake gcc-c++ doxygen /usr/bin/dot
+%ifarch %ix86 x86_64
+BuildRequires: yasm
+%endif
 
 %description
 AOMedia Video 1, almost universally referred to as AV1,
@@ -76,6 +80,9 @@ The %name-docs package contains documentation files for %name.
 %prep
 %setup
 %patch1 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # Override old version from changelog
 echo -n %version > version
@@ -84,7 +91,9 @@ echo -n %version > version
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
+%ifarch armh
 	-DAOM_TARGET_CPU:STRING=generic \
+%endif
 	-DENABLE_DOCS:BOOL=ON \
 	-DENABLE_EXAMPLES:BOOL=ON \
 	-DENABLE_TOOLS:BOOL=ON \
@@ -125,6 +134,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %doc %_cmake__builddir/docs/html
 
 %changelog
+* Mon May 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.0-alt3
+- enabled target specific optimizations (except armh)
+- added SIMD patch for Elbrus
+
 * Mon May 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt2
 - Fixed build with new cmake macros (Closes: #40126).
 
