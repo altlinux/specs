@@ -7,23 +7,22 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-dependency-plugin
-Version:        3.1.1
-Release:        alt1_5jpp11
+Version:        3.1.2
+Release:        alt1_4jpp11
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 License:        ASL 2.0
+
 URL:            http://maven.apache.org/plugins/%{name}
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 BuildArch:      noarch
-
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-# port to maven-artifact-transfer 0.11.0
-Patch0:         00-maven-artifact-transfer-0.11.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(classworlds:classworlds)
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -48,9 +47,7 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
-
 %description
-
 The dependency plugin provides the capability to manipulate
 artifacts. It can copy and/or unpack artifacts from local or remote
 repositories to a specified location.
@@ -63,19 +60,29 @@ BuildArch: noarch
 %description javadoc
 %{summary}.
 
-
 %prep
 %setup -q
-%patch0 -p1
 
 %pom_remove_plugin :maven-enforcer-plugin
 
 # We don't want to support legacy Maven versions (older than 3.1)
 %pom_remove_dep org.sonatype.aether:
 
+# trivial port to commons-lang3
+%pom_change_dep :commons-lang org.apache.commons:commons-lang3:3.8.1
+
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    src/main/java/org/apache/maven/plugins/dependency/analyze/AbstractAnalyzeMojo.java
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    src/main/java/org/apache/maven/plugins/dependency/resolvers/ResolveDependencySourcesMojo.java
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    src/main/java/org/apache/maven/plugins/dependency/DisplayAncestorsMojo.java
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    src/test/java/org/apache/maven/plugins/dependency/fromConfiguration/TestUnpackMojo.java
+
 %build
 # Tests require legacy Maven
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -87,6 +94,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1.2-alt1_4jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_5jpp11
 - update
 
