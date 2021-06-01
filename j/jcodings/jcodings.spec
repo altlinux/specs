@@ -1,54 +1,76 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit_hash d50ee0e
-%global tag_hash d50ee0e
-
 # Prevent brp-java-repack-jars from being run.
 %define __jar_repack %{nil}
 
 Name:           jcodings
-Version:        1.0.9
-Release:        alt2_17jpp8
+Version:        1.0.36
+Release:        alt1_2jpp11
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 License:        MIT
-URL:            http://github.com/jruby/%{name}
-Source0:        https://github.com/jruby/jcodings/tarball/%{version}/jruby-%{name}-%{version}-0-g%{commit_hash}.tar.gz
-
-BuildArch:      noarch
+URL:            https://github.com/jruby/%{name}
+Source0:        https://github.com/jruby/%{name}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  maven-source-plugin
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
+BuildArch: noarch
 Source44: import.info
 
 %description
 Java-based codings helper classes for Joni and JRuby.
 
+%package javadoc
+Group: Development/Other
+Summary: API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
 
 %prep
-%setup -q -n jruby-%{name}-%{tag_hash}
+%setup -q -n %{name}-%{name}-%{version}
 
 find -name '*.class' -delete
 find -name '*.jar' -delete
 
 %mvn_file : %{name}
 
-%build
-echo "See %{url} for more info about the %{name} project." > README.txt
+# Remove pointless parent pom
+%pom_remove_parent
 
+# Remove wagon extension
 %pom_xpath_remove "pom:build/pom:extensions"
-%mvn_build
+
+# Remove plugins not relevant for downstream RPM builds
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+
+# Generate OSGi metadata by using bundle packaging
+%pom_xpath_inject pom:project "<packaging>bundle</packaging>"
+%pom_add_plugin org.apache.felix:maven-bundle-plugin "<extensions>true</extensions>"
+
+%build
+%mvn_build -- -Dmaven.compiler.source=9 -Dmaven.compiler.target=9 -Dmaven.javadoc.source=9 -Dmaven.compiler.release=9
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.txt
+%doc --no-dereference LICENSE.txt
+%doc README.md
+
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.36-alt1_2jpp11
+- new version; needs java9 api
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_17jpp8
 - fc update
 
