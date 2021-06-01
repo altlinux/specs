@@ -1,13 +1,14 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-core
-Version:       2.10.2
-Release:       alt1_2jpp8
+Version:       2.11.2
+Release:       alt1_1jpp11
 Summary:       Core part of Jackson
 License:       ASL 2.0
+
 URL:           https://github.com/FasterXML/jackson-core
 Source0:       %{url}/archive/%{name}-%{version}.tar.gz
 
@@ -51,7 +52,7 @@ sed -i 's/\r//' LICENSE NOTICE
 %mvn_file : %{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -64,6 +65,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
 - new version
 
