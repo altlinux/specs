@@ -8,12 +8,12 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           maven-source-plugin
 Summary:        Plugin creating source JAR
-Version:        3.2.0
-Release:        alt1_2jpp11
+Version:        3.2.1
+Release:        alt1_3jpp11
 License:        ASL 2.0
 
 URL:            http://maven.apache.org/plugins/maven-source-plugin/
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch:      noarch
 
@@ -29,6 +29,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver) >= 4.2.0
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.3.0
 Source44: import.info
 
 %description
@@ -51,7 +52,7 @@ API documentation for %{name}.
 
 %build
 %mvn_file : %{name}
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -66,6 +67,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.1-alt1_3jpp11
+- new version
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_2jpp11
 - new version
 
