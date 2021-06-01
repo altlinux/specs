@@ -1,7 +1,7 @@
 %define oname pycdlib
 
 Name:        pycdlib
-Version:     1.7.0
+Version:     1.11.0
 Release:     alt1
 
 Summary:     Tools and libraries for working with ISO images
@@ -15,7 +15,7 @@ Source:      %name-%version.tar
 BuildRequires(pre): rpm-build-python3 rpm-build-licenses
 BuildPreReq:        python3-module-setuptools python3-devel
 
-Requires:    %oname-tools = %EVR python3-module-pysendfile 
+Requires:    %oname-tools = %EVR
 
 
 %description
@@ -65,7 +65,6 @@ Documentations for PyCdlib.
 %doc COPYING README.md
 
 %files -n %oname-tools
-%_bindir/pycdlib-compare
 %_bindir/pycdlib-explorer
 %_bindir/pycdlib-extract-files
 %_bindir/pycdlib-genisoimage
@@ -80,5 +79,8 @@ Documentations for PyCdlib.
 
 
 %changelog
+* Tue Jun 01 2021 Ivan Razzhivin <underwit@altlinux.org> 1.11.0-alt1
+- Update to upstream version 1.11.0 (closes: #40133)
+
 * Mon Jun 24 2019 Ivan Razzhivin <underwit@altlinux.org> 1.7.0-alt1
 - Initial build for ALT Linux Sisyphus
