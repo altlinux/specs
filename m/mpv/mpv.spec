@@ -3,8 +3,8 @@
 %endif
 
 Name: mpv
-Version: 0.33.0
-Release: alt2
+Version: 0.33.1
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -142,6 +142,11 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Tue Jun 01 2021 Leontiy Volodin <lvol@altlinux.org> 0.33.1-alt1
+- 0.33.1.
+- Fixes:
+  + CVE-2021-30145.
+
 * Mon Jan 25 2021 Leontiy Volodin <lvol@altlinux.org> 0.33.0-alt2
 - Added vapoursynth and libzimg support.
 
