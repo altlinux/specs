@@ -1,12 +1,12 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Epoch:          1
 Name:           apache-sshd
-Version:        2.2.0
-Release:        alt1_4jpp8
+Version:        2.4.0
+Release:        alt1_5jpp11
 Summary:        Apache SSHD
 
 # One file has ISC licensing:
@@ -79,6 +79,7 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-pmd-plugin
+%pom_remove_plugin :maven-antrun-plugin
 %pom_remove_plugin :animal-sniffer-maven-plugin
 
 # Suppress generation of uses clauses
@@ -86,7 +87,7 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 
 %build
 # Can't run tests, they require ch.ethz.ganymed:ganymed-ssh2
-%mvn_build -f -- -Dworkspace.root.dir=$(pwd)
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dworkspace.root.dir=$(pwd) -Dsource=1.8
 
 %install
 %mvn_install
@@ -99,6 +100,9 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 %doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt1_5jpp11
+- new version
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.2.0-alt1_4jpp8
 - new version
 
