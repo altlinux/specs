@@ -1,8 +1,8 @@
 %define basever 1.1.0
 
 Name: alsa-tools
-Version: 1.2.2
-Release: alt2
+Version: 1.2.5
+Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPLv2+
@@ -172,6 +172,9 @@ sed -i 's,env python,&2,' %buildroot%_bindir/hwmixvolume
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Tue Jun 01 2021 Michael Shigorin <mike@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Thu May 27 2021 Michael Shigorin <mike@altlinux.org> 1.2.2-alt2
 - explicit BR: rpm-build-python
 
