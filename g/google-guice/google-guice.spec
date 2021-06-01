@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,8 +21,8 @@ BuildRequires: jpackage-1.8-compat
 %global short_name guice
 
 Name:           google-%{short_name}
-Version:        4.2.2
-Release:        alt1_1jpp8
+Version:        4.2.3
+Release:        alt1_3jpp11
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -271,7 +271,7 @@ This package provides %{summary}.
 %mvn_alias ":guice" "org.sonatype.sisu:sisu-guice"
 
 # Skip tests because of missing dependency guice-testlib
-%mvn_build -f -s
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -306,6 +306,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2.3-alt1_3jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:4.2.2-alt1_1jpp8
 - new version
 
