@@ -4,27 +4,27 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag r1rv63
+%global gittag r1rv65
 %global classname org.bouncycastle.jce.provider.BouncyCastleProvider
 
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
-Version:          1.63
-Release:          alt1_2jpp8
+Version:          1.65
+Release:          alt1_4jpp11
 License:          MIT
 URL:              http://www.bouncycastle.org
 
 Source0:          https://github.com/bcgit/bc-java/archive/%{gittag}.tar.gz
 
 # POMs from Maven Central
-Source1:          http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/%{version}/bcprov-jdk15on-%{version}.pom
-Source2:          http://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on/%{version}/bcpkix-jdk15on-%{version}.pom
-Source3:          http://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/%{version}/bcpg-jdk15on-%{version}.pom
-Source4:          http://repo1.maven.org/maven2/org/bouncycastle/bcmail-jdk15on/%{version}/bcmail-jdk15on-%{version}.pom
-Source5:          http://repo1.maven.org/maven2/org/bouncycastle/bctls-jdk15on/%{version}/bctls-jdk15on-%{version}.pom
+Source1:          https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/%{version}/bcprov-jdk15on-%{version}.pom
+Source2:          https://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on/%{version}/bcpkix-jdk15on-%{version}.pom
+Source3:          https://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/%{version}/bcpg-jdk15on-%{version}.pom
+Source4:          https://repo1.maven.org/maven2/org/bouncycastle/bcmail-jdk15on/%{version}/bcmail-jdk15on-%{version}.pom
+Source5:          https://repo1.maven.org/maven2/org/bouncycastle/bctls-jdk15on/%{version}/bctls-jdk15on-%{version}.pom
 
 # Script to fetch POMs from Maven Central
 Source6:          get-poms.sh
@@ -35,6 +35,7 @@ BuildRequires:    aqute-bnd
 BuildRequires:    ant
 BuildRequires:    ant-junit
 BuildRequires:    javamail
+BuildRequires:    jakarta-activation
 BuildRequires:    javapackages-local
 
 Requires(post):   javapackages-tools
@@ -90,12 +91,6 @@ JSSE.
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-Provides:  %{name}-pkix-javadoc = %{version}-%{release}
-Obsoletes: %{name}-pkix-javadoc < %{version}-%{release}
-Provides:  %{name}-pg-javadoc = %{version}-%{release}
-Obsoletes: %{name}-pg-javadoc < %{version}-%{release}
-Provides:  %{name}-mail-javadoc = %{version}-%{release}
-Obsoletes: %{name}-mail-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -109,7 +104,7 @@ find . -type f -name "*.class" -exec rm -f {} \;
 find . -type f -name "*.jar" -exec rm -f {} \;
 
 # Relax javadoc linting and set expected source encoding
-sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none" encoding="UTF-8"' \
+sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none" encoding="UTF-8" source="1.8"' \
        -e '/<javac/aencoding="UTF-8"' ant/bc+-build.xml
 
 cp -p %{SOURCE1} bcprov.pom
@@ -119,11 +114,11 @@ cp -p %{SOURCE4} bcmail.pom
 cp -p %{SOURCE5} bctls.pom
 
 %build
-ant -f ant/jdk15+.xml \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f ant/jdk15+.xml \
   -Djunit.jar.home=$(build-classpath junit) \
   -Dmail.jar.home=$(build-classpath javax.mail) \
-  -Dactivation.jar.home= \
-  -Drelease.debug=true \
+  -Dactivation.jar.home=$(build-classpath jakarta-activation/jakarta.activation) \
+  -Drelease.debug=true -Dbc.javac.source=1.8 -Dbc.javac.target=1.8 \
   clean build-provider build #test
 
 cat > bnd.bnd <<EOF
@@ -201,7 +196,7 @@ fi
 
 %files -f .mfiles-bcprov
 %doc --no-dereference build/artifacts/jdk1.5/bcprov-jdk15on-*/LICENSE.html
-%doc docs/ core/docs/ *.html
+%doc docs/ *.html
 %{_sysconfdir}/java/security/security.d/2000-%{classname}
 
 %files pkix -f .mfiles-bcpkix
@@ -220,6 +215,9 @@ fi
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.65-alt1_4jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.63-alt1_2jpp8
 - new version
 
