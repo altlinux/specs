@@ -12,14 +12,14 @@
 # File "./docsrc/exts/sphinxlocal/builders/manpage.py", line 78, in write
 #     darkgreen, [docname])
 # TypeError: inline_all_toctrees() takes exactly 5 arguments (6 given)
-%def_with sphinx
+%def_without sphinx
 
 %def_with srs2
 %def_with snmp
 
 Name: cyrus-imapd
 Version: 3.2.6
-Release: alt1
+Release: alt2
 
 Summary: A high-performance email, contacts and calendar server
 License: ALT-Cyrus
@@ -504,6 +504,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.6-alt2
+- NMU: build w/o sphinx
+
 * Wed Mar 17 2021 Sergey Y. Afonin <asy@altlinux.org> 3.2.6-alt1
 - 3.2.6 (XFER now recognises 3.4 and 3.5 backends)
 
