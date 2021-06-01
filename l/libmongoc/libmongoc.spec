@@ -2,7 +2,7 @@
 
 Name: libmongoc
 Version: 1.14.0
-Release: alt1
+Release: alt1.1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: ASL 2.0 and ISC and MIT and zlib
@@ -59,6 +59,7 @@ This package contains development files of libbson.
 
 %build
 %cmake \
+    %_cmake_skip_rpath \
     -DBUILD_VERSION=%version \
     -DENABLE_STATIC:STRING=OFF \
     -DENABLE_BSON:STRING=ON \
@@ -77,7 +78,7 @@ This package contains development files of libbson.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 %if_enabled tests
@@ -125,6 +126,9 @@ exit $ret
 
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.14.0-alt1.1
+- NMU: spec: adapt to new cmake macros.
+
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
@@ -147,4 +151,4 @@ exit $ret
 - Version 1.0.0
 
 * Fri Mar 08 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.1-alt1
-- Biuld fot ALT
+- Build fot ALT
