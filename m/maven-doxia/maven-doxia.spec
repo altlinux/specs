@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,21 +17,18 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with    fop
 
 Name:           maven-doxia
-Version:        1.9
-Release:        alt1_4jpp8
 Epoch:          0
+Version:        1.9.1
+Release:        alt1_3jpp11
 Summary:        Content generation framework
 License:        ASL 2.0
-URL:            http://maven.apache.org/doxia/
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia/%{version}/doxia-%{version}-source-release.zip
+URL:            https://maven.apache.org/doxia/
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/doxia/doxia/%{version}/doxia-%{version}-source-release.zip
 
 # Build against iText 2.x
 # https://issues.apache.org/jira/browse/DOXIA-53
 Patch1:         0001-Fix-itext-dependency.patch
-
-# Don't run bad tests which rely on ordering in set (they fail with Java 8)
-Patch2:         0002-Disable-tests-which-rely-on-ordering-in-set.patch
 
 BuildArch:      noarch
 
@@ -223,7 +220,6 @@ API documentation for %{name}.
 find -name '*.java' -exec sed -i 's/\r//' {} +
 find -name '*.xml' -exec sed -i 's/\r//' {} +
 %patch1 -p1
-%patch2 -p1
 
 # we don't have clirr-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin pom.xml
@@ -251,7 +247,7 @@ rm doxia-core/src/test/java/org/apache/maven/doxia/util/XmlValidatorTest.java
 %endif
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -286,6 +282,9 @@ rm doxia-core/src/test/java/org/apache/maven/doxia/util/XmlValidatorTest.java
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.1-alt1_3jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9-alt1_4jpp8
 - new version
 
