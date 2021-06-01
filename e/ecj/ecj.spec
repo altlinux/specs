@@ -6,21 +6,21 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global qualifier S-4.14RC2a-201912100610
+%global qualifier R-4.16-202006040540
 
 Summary: Eclipse Compiler for Java
 Name: ecj
-Version: 4.14
-Release: alt1_3jpp11
+Version: 4.16
+Release: alt1_4jpp11
 URL: http://www.eclipse.org
 License: EPL-2.0
 
-Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}RC2a.jar
-Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.20.0/ecj-3.20.0.pom
+Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}.jar
+Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.22.0/ecj-3.22.0.pom
 # Extracted from https://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/%%{qualifier}/ecj-%%{version}.jar
 Source4: MANIFEST.MF
-# Java API stubs for newer JDKs
-Source5: java10api.jar
+# Java API stubs for newer JDKs to allow us to build on the system default JDK
+Source5: java14api.jar
 
 # Always generate debug info when building RPMs (Andrew Haley)
 Patch0: %{name}-rpmdebuginfo.patch
@@ -32,6 +32,10 @@ BuildArch: noarch
 
 BuildRequires: ant
 BuildRequires: javapackages-local
+
+# Build with Java 11 against bootclasspath of Java 8
+BuildRequires: java-11-openjdk-devel
+BuildRequires: java-1.8.0-openjdk-devel
 Source44: import.info
 # Use ECJ for GCJ
 # cvs -d:pserver:anonymous@sourceware.org:/cvs/rhug \
@@ -61,16 +65,13 @@ mkdir -p scripts/binary/META-INF/
 cp %{SOURCE4} scripts/binary/META-INF/MANIFEST.MF
 rm ./META-INF/ECLIPSE_.{SF,RSA}
 
-# JDTCompilerAdapter isn't used by the batch compiler
-rm -f org/eclipse/jdt/core/JDTCompilerAdapter.java
-
 # Aliases
 %mvn_alias org.eclipse.jdt:ecj org.eclipse.jdt:core org.eclipse.jdt.core.compiler:ecj \
   org.eclipse.tycho:org.eclipse.jdt.core org.eclipse.tycho:org.eclipse.jdt.compiler.apt
 
 # Make Java API stubs available for other packages
-%mvn_artifact "org.eclipse:java10api:jar:10" %{SOURCE5}
-%mvn_alias "org.eclipse:java10api:jar:10" "org.eclipse:java9api:jar:9"
+%mvn_artifact "org.eclipse:java14api:jar:14" %{SOURCE5}
+%mvn_alias "org.eclipse:java14api:jar:14" "org.eclipse:java10api:jar:10" "org.eclipse:java9api:jar:9"
 %patch33 -p1
 
 # Use ECJ for GCJ's bytecode compiler
@@ -85,7 +86,7 @@ rm -rf eclipse-gcj
 #patch55 -p1
 
 %build
-ant -Djavaapi=%{SOURCE5}
+JAVA_HOME=%{_jvmdir}/java-11 ant -Djavaapi=%{SOURCE5}
 
 %install
 %mvn_artifact pom.xml ecj.jar
@@ -109,6 +110,9 @@ ln -s ecj/ecj.jar %buildroot%_javadir/ecj.jar
 %{_mandir}/man1/ecj*
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:4.16-alt1_4jpp11
+- new version
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1:4.14-alt1_3jpp11
 - new version
 
