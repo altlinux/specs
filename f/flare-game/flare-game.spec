@@ -2,7 +2,7 @@
 
 Name: %_name-game
 Version: 1.11
-Release: alt1
+Release: alt1.1
 
 Summary: Fantasy action RPG using the FLARE engine
 # All of Flare's art and data files are released under CC-BY-SA 3.0.
@@ -41,14 +41,10 @@ It is built on the FLARE engine (Free/Libre Action Roleplaying Engine).
 
 %build
 %cmake -DBINDIR=bin -DDATADIR=share/flare
-cd BUILD
-%make_build
-cd -
+%cmake_build
 
 %install
-cd BUILD
-%makeinstall_std
-cd -
+%cmake_install
 %find_lang %_name
 
 %files -f %_name.lang
@@ -56,6 +52,9 @@ cd -
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.11-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Aug 08 2019 Mikhail Efremov <sem@altlinux.org> 1.11-alt1
 - Updated to 1.11.
 
