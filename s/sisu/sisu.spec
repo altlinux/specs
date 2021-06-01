@@ -1,32 +1,28 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Release type, either "milestone" or "release"
-%global reltype release
-#global reltag .M1
-
 Name:           sisu
-Epoch:          2
-Version:        0.3.3
-Release:        alt1_8jpp8
 Summary:        Eclipse dependency injection framework
-# sisu is EPL-1.0
-# bundled asm is BSD
+Epoch:          2
+Version:        0.3.4
+Release:        alt1_3jpp11
+# sisu is EPL-1.0, the bundled asm is BSD
 License:        EPL-1.0 and BSD
+
 URL:            http://eclipse.org/sisu
+Source0:        http://git.eclipse.org/c/sisu/org.eclipse.sisu.inject.git/snapshot/releases/%{version}.tar.gz#/org.eclipse.sisu.inject-%{version}.tar.gz
+Source1:        http://git.eclipse.org/c/sisu/org.eclipse.sisu.plexus.git/snapshot/releases/%{version}.tar.gz#/org.eclipse.sisu.plexus-%{version}.tar.gz
 
-Source0:        http://git.eclipse.org/c/%{name}/org.eclipse.%{name}.inject.git/snapshot/%{reltype}s/%{version}%{?reltag}.tar.bz2#/org.eclipse.%{name}.inject-%{version}%{?reltag}.tar.bz2
-Source1:        http://git.eclipse.org/c/%{name}/org.eclipse.%{name}.plexus.git/snapshot/%{reltype}s/%{version}%{?reltag}.tar.bz2#/org.eclipse.%{name}.plexus-%{version}%{?reltag}.tar.bz2
+Source100:      sisu-parent.pom
+Source101:      sisu-inject.pom
+Source102:      sisu-plexus.pom
 
-Source100:      %{name}-parent.pom
-Source101:      %{name}-inject.pom
-Source102:      %{name}-plexus.pom
-
-Patch0:         %{name}-OSGi-import-guava.patch
-Patch2:         %{name}-ignored-tests.patch
-Patch3:         %{name}-osgi-api.patch
+Patch0:         sisu-OSGi-import-guava.patch
+Patch2:         sisu-ignored-tests.patch
+Patch3:         sisu-osgi-api.patch
+Patch4:         0001-Remove-dependency-on-glassfish-servlet-api.patch
 
 BuildArch:      noarch
 
@@ -36,7 +32,6 @@ BuildRequires:  mvn(com.google.inject:guice::no_aop:)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(javax.enterprise:cdi-api)
 BuildRequires:  mvn(javax.inject:javax.inject)
-BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
@@ -78,8 +73,8 @@ This package contains %{summary}.
 
 %prep
 %setup -q -c -T
-tar xf %{SOURCE0} && mv %{reltype}s/* sisu-inject && rmdir %{reltype}s
-tar xf %{SOURCE1} && mv %{reltype}s/* sisu-plexus && rmdir %{reltype}s
+tar xf %{SOURCE0} && mv releases/* sisu-inject && rmdir releases
+tar xf %{SOURCE1} && mv releases/* sisu-plexus && rmdir releases
 
 cp %{SOURCE100} pom.xml
 cp %{SOURCE101} sisu-inject/pom.xml
@@ -88,6 +83,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 %patch0
 %patch2
 %patch3
+%patch4 -p1
+
+%pom_remove_dep :servlet-api sisu-inject
 
 %pom_xpath_set -r /pom:project/pom:version %{version}
 
@@ -97,7 +95,7 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 %mvn_alias :org.eclipse.sisu.plexus org.sonatype.sisu:sisu-inject-plexus
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -112,6 +110,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2:0.3.4-alt1_3jpp11
+- new version
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 2:0.3.3-alt1_8jpp8
 - fc update
 
