@@ -1,8 +1,8 @@
 %define oname flask-wtf
 
 Name: python3-module-%oname
-Version: 0.14.2
-Release: alt2
+Version: 0.15.1
+Release: alt1
 
 Summary: Simple integration of Flask and WTForms
 License: BSD
@@ -12,17 +12,14 @@ BuildArch: noarch
 
 # https://github.com/lepture/flask-wtf.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
-Patch2: %oname-%version-upstream-sphinx.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-nose python3-module-flask
 BuildRequires: python3-module-werkzeug python3-module-wtforms
 BuildRequires: python3-module-flask-babel python3-module-speaklater
-BuildRequires: flask-sphinx-themes python3-module-sphinx
+BuildRequires: python3-module-sphinx
 
 %py3_provides flask_wtf
-
 
 %description
 Simple integration of Flask and WTForms, including CSRF, file upload and
@@ -51,8 +48,6 @@ This package comtains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
@@ -82,8 +77,10 @@ py.test3 ||:
 %files docs
 %doc docs/_build/html examples
 
-
 %changelog
+* Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.15.1-alt1
+- Automatically updated to 0.15.1.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.14.2-alt2
 - Build for python2 disabled.
 
