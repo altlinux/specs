@@ -41,7 +41,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.5.1
-Release: alt2
+Release: alt3
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -60,6 +60,7 @@ Source3: %bname-xfeatures2d-vgg-%version.tar
 
 Patch1: %name-%version-alt-python-paths.patch
 Patch2: %name-%version-alt-linking.patch
+Patch2000: %name-e2k-simd.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -270,6 +271,9 @@ This package contains %Name examples.
 pushd ../%bname-contrib-%version >/dev/null
 %patch2 -p1
 popd >/dev/null
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
@@ -363,6 +367,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Tue Jun 01 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:4.5.1-alt3
+- added SIMD patch for Elbrus
+
 * Mon May 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.1-alt2
 - Fixed build with new cmake macros (Closes: #40128).
 
