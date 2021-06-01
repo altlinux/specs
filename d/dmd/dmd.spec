@@ -9,7 +9,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.095.1
+Version: 2.096.1
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -214,6 +214,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Tue Jun 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.096.1-alt1
+- Updated to upstream version 2.096.1.
+
 * Wed Mar 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.095.1-alt1
 - Updated to upstream version 2.095.1.
 - Fixed build with gcc-10.
