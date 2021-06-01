@@ -1,26 +1,20 @@
 %define oname plaster
 
-%def_with python3
-
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0
-Release: alt1.qa1
+Release: alt2
 BuildArch: noarch
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Summary: Application configuration settings abstraction layer
 URL:     https://github.com/Pylons/%{oname}
 
 # https://github.com/Pylons/plaster.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools python2.7(pytest)
-BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools python3(pytest)
-%endif
+BuildRequires: python3-module-sphinx
+BuildRequires: python3(pytest)
 
 %description
 plaster is a loader interface around multiple
@@ -38,27 +32,8 @@ Group: Development/Python
 %description doc
 Contains the documentation for python-module-plaster.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Application configuration settings abstraction layer
-Group: Development/Python3
-
-%description -n python3-module-%oname
-plaster is a loader interface around multiple
-configuration file formats. It exists to define a common API for
-applications to use when they wish to load configuration. The library
-itself does not aim to handle anything except a basic API that
-applications may use to find and load configuration settings. Any
-specific constraints should be implemented in a loader which can be
-registered via an entry point.
-%endif
-
 %prep
 %setup
-
-%if_with python3
-cp -a . ../python3
-%endif
 
 # The plaster docs upstream only build if plaster is installed. Since we are building plaster docs
 # from a source checkout, let's insert plaster into the path.
@@ -76,50 +51,29 @@ sed -i "/html_theme =.*/d" docs/conf.py
 sed -i "/.*github_url.*/d" docs/conf.py
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
-%make_build -C docs html
+%make_build SPHINXBUILD="sphinx-build-3" -C docs html
 rm -rf docs/_build/html/.buildinfo
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-PYTHONPATH="./src" py.test
-
-%if_with python3
-pushd ../python3
 PYTHONPATH="./src" py.test3
-popd
-%endif
 
 %files
 %doc README.rst LICENSE.txt
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files doc
 %doc docs/_build/html
 %doc CHANGES.rst LICENSE.txt README.rst
 
-%if_with python3
-%files -n python3-module-%oname
-%doc README.rst LICENSE.txt
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.0-alt2
+- Drop python2 support.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1.qa1
 - NMU: applied repocop patch
 
