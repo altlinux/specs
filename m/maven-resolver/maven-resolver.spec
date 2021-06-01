@@ -3,17 +3,18 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-resolver
 Epoch:          1
-Version:        1.4.1
-Release:        alt1_2jpp8
-License:        ASL 2.0
+Version:        1.4.2
+Release:        alt1_3jpp11
 Summary:        Apache Maven Artifact Resolver library
-URL:            http://maven.apache.org/resolver/
-Source0:        http://archive.apache.org/dist/maven/resolver/%{name}-%{version}-source-release.zip
+License:        ASL 2.0
+
+URL:            https://maven.apache.org/resolver/
+Source0:        https://archive.apache.org/dist/maven/resolver/%{name}-%{version}-source-release.zip
 
 # keep deprecated and removed aether CacheUtils for a while longer
 # some packages still depend on this and things break without it
@@ -168,7 +169,7 @@ done
 %mvn_file ':maven-resolver{*}' %{name}/maven-resolver@1 aether/aether@1
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -193,6 +194,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.4.2-alt1_3jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1:1.4.1-alt1_2jpp8
 - new version
 
