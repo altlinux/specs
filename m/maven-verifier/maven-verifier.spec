@@ -3,23 +3,25 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-verifier
-Version:        1.6
-Release:        alt1_10jpp8
+Version:        1.7.2
+Release:        alt1_3jpp11
 Summary:        Maven verifier
 License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-verifier
-BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:            https://maven.apache.org/shared/maven-verifier
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 Source44: import.info
 
 %description
@@ -36,8 +38,11 @@ API documentation for %{name}.
 %prep
 %setup -q
 
+# drop tests that attempt to write outside build directory
+rm src/test/java/org/apache/maven/it/ForkedLauncherTest.java
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -50,6 +55,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.7.2-alt1_3jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_10jpp8
 - fc update
 
