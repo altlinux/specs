@@ -45,7 +45,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -367,6 +367,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 subst '/^#!.*python$/s|python$|python2|' $(grep -Rl '#!.*python$' *)
 
 %build
+%define _cmake__builddir BUILD
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja \
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
@@ -814,6 +815,9 @@ ninja -C BUILD check-all || :
 %doc %llvm_docdir/lldb
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt2
+- spec: adapted to https://altlinux.org/CMakeMigration2021
+
 * Fri Jan 08 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt1
 - 11.0.0 -> 11.0.1.
 - New LLVM subproject: lldb.
