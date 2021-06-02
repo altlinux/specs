@@ -1,9 +1,9 @@
-Name:           python-module-xlrd
+Name:           python3-module-xlrd
 Version:        2.0.1
-Release:        alt1
+Release:        alt2
 Summary:        Library to extract data from Microsoft Excel (TM) spreadsheet files
 
-Group:          Development/Python
+Group:          Development/Python3
 License:        BSD
 URL:            http://www.python-excel.org/
 Source0:        xlrd-%version.tar
@@ -11,68 +11,43 @@ Source0:        xlrd-%version.tar
 
 BuildArch:      noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-sphinx
 
-BuildRequires: python-module-sphinx python-module-pkginfo
-
-Provides:	python-xlrd = %version-%release
+Provides:	python3-xlrd = %version-%release
 
 %description
 Extract data from Excel spreadsheets (.xls and .xlsx, versions 2.0
 onwards) on any platform.  Pure Python (2.6, 2.7, 3.2+).  Strong
 support for Excel dates.  Unicode-aware.
 
-%package -n python3-module-xlrd
-Summary:        Library to extract data from Microsoft Excel (TM) spreadsheet files
-Group:          Development/Python3
-Provides:	python3-xlrd = %version-%release
-
-%description -n python3-module-xlrd
-Extract data from Excel spreadsheets (.xls and .xlsx, versions 2.0
-onwards) on any platform.  Pure Python (2.6, 2.7, 3.2+).  Strongr
-support for Excel dates.  Unicode-aware.
-
 %prep
 %setup -q -n xlrd-%{version}
-mkdir -p ../python3
-cp -a * ../python3 ||:
 
 %build
-%python_build
 export PYTHONPATH=`pwd`:$PYTHONPATH
-make -C docs man
-pushd ../python3
+make SPHINXBUILD="sphinx-build-3" -C docs man
 %python3_build
-popd
 
 %install
-%python_install
-pushd ../python3
 %python3_install
-popd
 install -Dm0644 docs/_build/man/xlrd.1 %buildroot%_man1dir/xlrd.1
 
 # add shebang and remove .py extension
-subst 's|^#!.*|#!%__python|' %buildroot%_bindir/runxlrd.py
+subst 's|^#!.*|#!%__python3|' %buildroot%_bindir/runxlrd.py
 mv %buildroot%_bindir/runxlrd{.py,}
 
 %files
 %doc README.rst
 %_bindir/runxlrd
-%python_sitelibdir/xlrd/*
-%python_sitelibdir/*egg-info
-%_man1dir/xlrd.1*
-
-%files -n python3-module-xlrd
-%doc README.rst
 %python3_sitelibdir/xlrd/*
 %python3_sitelibdir/*egg-info
+%_man1dir/xlrd.1*
 
 %changelog
+* Wed Jun 02 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
+- Drop python2 support.
+
 * Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - New version.
 
