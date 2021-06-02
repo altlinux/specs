@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,8 +12,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without jp_minimal
 
 Name:          jackson-jaxrs-providers
-Version:       2.10.2
-Release:       alt1_2jpp8
+Version:       2.11.2
+Release:       alt1_1jpp11
 Summary:       Jackson JAX-RS providers
 License:       ASL 2.0
 
@@ -25,11 +25,12 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
+BuildRequires:  mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations)
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(javax.ws.rs:javax.ws.rs-api)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-cbor)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile)
@@ -156,9 +157,9 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 
 %build
 %if %{with jp_minimal}
-%mvn_build -s -f
+%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 %else
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 %endif
 
 %install
@@ -186,6 +187,9 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
 - new version
 
