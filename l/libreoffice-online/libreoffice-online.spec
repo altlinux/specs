@@ -11,7 +11,7 @@
 
 Name: libreoffice-online
 Version: 6.2.3.2
-Release: alt5
+Release: alt6
 Summary: LibreOffice Online WebSocket Daemon
 License: MPL-2.0
 Group: Office
@@ -33,7 +33,7 @@ Patch6: skip-installing-http-configs.patch
 Patch7: alt-systemd-service.patch
 Patch8: alt-use-hash-directory.patch
 Patch9: alt-gcc-compat.patch
-Patch10: alt-python2-compat.patch
+Patch10: upstream-python3-compat.patch
 Patch11: alt-32bit-build.patch
 Patch12: alt-fix-build-poco-1.10.1.patch
 Patch13: alt-toolchain-compat.patch
@@ -45,7 +45,7 @@ BuildRequires: gcc-c++
 BuildRequires: libtool automake npm libcap-utils fontconfig
 BuildRequires: libpoco-devel libpng-devel libcap-devel cppunit-devel
 BuildRequires: pam-devel libpcre-devel
-BuildRequires: python-module-polib python-module-lxml
+BuildRequires: python3 python3-module-polib python3-module-lxml
 
 %description
 This is LibreOffice Online, which provides basic collaborative editing of
@@ -100,6 +100,7 @@ Apache 2.x web-server default configuration for %name.
 
 %autoreconf
 %configure \
+	--disable-werror \
 	--with-lokit-path=bundled/include \
 	--disable-setcap \
 	--with-lo-path=%default_loroot \
@@ -198,6 +199,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.3.2-alt6
+- Fixed build without python-module-polib.
+
 * Tue Apr 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.3.2-alt5
 - Fixed build with new toolchain.
 
