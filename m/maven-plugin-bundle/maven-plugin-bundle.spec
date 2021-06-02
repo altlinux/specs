@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -9,20 +9,19 @@ BuildRequires: jpackage-1.8-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without obr
+%bcond_with obr
 %bcond_without reporting
 
-%global site_name maven-bundle-plugin
+%global srcname maven-bundle-plugin
 
 Name:           maven-plugin-bundle
-Version:        3.5.1
-Release:        alt1_4jpp8
+Version:        4.2.1
+Release:        alt1_3jpp11
 Summary:        Maven Bundle Plugin
 License:        ASL 2.0
-URL:            http://felix.apache.org
-BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/org/apache/felix/{%site_name}/%{version}/%{site_name}-%{version}-source-release.tar.gz
+URL:            https://felix.apache.org
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/%{srcname}/%{version}/%{srcname}-%{version}-source-release.tar.gz
 
 # Needs polishing to be sent upstream
 Patch0:         0001-Port-to-current-maven-dependency-tree.patch
@@ -32,6 +31,8 @@ Patch1:         0002-Fix-for-new-maven-archiver.patch
 Patch2:         0003-Port-to-plexus-utils-3.0.24.patch
 # Port to newer Maven
 Patch3:         0004-Use-Maven-3-APIs.patch
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
@@ -45,6 +46,7 @@ BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 %if %{with obr}
 BuildRequires:  mvn(net.sf.kxml:kxml2)
@@ -54,7 +56,7 @@ BuildRequires:  mvn(xpp3:xpp3)
 %if %{with reporting}
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 %endif
 Source44: import.info
 
@@ -72,7 +74,7 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n %{site_name}-%{version}
+%setup -q -n %{srcname}-%{version}
 
 %patch0 -p1
 %patch1 -p1
@@ -97,20 +99,19 @@ rm -r src/main/java/org/apache/felix/bundleplugin/pom
 %pom_add_dep xpp3:xpp3
 %pom_add_dep net.sf.kxml:kxml2
 %else
-rm -rf src/main/java/org/apache/felix/obrplugin/
+rm -r src/main/java/org/apache/felix/obrplugin/
 %pom_remove_dep :org.apache.felix.bundlerepository
 %endif
 
 %if %{without reporting}
-rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
+rm src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %pom_remove_dep :doxia-sink-api
 %pom_remove_dep :doxia-site-renderer
-%pom_remove_dep :maven-reporting-impl
 %endif
 
 %build
 # Tests depend on bundled JARs
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -122,6 +123,9 @@ rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 4.2.1-alt1_3jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.5.1-alt1_4jpp8
 - fc update
 
