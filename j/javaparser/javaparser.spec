@@ -1,12 +1,12 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javaparser
-Version:       3.3.5
-Release:       alt1_3jpp8
-Summary:       Java 1 to 9 Parser and Abstract Syntax Tree for Java
+Version:       3.14.16
+Release:       alt1_1jpp11
+Summary:       Java 1 to 13 Parser and Abstract Syntax Tree for Java
 License:       LGPLv3+ or ASL 2.0
 URL:           http://javaparser.org
 Source0:       https://github.com/javaparser/javaparser/archive/%{name}-parent-%{version}.tar.gz
@@ -16,12 +16,13 @@ BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
 BuildRequires:  mvn(net.java.dev.javacc:javacc)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 
 BuildArch:     noarch
 Source44: import.info
 
 %description
-This package contains a Java 1 to 9 Parser with AST generation and
+This package contains a Java 1 to 13 Parser with AST generation and
 visitor support. The AST records the source code structure, javadoc
 and comments. It is also possible to change the AST nodes or create new
 ones to modify the source code.
@@ -40,11 +41,9 @@ This package contains API documentation for %{name}.
 sed -i 's/\r//' readme.md
 
 # Remove plugins unnecessary for RPM builds
-%pom_remove_plugin :animal-sniffer-maven-plugin javaparser-core
-%pom_remove_plugin :maven-enforcer-plugin javaparser-core
+%pom_remove_plugin -r :jacoco-maven-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :coveralls-maven-plugin
-%pom_remove_plugin :jacoco-maven-plugin . javaparser-testing
 
 # Compatibility alias
 %mvn_alias :javaparser-core com.google.code.javaparser:javaparser
@@ -55,19 +54,34 @@ sed -i \
   -e 's/com.helger.maven/org.codehaus.mojo/' \
   javaparser-core/pom.xml
 
-# Missing plugin
+# This plugin is not in Fedora, so use maven-resources-plugin to accomplish the same thing
 %pom_remove_plugin :templating-maven-plugin javaparser-core
+%pom_xpath_inject "pom:build" "
+<resources>
+  <resource>
+    <directory>src/main/java-templates</directory>
+    <filtering>true</filtering>
+    <targetPath>\${basedir}/src/main/java</targetPath>
+  </resource>
+</resources>" javaparser-core
 
 # Missing dep on jbehave for testing
-%pom_disable_module javaparser-testing
+%pom_disable_module javaparser-core-testing
+%pom_disable_module javaparser-core-testing-bdd
+
+# Don't build the symbol solver
+%pom_disable_module javaparser-symbol-solver-core
+%pom_disable_module javaparser-symbol-solver-logic
+%pom_disable_module javaparser-symbol-solver-model
+%pom_disable_module javaparser-symbol-solver-testing
 
 # Only need to ship the core module
-%mvn_package ":javaparser-core-generators" __noinstall
-%mvn_package ":javaparser-metamodel-generator" __noinstall
-%mvn_package ":javaparser-testing" __noinstall
+%pom_disable_module javaparser-core-generators
+%pom_disable_module javaparser-core-metamodel-generator
+%pom_disable_module javaparser-core-serialization
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -80,6 +94,9 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.14.16-alt1_1jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.5-alt1_3jpp8
 - fc update
 
