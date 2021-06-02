@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt3_27jpp8
+Release:        alt3_30jpp11
 Summary:        Plexus Build API
 License:        ASL 2.0
 URL:            https://github.com/sonatype/sisu-build-api
@@ -25,7 +25,7 @@ Patch1:         %{name}-utils-3.3.0.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.3.0
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -66,6 +66,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_30jpp11
+- update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_27jpp8
 - fc update
 
