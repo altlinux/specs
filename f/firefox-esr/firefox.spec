@@ -16,7 +16,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox-esr
-Version: 78.10.1
+Version: 78.11.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -450,6 +450,12 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Jun 01 2021 Andrey Cherepanov <cas@altlinux.org> 78.11.0-alt1
+- New version (78.11.0).
+- Security fixes:
+  + CVE-2021-29964 Out of bounds-read when parsing a `WM_COPYDATA` message
+  + CVE-2021-29967 Memory safety bugs fixed in Firefox 89 and Firefox ESR 78.11
+
 * Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 78.10.1-alt1
 - New version (78.10.1).
 - Security fixes:
