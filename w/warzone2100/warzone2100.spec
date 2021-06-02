@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: warzone2100
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -79,14 +79,10 @@ Game data for warzone2100.
 install -m644 %SOURCE2 build_tools/autorevision.cache
 
 %build
-%ifarch %e2k
-# ftbfs with lcc 1.24.11
-%add_optflags -Wno-error=type-limits -Wno-error=invalid-offsetof
-%endif
-
 %cmake \
 	-DWZ_DISTRIBUTOR="ALT Linux" \
 	-DWZ_FINDSDL2_NOCONFIG:BOOL=OFF \
+	-DWZ_ENABLE_WARNINGS_AS_ERRORS:BOOL=OFF \
 	%nil
 
 %cmake_build
@@ -120,6 +116,10 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.1-alt1
+- Updated to upstream version 4.0.1.
+- Disabled -Werror build flag.
+
 * Wed Apr 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt1
 - Updated to upstream version 4.0.0.
 
