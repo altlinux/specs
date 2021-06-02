@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          glassfish-jax-rs-api
 Version:       2.1.6
-Release:       alt1_2jpp8
+Release:       alt2_2jpp8
 Summary:       JAX-RS API Specification (JSR 339)
 License:       EPL-2.0 or GPLv2 with exceptions
 URL:           https://github.com/eclipse-ee4j/jaxrs-api
@@ -17,6 +17,7 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.glassfish.build:spec-version-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
+#BuildRequires: mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -56,7 +57,7 @@ cd jaxrs-api
 # Compatibility alias
 %mvn_alias : javax.ws.rs:javax.ws.rs-api
 
-%mvn_build
+%mvn_build -j
 )
 
 %install
@@ -69,10 +70,13 @@ cd jaxrs-api
 %doc --no-dereference LICENSE.md NOTICE.md
 %doc README.md CONTRIBUTING.md
 
-%files javadoc -f jaxrs-api/.mfiles-javadoc
-%doc --no-dereference LICENSE.md NOTICE.md
+#%files javadoc -f jaxrs-api/.mfiles-javadoc
+#%doc --no-dereference LICENSE.md NOTICE.md
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 2.1.6-alt2_2jpp8
+- fixed build
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.1.6-alt1_2jpp8
 - new version
 
