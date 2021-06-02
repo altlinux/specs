@@ -1,14 +1,14 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-bundlerepository
 Version:        2.0.10
-Release:        alt1_7jpp8
+Release:        alt1_11jpp11
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
-URL:            http://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
+URL:            https://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
 BuildArch:      noarch
 
 Source0:        https://archive.apache.org/dist/felix/org.apache.felix.bundlerepository-%{version}-source-release.tar.gz
@@ -29,6 +29,7 @@ BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.osgi:osgi.cmpn)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(xpp3:xpp3)
+BuildRequires:  mvn(org.mockito:mockito-all)
 Source44: import.info
 
 %description
@@ -52,6 +53,10 @@ This package contains the API documentation for %{name}.
 # Unbundle xpp3
 %pom_add_dep "xpp3:xpp3:1.1.3.4.O" pom.xml "<optional>true</optional>"
 
+# Inject junit and mockito dep
+%pom_add_dep junit:junit::test
+%pom_add_dep org.mockito:mockito-all::test
+
 # Make felix utils mandatory dep
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='org.apache.felix.utils']]/pom:optional"
 
@@ -65,7 +70,7 @@ This package contains the API documentation for %{name}.
 %mvn_file : felix/%{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -78,6 +83,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.0.10-alt1_11jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_7jpp8
 - update
 
