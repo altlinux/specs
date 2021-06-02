@@ -6,7 +6,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           jetty-build-support
 Version:        1.4
-Release:        alt1_8jpp8
+Release:        alt2_8jpp8
 Summary:        Jetty build support files
 # licensing bug upstream
 # https://bugs.eclipse.org/bugs/show_bug.cgi?id=362646
@@ -26,6 +26,7 @@ BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-toolchain:pom:)
 Source44: import.info
@@ -57,6 +58,9 @@ BuildArch: noarch
 %doc jetty-distribution-remote-resources/src/main/resources/*
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4-alt2_8jpp8
+- fixed build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_8jpp8
 - fc update
 
