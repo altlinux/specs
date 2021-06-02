@@ -1,24 +1,26 @@
+Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Upstream uses version-release.  Control the madness here.
-%global upver 1.12
-%global uprel 1
-%global filever %{upver}-%{uprel}
+# Upstream has not made a tarball for the 1.12.2 release, so pull it from git
+%global commit      328cf493ec2537af9d2bbce0eb4b4ef118b66547
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           automaton
-Version:        %{upver}r%{uprel}
-Release:        alt1_6jpp8
+Version:        1.12.2
+Release:        alt1_4jpp11
 Summary:        A Java finite state automata/regular expression library
 
 License:        BSD
-URL:            http://www.brics.dk/automaton/
-Source0:        http://www.brics.dk/~amoeller/%{name}/%{name}-%{filever}.tar.gz
-Source1:        https://github.com/cs-au-dk/dk.brics.automaton/blob/master/pom.xml
+URL:            https://www.brics.dk/automaton/
+Source0:        https://github.com/cs-au-dk/dk.brics.automaton/archive/%{commit}/%{name}-%{version}.tar.gz
+# Fix for javadoc error: tag not supported in the generated HTML version
+Patch0:         %{name}-javadoc.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 
@@ -44,20 +46,21 @@ BuildArch:      noarch
 Javadoc documentation for automaton.
 
 %prep
-%setup -q -n %{name}-%{upver}
+%setup -q -n dk.brics.%{name}-%{commit}
+%patch0 -p1
 
-# Remove prebuilt artifacts
-rm -fr dist/%{name}.jar doc/*
-
-# Add the maven pom file, forgotten by upstream
-cp -p %{SOURCE1} .
 
 # Remove references to unneeded plugins
 %pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
 
+# Generate code for JDK 8 instead of JDK 6
+sed -e 's,>1.6<,>1.8<,g' \
+    -e 's,Xdoclint.*,&\n          <source>8</source>,' \
+    -i pom.xml
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -69,6 +72,9 @@ cp -p %{SOURCE1} .
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1:1.12.2-alt1_4jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.12r1-alt1_6jpp8
 - fc update
 
