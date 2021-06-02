@@ -1,24 +1,20 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-parent
-Version:        4
-Release:        alt1_9jpp8
+Version:        7
+Release:        alt1_3jpp11
 Summary:        Parent POM file for Apache Felix Specs
 License:        ASL 2.0
-URL:            http://felix.apache.org/
-Source0:        http://repo1.maven.org/maven2/org/apache/felix/felix-parent/%{version}/%{name}-%{version}-source-release.tar.gz
+URL:            https://felix.apache.org/
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/%{name}/%{version}/%{name}-%{version}-source-release.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.mockito:mockito-all)
 
 # FIXME auto-requires are not generated
 Requires:  mvn(org.easymock:easymock)
@@ -31,6 +27,7 @@ Parent POM file for Apache Felix Specs.
 %prep
 %setup -q -n felix-parent-%{version}
 %mvn_alias : :felix
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-release-plugin
@@ -41,13 +38,8 @@ Parent POM file for Apache Felix Specs.
 # wagon ssh dependency unneeded
 %pom_xpath_remove pom:extensions
 
-# Remove workaround for MANTRUN-51/MNG-6205 issue
-# (should only be needed with old versions of Maven)
-# See: http://svn.apache.org/viewvc/maven/plugins/trunk/maven-antrun-plugin/src/site/fml/faq.fml?r1=790402&r2=790401
-%pom_xpath_remove "pom:plugin[pom:artifactId='maven-antrun-plugin']/pom:dependencies"
-
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -56,6 +48,9 @@ Parent POM file for Apache Felix Specs.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:7-alt1_3jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:4-alt1_9jpp8
 - fc update
 
