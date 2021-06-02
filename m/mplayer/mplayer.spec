@@ -7,7 +7,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38276
+%define svnrev 38313
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -299,7 +299,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt6.%svnrev.1
+Release: alt7.%svnrev.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -369,6 +369,7 @@ Obsoletes: %Name-gui
 
 BuildRequires: %awk libncurses-devel libslang-devel zlib-devel
 BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
+BuildRequires: rpm-build-python
 %{?svnrev:%{?_with_htmldocs:BuildRequires: docbook-style-xsl xsltproc sgml-common docbook-dtds}}
 
 %{?_enable_mencoder:%{?_enable_lame:BuildRequires: liblame-devel}}
@@ -1131,6 +1132,10 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Wed Jun 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt7.38313.1
+- Updated to SVN snapshot (revision 38313).
+- Fixed FTBFS: added rpm-build-python to BR.
+
 * Wed Mar 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt6.38276.1
 - Updated to SVN snapshot (revision 38276).
 - New manual page: gmplayer(1).
