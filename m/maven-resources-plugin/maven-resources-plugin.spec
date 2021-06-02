@@ -3,34 +3,44 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-resources-plugin
-Version:        3.1.0
-Release:        alt1_6jpp8
+Version:        3.2.0
+Release:        alt1_1jpp11
 Summary:        Maven Resources Plugin
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-resources-plugin
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch: noarch
+
+URL:            https://maven.apache.org/plugins/maven-resources-plugin
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering) >= 3.2.0
+BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.aether:aether-api)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 Source44: import.info
 
 %description
 The Resources Plugin handles the copying of project resources
 to the output directory.
+
 
 %package javadoc
 Group: Development/Java
@@ -44,11 +54,14 @@ API documentation for %{name}.
 %prep
 %setup -q
 
+
 %build
-%mvn_build -f
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
@@ -56,7 +69,11 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
+
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_1jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_6jpp8
 - fc update
 
