@@ -12,8 +12,8 @@
 %define _cmake__builddir BUILD
 
 Name: lib%oname
-Version: 3.0.0
-Release: alt5
+Version: 3.1.0
+Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -23,7 +23,8 @@ Url: http://aomedia.org/
 Source: %name-%version.tar
 # ffmpeg -i testdata/rush_hour_444.y4m -vframes 10 -pix_fmt yuv420p rush_hour_420.yuv
 Source1: rush_hour_420.yuv
-Patch1: %name-%version-alt.patch
+
+Patch1: %name-alt-version.patch
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: cmake gcc-c++ doxygen /usr/bin/dot
@@ -149,6 +150,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %doc %_cmake__builddir/docs/html
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt1
+- Updated to upstream version 3.1.0.
+
 * Wed Jun 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.0-alt5
 - ppc64le optimizations excluded (failed tests)
 
