@@ -1,8 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifnarch ppc64le
+%def_with jemalloc
+%else
+%def_without jemalloc
+%endif
+
 Name: clickhouse
 Version: 21.3.12.2
-Release: alt1.1
+Release: alt2
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -90,6 +96,10 @@ BuildRequires: libabseil-cpp-devel
 BuildRequires: librocksdb-devel librocksdb-devel-static bzlib-devel libgflags-devel
 BuildRequires: liblzma-devel
 
+%if_with jemalloc
+BuildRequires: libjemalloc-devel
+%endif
+
 ExclusiveArch: aarch64 x86_64 ppc64le
 
 %add_python3_path %_datadir/clickhouse-test
@@ -152,6 +162,9 @@ pushd contrib/grpc
 %patch4 -p1
 popd
 
+# remove third-party headers which must not be used
+rm -rf contrib/jemalloc-cmake/include*
+
 %build
 if [ %__nprocs -gt 6 ] ; then
 	export NPROCS=6
@@ -175,7 +188,11 @@ fi
 	-DENABLE_HDFS:BOOL=OFF \
 	-DUSE_INTERNAL_HDFS3_LIBRARY:BOOL=OFF \
 %endif
+%if_with jemalloc
+	-DENABLE_JEMALLOC:BOOL=ON \
+%else
 	-DENABLE_JEMALLOC:BOOL=OFF \
+%endif
 	-DENABLE_PARQUET:BOOL=OFF \
 	-DENABLE_S3:BOOL=OFF \
 	-DENABLE_UTILS:BOOL=OFF \
@@ -228,7 +245,10 @@ rm -fv %buildroot%_prefix/lib/*.a
 %preun server
 %preun_service clickhouse-server
 
-
+%post common-static
+# CAP_IPC_LOCK capability is needed for binary mlock
+# CAP_SYS_NICE capability is needef for os_thread_priority feature
+setcap -q cap_ipc_lock,cap_sys_nice=+ep %_bindir/clickhouse 2>/dev/null ||:
 
 %files common-static
 %_bindir/clickhouse
@@ -265,6 +285,10 @@ rm -fv %buildroot%_prefix/lib/*.a
 %_datadir/clickhouse-test
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.12.2-alt2
+- Rebuilt with jemalloc.
+- Added capabilities to clickhouse executable.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 21.3.12.2-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

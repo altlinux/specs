@@ -4,8 +4,8 @@
 %define sorev 2
 
 Name: libjemalloc2
-Version: 5.2.0
-Release: alt2
+Version: 5.2.1
+Release: alt1
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -114,6 +114,9 @@ rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.1-alt1
+- Updated to upstream version 5.2.1
+
 * Mon Dec 07 2020 Nikita Ermakov <arei@altlinux.org> 5.2.0-alt2
 - Remove the not needed google-perftools requirement in libjemalloc-devel.
 
