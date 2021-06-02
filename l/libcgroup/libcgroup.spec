@@ -2,13 +2,14 @@
 Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
-Version: 0.42.2
-Release: alt2
+Version: 2.0
+Release: alt1
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 # VCS: https://github.com/libcgroup/libcgroup.git
 Source: %name-%version.tar
+Source2: tests.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: flex gcc-c++ libpam-devel
@@ -52,6 +53,7 @@ provide scripts to manage that configuration.
 %prep
 %setup
 %patch -p1
+tar -xf %SOURCE2 -C tests
 
 %build
 %autoreconf
@@ -129,6 +131,9 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Sat May 29 2021 Alexey Shabalin <shaba@altlinux.org> 2.0-alt1
+- new version 2.0
+
 * Tue Feb 25 2020 Alexey Shabalin <shaba@altlinux.org> 0.42.2-alt2
 - fixed start service (package %%_sysconfdir/cgconfig.d dir)
 
