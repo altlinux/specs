@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: stress-ng
-Version: 0.12.08
+Version: 0.12.09
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -27,13 +27,14 @@ BuildRequires: libseccomp-devel
 BuildRequires: zlib-devel
 
 %description
-stress-ng will stress test a computer system in various selectable ways. It was
-designed to exercise various physical subsystems of a computer as well as the
-various operating system kernel interfaces. Stress-ng features:
+stress-ng will stress test a computer system in various selectable
+ways. It was designed to exercise various physical subsystems
+of a computer as well as the various operating system kernel
+interfaces. Stress-ng features:
 
 * 250 stress tests
-* 80+ CPU specific stress tests that exercise floating point, integer,
-  bit manipulation and control flow
+* 80+ CPU specific stress tests that exercise floating point,
+  integer, bit manipulation and control flow
 * over 20 virtual memory stress tests
 * portable: builds on Linux, etc.
 
@@ -50,6 +51,9 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %install
 %makeinstall_std
 
+install -pD kernel-coverage.sh %buildroot%_datadir/stress-ng/kernel-coverage.sh
+install -pD syscalls.txt       %buildroot%_datadir/stress-ng/syscalls.txt
+
 %check
 # getrandom test does not work in sborotschnitza:
 #   getrandom using flags GRND_INSECURE failed, errno=22 (Invalid argument)
@@ -58,7 +62,8 @@ sed -i '/STRESSORS/s/getrandom //g' debian/tests/lite-test
 sed -i '/STRESSORS/s/ cache / /g' debian/tests/lite-test
 
 banner lite-test
-SEGFAULT_SIGNALS="segv abrt" LD_PRELOAD=libSegFault.so time timeout -s6 300 make lite-test
+SEGFAULT_SIGNALS="segv abrt" LD_PRELOAD=libSegFault.so time timeout -s6 300 \
+	make lite-test
 banner done
 
 %files
@@ -69,6 +74,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Wed Jun 02 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.09-alt1
+- Update to V0.12.09 (2021-05-22).
+
 * Mon May 10 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.08-alt1
 - Update to V0.12.08 (2021-05-06).
 
