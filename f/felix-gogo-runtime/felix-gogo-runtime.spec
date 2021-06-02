@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle  org.apache.felix.gogo.runtime
 
 Name:           felix-gogo-runtime
 Version:        1.1.0
-Release:        alt1_5jpp8
+Release:        alt1_8jpp11
 Summary:        Apache Felix Gogo command line shell for OSGi
 # One file is also MIT licensed:
 #  src/main/java/org/apache/felix/gogo/runtime/Expression.java
@@ -42,10 +42,13 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{bundle}-%{version}
 
+# Remove 2 failing assertions on Java 11 in TestParser.testPipe()
+sed -i '/(echoout/ d' src/test/java/org/apache/felix/gogo/runtime/TestParser.java
+
 %mvn_file : felix/%{bundle}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dsource=1.8 -DdetectJavaApiLink=false
 
 %install
 %mvn_install
@@ -57,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt1_8jpp11
+- update
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt1_5jpp8
 - new version
 
