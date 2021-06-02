@@ -6,7 +6,7 @@
 %define subst_enable_meson_bool() %{expand:%%{?_enable_%{1}:-D%{2}=true}} %{expand:%%{?_disable_%{1}:-D%{2}=false}}
 
 Name: ncmpc
-Version: 0.38
+Version: 0.45
 Release: alt1
 Summary: curses client for mpd
 License: GPL-2.0+
@@ -17,6 +17,8 @@ Url: https://www.musicpd.org/
 Source: %name-%version.tar
 Source1: %name.desktop
 
+Patch1: ncmpc-alt-disable-upload-target.patch
+
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
 BuildRequires: glib2-devel libncursesw-devel libtinfo-devel pkg-config
@@ -24,6 +26,7 @@ BuildRequires: liblirc-devel
 BuildRequires: libmpdclient-devel
 BuildRequires: desktop-file-utils
 BuildRequires: boost-complete
+BuildRequires: libpcre-devel
 %if_enabled doc
 BuildRequires: doxygen
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
@@ -38,6 +41,7 @@ with a remote control.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %meson \
@@ -79,6 +83,9 @@ rm -f %buildroot%_defaultdocdir/%name/html/.buildinfo
 %_datadir/%name
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.45-alt1
+- Updated to upstream version 0.45.
+
 * Tue Jul 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.38-alt1
 - Updated to upstream version 0.38.
 
