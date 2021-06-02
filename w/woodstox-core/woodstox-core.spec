@@ -7,27 +7,27 @@ BuildRequires: jpackage-11-compat
 
 Name:           woodstox-core
 Summary:        High-performance XML processor
-Version:        6.0.2
-Release:        alt1_2jpp11
+Version:        6.2.1
+Release:        alt1_5jpp11
 License:        ASL 2.0 or LGPLv2+ or BSD
 
 URL:            https://github.com/FasterXML/woodstox
 Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
-Patch0: 0001-Allow-building-against-OSGi-APIs-newer-than-R4.patch
+# Port to latest OSGi APIs
+Patch0:         0001-Allow-building-against-OSGi-APIs-newer-than-R4.patch
+# Drop requirements on defunct optional dependencies: msv and relaxng
+Patch1:         0002-Patch-out-optional-support-for-msv-and-relax-schema-.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml:oss-parent:pom:)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.java.dev.msv:msv-core)
-BuildRequires:  mvn(net.java.dev.msv:xsdlib)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
 BuildRequires:  mvn(org.osgi:osgi.core)
-BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
 Source44: import.info
 
 %description
@@ -49,9 +49,19 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{base_name}-%{name}-%{version}
-
 %patch0 -p1
+%patch1 -p1
 
+
+%pom_remove_dep relaxngDatatype:relaxngDatatype
+%pom_remove_dep net.java.dev.msv:
+rm -rf src/main/java/com/ctc/wstx/msv
+
+# Remove tests for msv and relaxng functionality
+rm -rf src/test/java/wstxtest/msv src/test/java/wstxtest/vstream/TestRelaxNG.java src/test/java/stax2/vwstream/W3CSchemaWrite*Test.java \
+  src/test/java/failing/{TestRelaxNG,TestW3CSchemaTypes,TestW3CSchemaComplexTypes,TestW3CDefaultValues}.java
+
+# Unnecessary for RPM builds
 %pom_remove_plugin :nexus-staging-maven-plugin
 
 # we don't care about Java 9 modules (yet)
@@ -69,7 +79,7 @@ This package contains the API documentation for %{name}.
 
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build --xmvn-javadoc
 
 
 %install
@@ -81,9 +91,12 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-
+%doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 6.2.1-alt1_5jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 6.0.2-alt1_2jpp11
 - new version
 
