@@ -2,7 +2,7 @@
 
 Name:     smesh
 Version:  8.3.0.4
-Release:  alt2
+Release:  alt2.1
 
 Summary:  OpenCascade based MESH framework
 License:  LGPL-2.1
@@ -78,10 +78,10 @@ Development files and headers for libsmesh.
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DSMESH_TESTING=ON \
        -DENABLE_NETGEN=%{?_with_netgen:ON}%{!?_with_netgen:OFF}
-%ninja_build -C BUILD
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%ninja_install -C BUILD
+%ninja_install -C "%_cmake__builddir"
 
 %files -n libsmesh
 %doc README.md
@@ -93,6 +93,9 @@ Development files and headers for libsmesh.
 %_libdir/cmake/SMESHConfig.cmake
 
 %changelog
+* Wed Jun 02 2021 Arseny Maslennikov <arseny@altlinux.org> 8.3.0.4-alt2.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.3.0.4-alt2
 - Rebuilt with VTK-9.0.1.
 
