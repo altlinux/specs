@@ -4,15 +4,16 @@
 %define soname 3
 %define libname lib%{oname}%{soname}
 
-# tests require approximately 500Mb of video data and run really long (up to a few hours)
-%def_disable check
+# tests require downloading ~750Mb of video data
+# and run really long (up to a few hours)
+%def_disable longcheck
 
 # TODO: remove later this fix for documentation
 %define _cmake__builddir BUILD
 
 Name: lib%oname
 Version: 3.0.0
-Release: alt3
+Release: alt5
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -20,12 +21,17 @@ Url: http://aomedia.org/
 
 # https://aomedia.googlesource.com/aom/
 Source: %name-%version.tar
+# ffmpeg -i testdata/rush_hour_444.y4m -vframes 10 -pix_fmt yuv420p rush_hour_420.yuv
+Source1: rush_hour_420.yuv
 Patch1: %name-%version-alt.patch
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: cmake gcc-c++ doxygen /usr/bin/dot
 %ifarch %ix86 x86_64
 BuildRequires: yasm
+%endif
+%if_enabled longcheck
+BuildRequires: python3
 %endif
 
 %description
@@ -80,6 +86,7 @@ The %name-docs package contains documentation files for %name.
 %prep
 %setup
 %patch1 -p1
+cp -p %SOURCE1 .
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -91,13 +98,13 @@ echo -n %version > version
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
-%ifarch armh
+%ifarch armh ppc64le
 	-DAOM_TARGET_CPU:STRING=generic \
 %endif
 	-DENABLE_DOCS:BOOL=ON \
 	-DENABLE_EXAMPLES:BOOL=ON \
 	-DENABLE_TOOLS:BOOL=ON \
-%if_disabled check
+%if_disabled longcheck
 	-DENABLE_TESTS:BOOL=OFF \
 %endif
 	%nil
@@ -108,11 +115,19 @@ echo -n %version > version
 %cmakeinstall_std
 
 %check
+# simple check using examples
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%_cmake__builddir/examples/lossless_encoder 352 288 rush_hour_420.yuv rush_hour_420.av1
+%_cmake__builddir/examples/simple_decoder rush_hour_420.av1 output.yuv
+cmp rush_hour_420.yuv output.yuv
+
+%if_enabled longcheck
 # just add test data and correspondingly modify test data path
 # NOTE: running tests may take very long time
-export LIBAOM_TEST_DATA_PATH=$(pwd)/.gear/testdata
+export LIBAOM_TEST_DATA_PATH=$(pwd)/testdata
 export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/googletest/src/googletest
 %make -C %_cmake__builddir runtests
+%endif
 
 %files -n %libname
 %doc LICENSE PATENTS README.md
@@ -134,6 +149,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %doc %_cmake__builddir/docs/html
 
 %changelog
+* Wed Jun 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.0-alt5
+- ppc64le optimizations excluded (failed tests)
+
+* Tue Jun 01 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.0-alt4
+- added simple check
+
 * Mon May 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.0-alt3
 - enabled target specific optimizations (except armh)
 - added SIMD patch for Elbrus
