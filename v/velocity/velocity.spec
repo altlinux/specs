@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           velocity
 Version:        1.7
-Release:        alt3_27jpp8
+Release:        alt3_32jpp11
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -26,14 +26,15 @@ Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{versi
 # Remove bundled binaries which cannot be easily verified for licensing
 Source2:        generate-tarball.sh
 
-Patch0:         0001-Remove-avalon-logkit.patch
-Patch1:         0004-Use-log4j-1.2.17.patch
-Patch2:         0003-Use-system-jars.patch
-Patch3:         0004-JDBC-41-compat.patch
-Patch4:         0001-Don-t-use-Werken-XPath.patch
-Patch5:         0006-Skip-Java-8-incompatible-test.patch
-Patch6:         velocity-1.7-doclint.patch
-Patch7:         velocity-1.7-osgi.patch
+Patch0:         0000-Remove-avalon-logkit.patch
+Patch1:         0001-Use-log4j-1.2.17.patch
+Patch2:         0002-Use-system-jars.patch
+Patch3:         0003-JDBC-41-compat.patch
+Patch4:         0004-Do-not-use-Werken-XPath.patch
+Patch5:         0005-Skip-Java-8-incompatible-test.patch
+Patch6:         0006-Run-javadoc-with-Xdoclint-none.patch
+Patch7:         0007-Fix-OSGi-metadata.patch
+Patch8:         0008-Port-to-apache-commons-lang3.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
@@ -45,7 +46,7 @@ BuildRequires:  hsqldb-lib
 %endif
 BuildRequires:  apache-commons-collections
 BuildRequires:  apache-commons-logging
-BuildRequires:  apache-commons-lang
+BuildRequires:  apache-commons-lang3
 BuildRequires:  glassfish-servlet-api
 BuildRequires:  jakarta-oro
 BuildRequires:  jaxen
@@ -54,8 +55,6 @@ BuildRequires:  bcel
 BuildRequires:  log4j12
 BuildRequires:  apache-parent
 Source44: import.info
-
-# It fails one of the arithmetic test cases with gcj
 
 %description
 Velocity is a Java-based template engine. It permits anyone to use the
@@ -111,17 +110,6 @@ Demonstrations and samples for %{name}.
 find . -name '*.jar' ! -name 'test*.jar' -print -delete
 find . -name '*.class' ! -name 'Foo.class' -print -delete
 
-# Remove dependency on avalon-logkit
-rm -f src/java/org/apache/velocity/runtime/log/AvalonLogChute.java
-rm -f src/java/org/apache/velocity/runtime/log/AvalonLogSystem.java
-rm -f src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
-
-# need porting to new servlet API. We would just add a lot of empty functions
-rm  src/test/org/apache/velocity/test/VelocityServletTestCase.java
-
-# This test doesn't work with new hsqldb
-rm src/test/org/apache/velocity/test/sql/DataSourceResourceLoaderTestCase.java
-
 cp %{SOURCE1} ./pom.xml
 
 # remove rest of avalon logkit refences
@@ -148,6 +136,20 @@ cp %{SOURCE1} ./pom.xml
 # Remove werken-xpath Import/Export refences in OSGi manifest file
 %patch7 -p1
 
+# Port to apache commons-lang3
+%patch8 -p1
+
+# Remove dependency on avalon-logkit
+rm -f src/java/org/apache/velocity/runtime/log/AvalonLogChute.java
+rm -f src/java/org/apache/velocity/runtime/log/AvalonLogSystem.java
+rm -f src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
+
+# need porting to new servlet API. We would just add a lot of empty functions
+rm  src/test/org/apache/velocity/test/VelocityServletTestCase.java
+
+# This test doesn't work with new hsqldb
+rm src/test/org/apache/velocity/test/sql/DataSourceResourceLoaderTestCase.java
+
 %if %{without hsqldb}
 rm -r src/test/org/apache/velocity/test/sql
 %endif
@@ -155,11 +157,10 @@ rm -r src/test/org/apache/velocity/test/sql
 # -----------------------------------------------------------------------------
 
 %build
-
 export CLASSPATH=$(build-classpath \
 antlr \
 apache-commons-collections \
-commons-lang \
+commons-lang3 \
 commons-logging \
 glassfish-servlet-api \
 junit \
@@ -170,11 +171,12 @@ jdom \
 bcel \
 hsqldb \
 junit)
-ant \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
   -buildfile build/build.xml \
   -Dbuild.sysclasspath=first \
   -Djavac.target=1.6 \
   -Djavac.source=1.6 \
+  -Dtest.haltonfailure=false \
   jar javadocs test
 
 # fix line-endings in generated files
@@ -211,6 +213,9 @@ cp -pr examples test %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.7-alt3_32jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_27jpp8
 - fc update
 
