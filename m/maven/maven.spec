@@ -23,7 +23,7 @@ BuildRequires: jpackage-11-compat
 Name:           maven
 Epoch:          1
 Version:        3.6.1
-Release:        alt1_5jpp11
+Release:        alt2_5jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -217,7 +217,7 @@ sed -i "
 %mvn_alias :maven-resolver-provider :maven-aether-provider
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
 
 mkdir m2home
 (cd m2home
@@ -317,6 +317,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.1-alt2_5jpp11
+- fixed build with new modello
+
 * Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.1-alt1_5jpp11
 - new version
 
