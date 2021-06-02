@@ -3,14 +3,14 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name      taglibs-standard
 
 Name:           tomcat-taglibs-standard
 Version:        1.2.5
-Release:        alt1_9jpp8
+Release:        alt1_12jpp11
 Epoch:          0
 Summary:        Apache Standard Taglib
 License:        ASL 2.0
@@ -54,7 +54,7 @@ Javadoc for %{name}.
 %mvn_alias org.apache.taglibs:taglibs-standard-compat org.eclipse.jetty.orbit:org.apache.taglibs.standard.glassfish
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
@@ -68,6 +68,9 @@ Javadoc for %{name}.
 %doc NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2.5-alt1_12jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.2.5-alt1_9jpp8
 - fc update
 
