@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -23,7 +23,7 @@ Source: %_name-%version.tar
 %endif
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common >= 0.9.12
+BuildRequires: gcc-c++ mm-common >= 1.0.3
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
@@ -89,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu May 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
+- 3.0.7
+
 * Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
 - 3.0.6
 

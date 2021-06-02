@@ -7,7 +7,7 @@
 %def_enable docs
 
 Name: %{_name}2
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -26,7 +26,7 @@ Provides: libsigc++2.0 = %version-%release
 Obsoletes: libsigc++2.0 < %version-%release
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common
+BuildRequires: gcc-c++ mm-common >= 1.0.3
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
@@ -96,6 +96,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu May 20 2021 Yuri N. Sedunov <aris@altlinux.org> 2.10.7-alt1
+- 2.10.7
+
 * Wed Nov 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10.6-alt1
 - 2.10.6
 

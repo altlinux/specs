@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: libatkmm
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: A C++ interface for ATK library
@@ -93,6 +93,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri May 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.28.2-alt1
+- 2.28.2
+
 * Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.1-alt1
 - 2.28.1 (ported to Meson build system)
 

@@ -8,7 +8,7 @@
 %def_enable docs
 
 Name: libgtkmm3
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
@@ -35,7 +35,7 @@ BuildRequires: gcc-c++ mm-common libgtk+3-devel >= %gtk_ver
 BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= %pangomm_ver
 BuildRequires: libcairomm-devel >= %cairo_ver libepoxy-devel
 %{?_enable_atkmm:BuildRequires: libatkmm-devel >= %atkmm_ver}
-%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz fonts-ttf-open-sans xsltproc}
 %{?_enable_check:BuildRequires: xvfb-run}
 
 %description
@@ -117,6 +117,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Fri May 21 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.5-alt1
+- 3.24.5
+
 * Tue Feb 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.4-alt1
 - 3.24.4
 

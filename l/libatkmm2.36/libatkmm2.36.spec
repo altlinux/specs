@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A C++ interface for ATK library
@@ -94,6 +94,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri May 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
+- 2.36.1
+
 * Sat Dec 19 2020 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
 - 2.36.0 (new atkmm-2.36 library)
 - -- end of atkmm-1.6 --

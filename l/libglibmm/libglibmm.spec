@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libglibmm
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -33,7 +33,7 @@ BuildRequires(pre): meson
 BuildRequires: mm-common gcc-c++
 BuildRequires: libgio-devel >= %glib_ver libsigc++2-devel >= %sigc_ver
 BuildRequires: perl-XML-Parser
-%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz fonts-ttf-open-sans xsltproc}
 
 %description
 A C++ interface for glib library.
@@ -105,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu May 20 2021 Yuri N. Sedunov <aris@altlinux.org> 2.66.1-alt1
+- 2.66.1
+
 * Wed Jan 27 2021 Yuri N. Sedunov <aris@altlinux.org> 2.66.0-alt1
 - 2.66.0
 

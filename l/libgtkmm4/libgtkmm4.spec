@@ -8,7 +8,7 @@
 %def_enable docs
 
 Name: lib%{rname}4
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A C++ interface for GTK4 library
@@ -37,7 +37,7 @@ BuildRequires: gcc-c++ mm-common libgtk4-devel >= %gtk_ver
 BuildRequires: libglibmm%glibmm_api_ver-devel >= %glibmm_ver
 BuildRequires: libpangomm%pangomm_api_ver-devel >= %pangomm_ver
 BuildRequires: libcairomm%cairomm_api_ver-devel >= %cairomm_ver libepoxy-devel
-%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz fonts-ttf-open-sans xsltproc}
 %{?_enable_check:BuildRequires: xvfb-run}
 
 %description
@@ -114,6 +114,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Fri May 21 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Tue Feb 23 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 

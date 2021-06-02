@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %{_name}2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -87,6 +87,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 2.42.1-alt1
+- 2.42.1
+
 * Fri Oct 02 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
 - 2.42.0 (ported to Meson build system)
 
