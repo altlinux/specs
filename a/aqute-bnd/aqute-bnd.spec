@@ -1,16 +1,16 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
 Name:           aqute-bnd
-Version:        3.5.0
-Release:        alt1_8jpp8
+Version:        4.3.1
+Release:        alt1_1jpp11
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
-License:        ASL 2.0
+License:        ASL 2.0 or EPL-2.0
 URL:            http://bnd.bndtools.org/
 BuildArch:      noarch
 
@@ -20,24 +20,32 @@ Source0:        %{version}.REL.tar.gz
 # ./repack-tarball.sh
 Source1:        repack-tarball.sh
 
+# A custom aggregator pom to run the build
 Source2:        parent.pom
+# Poms from maven central since upstream uses gradle to build
 Source3:        https://repo1.maven.org/maven2/biz/aQute/bnd/aQute.libg/%{version}/aQute.libg-%{version}.pom
 Source4:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd/%{version}/biz.aQute.bnd-%{version}.pom
 Source5:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bndlib/%{version}/biz.aQute.bndlib-%{version}.pom
 Source6:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.annotation/%{version}/biz.aQute.bnd.annotation-%{version}.pom
+Source7:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.exporters/%{version}/biz.aQute.bnd.exporters-%{version}.pom
+Source8:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.reporter/%{version}/biz.aQute.bnd.reporter-%{version}.pom
 
+# Remove support for remote and resolve commands since they bring more deps than we want
 Patch0:         0001-Disable-removed-commands.patch
+
+# Fix build failure against ant
 Patch1:         0002-Fix-ant-compatibility.patch
-Patch2:         0001-Port-to-OSGI-7.0.0.patch
+
+# Fix unimplemented new APIs introduced in OSGi R7
+Patch2:         0003-Port-to-OSGI-7.0.0.patch
+
+# Twig is dead upstream, so patch out the option to use it for reports
+Patch3:         0004-Patch-out-twig-plugin-for-report-generation.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.osgi:osgi.annotation)
-BuildRequires:  mvn(org.osgi:osgi.cmpn)
-BuildRequires:  mvn(org.osgi:osgi.core)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(com.github.javaparser:javaparser-core) >= 3.14.16
+BuildRequires:  mvn(jline:jline)
 BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
@@ -45,8 +53,15 @@ BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-mapping)
 BuildRequires:  mvn(org.eclipse.aether:aether-api)
+BuildRequires:  mvn(org.osgi:osgi.annotation)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
+
 # Explicit javapackages-tools requires since bnd script uses
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
@@ -95,69 +110,91 @@ rm gradlew*
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-
-# the commands pull in more dependencies than we want (felix-resolver, jetty)
-rm biz.aQute.bnd/src/aQute/bnd/main/{RemoteCommand,ResolveCommand}.java
+%patch3 -p1
 
 sed 's/@VERSION@/%{version}/' %SOURCE2 > pom.xml
 sed -i 's|${Bundle-Version}|%{version}|' biz.aQute.bndlib/src/aQute/bnd/osgi/bnd.info
-
-
 
 # libg
 pushd aQute.libg
 cp -p %{SOURCE3} pom.xml
 %pom_add_parent biz.aQute.bnd:parent:%{version}
+%pom_remove_dep :org.osgi.util.function
+%pom_remove_dep :org.osgi.util.promise
 %pom_add_dep org.osgi:osgi.cmpn
-%pom_add_dep org.slf4j:slf4j-api
+%pom_add_dep org.osgi:osgi.core
 popd
 
-# bndlib.annotations
-pushd biz.aQute.bnd.annotation
-cp -p %{SOURCE6} pom.xml
+# bnd
+pushd biz.aQute.bnd
+cp -p %{SOURCE4} pom.xml
+sed -i -r 's/provided/compile/' pom.xml
 %pom_add_parent biz.aQute.bnd:parent:%{version}
+# add missing dep for ant tasks
+%pom_add_dep org.apache.ant:ant
+# remove support for remote and resolve commands
+rm src/aQute/bnd/main/{RemoteCommand,ResolveCommand}.java
+%pom_remove_dep :biz.aQute.resolve
+%pom_remove_dep :biz.aQute.repository
+%pom_remove_dep :biz.aQute.remote.api
+%pom_remove_dep :snakeyaml
 popd
 
 # bndlib
 pushd biz.aQute.bndlib
 cp -p %{SOURCE5} pom.xml
 %pom_add_parent biz.aQute.bnd:parent:%{version}
-
-%pom_add_dep org.osgi:osgi.annotation
+%pom_remove_dep :org.osgi.util.function
+%pom_remove_dep :org.osgi.util.promise
 %pom_add_dep org.osgi:osgi.core
 %pom_add_dep org.osgi:osgi.cmpn
-%pom_add_dep org.slf4j:slf4j-api
 %pom_add_dep biz.aQute.bnd:aQute.libg:%{version}
 %pom_add_dep biz.aQute.bnd:biz.aQute.bnd.annotation:%{version}
 popd
 
-# bnd
-pushd biz.aQute.bnd
-cp -p %{SOURCE4} pom.xml
+# bnd.annotation
+pushd biz.aQute.bnd.annotation
+cp -p %{SOURCE6} pom.xml
 %pom_add_parent biz.aQute.bnd:parent:%{version}
-
-%pom_add_dep biz.aQute.bnd:biz.aQute.bndlib:%{version}
-%pom_add_dep biz.aQute.bnd:aQute.libg:%{version}
-%pom_add_dep biz.aQute.bnd:biz.aQute.bnd.annotation:%{version}
-%pom_add_dep org.apache.ant:ant
-%pom_add_dep org.osgi:osgi.annotation
 %pom_add_dep org.osgi:osgi.core
 %pom_add_dep org.osgi:osgi.cmpn
-%pom_add_dep org.slf4j:slf4j-api
+popd
 
-%pom_add_dep org.slf4j:slf4j-simple::runtime
+# bnd.exporters
+pushd biz.aQute.bnd.exporters
+cp -p %{SOURCE7} pom.xml
+%pom_add_parent biz.aQute.bnd:parent:%{version}
+%pom_add_dep org.osgi:osgi.core
+%pom_add_dep org.osgi:osgi.cmpn
+popd
+
+# bnd.reporter
+pushd biz.aQute.bnd.reporter
+cp -p %{SOURCE8} pom.xml
+%pom_add_parent biz.aQute.bnd:parent:%{version}
+%pom_add_dep org.osgi:osgi.core
+%pom_add_dep org.osgi:osgi.cmpn
+# remove twig dep and friends (twig is dead upstream)
+rm src/biz/aQute/bnd/reporter/plugins/transformer/JtwigTransformerPlugin.java
+%pom_remove_dep org.jtwig:
+%pom_remove_dep com.googlecode.concurrentlinkedhashmap:
+%pom_remove_dep com.google.guava:
+# uneeded dependency
+%pom_remove_dep :commons-lang3
 popd
 
 # maven-plugins
+mkdir -p maven/bnd-maven-plugin/src/main/java/aQute/bnd/maven/lib
+cp -r biz.aQute.bnd.maven/src/aQute/bnd/maven/lib/configuration maven/bnd-maven-plugin/src/main/java/aQute/bnd/maven/lib/
 pushd maven
-rm bnd-shared-maven-lib/src/main/java/aQute/bnd/maven/lib/resolve/DependencyResolver.java
-%pom_remove_dep -r :biz.aQute.resolve
-%pom_remove_dep -r :biz.aQute.repository
+%pom_remove_dep -r :biz.aQute.bnd.maven
 # Unavailable reactor dependency - org.osgi.impl.bundle.repoindex.cli
 %pom_disable_module bnd-indexer-maven-plugin
 # Requires unbuilt parts of bnd
 %pom_disable_module bnd-export-maven-plugin
+%pom_disable_module bnd-reporter-maven-plugin
 %pom_disable_module bnd-resolver-maven-plugin
+%pom_disable_module bnd-run-maven-plugin
 %pom_disable_module bnd-testing-maven-plugin
 # Integration tests require Internet access
 %pom_remove_plugin -r :maven-invoker-plugin
@@ -166,6 +203,19 @@ rm bnd-shared-maven-lib/src/main/java/aQute/bnd/maven/lib/resolve/DependencyReso
 %pom_remove_plugin -r :flatten-maven-plugin
 popd
 
+# Use compiler release flag when building on JDK >8 for correct cross-compiling
+%pom_xpath_inject pom:project "
+  <profiles>
+    <profile>
+      <id>jdk-release-flag</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.release>8</maven.compiler.release>
+      </properties>
+    </profile>
+  </profiles>"
 
 %mvn_alias biz.aQute.bnd:biz.aQute.bnd :bnd biz.aQute:bnd
 %mvn_alias biz.aQute.bnd:biz.aQute.bndlib :bndlib biz.aQute:bndlib
@@ -180,7 +230,7 @@ popd
 %mvn_package biz.aQute.bnd:bnd-plugin-parent __noinstall
 
 %build
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -188,7 +238,7 @@ popd
 install -d -m 755 %{buildroot}%{_sysconfdir}/ant.d
 echo "aqute-bnd slf4j/api slf4j/simple osgi-annotation osgi-core osgi-compendium" >%{buildroot}%{_sysconfdir}/ant.d/%{name}
 
-%jpackage_script aQute.bnd.main.bnd "" "" aqute-bnd:slf4j/slf4j-api:slf4j/slf4j-simple:osgi-annotation:osgi-core:osgi-compendium bnd 1
+%jpackage_script aQute.bnd.main.bnd "" "" aqute-bnd:slf4j/slf4j-api:slf4j/slf4j-simple:jline/jline:jansi/jansi:osgi-annotation:osgi-core:osgi-compendium bnd 1
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
@@ -208,6 +258,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:4.3.1-alt1_1jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_8jpp8
 - fc update
 
