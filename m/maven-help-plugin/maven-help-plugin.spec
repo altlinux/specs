@@ -3,11 +3,11 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat maven-plugins-pom mvn(org.apache.maven:maven-plugin-descriptor)
+BuildRequires: jpackage-11-compat maven-plugins-pom mvn(org.apache.maven:maven-plugin-descriptor) apache-commons-lang
 #maven-plugin-testing-harness
 Name:           maven-help-plugin
 Version:        2.2
-Release:        alt2_8jpp8
+Release:        alt3_8jpp11
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Other
@@ -33,6 +33,7 @@ BuildRequires: xstream
 BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: plexus-containers-component-metadata
 BuildRequires: maven-plugin-tools-generators
+BuildRequires: mvn(org.apache.maven:maven-monitor)
 Requires: ant
 Requires: javapackages-tools
 Requires: xstream
@@ -74,7 +75,7 @@ sed -i "s|PluginUtils.toText|org.apache.maven.tools.plugin.generator.GeneratorUt
     src/main/java/org/apache/maven/plugins/help/DescribeMojo.java
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -86,6 +87,9 @@ sed -i "s|PluginUtils.toText|org.apache.maven.tools.plugin.generator.GeneratorUt
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 2.2-alt3_8jpp11
+- fixed build
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_8jpp8
 - fixed build
 
