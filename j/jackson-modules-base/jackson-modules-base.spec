@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,8 +12,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with    jp_minimal
 
 Name:          jackson-modules-base
-Version:       2.10.2
-Release:       alt1_2jpp8
+Version:       2.11.2
+Release:       alt1_1jpp11
 Summary:       Jackson modules: Base
 License:       ASL 2.0
 
@@ -31,7 +31,6 @@ BuildRequires:  mvn(com.google.inject:guice)
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.thoughtworks.paranamer:paranamer)
 %endif
-# xmvn-builddep misses this one:
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(junit:junit)
@@ -159,7 +158,7 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %mvn_file ":{*}" jackson-modules/@1
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -200,6 +199,9 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.10.2-alt1_2jpp8
 - new version
 
