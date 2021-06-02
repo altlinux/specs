@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -58,7 +58,7 @@ BuildRequires: jpackage-1.8-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20191120
+%global addver  .v20200723
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -67,8 +67,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without  jp_minimal
 
 Name:           jetty
-Version:        9.4.24
-Release:        alt1_3.v20191120jpp8
+Version:        9.4.31
+Release:        alt1_3jpp11
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -82,6 +82,7 @@ Source5:        %{name}.service
 Source6:        LICENSE-MIT
 
 Patch1:         0001-Distro-jetty.home.patch
+Patch2:         0002-Port-to-servlet-api-4-5.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
@@ -658,11 +659,13 @@ BuildArch: noarch
 %setup -q -n %{name}.project-%{name}-%{version}%{addver}
 
 %patch1 -p1
+%patch2 -p1
 
 find . -name "*.?ar" -exec rm {} \;
 find . -name "*.class" -exec rm {} \;
 
 # Plugins irrelevant or harmful to building the package
+%pom_remove_plugin -r :maven-checkstyle-plugin
 %pom_remove_plugin -r :findbugs-maven-plugin
 %pom_remove_plugin -r :maven-enforcer-plugin
 %pom_remove_plugin -r :clirr-maven-plugin
@@ -681,6 +684,10 @@ find . -name "*.class" -exec rm {} \;
 %pom_remove_plugin -r :flatten-maven-plugin jetty-bom
 
 %pom_disable_module aggregates/jetty-all
+
+# Reflective use of classes that might not be present in the JDK should be optional OSGi-wise
+%pom_xpath_inject "pom:configuration/pom:instructions" \
+"<Import-Package>sun.misc;resolution:=optional,com.sun.nio.file;resolution:=optional,*</Import-Package>"
 
 # Use proper groupId for apache ant
 %pom_xpath_replace "pom:groupId[text()='ant']" "<groupId>org.apache.ant</groupId>" jetty-ant/pom.xml
@@ -845,7 +852,7 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 
 # we don't have all necessary dependencies to run tests
 # missing test dep: org.eclipse.jetty.toolchain:jetty-perf-helper
-%mvn_build -f -s
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -854,6 +861,7 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/default/jetty`
 touch $RPM_BUILD_ROOT/etc/default/jetty
 install -D -m 755 %{S:45} %buildroot%_initdir/%name
+
 
 # jp_minimal version doesn't contain main package
 %if %{without jp_minimal}
@@ -1048,6 +1056,9 @@ exit 0
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 9.4.31-alt1_3jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 9.4.24-alt1_3.v20191120jpp8
 - fc update
 
