@@ -3,7 +3,7 @@
 %def_disable webkit
 
 Name: psi-plus
-Version: 1.5.1494
+Version: 1.5.1543
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -735,6 +735,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp}plugin.so
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Jun 02 2021 Oleg Solovyov <mcpain@altlinux.org> 1.5.1543-alt1
+- Version 1.5.1543
+
 * Wed Apr 28 2021 Oleg Solovyov <mcpain@altlinux.org> 1.5.1494-alt1
 - Version 1.5.1494
 
