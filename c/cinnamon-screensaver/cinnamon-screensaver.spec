@@ -1,4 +1,4 @@
-%define ver_major 4.8
+%define ver_major 5.0
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
@@ -93,8 +93,10 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 
 %files
 %_bindir/%name
+%_bindir/cinnamon-unlock-desktop
 %attr(2711,root,chkpwd) %_libexecdir/%name-pam-helper
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
+%_libexecdir/cs-backup-locker
 %_bindir/%name-command
 %_datadir/%name
 %_datadir/dbus-1/services/*.service
@@ -109,7 +111,6 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %files -n lib%name-devel
 %_libdir/*.so
 %_pkgconfigdir/*
-%_includedir/%name
 
 %files -n lib%name-gir
 %_libdir/girepository-1.0/*
@@ -118,6 +119,12 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 5.0.1-alt1
+- 5.0.1
+
+* Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Fri Dec 11 2020 Vladimir Didenko <cow@altlinux.org> 4.8.1-alt1
 - 4.8.1
 

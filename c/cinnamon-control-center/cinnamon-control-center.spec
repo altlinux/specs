@@ -1,4 +1,4 @@
-%define ver_major 4.8
+%define ver_major 5.0
 %define api_ver 1.0
 
 %def_disable debug
@@ -8,7 +8,7 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -150,6 +150,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri May 28 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Tue Jan 12 2021 Vladimir Didenko <cow@altlinux.org> 4.8.2-alt1
 - 4.8.2
 

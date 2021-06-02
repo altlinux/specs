@@ -1,6 +1,6 @@
 Name: lightdm-settings
-Version: 1.5.2
-Release: alt2
+Version: 1.5.3
+Release: alt1
 Summary: Configuration tool for the LightDM display manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -46,6 +46,9 @@ chmod -c 0755 %{buildroot}%{_bindir}/%{name}			\
 %{_datadir}/polkit-1/actions/org.x.%{name}.policy
 
 %changelog
+* Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Wed May 5 2021 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt2
 - add rpm-build-python3 to the build requirements
 

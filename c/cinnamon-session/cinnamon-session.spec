@@ -1,12 +1,13 @@
-%define ver_major 4.8
-%define _libexecdir %_prefix/libexec
+%define ver_major 5.0
+%define _libexecdirname libexec
+%define _libexecdir %_prefix/%_libexecdirname
 %define _name cinnamon
 
 %def_disable wmsession
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -74,7 +75,7 @@ This package provides the Cinnamon session manager.
 %patch0 -p1
 
 %build
-%meson -Dwith-gconf=false --libexecdir=%_libexecdir
+%meson -Dwith-gconf=false --libexecdir=%_libexecdirname
 %meson_build
 
 %install
@@ -119,6 +120,12 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt2
+- use new cinnamon screensaver name for required components
+
+* Fri May 28 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
 - 4.8.0
 

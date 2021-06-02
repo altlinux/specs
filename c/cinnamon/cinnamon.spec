@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.8.6
-Release: alt5
+Version: 5.0.0
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -158,6 +158,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 # gnome-shell provides typelib(St) as well
 %filter_from_provides /typelib(St)/d
 
+mkdir -p %buildroot%python3_sitelibdir_noarch
+mv %buildroot/usr/lib/python3/dist-packages/cinnamon %buildroot%python3_sitelibdir_noarch
+
 %files
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
@@ -177,6 +180,7 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %_datadir/desktop-directories/*.directory
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
+%python3_sitelibdir_noarch/cinnamon/
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*.svg
 %_man1dir/*.1.*
@@ -187,6 +191,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Wed Apr 07 2021 Anton Midyukov <antohami@altlinux.org> 4.8.6-alt5
 - Add Requires: libsoup-gir (Closes: 39890)
 

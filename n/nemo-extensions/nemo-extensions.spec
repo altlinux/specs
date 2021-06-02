@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 4.8.0
-Release: alt1
+Version: 5.0.0
+Release: alt2
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -35,8 +35,8 @@ BuildRequires: libwebkit2gtk-devel
 BuildRequires: libclutter-gtk3-devel
 BuildRequires: libclutter-gtk3-gir-devel
 BuildRequires: libclutter-gst3.0-devel
-BuildRequires: libgtksourceview3-gir-devel
-BuildRequires: libgtksourceview3-devel
+BuildRequires: libgtksourceview4-gir-devel
+BuildRequires: libgtksourceview4-devel
 BuildRequires: perl(XML/Parser.pm)
 BuildRequires: libcogl-gir-devel
 BuildRequires: libxreader-gir-devel
@@ -125,6 +125,15 @@ some text files, and possibly others in the future.
 To activate the preview, left-click the file and hit space.
 The preview can be closed by hitting space again, or escape.
 
+%package -n nemo-preview-gir-devel
+Summary: GObject introspection devel data for the nemo-preview extension
+Group: System/Libraries
+BuildArch: noarch
+Requires: nemo-preview = %version-%release
+
+%description -n nemo-preview-gir-devel
+GObject introspection devel data for the nemo-preview extension.
+
 %package -n nemo-emblems
 Summary: Emblem support for nemo
 License: %gpl3plus
@@ -165,9 +174,8 @@ Context menu comparison extension for Nemo file manager.
 
 %build
 pushd nemo-fileroller
-%autoreconf
-%configure
-%make
+%meson
+%meson_build
 popd
 
 pushd nemo-python
@@ -176,9 +184,8 @@ pushd nemo-python
 popd
 
 pushd nemo-share
-%autoreconf
-%configure
-%make
+%meson
+%meson_build
 popd
 
 %set_typelibdir %_libdir/nemo-preview
@@ -189,10 +196,8 @@ pushd nemo-preview
 popd
 
 pushd nemo-image-converter
-[ ! -d m4 ] && mkdir m4
-%autoreconf
-%configure
-%make
+%meson
+%meson_build
 popd
 
 pushd nemo-terminal
@@ -212,7 +217,7 @@ rm -rf %buildroot
 mkdir -p %buildroot/%_datadir/nemo-python/extensions/
 
 pushd nemo-fileroller
-%makeinstall_std
+%meson_install
 popd
 
 pushd nemo-python
@@ -220,7 +225,7 @@ pushd nemo-python
 popd
 
 pushd nemo-share
-%makeinstall_std
+%meson_install
 popd
 
 pushd nemo-terminal
@@ -236,7 +241,7 @@ pushd nemo-emblems
 popd
 
 pushd nemo-image-converter
-%makeinstall_std
+%meson_install
 popd
 
 pushd nemo-compare
@@ -289,8 +294,11 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_bindir/nemo-preview
 %_libdir/nemo-preview
 %_libexecdir/nemo-preview-start
-%_datadir/nemo-preview
+%_datadir/nemo-preview/js
 %_datadir/dbus-1/services/org.nemo.Preview.service
+
+%files -n nemo-preview-gir-devel
+%_datadir/nemo-preview/gir-1.0/*
 
 %files -n nemo-emblems
 %doc nemo-emblems/COPYING.GPL3
@@ -310,6 +318,12 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %python3_sitelibdir_noarch/nemo_compare-*.egg-*
 
 %changelog
+* Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt2
+- Don't pack gir development files as part of nemo-preview extension
+
+* Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Fri Nov 27 2020 Vladimir Didenko <cow@altlinux.org> 4.8.0-alt1
 - 4.8.0
 

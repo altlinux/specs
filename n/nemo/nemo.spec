@@ -1,5 +1,5 @@
 %define api_ver 3.0
-%define ver_major 4.8
+%define ver_major 5.0
 
 %def_enable exempi
 %def_enable tracker
@@ -7,8 +7,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -70,6 +70,7 @@ BuildRequires: libxapps-devel >= 1.0.4
 %{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+BuildRequires: libgsf-devel
 
 %description
 Nemo integrates access to files, applications, media, Internet-based
@@ -184,6 +185,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Tue May 4 2021 Vladimir Didenko <cow@altlinux.org> 4.8.6-alt2
 - add rpm-build-python3 to the build requirements
 
