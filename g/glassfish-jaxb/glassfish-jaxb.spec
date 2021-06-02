@@ -18,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt2_15jpp8
+Release:        alt3_15jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
@@ -35,6 +35,7 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+#BuildRequires:  mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 %if %{without jp_minimal}
 BuildRequires:  mvn(args4j:args4j)
 BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
@@ -244,6 +245,7 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-source-plugin jxc
 %pom_remove_plugin :maven-source-plugin xjc
+%pom_remove_plugin :maven-javadoc-plugin
 
 %if %{with jp_minimal}
 # For minimal build disable all modules with extra deps
@@ -274,7 +276,7 @@ rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,St
 %endif
 
 %build
-%mvn_build -f -s -- -Ddev -DbuildNumber=unknown
+%mvn_build -f -s -j -- -Ddev -DbuildNumber=unknown
 
 %install
 %mvn_install
@@ -324,11 +326,14 @@ rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,St
 %doc --no-dereference License.txt licenceheader.txt License.html
 %endif
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference License.txt licenceheader.txt License.html
+#%files javadoc -f .mfiles-javadoc
+#%doc --no-dereference License.txt licenceheader.txt License.html
 
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2.11-alt3_15jpp8
+- fixed build
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_15jpp8
 - update
 
