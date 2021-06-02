@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.17.3
+Version: 1.18.0
 Release: alt1
 
 Summary: Input devices library
@@ -151,6 +151,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Wed Jun 02 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.17.3-alt1
 - 1.17.3
 
