@@ -3,13 +3,13 @@ BuildRequires: maven-project
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat mojo-parent maven-plugin-plugin
+BuildRequires: jpackage-11-compat mojo-parent maven-plugin-plugin apache-commons-lang
 
 %global group_id  org.codehaus.mojo
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt7_18jpp8
+Release:          alt8_18jpp11
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Other
@@ -25,10 +25,6 @@ BuildArch:        noarch
 BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 
-Requires: javapackages-tools
-Requires:         maven
-Requires:         plexus-utils
-Requires:         apache-commons-lang
 Source44: import.info
 
 %description
@@ -55,7 +51,7 @@ cp %{SOURCE1} LICENSE-ASL
 %pom_add_dep junit:junit::test
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -67,6 +63,9 @@ cp %{SOURCE1} LICENSE-ASL
 %doc LICENSE-MIT LICENSE-ASL
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt8_18jpp11
+- fixed build
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt7_18jpp8
 - fixed build with new maven-reporting-impl
 
