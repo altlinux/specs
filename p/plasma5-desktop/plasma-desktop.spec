@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.21.5
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -127,7 +127,7 @@ Common polkit files for %name
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-#%patch14 -p1
+%patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
@@ -238,6 +238,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Jun 02 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt3
+- arrange desktop icons by columns by default
+
 * Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt2
 - split ibus emojier into separate subpackage
 
