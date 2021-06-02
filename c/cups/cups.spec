@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.3.3
-Release: alt4.op2
+Release: alt5.op2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -106,7 +106,7 @@ Requires: printer-testpages bc cups-filters
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel libsystemd-daemon pkg-config
 BuildRequires: gcc-c++ libacl-devel libaudit-devel libavahi-devel libdbus-devel libpam-devel libpaper-devel libselinux-devel libssl-devel libsystemd-daemon-devel systemd-devel libusb-devel xdg-utils zlib-devel
 
-BuildRequires: dbus python python-module-polib
+BuildRequires: dbus python3 python3-module-polib
 BuildRequires: libgnutls-devel
 
 %description
@@ -274,7 +274,7 @@ cd locale
 make pot
 mv cups_ru.po cups_old_ru.po
 msgmerge cups_old_ru.po cups.pot -C ../alt_ru.po -o cups_ru.po
-python2 ../pofix.py cups_ru.po
+python3 ../pofix.py cups_ru.po
 )
 
 %install
@@ -436,6 +436,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt5.op2
+- Fixed build without python-module-polib.
+
 * Thu May 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt4.op2
 - Added service migration script (Closes: #40107)
 
