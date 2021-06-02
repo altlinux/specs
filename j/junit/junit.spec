@@ -2,26 +2,27 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           junit
 Epoch:          1
-Version:        4.12
-Release:        alt1_13jpp8
+Version:        4.13
+Release:        alt1_2jpp11
 Summary:        Java regression test package
 License:        EPL-1.0
 URL:            http://www.junit.org/
 BuildArch:      noarch
 
-# ./clean-tarball.sh %{version}
-Source0:        %{name}-%{version}-clean.tar.gz
+# ./clean-tarball.sh %%{version}
+Source0:        %{name}4-%{version}-clean.tar.gz
 Source3:        create-tarball.sh
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.hamcrest:hamcrest-library)
 
 Obsoletes:      %{name}-demo < 4.12
 Source44: import.info
@@ -58,10 +59,8 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-r%{version}
+%setup -q -n %{name}4-r%{version}
 
-# InaccessibleBaseClassTest fails with Java 8
-sed -i /InaccessibleBaseClassTest/d src/test/java/org/junit/tests/AllTests.java
 
 %pom_remove_plugin :replacer
 sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >src/main/java/junit/runner/Version.java
@@ -88,25 +87,43 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
       </configuration>
     </plugin>"
 
+# Use compiler release flag when building on JDK >8 for correct cross-compiling
+%pom_xpath_inject pom:profiles "
+    <profile>
+      <id>jdk-release-flag</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.release>\${jdkVersion}</maven.compiler.release>
+      </properties>
+    </profile>"
+
+%pom_xpath_set //pom:compilerVersion 1.8
+
 %mvn_file : %{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DjdkVersion=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-junit.txt README.md
+%doc --no-dereference LICENSE-junit.txt
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-junit.txt
+%doc --no-dereference LICENSE-junit.txt
 
 %files manual
-%doc LICENSE-junit.txt
+%doc --no-dereference LICENSE-junit.txt
 %doc doc/*
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:4.13-alt1_2jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_13jpp8
 - fc update
 
