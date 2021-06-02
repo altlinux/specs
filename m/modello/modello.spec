@@ -19,8 +19,8 @@ BuildRequires: jpackage-11-compat
 Name:           modello
 Summary:        Modello Data Model toolkit
 Epoch:          0
-Version:        1.10.0
-Release:        alt1_2jpp11
+Version:        1.11
+Release:        alt1_3jpp11
 # The majority of files are under MIT license, but some of them are ASL 2.0.
 # Some parts of the project are derived from the Exolab project,
 # and are licensed under a 5-clause BSD license.
@@ -105,8 +105,8 @@ sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 
 
 %build
-# skip tests because we have too old xmlunit in Fedora now (1.0.8)
-%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.version=3.1.1
+# FIXME: tests fail
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.version=3.1.1
 
 
 %install
@@ -120,7 +120,7 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files -f .mfiles
 %doc LICENSE
-%{_bindir}/*
+%{_bindir}/modello
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc -f .mfiles-javadoc
@@ -128,6 +128,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.11-alt1_3jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.0-alt1_2jpp11
 - new version
 
