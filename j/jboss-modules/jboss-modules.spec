@@ -1,72 +1,68 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-%define fedora 30
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.5.2
-%global namedreltag .Final
-%global namedversion %{version}%{?namedreltag}
-
-Name:             jboss-modules
-Version:          1.5.2
-Release:          alt2_8jpp8
-Summary:          A Modular Classloading System
+Name:           jboss-modules
+Version:        1.5.2
+Release:        alt2_12jpp11
+Summary:        Modular Classloading System
 # XPP3 License: src/main/java/org/jboss/modules/xml/MXParser.java
 #  src/main/java/org/jboss/modules/xml/XmlPullParser.java
 #  src/main/java/org/jboss/modules/xml/XmlPullParserException.java
-License:          ASL 2.0 and xpp
-URL:              https://github.com/jbossas/jboss-modules
-Source0:          https://github.com/jbossas/jboss-modules/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
+License:        ASL 2.0 and xpp
 
-BuildArch:        noarch
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
 
-BuildRequires:    maven-local
-BuildRequires:    mvn(junit:junit)
-BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
-BuildRequires:    mvn(org.jboss.shrinkwrap:shrinkwrap-impl-base)
-%if 0%{?fedora}
-BuildRequires:    graphviz libgraphviz
-BuildRequires:    mvn(jdepend:jdepend)
-BuildRequires:    mvn(org.jboss.apiviz:apiviz)
-%endif
+URL:            https://github.com/jbossas/jboss-modules
+Source0:        %{url}/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
+
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.jboss.shrinkwrap:shrinkwrap-impl-base)
+BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
 %description
 Ths package contains A Modular Classloading System.
 
+
 %package javadoc
 Group: Development/Java
-Summary:          Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
+
 %prep
 %setup -q -n %{name}-%{namedversion}
 
-# Conditionally remove dependency on apiviz
-if [ %{?rhel} ]; then
-    %pom_remove_plugin :maven-javadoc-plugin
-fi
+# do not build custom Javadocs with apiviz doclet
+%pom_remove_plugin :maven-javadoc-plugin
 
-# Unneeded task
-%pom_remove_plugin :maven-source-plugin
-
-# Use not available org.wildfly.checkstyle:wildfly-checkstyle-config:1.0.4.Final
+# remove unnecessary maven plugins
 %pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-source-plugin
 
 # Tries to connect to remote host
 rm src/test/java/org/jboss/modules/MavenResourceTest.java \
  src/test/java/org/jboss/modules/maven/MavenSettingsTest.java
 
+# remove test that's not ready for Java 9 Modules
+rm src/test/java/org/jboss/modules/JAXPModuleTest.java
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc README.md
@@ -75,7 +71,11 @@ rm src/test/java/org/jboss/modules/MavenResourceTest.java \
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt XPP3-LICENSE.txt
 
+
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt2_12jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_8jpp8
 - fc update
 
