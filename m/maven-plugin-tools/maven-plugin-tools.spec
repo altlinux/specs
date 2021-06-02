@@ -4,60 +4,86 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# ant scripting is unused in fedora 33+
+%bcond_with ant
+
+# bsh support is unused in fedora 33+
+%bcond_with beanshell
+
 Name:           maven-plugin-tools
-Version:        3.5.1
-Release:        alt2_7jpp8
+Version:        3.6.0
+Release:        alt1_7jpp11
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugin-tools/
 BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugin-tools/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugin-tools/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Patch0:         0001-Avoid-duplicate-MOJO-parameters.patch
-Patch1:         0002-Deal-with-nulls-from-getComment.patch
-Patch2:         0003-Port-to-plexus-utils-3.0.24.patch
+Patch0:         0000-ignore-jtidy-crashes.patch
+Patch1:         0001-Port-to-plexus-utils-3.0.24.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(net.sf.jtidy:jtidy)
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.ant:ant-launcher)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-registry)
-BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.apache.maven.surefire:maven-surefire-common)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
 BuildRequires:  mvn(org.apache.velocity:velocity)
-BuildRequires:  mvn(org.beanshell:bsh)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-ant-factory)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-bsh-factory)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
-BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
+
+%if %{with ant}
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-launcher)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-ant-factory)
+%endif
+
+%if %{with beanshell}
+BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-bsh-factory)
+%endif
+
+# removed in fedora 33 with 3.6.0
+Obsoletes:      maven-plugin-tools-javadoc < 0:3.6.0-1
+
+%if %{without ant}
+Obsoletes:      maven-plugin-tools-ant < %{epoch}:%{version}-%{release}
+Obsoletes:      maven-script-ant < %{epoch}:%{version}-%{release}
+%endif
+
+%if %{without beanshell}
+Obsoletes:      maven-plugin-tools-beanshell < %{epoch}:%{version}-%{release}
+Obsoletes:      maven-script-beanshell < %{epoch}:%{version}-%{release}
+%endif
 Source44: import.info
 
 %description
@@ -89,33 +115,37 @@ Summary:        Maven Plugin Tool for Annotations
 %description annotations
 This package provides Java 5 annotation tools for use with Apache Maven.
 
+%if %{with ant}
 %package ant
 Group: Development/Java
 Summary:        Maven Plugin Tool for Ant
-#Obsoletes:      maven-shared-plugin-tools-ant < 0:%{version}-%{release}
-#Provides:       maven-shared-plugin-tools-ant = 0:%{version}-%{release}
+Obsoletes:      maven-shared-plugin-tools-ant < 0:%{version}-%{release}
+Provides:       maven-shared-plugin-tools-ant = 0:%{version}-%{release}
 
 %description ant
 Descriptor extractor for plugins written in Ant.
+%endif
 
 %package api
 Group: Development/Java
 Summary:        Maven Plugin Tools APIs
-#Obsoletes:      maven-shared-plugin-tools-api < 0:%{version}-%{release}
-#Provides:       maven-shared-plugin-tools-api = 0:%{version}-%{release}
+Obsoletes:      maven-shared-plugin-tools-api < 0:%{version}-%{release}
+Provides:       maven-shared-plugin-tools-api = 0:%{version}-%{release}
 
 %description api
 The Maven Plugin Tools API provides an API to extract information from
 and generate documentation for Maven Plugins.
 
+%if %{with beanshell}
 %package beanshell
 Group: Development/Java
 Summary:        Maven Plugin Tool for Beanshell
-#Obsoletes:      maven-shared-plugin-tools-beanshell < 0:%{version}-%{release}
-#Provides:       maven-shared-plugin-tools-beanshell = 0:%{version}-%{release}
+Obsoletes:      maven-shared-plugin-tools-beanshell < 0:%{version}-%{release}
+Provides:       maven-shared-plugin-tools-beanshell = 0:%{version}-%{release}
 
 %description beanshell
 Descriptor extractor for plugins written in Beanshell.
+%endif
 
 %package generators
 Group: Development/Java
@@ -128,31 +158,17 @@ The Maven Plugin Tools Generators provides content generation
 %package java
 Group: Development/Java
 Summary:        Maven Plugin Tool for Java
-#Obsoletes:      maven-shared-plugin-tools-java < 0:%{version}-%{release}
-#Provides:       maven-shared-plugin-tools-java = 0:%{version}-%{release}
+Obsoletes:      maven-shared-plugin-tools-java < 0:%{version}-%{release}
+Provides:       maven-shared-plugin-tools-java = 0:%{version}-%{release}
 
 %description java
 Descriptor extractor for plugins written in Java.
 
-# Note that this package contains code, not documentation.
-# See comments about "javadocs" subpackage below.
-%package javadoc
-Group: Development/Java
-Summary:        Maven Plugin Tools Javadoc
-BuildArch: noarch
-
-%description javadoc
-The Maven Plugin Tools Javadoc provides several Javadoc taglets to be used when
-generating Javadoc.
-
-Java API documentation for %{name} is contained in
-%{name}-javadocs package. This package does not contain it.
-
 %package model
 Group: Development/Java
 Summary:        Maven Plugin Metadata Model
-#Obsoletes:      maven-shared-plugin-tools-model < 0:%{version}-%{release}
-#Provides:       maven-shared-plugin-tools-model = 0:%{version}-%{release}
+Obsoletes:      maven-shared-plugin-tools-model < 0:%{version}-%{release}
+Provides:       maven-shared-plugin-tools-model = 0:%{version}-%{release}
 
 %description model
 The Maven Plugin Metadata Model provides an API to play with the Metadata
@@ -166,6 +182,7 @@ Summary:        Maven Script Mojo Support
 Maven Script Mojo Support lets developer write Maven plugins/goals
 with scripting languages instead of compiled Java.
 
+%if %{with ant}
 %package -n maven-script-ant
 Group: Development/Java
 Summary:        Maven Ant Mojo Support
@@ -173,7 +190,9 @@ Summary:        Maven Ant Mojo Support
 %description -n maven-script-ant
 This package provides %{summary}, which write Maven plugins with
 Ant scripts.
+%endif
 
+%if %{with beanshell}
 %package -n maven-script-beanshell
 Group: Development/Java
 Summary:        Maven Beanshell Mojo Support
@@ -181,6 +200,7 @@ Summary:        Maven Beanshell Mojo Support
 %description -n maven-script-beanshell
 This package provides %{summary}, which write Maven plugins with
 Beanshell scripts.
+%endif
 
 # This "javadocs" package violates packaging guidelines as of Sep 6 2012. The
 # subpackage name "javadocs" instead of "javadoc" is intentional. There was a
@@ -196,58 +216,28 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %pom_remove_plugin :maven-enforcer-plugin
-
-# For com.sun:tools use scope "compile" instead of "system"
-%pom_remove_dep com.sun:tools maven-plugin-tools-javadoc
-%pom_add_dep com.sun:tools maven-plugin-tools-javadoc
 
 %pom_xpath_inject "pom:project/pom:properties" "
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>"
 
-# Remove test dependencies because tests are skipped anyways.
-%pom_xpath_remove "pom:dependency[pom:scope='test']"
+%if %{without ant}
+%pom_disable_module maven-script-ant maven-script
+%pom_disable_module maven-plugin-tools-ant maven-script
+%endif
 
-# Use Maven 3.1.1 APIs
-%pom_remove_dep :maven-project maven-plugin-plugin
-%pom_remove_dep :maven-plugin-descriptor maven-plugin-plugin
-%pom_remove_dep :maven-plugin-registry maven-plugin-plugin
-%pom_remove_dep :maven-artifact-manager maven-plugin-plugin
-
-%pom_change_dep :maven-project :maven-core maven-plugin-tools-annotations
-%pom_change_dep :maven-plugin-descriptor :maven-compat maven-plugin-tools-annotations
-
-%pom_remove_dep :maven-plugin-descriptor maven-script/maven-plugin-tools-ant
-%pom_change_dep :maven-project :maven-core maven-script/maven-plugin-tools-ant
-
-%pom_remove_dep :maven-plugin-descriptor maven-plugin-tools-api
-%pom_change_dep :maven-project :maven-core maven-plugin-tools-api
-
-%pom_remove_dep :maven-plugin-descriptor maven-script/maven-plugin-tools-beanshell
-
-%pom_remove_dep :maven-project maven-plugin-tools-generators
-%pom_remove_dep :maven-plugin-descriptor maven-plugin-tools-generators
-
-%pom_change_dep :maven-project :maven-core maven-plugin-tools-java
-%pom_remove_dep :maven-plugin-descriptor maven-plugin-tools-java
-
-%pom_change_dep :maven-plugin-descriptor :maven-plugin-api maven-script/maven-plugin-tools-model
-
-%pom_remove_dep :maven-project maven-script/maven-script-ant
-%pom_remove_dep :maven-plugin-descriptor maven-script/maven-script-ant
-
-%pom_remove_dep :maven-project
-%pom_remove_dep :maven-plugin-descriptor
-%pom_add_dep org.apache.maven:maven-compat
-%pom_add_dep org.apache.maven:maven-plugin-registry
+%if %{without beanshell}
+%pom_disable_module maven-script-beanshell maven-script
+%pom_disable_module maven-plugin-tools-beanshell maven-script
+%endif
 
 %build
-%mvn_build -s -f
+%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -264,35 +254,44 @@ API documentation for %{name}.
 %files annotations -f .mfiles-maven-plugin-tools-annotations
 %doc --no-dereference LICENSE NOTICE
 
+%if %{with ant}
 %files ant -f .mfiles-maven-plugin-tools-ant
+%endif
 
 %files api -f .mfiles-maven-plugin-tools-api
 %doc --no-dereference LICENSE NOTICE
 
+%if %{with beanshell}
 %files beanshell -f .mfiles-maven-plugin-tools-beanshell
+%endif
 
 %files generators -f .mfiles-maven-plugin-tools-generators
 
 %files java -f .mfiles-maven-plugin-tools-java
-
-%files javadoc -f .mfiles-maven-plugin-tools-javadoc
 
 %files model -f .mfiles-maven-plugin-tools-model
 %doc --no-dereference LICENSE NOTICE
 
 %files -n maven-script -f .mfiles-maven-script
 
+%if %{with ant}
 %files -n maven-script-ant -f .mfiles-maven-script-ant
 %doc --no-dereference LICENSE NOTICE
+%endif
 
+%if %{with beanshell}
 %files -n maven-script-beanshell -f .mfiles-maven-script-beanshell
 %doc --no-dereference LICENSE NOTICE
+%endif
 
 %files javadocs -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.6.0-alt1_7jpp11
+- new version
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt2_7jpp8
 - fixed build
 
