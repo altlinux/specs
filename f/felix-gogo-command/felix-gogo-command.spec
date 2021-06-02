@@ -1,19 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle  org.apache.felix.gogo.command
 
 Name:           felix-gogo-command
 Version:        1.0.2
-Release:        alt1_9jpp8
+Release:        alt1_12jpp11
 Summary:        Apache Felix Gogo command line shell for OSGi
 License:        ASL 2.0
-URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
+URL:            https://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 BuildArch:      noarch
 
-Source0:        https://repo1.maven.org/maven2/org/apache/felix/org.apache.felix.gogo.command/%{version}/%{bundle}-%{version}-source-release.tar.gz
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/%{bundle}/%{version}/%{bundle}-%{version}-source-release.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
@@ -22,6 +22,7 @@ BuildRequires:  mvn(org.apache.felix:org.apache.felix.gogo.runtime)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.osgi:osgi.cmpn)
 BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(junit:junit)
 Source44: import.info
 
 %description
@@ -47,8 +48,10 @@ This package contains API documentation for %{name}.
 %pom_change_dep :org.osgi.core :osgi.core::provided
 %pom_change_dep :org.osgi.compendium :osgi.cmpn::provided
 
+%pom_add_dep junit:junit::test
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -60,6 +63,9 @@ This package contains API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt1_12jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_9jpp8
 - fc update
 
