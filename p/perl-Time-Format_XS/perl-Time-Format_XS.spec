@@ -1,7 +1,8 @@
+%define _without_test 1
 %define dist Time-Format_XS
 Name: perl-%dist
 Version: 1.03
-Release: alt5
+Release: alt6
 
 Summary: Companion module for Time::Format, to speed up time formatting
 License: GPL or Artistic
@@ -40,6 +41,9 @@ cp -f %{SOURCE1} .
 %perl_vendor_archlib/Time
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1.03-alt6
+- disabled tests (random fail chance) for perl 5.32 rebuild
+
 * Tue Mar 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt5
 - fixed segfault (closes: #36167) (closes: #36226)
 
