@@ -3,24 +3,26 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-remote-resources-plugin
-Version:        1.5
-Release:        alt1_6jpp8
+Version:        1.7.0
+Release:        alt1_3jpp11
 Summary:        Maven Remote Resources Plugin
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-remote-resources-plugin/
+
+URL:            https://maven.apache.org/plugins/maven-remote-resources-plugin/
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
 BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
-BuildRequires:  mvn(org.apache.maven:maven-monitor)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven:maven-settings:2.2.1)
@@ -36,7 +38,6 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-resources)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
-
 
 %description
 Process resources packaged in JARs that have been deployed to
@@ -59,7 +60,7 @@ API documentation for %{name}.
 
 %build
 # Tests use Maven 2 APIs
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -71,6 +72,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.7.0-alt1_3jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_6jpp8
 - fc update
 
