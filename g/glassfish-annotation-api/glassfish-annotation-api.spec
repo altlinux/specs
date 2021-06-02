@@ -12,7 +12,7 @@ BuildRequires: jpackage-11-compat
 
 Name:          glassfish-annotation-api
 Version:       1.3.2
-Release:       alt1_2jpp11
+Release:       alt2_2jpp11
 Summary:       Common Annotations API Specification (JSR 250)
 License:       CDDL-1.1 or GPLv2 with exceptions
 
@@ -28,6 +28,7 @@ BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.glassfish.build:spec-version-maven-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 # xmvn-builddep misses this one
 BuildRequires: mvn(org.glassfish:legal)
 
@@ -66,6 +67,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1.3.2-alt2_2jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.3.2-alt1_2jpp11
 - new version
 
