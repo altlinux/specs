@@ -15,14 +15,14 @@ BuildRequires: jpackage-1.8-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Allow conditionally building without deps on scripting libs rhino and jython
+# Allow conditionally building without optional deps on scripting libs rhino and jython
 %bcond_with jp_minimal
 
-%global classpath batik:rhino:xml-commons-apis:xml-commons-apis-ext:xmlgraphics-commons:jai_imageio
+%global classpath batik:xml-commons-apis:xml-commons-apis-ext:xmlgraphics-commons
 
 Name:           batik
-Version:        1.11
-Release:        alt2_3jpp8
+Version:        1.13
+Release:        alt1_1jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
@@ -35,10 +35,10 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.xmlgraphics:xmlgraphics-commons) >= 2.3
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.xmlgraphics:xmlgraphics-commons)
 %if %{without jp_minimal}
 BuildRequires:  mvn(org.mozilla:rhino)
 BuildRequires:  mvn(org.python:jython)
@@ -46,9 +46,6 @@ BuildRequires:  mvn(org.python:jython)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-apis:xml-apis)
 BuildRequires:  mvn(xml-apis:xml-apis-ext)
-
-# full support for tiff
-Requires:     jai-imageio-core
 Source44: import.info
 #19119
 Provides: xmlgraphics-batik = 0:%version-%release
@@ -67,7 +64,6 @@ purposes, such as viewing, generation or manipulation.
 %package util
 Group: Graphics
 Summary:        Batik utility library
-Obsoletes:      %{name} < 1.11-1
 
 %description util
 Util component of the Apache Batik SVG manipulation and rendering library.
@@ -86,7 +82,13 @@ Group: Graphics
 Summary:        Batik SVG browser
 # Explicit requires for javapackages-tools since squiggle-script
 # uses /usr/share/java-utils/java-functions
-Requires:      javapackages-tools
+Requires:       javapackages-tools
+# Requires AWT, so can't rely on java-headless alone
+Requires:       java
+%if %{without jp_minimal}
+# Soft requirement on optional scripting libs
+Requires: mvn(org.mozilla:rhino)
+%endif
 #19119
 Provides: xmlgraphics-batik-squiggle = 0:%version-%release
 Obsoletes: xmlgraphics-batik-squiggle < 0:%version
@@ -147,6 +149,10 @@ Summary:        Batik SVG rasterizer
 # Explicit requires for javapackages-tools since rasterizer-script
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
+%if %{without jp_minimal}
+# Soft requirement on optional scripting libs
+Requires: mvn(org.mozilla:rhino)
+%endif
 #19119
 Provides: xmlgraphics-batik-rasterizer = 0:%version-%release
 Obsoletes: xmlgraphics-batik-rasterizer < 0:%version
@@ -169,6 +175,8 @@ Summary:        Batik SVG slideshow
 # Explicit requires for javapackages-tools since slideshow-script
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
+# Requires AWT, so can't rely on java-headless alone
+Requires:       java
 #19119
 Provides: xmlgraphics-batik-slideshow = 0:%version-%release
 Obsoletes: xmlgraphics-batik-slideshow < 0:%version
@@ -225,6 +233,9 @@ for pom in `find -mindepth 2 -name pom.xml -not -path ./batik-all/pom.xml`; do
     %pom_xpath_inject pom:project '<packaging>bundle</packaging>' $pom
 done
 
+# The "old-test" module cannot be built due to missing deps in Fedora
+%pom_disable_module batik-test-old
+
 %if %{with jp_minimal}
 # Remove optional deps on rhino and jython for minimal build
 %pom_remove_dep :rhino batik-{bridge,script}
@@ -248,11 +259,15 @@ rm batik-bridge/src/main/java/org/apache/batik/bridge/WindowWrapper.java
 %mvn_package :batik-slideshow slideshow
 %mvn_package :batik-css css
 %mvn_package :batik-constants util
+%mvn_package :batik-shared-resources util
 %mvn_package :batik-i18n util
 %mvn_package :batik-util util
 %mvn_package ':batik-test*' __noinstall
 
 %mvn_file :batik-all batik-all
+
+#no jacl rpm and it breaks javadoc
+rm batik-script/src/main/java/org/apache/batik/script/jacl/JaclInterpreter.java
 
 %build
 # zerg's girar armh hack:
@@ -267,10 +282,10 @@ subst 's,maxmemory="128m",maxmemory="512m",' build.xml
 %install
 %mvn_install
 
-%jpackage_script org.apache.batik.apps.svgbrowser.Main '' '' %{classpath} squiggle true
+%jpackage_script org.apache.batik.apps.svgbrowser.Main '' '' %{classpath}:rhino squiggle true
 %jpackage_script org.apache.batik.apps.svgpp.Main '' '' %{classpath} svgpp true
 %jpackage_script org.apache.batik.apps.ttf2svg.Main '' '' %{classpath} ttf2svg true
-%jpackage_script org.apache.batik.apps.rasterizer.Main '' '' %{classpath} rasterizer true
+%jpackage_script org.apache.batik.apps.rasterizer.Main '' '' %{classpath}:rhino rasterizer true
 %jpackage_script org.apache.batik.apps.slideshow.Main '' '' %{classpath} slideshow true
 
 # Demo
@@ -328,6 +343,9 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.13-alt1_1jpp8
+- new version
+
 * Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt2_3jpp8
 - use zerg@'s hack for armh
 
