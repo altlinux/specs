@@ -1,16 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with python3
 %def_enable bootstrap
-%def_without python2
 
 %define oname Enable
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.8.1
-Release: alt2
+Release: alt3
 Summary: Drawing and interaction packages
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD and GPLv2
 URL: https://github.com/enthought/enable/
 
@@ -22,15 +20,8 @@ Patch1: 2c9b2090edd03e14857f99778350daed3ccf8e5a.patch
 
 BuildRequires: gcc-c++ swig
 BuildRequires: libX11-devel libGL-devel libGLU-devel
-BuildRequires: libnumpy-devel libfreetype-devel
+BuildRequires: libfreetype-devel
 BuildRequires: libopenblas-devel liblapack-devel
-
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-Cython
-%add_python_req_skip macport mac_context hypothesis
-%add_python_req_skip tvtk
-%endif
 
 %if_disabled bootstrap
 BuildRequires: python-module-Pyrex
@@ -38,12 +29,12 @@ BuildRequires: python-module-sphinx-devel python-module-Pygments
 BuildRequires: python-module-traits fonts-ttf-PT
 %endif
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
-%endif
+
+%add_python3_req_skip macport mac_context hypothesis
+%add_python3_req_skip wx.aui wx.glcanvas wx.grid wx.py.shell
 
 %description
 The Enable project provides two related multi-platform packages for
@@ -56,9 +47,10 @@ systems, a variety of raster image formats, PDF, and Postscript.
 
 %package tests
 Summary: Tests for Enable project
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-%add_python_req_skip hypothesis
+%add_python3_req_skip hypothesis
+%add_python3_req_skip etsdevtools.debug.memusage
 
 %description tests
 The Enable project provides two related multi-platform packages for
@@ -71,45 +63,10 @@ systems, a variety of raster image formats, PDF, and Postscript.
 
 This package contains tests for Enable project.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Drawing and interaction packages
-Group: Development/Python3
-%add_python3_req_skip macport mac_context hypothesis
-%add_python3_req_skip wx.aui wx.glcanvas wx.grid wx.py.shell
-
-%description -n python3-module-%oname
-The Enable project provides two related multi-platform packages for
-drawing GUI objects. The Enable package is a multi-platform object
-drawing library built on top of Kiva. The core of Enable is a
-container/component model for drawing and event notification. Kiva is a
-multi-platform DisplayPDF vector drawing engine that supports multiple
-output backends, including Windows, GTK, and Macintosh native windowing
-systems, a variety of raster image formats, PDF, and Postscript.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Enable project
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-%add_python3_req_skip hypothesis
-%add_python3_req_skip etsdevtools.debug.memusage
-
-%description -n python3-module-%oname-tests
-The Enable project provides two related multi-platform packages for
-drawing GUI objects. The Enable package is a multi-platform object
-drawing library built on top of Kiva. The core of Enable is a
-container/component model for drawing and event notification. Kiva is a
-multi-platform DisplayPDF vector drawing engine that supports multiple
-output backends, including Windows, GTK, and Macintosh native windowing
-systems, a variety of raster image formats, PDF, and Postscript.
-
-This package contains tests for Enable project.
-%endif
-
 %if_disabled bootstrap
 %package pickles
 Summary: Pickles for Enable project
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 The Enable project provides two related multi-platform packages for
@@ -145,11 +102,6 @@ This package contains development documentation for Enable project.
 %patch -p1
 %patch1 -p1
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 # remove python3-only backend
 rm -rf enable/enable/vtk_backend
 
@@ -159,15 +111,8 @@ rm -rf enable/enable/vtk_backend
 
 %build
 %add_optflags -fno-strict-aliasing
-%if_with python2
-%python_build_debug
-%endif
 
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %if_disabled bootstrap
 %generate_pickles docs/source docs/source %oname
@@ -175,57 +120,18 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %endif
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%if_with python2
-rm -fR %buildroot%python_sitelibdir/enthought/kiva/mac
-rm -f $(find %buildroot%python_sitelibdir -name '*mac*.py*')
-
-# remove shebangs from files
-find %buildroot%python_sitelibdir -type f -name '*.py' -exec \
-	sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
-%endif
-
-%if_with python3
 rm -fR %buildroot%python3_sitelibdir/enthought/kiva/mac
 rm -f $(find %buildroot%python3_sitelibdir -name '*mac*.py*')
 
 # remove shebangs from files
 find %buildroot%python3_sitelibdir -type f -name '*.py' -exec \
 	sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
-%endif
 
 %if_disabled bootstrap
 install -d %buildroot%python_sitelibdir/enable
 cp -fR pickle %buildroot%python_sitelibdir/enable/
-%endif
-
-%if_with python2
-%files
-%doc image_LICENSE*.txt LICENSE.txt
-%doc *.rst CHANGES.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
-%exclude %python_sitelibdir/*/example*
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/*/*/tests
-%if_disabled bootstrap
-%exclude %python_sitelibdir/enable/pickle
-%endif
-
-%files tests
-%python_sitelibdir/*/test*
-%python_sitelibdir/*/example*
-%python_sitelibdir/*/*/tests
-%python_sitelibdir/*/*/*/tests
 %endif
 
 %if_disabled bootstrap
@@ -237,8 +143,7 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %doc docs examples
 %endif
 
-%if_with python3
-%files -n python3-module-%oname
+%files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc *.rst CHANGES.txt
 %python3_sitelibdir/*
@@ -248,15 +153,17 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test*
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/example*
 %python3_sitelibdir/*/*/tests
 %python3_sitelibdir/*/*/*/tests
-%endif
 
 %changelog
+* Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt3
+- Drop python2 support.
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.1-alt2
 - Updated build dependencies.
 
