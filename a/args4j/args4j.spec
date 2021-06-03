@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           args4j
 Version:        2.33
-Release:        alt1_8jpp8
+Release:        alt1_12jpp8
 Summary:        Java command line arguments parser
 License:        MIT
 URL:            http://args4j.kohsuke.org
@@ -80,6 +80,12 @@ find -name '*.jar' -exec rm -f '{}' \;
 # Remove reliance on the parent pom
 %pom_remove_parent
 
+# Fix javadoc generation on java 11
+%pom_xpath_inject pom:pluginManagement/pom:plugins "<plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration><source>1.6</source></configuration>
+</plugin>"
+
 # put args4j-tools and parent POM to separate subpackages
 %mvn_package :args4j-tools::{}: %{name}-tools
 %mvn_package :args4j-site::{}: %{name}-parent
@@ -105,6 +111,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc --no-dereference %{name}/LICENSE.txt
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 2.33-alt1_12jpp8
+- jvm8 update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1_8jpp8
 - update
 
