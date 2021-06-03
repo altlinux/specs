@@ -1,13 +1,11 @@
 %define oname transaction
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.1.2
-Release: alt1.1
+Release: alt2
 Summary: Transaction management for Python
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: http://pypi.python.org/pypi/transaction/
 
@@ -15,17 +13,13 @@ Url: http://pypi.python.org/pypi/transaction/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib  python-module-objects.inv python-module-repoze.sphinx.autointerface 
-BuildRequires: python-module-coverage python-module-nose python-module-setuptools
-BuildRequires: python-module-mock
-%if_with python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-nose python3-module-setuptools python3-module-zope
-BuildRequires: python3-module-mock
-%endif
+BuildRequires: python3-module-coverage python3-module-nose python3-module-zope
+BuildRequires: python3-module-mock python3-module-sphinx python3-module-repoze
+BuildRequires: python3-module-repoze.sphinx python3-module-repoze.sphinx.autointerface
 
-%py_requires zope.interface
+%py3_requires zope.interface
 
 %description
 This package contains a generic transaction implementation for Python.
@@ -37,43 +31,9 @@ easy to express in the interface. This could probably use more work. The
 semantics are presented in detail through examples of a sample data
 manager in transaction.tests.test_SampleDataManager.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Transaction management for Python 3
-Group: Development/Python3
-%py3_requires zope.interface
-
-%description -n python3-module-%oname
-This package contains a generic transaction implementation for Python 3.
-It is mainly used by the ZODB, though.
-
-Note that the data manager API, transaction.interfaces.IDataManager, is
-syntactically simple, but semantically complex. The semantics were not
-easy to express in the interface. This could probably use more work. The
-semantics are presented in detail through examples of a sample data
-manager in transaction.tests.test_SampleDataManager.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Transaction management for Python 3
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-This package contains a generic transaction implementation for Python 3.
-It is mainly used by the ZODB, though.
-
-Note that the data manager API, transaction.interfaces.IDataManager, is
-syntactically simple, but semantically complex. The semantics were not
-easy to express in the interface. This could probably use more work. The
-semantics are presented in detail through examples of a sample data
-manager in transaction.tests.test_SampleDataManager.
-
-This package contains tests for Transaction management for Python 3.
-%endif
-
 %package tests
 Summary: Tests for Transaction management for Python
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -90,7 +50,7 @@ This package contains tests for Transaction management for Python.
 
 %package pickles
 Summary: Pickles for Transaction management for Python
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 This package contains a generic transaction implementation for Python.
@@ -125,69 +85,43 @@ Python.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -a . ../python3
-%endif
-
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files pickles
-%python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc docs/_build/html/*
 
 %files tests
-%python_sitelibdir/%oname/tests
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
-
-%files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
-%endif
 
 %changelog
+* Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.2-alt2
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
