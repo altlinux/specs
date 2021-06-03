@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,7 +21,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:       ANother Tool for Language Recognition
 Name:          antlr
 Version:       2.7.7
-Release:       alt12_59jpp8
+Release:       alt12_63jpp11
 Epoch:         0
 License:       ANTLR-PD
 URL:           http://www.antlr2.org/
@@ -38,7 +38,7 @@ Patch2:        antlr-examples-license.patch
 
 %ifarch %{mono_arches}
 %if ! 0%{?rhel} >= 6
-BuildRequires: mono-core mono-data mono-devel mono-extras mono-web
+BuildRequires: mono-core mono-data mono-data-sqlite mono-devel mono-extras mono-wcf mono-web
 BuildRequires: mono-winforms
 %endif
 %endif
@@ -148,7 +148,7 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_file %{name}:%{name} %{name}
 
 %build
-ant -Dj2se.apidoc=%{_javadocdir}/java
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dj2se.apidoc=%{_javadocdir}/java
 # make expects to find it here
 cp work/lib/antlr.jar .
 export CLASSPATH=.
@@ -234,6 +234,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %endif
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.7-alt12_63jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_59jpp8
 - update
 
