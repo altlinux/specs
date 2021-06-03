@@ -1,7 +1,7 @@
 %define soversion 199
 Name: x265
 Version: 3.5
-Release: alt1
+Release: alt1.1
 Summary: H.265/HEVC encoder
 License: GPLv2
 Group: Video
@@ -47,10 +47,10 @@ sed -i	-e '/X265_VERSION / s,unknown,%version,' \
 
 %build
 %add_optflags %optflags_shared
+%define _cmake__builddir $builddir
 build() {
-%cmake -DCMAKE_CXX_FLAGS='%optflags' \
+%cmake \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DLIB_INSTALL_DIR=%_lib \
 	-DCMAKE_SKIP_RPATH:BOOL=YES \
 	-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
@@ -59,44 +59,40 @@ build() {
 	-DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy \
 	-DENABLE_SHARED=ON \
 	$* \
-	../../source
+	-S source
 %cmake_build
 }
 
 %ifarch x86_64 aarch64 ppc64 ppc64le
-mkdir 10bit; pushd 10bit
+builddir=10bit
     build \
     -DENABLE_CLI=OFF \
     -DENABLE_ALTIVEC=OFF \
     -DHIGH_BIT_DEPTH=ON
-popd
 
-mkdir 12bit; pushd 12bit
+builddir=12bit
     build \
     -DENABLE_CLI=OFF \
     -DENABLE_ALTIVEC=OFF \
     -DHIGH_BIT_DEPTH=ON \
     -DMAIN12=ON
-popd
 %endif
 
 # 8 bit base library + encoder
-mkdir 8bit; pushd 8bit
+builddir=8bit
     build -DENABLE_HDR10_PLUS=YES \
     %ifarch %ix86
-    	  -DENABLE_ASSEMBLY=OFF \
+      -DENABLE_ASSEMBLY=OFF \
     %endif
     #
-popd
 
 %install
+%define _cmake__builddir ${i}bit
 for i in 8 10 12; do
     if [ -d ${i}bit ]; then
-        pushd ${i}bit
-            %cmakeinstall_std
+            %cmake_install
             # Remove unversioned library, should not be linked to
             rm -f %buildroot%_libdir/libx265_main${i}.so
-        popd
     fi
 done
 
@@ -105,7 +101,7 @@ find %buildroot -name "*.a" -delete
 %check
 for i in 8 10 12; do
     if [ -d ${i}bit ]; then
-        pushd ${i}bit/BUILD
+        pushd ${i}bit
             test/TestBench || :
         popd
     fi
@@ -130,6 +126,9 @@ done
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 3.5-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Wed Apr 21 2021 Anton Farygin <rider@altlinux.ru> 3.5-alt1
 - 3.5
 - 10 and 12bit variants are built by analogy with x265 from the fedora fusion
