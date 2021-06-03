@@ -1,14 +1,12 @@
 %define oname lockfile
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.12.2
-Release: alt1
+Release: alt2
 
 Summary: A platform-independent file locking module
 
-Group: Development/Python
+Group: Development/Python3
 License: MIT
 Url: http://pypi.python.org/pypi/%oname
 
@@ -18,29 +16,10 @@ Source: https://pypi.python.org/packages/source/l/lockfile/lockfile-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-pbr python3-module-html5lib python3-module-pbr rpm-build-python3
-
-#BuildRequires: python-devel python-module-distribute python-module-pbr
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools python3-module-pbr
-%endif
+BuildRequires: python3-module-html5lib python3-module-pbr
 
 %description
-The lockfile module exports a FileLock class which provides a simple API for
-locking files. Unlike the Windows msvcrt.locking function, the Unix
-fcntl.flock, fcntl.lockf and the deprecated posixfile module, the API is
-identical across both Unix (including Linux and Mac) and Windows platforms. The
-lock mechanism relies on the atomic nature of the link (on Unix) and mkdir (on
-Windows) system calls.
-
-%package -n python3-module-%oname
-Summary: A platform-independent file locking module
-Group: Development/Python3
-
-%description -n python3-module-%oname
 The lockfile module exports a FileLock class which provides a simple API for
 locking files. Unlike the Windows msvcrt.locking function, the Unix
 fcntl.flock, fcntl.lockf and the deprecated posixfile module, the API is
@@ -51,41 +30,21 @@ Windows) system calls.
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc ACKS LICENSE README.rst RELEASE-NOTES doc/
-%python_sitelibdir/%oname/
-%python_sitelibdir/%oname-%version-*.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
-%doc ACKS LICENSE README.rst RELEASE-NOTES doc/
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version-*.egg-info
-%endif
 
 %changelog
+* Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.12.2-alt2
+- Drop python2 support.
+
 * Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 0.12.2-alt1
 - new version 0.12.2 (with rpmrb script)
 
