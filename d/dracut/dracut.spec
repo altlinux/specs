@@ -11,7 +11,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 053
+Version: 055
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -19,7 +19,8 @@ Group: System/Base
 
 # The entire source code is GPLv2+
 # except install/* which is LGPLv2+
-License: GPLv2+ and LGPLv2+
+# except util/* which is GPLv2
+License: GPLv2+ and LGPLv2+ and GPLv2
 
 Vcs: https://github.com/dracutdevs/dracut.git
 Url: https://dracut.wiki.kernel.org/
@@ -198,7 +199,6 @@ echo "DRACUT_VERSION=%version-%release" > %buildroot%dracutlibdir/dracut-version
 
 # compatibility symlinks
 mkdir -p %buildroot/sbin
-ln -r -s %buildroot%_sbindir/mkinitrd %buildroot/sbin/mkinitrd
 
 # Cleanup
 rm -fr -- %buildroot%dracutlibdir/modules.d/01fips
@@ -253,14 +253,12 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 
 %files
 %if_enabled documentation
-%doc README.md HACKING.md AUTHORS NEWS.md dracut.html dracut.png dracut.svg
+%doc README.md docs/HACKING.md AUTHORS NEWS.md dracut.html docs/dracut.png docs/dracut.svg
 %endif
 %doc COPYING
 %_sbindir/dracut
 %_datadir/bash-completion/completions/dracut
 %_datadir/bash-completion/completions/lsinitrd
-%_sbindir/mkinitrd
-/sbin/mkinitrd
 %_bindir/lsinitrd
 %dir %dracutlibdir
 %dir %dracutlibdir/modules.d
@@ -271,6 +269,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/dracut-logger.sh
 %dracutlibdir/dracut-initramfs-restore
 %dracutlibdir/dracut-install
+%dracutlibdir/dracut-util
 %dracutlibdir/skipcpio
 %config(noreplace) %_sysconfdir/dracut.conf
 %dracutlibdir/dracut.conf.d/01-dist.conf
@@ -281,7 +280,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %if_enabled documentation
 %_mandir/man8/dracut.8*
 %_mandir/man8/*service.8*
-%_mandir/man8/mkinitrd.8*
 %_mandir/man1/lsinitrd.1*
 %_mandir/man7/dracut.kernel.7*
 %_mandir/man7/dracut.cmdline.7*
@@ -292,17 +290,30 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 
 %dracutlibdir/modules.d/00bash
 %dracutlibdir/modules.d/00systemd
+%dracutlibdir/modules.d/00systemd-network-management
 %ifnarch s390 s390x
 %dracutlibdir/modules.d/00warpclock
 %endif
 #%dracutlibdir/modules.d/01fips
+%dracutlibdir/modules.d/01systemd-ac-power
 %dracutlibdir/modules.d/01systemd-ask-password
 %dracutlibdir/modules.d/01systemd-coredump
+%dracutlibdir/modules.d/01systemd-hostnamed
+%dracutlibdir/modules.d/01systemd-ldconfig
 %dracutlibdir/modules.d/01systemd-initrd
+%dracutlibdir/modules.d/01systemd-journald
 %dracutlibdir/modules.d/01systemd-modules-load
 %dracutlibdir/modules.d/01systemd-repart
+%dracutlibdir/modules.d/01systemd-resolved
+%dracutlibdir/modules.d/01systemd-rfkill
+%dracutlibdir/modules.d/01systemd-sysext
 %dracutlibdir/modules.d/01systemd-sysctl
 %dracutlibdir/modules.d/01systemd-sysusers
+%dracutlibdir/modules.d/01systemd-timedated
+%dracutlibdir/modules.d/01systemd-timesyncd
+%dracutlibdir/modules.d/01systemd-tmpfiles
+%dracutlibdir/modules.d/01systemd-udevd
+%dracutlibdir/modules.d/01systemd-veritysetup
 %dracutlibdir/modules.d/03modsign
 %dracutlibdir/modules.d/03rescue
 %dracutlibdir/modules.d/04watchdog
@@ -317,6 +328,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/45url-lib
 %dracutlibdir/modules.d/50drm
 %dracutlibdir/modules.d/50plymouth
+%dracutlibdir/modules.d/62bluetooth
 %dracutlibdir/modules.d/80lvmmerge
 %dracutlibdir/modules.d/90btrfs
 %dracutlibdir/modules.d/90crypt
@@ -334,6 +346,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/90qemu
 %dracutlibdir/modules.d/91crypt-gpg
 %dracutlibdir/modules.d/91crypt-loop
+%dracutlibdir/modules.d/91tpm2-tss
 %dracutlibdir/modules.d/95debug
 %dracutlibdir/modules.d/95fstab-sys
 %dracutlibdir/modules.d/95lunmask
@@ -390,7 +403,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %prefix/lib/kernel/install.d/50-dracut.install
 
 %files network
-%dracutlibdir/modules.d/02systemd-networkd
+%dracutlibdir/modules.d/01systemd-networkd
 %dracutlibdir/modules.d/35network-manager
 %dracutlibdir/modules.d/35network-legacy
 %dracutlibdir/modules.d/35network-wicked
@@ -450,6 +463,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Mon May 31 2021 Alexey Shabalin <shaba@altlinux.org> 055-alt1
+- 055
+
 * Fri Mar 12 2021 Alexey Shabalin <shaba@altlinux.org> 053-alt1
 - 053
 
