@@ -5,16 +5,16 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.30
-%define nss_version   3.63.0
-%define rust_version  1.50.0
-%define cargo_version 1.50.0
+%define nspr_version  4.31
+%define nss_version   3.66.0
+%define rust_version  1.52.0
+%define cargo_version 1.52.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        88.0.1
+Version:        89.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -494,6 +494,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Jun 03 2021 Alexey Gladkov <legion@altlinux.ru> 89.0-alt1
+- New release (89.0).
+- Security fixes:
+  + CVE-2021-29965: Password Manager on Firefox for Android susceptible to domain spoofing
+  + CVE-2021-29960: Filenames printed from private browsing mode incorrectly retained in preferences
+  + CVE-2021-29961: Firefox UI spoof using `<select>` elements and CSS scaling
+  + CVE-2021-29963: Shared cookies for search suggestions in private browsing mode
+  + CVE-2021-29964: Out of bounds-read when parsing a `WM_COPYDATA` message
+  + CVE-2021-29959: Devices could be re-enabled without additional permission prompt
+  + CVE-2021-29962: No rate-limiting for popups on Firefox for Android
+  + CVE-2021-29967: Memory safety bugs fixed in Firefox 89 and Firefox ESR 78.11
+  + CVE-2021-29966: Memory safety bugs fixed in Firefox 89
+
 * Fri May 07 2021 Alexey Gladkov <legion@altlinux.ru> 88.0.1-alt1
 - New release (88.0.1).
 - Security fixes:
