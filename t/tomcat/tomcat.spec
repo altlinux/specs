@@ -1,17 +1,22 @@
 Group: System/Servers
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
-BuildRequires: rpm-build-java zip
 # END SourceDeps(oneline)
 # fc script use systemctl calls -- gives dependency on systemctl :(
 %add_findreq_skiplist %{_sbindir}/tomcat
 %define _libexecdir %_prefix/libexec
+%define tomcat_user tomcat
+%define tomcat_group tomcat
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
+%define fedora 33
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name tomcat
+%define version 9.0.38
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -42,42 +47,43 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define jspspec 2.3
-%define major_version 9
-%define minor_version 0
-%define micro_version 37
-%define servletspec 4.0
-%define elspec 3.0
+%global jspspec 2.3
+%global major_version 9
+%global minor_version 0
+%global micro_version 38
+%global packdname apache-tomcat-%{version}-src
+%global servletspec 4.0
+%global elspec 3.0
+%global tcuid 53
 # Recommended version is specified in java/org/apache/catalina/core/AprLifecycleListener.java
-%global native_version 1.2.14
+%global native_version 1.2.21
 
 
 # FHS 2.3 compliant tree structure - http://www.pathname.com/fhs/2.3/
-%define basedir %{_var}/lib/%{name}
-%define appdir %{basedir}/webapps
-%define apphomedir %{_datadir}/%{name}
-%define bindir %{apphomedir}/bin
-%define confdir %{_sysconfdir}/%{name}
-%define libdir %{_javadir}/%{name}
-%define logdir %{_var}/log/%{name}
-%define cachedir %{_var}/cache/%{name}
-%define tempdir %{cachedir}/temp
-%define workdir %{cachedir}/work
-%define _systemddir /lib/systemd/system
+%global basedir %{_var}/lib/%{name}
+%global appdir %{basedir}/webapps
+%global apphomedir %{_datadir}/%{name}
+%global bindir %{apphomedir}/bin
+%global confdir %{_sysconfdir}/%{name}
+%global libdir %{_javadir}/%{name}
+%global logdir %{_var}/log/%{name}
+%global cachedir %{_var}/cache/%{name}
+%global tempdir %{cachedir}/temp
+%global workdir %{cachedir}/work
+%global _systemddir /lib/systemd/system
 
-%define tomcat_user tomcat
-%define tomcat_group tomcat
+# Fedora doesn't seem to have this macro, so we define it if it doesn't exist
+%{!?_mavendepmapfragdir: %global _mavendepmapfragdir /usr/share/maven-metadata}
 
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1
+Release:       alt1_1jpp11
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
-License: Apache-2.0
+License:       Apache-2.0
 URL:           http://tomcat.apache.org/
-# https://downloads.apache.org/tomcat/tomcat-9/v%version/src/apache-%name-%version-src.tar.gz
-Source0: %name-%version.tar.gz
+Source0:       http://www.apache.org/dist/tomcat/tomcat-%{major_version}/v%{version}/src/%{packdname}.tar.gz
 Source1:       %{name}-%{major_version}.%{minor_version}.conf
 Source3:       %{name}-%{major_version}.%{minor_version}.sysconfig
 Source4:       %{name}-%{major_version}.%{minor_version}.wrapper
@@ -94,9 +100,8 @@ Source32:      tomcat-named.service
 Patch0:        %{name}-%{major_version}.%{minor_version}-bootstrap-MANIFEST.MF.patch
 Patch1:        %{name}-%{major_version}.%{minor_version}-tomcat-users-webapp.patch
 Patch2:        %{name}-build.patch
-# remove this on ecj 4.12+ upgrade
-Patch3: %name-9.0.37-Revert-JDT-4.12-has-a-constant-for-Java-12.patch
-Patch4: %name-9.0.37-rhbz-1857043.patch
+Patch3:        %{name}-%{major_version}.%{minor_version}-catalina-policy.patch
+Patch4:        rhbz-1857043.patch
 
 BuildArch:     noarch
 
@@ -105,19 +110,25 @@ BuildRequires: ecj >= 1:4.10
 BuildRequires: findutils
 BuildRequires: apache-commons-daemon
 BuildRequires: tomcat-taglibs-standard
-BuildRequires: java-devel >= 1.8.0
+%if 0%{?fedora} >= 27 || 0%{?rhel} > 7
+# add_maven_depmap is deprecated, using javapackages-local for now
+# See https://fedora-java.github.io/howto/latest/#_add_maven_depmap_macro
 BuildRequires: javapackages-local
+%endif
 BuildRequires: geronimo-jaxrpc
 BuildRequires: geronimo-saaj
 BuildRequires: aqute-bnd
 BuildRequires: aqute-bndlib
 BuildRequires: wsdl4j
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 
 Requires:      apache-commons-daemon
-Requires:      jpackage-utils
+Requires:      javapackages-tools
 Requires:      procps
-Requires:      %{name}-lib = %{epoch}:%{version}-%{release}
+Requires:      tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-4.0-api
+%if 0%{?fedora} || 0%{?rhel} > 7
 Requires:    tomcat-native >= %{native_version}
+%endif
 Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 
 # added after log4j sub-package was removed
@@ -217,7 +228,7 @@ Requires: tomcat-taglibs-standard >= 0:1.1
 The ROOT and examples web applications for Apache Tomcat.
 
 %prep
-%setup
+%setup -q -n %{packdname}
 # remove pre-built binaries and windows files
 find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "*.gz" -o \
    -name "*.jar" -o -name "*.war" -o -name "*.zip" \) -delete
@@ -225,7 +236,7 @@ find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "
 %patch0 -p0
 %patch1 -p0
 %patch2 -p0
-%patch3 -p1
+%patch3 -p0
 %patch4 -p0
 
 ln -s $(build-classpath tomcat-taglibs-standard/taglibs-standard-impl) webapps/examples/WEB-INF/lib/jstl.jar
@@ -240,7 +251,7 @@ export OPT_JAR_LIST="xalan-j2-serializer"
    touch HACK
 
    # who needs a build.properties file anyway
-   %{ant} -Dbase.path="." \
+   %{ant} -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbase.path="." \
       -Dbuild.compiler="modern" \
       -Dcommons-daemon.jar="$(build-classpath apache-commons-daemon)" \
       -Dcommons-daemon.native.src.tgz="HACK" \
@@ -257,6 +268,7 @@ export OPT_JAR_LIST="xalan-j2-serializer"
       -Dbndlibg.jar="$(build-classpath aqute-bnd/aQute.libg)" \
       -Dbndannotation.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
       -Dslf4j-api.jar="$(build-classpath slf4j/slf4j-api)" \
+      -Dosgi-cmpn.jar="$(build-classpath osgi-compendium/osgi.cmpn)" \
       -Dversion="%{version}" \
       -Dversion.build="%{micro_version}" \
       deploy dist-source
@@ -265,7 +277,7 @@ export OPT_JAR_LIST="xalan-j2-serializer"
     rm output/build/bin/commons-daemon.jar output/build/lib/ecj.jar
 pushd output/dist/src/webapps/docs/appdev/sample/src
 mkdir -p ../web/WEB-INF/classes
-%{javac} -cp ../../../../../../../../output/build/lib/servlet-api.jar -d ../web/WEB-INF/classes mypackage/Hello.java
+%{javac} -target 1.8 -source 1.8 -cp ../../../../../../../../output/build/lib/servlet-api.jar -d ../web/WEB-INF/classes mypackage/Hello.java
 pushd ../web
 %{jar} cf ../../../../../../../../output/build/webapps/docs/appdev/sample/sample.war *
 popd
@@ -487,9 +499,11 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 
 
 %pre
-%_sbindir/groupadd -r -f %tomcat_user 2>/dev/null ||:
-%_sbindir/useradd -c "Apache Tomcat" -g %tomcat_group \
-    -s /sbin/nologin -r -d %{apphomedir} tomcat 2>/dev/null ||:
+getent group %tomcat_group >/dev/null || %{_sbindir}/groupadd -f -r %tomcat_group
+if ! getent passwd %tomcat_user >/dev/null ; then
+    %{_sbindir}/useradd -r -g %tomcat_group -d %{apphomedir} -s /sbin/nologin -c "Apache Tomcat" %tomcat_user
+fi
+exit 0
 
 %post
 %post_service %{name}
@@ -570,9 +584,6 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %dir %{libdir}
 %{libdir}/*.jar
 %{_javadir}/*.jar
-%exclude %_javadir/%name-el-api.jar
-%exclude %_javadir/%name-servlet-api.jar
-%exclude %_javadir/%name-jsp-api.jar
 %{bindir}/tomcat-juli.jar
 %{_mavenpomdir}/JPP.%{name}-annotations-api.pom
 %{_mavenpomdir}/JPP.%{name}-catalina-ha.pom
@@ -593,6 +604,10 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %exclude %{_javadir}/%{name}-servlet-%{servletspec}*.jar
 %exclude %{_javadir}/%{name}-el-%{elspec}-api.jar
 %exclude %{_javadir}/%{name}-jsp-%{jspspec}*.jar
+# Don't package files twice
+    %exclude %_javadir/%name-el-api.jar
+%exclude %_javadir/%name-servlet-api.jar
+%exclude %_javadir/%name-jsp-api.jar
 
 %files servlet-%{servletspec}-api -f output/dist/src/res/maven/.mfiles-tomcat-servlet-api
 %_altdir/servlet_tomcat-servlet-4.0-api
@@ -618,6 +633,13 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %attr(0660,tomcat,tomcat) %verify(not size md5 mtime) %{logdir}/catalina.out
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 1:9.0.38-alt1_1jpp11
+- new version
+- merged slev@:
+  46306c0 spec: Don't package files twice
+  48af392 spec: Fix the License tag
+  dbe4df1 ALT: Don't allocate static uid/gid
+
 * Tue Sep 15 2020 Stanislav Levin <slev@altlinux.org> 1:9.0.37-alt1
 - 9.0.13 -> 9.0.37.
 
