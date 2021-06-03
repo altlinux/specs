@@ -7,7 +7,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           guava
 Version:        25.0
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Google Core Libraries for Java
 # Most of the code is under ASL 2.0
 # Few classes are under CC0, grep for creativecommons
@@ -21,7 +21,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -51,6 +50,9 @@ guava-testlib provides additional functionality for conveninent unit testing
 %setup -q
 
 find . -name '*.jar' -delete
+
+# drop unnecessary dependency on parent POM
+%pom_remove_parent
 
 %pom_disable_module guava-gwt
 %pom_disable_module guava-tests
@@ -107,6 +109,9 @@ find -name '*.java' | xargs sed -ri \
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 25.0-alt1_9jpp8
+- jvm8 update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 25.0-alt1_6jpp8
 - fc update
 
