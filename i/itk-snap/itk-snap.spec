@@ -4,7 +4,7 @@
 
 Name: itk-snap
 Version: 3.8.0
-Release: alt4
+Release: alt5
 Summary: Software application used to segment structures in 3D medical images
 Group: Sciences/Medicine
 License: GPLv3
@@ -14,6 +14,8 @@ ExclusiveArch: %ix86 x86_64
 
 # https://git.code.sf.net/p/itk-snap/src
 Source: %name-%version.tar
+
+Source1: itk-snap.desktop
 
 Patch1: %name-alt-no-git.patch
 Patch2: %name-alt-build.patch
@@ -97,6 +99,13 @@ rm -rf Common/JSon
 %install
 %cmakeinstall_std
 
+# install desktop file and icon
+install -d %buildroot%_desktopdir
+install -m644 %SOURCE1 %buildroot%_desktopdir/
+
+install -d %buildroot%_datadir/%name
+install -m644 GUI/Qt/Resources/logo_square.png %buildroot%_datadir/%name/
+
 %files
 %doc COPYING
 %doc README.md ReleaseNotes.md
@@ -105,8 +114,14 @@ rm -rf Common/JSon
 %_bindir/itksnap-wt
 %_libexecdir/snap-%version/ITK-SNAP
 %_libdir/lib*.so*
+%_desktopdir/*.desktop
+%dir %_datadir/%name
+%_datadir/%name/logo_square.png
 
 %changelog
+* Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt5
+- Added desktop file.
+
 * Fri May 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt4
 - Rebuilt with VTK-9.0.1.
 

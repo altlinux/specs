@@ -1,5 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
+# TODO: remove later this fix for documentation
+%define _cmake__builddir BUILD
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -7,7 +10,7 @@
 %define ver 9.0
 Name: %oname
 Version: %ver.1
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -18,6 +21,14 @@ Source: %name-%version.tar
 
 # git submodules
 Source1: %name-%version-ThirdParty-vtkm-vtkvtkm-vtk-m.tar
+
+# Remote modules
+Source100: %name-%version-MomentInvariants.tar
+Source101: %name-%version-PoissonReconstruction.tar
+Source102: %name-%version-Powercrust.tar
+Source103: %name-%version-SignedTensor.tar
+Source104: %name-%version-SplineDrivenImageSlicer.tar
+Source105: %name-%version-vtkDICOM.tar
 
 # https://gitlab.kitware.com/vtk/vtk/-/issues/18033
 Patch1: %oname-%version-alt-freetype-2.10.3.patch
@@ -45,6 +56,23 @@ Patch9: %oname-%version-fedora-AllValues.patch
 
 # Proj 5 support - backport https://gitlab.kitware.com/vtk/vtk/-/merge_requests/7731
 Patch10: %oname-%version-fedora-proj5.patch
+
+# https://gitlab.kitware.com/vtk/vtk/-/merge_requests/7997
+Patch11: %oname-%version-upstream-duplicate-openslide.patch
+
+Patch12: %oname-%version-upstream-horizontal-mouse-scroll.patch
+
+Patch13: %oname-%version-alt-dont-fetch-remote-modules.patch
+
+Patch14: %oname-%version-alt-PoissonReconstruction-build.patch
+
+Patch15: %oname-%version-alt-fix-linking.patch
+
+Patch16: %oname-%version-alt-SplineDrivenImageSlicer-install-headers.patch
+
+Patch17: %oname-%version-upstream-follow-camera-direction.patch
+
+Patch18: %oname-%version-upstream-doubleclick-command.patch
 
 Requires: lib%oname%ver = %EVR
 
@@ -248,7 +276,7 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 This package contains VTK data files for tests/examples.
 
 %prep
-%setup -a1
+%setup -a1 -a100 -a101 -a102 -a103 -a104 -a105
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -259,6 +287,22 @@ This package contains VTK data files for tests/examples.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+
+pushd Remote/PoissonReconstruction
+%patch14 -p1
+popd
+
+%patch15 -p1
+
+pushd Remote/SplineDrivenImageSlicer
+%patch16 -p1
+popd
+
+%patch17 -p1
+%patch18 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
 
@@ -280,6 +324,7 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 %add_optflags -D__USE_LARGEFILE64 -DH5_HAVE_SIGSETJMP -D__USE_POSIX
 %add_optflags -DH5_HAVE_SETJMP_H
 
+# remote module flags go last
 %cmake \
 	-DBUILD_SHARED_LIBS=ON \
 	-DVTK_BUILD_DOCUMENTATION=ON \
@@ -333,11 +378,18 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DVTK_USE_OGGTHEORA_ENCODER=ON \
 	-DVTK_USE_X=ON \
 	-DVTK_WRAP_PYTHON=ON \
+	-DVTK_MODULE_ENABLE_VTK_ParallelMomentInvariants:STRING=NO \
+	-DVTK_MODULE_ENABLE_VTK_MomentInvariants:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_PoissonReconstruction:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_Powercrust:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_SignedTensor:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_SplineDrivenImageSlicer:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_vtkDICOM:STRING=YES \
 	%nil
 
-export LD_LIBRARY_PATH=$PWD/BUILD/%_lib
+export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %cmake_build
-%make DoxygenDoc -C BUILD
+%cmake_build -t DoxygenDoc
 
 %install
 export VTK_DATA_ROOT=%_datadir/%oname-%ver
@@ -345,7 +397,7 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 
 # Install data
 mkdir -p %buildroot%_datadir/%oname-%ver
-cp -alL BUILD/ExternalData/* %buildroot%_datadir/%oname-%ver
+cp -alL %_cmake__builddir/ExternalData/* %buildroot%_datadir/%oname-%ver
 
 %files
 %doc Copyright.txt README.md
@@ -391,6 +443,11 @@ cp -alL BUILD/ExternalData/* %buildroot%_datadir/%oname-%ver
 %_datadir/%oname-%ver
 
 %changelog
+* Thu May 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt2
+- Built remote modules.
+- Fixed 'duplicate target OpenSlide::OpenSlide' error using patch from upstream.
+- Fixed build with new cmake macros.
+
 * Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt1
 - Updated to upstream version 9.0.1.
 
