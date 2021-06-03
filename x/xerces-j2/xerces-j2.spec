@@ -16,7 +16,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          xerces-j2
 Version:       2.12.0
-Release:       alt1_4jpp8
+Release:       alt1_9jpp8
 Summary:       Java XML parser
 # Most of the source is ASL 2.0
 # W3C licensed files:
@@ -46,6 +46,9 @@ Patch0:        %{name}-build.patch
 # Patch the manifest so that it includes OSGi stuff
 Patch1:        %{name}-manifest.patch
 
+# Patch various classes that need to implement getContentDocument method
+Patch2:        %{name}-getcontentdocument.patch
+
 BuildArch:     noarch
 
 BuildRequires: javapackages-local
@@ -54,6 +57,7 @@ BuildRequires: apache-parent
 BuildRequires: xalan-j2 >= 2.7.1
 BuildRequires: xml-commons-apis >= 1.4.01
 BuildRequires: xml-commons-resolver >= 1.2
+BuildRequires: java-1.8.0-openjdk-devel
 
 Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
@@ -127,6 +131,7 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %setup -q -n xerces-%{cvs_version}
 %patch0 -p0 -b .orig
 %patch1 -p0 -b .orig
+%patch2 -p0 -b .orig
 
 # Copy the custom ant tasks into place
 mkdir -p tools/org/apache/xerces/util
@@ -139,20 +144,24 @@ find -name '*.jar' -exec rm -f '{}' \;
 
 sed -i 's/\r//' LICENSE README NOTICE
 
+# Disable javadoc linting
+sed -i -e "s|additionalparam='|additionalparam='-Xdoclint:none |" build.xml
+
 # legacy aliases for compatability
 %mvn_alias : xerces:xerces xerces:xmlParserAPIs apache:xerces-j2
 %mvn_file : %{name} jaxp_parser_impl
 
 %build
+export JAVA_HOME=%{_jvmdir}/java-1.8.0
 pushd tools
 
 # Build custom ant tasks
-javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
-jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
+$JAVA_HOME/bin/javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
+$JAVA_HOME/bin/jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
 
 # Build custom doc taglets
-javac -classpath /usr/lib/jvm/java/lib/tools.jar org/apache/xerces/util/*Taglet.java
-jar cf bin/xerces2taglets.jar org/apache/xerces/util/*Taglet.class
+$JAVA_HOME/bin/javac -classpath $JAVA_HOME/lib/tools.jar org/apache/xerces/util/*Taglet.java
+$JAVA_HOME/bin/jar cf bin/xerces2taglets.jar org/apache/xerces/util/*Taglet.class
 
 ln -sf $(build-classpath xalan-j2-serializer) serializer.jar
 ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
@@ -161,8 +170,8 @@ ln -sf $(build-classpath xerces-j2) x.jar
 popd
 
 # Build everything
-export ANT_OPTS="-Xmx256m -Djava.endorsed.dirs=$(pwd)/tools -Djava.awt.headless=true -Dbuild.sysclasspath=first -Ddisconnected=true"
-ant -Djavac.source=1.5 -Djavac.target=1.5 \
+export ANT_OPTS="-Xmx512m -Djava.awt.headless=true -Dbuild.sysclasspath=first -Ddisconnected=true"
+ant -Djavac.source=1.6 -Djavac.target=1.6 \
     -Dbuild.compiler=modern \
     clean jars javadocs
 
@@ -211,6 +220,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_9jpp8
+- jvm8 update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.12.0-alt1_4jpp8
 - fc update
 
