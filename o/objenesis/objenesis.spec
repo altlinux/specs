@@ -36,8 +36,8 @@ BuildRequires: jpackage-1.8-compat
 
 Summary:        A library for instantiating Java objects
 Name:           objenesis
-Version:        2.6
-Release:        alt1_6jpp8
+Version:        3.1
+Release:        alt1_4jpp8
 License:        ASL 2.0
 URL:            http://objenesis.org/
 Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
@@ -47,6 +47,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 # xmvn-builddep misses this:
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 
@@ -90,10 +91,14 @@ This package contains the API documentation for %{name}.
 %pom_xpath_remove pom:addMavenDescriptor
 
 %pom_remove_plugin :maven-timestamp-plugin
-%pom_remove_plugin :maven-license-plugin
 %pom_xpath_remove "pom:dependency[pom:scope='test']" tck
-
 %pom_xpath_remove pom:build/pom:extensions
+
+# Fix javadoc generation on java 11
+%pom_xpath_inject pom:pluginManagement/pom:plugins "<plugin>
+<artifactId>maven-javadoc-plugin</artifactId>
+<configuration><source>1.8</source></configuration>
+</plugin>" 
 
 %build
 # tests are skipped because of missing dependency spring-osgi-test
@@ -111,6 +116,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:3.1-alt1_4jpp8
+- new version, use jvm8
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_6jpp8
 - fc update
 
