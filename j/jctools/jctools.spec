@@ -3,29 +3,30 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 2.1.2
-%global namedreltag %nil
-%global namedversion %{version}%{?namedreltag}
-
 Name:          jctools
-Version:       2.1.2
-Release:       alt1_6jpp8
+Version:       3.1.0
+Release:       alt1_1jpp8
 Summary:       Java Concurrency Tools for the JVM
 License:       ASL 2.0
 URL:           http://jctools.github.io/JCTools/
-Source0:       https://github.com/JCTools/JCTools/archive/v%{namedversion}/%{name}-%{namedversion}.tar.gz
+Source0:       https://github.com/JCTools/JCTools/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.github.javaparser:javaparser-core)
+BuildRequires:  mvn(com.github.javaparser:javaparser-core) >= 3.14.16
 BuildRequires:  mvn(com.google.guava:guava-testlib)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-all)
-BuildRequires:  mvn(org.ow2.asm:asm-util)
 
 BuildArch:     noarch
+
+# Parent pom package obsoleted in F34
+Obsoletes: %{name}-parent < 3.1.0-1
+# Can't ship these modules any longer due to usage of Unsafe.defineClass
+# not available in JDK 11, see https://github.com/JCTools/JCTools/issues/254
+Obsoletes: %{name}-channels < 3.1.0-1
+Obsoletes: %{name}-experimental < 3.1.0-1
 Source44: import.info
 
 %description
@@ -40,39 +41,17 @@ A. Single Writer Map/Set implementations
 A. Low contention stats counters
 A. Executor
 
-%package channels
-Group: Development/Java
-Summary:       JCTools Channel implementations
-
-%description channels
-Channel implementations for the
-Java Concurrency Tools Library.
-
-%package experimental
-Group: Development/Java
-Summary:       JCTools Experimental implementations
-
-%description experimental
-Experimental implementations for the
-Java Concurrency Tools Library.
-
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
-%package parent
-Group: Development/Java
-Summary:       JCTools Parent POM
-
-%description parent
-JCTools Parent POM.
-
 %prep
-%setup -q -n JCTools-%{namedversion}
+%setup -q -n JCTools-%{version}
+
 # Cleanup
 find . -name '*.class' -print -delete
 find . -name '*.jar' -print -delete
@@ -82,13 +61,14 @@ rm jctools-core/src/test/java/org/jctools/queues/MpqSanityTestMpscCompound.java
 rm jctools-core/src/test/java/org/jctools/queues/atomic/AtomicMpqSanityTestMpscCompound.java
 rm jctools-core/src/test/java/org/jctools/maps/NonBlockingHashMapTest.java
 
-%pom_xpath_set pom:project/pom:version %{namedversion}
-%pom_xpath_set -r pom:parent/pom:version %{namedversion} %{name}-{build,core,channels,experimental}
+# Fix up version
+%pom_xpath_set pom:project/pom:version %{version}
+%pom_xpath_set -r pom:parent/pom:version %{version} %{name}-{build,core,channels,experimental}
 
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :coveralls-maven-plugin
-%pom_remove_plugin :jacoco-maven-plugin
+%pom_remove_plugin :coveralls-maven-plugin %{name}-core
+%pom_remove_plugin :jacoco-maven-plugin %{name}-core
 %pom_remove_plugin :maven-source-plugin %{name}-core
 %pom_remove_plugin :maven-javadoc-plugin %{name}-core
 
@@ -96,33 +76,17 @@ rm jctools-core/src/test/java/org/jctools/maps/NonBlockingHashMapTest.java
 %pom_disable_module %{name}-benchmarks
 %pom_disable_module %{name}-concurrency-test
 
-# Modern asm deps
-%pom_change_dep ":asm-all" ":asm-util" jctools-{channels,experimental}
-
-# Add OSGi support
-for mod in core experimental; do
- %pom_xpath_set "pom:project/pom:packaging" bundle %{name}-${mod}
- %pom_add_plugin org.apache.felix:maven-bundle-plugin:2.3.7 %{name}-${mod} '
- <extensions>true</extensions>
- <executions>
-   <execution>
-     <id>bundle-manifest</id>
-     <phase>process-classes</phase>
-     <goals>
-       <goal>manifest</goal>
-     </goals>
-   </execution>
- </executions>
- <configuration>
-  <excludeDependencies>true</excludeDependencies>
- </configuration>'
-done
+# Can't build these modules due to use of Unsafe.defineClass which is not present
+# in JDK 11, see https://github.com/JCTools/JCTools/issues/254
+%pom_disable_module %{name}-channels
+%pom_disable_module %{name}-experimental
 
 # No need to package internal build tools
+%mvn_package :jctools-parent __noinstall
 %mvn_package :jctools-build __noinstall
 
 %build
-%mvn_build -s -f -- -Dmaven.test.skip.exec=true
+%mvn_build -s -f
 
 %install
 %mvn_install
@@ -131,17 +95,13 @@ done
 %doc README.md
 %doc --no-dereference LICENSE
 
-%files channels -f .mfiles-%{name}-channels
-
-%files experimental -f .mfiles-%{name}-experimental
-
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
-%files parent -f .mfiles-%{name}-parent
-%doc --no-dereference LICENSE
-
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_1jpp8
+- new version
+
 * Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_6jpp8
 - new version
 
