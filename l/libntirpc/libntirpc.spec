@@ -1,7 +1,7 @@
 %define major 3
 Name: libntirpc
 Version: %major.3
-Release: alt1
+Release: alt1.1
 
 Summary: New Transport Independent RPC Library
 
@@ -51,10 +51,10 @@ Development headers and auxiliary files for developing with %name.
 %build
 %cmake -DOVERRIDE_INSTALL_PREFIX=%prefix -DTIRPC_EPOLL=1 -DUSE_GSS=ON "-GUnix Makefiles"
 
-%make_build -C BUILD
+%make_build -C "%_cmake__builddir"
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std -C "%_cmake__builddir"
 
 rm -f %buildroot%_includedir/ntirpc/misc/winpthreads.h
 ln -s %name.so.%version %buildroot%_libdir/%name.so.%major
@@ -71,6 +71,9 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.%major
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Thu Jun 03 2021 Arseny Maslennikov <arseny@altlinux.org> 3.3-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
 - new version 3.3 (with rpmrb script)
 

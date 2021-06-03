@@ -1,6 +1,6 @@
 Name: adwaita-qt
 Version: 1.1.4
-Release: alt1
+Release: alt1.1
 Summary: Adwaita theme for Qt-based applications
 License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
@@ -38,25 +38,19 @@ Adwaita theme variant for applications utilizing Qt5
 %setup
 
 %build
-mkdir -p "%_target_platform-qt4"
-pushd "%_target_platform-qt4"
-%cmake -DUSE_QT4=true ../..
+%define _cmake__builddir %_target_platform-qt4
+%cmake -DUSE_QT4=true
 %cmake_build
-popd
 
-mkdir -p "%_target_platform-qt5"
-pushd "%_target_platform-qt5"
-%cmake ../..
+%define _cmake__builddir %_target_platform-qt5
+%cmake
 %cmake_build
-popd
 
 %install
-pushd "%_target_platform-qt4"
-%cmakeinstall_std
-popd
-pushd "%_target_platform-qt5"
-%cmakeinstall_std
-popd
+%define _cmake__builddir %_target_platform-qt4
+%cmake_install
+%define _cmake__builddir %_target_platform-qt5
+%cmake_install
 
 %files -n adwaita-qt4
 %doc LICENSE.LGPL2 README.md
@@ -69,6 +63,9 @@ popd
 %files
 
 %changelog
+* Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.4-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Thu Jul 16 2020 Anton Midyukov <antohami@altlinux.org> 1.1.4-alt1
 - new version 1.1.4
 

@@ -2,7 +2,7 @@
 
 Name: vogl
 Version: 1.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenGL capture / playback debugger.
 License: MIT
@@ -84,7 +84,8 @@ find . -type f | xargs sed -i -e "s:@LIBDIR@:%_libdir:g"
 export CC=clang
 export CXX=clang++
 
-%cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_X64=On
+%cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_X64=On \
+    %_cmake_skip_rpath
 
 %cmake_build
 
@@ -119,5 +120,8 @@ install  libvogltrace64.so           %buildroot%_libdir
 %_bindir/libbacktrace_test64
 
 %changelog
+* Thu Jun 03 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0-alt1.1
+- NMU: fixed FTBFS.
+
 * Tue Oct 23 2018 Alexey Melyashinsky <bip@altlinux.org> 1.0-alt1
 - Initial build for ALT
