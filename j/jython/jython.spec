@@ -2,16 +2,15 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-#BuildRequires(pre): j2se-jdbc = 1.4.2
+
 BuildRequires: jline
 # recommends
 Requires: jline libreadline-java
 AutoReq: yes, nopython
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -22,9 +21,12 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %global scm_tag            v2.7.1
 
+# Turn off the brp-python-bytecompile script
+# We generate JVM bytecode instead
+
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt3_8jpp8
+Release:                   alt3_14jpp11
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -33,6 +35,7 @@ URL:                       http://www.jython.org/
 # Those wheels are used for the ensurepip module and are bundled with upstream
 # source tarball. We remove them and depend on packages that bring wheels built
 # in Fedora. When turned off (set to "with"), bundled wheels are used.
+# Note: With setuptools 45+ in Fedora 33+, we cannot longer use this on Python 2
 %bcond_with rpmwheels
 
 # Use the included fetch-jython.sh script to generate the source drop
@@ -61,6 +64,7 @@ Requires:                  antlr32-java
 Requires:                  apache-commons-compress
 Requires:                  bouncycastle
 Requires:                  bouncycastle-pkix
+Requires:                  glassfish-jaxb-api
 Requires:                  guava
 Requires:                  objectweb-asm
 Requires:                  jctools >= 2.0.2
@@ -84,6 +88,7 @@ BuildRequires:             antlr32-tool
 BuildRequires:             apache-commons-compress
 BuildRequires:             bouncycastle
 BuildRequires:             bouncycastle-pkix
+BuildRequires:             glassfish-jaxb-api
 BuildRequires:             guava
 BuildRequires:             objectweb-asm
 BuildRequires:             jctools >= 2.0.2
@@ -100,14 +105,13 @@ BuildRequires:             netty >= 4.1.13
 BuildRequires:             xerces-j2
 
 %if %{with rpmwheels}
-BuildRequires: python-setuptools-wheel
+BuildRequires: python-setuptools-wheel < 45
 BuildRequires: python-pip-wheel
-Requires: python-setuptools-wheel
+Requires: python-setuptools-wheel < 45
 Requires: python-pip-wheel
 %else
-#Provides: bundled(python2-pip) = 9.0.1
-#Provides: bundled(python2-setuptools) = 28.8.0
-AutoProv: yes,nopython
+Provides: bundled(python2-pip) = 9.0.1
+Provides: bundled(python2-setuptools) = 28.8.0
 %endif
 
 BuildArch:                 noarch
@@ -134,7 +138,6 @@ mix the two languages both during development and in shipping products.
 %package javadoc
 Group: Development/Java
 Summary:           Javadoc for %{name}
-# Obsoletes/Provides added in F25
 BuildArch: noarch
 
 %description javadoc
@@ -179,12 +182,12 @@ sed -i -e 's/CharMatcher\.ascii()/CharMatcher.ASCII/' \
 %build
 # Symlink build-time libs
 build-jar-repository -p -s extlibs \
-  antlr32/antlr antlr32/antlr-runtime stringtemplate antlr \
+  antlr32/antlr antlr32/antlr-runtime stringtemplate antlr jaxb-api \
   jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi icu4j/icu4j \
   glassfish-servlet-api guava objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
   commons-compress junit hamcrest/core
 
-ant \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djython.java.version=1.8 \
   -Djython.dev.jar=jython.jar \
   -Dhas.repositories.connection=false \
   javatest javadoc
@@ -194,14 +197,14 @@ find dist -type f -name '*.py' | xargs sed -i "s:#!\s*/usr.*::"
 
 pushd maven
 # generate maven pom
-ant -Dproject.version=%{version} install
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dproject.version=%{version} install
 popd
 
 # Symlink run-time libs
 rm dist/javalib/*.jar
 build-jar-repository -p -s dist/javalib antlr32/antlr-runtime-3.2 \
   objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava icu4j/icu4j \
-  jffi jffi-native jnr-constants jnr-ffi/jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi \
+  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi jaxb-api \
   netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-resolver netty/netty-transport \
   jctools/jctools-core apache-commons-compress bcprov bcpkix xerces-j2
 
@@ -279,6 +282,9 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.1-alt3_14jpp11
+- java11 build
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt3_8jpp8
 - rebuild with new jnr-ffi
 
