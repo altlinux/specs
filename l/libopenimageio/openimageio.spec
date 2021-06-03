@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.2.15.0
-Release:        alt1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -55,7 +55,7 @@ BuildRequires:  libopencv-devel
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
 # rebuilt.
-BuildRequires:  libopencolorio-devel
+BuildRequires:  libopencolorio2.0-devel
 
 
 %description
@@ -200,6 +200,9 @@ cp -a %_cmake__builddir/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.15.0-alt2
+- Rebuilt with opencolorio-2.0.1.
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.15.0-alt1
 - Updated to upstream version 2.2.15.0.
 

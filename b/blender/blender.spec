@@ -8,9 +8,11 @@
 %def_without embree
 %endif
 
+%def_with jemalloc
+
 Name: blender
-Version: 2.92.0
-Release: alt1.1
+Version: 2.93.0
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -57,7 +59,7 @@ BuildRequires: libopenCOLLADA-devel >= 0-alt3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenimageio-devel
-BuildRequires: libopencolorio-devel
+BuildRequires: libopencolorio2.0-devel
 BuildRequires: openexr-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libglog-devel libgflags-devel eigen3-devel
@@ -71,9 +73,15 @@ BuildRequires: openvdb-devel libblosc-devel
 BuildRequires: llvm-devel
 BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel libgmpxx-devel
+BuildRequires: libharu-devel
+BuildRequires: libpulseaudio-devel
 
 %if_with embree
 BuildRequires: embree-devel
+%endif
+
+%if_with jemalloc
+BuildRequires: libjemalloc-devel
 %endif
 
 %if_with docs
@@ -286,6 +294,10 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.0-alt1
+- Updated to upstream version 2.93.0.
+- Built with jemalloc, libharu and pulseaudio.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.92.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

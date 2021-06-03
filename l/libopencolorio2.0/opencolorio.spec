@@ -5,10 +5,11 @@
 # TODO: build docs, build and run tests
 
 %define oname opencolorio
+%define soname 2.0
 
-Name:           lib%oname
-Version:        1.1.1
-Release:        alt5
+Name:           lib%oname%soname
+Version:        2.0.1
+Release:        alt1
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -18,18 +19,8 @@ URL:            https://opencolorio.org/
 # https://github.com/imageworks/OpenColorIO.git
 Source:         %name-%version.tar
 
-# patches from Fedora
-
-# Work with system libraries instead of bundled.
-
-# Fix build against yaml-cpp 0.6.0+
-# This patch is fine for our case (building against system yaml-cpp)
-# but probably a bit too simple-minded to upstream as-is. See
-# https://github.com/imageworks/OpenColorIO/issues/517
-Patch1:         ocio-1.1.0-yamlcpp060.patch
-Patch2:         ocio-glext_h.patch
-
-Patch3:         ocio-1.1.1-upstream-typo-fix.patch
+Patch1: opencolorio-alt-install.patch
+Patch2: opencolorio-alt-armh-multiple-definition.patch
 
 # Utilities
 BuildRequires:  cmake gcc-c++
@@ -49,6 +40,10 @@ BuildRequires:  libX11-devel libXmu-devel libXi-devel
 BuildRequires:  libfreeglut-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  zlib-devel
+BuildRequires: libexpat-devel
+BuildRequires: pystring-devel
+BuildRequires: pybind11-devel
+BuildRequires: python3-devel
 
 #######################
 # Unbundled libraries #
@@ -58,73 +53,65 @@ BuildRequires:  liblcms2-devel
 BuildRequires:  libyaml-cpp-devel
 BuildRequires:  boost-devel
 
-%add_findprov_skiplist %_pkgconfigdir/*.pc
-
 %description
 OCIO enables color transforms and image display to be handled in a consistent
 manner across multiple graphics applications. Unlike other color management
 solutions, OCIO is geared towards motion-picture post production, with an
 emphasis on visual effects and animation color pipelines.
 
-
-%package -n %oname-tools
-Summary:        Command line tools for %name
+%package -n %oname%soname-tools
+Summary:        Command line tools for %oname
 Group:          Other
-Requires:       %name = %EVR
-Conflicts:      opencolorio2.0-tools
+Requires:       lib%oname%soname = %EVR
 
-%description -n %oname-tools
+%description -n %oname%soname-tools
 Command line tools for %oname.
 
-
 %package devel
-Summary:        Development libraries and headers for %name
+Summary:        Development libraries and headers for %oname
 Group:          Development/Other
-Requires:       %name = %EVR
-Conflicts:      libopencolorio2.0-devel
+Requires:       lib%oname%soname = %EVR
 
 %description devel
 Development libraries and headers for %oname.
+
+%package -n python3-module-%oname
+Summary:        %oname python3 module
+Group:          Development/Python3
+
+%description -n python3-module-%oname
+%oname python3 module.
 
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-
-# Remove bundled libraries
-rm -f ext/lcms*
-rm -f ext/tinyxml*
-rm -f ext/yaml*
 
 %ifarch %e2k
-# lcc: Lut3DOp.cpp is too sloppy code for my -Werror!
-sed -i 's, -Werror,,' src/core/CMakeLists.txt src/pyglue/CMakeLists.txt
 %add_optflags -std=c++11
 %endif
 
 %build
-%cmake_insource \
+%cmake \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DOCIO_BUILD_PYTHON:BOOL=ON \
 	-DOCIO_BUILD_STATIC=OFF \
 	-DOCIO_BUILD_DOCS=OFF \
-	-DOCIO_BUILD_PYGLUE=OFF \
 	-DOCIO_BUILD_TESTS=OFF \
-	-DUSE_EXTERNAL_YAML=TRUE \
-	-DUSE_EXTERNAL_TINYXML=TRUE \
-	-DUSE_EXTERNAL_LCMS=TRUE \
+	-DOCIO_WARNING_AS_ERROR:BOOL=OFF \
 %ifnarch x86_64 %e2k
 	-DOCIO_USE_SSE=OFF \
 %endif
 %ifnarch %e2k
+	-DOCIO_USE_GLVND:BOOL=ON \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %endif
 	%nil
 
-# LD_LIBRARY_PATH is needed for proper doc generation
-LD_LIBRARY_PATH=$(pwd)/src/core %make_build
+%cmake_build
 
 %install
-LD_LIBRARY_PATH=$(pwd)/src/core %makeinstall_std
+%cmakeinstall_std
 
 # Generate man pages
 mkdir -p %buildroot%_man1dir
@@ -138,31 +125,28 @@ for i in %buildroot%_bindir/* ; do
 	fi
 done
 
-# Fix location of cmake files.
-mkdir -p %buildroot%_datadir/cmake/Modules
-find %buildroot -name "*.cmake" -exec mv {} %buildroot%_datadir/cmake/Modules/ \;
+%files -n lib%oname%soname
+%doc LICENSE THIRD-PARTY.md
+%doc CHANGELOG.md CONTRIBUTING.md COMMITTERS.md GOVERNANCE.md PROCESS.md README.md SECURITY.md
+%_libdir/*.so.%{soname}
+%_libdir/*.so.%{soname}.*
 
-%files
-%doc LICENSE
-%doc ChangeLog README.md
-%_libdir/*.so.*
-%dir %_datadir/ocio
-%_datadir/ocio/setup_ocio.sh
-
-%files -n %oname-tools
+%files -n %oname%soname-tools
 %_bindir/*
 %_man1dir/*
 
 %files devel
-%_datadir/cmake/Modules/*
 %_includedir/OpenColorIO/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%files -n python3-module-%oname
+%python3_sitelibdir/*.so
+
 %changelog
-* Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt5
-- Rebuilt without openimageio support.
-- Added conflicts to openimageio2.0 devel and tools packages.
+* Tue Jun 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt1
+- Updated to upstream version 2.0.1.
+- Built without openimageio support.
 
 * Tue Apr 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt4
 - Rebuilt with openimageio support.

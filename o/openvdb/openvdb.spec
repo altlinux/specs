@@ -7,8 +7,8 @@
 %define soname 8.0
 
 Name: openvdb
-Version: 8.0.0
-Release: alt2
+Version: 8.0.1
+Release: alt1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -36,7 +36,7 @@ BuildRequires: pkgconfig(tbb) >= 3.0
 BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(zlib) > 1.2.7
 BuildRequires: pkgconfig(python3)
-BuildRequires: python3-module-numpy python3-module-numpy-testing libnumpy-py3-devel
+BuildRequires: python3-module-numpy libnumpy-py3-devel
 
 %description
 OpenVDB is an Academy Award-winning open-source C++ library comprising a novel
@@ -109,10 +109,6 @@ sed -i \
 %install
 %cmakeinstall_std
 
-# Let RPM pick up HTML documents in the files section
-mv %buildroot%_prefix/doc/html .
-rm -fr %buildroot%_datadir/doc
-
 %files
 %_bindir/vdb_print
 
@@ -126,12 +122,15 @@ rm -fr %buildroot%_datadir/doc
 %python3_sitelibdir/py%{name}.so
 
 %files devel
-%doc html
+%_defaultdocdir/OpenVDB
 %_includedir/*
 %_libdir/lib%{name}.so
 %_libdir/cmake/*
 
 %changelog
+* Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.1-alt1
+- Updated to upstream version 8.0.1.
+
 * Mon May 24 2021 Ivan A. Melnikov <iv@altlinux.org> 8.0.0-alt2
 - Fix build on mipsel:
   + link with -latomic;

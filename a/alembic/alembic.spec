@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define soname 1.7
+%define soname 1.8
 
 Name: alembic
-Version: 1.7.16
+Version: 1.8.1
 Release: alt1
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
@@ -14,11 +14,8 @@ URL: http://alembic.io/
 Source: %name-%version.tar
 
 # Patches from Gentoo
-Patch1: alembic-1.7.11-gentoo-0001-Fix-to-find-boost-with-cmake-3.11.patch
-Patch2: alembic-1.7.11-gentoo-0002-Find-IlmBase-by-setting-a-proper-ILMBASE_ROOT-value.patch
-Patch3: alembic-1.7.11-gentoo-0003-Fix-env-var-for-renderman.patch
-Patch4: alembic-1.7.11-gentoo-0004-Fix-a-compile-issue-with-const.patch
-Patch5: alembic-1.7.11-gentoo-0005-Fix-install-locations.patch
+Patch1: alembic-1.7.11-gentoo-0002-Find-IlmBase-by-setting-a-proper-ILMBASE_ROOT-value.patch
+Patch2: alembic-1.8.0-gentoo-0001-set-correct-libdir.patch
 
 BuildRequires: boost-devel
 BuildRequires: cmake
@@ -61,20 +58,23 @@ applications that use %{name}.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && \
 	mv -f ACKNOWLEDGEMENTS.txt.conv ACKNOWLEDGEMENTS.txt
 
 %build
 %cmake \
+	%_cmake_skip_rpath \
 	-DALEMBIC_LIB_INSTALL_DIR=%_libdir \
+	-DALEMBIC_BUILD_LIBS:BOOL=ON \
 	-DALEMBIC_SHARED_LIBS=ON \
+	-DDOCS_PATH:BOOL=OFF \
+	-DUSE_ARNOLD:BOOL=OFF \
 	-DUSE_BINARIES=ON \
 	-DUSE_HDF5=ON \
 	-DUSE_EXAMPLES=ON \
+	-DUSE_MAYA:BOOL=OFF \
+	-DUSE_PRMAN:BOOL=OFF \
 	-DUSE_PYALEMBIC=OFF \
 	-DUSE_STATIC_BOOST=OFF \
 	-DUSE_STATIC_HDF5=OFF \
@@ -107,6 +107,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1
+- Updated to upstream version 1.8.1.
+
 * Fri Nov 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.16-alt1
 - Updated to upstream version 1.7.16.
 
