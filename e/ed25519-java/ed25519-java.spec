@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          ed25519-java
 Version:       0.3.0
-Release:       alt1_3jpp8
+Release:       alt1_8jpp8
 Summary:       Implementation of EdDSA (Ed25519) in Java
 License:       CC0
 URL:           https://github.com/str4d/ed25519-java
@@ -56,7 +56,7 @@ This package contains javadoc for %{name}.
 %mvn_file net.i2p.crypto:eddsa %{name} eddsa
 
 %build
-%mvn_build
+%mvn_build -- -Dsource=1.8
 
 %install
 %mvn_install
@@ -69,6 +69,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_8jpp8
+- jvm8 update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_3jpp8
 - new version
 
