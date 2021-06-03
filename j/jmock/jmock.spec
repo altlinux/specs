@@ -1,34 +1,44 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 2.8.2
-%global namedreltag %{nil}
-%global namedversion %{version}%{?namedreltag}
+Name:           jmock
+Version:        2.12.0
+Release:        alt1_2jpp11
+Summary:        Java library for testing code with mock objects
+License:        BSD
 
-Name:          jmock
-Version:       2.8.2
-Release:       alt4_10jpp8
-Summary:       Java library for testing code with mock objects
-License:       BSD
-Url:           http://www.jmock.org/
-Source0:       https://github.com/jmock-developers/jmock-library/archive/%{namedversion}.tar.gz
+URL:            http://www.jmock.org/
+Source0:        https://github.com/jmock-developers/jmock-library/archive/%{version}/%{name}-%{version}.tar.gz
+# Adapt to junit 4.13
+# See https://github.com/jmock-developers/jmock-library/pull/200
+Patch0:         %{name}-junit4.13.patch
 
-BuildRequires: maven-local
-BuildRequires: mvn(cglib:cglib)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires: mvn(org.beanshell:bsh)
-BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires: mvn(org.hamcrest:hamcrest-library)
-BuildRequires: mvn(org.objenesis:objenesis)
-BuildRequires: mvn(org.ow2.asm:asm)
-BuildRequires: mvn(xmlunit:xmlunit)
+BuildArch:      noarch
 
-BuildArch:     noarch
+BuildRequires:  maven-local
+BuildRequires:  mvn(cglib:cglib)
+BuildRequires:  mvn(com.google.auto.service:auto-service)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(javax.xml.ws:jaxws-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.bytebuddy:byte-buddy)
+BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:  mvn(org.hamcrest:hamcrest)
+BuildRequires:  mvn(org.hamcrest:hamcrest-library)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-params)
+BuildRequires:  mvn(org.junit.platform:junit-platform-launcher)
+BuildRequires:  mvn(org.objenesis:objenesis)
+BuildRequires:  mvn(org.ow2.asm:asm)
+
+# required for some unit tests
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit-platform)
 Source44: import.info
 
 %description
@@ -43,113 +53,136 @@ The jMock library:
   * plugs into your favorite test framework
   * is easy to extend.
 
+
 %package example
 Group: Development/Java
-Summary:       jMock Examples
+Summary:        jMock Examples
 
 %description example
 jMock Examples.
 
+
+%package imposters
+Group: Development/Java
+Summary:        jMock imposters
+
+%description imposters
+jMock imposters.
+
+
 %package junit3
 Group: Development/Java
-Summary:       jMock JUnit 3 Integration
+Summary:        jMock JUnit 3 Integration
 
 %description junit3
 jMock JUnit 3 Integration.
 
+
 %package junit4
 Group: Development/Java
-Summary:       jMock JUnit 4 Integration
+Summary:        jMock JUnit 4 Integration
 
 %description junit4
 jMock JUnit 4 Integration.
 
+
+%package junit5
+Group: Development/Java
+Summary:        jMock JUnit 5 Integration
+
+%description junit5
+jMock JUnit 5 Integration.
+
+
 %package legacy
 Group: Development/Java
-Summary:       jMock Legacy Plugins
+Summary:        jMock Legacy Plugins
 
 %description legacy
 Plugins that make it easier to use jMock with legacy code.
 
+
 %package parent
 Group: Development/Java
-Summary:       jMock Parent POM
+Summary:        jMock Parent POM
 
 %description parent
 jMock Parent POM.
 
+
 %package testjar
 Group: Development/Java
-Summary:       jMock Test Jar
+Summary:        jMock Test Jar
 
 %description testjar
 Source for JAR files used in jMock Core tests.
 
+
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
+
 %prep
-%setup -q -n %{name}-library-%{namedversion}
+%setup -q -n %{name}-library-%{version}
+%patch0 -p1
+
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
 
-%pom_remove_plugin :nexus-staging-maven-plugin
+# remove maven plugins that are not required for RPM builds
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
-
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin -r :versions-maven-plugin
 %pom_remove_plugin :maven-gpg-plugin testjar
 
-%pom_change_dep cglib: :cglib
-%pom_change_dep cglib: :cglib %{name}
+# use correct maven artifact for @javax.annotations.Nullable
+%pom_change_dep com.google.code.findbugs:annotations com.google.code.findbugs:jsr305 testjar
 
-sed -i "s|%classpath|$(build-classpath objectweb-asm/asm)|" %{name}/pom.xml
+# don't install imposters-tests package
+%mvn_package org.jmock:jmock-imposters-tests __noinstall
 
-%pom_xpath_remove pom:build %{name}-example
-%pom_xpath_inject "pom:project" "
-<build>
-  <sourceDirectory>src/main</sourceDirectory>
-</build>" %{name}-example
-# package org.jmock.integration.junit{3,4} do not exist
-%pom_add_dep org.%{name}:%{name}-junit3:'${project.version}' %{name}-example
-%pom_add_dep org.%{name}:%{name}-junit4:'${project.version}' %{name}-example
-
-%mvn_alias org.%{name}:%{name} :%{name}-script
-%mvn_package org.%{name}:%{name}::tests: %{name}
-%mvn_package org.%{name}:%{name}-junit3::tests: %{name}-junit3
-# AssertionError: Expected: (null or an empty string) but: was "the Mockery is not thread-safe: use a Synchroniser to ensure thread safety"
-rm jmock-legacy/src/test/java/org/jmock/test/acceptance/MockeryFinalizationAcceptanceTests.java
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
 
-%files -f .mfiles-%{name}
+
+%files           -f .mfiles-%{name}
 %doc README*
 %doc --no-dereference LICENSE.txt
 
-%files example -f .mfiles-%{name}-example
-%files junit3 -f .mfiles-%{name}-junit3
-%files junit4 -f .mfiles-%{name}-junit4
-%files legacy -f .mfiles-%{name}-legacy
+%files example   -f .mfiles-%{name}-example
+%files imposters -f .mfiles-%{name}-imposters
+%files junit3    -f .mfiles-%{name}-junit3
+%files junit4    -f .mfiles-%{name}-junit4
+%files junit5    -f .mfiles-%{name}-junit5
+%files legacy    -f .mfiles-%{name}-legacy
 
-%files parent -f .mfiles-%{name}-parent
+%files parent    -f .mfiles-%{name}-parent
 %doc --no-dereference LICENSE.txt
 
-%files testjar -f .mfiles-%{name}-testjar
+%files testjar   -f .mfiles-%{name}-testjar
 %doc --no-dereference LICENSE.txt
 
-%files javadoc -f .mfiles-javadoc
+%files javadoc   -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
+
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_2jpp11
+- new version
+
 * Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt4_10jpp8
 - fixed build
 
