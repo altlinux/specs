@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without openimageio
+%def_with openimageio
 
 # TODO: build docs, build and run tests
 
@@ -9,7 +9,7 @@
 
 Name:           lib%oname%soname
 Version:        2.0.1
-Release:        alt1
+Release:        alt2
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -144,6 +144,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt2
+- Rebuilt with openimageio support.
+
 * Tue Jun 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt1
 - Updated to upstream version 2.0.1.
 - Built without openimageio support.
