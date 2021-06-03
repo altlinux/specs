@@ -9,12 +9,14 @@
 
 Name: libwebp
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Library and tools for the WebP graphics format
 License: BSD-3-Clause
 Group: System/Libraries
 Url: http://webmproject.org/
+
+Vcs: https://chromium.googlesource.com/webm/libwebp
 Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%name-%version.tar.gz
 
 BuildRequires: libgomp-devel libjpeg-devel libpng-devel libtiff-devel
@@ -70,6 +72,11 @@ images more efficiently.
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
+%ifarch %e2k
+# this trick forces WEBP to actually use the SIMD code
+# without it the SIMD code is compiled but never used
+export CFLAGS="%optflags -DEMSCRIPTEN"
+%endif
 %configure --disable-static \
 	%{subst_enable libwebpmux} \
 	%{subst_enable libwebpdemux} \
@@ -127,6 +134,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Wed Jun 02 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt2
+- ilyakurdyukov@: enabled use of SIMD code on Elbrus
+
 * Sat Jan 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
