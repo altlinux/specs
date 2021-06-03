@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20201110
+%define orig_timestamp 20210216
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 14
+Version: 15
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,20 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Jun 03 2021 L.A. Kostis <lakostis@altlinux.ru> 2:15-alt1.20210216
+- Sync with Debian 3.20210216.1:
+  + New upstream microcode datafile 20210216
+    + Mitigates an issue on Skylake Server (H0/M0/U0), Xeon-D 21xx,
+      and Cascade Lake Server (B0/B1) when using an active JTAG
+      agent like In Target Probe (ITP), Direct Connect Interface
+      (DCI) or a Baseboard Management Controller (BMC) to take the
+      CPU JTAG/TAP out of reset and then returning it to reset.
+    + This issue is related to the INTEL-SA-00381 mitigation.
+    + Updated Microcodes:
+      sig 0x00050654, pf_mask 0xb7, 2020-12-31, rev 0x2006a0a, size 36864
+      sig 0x00050656, pf_mask 0xbf, 2020-12-31, rev 0x4003006, size 53248
+      sig 0x00050657, pf_mask 0xbf, 2020-12-31, rev 0x5003006, size 53248
+
 * Tue Nov 17 2020 L.A. Kostis <lakostis@altlinux.ru> 2:14-alt1.20201110
 - Sync with Debian 3.20201110.1:
   + New upstream microcode datafile 20201110:
