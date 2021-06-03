@@ -1,15 +1,18 @@
+
+
 %define oname libftgl
+%define _unpackaged_files_terminate_build 1
+
 Name: %{oname}2
-Version: 2.2.0
-Release: alt11.svn20110521
+Version: 2.4.0
+Release: alt1
 Summary: OpenGL frontend to Freetype 2
 
 Group: System/Libraries
 License: LGPLv2
 Url: http://ftgl.wiki.sourceforge.net/
-# https://ftgl.svn.sourceforge.net/svnroot/ftgl/trunk/
+# https://github.com/frankheckenbach/ftgl
 Source0: %name-%version.tar
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Automatically added by buildreq on Sun Aug 23 2009
 BuildRequires: ImageMagick-tools cppunit-devel doxygen gcc-c++
@@ -30,6 +33,7 @@ FTGL uses the Freetype (www.freetype.org) font library to open and 'decode'
 the fonts. It then takes that output and stores it in a format most
 efficient for OpenGL rendering.
 
+
 %package -n %oname-devel
 Summary: Development files for %name
 Group: Development/C++
@@ -44,6 +48,8 @@ Conflicts: libftgl213-devel
 The %oname-devel package contains libraries and header files for
 developing applications that use %oname.
 
+
+
 %package docs
 Summary: Documentation for %name
 Group: Documentation
@@ -52,15 +58,13 @@ BuildArch: noarch
 %description docs
 This package contains documentation files for %oname.
 
+
 %prep
 %setup
-
-ln -s %_datadir/libtool/libltdl/aclocal.m4 ./
 
 %build
 touch msvc/Makefile.in
 %autoreconf
-#./autogen.sh
 %configure \
   --enable-shared \
   --disable-static \
@@ -70,15 +74,13 @@ touch msvc/Makefile.in
   --with-glut-lib=%_libdir \
   --with-x
 
-sed -i 's/~rc[0-9]*//' ftgl.pc
-
-%make_build all
+%make_build
 
 %install
 %makeinstall_std
 find %buildroot -name '*.la' -exec rm -f {} ';'
 
-install -p -m644 src/*.h %buildroot%_includedir/FTGL
+# install -p -m644 src/*.h %buildroot%_includedir/FTGL
 
 # Doc fixes
 mkdir -p __doc/html
@@ -98,6 +100,10 @@ rm -rf %buildroot%_datadir/doc
 %doc __doc/*
 
 %changelog
+* Wed Jun 02 2021 Ivan A. Melnikov <iv@altlinux.org> 2.4.0-alt1
+- 2.4.0
+- new upstream, https://github.com/frankheckenbach/ftgl
+
 * Wed Oct 04 2017 Michael Shigorin <mike@altlinux.org> 2.2.0-alt11.svn20110521
 - reverted last change, not needed anymore
 
