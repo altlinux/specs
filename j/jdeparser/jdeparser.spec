@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:             jdeparser
 Version:          2.0.3
-Release:          alt1_2jpp8
+Release:          alt1_5jpp8
 Summary:          Source generator library for Java
 License:          ASL 2.0
 URL:              https://github.com/jdeparser/jdeparser2
@@ -18,6 +18,7 @@ URL:              https://github.com/jdeparser/jdeparser2
 Source0:          %{url}/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 BuildArch:        noarch
 
+BuildRequires:    java-1.8.0-openjdk-devel
 BuildRequires:    maven-local
 BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
@@ -41,6 +42,8 @@ This package contains the API documentation for %{name}.
 %setup -q -n jdeparser2-%{namedversion}
 
 %build
+# Use Java 8 as sun.reflect.Reflection is removed in Java 11.
+export JAVA_HOME=%{_jvmdir}/java-1.8.0
 %mvn_build
 
 %install
@@ -53,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_5jpp8
+- jvm8 update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_2jpp8
 - new version
 
