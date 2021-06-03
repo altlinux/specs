@@ -20,14 +20,14 @@ BuildRequires: jpackage-1.8-compat
 %global subproj sitetools
 
 Name:           %{parent}-%{subproj}
-Version:        1.9.1
+Version:        1.9.2
 Release:        alt1_3jpp8
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 URL:            http://maven.apache.org/doxia/
 BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia-sitetools/%{version}/doxia-%{subproj}-%{version}-source-release.zip
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/doxia/doxia-sitetools/%{version}/doxia-%{subproj}-%{version}-source-release.zip
 
 Patch0:         0001-Port-to-plexus-utils-3.0.24.patch
 Patch1:         0002-Remove-dependency-on-velocity-tools.patch
@@ -137,6 +137,9 @@ rm -r doxia-doc-renderer/src/main/java/org/apache/maven/doxia/docrenderer/pdf/fo
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.2-alt1_3jpp8
+- new version, use jvm8
+
 * Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.1-alt1_3jpp8
 - non-bootstrap build
 
