@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with jp_minimal
 
 Name:           freemarker
-Version:        2.3.29
+Version:        2.3.30
 Release:        alt1_2jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
@@ -36,6 +36,7 @@ Patch7:         javacc-7.patch
 
 BuildArch:      noarch
 
+BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: ant
 BuildRequires: apache-parent
 BuildRequires: apache-commons-logging
@@ -97,7 +98,7 @@ sed -i 's/cachepath conf="IDE"/cachepath conf="javadoc"/' build.xml
 sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jython2.5,build.jsp2.1" />' ivy.xml
 
 # Disable Java 8 javadoc linting
-sed -i '/<javadoc/a\ additionalparam="-Xdoclint:none"' build.xml
+sed -i '/<javadoc/a\ additionalparam="-Xdoclint:none" encoding="UTF-8"' build.xml
 
 # Drop unnecessary dep on avalon
 sed -i -e '/avalon-logkit/d' ivy.xml
@@ -113,10 +114,14 @@ sed -i -e '/dom4j/d' -e '/saxpath/d' ivy.xml
 rm src/main/java/freemarker/ext/xml/_Dom4jNavigator.java
 %endif
 
+# Don't import all the logger implementations in the OSGi metadata
+sed -i -e '/^Import-Package/s/:/: !org.apache.log4j, /' osgi.bnd
+
 %mvn_file org.%{name}:%{name} %{name}
 
 %build
 export LANG=C.UTF-8
+export JAVA_HOME=%{_jvmdir}/java-1.8.0
 ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
 
 %install
@@ -132,6 +137,9 @@ export LANG=C.UTF-8
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt1_2jpp8
+- new version, use jvm8
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.29-alt1_2jpp8
 - new version
 
