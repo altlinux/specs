@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: lm_sensors3
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 
 Summary: Hardware Health Monitoring Tools
@@ -241,6 +241,9 @@ fi
 %endif #static
 
 %changelog
+* Thu Jun 03 2021 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt1
+- new version 3.6.0.
+
 * Sat Apr 06 2019 L.A. Kostis <lakostis@altlinux.ru> 3.5.0-alt1
 - new version 3.5.0
 - update URL
