@@ -16,8 +16,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without osgi
 
 Name:           objectweb-asm
-Version:        7.0
-Release:        alt1_4jpp8
+Version:        8.0.1
+Release:        alt1_1jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -26,17 +26,26 @@ BuildArch:      noarch
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 Source1:        parent.pom
-Source2:        http://repo1.maven.org/maven2/org/ow2/asm/asm/%{version}/asm-%{version}.pom
-Source3:        http://repo1.maven.org/maven2/org/ow2/asm/asm-analysis/%{version}/asm-analysis-%{version}.pom
-Source4:        http://repo1.maven.org/maven2/org/ow2/asm/asm-commons/%{version}/asm-commons-%{version}.pom
-Source5:        http://repo1.maven.org/maven2/org/ow2/asm/asm-test/%{version}/asm-test-%{version}.pom
-Source6:        http://repo1.maven.org/maven2/org/ow2/asm/asm-tree/%{version}/asm-tree-%{version}.pom
-Source7:        http://repo1.maven.org/maven2/org/ow2/asm/asm-util/%{version}/asm-util-%{version}.pom
+Source2:        https://repo1.maven.org/maven2/org/ow2/asm/asm/%{version}/asm-%{version}.pom
+Source3:        https://repo1.maven.org/maven2/org/ow2/asm/asm-analysis/%{version}/asm-analysis-%{version}.pom
+Source4:        https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/%{version}/asm-commons-%{version}.pom
+Source5:        https://repo1.maven.org/maven2/org/ow2/asm/asm-test/%{version}/asm-test-%{version}.pom
+Source6:        https://repo1.maven.org/maven2/org/ow2/asm/asm-tree/%{version}/asm-tree-%{version}.pom
+Source7:        https://repo1.maven.org/maven2/org/ow2/asm/asm-util/%{version}/asm-util-%{version}.pom
 # We still want to create an "all" uberjar, so this is a custom pom to generate it
 # TODO: Fix other packages to no longer depend on "asm-all" so we can drop this
 Source8:        asm-all.pom
 # The source contains binary jars that cannot be verified for licensing and could be proprietary
 Source9:       generate-tarball.sh
+
+# Revert upstream change https://gitlab.ow2.org/asm/asm/-/commit/2a58bc9bcf2ea6eee03e973d1df4cf9312573c9d
+# To restore some deprecations that were deleted and broke the API
+Patch0: 0001-Revert-upstream-change-2a58bc9.patch
+
+# Move a statement that can throw a CompileException inside a try-catch block
+# for that exception.  Upstream has fixed this another way with a large code
+# refactor that seems inappropriate to backport.
+Patch1: 0002-Catch-CompileException-in-test.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -79,6 +88,9 @@ This package provides %{summary}.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+
 
 # A custom parent pom to aggregate the build
 cp -p %{SOURCE1} pom.xml
@@ -116,12 +128,15 @@ for pom in asm asm-analysis asm-commons asm-test asm-tree asm-util; do
 done
 
 # Disable tests that use unlicensed class files
-sed -i -e '/testReadAndWriteWithComputeMaxsAndLargeSubroutines/i@org.junit.jupiter.api.Disabled("missing class file")' \
+sed -i -e '/testToByteArray_computeMaxs_largeSubroutines/i@org.junit.jupiter.api.Disabled("missing class file")' \
   asm/src/test/java/org/objectweb/asm/ClassWriterTest.java
-sed -i -e '/testMergeWithJsrReachableFromTwoDifferentPaths/i@org.junit.jupiter.api.Disabled("missing class file")' \
-  asm-analysis/src/test/java/org/objectweb/asm/tree/analysis/BasicInterpreterTest.java
-sed -i -e '/testSortLocalVariablesAndInstantiate()/i@org.junit.jupiter.api.Disabled("missing class file")' \
+sed -i -e '/testAnalyze_mergeWithJsrReachableFromTwoDifferentPaths/i@org.junit.jupiter.api.Disabled("missing class file")' \
+  asm-analysis/src/test/java/org/objectweb/asm/tree/analysis/AnalyzerWithBasicInterpreterTest.java
+sed -i -e '/testAllMethods_issue317586()/i@org.junit.jupiter.api.Disabled("missing class file")' \
   asm-commons/src/test/java/org/objectweb/asm/commons/LocalVariablesSorterTest.java
+
+# Remove failing test SerialVersionUidAdderTest due to missing class files
+rm asm-commons/src/test/java/org/objectweb/asm/commons/SerialVersionUidAdderTest.java
 
 # Insert asm-all pom
 mkdir -p asm-all
@@ -164,6 +179,9 @@ popd
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:8.0.1-alt1_1jpp8
+- new version, use jvm8
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:7.0-alt1_4jpp8
 - fc update
 
