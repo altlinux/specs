@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -45,15 +45,15 @@ BuildRequires: jpackage-1.8-compat
 #
 
 %bcond_with tests
-%bcond_without javadoc
+%bcond_with javadoc
 %bcond_without junit5
 
 %global ant_home %{_datadir}/ant
 
 Name:           ant
-Version:        1.10.6
-Release:        alt1_2jpp8
 Epoch:          0
+Version:        1.10.8
+Release:        alt1_4jpp11
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
 Summary(fr):    Outil de compilation pour java
@@ -63,6 +63,10 @@ Source0:        https://www.apache.org/dist/ant/source/apache-ant-%{version}-src
 Source2:        apache-ant-1.8.ant.conf
 # manpage
 Source3:        ant.asciidoc
+
+# temporarily disable AntClassLoaderTest.testSignedJar()
+# https://bugzilla.redhat.com/show_bug.cgi?id=1869017
+Patch0:         00-disable-jarsigner-test.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant >= 1.10.2
@@ -439,6 +443,7 @@ Javadoc pour %{name}.
 
 %prep
 %setup -q -n apache-ant-%{version}
+%patch0 -p1
 
 # Fix class-path-in-manifest rpmlint warning
 %pom_xpath_remove 'attribute[@name="Class-Path"]' build.xml
@@ -484,7 +489,11 @@ mv LICENSE.utf8 LICENSE
 %pom_xpath_inject 'target[@name="javadocs"]/javadoc/packageset' '<exclude name="**/junitlauncher"/>' build.xml
 %endif
 
+# fix javamail dependency coordinates (remove once javamail is updated)
+%pom_change_dep -r com.sun.mail:jakarta.mail javax.mail:mail src/etc/poms/ant-javamail/pom.xml
+
 %build
+# -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
 %{ant} jars test-jar
 
 %if %with javadoc
@@ -746,6 +755,9 @@ LC_ALL=C.UTF-8 %{ant} test
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.8-alt1_4jpp11
+- new version
+
 * Fri May 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.6-alt1_2jpp8
 - new version
 
