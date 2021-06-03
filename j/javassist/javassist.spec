@@ -5,18 +5,18 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 3.18.1
+%define version 3.21.0
 %global upstream_version rel_%(sed s/\\\\./_/g <<<"%{version}")_ga
 
 Name:           javassist
-Version:        3.18.1
-Release:        alt1_12jpp8
+Version:        3.21.0
+Release:        alt1_3jpp8
 Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
-URL:            http://www.csg.is.titech.ac.jp/~chiba/%{name}/
+URL:            https://www.javassist.org/
 BuildArch:      noarch
 
-Source0:        http://github.com/jboss-%{name}/%{name}/archive/%{upstream_version}.tar.gz
+Source0:        https://github.com/jboss-%{name}/%{name}/archive/%{upstream_version}.tar.gz
 
 Patch0:         0001-Remove-usage-of-junit.awtui-and-junit.swingui.patch
 
@@ -72,6 +72,9 @@ mkdir runtest
 %doc License.html
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.21.0-alt1_3jpp8
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_12jpp8
 - fc update
 
