@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           relaxngDatatype
 Version:        2011.1
-Release:        alt1_12jpp8
+Release:        alt1_15jpp11
 Summary:        RELAX NG Datatype API
 License:        BSD
 URL:            https://github.com/java-schema-utilities/relaxng-datatype-java
@@ -48,8 +48,11 @@ cp -p %{SOURCE1} .
 # For compatibility
 %mvn_alias "com.github.relaxng:relaxngDatatype" "relaxngDatatype:relaxngDatatype"
 
+# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -62,6 +65,9 @@ cp -p %{SOURCE1} .
 %doc copying.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2011.1-alt1_15jpp11
+- update
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2011.1-alt1_12jpp8
 - new version
 
