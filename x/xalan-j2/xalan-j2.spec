@@ -42,7 +42,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           xalan-j2
 Version:        2.7.2
-Release:        alt1_2jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
@@ -73,6 +73,7 @@ BuildRequires:  sed
 BuildRequires:  glassfish-servlet-api
 BuildRequires:  xerces-j2 >= 0:2.7.1
 BuildRequires:  xml-commons-apis >= 0:1.3
+BuildRequires:  java-1.8.0-openjdk-devel
 
 Requires:       xerces-j2
 
@@ -152,6 +153,7 @@ sed -i 's/\r//' KEYS LICENSE.txt NOTICE.txt xdocs/style/resources/script.js \
 %mvn_package :xsltc xsltc
 
 %build
+export JAVA_HOME=%{_jvmdir}/java-1.8.0-openjdk
 pushd lib
 ln -sf $(build-classpath java_cup-runtime) runtime.jar
 ln -sf $(build-classpath bcel) BCEL.jar
@@ -165,7 +167,7 @@ ln -sf $(build-classpath ant) ant.jar
 popd
 export CLASSPATH=$(build-classpath glassfish-servlet-api)
 
-ant \
+ant -Dcompiler.source=1.8 -Dcompiler.target=1.8 \
   -Djava.awt.headless=true \
   -Dapi.j2se=%{_javadocdir}/java \
   -Dbuild.xalan-interpretive.jar=build/xalan-interpretive.jar \
@@ -227,6 +229,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %{_datadir}/%{name}
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_6jpp8
+- jvm8 update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_2jpp8
 - new version
 
