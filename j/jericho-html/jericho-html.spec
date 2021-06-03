@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:       Java library allowing analysis and manipulation of parts of an HTML document
 Name:          jericho-html
 Version:       3.3
-Release:       alt1_16jpp8
+Release:       alt1_19jpp11
 License:       EPL-1.0 or LGPLv2+
 URL:           http://jericho.htmlparser.net/
 Source0:       http://downloads.sf.net/jerichohtml/%{name}-%{version}.zip
@@ -48,13 +48,14 @@ find \( -name '*.java' -o -name '*.bat' -o -name '*.txt' -o -name '*.jsp' -o -na
 
 # fix non ASCII chars
 for s in src/java/net/htmlparser/jericho/{Renderer,StreamEncodingDetector}.java ; do
-    native2ascii -encoding UTF8 ${s} ${s}
+    iconv -f WINDOWS-1252 -t UTF-8 ${s} > ${s}.new
+    mv ${s}.new ${s}
 done
 
 %build
 export CLASSPATH=$(build-classpath slf4j/api commons-logging log4j)
 
-%javac -Xlint -g:none -d classes -encoding UTF-8 \
+%javac -source 1.8 -target 1.8 -Xlint -g:none -d classes -encoding UTF-8 \
     src/java/net/htmlparser/jericho/*.java \
     src/java/net/htmlparser/jericho/nodoc/*.java
 %jar -cf dist/%{name}.jar -C classes .
@@ -62,13 +63,13 @@ export CLASSPATH=$(build-classpath slf4j/api commons-logging log4j)
 %javadoc -encoding UTF-8 -classpath classes:$CLASSPATH -quiet -Xdoclint:none \
     -windowtitle "Jericho HTML Parser %version" -use -d docs/javadoc \
     -subpackages net.htmlparser.jericho -exclude net.htmlparser.jericho.nodoc \
-    -noqualifier net.htmlparser.jericho -group "Core Package" \
+    -noqualifier net.htmlparser.jericho -sourcepath src/java -group "Core Package" \
     src/java/net/htmlparser/jericho/*.java \
     src/java/net/htmlparser/jericho/nodoc/*.java
 
 cp -p docs/src/*.* docs/javadoc
 
-%javac -Xlint -g -deprecation -classpath dist/%{name}.jar \
+%javac -source 1.8 -target 1.8 -Xlint -g -deprecation -classpath dist/%{name}.jar \
     -d samples/console/classes samples/console/src/*.java
 
 %install
@@ -97,6 +98,9 @@ export CLASSPATH=classes:samples/console/classes:$(build-classpath junit hamcres
 %doc --no-dereference licence-epl-1.0.html licence-lgpl-2.1.txt licence.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_19jpp11
+- update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_16jpp8
 - fc update
 
