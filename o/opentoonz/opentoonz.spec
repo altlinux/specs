@@ -6,7 +6,7 @@
 
 Name: opentoonz
 Version: 1.5.0
-Release: alt1
+Release: alt2
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -29,6 +29,7 @@ Patch1: %name-1.4.0-alt-libraries-path.patch
 Patch2: %name-1.4.0-alt-data-location.patch
 Patch3: opensuse-0001-Fix-linker-errors-on-Linux.patch
 Patch4: opensuse-0001-Use-the-system-mypaint-brushes.patch
+Patch5: %name-1.5.0-alt-docs-sphinx-compat.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -87,6 +88,10 @@ This package contains documentation and samples for OpenToonz.
 %patch3 -p1
 %patch4 -p1
 
+pushd additional/docs
+%patch5 -p1
+popd
+
 # prevent using unbundled libraries
 # don't unbundle libtiff because it's patched. See: https://github.com/opentoonz/opentoonz/blob/master/doc/how_to_build_linux.md#building-libtiff
 rm -rf thirdparty/{boost,glew,glut,LibJPEG,libjpeg-turbo64,libmypaint,libpng-1.6.21,libusb,Lz4,lzo/2.03,openblas,quicktime,superlu,zlib-1.2.8}
@@ -107,6 +112,7 @@ popd
 # build opentoonz
 pushd toonz/sources
 %cmake \
+	%_cmake_skip_rpath \
 	-DTIFF_LIBRARY="%_builddir/%name-%version/thirdparty/tiff-4.0.3/libtiff/.libs/libtiff.a" \
 	%nil
 
@@ -116,7 +122,10 @@ popd
 # build opentoonz plugins
 for i in plugins/{blur,geom,multiplugin} ; do
 pushd $i
-%cmake
+%cmake \
+	%_cmake_skip_rpath \
+	%nil
+
 %cmake_build
 popd
 done
@@ -135,7 +144,7 @@ popd
 # install opentoonz plugins
 for i in plugins/{blur,geom,multiplugin} ; do
 pushd $i
-install BUILD/*.plugin %buildroot%_libdir/%name/stuff/plugins/
+install %_cmake__builddir/*.plugin %buildroot%_libdir/%name/stuff/plugins/
 popd
 done
 
@@ -153,6 +162,9 @@ done
 %doc additional/sample
 
 %changelog
+* Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt2
+- Fixed build with new sphinx.
+
 * Tue Apr 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt1
 - Updated to upstream version 1.5.0.
 
