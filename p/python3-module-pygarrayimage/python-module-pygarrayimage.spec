@@ -1,38 +1,19 @@
 %define oname pygarrayimage
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0
-Release: alt2.2
+Release: alt3
 Summary: Allow numpy arrays as source of texture data for pyglet
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD
 URL: http://pypi.python.org/pypi/pygarrayimage/
 Source: %oname-%version.tar.gz
 BuildArch: noarch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
 %description
-pygarrayimage allows display of Python objects supporting the array
-interface as OpenGL textures without a copy. The OpenGL texture handling
-is done using pyglet.
-
-In other words, this allows fast transfer of data from numpy arrays (or
-any other data source supporting the array interface) to the video card.
-
-%package -n python3-module-%oname
-Summary: Allow numpy arrays as source of texture data for pyglet
-Group: Development/Python3
-
-%description -n python3-module-%oname
 pygarrayimage allows display of Python objects supporting the array
 interface as OpenGL textures without a copy. The OpenGL texture handling
 is done using pyglet.
@@ -43,39 +24,20 @@ any other data source supporting the array interface) to the video card.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc PKG-INFO *.rst examples
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc PKG-INFO *.rst examples
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.0-alt3
+- Drop python2 support.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2.2
 - (NMU) rebuild with python3.6
 
