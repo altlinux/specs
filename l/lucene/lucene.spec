@@ -18,8 +18,8 @@ BuildRequires: jpackage-1.8-compat
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        8.1.1
-Release:        alt1_4jpp8
+Version:        8.4.1
+Release:        alt1_9jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -32,11 +32,10 @@ Patch1:         0002-Dependency-generation.patch
 BuildRequires:  ant
 BuildRequires:  ivy-local
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %if %{without jp_minimal}
-BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
-BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
@@ -65,18 +64,18 @@ Obsoletes: %{name}-replicator < 8.1.1-3
 Obsoletes: %{name}-spatial < 8.1.1-3
 Obsoletes: %{name}-spatial-extras < 8.1.1-3
 Obsoletes: %{name}-spatial3d < 8.1.1-3
+Obsoletes: %{name}-test-framework < 8.4.1-4
 
 %if %{with jp_minimal}
 # Remove left-over packages that would have broken deps when built in minimal mode
-Obsoletes: %{name}-parent < 8.1.1-3
-Obsoletes: %{name}-solr-grandparent < 8.1.1-3
-Obsoletes: %{name}-test-framework < 8.1.1-3
-Obsoletes: %{name}-expressions < 8.1.1-3
-Obsoletes: %{name}-analyzers-phonetic < 8.1.1-3
-Obsoletes: %{name}-analyzers-icu < 8.1.1-3
-Obsoletes: %{name}-analyzers-nori < 8.1.1-3
-Obsoletes: %{name}-analyzers-kuromoji < 8.1.1-3
-Obsoletes: %{name}-analyzers-stempel < 8.1.1-3
+Obsoletes: %{name}-parent < %{version}-%{release}
+Obsoletes: %{name}-solr-grandparent < %{version}-%{release}
+Obsoletes: %{name}-expressions < %{version}-%{release}
+Obsoletes: %{name}-analyzers-phonetic < %{version}-%{release}
+Obsoletes: %{name}-analyzers-icu < %{version}-%{release}
+Obsoletes: %{name}-analyzers-nori < %{version}-%{release}
+Obsoletes: %{name}-analyzers-kuromoji < %{version}-%{release}
+Obsoletes: %{name}-analyzers-stempel < %{version}-%{release}
 %endif
 
 BuildArch:      noarch
@@ -192,6 +191,13 @@ Summary:      Lucene Suggest Module
 %description suggest
 Lucene Suggest Module.
 
+%package monitor
+Group: Development/Java
+Summary:      Lucene Monitor Module
+
+%description monitor
+Lucene Monitor Module.
+
 %if %{without jp_minimal}
 %package parent
 Group: Development/Java
@@ -206,13 +212,6 @@ Summary:      Lucene Solr grandparent POM
 
 %description solr-grandparent
 Lucene Solr grandparent POM.
-
-%package test-framework
-Group: Development/Java
-Summary:      Apache Lucene Java Test Framework
-
-%description test-framework
-Apache Lucene Java Test Framework.
 
 %package expressions
 Group: Development/Java
@@ -278,11 +277,13 @@ rm -rf solr
 
 find -name "*.jar" -delete
 
+mkdir -p lucene/build/analysis/{kuromoji,nori}
+
 # don't generate uses clauses in osgi metadata
 sed -i -e "/<Export-Package>/a<_nouses>true</_nouses>" dev-tools/maven/pom.xml.template
 
-# make the target public
-sed -i 's/-filter-pom-templates/filter-pom-templates/' lucene/common-build.xml
+# optional on internal APIs that might not be present
+sed -i -e "/<Export-Package>/a<Import-Package>com.sun.management;resolution:=\"optional\",sun.misc;resolution:=\"optional\",*</Import-Package>" dev-tools/maven/pom.xml.template
 
 # compatibility with existing packages
 %mvn_alias :%{name}-analyzers-common :%{name}-analyzers
@@ -294,8 +295,9 @@ sed -i 's/-filter-pom-templates/filter-pom-templates/' lucene/common-build.xml
 %build
 pushd %{name}
 find -maxdepth 2 -type d -exec mkdir -p '{}/lib' \;
-# generate dependencies
-ant -f common-build.xml filter-pom-templates -Divy.mode=local -Dversion=%{version} -Divy.available=true
+
+# generate maven dependencies
+ant -f build.xml generate-maven-artifacts -Divy.mode=local -Dversion=%{version} -Divy.available=true
 
 # fix source dir + move to expected place
 for pom in `find build/poms/%{name} -name pom.xml`; do
@@ -340,6 +342,7 @@ mv lucene/build/poms/pom.xml .
 pushd lucene
 %pom_disable_module benchmark
 %pom_disable_module demo
+%pom_disable_module test-framework
 %pom_disable_module facet
 %pom_disable_module replicator
 %pom_disable_module spatial
@@ -352,7 +355,6 @@ popd
 
 %if %{with jp_minimal}
 pushd lucene
-%pom_disable_module test-framework
 %pom_disable_module expressions
 %pom_disable_module icu analysis
 %pom_disable_module kuromoji analysis
@@ -365,8 +367,20 @@ popd
 %mvn_package :lucene-solr-grandparent __noinstall
 %endif
 
+# Use compiler release flag when building on JDK >8 for correct cross-compiling
+%pom_xpath_inject pom:profiles "
+    <profile>
+      <id>jdk-release-flag</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.release>\${java.compat.version}</maven.compiler.release>
+      </properties>
+    </profile>"
+
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
-%mvn_build -s -f
+%mvn_build -s -f -- -Dcheckoutid=%{version}
 
 %install
 %mvn_install
@@ -393,10 +407,10 @@ popd
 %files codecs -f .mfiles-%{name}-codecs
 %files classification -f .mfiles-%{name}-classification
 %files suggest -f .mfiles-%{name}-suggest
+%files monitor -f .mfiles-%{name}-monitor
 %if %{without jp_minimal}
 %files parent -f .mfiles-%{name}-parent
 %files solr-grandparent -f .mfiles-%{name}-solr-grandparent
-%files test-framework -f .mfiles-%{name}-test-framework
 %files expressions -f .mfiles-%{name}-expressions
 %files analyzers-phonetic -f .mfiles-%{name}-analyzers-phonetic
 %files analyzers-icu -f .mfiles-%{name}-analyzers-icu
@@ -409,6 +423,9 @@ popd
 %doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:8.4.1-alt1_9jpp8
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:8.1.1-alt1_4jpp8
 - new version
 
