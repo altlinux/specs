@@ -1,19 +1,20 @@
 %define name speedtest-cli
 %define version 2.1.3
-%define release alt1
+%define release alt2
 
 Name: %name
 Version: %version
 Release: %release
 
 Summary: Network bandwidth testing tool
-License: Apache2
+License: Apache-2.0
 Group: System/Configuration/Networking
 Url: https://github.com/sivel/speedtest-cli
 BuildArch: noarch
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
 
 %description
 Command line interface for testing internet bandwidth using
@@ -28,7 +29,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %build
 %install
 mkdir -p %buildroot%_bindir
-install speedtest.py %buildroot%_bindir/%name
+install -m755 speedtest.py %buildroot%_bindir/%name
 
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%name.desktop <<EOF
@@ -48,8 +49,12 @@ EOF
 %doc README.rst CONTRIBUTING.md
 %_desktopdir/%name.desktop
 
-
 %changelog
+* Thu Jun 03 2021 L.A. Kostis <lakostis@altlinux.ru> 2.1.3-alt2
+- spec:
+   + update BR (add rpm-build-python3);
+   + fix License tag.
+
 * Mon Apr 12 2021 Alexander Makeenkov <amakeenk@altlinux.org> 2.1.3-alt1
 - Updated to version 2.1.3
 
