@@ -46,37 +46,43 @@ BuildRequires: jpackage-1.8-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+%bcond_with dom4j
 %bcond_with hibernate
+%bcond_with jdom
+%bcond_with jdom2
+%bcond_with joda
+%bcond_with kxml
+%bcond_with stax
+%bcond_with woodstox
 
 Name:           xstream
-Version:        1.4.11.1
-Release:        alt1_5jpp8
+Version:        1.4.12
+Release:        alt1_6jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://x-stream.github.io/
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
+Source0:        https://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
 
 # patch pom.xml to target Java 8 / 1.8
 Patch0:         xstream-java-8-target.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
-BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(com.sun.activation:jakarta.activation)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
-BuildRequires:  mvn(joda-time:joda-time)
-BuildRequires:  mvn(net.sf.kxml:kxml2-min)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
-BuildRequires:  mvn(org.jdom:jdom)
-BuildRequires:  mvn(org.jdom:jdom2)
-BuildRequires:  mvn(stax:stax)
-BuildRequires:  mvn(stax:stax-api)
 BuildRequires:  mvn(xpp3:xpp3)
 BuildRequires:  mvn(xpp3:xpp3_min)
+
+
+%if %{with dom4j}
+BuildRequires:  mvn(dom4j:dom4j)
+%endif
 
 %if %{with hibernate}
 BuildRequires:  mvn(javassist:javassist)
@@ -85,6 +91,31 @@ BuildRequires:  mvn(org.hibernate:hibernate-core)
 BuildRequires:  mvn(org.hibernate:hibernate-envers)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(xom:xom)
+%endif
+
+%if %{with jdom}
+BuildRequires:  mvn(org.jdom:jdom)
+%endif
+
+%if %{with jdom2}
+BuildRequires:  mvn(org.jdom:jdom2)
+%endif
+
+%if %{with joda}
+BuildRequires:  mvn(joda-time:joda-time)
+%endif
+
+%if %{with kxml}
+BuildRequires:  mvn(net.sf.kxml:kxml2-min)
+%endif
+
+%if %{with stax}
+BuildRequires:  mvn(stax:stax)
+BuildRequires:  mvn(stax:stax-api)
+%endif
+
+%if %{with woodstox}
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
 %endif
 Source44: import.info
 
@@ -178,9 +209,6 @@ find . -name "*.jar" -print -delete
 
 %pom_remove_plugin :maven-javadoc-plugin xstream
 
-# provided by JDK
-%pom_remove_dep javax.activation:activation xstream
-
 %pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib xstream-hibernate
 %pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-hibernate
 %pom_remove_plugin :maven-dependency-plugin xstream-hibernate
@@ -188,6 +216,18 @@ find . -name "*.jar" -print -delete
 
 %pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-benchmark
 %pom_remove_plugin :maven-javadoc-plugin xstream-benchmark
+
+# Fix dep on activation
+%pom_change_dep javax.activation:activation com.sun.activation:jakarta.activation . xstream
+
+%if %{without dom4j}
+%pom_remove_dep -r dom4j:dom4j
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/Dom4JDriver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/Dom4JReader.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/Dom4JWriter.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/Dom4JXmlWriter.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamDom4J.java
+%endif
 
 %if %{without hibernate}
 # Don't build hibernate module
@@ -198,6 +238,50 @@ find . -name "*.jar" -print -delete
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/Xom*
 rm xstream/src/java/com/thoughtworks/xstream/io/json/Jettison*
 rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamXom.java
+%endif
+
+%if %{without jdom}
+%pom_remove_dep -r org.jdom:jdom
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDomDriver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDomReader.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDomWriter.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamJDom.java
+%endif
+
+%if %{without jdom2}
+%pom_remove_dep -r org.jdom:jdom2
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDom2Driver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDom2Reader.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDom2Writer.java
+%endif
+
+%if %{without joda}
+%pom_remove_dep -r joda-time:joda-time
+rm xstream/src/java/com/thoughtworks/xstream/core/util/ISO8601JodaTimeConverter.java
+rm xstream/src/test/com/thoughtworks/acceptance/JodaTimeTypesTest.java
+%endif
+
+%if %{without kxml}
+%pom_remove_dep -r net.sf.kxml:kxml2-min
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/KXml2DomDriver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/KXml2Driver.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamKXml2.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamKXml2DOM.java
+%endif
+
+%if %{without stax}
+%pom_remove_dep -r stax:stax
+%pom_remove_dep -r stax:stax-api
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/BEAStaxDriver.java
+rm xstream/src/test/com/thoughtworks/xstream/io/xml/BEAStaxReaderTest.java
+rm xstream/src/test/com/thoughtworks/xstream/io/xml/BEAStaxWriterTest.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamBEAStax.java
+%endif
+
+%if %{without woodstox}
+%pom_remove_dep -r org.codehaus.woodstox:woodstox-core-asl
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/WstxDriver.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamWoodstox.java
 %endif
 
 %mvn_file :%{name} %{name}/%{name} %{name}
@@ -228,6 +312,9 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4.12-alt1_6jpp8
+- new version, use jvm8
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4.11.1-alt1_5jpp8
 - update
 
