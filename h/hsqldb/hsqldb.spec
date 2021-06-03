@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           hsqldb
 Version:        2.4.0
-Release:        alt1_7jpp8
+Release:        alt1_10jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -38,6 +38,7 @@ Patch1:         0002-Build-cmdline-classes.patch
 BuildRequires:  ant
 BuildRequires:  javapackages-local
 BuildRequires:  glassfish-servlet-api
+BuildRequires:  java-1.8.0-openjdk-devel
 
 Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
 Requires:       glassfish-servlet-api
@@ -121,6 +122,7 @@ sed -i -e 's|doc/apidocs|%{_javadocdir}/%{name}|g' index.html
 
 %build
 pushd build
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0"
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 ant hsqldb javadoc -Dservletapi.lib=$(build-classpath glassfish-servlet-api)
 popd
@@ -202,6 +204,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt1_10jpp8
+- jvm8 update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt1_7jpp8
 - fc update
 
