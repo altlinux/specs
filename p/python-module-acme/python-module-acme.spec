@@ -4,7 +4,7 @@
 %def_without python2
 
 Name: python-module-acme
-Version: 1.14.0
+Version: 1.16.0
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -198,6 +198,9 @@ Documentation for the ACME python libraries
 #%doc docs/_build/html
 
 %changelog
+* Wed Jun 02 2021 Vitaly Lipatov <lav@altlinux.ru> 1.16.0-alt1
+- new version 1.16.0 (with rpmrb script)
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
 - new version 1.14.0 (with rpmrb script)
 
