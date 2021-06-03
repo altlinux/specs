@@ -1,20 +1,17 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           easymock
-Version:        3.6
-Release:        alt1_5jpp8
+Version:        4.2
+Release:        alt1_1jpp11
 Summary:        Easy mock objects
 License:        ASL 2.0
-URL:            http://www.easymock.org
 
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-# Remove bundled binaries which cannot be easily verified for licensing
-Source1:        generate-tarball.sh
+URL:            http://www.easymock.org
+Source0:        https://github.com/easymock/easymock/archive/easymock-%{version}.tar.gz
 
 Patch1:         0001-Disable-android-support.patch
 Patch2:         0002-Unshade-cglib-and-asm.patch
@@ -27,9 +24,11 @@ BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit47)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit-platform)
 BuildRequires:  mvn(org.apache.maven.surefire:surefire-testng)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires:  mvn(org.junit.vintage:junit-vintage-engine)
 BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.testng:testng)
@@ -40,7 +39,6 @@ Obsoletes:      %{name}3 < 3.4
 Provides:       %{name}3 = %{version}-%{release}
 Obsoletes:      %{name}2 < 2.5.2-10
 Source44: import.info
-
 
 %description
 EasyMock provides Mock Objects for interfaces in JUnit tests by generating
@@ -65,11 +63,13 @@ Javadoc for %{name}.
 %patch2 -p1
 %patch3 -p1
 
-%pom_remove_plugin :maven-license-plugin
-%pom_remove_plugin :maven-timestamp-plugin
+# disable unnecessary maven plugins
+%pom_remove_plugin :animal-sniffer-maven-plugin . core
+%pom_remove_plugin :license-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin core
+%pom_remove_plugin :maven-gpg-plugin test-java8 test-junit5 test-testng
+%pom_remove_plugin :maven-timestamp-plugin
+%pom_remove_plugin :versions-maven-plugin
 
 # remove android support
 rm core/src/main/java/org/easymock/internal/Android*.java
@@ -85,17 +85,16 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 %pom_disable_module test-integration
 %pom_disable_module test-osgi
 
-# remove some warning caused by unavailable plugin
-%pom_remove_plugin org.codehaus.mojo:versions-maven-plugin
-
 # For compatibility reasons
 %mvn_file ":easymock{*}" easymock@1 easymock3@1
 
 # ssh not needed during our builds
 %pom_xpath_remove pom:extensions
 
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
@@ -109,6 +108,9 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2-alt1_1jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.6-alt1_5jpp8
 - fc update
 
