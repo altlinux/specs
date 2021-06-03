@@ -1,34 +1,20 @@
 %define oname webhelpers
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.3
-Release: alt2.1.1.1
+Release: alt3
 Summary: Helper functions intended to make writing templates in web applications easier
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/WebHelpers
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: WebHelpers-%version.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel texlive-latex-recommended
-#BuildPreReq: python-module-sphinx-devel python-module-nose
-#BuildPreReq: python-module-routes python-module-webob
-#BuildPreReq: python-module-pysqlite2 python-module-repoze.lru
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
-%endif
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-repoze python-module-repoze.lru python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pysqlite2 python-module-routes python-module-setuptools python3-module-setuptools rpm-build-python3 time
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+BuildRequires: /usr/bin/2to3
 
 %description
 Web Helpers is a library of helper functions intended to make writing
@@ -37,20 +23,9 @@ for Pylons and TurboGears 2. It also contains a large number of
 functions not specific to the web, including text processing, number
 formatting, date calculations, container objects, etc.
 
-%package -n python3-module-%oname
-Summary: Helper functions intended to make writing templates in web applications easier
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Web Helpers is a library of helper functions intended to make writing
-templates in web applications easier. It's the standard function library
-for Pylons and TurboGears 2. It also contains a large number of
-functions not specific to the web, including text processing, number
-formatting, date calculations, container objects, etc.
-
 %package tests
 Summary: Tests for Web Helpers
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %version-%release
 
@@ -79,7 +54,7 @@ This package contains documentation for Web Helpers.
 
 %package pickles
 Summary: Pickles for Web Helpers
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 
 %description pickles
@@ -94,42 +69,27 @@ This package contains pickles for Web Helpers.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 export PYTHONPATH=$PWD
 touch tests/__init__.py
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc CHANGELOG LICENSE PKG-INFO *.txt TODO
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files tests
 %doc tests
@@ -139,15 +99,12 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/_build/html
 
 %files pickles
-%python_sitelibdir/%oname/pickle
-
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGELOG LICENSE PKG-INFO *.txt TODO
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/%oname/pickle
 
 %changelog
+* Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.3-alt3
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt2.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
