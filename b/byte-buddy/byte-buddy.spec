@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,18 +14,15 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with bootstrap
 
 Name:          byte-buddy
-Version:       1.9.5
-Release:       alt1_5jpp8
+Version:       1.10.14
+Release:       alt1_1jpp11
 Summary:       Runtime code generation for the Java virtual machine
 License:       ASL 2.0
 URL:           http://bytebuddy.net/
 Source0:       https://github.com/raphw/byte-buddy/archive/%{name}-%{version}.tar.gz
 
-# Patch out use of a unixsocket lib that is not in Fedora
-Patch0:         no-unixsocket.patch
-
 # Patch the build to avoid bundling inside shaded jars
-Patch1:         avoid-bundling-asm.patch
+Patch0:         avoid-bundling-asm.patch
 
 BuildRequires:  maven-local
 %if %{without bootstrap}
@@ -39,6 +36,8 @@ BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.ow2.asm:asm-analysis)
 BuildRequires:  mvn(org.ow2.asm:asm-util)
 %endif
+BuildRequires:  mvn(net.java.dev.jna:jna)
+BuildRequires:  mvn(net.java.dev.jna:jna-platform)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
@@ -94,11 +93,13 @@ This package contains API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 %patch0
-%patch1
 
 # Remove pre-built jars
 find -name *.jar -delete
 find -name *.class -delete
+
+# JDK 11 does not know about the Java record type
+rm byte-buddy-dep/src/precompiled/java/net/bytebuddy/test/precompiled/SampleRecord.java
 
 # Cause pre-compiled stuff to be re-compiled
 mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/build/*.java \
@@ -109,6 +110,7 @@ mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/test/precompiled/*.java \
 
 # Don't ship android or benchmark modules
 %pom_disable_module byte-buddy-android
+%pom_disable_module byte-buddy-android-test
 %pom_disable_module byte-buddy-benchmark
 
 # Don't ship gradle plugin
@@ -143,12 +145,12 @@ sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
 %if %{with bootstrap}
 # Cannot run the test suite in bootstrap mode due to circular dep
 # on self and mockito
-%mvn_build -s -f -- -P'java8,!checks'
+%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P'java8,!checks'
 %else
 # Ignore test failures, there seems to be something different about the
 # bytecode of our recompiled test resources, expect 6 test failures in
 # the byte-buddy-dep module
-%mvn_build -s -- -P'java8,!checks' -Dsourcecode.test.version=1.8 -Dmaven.test.failure.ignore=true
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P'java8,!checks' -Dsourcecode.test.version=1.8 -Dmaven.test.failure.ignore=true
 %endif
 
 %install
@@ -172,6 +174,9 @@ cat .mfiles-%{name}-dep >> .mfiles-%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.10.14-alt1_1jpp11
+- new version
+
 * Sun Jul 14 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.5-alt1_5jpp8
 - full build
 
