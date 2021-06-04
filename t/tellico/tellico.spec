@@ -1,6 +1,6 @@
 Name: 	 tellico
 Version: 3.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: A collection manager for KDE
 License: GPL-2.0+
@@ -68,7 +68,7 @@ tar xf %SOURCE1
 %K5build
 
 %install
-%cmakeinstall_std
+%K5install
 
 # fix python shebangs
 find %buildroot -type f -print0 |
@@ -93,6 +93,9 @@ find %buildroot -type f -print0 |
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Thu Jun 03 2021 Arseny Maslennikov <arseny@altlinux.org> 3.4.1-alt1.1
+- NMU: spec: use KF5 macros.
+
 * Mon May 10 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
 - New version.
 - Enable localization.
