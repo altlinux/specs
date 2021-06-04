@@ -1,27 +1,38 @@
-
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
-
-Name: clojure
-Version: 1.10.1
-Summary: A dynamic programming language that targets the Java Virtual Machine
-License: EPL-1.0
-Url: http://clojure.org/
 Group: Development/Java
-Release: alt0.1jpp
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global project     clojure
+%global groupId     org.clojure
+%global artifactId  clojure
+%global archivename %{project}-%{artifactId}
 
-Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.org>
-Provides: mvn(org.clojure:clojure) = 1.10.1
-Provides: mvn(org.clojure:clojure:pom:) = 1.10.1
-Requires: mvn(org.clojure:core.specs.alpha)
-Requires: mvn(org.clojure:spec.alpha)
+Name:           clojure
+Epoch:          1
+Version:        1.10.1
+Release:        alt1_5jpp11
+Summary:        A dynamic programming language that targets the Java Virtual Machine
 
-BuildArch: noarch
-Source: clojure-1.10.1-5.fc33.cpio
+License:        EPL-1.0
+URL:            http://clojure.org/
+Source0:        https://github.com/%{name}/%{name}/archive/%{name}-%{version}.zip
 
+BuildArch:      noarch
 
-%description
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.clojure:core.specs.alpha)
+BuildRequires:  mvn(org.clojure:spec.alpha)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+Source44: import.info
+
+%description 
 Clojure is a dynamic programming language that targets the Java
 Virtual Machine. It is designed to be a general-purpose language,
 combining the approachability and interactive development of a
@@ -34,25 +45,30 @@ optional type hints and type inference, to ensure that calls to Java
 can avoid reflection.
 
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{archivename}-%{version}
+
+%pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
-sed -i 1s,/usr/bin/bash,/bin/bash, usr/bin/*
-mkdir -p etc/java
-touch etc/java/clojure.conf
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
 
+%mvn_install
 
-%files -f %name-list
-/etc/java/clojure.conf
+# startup script
+%jpackage_script clojure.main "" "" clojure:clojure-spec-alpha:clojure-core-specs-alpha clojure false
+
+%files -f .mfiles
+%doc --no-dereference epl-v10.html 
+%doc changes.md readme.txt 
+%{_bindir}/%{name}
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.1-alt1_5jpp11
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
