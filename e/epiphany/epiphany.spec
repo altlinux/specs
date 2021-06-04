@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %set_verify_elf_method unresolved=relaxed
 
 %define _libexecdir %_prefix/libexec
@@ -10,8 +10,8 @@
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.1
-Release: alt2%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -115,6 +115,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Jun 04 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
+- 40.2
+
 * Tue May 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt2
 - updated to 40.1-8-g745c2702a
 
