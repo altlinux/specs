@@ -1,6 +1,6 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit_hash 1dead92
@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt2_18jpp8
+Release:        alt2_21jpp11
 Summary:        Pure-java port of asmjit
 
 License:        MIT
@@ -42,7 +42,7 @@ find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dmaven.compiler.release=6
 
 %install
 %mvn_install
@@ -55,6 +55,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt2_21jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_18jpp8
 - fc update
 
