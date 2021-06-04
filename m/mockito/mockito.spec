@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mockito
-Version:        2.23.9
-Release:        alt1_6jpp8
+Version:        2.28.2
+Release:        alt1_1jpp11
 Summary:        Tasty mocking framework for unit tests in Java
 License:        MIT
 URL:            https://site.mockito.org/
@@ -32,6 +32,7 @@ BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 BuildRequires:  mvn(org.objenesis:objenesis)
+BuildRequires:  mvn(org.opentest4j:opentest4j)
 BuildRequires:  mvn(org.ow2.asm:asm)
 Source44: import.info
 
@@ -70,7 +71,7 @@ EOF
 %mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
 
 %build
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -83,6 +84,9 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.28.2-alt1_1jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.23.9-alt1_6jpp8
 - fc update
 
