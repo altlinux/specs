@@ -1,5 +1,5 @@
 Name: sysdig
-Version: 0.23.1
+Version: 0.27.1
 Release: alt1
 
 Summary: A system exploration and troubleshooting tool
@@ -18,6 +18,11 @@ ExclusiveArch: x86_64 %ix86
 # optimized out: cmake cmake-modules libstdc++-devel libtinfo-devel python3-base zlib-devel
 BuildRequires: cmake gcc-c++ jsoncpp-devel libdb4-devel libluajit-devel libncurses-devel zlib-devel
 BuildRequires: libjq-devel libb64-devel libssl-devel libcurl-devel libelf-devel
+BuildRequires: pkgconfig(grpc) grpc-plugins
+BuildRequires: pkgconfig(protobuf)
+BuildRequires: pkgconfig(gtest)
+BuildRequires: libcares-devel
+BuildRequires: tbb-devel
 BuildRequires: liblua5.1-devel
 
 %description
@@ -25,7 +30,7 @@ An open source system-level exploration and troubleshooting tool.
 
 %prep
 %setup
-%__subst "s|add_subdirectory(driver)||g" CMakeLists.txt
+%__subst "/option(BUILD_DRIVER/s|ON|OFF|g" driver/CMakeLists.txt
 
 # fix build with recent curl, see https://github.com/draios/sysdig/issues/895
 sed 's|curl/curlbuild\.h|curl/system.h|' -i \
@@ -41,17 +46,23 @@ cd -
 %cmake -DUSE_BUNDLED_LUAJIT:BOOL=off \
        -DUSE_BUNDLED_JSONCPP:BOOL=off \
        -DUSE_BUNDLED_ZLIB:BOOL=off \
+       -DUSE_BUNDLED_TBB:BOOL=off \
+       -DUSE_BUNDLED_PROTOBUF:BOOL=off \
        -DUSE_BUNDLED_NCURSES:BOOL=off \
        -DUSE_BUNDLED_OPENSSL:BOOL=off \
+       -DUSE_BUNDLED_GTEST:BOOL=off \
+       -DUSE_BUNDLED_GRPC:BOOL=off \
        -DUSE_BUNDLED_CURL:BOOL=off \
+       -DUSE_BUNDLED_CARES:BOOL=off \
        -DUSE_BUNDLED_B64:BOOL=off \
        -DUSE_BUNDLED_JQ:BOOL=off
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 rm -rf %buildroot/%_datadir/zsh/
 rm -rf %buildroot/usr/etc/
+rm -rf %buildroot/%_prefix/src/sysdig
 
 %files
 %_bindir/%name
@@ -61,6 +72,9 @@ rm -rf %buildroot/usr/etc/
 %_datadir/%name/
 
 %changelog
+* Thu Jun 03 2021 Arseny Maslennikov <arseny@altlinux.org> 0.27.1-alt1
+- new version 0.27.1 (with rpmrb script)
+
 * Thu Sep 13 2018 Vitaly Lipatov <lav@altlinux.ru> 0.23.1-alt1
 - new version 0.23.1 (with rpmrb script)
 
