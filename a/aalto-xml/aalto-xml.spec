@@ -5,7 +5,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:          aalto-xml
 Version:       1.2.2
-Release:       alt1_2jpp11
+Release:       alt1_5jpp11
 Summary:       Ultra-high performance non-blocking XML processor (Stax/Stax2, SAX/SAX2)
 # Source files without license headers https://github.com/FasterXML/aalto-xml/issues/38
 # See https://github.com/FasterXML/jackson-modules-base/issues/18, from main developer:
@@ -69,7 +69,7 @@ mv release-notes/asl/LICENSE NOTICE
 %pom_remove_plugin :moditect-maven-plugin
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -f --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -82,6 +82,9 @@ mv release-notes/asl/LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1_5jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1_2jpp11
 - new version
 
