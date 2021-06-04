@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 Name:          foreman-addons
 Version:       0.0.4
-Release:       alt2
+Release:       alt3
 Summary:       Default addons for Foreman
 License:       GPLv3
 Group:         Development/Ruby
@@ -14,6 +14,7 @@ Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
 
 Conflicts:     smart-proxy-dynflow-core
+Conflicts:     hammer
 Requires:      gem-ed25519
 Requires:      gem-bcrypt-pbkdf
 Requires:      node-gyp
@@ -23,6 +24,8 @@ Requires:      node-gyp
 #Requires:      npm(babel-plugin-module-resolver)
 
 Autoreq:       yes,nopython
+
+%gem_replace_version clamp ~> 1.3.0
 
 %description
 %summary.
@@ -43,7 +46,14 @@ find -name 'package.json' -exec rm -rf "{}" \;
             --use=foreman_remote_execution --alias=foreman-addons --join=bin:lib \
             --use=smart_proxy_dynflow_core --alias=foreman-addons --join=bin:lib \
             --use=smart_proxy_dynflow --alias=foreman-addons --join=bin:lib \
-            --use=smart_proxy_remote_execution_ssh --alias=foreman-addons --join=bin:lib
+            --use=smart_proxy_remote_execution_ssh --alias=foreman-addons --join=bin:lib \
+            --use=clamp --alias=foreman-addons --join=bin:lib \
+            --use=powerbar --alias=foreman-addons --join=bin:lib \
+            --use=hammer_cli --alias=foreman-addons --join=bin:lib \
+            --use=hammer_cli_foreman --alias=foreman-addons --join=bin:lib \
+            --use=hammer_cli_foreman_remote_execution --alias=foreman-addons --join=bin:lib \
+            --use=hammer_cli_foreman_tasks --alias=foreman-addons --join=bin:lib \
+            --use=hammer_cli_foreman_templates --alias=foreman-addons --join=bin:lib
 
 %install
 %ruby_install
@@ -74,6 +84,10 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Jun 03 2021 Pavel Vasenkov <pav@altlinux.org> 0.0.4-alt3
+- + hammer_cli and its modules for foreman
+- ! gem clamp deps to ~> 1.3.0
+
 * Mon Mar 15 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.4-alt2
 - ! dep to foreman dynflow core
 - ! foreman dynflow core errors
