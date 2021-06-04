@@ -1,59 +1,52 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
+%define fedora 33
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.3.0
 # empty debuginfo
 %global debug_package %nil
 
-%global build_opts -Doffline=true -Divy.mode=local -Divysettings.xml=/etc/ivy/ivysettings.xml -Divy.revision=%{version}
-
 Name:          lz4-java
-Version:       1.3.0
-Release:       alt2_13jpp8
+Version:       1.7.1
+Release:       alt1_12jpp11
 Summary:       LZ4 compression for Java
-# GPL: src/xxhash/bench.c
-# src/lz4/programs
-# BSD: src/xxhash/xxhash.c src/xxhash/xxhash.h
-# src/lz4
-License:       ASL 2.0 and (BSD and GPLv2+)
-URL:           https://github.com/jpountz/lz4-java
-Source0:       https://github.com/jpountz/lz4-java/archive/%{version}.tar.gz
+License:       ASL 2.0
+# GPLv2+ and BSD for lz4 and xxhash libs that are shared in liblz4-java.so
+URL:           https://github.com/lz4/lz4-java
+Source0:       https://github.com/lz4/lz4-java/archive/%{version}.tar.gz
 
-# Disable maven-ant-tasks and old aqute-bnd (1.50.x) support
-# Add support for system mvel2
-# Fix doclint/encoding in javadoc task
-Patch0:        lz4-java-1.3.0-build.patch
-# Use randomizedtesting <= 2.1.3
-Patch1:        lz4-java-1.3.0-junit_Assert.patch
+# lz4-java v1.3.0 introduced usage of sun.misc.Unsafe, which would later become
+# depricated in jdk 9 and kept as an unexposed API in later jdk releases.
+# lz4-java optionally uses Unsafe to achieve faster compression and decompression,
+# however it's implementation is not critical to functionality, and can be removed.
+Patch0:        0-remove-unsafe.patch
+# After updating mvel to version 2.4.10, MVEL generated classes have formatting issues where
+# code after comments are not being formatted with new lines. As a result, including comments
+# in the templates results in classes with invalid code following the first comment.
+# This patch simply removes comments from the templates so the classes can be generated as expected.
+# Related bug: https://github.com/mvel/mvel/issues/152
+Patch1:        1-remove-comments-from-templates.patch
+# Adds a simple makefile to be run in-place of the cpptasks in the build.xml
+Patch2:        2-remove-cpptasks.patch
+# some lz4-java tests require randomizedtesting, which is not currently
+# shipped or maintained in Fedora; remove those and use system ant-junit to run applicable tests
+Patch3:        3-remove-randomizedtesting-tests.patch
 
 # Build tools
+BuildRequires: apache-parent
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: aqute-bnd
-BuildRequires: cpptasks
 BuildRequires: gcc
 BuildRequires: ivy-local
 BuildRequires: javapackages-local
+BuildRequires: lz4
+BuildRequires: liblz4-devel
 BuildRequires: mvel
 BuildRequires: objectweb-asm
-BuildRequires: randomizedtesting-junit4-ant
-# Other missing build deps
-BuildRequires: bea-stax-api
 BuildRequires: xerces-j2
-BuildRequires: apache-parent
-# https://github.com/jpountz/lz4-java/issues/74
-# lz4 >= r128 is incompatible with lz4-java apparently
-# due to differences in the framing implementation
-Provides:      bundled(lz4) = r122
-# FPC ticket Bundled Library Exception
-# https://fedorahosted.org/fpc/ticket/603
-Provides:      bundled(libxxhash) = r37
+BuildRequires: libxxhash-devel
 Source44: import.info
 
 %description
@@ -87,48 +80,41 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
+
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
 # Cleanup
 find -name '*.dylib' -print -delete
 find -name '*.so' -print -delete
 
-%patch0 -p1
-%patch1 -p1
-
-cp -p src/xxhash/LICENSE LICENSE.xxhash
-cp -p src/lz4/LICENSE lz4_LICENSE
-
-# Fix OSGi manifest entries
-echo "Export-Package: net.jpountz.*,!linux.*" >> lz4.bnd
-sed -i '/packages.version/d' lz4.bnd
-
 %build
+export LIB_DIR=%{_libdir}
+%if 0%{?fedora} >= 33
+    export JAVA_HOME=/usr/lib/jvm/java-11/
+%else
+    export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+%endif
 
-ant %build_opts -Divy.pom.version=%{version} jar docs makepom
-
-# bunlde task use old bnd wrap configuration, is not usable
-bnd wrap -p lz4.bnd -o dist/lz4-%{version}.jar --version %{version} dist/lz4.jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local -Divy.revision=1.7.1 -Divy.pom.version=1.7.1 jar test docs makepom
+bnd wrap -p lz4-java.bnd -o dist/lz4-java-%{version}.jar --version %{version} dist/lz4-java.jar
 
 %install
-%mvn_file net.jpountz.lz4:lz4 lz4
-%mvn_artifact dist/lz4-%{version}.pom dist/lz4-%{version}.jar
+%mvn_artifact dist/lz4-java-%{version}.pom dist/lz4-java-%{version}.jar
 %mvn_install -J build/docs
-
-%ifnarch %{arm} %{e2k} aarch64 ppc64
-# FIXME - tests fail on aarch64 for unknown reason.
-# On armhfp tests are skipped due to poor JVM performance ("Execution
-# time total: 3 hours 37 minutes 14 seconds" ... waste of time)
-%check
-ant %build_opts test
-%endif
 
 %files -f .mfiles
 %doc CHANGES.md README.md
-%doc --no-dereference LICENSE.txt LICENSE.xxhash lz4_LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.7.1-alt1_12jpp11
+- new version
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_13jpp8
 - fixed build with new java
 
