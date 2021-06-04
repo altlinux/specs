@@ -5,12 +5,12 @@ BuildRequires: unzip
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           geronimo-annotation
 Version:        1.0
-Release:        alt4_27jpp8
+Release:        alt4_28jpp11
 Summary:        Java EE: Annotation API v1.3
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -42,13 +42,12 @@ This package contains the API documentation for %{name}.
 %mvn_alias : org.apache.geronimo.specs:geronimo-annotation_1.0_spec
 %mvn_alias : org.apache.geronimo.specs:geronimo-annotation_1.1_spec
 %mvn_alias : org.apache.geronimo.specs:geronimo-annotation_1.2_spec
-%mvn_alias : javax.annotation:jsr250-api
 %mvn_alias : org.eclipse.jetty.orbit:javax.annotation
 
 %mvn_file : %{name} annotation
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -60,6 +59,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt4_28jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_27jpp8
 - fc update
 
