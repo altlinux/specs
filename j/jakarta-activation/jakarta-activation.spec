@@ -6,8 +6,8 @@ BuildRequires: jpackage-11-compat
 %global srcname jaf
 
 Name:           jakarta-activation
-Version:        1.2.1
-Release:        alt2_5jpp11
+Version:        1.2.2
+Release:        alt1_1jpp11
 Summary:        Jakarta Activation Specification and Implementation
 License:        BSD
 
@@ -66,7 +66,7 @@ sed -i "s/\${activation.osgiversion}/%{version}/g" activation/pom.xml
 
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=9 -Dmaven.compiler.target=9 -Dmaven.javadoc.source=9 -Dmaven.compiler.release=9
 
 
 %install
@@ -82,6 +82,9 @@ sed -i "s/\${activation.osgiversion}/%{version}/g" activation/pom.xml
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1_1jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt2_5jpp11
 - fixed build
 
