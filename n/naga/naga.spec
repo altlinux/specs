@@ -3,32 +3,36 @@ Group: System/Base
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global svnrel 82
+# Upstream was originally located at http://code.google.com/p/naga/.  The
+# primary author later created a github repo and added some documentation, but
+# never tagged any releases.  We take his latest github commit.
 
 Name:           naga
 Version:        3.0
-Release:        alt1_14.82svnjpp8
+
+%global commit  6f1e95ddfdb1aa7719c98168f0a5efc5be191426
+%global date    20200930
+%global forgeurl https://github.com/lerno/naga
+
+URL:            %{forgeurl}
+Release:        alt1_16jpp11
 Summary:        Simplified Java NIO asynchronous sockets
 
 License:        MIT
-URL:            http://code.google.com/p/naga/
-# Upstream does not release stable source tarballs.
-# Tarball created with
-# svn checkout -r %{svnrel} http://naga.googlecode.com/svn/trunk/ naga
-# rm -rf naga/.svn
-# tar jcf naga-%{svnrel}svn.tar.bz2 naga
-Source0:        naga-%{svnrel}svn.tar.bz2
-# Force utf8
-Patch0:		naga-encoding.patch
+Source0:        naga-%{commit}.tar.gz
+# Fix javadoc errors and warnings
+Patch0:         %{name}-javadoc.patch
+# Build for Java 1.8 and tell javac that the sources are UTF-8 encoded
+Patch1:         %{name}-java18.patch
+
 BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
 BuildRequires:  ant
+BuildRequires:  javapackages-tools
 
-Requires:       jpackage-utils
+Requires:       javapackages-filesystem
 Source44: import.info
 
 %description
@@ -52,21 +56,20 @@ flags.
 %package javadoc
 Group: Development/Java
 Summary:        Javadocs for %{name}
-Requires:       jpackage-utils
+Requires:       javapackages-filesystem
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1 -b .encoding
+%setup -n %name-%commit
+%patch0 -p1
+%patch1 -p1
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
 
 %build
-ant build javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 build javadoc
 
 %install
 mkdir -p %{buildroot}%{_javadir}
@@ -78,14 +81,19 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
+%doc Echoserver.md Eventmachine.md Gotchas.md PacketReader.md README.md
+%doc --no-dereference COPYING
 %{_javadir}/naga.jar
 %{_javadir}/naga-3_0.jar
 
 %files javadoc
+%doc --no-dereference COPYING
 %{_javadocdir}/%{name}
 
-
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_16jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_14.82svnjpp8
 - fc update
 
