@@ -7,7 +7,7 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -19,8 +19,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without  jp_minimal
 
 Name:           log4j
-Version:        2.13.0
-Release:        alt1_3jpp8
+Version:        2.13.3
+Release:        alt1_1jpp11
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -28,7 +28,6 @@ License:        ASL 2.0
 URL:            http://logging.apache.org/%{name}
 Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz
 
-Patch1:         logging-log4j-LOG4J2-2745-LOG4J2-2744-slf4j.patch
 Patch2:         logging-log4j-Remove-unsupported-EventDataConverter.patch
 
 BuildRequires:  maven-local
@@ -36,11 +35,14 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(com.lmax:disruptor)
+BuildRequires:  mvn(com.sun.activation:jakarta.activation)
 BuildRequires:  mvn(com.sun.mail:javax.mail)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.jctools:jctools-core)
@@ -164,7 +166,6 @@ BuildArch: noarch
 
 %prep
 %setup -q -n apache-%{name}-%{version}-src
-%patch1 -p1
 %patch2 -p1
 
 
@@ -188,12 +189,8 @@ rm -rf docs/api
 # artifact for upstream testing of log4j itself, shouldn't be distributed
 %pom_disable_module %{name}-perf
 
-# needs java 9 to build
-%pom_disable_module %{name}-api-java9
-%pom_disable_module %{name}-core-java9
-%pom_remove_dep -r :%{name}-api-java9
-%pom_remove_dep -r :%{name}-core-java9
-%pom_remove_plugin -r :maven-dependency-plugin
+# add dependency for javax.activation package (no longer part of OpenJDK)
+%pom_add_dep com.sun.activation:jakarta.activation
 
 # unavailable com.conversantmedia:disruptor
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/async/DisruptorBlockingQueueFactory.java
@@ -281,7 +278,7 @@ rm -r log4j-1.2-api/src/main/java/org/apache/log4j/or/jms
 
 %build
 # missing test deps (mockejb)
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -314,6 +311,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.13.3-alt1_1jpp11
+- new version
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.13.0-alt1_3jpp8
 - new version
 
