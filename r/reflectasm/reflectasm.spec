@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          reflectasm
 Version:       1.11.0
-Release:       alt1_8jpp8
+Release:       alt2_8jpp11
 Summary:       High performance Java library that provides reflection by using code generation
 License:       BSD
 URL:           https://github.com/EsotericSoftware/reflectasm
@@ -57,7 +57,7 @@ rm -r test/com/esotericsoftware/reflectasm/ClassLoaderTest.java
 
 %build
 
-%mvn_build
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -70,6 +70,9 @@ rm -r test/com/esotericsoftware/reflectasm/ClassLoaderTest.java
 %doc --no-dereference license.txt
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.11.0-alt2_8jpp11
+- fixed build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_8jpp8
 - new version
 
