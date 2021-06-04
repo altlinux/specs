@@ -22,25 +22,27 @@ BuildRequires: jpackage-11-compat
 
 Name:           maven
 Epoch:          1
-Version:        3.6.1
-Release:        alt2_5jpp11
+Version:        3.6.3
+Release:        alt1_4jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
 License:        ASL 2.0 and MIT
-URL:            http://maven.apache.org/
-BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/%{name}/%{name}-3/%{version}/sources/apache-%{name}-%{version}-src.tar.gz
+URL:            http://maven.apache.org/
+
+Source0:        http://archive.apache.org/dist/%{name}/%{name}-3/%{version}/source/apache-%{name}-%{version}-src.tar.gz
 Source1:        maven-bash-completion
 Source2:        mvn.1
 
-Patch1:         0001-Adapt-mvn-script.patch
+Patch1:         0001-adapt-mvn-script.patch
 # Downstream-specific, avoids dependency on logback
 # Used only when %%without logback is in effect
-Patch2:         0002-Invoke-logback-via-reflection.patch
-Patch3:         0003-MNG-6642-Revert-MNG-5995-Remove-dependency-to-maven-.patch
-Patch4:         0004-Use-non-shaded-HTTP-wagon.patch
+Patch2:         0002-invoke-logback-via-reflection.patch
+Patch3:         0003-use-non-shaded-HTTP-wagon.patch
+Patch4:         0004-remove-dependency-on-powermock.patch
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.inject:guice::no_aop:)
@@ -53,6 +55,7 @@ BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
 BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-connector-basic)
 BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-impl)
@@ -63,7 +66,7 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-file)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-http)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin) >= 1.10.0
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin) >= 1.11
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
@@ -74,6 +77,8 @@ BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.hamcrest:hamcrest-library)
+BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.mockito:mockito-core) >= 2
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
@@ -109,7 +114,7 @@ Requires:       apache-commons-lang3
 Requires:       apache-commons-logging
 Requires:       atinject
 Requires:       cdi-api
-Requires:       geronimo-annotation
+Requires:       jakarta-annotations
 Requires:       google-guice
 Requires:       guava
 Requires:       hawtjni-runtime
@@ -149,6 +154,7 @@ Maven is a software project management and comprehension tool. Based on the
 concept of a project object model (POM), Maven can manage a project's build,
 reporting and documentation from a central piece of information.
 
+
 %package        lib
 Group: Development/Java
 Summary:        Core part of Maven
@@ -168,6 +174,7 @@ Provides:       bundled(slf4j) = %{bundled_slf4j_version}
 %description    lib
 Core part of Apache Maven that can be used as a library.
 
+
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -175,6 +182,7 @@ BuildArch: noarch
 
 %description    javadoc
 %{summary}.
+
 
 %prep
 %setup -q -n apache-%{name}-%{version}
@@ -187,6 +195,8 @@ BuildArch: noarch
 find -name '*.jar' -not -path '*/test/*' -delete
 find -name '*.class' -delete
 find -name '*.bat' -delete
+
+%pom_remove_dep -r :powermock-reflect
 
 sed -i 's:\r::' apache-maven/src/conf/settings.xml
 
@@ -216,8 +226,16 @@ sed -i "
 
 %mvn_alias :maven-resolver-provider :maven-aether-provider
 
+# inject missing sisu-maven-plugin in maven-model-builder
+%pom_xpath_inject 'pom:build/pom:plugins' '
+<plugin>
+    <groupId>org.eclipse.sisu</groupId>
+    <artifactId>sisu-maven-plugin</artifactId>
+</plugin>' maven-model-builder/pom.xml
+
+
 %build
-%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 mkdir m2home
 (cd m2home
@@ -317,6 +335,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt1_4jpp11
+- new version
+
 * Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.1-alt2_5jpp11
 - fixed build with new modello
 
