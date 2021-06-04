@@ -1,6 +1,6 @@
 Name: ctpp
 Version: 2.7.1
-Release: alt2.qa1.1
+Release: alt2.qa1.2
 Summary: HTML templater
 License: BSD
 Group: Development/Other
@@ -49,11 +49,11 @@ You will need to install this package to use CTPP package.
 %setup -q
 
 %build
-%cmake_insource
-%make_build VERBOSE=1
+%cmake_insource %_cmake_skip_rpath
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 mkdir -p %buildroot%_man1dir
 mv %buildroot/usr/man/man1/* %buildroot%_man1dir/
 
@@ -75,6 +75,9 @@ mv %buildroot/usr/man/man1/* %buildroot%_man1dir/
 %_libdir/libctpp2-st.a
 
 %changelog
+* Thu Jun 03 2021 Arseny Maslennikov <arseny@altlinux.org> 2.7.1-alt2.qa1.2
+- NMU: spec: adapt to new cmake macros.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.1-alt2.qa1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
