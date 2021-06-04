@@ -37,7 +37,7 @@ Name:           xmlunit
 Summary:        Provides classes to do asserts on xml
 Epoch:          0
 Version:        2.7.0
-Release:        alt1_4jpp11
+Release:        alt1_6jpp11
 # xmlunit2 is licensed under ASL 2.0, xmlunit-legacy is still BSD-licensed
 License:        ASL 2.0 and BSD
 
@@ -45,6 +45,7 @@ URL:            https://www.xmlunit.org/
 Source0:        https://github.com/xmlunit/xmlunit/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
 
 Patch0:         0001-Disable-tests-requiring-network-access.patch
+Patch1:         xmlunit-2.7.0-ValueAssertTest-fix.patch
 
 BuildArch:      noarch
 
@@ -122,6 +123,7 @@ This package provides %{summary}.
 %setup -q -n %{name}-%{version}-src
 
 %patch0 -p1
+%patch1 -p1
 
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
@@ -154,6 +156,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.0-alt1_6jpp11
+- fixed build
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.0-alt1_4jpp11
 - new version
 
