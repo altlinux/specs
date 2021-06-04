@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/jar /usr/bin/java /usr/bin/javac /usr/bin/xprop imake libXt-devel pkgconfig(dbus-1) xorg-cf-files
+BuildRequires: /usr/bin/jar /usr/bin/java /usr/bin/javac imake libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-11-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_1jpp11
+Release:    alt1_4jpp11
 Summary:    Java ATK Wrapper
 
 License:    LGPLv2+
@@ -29,7 +29,7 @@ BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
-BuildRequires:  xorg-utils
+BuildRequires:  xprop
 BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
 BuildRequires:  libat-spi2-core-devel libat-spi2-core-gir-devel
@@ -37,7 +37,7 @@ BuildRequires:  gobject-introspection-devel
 
 
 Requires:   java
-Requires:   xorg-utils
+Requires:   xprop
 Source44: import.info
 
 %description
@@ -82,6 +82,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so \
 
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt1_4jpp11
+- update
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt1_1jpp11
 - new version
 
