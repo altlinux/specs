@@ -1,6 +1,6 @@
 Name:       tvision
 Version:    586
-Release:    alt1
+Release:    alt1.1
 License:    MIT
 Group:      Development/C++
 URL:        https://github.com/magiblot/tvision
@@ -42,16 +42,16 @@ Summary:    A modern port of Turbo Vision 2.0, source and binary examples
 %patch1 -p0
 
 %build
-%cmake
+%cmake %_cmake_skip_rpath
 %cmake_build
 
 %install
 install -d %buildroot%_libdir
-cp -a BUILD/libtvision.so* %buildroot%_libdir/
+cp -a "%_cmake__builddir"/libtvision.so* %buildroot%_libdir/
 install -d %buildroot%_includedir
 cp -a include/tvision %buildroot%_includedir/
 install -d %buildroot%_bindir
-install BUILD/tv* %buildroot%_bindir/
+install "%_cmake__builddir"/tv* %buildroot%_bindir/
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -66,6 +66,9 @@ install BUILD/tv* %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Jun 03 2021 Arseny Maslennikov <arseny@altlinux.org> 586-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Sat Dec 19 2020 Fr. Br. George <george@altlinux.ru> 586-alt1
 - Initial release for ALT
 
