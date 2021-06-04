@@ -76,7 +76,7 @@
 %endif
 
 Name: Mesa
-Version: 21.1.1
+Version: 21.1.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -278,7 +278,7 @@ Mesa-based DRI drivers
 	-Ddri-drivers='%{?dri_drivers}' \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
-	-Dvulkan-layers=overlay \
+	-Dvulkan-layers=device-select \
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=true \
 %endif
@@ -447,18 +447,19 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/vdpau/libvdpau_gallium.so.1.0.0
 %endif
 %ifarch %vulkan_virtio_arches
-%_bindir/mesa-overlay-control.py
-%_libdir/libvulkan_virtio.so
-%_libdir/libVkLayer_MESA_overlay.so
+#_bindir/mesa-overlay-control.py
+#_libdir/libVkLayer_MESA_overlay.so
+%_libdir/libVkLayer_MESA_device_select.so
 %dir %_datadir/vulkan
-%dir %_datadir/vulkan/explicit_layer.d
-%_datadir/vulkan/explicit_layer.d/VkLayer_MESA*.json
+%dir %_datadir/vulkan/*plicit_layer.d
+%_datadir/vulkan/*plicit_layer.d/VkLayer_MESA*.json
 %endif
 
 %ifarch %virgl_arches
 %files -n xorg-dri-virtio
 %_libdir/X11/modules/dri/virtio_gpu_dri.so
 %ifarch %vulkan_virtio_arches
+%_libdir/libvulkan_virtio.so
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/virtio_icd*.json
@@ -528,6 +529,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Jun 04 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.1.2-alt1
+- 21.1.2
+
 * Fri May 21 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.1.1-alt1
 - 21.1.1
 
