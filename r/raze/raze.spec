@@ -1,6 +1,6 @@
 Name: raze
-Version: 1.0.1
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
 Summary: Raze is a fork of Build engine games backed by GZDoom tech
 License: GPLv2+
@@ -10,13 +10,13 @@ Url: https://github.com/coelckers/Raze
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 Source: %name-%version.tar
 Patch: 0001-Fix-file-paths.patch
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake glslang-devel libspirv-tools-devel bzip2 libvpx-devel
-BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz zmusic-devel libzmusiclite
+BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp-devel libtimidity-devel xz zmusic-devel libzmusiclite
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
 
 %description
@@ -74,6 +74,9 @@ done
 %_datadir/%name/%name.pk3
 
 %changelog
+* Mon May 31 2021 Artyom Bystrov <arbars@altlinux.org> 1.1.2-alt1
+- add e2k arch support by fixing libgomp-devel in deps list (thanks to @mike :))
+
 * Thu Apr 29 2021 Artyom Bystrov <arbars@altlinux.org> 1.0.1-alt2
 - Add patch for fixing data paths (thanks to Arch Linux Team)
 
