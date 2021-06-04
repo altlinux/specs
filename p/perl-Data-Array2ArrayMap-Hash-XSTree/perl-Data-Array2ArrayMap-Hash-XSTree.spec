@@ -6,7 +6,7 @@
 %define module Data-Array2ArrayMap-Hash-XSTree
 
 Name: perl-%module
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -38,6 +38,9 @@ BuildRequires: perl-Clone perl-devel
 %perl_vendor_autolib/Data
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- new version
+
 * Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
 - new version
 
