@@ -5,7 +5,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           felix-bundlerepository
 Version:        2.0.10
-Release:        alt1_11jpp11
+Release:        alt2_11jpp11
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
 URL:            https://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
@@ -70,7 +70,7 @@ This package contains the API documentation for %{name}.
 %mvn_file : felix/%{name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -83,6 +83,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 2.0.10-alt2_11jpp11
+- fixed build
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.0.10-alt1_11jpp11
 - update
 
