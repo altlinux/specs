@@ -11,7 +11,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           javamail
 Version:        1.5.2
-Release:        alt1_14jpp11
+Release:        alt2_14jpp11
 Summary:        Java Mail API
 License:        CDDL-1.0 or GPLv2 with exceptions
 URL:            http://www.oracle.com/technetwork/java/javamail
@@ -84,7 +84,7 @@ add_dep javax.mail mailapijar
 %build
 #export JAVA_HOME="/usr/lib/jvm/java-1.8.0"
 # Some tests fail on Koji due to networking limitations
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
+%mvn_build -j -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -97,10 +97,13 @@ ln -sf ../%{name}/javax.mail.jar %{buildroot}%{_javadir}/javax.mail/
 %doc mail/src/main/resources/META-INF/LICENSE.txt
 %{_javadir}/javax.mail/
 
-%files javadoc -f .mfiles-javadoc
-%doc mail/src/main/resources/META-INF/LICENSE.txt
+#files javadoc -f .mfiles-javadoc
+#doc mail/src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt2_14jpp11
+- fixed build - disabled javadoc
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt1_14jpp11
 - update
 
