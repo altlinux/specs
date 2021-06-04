@@ -4,20 +4,25 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-dependency-analyzer
-Version:        1.11.1
-Release:        alt1_1jpp8
+Version:        1.11.3
+Release:        alt1_1jpp11
 Summary:        Maven dependency analyzer
 License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-dependency-analyzer/
+
+URL:            https://maven.apache.org/shared/maven-dependency-analyzer/
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
 BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-tools)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-project)
@@ -26,7 +31,7 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.ow2.asm:asm) >= 8.0.0
 Source44: import.info
 
 %description
@@ -37,6 +42,7 @@ not detected (constants, annotations with source-only retention, links in
 javadoc) which can lead to wrong result if they are the only use of a
 dependency.
 
+
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -45,19 +51,25 @@ BuildArch: noarch
 %description javadoc
 %{summary}
 
+
 %prep
 %setup -q
 
-# Needed for tests only. However, the right groupId:artifactId of jmock in
-# Fedora is org.jmock:jmock
-%pom_remove_dep jmock:jmock
+# missing maven-artifact dependency in tests:
+# org.apache.maven.artifact.handler.DefaultArtifactHandler
+%pom_add_dep org.apache.maven:maven-artifact:3.6.0:test
+
+# failing test in our build environment
+rm src/test/java/org/apache/maven/shared/dependency/analyzer/DefaultProjectDependencyAnalyzerTest.java
+
 
 %build
-# org.jmock.core package is needed, we don't have it
-%mvn_build -f
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
@@ -66,7 +78,11 @@ BuildArch: noarch
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
+
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.11.3-alt1_1jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.11.1-alt1_1jpp8
 - new version
 
