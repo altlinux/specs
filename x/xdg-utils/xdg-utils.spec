@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.3
-Release: alt7
+Release: alt8
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -34,6 +34,9 @@ BuildRequires: xmlto w3m
 
 AutoReq: no
 Requires: coreutils, file, gawk, grep, procps, sed, sh, which, xprop, xset
+
+# for xdg-screensaver (ALT #40152)
+Requires: perl-X11-Protocol perl-Net-DBus
 
 %description
 Xdg-utils is a set of command line tools that assist applications with
@@ -105,6 +108,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Fri Jun 04 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt8
+- add requires: perl-X11-Protocol perl-Net-DBus (ALT bug 40152)
+
 * Wed Oct 07 2020 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt7
 - xdg-su: add fallback to xvt if no xterm found
 
