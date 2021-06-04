@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: polkit
-Version: 0.118
-Release: alt2
+Version: 0.119
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -142,6 +142,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Fri Jun 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.119-alt1
+- 0.119 (fixed CVE-2021-3560)
+
 * Mon Dec 07 2020 Ivan Savin <svn17@altlinux.org> 0.118-alt2
 - Add the ability to add user_of_subject to user_identities list
   if user_of_subject is a member of the group with administrator
