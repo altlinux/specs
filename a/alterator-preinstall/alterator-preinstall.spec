@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Alterator preinstall hooks runner module
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 Requires: alterator >= 4.17-alt1
 Requires: alterator-l10n >= 2.1-alt4
-Requires: installer-scripts-remount-stage2
+Requires: installer-scripts-remount-stage2 >= 0.5.21-alt1
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: installer-common-stage2 < 1.8.4-alt1
 
@@ -37,6 +37,9 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Jun 04 2021 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt1
+- backend3/preinstall: not mount /run to /destination/run
+
 * Tue Feb 04 2014 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
 - Do not turn off host alteratord during preinstall in autoinstall mode (ALT #29783)
 
