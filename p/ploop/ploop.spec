@@ -3,7 +3,7 @@
 
 Name: ploop
 Version: 7.0.259
-Release: alt1
+Release: alt2
 Group: System/Base
 License: GPLv2
 Summary: Ploop tools
@@ -109,6 +109,9 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.259-alt2
+- revert "disable metadata_csum feature for VE fs"
+
 * Fri May 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.259-alt1
 - 7.0.259
 - fix e4defrag call
