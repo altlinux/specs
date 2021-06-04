@@ -1,50 +1,27 @@
+
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
+
+Name: clojure
+Version: 1.10.1
+Summary: A dynamic programming language that targets the Java Virtual Machine
+License: EPL-1.0
+Url: http://clojure.org/
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-%define fedora 31
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.8.0
-%global project     clojure
-%global groupId     org.clojure
-%global artifactId  clojure
-%global archivename %{project}-%{artifactId}
-%global full_version %{version}
+Release: alt0.1jpp
 
-Name:           clojure
-Epoch:          1
-Version:        1.8.0
-Release:        alt1_1jpp8
-Summary:        A dynamic programming language that targets the Java Virtual Machine
+Epoch: 1
+Packager: Igor Vlasenko <viy@altlinux.org>
+Provides: mvn(org.clojure:clojure) = 1.10.1
+Provides: mvn(org.clojure:clojure:pom:) = 1.10.1
+Requires: mvn(org.clojure:core.specs.alpha)
+Requires: mvn(org.clojure:spec.alpha)
 
-License:        EPL-1.0
-URL:            http://clojure.org/
-Source0:        https://github.com/%{name}/%{name}/archive/%{name}-%{full_version}.zip
+BuildArch: noarch
+Source: clojure-1.10.1-5.fc33.cpio
 
-Source1:        clojure.sh
 
-BuildArch:      noarch
-
-BuildRequires:  javapackages-tools
-BuildRequires:  maven-local
-BuildRequires:  ant >= 1.6
-BuildRequires:  objectweb-asm
-BuildRequires:  sonatype-oss-parent
-
-%if 0%{?fedora} > 20
-%else
-Requires:       java >= 1.6
-%endif
-
-Requires:       objectweb-asm
-Source44: import.info
-
-%description 
+%description
 Clojure is a dynamic programming language that targets the Java
 Virtual Machine. It is designed to be a general-purpose language,
 combining the approachability and interactive development of a
@@ -57,34 +34,29 @@ optional type hints and type inference, to ensure that calls to Java
 can avoid reflection.
 
 %prep
-%setup -q -n %{archivename}-%{full_version}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-ant -Dmaven.test.skip=1
-
-%mvn_artifact pom.xml %{name}.jar
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+sed -i 1s,/usr/bin/bash,/bin/bash, usr/bin/*
+mkdir -p etc/java
+touch etc/java/clojure.conf
 
 %install
-# jar - link to prefix'd jar so that java stuff knows where to look
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# startup script
-install -d -m 755 %{buildroot}%{_bindir}
-install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 
-%mvn_install
-
-%files -f .mfiles
-%doc --no-dereference epl-v10.html 
-%doc changes.md readme.txt 
-%{_mavenpomdir}/*
-%{_javadir}/%{name}.jar
-%{_bindir}/%{name}
+%files -f %name-list
+/etc/java/clojure.conf
 
 %changelog
+* Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.8.0-alt1_1jpp8
 - new version
 
