@@ -64,7 +64,7 @@
 
 Name:    mpd
 Version: 0.21.24
-Release: alt1
+Release: alt1.1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
@@ -78,6 +78,8 @@ Source2: %name.sys.conf.in
 Source3: %name.init.in
 Source4: %name.logrotate
 Source5: %name.tmpfile
+
+Patch10: mpd-0.21.24-alt-docs-remove-upload-target.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): meson
@@ -153,6 +155,7 @@ This package contains %Name documentation.
 
 %prep
 %setup
+%patch10 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -263,6 +266,10 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Fri May 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.21.24-alt1.1
+- doc/meson.build: remove "upload" target
+  (https://github.com/MusicPlayerDaemon/MPD/issues/1161)
+
 * Mon Jul 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.24-alt1
 - Updated to upstream version 0.21.24.
 - Enabled again iso9660 support.

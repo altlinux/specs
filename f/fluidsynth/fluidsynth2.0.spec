@@ -14,10 +14,11 @@
 %def_enable libinstpatch
 %def_enable dbus
 %def_enable systemd
+%def_disable docs
 %def_enable check
 
 Name: fluidsynth
-Version: 2.1.8
+Version: 2.2.1
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -182,14 +183,14 @@ MIDI-синтезатора. FluidSynth также может воспроизв
     %{?_enable_sdl2:-Denable-sdl2:bool=true}
 %nil
 %cmake_build
-%cmake_build doxygen
+%{?_enable_docs:%cmake_build -t doxygen}
 
 %install
-%cmakeinstall_std
-cp -r BUILD/doc/api/html ./
+%cmake_install
+%{?_enable_docs:cp -r %_cmake__builddir/doc/api/html ./}
 
 %check
-%make -C BUILD check
+%cmake_build -t check
 
 %files
 %_bindir/%name
@@ -203,7 +204,7 @@ cp -r BUILD/doc/api/html ./
 %_includedir/*
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
-%doc html
+%{?_enable_docs:%doc html}
 %doc TODO
 
 %if_enabled static
@@ -212,6 +213,10 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Mon May 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+- adapted to new cmake macros
+
 * Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt1
 - 2.1.8
 

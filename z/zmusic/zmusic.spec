@@ -1,6 +1,6 @@
 Name:           zmusic
 Version:        1.1.2
-Release:        alt1
+Release:        alt1.1
 Summary:        ZDoom component library for music handling
 License:        GPL-3.0 and LGPL-v2.1
 Group:          Sound
@@ -78,6 +78,9 @@ export CXXFLAGS="%optflags -msse -msse2"
 %_libdir/libzmusiclite.*
 
 %changelog
+* Fri May 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1.1
+- rebuilt against libfluidsynth.so.3
+
 * Thu Jul 16 2020 Artyom Bystrov <arbars@altlinux.org> 1.1.2-alt1
 - initial build for ALT Sisyphus (Thanks to OpenSUSE Team!)
 

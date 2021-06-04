@@ -1,6 +1,6 @@
 Name: scummvm
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Graphic adventure game interpreter
 Group: Games/Adventure
@@ -9,6 +9,7 @@ Url: http://www.scummvm.org
 
 Source: %name-%version.tar.gz
 Patch: scummvm-1.3.0-mp2player.patch
+Patch1: scummvm-2.2.0-Fluidsynth2.2.patch
 
 Provides: %_gamesdatadir/%name
 
@@ -25,8 +26,10 @@ LucasArts games such as Monkey Island, Day of the Tentacle, and others.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
+export CXXFLAGS=-DFS_API_VERSION=0x0202
 ./configure \
 	--prefix=%prefix \
 	--bindir=%_bindir \
@@ -70,6 +73,9 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Fri May 28 2021 Fr. Br. George <george@altlinux.ru> 2.2.0-alt2
+- Build with fluidsynth 2.2.1
+
 * Sun Oct 04 2020 Fr. Br. George <george@altlinux.ru> 2.2.0-alt1
 - Autobuild version bump to 2.2.0
 
