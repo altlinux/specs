@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-build-python3
 %add_python3_path /usr/share/java-utils/
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
-%define fedora 32
+%define fedora 33
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -33,7 +33,7 @@ BuildRequires: jpackage-11-compat
 %bcond_without asciidoc
 %bcond_with gradle
 %bcond_with tests
-%bcond_with xmvn_javadoc
+%bcond_without xmvn_javadoc
 
 %if 0%{?fedora} || 0%{?rhel} > 7
 %global python_prefix python3
@@ -44,12 +44,12 @@ BuildRequires: jpackage-11-compat
 %global rpmmacrodir /etc/rpm
 %endif
 
-%global default_jdk %{?_root_prefix}%{!?_root_prefix:%{_prefix}}/lib/jvm/java-1.8.0-openjdk
-%global default_jre %{?_root_prefix}%{!?_root_prefix:%{_prefix}}/lib/jvm/jre-1.8.0-openjdk
+%global default_jdk %{?_root_prefix}%{!?_root_prefix:%{_prefix}}/lib/jvm/java-11-openjdk
+%global default_jre %{?_root_prefix}%{!?_root_prefix:%{_prefix}}/lib/jvm/jre-11-openjdk
 
 Name:           javapackages-tools
 Version:        5.3.0
-Release:        alt1_9jpp8
+Release:        alt1_13jpp11
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -347,6 +347,9 @@ popd
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:5.3.0-alt1_13jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:5.3.0-alt1_9jpp8
 - use jvm_run() to avoid generating /usr/bin/run dependency
 
