@@ -2,7 +2,7 @@
 
 Name: libbotan
 Version: 2.18.0
-Release: alt1
+Release: alt2
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -12,6 +12,7 @@ Url: http://botan.randombit.net
 
 # Source-url: https://github.com/randombit/botan/archive/%version.tar.gz
 Source: %name-%version.tar
+Patch2000: %name-e2k-simd.patch
 
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++
@@ -52,6 +53,9 @@ Python extensions for botan
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 export CXXFLAGS="${CXXFLAGS:-%optflags}"
@@ -101,6 +105,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Thu Jun 03 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.18.0-alt2
+- added SIMD patch for Elbrus
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.18.0-alt1
 - new version 2.18.0 (with rpmrb script)
 
