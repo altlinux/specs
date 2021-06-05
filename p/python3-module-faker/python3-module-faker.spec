@@ -1,7 +1,7 @@
 %define  modulename faker
 
 Name:    python3-module-%modulename
-Version: 8.4.0
+Version: 8.5.1
 Release: alt1
 
 Summary: Faker is a Python package that generates fake data for you.
@@ -36,6 +36,9 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Sat Jun 05 2021 Grigory Ustinov <grenka@altlinux.org> 8.5.1-alt1
+- Automatically updated to 8.5.1.
+
 * Fri May 28 2021 Grigory Ustinov <grenka@altlinux.org> 8.4.0-alt1
 - Automatically updated to 8.4.0.
 
