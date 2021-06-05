@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt7
+Release: alt7.1
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -38,6 +38,7 @@ Conflicts: openuds-tunnel openuds-guacamole-tunnel
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): webserver-common rpm-build-webserver-common rpm-macros-apache2
+BuildRequires: gettext-tools
 
 %description
 OpenUDS (Universal Desktop Services) is a multiplatform connection broker for:
@@ -79,6 +80,11 @@ Requires: cert-sh-functions
 
 sed -i 's|#!/usr/bin/env python3|#!/usr/bin/python3|' \
     $(find . -name '*.py')
+
+%build
+# Compile localization files
+for po in `find src/uds/locale -name \*.po`;do msgfmt $po -o "${po%%.po}.mo"; done
+find src/uds/locale -name \*.po -delete
 
 %install
 
@@ -142,6 +148,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Sat Jun 05 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt7.1
+- NMU: package compiled localization files (ALT #40161)
+
 * Fri Apr 23 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt7
 - Fix create home dir for user openuds
 
