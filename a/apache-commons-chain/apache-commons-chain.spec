@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_22jpp11
+Release:       alt2_22jpp11
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
@@ -23,7 +23,7 @@ BuildRequires:  mvn(commons-beanutils:commons-beanutils)
 BuildRequires:  mvn(commons-digester:commons-digester)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.portlet:portlet-api)
-BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api:3.1.0)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
@@ -82,7 +82,7 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 
 %build
 
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
+%mvn_build -- -Dmaven.javadoc.source=1.6 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dmaven.compiler.release=6
 
 %install
 %mvn_install
@@ -95,6 +95,9 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2-alt2_22jpp11
+- fixed build
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2-alt1_22jpp11
 - update
 
