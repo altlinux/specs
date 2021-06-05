@@ -3,15 +3,15 @@ BuildRequires: python3(sqlalchemy)
 # END SourceDeps(oneline)
 %define oname aiopg
 
-%def_without python2
 %def_with python3
+%def_without docs
 
-Name: python-module-%oname
-Version: 0.16.0
-Release: alt1.1
+Name: python3-module-%oname
+Version: 1.2.1
+Release: alt1
 Summary: aiopg is a library for accessing a PostgreSQL database from the asyncio
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/aiopg/
 
 BuildArch: noarch
@@ -20,100 +20,57 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-psycopg2
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-psycopg2
-%endif
+BuildRequires: python3-module-psycopg2 python3-module-async-timeout
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx-devel python3-module-sphinxcontrib-asyncio
 
-%py_provides %oname
-%py_requires asyncio psycopg2 sqlalchemy
+%py3_provides %oname
+%py3_requires asyncio psycopg2 sqlalchemy
 
 %description
 aiopg is a library for accessing a PostgreSQL database from the asyncio
 (PEP-3156/tulip) framework. It wraps asynchronous features of the
 Psycopg database driver.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: aiopg is a library for accessing a PostgreSQL database from the asyncio
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires asyncio psycopg2 sqlalchemy
-
-%description -n python3-module-%oname
-aiopg is a library for accessing a PostgreSQL database from the asyncio
-(PEP-3156/tulip) framework. It wraps asynchronous features of the
-Psycopg database driver.
-%endif
-
 %prep
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%make -C docs html SPHINXBUILD=py3_sphinx-build
+%if_with docs
+%make -C docs html SPHINXBUILD=sphinx-build-3
+%endif
 
 rm -f requirements.txt
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
-%doc *.txt *.rst examples docs/_build/html
-%python_sitelibdir/*
+%doc *.txt *.rst examples
+%if_with docs
+%doc docs/_build/html
 %endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt *.rst examples docs/_build/html
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sat Jun 05 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Automatically updated to 1.2.1.
+- Drop python2 support.
+- Build without docs.
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1.1
 - NMU: applied logoved fixes
 
