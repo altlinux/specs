@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -134,6 +134,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Jun 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.40.2-alt1
+- 2.40.2
+
 * Sat May 01 2021 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
 - 2.40.1
 

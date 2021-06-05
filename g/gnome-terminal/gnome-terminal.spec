@@ -5,7 +5,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.64.1
+%define vte_ver 0.64.2
 
 Provides: xvt
 
@@ -83,12 +83,13 @@ EOF
 
 %files -f %name.lang
 %_bindir/%name
-#%_libexecdir/%name-migration
 %_libexecdir/%name-server
 %_prefix/lib/systemd/user/%name-server.service
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%dir %_libdir/%name
+%_libdir/%name/gschemas.compiled
 %_datadir/gnome-shell/search-providers/%name-search-provider.ini
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -105,6 +106,9 @@ EOF
 %endif
 
 %changelog
+* Sat Jun 05 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.2-alt1
+- 3.40.2
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
 - 3.40.1
 
