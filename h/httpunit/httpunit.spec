@@ -38,7 +38,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt7_32jpp11
+Release:        alt8_32jpp11
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -63,14 +63,14 @@ BuildRequires:  ant >= 0:1.6
 BuildRequires:  nekohtml
 BuildRequires:  jtidy
 BuildRequires:  junit >= 0:3.8
-BuildRequires:  glassfish-servlet-api
+BuildRequires:  mvn(javax.servlet:servlet-api:3.1.0)
 BuildRequires:  javamail >= 0:1.3
 BuildRequires:  rhino
 BuildRequires:  javapackages-local
 BuildRequires:  jakarta-activation
 
 Requires:       junit >= 0:3.8
-Requires:       glassfish-servlet-api
+#Requires:       mvn(javax.servlet:servlet-api:3.1.0)
 # As of 1.5, requires either nekohtml or jtidy, and prefers nekohtml.
 Requires:       nekohtml
 Requires:       rhino
@@ -126,7 +126,7 @@ ln -s \
   %{_javadir}/junit.jar \
   %{_javadir}/jtidy.jar \
   %{_javadir}/nekohtml.jar \
-  %{_javadir}/glassfish-servlet-api.jar \
+  %{_javadir}/glassfish-servlet-api-3.1.0.jar \
   %{_javadir}/js.jar \
   %{_javadir}/xerces-j2.jar \
   jars
@@ -168,6 +168,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7-alt8_32jpp11
+- fixed build
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7-alt7_32jpp11
 - update
 
