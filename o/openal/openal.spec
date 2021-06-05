@@ -3,7 +3,7 @@
 
 Name: openal
 Version: 1.21.1
-Release: alt1
+Release: alt2
 
 Summary: Open Audio Library
 
@@ -84,12 +84,15 @@ sed -i 's,-Winline,,' CMakeLists.txt
 %build
 %cmake_insource \
 	-DALSOFT_REQUIRE_OSS=OFF \
-	-DALSOFT_CONFIG=ON
-
+	-DALSOFT_CONFIG=ON \
 %ifarch %e2k
-# TODO: reintroduce if possible
-sed -i '/^#define HAVE_SSE/d' config.h
+	-DALSOFT_CPUEXT_SSE4_1=OFF \
+	-DALSOFT_CPUEXT_SSE3=OFF \
+	-DALSOFT_CPUEXT_SSE2=OFF \
+	-DALSOFT_CPUEXT_SSE=OFF \
+	-DALSOFT_CPUEXT_NEON=OFF \
 %endif
+	#
 
 %make_build
 
@@ -136,7 +139,14 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 %_bindir/alsoft-config
 %endif
 
+# TODO:
+# - use SSE on e2k if possible (mike@)
+# - alrecord, altonegen not packaged (really needed?)
+
 %changelog
+* Sat Jun 05 2021 Michael Shigorin <mike@altlinux.org> 1.21.1-alt2
+- E2K: fix ftbfs by avoiding x86/arm intrinsics in a cleaner way for now
+
 * Sat Apr 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.21.1-alt1
 - Version 1.21.1
 
