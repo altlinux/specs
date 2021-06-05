@@ -12,8 +12,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2102
-Release: alt1.1
+Version: 6.2.2103
+Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -382,6 +382,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Sat Jun 05 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2103-alt1
+- New version.
+
 * Wed May 05 2021 Arseny Maslennikov <arseny@altlinux.org> 6.2.2102-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
