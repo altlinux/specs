@@ -2,7 +2,7 @@
 %def_with emacs
 
 Name: gnuplot
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 Epoch: 1
 
@@ -271,6 +271,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Sat Jun 05 2021 Grigory Ustinov <grenka@altlinux.org> 1:5.4.2-alt1
+- Automatically updated to 5.4.2.
+
 * Mon Dec 21 2020 Grigory Ustinov <grenka@altlinux.org> 1:5.4.1-alt1
 - Build new version.
 - Update faq file.
