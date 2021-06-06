@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           freemarker
 Version:        2.3.30
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
 URL:            https://freemarker.apache.org/
@@ -43,7 +43,7 @@ BuildRequires: apache-commons-logging
 BuildRequires: aqute-bnd
 BuildRequires: hamcrest
 BuildRequires: ivy-local
-BuildRequires: glassfish-jsp-api
+BuildRequires: glassfish-jsp-api2.3
 BuildRequires: glassfish-servlet-api
 BuildRequires: javacc >= 7.0
 BuildRequires: jaxen >= 1.1
@@ -137,6 +137,9 @@ export LANG=C.UTF-8
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt2_2jpp8
+- fixed build
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt1_2jpp8
 - new version, use jvm8
 

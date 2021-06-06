@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 
 Name:       glassfish-jsp-api2.3
 Version:    2.3.3
-Release:    alt2_2jpp11
+Release:    alt3_2jpp11
 Summary:    Glassfish J2EE JSP API specification
 License:    (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
 
@@ -55,7 +55,7 @@ sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 %pom_remove_plugin :maven-javadoc-plugin
 
 %mvn_alias : javax.servlet:jsp-api
-%mvn_compat_version : 2.3 2.3.0 %version
+%mvn_compat_version : 2.1 2.2 2.3 %version
 popd
 
 %build
@@ -76,6 +76,9 @@ popd
 
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 2.3.3-alt3_2jpp11
+- added compat version 2.1
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 2.3.3-alt2_2jpp11
 - compat build
 
