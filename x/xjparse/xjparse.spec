@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		xjparse
 Version:	1.0
-Release:	alt1_21jpp8
+Release:	alt1_24jpp11
 Summary:	Wrapper for the Xerces XML Schema validator
 License:	ASL 2.0
 URL:		http://nwalsh.com/java/xjparse
@@ -34,7 +34,7 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 %build
 export CLASSPATH=$(build-classpath xml-commons-resolver)
-ant -f build.xml jar -verbose
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f build.xml jar -verbose
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
@@ -50,6 +50,9 @@ install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 %{_bindir}/xjparse
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_24jpp11
+- rebuild with java11 and use jvm_run
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_21jpp8
 - fc update
 
