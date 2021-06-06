@@ -18,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt3_15jpp8
+Release:        alt4_15jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
@@ -38,8 +38,8 @@ BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 #BuildRequires:  mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 %if %{without jp_minimal}
 BuildRequires:  mvn(args4j:args4j)
-BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
-BuildRequires:  mvn(com.sun.istack:istack-commons-tools)
+BuildRequires:  mvn(com.sun.istack:istack-commons-runtime:2.21)
+BuildRequires:  mvn(com.sun.istack:istack-commons-tools:2.21)
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
 BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset)
@@ -275,6 +275,12 @@ rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,St
 %mvn_package :jaxb-bom* __noinstall
 %endif
 
+%pom_change_dep com.sun.istack: ::2.21 xjc codemodel/codemodel-annotation-compiler core
+
+#./xjc/pom.xml:            <groupId>com.sun.istack</groupId>
+#./xjc/pom.xml:            <artifactId>istack-commons-tools</artifactId>
+
+
 %build
 %mvn_build -f -s -j -- -Ddev -DbuildNumber=unknown
 
@@ -331,6 +337,9 @@ rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,St
 
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2.11-alt4_15jpp8
+- fixed build
+
 * Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2.11-alt3_15jpp8
 - fixed build
 
