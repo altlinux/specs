@@ -1,17 +1,16 @@
 Name: wmgtemp
-Version: 1.1
-Release: alt3
+Version: 1.2
+Release: alt1
 
 Summary: Dock app for WindowMaker that displays the CPU and SYS temperatures
 License: Artistic-1
 Group: Graphical desktop/Window Maker
 
 Url: http://www.fluxcode.net/projects/wmgtemp
-Source0: http://www.fluxcode.net/%name-%version.tar.gz
+Source0: https://www.dockapps.net/download/%name-%version.tar.gz
 Source1: %name.menu
 
-# Automatically added by buildreq on Wed Oct 20 2010
-BuildRequires: libXext-devel libXpm-devel libsensors3-devel
+BuildRequires: libXext-devel libXpm-devel libsensors3-devel libdockapp-devel
 
 %description
 wmgtemp graphically displays the CPU and System temperatures
@@ -25,14 +24,12 @@ high-temperature warning lights.
 %setup
 
 %build
-cd src
-%add_optflags "-std=gnu89"
-%add_optflags "-fcommon"
-%make_build CCFLAGS="%optflags"
+%autoreconf
+%configure
+%make_build
 
 %install
-install -pDm755 src/%name %buildroot%_bindir/%name
-install -pDm644 %name.1 %buildroot%_man1dir/%name.1
+%makeinstall_std
 install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
@@ -41,6 +38,9 @@ install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.2-alt1
+- Build new version without -fcommon.
+
 * Thu Mar 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.1-alt3
 - gcc10 FTBFS workaround (-fcommon)
 - updated license tag
