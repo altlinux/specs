@@ -12,7 +12,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.24
+Version: 8.0.25
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -389,7 +389,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_SYSTEMD=ON \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DWITH_BOOST=../boost/boost_1_73_0 \
+	-DWITH_BOOST=boost/boost_1_73_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 %if_with debug
 	-DWITH_DEBUG=1 \
@@ -792,6 +792,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed May 19 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.25-alt1
+- new version
+
 * Wed Apr 21 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.24-alt1
 - new version
   + (fixes: CVE-2020-1971, CVE-2020-28196, CVE-2021-2144, CVE-2021-2146)
