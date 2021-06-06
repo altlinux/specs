@@ -8,7 +8,7 @@ BuildRequires: perl(Getopt/Mixed.pm)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -45,7 +45,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           rhino
 Version:        1.7.7.1
-Release:        alt1_9jpp8
+Release:        alt1_14jpp11
 Summary:        JavaScript for Java
 License:        MPLv2.0
 
@@ -60,9 +60,8 @@ Patch1:         %{name}-addOrbitManifest.patch
 URL:            http://www.mozilla.org/rhino/
 
 BuildRequires:  ant
-BuildRequires:  sonatype-oss-parent
 BuildRequires:  javapackages-local
-Requires:       jline
+Requires:       jline2
 # Explicit javapackages-tools requires since rhino script uses
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
@@ -102,13 +101,13 @@ sed -i -e 's|^implementation.version: Rhino .* release .* \${implementation.date
 %mvn_file : js %{name}
 
 %build
-ant deepclean jar copy-all -Dno-xmlbeans=1
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  deepclean jar copy-all -Dno-xmlbeans=1
 %mvn_artifact %{SOURCE1} build/%{name}%{version}/js.jar
 
 pushd examples
 
 export CLASSPATH=../build/%{name}%{version}/js.jar:$(build-classpath xmlbeans/xbean 2>/dev/null)
-%{javac} *.java
+%{javac} -target 1.8 -source 1.8 *.java
 %{jar} cf ../build/%{name}%{version}/%{name}-examples.jar *.class
 popd
 
@@ -142,6 +141,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_datadir}/%{name}
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 1:1.7.7.1-alt1_14jpp11
+- rebuild with java11 and use jvm_run
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_9jpp8
 - fc update
 
