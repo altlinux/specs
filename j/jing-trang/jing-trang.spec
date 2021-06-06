@@ -22,7 +22,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jing-trang
 Version:        20151127
-Release:        alt1_8jpp8
+Release:        alt2_8jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
@@ -190,6 +190,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:20151127-alt2_8jpp8
+- use jvm_run
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_8jpp8
 - fc update
 
