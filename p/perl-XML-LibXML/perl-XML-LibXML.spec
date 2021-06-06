@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML
-%def_without bootstrap
+%def_with bootstrap
 Name: perl-%dist
 Version: 2.0207
-Release: alt1
+Release: alt1.1
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -66,6 +66,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 2.0207-alt1.1
+- rebuild with new perl 5.32.1 (bootstrapped)
+
 * Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 2.0207-alt1
 - automated CPAN update
 

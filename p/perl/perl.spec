@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.30.3
+Version: 5.32.1
 Release: alt1
 Epoch: 1
 
@@ -16,11 +16,11 @@ Patch02: perl-5.24.0-alt-644-at-installperl.patch
 Patch03: perl-5.22.0-alt-644-viy-ExtUtils-Install-fix-test.patch
 Patch04: perl-5.26.1-alt-at-MM_Unix-link-xs-with-libperl.patch
 Patch05: perl-5.24.1-alt-at-MM_Unix-shabang.patch
-Patch06: perl-5.30.1-alt-at-Storable-no-early-dep-on-Log-Agent.patch
+Patch06: perl-5.32.1-alt-at-Storable-no-early-dep-on-Log-Agent.patch
 Patch07: perl-5.24.0-alt-at-debian-Errno_pm.patch
 Patch08: perl-5.26.1-alt-at-disable-Cpan-Meta-under-rpm.patch
 Patch09: perl-5.24.0-alt-at-libperl-soname.patch
-Patch10: perl-5.24.1-alt-at-no-rpath-for-std-libs.patch
+Patch10: perl-5.32.1-alt-at-no-rpath-for-std-libs.patch
 Patch11: perl-5.20.1-alt-at-perl5db-findreq-cleanup.patch
 Patch12: perl-5.20.1-alt-at-perlbug-findreq-cleanup.patch
 Patch13: perl-5.20.1-alt-at-skip-deprecation-warning.patch
@@ -30,7 +30,7 @@ Patch15: perl-5.20.1-alt-crux-fix-test-without-proc.patch
 Patch16: perl-5.20.1-alt-ldv-support-for-alt-gcc-wrapper.patch
 Patch17: perl-5.26.1-alt-viy-Unicode-Normalize-fix-deps.patch
 # hack - sensitive test can fail transaction - see maintainers notes for 5.24.1
-Patch18: perl-5.24.1-alt-viy-disable-Time-HiRes-itimer.t.patch
+Patch18: perl-5.32.1-alt-viy-disable-Time-HiRes-itimer.t.patch
 Patch19: perl-5.28.1-alt-viy-no-check-sums-in-customized.t.patch
 # temporary quick hack; should be replaced by a proper surgery
 # not installing version::regex will live perl.req's unmets
@@ -40,8 +40,7 @@ Patch21: perl-5.24.3-alt-solovyov.patch
 Patch23: perl-5.22.3-alt-mcpain-trust-mode.patch
 
 # cpan update patches here. use format below:
-Patch50: cpan-update-Scalar-List-Utils-1.50-to-Scalar-List-Utils-1.55.patch
-Patch51: cpan-update-Test-Simple-1.302162-to-Test-Simple-1.302175.patch
+Patch50: cpan-update-Test-Simple-1.302175-to-Test-Simple-1.302183.patch
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora)[shift=300]: -----------------------
@@ -56,170 +55,121 @@ Patch312:        perl-5.27.8-hints-linux-Add-lphtread-to-lddlflags.patch
 # Pass the correct CFLAGS to dtrace
 Patch313:        perl-5.28.0-Pass-CFLAGS-to-dtrace.patch
 
-# Fix memory handling when parsing string literals, fixed after 5.31.0
-Patch316:        perl-5.31.0-S_scan_const-Properly-test-if-need-to-grow.patch
+# Do not use C compiler reserved identifiers, in upstream after 5.33.0
+Patch314:        perl-5.33.0-MUTABLE_PTR-Rmv-non-standard-syntax.patch
 
-# Fix an undefined behavior in shifting IV variables, fixed after 5.31.0
-Patch317:        perl-5.31.0-Create-fcn-for-lossless-conversion-of-NV-to-IV.patch
-Patch318:        perl-5.30.0-pp.c-Add-two-UNLIKELY-s.patch
-Patch319:        perl-5.30.0-Remove-undefined-behavior-from-IV-shifting.patch
+# Fix SvUV_nomg() macro definition, in upstream after 5.33.0
+Patch315:        perl-5.33.0-sv.h-Wanted-UOK-but-said-IOK.patch
 
-# Fix stacking file test operators, CPAN RT#127073, fixed after 5.31.0
-Patch320:        perl-5.31.0-Don-t-use-PL_check-op_type-to-check-for-filetets-ops.patch
+# Fix SvTRUE() documentation, in upstream after 5.33.0
+Patch316:        perl-5.33.0-Update-pod-for-SvTRUE-to-indicate-single-param-evalu.patch
 
-# Fix a crash in SIGALARM handler when waiting on a child process to be closed,
-# RT#122112, fixed after 5.31.0
-Patch321:        perl-5.31.0-perl-122112-test-for-signal-handler-death-in-pclose.patch
-Patch322:        perl-5.31.0-perl-122112-a-simpler-fix-for-pclose-aborted-by-a-si.patch
-Patch323:        perl-5.31.0-perl-122112-remove-some-interfering-debug-output.patch
+# Fix ext/XS-APItest/t/utf8_warn_base.pl tests, in upstream after 5.33.0
+Patch317:        perl-5.33.0-ext-XS-APItest-t-utf8_warn_base.pl-Fix-a-couple-test.patch
 
-# Fix a crash with a negative precision in sprintf function, RT#134008,
-# fixed after 5.31.0
-Patch325:        perl-5.31.0-perl-134008-an-alternative-test.patch
+# Fix IO::Handle::error() to report write errors, GH#6799, in upstream after 5.33.0
+Patch318:        perl-5.33.0-make-fh-error-report-errors-from-both-input-and-outp.patch
+Patch319:        perl-5.33.0-IO-Handle-clear-the-error-on-both-input-and-output-s.patch
 
-# Prevent from wrapping a width in a numeric format string, RT#133913,
-# fixed after 5.31.0
-Patch327:        perl-5.31.0-perl-133913-limit-numeric-format-results-to-INT_MAX.patch
+# Fix setting a non-blocking mode in IO::Socket::UNIX, GH#17787,
+# in upstream after 5.33.0
+Patch321:        perl-5.33.0-IO-Socket-UNIX-synchronize-behavior-with-module-docu.patch
 
-# Fix subroutine protypes to track reference aliases, RT#134072,
-# fixed after 5.31.0
-Patch328:        perl-5.31.0-perl-134072-allow-foo-bar-to-work-in-main.patch
+# Fix running actions after stepping in a debugger, GH#17901,
+# in upstream after 5.33.0
+Patch322:        perl-5.33.0-After-running-an-action-in-the-debugger-turn-it-off.patch
+Patch323:        perl-5.33.0-Clearing-DB-action-at-the-end-is-no-longer-needed.patch
+Patch324:        perl-5.33.0-Add-missing-MANIFEST-entry-from-fix-for-debugger.patch
 
-# Fix changing packet destination sent from a UDP IO::Socket object,
-# RT#133936, fixed after 5.31.0
-Patch330:        perl-5.31.0-perl-133936-ensure-TO-is-honoured-for-UDP-sock-send.patch
-Patch331:        perl-5.31.0-perl-133936-document-differences-between-IO-Socket-a.patch
-Patch332:        perl-5.31.0-perl-133936-make-send-a-bit-saner.patch
+# Fix a buffer size for asctime_r() and ctime_r() functions,
+# in upstream after 5.33.0
+Patch325:        perl-5.33.0-reentr.c-Buffer-sizes-for-asctime_r-ctime_r-are-smal.patch
 
-# Fix %%{^CAPTURE_ALL} to be an alias for %%- variable, RT#131867,
-# fixed after 5.31.0
-Patch337:        perl-5.31.0-CAPTURE_ALL-was-intended-to-be-an-alias-for-make-it-.patch
+# Prevent from an integer overflow in RenewDouble() macro,
+# in upstream after 5.33.0
+Patch326:        perl-5.33.0-reentr.c-Prevent-infinite-looping.patch
 
-# Fix %%{^CAPTURE} value when used after @{^CAPTURE}, RT#134193,
-# fixed after 5.31.0
-Patch338:        perl-5.31.0-perl-134193-allow-CAPTURE-to-work-when-CAPTURE-comes.patch
-Patch339:        perl-5.31.0-perl-134193-make-the-varname-match-the-names.patch
+# Fix a number of arguments passed to a BOOT XS subroutine, GH#17755,
+# in upstream after 5.33.0
+Patch328:        perl-5.33.0-XSUB.h-fix-MARK-and-items-variables-inside-BOOT-XSUB.patch
 
-# Fix a test for a crash in SIGALARM handler when waiting on a child process to
-# be closed, RT#122112, fixed after 5.31.1
-Patch340:        perl-5.31.1-perl-122112-make-sure-SIGPIPE-is-delivered-if-we-tes.patch
+# Fix an IO::Handle spurious error reported for regular file handles,
+# GH#18019, in upstream after 5.33.0
+Patch329:        perl-5.33.0-IO-Handle-Fix-a-spurious-error-reported-for-regular-.patch
 
-# Fix a crash on an uninitialized warning when processing a multideref node,
-# RT#134275, fixed after 5.31.1
-Patch341:        perl-5.31.1-avoid-SEGV-with-uninit-warning-with-multideref.patch
+# Fix inheritance resolution of lexial objects in a debugger, GH#17661,
+# in upstream after 5.33.0
+Patch330:        perl-5.33.0-fix-C-i-obj-where-obj-is-a-lexical.patch
 
-# Preserve append mode when opening anonymous files, RT#134221,
-# fixed after 5.31.1
-Patch342:        perl-5.30.0-perl-134221-support-append-mode-for-open-.-undef.patch
-Patch343:        perl-5.31.1-perl-134221-support-append-mode-temp-files-on-Win32-.patch
-Patch344:        perl-5.31.1-perl-134221-support-O_APPEND-for-open-.-undef-on-VMS.patch
+# Fix sorting with a block that calls return, GH#18081,
+# in upstream after 5.33.1
+Patch335:        perl-5.33.1-sort-return-foo.patch
 
-# Fix propagating non-string variables in an exception value, RT#134291,
-# fixed after 5.31.2
-Patch345:        perl-5.31.2-perl-134291-propagate-non-PVs-in-in-bare-die.patch
+# Fix sv_collxfrm macro to respect locale, in upstream after 5.33.2
+Patch338:        perl-5.33.2-sv.h-sv_collxfrm-didn-t-work-properly.patch
 
-# Include trailing zero in scalars holding trie data, RT#134207,
-# fixed after 5.31.2
-Patch346:        perl-5.31.2-include-a-trailing-0-in-SVs-holding-trie-info.patch
+# Fix an iterator signedness in handling an mro exception, GH#18155,
+# in upstream after 5.33.2
+Patch339:        perl-5.33.2-mro.xs-Fix-compiler-warning.patch
 
-# Fix a use after free in debugging output of a collation,
-# in upstream after 5.31.2
-Patch348:        perl-5.31.2-locale.c-Stop-Coverity-warning.patch
+# Fix a code flow in Perl_sv_inc_nomg(), in upstream after 5.33.2
+Patch340:        perl-5.33.2-sv.c-Added-missing-braces-in-Perl_sv_inc_nomg.patch
 
-# Fix a NULL pointer dereference in PerlIOVia_pushed(), fixed after 5.31.2
-Patch349:        perl-5.31.2-PerlIO-Via-check-arg-is-non-NULL-before-using-it.patch
+# Fix an undefined behavior in Perl_custom_op_get_field(),
+# in upstream after 5.33.3
+Patch341:        perl-5.33.3-Perl_custom_op_get_field-remove-undef-behaviour.patch
 
-# Fix a crash when setting $@ on unwinding a call stack, RT#134266,
-# fixed after 5.31.2
-Patch350:        perl-5.30.0-perl-134266-make-sure-is-writable-when-we-write-to-i.patch
+# Fix Config variable names in in t/op tests, in upstream after 5.33.3
+Patch342:        perl-5.33.3-t-op-inc.t-t-op-hexfp.t-t-op-sprintf2.t-Add-missing-.patch
 
-# Fix parsing a denominator when parsing a Unicode property name,
-# fixed after 5.31.2
-Patch351:        perl-5.31.2-regcomp.c-Don-t-read-off-the-end-of-buffer.patch
+# Fix fetching a magic on the stacked file test operators,
+# in upstream after 5.33.3
+Patch343:        perl-5.33.3-fetch-magic-on-the-first-stacked-filetest-not-the-la.patch
 
-# Fix a documentation about a future API change, fixed after 5.31.2
-Patch352:        perl-5.31.2-perlapi-5.30-promise-not-met-change-to-5.32.patch
+# Fix a crash in optimizing split(), GH#18232, in upstream after 5.33.3
+Patch344:        perl-5.32.0-Add-av_count.patch
+Patch345:        perl-5.33.2-Remove-Perl_av_top_index.patch
+Patch346:        perl-5.32.0-pp_split-no-SWITCHSTACK-in-ary-split-.-optimisation.patch
+Patch347:        perl-5.33.3-pp_split-add-TonyC-s-stack-not-refcounted-suggestion.patch
 
-# Do not run File-Find tests in parallel, fixed after 5.31.2
-Patch353:        perl-5.31.2-Run-tests-in-ext-File-Find-t-in-series.patch
+# Make accessing environment by DynaLoader thread-safe,
+# in upstream after 5.33.4
+Patch348:        perl-5.32.1-DynaLoader-use-PerlEnv_getenv.patch
 
-# Fix parsing a Unicode property name when compiling a regular expression,
-# fixed after 5.31.3
-Patch354:        perl-5.31.3-regcomp.c-Fix-wrong-limit-test.patch
+# Use duplocale() if available, in upstream after 5.33.4
+Patch349:        perl-5.33.4-locale.c-Fix-typo-in-ifdef.patch
 
-# Do not interpret 0x and 0b prefixes when numifying strings, RT#134230,
-# fixed after 5.31.3
-Patch356:        perl-5.31.3-perl-134230-don-t-interpret-0x-0b-when-numifying-str.patch
+# Fix fc() in Turkish locale, in upstream after 5.33.5
+Patch350:        perl-5.33.5-Fix-buggy-fc-in-Turkish-locale.patch
 
-# Correct a misspelling in perlrebackslash documentation, RT#134395,
-# fixed after 5.31.3
-Patch359:        perl-5.31.3-Supply-missing-right-brace-in-regex-example.patch
+# Fix croaking on "my $_" when "use utf8" is in effect, GH#18449,
+# in upstream after 5.33.5
+Patch351:        perl-5.33.5-op.c-croak-on-my-_-when-use-utf8-is-in-effect.patch
 
-# Fix a detection for futimes, RT#134432, fixed after 5.31.3
-Patch361:        perl-5.31.3-Configure-Include-stdlib.h-in-futimes-check.patch
-Patch362:        perl-5.31.3-Florian-Weimer-is-now-a-perl-author.patch
+# Fix PERL_UNUSED_ARG() definition in XSUB.h, in upstream after 5.33.5
+Patch352:        perl-5.33.5-Use-perl.h-versions-of-PERL_UNUSED_foo-in-XSUB.h.patch
 
-# Fix overloading for binary and octal floats, RT#125557,
-# in upstream after 5.31.3
-Patch363:        perl-5.30.1-perl-125557-correctly-handle-overload-for-bin-oct-fl.patch
+# Add missing entries to perldiag, GH#18276, in upstream after 5.33.6
+Patch353:        perl-5.33.6-Add-missing-entries-to-perldiag-GH-18276.patch
 
-# Fix handling undefined array members in Dumpvalue, RT#134441,
-# in upstream after 5.31.4
-Patch364:        perl-5.31.4-Handle-undefined-values-correctly.patch
+# Protect locale tests from LANGUAGE environment variable,
+# in upstream after 5.33.6
+Patch354:        perl-5.33.6-t-run-locale.t-Rmv-LANGUAGE-from-environment.patch
 
-# Fix taint mode documentation regarding @INC, in upstream after 5.31.5
-Patch365:        perl-5.31.5-Fix-taint-mode-INC-documentation.patch
-Patch366:        perl-5.31.5-Be-clearer-about-taint-s-effect-on-INC.patch
+# Prevent the number of buckets in a hash from getting too large,
+# in upstream after 5.33.6
+Patch355:        perl-5.32.1-hv.c-add-a-guard-clause-to-prevent-the-number-of-buc.patch
 
-# Fix handling a layer argument in Tie::StdHandle::BINMODE(), RT#132475,
-# in upstream after 5.31.5
-Patch367:        perl-5.31.5-Tie-StdHandle-BINMODE-handle-layer-argument.patch
+# Fix a memory leak when compiling a regular expression, GH#18604,
+# in upstream after 5.33.7
+Patch356:        perl-5.33.7-regcomp.c-Remove-memory-leak.patch
 
-# Fix an unintended upgrade to UTF-8 in the middle of a transliteration,
-# in upstream after 5.31.5
-Patch368:        perl-5.31.5-toke.c-Fix-bug-tr-upgrading-to-UTF-8-in-middle.patch
-Patch369:        perl-5.31.5-toke.c-comment-changes.patch
+# Fix dumping a hash entry of PL_strtab type, in upstream after 5.33.7
+Patch357:        perl-5.32.1-Perl_do_sv_dump-handle-PL_strtab.patch
 
-# Fix a race in File::stat() tests, GH#17234, in upstream after 5.31.5
-Patch370:        perl-5.31.5-prevent-a-race-between-name-based-stat-and-an-open-m.patch
-
-# Fix a buffer overread when parsing a number, GH#17279,
-# in upstream after 5.31.5
-Patch371:        perl-5.30.1-handle-s-being-updated-without-len-being-updated.patch
-
-# Work around a glibc bug in caching LC_MESSAGES, GH#17081,
-# <https://sourceware.org/bugzilla/show_bug.cgi?id=24936>,
-# in upstream after 5.31.6
-Patch372:        perl-5.31.6-PATCH-GH-17081-Workaround-glibc-bug-with-LC_MESSAGES.patch
-
-# Fix POSIX:setlocale() documentation, in upstream after 5.31.7
-Patch373:        perl-5.31.7-POSIX.pod-Update-setlocale-docs.patch
-
-# Prevent from an integer overflow in POSIX::SigSet(), in upstream after 5.31.7
-Patch374:        perl-5.31.7-error-check-the-calls-to-sigaddset-in-POSIX-SigSet-n.patch
-
-# Fix thread-safety of IO::Handle, GH#14816, in upstream after 5.31.7
-Patch375:        perl-5.31.7-Add-tests-for-IO-Handle-getline-and-getlines.patch
-Patch376:        perl-5.30.2-Loading-IO-is-now-threadsafe-avoiding-the-core-bug-r.patch
-Patch377:        perl-5.31.7-Skip-the-new-open-pragma-tests-for-no-utf8-under-PER.patch
-
-# Close :unix PerlIO layers properly, in upstream after 5.31.8
-Patch378:        perl-5.31.8-perlio.c-make-unix-close-method-call-underlaying-lay.patch
-
-# Only install ExtUtils::XSSymSet manual page on VMS, GH#17424,
-# in upstream after 5.31.8
-Patch379:        perl-5.31.8-only-install-ExtUtils-XSSymSet-man-page-on-VMS.patch
-
-# Fix sorting tied arrays, GH#17496, in upstream after 5.31.8
-Patch380:        perl-5.31.8-perltie.pod-rework-example-code-so-EXTEND-is-a-no-op.patch
-Patch381:        perl-5.31.8-pp_sort.c-fix-fencepost-error-in-call-to-av_extend.patch
-
-# Fix a spurious warning about a multidimensional syntax, GH#16535,
-# in upstream after 5.31.8
-Patch382:        perl-5.30.2-toke.c-fix-Multidimensional-array-heuristic-to-ignor.patch
-
-# Fix a warning about an uninitialized value in B::Deparse, GH#17537
-Patch383:        perl-5.31.9-B-Deparse-fixup-uninitialized-error-in-deparsing-wei.patch
+# Fix an arithmetic left shift of a minimal integer value, GH#18639,
+# in upstream after 5.33.8
+Patch358:        perl-5.33.8-Fix-broken-left-shift-of-IV_MIN-under-use-integer.patch
 # EndPatches(fedora): --------------------------------------
 
 # there's a problem with strict.pm
@@ -393,28 +343,28 @@ equivalent text will have identical binary representations.
 %patch21 -p1
 %patch23 -p1
 %patch50 -p1
-%patch51 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora): ------------------------------------
 %patch310 -p1
 %patch312 -p1
 %patch313 -p1
+%patch314 -p1
+%patch315 -p1
 %patch316 -p1
 %patch317 -p1
 %patch318 -p1
 %patch319 -p1
-%patch320 -p1
 %patch321 -p1
 %patch322 -p1
 %patch323 -p1
+%patch324 -p1
 %patch325 -p1
-%patch327 -p1
+%patch326 -p1
 %patch328 -p1
+%patch329 -p1
 %patch330 -p1
-%patch331 -p1
-%patch332 -p1
-%patch337 -p1
+%patch335 -p1
 %patch338 -p1
 %patch339 -p1
 %patch340 -p1
@@ -424,6 +374,7 @@ equivalent text will have identical binary representations.
 %patch344 -p1
 %patch345 -p1
 %patch346 -p1
+%patch347 -p1
 %patch348 -p1
 %patch349 -p1
 %patch350 -p1
@@ -431,31 +382,10 @@ equivalent text will have identical binary representations.
 %patch352 -p1
 %patch353 -p1
 %patch354 -p1
+%patch355 -p1
 %patch356 -p1
-%patch359 -p1
-%patch361 -p1
-%patch362 -p1
-%patch363 -p1
-%patch364 -p1
-%patch365 -p1
-%patch366 -p1
-%patch367 -p1
-%patch368 -p1
-%patch369 -p1
-%patch370 -p1
-%patch371 -p1
-%patch372 -p1
-%patch373 -p1
-%patch374 -p1
-%patch375 -p1
-%patch376 -p1
-%patch377 -p1
-%patch378 -p1
-%patch379 -p1
-%patch380 -p1
-%patch381 -p1
-%patch382 -p1
-%patch383 -p1
+%patch357 -p1
+%patch358 -p1
 # EndPatches(fedora): --------------------------------------
 
 # .orig files can break some test
@@ -552,6 +482,7 @@ rm -r %buildroot%privlib/Attribute/Handlers*
 #rm %buildroot%privlib/B/Debug.pm
 rm -r %buildroot%privlib/CPAN* %buildroot%privlib/App/Cpan.pm %buildroot%_bindir/cpan*
 rm -r %buildroot{%privlib,%archlib,%autolib}/Compress
+rm -r %buildroot%_bindir/streamzip
 rm %buildroot%privlib/Devel/SelfStubber.pm
 rm -r %buildroot{%archlib,%autolib}/Digest/SHA* %buildroot%_bindir/shasum
 rm -r %buildroot{%privlib,%archlib,%autolib}/Encode*
@@ -585,8 +516,8 @@ rm %buildroot%privlib/Params/Check.pm
 rm %buildroot%privlib/Parse/CPAN/Meta.pm
 rm %buildroot%privlib/Perl/OSType.pm
 rm %buildroot%privlib/Pod/Escapes.pm
-rm %buildroot%privlib/Pod/{Checker,Find,InputObjects,ParseUtils,Parser,PlainText,Select,Usage}.pm
-rm %buildroot%_bindir/{pod2usage,podchecker,podselect}
+rm %buildroot%privlib/Pod/{Checker,Usage}.pm
+rm %buildroot%_bindir/{pod2usage,podchecker}
 rm -r %buildroot%privlib/Pod/{Man,ParseLink,Text}*
 rm %buildroot%_bindir/{pod2man,pod2text}
 rm -r %buildroot%privlib/Pod/Perldoc* %buildroot%_bindir/perldoc
@@ -698,7 +629,6 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%archlib/Sub/Util*
 # initial unicode support
 %dir	%privlib/unicore
-	%privlib/unicore/Heavy.pl
 %dir	%privlib/unicore/To
 	%privlib/unicore/To/Digit.pl
 	%privlib/unicore/To/Fold.pl
@@ -830,10 +760,6 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Tie/Array.pm
 	%privlib/Tie/Handle.pm
 	%privlib/Tie/Hash*
-%dir	%archlib/Tie
-	%archlib/Tie/Hash*
-%dir	%autolib/Tie
-	%autolib/Tie/Hash*
 	%privlib/Tie/Memoize.pm
 	%privlib/Tie/Scalar.pm
 	%privlib/Tie/StdHandle.pm
@@ -983,6 +909,12 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Test2/API/Breakage.pm
 	%privlib/Test2/API/Context.pm
 	%privlib/Test2/API/Instance.pm
+	%privlib/Test2/API/InterceptResult.pm
+%dir	%privlib/Test2/API/InterceptResult
+	%privlib/Test2/API/InterceptResult/Event.pm
+	%privlib/Test2/API/InterceptResult/Facet.pm
+	%privlib/Test2/API/InterceptResult/Hub.pm
+	%privlib/Test2/API/InterceptResult/Squasher.pm
 	%privlib/Test2/API/Stack.pm
 	%privlib/Test2/Event.pm
 %dir	%privlib/Test2/Event
@@ -1127,6 +1059,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 1:5.32.1-alt1
+- 5.30.3 -> 5.32.1
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:5.30.3-alt1
 - 5.30.2 -> 5.30.3
 - added Provides/Obsoletes on perl-PathTools 3.75
