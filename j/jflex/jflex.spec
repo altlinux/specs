@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-emacs
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -20,7 +20,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        Fast Scanner Generator
 Name:           jflex
 Version:        1.7.0
-Release:        alt1_1jpp8
+Release:        alt1_5jpp11
 License:        BSD
 URL:            http://jflex.de/
 BuildArch:      noarch
@@ -99,7 +99,7 @@ sed -i /%%inputstreamctor/d src/main/jflex/LexScan.flex
 %build
 java -jar $(find-jar java_cup) -parser LexParse -interface -destdir src/main/java src/main/cup/LexParse.cup
 jflex -d src/main/java/jflex --skel src/main/jflex/skeleton.nested src/main/jflex/LexScan.flex
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %if %{with emacs}
 # Compile Emacs jflex-mode source
@@ -153,6 +153,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.0-alt1_5jpp11
+- rebuild with java11 and use jvm_run
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt1_1jpp8
 - new version
 
