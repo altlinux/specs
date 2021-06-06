@@ -5,10 +5,10 @@ BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-11-compat
 Name:		opticalraytracer
 Version:	2.7
-Release:	alt2_12jpp8
+Release:	alt3_12jpp11
 Summary:	Utility that analyzes systems of lenses
 
 License:	GPLv2+	  
@@ -44,8 +44,11 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -c
 
+
+sed -i 's,javac\.source=1\.5,javac\.source=1.8,;s,javac\.target=1\.5,javac.target=1.8,' nbproject/project.properties
+
 %build
-ant 
+ant
 
 %install
 desktop-file-install \
@@ -114,6 +117,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 2.7-alt3_12jpp11
+- java11 build
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_12jpp8
 - new version
 
