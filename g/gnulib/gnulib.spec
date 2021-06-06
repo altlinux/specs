@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.4550.2a794
+Version: 0.1.4669.fed6f
 Release: alt1
 
 Summary: GNU Portability Library
@@ -52,6 +52,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Sun Jun 06 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4669.fed6f-alt1
+- v0.1-4550-g2a7948aad -> v0.1-4669-gfed6ffdbb.
+
 * Wed Apr 07 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4550.2a794-alt1
 - v0.1-2433-g3043e43a7 -> v0.1-4550-g2a7948aad.
 
