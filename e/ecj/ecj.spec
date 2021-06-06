@@ -11,7 +11,7 @@ Epoch: 1
 Summary: Eclipse Compiler for Java
 Name: ecj
 Version: 4.16
-Release: alt1_4jpp11
+Release: alt2_4jpp11
 URL: http://www.eclipse.org
 License: EPL-2.0
 
@@ -99,17 +99,15 @@ JAVA_HOME=%{_jvmdir}/java-11 ant -Djavaapi=%{SOURCE5}
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
 install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 
-# viy: compat symlink for gradle
-ln -s ecj/ecj.jar %buildroot%_javadir/ecj.jar
-
 %files -f .mfiles
 %doc --no-dereference about.html
-# compat symlink for gradle
-%_javadir/ecj.jar
 %{_bindir}/ecj
 %{_mandir}/man1/ecj*
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 1:4.16-alt2_4jpp11
+- removed compat symlink for gradle
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:4.16-alt1_4jpp11
 - new version
 
