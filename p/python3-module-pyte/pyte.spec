@@ -1,8 +1,10 @@
 %define oname pyte
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.4.9
-Release: alt2.git20141204
+Version: 0.8.0
+Release: alt1
 Summary: Simple VTXXX-compatible terminal emulator
 License: LGPLv3
 Group: Development/Python3
@@ -15,9 +17,13 @@ BuildArch: noarch
 %py3_provides %oname
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-pip
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-pytest-runner
+
+%if_with check
+BuildRequires: python3-module-wcwidth
+%endif
 
 %description
 It's an in memory VTXXX-compatible terminal emulator. XXX stands for a
@@ -26,38 +32,8 @@ first, and probably the most famous one, was VT100 terminal, which is
 now a de-facto standard for all virtual terminal emulators. pyte follows
 the suit.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-It's an in memory VTXXX-compatible terminal emulator. XXX stands for a
-series of video terminals, developed by DEC between 1970 and 1995. The
-first, and probably the most famous one, was VT100 terminal, which is
-now a de-facto standard for all virtual terminal emulators. pyte follows
-the suit.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-It's an in memory VTXXX-compatible terminal emulator. XXX stands for a
-series of video terminals, developed by DEC between 1970 and 1995. The
-first, and probably the most famous one, was VT100 terminal, which is
-now a de-facto standard for all virtual terminal emulators. pyte follows
-the suit.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
 
 %build
 %python3_build
@@ -65,29 +41,18 @@ ln -s ../objects.inv docs/
 %install
 %python3_install
 
-export PYTHONPATH=$PWD
-pushd docs
-sphinx-build-3 -b pickle -d build/doctrees . build/pickle
-sphinx-build-3 -b html -d build/doctrees . build/html
-popd
-
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
 python3 setup.py test
 
 %files
 %doc AUTHORS CHANGES README examples
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/build/html/*
 
 %changelog
+* Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt1
+- Build new version.
+- build without docs.
+
 * Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.4.9-alt2.git20141204
 - Drop python2 support.
 
