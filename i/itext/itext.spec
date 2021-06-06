@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt3_41jpp8
+Release:          alt4_41jpp11
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -246,7 +246,7 @@ sed -i 's,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 %build
 export CLASSPATH=$(build-classpath bcprov bcmail bcpkix pdf-renderer dom4j)
 pushd src
- ant -Ditext.jdk.core=1.6 \
+ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Ditext.jdk.core=1.6 \
      -Ditext.jdk.rups=1.6 \
      -Ditext.jdk.toolbox=1.6 \
      jar jar.rups jar.rtf jar.toolbox javadoc
@@ -343,6 +343,10 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 1:2.1.7-alt4_41jpp11
+- java11 build
+- use jvm_run
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt3_41jpp8
 - new version
 
