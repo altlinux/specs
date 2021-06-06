@@ -1,25 +1,26 @@
 Group: Development/Java
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 2.2.8
+%define version 2.4.10
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          mvel
-Version:       2.2.8
-Release:       alt1_9jpp8
+Version:       2.4.10
+Release:       alt1_1jpp11
 Summary:       MVFLEX Expression Language
 License:       ASL 2.0
 Url:           https://github.com/mvel
 Source0:       https://github.com/mvel/mvel/archive/%{name}2-%{namedversion}.tar.gz
 Source1:       %{name}-script
-Patch0:        %{name}-2.2.7.Final-use-system-asm.patch
+Patch0:        0-use-system-asm.patch
 # remove tests which require internal objectweb-asm libraries
-Patch1:        %{name}-2.2.8.Final-tests.patch
+Patch1:        1-remove-internal-asm-tests.patch
+Patch2:        2-remove-underscore-identifier.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.thoughtworks.xstream:xstream)
@@ -59,9 +60,8 @@ rm ASM-LICENSE.txt
 %patch0 -p1
 rm -rf src/main/java/org/mvel2/asm
 %patch1 -p1
+%patch2 -p1
 
-# See https://bugzilla.redhat.com/show_bug.cgi?id=1095339
-sed -i '/Unsafe/d' src/main/java/org/mvel2/util/JITClassLoader.java
 
 # Unwanted task
 %pom_remove_plugin :maven-source-plugin
@@ -70,15 +70,12 @@ sed -i '/Unsafe/d' src/main/java/org/mvel2/util/JITClassLoader.java
 
 sed -i 's/\r//' LICENSE.txt
 
-# fix non ASCII chars
-native2ascii -encoding UTF8 src/main/java/org/mvel2/sh/ShellSession.java src/main/java/org/mvel2/sh/ShellSession.java
-
 %mvn_file :%{name}2 %{name}
 
 %build
 
 # Tests fails only on ARM builder
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -98,6 +95,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 2.4.10-alt1_1jpp11
+- rebuild with java11 and use jvm_run
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_9jpp8
 - fc update
 
