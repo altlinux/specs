@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-rat
 Summary:        Apache Release Audit Tool (RAT)
 Version:        0.13
-Release:        alt1_7jpp8
+Release:        alt1_8jpp11
 License:        ASL 2.0
 
 URL:            http://creadur.apache.org/rat/
@@ -154,16 +154,16 @@ rm apache-rat-plugin/src/test/java/org/apache/rat/mp/RatCheckMojoTest.java
 
 
 %build
-%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.test.skip.exec=true
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 
 %install
 %mvn_install
 
 # create wrapper script
-%jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang3:junit apache-rat true
+%jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang:junit apache-rat true
 
-# install ant tasks
+# install ant taksks
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 echo "apache-rat/rat-core apache-rat/rat-tasks" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 
@@ -193,6 +193,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0.13-alt1_8jpp11
+- rebuild with java11 and use jvm_run
+
 * Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_7jpp8
 - new version
 
