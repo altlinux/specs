@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           Mars
 Version:        4.5
-Release:        alt3_10jpp8
+Release:        alt3_14jpp11
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 License:        MIT
@@ -44,7 +44,7 @@ find . -name '*.class' -exec rm -f '{}' \;
 sed -i 's/\r//' MARSlicense.txt
 
 cp -p %{SOURCE3} build.xml
-ant
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 %install
 install -Dpm 644 %{name}.jar ${RPM_BUILD_ROOT}%{_javadir}/%{name}.jar
@@ -61,6 +61,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 4.5-alt3_14jpp11
+- rebuild with java11
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 4.5-alt3_10jpp8
 - fc update
 
