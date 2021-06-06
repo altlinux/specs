@@ -1,9 +1,9 @@
 Name:		gravit
-Version:	0.5.0
-Release:	alt2
+Version:	0.5.1
+Release:	alt1
 Group:		Games/Educational
 Summary:	Visually stunning gravity simulator
-URL:		http://gravit.slowchop.com
+URL:		https://github.com/gak/gravit
 Source:		%name-%version.tgz
 License:	GPLv2+
 
@@ -44,6 +44,9 @@ ln -sf %_ttffontsdir/TrueType-vera/Vera.ttf %buildroot%_datadir/%name/data/Vera.
 %_datadir/%name
 
 %changelog
+* Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.1-alt1
+- Build new version.
+
 * Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt2
 - Fixed FTBFS with -fcommon.
 
