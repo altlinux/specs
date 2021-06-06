@@ -1,12 +1,12 @@
 %define crda_lib /lib/crda
 %define sbindir /sbin
 %define _db wireless-regdb
-%define _db_date 2020.04.29
+%define _db_date 2021.04.21
 
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.14
-Release: alt4
+Release: alt5
 License: copyleft-next-0.3.0
 Group: Networking/Other
 
@@ -118,6 +118,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Sun Jun 06 2021 L.A. Kostis <lakostis@altlinux.ru> 4.14-alt5
+- regdb updated to 20210421
+
 * Mon Jul 27 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.14-alt4
 - regdb updated to 20200429
 
