@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           objectweb-asm3
 Version:        3.3.1
-Release:        alt1_23jpp8
+Release:        alt2_23jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -120,6 +120,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 3.3.1-alt2_23jpp8
+- rebuild to use jvm_run
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_23jpp8
 - fc update
 
