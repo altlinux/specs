@@ -1,10 +1,11 @@
 %define     oname openstackdocstheme
 
 %def_with docs
+# problems with hacking < 3.1.0
 %def_without check
 
 Name:       python3-module-%oname
-Version:    2.2.7
+Version:    2.3.0
 Release:    alt1
 
 Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
@@ -26,6 +27,12 @@ BuildRequires: python3-module-pbr
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-dulwich
+%endif
+
+%if_with check
+BuildRequires: python3-module-pip
+BuildRequires: python3-module-pre-commit
+BuildRequires: python3-module-hacking
 %endif
 
 %description
@@ -79,6 +86,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Build new version.
+
 * Thu Jan 14 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.7-alt1
 - Build new version.
 
