@@ -4,25 +4,25 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global         gituser         syvaidya
 %global         gitname         openstego
-# Release 0.7.3 - 2018-04-15
-%global         commit          df7e186646f3cde69ead1a8be3de3290489aa2e4
+# Release 0.7.4 - 2020-06-06
+%global         commit          2f4d84f0e38421809fa8213f0fe1028bfc3fa9ed
 %global         shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           OpenStego
-Version:        0.7.3
-Release:        alt1_5jpp8
+Version:        0.7.4
+Release:        alt1_2jpp11
 Summary:        Free Steganography solution
 Summary(fr):    Solution libre pour la steganographie
 
 License:        GPLv2
-#               https://github.com/syvaidya/openstego/releases 
+#               https://github.com/syvaidya/openstego/releases
 URL:            http://openstego.sourceforge.net/index.html
-# Source0:      http://downloads.sourceforge.net/project/openstego/openstego/openstego-%{version}/openstego-src-%{version}.zip
+# Source0:      http://downloads.sourceforge.net/project/openstego/openstego/openstego-%%{version}/openstego-src-%%{version}.zip
 Source0:        https://github.com/%{gituser}/%{gitname}/archive/%{gitname}-%{version}.tar.gz
 Source1:        openstego.desktop
 # Patch the ant build script to build only the binary package out of java sources
@@ -72,7 +72,7 @@ rm -f openstego.bat
 
 
 %build
-ant package doc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  package doc
 
 
 %install
@@ -83,7 +83,8 @@ cp -p ./lib/openstego.jar %{buildroot}%{_javadir}/openstego.jar
 cp -p ./src/image/ImagesVectorSource.svg %{buildroot}%{_datadir}/pixmaps/openstego.svg
 cp -pr ./doc/api/* %{buildroot}%{_javadocdir}/openstego
 %jpackage_script com.openstego.desktop.OpenStego "" "" openstego.jar openstego true
-# Install openstego.desktop :
+
+# Install openstego.desktop
 desktop-file-install                       \
 --dir=%{buildroot}%{_datadir}/applications \
 %{SOURCE1}
@@ -106,6 +107,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0.7.4-alt1_2jpp11
+- rebuild with java11 and use jvm_run
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.3-alt1_5jpp8
 - fc update
 
