@@ -47,7 +47,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
 Version:        9.4.0.9
-Release:        alt1_10jpp8
+Release:        alt2_10jpp8
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
 # net/sf/saxon/option/jdom/ is MPLv1.1
 # net/sf/saxon/serialize/codenorm/ is UCD
@@ -250,6 +250,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %{_mandir}/man1/%{name}q.1*
 
 %changelog
+* Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:9.4.0.9-alt2_10jpp8
+- use jvm_run
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:9.4.0.9-alt1_10jpp8
 - fc update
 
