@@ -1,11 +1,13 @@
-Name: angband
-Version: 4.1.2
-Release: alt2
+Name:    angband
+Version: 4.2.2
+Release: alt1
 
 Summary: Angband is a "graphical" dungeon adventure game
-Summary(ru_RU.UTF-8): 	Angband - приключенческая игра.
+Summary(ru_RU.UTF-8): Angband - приключенческая игра.
+
 License: Moria/Angband license
 Group: Games/Adventure
+# https://github.com/angband/angband/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar.gz
 Url: http://rephial.org
 
@@ -42,7 +44,6 @@ EOF
 
 %build
 %autoreconf
-%add_optflags -fcommon
 %configure --enable-x11 --enable-curses --disable-sdl
 %make_build
 
@@ -51,16 +52,17 @@ EOF
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
-%doc copying.txt readme.txt thanks.txt changes.txt faq.txt
 %dir %_sysconfdir/%name
 %config %_sysconfdir/%name/*
-#attr(02711,games,games) %_bindir/%name
 %_bindir/%name
 %dir %_datadir/%name
 %_datadir/%name/*
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1
+- Build new version without -fcommon.
+
 * Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt2
 - Fixed FTBFS with -fcommon.
 
@@ -99,7 +101,7 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 * Mon Apr 11 2011 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1.qa1
 NMU: converted menu to desktop file
 
-* Sun Oct 03 2009 Alexey Voinov <voins@altlinux.ru> 3.1.1-alt1
+* Sat Oct 03 2009 Alexey Voinov <voins@altlinux.ru> 3.1.1-alt1
 - new version 3.1.1.1626
 - /usr/games -> /usr
 - update_menus removed
@@ -173,5 +175,5 @@ NMU: converted menu to desktop file
 * Fri Aug 17 2001 Alexey Voinov <voins@voins.program.ru> 2.9.3-alt1
 - new version
 
-* Sun Mar 13 2001 Alexey Voinov <voins@voins.program.ru>
+* Tue Mar 13 2001 Alexey Voinov <voins@voins.program.ru>
 - initial build
