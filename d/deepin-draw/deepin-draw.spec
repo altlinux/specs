@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: deepin-draw
-Version: 5.8.0.20
+Version: 5.9.4
 Release: alt1
 Summary: A lightweight drawing tool for Linux Deepin
 License: GPL-3.0+
@@ -8,10 +10,14 @@ Url: https://github.com/linuxdeepin/deepin-draw
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-draw_5.8.0.19_alt_dtk5.patch
 
-BuildRequires(pre): desktop-file-utils
-BuildRequires: clang10.0-devel libfreeimage-devel dtk5-widget-devel libexif-devel libxcbutil-devel qt5-base-devel qt5-svg-devel qt5-linguist qt5-multimedia-devel qt5-x11extras-devel
+%if_enabled clang
+BuildRequires(pre): clang12.0-tools
+%else
+BuildRequires(pre): gcc-c++
+%endif
+BuildRequires(pre): rpm-build-ninja desktop-file-utils
+BuildRequires: cmake libfreeimage-devel dtk5-widget-devel libexif-devel libxcbutil-devel qt5-base-devel qt5-svg-devel qt5-linguist qt5-multimedia-devel qt5-x11extras-devel qt5-tools-devel
 # Requires: deepin-session-shell deepin-qt5integration
 
 %description
@@ -19,19 +25,35 @@ A lightweight drawing tool for Linux Deepin.
 
 %prep
 %setup
-%patch -p2
-
-sed -i 's|lrelease|lrelease-qt5|' generate_translations.sh
-sed -i 's|lupdate|lupdate-qt5|' update_ts.sh
-sed -i '/include <DGraphicsView>/i #include <QFileDevice>' frame/cgraphicsview.h
-sed -i '/include <QPainter>/a #include <QMouseEvent>' widgets/ciconbutton.cpp
 
 %build
-%qmake_qt5 PREFIX=%_prefix QMAKE_STRIP= -spec linux-clang
-%make_build
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DAPP_VERSION=%version \
+  -DVERSION=%version \
+  -DLIB_INSTALL_DIR=%_libdir \
+%if_enabled clang
+  -DLLVM_PARALLEL_LINK_JOBS=1 \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DBUILD_SHARED_LIBS:BOOL=OFF \
+  -DLLVM_TARGETS_TO_BUILD="all" \
+  -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
+  -DLLVM_ENABLE_LIBCXX:BOOL=OFF \
+  -DLLVM_ENABLE_ZLIB:BOOL=ON \
+%endif
+  #
+%cmake_build
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 %find_lang %name
 
 %check
@@ -44,9 +66,21 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/deepin/apps/scalable/%name.svg
 %_datadir/mime/packages/%name.xml
+%_datadir/application/x-ddf.xml
+%_datadir/dbus-1/services/com.deepin.Draw.service
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%name/
+%_datadir/deepin-manual/manual-assets/application/%name/draw/
 
 %changelog
+* Mon Jun 07 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.4-alt1
+- New version (5.9.4).
+- Built with gcc-c++ and cmake instead clang and qmake.
+
 * Fri Oct 16 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.20-alt1
 - New version (5.8.0.20) with rpmgs script.
 
