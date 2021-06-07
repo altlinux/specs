@@ -1,6 +1,6 @@
 Name: dfu-util
-Version: 0.9
-Release: alt2
+Version: 0.10
+Release: alt1
 
 Summary: USB Device Firmware Upgrade tool
 
@@ -45,6 +45,9 @@ The DFU specification can be found at:
 %_man1dir/*
 
 %changelog
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
+- new version 0.10 (with rpmrb script)
+
 * Tue Jun 30 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt2
 - manual build
 
