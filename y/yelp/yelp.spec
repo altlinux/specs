@@ -7,7 +7,7 @@
 %def_enable lzma
 
 Name: yelp
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Lightweight help browser for GNOME
@@ -92,7 +92,7 @@ Yelp.
 	--disable-schemas-compile \
 	%{subst_enable debug} \
 	%{subst_enable lzma}
-
+%nil
 %make_build
 
 %install
@@ -124,6 +124,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Mon Jun 07 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
+- 40.2
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
