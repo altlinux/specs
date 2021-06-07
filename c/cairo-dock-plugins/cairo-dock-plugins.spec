@@ -8,7 +8,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt15
+Release: alt16
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -22,6 +22,7 @@ Patch4: cairo-dock-plugins-3.4.1-lock-screen.sh-used-xdg-screensaver-if-availabl
 Patch5: cairo-dock-plugins-3.4.1-weather-update-URL.patch
 Patch6: cairo-dock-plugins-3.4.1-no-nv.patch
 Patch7: cairo-dock-plugins-3.4.1-gcc10-extern.patch
+Patch8: build-CDApplet-vala-interface.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -984,6 +985,7 @@ binding for Cairo-Dock.
 %patch6 -p1
 %endif
 %patch7 -p1
+%patch8 -p1
 
 %build
 # Need dbusmenu-* for extra plugins
@@ -1003,6 +1005,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Sun Jun 06 2021 Arseny Maslennikov <arseny@altlinux.org> 3.4.1-alt16
+- Fix FTBFS.
+
 * Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt15
 - Fix compilation with gcc10 -fno-common
 
