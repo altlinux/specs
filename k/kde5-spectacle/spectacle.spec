@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 21.04.1
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: alt-dbus-service.patch
+Patch1: alt-services-paths.patch
 Patch2: alt-desktop-exec.patch
 Patch3: alt-kimageannotator-tr.patch
 
@@ -88,6 +88,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt2
+- fix paths to binary in service files
+
 * Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - new version
 
