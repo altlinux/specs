@@ -1,15 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with python3
-
 %define oname boto
 
 Summary: A simple lightweight interface to Amazon Web Services
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.49.0
-Release: alt1
+Release: alt2
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/boto/boto
 
 BuildArch: noarch
@@ -19,22 +17,17 @@ Source: %name-%version.tar
 Patch1: python-boto.vendored.six-remove.patch
 Patch2: boto-python3.8-compat.patch
 
-BuildRequires: python-devel
-BuildRequires: python-module-nose
-BuildRequires: python-module-mock
-BuildRequires: python-module-httpretty
-BuildRequires: python-module-requests
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-httpretty
 BuildRequires: python3-module-requests
-%endif
 
-%add_findreq_skiplist %python_sitelibdir/%oname/mashups/order.py
 %add_findreq_skiplist %python3_sitelibdir/%oname/mashups/order.py
+%add_python3_req_skip Queue StringIO httplib urlparse
+
+#Conflicts: python-module-boto
+#Obsoletes: python-module-boto
 
 %description
 Boto is a Python package that provides interfaces to Amazon Web Services.
@@ -43,62 +36,25 @@ the REST API's provided by those services and EC2 (Elastic Compute Cloud)
 via the Query API. The goal of boto is to provide a very simple, easy to
 use, lightweight wrapper around the Amazon services.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: A simple lightweight interface to Amazon Web Services
-Group: Development/Python3
-%add_python3_req_skip Queue StringIO httplib urlparse
-
-%description -n python3-module-%oname
-Boto is a Python package that provides interfaces to Amazon Web Services.
-It supports S3 (Simple Storage Service), SQS (Simple Queue Service) via
-the REST API's provided by those services and EC2 (Elastic Compute Cloud)
-via the Query API. The goal of boto is to provide a very simple, easy to
-use, lightweight wrapper around the Amazon services.
-%endif
-
 %prep
 %setup
 %patch1 -p1
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-pushd ../python3
 %patch2 -p1
-popd
-%endif
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 
 rm -fv %buildroot/usr/bin/*
-%endif
-
-%python_install
 
 %check
-%{__python} tests/test.py default
-%if_with python3
-pushd ../python3
 %{__python3} tests/test.py default
-popd
-%endif
 
 %files
 %doc README.rst
+%if 0
 %{_bindir}/asadmin
 %{_bindir}/bundle_image
 %{_bindir}/cfadmin
@@ -120,16 +76,14 @@ popd
 %{_bindir}/s3put
 %{_bindir}/sdbadmin
 %{_bindir}/taskadmin
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-%version-py*.egg-info
-
-%if_with python3
-%files -n python3-module-boto
+%endif
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
-%endif
 
 %changelog
+* Mon Jun 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.49.0-alt2
+- Drop python2 support.
+
 * Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.49.0-alt1
 - Updated to upstream version 2.49.0.
 
