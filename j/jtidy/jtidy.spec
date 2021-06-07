@@ -1,12 +1,12 @@
 Group: Development/Java
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jtidy
 Version:          1.0
-Release:          alt3_0.31.20100930svn1125jpp8
+Release:          alt3_0.35.20100930svn1125jpp11
 Epoch:            3
 Summary:          HTML syntax checker and pretty printer
 License:          zlib
@@ -15,6 +15,9 @@ URL:              http://jtidy.sourceforge.net/
 # tar caf jtidy.tar.xz jtidy
 Source0:          %{name}.tar.xz
 Source1:          %{name}.jtidy.script
+
+Patch0:           javac-1.8.patch
+
 BuildArch:        noarch
 
 BuildRequires:    javapackages-local
@@ -43,12 +46,13 @@ This package contains %{summary}.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1
 
 %pom_remove_dep xerces:dom3-xml-apis
 
 
 %build
-ant -Dant.build.javac.source=1.4
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 %install
 %mvn_file : %{name}
@@ -78,6 +82,9 @@ EOF
 
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 3:1.0-alt3_0.35.20100930svn1125jpp11
+- rebuild with java11 and use jvm_run
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.31.20100930svn1125jpp8
 - fc update
 
