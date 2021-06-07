@@ -1,23 +1,23 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
-BuildRequires: gcc-c++ unzip
+BuildRequires: gcc-c++ perl(Digest.pm) perl(English.pm) perl(Error.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Object.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(UNIVERSAL.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(blib.pm) perl(overload.pm) perl-devel unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global antlr_version 3.5.2
 %global c_runtime_version 3.4
 %global javascript_runtime_version 3.1
-%global baserelease 30
+%global baserelease 31
 
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Epoch:              1
 Version:            %{antlr_version}
-Release:            alt1_30jpp8
+Release:            alt1_31jpp11
 License:            BSD
 URL:                http://www.antlr3.org/
 
@@ -190,7 +190,7 @@ find -type f -a -name *.class -delete
 %mvn_file :antlr-maven-plugin antlr3-maven-plugin
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 # Build the C runtime
 pushd runtime/C
@@ -236,7 +236,7 @@ EOF
 
 # install C runtime
 pushd runtime/C
-make DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std
 rm $RPM_BUILD_ROOT%{_libdir}/libantlr3c.{a,la}
 pushd api/man/man3
 for file in `ls -1 * | grep -vi "^antlr3"`; do
@@ -292,6 +292,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %doc tool/LICENSE.txt
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 1:3.5.2-alt1_31jpp11
+- use jvm_run
+
 * Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_30jpp8
 - fc update
 
