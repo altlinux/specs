@@ -1,5 +1,5 @@
 Name:    trustedqsl
-Version: 2.5.7
+Version: 2.5.8
 Release: alt1
 Summary: TrustedQSL ham-radio applications
 
@@ -97,6 +97,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Mon Jun 07 2021 Andrey Cherepanov <cas@altlinux.org> 2.5.8-alt1
+- New version.
+
 * Thu Nov 19 2020 Andrey Cherepanov <cas@altlinux.org> 2.5.7-alt1
 - New version.
 
