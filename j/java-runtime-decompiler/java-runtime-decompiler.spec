@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary: Application for extraction and decompilation of JVM byte code
 Name: java-runtime-decompiler
 Version: 3.0
-Release: alt1_9jpp9
+Release: alt2_9jpp9
 License: GPLv3
 URL: https://github.com/pmikova/java-runtime-decompiler
 Source0: https://github.com/pmikova/%{name}/archive/%{name}-%{version}.tar.gz
@@ -68,6 +68,7 @@ pushd runtime-decompiler
 %pom_remove_plugin :maven-jar-plugin
 popd
 %mvn_build --xmvn-javadoc
+#-Dmaven.javadoc.source=1.8
 
 %install
 %mvn_install
@@ -102,6 +103,9 @@ desktop-file-install                      \
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 3.0-alt2_9jpp9
+- use jvm_run
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_9jpp9
 - new version
 
