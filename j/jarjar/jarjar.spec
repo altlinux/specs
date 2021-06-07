@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2008, JPackage Project
@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jarjar
 Version:        1.4
-Release:        alt1_23jpp8
+Release:        alt2_23jpp11
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
@@ -50,6 +50,7 @@ Source2:        jarjar-util.pom
 Patch0:         fix-maven-plugin.patch
 Patch1:         do-not-embed-asm.patch
 Patch2:         port-to-asm6.patch
+Patch33:	jarjar-1.4-set-target-16.patch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
@@ -95,6 +96,7 @@ BuildArch: noarch
 %patch0
 %patch1
 %patch2 -p1
+%patch33 -p1
 
 # remove all binary libs
 rm -f lib/*.jar
@@ -111,7 +113,7 @@ ln -sf $(build-classpath objectweb-asm/asm-commons) asm-commons-4.0.jar
 ln -sf $(build-classpath maven/maven-plugin-api) maven-plugin-api.jar
 popd
 export CLASSPATH=$(build-classpath ant)
-ant jar jar-util javadoc mojo test
+ant jar jar-util mojo test
 
 sed -i -e s/@VERSION@/%{version}/g maven/pom.xml
 
@@ -124,7 +126,8 @@ sed -i -e s/@VERSION@/%{version}/g maven/pom.xml
 %mvn_alias com.tonicsystems.jarjar:jarjar-plugin jarjar:jarjar-plugin tonic:jarjar-plugin com.tonicsystems:jarjar-plugin
 
 %install
-%mvn_install -J dist/javadoc
+%mvn_install 
+#-J dist/javadoc
 
 %jpackage_script com.tonicsystems.jarjar.Main "" "" jarjar/jarjar:objectweb-asm/asm:objectweb-asm/asm-commons %{name} true
 
@@ -144,10 +147,14 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 %doc COPYING
 
-%files javadoc -f .mfiles-javadoc
-%doc COPYING
+#files javadoc -f .mfiles-javadoc
+#doc COPYING
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4-alt2_23jpp11
+- use jvm_run
+- java11 build
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_23jpp8
 - new version
 
