@@ -20,7 +20,7 @@ AutoProv: yes, nopython nopython3
 
 Name: extra-cmake-modules
 Version: 5.82.0
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -47,7 +47,8 @@ Patch4: alt-remove-c90.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake qt5-tools qt5-tools-devel
 %if_enabled doc
-BuildRequires: /usr/bin/sphinx-build
+#BuildRequires: python3-module-sphinx /usr/bin/sphinx-build
+BuildRequires: python-module-sphinx
 %endif
 
 
@@ -87,6 +88,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.82.0-alt2
+- fix build requires
+
 * Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.82.0-alt1
 - new version
 
