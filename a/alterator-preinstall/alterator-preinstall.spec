@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Alterator preinstall hooks runner module
@@ -37,6 +37,9 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Jun 04 2021 Anton Midyukov <antohami@altlinux.org> 0.7.4-alt1
+- backend3/preinstall: running alterator in chroot before mounting socket
+
 * Fri Jun 04 2021 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt1
 - backend3/preinstall: not mount /run to /destination/run
 
