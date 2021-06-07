@@ -2,12 +2,14 @@
 %def_with python3
 # wait for new wx
 %def_without wx
+%def_without qt4
+%def_without pyside
 
 #add_findreq_skiplist %python_sitelibdir/pyudev/*
 
 Name: python-module-pyudev
 Version: 0.21.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Udev bindings for Python
@@ -203,8 +205,10 @@ service found in modern linux systems.
 %files -n python3-module-pyudev-qtbase
 %python3_sitelibdir/pyudev/_qt_base.p*
 
+%if_with qt4
 %files -n python3-module-pyudev-pyqt4
 %python3_sitelibdir/pyudev/pyqt4.p*
+%endif
 
 %files -n python3-module-pyudev-pyqt5
 %python3_sitelibdir/pyudev/pyqt5.p*
@@ -212,8 +216,10 @@ service found in modern linux systems.
 %files -n python3-module-pyudev-glib
 %python3_sitelibdir/pyudev/glib.p*
 
+%if_with pyside
 %files -n python3-module-pyudev-pyside
 %python3_sitelibdir/pyudev/pyside.p*
+%endif
 
 %if_with wx
 %files -n python3-module-pyudev-wx
@@ -224,6 +230,9 @@ service found in modern linux systems.
 
 
 %changelog
+* Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 0.21.0-alt3
+- disable build of qt4 and pyside modules
+
 * Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt2
 - NMU: disable build python2 modules
 - disable wx subpackage (need new wx module)
