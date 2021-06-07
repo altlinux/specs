@@ -40,7 +40,7 @@
 %define bugfix 1
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -57,6 +57,7 @@ Release: alt3
 %define poppler_qt4_devel_name lib%rname%somajor-qt4-devel
 %define poppler_qt5_devel_name lib%rname%somajor-qt5-devel
 %endif
+%define _cmake__builddir BUILD
 
 Group: Publishing
 Summary: PDF rendering library
@@ -409,6 +410,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 0.86.1-alt4
+- fix to build against new cmake
+
 * Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 0.86.1-alt3
 - build only compat library
 
