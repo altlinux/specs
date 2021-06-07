@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.82.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -115,6 +115,9 @@ BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Fri Jun 04 2021 Slava Aseev <ptrnine@altlinux.org> 5.82.0-alt3
+- Do not keep dbus-daemon waiting if KWallet is disabled (fixes: #40132)
+
 * Thu May 13 2021 Slava Aseev <ptrnine@altlinux.org> 5.82.0-alt2
 - Introduce Secret Service API
 
