@@ -1,22 +1,20 @@
 Name: lib2geom
-Version: 20081103
-Release: alt1.6
+Version: 1.1
+Release: alt1
+Epoch: 1
 
-Summary: A robust computational geometry framework for Inkscape
+Summary: Easy to use 2D geometry library in C++
 
 License: LGPL
 Group: Development/C
-Url: http://lib2geom.sourceforge.net/
+Url: https://gitlab.com/inkscape/lib2geom
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://inkscape.modevia.com/2geom/src/%name%version.tar.bz2
-Patch0: %name-no-rpath.patch
-Patch1: %name-20081103-alt-gc4.6.patch
-Patch2: lib2geom-20081103-alt-gcc8-fix.patch
+# Source-url: https://gitlab.com/inkscape/lib2geom/-/archive/%version/lib2geom-%version.tar.bz2
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Mon Mar 31 2008
-BuildRequires: boost-devel ccmake gcc-c++ libgsl-devel libgtk+2-devel
+BuildRequires: boost-devel cmake gcc-c++ libdouble-conversion-devel libgsl-devel libgtest-devel libgtk+3-devel
 
 %description
 lib2geom (2Geom in private life) was initially a library developed for
@@ -34,35 +32,37 @@ in development of the %name-based applications.
 
 
 %prep
-%setup -q -n %name
-%patch0 -p2
-%patch1 -p2
-%patch2 -p1
+%setup
 # fix target lib dir
-sed -i "s| lib| %_lib|g" src/2geom/CMakeLists.txt
+sed -i "s| lib/| %_lib/|g" CMakeLists.txt
 sed -i 's,^SET(CMAKE_CXX_FLAGS ",SET(CMAKE_CXX_FLAGS "%optflags -fno-inline -fpermissive ,' CMakeLists.txt
 
 %build
 cmake \
-	-D 2GEOM_BUILD_SHARED=ON \
-	-D CMAKE_INSTALL_PREFIX=%_prefix \
-	-D MAKE_SKIP_RPATH:BOOL=OFF \
+	-D2GEOM_BUILD_SHARED=ON \
+	-DCMAKE_INSTALL_PREFIX=%_prefix \
+	-DCMAKE_SKIP_RPATH=ON \
 	.
 %make_build
 
 %install
 %makeinstall_std
+sed -i "s|/lib$|/%_lib|" %buildroot%_pkgconfigdir/*
 
 %files
-%doc HACKING.txt TODO
-%_libdir/lib2geom.so.3.0
+%doc README.md NEWS.md
+%_libdir/lib2geom.so.*
 
 %files devel
-%_includedir/2geom-0.3/
+%_includedir/2geom-*/
 %_pkgconfigdir/*
 %_libdir/lib2geom.so
+%_libdir/cmake/2Geom/
 
 %changelog
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.1-alt1
+- new version (1.1) with rpmgs script
+
 * Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 20081103-alt1.6
 - GCC8 fix
 

@@ -1,4 +1,4 @@
-%define major 1.0
+%define major 1.1
 
 %def_with shared
 %def_without gnome_vfs
@@ -9,8 +9,8 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major.2
-Release: alt2
+Version: %major
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -23,11 +23,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://media.inkscape.org/dl/resources/file/inkscape-%version.tar.xz
 Source: %name-%version.tar
 
-Patch: %name-dia.patch
-Patch6: fix_atomic_rel_error.patch
-Patch7: 0001-CMakeLists.txt-move-GNUInstallDirs-after-project-NAM.patch
-Patch8: inkscape-glib.patch
-
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
 BuildRequires: desktop-file-utils
@@ -35,9 +30,11 @@ BuildRequires: desktop-file-utils
 AutoProv:yes,nopython3
 BuildRequires(pre): rpm-build-python3
 %add_python3_lib_path %_datadir/%name/extensions
+BuildRequires: python3-module-Cython
 
-BuildRequires: boost-devel-headers cmake gcc-c++ intltool
-BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel perl-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel
+BuildRequires: boost-devel-headers boost-filesystem-devel cmake gcc-c++ intltool
+BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel perl-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
+BuildRequires: lib2geom-devel >= 1.1
 
 # Checking for modules 'gtkmm-3.0>=3.22;gdkmm-3.0>=3.22;gtk+-3.0>=3.22;gdk-3.0>=3.22;gdl-3.0>=3.4'
 BuildRequires: libgtkmm3-devel >= 3.22 libgdl3-devel >= 3.4
@@ -49,7 +46,7 @@ BuildRequires: libpng-devel libexif-devel libjpeg-devel
 BuildRequires: libpoppler-devel libpoppler-glib-devel
 BuildRequires: libpotrace-devel liblcms2-devel
 %if_with graphicsmagick
-BuildRequires: libGraphicsMagick-devel
+BuildRequires: libGraphicsMagick-c++-devel
 %else
 BuildRequires: libImageMagick-devel
 %endif
@@ -134,8 +131,7 @@ Run checkinstall tests for %name.
 
 %prep
 %setup
-%patch7 -p1
-%patch8 -p0
+rm -rfv src/3rdparty/2geom/
 
 %build
 %cmake_insource \
@@ -143,6 +139,8 @@ Run checkinstall tests for %name.
     -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_SKIP_RPATH=OFF \
     -DCMAKE_SKIP_INSTALL_RPATH=OFF \
+    -DWITH_GNU_READLINE=ON \
+    -DWITH_INTERNAL_2GEOM=OFF \
 %else
     -DBUILD_SHARED_LIBS=OFF \
 %endif
@@ -189,6 +187,7 @@ true
 #_datadir/appdata/inkscape*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/inkscape*
 #_mandir/??/man1/inkscape.??.1.*
 %_datadir/metainfo/org.inkscape.Inkscape.appdata.xml
@@ -209,6 +208,9 @@ true
 %files checkinstall
 
 %changelog
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- new version 1.1 (with rpmrb script) (ALT bug 40171)
+
 * Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt2
 - fix build with glib >= 2.67.3
 
