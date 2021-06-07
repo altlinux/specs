@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.8.7
+Version: 0.8.8
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -42,6 +42,10 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Jun 07 2021 Anton Midyukov <antohami@altlinux.org> 0.8.8-alt1
+- Revert commit: backend3/livecd-install: create tmpfiles directory on $dst/run
+- backend3/livecd-install: running alterator in chroot before mounting socket
+
 * Fri Jun 04 2021 Anton Midyukov <antohami@altlinux.org> 0.8.7-alt1
 - backend3/livecd-install: create tmpfiles directory on $dst/run
   (Closes: 40142)
