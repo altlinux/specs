@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:		gogui
 Version:	1.4.9
-Release:	alt2_7jpp8
+Release:	alt3_7jpp8
 Summary:	Graphical user interface to programs that play the board game Go
 
 License:	GPLv3
@@ -163,6 +163,9 @@ EOF
 %doc COPYING.html
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 1.4.9-alt3_7jpp8
+- use jvm_run
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.9-alt2_7jpp8
 - fixed build with new java
 
