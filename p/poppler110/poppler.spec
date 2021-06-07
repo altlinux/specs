@@ -38,7 +38,7 @@
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -55,6 +55,7 @@ Release: alt1
 %define poppler_qt4_devel_name lib%rname%somajor-qt4-devel
 %define poppler_qt5_devel_name lib%rname%somajor-qt5-devel
 %endif
+%define _cmake__builddir BUILD
 
 Group: Publishing
 Summary: PDF rendering library
@@ -405,6 +406,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 21.05.0-alt2
+- fix to build against new cmake
+
 * Tue May 18 2021 Sergey V Turchin <zerg@altlinux.org> 21.05.0-alt1
 - new version
 
