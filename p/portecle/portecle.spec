@@ -4,14 +4,14 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bcver   1.51
 
 Name:           portecle
 Version:        1.10
-Release:        alt1_5jpp8
+Release:        alt2_5jpp11
 Summary:        Multipurpose keystore and certificate tool
 
 License:        GPLv2+
@@ -47,7 +47,7 @@ cp -p src/main/net/sf/portecle/images/splash.png doc/images/
 
 
 %build
-%ant -Djar.classpath= -Dhelpbaseurl=file://%{_docdir}/%{name}/doc/ \
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djar.classpath= -Dhelpbaseurl=file://%{_docdir}/%{name}/doc/ \
     -Dbcprov.jar=$(build-classpath bcprov) \
     -Dbcpkix.jar=$(build-classpath bcpkix) jar
 
@@ -87,6 +87,10 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 1.10-alt2_5jpp11
+- use jvm_run
+- java11 build
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_5jpp8
 - java update
 
