@@ -1,17 +1,18 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plantuml
-Version:        1.2019.1
-Release:        alt1_6jpp8
+Version:        1.2021.0
+Release:        alt1_2jpp11
 Epoch:          2
 Summary:        Program to generate UML diagram from a text description
 
 License:        LGPLv3+
 URL:            http://plantuml.com/
 Source0:        http://downloads.sourceforge.net/plantuml/%{name}-lgpl-%{version}.tar.gz
+Patch0:         remove-non-ascii-char.patch
 
 BuildArch:      noarch
 
@@ -46,6 +47,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -c -n plantuml
+%patch0 -p1
 
 # Convert from dos to unix line ending
 sed -i.orig 's|\r||g' README
@@ -53,11 +55,11 @@ touch -r README.orig README
 rm README.orig
 
 %build
-ant
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 # build javadoc
 export CLASSPATH=$(build-classpath ant):plantuml.jar
-%javadoc -source 1.8 -encoding UTF-8 -Xdoclint:none -d javadoc $(find src -name "*.java") -windowtitle "PlantUML %{version}"
+%javadoc -source 1.8 -source 1.8 -encoding UTF-8 -Xdoclint:none -d javadoc $(find src -name "*.java") -windowtitle "PlantUML %{version}"
 
 %install
 # Set jar location
@@ -81,6 +83,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference COPYING
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 2:1.2021.0-alt1_2jpp11
+- rebuild with java11 and use jvm_run
+
 * Sun Sep 13 2020 Igor Vlasenko <viy@altlinux.ru> 2:1.2019.1-alt1_6jpp8
 - new version (closes: #38927)
 
