@@ -8,7 +8,7 @@ Summary: Plugins and extensions for building Eclipse plugins and OSGI bundles wi
 License: ASL 2.0 and EPL-1.0
 Url: http://eclipse.org/tycho
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Provides: mvn(org.eclipse.tycho:org.eclipse.tycho.core.shared) = 1.3.0
@@ -121,7 +121,6 @@ Provides: osgi(org.eclipse.tycho.surefire.osgibooter) = 1.3.0
 Provides: osgi(org.eclipse.tycho.surefire.testng) = 1.3.0
 Provides: osgi(org.eclipse.tycho.test.utils) = 1.3.0
 Provides: osgi(org.fedoraproject.p2) = 0.0.1
-Provides: tycho = 1.3.0-4.fc30
 Requires: ecj
 Requires: eclipse-platform
 Requires: java-headless
@@ -188,7 +187,7 @@ no duplication of metadata between POM and OSGi metadata.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
-sed -i s,usr/bin/sh,bin/sh, usr/share/java-utils/p2-install.sh
+sed -i '1s,usr/bin/sh,bin/sh,;s,^run ,jvm_run ,' usr/share/java-utils/p2-install.sh
 
 %build
 cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
@@ -203,6 +202,9 @@ done
 %files -f %name-list
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt0.2jpp
+- use jvm_run
+
 * Wed Jul 10 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
