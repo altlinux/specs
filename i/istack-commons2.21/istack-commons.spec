@@ -1,3 +1,4 @@
+%define oldname istack-commons
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -6,9 +7,9 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           istack-commons
+Name:           istack-commons2.21
 Version:        2.21
-Release:        alt2_12jpp8
+Release:        alt3_12jpp8
 Summary:        Common code for some Glassfish projects
 License:        CDDL-1.1 and GPLv2 with exceptions
 URL:            http://istack-commons.java.net
@@ -17,7 +18,7 @@ URL:            http://istack-commons.java.net
 # find istack-commons-2.21/ -name '*.jar' -delete
 # rm -rf istack-commons-2.21/test/lib/*.zip istack-commons-2.21/runtime/lib/*.zip
 # tar -zcvf istack-commons-2.21.tar.gz istack-commons-2.21
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{oldname}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -77,7 +78,7 @@ This package contains the istack-commons import properties Maven Mojo.
 %package buildtools
 Group: Development/Java
 Summary:        istack-commons buildtools
-Obsoletes:      %{name} < %{version}-%{release}
+Obsoletes:      %{oldname} < %{version}-%{release}
 
 %description buildtools
 This package contains istack-commons buildtools.
@@ -85,7 +86,7 @@ This package contains istack-commons buildtools.
 %package runtime
 Group: Development/Java
 Summary:        istack-commons runtime
-Obsoletes:      %{name} < %{version}-%{release}
+Obsoletes:      %{oldname} < %{version}-%{release}
 
 %description runtime
 This package contains istack-commons runtime.
@@ -93,7 +94,7 @@ This package contains istack-commons runtime.
 %package soimp
 Group: Development/Java
 Summary:        istack-commons soimp
-Obsoletes:      %{name} < %{version}-%{release}
+Obsoletes:      %{oldname} < %{version}-%{release}
 
 %description soimp
 This package contains istack-commons soimp.
@@ -101,7 +102,7 @@ This package contains istack-commons soimp.
 %package test
 Group: Development/Java
 Summary:        istack-commons test
-Obsoletes:      %{name} < %{version}-%{release}
+Obsoletes:      %{oldname} < %{version}-%{release}
 
 %description test
 This package contains istack-commons test.
@@ -109,32 +110,32 @@ This package contains istack-commons test.
 %package tools
 Group: Development/Java
 Summary:        istack-commons tools
-Obsoletes:      %{name} < %{version}-%{release}
+Obsoletes:      %{oldname} < %{version}-%{release}
 
 %description tools
 This package contains istack-commons tools.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary:        Javadoc for %{oldname}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %{oldname}.
 
 %prep
-%setup -q
+%setup -n %{oldname}-%{version} -q
 
 %pom_remove_plugin org.glassfish.copyright:glassfish-copyright-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 
 # backward compatibility symlinks
-%mvn_file com.sun.istack:%{name}-buildtools %{name}-buildtools %{name}/%{name}-buildtools
-%mvn_file com.sun.istack:%{name}-runtime %{name}-runtime %{name}/%{name}-runtime
-%mvn_file com.sun.istack:%{name}-soimp %{name}-soimp %{name}/%{name}-soimp
-%mvn_file com.sun.istack:%{name}-test %{name}-test %{name}/%{name}-test
-%mvn_file com.sun.istack:%{name}-tools %{name}-tools %{name}/%{name}-tools
+%mvn_file com.sun.istack:%{oldname}-buildtools %{oldname}-buildtools %{oldname}/%{oldname}-buildtools
+%mvn_file com.sun.istack:%{oldname}-runtime %{oldname}-runtime %{oldname}/%{oldname}-runtime
+%mvn_file com.sun.istack:%{oldname}-soimp %{oldname}-soimp %{oldname}/%{oldname}-soimp
+%mvn_file com.sun.istack:%{oldname}-test %{oldname}-test %{oldname}/%{oldname}-test
+%mvn_file com.sun.istack:%{oldname}-tools %{oldname}-tools %{oldname}/%{oldname}-tools
 
 # Unused & unavailable dep
 %pom_remove_dep org.sonatype.sisu:sisu-inject-plexus import-properties-plugin
@@ -157,10 +158,10 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles-istack-commons
-%dir %{_javadir}/%{name}
+%dir %{_javadir}/%{oldname}
 %doc Licence.txt
 
-#%files -n %{name}-maven-plugin -f .mfiles-%{name}-maven-plugin
+#%files -n %{oldname}-maven-plugin -f .mfiles-%{oldname}-maven-plugin
 #%doc Licence.txt
 
 #%files -n import-properties-plugin -f .mfiles-import-properties-plugin
@@ -186,6 +187,10 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 2.21-alt3_12jpp8
+- NMU for unknown reason:
+  the person above was too neglectant to add --changelog "- NMU: <reason>" option.
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 2.21-alt2_12jpp8
 - made a compat package
 
