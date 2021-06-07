@@ -5,13 +5,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt3_17jpp8
+Release:       alt4_17jpp11
 Summary:       An HTML Report of API Differences
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
@@ -28,7 +28,7 @@ Source2:       jdiff-script
 
 Patch0:        jdiff-java8.patch
 
-BuildRequires: java-devel
+#BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: jpackage-utils
 
@@ -82,7 +82,7 @@ native2ascii -encoding UTF8 test/new/ChangedPackageDoc2/ChangedMethod.java test/
 
 %build
 export CLASSPATH=$(build-classpath junit):`pwd`/build/lib/jdiff.jar:`pwd`/build/lib/antjdiff.jar
-%{ant} -Dbuild.sysclasspath=only dist unittest check.compile
+%{ant} -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbuild.sysclasspath=only dist unittest check.compile
 # release
 
 %javadoc -classpath `pwd`/build/lib/jdiff.jar:`pwd`/build/lib/antjdiff.jar:$(build-classpath xerces-j2 ant.jar ../jvm/java/lib/tools) \
@@ -120,6 +120,10 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.1-alt4_17jpp11
+- use jvm_run
+- java11 build
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_17jpp8
 - new version
 
