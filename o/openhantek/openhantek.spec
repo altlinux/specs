@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 3.2.1
+Version: 3.2.3
 Release: alt1
 Epoch: 1
 
@@ -51,6 +51,9 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.2.3-alt1
+- new version 3.2.3 (with rpmrb script)
+
 * Sun Apr 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.2.1-alt1
 - new version 3.2.1 (with rpmrb script)
 
