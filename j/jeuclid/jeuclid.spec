@@ -8,7 +8,7 @@ Epoch:          2
 
 Name:		jeuclid
 Version:	3.1.9
-Release:	alt1_2
+Release:	alt1_2jpp6
 Summary:	MathML rendering solution
 Group:		Development/Java
 License:	ASL 2.0 and SPL
@@ -154,6 +154,10 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications \
 
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 2:3.1.9-alt1_2jpp6
+- use jvm_run
+- set source/target 1.6
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2:3.1.9-alt1_2
 - fixed build
 
@@ -173,50 +177,3 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications \
 
 * Thu Jul 16 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.3-alt1
 - Intial from Fedora
-
-* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1.3-11
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
-
-* Fri Jan 23 2009 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-9
-- Re-imported SRPM, cvs failed to bring in jecuclid-cli.sh
-
-* Tue Dec 9 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-9
-- Added missing hicolor-icon-theme build require
-- Fixed timestamp issue
-- Added GTK icon scriplets
-
-* Fri Nov 27 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-8
-- Added cli package
-- Fixed build script so subpackages dont all package into one jar
-- Added desktop file and java wrapper scripts
-
-* Thu Nov 26 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-7
-- Fixed BuildRequires
-- Fixed Requires
-- Added mathviewer and fop
-- mathviewer patch includes SPL code. SPL added to license field
-- New build file to manage core mathviewer and fop
-
-* Wed Nov 26 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-6
-- Fixed package name
-- Added system links to jar files
-
-* Wed Nov 26 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-5
-- Fixed trailing white space
-- Fixed patch comments
-- Fixed search for jar file
-
-* Wed Nov 26 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-4
-- Fixed source URL
-- Added verbose to ant
-
-* Wed Nov 26 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-3
-- Fixed end-of-line-encoding in NOTICE
-
-* Tue Nov 25 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-2
-- Added comments to patches
-- Removed java-devel from BuildRequires for java-1.6.0-openjdk-devel
-- Made arch noarch
-
-* Mon Nov 24 2008 Brennan Ashton <bashton at, brennanashton.com> 3.1.3-1
-- Created spec file
