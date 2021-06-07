@@ -2,14 +2,14 @@
 
 %def_with openimageio
 
-# TODO: build docs, build and run tests
+# TODO: build docs
 
 %define oname opencolorio
 %define soname 2.0
 
 Name:           lib%oname%soname
 Version:        2.0.1
-Release:        alt2
+Release:        alt3
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -23,35 +23,34 @@ Patch1: opencolorio-alt-install.patch
 Patch2: opencolorio-alt-armh-multiple-definition.patch
 
 # Utilities
-BuildRequires:  cmake gcc-c++
-BuildRequires:  help2man
+BuildRequires: cmake gcc-c++
+BuildRequires: help2man
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
 # rebuilt.
 %if_with openimageio
-BuildRequires:  libopenimageio-devel
+BuildRequires: libopenimageio-devel
 %endif
-BuildRequires:  openexr-devel
+BuildRequires: openexr-devel
 
 # Libraries
-BuildRequires:  libGL-devel libGLU-devel
-BuildRequires:  libX11-devel libXmu-devel libXi-devel
-BuildRequires:  libfreeglut-devel
-BuildRequires:  libGLEW-devel
-BuildRequires:  zlib-devel
+BuildRequires: libGL-devel libGLU-devel
+BuildRequires: libX11-devel libXmu-devel libXi-devel
+BuildRequires: libfreeglut-devel
+BuildRequires: libGLEW-devel
+BuildRequires: zlib-devel
 BuildRequires: libexpat-devel
 BuildRequires: pystring-devel
 BuildRequires: pybind11-devel
 BuildRequires: python3-devel
+BuildRequires: liblcms2-devel
+BuildRequires: libyaml-cpp-devel
+BuildRequires: boost-devel
 
-#######################
-# Unbundled libraries #
-#######################
-BuildRequires:  tinyxml-devel
-BuildRequires:  liblcms2-devel
-BuildRequires:  libyaml-cpp-devel
-BuildRequires:  boost-devel
+# Test dependencies
+BuildRequires: ctest
+BuildRequires: python3-module-numpy
 
 %description
 OCIO enables color transforms and image display to be handled in a consistent
@@ -87,6 +86,9 @@ Group:          Development/Python3
 %patch1 -p1
 %patch2 -p1
 
+# disable debugging wrappers
+%add_optflags -DNDEBUG
+
 %ifarch %e2k
 %add_optflags -std=c++11
 %endif
@@ -97,7 +99,8 @@ Group:          Development/Python3
 	-DOCIO_BUILD_PYTHON:BOOL=ON \
 	-DOCIO_BUILD_STATIC=OFF \
 	-DOCIO_BUILD_DOCS=OFF \
-	-DOCIO_BUILD_TESTS=OFF \
+	-DOCIO_BUILD_TESTS=ON \
+	-DOCIO_BUILD_GPU_TESTS=OFF \
 	-DOCIO_WARNING_AS_ERROR:BOOL=OFF \
 %ifnarch x86_64 %e2k
 	-DOCIO_USE_SSE=OFF \
@@ -125,6 +128,17 @@ for i in %buildroot%_bindir/* ; do
 	fi
 done
 
+%check
+pushd %_cmake__builddir
+# currently tests only pass on x86_64 and armh
+# on other architectures there are precision issues
+%ifarch x86_64 %arm
+ctest
+%else
+ctest ||:
+%endif
+popd
+
 %files -n lib%oname%soname
 %doc LICENSE THIRD-PARTY.md
 %doc CHANGELOG.md CONTRIBUTING.md COMMITTERS.md GOVERNANCE.md PROCESS.md README.md SECURITY.md
@@ -144,6 +158,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Jun 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt3
+- Enabled tests.
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt2
 - Rebuilt with openimageio support.
 
