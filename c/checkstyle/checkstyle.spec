@@ -3,9 +3,8 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -40,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           checkstyle
 Version:        8.0
-Release:        alt1_6jpp8
+Release:        alt2_6jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -174,6 +173,9 @@ fi
 
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 0:8.0-alt2_6jpp8
+- use jvm_run
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_6jpp8
 - new version
 
