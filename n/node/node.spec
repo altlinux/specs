@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.16
+%define major 14.17
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -24,7 +24,7 @@
 %define openssl_version 1.1.1k
 %def_with systemssl
 
-%global libuv_abi 1.40.0
+%global libuv_abi 1.41.0
 %def_with systemuv
 
 %global libicu_abi 6.7
@@ -50,7 +50,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -380,6 +380,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.0-alt1
+- new version 14.17.0 (with rpmrb script)
+- set libuv >= 1.41.0
+
 * Sun Apr 11 2021 Vitaly Lipatov <lav@altlinux.ru> 14.16.1-alt1
 - new version 14.16.1 (with rpmrb script)
 - set openssl >= 1.1.1k
