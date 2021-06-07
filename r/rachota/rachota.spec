@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global checkout 20130104cvs
 Name:           rachota
 Version:        2.3
-Release:        alt1_18.20130104cvsjpp8
+Release:        alt1_21.20130104cvsjpp11
 Summary:        Straightforward timetracking
 
 License:        CDDL
@@ -93,6 +93,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 2.3-alt1_21.20130104cvsjpp11
+- rebuild with java11 and use jvm_run
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_18.20130104cvsjpp8
 - fc update
 
