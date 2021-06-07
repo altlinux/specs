@@ -1,5 +1,5 @@
 Name: diffutils
-Version: 3.7.0.38.cc14
+Version: 3.7.0.40.caf3
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -17,7 +17,7 @@ Source1: po-%version-%release.tar
 
 Conflicts: man-pages <= 1.52-alt1
 
-BuildRequires: gnulib >= 0.1.4513.79a63
+BuildRequires: gnulib >= 0.1.4669.fed6f
 BuildRequires: gperf help2man makeinfo
 
 %description
@@ -69,6 +69,11 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Wed Jun 02 2021 Dmitry V. Levin <ldv@altlinux.org> 3.7.0.40.caf3-alt1
+- diffutils: v3.7-38-gcc14770 -> v3.7-40-gcaf365b
+- gnulib BR: v0.1-4513-g79a63f591 -> v0.1-4669-gfed6ffdbb.
+- Updated translations from translationproject.org.
+
 * Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 3.7.0.38.cc14-alt1
 - diffutils: v3.7 -> v3.7-38-gcc14770.
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4513-g79a63f591.

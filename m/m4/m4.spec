@@ -1,5 +1,5 @@
 Name: m4
-Version: 1.4.18.0.15.4e5c
+Version: 1.4.19.0.4.gcd7f
 Release: alt1
 
 Summary: The GNU macro processor
@@ -10,7 +10,7 @@ Url: https://www.gnu.org/software/m4/
 # git://git.altlinux.org/gears/m/m4.git
 Source: %name-%version-%release.tar
 
-BuildRequires: gnulib >= 0.1.3618.4cfff6
+BuildRequires: gnulib >= 0.1.4645.3639c
 BuildRequires: gperf
 BuildRequires: help2man
 BuildRequires: makeinfo
@@ -56,6 +56,10 @@ install -pD -m644 m4/m4.m4 %buildroot%_aclocaldir/m4.m4
 %doc AUTHORS BACKLOG NEWS README THANKS TODO
 
 %changelog
+* Tue Jun 01 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.19.0.4.gcd7f-alt1
+- v1.4.18-15-g4e5c2c01 -> v1.4.19-4-gcd7f4d15.
+- gnulib BR: v0.1-3618-g4cfff6810 -> v0.1-4645-g3639c57a9.
+
 * Tue Apr 06 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.18.0.15.4e5c-alt1
 - v1.4.18 -> v1.4.18-15-g4e5c2c01 (fixes build with makeinfo >= 6.7).
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-3618-g4cfff6810.

@@ -1,5 +1,5 @@
 Name: findutils
-Version: 4.8.0.0.5.caa0
+Version: 4.8.0.0.10.1157
 Release: alt1
 
 Summary: The GNU versions of find utilities (find and xargs)
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.1.4349.8ed1d
+BuildRequires: gnulib >= 0.1.4669.fed6f
 BuildRequires: glibc-devel-static
 BuildRequires: makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -115,6 +115,10 @@ env PATH="%buildroot/bin:$PATH" \
 %_bindir/find.static
 
 %changelog
+* Sun Jun 06 2021 Dmitry V. Levin <ldv@altlinux.org> 4.8.0.0.10.1157-alt1
+- findutils: v4.8.0-5-gcaa03867 -> v4.8.0-10-g11576f4e.
+- gnulib BR: v0.1-4349-g8ed1d1f9f -> v0.1-4669-gfed6ffdbb.
+
 * Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 4.8.0.0.5.caa0-alt1
 - findutils: v4.6.0-204-gb23a2693 -> v4.8.0-5-gcaa03867.
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4349-g8ed1d1f9f.
