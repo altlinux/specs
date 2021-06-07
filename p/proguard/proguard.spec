@@ -1,7 +1,7 @@
 Name: proguard
 Summary: Java class file shrinker, optimizer, obfuscator, and preverifier
 Version: 5.3.3
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Java
 BuildArch: noarch
@@ -95,6 +95,9 @@ cp -p %{SOURCE104} %buildroot%_liconsdir/%{name}.png
 %_liconsdir/%{name}.png
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 5.3.3-alt2
+- NMU: rebuild to use jvm_run in %%jpackage_script
+
 * Wed Apr 05 2017 Cronbuild Service <cronbuild@altlinux.org> 5.3.3-alt1
 - new version 5.3.3
 
