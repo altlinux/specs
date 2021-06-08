@@ -1,18 +1,29 @@
 Name: abook
-Version: 0.5.6
-Release: alt4
+Version: 0.6.1
+Release: alt1
 
 Summary: Text-based addressbook program for mutt
-License: GPL
+License: GPLv2+
 Group: Networking/Mail
 
 Url: http://abook.sourceforge.net/
-Source: %name-%version.tar.bz2
-Patch: abook-0.5.6-editor.patch
+Source: %name-%version.tar.gz
+#Patch: abook-0.5.6-editor.patch
+# preserve all fields by default
+Patch0: %{name}-preserve.patch
+# 0618ad6 fixed bug #6 (https://sourceforge.net/p/abook/bugs/6/)
+Patch1: 0001-fixed-bug-6.patch
+# 02ac0ce doc: manpage mention of the -f option + fix for bug #8 (https://sourceforge.net/p/abook/bugs/8/)
+Patch2: 0002-doc-manpage-mention-of-the-f-option-fix-for-bug-8.patch
+# 54f8e4a build: fix compilation when used with GCC -std=gnu99 or -std=gnu11 
+Patch3: 0003-build-fix-compilation-when-used-with-GCC-std-gnu99-o.patch
+
+Patch6: abook-0.6.1.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Jun 08 2008 (-bi)
-BuildRequires: libncursesw-devel libreadline-devel libncurses-devel libtinfo-devel
+BuildRequires: libncursesw-devel libreadline-devel libncurses-devel libtinfo-devel automake gettext
 
 Summary(ru_RU.UTF-8): Текстовая адресная книга для mutt
 
@@ -26,9 +37,20 @@ Abook это небольшая и полнофункциональная тек
 
 %prep
 %setup -n %name-%version
-%patch -p0
+#patch5 -p0
+%patch0 -p1 -b .p
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+#patch6 -p0
 
 %build
+#add_optflags -fcommon
+#aclocal
+#autoconf
+#automake --add-missing
+autoreconf -vif
+
 %configure
 %make_build
 
@@ -45,6 +67,10 @@ Abook это небольшая и полнофункциональная тек
 # - 0.6.0pre2? (2006-09-07)
 
 %changelog
+* Tue Jun 08 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.1-alt1
+- 0.6.1
+- update license
+
 * Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 0.5.6-alt4
 - rebuilt with readline7
 
