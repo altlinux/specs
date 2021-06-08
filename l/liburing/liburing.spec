@@ -1,5 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: liburing
-Version: 0.7
+Version: 2.0
 Release: alt1
 
 Summary: Linux-native io_uring I/O access library
@@ -8,11 +13,16 @@ Group: System/Libraries
 
 Url: http://git.kernel.dk/cgit/liburing
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
+BuildRequires: gcc-c++
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 %description
 Provides native async IO for the Linux 5.1+ kernel, in a fast
 and efficient manner, for both buffered and O_DIRECT.
+
+liburing provides helpers to setup and teardown io_uring instances,
+and also a simplified interface for applications that don't need
+(or want) to deal with the full kernel side implementation.
 
 %package devel
 Summary: Development files for Linux-native io_uring I/O access library
@@ -35,6 +45,7 @@ linked programs that use Linux-native io_uring.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 ./configure \
 	--prefix=%_prefix \
 	--includedir=%_includedir \
@@ -42,25 +53,44 @@ linked programs that use Linux-native io_uring.
 	--libdevdir=%_libdir \
 	--mandir=%_mandir \
 	#
-%make_build
+%make_build --no-print-directory CFLAGS="%optflags" V=1
 
 %install
-%makeinstall_std
+%makeinstall_std V=1
+
+%ifnarch ppc64le %e2k
+# Almost all tests fail on ppc64le, so there is not point to even try.
+%check
+# These tests always fail on the most arches/older kernels.
+TEST_EXCLUDE="35fa71a030ca-test eeed8b54e0df-test connect io_uring_register sq-poll-dup
+	sq-poll-share double-poll-crash timeout-new sendmsg_fs_cve link-timeout
+	500f9fbadef8-test cq-overflow defer file-update io-cancel io_uring_enter iopoll
+	lfs-openat lfs-openat-write link_drain open-close openat2 pipe-eof poll-cancel
+	poll-cancel-ton poll-link read-write self sigfd-deadlock sq-space_left thread-exit
+	statx accept-link socket-rw across-fork" \
+make runtests
+%endif
 
 %files
 %_libdir/liburing.so.*
 %doc COPYING
 
 %files devel
+%doc README LICENSE
 %_includedir/*
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 %_man2dir/*
+%_man3dir/*
+%_man7dir/*
 
 %files devel-static
 %_libdir/%name.a
 
 %changelog
+* Sat Jun 05 2021 Vitaly Chikunov <vt@altlinux.org> 2.0-alt1
+- Update to liburing-2.0 (2021-02-28).
+
 * Wed Nov 25 2020 Alexey Shabalin <shaba@altlinux.org> 0.7-alt1
 - new version 0.7
 
