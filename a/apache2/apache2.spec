@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.47
-Release: alt3
+Version: 2.4.48
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -232,6 +232,20 @@ This package contains modules for %name.
 
 %description -l ru_RU.UTF-8 mods
 В этом пакете находятся модули для %name.
+
+
+%package mod_proxy_html
+Summary: HTML and XML content filters for the Apache HTTP Server
+Group: System/Servers
+Requires: %name-mmn = %mmn
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name >= %apache2_libapr_evr
+Requires: %apache2_moduledir
+BuildRequires: libxml2-devel
+
+%description mod_proxy_html
+The mod_proxy_html and mod_xml2enc modules provide filters which can
+transform and modify HTML and XML content.
 
 %package configs-A1PROXIED
 Summary: This is a hack to run proxified Apache2 in case Apache1 is running
@@ -740,6 +754,7 @@ EOF
 	--enable-deflate --enable-cgid \
 	--enable-proxy --enable-proxy-connect \
 	--enable-proxy-http --enable-proxy-ftp \
+	--enable-proxy-html \
 	--enable-charset_lite=shared \
 	--enable-unixd --enable-mods-static='unixd' \
 	$*
@@ -1198,21 +1213,25 @@ exit 0
 %config(noreplace) %apache2_mods_available/*.conf
 %ghost %apache2_mods_enabled/*.load
 %ghost %apache2_mods_enabled/*.conf
+%exclude %apache2_mods_available/proxy_html.load
 %exclude %apache2_mods_available/ssl.load
 %exclude %apache2_mods_available/ssl.conf
 %exclude %apache2_mods_available/*ldap.load
 %exclude %apache2_mods_available/cache_disk.*
 %exclude %apache2_mods_enabled/ssl.load
+%exclude %apache2_mods_enabled/proxy_html.load
 %exclude %apache2_mods_enabled/ssl.conf
 
 %doc %docdir/original/mods-available/*.load
 %doc %docdir/original/mods-available/*.conf
 %exclude %docdir/original/mods-available/ssl.load
+%exclude %docdir/original/mods-available/proxy_html.load
 %exclude %docdir/original/mods-available/ssl.conf
 %exclude %docdir/original/mods-available/cache_disk.*
 
 # everything but mod_ssl.so:
 %apache2_moduledir/mod_*.so
+%exclude %apache2_moduledir/mod_proxy_html.so
 %exclude %apache2_moduledir/mod_ssl.so
 %exclude %apache2_moduledir/mod_*ldap.so
 %exclude %apache2_moduledir/mod_suexec.so
@@ -1434,6 +1453,13 @@ exit 0
 %attr(2770,root,%apache2_group) %dir %apache2_htcacheclean_cachepath/
 %doc %docdir/original/mods-available/cache_disk.*
 
+%files mod_proxy_html
+%config(noreplace) %apache2_mods_available/proxy_html.load
+%apache2_mods_enabled/proxy_html.load
+%apache2_moduledir/mod_proxy_html.so
+%docdir/original/mods-available/proxy_html.load
+
+
 %files htcacheclean-control
 %_controldir/htcacheclean-*
 
@@ -1495,6 +1521,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Jun 08 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.48-alt1
+- 2.4.48
+- added mod_proxy_html subpackage
+
 * Thu May 20 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.47-alt3
 - removed openldap-common from BuildRequires
 
