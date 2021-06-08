@@ -1,5 +1,5 @@
 Name: klavaro
-Version: 3.12
+Version: 3.13
 Release: alt1
 
 Summary: Yet another touch typing tutor
@@ -24,7 +24,6 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-#export DATADIRNAME=share
 %autoreconf
 %configure
 %make_build
@@ -42,6 +41,9 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Jun 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.13-alt1
+- 3.13
+
 * Fri Apr 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.12-alt1
 - 3.12
 
