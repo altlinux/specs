@@ -1,14 +1,14 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBD/SQLite.pm) perl-podlators
+BuildRequires: perl(DBD/SQLite.pm) perl(DateTime/Locale.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-SQLite 
 Summary:        Parse and format SQLite dates and times 
 Version:        0.11
-Release:        alt2_28
+Release:        alt3_28
 License:        GPL+ or Artistic 
 Source0:        https://cpan.metacpan.org/authors/id/C/CF/CFAERBER/DateTime-Format-SQLite-%{version}.tar.gz
 URL:            https://metacpan.org/release/DateTime-Format-SQLite
@@ -62,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.11-alt3_28
+- fixed build
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_28
 - update to new release by fcimport
 
