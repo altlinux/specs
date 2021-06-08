@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 
 Name:          glassfish-fastinfoset
 Version:       1.2.15
-Release:       alt1_2jpp11
+Release:       alt2_2jpp11
 Summary:       Fast Infoset
 License:       ASL 2.0
 
@@ -21,7 +21,7 @@ Patch0:        00-xmlstreambuffer-1.5.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.sun.xml.stream.buffer:streambuffer)
-BuildRequires: mvn(com.sun.xsom:xsom)
+BuildRequires: mvn(com.sun.xsom:xsom:pom:20140925)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
@@ -95,6 +95,9 @@ find -name "module-info.java" -print -delete
 %doc README.md
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.2.15-alt2_2jpp11
+- build with compat xsom
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.2.15-alt1_2jpp11
 - new version
 
