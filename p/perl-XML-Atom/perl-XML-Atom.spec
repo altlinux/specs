@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Atom
 Name: perl-%dist
 Version: 0.43
-Release: alt1
+Release: alt2
 
 Summary: Atom API and Feed Support
 License: GPL or Artistic
@@ -41,6 +44,9 @@ API.
 %perl_vendor_privlib/XML
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.43-alt2
+- fixed build
+
 * Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 0.43-alt1
 - automated CPAN update
 
