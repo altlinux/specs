@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module DateTime-Format-Builder
 
 Name: perl-%module
 Version: 0.83
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: DateTime::Format::Builder - create DateTime parser classes and objects
@@ -35,6 +38,9 @@ DateTime::Format::Builder - create DateTime parser classes and objects.
 %perl_vendor_privlib/DateTime/*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:0.83-alt2
+- fixed build
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.83-alt1
 - automated CPAN update
 
