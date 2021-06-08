@@ -1,10 +1,9 @@
 Name: lib2geom
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Easy to use 2D geometry library in C++
-
 License: LGPL
 Group: Development/C
 Url: https://gitlab.com/inkscape/lib2geom
@@ -33,7 +32,11 @@ in development of the %name-based applications.
 
 %prep
 %setup
-# fix target lib dir
+%ifarch %e2k
+# lcc 1.25.15 barfs at include/2geom/ord.h:54 as of 1.1
+sed -i 's,-Werror=return-type,,' CMakeLists.txt
+%endif
+# fix target lib dir (NB: looks like there are no CMAKE_CXX_FLAGS there in 1.1)
 sed -i "s| lib/| %_lib/|g" CMakeLists.txt
 sed -i 's,^SET(CMAKE_CXX_FLAGS ",SET(CMAKE_CXX_FLAGS "%optflags -fno-inline -fpermissive ,' CMakeLists.txt
 
@@ -60,6 +63,9 @@ sed -i "s|/lib$|/%_lib|" %buildroot%_pkgconfigdir/*
 %_libdir/cmake/2Geom/
 
 %changelog
+* Tue Jun 08 2021 Michael Shigorin <mike@altlinux.org> 1:1.1-alt1.1
+- E2K: ftbfs workaround
+
 * Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.1-alt1
 - new version (1.1) with rpmgs script
 
