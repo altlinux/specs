@@ -1,6 +1,6 @@
 Name: postfix
 Version: 3.6.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -671,8 +671,19 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Mon Jun 07 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.0-alt2
+- Removed notes about mynetworks_style from COMPATIBILITY_README.
+- Changed postfix(1) to point to packaged version of COMPATIBILITY_README.
+- post-install: silenced messages about unused erroneously packaged (in
+  previous versions) files /usr/libexec/postfix/main.cf and
+  /usr/libexec/postfix/master.cf .
+- Changed default value of smtpd_relay_restrictions option to be:
+  + independent of compatibility_level option value;
+  + compatible with postfix < 2.10.
+
 * Sat May 29 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.0-alt1
 - Updated to 3.6.0.
+- /etc/postfix/main.cf: set compatibility_level=3.6 for new installations.
 
 * Wed Dec 02 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.11.11-alt4
 - Fixed build with gcc 10.x.
