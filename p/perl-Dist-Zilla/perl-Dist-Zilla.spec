@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 ## SPEC file for Perl module Dist::Zilla
 
 Name: perl-Dist-Zilla
 Version: 6.017
-Release: alt2
+Release: alt3
 
 Summary: scary tools for building CPAN distributions
 
@@ -79,6 +82,9 @@ rm -f --  t/plugins/filefinders.t
 
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 6.017-alt3
+- fixed build
+
 * Fri Mar 26 2021 Ivan A. Melnikov <iv@altlinux.org> 6.017-alt2
 - Build dependencies cleanup
   + rerun buildreq to avoid recursive build dependencies
