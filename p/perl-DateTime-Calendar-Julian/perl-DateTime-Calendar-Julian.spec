@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(DateTime.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
+BuildRequires: perl(DateTime.pm) perl(DateTime/Locale.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
 %define module_name DateTime-Calendar-Julian
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.104
-Release: alt1
+Release: alt2
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.104-alt2
+- fixed build
+
 * Mon Mar 15 2021 Igor Vlasenko <viy@altlinux.org> 0.104-alt1
 - automated CPAN update
 
