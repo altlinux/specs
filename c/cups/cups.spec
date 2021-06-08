@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.3.3
-Release: alt5.op2
+Release: alt6.op2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -357,26 +357,26 @@ if [ $2 -gt 0 ]; then
 		fi
 
 # disable services with old names
-		"$SYSTEMCTL" disable org.cups.cups-lpd.socket ||:
-		"$SYSTEMCTL" disable org.cups.cupsd.path ||:
-		"$SYSTEMCTL" disable org.cups.cupsd.service ||:
-		"$SYSTEMCTL" disable org.cups.cupsd.socket ||:
+		"$SYSTEMCTL" disable --now org.cups.cups-lpd.socket ||:
+		"$SYSTEMCTL" disable --now org.cups.cupsd.path ||:
+		"$SYSTEMCTL" disable --now org.cups.cupsd.service ||:
+		"$SYSTEMCTL" disable --now org.cups.cupsd.socket ||:
 
 # re-enable services with new names
 		if [ $enable_lpd_socket -eq 1 ] ; then
-			"$SYSTEMCTL" enable cups-lpd.socket
+			"$SYSTEMCTL" enable --now cups-lpd.socket
 		fi
 
 		if [ $enable_cups_path -eq 1 ] ; then
-			"$SYSTEMCTL" enable cups.path
+			"$SYSTEMCTL" enable --now cups.path
 		fi
 
 		if [ $enable_cups_service -eq 1 ] ; then
-			"$SYSTEMCTL" enable cups.service
+			"$SYSTEMCTL" enable --now cups.service
 		fi
 
 		if [ $enable_cups_socket -eq 1 ] ; then
-			"$SYSTEMCTL" enable cups.socket
+			"$SYSTEMCTL" enable --now cups.socket
 		fi
 	fi
 fi
@@ -436,6 +436,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Tue Jun 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt6.op2
+- Updated service migration script.
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt5.op2
 - Fixed build without python-module-polib.
 
