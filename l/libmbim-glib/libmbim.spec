@@ -4,14 +4,14 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.24.6
+Version: 1.24.8
 Release: alt1
 
 Summary: MBIM modem protocol helper library
 License: LGPLv2+
 Group: System/Libraries
-URL: https://cgit.freedesktop.org/libmbim/libmbim/
-Vcs: git://anongit.freedesktop.org/libmbim/libmbim
+URL: https://gitlab.freedesktop.org/mobile-broadband/libmbim
+Vcs: https://gitlab.freedesktop.org/mobile-broadband/libmbim.git
 Source: %name-%version.tar
 
 Patch: %_name-%version-%release.patch
@@ -91,7 +91,7 @@ touch README ChangeLog
 %define more_warnings error
 %endif
 
-%autoreconf
+GTKDOCIZE="true" %autoreconf
 %configure \
 	--disable-static \
 	--with-udev \
@@ -136,6 +136,11 @@ make check
 
 
 %changelog
+* Tue Jun 08 2021 Mikhail Efremov <sem@altlinux.org> 1.24.8-alt1
+- Disabled gtkdocize in autoreconf.
+- Updated Vcs and Url tags.
+- Updated to 1.24.8.
+
 * Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 1.24.6-alt1
 - Updated to 1.24.6.
 

@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.28.2
+Version: 1.28.6
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -89,7 +89,7 @@ touch README ChangeLog
 %define more_warnings error
 %endif
 
-%autoreconf
+GTKDOCIZE="true" %autoreconf
 %configure \
 	--disable-static \
 	--enable-mbim-qmux \
@@ -136,8 +136,11 @@ make check
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
-
 %changelog
+* Tue Jun 08 2021 Mikhail Efremov <sem@altlinux.org> 1.28.6-alt1
+- Disabled gtkdocize in autoreconf.
+- Updated to 1.28.6.
+
 * Mon Mar 01 2021 Mikhail Efremov <sem@altlinux.org> 1.28.2-alt1
 - Fixed build on armh.
 - BR: requre autoconf-archive >= 2021.02.19-alt1.

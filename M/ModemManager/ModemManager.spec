@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.16.4
+Version: 1.16.6
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -131,7 +131,7 @@ Requires: libmm-glib-devel = %version-%release
 %else
 %define more_warnings yes
 %endif
-%autoreconf
+GTKDOCIZE="true" %autoreconf
 %configure \
 	--disable-static \
 	--with-udev-base-dir=/lib/udev \
@@ -234,6 +234,10 @@ fi
 %endif
 
 %changelog
+* Tue Jun 08 2021 Mikhail Efremov <sem@altlinux.org> 1.16.6-alt1
+- Disabled gtkdocize in autoreconf.
+- Updated to 1.16.6.
+
 * Thu Apr 22 2021 Mikhail Efremov <sem@altlinux.org> 1.16.4-alt1
 - Updated to 1.16.4.
 
