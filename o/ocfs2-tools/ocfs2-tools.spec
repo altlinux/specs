@@ -1,7 +1,8 @@
+%def_without ocfs2console
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
-Version: 1.8.6
-Release: alt2
+Version: 1.8.7
+Release: alt1
 License: GPLv2
 Group: System/Kernel and hardware
 # https://github.com/markfasheh/ocfs2-tools
@@ -13,13 +14,16 @@ Patch1: ocfs2-tools-service.patch
 Patch2: ocfs2-tools-add_sysmacros.h.patch
 
 Url: http://oss.oracle.com/projects/ocfs2-tools/
-BuildRequires: e2fsprogs-devel, glib2-devel, python-module-pygtk , python-dev, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel, libaio-devel
+BuildRequires: e2fsprogs-devel, glib2-devel, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel, libaio-devel
 BuildRequires: libcorosync-devel, libpacemaker-devel, libdlm-devel
 
 %description
 Tools to manage Oracle Cluster Filesystem 2 volumes.
 
+%if_with ocfs2console
 %package -n ocfs2console
+BuildRequires: python-module-pygtk
+BuildRequires: python-dev
 Summary: GUI frontend for OCFS2 management
 Group: System/Kernel and hardware
 Requires: ocfs2-tools = %version
@@ -28,6 +32,7 @@ Requires: ocfs2-tools = %version
 %description -n ocfs2console
 GUI frontend for management and debugging of Oracle Cluster Filesystem 2
 volumes.
+%endif
 
 %package -n ocfs2-tools-devel
 Summary: Headers and static archives for ocfs2-tools
@@ -47,7 +52,7 @@ develop ocfs2 filesystem-specific programs.
 %build
 %autoreconf
 %configure --enable-dynamic-ctl=yes \
-	   --enable-ocfs2console=yes \
+	   %{subst_with ocfs2console} \
 	   --enable-dynamic-fsck=yes \
 	   --disable-debug \
 	   --prefix=/usr \
@@ -69,7 +74,9 @@ mkdir -p %buildroot/%_sysconfdir/ocfs2/
 install -m600 %SOURCE1 %buildroot/%_sysconfdir/ocfs2/
 
 make DESTDIR="%buildroot" install
+%if_with ocfs2console
 sed -i -e '1s,^#!/usr/bin/python *,#!/usr/bin/python2 ,' %buildroot/usr/sbin/ocfs2console
+%endif
 
 %post
 %post_service o2cb
@@ -110,10 +117,12 @@ sed -i -e '1s,^#!/usr/bin/python *,#!/usr/bin/python2 ,' %buildroot/usr/sbin/ocf
 %_man1dir/o2info.1*
 %dir /var/run/o2cb
 
+%if_with ocfs2console
 %files -n ocfs2console
 %_libdir/python%__python_version/site-packages/ocfs2interface
 %_sbindir/ocfs2console
 %_man8dir/ocfs2console.8*
+%endif
 
 %files -n ocfs2-tools-devel
 %_libdir/*.a
@@ -128,6 +137,10 @@ sed -i -e '1s,^#!/usr/bin/python *,#!/usr/bin/python2 ,' %buildroot/usr/sbin/ocf
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Mon Jun 07 2021 Anton Farygin <rider@altlinux.ru> 1.8.7-alt1
+- 1.8.7
+- disabled the ocfs2console due to dependency on python2
+
 * Tue Apr 14 2020 Anton Farygin <rider@altlinux.ru> 1.8.6-alt2
 - built with python2, pacemaker and corosync
 
