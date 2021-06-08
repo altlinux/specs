@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 Name:          msv
 Epoch:         1
 Version:       2013.6.1
-Release:       alt1_19jpp11
+Release:       alt2_19jpp11
 Summary:       Multi-Schema Validator
 License:       BSD and ASL 1.1
 URL:           http://msv.java.net/
@@ -32,7 +32,7 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
+BuildRequires:  mvn(relaxngDatatype:relaxngDatatype:20020414)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xml-resolver:xml-resolver)
 
@@ -245,6 +245,9 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:2013.6.1-alt2_19jpp11
+- build with compat relaxngDatatype
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:2013.6.1-alt1_19jpp11
 - update
 
