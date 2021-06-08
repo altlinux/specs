@@ -1,3 +1,4 @@
+%define oldname glassfish-fastinfoset
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
@@ -5,9 +6,9 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 %global srcname metro-fi
 
-Name:          glassfish-fastinfoset
+Name:          glassfish-fastinfoset1.2
 Version:       1.2.15
-Release:       alt2_2jpp11
+Release:       alt3_2jpp11
 Summary:       Fast Infoset
 License:       ASL 2.0
 
@@ -39,11 +40,11 @@ parse and serialize than equivalent XML documents.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary:       Javadoc for %{oldname}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for %{oldname}.
 
 %prep
 %setup -q -n %{srcname}-%{version}-RELEASE
@@ -77,8 +78,10 @@ find -name "module-info.java" -print -delete
   <phase>skip</phase>
  </execution>" fastinfoset
 
-%mvn_file :FastInfoset %{name}
-%mvn_file :FastInfosetUtilities %{name}-utilities
+%mvn_file :FastInfoset %{oldname}
+%mvn_file :FastInfosetUtilities %{oldname}-utilities
+
+%mvn_compat_version : 1.2 1.2.13 %{version}
 
 %build
 %mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
@@ -95,6 +98,9 @@ find -name "module-info.java" -print -delete
 %doc README.md
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.2.15-alt3_2jpp11
+- compat build
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.2.15-alt2_2jpp11
 - build with compat xsom
 

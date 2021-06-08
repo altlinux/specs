@@ -18,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt6_15jpp8
+Release:        alt7_15jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
@@ -42,7 +42,7 @@ BuildRequires:  mvn(com.sun.istack:istack-commons-runtime:2.21)
 BuildRequires:  mvn(com.sun.istack:istack-commons-tools:2.21)
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
-BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset)
+BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset:1.2.13)
 BuildRequires:  mvn(com.sun.xsom:xsom:pom:20140925)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
@@ -212,6 +212,12 @@ This package contains the API documentation for %{name}.
 %endif
 %patch1 -p1
 
+#viy@: set compat versions
+#./xjc/pom.xml:            <groupId>com.sun.istack</groupId>
+#./xjc/pom.xml:            <artifactId>istack-commons-tools</artifactId>
+%pom_change_dep com.sun.istack: ::2.21 xjc codemodel/codemodel-annotation-compiler core
+
+
 # Disable unneeded OSGi bundles
 %pom_disable_module xjc bundles
 %pom_disable_module jxc bundles
@@ -275,12 +281,6 @@ rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,St
 %mvn_package :jaxb-bom* __noinstall
 %endif
 
-%pom_change_dep com.sun.istack: ::2.21 xjc codemodel/codemodel-annotation-compiler core
-
-#./xjc/pom.xml:            <groupId>com.sun.istack</groupId>
-#./xjc/pom.xml:            <artifactId>istack-commons-tools</artifactId>
-
-
 %build
 %mvn_build -f -s -j -- -Ddev -DbuildNumber=unknown
 
@@ -337,6 +337,9 @@ rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,St
 
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2.11-alt7_15jpp8
+- build with compat glassfish-fastinfoset
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2.11-alt6_15jpp8
 - build with compat xsom
 
