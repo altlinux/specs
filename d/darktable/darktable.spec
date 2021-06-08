@@ -5,7 +5,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -52,7 +52,7 @@ BuildRequires: libharfbuzz-devel libwebp-devel libxshmfence-devel
 # since 2.0
 BuildRequires: libpugixml-devel >= %pugixml_ver libcups-devel
 BuildRequires: libosm-gps-map1.0-devel
-BuildRequires: python-module-jsonschema
+BuildRequires: /usr/bin/jsonschema
 BuildRequires: iso-codes-devel >= %iso_codes_ver
 BuildRequires: libgmic-devel
 # since 3.2.0
@@ -111,6 +111,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Tue Jun 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1.1
+- fixed BR
+
 * Sat Feb 06 2021 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
