@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module DateTime-Format-Strptime
 
 Name: perl-%module
 Epoch: 1
 Version: 1.79
-Release: alt1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -40,6 +43,9 @@ returns the DateTime object associated.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:1.79-alt2
+- fixed build
+
 * Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 1:1.79-alt1
 - automated CPAN update
 
