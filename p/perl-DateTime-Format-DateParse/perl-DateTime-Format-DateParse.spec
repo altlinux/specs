@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define dist DateTime-Format-DateParse
 Name: perl-%dist
 Version: 0.05
-Release: alt1.1
+Release: alt2.1
 
 Summary: Parses Date::Parse compatible formats
 License: %perl_license
@@ -38,6 +41,9 @@ This module is a compatibility wrapper around Date::Parse.
 %perl_vendor_privlib/DateTime/
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.05-alt2.1
+- fixed build
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
