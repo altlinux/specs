@@ -1,13 +1,13 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-podlators
+BuildRequires: perl(CPAN.pm) perl(DateTime/Locale.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DateManip
 Version:        0.04
-Release:        alt2_31
+Release:        alt3_31
 Summary:        Convert Date::Manip to DateTime and vice versa
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Format-DateManip
@@ -59,6 +59,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.04-alt3_31
+- fixed build
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_31
 - update to new release by fcimport
 
