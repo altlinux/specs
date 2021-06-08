@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 Group: Text tools
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 Name:		publican-jboss
 Summary:	Common documentation files for %{brand}
 Version:	2.6
-Release:	alt2_14jpp8
+Release:	alt3_14jpp8
 License:	CC-BY-SA
 # Limited to these arches on RHEL 6 due to PDF + Java limitations
 %if %{RHEL6}
@@ -46,6 +49,9 @@ publican install_brand --path=$RPM_BUILD_ROOT%{_datadir}/publican/Common_Content
 %{_datadir}/publican/Common_Content/%{brand}
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 2.6-alt3_14jpp8
+- fixed build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_14jpp8
 - fc update
 
