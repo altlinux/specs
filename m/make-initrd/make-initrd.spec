@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.17.0
+Version: 2.18.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -124,6 +124,7 @@ Requires: %name = %version-%release
 Requires: plymouth
 Requires: plymouth-plugin-label
 Requires: fonts-ttf-dejavu
+Requires: fontconfig
 AutoReq: noshell, noshebang
 
 %description plymouth
@@ -261,6 +262,10 @@ fi
 %_datadir/%name/features/kickstart
 
 %changelog
+* Tue Jun 08 2021 Alexey Gladkov <legion@altlinux.ru> 2.18.0-alt1
+- New version (2.18.0).
+- Fix definition of default theme (ALT#40090).
+
 * Tue May 18 2021 Alexey Gladkov <legion@altlinux.ru> 2.17.0-alt1
 - Switch from upstream git tree to release tarballs.
 - Runtime:
