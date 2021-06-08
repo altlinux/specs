@@ -6,7 +6,7 @@
 
 Name: hotdoc
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Hotdoc is a documentation framework
 License: LGPL-2.1-or-later
@@ -23,6 +23,8 @@ Source1: %name-%version-bootstrap_theme.tar
 # provided by hotdoc/parsers/c_comment_scanner/c_comment_scanner.cpython-3*.so
 %py3_provides hotdoc.parsers.c_comment_scanner.c_comment_scanner
 
+%define clang_ver 12.0
+Requires: clang%clang_ver-devel llvm%clang_ver-devel
 Requires: bison flex
 Requires: python3-module-appdirs >= 1.4.4
 Requires: python3-module-contextlib2 >= 0.6.0
@@ -81,6 +83,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Tue Jun 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.3-alt2
+- updated c-extension dependencies
+
 * Wed Mar 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.3-alt1
 - 0.13.3
 

@@ -1,9 +1,12 @@
-%define ver_major 1.8
+%define ver_major 1.10
 %define api_ver 1.0
 %define _name wpebackend-fdo
 
+%def_enable docs
+%def_enable check
+
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
@@ -13,33 +16,48 @@ Url: https://github.com/Igalia/WPEBackend-fdo
 
 Source: %url/releases/download/%version/%_name-%version.tar.xz
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): meson
+BuildRequires: gcc-c++
 BuildRequires: libgio-devel libEGL-devel
 BuildRequires: libwpe-devel >= %ver_major libepoxy-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-egl-devel
-
+BuildRequires: libxkbcommon-devel
+%{?_enable_docs:BuildRequires: hotdoc}
 %description
 %summary
 
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides files for developing applications that use %name.
+
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+This package provides development documentation for %_name library.
 
 %prep
 %setup -n %_name-%version
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
-%cmake -DCMAKE_BUILD_TYPE="Release"
-%cmake_build
+%meson \
+%{?_enable_docs:-Dbuild_docs=true}
+%nil
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/libWPEBackend-fdo-%api_ver.so.*
@@ -50,7 +68,16 @@ This package provides files for developing applications that use %name.
 %_libdir/libWPEBackend-fdo-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
+%if_enabled docs
+%files devel-doc
+%_datadir/doc/WPEBackend-fdo/
+%endif
+
 %changelog
+* Tue Jun 08 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0 (ported to Meson build system)
+- new -devel-doc subpackage
+
 * Thu May 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
