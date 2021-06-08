@@ -22,7 +22,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jing-trang
 Version:        20151127
-Release:        alt2_8jpp8
+Release:        alt3_8jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
@@ -49,8 +49,8 @@ BuildRequires:  java-javadoc
 BuildRequires:  javacc
 BuildRequires:  jpackage-utils
 BuildRequires:  qdox
-BuildRequires:  relaxngDatatype
-BuildRequires:  relaxngDatatype-javadoc
+BuildRequires:  relaxngDatatype2011.1
+BuildRequires:  relaxngDatatype2011.1-javadoc
 BuildRequires:  testng
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
@@ -65,7 +65,7 @@ Group: Text tools
 Summary:        RELAX NG validator in Java
 Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
-Requires:       relaxngDatatype
+Requires:       relaxngDatatype2011.1
 Requires:       xerces-j2
 Requires:       xml-commons-resolver
 
@@ -81,7 +81,7 @@ Language.
 Group: Development/Java
 Summary:        Javadoc API documentation for Jing
 Requires:       java-javadoc
-Requires:       relaxngDatatype-javadoc
+Requires:       relaxngDatatype2011.1-javadoc
 BuildArch: noarch
 
 %description -n jing-javadoc
@@ -92,7 +92,7 @@ Group: Text tools
 Summary:        Multi-format schema converter based on RELAX NG
 Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
-Requires:       relaxngDatatype
+Requires:       relaxngDatatype2011.1
 Requires:       xerces-j2
 Requires:       xml-commons-resolver
 
@@ -146,13 +146,13 @@ install -Dpm 644 jing-%{version}/bin/jing.jar $RPM_BUILD_ROOT%{_javadir}
 mv jing-%{version}/doc/api $RPM_BUILD_ROOT%{_javadocdir}/jing
 ln -s %{_javadocdir}/jing jing-%{version}/doc/api
 rm -f jing-%{version}/sample/datatype/datatype-sample.jar
-%jpackage_script com.thaiopensource.relaxng.util.Driver "" "" jing:relaxngDatatype:xml-commons-resolver:xerces-j2 jing true
+%jpackage_script com.thaiopensource.relaxng.util.Driver "" "" jing:relaxngDatatype2011.1:xml-commons-resolver:xerces-j2 jing true
 mkdir -p jing-%{version}/_licenses
 mv jing-%{version}/doc/*copying.* jing-%{version}/_licenses
 
 unzip build/dist/trang-%{version}.zip
 install -pm 644 trang-%{version}/trang.jar $RPM_BUILD_ROOT%{_javadir}
-%jpackage_script com.thaiopensource.relaxng.translate.Driver "" "" trang:relaxngDatatype:xml-commons-resolver:xerces-j2 trang true
+%jpackage_script com.thaiopensource.relaxng.translate.Driver "" "" trang:relaxngDatatype2011.1:xml-commons-resolver:xerces-j2 trang true
 
 unzip build/dist/dtdinst-%{version}.zip
 install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
@@ -190,6 +190,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0:20151127-alt3_8jpp8
+- build with compat relaxngDatatype
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:20151127-alt2_8jpp8
 - use jvm_run
 
