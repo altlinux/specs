@@ -1,48 +1,23 @@
 %define oname routes
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.4.1
-Release: alt1
+Release: alt2
 Summary: Routing Recognition and Generation Tools
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://routes.groovie.org/
 
 # git://github.com/bbangert/routes
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-Requires: python-module-repoze.lru
-
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-sphinx-devel python-module-Pygments
-BuildRequires: python-module-repoze.lru python-module-webob
-BuildRequires: python-module-six
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-six
-%endif
-
-%description
-Routes is a Python re-implementation of the Rails routes system for
-mapping URLs to application actions, and conversely to generate URLs.
-Routes makes it easy to create pretty and concise URLs that are RESTful
-with little effort.
-
-Routes allows conditional matching based on domain, cookies, HTTP
-method, or a custom function. Sub-domain support is built in. Routes
-comes with an extensive unit test suite.
-
-%package -n python3-module-%oname
-Summary: Routing Recognition and Generation Tools
-Group: Development/Python3
 Requires: python3-module-repoze.lru
 
-%description -n python3-module-%oname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-six
+
+%description
 Routes is a Python re-implementation of the Rails routes system for
 mapping URLs to application actions, and conversely to generate URLs.
 Routes makes it easy to create pretty and concise URLs that are RESTful
@@ -67,7 +42,7 @@ This package contains documentation for Routes.
 
 %package pickles
 Summary: Pickles for Routing Recognition and Generation Tools
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Routes is a Python re-implementation of the Rails routes system for
@@ -80,29 +55,13 @@ This package contains pickles for Routes.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd docs
 
 install -d %buildroot%_docdir/%name
@@ -110,19 +69,15 @@ popd
 
 %files
 %doc CHANGELOG LICENSE README TODO
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files doc
 %_docdir/%name
 
-
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGELOG LICENSE README TODO
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Jun 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt2
+- Drop python2 support.
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
