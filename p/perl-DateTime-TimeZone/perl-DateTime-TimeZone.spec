@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
 Version: 2.47
-Release: alt1
+Release: alt2
 
 Summary: Time zone object base class and factory
 License: GPL or Artistic
@@ -84,6 +87,9 @@ fi
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 2.47-alt2
+- fixed build
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 2.47-alt1
 - automated CPAN update
 
