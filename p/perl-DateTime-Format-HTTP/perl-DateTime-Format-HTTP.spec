@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define m_distro DateTime-Format-HTTP
 Name: perl-DateTime-Format-HTTP
 Version: 0.42
-Release: alt1
+Release: alt2
 Summary: DateTime::Format::HTTP - Date conversion routines
 
 Group: Development/Perl
@@ -29,6 +32,9 @@ BuildRequires: perl-devel perl-HTTP-Date perl-DateTime perl-Module-Build
 %doc LICENSE Changes README 
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.42-alt2
+- fixed build
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
 - automated CPAN update
 
