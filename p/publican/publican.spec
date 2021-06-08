@@ -1,7 +1,7 @@
 Group: Publishing
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/desktop-file-install perl(HTML/WikiConverter.pm) perl-podlators
+BuildRequires: /usr/bin/desktop-file-install perl(DateTime/Locale.pm) perl(HTML/WikiConverter.pm) perl-podlators
 # END SourceDeps(oneline)
 Requires: docbook-dtds docbook-style-xsl perl-Makefile-Parser
 BuildRequires: docbook-dtds docbook-style-xsl
@@ -31,7 +31,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt3_13.1
+Release:        alt4_13.1
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -333,6 +333,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 4.3.2-alt4_13.1
+- fixed build
+
 * Sun Feb 14 2021 Ivan A. Melnikov <iv@altlinux.org> 4.3.2-alt3_13.1
 - drop self-obsoletes
 
