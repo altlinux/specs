@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name: txw2
 Version: 20110809
-Release: alt3_20jpp8
+Release: alt4_20jpp8
 Summary: Typed XML writer for Java
 License: CDDL-1.1 and GPLv2 with exceptions
 URL: https://txw.dev.java.net
@@ -26,11 +26,11 @@ BuildArch: noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(args4j:args4j)
 BuildRequires:  mvn(com.sun.codemodel:codemodel)
-BuildRequires:  mvn(com.sun.xsom:xsom)
+BuildRequires:  mvn(com.sun.xsom:xsom:20140514)
 BuildRequires:  mvn(javax.xml.stream:stax-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.kohsuke.rngom:rngom)
+BuildRequires:  mvn(org.kohsuke.rngom:rngom:20100718)
 BuildRequires:  mvn(relaxngDatatype:relaxngDatatype:20020414)
 Source44: import.info
 
@@ -63,6 +63,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 20110809-alt4_20jpp8
+- build wuth compat rngom and xsom
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 20110809-alt3_20jpp8
 - build with compat relaxngDatatype
 
