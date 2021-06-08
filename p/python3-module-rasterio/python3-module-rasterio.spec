@@ -2,7 +2,7 @@
 %define oname rasterio
 
 Name: python3-module-%oname
-Version: 1.2.1
+Version: 1.2.3
 Release: alt1
 
 License: BSD
@@ -67,6 +67,9 @@ xvfb-run py.test3 ||:
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
+- new version 1.2.3 (with rpmrb script)
+
 * Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
