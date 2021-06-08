@@ -18,7 +18,7 @@
 %def_disable	unit_tests
 
 Name: syslog-ng
-Version: 3.31.2
+Version: 3.32.1
 Release: alt1
 
 Summary: syslog-ng daemon
@@ -50,9 +50,16 @@ BuildRequires: rpm-build-licenses
 BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel
 BuildRequires: libnet2-devel libpcre-devel libpopt-devel
 BuildRequires: libssl-devel libuuid-devel libivykis-devel
-BuildRequires: xsltproc docbook-style-xsl python3-dev
+BuildRequires: xsltproc docbook-style-xsl
 
-%{?_enable_geoip2:BuildRequires: libGeoIP-devel}
+BuildRequires: python3-dev
+%add_python3_path %_libdir/syslog-ng/python/syslogng
+%add_python3_path %_libdir/syslog-ng/python/syslogng/debuggercli
+%add_python3_req_skip editline.editline
+
+# temporary for task 269916 (p9)
+BuildRequires(pre): rpm-macros-python3
+
 %{?_enable_geoip2:BuildRequires: libmaxminddb-devel}
 %{?_enable_json:BuildRequires: libjson-c-devel}
 %{?_enable_smtp:BuildRequires: libesmtp-devel}
@@ -229,7 +236,7 @@ autoconf
 # fix perl path
 %{__sed} -i 's|^#!/usr/local/bin/perl|#!%{__perl}|' contrib/relogger.pl
 
-find -type f -name "*.py" -exec sed -i 's|/usr/bin/env python|%__python3|' {} \;
+find -type f -name "*.py" -exec sed -i 's|/usr/bin/env python.*|%__python3|' {} \;
 
 %build
 skip_submodules=1 ./autogen.sh
@@ -520,6 +527,10 @@ fi
 %_libdir/libsyslog-ng-native-connector.a
 
 %changelog
+* Tue Jun 08 2021 Sergey Y. Afonin <asy@altlinux.org> 3.32.1-alt1
+- 3.32.1
+- fixed build without rpm-build-python (ALT #40178)
+
 * Sun Mar 28 2021 Sergey Y. Afonin <asy@altlinux.org> 3.31.2-alt1
 - 3.31.2
 
