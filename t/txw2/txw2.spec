@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name: txw2
 Version: 20110809
-Release: alt2_20jpp8
+Release: alt3_20jpp8
 Summary: Typed XML writer for Java
 License: CDDL-1.1 and GPLv2 with exceptions
 URL: https://txw.dev.java.net
@@ -31,7 +31,7 @@ BuildRequires:  mvn(javax.xml.stream:stax-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.kohsuke.rngom:rngom)
-BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
+BuildRequires:  mvn(relaxngDatatype:relaxngDatatype:20020414)
 Source44: import.info
 
 %description
@@ -63,6 +63,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 20110809-alt3_20jpp8
+- build with compat relaxngDatatype
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_20jpp8
 - fc update & java 8 build
 
