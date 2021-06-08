@@ -1,7 +1,7 @@
 %define oname lark-parser
 
 Name: python3-module-%oname
-Version: 0.9.0
+Version: 0.11.3
 Release: alt1
 
 Summary: A modern parsing library for Python, implementing Earley & LALR(1) and an easy interface
@@ -63,6 +63,9 @@ rm -rfv %buildroot%python3_sitelibdir/lark/__pyinstaller
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
+- new version 0.11.3 (with rpmrb script)
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - new version 0.9.0 (with rpmrb script)
 
