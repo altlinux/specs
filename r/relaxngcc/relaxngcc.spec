@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name: relaxngcc
 Version: 1.12
-Release: alt2_18jpp8
+Release: alt3_18jpp8
 Summary: RELAX NG Compiler Compiler
 
 License: ASL 1.1
@@ -25,7 +25,7 @@ BuildRequires: javacc
 BuildRequires: jpackage-utils
 BuildRequires: msv-msv
 BuildRequires: msv-xsdlib
-BuildRequires: relaxngDatatype
+BuildRequires: relaxngDatatype2011.1
 BuildRequires: isorelax
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
@@ -33,7 +33,7 @@ BuildRequires: dos2unix
 
 Requires: msv-msv
 Requires: msv-xsdlib
-Requires: relaxngDatatype
+#Requires: relaxngDatatype2011.1
 Requires: isorelax
 Requires: xerces-j2
 Requires: xml-commons-apis
@@ -95,7 +95,7 @@ done
 # build:
 mkdir lib
 build-jar-repository -p lib \
-  msv-msv msv-xsdlib relaxngDatatype isorelax javacc
+  msv-msv msv-xsdlib relaxngDatatype2011.1 isorelax javacc
 
 # Put the ant build files in place:
 cp %{SOURCE1} build.xml
@@ -126,6 +126,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc LICENSE.txt
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0:1.12-alt3_18jpp8
+- build with compat relaxngDatatype
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_18jpp8
 - fc update
 
