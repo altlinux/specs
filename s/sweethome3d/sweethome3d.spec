@@ -1,3 +1,4 @@
+ExcludeArch: %arm
 #ExclusiveArch: %{ix86} x86_64
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -17,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		sweethome3d
 Version:	6.1
-Release:	alt1_2jpp8
+Release:	alt2_2jpp8
 Summary:	A free interior design application, with a 3D preview
 License:	GPLv2
 Group:		Graphics
@@ -407,6 +408,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 6.1-alt2_2jpp8
+- use jvm_run
+
 * Mon Dec 09 2019 Igor Vlasenko <viy@altlinux.ru> 6.1-alt1_2jpp8
 - added obsoletes (closes: #37301)
 
