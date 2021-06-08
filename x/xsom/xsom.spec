@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 Name:           xsom
 Summary:        XML Schema Object Model (XSOM)
 Version:        20140514
-Release:        alt2_3jpp11
+Release:        alt3_3jpp11
 License:        CDDL-1.1 or GPLv2 with exceptions
 
 # java.net is dead; upstream sources have been imported to GitHub though
@@ -26,7 +26,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
+BuildRequires:  mvn(relaxngDatatype:relaxngDatatype:20020414)
 
 BuildArch:      noarch
 Source44: import.info
@@ -81,6 +81,9 @@ popd
 %doc --no-dereference license.txt copyright.txt
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 20140514-alt3_3jpp11
+- build with compat relaxngDatatype
+
 * Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 20140514-alt2_3jpp11
 - fixed build
 
