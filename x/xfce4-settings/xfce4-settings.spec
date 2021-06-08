@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.16.1
-Release: alt2
+Version: 4.16.2
+Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -88,6 +88,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Tue Jun 08 2021 Mikhail Efremov <sem@altlinux.org> 4.16.2-alt1
+- Updated to 4.16.2.
+
 * Tue May 11 2021 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt2
 - Fixed build: added rpm-build-python3 to BR.
 
