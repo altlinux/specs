@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Format-W3CDTF
 Name: perl-%dist
 Version: 0.08
-Release: alt1
+Release: alt2
 
 Summary: Parse and format W3CDTF datetime strings
 License: GPL or Artistic
@@ -35,6 +38,9 @@ date format of RSS 1.0.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.08-alt2
+- fixed build
+
 * Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
