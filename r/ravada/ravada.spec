@@ -3,7 +3,7 @@
 Name: ravada
 Summary: Remote Virtual Desktops Manager
 Version: 1.0.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0
 Group: Development/Perl
 Url: https://ravada.upc.edu/
@@ -21,6 +21,7 @@ BuildRequires: bridge-utils iproute2 net-tools qemu-img wget
 
 BuildRequires: perl-Authen-Passphrase
 BuildRequires: perl-DateTime-Format-DateParse
+BuildRequires: perl-DateTime-Locale
 BuildRequires: perl-DateTime
 BuildRequires: perl-DBD-SQLite
 BuildRequires: perl-DBIx-Connector
@@ -53,6 +54,7 @@ BuildRequires: perl-YAML
 
 %if_with check
 BuildRequires: /proc
+BuildRequires: rpm-build-vm
 BuildRequires: perl-Test-Moose-More
 BuildRequires: perl-Test-Perl-Critic
 %endif
@@ -90,7 +92,7 @@ install -p -m644 etc/systemd/*.service %buildroot%_unitdir
 %check
 export TZ=UTC
 export PATH=$PATH:/sbin
-make test
+vm-run --kvm=cond "mount -t tmpfs tmp /var/run; make test"
 
 %preun
 %preun_service rvd_back
@@ -119,6 +121,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Tue Jun 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1-alt2
+- FTBFS: BR: perl-DateTime-Locale
+
 * Tue May 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
