@@ -1,21 +1,24 @@
 %define oname aften
+
 Name: libaften
 Version: 0.0.8
-Release: alt1.qa3
-Serial: 1
+Release: alt3
+Epoch: 1
 
 Summary: Aften: A/52 audio encoder
-
-License: LGPL
+License: LGPLv2+
 Group: System/Libraries
+
 Url: http://%oname.sourceforge.net/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: http://dl.sourceforge.net/%oname/%oname-%version.tar.bz2
+Patch2000: %name-e2k-simd.patch
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Automatically added by buildreq on Thu Aug 02 2007
 BuildRequires: cmake yasm subversion
+
+# used to build on armh back in 2013 but not in 2021
+ExclusiveArch: %ix86 x86_64 %e2k
 
 %description
 A simple AC3-compatible audio encoder based on FFmpeg.
@@ -29,17 +32,20 @@ Requires: %name = %{?serial:%serial:}%version-%release
 Header files for %name library.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 mkdir -p default && cd default
-cmake .. -DCMAKE_INSTALL_PREFIX:STRING="/usr" -DSHARED=yes
+cmake .. -DCMAKE_INSTALL_PREFIX:STRING="%_usr" -DSHARED=yes
 %make_build
 
 %install
 cd default
-%make_install install DESTDIR=%buildroot
-# hack due broken install target in CMakeList
+%makeinstall_std
+# hack due to broken install target in CMakeList
 test -d %buildroot%_libdir || mv %buildroot%_prefix/lib %buildroot%_libdir
 
 %files
@@ -52,6 +58,12 @@ test -d %buildroot%_libdir || mv %buildroot%_prefix/lib %buildroot%_libdir
 %_includedir/*
 
 %changelog
+* Tue Jun 08 2021 Michael Shigorin <mike@altlinux.org> 1:0.0.8-alt3
+- built for sisyphus (with minor spec cleanup)
+
+* Tue Jun 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.0.8-alt2
+- added SIMD patch for Elbrus
+
 * Thu Aug 30 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.0.8-alt1.qa3
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
