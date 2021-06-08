@@ -2,13 +2,13 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(DateTime/Locale.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Pg
 Version:        0.16014
-Release:        alt1
+Release:        alt2
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Format-Pg
@@ -63,6 +63,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.16014-alt2
+- fixed build
+
 * Mon Mar 15 2021 Igor Vlasenko <viy@altlinux.org> 0.16014-alt1
 - automated CPAN update
 
