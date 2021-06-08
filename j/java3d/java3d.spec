@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		java3d
 Version:	1.5.2
-Release:	alt3_15jpp8
+Release:	alt4_15jpp8
 Summary:	The Java 3D API
 Group:		Development/Java
 License:	BSD, GPL
@@ -148,6 +148,9 @@ sed -i '/GLsizeiptr/d;/GLintptr/d' j3d-core/src/native/ogl/gldefs.h
 
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 export ANT_OPTS=-Xmx256m
 export CLASSPATH=$PWD/j3d-core/build/default/opt/lib/ext/j3dcore.jar:junit.jar:%{_datadir}/java/vecmath.jar
 
@@ -222,6 +225,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt4_15jpp8
+- armh build
+
 * Fri Jan 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt3_15jpp8
 - fixed i586
 
