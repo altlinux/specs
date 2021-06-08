@@ -1,7 +1,7 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl-podlators
+BuildRequires: perl(DateTime/Locale.pm) perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -11,7 +11,7 @@ Summary:	Convert between DateTime and Excel dates
 Name:		perl-DateTime-Format-Excel
 Epoch:		1
 Version:	0.31
-Release:	alt2_27
+Release:	alt3_27
 # lib/DateTime/Format/Excel.pm -> GPL+ or Artistic
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/%{pkgname}
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:0.31-alt3_27
+- fixed build
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_27
 - update to new release by fcimport
 
