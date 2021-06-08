@@ -18,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt5_15jpp8
+Release:        alt6_15jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
@@ -43,7 +43,7 @@ BuildRequires:  mvn(com.sun.istack:istack-commons-tools:2.21)
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
 BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset)
-BuildRequires:  mvn(com.sun.xsom:xsom)
+BuildRequires:  mvn(com.sun.xsom:xsom:pom:20140925)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
 BuildRequires:  mvn(relaxngDatatype:relaxngDatatype:20020414)
@@ -337,6 +337,9 @@ rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,St
 
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2.11-alt6_15jpp8
+- build with compat xsom
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2.11-alt5_15jpp8
 - build with compat relaxngDatatype
 
