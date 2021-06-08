@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Format-Mail
 Name: perl-%dist
 Version: 0.403
-Release: alt2
-Serial:  1
+Release: alt3
+Epoch:  1
 
 Summary: Convert between DateTime and RFC2822/822 formats
 License: GPL or Artistic
@@ -35,6 +38,9 @@ This module parses and emits such dates.
 %perl_vendor_privlib/DateTime*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:0.403-alt3
+- fixed build
+
 * Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1:0.403-alt2
 - fix missing buildreq
 
