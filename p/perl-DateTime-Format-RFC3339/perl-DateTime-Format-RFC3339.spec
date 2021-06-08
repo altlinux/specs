@@ -1,6 +1,6 @@
-Serial: 1
+Epoch: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(DateTime.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(strict.pm) perl(version.pm) perl(warnings.pm)
+BuildRequires: perl(DateTime.pm) perl(DateTime/Locale.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(strict.pm) perl(version.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
 %define module_version 1.2.0
 %define module_name DateTime-Format-RFC3339
@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: Parse and format RFC3339 datetime strings
 Group: Development/Perl
 License: unrestricted
@@ -38,6 +38,9 @@ objects.
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2.0-alt3
+- fixed build
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2.0-alt2
 - regenerated from template by package builder
 
