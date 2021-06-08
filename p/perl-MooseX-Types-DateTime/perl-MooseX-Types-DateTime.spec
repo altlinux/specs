@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-DateTime
 Name: perl-%dist
 Version: 0.13
-Release: alt1.1
+Release: alt2.1
 
 Summary: DateTime related constraints and coercions for Moose
 License: GPL or Artistic
@@ -34,6 +37,9 @@ designed to work with the DateTime suite of objects.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.13-alt2.1
+- fixed build
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1.1
 - rebuild to restore role requires
 
