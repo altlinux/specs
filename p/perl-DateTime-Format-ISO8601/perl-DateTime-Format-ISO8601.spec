@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(DateTime/Locale.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module DateTime-Format-ISO8601
 
 Name: perl-%module
 Version: 0.16
-Release: alt1
+Release: alt2
 
 Summary: Perl module that parses ISO8601 formats
 License: Perl
@@ -34,6 +37,9 @@ Perl module that parses almost all ISO8601 date and time formats.
 %perl_vendor_privlib/DateTime/*
 
 %changelog
+* Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.16-alt2
+- fixed build
+
 * Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
