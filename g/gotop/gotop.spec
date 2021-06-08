@@ -1,6 +1,6 @@
 %global import_path github.com/cjbassi/gotop
 Name:     gotop
-Version:  4.0.1
+Version:  4.1.1
 Release:  alt1
 
 Summary:  A terminal based graphical activity monitor inspired by gtop and vtop
@@ -42,6 +42,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Tue Jun 08 2021 Mikhail Gordeev <obirvalger@altlinux.org> 4.1.1-alt1
+- new version 4.1.1
+
 * Wed Oct 28 2020 Mikhail Gordeev <obirvalger@altlinux.org> 4.0.1-alt1
 - new version 4.0.1
 
