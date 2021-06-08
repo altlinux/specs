@@ -7,8 +7,8 @@
 %define testspec_version %ver_major.3
 
 Name: sassc
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Wrapper around libsass to compile CSS stylesheet
 Group: Text tools
@@ -58,6 +58,10 @@ ruby sass-spec/sass-spec.rb --impl libsass -c ./%name
 %doc LICENSE Readme.md
 
 %changelog
+* Mon Jun 07 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+- updated sassc-spec to 3.6.3-255-ge6a5b525
+
 * Wed Dec 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
 - updated sassc-spec to 3.6.3-164-g6015399e
   to make check happy against libsass-3.6.4

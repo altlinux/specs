@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: libsass
-Version: 3.6.4
+Version: 3.6.5
 Release: alt1
 
 Summary: A C/C++ implementation of a Sass compiler
@@ -68,6 +68,9 @@ export LIBSASS_VERSION=%version
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 07 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.5-alt1
+- 3.6.5
+
 * Wed Dec 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - updated to 3.6.4-17-gd4d74ef5
 
