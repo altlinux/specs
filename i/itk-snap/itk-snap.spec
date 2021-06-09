@@ -1,10 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+# stable branches support uses this macro
+%define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+
 %define itkver 4.12
 
 Name: itk-snap
 Version: 3.8.0
-Release: alt5
+Release: alt6
 Summary: Software application used to segment structures in 3D medical images
 Group: Sciences/Medicine
 License: GPLv3
@@ -22,6 +25,7 @@ Patch2: %name-alt-build.patch
 Patch3: %name-alt-unbundle.patch
 Patch4: %name-alt-glibc-compat.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ cmake
 BuildRequires: libitk%itkver-devel
 BuildRequires: qt5-declarative-devel
@@ -74,7 +78,9 @@ with the bulk of the development effort dedicated to the user interface.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%qIF_ver_lt S1 %ubt_id
 %patch4 -p1
+%endif
 
 # remove unbundled libraries
 rm -rf Common/JSon
@@ -119,6 +125,9 @@ install -m644 GUI/Qt/Resources/logo_square.png %buildroot%_datadir/%name/
 %_datadir/%name/logo_square.png
 
 %changelog
+* Tue Jun 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt6
+- Added compatibility to p9.
+
 * Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt5
 - Added desktop file.
 

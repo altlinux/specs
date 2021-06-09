@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
-# TODO: remove later this fix for documentation
+# TODO: remove later this fix for p9 support
 %define _cmake__builddir BUILD
 
-%define mpiimpl openmpi
-%define mpidir %_libdir/%mpiimpl
+# stable branches support uses this macro
+%define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 %define oname vtk
 %define ver 9.0
 Name: %oname
 Version: %ver.1
-Release: alt2
+Release: alt3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -76,7 +76,8 @@ Patch18: %oname-%version-upstream-doubleclick-command.patch
 
 Requires: lib%oname%ver = %EVR
 
-BuildRequires(pre): rpm-build-python3 /proc
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: gcc-c++ tk-devel cmake libGLU-devel libXt-devel
 BuildRequires: libmysqlclient-devel postgresql-devel
@@ -99,7 +100,7 @@ BuildRequires: texlive-latex-extra texlive-science
 BuildRequires: libavformat-devel libpostproc-devel libswscale-devel
 BuildRequires: libavdevice-devel libavfilter-devel
 BuildRequires: liblz4-devel
-BuildRequires: libnetcdf-devel netcdf-cxx4-devel
+BuildRequires: libnetcdf-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
 BuildRequires: qt5-base-devel-static
@@ -157,6 +158,9 @@ Requires: libxml2-devel
 Requires: libgdal-devel
 Requires: libGLEW-devel
 Requires: libarchive-devel
+%qIF_ver_lt %ubt_id S1
+Requires: libnetcdf-devel
+%endif
 Conflicts: libvtk6.1-devel libvtk6.2-devel libvtk8.1-devel
 Conflicts: libvtk8.2-devel
 
@@ -389,7 +393,11 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %cmake_build
+%qIF_ver_lt %ubt_id S1
+%cmake_build DoxygenDoc
+%else
 %cmake_build -t DoxygenDoc
+%endif
 
 %install
 export VTK_DATA_ROOT=%_datadir/%oname-%ver
@@ -443,6 +451,9 @@ cp -alL %_cmake__builddir/ExternalData/* %buildroot%_datadir/%oname-%ver
 %_datadir/%oname-%ver
 
 %changelog
+* Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt3
+- Added compatibility to p9.
+
 * Thu May 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt2
 - Built remote modules.
 - Fixed 'duplicate target OpenSlide::OpenSlide' error using patch from upstream.

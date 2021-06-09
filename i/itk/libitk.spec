@@ -1,10 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
+# stable branches support uses this macro
+%define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+
+%qIF_ver_lt %ubt_id S1
+%define _cmake__builddir BUILD
+%endif
+
 %define itkver 5.1
 
 Name: itk
 Version: %itkver.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -66,6 +73,7 @@ Patch2: %name-%version-VariationalRegistration.patch
 Patch3: %name-%version-PerformanceBenchmarking.patch
 Patch4: %name-%version-TubeTK.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ cmake
 BuildRequires: gdcm-devel castxml graphviz libhdf5-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel
@@ -210,6 +218,9 @@ rm -rf Modules/ThirdParty/GoogleTest/src
 # artifact dir in the runpath, so we pass -DCMAKE_SKIP_RPATH=ON.
 # remote modules go last
 %cmake \
+%qIF_ver_lt %ubt_id S1
+       -DPYTHON_EXECUTABLE=%__python3 \
+%endif
        %_cmake_skip_rpath \
        -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
        -DCMAKE_VERBOSE_MAKEFILE=ON \
@@ -342,7 +353,11 @@ rm -rf Modules/ThirdParty/GoogleTest/src
 %cmake_build
 
 %install
+%qIF_ver_lt %ubt_id S1
+%cmakeinstall_std
+%else
 %cmake_install
+%endif
 
 # Don't install test driver as example
 rm -f %_cmake__builddir/bin/itkTestDriver
@@ -372,6 +387,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ %_cmake__builddir/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.*
 
 %changelog
+* Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt2
+- Added compatibility to p9.
+
 * Tue Jun 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt1
 - Updated to upstream version 5.1.2.
 - Built with remote modules.
