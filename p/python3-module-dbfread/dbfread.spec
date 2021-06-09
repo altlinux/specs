@@ -1,14 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname dbfread
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0.7
-Release: alt3
+Release: alt4
 Summary: Read DBF Files with Python
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/dbfread/
 
@@ -16,17 +14,12 @@ Url: https://pypi.python.org/pypi/dbfread/
 Source: %{oname}-%{version}.tar.gz
 Patch: dbfread-2.0.7-Fix-Pytest4.x-compatibility-errors.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-pytest
-%if_with python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest
-%endif
+BuildRequires: python3-module-sphinx
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 DBF is a file format used by databases such dBase, Visual FoxPro, and
@@ -36,7 +29,7 @@ batch jobs and one-off scripts.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -47,35 +40,9 @@ batch jobs and one-off scripts.
 
 This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Read DBF Files with Python
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-DBF is a file format used by databases such dBase, Visual FoxPro, and
-FoxBase+. This library reads DBF files and returns the data as native
-Python data types for further processing. It is primarily intended for
-batch jobs and one-off scripts.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-DBF is a file format used by databases such dBase, Visual FoxPro, and
-FoxBase+. This library reads DBF files and returns the data as native
-Python data types for further processing. It is primarily intended for
-batch jobs and one-off scripts.
-
-This package contains tests for %oname.
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 DBF is a file format used by databases such dBase, Visual FoxPro, and
@@ -102,72 +69,44 @@ This package contains documentation for %oname.
 %setup -q -n %{oname}-%{version}
 %patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-py.test -vv
-%if_with python3
-pushd ../python3
 py.test3 -vv
-popd
-%endif
 
 %files
 %doc *.rst examples
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/test*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
 
 %files tests
-%python_sitelibdir/*/test*
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst examples
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-%endif
-
 %changelog
+* Wed Jun 09 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.7-alt4
+- Drop python2 support.
+
 * Wed May 29 2019 Stanislav Levin <slev@altlinux.org> 2.0.7-alt3
 - Fixed Pytest4.x compatibility errors.
 
