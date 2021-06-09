@@ -1,7 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-# like subst_with, but replacing '_' with '-'
-%define subst_with_dash() %{expand:%%(echo '%%{subst_with %1}' | sed 's/_/-/g')}
+%define enabled_ifwith() %{expand:%%{?_with_%{1}:enabled}%%{!?_with_%{1}:disabled}}
 
 %define _localstatedir /var
 %define _libexecdir %_prefix/libexec
@@ -170,7 +169,7 @@
 
 Name: libvirt
 Version: 7.3.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -270,6 +269,7 @@ Copy of the libvirt website documentation
 Summary: Server side daemon and supporting files for libvirt library
 Group: System/Servers
 Requires: %name-libs = %EVR
+Requires: %name-admin = %EVR
 Requires: iptables
 %{?_with_pm_utils:Requires: pm-utils}
 Requires: dmidecode
@@ -755,6 +755,13 @@ Requires: %name-daemon-driver-network = %EVR
 Libvirt plugin for NSS for translating domain names into IP addresses.
 %endif
 
+%package admin
+Summary: Libvirt administration utility
+Group: System/Configuration/Other
+
+%description admin
+Includes virt-admin, the libvirt administartion utility.
+
 %prep
 %setup
 mkdir -p src/keycodemapdb
@@ -772,49 +779,57 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		-Dqemu_user=%qemu_user \
 		-Dqemu_group=%qemu_group \
 		-Dremote_default_mode=legacy \
-		%{?_with_libvirtd:-Ddriver_libvirtd=enabled} \
-		%{?_with_qemu:-Ddriver_qemu=enabled} \
-		%{?_with_openvz:-Ddriver_openvz=enabled} \
-		%{?_with_lxc:-Ddriver_lxc=enabled} \
-		%{?_with_login_shell:-Dlogin_shell=enabled} \
-		%{?_without_vbox:-Ddriver_vbox=disabled} \
-		%{?_with_libxl:-Ddriver_libxl=enabled} \
-		%{?_without_vmware:-Ddriver_vmware=disabled} \
-		%{?_with_esx:-Ddriver_esx=enabled} \
-		%{?_with_hyperv:-Ddriver_hyperv=enabled} \
-		%{?_with_network:-Ddriver_network=enabled} \
-		%{?_with_storage_fs:-Dstorage_fs=enabled} \
-		%{?_with_storage_lvm:-Dstorage_lvm=enabled} \
-		%{?_with_storage_iscsi:-Dstorage_iscsi=enabled} \
-		%{?_with_storage_iscsi_direct:-Dstorage_iscsi_direct=enabled} \
-		%{?_with_storage_scsi:-Dstorage_scsi=enabled} \
-		%{?_with_storage_disk:-Dstorage_disk=enabled} \
-		%{?_with_storage_rbd:-Dstorage_rbd=enabled} \
-		%{?_with_storage_mpath:-Dstorage_mpath=enabled} \
-		%{?_with_storage_gluster:-Dstorage_gluster=enabled} \
-		%{?_with_storage_zfs:-Dstorage_zfs=enabled} \
-		%{?_without_storage_vstorage:-Dstorage_vstorage=disabled} \
-		%{?_with_storage_sheepdog:-Dstorage_sheepdog=enabled} \
-		%{?_with_numactl:-Dnumactl=enabled} \
-		%{?_with_selinux:-Dselinux=enabled} \
+%if_with libvirtd
+		-Ddriver_libvirtd=enabled \
+		-Dhost_validate=enabled \
+		-Dinit_script=systemd \
+%else
+		-Ddriver_libvirtd=disabled \
+		-Dhost_validate=disabled \
+		-Dinit_script=none \
+%endif
+		-Ddriver_qemu=%{enabled_ifwith qemu} \
+		-Ddriver_openvz=%{enabled_ifwith openvz} \
+		-Ddriver_lxc=%{enabled_ifwith lxc} \
+		-Dlogin_shell=%{enabled_ifwith login_shell} \
+		-Ddriver_vbox=%{enabled_ifwith vbox} \
+		-Ddriver_libxl=%{enabled_ifwith libxl} \
+		-Ddriver_vmware=%{enabled_ifwith vmware} \
+		-Ddriver_esx=%{enabled_ifwith esx} \
+		-Ddriver_hyperv=%{enabled_ifwith hyperv} \
+		-Ddriver_network=%{enabled_ifwith network} \
+		-Dstorage_fs=%{enabled_ifwith storage_fs} \
+		-Dstorage_lvm=%{enabled_ifwith storage_lvm} \
+		-Dstorage_iscsi=%{enabled_ifwith storage_iscsi} \
+		-Dstorage_iscsi_direct=%{enabled_ifwith storage_iscsi_direct} \
+		-Dstorage_scsi=%{enabled_ifwith storage_scsi} \
+		-Dstorage_disk=%{enabled_ifwith storage_disk} \
+		-Dstorage_rbd=%{enabled_ifwith storage_rbd} \
+		-Dstorage_mpath=%{enabled_ifwith storage_mpath} \
+		-Dstorage_gluster=%{enabled_ifwith storage_gluster} \
+		-Dstorage_zfs=%{enabled_ifwith storage_zfs} \
+		-Dstorage_vstorage=%{enabled_ifwith storage_vstorage} \
+		-Dstorage_sheepdog=%{enabled_ifwith storage_sheepdog} \
+		-Dnumactl=%{enabled_ifwith numactl} \
+		-Dselinux=%{enabled_ifwith selinux} \
 		-Dselinux_mount=%selinux_mount \
-		%{?_with_netcf:-Dnetcf=enabled} \
-		%{?_with_udev:-Dudev=enabled} \
-		%{?_with_yajl:-Dyajl=enabled} \
-		%{?_with_sanlock:-Dsanlock=enabled} \
-		%{?_with_fuse:-Dfuse=enabled} \
-		%{?_with_pm_utils:-Dpm_utils=enabled} \
-		%{?_with_polkit:-Dpolkit=enabled} \
-		%{?_with_firewalld:-Dfirewalld=enabled} \
-		%{?_without_firewalld_zone:-Dfirewalld_zone=disabled} \
-		%{?_with_capng:-Dcapng=enabled} \
-		%{?_with_libpcap:-Dlibpcap=enabled} \
-		%{?_with_libssh:-Dlibssh=enabled} \
-		%{?_with_libssh2:-Dlibssh2=enabled} \
-		%{?_with_audit:-Daudit=enabled} \
-		%{?_with_dtrace:-Ddtrace=enabled} \
-		%{?_with_nss:-Dnss=enabled} \
-		%{?_with_sasl:-Dsasl=enabled} \
+		-Dnetcf=%{enabled_ifwith netcf} \
+		-Dudev=%{enabled_ifwith udev} \
+		-Dyajl=%{enabled_ifwith yajl} \
+		-Dsanlock=%{enabled_ifwith sanlock} \
+		-Dfuse=%{enabled_ifwith fuse} \
+		-Dpm_utils=%{enabled_ifwith pm_utils} \
+		-Dpolkit=%{enabled_ifwith polkit} \
+		-Dfirewalld=%{enabled_ifwith firewalld} \
+		-Dfirewalld_zone=%{enabled_ifwith firewalld_zone} \
+		-Dcapng=%{enabled_ifwith capng} \
+		-Dlibpcap=%{enabled_ifwith libpcap} \
+		-Dlibssh=%{enabled_ifwith libssh} \
+		-Dlibssh2=%{enabled_ifwith libssh2} \
+		-Daudit=%{enabled_ifwith audit} \
+		-Ddtrace=%{enabled_ifwith dtrace} \
+		-Dnss=%{enabled_ifwith nss} \
+		-Dsasl=%{enabled_ifwith sasl} \
 		-Ddocs=enabled \
 		-Dexpensive_tests=enabled
 
@@ -828,8 +843,10 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 install -pD -m 755 %SOURCE11  %buildroot%_initdir/libvirtd
 install -pD -m 755 %SOURCE12  %buildroot%_initdir/virtlockd
 install -pD -m 755 %SOURCE13  %buildroot%_initdir/virtlogd
-%endif
 install -pD -m 755 %SOURCE14  %buildroot%_initdir/libvirt-guests
+%else
+rm -f %buildroot%_libexecdir/libvirt-guests.sh
+%endif
 
 rm -f %buildroot%_libdir/*.{a,la}
 rm -f %buildroot%_libdir/%name/*/*.{a,la}
@@ -837,11 +854,12 @@ rm -f %buildroot%_libdir/%name/*/*.{a,la}
 # delete docs
 rm -rf %buildroot%_datadir/doc/libvirt
 
+
+%if_with qemu
 # We install /etc/libvirt/qemu/networks/autostart/default.xml as ghost
 rm -f %buildroot%_sysconfdir/libvirt/qemu/networks/autostart/default.xml
 touch %buildroot%_sysconfdir/libvirt/qemu/networks/autostart/default.xml
-
-%if_without qemu
+%else
 rm -f %buildroot%_datadir/augeas/lenses/libvirtd_qemu.aug
 rm -f %buildroot%_datadir/augeas/lenses/tests/test_libvirtd_qemu.aug
 rm -f %buildroot%_sysconfdir/libvirt/qemu.conf
@@ -994,11 +1012,6 @@ fi
 %_man8dir/virtlockd*
 %_man7dir/virkey*
 %_man1dir/virt-host-validate.*
-
-#virt-admin
-%_bindir/virt-admin
-%_man1dir/virt-admin.1*
-%_datadir/bash-completion/completions/virt-admin
 
 #virtlogd
 %config(noreplace) %_sysconfdir/libvirt/virtlogd.conf
@@ -1333,6 +1346,12 @@ fi
 %endif
 %endif
 
+%files admin
+%_bindir/virt-admin
+%_man1dir/virt-admin.1*
+%_datadir/bash-completion/completions/virt-admin
+
+
 %files devel
 %_pkgconfigdir/*.pc
 %_libdir/*.so
@@ -1340,6 +1359,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Jun 09 2021 Ivan A. Melnikov <iv@altlinux.org> 7.3.0-alt2
+- Fix build without server_drivers, again.
+- Package virt-admin separately.
+
 * Wed May 05 2021 Alexey Shabalin <shaba@altlinux.org> 7.3.0-alt1
 - 7.3.0
 - Merge libvirt-admin package into libvirt-daemon.
