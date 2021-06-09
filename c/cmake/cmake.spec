@@ -6,7 +6,7 @@
 
 Name: cmake
 Version: 3.19.7
-Release: alt3
+Release: alt4
 
 Summary: Cross-platform, open-source make system
 
@@ -303,6 +303,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Fri Jun 04 2021 Arseny Maslennikov <arseny@altlinux.org> 3.19.7-alt4
+- macros: honor NPROCS in addition to %%__nprocs. (fixes ALT bug 40153)
+
 * Sat Apr 24 2021 Arseny Maslennikov <arseny@altlinux.org> 3.19.7-alt3
 - macros: add a macro to allow cmake command name substitution
 - macros: allow easy override of build artifact directory
