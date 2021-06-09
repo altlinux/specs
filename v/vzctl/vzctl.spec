@@ -1,6 +1,6 @@
 
 Name: vzctl
-Version: 7.0.242
+Version: 7.0.245
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -19,7 +19,7 @@ ExclusiveArch: x86_64
 # these reqs are for vz helper scripts
 Requires: ploop >= 7.0.199
 Requires: network-config-subsystem
-Requires: libvzctl >= 7.0.596
+Requires: libvzctl >= 7.0.659
 
 BuildRequires: glibc-devel libuuid-devel
 BuildRequires: systemd-devel libudev-devel
@@ -123,6 +123,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Wed Jun 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.245-alt1
+- 7.0.245
+
 * Thu Apr 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.242-alt1
 - 7.0.241
 - vzlist: reduce the width of CTID field
