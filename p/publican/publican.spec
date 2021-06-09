@@ -31,7 +31,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt4_13.1
+Release:        alt5_13.1
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -181,6 +181,7 @@ BuildRequires:  fonts-ttf-cjkuni-uming fonts-ttf-ipa-gothic fonts-ttf-ipa-pgothi
 BuildRequires:  fonts-ttf-lklug fonts-ttf-baekmuk-batang
 %endif
 Source44: import.info
+Requires: perl(DateTime/Locale.pm)
 
 %description
 Publican is a DocBook publication system, not just a DocBook processing tool.
@@ -333,6 +334,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Wed Jun 09 2021 Igor Vlasenko <viy@altlinux.org> 4.3.2-alt5_13.1
+- added requires on perl(DateTime/Locale.pm)
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 4.3.2-alt4_13.1
 - fixed build
 
