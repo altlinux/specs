@@ -1,8 +1,8 @@
 %define dist Date-Calc-XS
-%def_with bootstrap
+%def_without bootstrap
 Name: perl-%dist
 Version: 6.4
-Release: alt4.1
+Release: alt5
 
 Summary: XS wrapper and C library plug-in for Date::Calc
 License: GPL or Artistic
@@ -45,6 +45,9 @@ calendar (the one used in all western countries today).
 	%perl_vendor_autolib/Date/Calc/XS/XS.so
 
 %changelog
+* Wed Jun 09 2021 Igor Vlasenko <viy@altlinux.org> 6.4-alt5
+- unbootstrap
+
 * Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 6.4-alt4.1
 - rebuild with new perl 5.32.1 (bootstrapped)
 
