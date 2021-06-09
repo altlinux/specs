@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.21.1.vz7.174.15
-%define orelease 1160.21.1.vz7.174.15
+#     rh7-3.10.0-1160.25.1.vz7.180.4
+%define orelease 1160.25.1.vz7.180.4
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -387,7 +387,7 @@ for f in \
 	Makefile \
 	Module.symvers \
 	scripts/Kbuild.include \
-	scripts/Makefile{,.{build,clean,host,lib,mod*}} \
+	scripts/Makefile* \
 	scripts/bin2c \
 	scripts/check{includes,version}.pl \
 	scripts/conmakehash \
@@ -587,6 +587,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Wed Jun 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.4
+- Build rh7-3.10.0-1160.25.1.vz7.180.4
+- fix src package
+
 * Sun May 23 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.21.1.vz7.174.15
 - fix panic on 3.10.0-1160.21.1.vz7.174.13 in nf_tables
 - ploop: Use preallocation for ext4
