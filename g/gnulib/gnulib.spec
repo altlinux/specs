@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.4669.fed6f
+Version: 0.1.4683.4480d
 Release: alt1
 
 Summary: GNU Portability Library
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Source1: po-%version-%release.tar
 Patch1: gnulib-alt-utimens.patch
 Patch2: gnulib-alt-mktime-internal.patch
+Patch3: gnulib-eggert-tests-Wnull-dereference.patch
+Patch4: gnulib-alt-tests-Wmissing-prototypes.patch
 AutoReqProv: no
 BuildRequires: gnu-config makeinfo
 
@@ -29,6 +31,8 @@ source repository.
 %setup -a1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 
@@ -52,6 +56,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Wed Jun 09 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4683.4480d-alt1
+- v0.1-4669-gfed6ffdbb -> v0.1-4683-g4480dd39f.
+
 * Sun Jun 06 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4669.fed6f-alt1
 - v0.1-4550-g2a7948aad -> v0.1-4669-gfed6ffdbb.
 
