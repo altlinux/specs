@@ -3,8 +3,8 @@
 %define oname guessit
 
 Name: python3-module-%oname
-Version: 3.1.1
-Release: alt2
+Version: 3.3.1
+Release: alt1
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
 Group: Development/Python3
@@ -13,11 +13,8 @@ Url: https://pypi.python.org/pypi/guessit/
 
 # https://github.com/wackou/guessit.git
 Source: %name-%version.tar
-Patch1: %oname-3.1.0-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-babelfish python3-module-stevedore
 BuildRequires: python3-module-requests python3-module-dateutil
 BuildRequires: python3-module-yaml python3-module-guess-language
@@ -85,16 +82,10 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 # remove mimetypes from test data, see https://github.com/guessit-io/guessit/pull/515
 # TODO: consider removing following line on next release after 2.1.4
 sed -i -e '/mimetype:/d' guessit/test/*.yml
-
-sed -i -e "s:@VERSION@:%version:g" docs/conf.py
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
 
 %build
 export LC_ALL=en_US.UTF-8
@@ -105,33 +96,25 @@ export LC_ALL=en_US.UTF-8
 
 %python3_install
 
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
 export LC_ALL=en_US.UTF-8
 rm -fR build
 python3 setup.py test
 
 %files
-%doc *.rst
+%doc *.md
 %_bindir/*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/*/test
 
 %files tests
 %python3_sitelibdir/*/test
 
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-
 %changelog
+* Wed Jun 09 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+- Build without docs (upstream removed them).
+
 * Tue Oct 20 2020 Stanislav Levin <slev@altlinux.org> 3.1.1-alt2
 - Dropped buildtime dependency on pytest_capturelog.
 
