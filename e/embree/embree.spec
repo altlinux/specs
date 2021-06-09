@@ -5,7 +5,7 @@
 
 Name: embree
 Version: 3.13.0
-Release: alt1
+Release: alt2
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -82,14 +82,17 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %doc README.md CHANGELOG.md readme.pdf third-party-programs-TBB.txt third-party-programs.txt
 %_libdir/lib%{name}%{libsuffix}.so.%{soname}
 %_libdir/lib%{name}%{libsuffix}.so.%{soname}.*
-%_man3dir/*
 
 %files devel
 %_libdir/lib%{name}%{libsuffix}.so
 %_includedir/%{name}%{libsuffix}/
 %_libdir/cmake/%name-%version/
+%_man3dir/*
 
 %changelog
+* Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt2
+- Moved man pages to devel package.
+
 * Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt1
 - Updated to upstream version 3.13.0.
 
