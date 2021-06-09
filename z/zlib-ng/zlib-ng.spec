@@ -1,6 +1,6 @@
 Name: zlib-ng
 Version: 2.0.3
-Release: alt1.1
+Release: alt2
 
 Summary: Zlib replacement with optimizations
 License: Zlib
@@ -13,6 +13,7 @@ ExcludeArch: armh
 
 # https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch2000: %name-e2k-simd.patch
 
 BuildRequires: ctest
 
@@ -39,6 +40,9 @@ developing application that use %name.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %cmake -DCMAKE_SKIP_RPATH:BOOL=OFF
@@ -63,6 +67,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Wed Jun 09 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.3-alt2
+- added SIMD patch for Elbrus
+
 * Mon May 31 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1.1
 - Adapted to new cmake macros
 
