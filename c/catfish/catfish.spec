@@ -1,6 +1,6 @@
 Name: catfish
-Version: 1.4.10
-Release: alt3
+Version: 4.16.0
+Release: alt1
 Summary: A handy file search tool
 
 Group: File tools
@@ -8,7 +8,7 @@ License: GPLv2+
 Url: http://www.twotoasts.de/index.php/catfish/
 Source: %name-%version.tar.gz
 BuildArch: noarch
-Patch: catfish-1.4.10-ALT-searchODF.patch
+Patch: catfish-1.4.16-ALT-searchODF.patch
 
 ##BuildRequires: intltool python-module-PyXML python-module-distutils-extra python-module-pexpect python-module-zeitgeist2.0 python3-dev
 # Automatically added by buildreq on Mon Jun 10 2019
@@ -61,7 +61,7 @@ rm -rf %buildroot%_defaultdocdir/%name
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS COPYING README.md
 
 %_bindir/*
 %_desktopdir/*.desktop
@@ -74,6 +74,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Jun 09 2021 Anton Midyukov <antohami@altlinux.org> 4.16.0-alt1
+- Updated to upstream version 4.16.0 (Closes: #29433 #39757)
+
 * Fri Dec 25 2020 Anton Midyukov <antohami@altlinux.org> 1.4.10-alt3
 - Add requires typelib(Gtk) = 3.0
 
