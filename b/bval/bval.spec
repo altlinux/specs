@@ -27,14 +27,14 @@ BuildRequires: jpackage-11-compat
 
 Name:          bval
 Version:       2.0.3
-Release:       alt1_0jpp11
+Release:       alt2_0jpp11
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
 Source0:       http://www.apache.org/dist/bval/%{namedversion}/%{name}-parent-%{namedversion}-source-release.zip
 
 BuildRequires: maven-local
-BuildRequires: mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires: mvn(com.sun.xml.bind:jaxb-impl:2.2.6)
 BuildRequires: mvn(com.thoughtworks.xstream:xstream)
 BuildRequires: mvn(commons-beanutils:commons-beanutils-core)
 BuildRequires: mvn(javax.annotation:javax.annotation-api)
@@ -205,6 +205,9 @@ sed -i '/Privileged/d' \
 #%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jun 09 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt2_0jpp11
+- build with compat jaxb
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_0jpp11
 - new version, build w/o jsr and extras due to openjfx dependency
 
