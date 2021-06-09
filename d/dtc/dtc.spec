@@ -2,7 +2,7 @@
 %def_without python
 
 Name: dtc
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
@@ -123,6 +123,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Wed Jun 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Tue Oct 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
