@@ -11,7 +11,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -415,6 +415,18 @@ Requires: fence-agents-common = %version-%release
 
 %description ldom
 The fence-agents-ldom package contains a fence agent for APC devices that are accessed via telnet or SSH.
+
+%package lindypdu
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for Lindy over SNMP
+Requires: fence-agents-common = %version-%release
+
+%description lindypdu
+The fence-agents-lindypdu is an I/O Fencing agent
+which can be used with the Lindy PDU network power switch. It logs
+into a device via SNMP and reboots a specified outlet. It supports
+SNMP v1 with all combinations of authenticity/privacy settings.
 
 %package lpar
 BuildArch: noarch
@@ -968,6 +980,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %_sbindir/fence_ldom
 %_man8dir/fence_ldom.8*
 
+%files lindypdu
+%_sbindir/fence_lindypdu
+%_man8dir/fence_lindypdu.8*
+
 %files lpar
 %_sbindir/fence_lpar
 %_man8dir/fence_lpar.8*
@@ -1111,6 +1127,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %endif
 
 %changelog
+* Wed Jun 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.9.0-alt1
+- 4.9.0
+- Add lindypdu module.
+
 * Wed Apr 07 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.8.0-alt1
 - 4.8.0
 - fence-virt packages
