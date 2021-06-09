@@ -1,17 +1,12 @@
-%def_disable snapshot
-%define real_ver_major 69
+%define real_ver_major 67
 %define real_ver_minor 1
 %define real_ver %{real_ver_major}.%{real_ver_minor}
 
 %def_without doc
 
-#%%ifarch aarch64 ppc64le
-#%%def_disable check
-#%%endif
-
-Name: icu
+Name: icu%real_ver_major
 Version: %(echo %real_ver_major | sed -e 's|\(.\)|\1.|').%real_ver_minor
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -19,12 +14,7 @@ Group: System/Libraries
 License: ICU and BSD-3-Clause and Unicode-TOU and naist-2003
 Url: http://www.icu-project.org/
 
-%if_disabled snapshot
-Source: https://github.com/unicode-org/%name/releases/download/release-%{real_ver_major}-%{real_ver_minor}/icu4c-%{real_ver_major}_%{real_ver_minor}-src.tgz
-%else
-Vcs: https://github.com/unicode-org/icu.git
-Source: icu-%version.tar
-%endif
+Source: http://download.icu-project.org/files/icu4c/%real_ver/icu4c-%{real_ver_major}_%{real_ver_minor}-src.tgz
 Patch: icu-6.3.1-alt-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -37,47 +27,15 @@ BuildRequires: gcc-c++ libstdc++-devel python3-base
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support
 
-%package utils
-Summary: International Components for Unicode (utilities)
-Group: Text tools
-Requires: %libicu = %EVR
-Provides: icu = %version
-Obsoletes: icu < %version
-
-%description utils
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the utilites for compiling and developing
-programs with ICU
-
 %package -n %libicu
 Summary: International Components for Unicode (libraries)
 Group: System/Libraries
-Provides: libicu = %EVR
-Obsoletes: libicu < %EVR
+Provides: libicu = %epoch:%version-%release
+Obsoletes: libicu < %epoch:%version-%release
 
 %description -n %libicu
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains the runtime libraries for ICU
-
-%package -n libicu-devel
-Summary: International Components for Unicode (development files)
-Group: Development/C++
-Requires: %libicu = %EVR
-Requires: icu-utils = %EVR
-
-%description -n libicu-devel
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the development files for ICU
-
-%package samples
-Summary: Sample programs for ICU
-Group: Development/Other
-Requires: libicu-devel = %EVR
-BuildArch: noarch
-
-%description samples
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains sample code for ICU
 
 %prep
 %setup -c
@@ -103,73 +61,47 @@ cd source
 %install
 cd source
 %makeinstall_std
-cp -a samples %buildroot%_datadir/icu
-
-%check
-cd source
-%make check
-
-%files utils
-%_bindir/*
-%exclude %_bindir/icu-config
-%_sbindir/*
-%exclude %_man1dir/icu-config.1*
-%_man1dir/*
-%_man8dir/*
 
 %files -n %libicu
 %_libdir/*.so.*
-%doc LICENSE readme.html
 
-%files -n libicu-devel
-%_includedir/*
-%_bindir/icu-config
-%_libdir/*.so
-%_libdir/icu
-%_pkgconfigdir/*.pc
-%dir %_datadir/icu
-%_datadir/icu/%real_ver
-%_man1dir/icu-config.1*
-%doc *.html *.css
-
-%files samples
-%_datadir/icu/samples
+%exclude %_bindir/*
+%exclude %_sbindir/*
+%exclude %_libdir/*.so
+%exclude %_libdir/icu/
+%exclude %_includedir/*
+%exclude %_pkgconfigdir/*.pc
+%exclude %_datadir/icu/%real_ver/
+%exclude %_man1dir/*
+%exclude %_man8dir/*
 
 %changelog
-* Wed Jun 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1:6.9.1-alt1
-- 6.9.1
+* Mon Nov 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.7.1-alt2
+- icu67 compat library
 
-* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.7.1-alt2
-- source/config/mh-linux:
-  cleaned LDFLAGSICUDT to avoid linking problems on armh
+* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.6.1-alt2
+- icu66 compat library
 
-* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.7.1-alt1
-- 6.7.1
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.5.1-alt2
+- icu65 compat library
 
-* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1:6.6.1-alt1
-- 6.6.1
-- fixed License tag
+* Sat Oct 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.2-alt2
+- icu64 compat library
 
-* Sun Oct 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.5.1-alt1
-- 6.5.1
+* Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt2
+- icu63 compat library
 
-* Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.2-alt1
-- 6.4.2
+* Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.2.1-alt2
+- icu62 compat library
 
-* Sat Apr 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.4.1-alt1
-- 6.4.1
-
-* Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt2
-- mike@: fixed build on e2k
-
-* Sat Oct 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.3.1-alt1
-- 6.3.1
-
-* Sat Jun 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.2.1-alt1
-- 6.2.1
+* Sat Jun 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.0.2-alt2
+- icu60 compat library
 
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1:6.0.2-alt1
 - 6.0.2
+
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1:5.6.1-alt2
+- icu56 compat library
 
 * Thu Jan 12 2017 Michael Shigorin <mike@altlinux.org> 1:5.6.1-alt1.1.1
 - BOOTSTRAP: drop unused BR: doxygen

@@ -20,7 +20,7 @@
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt12
+Release: alt13
 
 Summary: Web browser engine
 License: LGPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -41,6 +41,8 @@ Patch8: webkitgtk-2.4.11-alt-build.patch
 Patch9: webkitgtk-2.4.11-alt-python2.patch
 # workaround for bison-3.7.x
 Patch10: webkitgtk-2.4.11-alt-bison-3.7-workaround.patch
+# https://aur.archlinux.org/cgit/aur.git/tree/icu68.patch?h=webkitgtk
+Patch11: webkitgtk-2.4.11-arch-icu68.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
 %{?_enable_geolocation:Requires: geoclue2}
@@ -203,6 +205,7 @@ GObject introspection devel data for the JavaScriptCore library
 %patch8 -b .orig
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -302,6 +305,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Wed Jun 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt13
+- rebuilt against libicu*.so.69
+
 * Wed Apr 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt12
 - fixed build
 
