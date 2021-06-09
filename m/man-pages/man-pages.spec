@@ -1,6 +1,6 @@
 Name: man-pages
 Version: 5.11
-Release: alt1
+Release: alt2
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
@@ -94,6 +94,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Wed Jun 09 2021 Dmitry V. Levin <ldv@altlinux.org> 5.11-alt2
+- Removed rpcgen(1) manual page (closes: #40187).
+
 * Mon Mar 22 2021 Dmitry V. Levin <ldv@altlinux.org> 5.11-alt1
 - 5.10 -> 5.11.
 
