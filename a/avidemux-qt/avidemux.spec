@@ -5,7 +5,7 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.7.6
+Version: 2.7.8
 Release: alt1
 
 Group: Video
@@ -14,7 +14,9 @@ Summary(ru_RU.UTF-8): Avidemux -- это редактор AVI-файлов с г
 Url: http://avidemux.org/
 License: GPL-2.0-only
 
-ExcludeArch: armh
+ExcludeArch: armh %ix86
+AutoReq: yes, nopython nopython3
+AutoProv: yes, nopython nopython3
 
 Provides: avidemux3 = %version-%release
 Provides: avidemux2 = %version-%release
@@ -39,18 +41,23 @@ Patch4: alt-flags.patch
 Patch5: alt-buildfix.patch
 Patch6: alt-fix-find-x264.patch
 Patch7: alt-other-arch.patch
+Patch8: alt-check-updates.patch
 #
 Patch100: avidemux-2.5.1-opencore-check.patch
 
 # Automatically added by buildreq on Mon Aug 24 2015 (-bi)
 # optimized out: cmake-modules elfutils glibc-devel-static libEGL-devel libGL-devel libX11-devel libXext-devel libXv-devel libalsa-devel libgpg-error libjack-devel libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libqt5-core libqt5-gui libqt5-script libqt5-widgets libqt5-xml libstdc++-devel libvorbis-devel libxcb-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage pkg-config python-base python3 python3-base qt5-base-devel rpm-build-gir rsync ruby ruby-stdlibs xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: bzlib-devel cmake gcc-c++ git-core libSDL-devel libXvMC-devel libaften-devel libarts-devel libdca-devel libfaad-devel liblame-devel liblzma-devel liblzo2-devel libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel libsqlite3-devel libva-devel libvdpau-devel libvpx-devel libx264-devel libx265-devel libxvid-devel nss-ldapd perl-podlators python-module-google qt5-script-devel qt5-tools rpm-build-python3 rpm-build-ruby texi2html xsltproc yasm zlib-devel-static
-BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libGL-devel libGLU-devel libSDL2-devel python-devel
+BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libGL-devel libGLU-devel libSDL2-devel
+#BuildRequires: python3-devel
 BuildRequires: libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame-devel libopus-devel
 #BuildRequires: libaften-devel
 BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fontconfig-devel libfribidi-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libvdpau-devel libva-devel libXv-devel libXvMC-devel
+%ifarch %ix86 x86_64
+BuildRequires: nv-codec-headers
+%endif
 %if_enabled xvba
 BuildRequires: libxvba-devel
 %endif
@@ -115,6 +122,7 @@ Common files for %name
 %patch5 -p1
 #%patch6 -p1
 %patch7 -p1
+%patch8 -p1
 %patch100 -p1
 
 #cp -f %SOURCE4 po/
@@ -201,6 +209,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Jun 08 2021 Sergey V Turchin <zerg@altlinux.org> 2.7.8-alt1
+- new version (closes: 40181)
+
 * Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 2.7.6-alt1
 - new version
 
