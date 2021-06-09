@@ -7,25 +7,18 @@
 
 Name: libsmi
 Version: 0.5.0
-Release: alt1.svn1841
+Release: alt2
 
 Summary: A library to access SMI MIB information
 License: BSD
 Group: System/Libraries
 URL: http://www.ibr.cs.tu-bs.de/projects/libsmi/index.html
 
-Packager: Alexey Shabalin <shaba@altlinux.ru>
-
-# SVN http://svn.ibr.cs.tu-bs.de/software-ibr-1999-libsmi
+Vcs: https://gitlab.ibr.cs.tu-bs.de/nm/libsmi.git
 Source0: %name-%version.tar
 Source1: smi.conf
 
-Patch2: libsmi-0.4.8-alt-man.patch
-Patch3: libsmi-deb-smistrip.patch
-Patch4: libsmi-alt-fix-build.patch
-Patch5: libsmi-0.5.0-alt-yyleng.patch
-Patch7: libsmi-0.4.8-alt-bison.patch
-
+Patch: %name-%version-%release.patch
 
 Requires: snmp-mibs
 BuildRequires: flex gcc-c++ wget
@@ -89,14 +82,10 @@ This package contains the LibSMI tools.
 
 %prep
 %setup -q
-
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch7 -p1
+%patch -p1
 
 %build
+%__libtoolize --copy --force
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -148,6 +137,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/smi.conf
 %_man1dir/*
 
 %changelog
+* Wed Jun 09 2021 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt2
+- Switch build to upstream git
+
 * Wed Aug 28 2019 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt1.svn1841
 - 0.5.0 svn rev 1841
 
