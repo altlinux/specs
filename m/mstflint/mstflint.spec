@@ -1,5 +1,3 @@
-%global commit cac81bf5bb128b6242da83e4110c9a209f2e3e20
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
 %def_enable dc
 %def_disable fw_mgr
 %def_enable xml2
@@ -9,10 +7,10 @@
 
 Name: mstflint
 Version: 4.16.0
-Release: alt1
+Release: alt2
 
 Summary: Mellanox firmware burning application
-License: GPL/BSD
+License: GPLv2 or BSD
 Url: http://openib.org/
 
 Group: System/Base
@@ -45,7 +43,7 @@ Mellanox manufactured InfiniBand adapters.
 
 %build
 mkdir config
-echo "#define TOOLS_GIT_SHA \"%shortcommit\"" > common/gitversion.h
+echo "#define TOOLS_GIT_SHA \"%release\"" > common/gitversion.h
 
 %autoreconf
 %configure \
@@ -71,6 +69,9 @@ rm -rf %buildroot%_includedir
 %_man1dir/*
 
 %changelog
+* Wed Jun 09 2021 Alexey Shabalin <shaba@altlinux.org> 4.16.0-alt2
+- v4.16.0-2
+
 * Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 4.16.0-alt1
 - v4.16.0-1
 
