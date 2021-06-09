@@ -1,7 +1,7 @@
 %define bname Data-Validate
 Name: perl-%bname
 Version: 0.09
-Release: alt1
+Release: alt2
 Summary: Common data validation methods
 Group: Development/Perl
 License: Perl (GPL or Artistic)
@@ -9,7 +9,7 @@ URL: http://search.cpan.org/dist/%bname
 Source: http://cpan.org.ua/authors/id/S/SO/SONNEN/%bname-%version.tar
 BuildArch: noarch
 
-BuildRequires: rpm-build-perl perl-devel perl(Math/BigInt/FastCalc.pm)
+BuildRequires: rpm-build-perl perl-devel perl(Math/BigInt/FastCalc.pm) perl(Math/BigInt.pm)
 
 %description
 This module collects common validation routines to make input validation, and
@@ -37,6 +37,9 @@ names make it clear what you're trying to test for.
 
 
 %changelog
+* Wed Jun 09 2021 Igor Vlasenko <viy@altlinux.org> 0.09-alt2
+- updated BR:
+
 * Tue Dec 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
