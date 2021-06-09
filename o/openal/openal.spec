@@ -3,7 +3,7 @@
 
 Name: openal
 Version: 1.21.1
-Release: alt2
+Release: alt3
 
 Summary: Open Audio Library
 
@@ -79,6 +79,10 @@ The %{name}-tools package contains various OpenAL command line tools.
 %setup
 %ifarch %e2k
 sed -i 's,-Winline,,' CMakeLists.txt
+# changes "{_mm*}" to "=_mm*"
+sed -i "/[{]_mm/{s|[{]_mm|=_mm|;:x;/[}]/!{N;bx};s|[}]||}" \
+	alc/effects/convolution.cpp \
+	core/mixer/mixer_sse*.cpp core/uhjfilter.cpp
 %endif
 
 %build
@@ -86,10 +90,6 @@ sed -i 's,-Winline,,' CMakeLists.txt
 	-DALSOFT_REQUIRE_OSS=OFF \
 	-DALSOFT_CONFIG=ON \
 %ifarch %e2k
-	-DALSOFT_CPUEXT_SSE4_1=OFF \
-	-DALSOFT_CPUEXT_SSE3=OFF \
-	-DALSOFT_CPUEXT_SSE2=OFF \
-	-DALSOFT_CPUEXT_SSE=OFF \
 	-DALSOFT_CPUEXT_NEON=OFF \
 %endif
 	#
@@ -140,10 +140,12 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 %endif
 
 # TODO:
-# - use SSE on e2k if possible (mike@)
 # - alrecord, altonegen not packaged (really needed?)
 
 %changelog
+* Wed Jun 09 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.21.1-alt3
+- fixed SSE code for Elbrus compiler
+
 * Sat Jun 05 2021 Michael Shigorin <mike@altlinux.org> 1.21.1-alt2
 - E2K: fix ftbfs by avoiding x86/arm intrinsics in a cleaner way for now
 
