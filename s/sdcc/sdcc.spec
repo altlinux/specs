@@ -3,7 +3,7 @@
 Name: sdcc
 Epoch: 1
 Version: 3.9.0
-Release: alt1
+Release: alt2
 Group: Development/C
 URL: http://sdcc.sourceforge.net
 License: GPL
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Patch1: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: flex gcc-c++ boost-devel gputils /usr/bin/makeinfo
 BuildRequires: zlib-devel
 BuildRequires: /usr/bin/python3
@@ -86,6 +87,9 @@ PYTHON=python3 \
 %_docdir/%name-%version
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.9.0-alt2
+- Updated build dependencies.
+
 * Mon Oct 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.9.0-alt1
 - Updated to upstream version 3.9.0 (Closes: #37328).
 
