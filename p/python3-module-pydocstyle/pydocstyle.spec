@@ -2,14 +2,12 @@
 
 %define oname pydocstyle
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 2.1.1
-Release: alt4
+Name: python3-module-%oname
+Version: 6.1.1
+Release: alt1
 Summary: Python docstring style checker
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/pydocstyle
 
@@ -17,15 +15,15 @@ Url: https://pypi.python.org/pypi/pydocstyle
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-objects.inv python-module-sphinxcontrib-issuetracker
-BuildRequires: python-module-html5lib python-module-mock python-module-pytest python-module-pathlib
-BuildRequires: python2.7(configparser) python2.7(snowballstemmer) python2.7(six)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest
 BuildRequires: python3(configparser) python3(snowballstemmer) python3(six)
-%endif
+# Documentation
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-alabaster python3-module-objects.inv python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+
+# Conflicts due to binaries in /usr/bin
+Conflicts: python-module-%oname
 
 %description
 pydocstyle is a static analysis tool for checking
@@ -36,7 +34,7 @@ but it should not be considered a reference implementation.
 
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 pydocstyle is a static analysis tool for checking
@@ -61,95 +59,49 @@ but it should not be considered a reference implementation.
 
 This package contains documentation for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python docstring style checker
-Group: Development/Python3
-
-%description -n python3-module-%oname
-pydocstyle is a static analysis tool for checking
-compliance with Python docstring conventions.
-
-pydocstyle supports most of PEP 257 out of the box,
-but it should not be considered a reference implementation.
-%endif
-
 %prep
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %make -C docs pickle
 %make -C docs html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
 export LC_ALL=en_US.UTF-8
 # those tests are known to fail
 rm -f src/tests/test_integration.py
-PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
-%if_with python3
-pushd ../python3
-# those tests are known to fail
-rm -f src/tests/test_integration.py
 PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
-popd
-%endif
 
 %files
-%doc *.rst
+%doc LICENSE-MIT
+%doc README.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.1-alt1
+- Updated to upstream verion 6.1.1.
+- Rebuilt without python-2.
+
 * Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 2.1.1-alt4
 - Fix build.
 

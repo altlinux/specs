@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 7.7.1
-Release: alt2
+Release: alt3
 Summary: pylama -- Code audit tool for python
 License: LGPL
 Group: Development/Python3
@@ -13,6 +13,8 @@ Url: https://pypi.python.org/pypi/pylama/
 # https://github.com/klen/pylama.git
 Source: %name-%version.tar
 BuildArch: noarch
+
+Patch1: pylama-alt-pydocstyle-compat-test.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: git
@@ -31,6 +33,7 @@ pylama -- Code audit tool for python.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 export LC_ALL=en_US.UTF-8
@@ -54,6 +57,10 @@ nosetests3
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.7.1-alt3
+- Added workaround for passing tests with new pydocstyle version.
+- Cleaned up sources.
+
 * Wed Sep 09 2020 Grigory Ustinov <grenka@altlinux.org> 7.7.1-alt2
 - Fixed installation (Closes: #38890).
 - Build with check.
