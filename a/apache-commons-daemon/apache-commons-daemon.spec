@@ -1,7 +1,7 @@
 Epoch: 1
 Group: System/Base
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name   daemon
@@ -9,12 +9,12 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           apache-commons-daemon
 Summary:        Defines API to support an alternative invocation mechanism
-Version:        1.2.2
-Release:        alt1_5jpp8
+Version:        1.2.4
+Release:        alt1_1jpp11
 License:        ASL 2.0
 
-URL:            http://commons.apache.org/%{base_name}
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:            https://commons.apache.org/%{base_name}
+Source0:        https://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 
 Patch0:         00-configure-java-os.patch
 
@@ -87,7 +87,7 @@ popd
 # build jars
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:%{short_name}
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -112,6 +112,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2.4-alt1_1jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt1_5jpp8
 - new version
 
