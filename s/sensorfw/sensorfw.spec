@@ -1,11 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:       sensorfw
 Summary:    Sensor Framework
 Version:    0.7.2
 Group:      System/Kernel and hardware
-Release:    alt4
+Release:    alt5
 License:    LGPLv2+
 URL:        http://gitorious.org/sensorfw
-Source0:    %{name}-%{version}.tar
+
+Source0:    %name-%version.tar
 Source1:    sensorfw-rpmlintrc
 Source2:    sensord.service
 Source3:    sensord-daemon-conf-setup
@@ -16,6 +19,7 @@ Source7:    sensord-mrst_cdk.conf
 Source8:    sensord-oaktrail.conf
 Source9:    sensord.sysconfig
 Source100:  sensorfw.yaml
+
 Patch0:     sensorfw-0.7.1-tests-directories.patch
 Patch1:     sensorfw-0.7.1-pegatron-accel.patch
 Patch2:     sensorfw-0.7.1-oemtablet-accel.patch
@@ -29,77 +33,60 @@ Patch9:     fix-method-call.patch
 Patch10:    fix-project-libs.patch
 Patch20:    %name-%version-alt-gcc6.patch
 Patch21:    %name-%version-alt-python2-compat.patch
-#Requires:   qt
-#Requires:   GConf-dbus
-Requires:   %{name}-configs
-#Requires:   systemd
-#Requires(preun): systemd
-#Requires(post): /sbin/ldconfig
-#Requires(post): systemd
-#Requires(postun): /sbin/ldconfig
-#Requires(postun): systemd
-BuildRequires:  pkgconfig(QtCore)
-BuildRequires:  pkgconfig(gconf-2.0)
-BuildRequires:  pkgconfig(contextprovider-1.0)
-BuildRequires:  doxygen
-BuildRequires:  graphviz
-BuildRequires:  gcc-c++
-BuildRequires:  gdb
-Obsoletes:   sensorframework
 
+BuildRequires(pre): rpm-build-python
+BuildRequires: pkgconfig(QtCore)
+BuildRequires: pkgconfig(gconf-2.0)
+BuildRequires: pkgconfig(contextprovider-1.0)
+BuildRequires: doxygen
+BuildRequires: graphviz
+BuildRequires: gcc-c++
+BuildRequires: gdb
+
+Obsoletes: sensorframework
+Requires: %name-configs
 
 %description
 Sensor Framework provides an interface to hardware sensor drivers through logical sensors. This package contains sensor framework daemon and required libraries.
 
-
-
 %package devel
 Summary:    Sensor framework daemon libraries development headers
 Group:      Development/C++
-Requires:   %{name} = %{version}-%{release}
-#Requires:   qt-devel
+Requires:   %name = %EVR
 
 %description devel
 Development headers for sensor framework daemon and libraries.
 
-
 %package tests
 Summary:    Unit test cases for sensord
 Group:      Development/C++
-Requires:   %{name} = %{version}-%{release}
-#Requires:   testrunner-lite
-#Requires:   python
+Requires:   %name = %EVR
 
 %description tests
 Contains unit test cases for CI environment.
 
-
 %package contextfw-tests
 Summary:    Test cases for sensord acting as context provider
 Group:      Development/C++
-Requires:   %{name} = %{version}-%{release}
-#Requires:   sensorfw-tests
-#Requires:   contextkit >= 0.3.6
+Requires:   %name = %EVR
 
 %description contextfw-tests
 Contains test cases for CI environment, for ensuring that sensord provides context properties correctly.
 
-
 %package doc
 Summary:    API documentation for libsensord
 Group:      Development/Documentation
-Requires:   %{name} = %{version}-%{release}
+Requires:   %name = %EVR
 BuildArch: noarch
 
 %description doc
 Doxygen-generated API documentation for sensord.
 
-
 %package configs
 Summary:    Sensorfw configuration files
 Group:      System/Configuration/Other
 BuildArch:    noarch
-Requires:   %{name} = %{version}
+Requires:   %name = %EVR
 Provides:   sensord-config
 Provides:   config-n900
 Provides:   config-aava
@@ -111,10 +98,8 @@ Provides:   config-oaktrail
 %description configs
 Sensorfw configuration files.
 
-
-
 %prep
-%setup -q -n %{name}-%{version}
+%setup
 
 # sensorfw-0.7.1-tests-directories.patch
 %patch0 -p1
@@ -140,127 +125,94 @@ Sensorfw configuration files.
 %patch10
 %patch20 -p2
 %patch21 -p2
-# >> setup
-# << setup
+
 find . -type f -name \*.pr\? | while read f; do sed -i 's|/usr/lib|%_libdir|' $f; done
 
 %build
-#unset LD_AS_NEEDED
-# >> build pre
-#export LD_RUN_PATH=/usr/lib/sensord/
-# << build pre
-
 PATH=$PATH:%_qt4dir/bin qmake \
     CONFIG+=mce_disable
 
 %make_build
 
-# >> build post
-# << build post
 %install
-rm -rf %{buildroot}
-# >> install pre
-# << install pre
 %make_install INSTALL_ROOT=%buildroot install
 
-# >> install post
-install -D -m644 %{SOURCE2} $RPM_BUILD_ROOT/%{_lib}/systemd/system/sensord.service
-install -D -m750 %{SOURCE3} $RPM_BUILD_ROOT/%{_bindir}/sensord-daemon-conf-setup
-install -m644 %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
-install -m644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
-install -m644 %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
-install -m644 %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
-install -m644 %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
+install -D -m644 %SOURCE2 %buildroot/%_lib/systemd/system/sensord.service
+install -D -m750 %SOURCE3 %buildroot%_bindir/sensord-daemon-conf-setup
+install -m644 %SOURCE4 %buildroot%_sysconfdir/%name/
+install -m644 %SOURCE5 %buildroot%_sysconfdir/%name/
+install -m644 %SOURCE6 %buildroot%_sysconfdir/%name/
+install -m644 %SOURCE7 %buildroot%_sysconfdir/%name/
+install -m644 %SOURCE8 %buildroot%_sysconfdir/%name/
 install -D -m755 sensord.init %buildroot%_initdir/sensord
 
-mkdir -p %{buildroot}/%{_lib}/systemd/system/basic.target.wants
-ln -s ../sensord.service %{buildroot}/%{_lib}/systemd/system/basic.target.wants/sensord.service
-# << install post
+mkdir -p %buildroot/%_lib/systemd/system/basic.target.wants
+ln -s ../sensord.service %buildroot/%_lib/systemd/system/basic.target.wants/sensord.service
 
 # Install the sensord sysconfig
-install -D -m644 %{SOURCE9} %buildroot%_sysconfdir/sysconfig/sensord
+install -D -m644 %SOURCE9 %buildroot%_sysconfdir/sysconfig/sensord
 
-#%preun
-#if systemctl -q is-active sensord.service; then systemctl stop sensord.service; fi
+%post
+%post_service sensord
 
-#%post
-#/sbin/ldconfig
-#if systemctl daemon-reload; then systemctl reload-or-try-restart sensord.service; fi
-
-#%postun
-#/sbin/ldconfig
-#systemctl daemon-reload ||:
+%preun
+%preun_service sensord
 
 %files
-%defattr(-,root,root,-)
-# >> files
-%attr(755,root,root)%{_sbindir}/sensord
-%dir %{_libdir}/sensord
-%{_libdir}/sensord/*.so
-%{_libdir}/*.so.*
-%config %{_sysconfdir}/dbus-1/system.d/sensorfw.conf
-%config %{_sysconfdir}/sensorfw/sensord.conf
-%dir %{_sysconfdir}/%{name}
-%dir %{_sysconfdir}/%{name}/sensord.conf.d/
-%{_datadir}/contextkit/providers/com.nokia.SensorService.context
+%attr(755,root,root) %_sbindir/sensord
+%dir %_libdir/sensord
+%_libdir/sensord/*.so
+%_libdir/*.so.*
+%config %_sysconfdir/dbus-1/system.d/sensorfw.conf
+%config %_sysconfdir/sensorfw/sensord.conf
+%dir %_sysconfdir/%name
+%dir %_sysconfdir/%name/sensord.conf.d/
+%_datadir/contextkit/providers/com.nokia.SensorService.context
 %doc debian/copyright debian/README COPYING
-/%{_lib}/systemd/system/sensord.service
-/%{_lib}/systemd/system/basic.target.wants/sensord.service
-%{_bindir}/sensord-daemon-conf-setup
+/%_lib/systemd/system/sensord.service
+/%_lib/systemd/system/basic.target.wants/sensord.service
+%_bindir/sensord-daemon-conf-setup
 %_initdir/sensord
-%{_sysconfdir}/sysconfig/sensord
-# << files
-
+%_sysconfdir/sysconfig/sensord
 
 %files devel
-%defattr(-,root,root,-)
-# >> files devel
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/*
-%dir %{_includedir}/sensord
-%{_includedir}/sensord/*
-%{_datadir}/qt4/mkspecs/features/sensord.prf
-# << files devel
+%_libdir/*.so
+%_libdir/pkgconfig/*
+%dir %_includedir/sensord
+%_includedir/sensord/*
+%_datadir/qt4/mkspecs/features/sensord.prf
 
 %files tests
-%defattr(-,root,root,-)
-# >> files tests
-%dir %{_libdir}/sensord/testing
-%{_libdir}/sensord/testing/*
-%dir %{_datadir}/sensorfw-tests
-%attr(755,root,root)%{_datadir}/sensorfw-tests/*.p*
-%attr(644,root,root)%{_datadir}/sensorfw-tests/*.xml
-%attr(644,root,root)%{_datadir}/sensorfw-tests/*.conf
-%attr(755,root,root)%{_bindir}/*
+%dir %_libdir/sensord/testing
+%_libdir/sensord/testing/*
+%dir %_datadir/sensorfw-tests
+%attr(755,root,root) %_datadir/sensorfw-tests/*.p*
+%attr(644,root,root) %_datadir/sensorfw-tests/*.xml
+%attr(644,root,root) %_datadir/sensorfw-tests/*.conf
+%attr(755,root,root) %_bindir/*
 %exclude %_bindir/sensord-daemon-conf-setup
-# << files tests
 
 %files contextfw-tests
-%defattr(-,root,root,-)
-# >> files contextfw-tests
-%dir %{_datadir}/sensorfw-contextfw-tests
-%attr(755,root,root)%{_datadir}/sensorfw-contextfw-tests/*.sh
-%attr(755,root,root)%{_datadir}/sensorfw-contextfw-tests/*.p*
-%attr(644,root,root)%{_datadir}/sensorfw-contextfw-tests/*.xml
-# << files contextfw-tests
+%dir %_datadir/sensorfw-contextfw-tests
+%attr(755,root,root) %_datadir/sensorfw-contextfw-tests/*.sh
+%attr(755,root,root) %_datadir/sensorfw-contextfw-tests/*.p*
+%attr(644,root,root) %_datadir/sensorfw-contextfw-tests/*.xml
 
 %files doc
-%defattr(-,root,root,-)
-# >> files doc
-%dir %{_defaultdocdir}/sensord
-%dir %{_defaultdocdir}/sensord/html
-%attr(644,root,root)%{_defaultdocdir}/sensord/html/*
-# << files doc
+%dir %_defaultdocdir/sensord
+%dir %_defaultdocdir/sensord/html
+%attr(644,root,root) %_defaultdocdir/sensord/html/*
 
 %files configs
-%defattr(-,root,root,-)
-# >> files configs
-%config %{_sysconfdir}/%{name}/sensord.conf.d/*.conf
-%config %{_sysconfdir}/%{name}/*.conf
-%exclude %{_sysconfdir}/sensorfw/sensord.conf
-# << files configs
+%config %_sysconfdir/%name/sensord.conf.d/*.conf
+%config %_sysconfdir/%name/*.conf
+%exclude %_sysconfdir/sensorfw/sensord.conf
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt5
+- Updated build dependencies.
+- Cleaned up spec.
+
 * Wed Jul 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt4
 - Updated python dependencies.
 
