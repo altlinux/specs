@@ -5,8 +5,8 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Epoch:          1
 Name:           apache-sshd
-Version:        2.4.0
-Release:        alt1_5jpp11
+Version:        2.6.0
+Release:        alt1_1jpp11
 Summary:        Apache SSHD
 
 # One file has ISC licensing:
@@ -61,6 +61,7 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 
 # Avoid unnecessary dep on spring framework
 %pom_remove_dep :spring-framework-bom
+%pom_remove_dep :testcontainers-bom sshd-sftp
 
 # Build the core modules only
 %pom_disable_module assembly
@@ -75,12 +76,14 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 
 # Disable plugins we don't need for RPM builds
 %pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin :groovy-maven-plugin
+%pom_remove_plugin :gmavenplus-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-pmd-plugin
 %pom_remove_plugin :maven-antrun-plugin
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :impsort-maven-plugin
+%pom_remove_plugin :formatter-maven-plugin . sshd-core
 
 # Suppress generation of uses clauses
 %pom_xpath_inject "pom:configuration/pom:instructions" "<_nouses>true</_nouses>" .
@@ -100,6 +103,9 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 %doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.6.0-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt1_5jpp11
 - new version
 
