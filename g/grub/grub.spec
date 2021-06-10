@@ -1,8 +1,12 @@
 %define efi_arches %ix86 x86_64 aarch64 riscv64
 
+# SBAT generation number for ALT
+# Refer to https://github.com/rhboot/shim/blob/main/SBAT.md
+%global alt_gen_number 1
+
 Name: grub
-Version: 2.04
-Release: alt3
+Version: 2.06
+Release: alt1.rc1
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -33,6 +37,8 @@ Source13: grub-entries.8
 
 Source14: grub-efi.filetrigger
 
+Source15: sbat.csv.in
+
 Patch0: grub-2.04-os-alt.patch
 Patch1: grub-2.00-sysconfig-path-alt.patch
 Patch2: grub-2.02-altlinux-theme.patch
@@ -43,7 +49,6 @@ Patch8: grub-2.04-debian-install_signed.patch
 Patch9: grub-2.00-fedora-unrestricted.patch
 Patch10: grub2-stfu.patch
 Patch11: grub-2.02-shift-interrupt-timeout.patch
-Patch12: grub-2.02-ubuntu-efi-setup.patch
 Patch13: grub-2.02-check_writes-alt.patch
 Patch14: grub-2.04-alt-luks-use-uuid.patch
 Patch20: grub-2.02-alt-os-prober-compat.patch
@@ -53,47 +58,20 @@ Patch23: grub-2.02-debian-grub-install-removable-shim.patch
 Patch24: grub-2.04-alt-grub-install-no-fallback-for-removable.patch
 Patch25: grub-2.04-alt-add-file-with-Russian-translation.patch
 Patch26: grub-2.04-alt-add-strings-and-translation-for-OS-ALT.patch
+Patch27: grub-2.06-alt-fix-build-with-new-gnulib.patch
 
 # add a rhboot/grub-2.02-sb set of patches to ensure SecureBoot safe operation
 # refer to url:  https://github.com/rhboot/grub2/commits/grub-2.02-sb
-Patch101: grub-2.04-sb-0001-Add-support-for-Linux-EFI-stub-loading.patch
-Patch102: grub-2.04-sb-0002-Rework-linux-command.patch
-Patch103: grub-2.04-sb-0003-Rework-linux16-command.patch
-Patch104: grub-2.04-sb-0004-Add-secureboot-support-on-efi-chainloader.patch
-Patch105: grub-2.04-sb-0005-Make-any-of-the-loaders-that-link-in-efi-mode-honor-.patch
-Patch106: grub-2.04-sb-0006-Handle-multi-arch-64-on-32-boot-in-linuxefi-loader.patch
+Patch101: grub-2.06-sb-0001-Add-support-for-Linux-EFI-stub-loading.patch
+Patch102: grub-2.06-sb-0002-Rework-linux-command.patch
+Patch103: grub-2.06-sb-0003-Rework-linux16-command.patch
+Patch104: grub-2.06-sb-0004-Add-secureboot-support-on-efi-chainloader.patch
+Patch105: grub-2.06-sb-0005-Make-any-of-the-loaders-that-link-in-efi-mode-honor-.patch
+Patch106: grub-2.06-sb-0006-Handle-multi-arch-64-on-32-boot-in-linuxefi-loader.patch
 
-Patch190: grub-2.04-fedora-Rework-how-the-fdt-command-builds.patch
-
-# BootHole & Co. vulnerabilities fix patchset
-# refer to url: https://lists.gnu.org/archive/html/grub-devel/2020-07/msg00034.html
-Patch301: grub-2.04-bh-0001-yylex-Make-lexer-fatal-errors-actually-be-fatal.patch
-Patch302: grub-2.04-bh-0002-safemath-Add-some-arithmetic-primitives-that-check-f.patch
-Patch303: grub-2.04-bh-0003-calloc-Make-sure-we-always-have-an-overflow-checking.patch
-Patch304: grub-2.04-bh-0004-calloc-Use-calloc-at-most-places.patch
-Patch305: grub-2.04-bh-0005-malloc-Use-overflow-checking-primitives-where-we-do-.patch
-Patch306: grub-2.04-bh-0006-iso9660-Don-t-leak-memory-on-realloc-failures.patch
-Patch307: grub-2.04-bh-0007-font-Do-not-load-more-than-one-NAME-section.patch
-Patch308: grub-2.04-bh-0008-gfxmenu-Fix-double-free-in-load_image.patch
-Patch309: grub-2.04-bh-0009-xnu-Fix-double-free-in-grub_xnu_devprop_add_property.patch
-Patch311: grub-2.04-bh-0011-lzma-Make-sure-we-don-t-dereference-past-array.patch
-Patch312: grub-2.04-bh-0012-term-Fix-overflow-on-user-inputs.patch
-Patch313: grub-2.04-bh-0013-udf-Fix-memory-leak.patch
-Patch314: grub-2.04-bh-0014-multiboot2-Fix-memory-leak-if-grub_create_loader_cmd.patch
-Patch315: grub-2.04-bh-0015-tftp-Do-not-use-priority-queue.patch
-Patch316: grub-2.04-bh-0016-relocator-Protect-grub_relocator_alloc_chunk_addr-in.patch
-Patch317: grub-2.04-bh-0017-relocator-Protect-grub_relocator_alloc_chunk_align-m.patch
-Patch318: grub-2.04-bh-0018-script-Remove-unused-fields-from-grub_script_functio.patch
-Patch319: grub-2.04-bh-0019-script-Avoid-a-use-after-free-when-redefining-a-func.patch
-Patch320: grub-2.04-bh-0020-relocator-Fix-grub_relocator_alloc_chunk_align-top-m.patch
-Patch321: grub-2.04-bh-0021-hfsplus-Fix-two-more-overflows.patch
-Patch322: grub-2.04-bh-0022-lvm-Fix-two-more-potential-data-dependent-alloc-over.patch
-Patch323: grub-2.04-bh-0023-emu-Make-grub_free-NULL-safe.patch
-Patch324: grub-2.04-bh-0024-efi-Fix-some-malformed-device-path-arithmetic-errors.patch
-Patch325: grub-2.04-bh-0025-efi-chainloader-Propagate-errors-from-copy_file_path.patch
-Patch326: grub-2.04-bh-0026-efi-Fix-use-after-free-in-halt-reboot-path.patch
-Patch327: grub-2.04-bh-0027-loader-linux-Avoid-overflow-on-initrd-size-calculati.patch
-Patch328: grub-2.04-bh-0028-linux-Fix-integer-overflows-in-initrd-size-handling.patch
+Patch190: grub-2.06-fedora-Rework-how-the-fdt-command-builds.patch
+Patch191: grub-2.06-fedora-Revert-templates-Properly-disable-the-os-prober-by-d.patch
+Patch192: grub-2.06-fedora-Revert-templates-Disable-the-os-prober-by-default.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
@@ -235,7 +213,6 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 %patch13 -p2
 %patch14 -p2
 %patch20 -p2
@@ -245,6 +222,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch24 -p2
 %patch25 -p2
 %patch26 -p2
+%patch27 -p2
 
 #SB patches
 %patch101 -p1
@@ -254,39 +232,18 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch105 -p1
 %patch106 -p1
 
-%patch190 -p2
-
-#BootHole patches
-%patch301 -p1
-%patch302 -p1
-%patch303 -p1
-%patch304 -p1
-%patch305 -p1
-%patch306 -p1
-%patch307 -p1
-%patch308 -p1
-%patch309 -p1
-%patch311 -p1
-%patch312 -p1
-%patch313 -p1
-%patch314 -p1
-%patch315 -p1
-%patch316 -p1
-%patch317 -p1
-%patch318 -p1
-%patch319 -p1
-%patch320 -p1
-%patch321 -p1
-%patch322 -p1
-%patch323 -p1
-%patch324 -p1
-%patch325 -p1
-%patch326 -p1
-%patch327 -p1
-%patch328 -p1
+%patch190 -p1
+%patch191 -p1
+%patch192 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
+sed -i "/^AC_PREREQ/ s/2\.63/2.64/" configure.ac
 sed -i "s/PYTHON:=python/PYTHON:=python3/" autogen.sh
+
+# append ALT data to SBAT section
+# make sure upstream data is set appropriately in sbat.csv.in too
+cat %SOURCE15 > sbat.csv
+echo "grub.altlinux,%alt_gen_number,ALT Linux,grub,%version-%release,http://git.altlinux.org/gears/g/grub.git" >> sbat.csv
 
 %build
 ./bootstrap --no-git --gnulib-srcdir=%_datadir/gnulib
@@ -309,6 +266,7 @@ build_efi_image() {
 	local dir="$1"; shift
 	local format="$1"; shift
 	"$mkimage" -O "$format" -o "$dir"/grub.efi -d "$dir"/grub-core -p "" \
+		--sbat sbat.csv \
 		part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs \
 		squash4 normal chain boot configfile diskfilter \
 		minicmd reboot halt search search_fs_uuid search_fs_file \
@@ -533,6 +491,22 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed May 19 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt1.rc1
+- new version
+  + includes fixes for BootHole vulnerabilities so drop corresponding patches
+  + includes fixes for SB Bypass 2021 vulnerabilities
+    (fixes: CVE-2020-14372, CVE-2020-25632, CVE-2020-25647, CVE-2020-27749)
+    (fixes: CVE-2020-27779, CVE-2021-20225, CVE-2021-20233, CVE-2021-3418)
+- update os-alt-xen patch
+- remove upstreamed ubuntu-efi-setup patch
+- update fedora SB patch set
+- update fedora-Rework-how-the-fdt-command-builds patch
+- add fedora patches to revert os-prober disabling in SB
+- switch default graphics mode from "800x600" to "auto" (closes: #39948)
+- grub-efi-autoupdate: fix --removable installations were not updated
+- update alt-add-strings-and-translation-for-OS-ALT patch (antohami@)
+- add alt-fix-build-with-new-gnulib patch (egori@)
+
 * Tue Feb 16 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.04-alt3
 - grub-efi-autoupdate: fix grub update rendering system unbootable
 - grub-efi.filetrigger: add to ensure grub reinstall during shim-signed update
