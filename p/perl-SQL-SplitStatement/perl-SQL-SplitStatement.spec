@@ -2,7 +2,7 @@
 %define sname sql-splitstatement
 
 Name: perl-SQL-SplitStatement
-Version: 1.00020
+Version: 1.00023
 Release: alt1
 Summary: Split any SQL code into atomic statements
 License: GPL+ or Artistic
@@ -30,7 +30,7 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Script/Run.pm)
 BuildRequires: perl(base.pm)
 BuildRequires: perl(strict.pm)
-BuildRequires: perl(warnings.pm)
+BuildRequires: perl(warnings.pm) perl(Test/Differences.pm)
 
 %description
 This is a simple module which tries to split any SQL code, even including
@@ -48,7 +48,7 @@ of the module documentation), into the atomic statements it is composed of.
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE
+%doc Changes README
 # The LICENSE file is outdated and contains the wrong address for the FSF
 # https://rt.cpan.org/Ticket/Display.html?id=107996
 %_bindir/sql-split
@@ -56,5 +56,8 @@ of the module documentation), into the atomic statements it is composed of.
 %_man1dir/sql-split.1*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.00023-alt1
+- new version
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 1.00020-alt1
 - initial build for ALT
