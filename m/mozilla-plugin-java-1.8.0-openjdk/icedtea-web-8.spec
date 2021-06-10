@@ -1,9 +1,9 @@
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/rustc /usr/bin/xsltproc gcc-c++ zip
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%def_enable javaws
+%def_disable javaws
 %def_enable moz_plugin
 BuildRequires(pre): browser-plugins-npapi-devel
 BuildRequires: bc
@@ -17,63 +17,74 @@ BuildRequires: jpackage-1.8-compat
 #can rust have debuginfo? Verify and fix! Likely issue in Makefile of itw.
 %global debug_package %{nil}
 
-# Version of java
+# Version of java we run against
 %define javaver 1.8.0
+# Version of java we build by
+%define buildjavaver 1.8.0
 
-# Alternatives priority
-%define priority 18000
+# Alternatives priority (rised by one number when jre bumped to 11 (as 11 < 18 :)
+%define priority 110000
 # jnlp prorocol gnome registry keys
 %define gurlhandler   /desktop/gnome/url-handlers
 %define jnlphandler   %{gurlhandler}/jnlp
 %define jnlpshandler  %{gurlhandler}/jnlps
 
-%define javadir     %{_jvmdir}/java-%{javaver}-openjdk
 %define jredir      %{_jvmdir}/jre-%{javaver}-openjdk
+%define sdkdir      %{_jvmdir}/java-%{buildjavaver}-openjdk
 
-%define binsuffix      .itweb
-
-%define preffered_java  java-%{javaver}-openjdk
+%define preffered_jre  java-%{javaver}-openjdk
+%define preffered_jdk  java-%{buildjavaver}-openjdk-devel
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
-Version:	1.8.2
-Release:	alt1_3jpp8
-Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
+Version:	2.0.0
+Release:	alt1_pre.2.alpha13.patched1jpp8
+Summary:	Additional Java components for OpenJDK - Java Web Start implementation
 
 License:    LGPLv2+ and GPLv2 with exceptions
-URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
-Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
+URL:        https://openwebstart.com/
+Source0:    https://github.com/AdoptOpenJDK/IcedTea-Web/archive/%{oldname}-%{version}-pre.0.alpha13.patched1.tar.xz
 Patch0:     patchOutDunce.patch
-Patch1:     issue1.patch
-Patch2:     issue2.patch
-Patch3:     issue3.patch
-Patch4:     PreventiveleQueue.patch
-Patch11:    issue1-bin.patch
-Patch33:    issue3-bin.patch
-Patch5:     testTuning.patch
+Patch1:     launchersPhase.patch
+# this should be upstreamed. In build tasks which lauches java are using runtime JRE, should beusing SDK, but there is no place where to set it
+Patch2:     usePathJdkForDifferentBuildAndRuntimeJre.patch
 
 BuildRequires:  javapackages-tools
 #for deprecated add_maven_depmap, see https://www.spinics.net/lists/fedora-devel/msg233211.html
 BuildRequires:  javapackages-local
-BuildRequires:  %{preffered_java}-devel
+BuildRequires:  %{preffered_jdk}
 BuildRequires:  desktop-file-utils
 BuildRequires:  glib2-devel libgio libgio-devel
-BuildRequires:  autoconf
-BuildRequires:  automake
+BuildRequires:  dos2unix
+BuildRequires:	rust
 BuildRequires:	rust-cargo
 BuildRequires:  junit
+BuildRequires:  maven
 BuildRequires:  hamcrest
 BuildRequires:  libappstream-glib
-# new in 1.5 to have  clean up for malformed XMLs
 BuildRequires:  tagsoup
-# to apply binary tests for CVEs
-BuildRequires:      git
+BuildRequires:  maven-local
+# have to remove them at the end, what is the result?
+BuildRequires:  buildnumber-maven-plugin
+BuildRequires:  maven-source-plugin
+BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-shade-plugin
+BuildRequires:  exec-maven-plugin
+BuildRequires:  hamcrest
+BuildRequires:  hamcrest-core
+BuildRequires:  rhino
+BuildRequires:  IPAddress
+BuildRequires:  maven-javadoc-plugin
 
 # For functionality and the OpenJDK dirs
-Requires:      %{preffered_java}
+Requires:      %{preffered_jre}
 Requires:      javapackages-tools
+Requires:      rhino
+Requires:      IPAddress
+
 #maven fragments
 Requires(post):      javapackages-tools
-Requires(postun):      javapackages-tools
+Requires(postun):    javapackages-tools
 
 # When itw builds against it, it have to be also in runtime
 Requires:      tagsoup
@@ -87,7 +98,7 @@ Requires(postun):   GConf libGConf
 
 # Standard JPackage plugin provides.
 Provides: javaws = 1:%{javaver}
-Provides:   %{preffered_java}-javaws = 1:%{version}
+Provides: %{preffered_jre}-javaws = 1:%{version}
 Source44: import.info
 
 %define altname java-%{javaver}-openjdk
@@ -107,16 +118,16 @@ Requires: %{_alt_javacandidate}
 %endif
 Provides: icedtea-web = %version-%release
 Obsoletes: mozilla-plugin-java-1.7.0-openjdk < 1.5
-Patch34: translation-desktop-files.patch
+Patch33: translation-desktop-files.patch
 Source45: Messages_ru.properties
 
 #BuildRequires: java-%javaver-%origin-devel
 
 %description
 The IcedTea-Web project provides a an implementation of Java Web Start
-(originally based on the Netx project) and a settings tool to
-manage deployment settings for the aforementioned plugin and Web Start
-implementations. 
+(originally based on the Netx project, now opensource part of OpenWebStart)
+and a settings tool to manage deployment settings for the aforementioned 
+Web Start implementations. 
 
 %if_enabled javaws
 %package -n %altname-javaws
@@ -166,92 +177,96 @@ BuildArch:  noarch
 This package contains ziped sources of the IcedTea-Web project.
 
 %prep
-%setup -n %{oldname}-%{version} -q
+%setup -q -n icedtea-web-master
 %patch0 -p1
-%patch1 -p1
+dos2unix launchers/pom.xml
+%patch1 -p0
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-if [ -e ../.git ] ; then
-  mv ../.git ../ggit
-fi
-git apply --no-index --binary -v %{PATCH11}
-git apply --no-index --binary -v %{PATCH33}
-if [ -e ../ggit ] ; then
-  mv ../ggit ../.git
-fi
-%patch34 -p2
+%pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
+%pom_remove_plugin org.jacoco:jacoco-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-surefire-plugin
+%pom_add_plugin org.apache.maven.plugins:maven-install-plugin:2.5.2
+%pom_remove_dep junit:junit common/pom.xml
+%pom_remove_dep org.hamcrest:hamcrest common/pom.xml
 
-cp -f %SOURCE45 netx/net/sourceforge/jnlp/resources/Messages_ru.properties
-sed -i 's/en_US.UTF-8/en_US.UTF-8 ru_RU.UTF-8/' Makefile.am
+%pom_remove_dep org.hamcrest:hamcrest test-extensions/pom.xml
+%pom_remove_dep net.jcip:jcip-annotations test-extensions/pom.xml
+%pom_remove_dep com.github.stefanbirkner:system-rules test-extensions/pom.xml
 
-# test fails when /tmp files go missing :( aarch64 known mystery bug
-%ifarch aarch64
-sed -i 's,\$(CARGO) test,echo test,' Makefile.am
-%endif
+%pom_remove_dep com.github.vatbub:mslinks core/pom.xml
+%pom_remove_dep org.hamcrest:hamcrest integration/pom.xml
+%pom_remove_dep com.github.tomakehurst:wiremock-jre8 integration/pom.xml
+%pom_remove_dep com.github.stefanbirkner:system-rules integration/pom.xml
+
+rm -v core/src/main/java/net/sourceforge/jnlp/util/WindowsDesktopEntry.java
+rm -r integration/src
+%patch33 -p2
+# not updated for 2.0 yet
+#cp -f %SOURCE45 common/src/main/resources/net/adoptopenjdk/icedteaweb/i18n/Messages_ru.properties
+#sed -i 's/en_US.UTF-8/en_US.UTF-8 ru_RU.UTF-8/' Makefile.am
+
 
 %build
-autoreconf -vfi
-CXXFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS" \
-%configure \
-    --with-pkgversion=ALTLinux-%{release}-%{_arch} \
-    --docdir=%{_datadir}/javadoc/%{oldname} \
-    --with-jdk-home=%{javadir} \
-    --with-jre-home=%{jredir} \
-    --libdir=%{_libdir} \
-    --program-suffix=%{binsuffix} \
-    --disable-native-plugin \
-    --with-itw-libs=DISTRIBUTION \
-    --with-modularjdk-file=%{_sysconfdir}/java/%{oldname}    \
-    --prefix=%{_prefix}
-%make_build
+rm -rf launchers/build.log
+#export JAVA_HOME=%{sdkdir}
+SPLASH_TARGET_DIR=%{_datadir}/%{oldname} \
+ITW_TARGET_DIR=%{_datadir}/%{oldname} \
+BIN_TARGET_DIR=%{_libexecdir}/%{oldname} \
+ETC_TARGET_DIR=%{_sysconfdir}/java/%{oldname} \
+ITW_LIBS=DISTRIBUTION \
+JRE=%{jredir} \
+%mvn_build -- -Plaunchers -Dmaven.test.skip=true -Dmaven.javadoc.skip=true   || tail launchers/build.log -n 100
+tail launchers/build.log -n 100
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+#not installing all, itw is comlex maven project, wfrom which we need onlythe finall jar, without system deps
+%mvn_artifact pom.xml launchers/target//usr/share/icedtea-web/javaws.jar
 
-# icedteaweb-completion is currently not handled by make nor make install
+mkdir -p $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}
+# build provides also .bat and .sh files, we do not want them
+cp -v launchers/target/%{_libexecdir}/%{oldname}/javaws $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
+cp -v launchers/target/%{_libexecdir}/%{oldname}/itweb-settings $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
+cp -v launchers/target/%{_libexecdir}/%{oldname}/policyeditor $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
+
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/java/%{oldname}/
+cp -v launchers/target/%{_sysconfdir}/java/%{oldname}/itw-modularjdk.args $RPM_BUILD_ROOT%{_sysconfdir}/java/%{oldname}/
+
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{oldname}
+cp -v launchers/target/%{_datadir}/%{oldname}/* $RPM_BUILD_ROOT%{_datadir}/%{oldname}
+
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
-mv completion/policyeditor.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
-mv completion/javaws.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
-mv completion/itweb-settings.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
+cp -v launchers/target/extensions/bash_completion.d/* $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
 
-# Move javaws man page to a more specific name
+mkdir -p $RPM_BUILD_ROOT/%{_mandir}/
+cp -r launchers/target/icedtea-web-docs/2.0.0-SNAPSHOT/man/* $RPM_BUILD_ROOT/%{_mandir}/
+# rename javaws so it can coexists with other implementations
 mv $RPM_BUILD_ROOT/%{_mandir}/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/man1/javaws.itweb.1
+mv $RPM_BUILD_ROOT/%{_mandir}/cs/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/cs/man1/javaws.itweb.1
+mv $RPM_BUILD_ROOT/%{_mandir}/de/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/de/man1/javaws.itweb.1
+mv $RPM_BUILD_ROOT/%{_mandir}/pl/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/pl/man1/javaws.itweb.1
 
 # Install desktop files.
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/{applications,pixmaps}
-desktop-file-install --vendor ''\
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications javaws.desktop
-desktop-file-install --vendor ''\
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications itweb-settings.desktop
-desktop-file-install --vendor ''\
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications policyeditor.desktop
+desktop-file-install --vendor '' --dir $RPM_BUILD_ROOT%{_datadir}/applications launchers/target/extensions/xdesktop/javaws.desktop
+desktop-file-install --vendor '' --dir $RPM_BUILD_ROOT%{_datadir}/applications launchers/target/extensions/xdesktop/itweb-settings.desktop
+desktop-file-install --vendor '' --dir $RPM_BUILD_ROOT%{_datadir}/applications launchers/target/extensions/xdesktop/policyeditor.desktop
+cp launchers/target/libs/javaws.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
-# install MetaInfo file for firefox
-DESTDIR=%{buildroot} appstream-util install metadata/%{oldname}.metainfo.xml
 # install MetaInfo file for javaws
-DESTDIR=%{buildroot} appstream-util install metadata/%{oldname}-javaws.appdata.xml
+DESTDIR=%{buildroot} appstream-util install launchers/metadata/%{oldname}-javaws.appdata.xml
 
 # maven fragments generation
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 pushd $RPM_BUILD_ROOT%{_javadir}
-ln -s ../%{oldname}/javaws.jar %{oldname}.jar
-ln -s ../%{oldname}/plugin.jar %{oldname}-plugin.jar
+  ln -s ../%{oldname}/javaws.jar %{oldname}.jar
 popd
 mkdir -p $RPM_BUILD_ROOT/%{_mavenpomdir}
-cp  metadata/%{oldname}.pom  $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}.pom
-cp metadata/%{oldname}-plugin.pom  $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}-plugin.pom
+cp pom.xml  $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}.pom
 
-%add_maven_depmap %{oldname}.pom %{oldname}.jar
-%add_maven_depmap %{oldname}-plugin.pom %{oldname}-plugin.jar
-
-cp  netx.build/lib/src.zip  $RPM_BUILD_ROOT%{_datadir}/%{oldname}/javaws.src.zip
-cp liveconnect/lib/src.zip  $RPM_BUILD_ROOT%{_datadir}/%{oldname}/plugin.src.zip
+%mvn_artifact $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}.pom $RPM_BUILD_ROOT/%{_javadir}/%{oldname}.jar
 
 %find_lang %{oldname} --all-name --with-man
-# multiple -f flags in %files for <main>: merging -f %{oldname}.lang into -f .mfiles
-cat %{oldname}.lang >> .mfiles
 
 install -d -m 755 %buildroot/etc/icedtea-web
 cat > %buildroot/etc/icedtea-web/javaws.policy << EOF
@@ -260,8 +275,6 @@ grant codeBase "file:/usr/share/icedtea-web/netx.jar" {
     permission java.security.AllPermission;
 };
 EOF
-sed -e 's,^JAVA_ARGS=,JAVA_ARGS="-Djava.security.policy=/etc/icedtea-web/javaws.policy",' \
-%buildroot%_bindir/javaws.itweb
 
 
 ##################################################
@@ -335,55 +348,43 @@ done
 ##################################################
 
 %check
-make check
 appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
-%files -f .mfiles 
+%files -f %{oldname}.lang
 %{_sysconfdir}/bash_completion.d/*
 %config(noreplace) %{_sysconfdir}/java/%{oldname}/itw-modularjdk.args
-%{_prefix}/bin/*
+%{_libexecdir}/%{oldname}/*
 %{_datadir}/applications/*
 %dir %{_datadir}/%{oldname}
 %{_datadir}/%{oldname}/*.jar
+%{_datadir}/java/%{oldname}.jar
+%{_datadir}/maven-poms/%{oldname}.pom
 %{_datadir}/%{oldname}/*.png
 %{_datadir}/man/man1/*
 %{_datadir}/pixmaps/*
 %{_datadir}/appdata/*.xml
-%doc NEWS README
-%doc --no-dereference COPYING
+%doc README.md CONTRIBUTING.md
+%doc --no-dereference LICENSE LICENCE_DETAILS.md
 # alt linux specific
 %_altdir/%altname-plugin
 %{_desktopdir}/%{altname}-control-panel.desktop
 # replace by local variants
-%exclude %{_desktopdir}/javaws.desktop
 %exclude %{_desktopdir}/itweb-settings.desktop
+%if_enabled javaws
+%exclude %{_desktopdir}/javaws.desktop
 # separate javaws
 %exclude %{_desktopdir}/%{altname}-javaws.desktop
 %exclude %{_datadir}/pixmaps/javaws.png
 %exclude %{_man1dir}/javaws.itweb.1.gz
 %exclude %_bindir/javaws.itweb
-# security policy
-%dir /etc/icedtea-web
-/etc/icedtea-web/javaws.policy
+%endif
 
-%files javadoc
-%{_datadir}/javadoc/%{oldname}
-%doc --no-dereference COPYING
-
-%files devel
-%{_datadir}/%{oldname}/*.zip
-%doc --no-dereference COPYING
-
-%files -n %altname-javaws
-#
-%_altdir/%altname-javaws
-%{_desktopdir}/%{altname}-javaws.desktop
-%{_datadir}/pixmaps/javaws.png
-%{_man1dir}/javaws.itweb.1.gz
-%_bindir/javaws.itweb
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_pre.2.alpha13.patched1jpp8
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_3jpp8
 - new version
 
