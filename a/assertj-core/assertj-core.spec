@@ -12,8 +12,8 @@ BuildRequires: jpackage-11-compat
 %bcond_with memoryfilesystem
 
 Name:           assertj-core
-Version:        3.17.0
-Release:        alt1_1jpp11
+Version:        3.17.2
+Release:        alt1_2jpp11
 Summary:        Library of assertions similar to fest-assert
 License:        ASL 2.0
 
@@ -27,6 +27,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(org.hamcrest:hamcrest)
 BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.junit.platform:junit-platform-commons)
 BuildRequires:  mvn(org.opentest4j:opentest4j)
 
 %if %{with memoryfilesystem}
@@ -57,6 +58,7 @@ This package provides API documentation for %{name}.
 
 # remove plugins that are unnecessary for RPM builds
 %pom_remove_plugin :bnd-maven-plugin
+%pom_remove_plugin :bnd-testing-maven-plugin
 %pom_remove_plugin :bnd-resolver-maven-plugin
 %pom_remove_plugin :jacoco-maven-plugin
 %pom_remove_plugin :maven-antrun-plugin
@@ -94,6 +96,9 @@ rm -r src/test/java/org/assertj/core/internal/{Paths*.java,paths}
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.17.2-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.17.0-alt1_1jpp11
 - new version
 
