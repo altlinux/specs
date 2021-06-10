@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-codec
-Version:        1.13
+Version:        1.15
 Release:        alt1_2jpp11
 Summary:        Implementations of common encoders and decoders
 License:        ASL 2.0
@@ -42,7 +42,10 @@ sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 %mvn_alias : commons-codec:commons-codec
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dcommons.osgi.symbolicName=org.apache.commons.codec
+# Avoid running out of heap on s390x during test suite execution
+export MAVEN_OPTS="-Xmx1024m"
+
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.codec
 
 %install
 %mvn_install
@@ -52,6 +55,9 @@ sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.15-alt1_2jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.13-alt1_2jpp11
 - new version
 
