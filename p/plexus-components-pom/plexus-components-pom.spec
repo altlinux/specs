@@ -5,8 +5,8 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           plexus-components-pom
 Summary:        Plexus Components POM
-Version:        6.4
-Release:        alt1_1jpp11
+Version:        6.5
+Release:        alt1_2jpp11
 License:        ASL 2.0
 
 URL:            https://github.com/codehaus-plexus/plexus-components
@@ -39,6 +39,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 6.5-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 6.4-alt1_1jpp11
 - new version
 
