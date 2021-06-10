@@ -3,7 +3,7 @@
 %def_disable static
 
 Name: vips
-Version: 8.10.6
+Version: 8.11.0
 Release: alt1
 
 Summary: Large image processing library
@@ -120,6 +120,8 @@ rm -fv %buildroot%_bindir/vips%majorver
 
 %files -n lib%name
 %_libdir/lib*.so.*
+%dir %_libdir/vips-modules-%majorver/
+%_libdir/vips-modules-%majorver/vips-*.so
 
 %files -n lib%name-devel
 %_includedir/vips/
@@ -149,6 +151,10 @@ rm -fv %buildroot%_bindir/vips%majorver
 # - package python bindings
 
 %changelog
+* Thu Jun 10 2021 Vitaly Lipatov <lav@altlinux.ru> 8.11.0-alt1
+- new version 8.11.0 (with rpmrb script)
+- pack modules in libvips package for a time
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 8.10.6-alt1
 - new version 8.10.6 (with rpmrb script)
 - enable build with libheif
