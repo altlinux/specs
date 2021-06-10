@@ -3,9 +3,11 @@
 %define cholmod_ver 3.0.14
 %define umfpack_ver 5.7.9
 
+%define _cmake__builddir BUILD
+
 Name: libsuitesparse
 Version: 5.8.1
-Release: alt2
+Release: alt3
 
 Summary: Shared libraries for sparse matrix calculations
 License: LGPL and GPL
@@ -103,7 +105,8 @@ pushd Mongoose
 %cmake -DCMAKE_INSTALL_BINDIR=%_bindir -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_INSTALL_INCLUDEDIR=%_includedir
 popd
 pushd metis-5.1.0
-%cmake -DGKLIB_PATH=../GKlib
+export GKLIB_PATH=$(pwd)/GKlib
+%cmake -DGKLIB_PATH=${GKLIB_PATH}
 popd
 
 export JOBS=%__nprocs
@@ -176,6 +179,9 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_bindir/mongoose
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8.1-alt3
+- Fixed build with new cmake macros.
+
 * Fri Mar 19 2021 Ivan A. Melnikov <iv@altlinux.org> 5.8.1-alt2
 - Link with -latomic on mipsel.
 
