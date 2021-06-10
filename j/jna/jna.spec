@@ -16,8 +16,8 @@ BuildRequires: jpackage-11-compat
 %bcond_without reflections
 
 Name:           jna
-Version:        5.4.0
-Release:        alt1_7jpp11
+Version:        5.6.0
+Release:        alt1_2jpp11
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -162,6 +162,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5.6.0-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 5.4.0-alt1_7jpp11
 - update
 
