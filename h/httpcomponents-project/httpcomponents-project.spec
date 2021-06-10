@@ -1,16 +1,22 @@
 Group: Development/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global srcname httpcomponents-parent
+
 Name:           httpcomponents-project
 Summary:        Common POM file for HttpComponents
-Version:        11
-Release:        alt1_2jpp8
+Version:        12
+Release:        alt1_2jpp11
 License:        ASL 2.0
+
 URL:            http://hc.apache.org/
-Source0:        http://archive.apache.org/dist/httpcomponents/httpcomponents-parent/%{version}/httpcomponents-parent-%{version}.pom
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        http://archive.apache.org/dist/httpcomponents/%{srcname}/%{srcname}-%{version}-source-release.zip
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -21,19 +27,14 @@ Source44: import.info
 Obsoletes: hc-project < 4.1.1-alt1_1jpp6
 Provides: hc-project = %version-%release
 
-
 %description
-Common Maven POM  file for HttpComponents. This project should be
+Common Maven POM file for HttpComponents. This project should be
 required only for building dependant packages with Maven. Please don't
 use it as runtime requirement.
 
 %prep
-%setup -q -T -c %{name}
+%setup -q -n %{srcname}-%{version}
 
-cp -p %{SOURCE0} pom.xml
-cp -p %{SOURCE1} .
-
-%pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :docbkx-maven-plugin
 %pom_remove_plugin :maven-site-plugin
@@ -45,15 +46,18 @@ cp -p %{SOURCE1} .
 
 %build
 %mvn_file  : %{name}
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 12-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 11-alt1_2jpp8
 - new version
 
