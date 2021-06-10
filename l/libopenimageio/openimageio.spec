@@ -8,8 +8,8 @@
 %define soname 2.2
 
 Name:           lib%oname
-Version:        2.2.15.0
-Release:        alt3
+Version:        2.2.15.1
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -216,6 +216,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.15.1-alt1
+- Updated to upstream version 2.2.15.1.
+
 * Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.15.0-alt3
 - Updated dependencies.
 - Specified default plugin search path.
