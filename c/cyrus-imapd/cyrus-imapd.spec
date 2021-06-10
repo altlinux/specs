@@ -18,8 +18,8 @@
 %def_with snmp
 
 Name: cyrus-imapd
-Version: 3.2.6
-Release: alt2
+Version: 3.2.7
+Release: alt1
 
 Summary: A high-performance email, contacts and calendar server
 License: ALT-Cyrus
@@ -504,6 +504,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Thu Jun 10 2021 Sergey Y. Afonin <asy@altlinux.org> 3.2.7-alt1
+- 3.2.7 (fixes: CVE-2021-32056)
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.2.6-alt2
 - NMU: build w/o sphinx
 
