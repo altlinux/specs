@@ -6,34 +6,26 @@ BuildRequires: unzip
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsch
-Version:        0.1.54
-Release:        alt1_11jpp8
+Version:        0.1.55
+Release:        alt1_2jpp11
 Summary:        Pure Java implementation of SSH2
 License:        BSD
 URL:            http://www.jcraft.com/jsch/
 BuildArch:      noarch
 
 Source0:        http://download.sourceforge.net/sourceforge/jsch/jsch-%{version}.zip
-# wget \
-# http://download.eclipse.org/tools/orbit/downloads/drops/R20090825191606/bundles/com.jcraft.jsch_0.1.41.v200903070017.jar
-# unzip com.jcraft.jsch_*.jar META-INF/MANIFEST.MF
-# mv META-INF/MANIFEST.MF .
-# sed -i "/^Name/d" MANIFEST.MF
-# sed -i "/^SHA1/d" MANIFEST.MF
-# dos2unix MANIFEST.MF
-# sed -i "/^$/d" MANIFEST.MF
-# unix2dos MANIFEST.MF
+# stripped manifest based on 
+# https://download.eclipse.org/tools/orbit/downloads/drops2/R20201130205003/repository/plugins/com.jcraft.jsch_0.1.55.v20190404-1902.jar
 Source1:        MANIFEST.MF
 Source2:        plugin.properties
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.jcraft:jzlib)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  zip
 
 Requires:       jzlib >= 0:1.0.5
@@ -57,6 +49,9 @@ BuildArch: noarch
 %setup -q
 %mvn_file : jsch
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %pom_remove_plugin :maven-javadoc-plugin
 
 %pom_xpath_remove pom:project/pom:build/pom:extensions
@@ -66,7 +61,7 @@ BuildArch: noarch
 %pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]//pom:target'
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 # inject the OSGi Manifest
 mkdir META-INF
@@ -87,6 +82,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:0.1.55-alt1_2jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_11jpp8
 - fc update
 
