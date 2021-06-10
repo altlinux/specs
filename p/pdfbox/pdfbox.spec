@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          pdfbox
-Version:       2.0.21
+Version:       2.0.23
 Release:       alt1_1jpp11
 Summary:       Apache PDFBox library for working with PDF documents
 License:       ASL 2.0
@@ -24,7 +24,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(log4j:log4j:1.2.17)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -228,6 +227,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.23-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.21-alt1_1jpp11
 - new version
 
