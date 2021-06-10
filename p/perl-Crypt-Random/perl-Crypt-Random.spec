@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Crypt-Random
 Name: perl-%dist
-Version: 1.52
+Version: 1.54
 Release: alt1
 
 Summary: Cryptographically Secure, True Random Number Generator
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/V/VI/VIPUL/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Nov 19 2011
-BuildRequires: perl-Class-Loader perl-Math-Pari perl-devel
+BuildRequires: perl-Class-Loader perl-Math-Pari perl-devel perl(Statistics/ChiSquare.pm)
 
 %description
 Crypt::Random is an interface module to the /dev/random device found on
@@ -39,6 +39,9 @@ bitsize or in a specified interval.
 %perl_vendor_privlib/Crypt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.54-alt1
+- automated CPAN update
+
 * Wed Dec 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
 - automated CPAN update
 
