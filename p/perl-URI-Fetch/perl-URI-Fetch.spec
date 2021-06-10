@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist URI-Fetch
 Name: perl-%dist
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Smart URI fetching/caching
@@ -40,6 +40,9 @@ rm t/01-fetch.t
 %perl_vendor_privlib/URI
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- automated CPAN update
+
 * Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
 - automated CPAN update
 
