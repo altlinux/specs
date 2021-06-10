@@ -1,31 +1,36 @@
-
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
-
-Name: jaxb-fi
-Version: 1.2.18
-Summary: Implementation of the Fast Infoset Standard for Binary XML
-License: ASL 2.0 and BSD and ASL 1.1
-Url: https://github.com/eclipse-ee4j/jaxb-fi
 Group: Development/Java
-Release: alt0.1jpp
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           jaxb-fi
+Version:        1.2.18
+Release:        alt1_2jpp11
+Summary:        Implementation of the Fast Infoset Standard for Binary XML
+# jaxb-fi is licensed ASL 2.0 and EDL-1.0 (BSD)
+# bundled org.apache.xerces.util.XMLChar.java is licensed ASL 1.1
+License:        ASL 2.0 and BSD and ASL 1.1
 
-Packager: Igor Vlasenko <viy@altlinux.org>
-Provides: glassfish-fastinfoset = 1.2.18-2.fc34
-Provides: mvn(com.sun.xml.fastinfoset:FastInfoset) = 1.2.18
-Provides: mvn(com.sun.xml.fastinfoset:FastInfoset:pom:) = 1.2.18
-Provides: mvn(com.sun.xml.fastinfoset:FastInfosetUtilities) = 1.2.18
-Provides: mvn(com.sun.xml.fastinfoset:FastInfosetUtilities:pom:) = 1.2.18
-Provides: mvn(com.sun.xml.fastinfoset:fastinfoset-project:pom:) = 1.2.18
-Provides: osgi(com.sun.xml.fastinfoset.FastInfoset) = 1.2.18
-Requires: java-headless
-Requires: javapackages-filesystem
-Requires: mvn(com.sun.xml.stream.buffer:streambuffer)
-Requires: mvn(org.glassfish.jaxb:xsom)
+URL:            https://github.com/eclipse-ee4j/jaxb-fi
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
-BuildArch: noarch
-Source: jaxb-fi-1.2.18-2.fc34.cpio
+BuildArch:      noarch
 
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.sun.xml.stream.buffer:streambuffer)
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.glassfish.jaxb:xsom)
+
+# package renamed in fedora 33, remove in fedora 35
+Provides:       glassfish-fastinfoset = %{version}-%{release}
+Obsoletes:      glassfish-fastinfoset < 1.2.15-5
+
+# javadoc subpackage is currently not built
+Obsoletes:      glassfish-fastinfoset-javadoc < 1.2.15-5
+Source44: import.info
 
 %description
 Fast Infoset Project, an Open Source implementation of the Fast Infoset
@@ -35,22 +40,47 @@ The Fast Infoset specification (ITU-T Rec. X.891 | ISO/IEC 24824-1)
 describes an open, standards-based "binary XML" format that is based on
 the XML Information Set.
 
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+pushd code
+# remove unnecessary dependency on parent POM
+# org.eclipse.ee4j:project is not packaged and not required
+%pom_remove_parent
+
+# disable unnecessary submodules
+%pom_disable_module roundtrip-tests
+%pom_disable_module samples
+
+# disable unnecessary plugins
+%pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :glassfish-copyright-maven-plugin
+popd
+
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+pushd code
+# skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
+%mvn_build -j -- -DbuildNumber=unknown
+popd
+
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+pushd code
+%mvn_install
+popd
 
 
-%files -f %name-list
+%files -f code/.mfiles
+%doc --no-dereference LICENSE NOTICE.md
+%doc README.md
+
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt1_2jpp11
+- unbootstrap build
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
