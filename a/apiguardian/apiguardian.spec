@@ -1,16 +1,16 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apiguardian
 Summary:        API Guardian Java annotation
-Version:        1.1.0
-Release:        alt1_2jpp8
+Version:        1.1.1
+Release:        alt1_1jpp11
 License:        ASL 2.0
 
 URL:            https://github.com/apiguardian-team/apiguardian
-Source0:        https://github.com/apiguardian-team/apiguardian/archive/r%{version}/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/r%{version}/%{name}-%{version}.tar.gz
 Source100:      https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/%{version}/apiguardian-api-%{version}.pom
 
 BuildArch:      noarch
@@ -73,7 +73,7 @@ cp -pav %{SOURCE100} pom.xml
 
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -88,6 +88,9 @@ cp -pav %{SOURCE100} pom.xml
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_1jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
 - new version
 
