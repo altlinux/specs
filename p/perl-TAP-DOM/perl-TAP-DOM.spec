@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
@@ -11,14 +12,14 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    0.93
+Release:    alt1
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    https://cpan.metacpan.org/modules/by-module/TAP/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(Class/XSAccessor.pm)
@@ -54,7 +55,7 @@ exploration tools", like Data::DPath.
 change, so your data tools can, well, rely on it.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -68,10 +69,13 @@ change, so your data tools can, well, rely on it.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes META.json META.yml README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.93-alt1
+- automated CPAN update
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_1
 - update by mgaimport
 
