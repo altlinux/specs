@@ -2,7 +2,7 @@
 
 Name: firejail
 Version: 0.9.64.4
-Release: alt1
+Release: alt2
 Summary: Linux namespaces sandbox program
 License: GPLv2+
 Group: Development/Tools
@@ -10,6 +10,8 @@ Url: https://firejail.wordpress.com/
 
 # https://github.com/netblue30/firejail.git
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
 
 %description
 Firejail is a SUID sandbox program that reduces the risk of security
@@ -49,6 +51,9 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64.4-alt2
+- Updated build dependencies.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64.4-alt1
 - Updated to upstream version 0.9.64.4.
 
