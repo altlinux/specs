@@ -3,14 +3,14 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:          jackson-annotations
-Version:       2.11.2
-Release:       alt1_1jpp11
-Summary:       Core annotations for Jackson data processor
-License:       ASL 2.0
+Name:           jackson-annotations
+Version:        2.11.4
+Release:        alt1_2jpp11
+Summary:        Core annotations for Jackson data processor
+License:        ASL 2.0
 
-URL:           https://github.com/FasterXML/jackson-annotations
-Source0:       %{url}/archive/%{name}-%{version}.tar.gz
+URL:            https://github.com/FasterXML/jackson-annotations
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:) >= 2.11
@@ -56,6 +56,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_1jpp11
 - new version
 
