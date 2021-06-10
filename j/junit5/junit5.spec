@@ -10,7 +10,7 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 5.6.2
+%define version 5.7.1
 # Component versions, taken from gradle.properties
 %global platform_version 1.%(v=%{version}; echo ${v:2})
 %global jupiter_version %{version}
@@ -21,8 +21,8 @@ BuildRequires: jpackage-11-compat
 %bcond_with console
 
 Name:           junit5
-Version:        5.6.2
-Release:        alt1_4jpp11
+Version:        5.7.1
+Release:        alt1_1jpp11
 Summary:        Java regression testing framework
 License:        EPL-2.0
 URL:            http://junit.org/junit5/
@@ -129,9 +129,6 @@ done
 %pom_add_dep net.sf.jopt-simple:jopt-simple:5.0.4 junit-platform-console
 %pom_add_dep com.univocity:univocity-parsers:2.5.4 junit-jupiter-params
 
-# Incorrect scope - Junit4 is needed for compilation too, not only runtime.
-%pom_xpath_set "pom:dependency[pom:artifactId='junit']/pom:scope" compile junit-vintage-engine
-
 %if %{without console}
 # Disable the console modules
 %pom_disable_module junit-platform-console
@@ -168,6 +165,9 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5.7.1-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 5.6.2-alt1_4jpp11
 - new version
 
