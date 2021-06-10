@@ -3,20 +3,20 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:          plexus-pom
-Version:       6.4
-Release:       alt1_1jpp11
-Summary:       Root Plexus Projects POM
-License:       ASL 2.0
+Name:           plexus-pom
+Version:        7
+Release:        alt1_1jpp11
+Summary:        Root Plexus Projects POM
+License:        ASL 2.0
 
-URL:           https://github.com/codehaus-plexus/plexus-pom
-Source0:       %{url}/archive/plexus-%{version}.tar.gz
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+URL:            https://github.com/codehaus-plexus/plexus-pom
+Source0:        %{url}/archive/plexus-%{version}.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildArch:     noarch
+BuildArch:      noarch
 
-BuildRequires: maven-local
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 Source44: import.info
 
 %description
@@ -43,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 7-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 6.4-alt1_1jpp11
 - new version
 
