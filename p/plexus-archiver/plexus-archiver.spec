@@ -12,8 +12,8 @@ BuildRequires: jpackage-11-compat
 %bcond_without snappy
 
 Name:           plexus-archiver
-Version:        4.2.2
-Release:        alt1_3jpp11
+Version:        4.2.4
+Release:        alt1_1jpp11
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
@@ -29,7 +29,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default) >= 2.1.0
 BuildRequires:  mvn(org.codehaus.plexus:plexus-io) >= 3.2.0
@@ -87,6 +86,9 @@ rm src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2.4-alt1_1jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2.2-alt1_3jpp11
 - new version
 
