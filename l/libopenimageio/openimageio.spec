@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.2.15.0
-Release:        alt2
+Release:        alt3
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -23,6 +23,8 @@ Source0:        %name-%version.tar
 #Source1:        oiio-images.tar.gz
 
 Source2: %oname.watch
+
+Patch1: %oname-alt-armh-disable-neon.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -56,7 +58,6 @@ BuildRequires:  libopencv-devel
 # If an ABI incompatible update is done in one, the other also needs to be
 # rebuilt.
 BuildRequires:  libopencolorio2.0-devel
-
 
 %description
 OpenImageIO is a library for reading and writing images, and a bunch of related
@@ -117,6 +118,14 @@ with any formats for which plugins are available).
 Summary:        Documentation for %oname
 Group:          Development/Other
 Requires:       lib%oname%soname = %EVR
+Requires:       python3-module-%oname = %EVR
+Requires:       %oname-utils = %EVR
+%ifnarch armh
+Requires:       %oname-iv = %EVR
+%endif
+%ifnarch %e2k
+Requires:       libopencv-devel
+%endif
 
 %description devel
 Development files for package %name
@@ -124,6 +133,9 @@ Development files for package %name
 
 %prep
 %setup
+%ifarch armh
+%patch1 -p1
+%endif
 
 # Remove bundled pugixml
 rm -fr src/include/OpenImageIO/detail/pugixml/
@@ -157,6 +169,7 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 	-DUSE_SIMD=0 \
 %endif
 	-DOIIO_BUILD_TESTS:BOOL=FALSE \
+	-DPLUGIN_SEARCH_PATH=%_libdir/OpenImageIO-%soname \
 	%nil
 
 %cmake_build
@@ -168,6 +181,8 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 mkdir -p %buildroot%_man1dir
 cp -a %_cmake__builddir/src/doc/*.1 %buildroot%_man1dir
 
+mkdir -p %buildroot%_libdir/OpenImageIO-%soname
+
 %files -n lib%oname%soname
 %doc CHANGES.md README.md
 %doc LICENSE.md THIRD-PARTY.md
@@ -175,6 +190,7 @@ cp -a %_cmake__builddir/src/doc/*.1 %buildroot%_man1dir
 %_libdir/libOpenImageIO.so.%{soname}.*
 %_libdir/libOpenImageIO_Util.so.%{soname}
 %_libdir/libOpenImageIO_Util.so.%{soname}.*
+%_libdir/OpenImageIO-%soname
 
 %files -n python3-module-%oname
 %python3_sitelibdir/OpenImageIO*.so
@@ -200,6 +216,10 @@ cp -a %_cmake__builddir/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.15.0-alt3
+- Updated dependencies.
+- Specified default plugin search path.
+
 * Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.15.0-alt2
 - Rebuilt with opencolorio-2.0.1.
 

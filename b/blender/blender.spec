@@ -12,7 +12,7 @@
 
 Name: blender
 Version: 2.93.0
-Release: alt1
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -21,7 +21,7 @@ URL: https://www.blender.org
 
 # Blender doesn't officially support 32-bit build since 2.80. See also:
 # https://developer.blender.org/T67184
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExcludeArch: %ix86 %arm
 
 # git://git.blender.org/blender.git
 Source: %name-%version.tar
@@ -46,6 +46,7 @@ Patch26: blender-2.83.1-alt-remove-python2-dependency.patch
 Patch27: blender-2.90.0-alt-embree-components.patch
 Patch28: blender-2.90.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
+Patch30: blender-2.93.0-suse-reproducible.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel
@@ -75,6 +76,13 @@ BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libpotrace-devel
+BuildRequires: openshadinglanguage-devel
+BuildRequires: opensubdiv-devel
+
+%ifarch x86_64
+BuildRequires: openimagedenoise-devel
+%endif
 
 %if_with embree
 BuildRequires: embree-devel
@@ -165,7 +173,7 @@ This package contains documentation for Blender.
 Данный пакет содержит документацию для Blender.
 
 %prep
-%setup -a 1 -a 2 -a 3 -a 4
+%setup -a1 -a2 -a3 -a4
 
 # debian
 %patch11 -p1
@@ -180,6 +188,7 @@ This package contains documentation for Blender.
 %patch27 -p1
 %patch28 -p1
 %patch29 -p1
+%patch30 -p1
 
 %ifnarch %ix86 x86_64
 sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
@@ -226,7 +235,7 @@ fi
 	-DWITH_CXX_GUARDEDALLOC=OFF \
 	-DWITH_INSTALL_PORTABLE=OFF \
 	-DWITH_LLVM=ON \
-	-DWITH_PYTHON_SAFETY=ON \
+	-DWITH_PYTHON_SAFETY=OFF \
 	-DWITH_OPENMP=ON \
 	-DWITH_OPENCOLLADA=ON \
 	-DWITH_CYCLES=ON \
@@ -247,11 +256,11 @@ fi
 	-DWITH_SYSTEM_GLOG:BOOL=ON \
 	-DWITH_IMAGE_OPENEXR=ON \
 	-DWITH_TBB:BOOL=ON \
-	-DWITH_USD:BOOL=ON \
 	-DPYTHON_VERSION="%_python3_version" \
 	-DBUILDINFO_OVERRIDE_DATE="$BUILD_DATE" \
 	-DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
 	-DWITH_DOC_MANPAGE:BOOL=ON \
+	-DWITH_ASSERT_ABORT:BOOL=OFF \
 	%nil
 
 %cmake_build
@@ -294,6 +303,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Jun 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.0-alt2
+- Rebuilt with Open Image Denoise, Open Shading Language, OpenSubdiv and Potrace.
+
 * Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.0-alt1
 - Updated to upstream version 2.93.0.
 - Built with jemalloc, libharu and pulseaudio.
