@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Text-Wrap-Smart
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: Wrap text into chunks of (mostly) equal length
@@ -49,6 +49,9 @@ Text::Wrap::Smart was primarly developed to split an overly long SMS message int
 %exclude %perl_vendor_archlib
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.9-alt1
+- automated CPAN update
+
 * Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 0.8-alt1
 - automated CPAN update
 
