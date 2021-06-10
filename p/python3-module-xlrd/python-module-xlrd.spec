@@ -1,6 +1,6 @@
 Name:           python3-module-xlrd
 Version:        2.0.1
-Release:        alt2
+Release:        alt2.1
 Summary:        Library to extract data from Microsoft Excel (TM) spreadsheet files
 
 Group:          Development/Python3
@@ -15,6 +15,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 
 Provides:	python3-xlrd = %version-%release
+# Conflict over /usr/bin/runxlrd
+Provides: 	python-module-xlrd = %EVR
+Obsoletes: 	python-module-xlrd < %EVR
 
 %description
 Extract data from Excel spreadsheets (.xls and .xlsx, versions 2.0
@@ -45,6 +48,9 @@ mv %buildroot%_bindir/runxlrd{.py,}
 %_man1dir/xlrd.1*
 
 %changelog
+* Thu Jun 10 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2.1
+- Conflict over /usr/bin/runxlrd.
+
 * Wed Jun 02 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
 - Drop python2 support.
 
