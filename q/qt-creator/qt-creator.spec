@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with ClangCodeModel
-%define llvm_version 11.0
-%define qt_version 5.14.0
+%define llvm_version 12.0
+%define qt_version 5.15.2
 
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.15.0
+Version: 4.15.1
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -165,6 +165,10 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Jun 10 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.1-alt1
+- New version.
+- Build by LLVM 12.0.
+
 * Thu May 06 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.0-alt1
 - New version.
 
