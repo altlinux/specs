@@ -1,15 +1,16 @@
 %def_disable clang
 
 Name: deepin-movie
-Version: 5.7.11
-Release: alt1
+Version: 5.7.15
+Release: alt1.gitfe98519
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
-License: GPL-3.0+ and LGPL-2.1+
+License: GPL-3.0+ and OpenSSL-exception
 Group: Video
 Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar.gz
+Patch: deepin-movie-5.7.15-alt-fix-build.patch
 
 ExcludeArch: armh
 
@@ -40,6 +41,7 @@ BuildRequires: gsettings-qt-devel
 BuildRequires: libswresample-devel
 BuildRequires: mpris-qt5-devel
 BuildRequires: dbusextended-qt5-devel
+BuildRequires: libva-devel
 Requires: libdmr libdvdnav libgsettings-qt libmpv1
 
 %description
@@ -61,6 +63,7 @@ This package provides development files for libdmr.
 
 %prep
 %setup -n %name-reborn-%version
+%patch -p1
 sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
 
 %build
@@ -70,17 +73,17 @@ export CXX="clang++"
 export AR="llvm-ar"
 %endif
 
-%cmake_insource \
+%cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%ninja_build
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 %find_lang %name
 
 %files -f %name.lang
@@ -106,6 +109,10 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu Jun 10 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.15-alt1.gitfe98519
+- New version (5.7.15).
+- Updated to git commit fe98519031e8482cba72bfca4ad67269cd98a1de.
+
 * Mon Apr 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.11-alt1
 - New version (5.7.11) with rpmgs script.
 
