@@ -1,35 +1,28 @@
 
-
-%define libver 1.0
-%define libsover 0
 Name: maliit-framework
-Version: 0.94.2
-Release: alt5
-%define libmaliit libmaliit%libver-%libsover
-%define libmaliit_glib libmaliit-glib%libver-%libsover
+Version: 2.0.0
+Release: alt1
+%define sover 2
+%define libmaliit libmaliit%sover
+%define libmaliit_glib libmaliit-glib%sover
 %define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
 
 Group: System/Libraries
 Summary: Maliit Input Method Framework
 Url: http://www.maliit.org
 License: LGPLv2
+%K5init no_altplace
 
 Source0: %name-%version.tar
 Source1: maliit.conf
-Patch1: maliit-framework-focusworkaround.diff
 
-# Automatically added by buildreq on Thu Oct 18 2012 (-bi)
-# optimized out: at-spi2-atk docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib-networking glib2-devel gobject-introspection libX11-devel libXext-devel libXfixes-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-xml libqt4-xmlpatterns libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-module-distribute python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml rpm-build-gir ruby xml-common xml-utils xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc
-#BuildRequires: cups-filters doxygen fonts-type1-urw gcc-c++ gdb glibc-devel-static gobject-introspection-devel graphviz gtk-doc gvfs libGConf libXcomposite-devel libXdamage-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel libudev-devel phonon-devel python3 rpm-build-ruby time xdg-utils
-BuildRequires: gcc-c++
-BuildRequires: doxygen glibc-devel graphviz gtk-doc
-BuildRequires: libXcomposite-devel libXdamage-devel libudev-devel
-BuildRequires: pkgconfig(gobject-introspection-1.0) pkgconfig(dbus-glib-1)
-BuildRequires: pkgconfig(QtCore)
-BuildRequires: pkgconfig(QtDeclarative)
-BuildRequires: pkgconfig(gtk+-2.0)
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: rpm-build-python3 python3-devel
+# Automatically added by buildreq on Fri Jun 04 2021 (-bi)
+# optimized out: cmake-modules debugedit elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libatk-devel libcairo-devel libcairo-gobject-devel libctf-nobfd0 libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libharfbuzz-devel libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-waylandclient libsasl2-3 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server-devel libxcb-devel libxkbcommon-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-python3 sh4 wayland-devel xz
+#BuildRequires: cmake doxygen fonts-ttf-dejavu fonts-ttf-gnu-freefont-mono fonts-ttf-google-droid-sans graphviz libXfixes-devel libgtk+3-devel libwayland-cursor-devel libwayland-egl-devel python-modules-encodings python3-dev python3-module-mpl_toolkits qt5-base-devel-static qt5-svg-devel qt5-wayland-devel qt5-webengine-devel wayland-protocols
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: cmake doxygen graphviz libXfixes-devel libgtk+3-devel
+BuildRequires: wayland-protocols libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: qt5-base-devel-static qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 
 %description
 Core server and libraries for the Maliit Input Methods Framework
@@ -37,8 +30,10 @@ Core server and libraries for the Maliit Input Methods Framework
 %package devel
 Summary: Maliit Input Method Framework Development Package
 Group: System/Libraries
-#Requires: %name = %version-%release
-Requires: libmaliit-glib-gir
+Provides: libmaliit-devel = %EVR
+Obsoletes: libmaliit-devel < %EVR
+Provides: libmaliit-glib-devel = %EVR
+Obsoletes: libmaliit-glib-devel < %EVR
 %description devel
 This package contains the files necessary to develop
 input method plugins for Maliit, and applications using the libmaliit
@@ -50,31 +45,16 @@ Group: System/Libraries
 %description -n %libmaliit
 Maliit toolkit support extension library for Qt applications
 
-%package -n libmaliit-devel
-Summary: Maliit Framework Input Method library development files
-Group: System/Libraries
-%description -n libmaliit-devel
-Development files for the Maliit toolkit support extension library
-for Qt applications
-
 %package -n %libmaliit_glib
 Summary: Maliit Framework Input Method library
 Group: System/Libraries
 %description -n %libmaliit_glib
 Maliit toolkit support extension library for Gtk+ applications
 
-%package -n libmaliit-glib-devel
-Summary: Maliit Framework Input Method library development files
-Group: System/Libraries
-%description -n libmaliit-glib-devel
-Development files for the Maliit toolkit support extension library
-for Gtk+ applications
-
 %package -n libmaliit-glib-gir
 Summary: GObject introspection data for the Maliit Framework
 Group: System/Libraries
-Requires: %libmaliit_glib = %EVR
-Conflicts: libmaliit-glib-devel <= 0.94.0-alt1
+Requires: %libmaliit_glib
 %description -n libmaliit-glib-gir
 GObject introspection data for the Maliit Framework Input Method library
 
@@ -119,12 +99,12 @@ Conflicts: maliit-framework-examples <= 0.94.0-alt1
 This package contains settings utitlity for
 the Maliit input method framework
 
-%package -n maliit-inputcontext-qt4
-Summary: Maliit Input Context Plugin for Qt 4
+%package -n maliit-inputcontext-qt5
+Summary: Maliit Input Context Plugin for Qt
 Group: Accessibility
 Requires: %name = %version-%release
-%description -n maliit-inputcontext-qt4
-%name input context plugin for Qt 4 toolkit support
+%description -n maliit-inputcontext-qt5
+%name input context plugin for Qt toolkit support
 
 %package -n maliit-inputcontext-gtk2
 Summary: Maliit Input Context Plugin for Gtk+2
@@ -142,52 +122,38 @@ Requires: %name = %version-%release
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
 
 # avoid depending on python 2
-sed -i '1s=^#!/usr/bin/env python=#!/usr/bin/python3=' examples/apps/gtk3-python/maliit-exampleapp-gtk3-python.py
+#sed -i '1s=^#!/usr/bin/env python=#!/usr/bin/python3=' examples/apps/gtk3-python/maliit-exampleapp-gtk3-python.py
 
 %build
-%qmake_qt4 -r \
-    MALIIT_VERSION=%version \
-    MALIIT_SERVER_ARGUMENTS="-software -bypass-wm-hint" \
-    PREFIX=%prefix \
-    BINDIR=%_bindir \
-    LIBDIR=%_libdir \
-    INCLUDEDIR=%_includedir \
-    CONFIG+=notests \
-    CONFIG+=enable-dbus-activation \
-    CONFIG+=disable-gtk-cache-update \
-    QMAKE_CXXFLAGS+="-std=c++03" \
+export PATH=%_qt5_bindir:$PATH
+%K5build \
+    -DMALIIT_SERVER_ARGUMENTS="-software -bypass-wm-hint" \
+    -Denable-dbus-activation:BOOL=ON \
+    -Denable-qt5-inputcontext:BOOL=ON \
+    -Denable-wayland-gtk=ON \
+    -Denable-wayland=ON \
+    -Denable-xcb=ON \
+    -Denable-glib=ON \
+    -Denable-tests:BOOL=OFF \
+    -Denable-examples:BOOL=OFF \
     #
-#    MALIIT_ENABLE_MULTITOUCH=false \
-#    CONFIG+=enable-qdbus \
-#    CONFIG+=disable-background-translucency \
-
-%make_build
+#    CONFIG+=disable-gtk-cache-update \
 
 %install
-%make install INSTALL="install -p" INSTALL_ROOT=%buildroot
+#K5install
+%make -C BUILD DESTDIR=%buildroot install
 
 # install xinput config file
 mkdir -p %buildroot/%xinputconfdir
 install -pm 644 -D %SOURCE1 %buildroot/%xinputconfdir/
 
-# workaround against tests linking check
-#    %buildroot/%_qt4dir/plugins/inputmethods/lib*.so \
-#    %buildroot/%_libdir/maliit-framework-tests/plugins/lib*.so \
-#for l in \
-#    %buildroot/%_libdir/maliit/plugins*/factories/lib*.so
-#do
-#    libname=`basename $l`
-#    ln -s \
-#	`relative $l %buildroot/%_libdir/$libname` \
-#	%buildroot/%_libdir/$libname
-#done
+mkdir -p %buildroot/%_libdir/maliit/plugins/factories
 
-# install docs
-mv %buildroot/%_defaultdocdir/maliit-framework %buildroot/%_defaultdocdir/maliit-framework-%version
-install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-framework-%version/
+# cleanup
+rm -rf %buildroot/%_docdir/maliit-framework-doc
+
 
 %post -n maliit-inputcontext-gtk2
 %_bindir/gtk-query-immodules-2.0 > /etc/gtk-2.0/gtk.immodules 2>>/dev/null ||:
@@ -195,73 +161,45 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_bindir/gtk-query-immodules-3.0 --update-cache >/dev/null 2>&1 ||:
 
 %files
-%dir %_defaultdocdir/maliit-framework-%version
-%doc %_defaultdocdir/maliit-framework-%version/README
-%doc %_defaultdocdir/maliit-framework-%version/LICENSE.LGPL
-%doc %_defaultdocdir/maliit-framework-%version/NEWS
+%doc README LICENSE.* NEWS
 %dir %_libdir/maliit/
 %dir %_libdir/maliit/plugins*/
 %dir %_libdir/maliit/plugins*/factories
 %_bindir/maliit-server
-%_libdir/maliit/plugins*/factories/libmaliit-plugins-quick-factory*.so
+%_qt5_plugindir/platforminputcontexts/libmaliitplatforminputcontextplugin.so
+%_qt5_plugindir/wayland-shell-integration/libinputpanel-shell.so
+%_libdir/gtk-3.0/3.0.0/immodules/libim-wayland.so
 %config %xinputconfdir/*
 %_datadir/dbus-1/services/org.maliit.server.service
 
-%files settings
-%_bindir/maliit-exampleapp-settings-python3.py
+#%files settings
+#%_bindir/maliit-exampleapp-settings-python3.py
 
-%files examples
-%_bindir/maliit-example*
-%exclude %_bindir/maliit-exampleapp-settings-python3.py
+#%files examples
+#%_bindir/maliit-example*
+#%exclude %_bindir/maliit-exampleapp-settings-python3.py
 
 %files devel
-%dir %_includedir/maliit/
-%dir %_includedir/maliit/framework/
-%dir %_includedir/maliit/framework/maliit/
-%_includedir/maliit/connection/
-%_includedir/maliit/framework/maliit/*.h
-%_includedir/maliit/plugins/
-%_includedir/maliit/plugins-quick/
-%_includedir/maliit/server/
-%_libdir/libmaliit-connection.so
-%_libdir/libmaliit-plugins.so
-%_libdir/libmaliit-plugins-quick.so
-#%_libdir/libmaliit-plugins-quick-factory.so
-%_libdir/pkgconfig/maliit-connection.pc
-%_libdir/pkgconfig/maliit-framework.pc
-%_libdir/pkgconfig/maliit-plugins.pc
-%_libdir/pkgconfig/maliit-plugins-quick.pc
-%_libdir/pkgconfig/maliit-server.pc
-%_datadir/qt4/mkspecs/features/maliit-*.prf
+%_includedir/maliit-2/
+%_libdir/libmaliit-*.so
+%_libdir/pkgconfig/maliit-*.pc
+%_qt5_archdatadir/mkspecs/features/maliit-*.prf
+%_libdir/cmake/MaliitGLib/
+%_libdir/cmake/MaliitPlugins/
 
 %files -n %libmaliit
-%_libdir/libmaliit.so.*
-%_libdir/libmaliit-connection.so.*
+%_libdir/libmaliit-plugins.so.%sover
 %_libdir/libmaliit-plugins.so.*
-%_libdir/libmaliit-plugins-quick.so.*
-%_libdir/libmaliit-settings.so.*
-
-%files -n libmaliit-devel
-%_libdir/libmaliit.so
-%_libdir/libmaliit-settings.so
-%_includedir/maliit/maliit/
-%_libdir/pkgconfig/maliit.pc
-%_libdir/pkgconfig/maliit-settings.pc
 
 %files -n %libmaliit_glib
+%_libdir/libmaliit-glib.so.%sover
 %_libdir/libmaliit-glib.so.*
 
-%files -n libmaliit-glib-gir
-%_typelibdir/Maliit-*.typelib
-
-%files -n libmaliit-glib-devel
-%_girdir/Maliit-*.gir
-%_libdir/libmaliit-glib.so
-%_includedir/maliit/maliit-glib/
-%_libdir/pkgconfig/maliit-glib.pc
+#%files -n libmaliit-glib-gir
+#%_typelibdir/Maliit-*.typelib
 
 %files doc
-%doc %_defaultdocdir/maliit-framework-%version/html
+%doc BUILD/doc/html
 
 #%files sdk
 #%_bindir/maliit-sdk
@@ -270,16 +208,19 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 #%files tests
 #%_libdir/maliit-framework-tests/
 
-%files -n maliit-inputcontext-qt4
-%_qt4dir/plugins/inputmethods/*.so
+#%files -n maliit-inputcontext-qt5
+#%_qt5_plugindir/inputmethods/*.so
 
-%files -n maliit-inputcontext-gtk2
-%_libdir/gtk-2.0/2.10.0/immodules/libim-maliit.so*
+#%files -n maliit-inputcontext-gtk2
+#%_libdir/gtk-2.0/2.10.0/immodules/libim-maliit.so*
 
-%files -n maliit-inputcontext-gtk3
-%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
+#%files -n maliit-inputcontext-gtk3
+#%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Fri Jun 04 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
+- new version
+
 * Tue Feb 25 2020 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt5
 - fix to build with new compilers
 - build without python2
