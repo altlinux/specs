@@ -6,21 +6,22 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global qualifier R-4.16-202006040540
+%global qualifier R-4.19-202103031800
 
 Summary: Eclipse Compiler for Java
 Name: ecj
-Version: 4.16
-Release: alt2_4jpp11
-URL: http://www.eclipse.org
+Version: 4.19
+Release: alt1_1jpp11
+URL: https://www.eclipse.org
 License: EPL-2.0
 
-Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}.jar
-Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.22.0/ecj-3.22.0.pom
+Source0: https://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}.jar
+Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.25.0/ecj-3.25.0.pom
 # Extracted from https://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/%%{qualifier}/ecj-%%{version}.jar
 Source4: MANIFEST.MF
 # Java API stubs for newer JDKs to allow us to build on the system default JDK
-Source5: java14api.jar
+# Fetched from https://github.com/eclipse/eclipse.jdt.core/blob/R4_18/org.eclipse.jdt.compiler.tool/lib/javax15api.jar
+Source5: https://github.com/eclipse/eclipse.jdt.core/blob/R4_18/org.eclipse.jdt.compiler.tool/lib/javax15api.jar
 
 # Always generate debug info when building RPMs (Andrew Haley)
 Patch0: %{name}-rpmdebuginfo.patch
@@ -70,8 +71,7 @@ rm ./META-INF/ECLIPSE_.{SF,RSA}
   org.eclipse.tycho:org.eclipse.jdt.core org.eclipse.tycho:org.eclipse.jdt.compiler.apt
 
 # Make Java API stubs available for other packages
-%mvn_artifact "org.eclipse:java14api:jar:14" %{SOURCE5}
-%mvn_alias "org.eclipse:java14api:jar:14" "org.eclipse:java10api:jar:10" "org.eclipse:java9api:jar:9"
+%mvn_artifact "org.eclipse:javax15api:jar:15" %{SOURCE5}
 %patch33 -p1
 
 # Use ECJ for GCJ's bytecode compiler
@@ -86,7 +86,7 @@ rm -rf eclipse-gcj
 #patch55 -p1
 
 %build
-JAVA_HOME=%{_jvmdir}/java-11 ant -Djavaapi=%{SOURCE5}
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djavaapi=%{SOURCE5}
 
 %install
 %mvn_artifact pom.xml ecj.jar
@@ -105,6 +105,9 @@ install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 %{_mandir}/man1/ecj*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:4.19-alt1_1jpp11
+- new version
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 1:4.16-alt2_4jpp11
 - removed compat symlink for gradle
 
