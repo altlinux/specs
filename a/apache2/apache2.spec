@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.48
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -755,6 +755,7 @@ EOF
 	--enable-proxy --enable-proxy-connect \
 	--enable-proxy-http --enable-proxy-ftp \
 	--enable-proxy-html \
+	--enable-xml2enc \
 	--enable-charset_lite=shared \
 	--enable-unixd --enable-mods-static='unixd' \
 	$*
@@ -1214,24 +1215,28 @@ exit 0
 %ghost %apache2_mods_enabled/*.load
 %ghost %apache2_mods_enabled/*.conf
 %exclude %apache2_mods_available/proxy_html.load
+%exclude %apache2_mods_available/xml2enc.load
 %exclude %apache2_mods_available/ssl.load
 %exclude %apache2_mods_available/ssl.conf
 %exclude %apache2_mods_available/*ldap.load
 %exclude %apache2_mods_available/cache_disk.*
 %exclude %apache2_mods_enabled/ssl.load
 %exclude %apache2_mods_enabled/proxy_html.load
+%exclude %apache2_mods_enabled/xml2enc.load
 %exclude %apache2_mods_enabled/ssl.conf
 
 %doc %docdir/original/mods-available/*.load
 %doc %docdir/original/mods-available/*.conf
 %exclude %docdir/original/mods-available/ssl.load
 %exclude %docdir/original/mods-available/proxy_html.load
+%exclude %docdir/original/mods-available/xml2enc.load
 %exclude %docdir/original/mods-available/ssl.conf
 %exclude %docdir/original/mods-available/cache_disk.*
 
 # everything but mod_ssl.so:
 %apache2_moduledir/mod_*.so
 %exclude %apache2_moduledir/mod_proxy_html.so
+%exclude %apache2_moduledir/mod_xml2enc.so
 %exclude %apache2_moduledir/mod_ssl.so
 %exclude %apache2_moduledir/mod_*ldap.so
 %exclude %apache2_moduledir/mod_suexec.so
@@ -1455,9 +1460,13 @@ exit 0
 
 %files mod_proxy_html
 %config(noreplace) %apache2_mods_available/proxy_html.load
+%config(noreplace) %apache2_mods_available/xml2enc.load
 %apache2_mods_enabled/proxy_html.load
+%apache2_mods_enabled/xml2enc.load
 %apache2_moduledir/mod_proxy_html.so
+%apache2_moduledir/mod_xml2enc.so
 %docdir/original/mods-available/proxy_html.load
+%docdir/original/mods-available/xml2enc.load
 
 
 %files htcacheclean-control
@@ -1521,6 +1530,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu Jun 10 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.48-alt2
+- added xml2enc module to mod_proxy_html subpackage
+
 * Tue Jun 08 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.48-alt1
 - 2.4.48
 - added mod_proxy_html subpackage
