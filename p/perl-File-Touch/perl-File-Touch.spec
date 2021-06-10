@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-File-Touch
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: update access and modification timestamps, creating nonexistent files where necessary
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/File-Touch-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jul 10 2010
 BuildRequires: perl-devel
@@ -64,7 +64,7 @@ If defined, use this time (in epoch seconds) instead of current time for modific
 =back
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -73,9 +73,13 @@ If defined, use this time (in epoch seconds) instead of current time for modific
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/File/*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
