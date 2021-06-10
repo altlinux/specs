@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Feed-Find
 Name: perl-%dist
-Version: 0.07
-Release: alt2
+Version: 0.09
+Release: alt1
 
 Summary: Syndication feed auto-discovery
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ Feed::Find will discover the following feed formats: RSS 0.91, RSS 1.0,
 RSS 2.0, and Atom.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __BTE
 # requires network
@@ -42,6 +43,9 @@ rm t/01-find.t
 %perl_vendor_privlib/Feed
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.07-alt2
 - disabled build depndency on perl-Module-Install
 
