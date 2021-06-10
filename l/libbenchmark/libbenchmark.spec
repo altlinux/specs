@@ -1,15 +1,16 @@
 Name: libbenchmark
 Version: 1.5.2
-Release: alt1
+Release: alt2
 
 Summary: A microbenchmark support library
 
 Group: Development/C++
-License: Apache License 2.0
+License: Apache-2.0
 Url: https://github.com/google/benchmark
 
 # Source-url: https://github.com/google/benchmark/archive/v%version.tar.gz
 Source: %name-%version.tar
+Patch2000: %name-e2k.patch
 
 BuildRequires: cmake gcc-c++
 
@@ -28,6 +29,9 @@ This package contains the header files for %name.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 %__subst 's|lib/cmake/|%_lib/cmake/|' src/CMakeLists.txt
 %__subst 's|lib/pkgconfig|%_lib/pkgconfig|' src/CMakeLists.txt
 %__subst 's|set(lib_install_dir "lib/")|set(lib_install_dir "%_lib/")|' src/CMakeLists.txt
@@ -51,6 +55,10 @@ This package contains the header files for %name.
 %_pkgconfigdir/benchmark.pc
 
 %changelog
+* Thu Jun 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.2-alt2
+- added patch for Elbrus
+- corrected license
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
 - new version 1.5.2 (with rpmrb script)
 
