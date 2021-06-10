@@ -1,6 +1,6 @@
 Name: usermode-fs-tools
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: User-mode filesystems utilities
 License: GPL-3
@@ -132,6 +132,9 @@ done
 %_bindir/iso2stick
 
 %changelog
+* Thu Jun 10 2021 Nikita Ermakov <arei@altlinux.org> 1.1-alt2
+- dev2extfs: Handle the case when a node ends on '/'.
+
 * Mon Nov 16 2020 Leonid Krivoshein <klark@altlinux.org> 1.1-alt1
 - New sub-package 'usermode-isofs-tools': iso2stick utility added.
 - dir2extfs, dir2vfat, parts2img: more user-friendly sizes input.
