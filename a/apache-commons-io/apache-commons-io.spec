@@ -1,23 +1,43 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# unit tests do not finish or crash the JVM
+%bcond_with tests
+
+%global srcname commons-io
+
 Name:           apache-commons-io
 Epoch:          1
-Version:        2.6
-Release:        alt1_8jpp8
+Version:        2.8.0
+Release:        alt1_3jpp11
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
-URL:            http://commons.apache.org/io
+
+URL:            https://commons.apache.org/io
+Source0:        https://archive.apache.org/dist/commons/io/source/%{srcname}-%{version}-src.tar.gz
+
+Patch0: 0001-Fix-Files.size-failing-when-symlink-target-is-non-ex.patch
+
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
-
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+
+%if %{with tests}
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit-platform)
+%endif
 Source44: import.info
 
 %description
@@ -25,28 +45,60 @@ Commons-IO contains utility classes, stream implementations,
 file filters, and endian classes. It is a library of utilities
 to assist with developing IO functionality.
 
-%{?javadoc_package}
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 
 %prep
-%setup -q -n commons-io-%{version}-src
+%setup -q -n %{srcname}-%{version}-src
+%patch0 -p1
 sed -i 's/\r//' *.txt
 
-%build
+%if %{with tests}
+# com.google.jimfs:jimfs is not packaged for fedora
+%pom_remove_dep com.google.jimfs:jimfs
+rm src/test/java/org/apache/commons/io/input/ReversedLinesFileReaderTestParamFile.java
+
+# junit-pioneer is not packaged for fedora
+%pom_remove_dep :junit-pioneer
+rm src/test/java/org/apache/commons/io/input/XmlStreamReaderTest.java
+rm src/test/java/org/apache/commons/io/output/XmlStreamWriterTest.java
+%endif
+
 %mvn_file  : commons-io %{name}
 %mvn_alias : org.apache.commons:
 
-# NOTE: tests *may* fail because commons-io is on surefire's classpath and causes
-# tests to be run against the system version and not the one we just built
-%mvn_build -- -Dmaven.test.skip.exec=true  -Dcommons.osgi.symbolicName=org.apache.commons.io
+
+%build
+%if %{with tests}
+%mvn_build -- -Dmaven.test.skip.exec=true  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.io
+%else
+%mvn_build -f -- -Dmaven.test.skip.exec=true  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.io
+%endif
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES.txt
 
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference LICENSE.txt NOTICE.txt
+
+
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.8.0-alt1_3jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_8jpp8
 - fc update
 
