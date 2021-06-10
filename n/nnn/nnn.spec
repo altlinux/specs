@@ -1,7 +1,7 @@
 %def_enable qsort
 
 Name: nnn
-Version: 4.1
+Version: 4.1.1
 Release: alt1
 
 Summary: A full-featured terminal file manager
@@ -43,6 +43,9 @@ install -D -m644 misc/auto-completion/bash/nnn-completion.bash \
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Jun 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.1.1-alt1
+- 4.1 -> 4.1.1
+
 * Wed Jun 02 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.1-alt1
 - 4.0 -> 4.1
 
