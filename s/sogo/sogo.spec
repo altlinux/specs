@@ -3,8 +3,8 @@
 
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
-Version: 5.1.0
-Release: alt3
+Version: 5.1.1
+Release: alt1
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -256,7 +256,7 @@ SOGo backend for OpenChange
 tar xf %SOURCE2
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
 %patch5 -p1
 
@@ -440,6 +440,9 @@ test -e "$dovecot_service" && %post_service dovecot
 %preun_service sogo
 
 %changelog
+* Wed Jun 02 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt1
+- New version.
+
 * Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt3
 - Use python3 interpreter in python scripts.
 
