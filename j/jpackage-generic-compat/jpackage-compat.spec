@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -32,51 +32,6 @@ JPackage compatibility package. The main goal is to provide all nessssary
 symlinks, Requires and BuildRequires for ALTLinux to create a build environment
 compatible with JPackage.org.
 
-%package -n jpackage-1.5.0-compat
-Summary: JPackage build environment with java-1.5.0.
-Group: Development/Java
-
-Requires(pre): java-devel = 1.5.0 java = 1.5.0
-# hack
-Conflicts: java-devel > 1.5.99 java > 1.5.99 java-headless > 1.5.99
-
-Requires: jpackage-generic-compat
-Obsoletes: jpackage-1.5.0-core < %version-%release
-
-%description -n jpackage-1.5.0-compat
-JPackage compatibility package. the main goal is to provide all nessssary symlinks,
-Requires and BuildRequires for ALT to be build compatible with JPackage.
-Provides JPackage build environment with java-1.5.0.
-
-%package -n jpackage-1.6.0-compat
-Summary: JPackage build environment with java-1.6.0.
-Group: Development/Java
-
-Requires(pre): java-devel = 1.6.0 java = 1.6.0
-# hack
-Conflicts: java-devel > 1.6.99 java > 1.6.99 java-headless > 1.6.99
-
-Requires: jpackage-generic-compat
-
-%description -n jpackage-1.6.0-compat
-JPackage compatibility package. the main goal is to provide all nessssary symlinks,
-Requires and BuildRequires for ALT to be build compatible with JPackage.
-Provides JPackage build environment with java-1.6.0.
-
-%package -n jpackage-1.7.0-compat
-Summary: JPackage build environment with java-1.7.0.
-Group: Development/Java
-
-Requires(pre): java-devel = 1.7.0 java = 1.7.0
-# hack
-Conflicts: java-devel > 1.7.99 java > 1.7.99 java-headless > 1.7.99
-
-Requires: jpackage-generic-compat
-
-%description -n jpackage-1.7.0-compat
-JPackage compatibility package. the main goal is to provide all nessssary symlinks,
-Requires and BuildRequires for ALT to be build compatible with JPackage.
-Provides JPackage build environment with java-1.7.0.
 
 %package -n jpackage-1.8-compat
 Summary: JPackage build environment with java-1.8.0.
@@ -159,15 +114,15 @@ Provides JPackage build environment with java-11.
 install -d $RPM_BUILD_ROOT%_datadir
 
 %files
-#files -n jpackage-1.5.0-compat
-#files -n jpackage-1.6.0-compat
-#files -n jpackage-1.7.0-compat
 %files -n jpackage-1.8-compat
 %files -n jpackage-9-compat
 %files -n jpackage-10-compat
 %files -n jpackage-11-compat
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
+- cleaned up obsolete subpackages
+
 * Thu Jul 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - java 11 support
 
