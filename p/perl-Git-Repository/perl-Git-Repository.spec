@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Git-Repository
-Version: 1.324
+Version: 1.325
 Release: alt1
 
 Summary: Git::Repository - Perl interface to Git repositories
@@ -33,6 +33,9 @@ git config --global user.name "Hasher Bot"
 %doc Changes README
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.325-alt1
+- new version
+
 * Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 1.324-alt1
 - new version
 
