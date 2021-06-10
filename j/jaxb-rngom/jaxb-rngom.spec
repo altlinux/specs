@@ -1,0 +1,48 @@
+
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
+
+Name: jaxb-rngom
+Version: 2.3.3
+Summary: RELAX NG Object Model/Parser
+License: BSD
+Url: https://github.com/eclipse-ee4j/jaxb-ri
+Group: Development/Java
+Release: alt0.1jpp
+
+Packager: Igor Vlasenko <viy@altlinux.org>
+Provides: glassfish-jaxb-rngom = 2.3.3-6.fc34
+Provides: mvn(com.sun.xml.bind.external:rngom) = 2.3.3
+Provides: mvn(com.sun.xml.bind.external:rngom:pom:) = 2.3.3
+Provides: osgi(com.sun.xml.bind.external.rngom) = 2.3.3
+Requires: java-headless
+Requires: javapackages-filesystem
+Requires: mvn(com.sun.xml.bind.external:relaxng-datatype)
+
+BuildArch: noarch
+Source: jaxb-rngom-2.3.3-6.fc34.cpio
+
+
+%description
+This package contains RELAX NG Object Model/Parser.
+
+%prep
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+
+%build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
+
+
+%files -f %name-list
+
+%changelog
+* Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 2.3.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
