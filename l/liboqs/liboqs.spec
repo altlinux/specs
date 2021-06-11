@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: liboqs
-Version: 0.5.0
-Release: alt1.1
+Version: 0.6.0
+Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
@@ -67,12 +67,13 @@ sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
 #   OQS_KEM_DEFAULT="OQS_KEM_alg_ntruprime_ntrulpr653" L2
 #   OQS_SIG_DEFAULT="OQS_SIG_alg_sphincs_haraka_192f_simple" L3
 # with (claimed) NIST security level not less than before.
+# -DOQS_ENABLE_TEST_CONSTANT_TIME=ON -- does not pass.
 %cmake -B build \
 	-GNinja \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS=ON \
-	-DOQS_PORTABLE_BUILD=ON \
-	-DOQS_USE_CPU_EXTENSIONS=ON \
+	-DOQS_DIST_BUILD=ON \
+	-DOQS_OPT_TARGET=generic \
 	-DOQS_KEM_DEFAULT="OQS_KEM_alg_ntruprime_ntrulpr653" \
 	-DOQS_SIG_DEFAULT="OQS_SIG_alg_sphincs_haraka_192f_simple"
 %ninja_build -C build
@@ -103,6 +104,9 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Thu Jun 10 2021 Vitaly Chikunov <vt@altlinux.org> 0.6.0-alt1
+- Update to 0.6.0 (2021-06-08).
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.5.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
