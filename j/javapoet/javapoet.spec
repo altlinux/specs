@@ -1,18 +1,17 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javapoet
 Version:       1.7.0
-Release:       alt1_8jpp8
+Release:       alt1_12jpp11
 Summary:       A Java API for generating .java source files
 License:       ASL 2.0
 URL:           https://github.com/square/javapoet
 Source0:       https://github.com/square/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 %if 0
 # test dependencies
@@ -42,13 +41,16 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %pom_remove_plugin :maven-checkstyle-plugin
 
 %mvn_file : %{name}
 
 %build
 # skip tests due to missing test dependencies
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -61,6 +63,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.7.0-alt1_12jpp11
+- fc34 update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_8jpp8
 - fc update
 
