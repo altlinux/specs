@@ -6,18 +6,19 @@ BuildRequires: jpackage-11-compat
 %global bundle org.apache.felix.utils
 
 Name:           felix-utils
-Version:        1.11.4
-Release:        alt1_3jpp11
+Version:        1.11.6
+Release:        alt1_1jpp11
 Summary:        Utility classes for OSGi
 License:        ASL 2.0
-URL:            http://felix.apache.org
-BuildArch:      noarch
 
+URL:            http://felix.apache.org
 Source0:        https://repo1.maven.org/maven2/org/apache/felix/%{bundle}/%{version}/%{bundle}-%{version}-source-release.tar.gz
 
 # The module org.osgi.cmpn requires implementing methods which were not
 # implemented in previous versions where org.osgi.compendium was used
 Patch0:         0000-Port-to-osgi-cmpn.patch
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -60,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.11.6-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.11.4-alt1_3jpp11
 - new version
 
