@@ -5,7 +5,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_19jpp11
+Release:       alt1_21jpp11
 Summary:       Java manipulation of XML made easy
 License:       Saxpath
 URL:           http://www.jdom.org/
@@ -31,7 +31,6 @@ BuildRequires: jaxen
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
-BuildRequires: log4j12
 BuildRequires: aqute-bnd
 
 BuildArch:     noarch
@@ -98,6 +97,9 @@ mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_21jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_19jpp11
 - update
 
