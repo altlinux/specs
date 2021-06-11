@@ -1,22 +1,14 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global vertag e91772b1bc0b
-
-%bcond_with spring
+%global vertag 29e2699b80fc
 
 Name:           snakeyaml
 Summary:        YAML parser and emitter for Java
-Version:        1.26
-Release:        alt1_4jpp11
+Version:        1.27
+Release:        alt1_2jpp11
 License:        ASL 2.0
 
 URL:            https://bitbucket.org/asomov/%{name}
@@ -42,11 +34,6 @@ BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.velocity:velocity)
-%if %{with spring}
-BuildRequires:  mvn(org.springframework:spring-core)
-BuildRequires:  mvn(org.springframework:spring-beans)
-BuildRequires:  mvn(org.springframework:spring-context-support)
-%endif
 Source44: import.info
 
 %description
@@ -84,18 +71,12 @@ This package contains %{summary}.
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :nexus-staging-maven-plugin
 
-sed -i "/<artifactId>spring</s/spring/&-core/" pom.xml
-rm -f src/test/java/examples/SpringTest.java
-
 # Replacement for bundled gdata-java-client
 %pom_add_dep commons-codec:commons-codec
 
 # Unnecessary test-time only dependency
 %pom_remove_dep joda-time:joda-time
 rm -rf src/test/java/examples/jodatime
-
-# remove bundled stuff
-rm -rf target
 
 # fails in rpmbuild only due to different locale
 rm src/test/java/org/yaml/snakeyaml/issues/issue67/NonAsciiCharsInClassNameTest.java
@@ -104,12 +85,6 @@ rm src/test/java/org/yaml/snakeyaml/issues/issue318/ContextClassLoaderTest.java
 
 # convert CR+LF to LF
 sed -i 's/\r//g' LICENSE.txt
-
-%if %{without spring}
-%pom_remove_dep org.springframework
-rm -r src/test/java/org/yaml/snakeyaml/issues/issue9
-rm src/test/java/org/yaml/snakeyaml/helpers/FileTestHelper.java
-%endif
 
 
 %build
@@ -128,6 +103,9 @@ rm src/test/java/org/yaml/snakeyaml/helpers/FileTestHelper.java
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.27-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.26-alt1_4jpp11
 - new version
 
