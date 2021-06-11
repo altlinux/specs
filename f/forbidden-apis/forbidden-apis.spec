@@ -5,7 +5,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:          forbidden-apis
 Version:       2.5
-Release:       alt1_8jpp11
+Release:       alt1_10jpp11
 Summary:       Policeman's Forbidden API Checker
 License:       ASL 2.0
 URL:           https://github.com/policeman-tools/forbidden-apis
@@ -28,7 +28,6 @@ BuildRequires: ant-junit
 BuildRequires: objectweb-asm
 BuildRequires: plexus-utils
 BuildRequires: maven-plugin-plugin
-BuildRequires: sonatype-oss-parent
 Source44: import.info
 
 %description
@@ -89,6 +88,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local 
 %pom_add_dep org.codehaus.plexus:plexus-utils:1.1 build/maven/pom-deploy.xml
 %pom_add_dep commons-cli:commons-cli:1.3.1 build/maven/pom-deploy.xml
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent build/maven/pom-deploy.xml
+
 # Install maven artifacts
 %mvn_artifact build/maven/pom-deploy.xml dist/forbiddenapis-2.5.jar
 %mvn_install -J build/docs
@@ -105,6 +107,9 @@ install -pm 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_10jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_8jpp11
 - update
 
