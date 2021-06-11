@@ -3,14 +3,14 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
 Summary:       Official JDBC driver for MySQL
 Name:          mysql-connector-java
-Version:       8.0.21
-Release:       alt1_2jpp8
+Version:       8.0.23
+Release:       alt1_2jpp11
 Epoch:         1
 License:       GPLv2 with exceptions
 URL:           http://dev.mysql.com/downloads/connector/j/
@@ -44,7 +44,6 @@ Patch1:        remove-coverage-test.patch
 BuildArch:     noarch
 
 BuildRequires: ant >= 1.6.0
-BuildRequires: ant-contrib >= 1.0
 BuildRequires: ant-junit
 BuildRequires: apache-commons-logging
 BuildRequires: git
@@ -94,7 +93,7 @@ rm src/test/java/testsuite/regression/ConnectionRegressionTest.java
 rm src/test/java/testsuite/regression/DataSourceRegressionTest.java
 rm src/test/java/testsuite/simple/StatementsTest.java
 
-ant -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-1.8.0-openjdk \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-1.8.0-openjdk \
     -Dcom.mysql.cj.extra.libs=%{_javadir} \
     test dist
 
@@ -109,6 +108,9 @@ ant -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-1.8.0-openjdk \
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:8.0.23-alt1_2jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:8.0.21-alt1_2jpp8
 - new version
 
