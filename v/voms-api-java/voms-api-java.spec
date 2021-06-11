@@ -8,26 +8,21 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		voms-api-java
-Version:	3.3.0
-Release:	alt1_11jpp11
+Version:	3.3.2
+Release:	alt1_2jpp11
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
 URL:		https://wiki.italiangrid.it/VOMS
 Source0:	https://github.com/italiangrid/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
-#		Disable tests using non-local network interface
-Patch0:		%{name}-no-local.patch
-#		Add source version to javadoc configuration
-#		Backported from upstream git
-Patch1:		%{name}-javadoc-source.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
-BuildRequires:	mvn(eu.eu-emi.security:canl) >= 2.5
+BuildRequires:	mvn(eu.eu-emi.security:canl) >= 2.6
 BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(org.hamcrest:hamcrest-library)
 BuildRequires:	mvn(org.mockito:mockito-core)
-Requires:	mvn(eu.eu-emi.security:canl) >= 2.5
+Requires:	mvn(eu.eu-emi.security:canl) >= 2.6
 Source44: import.info
 
 %description
@@ -50,8 +45,6 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 # Remove unused dependency
 %pom_remove_dep net.jcip:jcip-annotations
@@ -90,6 +83,9 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_11jpp11
 - update
 
