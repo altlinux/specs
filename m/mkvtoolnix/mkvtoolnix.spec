@@ -3,19 +3,14 @@
 %def_disable debug
 %def_disable profiling
 
-%def_enable gui
-%def_enable bz2
-%def_enable lzo
-%def_disable wxwidgets
 %def_enable qt
 %def_with flac
-%def_without tools
 %def_with dvdread
 
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 55.0.0
+Version: 57.0.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -25,22 +20,24 @@ Url: https://mkvtoolnix.download/
 # https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
 
+Patch1: %name-buildflag-replacing.patch
+
 Provides: mkvmerge = %EVR
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
-BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs
-BuildRequires: libcurl-devel libebml-devel >= 1.4.0 libmatroska-devel >= 1.6.0 libfmt-devel >= 6.1.0
-BuildRequires: docbook-style-xsl xsltproc ruby-tools
+BuildRequires: libvorbis-devel libogg-devel
+BuildRequires: ruby ruby-stdlibs ruby-tools
+BuildRequires: libebml-devel >= 1.4.0 libmatroska-devel >= 1.6.0 libfmt-devel >= 6.1.0
+BuildRequires: docbook-style-xsl xsltproc
 BuildRequires: libpugixml-devel
 BuildRequires: po4a
 BuildRequires: libgtest-devel
 BuildRequires: libpcre2-devel
+BuildRequires: libutfcpp-devel
+BuildRequires: nlohmann-json-devel
 
-%{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.1-devel}
-%{?_enable_qt:BuildRequires: qt5-base-devel qt5-multimedia-devel cmark-devel}
-%{?_enable_bz2:BuildRequires: bzlib-devel}
-%{?_enable_lzo:BuildRequires: liblzo2-devel}
+%{?_enable_qt:BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel cmark-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
 %{?_with_dvdread:BuildRequires: libdvdread-devel}
 
@@ -50,19 +47,19 @@ container format for the future.
 With these tools one can extract tracks/data from (mkvextract) Matroska
 files and create (mkvmerge) Matroska files from other media files.
 
-%if_enabled gui
+%if_enabled qt
 %package gui
 Summary: GUI for mkvmerge including a chapter editor
 License: GPL-2
 Group: Video
 Provides: mmg = %EVR
 Provides: mkvmerge-gui = %EVR
-Obsoletes: mkvmerge-gui
+Obsoletes: mkvmerge-gui < %EVR
 
 %description gui
 Matroska is a new multimedia file format aiming to become the new
 container format for the future.
-mkvmerge GUI is a wxWindows based GUI for mkvmerge. It offers easy
+mkvmerge GUI is a Qt based GUI for mkvmerge. It offers easy
 access to all of mkvmerge's options. All settings (e.g. source files,
 track options etc) can be saved and restored. Included is a chapter
 editor that can read OGM style and XML style chapter files, write XML
@@ -82,21 +79,13 @@ With mkvinfo you can get information about Matroska files. This program
 lists all tracks contained in a Matroska file including information
 about the codecs used.
 
-%if_with tools
-%package tools
-Summary: %name additional tools
-Group: Video
-Conflicts: %name < 2.4.0-alt1
-
-%description tools
-Matroska is a new multimedia file format aiming to become the new
-container format for the future.
-This package contains some additional tools.
-%endif
-
 %prep
 %setup
-rm -rf lib/pugixml
+%patch1 -p1
+
+# remove some bundled libraries
+rm -rf lib/nlohmann-json lib/pugixml lib/utf8-cpp
+
 %ifarch %e2k riscv64
 sed -i 's,aarch64,&|riscv64|e2k,' ac/ax_boost_base.m4
 %endif
@@ -104,27 +93,21 @@ sed -i 's,aarch64,&|riscv64|e2k,' ac/ax_boost_base.m4
 %build
 ./autogen.sh
 %configure \
-    --disable-option-checking \
     --disable-update-check \
     %{subst_enable debug} \
     %{subst_enable profiling} \
-    %{subst_enable gui} \
-    %{subst_enable bz2} \
-    %{subst_enable lzo} \
-    %{subst_enable wxwidgets} \
     %{subst_enable qt} \
+%if_enabled qt
+    ac_cv_path_LCONVERT=%_bindir/lconvert-qt5 \
+%endif
     %{subst_with flac} \
     %{subst_with dvdread} \
     %nil
 
-rake %{?_with_tools:TOOLS=1} V=1
+rake V=1
 
 %install
 rake DESTDIR=%buildroot install
-
-%if_with tools
-install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %buildroot%_bindir
-%endif
 
 %find_lang --with-man %name
 %find_lang --with-man %name-gui
@@ -160,7 +143,7 @@ rake V=1 tests:run_unit
 %_man1dir/mkvinfo.*
 %_iconsdir/hicolor/*/apps/mkvinfo.*
 
-%if_enabled gui
+%if_enabled qt
 %files gui -f %name-gui.lang
 %doc COPYING
 %doc AUTHORS NEWS.md README.md CODE_OF_CONDUCT.md
@@ -173,16 +156,11 @@ rake V=1 tests:run_unit
 %_datadir/metainfo/org.bunkus.%name-gui.appdata.xml
 %endif
 
-%if_with tools
-%files tools
-%doc COPYING
-%doc AUTHORS NEWS.md README.md CODE_OF_CONDUCT.md
-%_bindir/base64tool
-%_bindir/*parser
-%_bindir/ebml_validator
-%endif
-
 %changelog
+* Fri Jun 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 57.0.0-alt1
+- Updated to upstream version 57.0.0.
+- Unbundled libraries.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 55.0.0-alt1
 - Updated to upstream version 55.0.0.
 
