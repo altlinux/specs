@@ -13,7 +13,7 @@ BuildRequires: jpackage-11-compat
 
 Name:       fernflower
 Version:    183.5153.8
-Release:    alt1_6jpp11
+Release:    alt1_10jpp11
 Summary:    JIdea's java decompiler
 License:    ASL 2.0 
 URL:        https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine
@@ -68,7 +68,7 @@ find | grep "\\.jar$"   && exit 1
 
 %build
 mkdir build
-javac  -target 1.8 -source 1.8 -d build `find src -type f`
+javac  -target 1.8 -source 1.8 -source 8 -target 8 -d build `find src -type f`
 cd build
 jar -cf ../%{name}.jar  org
 cd ..
@@ -108,6 +108,9 @@ cp %{name}.zip $RPM_BUILD_ROOT/%{_javadocdir}/
 %endif
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 183.5153.8-alt1_10jpp11
+- fc34 update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 183.5153.8-alt1_6jpp11
 - update
 
