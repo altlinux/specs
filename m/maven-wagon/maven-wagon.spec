@@ -18,8 +18,8 @@ BuildRequires: jpackage-11-compat
 
 Name:           maven-wagon
 Epoch:          0
-Version:        3.4.1
-Release:        alt1_3jpp11
+Version:        3.4.2
+Release:        alt1_1jpp11
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
 
@@ -230,6 +230,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE DEPENDENCIES
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.4.2-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.4.1-alt1_3jpp11
 - new version
 
