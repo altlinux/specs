@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 Summary:	Java Simple Serial Connector
 Name:		jssc
 Version:	2.8.0
-Release:	alt1_17jpp11
+Release:	alt1_19jpp11
 License:	GPLv3+
 URL:		http://jssc.scream3r.org
 Source:		https://github.com/scream3r/java-simple-serial-connector/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -68,7 +68,7 @@ mkdir -p classes/
 mkdir -p javadoc/
 (cd src/java; javadoc -Xdoclint:none -d ../../javadoc/ -encoding UTF-8 jssc/*.java)
 # compile native library
-g++ %{optflags} %{?__global_ldflags} -std=c++11 -fPIC -shared \
+g++ %{optflags} %{?__global_ldflags} -fPIC -shared \
     -D jSSC_NATIVE_LIB_VERSION=\"$(echo %{version} | sed 's/\([1-9]\.[0-9]\).*/\1/')\" \
     -I %{java_home}/include \
     -I %{java_home}/include/linux \
@@ -99,6 +99,9 @@ ln -srf %{buildroot}%{jni}/%{jniFullSoName} %{buildroot}%{jni}/%{jniSoName}
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.8.0-alt1_19jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.8.0-alt1_17jpp11
 - update
 
