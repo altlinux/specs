@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 Name:           maven-resolver
 Epoch:          1
 Version:        1.4.2
-Release:        alt1_3jpp11
+Release:        alt1_5jpp11
 Summary:        Apache Maven Artifact Resolver library
 License:        ASL 2.0
 
@@ -169,7 +169,7 @@ done
 %mvn_file ':maven-resolver{*}' %{name}/maven-resolver@1 aether/aether@1
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -194,6 +194,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:1.4.2-alt1_5jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.4.2-alt1_3jpp11
 - new version
 
