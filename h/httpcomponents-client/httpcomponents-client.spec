@@ -18,7 +18,7 @@ BuildRequires: jpackage-11-compat
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
 Version:           4.5.10
-Release:           alt2_2jpp11
+Release:           alt2_6jpp11
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
@@ -176,10 +176,10 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %pom_remove_dep :ehcache-core httpclient-cache
 %endif
 
-%build
 %mvn_file ":{*}" httpcomponents/@1
 
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -194,6 +194,9 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 4.5.10-alt2_6jpp11
+- fc34 update
+
 * Tue May 25 2021 Igor Vlasenko <viy@altlinux.org> 4.5.10-alt2_2jpp11
 - set compiler.release to 8 thanks to slev@
 
