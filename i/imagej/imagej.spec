@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           imagej
 Version:        1.50
-Release:        alt1_12.hjpp11
+Release:        alt1_14.hjpp11
 Summary:        Image Processing and Analysis in Java
 
 License:        Public Domain
@@ -135,6 +135,9 @@ desktop-file-install --vendor=""                     \
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.50-alt1_14.hjpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.50-alt1_12.hjpp11
 - update
 
