@@ -5,7 +5,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:    jnr-netdb
 Version: 1.1.6
-Release: alt1_10jpp11
+Release: alt1_12jpp11
 Summary: Network services database access for java
 License: ASL 2.0
 URL:     https://github.com/jnr/%{name}/
@@ -15,7 +15,6 @@ BuildArch: noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jnr-ffi)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -35,6 +34,9 @@ Javadoc for %{name}.
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 # Fix javadoc generation on java 11
 %pom_xpath_inject pom:project "<build><plugins><plugin>
 <artifactId>maven-javadoc-plugin</artifactId>
@@ -46,7 +48,7 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -58,6 +60,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_12jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_10jpp11
 - update
 
