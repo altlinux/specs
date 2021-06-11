@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt2_21jpp11
+Release:        alt2_23jpp11
 Summary:        Pure-java port of asmjit
 
 License:        MIT
@@ -20,7 +20,6 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -41,8 +40,11 @@ cp %{SOURCE1} .
 find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %build
-%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dmaven.compiler.release=6
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -55,6 +57,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt2_23jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt2_21jpp11
 - update
 
