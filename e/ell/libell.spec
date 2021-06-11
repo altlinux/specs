@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: ell
-Version: 0.32
+Version: 0.40
 Release: alt1
 Summary: Embedded Linux library
 Group: System/Libraries
@@ -58,6 +58,9 @@ Headers for developing against libell.
 %_pkgconfigdir/ell.pc
 
 %changelog
+* Fri Jun 11 2021 L.A. Kostis <lakostis@altlinux.ru> 0.40-alt1
+- 0.40.
+
 * Wed Aug 05 2020 L.A. Kostis <lakostis@altlinux.ru> 0.32-alt1
 - 0.32.
 

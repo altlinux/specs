@@ -7,7 +7,7 @@
 %def_enable deprecated
 
 Name: bluez
-Version: 5.55
+Version: 5.58
 Release: alt2
 
 Summary: Bluetooth utilities
@@ -31,7 +31,7 @@ Requires(post,preun): /bin/systemctl
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc
 %{?_enable_obex:BuildRequires: libical-devel libicu-devel}
-%{?_enable_btpclient:BuildRequires: libell-devel >= 0.28}
+%{?_enable_btpclient:BuildRequires: libell-devel >= 0.39}
 # for check
 BuildRequires: /proc
 
@@ -74,6 +74,15 @@ stack. BTP is binary protocol and is already implemented in Zephyr Project.
 
 https://github.com/zephyrproject-rtos/zephyr/blob/master/tests/bluetooth/tester/btp_spec.txt
 
+%package -n zsh-completion-%name
+Summary: Zsh completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description -n zsh-completion-%name
+Zsh completion for %name.
+
 %prep
 %setup
 %patch -p1
@@ -83,6 +92,9 @@ https://github.com/zephyrproject-rtos/zephyr/blob/master/tests/bluetooth/tester/
 %build
 %autoreconf
 export CFLAGS="$CFLAGS %(getconf LFS_CFLAGS)"
+# ugly workaround until
+# https://github.com/bluez/bluez/issues/125 fixed
+mkdir ell ||:
 %configure \
 	--enable-library \
 	--enable-threads \
@@ -137,7 +149,6 @@ fi
 %_prefix/lib/systemd/user/obex.service
 /lib/udev/rules.d/*-hid2hci.rules
 /lib/udev/hid2hci
-%_bindir/bccmd
 %_bindir/bluemoon
 %_bindir/bluetoothctl
 %_bindir/btattach
@@ -184,7 +195,21 @@ fi
 %_bindir/btpclient
 %endif
 
+%files -n zsh-completion-%name
+%_datadir/zsh/site-functions/_bluetoothctl
+
 %changelog
+* Fri Jun 11 2021 L.A. Kostis <lakostis@altlinux.ru> 5.58-alt2
+- Fix patches:
+  - 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
+    (fix location, closes #40184).
+
+* Fri Jun 11 2021 L.A. Kostis <lakostis@altlinux.ru> 5.58-alt1
+- 5.58.
+- Bump ell requirements (>= 0.39).
+- Apply ell build workaround (see https://github.com/bluez/bluez/issues/125).
+- Add zsh-completion package.
+
 * Wed Feb 24 2021 Dmitry Terekhin <jqt4@altlinux.org> 5.55-alt2
 - Change firmware path to correct /lib/firmware
 
