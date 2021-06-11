@@ -6,7 +6,7 @@
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A tetris clone
@@ -55,6 +55,9 @@ GNOME version of the popular russian game Tetris.
 
 
 %changelog
+* Fri Jun 11 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
+- 40.2
+
 * Tue May 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

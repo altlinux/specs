@@ -16,7 +16,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 Epoch: 1
 
@@ -164,9 +164,9 @@ the functionality of the installed Mutter.
 %prep
 %setup -n %name-%version%beta
 %patch
-# Also disable KMS modifiers for radeon
-echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
->> data/61-%name.rules
+# Also disable KMS modifiers for radeon (fixed in 40.2)
+#echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
+#>> data/61-%name.rules
 
 %build
 %meson \
@@ -228,6 +228,9 @@ echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modif
 
 
 %changelog
+* Thu Jun 10 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.2-alt1
+- 40.2
+
 * Fri May 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.1-alt1
 - 40.1
 - data/61-mutter.rules: disabled KMS modifiers for radeon driver

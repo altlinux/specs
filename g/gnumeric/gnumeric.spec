@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.49
+Version: %ver_major.50
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -183,6 +183,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.50-alt1
+- 1.12.50
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.49-alt1
 - 1.12.49
 - enabled python3 support
