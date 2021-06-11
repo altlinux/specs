@@ -3,7 +3,7 @@
 # TODO: remove later this fix for documentation
 %define _cmake__builddir BUILD
 
-%def_without openmp
+%def_with openmp
 %def_without unicap
 %def_with swig
 %def_with python
@@ -40,8 +40,8 @@
 %define sover 4.5
 Name: lib%bname
 Epoch: 1
-Version: 4.5.1
-Release: alt3
+Version: 4.5.2
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -367,6 +367,10 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.2-alt1
+- Updated to upstream version 4.5.2.
+- Built with openmp support.
+
 * Tue Jun 01 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:4.5.1-alt3
 - added SIMD patch for Elbrus
 
