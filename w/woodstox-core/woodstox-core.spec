@@ -7,8 +7,8 @@ BuildRequires: jpackage-11-compat
 
 Name:           woodstox-core
 Summary:        High-performance XML processor
-Version:        6.2.1
-Release:        alt1_5jpp11
+Version:        6.2.3
+Release:        alt1_2jpp11
 License:        ASL 2.0 or LGPLv2+ or BSD
 
 URL:            https://github.com/FasterXML/woodstox
@@ -79,7 +79,7 @@ rm -rf src/test/java/wstxtest/msv src/test/java/wstxtest/vstream/TestRelaxNG.jav
 
 
 %build
-%mvn_build --xmvn-javadoc
+%mvn_build --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -94,6 +94,9 @@ rm -rf src/test/java/wstxtest/msv src/test/java/wstxtest/vstream/TestRelaxNG.jav
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 6.2.3-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 6.2.1-alt1_5jpp11
 - new version
 
