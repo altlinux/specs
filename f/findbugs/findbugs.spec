@@ -13,7 +13,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_23jpp11
+Release:        alt1_25jpp11
 Summary:        Find bugs in Java code
 
 License:        LGPLv2+
@@ -257,6 +257,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.1-alt1_25jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.1-alt1_23jpp11
 - update
 
