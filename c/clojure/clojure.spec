@@ -13,8 +13,8 @@ BuildRequires: jpackage-11-compat
 
 Name:           clojure
 Epoch:          1
-Version:        1.10.1
-Release:        alt1_5jpp11
+Version:        1.10.2
+Release:        alt1_1jpp11
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 License:        EPL-1.0
@@ -30,6 +30,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.clojure:core.specs.alpha)
 BuildRequires:  mvn(org.clojure:spec.alpha)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+Requires:       javapackages-tools
 Source44: import.info
 
 %description 
@@ -66,6 +67,9 @@ can avoid reflection.
 %{_bindir}/%{name}
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.2-alt1_1jpp11
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.1-alt1_5jpp11
 - new version
 
