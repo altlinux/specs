@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt9
+Release: alt10
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -42,8 +42,8 @@ Requires: deepin-qt5integration
 Requires: deepin-qt5platform-plugins
 Requires: deepin-launcher
 Requires: icon-theme-deepin
-Requires: deepin-polkit-agent
-Requires: deepin-polkit-agent-ext-gnomekeyring
+# Requires: deepin-polkit-agent
+# Requires: deepin-polkit-agent-ext-gnomekeyring
 Requires: gnome-keyring
 Requires: startdde
 Requires: deepin-kwin
@@ -83,6 +83,7 @@ Requires: deepin-clipboard
 Requires: deepin-music
 Requires: deepin-calculator
 Requires: deepin-screen-recorder
+Requires: deepin-draw
 Requires: onboard
 # %%ifnarch armh
 Requires: deepin-movie
@@ -129,6 +130,10 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt10
+- Removed deepin-polkit-agent* from deepin-default.
+- Added deepin-draw into deepin-default.
+
 * Wed Apr 14 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt9
 - Added deepin-music, deepin-calculator, deepin-screen-recorder to deepin-default.
 - Moved redshift to deepin-full.
