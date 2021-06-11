@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-gogo-parent
-Version:        4
-Release:        alt1_4jpp8
+Version:        5
+Release:        alt1_1jpp11
 Summary:        Parent pom for Apache Felix Gogo
 License:        ASL 2.0
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
@@ -25,8 +25,21 @@ line shell for OSGi. It is used in many OSGi runtimes and servers.
 %prep
 %setup -q -n gogo-parent-%{version}
 
+# Use compendium dep
+%pom_xpath_remove "pom:dependency[pom:artifactId='org.osgi.namespace.service']"
+%pom_xpath_remove "pom:dependency[pom:artifactId='org.osgi.service.event']"
+%pom_xpath_remove "pom:dependency[pom:artifactId='org.osgi.service.log']"
+%pom_xpath_remove "pom:dependency[pom:artifactId='org.apache.felix.framework']"
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+<groupId>org.osgi</groupId>
+<artifactId>osgi.cmpn</artifactId>
+<version>6.0.0</version>
+<scope>provided</scope>
+</dependency>"
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -35,6 +48,9 @@ line shell for OSGi. It is used in many OSGi runtimes and servers.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5-alt1_1jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 4-alt1_4jpp8
 - fc update
 
