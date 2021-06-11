@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commitversion 157cf13
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:     yecht
 Version:  1.0
-Release:  alt1_11jpp8
+Release:  alt1_16jpp11
 Summary:  A YAML processor based on Syck
 License:  MIT
 URL:      http://github.com/%{cluster}/%{name}
@@ -21,7 +21,6 @@ Patch0:   disable-jruby-dep.patch
 
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 Requires: jpackage-utils
 
 BuildArch:      noarch
@@ -46,8 +45,11 @@ This package contains the API documentation for %{name}.
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -57,6 +59,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_16jpp11
+- fc34 update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_11jpp8
 - fc update
 
