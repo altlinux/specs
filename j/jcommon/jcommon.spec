@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: jcommon
 Version: 1.0.23
-Release: alt1_14jpp11
+Release: alt1_16jpp11
 Summary: JFree Java utility classes
 License: LGPLv2+
 # Github: https://github.com/jfree/jcommon
@@ -18,7 +18,6 @@ Source: %{name}-%{version}.tar.gz
 URL: http://www.jfree.org/jcommon
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
-BuildRequires: sonatype-oss-parent
 Requires: jpackage-utils
 BuildArch: noarch
 
@@ -46,6 +45,8 @@ Javadoc pour %{name}.
 %setup -q
 %patch0 -b javadoc-11
 find . -name "*.jar" -exec rm -f {} \;
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
 MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
         <configuration>
           <instructions>
@@ -82,6 +83,9 @@ fi
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.23-alt1_16jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.23-alt1_14jpp11
 - update
 
