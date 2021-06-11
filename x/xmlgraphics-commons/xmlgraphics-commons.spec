@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmlgraphics-commons
-Version:        2.3
-Release:        alt1_2jpp8
+Version:        2.6
+Release:        alt1_1jpp11
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -62,7 +62,7 @@ find -name "*.jar" -delete
 
 %build
 %mvn_file : %{name}
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -75,6 +75,9 @@ find -name "*.jar" -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.6-alt1_1jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_2jpp8
 - new version
 
