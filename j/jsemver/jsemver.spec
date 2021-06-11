@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsemver
 Version:        0.9.0
-Release:        alt1_11jpp8
+Release:        alt1_15jpp11
 Summary:        A Java implementation of the Semantic Versioning Specification
 
 License:        MIT
@@ -21,7 +21,6 @@ BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin >= 3.2
 BuildRequires:  maven-javadoc-plugin >= 2.10.2
 BuildRequires:  junit >= 4.12
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -41,8 +40,11 @@ This package contains the API documentation for %{name}
 find -name \*.jar -delete
 find -name \*.class -delete
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -59,6 +61,9 @@ find -name \*.class -delete
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.9.0-alt1_15jpp11
+- fc34 update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_11jpp8
 - fc update
 
