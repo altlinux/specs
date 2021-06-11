@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.11
-Release: alt1
+Release: alt2
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -28,6 +28,7 @@ Source7: docs-2.0.tar
 Patch1: mod_perl-2.0.5-lfs.patch
 Patch2: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
 Patch4: mod_perl-2.0.10-test_config.patch
+Patch5: mod_perl-2.0.11-fix_building_with_perl-5.33.7.patch
 
 Provides: mod_perl = %version
 
@@ -128,6 +129,9 @@ module.
 %patch1 -p1
 %patch2
 %patch4 -p1
+%if "%(rpmquery --qf '%%{VERSION}' perl-base 2>/dev/null)" != "5.32.1"
+%patch5
+%endif
 
 # Complete installation with separate projects
 tar xvf %SOURCE4
@@ -256,6 +260,9 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0.11-alt2
+- added support for perl 5.34
+
 * Fri Mar 19 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.0.11-alt1
 - CVE-2011-2767  Arbitrary Perl code execution in the context
   of the user account via a user-owned .htaccess.
