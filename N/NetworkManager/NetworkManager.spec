@@ -55,7 +55,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.30.4
+Version: 1.31.90
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -83,7 +83,6 @@ BuildRequires: iproute2 ppp-devel
 BuildRequires: libdbus-glib-devel >= %libdbus_glib_version
 BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc
 BuildRequires: libudev-devel
-BuildRequires: iptables
 BuildRequires: libmm-glib-devel
 BuildRequires: libndp-devel
 BuildRequires: libreadline-devel
@@ -371,6 +370,8 @@ export LDFLAGS=-pie
 	--with-ofono=no \
 	--with-libpsl=yes \
 	--enable-firewalld-zone \
+	--with-nft=/usr/sbin/nft \
+	--with-iptables=/sbin/iptables \
 %if_enabled sanitizers
 	--with-address-sanitizer=yes \
 	--enable-undefined-sanitizer \
@@ -495,7 +496,7 @@ fi
 %files
 
 %files -f %name.lang daemon
-%doc COPYING NEWS AUTHORS README CONTRIBUTING TODO
+%doc COPYING NEWS AUTHORS README CONTRIBUTING.md TODO
 %_bindir/nm-online
 %_bindir/nmcli
 %_datadir/dbus-1/system-services/*.service
@@ -512,7 +513,7 @@ fi
 %_libexecdir/NetworkManager/nm-*
 %exclude %_libexecdir/NetworkManager/nm-cloud-setup
 %_sbindir/*
-%_sysconfdir/dbus-1/system.d/*.conf
+%_datadir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/NetworkManager/%name.conf
 %_initrddir/NetworkManager
 %dir %_sysconfdir/NetworkManager
@@ -617,6 +618,16 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Jun 11 2021 Mikhail Efremov <sem@altlinux.org> 1.31.90-alt1
+- D-Bus service files installed in /usr now.
+- etcnet-alt: Rename libnm-glib-aux function.
+- etcnet-alt: Use NetworkManagerUtils.h.
+- etcnet-alt: Update path to nm-platform.h.
+- test: Use upstream variable for CPPFLAGS.
+- etcnet-alt: Update path to include.
+- Dropped iptables from BR.
+- Updated to 1.31.90 (1.32-rc1).
+
 * Thu Apr 22 2021 Mikhail Efremov <sem@altlinux.org> 1.30.4-alt1
 - Updated to 1.30.4 (fixes: CVE-2021-20297).
 
