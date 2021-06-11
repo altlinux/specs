@@ -5,8 +5,8 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mojo-parent
-Version:        50
-Release:        alt1_3jpp11
+Version:        60
+Release:        alt1_1jpp11
 Summary:        Codehaus MOJO parent project pom file
 License:        ASL 2.0
 
@@ -24,9 +24,6 @@ Codehaus MOJO parent project pom file
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-
-# Cobertura plugin is executed only during clean Maven phase.
-%pom_remove_plugin :cobertura-maven-plugin
 
 # Not needed in Fedora.
 %pom_remove_plugin :maven-enforcer-plugin
@@ -50,6 +47,9 @@ cp %SOURCE1 .
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:60-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:50-alt1_3jpp11
 - new version
 
