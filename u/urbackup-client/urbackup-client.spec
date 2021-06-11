@@ -1,7 +1,7 @@
 
 Name: urbackup-client
 Version: 2.4.11
-Release: alt1
+Release: alt2
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
@@ -37,7 +37,10 @@ sed -i "s@/usr/local/sbin/urbackupclientbackend@%_sbindir/urbackupclientbackend@
 export SUID_CFLAGS=-fPIE
 export SUID_LDFLAGS=-fpie
 %ifarch %ix86
-export CXXFLAGS="-msse2 -O2 -g"
+%add_optflags -msse2
+%endif
+%ifarch %e2k
+%add_optflags -mno-sse4.2 -mno-avx
 %endif
 %autoreconf
 %configure \
@@ -87,6 +90,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Thu Jun 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.4.11-alt2
+- fixed build for Elbrus
+
 * Thu Mar 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.11-alt1
 - 2.4.11
 
