@@ -1,23 +1,19 @@
 Summary: Ristretto is an image-viewer for the Xfce Desktop Environment
 Name: ristretto
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
-License: %gpl2plus
-Url: https://goodies.xfce.org/projects/applications/ristretto/
+License: GPLv2+
+Url: https://docs.xfce.org/apps/ristretto/start
 
-# Upstream: git://git.xfce.org/apps/ristretto
+Vcs: https://gitlab.xfce.org/apps/ristretto.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildRequires(pre): rpm-build-licenses
-
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 4.14.0
 BuildRequires: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
-# For exo-csource (needed in maintainer mode)
-BuildRequires: exo-csource
 BuildRequires: intltool libexif-devel libcairo-devel libmagic-devel
 
 %define _unpackaged_files_terminate_build 1
@@ -42,13 +38,20 @@ environment.
 %find_lang %name
 
 %files -f %name.lang
-%doc README NEWS AUTHORS
+%doc README.md NEWS AUTHORS
 %_bindir/*
 %_desktopdir/*.desktop
 %_datadir/metainfo/%name.appdata.xml
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jun 11 2021 Mikhail Efremov <sem@altlinux.org> 0.11.0-alt1
+- Dropped exo-csource from BR.
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Updated to 0.11.0.
+
 * Wed Aug 14 2019 Mikhail Efremov <sem@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 - Workaround for segfault.
