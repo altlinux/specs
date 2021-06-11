@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           svgsalamander
 Version:        1.1.2
-Release:        alt1_5jpp11
+Release:        alt1_9jpp11
 Summary:        An SVG engine for Java
 
 License:        LGPLv2+ or BSD
@@ -26,7 +26,6 @@ BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  javacc-maven-plugin
 BuildRequires:  maven-enforcer-plugin
-BuildRequires:  sonatype-oss-parent
 BuildRequires:  dos2unix
 BuildRequires:  ant
 
@@ -71,7 +70,7 @@ pushd svg-core
 cp %SOURCE1 pom.xml
 %mvn_file : %{name} svgSalamander svg-salamander
 %mvn_alias : com.kitfox.svg:svg-salamander
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 popd
 
 %install
@@ -88,6 +87,9 @@ popd
 %doc www/license/*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_9jpp11
+- fc34 update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_5jpp11
 - new version
 
