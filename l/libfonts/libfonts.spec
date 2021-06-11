@@ -9,21 +9,22 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: libfonts
 Version: 1.1.3
-Release: alt1_29jpp11
+Release: alt1_33jpp11
 Summary: TrueType Font Layouting
 License: LGPLv2 and UCD
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
-#unzip, find . -name "*.jar" -exec rm {} \;
+#unzip, find . -name "*.jar" -exec rm {} \;, rm -r patches
 #to simplify the licensing
-Source: %{name}-%{version}-jarsdeleted.zip
+Source: %{name}-%{version}-jars-itextpatch-deleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib jpackage-utils libloader >= 1.1.3
+BuildRequires: ant jpackage-utils libloader >= 1.1.3
 Requires: jpackage-utils libloader >= 1.1.3
 BuildArch: noarch
 Patch0: libfonts-1.1.2.build.patch
 Patch1: libfonts-1.1.2.java11.patch
+Patch2: libfonts-1.1.3-remove-antcontrib-support.patch
+Patch3: libfonts-1.1.3-remove-commons-logging.patch
 Source44: import.info
-
 %description
 LibFonts is a library developed to support advanced layouting in JFreeReport.
 This library allows to read TrueType-Font files to extract layouting specific
@@ -43,12 +44,12 @@ Javadoc for %{name}.
 %setup -q -c
 %patch0 -p1 -b .build
 %patch1 -p1 -b .java11
+%patch2 -p1 -b .no_antcontrib
+%patch3 -p1 -b .no_commons_logging
 find . -name "*.jar" -exec rm -f {} \;
 rm -r source/org/pentaho/reporting/libraries/fonts/itext
 mkdir -p lib
-build-jar-repository -s -p lib libbase commons-logging-api libloader
-cd lib
-ln -s /usr/share/java/ant ant-contrib
+build-jar-repository -s -p lib libbase libloader
 
 %build
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
@@ -72,6 +73,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_33jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_29jpp11
 - update
 
