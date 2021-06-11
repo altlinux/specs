@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 0.2.44
+%define version 0.2.56
 %global project     clojure
 %global artifactId  core.specs.alpha
 %global archivename %{artifactId}-%{artifactId}
@@ -14,8 +14,8 @@ BuildRequires: jpackage-11-compat
 
 Name:           clojure-core-specs-alpha
 Epoch:          1
-Version:        0.2.44
-Release:        alt1_4jpp11
+Version:        0.2.56
+Release:        alt1_1jpp11
 Summary:        Clojure library containing specs to describe Clojure core macros and functions
 
 Group:          Development/Other
@@ -99,10 +99,13 @@ core macros and functions.
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference epl-v10.html
+%doc --no-dereference LICENSE
 %doc epl-v10.html CHANGES.md README.md CONTRIBUTING.md
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2.56-alt1_1jpp11
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2.44-alt1_4jpp11
 - new version
 
