@@ -1,16 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -43,22 +36,18 @@ BuildRequires: jpackage-11-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%global reltag b6
-%bcond_without  desktop
-
 Name:           bsh
-Version:        2.0
-Release:        alt1_19.b6jpp11
+Version:        2.1.0
+Release:        alt1_1jpp11
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 URL:            http://www.beanshell.org/
 # bundled asm is BSD
 # bsf/src/bsh/util/BeanShellBSFEngine.java is public-domain
 License:        ASL 2.0 and BSD and Public Domain
-BuildArch:      noarch
+
 # ./generate-tarball.sh
-Source0:        %{name}-%{version}-%{reltag}.tar.gz
-Source1:        %{name}-desktop.desktop
+Source0:        %{name}-%{version}.tar.gz
 # Remove bundled jars which cannot be easily verified for licensing
 # Remove code marked as SUN PROPRIETARY/CONFIDENTAIL
 Source2:        generate-tarball.sh
@@ -69,23 +58,21 @@ Patch0:         0000-source-target-1.8.patch
 # - remove references to invisible symbols and methods
 Patch1:         0001-java-11-compatibility.patch
 
-BuildRequires:  javapackages-local
+BuildArch:      noarch
+
 BuildRequires:  ant
 BuildRequires:  bsf
-BuildRequires:  junit
-BuildRequires:  javacc
 BuildRequires:  glassfish-servlet-api
-%if %{with desktop}
-BuildRequires:  ImageMagick-tools
-BuildRequires:  desktop-file-utils
-%endif
+BuildRequires:  javacc
+BuildRequires:  javapackages-local
+BuildRequires:  junit
 
 Requires:       bsf
-Requires:       jline
+Requires:       jline2
+
 # Explicit javapackages-tools requires since scripts use
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
-
 
 Provides:       %{name}-utils = %{epoch}:%{version}-%{release}
 Obsoletes:      %{name}-utils < 0:2.0
@@ -133,7 +120,7 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q -n beanshell-%{version}%{reltag}
+%setup -q -n beanshell-%{version}
 %patch0 -p1
 %patch1 -p1
 
@@ -150,18 +137,9 @@ build-jar-repository lib bsf javacc junit glassfish-servlet-api
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  test dist
 
 %install
-%mvn_artifact pom.xml dist/%{name}-%{version}%{reltag}.jar
+%mvn_artifact pom.xml dist/%{name}-%{version}.jar
 
 %mvn_install -J javadoc
-
-%if %{with desktop}
-# menu entry
-desktop-file-install --mode=644 \
-  --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
-install -d -m 755 %{buildroot}%{_datadir}/pixmaps
-convert src/bsh/util/lib/icon.gif \
-  %{buildroot}%{_datadir}/pixmaps/bsh.png
-%endif
 
 install -d -m 755 %{buildroot}%{_datadir}/%{name}
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/webapps
@@ -171,7 +149,7 @@ install -m 644 dist/bshservlet-wbsh.war %{buildroot}%{_datadir}/%{name}/webapps
 # scripts
 install -d %{buildroot}%{_bindir}
 
-%jpackage_script bsh.Interpreter "\${BSH_DEBUG:+-Ddebug=true}" jline.console.internal.ConsoleRunner %{name}:jline %{name} true
+%jpackage_script bsh.Interpreter "\${BSH_DEBUG:+-Ddebug=true}" jline.console.internal.ConsoleRunner %{name}:jline2/jline %{name} true
 %jpackage_script bsh.Console "\${BSH_DEBUG:+-Ddebug=true}" "" bsh bsh-console true
 
 echo '#!%{_bindir}/bsh' > %{buildroot}%{_bindir}/bshdoc
@@ -183,12 +161,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
 %doc README.md src/Changes.html src/CodeMap.html docs/faq/faq.html
+
 %attr(0755,root,root) %{_bindir}/%{name}*
-%if %{with desktop}
-%{_datadir}/applications/%{name}-desktop.desktop
-%{_datadir}/pixmaps/%{name}.png
-%endif
-%{_datadir}/%{name}
+%{_datadir}/%{name}/
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files manual
@@ -201,6 +176,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.0-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0-alt1_19.b6jpp11
 - update
 
