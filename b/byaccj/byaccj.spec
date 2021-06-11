@@ -1,13 +1,13 @@
+Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:	Parser Generator with Java Extension
 Name:		byaccj
-Epoch:		0
 Version:	1.15
-Release:	alt1_21jpp8
+Release:	alt1_25jpp11
 License:	Public Domain
 URL:		http://byaccj.sourceforge.net/
 
@@ -31,11 +31,12 @@ Java now!
 %prep
 %setup -q -n %{name}%{version}
 chmod -c -x src/* docs/*
-sed -i -e 's|-arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4||g' src/Makefile
+sed -i -e 's|-arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4|$(LDFLAGS)|g' src/Makefile
+
 
 %build
 pushd src
-make yacc CFLAGS="%{optflags}" LDFLAGS=""
+%make_build yacc CFLAGS="%{optflags}" LDFLAGS="$RPM_LD_FLAGS"
 popd
 
 %install
@@ -47,6 +48,9 @@ install -p -m 755 src/yacc %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.15-alt1_25jpp11
+- fc34 update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_21jpp8
 - fc update
 
