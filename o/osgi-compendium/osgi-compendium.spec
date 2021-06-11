@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           osgi-compendium
 Version:        7.0.0
-Release:        alt1_4jpp8
+Release:        alt1_8jpp11
 Summary:        Interfaces and Classes for use in compiling OSGi bundles
 License:        ASL 2.0
 URL:            http://www.osgi.org
@@ -95,7 +95,7 @@ rm -r src/main/java/org/osgi/service/transaction/control/jpa
 %endif
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -110,6 +110,9 @@ rm -r src/main/java/org/osgi/service/transaction/control/jpa
 
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 7.0.0-alt1_8jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_4jpp8
 - fc update
 
