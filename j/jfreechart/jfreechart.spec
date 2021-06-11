@@ -18,7 +18,7 @@ BuildRequires: jpackage-11-compat
 %bcond_with swt
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_16jpp11
+Release:        alt1_18jpp11
 Summary:        Java chart library
 
 License:        LGPLv2+
@@ -33,7 +33,6 @@ BuildRequires:  mvn(javax.servlet:javax.servlet-api) >= 2.5
 %if %{with swt}
 BuildRequires:  eclipse-swt
 %endif
-BuildRequires:  sonatype-oss-parent
 BuildRequires:  ant
 
 BuildArch:      noarch
@@ -60,6 +59,9 @@ Experimental swt extension for jfreechart.
 # Erase prebuilt files
 find \( -name '*.jar' -o -name '*.class' \) -exec rm -f '{}' \;
 %patch0 -p2
+
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
 
 MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
         <configuration>
@@ -120,6 +122,9 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %endif
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.19-alt1_18jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.19-alt1_16jpp11
 - update
 
