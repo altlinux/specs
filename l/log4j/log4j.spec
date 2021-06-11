@@ -5,7 +5,6 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
@@ -20,7 +19,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           log4j
 Version:        2.13.3
-Release:        alt1_1jpp11
+Release:        alt1_3jpp11
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -44,7 +43,7 @@ BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.fusesource.jansi:jansi:1)
 BuildRequires:  mvn(org.jctools:jctools-core)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
@@ -67,7 +66,7 @@ BuildRequires:  mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
 BuildRequires:  mvn(org.eclipse.persistence:javax.persistence)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.fusesource.jansi:jansi:1)
 BuildRequires:  mvn(org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec)
 BuildRequires:  mvn(org.jctools:jctools-core)
 BuildRequires:  mvn(org.lightcouch:lightcouch)
@@ -226,6 +225,9 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # tests are disabled
 %pom_remove_plugin :maven-failsafe-plugin
 
+# Update required version of jansi 1.x
+%pom_xpath_set "//pom:dependency[pom:artifactId='jansi']/pom:version" 1.18
+
 %if %{with jp_minimal}
 %pom_disable_module %{name}-taglib
 %pom_disable_module %{name}-jmx-gui
@@ -311,6 +313,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.13.3-alt1_3jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.13.3-alt1_1jpp11
 - new version
 
