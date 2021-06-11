@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           aqute-bnd
 Version:        4.3.1
-Release:        alt1_1jpp11
+Release:        alt1_4jpp11
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
 License:        ASL 2.0 or EPL-2.0
@@ -61,6 +61,8 @@ BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
+# Requires self to generate OSGi metadata
+BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
 
 # Explicit javapackages-tools requires since bnd script uses
 # /usr/share/java-utils/java-functions
@@ -114,6 +116,7 @@ rm gradlew*
 
 sed 's/@VERSION@/%{version}/' %SOURCE2 > pom.xml
 sed -i 's|${Bundle-Version}|%{version}|' biz.aQute.bndlib/src/aQute/bnd/osgi/bnd.info
+sed -i -e '/-include/d' cnf/includes/jdt.bnd
 
 # libg
 pushd aQute.libg
@@ -150,6 +153,20 @@ cp -p %{SOURCE5} pom.xml
 %pom_add_dep org.osgi:osgi.cmpn
 %pom_add_dep biz.aQute.bnd:aQute.libg:%{version}
 %pom_add_dep biz.aQute.bnd:biz.aQute.bnd.annotation:%{version}
+%pom_add_plugin biz.aQute.bnd:bnd-maven-plugin . "
+<executions>
+  <execution>
+    <goals>
+      <goal>bnd-process</goal>
+    </goals>
+  </execution>
+</executions>"
+%pom_add_plugin org.apache.maven.plugins:maven-jar-plugin . "
+<configuration>
+    <archive>
+        <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+    </archive>
+</configuration>"
 popd
 
 # bnd.annotation
@@ -230,7 +247,8 @@ popd
 %mvn_package biz.aQute.bnd:bnd-plugin-parent __noinstall
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8 -Dworkspace=$(pwd) \
+  -Dorg.eclipse.jdt.core.compiler.source=1.8 -Dorg.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
 
 %install
 %mvn_install
@@ -238,7 +256,7 @@ popd
 install -d -m 755 %{buildroot}%{_sysconfdir}/ant.d
 echo "aqute-bnd slf4j/api slf4j/simple osgi-annotation osgi-core osgi-compendium" >%{buildroot}%{_sysconfdir}/ant.d/%{name}
 
-%jpackage_script aQute.bnd.main.bnd "" "" aqute-bnd:slf4j/slf4j-api:slf4j/slf4j-simple:jline/jline:jansi/jansi:osgi-annotation:osgi-core:osgi-compendium bnd 1
+%jpackage_script aQute.bnd.main.bnd "" "" aqute-bnd:slf4j/slf4j-api:slf4j/slf4j-simple:jline2/jline:jansi1/jansi:osgi-annotation:osgi-core:osgi-compendium bnd 1
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
@@ -258,6 +276,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:4.3.1-alt1_4jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:4.3.1-alt1_1jpp11
 - new version
 
