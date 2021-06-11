@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.35
-%define kernel_rt_release	rt39
+%define kernel_sublevel		.41
+%define kernel_rt_release	rt42
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -89,7 +89,7 @@ BuildRequires: bc
 BuildRequires: openssl-devel
 BuildRequires: rsync
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15 ltp iproute2}}
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -417,6 +417,14 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %check
 vm-run --depmod cat /sys/kernel/realtime
 
+export TMP=/tmp
+if ! timeout 600 vm-run --kvm=cond \
+	"/sbin/sysctl kernel.printk=8;
+	 runltp -S $PWD/skiplist -f syscalls -o out"; then
+	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed
+	exit 1
+fi
+
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
@@ -455,6 +463,10 @@ vm-run --depmod cat /sys/kernel/realtime
 %endif
 
 %changelog
+* Thu Jun 10 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.41-alt1.rt42
+- Update to v5.10.41-rt42 (04 Jun 2021)
+- spec: Run LTP tests in %%check.
+
 * Wed May 26 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.35-alt1.rt39
 - Update to v5.10.35-rt39 (12 May 2021).
 
