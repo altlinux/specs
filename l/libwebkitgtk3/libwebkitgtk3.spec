@@ -19,7 +19,7 @@
 
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt11
+Release: alt12
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -37,6 +37,7 @@ Patch4: webkitgtk-x86-assembler-fix.patch
 Patch5: webkitgtk-2.4.10-suse-aarch64.patch
 Patch6: webkitgtk-2.4.11-icu65.patch
 Patch7: webkitgtk-2.4.11-alt-bison-3.7-workaround.patch
+Patch8: webkitgtk-2.4.11-icu69.patch
 
 Obsoletes: %name-webinspector
 Provides: %name-webinspector = %EVR
@@ -227,6 +228,7 @@ GObject introspection data for the Webkit2 library
 %patch5 -p1
 %patch6 -p2
 %patch7 -p1
+%patch8 -p2
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -365,6 +367,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Fri Jun 11 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.11-alt12
+- FTBFS: fix build with icu69.
+
 * Thu Apr 22 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.11-alt11
 - Fix build with gcc 10 and bison 3.7 (thanks aris@).
 
