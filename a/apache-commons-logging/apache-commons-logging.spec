@@ -16,7 +16,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           apache-commons-logging
 Version:        1.2
-Release:        alt1_23jpp11
+Release:        alt1_25jpp11
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 URL:            http://commons.apache.org/logging
@@ -36,7 +36,7 @@ BuildRequires:  mvn(logkit:logkit)
 %endif
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(log4j:log4j:12)
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
@@ -77,6 +77,12 @@ rm src/main/java/org/apache/commons/logging/impl/AvalonLogger.java
 rm src/main/java/org/apache/commons/logging/impl/LogKitLogger.java
 %endif
 
+# Switch to log4j 2.x API
+%pom_change_dep log4j:log4j org.apache.logging.log4j:log4j-1.2-api
+
+# Avoid hard-coded versions in OSGi metadata
+%pom_xpath_set "pom:properties/pom:commons.osgi.import" '*;resolution:=optional'
+
 %pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :maven-scm-publish-plugin
 
@@ -90,7 +96,7 @@ sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
 rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.logging -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.logging -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 # The build produces more artifacts from one pom
 %mvn_artifact %{SOURCE2} target/commons-logging-%{version}-api.jar
@@ -104,6 +110,9 @@ rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 %doc PROPOSAL.html RELEASE-NOTES.txt
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_25jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_23jpp11
 - fixed build
 
