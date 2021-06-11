@@ -35,7 +35,7 @@ BuildRequires: gcc-c++
 Name:           perl-PDL
 %global cpan_version 2.047
 Version:        2.047
-Release:        alt1_2
+Release:        alt2_2
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -58,7 +58,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  gcc-fortran
 BuildRequires:  libgd3-devel
 BuildRequires:  libgsl-devel >= 1.0
-%ifnarch %e2k
+%ifnarch %e2k %mips
 # archdep, requires patching the patched source
 BuildRequires:  hdf hdf-devel
 %endif
@@ -298,6 +298,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 2.047-alt2_2
+- mipsel support thanks to iv@
+
 * Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 2.047-alt1_2
 - new version
 
