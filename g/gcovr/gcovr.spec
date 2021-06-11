@@ -1,9 +1,9 @@
 Name: gcovr
-Version: 4.2
+Version: 5.0
 Release: alt1
 
 Summary: A Python script for summarizing gcov data
-License: BSD
+License: BSD-3-Clause
 Group: Development/Tools
 Url: https://pypi.python.org/pypi/gcovr
 
@@ -38,6 +38,10 @@ Python.
 %doc README.rst PKG-INFO
 
 %changelog
+* Fri Jun 11 2021 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
+- 5.0
+- fixed License tag
+
 * Sat Nov 09 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
 - 4.2
 
