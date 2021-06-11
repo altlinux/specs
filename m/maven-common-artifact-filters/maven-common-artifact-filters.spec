@@ -7,8 +7,8 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-common-artifact-filters
-Version:        3.1.0
-Release:        alt1_3jpp11
+Version:        3.1.1
+Release:        alt1_1jpp11
 Summary:        Maven Common Artifact Filters
 License:        ASL 2.0
 
@@ -20,6 +20,7 @@ Patch0:         0001-Remove-Maven-3.0-specific-code.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
@@ -30,7 +31,7 @@ BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
 BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 %description
@@ -67,6 +68,9 @@ find -name SonatypeAether\*.java -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_3jpp11
 - new version
 
