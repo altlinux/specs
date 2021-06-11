@@ -1,7 +1,7 @@
 %define _indexhtmldir %_defaultdocdir/indexhtml
 
 Name: indexhtml-common
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: indexhtml-common
@@ -38,6 +38,9 @@ ln -s $(relative %_sbindir/indexhtml-update %_sysconfdir/firsttime.d/indexhtml) 
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.4-alt1
+- indexhtml-update: avoid /etc/sysconfig/i18n dependency
+
 * Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 0.6.3-alt1
 - indexhtml-update: avoid systemd dependency (see also #28528)
 
