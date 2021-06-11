@@ -12,7 +12,7 @@ BuildRequires: jpackage-11-compat
 %bcond_without tests
 
 Name:           univocity-parsers
-Version:        2.9.0
+Version:        2.9.1
 Release:        alt1_1jpp11
 Summary:        Collection of parsers for Java
 License:        ASL 2.0
@@ -69,6 +69,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.html
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.9.0-alt1_1jpp11
 - new version
 
