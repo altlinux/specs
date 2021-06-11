@@ -4,7 +4,7 @@
 %define libkpimimportwizard libkpimimportwizard%sover
 
 Name: kde5-%rname
-Version: 21.04.1
+Version: 21.04.2
 Release: alt1
 %K5init
 
@@ -92,6 +92,9 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 %_K5lib/libKPimImportWizard.so.*
 
 %changelog
+* Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
+- new version
+
 * Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - new version
 

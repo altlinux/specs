@@ -6,7 +6,7 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 21.04.1
+Version: 21.04.2
 Release: alt1
 %K5init altplace appdata
 
@@ -69,6 +69,9 @@ rm -f "$tmp_file"
 %endif
 
 %changelog
+* Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
+- new version
+
 * Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - new version
 
