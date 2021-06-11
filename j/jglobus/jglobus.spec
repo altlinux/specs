@@ -23,7 +23,7 @@ BuildRequires: jpackage-11-compat
 
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_20jpp11
+Release:	alt1_22jpp11
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -73,6 +73,12 @@ Patch10:	%{name}-adapt-to-changes-in-PrivateKeyInfo-class.patch
 #		Update source and target for JDK 11
 #		Add maven-javadoc-plugin configuration for JDK 11
 Patch11:	%{name}-java-version.patch
+#		DERInteger is obsolete
+#		https://github.com/jglobus/JGlobus/pull/177
+Patch12:	%{name}-DERInteger-is-obsolete.patch
+#		DEROutputStream is private
+#		https://github.com/jglobus/JGlobus/pull/177
+Patch13:	%{name}-DEROutputStream-is-private.patch
 
 BuildArch:	noarch
 
@@ -224,6 +230,8 @@ This package contains the API documentation for %{name}.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 # Do not package test classes
 %mvn_package org.jglobus:container-test-utils __noinstall
@@ -289,6 +297,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt1_22jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt1_20jpp11
 - update
 
