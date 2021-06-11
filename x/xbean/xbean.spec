@@ -19,7 +19,7 @@ BuildRequires: jpackage-11-compat
 Name:           xbean
 Summary:        Java plugin based web server
 Version:        4.15
-Release:        alt2_5jpp11
+Release:        alt2_7jpp11
 License:        ASL 2.0
 
 URL:            http://geronimo.apache.org/xbean/
@@ -34,8 +34,8 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-logging:commons-logging-api)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(log4j:log4j:1.2.12)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.ow2.asm:asm)
@@ -86,6 +86,9 @@ rm src/site/site.xml
 # use osgi-core instead of felix-osgi-core
 %pom_change_dep -r :org.osgi.core org.osgi:osgi.core
 
+# switch from log4j 1.2 compat package to log4j 1.2 API shim
+%pom_change_dep -r log4j:log4j org.apache.logging.log4j:log4j-1.2-api
+
 # Unshade ASM
 %pom_remove_dep -r :xbean-asm7-shaded
 %pom_remove_dep -r :xbean-finder-shaded
@@ -110,6 +113,7 @@ sed -i 's/org\.apache\.xbean\.asm7/org.objectweb.asm/g' `find xbean-reflect -nam
 sed -i '/testGetBytecode/i@org.junit.Ignore' xbean-finder/src/test/java/org/apache/xbean/finder/archive/MJarJarArchiveTest.java
 
 # Unused import which is not available in OpenJDK 11
+# Forwarded upstream: https://issues.apache.org/jira/browse/XBEAN-329
 sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/java/org/apache/xbean/propertyeditor/PropertyEditors.java
 
 %if %{without equinox}
@@ -131,7 +135,7 @@ sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/
 
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -146,6 +150,9 @@ sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:4.15-alt2_7jpp11
+- fc34 update
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:4.15-alt2_5jpp11
 - fixed build
 
