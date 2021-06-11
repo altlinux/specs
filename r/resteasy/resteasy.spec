@@ -10,11 +10,12 @@ BuildRequires: jpackage-11-compat
 
 Name:           resteasy
 Version:        3.0.26
-Release:        alt1_5jpp11
+Release:        alt1_7jpp11
 Summary:        Framework for RESTful Web services and Java applications
 License:        ASL 2.0 and CDDL
 URL:            http://resteasy.jboss.org/
 Source0:        https://github.com/resteasy/Resteasy/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
+Patch1:         0001-RESTEASY-2559-Improper-validation-of-response-header.patch
 
 BuildArch:      noarch
 
@@ -116,6 +117,7 @@ Summary:        Client for %{name}
 
 %prep
 %setup -q -n Resteasy-%{namedversion}
+%patch1 -p1
 
 %pom_disable_module arquillian
 %pom_disable_module eagledns
@@ -224,6 +226,9 @@ find -name '*.jar' -print -delete
 %doc --no-dereference License.html
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_7jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_5jpp11
 - update
 
