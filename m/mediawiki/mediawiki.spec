@@ -1,9 +1,9 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.35
+%define major 1.36
 
 Name: mediawiki
-Version: %major.2
-Release: alt2
+Version: %major.0
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -261,6 +261,7 @@ rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/tools/test.selser.sh
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/debug_selser.sh
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/*.js
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/toolcheck.js.sh
+rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/start-rt-test.sh
 rm -rfv %buildroot%_mediawikidir/extensions/VisualEditor/lib/ve/bin/
 rm -rfv %buildroot%_mediawikidir/extensions/VisualEditor/bin/
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/wikipeg/tools/impact
@@ -419,6 +420,9 @@ exit 0
 %_mediawiki_settings_dir/50-PdfHandler.php
 
 %changelog
+* Sun Jun 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36.0-alt1
+- new version 1.36.0 (with rpmrb script)
+
 * Wed May 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.35.2-alt2
 - fix build
 
