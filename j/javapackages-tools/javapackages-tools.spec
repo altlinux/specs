@@ -49,7 +49,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           javapackages-tools
 Version:        5.3.0
-Release:        alt1_13jpp11
+Release:        alt1_15jpp11
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -217,6 +217,7 @@ Requires:       xmvn-resolve
 # Java build systems don't have hard requirement on java-devel, so it should be there
 Requires:       python3-module-javapackages = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{python_interpreter}
+Provides:       javapackages-generators
 
 %description -n javapackages-local
 This package provides non-essential macros and scripts to support Java packaging.
@@ -347,6 +348,9 @@ popd
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:5.3.0-alt1_15jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:5.3.0-alt1_13jpp11
 - update
 
