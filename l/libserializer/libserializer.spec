@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: libserializer
 Version: 1.1.2
-Release: alt1_26jpp11
+Release: alt1_28jpp11
 Summary: JFreeReport General Serialization Framework
 License: LGPLv2+
 #Original source: http://downloads.sourceforge.net/jfreereport/libserializer-%%{version}.zip
@@ -17,11 +17,12 @@ License: LGPLv2+
 #to simplify the licensing
 Source: libserializer-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org
-BuildRequires: ant ant-contrib jpackage-utils libbase >= 1.1.2
+BuildRequires: ant jpackage-utils libbase >= 1.1.2
 Requires: jpackage-utils libbase >= 1.1.2
 BuildArch: noarch
 Patch0: libserializer-1.1.2.build.patch
 Patch1: libserializer-1.1.2.java11.patch
+Patch2:	libserializer-1.1.2-remove-antcontrib-support.patch
 Source44: import.info
 
 %description
@@ -42,11 +43,11 @@ Javadoc for %{name}.
 %setup -q -c
 %patch0 -p1 -b .build
 %patch1 -p1 -b .java11
+%patch2 -p1 -b .no_antcontrib
+
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
 build-jar-repository -s -p lib libbase commons-logging-api
-cd lib
-ln -s /usr/share/java/ant ant-contrib
 
 %build
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
@@ -66,6 +67,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_28jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_26jpp11
 - update
 
