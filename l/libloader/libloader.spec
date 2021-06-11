@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: libloader
 Version: 1.1.3
-Release: alt1_27jpp11
+Release: alt1_29jpp11
 Summary: Resource Loading Framework
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
@@ -17,12 +17,13 @@ License: LGPLv2
 #to simplify the licensing
 Source: %{name}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib jpackage-utils
+BuildRequires: ant jpackage-utils
 BuildRequires: libbase >= 1.1.3
 Requires: jpackage-utils libbase >= 1.1.3
 BuildArch: noarch
 Patch0: libloader-1.1.2.build.patch
 Patch1: libloader-1.1.2.java11.patch
+Patch2: libloader-1.1.3-remove-antcontrib-support.patch
 Source44: import.info
 
 %description
@@ -45,6 +46,8 @@ Javadoc for %{name}.
 %setup -q -c
 %patch0 -p1 -b .build
 %patch1 -p1 -b .java11
+%patch2 -p1 -b .no_antcontrib
+
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
 build-jar-repository -s -p lib libbase commons-logging-api
@@ -73,6 +76,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_29jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_27jpp11
 - update
 
