@@ -1,11 +1,11 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-enxio
 Version:        0.19
-Release:        alt1_4jpp8
+Release:        alt1_8jpp11
 Summary:        Unix sockets for Java
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
 # rest of the source code is ASL 2.0
@@ -24,7 +24,6 @@ BuildRequires:  mvn(com.github.jnr:jnr-ffi)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -45,11 +44,14 @@ This package contains the API documentation for %{name}.
 find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 # Unnecessary for RPM builds
 %pom_remove_plugin ":maven-javadoc-plugin"
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -61,6 +63,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.19-alt1_8jpp11
+- fc34 update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_4jpp8
 - fc update
 
