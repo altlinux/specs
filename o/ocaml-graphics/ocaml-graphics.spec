@@ -1,6 +1,6 @@
 %define libname graphics
 Name: ocaml-%libname
-Version: 5.1.1
+Version: 5.1.2
 Release: alt1
 Summary: The OCaml graphics library
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -41,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jun 11 2021 Anton Farygin <rider@altlinux.ru> 5.1.2-alt1
+- 5.1.2
+
 * Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 5.1.1-alt1
 - 5.1.1
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
