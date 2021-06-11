@@ -1,13 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define upname libtorrent-rasterbar
-%define soname 10
+%define soname 2.0
 
 Name: libtorrent-rasterbar
 Epoch: 3
-Version: 1.2.14
+Version: 2.0.4
 Release: alt1
-
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD-3-Clause and BSL-1.0
 Group: System/Libraries
@@ -16,8 +14,12 @@ Url: https://www.rasterbar.com/products/libtorrent/
 # https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
 
-# Patch from OpenSUSE
-Patch1: libtorrent-rasterbar-fix_library_version.patch
+# git submodules
+Source1: %name-%version-deps-asio-gnutls.tar
+Source2: %name-%version-deps-try_signal.tar
+Source3: %name-%version-simulation-libsimulator.tar
+
+Patch1: libtorrent-fedora-python-sha256.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -78,7 +80,7 @@ that other clients and libraries suffer from. libTorrent features:
 * Upload and download throttle.
 * And much more...
 
-%package -n %upname-devel
+%package devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C++
 Requires: %name%soname = %EVR
@@ -89,21 +91,21 @@ Conflicts: libtorrent-rasterbar7-devel < %EVR
 Obsoletes: libtorrent-rasterbar7-devel < %EVR
 Conflicts: libtorrent-devel
 
-%description -n %upname-devel
+%description devel
 The libtorrent-devel package contains libraries and header files needed
 to develop applications using libTorrent.
 
-%package -n python3-module-%upname
+%package -n python3-module-%name
 Summary: libTorrent python bindings
 Group: Development/Python3
 Requires: %name%soname = %EVR
 
-%description -n python3-module-%upname
+%description -n python3-module-%name
 The python3-module-libtorrent-rasterbar contains
 python-3 bindings to libTorrent.
 
 %prep
-%setup
+%setup -a1 -a2 -a3
 %patch1 -p1
 
 %build
@@ -114,7 +116,6 @@ export LIBS=-latomic
 %cmake \
 	-DCMAKE_CXX_STANDARD=14 \
 	-Dbuild_examples=ON \
-	-Dbuild_tests=ON \
 	-Dbuild_tools=ON \
 	-Dpython-bindings=ON \
 	-Dpython-egg-info=ON \
@@ -133,18 +134,21 @@ export LIBS=-latomic
 %_libdir/*.so.%{soname}
 %_libdir/*.so.%{soname}.*
 
-%files -n %upname-devel
+%files devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
 %_datadir/cmake/Modules/*.cmake
 %_libdir/cmake/*
 
-%files -n python3-module-%upname
+%files -n python3-module-%name
 %python3_sitelibdir/libtorrent*.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3:2.0.4-alt1
+- Updated to upstream version 2.0.4
+
 * Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.14-alt1
 - Updated to upstream version 1.2.14.
 
