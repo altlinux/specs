@@ -10,7 +10,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jgoodies-looks
 Version:        2.6.0
-Release:        alt1_14jpp11
+Release:        alt1_16jpp11
 Summary:        Free high-fidelity Windows and multi-platform appearance
 
 License:        BSD
@@ -24,7 +24,6 @@ BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.jgoodies:jgoodies-common) >= 1.8.0
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 # JGoodies Looks >= 2.4.2 doesn't provide demo jars anymore
 Provides:       %{name}-demo = %{version}-%{release}
 Obsoletes:      %{name}-demo < 2.4.2
@@ -79,6 +78,9 @@ for file in LICENSE.txt RELEASE-NOTES.txt; do
   rm $file.orig
 done
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 %mvn_file :%{name} %{name} %{name}
 
 
@@ -99,6 +101,9 @@ done
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.6.0-alt1_16jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.6.0-alt1_14jpp11
 - update
 
