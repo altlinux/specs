@@ -4,7 +4,7 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           weld-parent
-Version:        41
+Version:        44
 Release:        alt1_1jpp11
 Summary:        Parent POM for Weld
 License:        ASL 2.0
@@ -29,6 +29,9 @@ Parent POM for Weld
 %pom_remove_plugin :maven-remote-resources-plugin
 %pom_remove_plugin :maven-source-plugin
 
+%pom_remove_dep :maven-scm-api
+
+
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
@@ -38,6 +41,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 44-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 41-alt1_1jpp11
 - new version
 
