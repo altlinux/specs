@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.48
-Release: alt2
+Release: alt3
 Epoch: 1
 
 License: %asl
@@ -1530,6 +1530,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Jun 11 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.48-alt3
+- fixed httpd restart from filetrigger
+
 * Thu Jun 10 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.48-alt2
 - added xml2enc module to mod_proxy_html subpackage
 
