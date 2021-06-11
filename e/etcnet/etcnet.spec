@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.20
-Release:	alt1
+Release:	alt2
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -9,7 +9,7 @@ Url:		https://www.altlinux.org/Etcnet
 
 Source:		%name-%version.tar
 
-PreReq:		setup >= 0:2.1.9-ipl18mdk, service, startup >= 0:0.9.3-alt1
+PreReq:		setup service
 Requires:	grep, sed, iproute2 >= 4.4.0, ifrename >= 28-alt5.pre10, chkconfig
 Requires:	etcnet-defaults = %version-%release
 
@@ -141,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.20-alt2
+- Drop Requires: startup.
+
 * Wed Nov 25 2020 Mikhail Efremov <sem@altlinux.org> 0.9.20-alt1
 - dhcpcd: Support dhcpcd-9 pidfiles location.
 - dhcpcd: Stop dhcpcd if -4 or -6 options were used.
