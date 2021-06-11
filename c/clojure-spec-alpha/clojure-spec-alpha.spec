@@ -1,48 +1,113 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 0.2.194
+%global project     clojure
+%global artifactId  spec.alpha
+%global archivename %{artifactId}-%{artifactId}
+%global full_version %{version}
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+Name:           clojure-spec-alpha
+Epoch:          1
+Version:        0.2.194
+Release:        alt1_2jpp11
+Summary:        Spec is a Clojure library to describe the structure of data and functions
 
-Name: clojure-spec-alpha
-Version: 0.2.187
-Summary: Spec is a Clojure library to describe the structure of data and functions
-License: EPL-1.0
-Url: https://github.com/clojure/spec.alpha/
-Group: Development/Java
-Release: alt0.1jpp
-
-Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.org>
-Provides: mvn(org.clojure:spec.alpha) = 0.2.187
-Provides: mvn(org.clojure:spec.alpha:pom:) = 0.2.187
-Requires: java-headless
-Requires: javapackages-filesystem
-
-BuildArch: noarch
-Source: clojure-spec-alpha-0.2.187-1.fc33.cpio
+Group:          Development/Other
+License:        EPL-1.0
+URL:            https://github.com/%{project}/%{artifactId}/
+Source0:        https://github.com/%{project}/%{artifactId}/archive/%{artifactId}-%{full_version}.zip
 
 
-%description
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:  mvn(com.theoryinpractise:clojure-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.clojure:clojure)
+Source44: import.info
+
+
+%description 
 Spec is a Clojure library to describe the structure of data and functions.
 Specs can be used to validate data, conform (destructure) data, explain
 invalid data, generate examples that conform to the specs, and automatically
 use generative testing to test functions.
 
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{archivename}-%{full_version}
+# Remove unpackaged parent pom and add the required groupId
+%pom_remove_parent pom.xml
+%pom_xpath_inject pom:project "<groupId>org.clojure</groupId>"
+%pom_xpath_inject pom:project/pom:properties "<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>"
+%pom_xpath_inject pom:project/pom:properties "<clojure.source.dir>src/main/clojure</clojure.source.dir>"
+%pom_xpath_inject pom:project/pom:properties "<clojure.testSource.dir>src/test/clojure</clojure.testSource.dir>"
+ 
+# Hook clojure-maven-plugin to maven phases
+%pom_xpath_inject "pom:execution[pom:id='clojure-compile']" "<goals><goal>compile</goal></goals>"
+%pom_xpath_inject "pom:execution[pom:id='clojure-test']" "<goals><goal>test</goal></goals>"
+
+# Add builder helper to copy clojure source files so that
+# compiler finds them.
+%pom_add_plugin org.codehaus.mojo:build-helper-maven-plugin:1.12 . "
+        <executions>
+          <execution>
+            <id>add-clojure-source-dirs</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+              <goal>add-resource</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/clojure</source>
+              </sources>
+              <resources>
+                <resource>
+                  <directory>src/main/clojure</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-clojure-test-source-dirs</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+              <goal>add-test-resource</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/test/clojure</source>
+              </sources>
+              <resources>
+                <resource>
+                  <directory>src/test/clojure</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
-
+%files -f .mfiles
+%doc --no-dereference LICENSE
+%doc CHANGES.md README.md CONTRIBUTING.md
 %changelog
+* Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2.194-alt1_2jpp11
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2.187-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
