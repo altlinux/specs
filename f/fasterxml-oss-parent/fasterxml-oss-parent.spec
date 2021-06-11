@@ -6,8 +6,8 @@ BuildRequires: jpackage-11-compat
 %global srcname oss-parent
 
 Name:          fasterxml-oss-parent
-Version:       40
-Release:       alt1_1jpp11
+Version:       41
+Release:       alt1_2jpp11
 Summary:       FasterXML parent pom
 License:       ASL 2.0
 
@@ -57,6 +57,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 41-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 40-alt1_1jpp11
 - new version
 
