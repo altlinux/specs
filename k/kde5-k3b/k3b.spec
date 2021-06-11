@@ -23,7 +23,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 21.04.1
+Version: 21.04.2
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -183,6 +183,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
+- new version
+
 * Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - new version
 

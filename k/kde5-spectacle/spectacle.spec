@@ -5,8 +5,8 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 21.04.1
-Release: alt2
+Version: 21.04.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -88,6 +88,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
+- new version
+
 * Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt2
 - fix paths to binary in service files
 

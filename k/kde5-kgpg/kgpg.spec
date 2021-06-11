@@ -1,7 +1,7 @@
 %define rname kgpg
 
 Name: kde5-%rname
-Version: 21.04.1
+Version: 21.04.2
 Release: alt1
 %K5init
 
@@ -58,6 +58,9 @@ Graphical GPG frontend.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
+- new version
+
 * Wed May 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - new version
 
