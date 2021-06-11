@@ -10,7 +10,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             jboss-logging
 Version:          3.4.1
-Release:          alt1_2jpp11
+Release:          alt1_6jpp11
 Summary:          The JBoss Logging Framework
 License:          ASL 2.0
 
@@ -20,8 +20,8 @@ Source0:          %{url}/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    mvn(log4j:log4j:1.2.16)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.logging.log4j:log4j-1.2-api)
 BuildRequires:    mvn(org.apache.logging.log4j:log4j-api)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
@@ -45,11 +45,14 @@ This package contains the API documentation for %{name}.
 # Unneeded task
 %pom_remove_plugin :maven-source-plugin
 
+# switch from log4j 1.2 compat package to log4j 1.2 API shim
+%pom_change_dep log4j:log4j org.apache.logging.log4j:log4j-1.2-api
+
 cp -p src/main/resources/META-INF/LICENSE.txt .
 sed -i 's/\r//' LICENSE.txt
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -61,6 +64,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.4.1-alt1_6jpp11
+- fc34 update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 3.4.1-alt1_2jpp11
 - new version
 
