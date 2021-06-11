@@ -1,6 +1,6 @@
 Name: alterator-net-eth
 Version: 5.1.12
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -12,7 +12,7 @@ Requires: alterator-l10n >= 2.1-alt9
 Requires: alterator-sh-functions >= 0.12-alt1
 Requires: alterator-hw-functions >= 0.7-alt2
 Requires: alterator-net-functions >= 2.0.0
-Requires: etcnet openresolv avahi-autoipd startup >= 0.9.8.21-alt1
+Requires: etcnet openresolv avahi-autoipd
 # For use in netdev_is_wireless() from alterator-hw-functions.
 Requires: iw
 
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 5.1.12-alt2
+- Drop Requires: startup
+
 * Wed Mar 03 2021 Evgeny Sinelnikov <sin@altlinux.org> 5.1.12-alt1
 - Set NetworkManager Native as default if NetworkManager exists.
 
