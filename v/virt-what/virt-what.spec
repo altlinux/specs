@@ -1,5 +1,5 @@
 Name: virt-what
-Version: 1.15
+Version: 1.21
 Release: alt1
 
 Summary: Detect if we are running in a virtual machine
@@ -47,6 +47,9 @@ know about or cannot detect.
 %_man1dir/*
 
 %changelog
+* Sat Jun 12 2021 Ilya Mashkin <oddity@altlinux.ru> 1.21-alt1
+- 1.21
+
 * Mon Aug 10 2015 Michael Shigorin <mike@altlinux.org> 1.15-alt1
 - 1.15
 
