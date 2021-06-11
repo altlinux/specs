@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sequence-library
 Version:        1.0.3
-Release:        alt1_5jpp8
+Release:        alt1_9jpp11
 Summary:        Textual diff and merge library
 
 License:        Sequence     
@@ -41,7 +41,7 @@ find -name '*.jar' -o -name '*.class' -delete
 cp -pr %{SOURCE1} pom.xml
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -54,6 +54,9 @@ cp -pr %{SOURCE1} pom.xml
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_9jpp11
+- fc34 update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_5jpp8
 - fc update
 
