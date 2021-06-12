@@ -23,7 +23,7 @@ BuildRequires: jpackage-11-compat
 
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_22jpp11
+Release:	alt2_22jpp11
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -101,7 +101,7 @@ BuildRequires:	mvn(org.apache.maven.plugins:maven-surefire-plugin)
 BuildRequires:	mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires:	mvn(org.apache.tomcat:tomcat-coyote)
 %endif
-BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on:1.65)
 Source44: import.info
 
 %description
@@ -258,6 +258,8 @@ This package contains the API documentation for %{name}.
 %pom_disable_module ssl-proxies-tomcat
 %endif
 
+%pom_change_dep org.bouncycastle: ::1.65
+
 %build
 # Many tests requires network connections and a valid proxy certificate
 %mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Ptomcat7 -Dproject.build.sourceEncoding=UTF-8
@@ -297,6 +299,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt2_22jpp11
+- fixed build
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt1_22jpp11
 - fc34 update
 
