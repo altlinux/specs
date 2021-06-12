@@ -3,24 +3,19 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:          jackson-core
-Version:       2.11.2
-Release:       alt1_1jpp11
-Summary:       Core part of Jackson
-License:       ASL 2.0
+Name:           jackson-core
+Version:        2.11.4
+Release:        alt1_2jpp11
+Summary:        Core part of Jackson
+License:        ASL 2.0
 
-URL:           https://github.com/FasterXML/jackson-core
-Source0:       %{url}/archive/%{name}-%{version}.tar.gz
+URL:            https://github.com/FasterXML/jackson-core
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-
-%ifarch %{arm}
-# Speed up builds on 32bit arm in case we get such a builder
-BuildRequires: java-1.8.0-openjdk-aarch32-devel
-%endif
 
 BuildArch:      noarch
 Source44: import.info
@@ -65,6 +60,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_1jpp11
 - new version
 
