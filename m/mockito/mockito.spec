@@ -5,8 +5,8 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mockito
-Version:        2.28.2
-Release:        alt1_1jpp11
+Version:        3.5.13
+Release:        alt1_2jpp11
 Summary:        Tasty mocking framework for unit tests in Java
 License:        MIT
 URL:            https://site.mockito.org/
@@ -71,7 +71,7 @@ EOF
 %mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -84,6 +84,9 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.5.13-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.28.2-alt1_1jpp11
 - new version
 
