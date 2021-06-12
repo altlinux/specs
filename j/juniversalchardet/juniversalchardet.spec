@@ -1,77 +1,63 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ swig
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global githash 3fd330c443272699cd8ba5d7da7e56c27a567ec1
-Name:          juniversalchardet
-Version:       1.0.3
-Release:       alt1_13jpp8
-Summary:       A Java port of Mozilla's universalchardet
-# ALL files are under MPL (v1.1) GPL license
-# build.xml and c/* under MPL 1.1/GPL 2.0/LGPL 2.1 license
-License:       MPLv1.1 or GPLv2+ or LGPLv2+
-URL:           https://github.com/thkoch2001/juniversalchardet
-Source0:       https://github.com/thkoch2001/juniversalchardet/archive/%{githash}/%{name}-%{githash}.tar.gz
-Source1:       http://repo1.maven.org/maven2/com/googlecode/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-# added javadoc task
-# fix example build
-Patch0:        %{name}-1.0.3-build.patch
+Name:           juniversalchardet
+Version:        2.4.0
+Release:        alt1_2jpp11
+Summary:        Java character encoding detection
 
-BuildRequires: ant
-BuildRequires: javapackages-local
+# Choice of licenses offered in each source file
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
+URL:            https://github.com/albfernandez/juniversalchardet
+BuildArch:      noarch
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildArch:     noarch
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
+%{?javadoc_package}
+
 %description
-juniversalchardet is a Java port of 'universalchardet',
-that is the encoding detector library of Mozilla.
-
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+Juniversalchardet is a Java port of universalchardet, that is, the
+encoding detector library of Mozilla.
 
 %prep
-%setup -q -n %{name}-%{githash}
-find . -name "*.class" -delete
-find . -name "*.jar" -delete
+%setup -q
 
-%patch0 -p0
 
-sed -i 's/1.5/1.6/' build.xml
+# Fix newline encoding
+sed -i.orig 's/\r//' README.md
+touch -r README.md.orig README.md
+rm README.md.orig
 
-sed -i 's/\r//' readme.txt
+# Plugins not needed for an RPM build
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :spotbugs-maven-plugin
+
+# Provide alias for the old name
+%mvn_alias com.github.albfernandez:juniversalchardet com.googlecode.juniversalchardet:juniversalchardet
 
 %build
-
-%ant dist javadoc example
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
-%mvn_artifact %{SOURCE1} dist/%{name}-%{version}.jar
-%mvn_file com.googlecode.%{name}:%{name} %{name}
-%mvn_install -J dist/docs
-
-install -pm 644 dist/%{name}-example-%{version}.jar \
- %{buildroot}%{_javadir}/%{name}-example.jar
+%mvn_install
 
 %files -f .mfiles
-%{_javadir}/%{name}-example.jar
-%doc readme.txt
-%doc --no-dereference MPL-1.1.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference MPL-1.1.txt
+%doc mozilla_repositories.txt README.md
+%doc --no-dereference LICENSE
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt1_2jpp11
+- new version
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_13jpp8
 - fixed build with new java
 
