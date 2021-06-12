@@ -56,8 +56,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_with woodstox
 
 Name:           xstream
-Version:        1.4.12
-Release:        alt1_6jpp8
+Version:        1.4.14
+Release:        alt1_2jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://x-stream.github.io/
@@ -121,23 +121,23 @@ Source44: import.info
 
 
 %description
-XStream is a simple library to serialize objects to XML 
-and back again. A high level facade is supplied that 
-simplifies common use cases. Custom objects can be serialized 
-without need for specifying mappings. Speed and low memory 
-footprint are a crucial part of the design, making it suitable 
-for large object graphs or systems with high message throughput. 
-No information is duplicated that can be obtained via reflection. 
-This results in XML that is easier to read for humans and more 
-compact than native Java serialization. XStream serializes internal 
-fields, including private and final. Supports non-public and inner 
-classes. Classes are not required to have default constructor. 
-Duplicate references encountered in the object-model will be 
-maintained. Supports circular references. By implementing an 
-interface, XStream can serialize directly to/from any tree 
-structure (not just XML). Strategies can be registered allowing 
-customization of how particular types are represented as XML. 
-When an exception occurs due to malformed XML, detailed diagnostics 
+XStream is a simple library to serialize objects to XML
+and back again. A high level facade is supplied that
+simplifies common use cases. Custom objects can be serialized
+without need for specifying mappings. Speed and low memory
+footprint are a crucial part of the design, making it suitable
+for large object graphs or systems with high message throughput.
+No information is duplicated that can be obtained via reflection.
+This results in XML that is easier to read for humans and more
+compact than native Java serialization. XStream serializes internal
+fields, including private and final. Supports non-public and inner
+classes. Classes are not required to have default constructor.
+Duplicate references encountered in the object-model will be
+maintained. Supports circular references. By implementing an
+interface, XStream can serialize directly to/from any tree
+structure (not just XML). Strategies can be registered allowing
+customization of how particular types are represented as XML.
+When an exception occurs due to malformed XML, detailed diagnostics
 are provided to help isolate and fix the problem.
 
 
@@ -312,6 +312,9 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4.14-alt1_2jpp8
+- new version
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4.12-alt1_6jpp8
 - new version, use jvm8
 
