@@ -5,17 +5,17 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 65.1
+%define version 68.2
 %global gittag %(v=%{version}; echo "release-$v" | sed 's/\\./-/')
 %global srctgz %(v=%{version}; echo "icu4j-$v" | sed 's/\\./_/')
 
 Name:           icu4j
-Version:        65.1
-Release:        alt1_5jpp8
+Version:        68.2
+Release:        alt1_1jpp11
 Epoch:          1
 Summary:        International Components for Unicode for Java
 # ICU itself is now covered by Unicode license, but still has contributed
@@ -101,9 +101,9 @@ rm main/tests/charset/src/com/ibm/icu/dev/test/charset/TestConversion.java
 rm main/tests/translit/src/com/ibm/icu/dev/test/translit/TransliteratorDisorderedMarksTest.java
 
 %build
-export JAVA_HOME=%{_jvmdir}/java/
+#export JAVA_HOME=%{_jvmdir}/java/
 mkdir -p ~/.ant/lib
-ant -Djavac.source=8 -Djavac.target=8 -Divy.mode=local -Doffline=true -Ddoclint.option='-Xdoclint:none' -Dicu4j.api.doc.jdk.link= all
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djavac.source=8 -Djavac.target=8 -Divy.mode=local -Doffline=true -Ddoclint.option='-Xdoclint:none' -Dicu4j.api.doc.jdk.link= all
 
 for jar in icu4j icu4j-charset icu4j-localespi ; do
   sed -i -e 's/@POMVERSION@/%{version}/' maven/$jar/pom.xml
@@ -130,6 +130,9 @@ install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 %doc --no-dereference main/shared/licenses/*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:68.2-alt1_1jpp11
+- new version
+
 * Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 1:65.1-alt1_5jpp8
 - new version
 

@@ -1,41 +1,51 @@
 BuildArch: noarch
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-golang rpm-build-mono
-BuildRequires: java-devel-default python3-module-setuptools rpm-build-golang
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-golang rpm-macros-java rpm-macros-nodejs
+BuildRequires: java-devel-default python3-module-setuptools
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# NOTE: The JavaScript runtime library includes a bundled copy of an obsolete
-# version of Torben Hasse's require.js.  If somebody who knows about JavaScript
-# will do something about that, we can include that runtime as well.  For now,
-# it is omitted.
-#
 # NOTE: A PHP runtime is available as a separate project:
 # https://github.com/antlr/antlr-php-runtime/
+#
+# NOTE: A dart target is available, should dart ever be added to Fedora.
+#
+# NOTE: A C# target is available.  It can be built into a DLL successfully with
+# the dotnet package, but we don't seem to be able to create a nupkg with the
+# current tooling, nor is there a well-defined place where a nupkg should be
+# installed.
 
-%global swiftarches x86_64 aarch64
 %global swiftarches %nil
 %global swiftdir    %{_prefix}/lib/swift/linux
 
+# Use when a previous version has broken deps
+%bcond_with bootstrap
+
 Name:           antlr4-project
-Version:        4.8
-Release:        alt1_5jpp8
+Version:        4.9.2
+Release:        alt1_1jpp11
 Summary:        Parser generator (ANother Tool for Language Recognition)
 
 License:        BSD
-URL:            http://www.antlr.org/
+URL:            https://www.antlr.org/
 Source0:        https://github.com/antlr/antlr4/archive/%{version}/antlr4-%{version}.tar.gz
 # Work around a "code too large" error while compiling a generated file
 # https://github.com/antlr/antlr4/pull/2739
 Patch0:         antlr4-unicode-properties.patch
-# Fix mono errors due to ambiguous references
-# Upstream is not yet ready to move to newer mono versions.
-Patch1:         antlr4-mono-ambiguous.patch
 # Fix some javadoc problems
-Patch2:         antlr4-javadoc.patch
+# https://github.com/antlr/antlr4/pull/2960
+Patch1:         antlr4-javadoc.patch
+# Unbundle utf8cpp
+Patch2:         antlr4-utf8cpp.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc-c++
@@ -45,7 +55,9 @@ BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(com.webguys:string-template-maven-plugin)
 BuildRequires:  mvn(org.abego.treelayout:org.abego.treelayout.core)
 BuildRequires:  mvn(org.antlr:antlr3-maven-plugin)
+%if %{without bootstrap}
 BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
+%endif
 BuildRequires:  mvn(org.antlr:antlr-runtime)
 BuildRequires:  mvn(org.antlr:ST4)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -61,12 +73,18 @@ BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 BuildRequires:  pkgconfig(uuid)
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-setuptools
+BuildRequires:  libutfcpp-devel
+
+# We can no longer successfully build or install the mono runtime.  See comment
+# at the top of this spec file.
+# This can be removed when Fedora 37 reaches EOL.
+#Obsoletes:      mono-antlr4-runtime < 4.9.1
 
 %global _desc \
-ANTLR (ANother Tool for Language Recognition) is a powerful parser \
-generator for reading, processing, executing, or translating structured \
-text or binary files.  It is widely used to build languages, tools, and \
-frameworks.  From a grammar, ANTLR generates a parser that can build \
+ANTLR (ANother Tool for Language Recognition) is a powerful parser\
+generator for reading, processing, executing, or translating structured\
+text or binary files.  It is widely used to build languages, tools, and\
+frameworks.  From a grammar, ANTLR generates a parser that can build\
 and walk parse trees.
 Source44: import.info
 
@@ -162,7 +180,7 @@ This package provides the runtime library used by C++ ANTLR parsers.
 %package     -n antlr4-cpp-runtime-devel
 Group: Development/Java
 Summary:        Header files for programs that use C++ ANTLR parsers
-Requires:       antlr4-cpp-runtime = %{version}-%{release}
+Requires:       libantlr4 = %{version}-%{release}
 
 %description -n antlr4-cpp-runtime-devel 
 
@@ -177,25 +195,24 @@ parsers.
 Group: Development/Java
 Summary:        ANTLR runtime for Go
 BuildArch:      noarch
-BuildRequires:  rpm-macros-golang
+BuildRequires:  rpm-build-golang
 
 %description -n golang-antlr4-runtime-devel 
 
 This package provides the runtime library used by Go ANTLR parsers.
 %endif
 
-%ifarch %mono_arches
+%ifarch %nodejs_arches
 %_desc
-%package     -n mono-antlr4-runtime
+%package     -n nodejs-antlr4
 Group: Development/Java
-Summary:        ANTLR runtime for C\# (mono)
-License:        MIT
+Summary:        ANTLR runtime for JavaScript
 BuildArch:      noarch
-BuildRequires:  mono-core mono-devel mono-mono2-compat mono-mono2-compat-devel mono-web
+BuildRequires:  node
 
-%description -n mono-antlr4-runtime 
+%description -n nodejs-antlr4 
 
-This package provides the runtime library used by C\# (mono) ANTLR
+This package provides the runtime library used by JavaScript ANTLR
 parsers.
 %endif
 
@@ -204,6 +221,10 @@ parsers.
 Group: Development/Java
 Summary:        ANTLR runtime for Python 3
 BuildArch:      noarch
+
+# This can be removed when F31 reaches EOL
+Obsoletes:      antlr4-python3-runtime < 1:4.8-1
+Provides:       antlr4-python3-runtime = 1:%{version}-%{release}
 
 %description -n python3-module-antlr4 
 
@@ -265,22 +286,29 @@ sed -i 's,\\>,>,g' tool/resources/org/antlr/v4/tool/templates/unicodedata.st
 
 %mvn_package :antlr4-master antlr4-runtime
 
+%if %{with bootstrap}
+# Avoid the need to build with an older version of antlr4
+%pom_remove_plugin org.antlr:antlr4-maven-plugin runtime/Java
+cp -p runtime/Cpp/runtime/src/tree/xpath/XPathLexer.tokens runtime/Java/src
+%endif
+
+# Build for JDK 1.8
+sed -i 's/1\.7/1.8/g' pom.xml
+
+# Use utf8cpp instead of the deprecated wstring_convert
+sed -i 's/# \(.*DUSE_UTF8_INSTEAD_OF_CODECVT.*\)/\1/' runtime/Cpp/CMakeLists.txt
+
 # Change library install directory on 64-bit platforms
 if [ "%{_lib}" != "lib" ]; then
   sed -i 's/DESTINATION lib/&64/' runtime/Cpp/runtime/CMakeLists.txt
 fi
 
 %build
-# Ensure we get the jit on arm
-#ifarch %{arm}
-#export JAVA_HOME=$(ls -1d %{_jvmdir}/java-1.8.0-openjdk-aarch32*)
-#else
 #export JAVA_HOME=%{_jvmdir}/java
-#endif
 
 # Build for Java
 # Due to the missing takari packages, we cannot run the tests
-%mvn_build -s -f -- -Dsource=1.7
+%mvn_build -s -f -- -Dsource=1.8
 
 %if 0
 # Build the C++ runtime
@@ -288,13 +316,6 @@ cd runtime/Cpp
 %{fedora_v2_cmake} -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 %fedora_v2_cmake_build
 cd -
-
-# Build the Mono runtime
-%ifarch %mono_arches
-cd runtime/CSharp/runtime/CSharp
-xbuild Antlr4.mono.sln
-cd -
-%endif
 
 # Build the Python 3 runtime
 cd runtime/Python3
@@ -343,17 +364,16 @@ excluderegex:.*example.*
 EOF
 %endif
 
-# Install the Mono runtime
-#ifarch %mono_arches
-%if 0
-mkdir -p %{buildroot}%{_monogacdir}
-gacutil -i runtime/CSharp/runtime/CSharp/Antlr4.Runtime/lib/Debug/Antlr4.Runtime.Standard.dll -f -package antlr4 -root %{buildroot}%{_prefix}/lib
+# Install the JavaScript runtime
+%ifarch %nodejs_arches
+mkdir -p %{buildroot}%{nodejs_sitelib}
+cp -a runtime/JavaScript/src/antlr4 %{buildroot}%{nodejs_sitelib}
 %endif
 
 # Install the Python 3 runtime
 cd runtime/Python3
 %python3_install
-sed 's,#!python,#!%{__python3},' bin/pygrun > %{buildroot}%{_bindir}/pygrun
+sed 's,#!python,#!python3,' bin/pygrun > %{buildroot}%{_bindir}/pygrun
 touch -r bin/pygrun %{buildroot}%{_bindir}/pygrun
 chmod 0755 %{buildroot}%{_bindir}/pygrun
 cd -
@@ -371,10 +391,20 @@ cd -
 # Create man pages
 export PYTHONPATH=%{buildroot}%{python3_sitelibdir_noarch}
 mkdir -p %{buildroot}%{_mandir}/man1
-cd %{buildroot}%{_bindir}
-help2man -N --version-string=4.8 -h '' ./antlr4 > \
+%if %{with bootstrap}
+cat > antlr4 << EOF
+java -cp %{buildroot}%{_javadir}/antlr4/antlr4.jar:%{buildroot}%{_javadir}/antlr4/antlr4-runtime.jar:$(build-classpath antlr3-runtime stringtemplate4 treelayout) org.antlr.v4.Tool
+EOF
+chmod a+x antlr4
+help2man -N --version-string=%{version} -h '' ./antlr4 > \
   %{buildroot}%{_mandir}/man1/antlr4.1
-#help2man -N --version-string=4.8 ./pygrun > \
+cd %{buildroot}%{_bindir}
+%else
+cd %{buildroot}%{_bindir}
+help2man -N --version-string=%{version} -h '' ./antlr4 > \
+  %{buildroot}%{_mandir}/man1/antlr4.1
+%endif
+#help2man -N --version-string=%{version} ./pygrun > \
 #  %{buildroot}%{_mandir}/man1/pygrun.1
 cd -
 
@@ -421,13 +451,11 @@ rm -fr %{buildroot}%{_docdir}/libantlr4
 %{go_path}/src/github.com/
 %endif
 
-#ifarch %mono_arches
-%if 0
-%files -n mono-antlr4-runtime
-%doc runtime/CSharp/README.md
+%ifarch %nodejs_arches
+%files -n nodejs-antlr4
+%doc runtime/JavaScript/README.md
 %doc --no-dereference LICENSE.txt
-%{_monodir}/antlr4/
-%{_monogacdir}/Antlr4.Runtime.Standard/
+%{nodejs_sitelib}/antlr4/
 %endif
 
 %files -n python3-module-antlr4
@@ -448,6 +476,9 @@ rm -fr %{buildroot}%{_docdir}/libantlr4
 %endif
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 4.9.2-alt1_1jpp11
+- new version
+
 * Thu Nov 12 2020 Igor Vlasenko <viy@altlinux.ru> 4.8-alt1_5jpp8
 - new version (closes: #39185)
 
