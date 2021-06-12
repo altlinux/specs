@@ -1,6 +1,6 @@
 Name:    libleatherman
-Version: 1.12.4
-Release: alt2.1
+Version: 1.12.5
+Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -70,6 +70,9 @@ subst 's|#!.*python$|#!%__python3|' scripts/cpplint.py
 %_libdir/cmake/leatherman
 
 %changelog
+* Sat Jun 12 2021 Andrey Cherepanov <cas@altlinux.org> 1.12.5-alt1
+- New version.
+
 * Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12.4-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
