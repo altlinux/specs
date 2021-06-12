@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,8 +18,8 @@ BuildRequires: jpackage-1.8-compat
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        8.4.1
-Release:        alt1_9jpp8
+Version:        8.6.3
+Release:        alt1_2jpp11
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -61,10 +61,13 @@ Obsoletes: %{name}-benchmark < 8.1.1-3
 Obsoletes: %{name}-demo < 8.1.1-3
 Obsoletes: %{name}-facet < 8.1.1-3
 Obsoletes: %{name}-replicator < 8.1.1-3
-Obsoletes: %{name}-spatial < 8.1.1-3
 Obsoletes: %{name}-spatial-extras < 8.1.1-3
 Obsoletes: %{name}-spatial3d < 8.1.1-3
 Obsoletes: %{name}-test-framework < 8.4.1-4
+
+# Obsolete since F32
+# Module was removed upstream
+Obsoletes: %{name}-spatial < 8.1.1-3
 
 %if %{with jp_minimal}
 # Remove left-over packages that would have broken deps when built in minimal mode
@@ -345,7 +348,6 @@ pushd lucene
 %pom_disable_module test-framework
 %pom_disable_module facet
 %pom_disable_module replicator
-%pom_disable_module spatial
 %pom_disable_module spatial-extras
 %pom_disable_module spatial3d
 
@@ -423,6 +425,9 @@ popd
 %doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:8.6.3-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:8.4.1-alt1_9jpp8
 - new version
 
