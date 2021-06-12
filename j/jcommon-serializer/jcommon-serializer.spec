@@ -8,12 +8,12 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_24jpp11
+Release: alt1_25jpp11
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.tar.gz
 URL: http://www.jfree.org/jfreereport/jcommon-serializer
-BuildRequires: ant jpackage-utils libbase >= 1.0.0
+BuildRequires: ant jpackage-utils apache-commons-logging libbase >= 1.0.0
 Requires: jpackage-utils libbase >= 1.0.0
 BuildArch: noarch
 Patch1: jcommon-serializer-0.3.0-depends.patch
@@ -60,6 +60,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_25jpp11
+- fixed build with new libbase
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_24jpp11
 - update
 
