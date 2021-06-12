@@ -6,21 +6,15 @@
 Name: kernel-image-%flavour
 
 %define xenomai_version		3.1
-%define ipipe_version		4.19.177-cip44-x86-17
+%define ipipe_version		4.19.192-cip50-x86-18
 %define kernel_base_version	4.19
-%define kernel_sublevel		.177
+%define kernel_sublevel		.192
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip44
-%define kernel_ipipe_release	17
+%define kernel_cip_release	cip50
+%define kernel_ipipe_release	18
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_cip_release.%kernel_ipipe_release
-
-# Numeric extra version scheme developed by Alexander Bokovoy:
-# 0.0.X -- preX
-# 0.X.0 -- rcX
-# 1.0.0 -- release
-%define kernel_extra_version_numeric 1.0.0
 
 %define krelease	%release
 
@@ -54,30 +48,31 @@ ExclusiveArch: x86_64
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: dev86 flex
+BuildRequires: dev86
+BuildRequires: flex
 BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
-BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
+BuildRequires: gcc%kgcc_version
+BuildRequires: gcc%kgcc_version-c++
+BuildRequires: gcc%kgcc_version-plugin-devel
+BuildRequires: libgmp-devel
+BuildRequires: libmpc-devel
+BuildRequires: kernel-source-%kernel_base_version = 1.0.0
 BuildRequires: xenomai-kernel-source >= %xenomai_version
-BuildRequires: module-init-tools >= 3.16
+BuildRequires: kmod
 BuildRequires: lzma-utils
 BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel 
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run}}
-
-Requires: bootloader-utils >= 0.4.24-alt1
-Requires: module-init-tools >= 3.1
-Requires: mkinitrd >= 1:2.9.9-alt1
-Requires: startup >= 0.8.3-alt1
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run ltp iproute2}}
 
 Provides: kernel = %kversion
 
+# boot_kernel.filetrigger
+Requires: bootloader-utils
 Requires(pre,postun): coreutils
-Requires(pre,postun): module-init-tools >= 3.1
-Requires(pre,postun): mkinitrd >= 1:2.9.9-alt1
+Requires(pre,postun): mkinitrd
+Requires(pre,postun): kmod
 
 %description
 This package contains the Linux kernel %ipipe_version with Xenomai
@@ -114,9 +109,11 @@ adjust_kernel_headers).
 %package -n kernel-headers-modules-%flavour
 Summary: Files needed for building modules for Linux kernel %name-%version-%release
 Group: Development/Kernel 
+Provides: kernel-devel-%flavour
 Requires: gcc%kgcc_version
 Requires: libelf-devel
-AutoReqProv: nocpp
+Requires: perl-base /bin/sh /usr/bin/awk /usr/bin/env coreutils diffutils grep gzip
+AutoReqProv: no
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -125,7 +122,8 @@ the Linux kernel package %name-%version-%release.
 
 If you need to compile a third-party kernel module for the Linux
 kernel package %name-%version-%release, install this package
-and specify %kbuild_dir as the kernel source directory.
+and specify %kbuild_dir as the kernel source
+directory.
 
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
@@ -283,6 +281,7 @@ scripts/config -e CONFIG_SCSI_VIRTIO -e CONFIG_SCSI_LOWLEVEL -m CONFIG_VIRTIO_PC
 	       -e CONFIG_CONFIGFS_FS
 
 scripts/config -e CONFIG_DEBUG_INFO
+scripts/config -e CONFIG_GDB_SCRIPTS
 
 # Disable what is recommended in
 # https://gitlab.denx.de/Xenomai/xenomai/wikis/Configuring_For_X86_Based_Dual_Kernels
@@ -332,86 +331,26 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 make modules_install INSTALL_MOD_PATH=%buildroot
 
 #
-# Install kernel-headers-modules
+# Install kernel-headers-modules ('kernel-devel' package).
 #
-mkdir -p %buildroot%kbuild_dir/arch/x86
-cp -a include			   %buildroot%kbuild_dir/include
-cp -a arch/x86/include		   %buildroot%kbuild_dir/arch/x86
-cp -a arch/x86/xenomai/include/asm %buildroot%kbuild_dir/include/xenomai/asm
+mkdir -p %buildroot%kbuild_dir
+find -type f -a '(' -name 'Makefile*' -o -name 'Kbuild*' -o -name 'Kconfig*' ')' \
+	-exec cp -t %buildroot%kbuild_dir --parents -p {} +
+find -type f -a '(' -name '*.sh' -o -name '*.pl' ')' \
+	-exec cp -t %buildroot%kbuild_dir --parents -p {} +
+cp -t %buildroot%kbuild_dir -p {Module.symvers,tools/objtool/objtool}
+ln -sr %buildroot/boot/config-$KernelVer %buildroot%kbuild_dir/.config
+ln -sr %buildroot/boot/System.map-$KernelVer %buildroot%kbuild_dir/System.map
 
-# drivers-headers install
-install -d %buildroot%kbuild_dir/drivers/scsi
-install -d %buildroot%kbuild_dir/drivers/md
-install -d %buildroot%kbuild_dir/drivers/usb/core
-install -d %buildroot%kbuild_dir/drivers/net/wireless
-install -d %buildroot%kbuild_dir/net/mac80211
-install -d %buildroot%kbuild_dir/kernel
-install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/scsi.h	 %buildroot%kbuild_dir/drivers/scsi/
-cp -a drivers/md/dm*.h		 %buildroot%kbuild_dir/drivers/md/
-cp -a drivers/usb/core/*.h	 %buildroot%kbuild_dir/drivers/usb/core/
-cp -a lib/hexdump.c		 %buildroot%kbuild_dir/lib/
-cp -a kernel/workqueue.c	 %buildroot%kbuild_dir/kernel/
-cp -a net/mac80211/ieee80211_i.h %buildroot%kbuild_dir/net/mac80211/
-cp -a net/mac80211/sta_info.h	 %buildroot%kbuild_dir/net/mac80211/
+cp -t %buildroot%kbuild_dir --parents -pr arch/x86/include
+cp -t %buildroot%kbuild_dir/arch/x86/include -pr arch/x86/include/*
+cp -t %buildroot%kbuild_dir/include -pr include/*
+cp -t %buildroot%kbuild_dir --parents -pr scripts/*
+find  %buildroot%kbuild_dir/scripts -type f -name '*.[cho]' -exec rm -v {} +
+find  %buildroot%kbuild_dir -type f -name '*.cmd' -exec rm -v {} +
+find  %buildroot%kbuild_dir -type l -follow -exec rm -v {} +
 
-# Install files required for building external modules (in addition to headers)
-KbuildFiles="
-	Makefile
-	Module.symvers
-	arch/%base_arch/Makefile
-%ifarch x86_64
-	arch/x86/Makefile
-	arch/x86/Makefile_32
-	arch/x86/Makefile_32.cpu
-	arch/x86/Makefile_64
-%endif
-	scripts/pnmtologo
-	scripts/mod/modpost
-	scripts/mkmakefile
-	scripts/mkversion
-	scripts/link-vmlinux.sh
-	scripts/mod/mk_elfconfig
-	scripts/kconfig/conf
-	scripts/mkcompile_h
-	scripts/makelst
-	scripts/Makefile.*
-	scripts/Makefile
-	scripts/Kbuild.include
-	scripts/kallsyms
-	scripts/genksyms/genksyms
-	scripts/basic/fixdep
-	scripts/basic/hash
-	scripts/extract-ikconfig
-	scripts/conmakehash
-	scripts/checkversion.pl
-	scripts/checkincludes.pl
-	scripts/checkconfig.pl
-	scripts/bin2c
-	scripts/gcc-version.sh
-	scripts/gcc-goto.sh
-	scripts/recordmcount.pl
-	scripts/recordmcount.h
-	scripts/recordmcount.c
-	scripts/recordmcount
-	scripts/gcc-x86_*-has-stack-protector.sh
-	scripts/module-common.lds
-	scripts/subarch.include
-	scripts/depmod.sh
-	scripts/gcc-plugins/*.so
-	scripts/ld-version.sh
-	tools/objtool/objtool
-
-	.config
-	.kernelrelease
-	gcc_version.inc
-	System.map
-"
-for f in $KbuildFiles; do
-	[ -e "$f" ] || continue
-	[ -x "$f" ] && mode=755 || mode=644
-	install -Dp -m$mode "$f" %buildroot%kbuild_dir/"$f"
-done
+# cp -a arch/x86/xenomai/include/asm %buildroot%kbuild_dir/include/xenomai/asm
 
 # Fix symlinks to kernel sources in /lib/modules
 rm -f %buildroot%modules_dir/{build,source}
@@ -419,15 +358,6 @@ ln -s %kbuild_dir %buildroot%modules_dir/build
 
 # Provide kernel headers for userspace
 make headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
-
-find %buildroot%kheaders_dir -name ..install.cmd -delete
-
-#provide symlink to autoconf.h for back compat
-pushd %buildroot%kbuild_dir/include/linux
-ln -s ../generated/autoconf.h
-ln -s ../generated/utsrelease.h
-ln -s ../generated/uapi/linux/version.h
-popd
 
 # For external modules.
 mkdir -p %buildroot%modules_dir/extra
@@ -440,6 +370,14 @@ vm-run "set -x
   dmesg | grep 'Cobalt v[0-9.]'
   ! dmesg | grep 'init failed'
   set +x"
+
+export TMP=/tmp
+if ! timeout 600 vm-run --kvm=cond \
+       "/sbin/sysctl kernel.printk=8;
+        runltp -S $PWD/skiplist -f syscalls -o out"; then
+       cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed
+       exit 1
+fi
 
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
@@ -457,6 +395,10 @@ vm-run "set -x
 %modules_dir/build
 
 %changelog
+* Sat Jun 12 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.192-alt1.cip50.18
+- Update to ipipe-core-4.19.192-cip50-x86-18 (2021-06-10).
+- spec: Run LTP tests in %%check.
+
 * Mon Mar 15 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.177-alt1.cip44.17
 - Update to ipipe-core-4.19.177-cip44-x86-17 (2021-03-15).
 - Fixes kernel Oops when audit enabled in combination with latest glibc.

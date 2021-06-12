@@ -5,8 +5,8 @@
 %def_enable docs
 
 Name: xenomai
-Version: 3.1
-Release: alt4
+Version: 3.1.1
+Release: alt1
 Summary: Real-Time Framework for Linux
 License: GPL-2.0+ and LGPL-2.0+ and LGPL-2.1 and MIT
 Group: System/Kernel and hardware
@@ -399,6 +399,9 @@ find /usr/share/doc/xenomai/demo -name a.out -delete
 %files checkinstall
 
 %changelog
+* Sat Jun 12 2021 Vitaly Chikunov <vt@altlinux.org> 3.1.1-alt1
+- Update to v3.1.1 (2021-05-31).
+
 * Sun Mar 07 2021 Vitaly Chikunov <vt@altlinux.org> 3.1-alt4
 - Update to stable/v3.1.x commit cdc938bc1 (2021-02-03).
 - rt_e1000e: Fix __bad_udelay linking error.
