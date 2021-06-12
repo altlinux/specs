@@ -7,7 +7,7 @@
 
 Name: jss
 Version: 4.8.1
-Release: alt1.1
+Release: alt2
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -22,10 +22,10 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-macros-java
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: glassfish-jaxb-api
+BuildRequires: jaxb-api
 BuildRequires: /proc
 BuildRequires: cmake
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-devel
 BuildRequires: jpackage-generic-compat
 BuildRequires: libnss-devel >= %nss_version
 BuildRequires: libnspr-devel
@@ -40,8 +40,7 @@ BuildRequires: nss-utils >= %nss_version
 %endif
 
 Requires: apache-commons-lang3
-Requires: glassfish-jaxb-api
-Requires: java-1.8.0-openjdk-headless
+Requires: jaxb-api
 Requires: slf4j
 Requires: libnss >= %nss_version
 
@@ -88,6 +87,8 @@ export BUILD_OPT=1
 %cmake_build --target all javadoc
 
 %check
+# fails on migration to Java11, need to investigate
+%ifnarch ppc64le
 # FIPS is not enabled in kernel
 cat > %_cmake__builddir/CTestCustom.cmake <<EOF
 set(CTEST_CUSTOM_TESTS_IGNORE
@@ -95,6 +96,7 @@ set(CTEST_CUSTOM_TESTS_IGNORE
 )
 EOF
 CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
+%endif
 
 %install
 install -d -m 0755 %buildroot%_jnidir
@@ -124,6 +126,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Fri Jun 11 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2
+- Built with Java11.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 4.8.1-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

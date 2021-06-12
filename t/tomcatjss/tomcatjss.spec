@@ -5,7 +5,7 @@
 
 Name: tomcatjss
 Version: 7.6.1
-Release: alt1
+Release: alt2
 
 Summary: JSSE module for Apache Tomcat that uses JSS
 License: LGPLv2+
@@ -18,6 +18,7 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
+BuildRequires: java-11-devel
 BuildRequires: jpackage-generic-compat
 BuildRequires: apache-commons-logging
 BuildRequires: ant
@@ -64,6 +65,9 @@ ant -v -f build.xml \
 %_javadir/tomcatjss-%version.jar
 
 %changelog
+* Fri May 21 2021 Stanislav Levin <slev@altlinux.org> 7.6.1-alt2
+- Built with Java11.
+
 * Fri Feb 05 2021 Stanislav Levin <slev@altlinux.org> 7.6.1-alt1
 - 7.6.0 -> 7.6.1.
 

@@ -9,7 +9,7 @@
 Name: ldapjdk
 Epoch: 1
 Version: 4.22.0
-Release: alt1
+Release: alt2
 
 Summary: LDAP SDK
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -25,9 +25,7 @@ BuildRequires: rpm-build-java
 
 BuildRequires: /proc
 BuildRequires: ant
-# at least dogtag pki requires java 8 at build/runtime
-# pin the Java so far
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-devel
 BuildRequires: javapackages-local
 BuildRequires: javapackages-tools
 BuildRequires: jss >= %jss_version
@@ -119,6 +117,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 ################################################################################
 %changelog
+* Fri May 21 2021 Stanislav Levin <slev@altlinux.org> 1:4.22.0-alt2
+- Built with Java11.
+
 * Mon Sep 14 2020 Stanislav Levin <slev@altlinux.org> 1:4.22.0-alt1
 - 4.21.0 -> 4.22.0.
 

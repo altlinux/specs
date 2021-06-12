@@ -13,7 +13,7 @@
 
 Name: pki-core
 Version: 10.10.5
-Release: alt2
+Release: alt3
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-java
 
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-devel
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: sh4
@@ -145,7 +145,7 @@ and utilities written in Python.
 Summary: Dogtag PKI Base Java Package
 Group: System/Base
 Requires: pki-base = %EVR
-Requires: java-1.8.0-openjdk-headless
+Requires: java
 Requires: xalan-j2
 Requires: xml-commons-apis
 Requires: xml-commons-resolver
@@ -753,6 +753,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Fri Jun 11 2021 Stanislav Levin <slev@altlinux.org> 10.10.5-alt3
+- Built with Java11.
+
 * Mon May 31 2021 Stanislav Levin <slev@altlinux.org> 10.10.5-alt2
 - Fixed FTBFS(new CMake policy).
 
