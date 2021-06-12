@@ -3,14 +3,14 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:          jackson-databind
-Version:       2.11.2
-Release:       alt1_2jpp11
-Summary:       General data-binding package for Jackson (2.x)
-License:       ASL 2.0 and LGPLv2+
+Name:           jackson-databind
+Version:        2.11.4
+Release:        alt1_2jpp11
+Summary:        General data-binding package for Jackson (2.x)
+License:        ASL 2.0 and LGPLv2+
 
-URL:           https://github.com/FasterXML/jackson-databind/
-Source0:       %{url}/archive/%{name}-%{version}.tar.gz
+URL:            https://github.com/FasterXML/jackson-databind
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
@@ -80,6 +80,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_2jpp11
 - new version
 
