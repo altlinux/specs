@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           powermock
 Version:        2.0.0
-Release:        alt1_4jpp8
+Release:        alt2_4jpp8
 Summary:        A Java mocking framework
 
 # Note: api-mockito subpackage is ASL 2.0 and MIT, the rest is ASL 2.0
@@ -45,7 +45,7 @@ BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 BuildRequires:  mvn(org.javassist:javassist)
-BuildRequires:  mvn(org.mockito:mockito-core) >= 2.23.0
+#BuildRequires:  mvn(org.mockito:mockito-core) >= 2.23.0
 BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.testng:testng)
 
@@ -233,13 +233,15 @@ rm powermock-core/src/test/java/org/powermock/configuration/support/Configuratio
 
 # Junit4 in Fedora is too new, don't build legacy module
 %pom_disable_module powermock-modules/powermock-module-junit4-legacy
+# viy@: new mock
+%pom_disable_module powermock-api/powermock-api-mockito2
 
 %mvn_package ":powermock-core" core
 %mvn_package ":powermock-classloading*" core
 %mvn_package ":powermock-module-junit4*" junit4
 %mvn_package ":powermock-module-testng*" testng
 %mvn_package ":powermock-module-javaagent" javaagent
-%mvn_package ":powermock-api-mockito2" api-mockito
+#mvn_package ":powermock-api-mockito2" api-mockito
 %mvn_package ":powermock-api-support" api-support
 %mvn_package ":powermock-api-easymock" api-easymock
 %mvn_package ":powermock-reflect" reflect
@@ -265,7 +267,7 @@ rm powermock-core/src/test/java/org/powermock/configuration/support/Configuratio
 %files reflect -f .mfiles-reflect
 %files junit4 -f .mfiles-junit4
 %files api-support -f .mfiles-api-support
-%files api-mockito -f .mfiles-api-mockito
+#files api-mockito -f .mfiles-api-mockito
 %files api-easymock -f .mfiles-api-easymock
 %files testng -f .mfiles-testng
 %files javaagent -f .mfiles-javaagent
@@ -273,6 +275,9 @@ rm powermock-core/src/test/java/org/powermock/configuration/support/Configuratio
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt2_4jpp8
+- build w/o mockito
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_4jpp8
 - fc update
 
