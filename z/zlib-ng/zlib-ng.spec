@@ -1,6 +1,6 @@
 Name: zlib-ng
-Version: 2.0.3
-Release: alt2
+Version: 2.0.4
+Release: alt1
 
 Summary: Zlib replacement with optimizations
 License: Zlib
@@ -67,6 +67,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Sat Jun 12 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1
+- Version 2.0.4
+
 * Wed Jun 09 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.3-alt2
 - added SIMD patch for Elbrus
 
