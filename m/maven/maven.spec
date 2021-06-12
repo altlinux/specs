@@ -23,7 +23,7 @@ BuildRequires: jpackage-11-compat
 Name:           maven
 Epoch:          1
 Version:        3.6.3
-Release:        alt1_8jpp11
+Release:        alt2_8jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -279,17 +279,17 @@ mv $M2_HOME/conf/logging %{buildroot}%{confdir}/
 ln -sf %{confdir}/logging %{buildroot}%{apphomedir}/conf
 
 # Ghosts for alternatives
-install -d -m 755 %{buildroot}%{_bindir}/
-install -d -m 755 %{buildroot}%{_mandir}/man1/
-touch %{buildroot}%{_bindir}/{mvn,mvnDebug}
-touch %{buildroot}%{_mandir}/man1/{mvn,mvnDebug}.1
+#install -d -m 755 %{buildroot}%{_bindir}/
+#install -d -m 755 %{buildroot}%{_mandir}/man1/
+#touch %{buildroot}%{_bindir}/{mvn,mvnDebug}
+#touch %{buildroot}%{_mandir}/man1/{mvn,mvnDebug}.1
 # maven-filesystem
 rm -f %buildroot%_datadir/%{name}/repository-jni/JPP
-for rpm404_ghost in %{_bindir}/mvn %{_bindir}/mvnDebug %{_mandir}/man1/mvn.1.gz %{_mandir}/man1/mvnDebug.1.gz
-do
-    mkdir -p %buildroot`dirname "$rpm404_ghost"`
-    touch %buildroot"$rpm404_ghost"
-done
+#for rpm404_ghost in %{_bindir}/mvn %{_bindir}/mvnDebug %{_mandir}/man1/mvn.1.gz %{_mandir}/man1/mvnDebug.1.gz
+#do
+#    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+#    touch %buildroot"$rpm404_ghost"
+#done
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/mvn_maven<<EOF
 %{_bindir}/mvn	%{apphomedir}/bin/mvn	%{?maven_alternatives_priority}0
 %{_bindir}/mvnDebug	%{apphomedir}/bin/mvnDebug	%{apphomedir}/bin/mvn
@@ -297,16 +297,17 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/mvn_maven<<EO
 %{_mandir}/man1/mvnDebug.1.gz	%{apphomedir}/bin/mvn.1.gz	%{apphomedir}/bin/mvn
 EOF
 
+mkdir -p %buildroot%{_bindir} %buildroot%{_man1dir}
+ln -s `relative %{apphomedir}/bin/mvn %{_bindir}/` %buildroot%{_bindir}/mvn
+ln -s `relative %{apphomedir}/bin/mvnDebug %{_bindir}/` %buildroot%{_bindir}/mvnDebug
+ln -s `relative %{apphomedir}/bin/mvn.1.gz %{_man1dir}/` %buildroot%{_man1dir}/mvn.1.gz
+
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mavenrc`
 touch $RPM_BUILD_ROOT/etc/mavenrc
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
 touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
-
-
-%postun
-[[ $1 -eq 0 ]] && update-alternatives --remove mvn %{apphomedir}/bin/mvn
 
 %pre 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=27807 (upgrade from maven1)
@@ -325,7 +326,8 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 %config(noreplace) %{confdir}/logging/simplelogger.properties
 
 %files
-%_altdir/mvn_maven
+%_bindir/mvn*
+%_man1dir/mvn*
 %{_datadir}/bash-completion
 %config(noreplace,missingok) /etc/mavenrc
 %config(noreplace,missingok) /etc/java/maven.conf
@@ -335,6 +337,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt2_8jpp11
+- fixed alternatives
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt1_8jpp11
 - fc34 update
 
