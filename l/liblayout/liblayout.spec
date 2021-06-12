@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: liblayout
 Version: 0.2.10
-Release: alt1_20jpp8
+Release: alt1_24jpp11
 Summary: CSS based layouting framework
 License: LGPLv2+ and UCD
 Source: http://downloads.sourceforge.net/jfreereport/liblayout-%{version}.zip
@@ -20,6 +20,8 @@ Requires: jpackage-utils flute libloader >= 1.1.3
 Requires: librepository >= 1.1.3 libfonts >= 1.1.3 sac
 Requires: pentaho-libxml libbase >= 1.0.0
 BuildArch: noarch
+
+Patch0: liblayout-0.2.10-remove-commons-logging.patch
 Source44: import.info
 
 %description
@@ -39,13 +41,14 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -c
+%patch0 -p1 -b .no_commons_logging
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
 build-jar-repository -s -p lib flute libloader librepository libxml libfonts \
-    sac libbase commons-logging-api
+    sac libbase
 
 %build
-ant jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
 for file in README.txt licence-LGPL.txt ChangeLog.txt; do
     tr -d '\r' < $file > $file.new
     mv $file.new $file
@@ -67,6 +70,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0.2.10-alt1_24jpp11
+- fc update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_20jpp8
 - fc update
 
