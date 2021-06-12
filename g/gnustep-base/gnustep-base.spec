@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=strict
-%define gnustep_ver 1.27
+%define gnustep_ver 1.28
 %def_without build_debug
 %def_without objc2
 %def_with doc
 
 Name: gnustep-base
 Version: 1.28.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -176,6 +176,9 @@ fi
 %endif
  
 %changelog
+* Fri Jun 11 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.28.0-alt2
+- Use sources from base-1_28_0.
+
 * Wed Apr 28 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.28.0-alt1
 - New version.
 

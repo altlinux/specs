@@ -3,7 +3,7 @@
 
 Name: gnustep-gui
 Version: 0.29.0
-Release: alt1
+Release: alt2
 Summary: The GNUstep GUI library
 License: LGPL-2.1+ and GPL-3.0+
 Group: Development/Tools
@@ -145,6 +145,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Fri Jun 11 2021 Andrey Cherepanov <cas@altlinux.org> 0.29.0-alt2
+- Use sources from gui-0_29_0.
+
 * Wed Apr 28 2021 Andrey Cherepanov <cas@altlinux.org> 0.29.0-alt1
 - New version.
 
