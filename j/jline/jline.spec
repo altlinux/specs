@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:             jline
 Version:          2.14.6
-Release:          alt1_10jpp11
+Release:          alt2_10jpp11
 Summary:          JLine is a Java library for handling console input
 License:          BSD
 URL:              https://github.com/jline/jline2
@@ -24,8 +24,8 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 
-Obsoletes: jline2 < %{version}-%{release}
-Provides: jline2 = %{version}-%{release}
+Obsoletes: jline2 < %{version}
+#Provides: jline2 = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -38,8 +38,8 @@ JLine to be familiar.
 %package javadoc
 Group: Development/Java
 Summary:          Javadocs for %{name}
-Obsoletes: jline2-javadoc < %{version}-%{release}
-Provides: jline2-javadoc = %{version}-%{release}
+Obsoletes: jline2-javadoc < %{version}
+#Provides: jline2-javadoc = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -99,6 +99,9 @@ find -name TerminalFactoryTest.java -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.14.6-alt2_10jpp11
+- fixed obsoletes on jline2
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.14.6-alt1_10jpp11
 - update
 
@@ -166,17 +169,3 @@ find -name TerminalFactoryTest.java -delete
 * Sun Dec 04 2005 Vladimir Lettiev <crux@altlinux.ru> 0.9.1-alt1
 - Rebuild for ALTLinux Sisyphus
 - spec cleanup
-
-* Mon Apr 25 2005 Fernando Nasser <fnasser@redhat.com> - 0:0.9.1-1jpp
-- Upgrade to 0.9.1
-- Disable attempt to include external jars
-
-* Mon Apr 25 2005 Fernando Nasser <fnasser@redhat.com> - 0:0.8.1-3jpp
-- Changes to use locally installed DTDs
-- Do not try and access sun site for linking javadoc
-
-* Sun Aug 23 2004 Randy Watler <rwatler at finali.com> - 0:0.8.1-2jpp
-- Rebuild with ant-1.6.2
-
-* Mon Jan 26 2004 David Walluck <david@anti-microsoft.org> 0:0.8.1-1jpp
-- release
