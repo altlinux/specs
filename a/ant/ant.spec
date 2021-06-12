@@ -52,8 +52,8 @@ BuildRequires: jpackage-11-compat
 
 Name:           ant
 Epoch:          0
-Version:        1.10.8
-Release:        alt1_4jpp11
+Version:        1.10.9
+Release:        alt1_2jpp11
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
 Summary(fr):    Outil de compilation pour java
@@ -63,10 +63,6 @@ Source0:        https://www.apache.org/dist/ant/source/apache-ant-%{version}-src
 Source2:        apache-ant-1.8.ant.conf
 # manpage
 Source3:        ant.asciidoc
-
-# temporarily disable AntClassLoaderTest.testSignedJar()
-# https://bugzilla.redhat.com/show_bug.cgi?id=1869017
-Patch0:         00-disable-jarsigner-test.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant >= 1.10.2
@@ -84,7 +80,7 @@ BuildRequires:  mvn(commons-net:commons-net)
 BuildRequires:  mvn(javax.mail:mail)
 BuildRequires:  mvn(jdepend:jdepend)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(log4j:log4j:1.2.13)
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
 BuildRequires:  mvn(org.tukaani:xz)
 BuildRequires:  mvn(oro:oro)
 BuildRequires:  mvn(regexp:regexp)
@@ -443,7 +439,6 @@ Javadoc pour %{name}.
 
 %prep
 %setup -q -n apache-ant-%{version}
-%patch0 -p1
 
 # Fix class-path-in-manifest rpmlint warning
 %pom_xpath_remove 'attribute[@name="Class-Path"]' build.xml
@@ -459,7 +454,7 @@ rm src/tests/junit/org/apache/tools/ant/types/selectors/SignedSelectorTest.java 
    src/tests/junit/org/apache/tools/mail/MailMessageTest.java
 
 #install jars
-build-jar-repository -s -p lib/optional antlr bcel javamail/mailapi jdepend junit log4j-1 oro regexp bsf commons-logging commons-net jsch xalan-j2 xml-commons-resolver xalan-j2-serializer hamcrest/core hamcrest/library xz-java
+build-jar-repository -s -p lib/optional antlr bcel javamail/mailapi jdepend junit log4j/log4j-1.2-api oro regexp bsf commons-logging commons-net jsch xalan-j2 xml-commons-resolver xalan-j2-serializer hamcrest/core hamcrest/library xz-java
 %if %{with junit5}
 build-jar-repository -s -p lib/optional junit5 opentest4j
 %endif
@@ -492,12 +487,14 @@ mv LICENSE.utf8 LICENSE
 # fix javamail dependency coordinates (remove once javamail is updated)
 %pom_change_dep -r com.sun.mail:jakarta.mail javax.mail:mail src/etc/poms/ant-javamail/pom.xml
 
+# switch from log4j 1.2 compat package to log4j 1.2 API shim
+%pom_change_dep log4j:log4j org.apache.logging.log4j:log4j-1.2-api:2.13.3 src/etc/poms/ant-apache-log4j/pom.xml
+
 %build
-# -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
-%{ant} jars test-jar
+%{ant} -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jars test-jar
 
 %if %with javadoc
-%{ant} javadocs
+%{ant} -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  javadocs
 %endif
 
 # typeset the manpage
@@ -580,7 +577,7 @@ echo "apache-commons-logging ant/ant-commons-logging" > $RPM_BUILD_ROOT%{_syscon
 echo "apache-commons-net ant/ant-commons-net" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/commons-net
 #echo "jai ant/ant-jai" > $RPM_BUILD_ROOT%%{_sysconfdir}/%%{name}.d/jai
 echo "bcel ant/ant-apache-bcel" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-bcel
-echo "log4j12 ant/ant-apache-log4j" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-log4j
+echo "log4j/log4j-1.2-api log4j/log4j-api log4j/log4j-core ant/ant-apache-log4j" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-log4j
 echo "oro ant/ant-apache-oro" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-oro
 echo "regexp ant/ant-apache-regexp" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-regexp
 echo "xalan-j2 xalan-j2-serializer ant/ant-apache-xalan2" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-xalan2
@@ -755,6 +752,9 @@ LC_ALL=C.UTF-8 %{ant} test
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.9-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.8-alt1_4jpp11
 - new version
 
