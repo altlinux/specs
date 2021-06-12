@@ -12,51 +12,60 @@ BuildRequires: jpackage-11-compat
 %bcond_without  junit5
 
 Name:           maven-surefire
-Version:        2.22.0
-Release:        alt1_9jpp11
 Epoch:          0
+Version:        3.0.0_M4
+Release:        alt1_1jpp11
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
-URL:            http://maven.apache.org/surefire/
-BuildArch:      noarch
 
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
+%global upstream_version %(echo '%{version}' | tr '_' '-')
+
+URL:            http://maven.apache.org/surefire/
+
+# ./generate-tarball.sh 3.0.0-M4
+Source0:        %{name}-%{upstream_version}.tar.gz
 # Remove bundled binaries which cannot be easily verified for licensing
 Source1:        generate-tarball.sh
 Source2:        http://junit.sourceforge.net/cpl-v10.html
 
-Patch0:         0001-Maven-3.patch
-Patch1:         0002-Port-to-current-doxia.patch
-Patch2:         0003-Port-to-TestNG-6.11.patch
-Patch3:         0004-Port-to-current-maven-shared-utils.patch
+Patch1:         0001-Port-to-TestNG-6.11.patch
+Patch2:         0002-Port-to-current-maven-shared-utils.patch
+Patch3:         0003-Fix-broken-Javadocs.patch
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-toolchain)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-java)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.testng:testng)
 BuildRequires:  mvn(org.testng:testng::jdk15:)
@@ -74,21 +83,26 @@ Surefire is a test framework project.
 
 %package plugin
 Group: Development/Java
-Summary:                Surefire plugin for maven
+Summary:        Surefire plugin for maven
+Requires:       %{name}-provider-junit = %{epoch}:%{version}-%{release}
+Requires:       %{name}-provider-testng = %{epoch}:%{version}-%{release}
+%if %{with junit5}
+Requires:       %{name}-provider-junit5 = %{epoch}:%{version}-%{release}
+%endif
 
 %description plugin
 Maven surefire plugin for running tests via the surefire framework.
 
 %package report-plugin
 Group: Development/Java
-Summary:                Surefire reports plugin for maven
+Summary:        Surefire reports plugin for maven
 
 %description report-plugin
 Plugin for generating reports from surefire test runs.
 
 %package provider-junit
 Group: Development/Java
-Summary:                JUnit provider for Maven Surefire
+Summary:        JUnit provider for Maven Surefire
 
 %description provider-junit
 JUnit provider for Maven Surefire.
@@ -96,7 +110,7 @@ JUnit provider for Maven Surefire.
 %if %{with junit5}
 %package provider-junit5
 Group: Development/Java
-Summary:                JUnit 5 provider for Maven Surefire
+Summary:        JUnit 5 provider for Maven Surefire
 
 %description provider-junit5
 JUnit 5 provider for Maven Surefire.
@@ -104,21 +118,21 @@ JUnit 5 provider for Maven Surefire.
 
 %package provider-testng
 Group: Development/Java
-Summary:                TestNG provider for Maven Surefire
+Summary:        TestNG provider for Maven Surefire
 
 %description provider-testng
 TestNG provider for Maven Surefire.
 
 %package report-parser
 Group: Development/Java
-Summary:                Parses report output files from surefire
+Summary:        Parses report output files from surefire
 
 %description report-parser
 Plugin for parsing report output files from surefire.
 
 %package -n maven-failsafe-plugin
 Group: Development/Java
-Summary:                Maven plugin for running integration tests
+Summary:        Maven plugin for running integration tests
 
 %description -n maven-failsafe-plugin
 The Failsafe Plugin is designed to run integration tests while the
@@ -139,17 +153,16 @@ to execute.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %prep
-%setup -q -n surefire-%{version}
+%setup -q -n surefire-%{upstream_version}
 cp -p %{SOURCE2} .
 
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -167,45 +180,36 @@ sed -i /-Xdoclint:all/d pom.xml
 
 # Help plugin is needed only to evaluate effective Maven settings.
 # For building RPM package default settings will suffice.
-%pom_remove_plugin :maven-help-plugin surefire-setup-integration-tests
+%pom_remove_plugin :maven-help-plugin surefire-its
 
 # QA plugin useful only for upstream
 %pom_remove_plugin -r :jacoco-maven-plugin
 
 # Not in Fedora
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
+
 # Complains
 %pom_remove_plugin -r :apache-rat-plugin
 %pom_remove_plugin -r :maven-enforcer-plugin
+
 # We don't need site-source
 %pom_remove_plugin :maven-assembly-plugin maven-surefire-plugin
 %pom_remove_dep -r ::::site-source
 
-%pom_xpath_set pom:mavenVersion 3.3.3
-%pom_remove_dep :maven-project maven-surefire-report-plugin
-%pom_remove_dep :maven-project maven-surefire-common
-%pom_remove_dep :maven-plugin-descriptor maven-surefire-common
-%pom_remove_dep :maven-toolchain maven-surefire-common
-
-%pom_xpath_remove -r "pom:execution[pom:id='shared-logging-generated-sources']"
-
-%pom_add_dep com.google.code.findbugs:jsr305 surefire-api
-
 # This package needs maven compat for ArtifactResolver class
 %pom_add_dep org.apache.maven:maven-compat maven-surefire-common
 
-%build
 %mvn_package ":*{surefire-plugin,report-plugin}*" @1
 %mvn_package ":*junit-platform*" junit5
 %mvn_package ":*{junit,testng,failsafe-plugin,report-parser}*"  @1
 %mvn_package ":*tests*" __noinstall
-# tests turned off because they need jmock
-# use xmvn-javadoc because maven-javadoc-plugin crashes JVM
-%mvn_build -f -j -G org.fedoraproject.xmvn:xmvn-mojo:javadoc
+
+%build
+# tests are disabled because of unpackaged dependencies (fest-assert, etc.)
+%mvn_build -f
 
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc README.md
@@ -225,6 +229,9 @@ sed -i /-Xdoclint:all/d pom.xml
 %doc --no-dereference LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M4-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.22.0-alt1_9jpp11
 - update
 
