@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: libbase
 Version: 1.1.3
-Release: alt1_26jpp11
+Release: alt1_29jpp11
 Summary: JFree Base Services
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
@@ -17,12 +17,14 @@ License: LGPLv2
 #to simplify the licensing
 Source: %{name}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib jpackage-utils apache-commons-logging
-Requires: jpackage-utils apache-commons-logging
+BuildRequires: ant jpackage-utils
+Requires: jpackage-utils
 BuildArch: noarch
 
 Patch0: libbase-1.1.2.build.patch
 Patch1: libbase-1.1.2.java11.patch
+Patch2: libbase-1.1.3-remove-antcontrib-support.patch
+Patch3: libbase-1.1.3-remove-commons-logging.patch
 Source44: import.info
 
 %description
@@ -44,11 +46,10 @@ Javadoc for %{name}.
 %setup -q -c
 %patch0 -p1 -b .build
 %patch1 -p1 -b .java11
-mkdir -p lib
+%patch2 -p1 -b .no_antcontrib
+%patch3 -p1 -b .no_commons_logging
+
 find . -name "*.jar" -exec rm -f {} \;
-build-jar-repository -s -p lib commons-logging-api
-cd lib
-ln -s /usr/share/java/ant ant-contrib 
 
 %build
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
@@ -68,6 +69,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_29jpp11
+- fc34 update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_26jpp11
 - update
 
