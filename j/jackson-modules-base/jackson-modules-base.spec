@@ -9,16 +9,16 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with    jp_minimal
+%bcond_with     jp_minimal
 
-Name:          jackson-modules-base
-Version:       2.11.2
-Release:       alt1_1jpp11
-Summary:       Jackson modules: Base
-License:       ASL 2.0
+Name:           jackson-modules-base
+Version:        2.11.4
+Release:        alt1_2jpp11
+Summary:        Jackson modules: Base
+License:        ASL 2.0
 
-URL:           https://github.com/FasterXML/jackson-modules-base
-Source0:       %{url}/archive/%{name}-%{version}.tar.gz
+URL:            https://github.com/FasterXML/jackson-modules-base
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -199,6 +199,9 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11.2-alt1_1jpp11
 - new version
 
