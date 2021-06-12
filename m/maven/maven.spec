@@ -23,7 +23,7 @@ BuildRequires: jpackage-11-compat
 Name:           maven
 Epoch:          1
 Version:        3.6.3
-Release:        alt1_4jpp11
+Release:        alt1_8jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -76,7 +76,7 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-utils) >= 3.2.0
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.fusesource.jansi:jansi:1)
 BuildRequires:  mvn(org.hamcrest:hamcrest-library)
 BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.mockito:mockito-core) >= 2
@@ -111,7 +111,6 @@ Requires:       apache-commons-cli
 Requires:       apache-commons-codec
 Requires:       apache-commons-io
 Requires:       apache-commons-lang3
-Requires:       apache-commons-logging
 Requires:       atinject
 Requires:       cdi-api
 Requires:       jakarta-annotations
@@ -120,7 +119,7 @@ Requires:       guava
 Requires:       hawtjni-runtime
 Requires:       httpcomponents-client
 Requires:       httpcomponents-core
-Requires:       jansi
+Requires:       jansi1
 Requires:       jansi-native
 Requires:       jcl-over-slf4j
 Requires:       maven-resolver-api
@@ -233,6 +232,9 @@ sed -i "
     <artifactId>sisu-maven-plugin</artifactId>
 </plugin>' maven-model-builder/pom.xml
 
+# Update required version of jansi 1.x
+%pom_xpath_set "//pom:dependency[pom:artifactId='jansi']/pom:version" 1.18
+
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
@@ -257,10 +259,10 @@ xmvn-subst -R %{buildroot} -s %{buildroot}%{apphomedir}
 
 # Transitive deps of wagon-http, missing because of unshading
 build-jar-repository -s -p %{buildroot}%{apphomedir}/lib \
-    commons-{codec,logging} httpcomponents/{httpclient,httpcore} maven-wagon/http-shared
+    httpcomponents/{httpclient,httpcore} maven-wagon/http-shared
 
 # Transitive deps of cdi-api that should have been excluded
-rm %{buildroot}%{apphomedir}/lib/jboss-interceptors*.jar
+rm %{buildroot}%{apphomedir}/lib/jakarta.interceptor-api*.jar
 rm %{buildroot}%{apphomedir}/lib/javax.el-api*.jar
 
 # Native lib whose extraction we suppressed
@@ -277,17 +279,17 @@ mv $M2_HOME/conf/logging %{buildroot}%{confdir}/
 ln -sf %{confdir}/logging %{buildroot}%{apphomedir}/conf
 
 # Ghosts for alternatives
-#install -d -m 755 %{buildroot}%{_bindir}/
-#install -d -m 755 %{buildroot}%{_mandir}/man1/
-#touch %{buildroot}%{_bindir}/{mvn,mvnDebug}
-#touch %{buildroot}%{_mandir}/man1/{mvn,mvnDebug}.1
+install -d -m 755 %{buildroot}%{_bindir}/
+install -d -m 755 %{buildroot}%{_mandir}/man1/
+touch %{buildroot}%{_bindir}/{mvn,mvnDebug}
+touch %{buildroot}%{_mandir}/man1/{mvn,mvnDebug}.1
 # maven-filesystem
 rm -f %buildroot%_datadir/%{name}/repository-jni/JPP
-#for rpm404_ghost in %{_bindir}/mvn %{_bindir}/mvnDebug %{_mandir}/man1/mvn.1.gz %{_mandir}/man1/mvnDebug.1.gz
-#do
-#    mkdir -p %buildroot`dirname "$rpm404_ghost"`
-#    touch %buildroot"$rpm404_ghost"
-#done
+for rpm404_ghost in %{_bindir}/mvn %{_bindir}/mvnDebug %{_mandir}/man1/mvn.1.gz %{_mandir}/man1/mvnDebug.1.gz
+do
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
+done
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/mvn_maven<<EOF
 %{_bindir}/mvn	%{apphomedir}/bin/mvn	%{?maven_alternatives_priority}0
 %{_bindir}/mvnDebug	%{apphomedir}/bin/mvnDebug	%{apphomedir}/bin/mvn
@@ -295,17 +297,16 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/mvn_maven<<EO
 %{_mandir}/man1/mvnDebug.1.gz	%{apphomedir}/bin/mvn.1.gz	%{apphomedir}/bin/mvn
 EOF
 
-mkdir -p %buildroot%{_bindir} %buildroot%{_man1dir}
-ln -s `relative %{apphomedir}/bin/mvn %{_bindir}/` %buildroot%{_bindir}/mvn
-ln -s `relative %{apphomedir}/bin/mvnDebug %{_bindir}/` %buildroot%{_bindir}/mvnDebug
-ln -s `relative %{apphomedir}/bin/mvn.1.gz %{_man1dir}/` %buildroot%{_man1dir}/mvn.1.gz
-
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mavenrc`
 touch $RPM_BUILD_ROOT/etc/mavenrc
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
 touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
+
+
+%postun
+[[ $1 -eq 0 ]] && update-alternatives --remove mvn %{apphomedir}/bin/mvn
 
 %pre 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=27807 (upgrade from maven1)
@@ -324,8 +325,7 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 %config(noreplace) %{confdir}/logging/simplelogger.properties
 
 %files
-%_bindir/mvn*
-%_man1dir/mvn*
+%_altdir/mvn_maven
 %{_datadir}/bash-completion
 %config(noreplace,missingok) /etc/mavenrc
 %config(noreplace,missingok) /etc/java/maven.conf
@@ -335,6 +335,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt1_8jpp11
+- fc34 update
+
 * Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt1_4jpp11
 - new version
 

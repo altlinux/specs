@@ -2,100 +2,80 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.2
-%bcond_with asciidoc
+%global srcname cdi
 
-%global namedreltag .NOTHING
-%global namedversion %{version}%{?namedreltag}
+Name:           cdi-api
+Version:        2.0
+Release:        alt1_2jpp11
+Summary:        Contexts and Dependency Injection API
+License:        ASL 2.0
 
-Name:             cdi-api
-Version:          1.2
-Release:          alt2_12jpp8
-Summary:          CDI API
-License:          ASL 2.0
-URL:              http://seamframework.org/Weld
-BuildArch:        noarch
+URL:            https://github.com/eclipse-ee4j/cdi
+Source0:        %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 
-Source0:          https://github.com/cdi-spec/cdi/archive/%{version}.tar.gz
+BuildArch:      noarch
 
-BuildRequires:    maven-local
-BuildRequires:    mvn(javax.el:javax.el-api)
-BuildRequires:    mvn(javax.inject:javax.inject)
-BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:    mvn(org.apache.maven.surefire:surefire-testng)
-BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:    mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
-BuildRequires:    mvn(org.jboss.weld:weld-parent:pom:)
-BuildRequires:    mvn(org.testng:testng::jdk15:)
-%if %{with asciidoc}
-BuildRequires:    asciidoc asciidoc-a2x
-BuildRequires:    /usr/bin/pygmentize
-%endif
+BuildRequires:  maven-local
+BuildRequires:  mvn(jakarta.interceptor:jakarta.interceptor-api)
+BuildRequires:  mvn(javax.el:javax.el-api)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.jboss.weld:weld-parent:pom:)
+BuildRequires:  mvn(org.testng:testng)
 Source44: import.info
 
 %description
 APIs for JSR-299: Contexts and Dependency Injection for Java EE
 
+
 %package javadoc
 Group: Development/Java
-Summary:          Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
+
 %prep
-%setup -q -n cdi-%{version}
+%setup -q -n %{srcname}-%{version}
 
-cd api
-# J2EE API directory
-%mvn_file :{cdi-api} %{name}/@1 javax.enterprise.inject/@1
 
-# Use newer version of interceptors API
-%pom_change_dep "javax.interceptor:javax.interceptor-api" "org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec"
+# do not build specification documentation
+%pom_disable_module spec
+
+# do not install useless parent POM
+%mvn_package javax.enterprise:cdi-spec __noinstall
+
+# use new jakarta interceptors coordinates
+%pom_change_dep :javax.interceptor-api jakarta.interceptor:jakarta.interceptor-api api
+
 
 %build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-(
- cd api
- %mvn_build -- -Denforcer.skip
-)
-
-%if %{with asciidoc}
-cd spec/src/main/doc
-asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o cdi-spec.html cdi-spec.asciidoc
-asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o license-asl2.html license-asl2.asciidoc
-asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o license-jcp.html license-jcp.asciidoc
-%global adoc html
-%else
-%global adoc asciidoc
-%endif
 
 %install
-cd api
 %mvn_install
 
-%files -f api/.mfiles
-%doc spec/src/main/doc/cdi-spec.%{adoc}
-%doc --no-dereference spec/src/main/doc/license-asl2.%{adoc}
-%doc --no-dereference spec/src/main/doc/license-jcp.%{adoc}
 
-%files javadoc -f api/.mfiles-javadoc
-%doc --no-dereference spec/src/main/doc/license-asl2.%{adoc}
-%doc --no-dereference spec/src/main/doc/license-jcp.%{adoc}
+%files -f .mfiles
+%doc --no-dereference spec/src/main/asciidoc/license-asl2.asciidoc
+%doc --no-dereference spec/src/main/asciidoc/license-jcp-final.asciidoc
+%doc spec/src/main/asciidoc/cdi-spec.asciidoc
+
+%files javadoc -f .mfiles-javadoc
+%doc --no-dereference spec/src/main/asciidoc/license-asl2.asciidoc
+%doc --no-dereference spec/src/main/asciidoc/license-jcp-final.asciidoc
+
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0-alt1_2jpp11
+- new version
+
 * Mon May 31 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt2_12jpp8
 - build w/o asciidoc (python2)
 
