@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-posix
 Version:        3.0.47
-Release:        alt1_2jpp8
+Release:        alt1_8jpp8
 Summary:        Java Posix layer
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
@@ -20,7 +17,6 @@ BuildRequires:  mvn(com.github.jnr:jnr-ffi)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:      noarch
 Source44: import.info
@@ -43,6 +39,9 @@ Javadoc for %{name}.
 # fix test which assumes that there is a group named "nogroup"
 sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 # Remove useless wagon extension.
 %pom_xpath_remove "pom:build/pom:extensions"
 
@@ -54,17 +53,18 @@ sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 
 %install
 %mvn_install
-ln -s %name/%name.jar %buildroot%_javadir/%name.jar
 
 %files -f .mfiles
 %doc README.md
 %doc --no-dereference LICENSE.txt
-%_javadir/%name.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 3.0.47-alt1_8jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.47-alt1_2jpp8
 - new version
 
