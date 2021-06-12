@@ -58,7 +58,7 @@ BuildRequires: jpackage-11-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20200723
+%global addver  .v20210224
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -67,8 +67,8 @@ BuildRequires: jpackage-11-compat
 %bcond_without  jp_minimal
 
 Name:           jetty
-Version:        9.4.31
-Release:        alt1_3jpp11
+Version:        9.4.38
+Release:        alt1_1jpp11
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -251,7 +251,6 @@ Obsoletes:      %{name}-rewrite < 9.4.20-1
 Obsoletes:      %{name}-servlets < 9.4.20-1
 Obsoletes:      %{name}-start < 9.4.20-1
 Obsoletes:      %{name}-unixsocket < 9.4.20-1
-Obsoletes:      %{name}-util-ajax < 9.4.20-1
 Obsoletes:      %{name}-websocket-api < 9.4.20-1
 Obsoletes:      %{name}-websocket-client < 9.4.20-1
 Obsoletes:      %{name}-websocket-common < 9.4.20-1
@@ -368,6 +367,13 @@ Summary:        util module for Jetty
 License:        (ASL 2.0 or EPL-1.0) and MIT
 
 %description    util
+%{extdesc} %{summary}.
+
+%package        util-ajax
+Group: Networking/WWW
+Summary:        util-ajax module for Jetty
+
+%description    util-ajax
 %{extdesc} %{summary}.
 
 %package        webapp
@@ -517,13 +523,6 @@ Summary:        unixsocket module for Jetty
 %description    unixsocket
 %{extdesc} %{summary}.
 
-%package        util-ajax
-Group: Networking/WWW
-Summary:        util-ajax module for Jetty
-
-%description    util-ajax
-%{extdesc} %{summary}.
-
 %package        websocket-api
 Group: Networking/WWW
 Summary:        websocket-api module for Jetty
@@ -666,11 +665,9 @@ find . -name "*.class" -exec rm {} \;
 
 # Plugins irrelevant or harmful to building the package
 %pom_remove_plugin -r :maven-checkstyle-plugin
-%pom_remove_plugin -r :findbugs-maven-plugin
+%pom_remove_plugin -r :spotbugs-maven-plugin
 %pom_remove_plugin -r :maven-enforcer-plugin
-%pom_remove_plugin -r :clirr-maven-plugin
 %pom_remove_plugin -r :maven-eclipse-plugin
-%pom_remove_plugin -r :maven-pmd-plugin
 %pom_remove_plugin -r :license-maven-plugin
 %pom_remove_plugin -r :maven-site-plugin
 %pom_remove_plugin -r :maven-source-plugin
@@ -688,9 +685,6 @@ find . -name "*.class" -exec rm {} \;
 # Reflective use of classes that might not be present in the JDK should be optional OSGi-wise
 %pom_xpath_inject "pom:configuration/pom:instructions" \
 "<Import-Package>sun.misc;resolution:=optional,com.sun.nio.file;resolution:=optional,*</Import-Package>"
-
-# Use proper groupId for apache ant
-%pom_xpath_replace "pom:groupId[text()='ant']" "<groupId>org.apache.ant</groupId>" jetty-ant/pom.xml
 
 %pom_remove_dep "com.sun.net.httpserver:http" jetty-http-spi
 
@@ -786,7 +780,6 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_disable_module jetty-fcgi
 %pom_disable_module jetty-websocket
 %pom_disable_module jetty-servlets
-%pom_disable_module jetty-util-ajax
 %pom_disable_module apache-jsp
 %pom_disable_module apache-jstl
 %pom_disable_module jetty-maven-plugin
@@ -895,7 +888,7 @@ build-jar-repository %{buildroot}%{apphomedir}/lib/apache-jsp \
            tomcat/tomcat-util-scan glassfish-el-api glassfish-el
 
 # ecj doesn't have javapackages metadata in manifest, remove when fixed
-ecj=`echo %{buildroot}%{apphomedir}/lib/apache-jsp/org.eclipse.jdt*.ecj-*.jar`
+ecj=`echo %{buildroot}%{apphomedir}/lib/apache-jsp/org.eclipse.jdt.ecj-*.jar`
 rm $ecj
 
 # substitute dependency jars (keep start.jar with shaded jetty util)
@@ -980,6 +973,7 @@ exit 0
 %files servlet -f .mfiles-jetty-servlet
 %files util -f .mfiles-jetty-util
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
+%files util-ajax -f .mfiles-jetty-util-ajax
 %files webapp -f .mfiles-jetty-webapp
 %files jmx -f .mfiles-jetty-jmx
 %files xml -f .mfiles-jetty-xml
@@ -1034,7 +1028,6 @@ exit 0
 %files servlets -f .mfiles-jetty-servlets
 %files start -f .mfiles-jetty-start
 %files unixsocket -f .mfiles-jetty-unixsocket
-%files util-ajax -f .mfiles-jetty-util-ajax
 %files websocket-api -f .mfiles-websocket-api
 %files websocket-client -f .mfiles-websocket-client
 %files websocket-common -f .mfiles-websocket-common
@@ -1056,6 +1049,9 @@ exit 0
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 9.4.38-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 9.4.31-alt1_3jpp11
 - new version
 
