@@ -7,13 +7,13 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag r1rv65
+%global gittag r1rv67
 %global classname org.bouncycastle.jce.provider.BouncyCastleProvider
 
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
-Version:          1.65
-Release:          alt1_4jpp11
+Version:          1.67
+Release:          alt1_2jpp11
 License:          MIT
 URL:              http://www.bouncycastle.org
 
@@ -215,6 +215,9 @@ fi
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.67-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.65-alt1_4jpp11
 - new version
 
