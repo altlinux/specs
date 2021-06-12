@@ -4,16 +4,16 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          HdrHistogram
-Version:       2.1.11
-Release:       alt1_6jpp11
+Version:       2.1.12
+Release:       alt1_1jpp11
 Summary:       A High Dynamic Range (HDR) Histogram
 License:       BSD and CC0
 URL:           http://hdrhistogram.github.io/%{name}/
 Source0:       https://github.com/%{name}/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
+BuildRequires: junit5
 BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 # Explicit requires for javapackages-tools since HistogramLogProcessor script
 # uses /usr/share/java-utils/java-functions
@@ -48,13 +48,14 @@ find  -name "*.jar"  -print -delete
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :maven-gpg-plugin
 
 %pom_xpath_set "pom:plugin[pom:groupId = 'com.google.code.maven-replacer-plugin' ]/pom:artifactId" replacer
 
 %mvn_file :%{name} %{name}
 
 %build
-%mvn_build --xmvn-javadoc
+%mvn_build --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -70,6 +71,9 @@ find  -name "*.jar"  -print -delete
 %doc --no-dereference COPYING.txt LICENSE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.1.12-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.1.11-alt1_6jpp11
 - update
 
