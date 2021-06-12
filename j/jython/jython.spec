@@ -8,7 +8,6 @@ BuildRequires: jline
 # recommends
 Requires: jline libreadline-java
 AutoReq: yes, nopython
-%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # fedora bcond_with macro
@@ -26,7 +25,7 @@ BuildRequires: jpackage-11-compat
 
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt3_14jpp11
+Release:                   alt3_16jpp11
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -74,8 +73,8 @@ Requires:                  jnr-netdb
 Requires:                  jnr-posix
 Requires:                  jffi
 Requires:                  jffi-native
-Requires:                  jline
-Requires:                  jansi
+Requires:                  jline2
+Requires:                  jansi1
 Requires:                  icu4j
 Requires:                  netty >= 4.1.13
 Requires:                  xerces-j2
@@ -98,8 +97,8 @@ BuildRequires:             jnr-netdb
 BuildRequires:             jnr-posix
 BuildRequires:             jffi
 BuildRequires:             jffi-native
-BuildRequires:             jline
-BuildRequires:             jansi
+BuildRequires:             jline2
+BuildRequires:             jansi1
 BuildRequires:             icu4j
 BuildRequires:             netty >= 4.1.13
 BuildRequires:             xerces-j2
@@ -183,7 +182,7 @@ sed -i -e 's/CharMatcher\.ascii()/CharMatcher.ASCII/' \
 # Symlink build-time libs
 build-jar-repository -p -s extlibs \
   antlr32/antlr antlr32/antlr-runtime stringtemplate antlr jaxb-api \
-  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi icu4j/icu4j \
+  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix/jnr-posix jline2/jline jansi1/jansi icu4j/icu4j \
   glassfish-servlet-api guava objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
   commons-compress junit hamcrest/core
 
@@ -204,7 +203,7 @@ popd
 rm dist/javalib/*.jar
 build-jar-repository -p -s dist/javalib antlr32/antlr-runtime-3.2 \
   objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava icu4j/icu4j \
-  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi jaxb-api \
+  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline2/jline jansi1/jansi jaxb-api \
   netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-resolver netty/netty-transport \
   jctools/jctools-core apache-commons-compress bcprov bcpkix xerces-j2
 
@@ -282,6 +281,9 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.1-alt3_16jpp11
+- fc34 update
+
 * Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.1-alt3_14jpp11
 - java11 build
 
