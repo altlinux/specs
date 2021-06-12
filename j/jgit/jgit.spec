@@ -3,10 +3,10 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag 5.8.1.202007141445-r
+%global gittag 5.11.0.202103091610-r
 
 Name:           jgit
-Version:        5.8.1
+Version:        5.11.0
 Release:        alt1_1jpp11
 Summary:        A pure java implementation of git
 
@@ -27,15 +27,14 @@ BuildRequires:  mvn(com.googlecode.javaewah:JavaEWAH)
 BuildRequires:  mvn(com.jcraft:jsch)
 BuildRequires:  mvn(com.jcraft:jzlib)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.i2p.crypto:eddsa)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.sshd:sshd-osgi) >= 2.4.0
-BuildRequires:  mvn(org.apache.sshd:sshd-sftp) >= 2.4.0
+BuildRequires:  mvn(org.apache.sshd:sshd-osgi) >= 2.6.0
+BuildRequires:  mvn(org.apache.sshd:sshd-sftp) >= 2.6.0
 BuildRequires:  mvn(org.bouncycastle:bcpg-jdk15on) >= 1.65
 BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.65
 BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on) >= 1.65
@@ -48,7 +47,7 @@ BuildRequires:  mvn(org.tukaani:xz)
 
 # Runtime requirements
 Requires:       bouncycastle >= 1.65
-Requires:       apache-sshd >= 1:2.4.0
+Requires:       apache-sshd >= 1:2.6.0
 Requires:       jzlib
 Source44: import.info
 
@@ -72,9 +71,8 @@ BuildArch: noarch
 rm .mvn/maven.config
 
 # Disable "errorprone" compiler that is not available in distro
-%pom_xpath_remove "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:executions/pom:execution[pom:id='compile-with-errorprone']" pom.xml
-%pom_xpath_remove "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:executions/pom:execution[pom:id='default-compile']/pom:configuration" pom.xml
-%pom_xpath_remove "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:dependencies" pom.xml
+%pom_xpath_remove "pom:configuration/pom:annotationProcessorPaths"
+%pom_xpath_remove "pom:configuration/pom:compilerArgs"
 
 # Use newer Felix dep
 %pom_change_dep -r org.osgi:org.osgi.core org.osgi:osgi.core:\${osgi-core-version}:provided
@@ -100,12 +98,6 @@ sed -i -e 's/@{argLine}//' $(find -name pom.xml)
 sed -i -e 's/org\.springframework\.boot\.loader\.JarLauncher/org.eclipse.jgit.pgm.Main/' \
   org.eclipse.jgit.pgm/jgit.sh
 
-# Relax junit restriction
-sed -i -e '/org\.junit/s/4\.13/4.12/' $(grep -r -l --include MANIFEST.MF org.junit)
-
-# Relax jsch restriction
-sed -i -e '/jsch/s/1\.55/1.54/' org.eclipse.jgit.junit.ssh/META-INF/MANIFEST.MF
-
 # Relax servlet restriction
 sed -i -e '/javax\.servlet/s/4\.0\.0/5.0.0/' org.eclipse.jgit.lfs.server/META-INF/MANIFEST.MF org.eclipse.jgit.pgm/META-INF/MANIFEST.MF
 sed -i -e '/javax\.servlet/s/3\.2\.0/5.0.0/' org.eclipse.jgit.junit.http/META-INF/MANIFEST.MF org.eclipse.jgit.http.server/META-INF/MANIFEST.MF
@@ -117,8 +109,10 @@ sed -i -e '/javax\.servlet/s/3\.2\.0/5.0.0/' org.eclipse.jgit.junit.http/META-IN
 # No need to build test modules if we aren't running tests
 sed -i -e '/\.test<\/module>/d' pom.xml
 
-# Never install test jars
-%mvn_package ":*.test" __noinstall
+# Or junit util bundles used by tests
+%pom_disable_module org.eclipse.jgit.junit
+%pom_disable_module org.eclipse.jgit.junit.ssh
+%pom_disable_module org.eclipse.jgit.junit.http
 
 %build
 # Don't run tests due to missing dependencies
@@ -147,6 +141,9 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5.11.0-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 5.8.1-alt1_1jpp11
 - new version
 
