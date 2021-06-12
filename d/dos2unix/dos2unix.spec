@@ -1,9 +1,9 @@
 Name: dos2unix
-Version: 7.3.5
+Version: 7.4.2
 Release: alt1
 
 Summary: Text file format converter
-License: Freely distributable
+License: BSD
 Group: Text tools
 
 Url: http://waterlan.home.xs4all.nl/dos2unix.html
@@ -15,7 +15,7 @@ Provides: unix2dos = %version-%release
 
 # Automatically added by buildreq on Mon Feb 15 2016
 # optimized out: perl-Encode perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Pod-Usage perl-parent perl-podlators
-BuildRequires: perl-Pod-Checker po4a
+BuildRequires: perl-Pod-Checker po4a gettext gcc perl-Padre
 
 %description
 %name - DOS/Mac to Unix and vice versa text file format converter.
@@ -42,6 +42,10 @@ rm -rf man/{es,nl}
 %doc *.txt
 
 %changelog
+* Sat Jun 12 2021 Ilya Mashkin <oddity@altlinux.ru> 7.4.2-alt1
+- 7.4.2
+- Update License to BSD
+
 * Mon Jul 10 2017 Michael Shigorin <mike@altlinux.org> 7.3.5-alt1
 - new version (watch file uupdate)
 
