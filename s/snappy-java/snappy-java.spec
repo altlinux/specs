@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # empty debuginfo
@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:             snappy-java
 Version:          1.1.2.4
-Release:          alt2_14jpp8
+Release:          alt2_18jpp11
 Summary:          Fast compressor/decompresser
 License:          ASL 2.0
 URL:              http://xerial.org/snappy-java/
@@ -26,6 +26,9 @@ Source0:          https://github.com/xerial/snappy-java/archive/%{version}.tar.g
 Source1:          http://central.maven.org/maven2/org/xerial/snappy/%{name}/%{version}/%{name}-%{version}.pom
 Patch0:           snappy-java-1.1.2-build.patch
 Patch1:           snappy-java-1.1.2.4-lsnappy.patch
+
+# Use "javac -h" because "javah" command disappeared in java 11
+Patch2:           javah-adaptation.patch
 
 BuildRequires:    gcc-c++
 BuildRequires:    libstdc++-devel-static
@@ -67,6 +70,7 @@ find -name "*.h" -print -delete
 
 %patch0 -p1
 %patch1 -p1
+%patch2
 
 cp %{SOURCE1} pom.xml
 %pom_xpath_remove "pom:dependency[pom:scope = 'test']"
@@ -92,7 +96,7 @@ cp %{SOURCE1} pom.xml
       <target>
        <javac destdir="lib"
          srcdir="src/main/java"
-         source="1.6" target="1.6" debug="on"
+         source="${maven.compiler.source}" target="${maven.compiler.target}" debug="on"
          classpathref="maven.plugin.classpath">
          <include name="**/OSInfo.java"/>
        </javac>
@@ -127,12 +131,6 @@ cp %{SOURCE1} pom.xml
   </execution>
 </executions>'
 
-%pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin:3.0 . '
-<configuration>
- <source>1.6</source>
- <target>1.6</target>
-</configuration>'
-
 chmod 644 NOTICE README.md
 # Convert from dos to unix line ending
 for file in LICENSE NOTICE README.md; do
@@ -150,7 +148,7 @@ export CXXFLAGS
 #    org.xerial:xerial-core:3.2.3
 #    org.scalatest:scalatest_2.11:2.2.0
 #    com.novocode:junit-interface:0.10
-%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -163,6 +161,9 @@ export CXXFLAGS
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2.4-alt2_18jpp11
+- fc update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2.4-alt2_14jpp8
 - fc update
 
