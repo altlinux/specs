@@ -1,7 +1,5 @@
-%define sover 0
-
 Name: googletest
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Google's framework for writing C++ tests
@@ -12,9 +10,9 @@ Url: https://github.com/google/%name
 
 # https://github.com/google/%name/archive/release-%version/%name-release-%version.tar.gz
 Source: %name-release-%version.tar
-Patch0: %name-alt-soname.patch
 
 BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: gcc-c++
 
 %description
@@ -25,13 +23,13 @@ assertions, user-defined assertions, death tests, fatal and non-fatal
 failures, value- and type-parameterized tests, various options for
 running the tests, and XML test report generation.
 
-%package -n libgtest%sover
+%package -n libgtest
 Summary: Google's framework for writing C++ tests
 Group: Development/C++
-Provides: libgtest
-Obsoletes: libgtest <= 1.7.0 
+Provides: libgtest0
+Obsoletes: libgtest0 <= 1.10.0 
 
-%description -n libgtest%sover
+%description -n libgtest
 Google's framework for writing C++ tests on a variety of platforms
 (Linux, Mac OS X, Windows, Cygwin, Windows CE, and Symbian). Based on
 the xUnit architecture. Supports automatic test discovery, a rich set of
@@ -46,13 +44,13 @@ Group: Development/C++
 %description -n libgtest-devel
 Development environment for gtest
 
-%package -n libgmock%sover
+%package -n libgmock
 Summary: Google C++ Mocking Framework
 Group: Development/C++
-Provides: libgmock
-Obsoletes: libgmock <= 1.7.0
+Provides: libgmock0
+Obsoletes: libgmock0 <= 1.10.0
 
-%description -n libgmock%sover
+%description -n libgmock
 Google's framework for writing and using C++ mock classes on a variety
 of platforms (Linux, Mac OS X, Windows, Windows CE, Symbian, etc).
 Inspired by jMock, EasyMock, and Hamcrest, and designed with C++'s
@@ -68,28 +66,19 @@ Development environment for gmock
 
 %prep
 %setup -n %name-release-%version
-%patch0 -p1
 
 %build
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DBUILD_SHARED_LIBS:BOOL=TRUE
-
-popd
-
-%make_build -C %_target_platform
+%cmake -DBUILD_SHARED_LIBS:BOOL=TRUE -Dgmock_build_tests:BOOL=TRUE
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 
-%files -n libgtest%sover
-%doc googletest/CONTRIBUTORS googletest/LICENSE googletest/README.md
+%check
+%make -C %_cmake__builddir test
+
+%files -n libgtest
+%doc CONTRIBUTORS LICENSE googletest/README.md
 %_libdir/libgtest.so.*
 %_libdir/libgtest_main.so.*
 
@@ -101,8 +90,8 @@ popd
 %_pkgconfigdir/gtest_main.pc
 %_includedir/gtest
 
-%files -n libgmock%sover
-%doc googlemock/CONTRIBUTORS googlemock/LICENSE googlemock/README.md
+%files -n libgmock
+%doc CONTRIBUTORS LICENSE googlemock/README.md
 %_libdir/libgmock.so.*
 %_libdir/libgmock_main.so.*
 
@@ -114,6 +103,9 @@ popd
 %_includedir/gmock
 
 %changelog
+* Sat Jun 12 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt1
+- Version 1.11.0
+
 * Sat Jun 27 2020 Nazarov Denis <nenderus@altlinux.org> 1.10.0-alt1
 - Version 1.10.0 (ALT #38645)
 
