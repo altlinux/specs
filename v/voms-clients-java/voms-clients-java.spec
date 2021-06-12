@@ -3,31 +3,25 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		voms-clients-java
-Version:	3.3.0
-Release:	alt1_6jpp8
+Version:	3.3.2
+Release:	alt1_2jpp11
 Summary:	Virtual Organization Membership Service Java clients
 
 License:	ASL 2.0
 URL:		https://wiki.italiangrid.it/VOMS
 Source0:	https://github.com/italiangrid/voms-clients/archive/v%{version}/%{name}-%{version}.tar.gz
-#		Use a more sensible timeout
-#		Backport from upstream git
-Patch0:		%{name}-use-a-more-sensible-timeout.patch
-#		Change default proxy cert key length to 2048 bits
-#		https://github.com/italiangrid/voms-clients/pull/20
-Patch1:		%{name}-change-default-proxy-cert-key-length-to-2048-bits.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
 BuildRequires:	mvn(commons-cli:commons-cli)
 BuildRequires:	mvn(commons-io:commons-io)
 BuildRequires:	mvn(org.italiangrid:voms-api-java)
-BuildRequires:	voms-api-java >= 3.3.0
-Requires:	voms-api-java >= 3.3.0
+BuildRequires:	voms-api-java >= 3.3.2
+Requires:	voms-api-java >= 3.3.2
 
 
 # Older versions of voms-clients did not have alternatives
@@ -49,8 +43,6 @@ voms-proxy-init, voms-proxy-destroy and voms-proxy-info.
 
 %prep
 %setup -q -n voms-clients-%{version}
-%patch0 -p1
-%patch1 -p1
 
 # Remove maven-javadoc-plugin configuration
 # We are not building the javadoc for this package
@@ -67,7 +59,7 @@ voms-proxy-init, voms-proxy-destroy and voms-proxy-info.
 %pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
 
 %build
-%mvn_build -j
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -153,6 +145,9 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_2jpp11
+- new version
+
 * Tue Oct 08 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_6jpp8
 - new version
 
