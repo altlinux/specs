@@ -16,7 +16,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.38
+%define version 9.0.44
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: jpackage-11-compat
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 38
+%global micro_version 44
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -267,6 +267,7 @@ export OPT_JAR_LIST="xalan-j2-serializer"
       -Dbndlib.jar="$(build-classpath aqute-bnd/biz.aQute.bndlib)" \
       -Dbndlibg.jar="$(build-classpath aqute-bnd/aQute.libg)" \
       -Dbndannotation.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
+      -Dosgi-annotations.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
       -Dslf4j-api.jar="$(build-classpath slf4j/slf4j-api)" \
       -Dosgi-cmpn.jar="$(build-classpath osgi-compendium/osgi.cmpn)" \
       -Dversion="%{version}" \
@@ -633,6 +634,9 @@ exit 0
 %attr(0660,tomcat,tomcat) %verify(not size md5 mtime) %{logdir}/catalina.out
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:9.0.44-alt1_1jpp11
+- new version
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 1:9.0.38-alt1_1jpp11
 - new version
 - merged slev@:
