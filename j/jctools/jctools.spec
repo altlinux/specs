@@ -3,13 +3,18 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:          jctools
-Version:       3.1.0
-Release:       alt1_1jpp8
-Summary:       Java Concurrency Tools for the JVM
-License:       ASL 2.0
-URL:           http://jctools.github.io/JCTools/
-Source0:       https://github.com/JCTools/JCTools/archive/v%{version}/%{name}-%{version}.tar.gz
+%global srcname JCTools
+
+Name:           jctools
+Version:        3.2.0
+Release:        alt1_1jpp8
+Summary:        Java Concurrency Tools for the JVM
+License:        ASL 2.0
+
+URL:            https://github.com/JCTools/JCTools
+Source0:        %{url}/archive/v%{version}/%{srcname}-%{version}.tar.gz
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.javaparser:javaparser-core) >= 3.14.16
@@ -19,14 +24,14 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-all)
 
-BuildArch:     noarch
+# unused parent package was removed for fedora 33+
+Obsoletes:      %{name}-parent < 3.1.0-1
 
-# Parent pom package obsoleted in F34
-Obsoletes: %{name}-parent < 3.1.0-1
-# Can't ship these modules any longer due to usage of Unsafe.defineClass
-# not available in JDK 11, see https://github.com/JCTools/JCTools/issues/254
-Obsoletes: %{name}-channels < 3.1.0-1
-Obsoletes: %{name}-experimental < 3.1.0-1
+# unused channels and experimental modules disabled with 3.1.0 for fedora 33+
+# Unsafe.defineClass is not available in JDK 11:
+# https://github.com/JCTools/JCTools/issues/254
+Obsoletes:      %{name}-channels < 3.1.0-1
+Obsoletes:      %{name}-experimental < 3.1.0-1
 Source44: import.info
 
 %description
@@ -41,64 +46,75 @@ A. Single Writer Map/Set implementations
 A. Low contention stats counters
 A. Executor
 
+
 %package javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
+
 %prep
-%setup -q -n JCTools-%{version}
+%setup -q -n %{srcname}-%{version}
 
-# Cleanup
-find . -name '*.class' -print -delete
-find . -name '*.jar' -print -delete
-
-# Remove failure-prone tests (race condition?)
+# drop some failure-prone tests (race conditions?)
 rm jctools-core/src/test/java/org/jctools/queues/MpqSanityTestMpscCompound.java
 rm jctools-core/src/test/java/org/jctools/queues/atomic/AtomicMpqSanityTestMpscCompound.java
 rm jctools-core/src/test/java/org/jctools/maps/NonBlockingHashMapTest.java
 
-# Fix up version
+# set correct version in all pom.xml files
 %pom_xpath_set pom:project/pom:version %{version}
-%pom_xpath_set -r pom:parent/pom:version %{version} %{name}-{build,core,channels,experimental}
+%pom_xpath_set pom:parent/pom:version %{version} jctools-{build,core,channels,experimental}
 
-# Remove plugins unnecessary for RPM builds
+# remove plugins unnecessary for RPM builds
+%pom_remove_plugin :coveralls-maven-plugin jctools-core
+%pom_remove_plugin :jacoco-maven-plugin jctools-core
 %pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :coveralls-maven-plugin %{name}-core
-%pom_remove_plugin :jacoco-maven-plugin %{name}-core
-%pom_remove_plugin :maven-source-plugin %{name}-core
-%pom_remove_plugin :maven-javadoc-plugin %{name}-core
+%pom_remove_plugin :maven-source-plugin jctools-core
+%pom_remove_plugin :maven-javadoc-plugin jctools-core
 
-# Unavailable deps
-%pom_disable_module %{name}-benchmarks
-%pom_disable_module %{name}-concurrency-test
+# remove tests with additional kotlin dependencies
+%pom_remove_dep org.jetbrains.kotlinx:lincheck jctools-core
+rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
-# Can't build these modules due to use of Unsafe.defineClass which is not present
-# in JDK 11, see https://github.com/JCTools/JCTools/issues/254
-%pom_disable_module %{name}-channels
-%pom_disable_module %{name}-experimental
+# disable unused modules with unavailable dependencies
+%pom_disable_module jctools-benchmarks
+%pom_disable_module jctools-concurrency-test
 
-# No need to package internal build tools
-%mvn_package :jctools-parent __noinstall
+# incompatible with Java 11 and unused in fedora:
+# https://github.com/JCTools/JCTools/issues/254
+%pom_disable_module jctools-channels
+%pom_disable_module jctools-experimental
+
+# do not install internal build tools
 %mvn_package :jctools-build __noinstall
+
+# do not install unused parent POM
+%mvn_package :jctools-parent __noinstall
+
 
 %build
 %mvn_build -s -f
 
+
 %install
 %mvn_install
 
-%files -f .mfiles-%{name}-core
+
+%files -f .mfiles-jctools-core
 %doc README.md
 %doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
+
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_1jpp8
+- fc update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_1jpp8
 - new version
 
