@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt4_41jpp11
+Release:          alt5_41jpp11
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -81,8 +81,8 @@ Patch7:           itext-2.1.7-bouncycastle1.52.patch
 Patch8:           itext-2.1.7-tibco-changes.patch
 
 BuildRequires:    ant
-BuildRequires:    bouncycastle-mail >= 1.52
-BuildRequires:    bouncycastle-pkix >= 1.52
+BuildRequires:    bouncycastle1.65-mail >= 1.52
+BuildRequires:    bouncycastle1.65-pkix >= 1.52
 BuildRequires:    desktop-file-utils
 BuildRequires:    dom4j
 BuildRequires:    ImageMagick-tools
@@ -112,8 +112,8 @@ exactly how your servlet's output will look.
 Group: Development/Other
 Summary:          The core iText Java-PDF library
 BuildArch:        noarch
-Requires:         bouncycastle-mail >= 1.52
-Requires:         bouncycastle-pkix >= 1.52
+Requires:         bouncycastle1.65-mail >= 1.52
+Requires:         bouncycastle1.65-pkix >= 1.52
 Requires:         jpackage-utils
 Obsoletes:        itext < 2.1.7-12
 Obsoletes: itext2 <= 2.1.7-alt1_9jpp6
@@ -188,22 +188,22 @@ sed -i.bcprov1.54 "s|algorithmidentifier.getObjectId().getId|algorithmidentifier
 
 cp -pr %{SOURCE2} JPP-itext.pom
 %pom_remove_dep bouncycastle:bcmail-jdk14 JPP-itext.pom
-%pom_add_dep org.bouncycastle:bcmail-jdk15on JPP-itext.pom
+%pom_add_dep org.bouncycastle:bcmail-jdk15on:1.65 JPP-itext.pom
 %pom_remove_dep bouncycastle:bcprov-jdk14 JPP-itext.pom
-%pom_add_dep org.bouncycastle:bcprov-jdk15on JPP-itext.pom
+%pom_add_dep org.bouncycastle:bcprov-jdk15on:1.65 JPP-itext.pom
 %pom_remove_dep bouncycastle:bctsp-jdk14 JPP-itext.pom
-%pom_add_dep org.bouncycastle:bcpkix-jdk15on JPP-itext.pom
+%pom_add_dep org.bouncycastle:bcpkix-jdk15on:1.65 JPP-itext.pom
 
 cp -pr %{SOURCE8} JPP-%{name}-rtf.pom
 cp -pr %{SOURCE9} JPP-%{name}-rups.pom
 
 for p in rtf rups ; do
 %pom_remove_dep bouncycastle:bcmail-jdk14 JPP-%{name}-${p}.pom
-%pom_add_dep org.bouncycastle:bcmail-jdk15on JPP-%{name}-${p}.pom
+%pom_add_dep org.bouncycastle:bcmail-jdk15on:1.65 JPP-%{name}-${p}.pom
 %pom_remove_dep bouncycastle:bcprov-jdk14 JPP-%{name}-${p}.pom
-%pom_add_dep org.bouncycastle:bcprov-jdk15on JPP-%{name}-${p}.pom
+%pom_add_dep org.bouncycastle:bcprov-jdk15on:1.65 JPP-%{name}-${p}.pom
 %pom_remove_dep bouncycastle:bctsp-jdk14 JPP-%{name}-${p}.pom
-%pom_add_dep org.bouncycastle:bcpkix-jdk15on JPP-%{name}-${p}.pom
+%pom_add_dep org.bouncycastle:bcpkix-jdk15on:1.65 JPP-%{name}-${p}.pom
 done
 
 # move manifest to build area
@@ -219,16 +219,16 @@ touch -r src/rups/com/lowagie/rups/view/icons/copyright_notice.txt tmpfile
 mv -f tmpfile src/rups/com/lowagie/rups/view/icons/copyright_notice.txt
 
 mkdir lib
-build-jar-repository -s -p lib bcprov bcmail bcpkix pdf-renderer dom4j
+build-jar-repository -s -p lib bcprov-1.65 bcmail-1.65 bcpkix-1.65 pdf-renderer dom4j
 
 # Remove jdk & version numbers from classpath entries
 for file in src/ant/{*,.ant*}; do
  for jarname in bcmail bcprov dom4j; do
-  sed -i "s|$jarname-.*\.jar|$jarname.jar|" $file
+  sed -i "s|$jarname-.*\.jar|$jarname-1.65.jar|" $file
  done
 done
 for file in src/ant/{*,.ant*}; do
- sed -i "s|bctsp-.*\.jar|bcpkix.jar|" $file
+ sed -i "s|bctsp-.*\.jar|bcpkix-1.65.jar|" $file
 done
 
 # Setting debug="on" on javac part of the build script.
@@ -343,6 +343,9 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 1:2.1.7-alt5_41jpp11
+- build with compat bouncycastle
+
 * Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 1:2.1.7-alt4_41jpp11
 - java11 build
 - use jvm_run
@@ -410,14 +413,3 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 
 * Sun Sep 11 2005 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt0.1
 - first build for ALT Linux Sisyphus
-
-* Thu Aug 26 2005 Ralph Apel <r.apel at r-apel.de> - 0:1.3-1jpp
-- Upgrade to 1.3
-- Now one jar only
-
-* Wed Aug 25 2004 Ralph Apel <r.apel at r-apel.de> - 0:1.02b-2jpp
-- Build with ant-1.6.2
-- Relax some versioned dependencies
-
-* Fri Feb 27 2004 Ralph Apel <r.apel at r-apel.de> - 0:1.02b-1jpp
-- First JPackage release
