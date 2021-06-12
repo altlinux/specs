@@ -11,7 +11,7 @@ BuildRequires: jpackage-11-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_4jpp11
+Release:    alt1_6jpp11
 Summary:    Java ATK Wrapper
 
 License:    LGPLv2+
@@ -26,7 +26,6 @@ BuildRequires:	gcc
 BuildRequires:	gcc-c++
 BuildRequires:	clang
 BuildRequires:  libatk-devel libatk-gir-devel
-BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:  xprop
@@ -55,7 +54,8 @@ change of underlying communication mechanism.
 
 %build
 %configure --disable-Werror
-%make_build
+#make_build
+make -j2
 cp %{SOURCE1} .
 
 %install
@@ -82,6 +82,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so \
 
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt1_6jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt1_4jpp11
 - update
 
