@@ -21,7 +21,7 @@ BuildRequires: jpackage-1.8-compat
 %global classpath batik:xml-commons-apis:xml-commons-apis-ext:xmlgraphics-commons
 
 Name:           batik
-Version:        1.13
+Version:        1.14
 Release:        alt1_1jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
@@ -270,13 +270,13 @@ rm batik-bridge/src/main/java/org/apache/batik/bridge/WindowWrapper.java
 rm batik-script/src/main/java/org/apache/batik/script/jacl/JaclInterpreter.java
 
 %build
-# zerg's girar armh hack:
-(while true; do date; sleep 7m; done) &
-# end armh hack, kill it when girar will be fixed
 
 export ANT_OPTS="-Xmx512m"
 # due to javadoc x86_64 out of memory
 subst 's,maxmemory="128m",maxmemory="512m",' build.xml
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 %mvn_build
 
 %install
@@ -343,6 +343,9 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.14-alt1_1jpp8
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.13-alt1_1jpp8
 - new version
 
