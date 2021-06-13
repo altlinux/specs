@@ -4,7 +4,7 @@
 
 Name:		rr
 Version:	5.4.0
-Release:	alt2
+Release:	alt3
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -45,7 +45,7 @@ subst "s!/bin/rr_page_!lib/rr/rr_page_!" src/AddressSpace.cc
 %cmake_build
 
 %install
-%cmake_install install DESTDIR=%buildroot
+%cmake_install
 mv %buildroot/%_bindir/rr_* %buildroot%_libdir/rr/
 subst '1s:/usr/bin/bash:/bin/bash:' %buildroot%_bindir/signal-rr-recording.sh
 rm -f %buildroot%_bindir/rr_page*
@@ -60,6 +60,9 @@ rm -f %buildroot%_bindir/rr_page*
 %_libdir/rr
 
 %changelog
+* Sat Jun 12 2021 Arseny Maslennikov <arseny@altlinux.org> 5.4.0-alt3
+- NMU: spec: adapt to new cmake macros.
+
 * Sun Dec 27 2020 Vitaly Chikunov <vt@altlinux.org> 5.4.0-alt2
 - spec: Temporary disable '-Werror=class-memaccess'.
 - spec: Update licenses.
