@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ texinfo unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global cluster jnr
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jffi
 Version:        1.2.23
-Release:        alt1_2jpp8
+Release:        alt1_5jpp11
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -72,6 +72,9 @@ This package contains the API documentation for %{name}.
 # Remove pointless parent pom
 %pom_remove_parent
 
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ pom.xml
+
 # Allow building on Java 11
 for f in src/main/java/com/kenai/jffi/{Foreign,ObjectBuffer}.java version.xml; do
   # Add the import for @Native
@@ -79,6 +82,9 @@ for f in src/main/java/com/kenai/jffi/{Foreign,ObjectBuffer}.java version.xml; d
   # Set @Native for fields
   sed -i '/\(static final\|final static\) int [A-Z]/ i @Native' $f
 done
+
+# Don't attempt to override arch configuration from RPM flags
+sed -i -e '/i586/d' jni/GNUmakefile
 
 # remove uneccessary directories
 rm -r archive/* jni/libffi/ lib/junit*
@@ -144,6 +150,9 @@ ant -Duse.system.libffi=1 -Drun.jvm.model=-Xmx128m test
 %doc --no-dereference COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_5jpp11
+- new version
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_2jpp8
 - new version, use jvm8
 
