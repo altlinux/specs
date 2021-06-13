@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           args4j
 Version:        2.33
-Release:        alt1_12jpp8
+Release:        alt1_14jpp11
 Summary:        Java command line arguments parser
 License:        MIT
 URL:            http://args4j.kohsuke.org
@@ -14,10 +14,12 @@ Source0:        https://github.com/kohsuke/%{name}/archive/%{name}-site-%{versio
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.mockito:mockito-all)
+
+# Stopped shipping these unused subpackages in F34
+Obsoletes: %{name}-tools < 2.33-13
+Obsoletes: %{name}-parent < 2.33-13
 Source44: import.info
 
 %description
@@ -30,21 +32,6 @@ to parse command line options/arguments in your CUI application.
 - It is designed to parse javac like options (as opposed to GNU-style
   where ls -lR is considered to have two options l and R)
 
-%package tools
-Group: Development/Java
-Summary:        Development-time tool for generating additional artifacits
-
-%description tools
-This package contains args4j development-time tool for generating
-additional artifacits.
-
-%package parent
-Group: Development/Java
-Summary:        args4j parent POM
-
-%description parent
-This package contains parent POM for args4j project.
-
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -56,26 +43,17 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-site-%{version}
 
-# removing classpath addition
-sed -i 's/<addClasspath>true/<addClasspath>false/g' %{name}-tools/pom.xml
-
-# fix ant group id
-sed -i 's/<groupId>ant/<groupId>org.apache.ant/g' %{name}-tools/pom.xml
-
 # removing bundled stuff
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
-%pom_remove_plugin :maven-shade-plugin %{name}-tools
+# Not needed for RPM builds
 %pom_remove_plugin -r :maven-site-plugin
-
-# XMvn cannot generate requires on dependecies with scope "system"
-%pom_xpath_remove "pom:profile[pom:id[text()='jdk-tools-jar']]" %{name}-tools
-%pom_add_dep com.sun:tools %{name}-tools
 
 # we don't need these now
 %pom_disable_module args4j-maven-plugin
 %pom_disable_module args4j-maven-plugin-example
+%pom_disable_module args4j-tools
 
 # Remove reliance on the parent pom
 %pom_remove_parent
@@ -86,9 +64,8 @@ find -name '*.jar' -exec rm -f '{}' \;
 <configuration><source>1.6</source></configuration>
 </plugin>"
 
-# put args4j-tools and parent POM to separate subpackages
-%mvn_package :args4j-tools::{}: %{name}-tools
-%mvn_package :args4j-site::{}: %{name}-parent
+# Don't package the parent pom
+%mvn_package :args4j-site __noinstall
 
 # install also compat symlinks
 %mvn_file ":{*}" %{name}/@1 @1
@@ -102,15 +79,13 @@ find -name '*.jar' -exec rm -f '{}' \;
 %files -f .mfiles
 %doc --no-dereference %{name}/LICENSE.txt
 
-%files tools -f .mfiles-%{name}-tools
-
-%files parent -f .mfiles-%{name}-parent
-%doc --no-dereference %{name}/LICENSE.txt
-
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference %{name}/LICENSE.txt
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.33-alt1_14jpp11
+- fc34 update
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 2.33-alt1_12jpp8
 - jvm8 update
 
