@@ -3,20 +3,17 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global cvs_version 2_12_0
-
 %define __requires_exclude system.bundle
 
 Name:          xerces-j2
-Version:       2.12.0
-Release:       alt1_9jpp8
+Version:       2.12.1
+Release:       alt1_3jpp11
 Summary:       Java XML parser
 # Most of the source is ASL 2.0
 # W3C licensed files:
@@ -25,18 +22,16 @@ Summary:       Java XML parser
 License:       ASL 2.0 and W3C
 URL:           http://xerces.apache.org/xerces2-j/
 
+%global cvs_version %(tr . _ <<< %{version})
+
 Source0:       http://mirror.ox.ac.uk/sites/rsync.apache.org/xerces/j/source/Xerces-J-src.%{version}.tar.gz
-Source1:       %{name}-version.sh
-Source2:       %{name}-constants.sh
+Source1:       http://www.apache.org/dist/xerces/j/source/Xerces-J-src.%{version}.tar.gz.asc
+Source2:       http://www.apache.org/dist/xerces/j/binaries/KEYS
 Source11:      %{name}-version.1
 Source12:      %{name}-constants.1
 
 # Custom javac ant task used by the build
 Source3:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/XJavac.java
-
-# Custom doclet tags used in javadocs
-Source5:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/ExperimentalTaglet.java
-Source6:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/InternalTaglet.java
 
 Source7:       %{name}-pom.xml
 
@@ -46,8 +41,8 @@ Patch0:        %{name}-build.patch
 # Patch the manifest so that it includes OSGi stuff
 Patch1:        %{name}-manifest.patch
 
-# Patch various classes that need to implement getContentDocument method
-Patch2:        %{name}-getcontentdocument.patch
+# Patch build.xml to patch modules as needed during javadoc generation
+Patch2:        %{name}-modulefix.patch
 
 BuildArch:     noarch
 
@@ -57,7 +52,7 @@ BuildRequires: apache-parent
 BuildRequires: xalan-j2 >= 2.7.1
 BuildRequires: xml-commons-apis >= 1.4.01
 BuildRequires: xml-commons-resolver >= 1.2
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: gnupg2
 
 Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
@@ -128,19 +123,21 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %{summary}.
 
 %prep
-%setup -q -n xerces-%{cvs_version}
-%patch0 -p0 -b .orig
-%patch1 -p0 -b .orig
-%patch2 -p0 -b .orig
+# Verify the source file
 
-# Copy the custom ant tasks into place
+%setup -q -n xerces-%{cvs_version}
+%patch0
+%patch1
+%patch2
+
+
+# Copy the custom ant task into place
 mkdir -p tools/org/apache/xerces/util
 mkdir -p tools/bin
-cp -a %{SOURCE3} %{SOURCE5} %{SOURCE6} tools/org/apache/xerces/util
+cp -a %{SOURCE3} tools/org/apache/xerces/util
 
 # Make sure upstream hasn't sneaked in any jars we don't know about
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find . \( -name '*.class' -o -name '*.jar' \) -delete
 
 sed -i 's/\r//' LICENSE README NOTICE
 
@@ -152,16 +149,11 @@ sed -i -e "s|additionalparam='|additionalparam='-Xdoclint:none |" build.xml
 %mvn_file : %{name} jaxp_parser_impl
 
 %build
-export JAVA_HOME=%{_jvmdir}/java-1.8.0
 pushd tools
 
 # Build custom ant tasks
-$JAVA_HOME/bin/javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
-$JAVA_HOME/bin/jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
-
-# Build custom doc taglets
-$JAVA_HOME/bin/javac -classpath $JAVA_HOME/lib/tools.jar org/apache/xerces/util/*Taglet.java
-$JAVA_HOME/bin/jar cf bin/xerces2taglets.jar org/apache/xerces/util/*Taglet.class
+javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
+jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
 
 ln -sf $(build-classpath xalan-j2-serializer) serializer.jar
 ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
@@ -171,7 +163,7 @@ popd
 
 # Build everything
 export ANT_OPTS="-Xmx512m -Djava.awt.headless=true -Dbuild.sysclasspath=first -Ddisconnected=true"
-ant -Djavac.source=1.6 -Djavac.target=1.6 \
+ant -Djavac.source=1.7 -Djavac.target=1.7 \
     -Dbuild.compiler=modern \
     clean jars javadocs
 
@@ -193,8 +185,8 @@ cp -pr build/docs/javadocs/xni/* %{buildroot}%{_javadocdir}/%{name}/xni
 cp -pr build/docs/javadocs/other/* %{buildroot}%{_javadocdir}/%{name}/other
 
 # scripts
-install -pD -m755 -T %{SOURCE1} %{buildroot}%{_bindir}/%{name}-version
-install -pD -m755 -T %{SOURCE2} %{buildroot}%{_bindir}/%{name}-constants
+%jpackage_script org.apache.xerces.impl.Version "" "" %{name} %{name}-version 1
+%jpackage_script org.apache.xerces.impl.Constants "" "" %{name} %{name}-constants 1
 
 # manual pages
 install -d -m 755 %{buildroot}%{_mandir}/man1
@@ -220,6 +212,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.1-alt1_3jpp11
+- new version
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_9jpp8
 - jvm8 update
 
