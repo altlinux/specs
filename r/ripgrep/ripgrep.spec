@@ -1,8 +1,8 @@
 %define bname rg
 
 Name: ripgrep
-Version: 12.1.1
-Release: alt2
+Version: 13.0.0
+Release: alt1
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
 Group: File tools
@@ -47,6 +47,9 @@ install -m 0644 target/release/build/%name-*/out/%bname.bash %buildroot%_datadir
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Sun Jun 13 2021 Alexander Makeenkov <amakeenk@altlinux.org> 13.0.0-alt1
+- Updated to version 13.0.0
+
 * Wed Feb 10 2021 Alexander Makeenkov <amakeenk@altlinux.org> 12.1.1-alt2
 - Build with pcre2 support (closes: #39668)
 
