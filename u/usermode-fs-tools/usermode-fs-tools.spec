@@ -1,6 +1,6 @@
 Name: usermode-fs-tools
-Version: 1.1
-Release: alt2
+Version: 1.2
+Release: alt1
 
 Summary: User-mode filesystems utilities
 License: GPL-3
@@ -132,6 +132,10 @@ done
 %_bindir/iso2stick
 
 %changelog
+* Sun Jun 13 2021 Leonid Krivoshein <klark@altlinux.org> 1.2-alt1
+- iso2stick: added support of the new m-p ISO layouting.
+- iso2stick: added --keep-boot/--keep-grub options.
+
 * Thu Jun 10 2021 Nikita Ermakov <arei@altlinux.org> 1.1-alt2
 - dev2extfs: Handle the case when a node ends on '/'.
 
