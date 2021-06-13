@@ -1,17 +1,15 @@
 %define gtkver 2
 
 Name: pcmanfm
-Version: 1.3.1
-Release: alt3
+Version: 1.3.2
+Release: alt1
 
 Summary: PCMan File Manager
 License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 
-Url: http://pcmanfm.sourceforge.net
+Url: https://github.com/lxde/pcmanfm
 Source: %name-%version.tar
-Patch0: 0001-Avoid-undefined-isdigit-behaviour.patch
-Patch1: 0003-main-set-the-GIOChannel-encoding-to-binary.patch 
 
 Provides: pcmanfm2 = %version-%release
 Obsoletes: pcmanfm2 < 1.2.0
@@ -52,8 +50,6 @@ This package contains header files.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 %autoreconf
@@ -78,6 +74,10 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Mon Feb 22 2021 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
+- new version 1.3.2
+- Update URL tag
+
 * Fri May 22 2020 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt3
 - Fix system reboot delayed for 90 seconds with systemd (Closes: 38280)
 

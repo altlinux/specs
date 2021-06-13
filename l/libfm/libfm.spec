@@ -4,17 +4,15 @@
 %def_disable bootstrap
 
 Name: libfm
-Version: 1.3.1
-Release: alt3
+Version: 1.3.2
+Release: alt1
 
 Summary: Core library of PCManFM file manager
-License: GPL
+License: GPLv2+
 Group: System/Libraries
 
-Url: https://lxde.org
+Url: https://github.com/lxde/libfm
 Source: %name-%version.tar
-Patch0: 0001-SF-1087-Fix-all-allfiles-parse-conditions.patch
-Patch1: 0002-SF-1082-Fix-SelectionCount-condition-parsing-if-was-.patch
 
 %{?_disable_bootstrap:BuildPreReq: rpm-build-xdg}
 BuildRequires: intltool %{?_disable_bootstrap:libmenu-cache-devel}
@@ -64,8 +62,6 @@ created with freedesktop.org Desktop Entry spec.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 sed -ri '/AM_INIT_AUTOMAKE/s,-Werror,\0 -Wno-portability,' configure.ac
 
 %build
@@ -130,6 +126,11 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 %endif
 
 %changelog
+* Mon Feb 22 2021 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
+- new version 1.3.2
+- Update URL tag
+- Update License tag
+
 * Fri May 22 2020 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt3
 - Added upstream patchs
 
