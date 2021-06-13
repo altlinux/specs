@@ -40,7 +40,7 @@ BuildRequires: java-1.8.0-devel
 
 Name:           ant%major_version
 Version:        1.9.6
-Release:        alt7_3jpp8
+Release:        alt8_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Group:          Development/Java
@@ -64,6 +64,8 @@ Provides: %{name}-nodeps = %{epoch}:%{version}
 # Conflicts: ant
 
 BuildArch:      noarch
+
+Patch33: ant19bin.patch
 
 %description
 Apache Ant is a Java library and command-line tool whose mission is to
@@ -92,6 +94,7 @@ find -name build.xml -o -name pom.xml | xargs sed -i -e s/-SNAPSHOT//
 
 # Fix class-path-in-manifest rpmlint warning
 %patch4
+%patch33 -p1
 
 # clean jar files
 find . -name "*.jar" | %{_bindir}/xargs -t rm
@@ -235,6 +238,9 @@ popd
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.6-alt8_3jpp8
+- removed xml-commons-api and xerces-j2 from classpath
+
 * Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt7_3jpp8
 - removed bindir/ant
 
