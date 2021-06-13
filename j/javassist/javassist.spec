@@ -1,29 +1,26 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 3.21.0
+Name:           javassist
+Version:        3.27.0
+Release:        alt1_2jpp11
+Summary:        Java Programming Assistant for Java bytecode manipulation
+License:        MPLv1.1 or LGPLv2+ or ASL 2.0
+
 %global upstream_version rel_%(sed s/\\\\./_/g <<<"%{version}")_ga
 
-Name:           javassist
-Version:        3.21.0
-Release:        alt1_3jpp8
-Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
-License:        MPLv1.1 or LGPLv2+ or ASL 2.0
 URL:            https://www.javassist.org/
+Source0:        https://github.com/jboss-%{name}/%{name}/archive/%{upstream_version}/%{name}-%{version}.tar.gz
+
 BuildArch:      noarch
-
-Source0:        https://github.com/jboss-%{name}/%{name}/archive/%{upstream_version}.tar.gz
-
-Patch0:         0001-Remove-usage-of-junit.awtui-and-junit.swingui.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.hamcrest:hamcrest-all)
 Source44: import.info
 
 %description
@@ -38,40 +35,56 @@ source text; Javassist compiles it on the fly. On the other hand, the
 bytecode-level API allows the users to directly edit a class file as
 other editors.
 
+
 %package javadoc
 Group: Development/Java
-Summary:           Javadocs for javassist
-Requires:          jpackage-utils
+Summary:        Javadocs for javassist
 BuildArch: noarch
 
 %description javadoc
 javassist development documentation.
 
+
 %prep
 %setup -q -n %{name}-%{upstream_version}
-find . -name \*.jar -type f -delete
-mkdir runtest
-%patch0 -p1
-%pom_xpath_remove "pom:profile[pom:id='default-tools']"
-%pom_add_dep com.sun:tools
 
-%mvn_file : %{name}
+# remove unnecessary maven plugins
+%pom_remove_plugin :maven-source-plugin
+
+# disable profiles that only add com.sun:tools dependency
+%pom_xpath_remove "pom:profiles"
+
+# add compatibility alias for old maven artifact coordinates
 %mvn_alias : %{name}:%{name}
 
+# add compatibility symlink for old classpath
+%mvn_file : %{name}
+
+
 %build
-# TODO: enable tests
 %mvn_build -f
+
+# remove bundled jar and class files *after* they were used for running tests
+rm javassist.jar src/test/resources/*.jar
+find src/test -name "*.class" -print -delete
+
 
 %install
 %mvn_install
 
+
 %files -f .mfiles
-%doc License.html Readme.html
+%doc --no-dereference License.html
+%doc Readme.html
 
 %files javadoc -f .mfiles-javadoc
-%doc License.html
+%doc --no-dereference License.html
+
 
 %changelog
+* Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 0:3.27.0-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.21.0-alt1_3jpp8
 - new version
 
