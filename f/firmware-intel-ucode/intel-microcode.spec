@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20210216
+%define orig_timestamp 20210608
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 15
+Version: 16
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,67 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 2:16-alt1.20210608
+- Sync with Debian 3.20210608.1:
+  + New upstream microcode datafile 20210608:
+    + Implements mitigations for CVE-2020-24511 CVE-2020-24512
+      (INTEL-SA-00464), information leakage through shared resources,
+      and timing discrepancy sidechannels
+    + Implements mitigations for CVE-2020-24513 (INTEL-SA-00465),
+      Domain-bypass transient execution vulnerability in some Intel Atom
+      Processors, affects Intel SGX.
+    + Implements mitigations for CVE-2021-24489 (INTEL-SA-00442), Intel
+      VT-d privilege escalation
+    + Fixes critical errata on several processors
+    + New Microcodes:
+      sig 0x00050655, pf_mask 0xb7, 2018-11-16, rev 0x3000010, size 47104
+      sig 0x000606a5, pf_mask 0x87, 2021-03-08, rev 0xc0002f0, size 283648
+      sig 0x000606a6, pf_mask 0x87, 2021-04-25, rev 0xd0002a0, size 283648
+      sig 0x00080664, pf_mask 0x01, 2021-02-17, rev 0xb00000f, size 130048
+      sig 0x00080665, pf_mask 0x01, 2021-02-17, rev 0xb00000f, size 130048
+      sig 0x000806c1, pf_mask 0x80, 2021-03-31, rev 0x0088, size 109568
+      sig 0x000806c2, pf_mask 0xc2, 2021-04-07, rev 0x0016, size 94208
+      sig 0x000806d1, pf_mask 0xc2, 2021-04-23, rev 0x002c, size 99328
+      sig 0x00090661, pf_mask 0x01, 2021-02-04, rev 0x0011, size 19456
+      sig 0x000906c0, pf_mask 0x01, 2021-03-23, rev 0x001d, size 19456
+      sig 0x000a0671, pf_mask 0x02, 2021-04-11, rev 0x0040, size 100352
+    + Updated Microcodes:
+      sig 0x000306f2, pf_mask 0x6f, 2021-01-27, rev 0x0046, size 34816
+      sig 0x000306f4, pf_mask 0x80, 2021-02-05, rev 0x0019, size 19456
+      sig 0x000406e3, pf_mask 0xc0, 2021-01-25, rev 0x00ea, size 105472
+      sig 0x000406f1, pf_mask 0xef, 2021-02-06, rev 0xb00003e, size 31744
+      sig 0x00050653, pf_mask 0x97, 2021-03-08, rev 0x100015b, size 34816
+      sig 0x00050654, pf_mask 0xb7, 2021-03-08, rev 0x2006b06, size 36864
+      sig 0x00050656, pf_mask 0xbf, 2021-03-08, rev 0x4003102, size 30720
+      sig 0x00050657, pf_mask 0xbf, 2021-03-08, rev 0x5003102, size 30720
+      sig 0x0005065b, pf_mask 0xbf, 2021-04-23, rev 0x7002302, size 27648
+      sig 0x00050663, pf_mask 0x10, 2021-02-04, rev 0x700001b, size 24576
+      sig 0x00050664, pf_mask 0x10, 2021-02-04, rev 0xf000019, size 24576
+      sig 0x00050665, pf_mask 0x10, 2021-02-04, rev 0xe000012, size 19456
+      sig 0x000506c9, pf_mask 0x03, 2020-10-23, rev 0x0044, size 17408
+      sig 0x000506ca, pf_mask 0x03, 2020-10-23, rev 0x0020, size 15360
+      sig 0x000506e3, pf_mask 0x36, 2021-01-25, rev 0x00ea, size 105472
+      sig 0x000506f1, pf_mask 0x01, 2020-10-23, rev 0x0034, size 11264
+      sig 0x000706a1, pf_mask 0x01, 2020-10-23, rev 0x0036, size 74752
+      sig 0x000706a8, pf_mask 0x01, 2020-10-23, rev 0x001a, size 75776
+      sig 0x000706e5, pf_mask 0x80, 2020-11-01, rev 0x00a6, size 110592
+      sig 0x000806a1, pf_mask 0x10, 2020-11-06, rev 0x002a, size 32768
+      sig 0x000806e9, pf_mask 0x10, 2021-01-05, rev 0x00ea, size 104448
+      sig 0x000806e9, pf_mask 0xc0, 2021-01-05, rev 0x00ea, size 104448
+      sig 0x000806ea, pf_mask 0xc0, 2021-01-06, rev 0x00ea, size 103424
+      sig 0x000806eb, pf_mask 0xd0, 2021-01-05, rev 0x00ea, size 104448
+      sig 0x000806ec, pf_mask 0x94, 2021-01-05, rev 0x00ea, size 104448
+      sig 0x000906e9, pf_mask 0x2a, 2021-01-05, rev 0x00ea, size 104448
+      sig 0x000906ea, pf_mask 0x22, 2021-01-05, rev 0x00ea, size 102400
+      sig 0x000906eb, pf_mask 0x02, 2021-01-05, rev 0x00ea, size 104448
+      sig 0x000906ec, pf_mask 0x22, 2021-01-05, rev 0x00ea, size 103424
+      sig 0x000906ed, pf_mask 0x22, 2021-01-05, rev 0x00ea, size 103424
+      sig 0x000a0652, pf_mask 0x20, 2021-02-07, rev 0x00ea, size 93184
+      sig 0x000a0653, pf_mask 0x22, 2021-03-08, rev 0x00ea, size 94208
+      sig 0x000a0655, pf_mask 0x22, 2021-03-08, rev 0x00ec, size 94208
+      sig 0x000a0660, pf_mask 0x80, 2020-12-08, rev 0x00e8, size 94208
+      sig 0x000a0661, pf_mask 0x80, 2021-02-07, rev 0x00ea, size 93184
+
 * Thu Jun 03 2021 L.A. Kostis <lakostis@altlinux.ru> 2:15-alt1.20210216
 - Sync with Debian 3.20210216.1:
   + New upstream microcode datafile 20210216
