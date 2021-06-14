@@ -1,7 +1,7 @@
-
+%define _localstatedir %_var
 
 Name:     sbd
-Version:  1.4.2
+Version:  1.5.0
 Release:  alt1
 
 Summary:  Storage-based death
@@ -21,7 +21,7 @@ BuildRequires: /usr/bin/pod2man
 
 Requires: corosync dlm pacemaker pacemaker-remote
 
-%define _localstatedir %_var
+Conflicts: fence-agents-sbd < 4.5.0
 
 %description
 This package contains the storage-based death functionality.
@@ -61,8 +61,8 @@ regression-testing sbd.
 
 rm -rf %buildroot%_libdir/stonith
 
-install -D -m 0755 src/sbd.sh %buildroot/usr/share/sbd/sbd.sh
-install -D -m 0755 tests/regressions.sh %buildroot/usr/share/sbd/regressions.sh
+install -D -m 0755 src/sbd.sh %buildroot%_datadir/%name/sbd.sh
+install -D -m 0755 tests/regressions.sh %buildroot%_datadir/%name/regressions.sh
 
 install -D -m 0644 src/sbd.service %buildroot%_unitdir/sbd.service
 install -D -m 0644 src/sbd_remote.service %buildroot%_unitdir/sbd_remote.service
@@ -75,7 +75,16 @@ find %buildroot -name '*.a' -type f -print0 | xargs -0 rm -f
 find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 
 %post
+%post_service sbd
+%post_service sbd_remote
+
 %preun
+%preun_service sbd
+%preun_service sbd_remote
+
+%postun
+%post_service sbd
+%post_service sbd_remote
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -86,6 +95,7 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_unitdir/sbd.service
 %_unitdir/sbd_remote.service
 %doc COPYING
+%_datadir/pkgconfig/%name.pc
 
 %files tests
 %dir %_datadir/%name
@@ -97,6 +107,9 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_libdir/libsbdtestbed.so
 
 %changelog
+* Mon Jun 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Wed Dec 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.4.2-alt1
 - 1.4.2
 
