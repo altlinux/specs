@@ -2,7 +2,7 @@
 %define theme_virt_dir lxde
 %define theme_fullname lxde-settings-%theme_name
 Name: %theme_fullname
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 BuildArch: noarch
@@ -33,8 +33,8 @@ cat > %buildroot/etc/alternatives/packages.d/%theme_fullname << __EOF__
 %_datadir/%theme_virt_dir %_datadir/%theme_fullname 1
 __EOF__
 
-mv skel %buildroot%_sysconfdir/skel
-mv X11 %buildroot%_sysconfdir/X11
+cp -r skel %buildroot%_sysconfdir/skel
+cp -r X11 %buildroot%_sysconfdir/X11
 chmod 755 %buildroot%_sysconfdir/X11/profile.d/*.sh
 
 mkdir -p %buildroot%_datadir/%theme_fullname
@@ -44,9 +44,13 @@ cp -r * %buildroot%_datadir/%theme_fullname
 %_sysconfdir/alternatives/packages.d/%theme_fullname
 %_datadir/%theme_fullname
 %_sysconfdir/skel/.config/*
+%_sysconfdir/skel/.gtkrc-2.0
 %_sysconfdir/X11/profile.d/*.sh
 
 %changelog
+* Mon Jun 14 2021 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
+- Add gtk2, gtk3 settings to /etc/skel
+
 * Fri Jun 07 2019 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
 - set default background (design-current)
 - drop requires
