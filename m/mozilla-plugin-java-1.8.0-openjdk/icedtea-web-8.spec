@@ -37,16 +37,17 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	2.0.0
-Release:	alt1_pre.2.alpha13.patched1jpp8
+Release:	alt2_pre.0.3.alpha16.patched1.3jpp8
 Summary:	Additional Java components for OpenJDK - Java Web Start implementation
 
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        https://openwebstart.com/
-Source0:    https://github.com/AdoptOpenJDK/IcedTea-Web/archive/%{oldname}-%{version}-pre.0.alpha13.patched1.tar.xz
+Source0:    https://github.com/AdoptOpenJDK/IcedTea-Web/archive/%{oldname}-%{version}-alpha16.tar.gz
 Patch0:     patchOutDunce.patch
 Patch1:     launchersPhase.patch
 # this should be upstreamed. In build tasks which lauches java are using runtime JRE, should beusing SDK, but there is no place where to set it
 Patch2:     usePathJdkForDifferentBuildAndRuntimeJre.patch
+Patch3:     altjava.patch
 
 BuildRequires:  javapackages-tools
 #for deprecated add_maven_depmap, see https://www.spinics.net/lists/fedora-devel/msg233211.html
@@ -177,11 +178,13 @@ BuildArch:  noarch
 This package contains ziped sources of the IcedTea-Web project.
 
 %prep
-%setup -q -n icedtea-web-master
+%setup -q -n IcedTea-Web-icedtea-web-2.0.0-alpha16
 %patch0 -p1
 dos2unix launchers/pom.xml
 %patch1 -p0
 %patch2 -p1
+%patch3 -p1
+
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
 %pom_remove_plugin org.jacoco:jacoco-maven-plugin
@@ -198,6 +201,12 @@ dos2unix launchers/pom.xml
 %pom_remove_dep org.hamcrest:hamcrest integration/pom.xml
 %pom_remove_dep com.github.tomakehurst:wiremock-jre8 integration/pom.xml
 %pom_remove_dep com.github.stefanbirkner:system-rules integration/pom.xml
+
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin common/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin core/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin test-extensions/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin xml-parser/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin pom.xml
 
 rm -v core/src/main/java/net/sourceforge/jnlp/util/WindowsDesktopEntry.java
 rm -r integration/src
@@ -216,18 +225,21 @@ BIN_TARGET_DIR=%{_libexecdir}/%{oldname} \
 ETC_TARGET_DIR=%{_sysconfdir}/java/%{oldname} \
 ITW_LIBS=DISTRIBUTION \
 JRE=%{jredir} \
-%mvn_build -- -Plaunchers -Dmaven.test.skip=true -Dmaven.javadoc.skip=true   || tail launchers/build.log -n 100
-tail launchers/build.log -n 100
+%mvn_build -- -Plaunchers -Dmaven.test.skip=true -Dmaven.javadoc.skip=true   || cat launchers/build.log
+cat launchers/build.log
 
 %install
 #not installing all, itw is comlex maven project, wfrom which we need onlythe finall jar, without system deps
 %mvn_artifact pom.xml launchers/target//usr/share/icedtea-web/javaws.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}
-# build provides also .bat and .sh files, we do not want them
+# build provides also .bat files, we do not want them
 cp -v launchers/target/%{_libexecdir}/%{oldname}/javaws $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
 cp -v launchers/target/%{_libexecdir}/%{oldname}/itweb-settings $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
 cp -v launchers/target/%{_libexecdir}/%{oldname}/policyeditor $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
+cp -v launchers/target/%{_libexecdir}/%{oldname}/javaws.sh $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
+cp -v launchers/target/%{_libexecdir}/%{oldname}/itweb-settings.sh $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
+cp -v launchers/target/%{_libexecdir}/%{oldname}/policyeditor.sh $RPM_BUILD_ROOT%{_libexecdir}/%{oldname}/
 
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/java/%{oldname}/
 cp -v launchers/target/%{_sysconfdir}/java/%{oldname}/itw-modularjdk.args $RPM_BUILD_ROOT%{_sysconfdir}/java/%{oldname}/
@@ -239,7 +251,7 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
 cp -v launchers/target/extensions/bash_completion.d/* $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/
 
 mkdir -p $RPM_BUILD_ROOT/%{_mandir}/
-cp -r launchers/target/icedtea-web-docs/2.0.0-SNAPSHOT/man/* $RPM_BUILD_ROOT/%{_mandir}/
+cp -r launchers/target/icedtea-web-docs/2.0.0-alpha16/man/* $RPM_BUILD_ROOT/%{_mandir}/
 # rename javaws so it can coexists with other implementations
 mv $RPM_BUILD_ROOT/%{_mandir}/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/man1/javaws.itweb.1
 mv $RPM_BUILD_ROOT/%{_mandir}/cs/man1/javaws.1 $RPM_BUILD_ROOT/%{_mandir}/cs/man1/javaws.itweb.1
@@ -267,14 +279,6 @@ cp pom.xml  $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}.pom
 %mvn_artifact $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}.pom $RPM_BUILD_ROOT/%{_javadir}/%{oldname}.jar
 
 %find_lang %{oldname} --all-name --with-man
-
-install -d -m 755 %buildroot/etc/icedtea-web
-cat > %buildroot/etc/icedtea-web/javaws.policy << EOF
-// Based on Oracle JDK policy file
-grant codeBase "file:/usr/share/icedtea-web/netx.jar" {
-    permission java.security.AllPermission;
-};
-EOF
 
 
 ##################################################
@@ -347,9 +351,6 @@ done
 # - END alt linux specific, shared with openjdk -#
 ##################################################
 
-%check
-appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
-
 %files -f %{oldname}.lang
 %{_sysconfdir}/bash_completion.d/*
 %config(noreplace) %{_sysconfdir}/java/%{oldname}/itw-modularjdk.args
@@ -382,6 +383,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Mon Jun 14 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt2_pre.0.3.alpha16.patched1.3jpp8
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_pre.2.alpha13.patched1jpp8
 - new version
 
