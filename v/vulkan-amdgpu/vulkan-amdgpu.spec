@@ -13,8 +13,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2021.Q2.2
-Release: alt1
+Version: 2021.Q2.5
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -83,7 +83,7 @@ popd
 mkdir -p %buildroot{%_vkdir,%_libdir,%_sysconfdir/amd}
 touch %buildroot%_sysconfdir/amd/amdPalSettings.cfg
 
-install -p -m644 %_builddir/xgl/BUILD/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
+install -p -m644 %_builddir/xgl/%_cmake__builddir/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
 install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 
 %files
@@ -93,15 +93,28 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q2.5-alt2
+- .spec: update cmake macros
+- update spvgen -alt-shared patch.
+
+* Sun Jun 13 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q2.5-alt1
+- 2021-6-10 update:
+  + icd: bump vulkan API version to 1.2.179.
+  + llvm: Updated to a85ea7baf890
+  + spvgen: Updated to faf9ff1722d3
+  + llpc: Updated to c89f405e3632
+  + pal: Updated to 02ac99ba650a
+  + xgl: Updated to 14397c77fbc0
+
 * Tue May 04 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q2.2-alt1
 - 2021-4-28 update (closes #40022):
- + update spvgen BR
- + json: bump vulkan API version to 1.2.174.
- + llvm: Updated to d2e97f487956
- + spvgen: Updated to 59823e6c3557
- + llpc: Updated to 28c4e99487eb
- + pal: Updated to 0168557a0715
- + xgl: Updated to f1467f0dfd3d
+  + update spvgen BR
+  + json: bump vulkan API version to 1.2.174.
+  + llvm: Updated to d2e97f487956
+  + spvgen: Updated to 59823e6c3557
+  + llpc: Updated to 28c4e99487eb
+  + pal: Updated to 0168557a0715
+  + xgl: Updated to f1467f0dfd3d
 
 * Wed Feb 24 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q1.3-alt2
 - Fix wayland client BR.
