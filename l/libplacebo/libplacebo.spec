@@ -1,7 +1,7 @@
-%define sover 88
+%define sover 120
 
 Name: libplacebo
-Version: 2.88.0
+Version: 3.120.1
 Release: alt0.1
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
@@ -14,14 +14,16 @@ BuildRequires(pre): meson
 BuildRequires: glslang-devel libspirv-tools-devel libvulkan-devel python3-module-mako libepoxy-devel liblcms2-devel gcc-c++
 
 %description
-libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library.
+libplacebo is essentially the core rendering algorithms and ideas of mpv turned
+into a library.
 
 %package -n %{name}%{sover}
 Summary: %name is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
 
 %description -n %{name}%{sover}
-libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library.
+libplacebo is essentially the core rendering algorithms and ideas of mpv turned
+into a library.
 
 %package -n %name-devel
 Summary: Development files for %name
@@ -51,6 +53,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 3.120.1-alt0.1
+- v3.120.1.
+
 * Mon Jul 20 2020 L.A. Kostis <lakostis@altlinux.ru> 2.88.0-alt0.1
 - Initial build for ALTLinux.
 

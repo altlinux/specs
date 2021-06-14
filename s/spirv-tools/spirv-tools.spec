@@ -1,11 +1,11 @@
 %define sover 0
 %define git %nil
 %define build_type RelWithDebInfo
-%define _cmake %cmake -S . -B BUILD -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+%define _cmake %cmake -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: spirv-tools
-Version: 2020.4
-Release: alt2.1
+Version: 2021.1
+Release: alt1
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -22,7 +22,7 @@ Patch1: %name-alt-cmake-path.patch
 BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
-BuildRequires: spirv-headers >= 1.5.3
+BuildRequires: spirv-headers >= 1.5.4-alt1.gbcf5521
 
 %description
 The package includes an assembler, binary module parser,
@@ -54,26 +54,30 @@ integration into other code bases directly.
 %patch0 -p2
 %patch1 -p2
 
+# will check protobuf support later
+# for fuzzler
 %build
 %_cmake \
-  -DSPIRV_BUILD_COMPRESSION:BOOL=OFF \
+  -DSPIRV_BUILD_COMPRESSION=OFF \
+  -DSPIRV_BUILD_FUZZER=OFF \
+  -DSPIRV_TOOLS_BUILD_STATIC=OFF \
   -DSPIRV-Headers_SOURCE_DIR=%_prefix \
 %ifarch %e2k
   -DSPIRV_WERROR=OFF \
 %endif
-  -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-  -DBUILD_SHARED_LIBS:BOOL=TRUE
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
+  -DBUILD_SHARED_LIBS=ON
 
 ninja \
   -vvv \
   -j %__nprocs \
-  -C BUILD
+  -C %_cmake__builddir
 
 %install
-pushd BUILD
+pushd %_cmake__builddir
 cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -DSHARE_INSTALL_PREFIX=%buildroot%_datadir ../
 popd
-ninja -C BUILD install
+ninja -C %_cmake__builddir install
 
 %files
 %doc CHANGES LICENSE README.md
@@ -92,8 +96,15 @@ ninja -C BUILD install
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
-* Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1:2020.4-alt2.1
-- NMU: spec: adapted to new cmake macros.
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 1:2021.1-alt1
+- Updated to v2021.1.
+- .spec: update cmake macros.
+
+* Mon Feb 15 2021 L.A. Kostis <lakostis@altlinux.ru> 1:2020.6-alt1
+- Updated to v2020.6.
+- Update -alt patches.
+- Disable static build explicitly.
+- Simplify build flags.
 
 * Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 1:2020.4-alt2
 - Rollback to 2020.4-alt1 (ALT #39672)

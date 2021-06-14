@@ -1,10 +1,10 @@
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_INSTALL_LIBDIR=%_datadir
-%define git %nil
+%define git bcf5521
 
 Name: spirv-headers
-Version: 1.5.3
-Release: alt0.3
+Version: 1.5.4
+Release: alt1.g%{git}
 Epoch: 1
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -45,6 +45,12 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/cmake/SPIRV-Headers/*
 
 %changelog
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 1:1.5.4-alt1.gbcf5521
+- Update to GIT bcf5521 (as required by SPIRV-Tools).
+
+* Mon Feb 15 2021 L.A. Kostis <lakostis@altlinux.ru> 1:1.5.4-alt1
+- Update to 1.5.4.raytracing.fixed.
+
 * Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 1:1.5.3-alt0.3
 - Rollback to 1.5.3-alt0.2 (ALT #39671)
 

@@ -2,7 +2,7 @@
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: vulkan
-Version: 1.2.152
+Version: 1.2.176
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -25,9 +25,11 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 8.13.3743
-BuildRequires: libspirv-tools-devel = 2020.4
-BuildRequires: spirv-headers >= 1.5.3
+BuildRequires: glslang-devel = 11.4.0
+BuildRequires: libspirv-tools-devel = 2021.1
+BuildRequires: spirv-headers >= 1.5.4
+# -layers need it
+BuildRequires: librobin-hood-hashing-devel
 
 # textrel due asm optimisation in loader code
 %ifarch i586
@@ -127,7 +129,8 @@ pushd %_builddir/vulkan-"$dir"
 	   -DGLSLANG_INSTALL_DIR=%_prefix \
 	   -DSPIRV_HEADERS_INSTALL_DIR=%_prefix \
 	   -DVulkanHeaders_INCLUDE_DIR=%buildroot%_includedir \
-	   -DVulkanRegistry_DIR=%buildroot%_datadir
+	   -DVulkanRegistry_DIR=%buildroot%_datadir \
+	   -DROBIN_HOOD_HASHING_INCLUDE_DIR=%_includedir
 %cmake_build
 %cmakeinstall_std
 popd
@@ -165,7 +168,9 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 
 %files -n lib%name-devel
 %dir %_includedir/vulkan
+%dir %_includedir/vk_video
 %_includedir/vulkan
+%_includedir/vk_video
 %_libdir/libvulkan.so
 %_pkgconfigdir/vulkan.pc
 %_datadir/vulkan/registry
@@ -188,6 +193,11 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.176-alt1
+- Updated to 1.2.176.
+- BR: add librobin dependency.
+- Add vk_video headers.
+
 * Tue Sep 08 2020 L.A. Kostis <lakostis@altlinux.ru> 1.2.152-alt1
 - Updated to v1.2.152.
 

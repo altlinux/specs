@@ -1,9 +1,10 @@
+%define soname 11
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: glslang
-Version: 8.13.3743
-Release: alt1.2
+Version: 11.4.0
+Release: alt1
 Epoch: 1
 
 Summary: OpenGL and OpenGL ES shader front end and validator
@@ -13,13 +14,13 @@ License: BSD
 Url: https://www.khronos.org/opengles/sdk/tools/Reference-Compiler/
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-Source: https://github.com/KhronosGroup/%name/archive/%version/%name-%version.tar.gz
+Source: https://github.com/KhronosGroup/%name/archive/%version/%name-%version.tar
 Patch0: %{name}-alt-soname.patch
 Patch1: %{name}-alt-shared-opt.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2020.3
+BuildRequires: python3-devel libspirv-tools-devel >= 2021.1
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -34,11 +35,11 @@ range (IDs are not as tightly packed around zero), but will compress
 better when multiple modules are compressed together, since
 compressor's dictionary can find better cross module commonality.
 
-%package -n lib%{name}0
+%package -n lib%{name}%{soname}
 Summary: %{name} shared libraries
 Group: Development/C++
 
-%description -n lib%{name}0
+%description -n lib%{name}%{soname}
 Contains shared libraries used by %{name}.
 
 %package devel
@@ -69,7 +70,7 @@ popd
 %doc README-spirv-remap.txt
 %_bindir/*
 
-%files -n lib%{name}0
+%files -n lib%{name}%{soname}
 %_libdir/*.so.*
 
 %files devel
@@ -80,6 +81,14 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 1:11.4.0-alt1
+- 11.4.0.
+
+* Mon Feb 15 2021 L.A. Kostis <lakostis@altlinux.ru> 1:11.1.0-alt1
+- Version 11.1.0.
+- Update -alt patches.
+- Breaking change: soname have changed.
+
 * Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 1:8.13.3743-alt1.2
 - Rollback to 8.13.3743-alt1.1 (ALT #39673)
 
