@@ -1,3 +1,4 @@
+ExcludeArch: armh
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -13,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 %global release_repository http://nexus.scala-tools.org/content/repositories/releases
 %global snapshot_repository http://nexus.scala-tools.org/content/repositories/snapshots
 %global jansi_jar %{_javadir}/jansi/jansi.jar
-%global jline2_jar %{_javadir}/jline/jline.jar
+%global jline2_jar %{_javadir}/jline2/jline.jar
 %global scaladir %{_datadir}/scala
 
 %global want_jdk8 1
@@ -21,7 +22,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           scala
 Version:        2.10.6
-Release:        alt2_17jpp8
+Release:        alt3_17jpp8
 Summary:        A hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
 # License was confirmed to be standard BSD by fedora-legal
@@ -79,7 +80,7 @@ Source31:       scala-bootstript.xml
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  ant-contrib
-BuildRequires:  jline >= 2.10
+BuildRequires:  jline2 >= 2.10
 BuildRequires:  aqute-bnd
 BuildRequires:  junit
 BuildRequires:  javapackages-local
@@ -93,7 +94,7 @@ BuildRequires:  scala
 Requires:       javapackages-tools
 Requires:       jansi
 
-Requires:       jline >= 2.10
+Requires:       jline2 >= 2.10
 
 %{echo 
 %filter_from_requires /ant/d;
@@ -235,6 +236,9 @@ echo echo $(tail -n 1 %{SOURCE3}) > tools/get-scala-commit-date
 chmod 755 tools/get-scala-*
 
 %build
+# zerg's girar armh hack:
+(while true; do date; sleep 7m; done) &
+# end armh hack, kill it when girar will be fixed
 
 export ANT_OPTS="-Xms2048m -Xmx2048m %{do_bootstrap}"
 
@@ -356,6 +360,9 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 %endif
 
 %changelog
+* Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 2.10.6-alt3_17jpp8
+- use jline2
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt2_17jpp8
 - fc update
 
