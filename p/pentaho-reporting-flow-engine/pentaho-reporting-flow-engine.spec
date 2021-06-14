@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: mvn(commons-logging:commons-logging-api) unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name: pentaho-reporting-flow-engine
 Version: 0.9.4
-Release: alt1_19jpp8
+Release: alt2_19jpp8
 Summary: Pentaho Flow Reporting Engine
 License: LGPLv2+
 Epoch: 1
@@ -65,6 +65,10 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jun 14 2021 Igor Vlasenko <viy@altlinux.org> 1:0.9.4-alt2_19jpp8
+- NMU for unknown reason:
+  the person above was too neglectant to add --changelog "- NMU: <reason>" option.
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_19jpp8
 - fc update
 
