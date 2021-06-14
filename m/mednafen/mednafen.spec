@@ -1,5 +1,5 @@
 Name: mednafen
-Version: 1.27.0
+Version: 1.27.1
 Release: alt1
 
 Summary: Multi-consoles Emulator
@@ -9,7 +9,7 @@ Url: http://mednafen.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # http://downloads.sourceforge.net/%%name/%%name-%%version.tar.bz2
-Source: %name-%version-UNSTABLE.tar.xz
+Source: %name-%version.tar.xz
 Patch1: mednafen-e2k.patch
 
 BuildRequires: gcc-c++ liblzo2-devel libsndfile-devel libflac-devel
@@ -84,6 +84,9 @@ export CXXFLAGS
 
 
 %changelog
+* Mon Jun 14 2021 Ilya Mashkin <oddity@altlinux.ru> 1.27.1-alt1
+- version 1.27.1
+
 * Tue Apr 13 2021 Ilya Mashkin <oddity@altlinux.ru> 1.27.0-alt1
 - version 1.27.0
 
