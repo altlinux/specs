@@ -3,8 +3,8 @@
 %def_enable check
 
 Name:    yq
-Version: 2.12.0
-Release: alt2
+Version: 2.12.2
+Release: alt1
 
 Summary: Command-line YAML, XML and TOML processor
 License: Apache-2.0
@@ -49,11 +49,15 @@ sed -i '/expect_exit_codes=.* sys.stdin.isatt/d' ./test/test.py
 %__python3 ./test/test.py -v
 
 %files
+%doc README.rst
 %_bindir/*
 %python3_sitelibdir/%name/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jun 14 2021 Ivan A. Melnikov <iv@altlinux.org> 2.12.2-alt1
+- 2.12.2
+
 * Tue Feb 09 2021 Ivan A. Melnikov <iv@altlinux.org> 2.12.0-alt2
 - add %%check section
 
