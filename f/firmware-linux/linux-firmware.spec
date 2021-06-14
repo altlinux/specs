@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210518
+Version: 20210608
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,29 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Jun 14 2021 Cronbuild Service <cronbuild@altlinux.org> 20210608-alt1
+- upstream changes (GIT 0f66b74):
+  + cypress: update firmware for cyw54591 pcie (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw4373 sdio (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw43570 pcie (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw4356 sdio (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw4354 sdio (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw43455 sdio (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw43430 sdio (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw43340 sdio (thx Chi-Hsien Lin)
+  + cypress: update firmware for cyw43012 sdio (thx Chi-Hsien Lin)
+  + rtl_bt: Add rtl8761bu firmware (thx Joakim Tjernlund)
+  + rtl_bt: Add rtl8761b firmware (thx Joakim Tjernlund)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2008.2946 (thx Petr Machata)
+  + mediatek: update MT7915 firmware to 20201105 (thx Ryder Lee)
+  + rtl_bt: Update RTL8822C BT(UART I/F) FW to 0x05A8_A0CB (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT(USB I/F) FW to 0x09A8_A0CB (thx Hilda Wu)
+  + update firmware for MT7921 WiFi device (thx Sean Wang)
+  + QCA: Add Bluetooth firmware for WCN685x (thx Rocky Liao)
+  + QCA: Update Bluetooth firmware for QCA6174 (thx Rocky Liao)
+  + QCA: Update Bluetooth firmware for QCA6390 (thx Rocky Liao)
+  + cxgb4: Update firmware to revision 1.25.6.0 (thx Raju Rangoju)
+
 * Mon May 24 2021 Cronbuild Service <cronbuild@altlinux.org> 20210518-alt1
 - upstream changes (GIT f846292):
   + nvidia: fix symlinks for tu104/tu106 acr unload firmware (thx Ben Skeggs)
