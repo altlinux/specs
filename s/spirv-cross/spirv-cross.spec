@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: spirv-cross
-Version: 2020.06.29
+Version: 2021.01.15
 Release: alt0.1
 
 Summary: tool to parse and convert SPIR-V to other shader languages
@@ -65,5 +65,8 @@ Provides: lib%{name} = %EVR
 %_datadir/cmake/*
 
 %changelog
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.01.15-alt0.1
+- 2021-01-15.
+
 * Tue Sep 08 2020 L.A. Kostis <lakostis@altlinux.ru> 2020.06.29-alt0.1
 - Initial build for Sisyphus.
