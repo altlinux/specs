@@ -1,26 +1,27 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jansi
-Version:          1.18
-Release:          alt1_2jpp8
-Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
+Version:          2.1.1
+Release:          alt1_3jpp11
+Summary:          Generate and interpret ANSI escape sequences in Java
+
 License:          ASL 2.0
 URL:              http://fusesource.github.io/jansi/
+Source0:          https://github.com/fusesource/jansi/archive/jansi-%{version}.tar.gz
+# Change the location of the native artifact to where Fedora wants it
+Patch0:           %{name}-jni.patch
 
-Source0:          https://github.com/fusesource/jansi/archive/jansi-project-%{version}.tar.gz
-
-BuildArch:        noarch
-
+BuildRequires:    gcc
 BuildRequires:    maven-local
-BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:    mvn(org.apache.maven.surefire:surefire-junit-platform)
 BuildRequires:    mvn(org.fusesource:fusesource-pom:pom:)
-BuildRequires:    mvn(org.fusesource.hawtjni:hawtjni-runtime)
-BuildRequires:    mvn(org.fusesource.jansi:jansi-native)
+BuildRequires:    mvn(org.junit.jupiter:junit-jupiter-engine)
 Source44: import.info
 
 %description
@@ -38,45 +39,78 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jansi-jansi-project-%{version}
+%setup -q -n jansi-jansi-%{version}
+%patch0 -p1
 
-%pom_disable_module example
+
+# We don't need the Fuse JXR skin
 %pom_xpath_remove "pom:build/pom:extensions"
 
-%pom_remove_plugin -r :maven-site-plugin
+# Plugins not needed for an RPM build
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
 
-# No maven-uberize-plugin
-%pom_remove_plugin -r :maven-uberize-plugin
+# We don't want GraalVM support in Fedora
+%pom_remove_plugin :exec-maven-plugin
+%pom_remove_dep :picocli-codegen
 
-# Remove unnecessary deps for jansi-native builds
-pushd jansi
-%pom_remove_dep :jansi-windows32
-%pom_remove_dep :jansi-windows64
-%pom_remove_dep :jansi-osx
-%pom_remove_dep :jansi-freebsd32
-%pom_remove_dep :jansi-freebsd64
-# it's there only to be bundled in uberjar and we disable uberjar generation
-%pom_remove_dep :jansi-linux32
-%pom_remove_dep :jansi-linux64
-popd
+# Build for JDK 1.8 at a minimum
+%pom_xpath_set "//pom:plugin[pom:artifactId='maven-compiler-plugin']//pom:source" 1.8
+%pom_xpath_set "//pom:plugin[pom:artifactId='maven-compiler-plugin']//pom:target" 1.8
 
-# javadoc generation fails due to strict doclint in JDK 8
-%pom_remove_plugin -r :maven-javadoc-plugin
+# Remove prebuilt shared objects
+rm -fr src/main/resources/org/fusesource/jansi/internal
+
+# Unbundle the JNI headers
+rm src/main/native/inc_linux/*.h
+ln -s %{java_home}/include/jni.h src/main/native/inc_linux
+ln -s %{java_home}/include/linux/jni_md.h src/main/native/inc_linux
+
+# Set the JNI path
+sed -i 's,@LIBDIR@,%{_libdir},' \
+    src/main/java/org/fusesource/jansi/internal/JansiLoader.java
 
 %build
-%mvn_build
+export CC=gcc
+# Build the native artifact
+CFLAGS="$CFLAGS -I. -I%{java_home}/include -I%{java_home}/include/linux -fPIC -fvisibility=hidden"
+cd src/main/native
+$CC $CFLAGS -c jansi.c
+$CC $CFLAGS -c jansi_isatty.c
+$CC $CFLAGS -c jansi_structs.c
+$CC $CFLAGS -c jansi_ttyname.c
+$CC $CFLAGS $LDFLAGS -shared -o libjansi.so *.o -lutil
+cd -
+
+# Build the Java artifacts
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dlibrary.jansi.path=$PWD/src/main/native
 
 %install
+# Install the native artifact
+mkdir -p %{buildroot}%{_libdir}/%{name}
+cp -p src/main/native/libjansi.so %{buildroot}%{_libdir}/%{name}
+
+# Install the Java artifacts
 %mvn_install
+
+mkdir -p %{buildroot}%{_javadir}/%name/
+ln -s ../../../lib/java/%name/%{name}.jar %{buildroot}%{_javadir}/%name/%{name}.jar
 
 %files -f .mfiles
 %doc --no-dereference license.txt
 %doc readme.md changelog.md
+%{_libdir}/%{name}/
+%dir %{_javadir}/%name
+%{_javadir}/%name/%{name}.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference license.txt
 
 %changelog
+* Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.1-alt1_3jpp11
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.18-alt1_2jpp8
 - new version
 
