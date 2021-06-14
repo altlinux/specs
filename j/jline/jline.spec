@@ -8,97 +8,223 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jline
-Version:          2.14.6
-Release:          alt2_10jpp11
-Summary:          JLine is a Java library for handling console input
+Version:          3.19.0
+Release:          alt1_1jpp11
+Summary:          Java library for handling console input
 License:          BSD
-URL:              https://github.com/jline/jline2
+URL:              https://github.com/jline/jline3
 BuildArch:        noarch
 
-Source0:          https://github.com/jline/jline2/archive/jline-%{version}.tar.gz
+Source0:          %{url}/archive/jline-parent-%{version}.tar.gz
+# Adapt to newer versions of apache-sshd
+Patch0:           %{name}-apache-sshd.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.googlecode.juniversalchardet:juniversalchardet)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.java.dev.jna:jna)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.sshd:sshd-core) >= 2.6.0
+BuildRequires:  mvn(org.apache.sshd:sshd-scp) >= 2.6.0
+BuildRequires:  mvn(org.apache.sshd:sshd-sftp) >= 2.6.0
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 
-Obsoletes: jline2 < %{version}
-#Provides: jline2 = %{version}-%{release}
+%global _desc \
+JLine is a Java library for handling console input.  It is similar in\
+functionality to BSD editline and GNU readline but with additional\
+features that bring it in par with the ZSH line editor.  Those familiar\
+with the readline/editline capabilities for modern shells (such as bash\
+and tcsh) will find most of the command editing features of JLine to be\
+familiar.
 Source44: import.info
 
-%description
-JLine is a Java library for handling console input. It is similar
-in functionality to BSD editline and GNU readline. People familiar
-with the readline/editline capabilities for modern shells (such as
-bash and tcsh) will find most of the command editing features of
-JLine to be familiar.
+%description 
+%_desc
+
+This package contains the parent POM for the jline project
 
 %package javadoc
 Group: Development/Java
 Summary:          Javadocs for %{name}
-Obsoletes: jline2-javadoc < %{version}
-#Provides: jline2-javadoc = %{version}-%{release}
 BuildArch: noarch
 
-%description javadoc
+%description javadoc 
+%_desc
+
 This package contains the API documentation for %{name}.
 
+%package        terminal
+Group: Development/Java
+Summary:        JLine terminal
+
+%description    terminal 
+%_desc
+
+This package contains the basic terminal support for JLine.
+
+%package        terminal-jansi
+Group: Development/Java
+Summary:        JLine terminal with JANSI
+Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
+
+%description    terminal-jansi 
+%_desc
+
+This package contains a functioning terminal based on JANSI.
+
+%package        terminal-jna
+Group: Development/Java
+Summary:        JLine terminal with JNA
+Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
+
+%description    terminal-jna 
+%_desc
+
+This package contains a functioning terminal based on JNA.
+
+%package        reader
+Group: Development/Java
+Summary:        JLine reader
+Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
+
+%description    reader 
+%_desc
+
+This package supports reading lines from a console with customizable key
+bindings and input editing.
+
+%package        style
+Group: Development/Java
+Summary:        JLine style
+Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
+
+%description    style 
+%_desc
+
+This package contains a style processor for JLine, which can apply
+colors to strings, for example.
+
+%package        builtins
+Group: Development/Java
+Summary:        JLine builtins
+Requires:       %{name}-reader = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-style = %{?epoch:%epoch:}%{version}-%{release}
+Requires:     mvn(com.googlecode.juniversalchardet:juniversalchardet)
+
+%description    builtins 
+%_desc
+
+This package contains keybindings to emulate popular tools such as nano
+and less.
+
+%package        console
+Group: Development/Java
+Summary:        JLine console
+Requires:       %{name}-builtins = %{?epoch:%epoch:}%{version}-%{release}
+
+%description    console 
+%_desc
+
+This package contains a console with command and script execution
+support, and tab completion.
+
+%package        remote-ssh
+Group: Development/Java
+Summary:        JLine remote SSH
+Requires:       %{name}-builtins = %{?epoch:%epoch:}%{version}-%{release}
+Requires:     mvn(org.apache.sshd:sshd-core) >= 2.6.0
+Requires:     mvn(org.apache.sshd:sshd-scp) >= 2.6.0
+Requires:     mvn(org.apache.sshd:sshd-sftp) >= 2.6.0
+
+%description    remote-ssh 
+%_desc
+
+This package contains an ssh client.
+
+%package        remote-telnet
+Group: Development/Java
+Summary:        JLine remote telnet
+Requires:       %{name}-builtins = %{?epoch:%epoch:}%{version}-%{release}
+Requires:     mvn(org.apache.sshd:sshd-core) >= 2.6.0
+
+%description    remote-telnet 
+%_desc
+
+This package contains a telnet client.
+
 %prep
-%setup -q -n jline2-jline-%{version}
+%setup -q -n jline3-jline-parent-%{version}
+%patch0
+
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
 
-# Remove maven-shade-plugin usage
-%pom_remove_plugin "org.apache.maven.plugins:maven-shade-plugin"
-# Remove animal sniffer plugin in order to reduce deps
-%pom_remove_plugin "org.codehaus.mojo:animal-sniffer-maven-plugin"
+# We don't need the bundle
+%pom_disable_module jline
 
-# Remove unavailable and unneeded deps
-%pom_xpath_remove "pom:build/pom:extensions"
-%pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :maven-enforcer-plugin
+# Missing dependencies in Fedora
+%pom_disable_module demo
+%pom_disable_module groovy
+%pom_disable_module graal
+%pom_remove_plugin :gmavenplus-plugin
+%pom_remove_dep :graal-sdk
+
+# Unnecessary plugins for an rpm build
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :native-image-maven-plugin
 
-# Makes the build fail on deprecation warnings from jansi
-%pom_xpath_remove 'pom:arg[text()="-Werror"]'
+# Apache SSHD package names where refactored in 2.6.0
+# See https://github.com/apache/mina-sshd/commit/5cbae28a42c478c052ade11d0fc3b84d4ee2f720
+sed -i -e 's/org.apache.sshd.server.scp/org.apache.sshd.scp.server/' \
+  remote-ssh/src/main/java/org/jline/builtins/ssh/Ssh.java
+sed -i -e 's/org.apache.sshd.server.subsystem.sftp/org.apache.sshd.sftp.server/' \
+  remote-ssh/src/main/java/org/jline/builtins/ssh/Ssh.java
 
-# Do not import non-existing internal package
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Import-Package"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions" "<Import-Package>javax.swing;resolution:=optional,org.fusesource.jansi,!org.fusesource.jansi.internal</Import-Package>"
-
-# Be sure to export jline.internal, but not org.fusesource.jansi.
-# See https://bugzilla.redhat.com/show_bug.cgi?id=1317551
-%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Export-Package" "jline.*;-noimport:=true"
-
-# For some reason these directories do not exist, failing compilation due to -Werror
-mkdir -p target/generated-sources/annotations
-mkdir -p target/generated-test-sources/test-annotations
-
-# drop a nondeterministic test
-find -name TerminalFactoryTest.java -delete
-# it's also the only test that uses powermock, so drop the powermock dependency
-%pom_remove_dep org.powermock:
-
-# Fix javadoc generation on java 11
-%pom_xpath_inject pom:build/pom:plugins "<plugin>
-<artifactId>maven-javadoc-plugin</artifactId>
-<configuration><source>1.8</source></configuration>
-</plugin>" 
 
 %build
-%mvn_build --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-%files -f .mfiles
+%files -f .mfiles-jline-parent
+%doc changelog.md README.md
+%doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
+%doc changelog.md README.md
+%doc --no-dereference LICENSE.txt
+
+%files terminal -f .mfiles-jline-terminal
+%doc changelog.md README.md
+%doc --no-dereference LICENSE.txt
+
+%files terminal-jansi -f .mfiles-jline-terminal-jansi
+
+%files terminal-jna -f .mfiles-jline-terminal-jna
+
+%files reader -f .mfiles-jline-reader
+
+%files style -f .mfiles-jline-style
+
+%files builtins -f .mfiles-jline-builtins
+
+%files console -f .mfiles-jline-console
+
+%files remote-ssh -f .mfiles-jline-remote-ssh
+
+%files remote-telnet -f .mfiles-jline-remote-telnet
 
 %changelog
+* Mon Jun 14 2021 Igor Vlasenko <viy@altlinux.org> 0:3.19.0-alt1_1jpp11
+- new version
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.14.6-alt2_10jpp11
 - fixed obsoletes on jline2
 
