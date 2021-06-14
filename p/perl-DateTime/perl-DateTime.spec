@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%def_without bootstrap
+%def_with bootstrap
 %define dist DateTime
 Name: perl-%dist
 Version: 1.54
-Release: alt2
+Release: alt2.1
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -50,6 +50,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.54-alt2.1
+- rebuild with new perl 5.34.0 (bootstrapped)
+
 * Wed Jun 09 2021 Igor Vlasenko <viy@altlinux.org> 1.54-alt2
 - unbootstrap
 
