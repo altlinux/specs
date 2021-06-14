@@ -4,11 +4,11 @@
 
 Name: ephoto
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
-License: GPLv3+
+License: BSD-2-Clause
 Url: https://www.smhouston.us/%name/
 
 %if_disabled snapshot
@@ -44,6 +44,10 @@ Photo Viewer for Enlightenment desktop.
 %doc AUTHORS README TODO
 
 %changelog
+* Mon Jun 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt3
+- updated to 36b629c (added russian translation)
+- fixed License tag
+
 * Thu Feb 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt2
 - updated to 09873c6 (ported to Meson build system)
 
