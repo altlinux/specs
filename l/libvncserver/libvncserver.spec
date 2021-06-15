@@ -6,10 +6,12 @@
 %define sover 0
 %define libvncserver libvncserver%sover
 %define libvncclient libvncclient%sover
+%define _cmake__builddir BUILD
+
 Name: libvncserver
 %define libname %name
 Version: 0.9.13
-Release: alt1.1
+Release: alt2
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
@@ -108,7 +110,7 @@ sed -i 's|@CMAKE_INSTALL_PREFIX@/lib$|@LIB_INSTALL_DIR@|' *.pc.cmakein
 %cmake_build
 
 %install
-%cmake_install
+make -C BUILD install DESTDIR=%buildroot
 
 %files
 
@@ -134,6 +136,9 @@ sed -i 's|@CMAKE_INSTALL_PREFIX@/lib$|@LIB_INSTALL_DIR@|' *.pc.cmakein
 
 
 %changelog
+* Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.13-alt2
+- compatable with p9
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.13-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
