@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%def_with bootstrap
+%def_without bootstrap
 %define dist Moose
 Name: perl-%dist
 Version: 2.2014
-Release: alt2.1
+Release: alt3
 
 Summary: A postmodern object system for Perl 5
 License: GPL or Artistic
@@ -64,6 +64,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 2.2014-alt3
+- unbootstrap
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.2014-alt2.1
 - rebuild with new perl 5.34.0 (bootstrapped)
 
