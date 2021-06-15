@@ -2,32 +2,25 @@
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
 
-Name: scala
+Name: scala-reflect
 Version: 2.13.5
-Summary: Hybrid functional/object-oriented language for the JVM
+Summary: Scala reflection library
 License: ASL 2.0 and BSD and MIT
 Url: http://www.scala-lang.org/
 Group: Development/Java
 Release: alt0.1jpp
 
 Packager: Igor Vlasenko <viy@altlinux.org>
-Provides: mvn(org.scala-lang:scala-compiler) = 2.13.5
-Provides: mvn(org.scala-lang:scala-compiler:pom:) = 2.13.5
-Provides: mvn(org.scala-lang:scalap) = 2.13.5
-Provides: mvn(org.scala-lang:scalap:pom:) = 2.13.5
-Provides: osgi(org.scala-lang.scala-compiler) = 2.13.5
+Provides: mvn(org.scala-lang:scala-reflect) = 2.13.5
+Provides: mvn(org.scala-lang:scala-reflect:pom:) = 2.13.5
+Provides: osgi(org.scala-lang.scala-reflect) = 2.13.5
+Requires: java-headless
 Requires: javapackages-filesystem
-Requires: javapackages-tools
-Requires: mvn(net.java.dev.jna:jna)
-Requires: mvn(org.jline:jline-reader)
-Requires: mvn(org.jline:jline-style)
-Requires: mvn(org.jline:jline-terminal-jna)
 Requires: mvn(org.scala-lang:scala-library)
-Requires: mvn(org.scala-lang:scala-reflect)
-Requires: scala-reflect
+Requires: scala-library
 
 BuildArch: noarch
-Source: scala-2.13.5-1.fc34.cpio
+Source: scala-reflect-2.13.5-1.fc34.cpio
 
 
 %description
@@ -36,11 +29,11 @@ common programming patterns in a concise, elegant, and type-safe way.
 It smoothly integrates features of object-oriented and functional
 languages.  It is also fully interoperable with Java.
 
-This package contains the Scala compiler and bytecode parser.
+This package contains the reflection library for the Scala programming
+language.
 
 %prep
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
-sed -i s,/usr/bin/bash,/bin/bash, usr/bin/*
 
 %build
 cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
