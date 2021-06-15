@@ -168,8 +168,8 @@
 %endif
 
 Name: libvirt
-Version: 7.3.0
-Release: alt2
+Version: 7.4.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1359,6 +1359,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 7.4.0-alt1
+- 7.4.0
+
 * Wed Jun 09 2021 Ivan A. Melnikov <iv@altlinux.org> 7.3.0-alt2
 - Fix build without server_drivers, again.
 - Package virt-admin separately.
