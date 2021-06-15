@@ -1,15 +1,16 @@
 %define oname urllib3
 %def_disable check
+%def_without docs
 
-Name: python-module-%oname
-Version: 1.25.10
-Release: alt2
+Name: python3-module-%oname
+Version: 1.26.5
+Release: alt1
 
 Epoch: 2
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 
 Url: https://github.com/shazow/urllib3/
 
@@ -20,21 +21,16 @@ Patch: %name-%version.patch
 Source: %oname-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires(pre): rpm-macros-sphinx
-
-BuildRequires: python-module-six python-module-backports.ssl_match_hostname
-BuildRequires: python-module-ndg-httpsclient
-BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-mock
-BuildRequires: python-module-nose
-BuildRequires: python-module-socks
-
-%setup_python_module %oname
-
-Requires: python-module-ndg-httpsclient
-Requires: python-module-six python-module-backports.ssl_match_hostname ca-certificates
-%py_requires ndg.httpsclient
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-six
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-nose
+Requires: python3-module-ndg-httpsclient
+Requires: python3-module-six ca-certificates
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+%endif
 
 %description
 Python HTTP library with thread-safe connection pooling, file post
@@ -42,7 +38,7 @@ support, sanity friendly, and more.
 
 %package tests
 Summary: Tests for urllib3
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -51,9 +47,10 @@ support, sanity friendly, and more.
 
 This package contains tests for urllib3.
 
+%if_with docs
 %package pickles
 Summary: Pickles for urllib3
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Python HTTP library with thread-safe connection pooling, file post
@@ -70,47 +67,55 @@ Python HTTP library with thread-safe connection pooling, file post
 support, sanity friendly, and more.
 
 This package contains documentation for urllib3.
+%endif
 
 %prep
 %setup -n %oname-%version
 #rm -rf urllib3/packages/
 %patch -p1
 
-
-%prepare_sphinx .
+%if_with docs
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd docs
-%make html
-%make pickle
+%make SPHINXBUILD="sphinx-build-3" html
+%make SPHINXBUILD="sphinx-build-3" pickle
 popd
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
-py.test
+py.test-3
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%if_with docs
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %changelog
-* Fri Jun 11 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.25.10-alt2
-- Build python2 module separately.
+* Fri Jun 11 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.26.5-alt1
+- 1.25.10 -> 1.26.5 (Closes: #40197)
+- Build without python2 support.
+- Build without docs.
 
 * Fri Jul 24 2020 Anton Farygin <rider@altlinux.ru> 2:1.25.10-alt1
 - 1.25.6 -> 1.25.10
