@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_enable check
 
 Name: gpodder
-Version: 3.10.17
+Version: 3.10.20
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -13,15 +13,17 @@ Url: http://gpodder.org
 %if_disabled snapshot
 Source: https://github.com/gpodder/gpodder/archive/%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/gpodder/gpodder.git
+Vcs: https://github.com/gpodder/gpodder.git
 Source: %name-%version.tar
 %endif
 
 BuildArch: noarch
 
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_datadir/%name
+
+# should be provided by python3-module-requests
+%add_python3_req_skip requests.packages.urllib3.exceptions
+%add_python3_req_skip requests.packages.urllib3.util.retry
 
 # M$ and ubuntu specific
 %add_python3_req_skip comtypes pywintypes win32gui appindicator
@@ -34,8 +36,12 @@ AutoReqProv: nopython
 # last commit in 2015
 %add_python3_req_skip kaa.metadata
 
+%define urllib3_ver 1.26.5
+%define mgpoclient_ver 1.8
+
 Requires: typelib(Gtk) = 3.0
-Requires: python3-module-mygpoclient >= 1.7
+Requires: python3-module-mygpoclient >= %mgpoclient_ver
+Requires: python3-module-urllib3 >= %urllib3_ver
 Requires: %_bindir/ffmpeg xdg-utils
 Requires: python3-module-eyeD3
 
@@ -43,8 +49,11 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-mygpoclient
 BuildRequires: python3-module-feedparser help2man intltool desktop-file-utils
 %if_enabled check
+BuildRequires: %_bindir/py.test3
+BuildRequires: python3-module-pytest-cov python3-module-pytest-httpserver
 BuildRequires: python3-module-podcastparser python3-modules-sqlite3
 BuildRequires: python3-module-minimock python3-module-coverage
+BuildRequires: python3-module-requests
 %endif
 
 %description
@@ -56,6 +65,8 @@ or played back on the user's desktop.
 
 %prep
 %setup
+find ./ -name "*.py" -print0 | \
+xargs -r0 sed -i -e "s|\(#\!/usr/bin/python\)$|\13|" --
 
 %build
 %make
@@ -69,7 +80,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/gpodder.desktop
 
 %check
-PYTHON=python3 %make unittest
+PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 %files -f %name.lang
 %_bindir/*
@@ -85,6 +96,9 @@ PYTHON=python3 %make unittest
 
 
 %changelog
+* Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.20-alt1
+- updated to 3.10.20-6-gc31ba52f
+
 * Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.17-alt1
 - 3.10.17
 
