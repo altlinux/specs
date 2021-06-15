@@ -1,6 +1,6 @@
 Name: nfs
-Version: 2.5.3
-Release: alt2
+Version: 2.5.4
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -10,7 +10,7 @@ Url: http://nfs.sourceforge.net/
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: libblkid-devel libevent-devel
+BuildRequires: libblkid-devel libevent-devel libuuid-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
 BuildRequires: rpcgen rpcsvc-proto-devel
@@ -305,6 +305,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue Jun 15 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.5.4-alt1
+- 2.5.4 released
+
 * Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.5.3-alt2
 - rebuilt with explicit python3 req finder
 
