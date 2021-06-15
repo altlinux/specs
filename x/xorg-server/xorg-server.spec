@@ -24,7 +24,7 @@
 
 Name: xorg-server
 Version: 1.20.11
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -75,7 +75,6 @@ the most frequently used server on a given machine.
 %package common
 Summary: The X server common files
 Group: System/X11
-PreReq: startup >= 0.9.2-alt1
 Requires: xorg-rgb xauth fonts-bitmap-misc >= 7.0.0-alt2
 Requires: xkbcomp xkeyboard-config
 Obsoletes: libXiconfig
@@ -312,6 +311,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Jun 15 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.11-alt2
+- removed package startup from dependencies
+
 * Wed Apr 14 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.11-alt1
 - 1.20.11
 
