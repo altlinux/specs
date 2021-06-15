@@ -1,10 +1,8 @@
 %def_with check
-
 Name: ethtool
 Version: 5.12
-Release: alt1
+Release: alt2
 Epoch: 1
-
 Summary: Ethernet settings tools for network cards
 License: GPLv2
 Group: System/Configuration/Networking
@@ -43,21 +41,20 @@ Ethernet-картки, таких як швидк╕сть, порт, autonegoti
 
 %install
 %makeinstall_std
-install -pDm755 ethtool.init %buildroot%_initdir/%name
-install -pDm644 ethtool.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 
 %check
 make check
 
 %files
 %doc AUTHORS NEWS README.ALT
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%_initdir/*
 %_sbindir/*
 %_man8dir/*
 %_datadir/bash-completion
 
 %changelog
+* Tue Jun 15 2021 Anton Farygin <rider@altlinux.ru> 1:5.12-alt2
+- removed initscript (unusable in modern ALT environment)
+
 * Wed May 12 2021 Anton Farygin <rider@altlinux.ru> 1:5.12-alt1
 - 5.12
 
