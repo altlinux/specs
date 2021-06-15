@@ -8,11 +8,14 @@ BuildRequires: jpackage-11-compat
 
 Name:             snappy-java
 Version:          1.1.2.4
-Release:          alt2_18jpp11
+Release:          alt2_19jpp11
 Summary:          Fast compressor/decompresser
 License:          ASL 2.0
 URL:              http://xerial.org/snappy-java/
-Source0:          https://github.com/xerial/snappy-java/archive/%{version}.tar.gz
+
+# set Version, run ./gen_clean_tarball.sh
+Source0:          snappy-java-%{version}-clean.tar.gz
+
 # Not able to build snappy-java jni library with sbt:
 # use sbt = 0.13.8 (use scala 2.11.6) available 0.13.1 (use scala 2.10.4)
 # Too many missing plugins:
@@ -24,6 +27,7 @@ Source0:          https://github.com/xerial/snappy-java/archive/%{version}.tar.g
 # de.johoop:jacoco4sbt:2.1.5
 # org.xerial.sbt:sbt-sonatype:0.5.0
 Source1:          http://central.maven.org/maven2/org/xerial/snappy/%{name}/%{version}/%{name}-%{version}.pom
+
 Patch0:           snappy-java-1.1.2-build.patch
 Patch1:           snappy-java-1.1.2.4-lsnappy.patch
 
@@ -161,6 +165,9 @@ export CXXFLAGS
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2.4-alt2_19jpp11
+- fc update
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2.4-alt2_18jpp11
 - fc update
 
