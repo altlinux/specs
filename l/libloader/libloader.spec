@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: mvn(commons-logging:commons-logging-api) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: libloader
 Version: 1.1.3
-Release: alt2_29jpp11
+Release: alt2_31jpp11
 Summary: Resource Loading Framework
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
@@ -24,6 +24,7 @@ BuildArch: noarch
 Patch0: libloader-1.1.2.build.patch
 Patch1: libloader-1.1.2.java11.patch
 Patch2: libloader-1.1.3-remove-antcontrib-support.patch
+Patch3: libloader-1.1.3-remove-commons-logging.patch
 Source44: import.info
 
 %description
@@ -47,10 +48,11 @@ Javadoc for %{name}.
 %patch0 -p1 -b .build
 %patch1 -p1 -b .java11
 %patch2 -p1 -b .no_antcontrib
+%patch3 -p1 -b .no_commons_logging
 
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
-build-jar-repository -s -p lib libbase commons-logging-api
+build-jar-repository -s -p lib libbase
 cd lib
 ln -s /usr/share/java/ant ant-contrib
 
@@ -76,6 +78,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt2_31jpp11
+- fc34 update
+
 * Mon Jun 14 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt2_29jpp11
 - NMU for unknown reason:
   the person above was too neglectant to add --changelog "- NMU: <reason>" option.
