@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -19,7 +19,7 @@ Requires: jpackage-utils
 # as in jdepend; should be detected by peering in SOURCEDIR
 Requires: unzip
 # as in fedora biarch packages; could be detected by peering in SPEC
-Requires: zip
+#Requires: zip
 
 # hack til migration on 1.8-compat
 Requires: java-devel = 0:1.8.0
@@ -120,6 +120,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
+- dropped requires on zip
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
 - dropped requires on docbook-style-xsl
 
