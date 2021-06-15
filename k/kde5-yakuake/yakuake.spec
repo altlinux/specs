@@ -1,7 +1,7 @@
 %define oname yakuake
 
 Name:    kde5-%oname
-Version: 21.04.1
+Version: 21.04.2
 Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
@@ -65,6 +65,7 @@ This version is built with KF5.
 %setup -n %oname-%version
 
 %build
+%K5init no_altplace
 %K5build
 
 %install
@@ -83,6 +84,9 @@ This version is built with KF5.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.2-alt1
+- New version.
+
 * Mon May 17 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.1-alt1
 - New version.
 
