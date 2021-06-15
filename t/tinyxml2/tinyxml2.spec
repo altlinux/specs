@@ -1,6 +1,6 @@
 %define soname 8
 Name: tinyxml2
-Version: 8.0.0
+Version: 8.1.0
 Release: alt1
 Summary: Simple, small, efficient, C++ XML parser
 License: Zlib
@@ -52,7 +52,7 @@ This package contains documentation for TinyXML-2.
 %patch0 -p1
 
 %build
-cmake \
+%cmake \
 %if %_lib == lib64
 	-DLIB_SUFFIX=64 \
 %endif
@@ -61,17 +61,17 @@ cmake \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DBUILD_STATIC_LIBS:BOOL=OFF \
+        -DBUILD_SHARED_LIBS=ON \
 	-DCMAKE_BUILD_TYPE=Release \
 	.
-%make_build VERBOSE=1
+%cmake_build
 
 doxygen dox
 %check
 %make test
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files -n lib%name.%soname
 %doc readme.md
@@ -87,6 +87,9 @@ doxygen dox
 %doc docs/*
 
 %changelog
+* Thu Jun 10 2021 Anton Farygin <rider@altlinux.ru> 8.1.0-alt1
+- 8.1.0
+
 * Fri Oct 09 2020 Anton Farygin <rider@altlinux.ru> 8.0.0-alt1
 - 8.0.0
 
