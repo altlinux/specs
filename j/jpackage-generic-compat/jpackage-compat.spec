@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -10,7 +10,7 @@ Url: http://www.sisyphus.ru/packages/viy/srpms
 BuildArch: noarch
 
 # TODO: test && drop the req?
-Requires: docbook-style-xsl
+#Requires: docbook-style-xsl
 
 # sun java requires it
 Requires: /proc
@@ -120,6 +120,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
+- dropped requires on docbook-style-xsl
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
 - cleaned up obsolete subpackages
 
