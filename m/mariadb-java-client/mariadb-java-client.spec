@@ -4,8 +4,8 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		mariadb-java-client
-Version:	2.7.1
-Release:	alt1_2jpp11
+Version:	2.7.2
+Release:	alt1_1jpp11
 Summary:	Connects applications developed in Java to MariaDB and MySQL databases
 # added BSD license because of https://bugzilla.redhat.com/show_bug.cgi?id=1291558#c13
 License:	BSD and LGPLv2+
@@ -132,6 +132,9 @@ rm src/main/resources/META-INF/MANIFEST.MF
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 2.7.2-alt1_1jpp11
+- new version
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 2.7.1-alt1_2jpp11
 - new version
 
