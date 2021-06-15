@@ -1,15 +1,15 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: mvn(commons-logging:commons-logging-api) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: pentaho-reporting-flow-engine
 Version: 0.9.4
-Release: alt2_19jpp8
+Release: alt2_23jpp11
 Summary: Pentaho Flow Reporting Engine
 License: LGPLv2+
 Epoch: 1
@@ -22,6 +22,7 @@ Requires: jpackage-utils libbase >= 1.1.3 libfonts >= 1.1.3
 Requires: pentaho-libxml libformula >= 1.1.3 librepository >= 1.1.3
 Requires: sac flute liblayout >= 0.2.10 libserializer
 BuildArch: noarch
+Patch0: pentaho-reporting-flow-engine-0.9.4-remove-commons-logging.patch
 Source44: import.info
 
 %description
@@ -40,14 +41,15 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -c
+%patch0 -p1 -b .no_commons_logging
 mkdir -p lib
 find . -name "*.jar" -exec rm -f {} \;
-build-jar-repository -s -p lib commons-logging-api libbase libloader \
+build-jar-repository -s -p lib libbase libloader \
     libfonts libxml jaxp libformula librepository sac flute liblayout \
     libserializer
 
 %build
-ant jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
 
 %install
 
@@ -65,6 +67,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1:0.9.4-alt2_23jpp11
+- fc34 update
+
 * Mon Jun 14 2021 Igor Vlasenko <viy@altlinux.org> 1:0.9.4-alt2_19jpp8
 - NMU for unknown reason:
   the person above was too neglectant to add --changelog "- NMU: <reason>" option.
