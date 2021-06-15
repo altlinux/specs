@@ -1,7 +1,8 @@
 Name: libqtkeychain-qt5
 Version: 0.12.0
-Release: alt1.1
+Release: alt2
 
+%define _cmake__builddir BUILD
 %define sover 1
 %define libqt5keychain libqt5keychain%sover
 
@@ -57,8 +58,8 @@ QTDIR="%_qt5_prefix" \
 %cmake_build
 
 %install
-PATH=$PATH:%_qt5_bindir \
-%cmake_install
+export PATH=$PATH:%_qt5_bindir
+make -C BUILD install DESTDIR=%buildroot
 
 %find_lang --with-qt qtkeychain
 
@@ -77,6 +78,9 @@ PATH=$PATH:%_qt5_bindir \
 %_qt5_archdatadir/mkspecs/qt_Qt5Keychain.pri
 
 %changelog
+* Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 0.12.0-alt2
+- compatable with p9
+
 * Sun Apr 25 2021 Arseny Maslennikov <arseny@altlinux.org> 0.12.0-alt1.1
 - NMU: spec: adapt to new cmake macros.
 
