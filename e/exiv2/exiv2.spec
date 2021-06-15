@@ -1,14 +1,18 @@
 %def_disable snapshot
+%define beta %nil
 
 %def_enable video
 %def_enable webready
-%def_enable tests
 %def_disable ssh
+%def_disable tests
 %def_disable check
 
+%define gcc_ver 9
+%set_gcc_version %gcc_ver
+
 Name: exiv2
-Version: 0.27.3
-Release: alt1
+Version: 0.27.4
+Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -16,20 +20,18 @@ Group: Graphics
 Url: http://www.exiv2.org
 
 %if_disabled snapshot
-#Source: %url/builds/%name-%version-Source.tar.gz
 Source: https://github.com/Exiv2/%name/archive/v%version/%name-%version.tar.gz
 %else
-#VCS: https://github.com/Exiv2/exiv2.git
+Vcs: https://github.com/Exiv2/exiv2.git
 Source: %name-%version.tar
 %endif
-# aarch64, armh, ppc64le:
-# cc1plus: error: '-fcf-protection=full' is not supported for this target
-Patch: %name-0.27.3-alt-no-fcf-protection.patch
+# try to disable -fvisibility-inlines-hidden with default gcc-10
+Patch: %name-0.27.4-alt-no-visibility_inlines.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires(pre): cmake
-BuildRequires: gcc-c++ libexpat-devel zlib-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc%gcc_ver-c++ libexpat-devel zlib-devel
 BuildRequires: doxygen xsltproc graphviz
 %{?_enable_tests:BuildRequires: libgtest-devel}
 %{?_enable_webready:BuildRequires: libcurl-devel libssh-devel libgcrypt-devel}
@@ -59,33 +61,28 @@ exiv2 library.
 
 %prep
 %setup -n %name-%version
-%ifnarch %ix86 x86_64
-%patch
-%endif
+%patch -p1 -b .visibility
 
 %build
-# xmpsdk: embedded copy of exempi should be compiled with BanAllEntityUsage
-# https://bugzilla.redhat.com/show_bug.cgi?id=888769
-export CPPFLAGS="$CPPFLAGS -DBanAllEntityUsage=1"
-export MAKEFILES_TYPE='Unix Makefiles'
-%add_optflags %(getconf LFS_CFLAGS)
-%cmake -G "$MAKEFILES_TYPE" \
-	-DCMAKE_BUILD_TYPE="Release" \
-	-DBUILD_STATIC_LIBS=OFF \
-	-DEXIV2_BUILD_SAMPLES=OFF \
-	%{?_enable_video:-DEXIV2_ENABLE_VIDEO=ON} \
-	%{?_enable_webready:-DEXIV2_ENABLE_WEBREADY=ON} \
-	%{?_enable_ssh:-DEXIV2_ENABLE_SSH=ON} \
-	%{?_enable_tests:-DEXIV2_BUILD_UNIT_TESTS=ON}
+%add_optflags -Wno-deprecated-declarations %(getconf LFS_CFLAGS)
+%cmake \
+	-DEXIV2_VISIBILITY_INLINES:BOOL=ON \
+	-DEXIV2_ENABLE_NLS:BOOL=ON \
+	-DEXIV2_BUILD_SAMPLES:BOOL=OFF \
+	%{?_enable_video:-DEXIV2_ENABLE_VIDEO:BOOL=ON} \
+	%{?_enable_webready:-DEXIV2_ENABLE_WEBREADY:BOOL=ON} \
+	%{?_enable_ssh:-DEXIV2_ENABLE_SSH:BOOL=ON} \
+	%{?_enable_tests:-DEXIV2_BUILD_UNIT_TESTS:BOOL=ON}
+%nil
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 %find_lang exiv2
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make -C BUILD tests
+%cmake_build -t tests
 
 %files
 %_bindir/%name
@@ -104,6 +101,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.4-alt1
+- 0.27.4 (fixed CVE-2021-3482, CVE-2021-29457,
+  CVE-2021-29458, CVE-2021-29470, CVE-2021-29473,
+  CVE-2021-29623, CVE-2021-32617)
+- adapted to new cmake macros
+- enabled NLS support
+- used gcc-9 to avoid mass rebuild
+- disabled tests broken with googletest-1.11.0-alt1
+
 * Wed Jul 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.27.3-alt1
 - 0.27.3
 
