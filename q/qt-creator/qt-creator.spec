@@ -9,7 +9,7 @@
 
 Name:    qt-creator
 Version: 4.15.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -26,12 +26,9 @@ Source2: perfparser.tar
 Patch0:  %name-%version-%release.patch
 Patch1:  0001-Link-against-libclang-cpp.so.patch
 
-Requires: %name-data = %EVR
 Provides: qtcreator = %EVR
 Obsoletes: qtcreator-clangcodemodel
 Provides: qtcreator-clangcodemodel = %EVR
-Provides: qbs = 1.14.0
-Obsoletes: qbs < 1.14.0
 
 BuildRequires(pre): qt5-base-devel >= %qt_version
 BuildRequires(pre): rpm-build-python3
@@ -56,10 +53,9 @@ BuildRequires: lld%llvm_version
 %endif
 BuildRequires: libsystemd-devel
 
-Requires: qt5-quickcontrols
+Requires: %name-core = %EVR
 # Add Qt5 build environment to build Qt project
 Requires: qt5-base-devel
-Requires: qt5-translations
 Requires: qt5-tools
 
 %ifarch %e2k
@@ -68,10 +64,27 @@ Requires: qt5-tools
 %endif
 
 %description
-Qt Creator (previously known as Project Greenhouse) is a new,
-lightweight, cross-platform integrated  development environment (IDE)
-designed to make development with the Qt application framework
-even faster and easier.
+Qt Creator (previously known as Project Greenhouse) is a new, lightweight,
+cross-platform integrated  development environment (IDE) designed to make
+development with the Qt application framework even faster and easier.
+
+This package contains IDE and Qt5 build environment.
+
+%package core
+Summary: Cross-platform IDE for Qt
+Group:   Development/Tools
+Requires: %name-data = %EVR
+Provides: qbs = 1.14.0
+Obsoletes: qbs < 1.14.0
+Requires: qt5-quickcontrols
+Requires: qt5-translations
+
+%description core
+Qt Creator (previously known as Project Greenhouse) is a new, lightweight,
+cross-platform integrated  development environment (IDE) designed to make
+development with the Qt application framework even faster and easier.
+
+This is core part of IDE without Qt5 build environment.
 
 %package doc
 Summary: %name docs
@@ -87,7 +100,7 @@ Documentation for %name
 Summary: Data files for %name
 Group: Development/Tools
 BuildArch: noarch
-Requires: %name
+Requires: %name-core = %EVR
 
 %description data
 Data files for %name
@@ -148,6 +161,8 @@ rm -rf %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-application/Co
 ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-application/CocoaApplication/en_US.lproj
 
 %files
+
+%files core
 %doc README* LICENSE*
 %_bindir/*
 %_libdir/qtcreator
@@ -165,6 +180,9 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.1-alt2
+- Package core part separately as qt-creator-core (ALT #40219).
+
 * Thu Jun 10 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.1-alt1
 - New version.
 - Build by LLVM 12.0.
