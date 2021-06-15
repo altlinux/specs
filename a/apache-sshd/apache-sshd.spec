@@ -6,7 +6,7 @@ BuildRequires: jpackage-11-compat
 Epoch:          1
 Name:           apache-sshd
 Version:        2.6.0
-Release:        alt1_1jpp11
+Release:        alt1_2jpp11
 Summary:        Apache SSHD
 
 # One file has ISC licensing:
@@ -18,6 +18,9 @@ Source0:        https://archive.apache.org/dist/mina/sshd/%{version}/apache-sshd
 
 # Avoid optional dep on tomcat native APR library
 Patch0:         0001-Avoid-optional-dependency-on-native-tomcat-APR-libra.patch
+
+# Fix error when generating MANIFEST.MF files and not adding imports
+Patch1:         0002-Fix-manifest-generation.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -57,6 +60,7 @@ This package provides %{name}.
 
 # Avoid optional dep on tomcat native APR library
 %patch0 -p1
+%patch1 -p1
 rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 
 # Avoid unnecessary dep on spring framework
@@ -103,6 +107,9 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 %doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1:2.6.0-alt1_2jpp11
+- fc34 update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.6.0-alt1_1jpp11
 - new version
 
