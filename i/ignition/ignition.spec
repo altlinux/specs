@@ -2,7 +2,7 @@
 %define dracutlibdir %{_prefix}/lib/dracut
 
 Name:     ignition
-Version:  2.9.0
+Version:  2.10.1
 Release:  alt1
 
 Summary:  First boot installer and configuration tool
@@ -86,6 +86,9 @@ popd
 %_bindir/%name-validate
 
 %changelog
+* Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 2.10.1-alt1
+- 2.10.1
+
 * Sun Jan 17 2021 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt1
 - 2.9.0
 
