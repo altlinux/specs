@@ -2,7 +2,7 @@
 %define        pkgname sdoc
 
 Name:          %pkgname
-Version:       2.0.3
+Version:       2.2.0
 Release:       alt1
 Summary:       rdoc generator html with javascript search index
 License:       MIT
@@ -75,6 +75,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version.
+
 * Tue Jan 26 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
 - New version.
 
