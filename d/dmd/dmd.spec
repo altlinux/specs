@@ -9,7 +9,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.096.1
+Version: 2.097.0
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -27,7 +27,7 @@ Source4: tools-%version.tar
 
 Patch1: druntime-2.082.0-alt-build.patch
 Patch2: druntime-2.082.0-alt-files-list.patch
-Patch3: dmd-2.095.1-alt-build.patch
+Patch3: dmd-2.097.0-alt-build.patch
 Patch4: phobos-2.082.0-alt-build.patch
 Patch5: tools-2.095.1-alt-build.patch
 
@@ -214,6 +214,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.097.0-alt1
+- Updated to upstream version 2.097.0.
+
 * Tue Jun 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.096.1-alt1
 - Updated to upstream version 2.096.1.
 
