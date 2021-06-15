@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: libformula
 Version: 1.1.3
-Release: alt1_29jpp11
+Release: alt1_30jpp11
 Summary: Formula Parser
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_30jpp11
+- fc34 update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_29jpp11
 - fc34 update
 
