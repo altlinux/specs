@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(DateTime/Locale.pm)
-# END SourceDeps(oneline)
 ## SPEC file for Perl module Dist::Zilla
 
 Name: perl-Dist-Zilla
-Version: 6.017
-Release: alt3
+Version: 6.019
+Release: alt1
 
 Summary: scary tools for building CPAN distributions
 
@@ -35,6 +32,7 @@ BuildRequires: perl-autobox perl-autodie perl-common-sense perl-CPAN-Uploader pe
 BuildRequires: perl-MooseX-SetOnce perl-Data-Section perl-DateTime perl-JSON perl-Log-Dispatchouli perl-Software-License perl-Perl-PrereqScanner perl-PPI perl-Pod-Eventual
 BuildRequires: perl-Sub-Exporter-ForMethods perl-File-Find-Rule perl-File-pushd perl-Hash-Merge-Simple perl-MooseX-Types-Path-Class perl-MooseX-Types-Perl perl-Test-Deep perl-Text-Glob
 BuildRequires: perl-Config-MVP-Reader-INI perl-Perl-Version perl-Term-UI perl-Devel-StackTrace perl-CPAN-Meta perl-List-AllUtils perl-Test-Pod perl-Test-Script
+BuildRequires: perl-DateTime-Locale
 
 %description
 Dist::Zilla is a program to make it easier to write, package,
@@ -82,6 +80,9 @@ rm -f --  t/plugins/filefinders.t
 
 
 %changelog
+* Tue Jun 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.019-alt1
+- New version
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 6.017-alt3
 - fixed build
 
