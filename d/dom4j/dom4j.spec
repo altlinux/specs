@@ -34,26 +34,19 @@ BuildRequires: jpackage-11-compat
 #
 
 Name:           dom4j
-Version:        2.0.0
-Release:        alt1_12jpp11
+Version:        2.0.3
+Release:        alt1_1jpp11
 Epoch:          0
 Summary:        Open Source XML framework for Java
 License:        BSD
 URL:            https://dom4j.github.io/
 BuildArch:      noarch
 
-Source0:        https://github.com/%{name}/%{name}/archive/v%{version}.tar.gz
+Source0:        https://github.com/dom4j/dom4j/archive/version-%{version}.tar.gz
 Source1:        https://repo1.maven.org/maven2/org/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-
-Patch0:         00-fix-java11-compilation.patch
-
-Obsoletes:      %{name}-demo < 2.0.0
-Obsoletes:      %{name}-manual < 2.0.0
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(jaxen:jaxen)
-BuildRequires:  mvn(net.java.dev.msv:xsdlib)
-BuildRequires:  mvn(xpp3:xpp3)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 
 # Test deps
@@ -77,32 +70,49 @@ Javadoc for %{name}.
 
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-version-%{version}
+
 
 %mvn_alias org.%{name}:%{name} %{name}:%{name}
 %mvn_file : %{name}/%{name} %{name}
 
 cp %{SOURCE1} pom.xml
+sed -i 's/runtime/compile/' pom.xml
 
-# optional deps missing from pom
-%pom_add_dep net.java.dev.msv:xsdlib::provided
-%pom_add_dep xpp3:xpp3::provided
-%pom_add_dep javax.xml.bind:jaxb-api::provided
+# test deps missing from pom
+%pom_add_dep xalan:xalan::test
+%pom_add_dep org.testng:testng:6.8.21:test
+%pom_add_dep xerces:xercesImpl::test
 
-# Remove support for ancient xpp2 (deprecated and not developed since 2003)
+# Remove support for code which depends on ancient / deprecated classes
+# xpp2 (deprecated and not developed since 2003)
 rm -r src/main/java/org/dom4j/xpp
 rm src/main/java/org/dom4j/io/XPPReader.java
+# The datatype code depends on msv (deprecated and not developed since 2013)
+rm -r src/main/java/org/dom4j/datatype
+rm -r src/test/java/org/dom4j/datatype
+%pom_remove_dep net.java.dev.msv:xsdlib
 
-# non-deterministic test
+# dom4j supports multiple parsers, remove support for unpackaged parsers
+rm src/main/java/org/dom4j/io/XPP3Reader.java
+rm src/test/java/org/dom4j/io/XPP3ReaderTest.java
+%pom_remove_dep xpp3:xpp3
+%pom_remove_dep pull-parser:pull-parser
+%pom_remove_dep javax.xml.stream:stax-api
+
+# Remove non-deterministic tests
+rm src/test/java/org/dom4j/ThreadingTest.java
 rm src/test/java/org/dom4j/util/PerThreadSingletonTest.java
+
 
 %build
 export LANG=en_US.ISO8859-1
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE
@@ -111,7 +121,11 @@ export LANG=en_US.ISO8859-1
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
+
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.3-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.0-alt1_12jpp11
 - update
 
