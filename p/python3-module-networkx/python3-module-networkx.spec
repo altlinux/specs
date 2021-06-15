@@ -2,15 +2,13 @@
 
 %define oname networkx
 
-%def_disable docs
-
 Name:           python3-module-%oname
 Epoch:          2
-Version:        2.5
+Version:        2.5.1
 Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
-License:        LGPLv2+
+License:        BSD-3-Clause
 URL:            http://networkx.github.io
 
 BuildArch:      noarch
@@ -21,7 +19,6 @@ Source:         %name-%version.tar
 Patch1:         %oname-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-decorator >= 4.3.0
 BuildRequires: python3-module-numpy >= 1.15.0
@@ -33,15 +30,6 @@ BuildRequires: python3-module-pydot >= 1.2.4
 BuildRequires: python3-module-yaml >= 3.13
 BuildRequires: python3-module-lxml >= 4.2.3
 BuildRequires: python3-module-gdal >= 1.10.0
-
-%if_enabled docs
-BuildRequires: python3-module-sphinx >= 1.7.6
-BuildRequires: python3-module-sphinx_rtd_theme >= 0.4.1
-BuildRequires: python3-module-sphinx-gallery >= 0.2.0
-BuildRequires: python3-module-Pillow >= 5.2.0
-BuildRequires: python3-module-nb2plots >= 0.6
-BuildRequires: python3-module-texext >= 0.6
-%endif
 
 Requires: %name-drawing = %EVR
 
@@ -88,39 +76,12 @@ study of the structure, dynamics, and functions of complex networks.
 
 This package contains tests for NetworkX.
 
-%package docs
-Summary: Documentation for NetworkX
-Group: Development/Documentation
-
-%description docs
-NetworkX is a Python package for the creation, manipulation, and
-study of the structure, dynamics, and functions of complex networks.
-
-This package contains development documentation for NetworkX.
-
-%package pickles
-Summary: Pickles for NetworkX
-Group: Development/Python3
-
-%description pickles
-NetworkX is a Python package for the creation, manipulation, and
-study of the structure, dynamics, and functions of complex networks.
-
-This package contains pickles for NetworkX.
-
 %prep
 %setup
 %patch1 -p1
-chmod -x examples/*/*.py
-chmod -x examples/*/*.bz2
 
 find -type f -name '*.py' -exec sed -i \
 	's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
-
-%if_enabled docs
-sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
-%prepare_sphinx3 .
-%endif
 
 %build
 %python3_build
@@ -128,36 +89,22 @@ sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
 %install
 %python3_install
 
-%if_enabled docs
-export SPHINXBUILD=sphinx-build-3
-export PYTHONPATH=$PYTHONPATH:%buildroot%python3_sitelibdir
-#make -C doc latex ||:
-#cp doc/build/doctrees/reference/credits.doctree \
-#	doc/build/doctrees/
-%make -C doc html
-
-mkdir installed-docs
-mv %buildroot%_docdir/%oname-%{version}* ./installed-docs
-
-cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
-
 rm -rf %buildroot%_defaultdocdir
 
 %files
 
 %files core
-%python3_sitelibdir/*
-%if_enabled docs
-%exclude %python3_sitelibdir/%oname/pickle
-%endif
+%doc LICENSE.txt
+%doc README.rst CODE_OF_CONDUCT.rst CONTRIBUTING.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python3_sitelibdir/%oname/drawing
 %exclude %python3_sitelibdir/%oname/readwrite/nx_shp.py
 %exclude %python3_sitelibdir/%oname/readwrite/__pycache__/nx_shp.*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/testing
-%exclude %python3_sitelibdir/*/*/tests
-%exclude  %python3_sitelibdir/*/*/*/tests
+%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/testing
+%exclude %python3_sitelibdir/%oname/*/tests
+%exclude %python3_sitelibdir/%oname/*/*/tests
 
 %files drawing
 %python3_sitelibdir/%oname/drawing
@@ -166,21 +113,17 @@ rm -rf %buildroot%_defaultdocdir
 %exclude %python3_sitelibdir/%oname/drawing/tests
 
 %files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/testing
-%python3_sitelibdir/*/*/tests
-%python3_sitelibdir/*/*/*/tests
-
-%if_enabled docs
-%files docs
-%doc installed-docs/*
-%doc doc/build/html
-
-%files pickles
-%python3_sitelibdir/%oname/pickle
-%endif
+%python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/testing
+%python3_sitelibdir/%oname/*/tests
+%python3_sitelibdir/%oname/*/*/tests
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.5.1-alt1
+- Updated to upstream version 2.5.1.
+- Fixed license.
+- Cleaned up spec.
+
 * Mon Jan 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.5-alt1
 - Updated to upstream version 2.5.
 - Removed dependency from python3-module-networkx-core
