@@ -58,7 +58,7 @@ BuildRequires: jpackage-11-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20210224
+%global addver  .v20210413
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -67,7 +67,7 @@ BuildRequires: jpackage-11-compat
 %bcond_without  jp_minimal
 
 Name:           jetty
-Version:        9.4.38
+Version:        9.4.40
 Release:        alt1_1jpp11
 Summary:        Java Webserver and Servlet Container
 
@@ -1049,6 +1049,9 @@ exit 0
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 9.4.40-alt1_1jpp11
+- fc update
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 9.4.38-alt1_1jpp11
 - new version
 
