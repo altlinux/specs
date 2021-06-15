@@ -2,10 +2,11 @@
 %define sover 5
 %define libname libzip%sover
 %define utilsname libzip-utils
+%define _cmake__builddir BUILD
 
 Name: libzip
 Version: 1.7.3
-Release: alt1.1
+Release: alt2
 
 Group: System/Libraries
 Summary: C library for reading, creating, and modifying zip archives
@@ -62,8 +63,7 @@ sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
 %cmake_build
 
 %install
-%cmake_install
-
+make -C BUILD install DESTDIR=%buildroot
 
 %files -n %utilsname
 %doc AUTHORS NEWS.* THANKS
@@ -85,6 +85,9 @@ sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
 %_man3dir/*ZIP*
 
 %changelog
+* Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 1.7.3-alt2
+- compatable with p9
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.7.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
