@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.11
-Release: alt8
+Release: alt10
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -80,6 +80,8 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 		 udevhelperdir=/lib/udev
 install -Dm0644 tmpfiles.conf %buildroot%_tmpfilesdir/system-config-printer.conf
 mv %buildroot%_datadir/{metainfo,appdata}
+install -m0644 markjob.py %buildroot/%_datadir/system-config-printer/
+
 %find_lang system-config-printer
 
 %post
@@ -114,6 +116,20 @@ exit 0
 
 
 %changelog
+* Tue Jun 15 2021 Paul Wolneykien <manowar@altlinux.org> 1.5.11-alt10
+- Use Python v3 for markjob.py.
+
+* Tue Jun 15 2021 Paul Wolneykien <manowar@altlinux.org> 1.5.11-alt9
+- adapt markjob.py to updated cups api (thx Anton V. Boyarshinov).
+- markjob.py: tmp path fixed (thx Anton V. Boyarshinov).
+- use alt-security-range and set all params for fonarik (thx Anton V. Boyarshinov).
+- ported to Gtk3 and internal copying (thx Anton V. Boyarshinov).
+- jobviewer.py  markjob.py: spacing fixed (thx Anton V. Boyarshinov).
+- forward initial security context (thx Anton V. Boyarshinov).
+- markjob.py: fonarik formatting fixed (thx Anton V. Boyarshinov).
+- job marking code fixed (thx Anton V. Boyarshinov).
+- packaging markjob.py added (thx Anton V. Boyarshinov).
+
 * Tue Feb 16 2021 Paul Wolneykien <manowar@altlinux.org> 1.5.11-alt8
 - Maintenance release.
 
