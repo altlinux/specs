@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: unzip zip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt2_21jpp8
+Release:	alt2_24jpp11
 Summary:	Universal Description, Discovery and Integration registry API for Java
 License:	IBM
 URL:		http://sourceforge.net/projects/uddi4j/
@@ -49,7 +49,7 @@ find -name '*.jar' -exec rm -f '{}' \;
 sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
 
 %build
-ant -Djavac.executable=javac compile javadocs
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djavac.executable=javac compile javadocs
 
 %install
 # inject OSGi manifests
@@ -70,6 +70,9 @@ zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.5-alt2_24jpp11
+- java 11 build; added explicit zip dependency
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_21jpp8
 - fc update
 
