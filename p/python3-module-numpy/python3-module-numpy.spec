@@ -4,8 +4,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.20.2
-Release: alt2
+Version: 1.20.3
+Release: alt1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
@@ -15,7 +15,7 @@ Url: https://www.numpy.org/
 # https://github.com/numpy/numpy.git
 Source: %name-%version.tar
 Source2: site.cfg
-Patch0: %oname-%version-Remove-strict-dependency-on-testing-package.patch
+Patch0: %oname-1.20.2-Remove-strict-dependency-on-testing-package.patch
 
 # E2K patchset with MCST numbering scheme
 Patch1001: 0001-arch_e2k_define.patch
@@ -237,6 +237,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.20.3-alt1
+- Updated to upstream version 1.20.3.
+
 * Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.20.2-alt2
 - NMU: add conflicts to old python-module-numpy
 
