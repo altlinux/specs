@@ -6,7 +6,7 @@
 
 Name: kcov
 Version: 38
-Release: alt2
+Release: alt3
 Summary: Code coverage tool without special compilation options
 
 # Licenses of kcov itself and its bundled js libraries (see below)
@@ -68,6 +68,7 @@ long-running applications.
 rm -r external/ # remove LLDB headers bundled for MacOS
 
 %build
+%define _cmake__builddir BUILD
 %cmake \
 	-G Ninja \
 	-DKCOV_INSTALL_DOCDIR:STRING=%_docdir/%name-%version \
@@ -94,5 +95,8 @@ tests/tools/run-tests BUILD/src/kcov /tmp $(pwd)/build-tests $(pwd) -v ||:
 %_docdir/%name-%version
 
 %changelog
+* Tue Jun 15 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 38-alt3
+- Fixed build after revolutionary changes in rpm-macros-cmake.
+
 * Thu May 07 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 38-alt2
 - Initial build.
