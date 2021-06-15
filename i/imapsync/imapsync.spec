@@ -1,5 +1,5 @@
 Name: imapsync
-Version: 1.945
+Version: 1.977
 Release: alt1
 
 Summary: Tool to migrate email between IMAP servers
@@ -14,7 +14,7 @@ Packager: Boris Savelev <boris@altlinux.org>
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
-Patch1:  %name-1.882-alt-no_cpanminus.patch
+Patch1:  %name-1.977-alt-no_cpanminus.patch
 
 BuildArch: noarch
 
@@ -22,9 +22,6 @@ BuildArch: noarch
 Requires: perl(IO/Socket/INET6.pm)
 
 # Build requires:
-# Automatically added by buildreq on Sun Mar 11 2018
-# optimized out: python-base python-modules python3 python3-base python3-module-mpl_toolkits python3-module-zope ruby ruby-stdlibs
-
 BuildRequires:  perl(Data/Dumper.pm) perl(Data/Uniqid.pm)
 BuildRequires:  perl(Digest/HMAC.pm) perl(Digest/HMAC_SHA1.pm) perl(Digest/MD5.pm)
 BuildRequires:  perl(File/Copy/Recursive.pm)
@@ -42,7 +39,7 @@ BuildRequires:  perl(PAR/Packer.pm) perl(Class/Load.pm)
 BuildRequires:  perl(CGI.pm) perl(Regexp/Common.pm) perl(Try/Tiny.pm)
 BuildRequires:  perl(Unicode/String.pm) perl(URI/Escape.pm)
 BuildRequires:  perl(Test/NoWarnings.pm) perl(Test/Deep.pm) perl(Test/Warn.pm)
-BuildRequires:  perl(File/Tail.pm)
+BuildRequires:  perl(File/Tail.pm) perl(Encode/IMAPUTF7.pm)
 
 %description
 imapsync is a tool for facilitating incremental recursive IMAP
@@ -67,6 +64,9 @@ optionally be deleted after a successful transfer.
 %_man1dir/%name.*
 
 %changelog
+* Tue Jun 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.977-alt1
+- New version
+
 * Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.945-alt1
 - New version
 
