@@ -1,8 +1,8 @@
 # SPEC file for vnStat package
 
 Name:    vnstat
-Version: 2.6
-Release: alt2
+Version: 2.7
+Release: alt1
 
 Summary: console-based network traffic monitor
 Summary(ru_RU.UTF-8): консольная утилита для подсчёта трафика
@@ -11,7 +11,7 @@ License: %gpl2only
 Group:   Monitoring
 URL:     http://humdi.net/vnstat/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
@@ -162,6 +162,9 @@ mkdir -p %buildroot%data_dir
 %_man1dir/%{name}i*
 
 %changelog
+* Tue Jun 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.7-alt1
+- New version
+
 * Wed Nov 11 2020 Nikolay A. Fetisov <naf@altlinux.org> 2.6-alt2
 - Remove duplicate self-provides
 
