@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: mvn(commons-logging:commons-logging-api) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-11-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name: libserializer
 Version: 1.1.2
-Release: alt2_28jpp11
+Release: alt2_29jpp11
 Summary: JFreeReport General Serialization Framework
 License: LGPLv2+
 #Original source: http://downloads.sourceforge.net/jfreereport/libserializer-%%{version}.zip
@@ -23,6 +23,7 @@ BuildArch: noarch
 Patch0: libserializer-1.1.2.build.patch
 Patch1: libserializer-1.1.2.java11.patch
 Patch2:	libserializer-1.1.2-remove-antcontrib-support.patch
+Patch3:	libserializer-1.1.2-remove-commons-logging.patch
 Source44: import.info
 
 %description
@@ -44,10 +45,11 @@ Javadoc for %{name}.
 %patch0 -p1 -b .build
 %patch1 -p1 -b .java11
 %patch2 -p1 -b .no_antcontrib
+%patch3 -p1 -b .no_commons_logging
 
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
-build-jar-repository -s -p lib libbase commons-logging-api
+build-jar-repository -s -p lib libbase
 
 %build
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
@@ -67,6 +69,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt2_29jpp11
+- fc34 update
+
 * Mon Jun 14 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt2_28jpp11
 - NMU for unknown reason:
   the person above was too neglectant to add --changelog "- NMU: <reason>" option.
