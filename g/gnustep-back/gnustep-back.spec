@@ -1,9 +1,7 @@
 %set_verify_elf_method unresolved=strict
 
-#based on Fedora's spec
-
 Name: gnustep-back    
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 Summary: The GNUstep back-end library
 License: LGPL-2.1+ and GPL-3.0+
@@ -12,20 +10,22 @@ URL: http://www.gnustep.org
 
 # https://github.com/gnustep/libs-back
 Source: libs-back-%version.tar
-Source1: Courier.FontInfo.plist
-Source2: Times.FontInfo.plist
+Patch1: gnustep-back-DejaVu-compatible-font.patch
 
-BuildPreReq: libfreetype-devel libX11-devel libXt-devel libXext-devel
-BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
-BuildPreReq: libart_lgpl-devel libglitz-devel libcairo-devel
-BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
-BuildPreReq: libXcursor-devel libXfixes-devel
-BuildPreReq: fonts-type1-urw gnustep-gui-doc
+BuildRequires: libfreetype-devel libX11-devel libXt-devel libXext-devel
+BuildRequires: libXmu-devel libICE-devel libXft-devel libGL-devel
+BuildRequires: libart_lgpl-devel libglitz-devel libcairo-devel
+BuildRequires: gnustep-make-devel gnustep-base-devel
+BuildRequires: gnustep-gui-devel = %version
+BuildRequires: libXcursor-devel libXfixes-devel
+BuildRequires: fonts-type1-urw gnustep-gui-doc
 BuildRequires: texinfo /proc
-BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
-BuildPreReq: libxslt-devel libffi-devel libicu-devel
+BuildRequires: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildRequires: libxslt-devel libffi-devel libicu-devel
 
-Requires: fonts-type1-urw gnustep-base gnustep-gui
+Requires: gnustep-base
+Requires: gnustep-gui = %version
+Requires: fonts-ttf-core
 
 %description 
 This is a back-end for the GNUstep GUI library which allows you to use
@@ -44,6 +44,7 @@ This is develompent documentation for %name.
 
 %prep
 %setup -n libs-back-%version
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -79,36 +80,7 @@ sed -i 's|i586|x86_64|g' $(find ./ -type f)
 %makeinstall_std -C Documentation \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-rm -rf \
-	%buildroot%_libdir/GNUstep/Documentation/Developer/Back/ReleaseNotes
-
-pushd %buildroot%_libdir/GNUstep/Fonts/Helvetica.nfont
-for i in $(ls *.?f?); do
-	rm -f $i
-	ln -s %_datadir/fonts/type1/urw/$i ./
-done
-popd
-
-install -d %buildroot%_libdir/GNUstep/Fonts/Courier.nfont
-pushd %buildroot%_libdir/GNUstep/Fonts/Courier.nfont
-install -p -m644 %SOURCE1 ./FontInfo.plist
-for i in n022003l n022023l n022004l n022024l; do
-	ln -s %_datadir/fonts/type1/urw/$i.afm ./
-	ln -s %_datadir/fonts/type1/urw/$i.pfb ./
-	ln -s %_datadir/fonts/type1/urw/$i.pfm ./
-done
-popd
-
-install -d %buildroot%_libdir/GNUstep/Fonts/Times.nfont
-pushd %buildroot%_libdir/GNUstep/Fonts/Times.nfont
-install -p -m644 %SOURCE2 ./FontInfo.plist
-for i in n021003l n021023l n021004l n021024l; do
-
-	ln -s %_datadir/fonts/type1/urw/$i.afm ./
-	ln -s %_datadir/fonts/type1/urw/$i.pfb ./
-	ln -s %_datadir/fonts/type1/urw/$i.pfm ./
-done
-popd
+rm -rf %buildroot%_libdir/GNUstep/Documentation/Developer/Back/ReleaseNotes
 
 install -d %buildroot%_sysconfdir/profile.d
 echo "export GNUSTEP_STRING_ENCODING=UTF-8" \
@@ -128,6 +100,12 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 0.29.0-alt1
+- New version compatible with current gnustep-gui (ALT #40221).
+
+* Wed Oct 21 2020 Andrey Cherepanov <cas@altlinux.org> 0.28.0-alt2
+- Use only common TTF font (Sans, Mono) instead of Type1 fonts and hardcoded DejaVu (ALT #39083).
+
 * Tue Oct 13 2020 Andrey Cherepanov <cas@altlinux.org> 0.28.0-alt1
 - New version.
 - Build from upstream https://github.com/gnustep/libs-back.
