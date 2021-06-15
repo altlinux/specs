@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 
 Summary:       Official JDBC driver for MySQL
 Name:          mysql-connector-java
-Version:       8.0.23
+Version:       8.0.25
 Release:       alt1_2jpp11
 Epoch:         1
 License:       GPLv2 with exceptions
@@ -108,6 +108,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcom.mysql.cj.bu
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1:8.0.25-alt1_2jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:8.0.23-alt1_2jpp11
 - new version
 
