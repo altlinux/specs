@@ -1,32 +1,40 @@
-%define ver_major 3.0
+%define ver_major 3
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 %def_enable gtk_doc
 %def_disable gtk_tests
-%def_enable check
+# tests passed in hasher on basalt for i586/x86_64 with -j16
+# 1/1 iio-sensor-proxy-integration-test OK 17.21s
+# but fail in girar for all architectures
+# [x86_64] 1/1 iio-sensor-proxy-integration-test TIMEOUT 60.11s
+%def_disable check
 
 Name: iio-sensor-proxy
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: IIO sensors to input device proxy
 Group: System/Kernel and hardware
-License: GPLv2+
+License: GPL-3.0
 Url: https://github.com/hadess/%name
 
-#VCS:https://gitlab.freedesktop.org/hadess/iio-sensor-proxy.git
+Vcs: https://gitlab.freedesktop.org/hadess/iio-sensor-proxy.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+%define meson_ver 0.54
 %define glib_ver 2.56
 %define gudev_ver 232
 
-BuildRequires: gnome-common gtk-doc
+BuildRequires(pre): meson >= %meson_ver
 BuildRequires: libgio-devel >= %glib_ver pkgconfig(systemd)
 BuildRequires: libudev-devel libgudev-devel >= %gudev_ver
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_gtk_tests:BuildRequires: libgtk+3-devel}
-%{?_enable_check:BuildRequires: /proc dbus-tools-gui}
+%{?_enable_check:
+BuildRequires: /proc /dev/pts dbus-tools-gui python3-module-psutil
+BuildRequires: python3-module-pygobject3 python3-module-dbusmock typelib(UMockdev) = 1.0}
 
 %description
 %name is a framework for accessing the various environmental sensors
@@ -56,24 +64,21 @@ Developer documentation for %name.
 %prep
 %setup
 %patch -p1
-[ ! -d m4 ] && mkdir m4
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{?_disable_gtk_tests:--disable-gtk-tests}
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_gtk_tests:-Dgtk-tests=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+dbus-run-session %__meson_test -t 2
 
 %files
-%_sbindir/%name
+%_libexecdir/%name
 %_bindir/monitor-sensor
 %_unitdir/%name.service
 %_udevrulesdir/80-%name.rules
@@ -87,6 +92,11 @@ Developer documentation for %name.
 
 
 %changelog
+* Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1 (ported to Meson build system)
+- fixed License tag
+- disabled check due timeout on girar infrastructure
+
 * Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 
