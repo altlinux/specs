@@ -1,26 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kchmviewer
-Version: 7.7
-Release: alt3
-
+Version: 8.0
+Release: alt1
 Summary: A CHM (Winhelp) and EPUB viewer
 License: %gpl3plus
 Group: Office
 Url: http://kchmviewer.net
 
+# https://github.com/gyunaev/kchmviewer.git
 Source: %name-%version.tar
-Patch1: %name-%version-qtwebengine.patch
-Patch2: %name-%version-alt-underlinking.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-make
+Patch1: %name-%version-upstream.patch
+Patch2: kchmviewer-8.0-remove-updates-check.patch
+Patch3: kchmviewer-8.0-remove-whats-this-function.patch
+Patch4: kchmviewer-8.0-remove-debug-output.patch
+
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires: gcc-c++ libchm-devel libzip-devel qt5-base-devel
 BuildRequires: qt5-webengine-devel
 BuildRequires: libXxf86misc-devel
 
-Obsoletes: kchmviewer4 <= 4.0-alt3
-Obsoletes: kchmviewer-nokde
-Provides: kchmviewer4 = %EVR
+Obsoletes: kchmviewer4 < %EVR
+Obsoletes: kchmviewer-nokde < %EVR
 
 %description
 Kchmviewer is a CHM (aka MS HTML help) and EPUB viewer written in C++.
@@ -33,7 +36,9 @@ non-English help files, including Korean, Chinese and Japanese.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %add_optflags -I%_includedir/libzip
@@ -54,6 +59,9 @@ install -pD -m644 packages/kchmviewer.desktop %buildroot%_desktopdir/%name.deskt
 %doc COPYING
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0-alt1
+- Updated to upstream version 8.0.
+
 * Thu Mar 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.7-alt3
 - Fixed epub support.
 
