@@ -1,5 +1,6 @@
 %define farstream farstream0.2
 %define farstream_dev  pkgconfig(farstream-0.2) libtelepathy-farstream-devel
+%define _cmake__builddir BUILD
 
 %define sover 0
 %define sover_service 1
@@ -10,7 +11,7 @@
 
 Name: telepathy-qt5
 Version: 0.9.8
-Release: alt1.1
+Release: alt2
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -111,7 +112,7 @@ export QT_DOC_DIR=%_qt5_docdir
 %cmake_build --target doxygen-doc
 
 %install
-%cmake_install
+make -C BUILD install DESTDIR=%buildroot
 
 %files common
 %doc AUTHORS COPYING HACKING NEWS README
@@ -139,6 +140,9 @@ export QT_DOC_DIR=%_qt5_docdir
 #%_libdir/lib*.a
 
 %changelog
+* Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt2
+- compatable with p9
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.8-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
