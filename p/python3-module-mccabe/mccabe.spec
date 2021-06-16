@@ -1,27 +1,23 @@
 %define _unpackaged_files_terminate_build 1
-%def_with python3
-
 %define oname mccabe
 
-Name:               python-module-%oname
+Name:               python3-module-%oname
 Version:            0.6.1
-Release:            alt1
+Release:            alt2
+
 Summary:            McCabe complexity checker
 
-Group:              Development/Python
+Group:              Development/Python3
 License:            Expat
-BuildArch:          noarch
 URL:                http://pypi.python.org/pypi/mccabe
 
-# https://github.com/pycqa/mccabe.git
+# Source-git: https://github.com/pycqa/mccabe.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pytest-runner
-%if_with python3
+BuildArch:          noarch
+
 BuildRequires: python3-module-setuptools rpm-build-python3
 BuildRequires: python3-module-pytest-runner
-%endif
 
 %description
 Ned's script to check McCabe complexity.
@@ -29,57 +25,25 @@ Ned's script to check McCabe complexity.
 This module provides a plugin for ``flake8``, the Python code
 checker.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: McCabe checker, plugin for flake8
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Ned's script to check McCabe complexity.
-
-This module provides a plugin for ``flake8``, the Python code
-checker.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%python_install
 
 %files
-%doc README.rst LICENSE
-%python_sitelibdir/%{oname}.py*
-%python_sitelibdir/%{oname}-%{version}*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc README.rst LICENSE
 %python3_sitelibdir/%{oname}.py*
 %python3_sitelibdir/%{oname}-%{version}-*
 %python3_sitelibdir/__pycache__/%{oname}.*
-%endif
 
 %changelog
+* Wed Jun 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt2
+- build python3 module separately
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1
 - Updated to upstream version 0.6.1.
 
