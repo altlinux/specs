@@ -2,63 +2,36 @@
 
 %define oname botocore
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 1.17.56
+Name: python3-module-%oname
+Version: 1.20.96
 Release: alt1
+
 Summary: The low-level, core functionality of boto 3
+
 License: Apache-2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/botocore/
 
 BuildArch: noarch
 
-# https://github.com/boto/botocore.git
+# Source-git: https://github.com/boto/botocore.git
 Source: %name-%version.tar
+
 Patch1: %oname-%version-alt-docsetup.patch
-Patch2: %oname-%version-alt-reqs.patch
 Patch3: %oname-%version-alt-no-vendored-packages.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-dateutil python-module-guzzle_sphinx_theme python-module-html5lib python-module-jmespath
-BuildRequires: python-module-nose python-module-objects.inv python-module-pbr python-module-setuptools python-module-unittest2
-BuildRequires: python-module-requests python-module-six python-module-urllib3 python-module-mock python-module-docutils python-module-jmespath
-BuildRequires: python2.7(jsonschema)
-BuildRequires: /usr/bin/py.test
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-dateutil python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools
 BuildRequires: python3-module-unittest2
 BuildRequires: python3-module-requests python3-module-six python3-module-urllib3 python3-module-mock python3-module-docutils python3-module-jmespath
 BuildRequires: python3(jsonschema)
 BuildRequires: /usr/bin/py.test3
-%endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 A low-level interface to a growing number of Amazon Web Services. The
 botocore package is the foundation for AWS-CLI.
-
-%package -n python3-module-%oname
-Summary: The low-level, core functionality of boto 3
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-A low-level interface to a growing number of Amazon Web Services. The
-botocore package is the foundation for AWS-CLI.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-A low-level interface to a growing number of Amazon Web Services. The
-botocore package is the foundation for AWS-CLI.
-
-This package contains pickles for %oname.
 
 %package docs
 Summary: Documentation for %oname
@@ -74,41 +47,18 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 
 rm -rf botocore/vendored
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
+#prepare_sphinx docs
+#ln -s ../objects.inv docs/source/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 # following test fails, remove it for now
@@ -116,41 +66,21 @@ rm -rf tests/functional/leak/test_resource_leaks.py
 # remove tests requiring network
 rm -rf tests/integration
 
-py.test
-
-%if_with python3
-pushd ../python3
-# following test fails, remove it for now
-rm -rf tests/functional/leak/test_resource_leaks.py
-# remove tests requiring network
-rm -rf tests/integration
-
 py.test3
-popd
-%endif
 
 %files
 %doc LICENSE.txt
 %doc *.rst
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-%version-py*.egg-info
-%exclude %python_sitelibdir/%oname/pickle
-
-%files pickles
-%python_sitelibdir/%oname/pickle
-
-%files docs
-%doc docs/build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE.txt
-%doc *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
-%endif
 
 %changelog
+* Thu Jun 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.20.96-alt1
+- new version 1.20.96 (with rpmrb script)
+
+* Wed Jun 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.17.56-alt2
+- build python3 module separately
+
 * Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.17.56-alt1
 - Updated to upstream version 1.17.56.
 

@@ -1,38 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname boto3
+%def_without check
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 1.14.56
+Name: python3-module-%oname
+Version: 1.17.96
 Release: alt1
+
 Summary: The AWS SDK for Python
+
 License: Apache-2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/boto3/
 
 BuildArch: noarch
 
-# https://github.com/boto/boto3.git
+# Source-git: https://github.com/boto/boto3.git
 Source: %name-%version.tar
+
 Patch1: %oname-alt-docs.patch
 Patch2: %oname-alt-unvendor.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools python-module-unittest2 python-module-mock
-BuildRequires: python-module-botocore python-module-html5lib python-module-nose python-module-pbr
-BuildRequires: python-module-alabaster python-module-guzzle_sphinx_theme python-module-objects.inv
-BuildRequires: python2.7(s3transfer)
-BuildRequires: python2.7(six)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-unittest2 python3-module-mock
 BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose python3-module-pbr
 BuildRequires: python3-module-sphinx
 BuildRequires: python3(s3transfer)
 BuildRequires: python3(six)
-%endif
 
 %description
 Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
@@ -43,113 +37,37 @@ WARNING: Boto 3 is in developer preview and should not be used in
 production yet! Please try it out and give feedback by opening issues or
 pull requests on this repository. Thanks!
 
-%package -n python3-module-%oname
-Summary: The AWS SDK for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
-Python, which allows Python developers to write software that makes use
-of services like Amazon S3 and Amazon EC2.
-
-WARNING: Boto 3 is in developer preview and should not be used in
-production yet! Please try it out and give feedback by opening issues or
-pull requests on this repository. Thanks!
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
-Python, which allows Python developers to write software that makes use
-of services like Amazon S3 and Amazon EC2.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
-Python, which allows Python developers to write software that makes use
-of services like Amazon S3 and Amazon EC2.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 # skip tests depending on network
 rm -rf tests/integration
-nosetests
-
-%if_with python3
-pushd ../python3
-# skip tests depending on network
-rm -rf tests/integration
 
 nosetests3
-popd
-%endif
 
 %files
 %doc LICENSE
 %doc *.rst
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-%version-py*.egg-info
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/%oname/pickle
-
-%files docs
-%doc docs/build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE
-%doc *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
-%endif
 
 %changelog
+* Thu Jun 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.17.96-alt1
+- new version 1.17.96 (with rpmrb script)
+- disable check (due internet depends)
+
+* Wed Jun 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.14.56-alt2
+- build python3 module separately
+
 * Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.56-alt1
 - Updated to upstream version 1.14.56.
 
