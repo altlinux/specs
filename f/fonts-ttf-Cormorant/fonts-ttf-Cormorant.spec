@@ -2,7 +2,7 @@
 %define __unzip /usr/bin/unzip -oj
 
 Name: fonts-ttf-%fname
-Version: 3.504
+Version: 3.609
 Release: alt1
 
 Summary: Cormorant open-source display font family
@@ -36,5 +36,8 @@ definition.
 %doc README.md *.txt
 
 %changelog
+* Wed Jun 16 2021 Ivan A. Melnikov <iv@altlinux.org> 3.609-alt1
+- 3.609
+
 * Mon Aug 06 2018 Ivan A. Melnikov <iv@altlinux.org> 3.504-alt1
 - Initial build for Sisyphus
