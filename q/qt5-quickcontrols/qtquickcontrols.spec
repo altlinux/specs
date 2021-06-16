@@ -3,7 +3,7 @@
 
 Name: qt5-quickcontrols
 Version: 5.15.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - module with set of QtQuick controls
@@ -14,6 +14,7 @@ Provides: qt5-qtquickcontrols = %version-%release
 Provides: libqt5-qtquickcontrols = %version-%release
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch: alt-revert-qtbug63437.patch
 
 # Automatically added by buildreq on Tue Nov 26 2013 (-bi)
 # optimized out: elfutils libGL-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libqt5-xml libstdc++-devel python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
@@ -43,6 +44,7 @@ This package contains documentation for Qt5 %qt_module
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
+%patch -p1
 
 %build
 %qmake_qt5
@@ -68,6 +70,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Jun 16 2021 Oleg Solovyov <mcpain@altlinux.org> 5.15.2-alt2
+- fix KDE bug 359783
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 
