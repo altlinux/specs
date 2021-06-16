@@ -1,7 +1,7 @@
 %define rname kdegraphics-thumbnailers
 
 Name: kde5-graphics-thumbnailers
-Version: 21.04.1
+Version: 21.04.2
 Release: alt1
 %K5init no_appdata
 
@@ -44,5 +44,8 @@ BuildRequires: kf5-karchive-devel kf5-kio-devel
 #%_K5cfg/*.kcfg
 
 %changelog
+* Fri Jun 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
+- new version
+
 * Wed May 26 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - initial build

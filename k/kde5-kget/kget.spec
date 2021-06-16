@@ -4,7 +4,7 @@
 %define libkgetcore libkgetcore%sover
 
 Name: kde5-%rname
-Version: 21.04.1
+Version: 21.04.2
 Release: alt1
 %K5init no_appdata
 
@@ -109,6 +109,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Fri Jun 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
+- new version
+
 * Thu May 20 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - new version
 
