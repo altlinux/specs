@@ -3,8 +3,6 @@
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.38
 %define xdg_name org.gnome.Totem
-%define nautilus_extdir %_libdir/nautilus/extensions-3.0
-
 %define parser_ver 3.10.1
 %define gst_api_ver 1.0
 %define gst_ver 1.4.2
@@ -18,7 +16,6 @@
 %define clutter_gst_ver 2.99.2
 %define peas_ver 1.1.0
 
-
 %def_disable static
 %def_enable vala
 
@@ -30,8 +27,6 @@
 
 %def_enable introspection
 %def_enable gtk_doc
-# in 3.31.91 nautilus properties page moved to nautilus module
-%def_disable nautilus
 %def_enable python
 %def_disable coherence_upnp
 %def_disable jamendo
@@ -41,7 +36,7 @@
 
 
 Name: totem
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -109,7 +104,6 @@ BuildRequires: python3-devel python3-module-pygobject3-devel pylint-py3
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
 BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
-%{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
 BuildRequires: libX11-devel libXrandr-devel libXi-devel
@@ -232,24 +226,6 @@ Conflicts: %name < %version
 %description devel-doc
 This package provides Totem reference manual
 
-%package nautilus
-Summary: Nautilus extension for the Totem media player
-Group: Video
-Requires: %name-video-thumbnailer = %version-%release
-Provides: totem-gstreamer-nautilus = %version-%release
-Provides: totem-xine-nautilus = %version-%release
-Provides: totem-nautilus = %version
-Provides: nautilus-totem-gstreamer = %version-%release
-Provides: nautilus-totem-xine = %version-%release
-Provides: nautilus-totem = %version-%release
-Obsoletes: totem-gstreamer-nautilus < %version-%release
-Obsoletes: totem-xine-nautilus < %version-%release
-Obsoletes: totem-nautilus < %version-%release
-
-%description nautilus
-This package provides integration with the Totem media player for
-the Nautilus file manager.
-
 %package video-thumbnailer
 Summary: Totem video thumbnailer
 Group: Video
@@ -271,16 +247,14 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %build
 %meson \
 	%{?_enable_python:-Denable-python=yes} \
-	%{?_enable_introspection:-Denable-introspection=yes} \
 	%{?_disable_vala:-Denable-vala=no} \
-	%{?_enable_nautilus:-Denable-nautilus=yes} \
 	%{?_enable_gtk_doc:-Denable-gtk-doc=true}
+%nil
 # https://github.com/mesonbuild/meson/issues/1994
 %meson_build -j1
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -362,11 +336,6 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/GConf/gsettings/jamendo.convert
 %endif
 
-%if_enabled nautilus
-%files nautilus
-%nautilus_extdir/*
-%endif
-
 %if_enabled coherence_upnp
 %files plugins-coherence_upnp
 %_libdir/%name/plugins/coherence_upnp/
@@ -377,8 +346,10 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_libdir/%name/plugins/brasero-disc-recorder/
 %endif
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %files video-thumbnailer
 %_bindir/%name-video-thumbnailer
@@ -387,6 +358,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Jun 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
