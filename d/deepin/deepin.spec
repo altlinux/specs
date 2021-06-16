@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt10
+Release: alt11
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -88,6 +88,10 @@ Requires: onboard
 # %%ifnarch armh
 Requires: deepin-movie
 # %%endif
+Requires: deepin-manual
+Requires: deepin-screensaver
+Requires: deepin-screensaver-modules
+Requires: deepin-compressor
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -104,9 +108,6 @@ Requires: deepin-shortcut-viewer
 Requires: deepin-account-faces
 Requires: deepin-topbar
 Requires: deepin-picker
-Requires: deepin-screensaver
-Requires: deepin-screensaver-modules
-Requires: deepin-compressor
 Requires: deepin-device-formatter
 Requires: redshift
 
@@ -130,6 +131,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Wed Jun 16 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt11
+- Added deepin-manual, deepin-screensaver and deepin-compressor into deepin-default.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt10
 - Removed deepin-polkit-agent* from deepin-default.
 - Added deepin-draw into deepin-default.
