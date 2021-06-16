@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xraylib
-Version: 3.3.0
+Version: 4.1.0
 Release: alt1
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
-License: BSD
+License: BSD-3-Clause
 Group: Sciences/Physics
 Url: https://github.com/tschoonj/xraylib
 
@@ -14,8 +14,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-fortran gcc-c++ swig
 BuildRequires: python3-devel python3-module-Cython libnumpy-py3-devel
-# TODO: remove libnumpy-devel when libnumpy-py3-devel is fixed
-BuildRequires: libnumpy-devel
 
 %description
 This is xraylib, a library for X-ray matter interactions cross sections
@@ -55,6 +53,12 @@ This package contains python bindings of %name.
 %prep
 %setup
 
+# change python shebangs to python3
+find . -name '*.py' | xargs sed -i \
+	-e '1s|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
+	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python3|' \
+	%nil
+
 %build
 export PYTHON=python3
 export PYTHON_VERSION=%_python3_version
@@ -65,24 +69,24 @@ sed -i 's|(SWIG)|(SWIG) -py3|' $(find ./ -name Makefile.am)
 %configure \
 	--enable-static=no \
 	--enable-python-integration \
-	--disable-perl
+	--disable-perl \
+	%nil
+
 %make_build
 
 %install
 %makeinstall_std
-sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
-	%buildroot%_bindir/%name
-rm -f %buildroot%python3_sitelibdir/*.la
-%if "%_lib" == "lib64"
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
+
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+mkdir -pv %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-%files
-%_bindir/%name
+rm -f %buildroot%python3_sitelibdir/*.la
 
 %files -n lib%name
-%doc AUTHORS BUGS Changelog README* TODO
+%doc license*.txt
+%doc AUTHORS Changelog README* TODO
 %_libdir/*.so.*
 %_datadir/%name
 
@@ -97,6 +101,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt1
+- Updated to upstream version 4.1.0.
+
 * Thu Feb 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
 - Updated to upstream version 3.3.0 (Closes: #38044).
 - Disabled python-2.

@@ -10,7 +10,7 @@
 %define ver 9.0
 Name: %oname
 Version: %ver.1
-Release: alt3
+Release: alt4
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -88,7 +88,7 @@ BuildRequires: libfreetype-devel libjpeg-devel
 BuildRequires: libxml2-devel libexpat-devel libftgl220-devel libpng-devel
 BuildRequires: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel
 BuildRequires: doxygen graphviz libgsl-devel
-BuildRequires: libbfd-devel libnumpy-devel libopenmotif-devel
+BuildRequires: libbfd-devel libopenmotif-devel
 BuildRequires: libgl2ps-devel
 BuildRequires: libXxf86misc-devel libimlxx-devel
 BuildRequires: libdc1394-devel libtheora-devel
@@ -115,6 +115,7 @@ BuildRequires: libproj-devel
 BuildRequires: libpugixml-devel
 BuildRequires: python3-devel python3-module-matplotlib
 BuildRequires: python3-module-PyQt5-devel python3-module-sip-devel
+BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenslide-devel
 BuildRequires: libarchive-devel
 
@@ -451,6 +452,9 @@ cp -alL %_cmake__builddir/ExternalData/* %buildroot%_datadir/%oname-%ver
 %_datadir/%oname-%ver
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt4
+- Updated build dependencies.
+
 * Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt3
 - Added compatibility to p9.
 
