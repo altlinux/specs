@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        91.0.4472.101
+Version:        91.0.4472.106
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -457,6 +457,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jun 16 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.4472.106-alt1
+- New version (91.0.4472.106).
+
 * Thu Jun 10 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.4472.101-alt1
 - New version (91.0.4472.101).
 - Security fixes:
