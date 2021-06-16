@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: blktrace
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: Block queue IO tracer
 License: GPL-2.0-only
@@ -12,6 +14,7 @@ Vcs: git://git.kernel.dk/blktrace.git
 
 Source: %name-%version.tar
 BuildRequires: libaio-devel
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm fio}}
 
 # Avoid: "forbidden requires: python-base
 # sisyphus_check: check-deps ERROR: package dependencies violation"
@@ -20,6 +23,17 @@ AutoReqProv: nopython noshebang
 %description
 blktrace is a block layer IO tracing mechanism which provides detailed
 information about request queue operations up to user space.
+
+  blkiomon - Monitor block device I/O based o blktrace data
+  blkparse - Produce formatted output of event streams of block devices
+  blkrawverify - Verifies an output file produced by blkparse
+  blktrace - Generate traces of the I/O traffic on block devices
+  bno_plot.py - Generate interactive 3D plot of IO blocks and sizes
+  btrace - Perform live tracing for block devices
+  btrecord & btreplay - Recreate IO loads recorded by blktrace
+  btt - Analyse block I/O traces produces by blktrace
+  iowatcher - Create visualizations from blktrace results
+  verify_blkparse - Verifies an output file produced by blkparse
 
 %prep
 %setup
@@ -42,6 +56,10 @@ information about request queue operations up to user space.
 # blktrace itself will just segfault, becasue no access to `/sys/devices/system/cpu/online`.
 # Other proggies do not support `-V`.
 
+truncate -s 11M disk.img
+PATH=%buildroot%_bindir:$PATH
+vm-run --kvm=cond --udevd --drive=disk.img,format=raw .gear/tests.sh
+
 %files
 %doc README doc/blktrace.tex
 %_bindir/*
@@ -49,6 +67,10 @@ information about request queue operations up to user space.
 %_man8dir/*
 
 %changelog
+* Wed Jun 16 2021 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
+- Update to blktrace-1.3.0 (2021-06-14).
+- spec: Add tests in %%check.
+
 * Sat Aug 08 2020 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt1
 - Update to blktrace-1.2.0-37-ga021a33 (2020-05-13).
 - spec: Do not build blktrace.pdf (read blktrace.tex instead).
