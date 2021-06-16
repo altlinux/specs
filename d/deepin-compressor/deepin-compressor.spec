@@ -1,7 +1,9 @@
+%define _cmake__builddir BUILD
+
 %def_disable clang
 
 Name: deepin-compressor
-Version: 5.10.0.15
+Version: 5.10.5
 Release: alt1
 Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
@@ -15,7 +17,7 @@ Obsoletes: %name-devel < %version
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -57,7 +59,7 @@ sed -i 's|#include <zip.h>|#include <libzip/zip.h>|' \
 sed -i 's|lib/|%_lib/|' \
     CMakeLists.txt
 # remove unbuilded translation
-rm -rf translations/deepin-compressor*.ts
+# rm -rf translations/deepin-compressor*.ts
 
 # %if_disabled clang
 # sed -i 's|int myshowWarningDialog|void myshowWarningDialog|' \
@@ -78,11 +80,13 @@ export PATH=%_qt5_bindir:$PATH
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
-    -DVERSION=%version
-%ninja_build -C BUILD
+    -DVERSION=%version \
+    -DLIB_INSTALL_DIR=%_libdir \
+#
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
@@ -107,6 +111,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Wed Jun 16 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.5-alt1
+- New version (5.10.5) with rpmgs script.
+- NMU: spec: adapted to new cmake macros.
+
 * Mon Apr 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.0.15-alt1
 - New version (5.10.0.15) with rpmgs script.
 
