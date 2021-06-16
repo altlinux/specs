@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 #TODO: try bulding against OpenMPI only when version upgrade 2.1->3.1
 %def_without openmpi
 %def_with ffmpeg
@@ -13,7 +15,7 @@
 
 Name: netgen
 Version: 6.2.2103
-Release: alt1
+Release: alt2
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -43,6 +45,7 @@ Patch8: 0008-Add-missing-ldl.patch
 Patch10: netgen-6.2-alt-unbundle-pybind11.patch
 Patch11: netgen-alt-fix-return-type.patch
 Patch12: netgen-alt-fix-build-i586.patch
+Patch13: %name-alt-version-detection.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
@@ -60,7 +63,7 @@ BuildRequires: libjpeg-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: pybind11-devel
-BuildRequires: python3-dev
+BuildRequires: python3-devel
 BuildRequires: zlib-devel
 BuildRequires: desktop-file-utils
 %if_with openmpi
@@ -70,7 +73,6 @@ BuildRequires: %mpiimpl-devel
 %if_with shared_togl
 BuildRequires: tcl-togl-devel 
 %endif
-BuildRequires: git-core
 BuildRequires: libGLU-devel
 
 Requires: lib%name = %EVR tcl-tix
@@ -197,6 +199,9 @@ This package contains Python bindings of NETGEN.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+
+echo -n v%version > version.txt
 
 %if_with shared_togl
 # Remove bundled togl
@@ -382,6 +387,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.2103-alt2
+- Fixed version detection.
+
 * Sat Jun 05 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2103-alt1
 - New version.
 
