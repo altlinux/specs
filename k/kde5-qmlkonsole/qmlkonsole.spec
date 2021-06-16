@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.06
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: qt5-qmltermwidget
+Conflicts: cool-retro-term <= 1.0.1-alt1
 
 Source: %rname-%version.tar
 
@@ -74,5 +75,8 @@ Requires: %name-common
 #%_K5lib/libqmlkonsole.so.*
 
 %changelog
+* Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 21.06-alt2
+- add conflict with cool-retro-term
+
 * Fri Jun 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.06-alt1
 - initial build
