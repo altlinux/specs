@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.13.12
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -17,6 +17,8 @@ Source2: %name.sysusers
 Source3: deepin-auth
 # archlinux patches
 Patch: deepin-daemon-fix-vanilla-libinput.patch
+# alt patches
+Patch1: deepin-daemon-alt-lightdm-lock-screen.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: glib2-devel
@@ -97,6 +99,7 @@ Daemon handling the DDE session settings
 %prep
 %setup -n %repo-%version
 # %patch -p1
+%patch1 -p2
 # patch langselector/locale.go < rpm/locale.go.patch
 # install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
 
@@ -293,6 +296,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Wed Jun 16 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.12-alt2
+- Used lightdm lock screen instead dde-lock.
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.12-alt1
 - New version (5.13.12) with rpmgs script.
 
