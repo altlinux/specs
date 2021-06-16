@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.4.3
-Release: alt2
+Release: alt3
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -491,7 +491,7 @@ Requires: bash-completion
 Requires: dansguardian
 Requires: perl-DBD-mysql
 #Requires: ejudge
-Requires: openfire
+Requires: ejabberd
 Requires: alterator-datetime
 Requires: alterator-console
 Requires: apache2-httpd-worker
@@ -599,6 +599,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.3-alt3
+- Replaced openfire with ejabberd.
+
 * Tue May 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt2
 - Do not require thunderbird on ppc64le.
 
