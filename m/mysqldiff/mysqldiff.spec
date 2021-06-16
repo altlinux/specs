@@ -1,6 +1,6 @@
 Name: mysqldiff
 Version: 0.60
-Release: alt1
+Release: alt2
 
 Summary: Comparing the schema (table structures) of two MySQL databases
 
@@ -44,9 +44,11 @@ mv %buildroot%_prefix/man %buildroot%_datadir/
 %perl_vendor_privlib/MySQL/Diff/
 %perl_vendor_privlib/MySQL/Diff.pm
 %_man1dir/*
-%_man3dir/*
 
 %changelog
+* Wed Jun 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.60-alt2
+- fix build
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.60-alt1
 - new version 0.60 (with rpmrb script) (ALT bug 35108)
 
