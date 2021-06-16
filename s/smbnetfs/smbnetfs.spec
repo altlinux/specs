@@ -1,6 +1,6 @@
 
 Name: smbnetfs
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 
 Summary: SMB filesystem using FUSE - mount network neighbourhood
@@ -21,7 +21,6 @@ neighborhood in Microsoft Windows.
 
 %prep
 %setup
-touch NEWS
 
 %build
 %autoreconf
@@ -36,6 +35,9 @@ CFLAGS="$RPM_OPT_FLAGS" %configure --with-gnome-keyring=no
 %_bindir/*
 
 %changelog
+* Wed Jun 16 2021 Ivan A. Melnikov <iv@altlinux.org> 0.6.3-alt1
+- New version.
+
 * Mon Mar 11 2019 Ivan A. Melnikov <iv@altlinux.org> 0.6.1-alt1
 - New version.
 - Minor spec cleanup.
