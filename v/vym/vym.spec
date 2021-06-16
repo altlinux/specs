@@ -1,11 +1,10 @@
 Name: vym
-Version: 2.7.1
+Version: 2.8.7
 Release: alt1
 
 Summary: QT based MindMap editor
 Url: http://www.insilmaril.de/vym/
-#Url: http://sourceforge.net/projects/vym
-#Url: https://sourceforge.net/p/vym/code/ci/master/tree/
+#Url; https://github.com/insilmaril/vym
 Packager: Alex Karpov <karpov@altlinux.ru>
 
 License: %gpl2only
@@ -13,7 +12,9 @@ Group: Office
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: %name-2.7.0-alt-pdf_path.patch
+Patch1: %name-2.8.7-alt-pdf_path.patch
+Patch2: %name-2.8.7-alt-return_type.patch
+Patch3: %name-2.8.7-alt-vymbasedir.patch
 
 Source1: %name.desktop
 
@@ -37,8 +38,8 @@ over complex contexts.
 %patch0 -p1
 
 %patch1
-
-sed -e 's/QT4/QT5/g' -i CMakeLists.txt
+%patch2
+%patch3
 
 %build
 %qmake_qt5 vym.pro PREFIX=%_prefix DATADIR=%_datadir
@@ -91,6 +92,9 @@ popd
 
 
 %changelog
+* Wed Jun 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.8.7-alt1
+- New version
+
 * Sat Aug 17 2019 Nikolay A. Fetisov <naf@altlinux.org> 2.7.1-alt1
 - New version
 
