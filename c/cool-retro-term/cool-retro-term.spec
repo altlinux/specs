@@ -1,5 +1,5 @@
 Name: cool-retro-term
-Version: 1.0.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Cool Retro Terminal
@@ -7,7 +7,7 @@ License: GPLv3
 Group: Terminals
 
 Url: https://github.com/Swordifish90/cool-retro-term
-Source0: %name-%version.tar
+Source0: %name-%version.tar.gz
 Source1: qmltermwidget.tar
 
 BuildRequires: gcc-c++
@@ -49,6 +49,9 @@ desktop-file-install \
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Wed Jun 16 2021 Ilya Mashkin <oddity@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+
 * Tue Apr 03 2018 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1
 - 1.0.1 (thx zerg@)
 
