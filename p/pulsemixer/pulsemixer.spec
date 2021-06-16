@@ -1,5 +1,5 @@
 Name:    pulsemixer
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: CLI and curses mixer for PulseAudio
@@ -32,5 +32,8 @@ install -Dm 755 pulsemixer %buildroot%_bindir/%name
 %doc *.md
 
 %changelog
+* Wed Jun 16 2021 Ivan A. Melnikov <iv@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Thu Jun 27 2019 Ivan A. Melnikov <iv@altlinux.org> 1.5.0-alt1
 - initial build
