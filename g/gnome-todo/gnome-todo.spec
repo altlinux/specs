@@ -11,7 +11,7 @@
 %def_disable gtk_doc
 
 Name: gnome-todo
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Todo manager for GNOME
@@ -42,7 +42,7 @@ BuildRequires: libpeas-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel
 BuildRequires: libgnome-online-accounts-devel 
 BuildRequires: librest-devel libjson-glib-devel libportal-devel
-BuildRequires: gir(Gtk) = 3.0
+BuildRequires: gir(Gtk) = 3.0 libadwaita-gir-devel
 
 %description
 GNOME Todo is a simple task management application designed to integrate
@@ -110,6 +110,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Wed Jun 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Tue May 04 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0 (ported to GTK4/libadwaita)
 
