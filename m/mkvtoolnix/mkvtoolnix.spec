@@ -10,7 +10,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 57.0.0
+Version: 58.0.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -19,8 +19,6 @@ Url: https://mkvtoolnix.download/
 
 # https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
-
-Patch1: %name-buildflag-replacing.patch
 
 Provides: mkvmerge = %EVR
 
@@ -50,7 +48,6 @@ files and create (mkvmerge) Matroska files from other media files.
 %if_enabled qt
 %package gui
 Summary: GUI for mkvmerge including a chapter editor
-License: GPL-2
 Group: Video
 Provides: mmg = %EVR
 Provides: mkvmerge-gui = %EVR
@@ -69,7 +66,6 @@ write chapters directly to Matroska files.
 
 %package -n mkvinfo
 Summary: Tool for print information about tracks in Matroska files
-License: GPL-2
 Group: Video
 
 %description -n mkvinfo
@@ -81,7 +77,6 @@ about the codecs used.
 
 %prep
 %setup
-%patch1 -p1
 
 # remove some bundled libraries
 rm -rf lib/nlohmann-json lib/pugixml lib/utf8-cpp
@@ -157,6 +152,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 58.0.0-alt1
+- Updated to upstream version 58.0.0.
+
 * Fri Jun 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 57.0.0-alt1
 - Updated to upstream version 57.0.0.
 - Unbundled libraries.
