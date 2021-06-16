@@ -50,7 +50,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -380,6 +380,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Jun 16 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.1-alt1
+- new version 14.17.1 (with rpmrb script)
+
 * Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.0-alt1
 - new version 14.17.0 (with rpmrb script)
 - set libuv >= 1.41.0
