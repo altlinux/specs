@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 21.3.1
-Release: alt1
+Release: alt2
 
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
@@ -42,11 +42,17 @@ rm -r %buildroot/%python3_sitelibdir/autobahn/xbr
 rm -r %buildroot/%python3_sitelibdir/autobahn/asyncio/xbr
 rm -r %buildroot/%python3_sitelibdir/autobahn/twisted/xbr
 
+# not all tests are removed. remove remaining ones
+rm -rf  %buildroot%python3_sitelibdir/autobahn/twisted/testing || exit 1
+
 %files
 %doc *.md *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.3.1-alt2
+- Fixed runtime dependencies.
+
 * Wed May 19 2021 Anton Midyukov <antohami@altlinux.org> 21.3.1-alt1
 - new version
 

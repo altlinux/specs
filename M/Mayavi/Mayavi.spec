@@ -7,7 +7,7 @@
 
 Name:           Mayavi
 Version:        4.7.3
-Release:        alt1
+Release:        alt2
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -20,7 +20,7 @@ Source1:        Mayavi.desktop
 Source2:        tvtk_doc.desktop
 
 Patch1: %name-alt-reqs.patch
-Patch2: %name-alt-docs.patch
+Patch2: %name-alt-test-dependencies.patch
 Patch3: %name-alt-no-docs.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -33,6 +33,7 @@ BuildRequires: libGL-devel libGLU-devel
 %if_enabled docs
 BuildRequires: python3-module-setupdocs
 BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: xvfb-run
 %endif
 %if_disabled bootstrap
@@ -75,13 +76,14 @@ Requires: python3-module-tvtk = %EVR
 This package contains Python files for Mayavi, scientific data
 3-dimensional visualizer.
 
-%package -n python3-module-%oname.tests
+%package -n python3-module-%oname-tests
 Summary: Tests for Mayavi, scientific data 3-dimensional visualizer
 Group: Development/Python3
+Obsoletes: python3-module-%oname.tests < %EVR
 Requires: python3-module-%oname = %EVR
 %add_python3_req_skip vtk.numpy_interface
 
-%description -n python3-module-%oname.tests
+%description -n python3-module-%oname-tests
 This package contains tests for Mayavi, scientific data
 3-dimensional visualizer.
 
@@ -102,12 +104,13 @@ interface or program to its scripting interface; you probably don't
 need to interact with TVTK unless you want to create a new Mayavi
 module.
 
-%package -n python3-module-tvtk.tests
+%package -n python3-module-tvtk-tests
 Summary: Tests for TVTK
 Group: Development/Python3
+Obsoletes: python3-module-tvtk.tests < %EVR
 Requires: python3-module-tvtk = %EVR
 
-%description -n python3-module-tvtk.tests
+%description -n python3-module-tvtk-tests
 TVTK: A Traits-based wrapper for the Visualization Toolkit, a
 popular open-source visualization library.
 These operate at different levels of abstraction. TVTK manipulates
@@ -175,9 +178,6 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %doc DEVELOPING.rst README.rst README-tvtk.txt
 %_bindir/mayavi2
 %_bindir/tvtk_doc
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/mayavi*
-%exclude %python3_sitelibdir/tvtk
 %_man1dir/*
 %_desktopdir/*
 %_liconsdir/*
@@ -188,14 +188,14 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %python3_sitelibdir/mayavi*
 %exclude %python3_sitelibdir/mayavi/tests
 
-%files -n python3-module-%oname.tests
+%files -n python3-module-%oname-tests
 %python3_sitelibdir/mayavi/tests
 
 %files -n python3-module-tvtk
 %python3_sitelibdir/tvtk
 %exclude %python3_sitelibdir/tvtk/tests
 
-%files -n python3-module-tvtk.tests
+%files -n python3-module-tvtk-tests
 %python3_sitelibdir/tvtk/tests
 
 %files doc
@@ -208,6 +208,10 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %endif
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.3-alt2
+- Renamed tests packages.
+- Updated package dependencies.
+
 * Thu May 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.3-alt1
 - Updated to upstream version 4.7.3.
 

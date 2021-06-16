@@ -5,12 +5,13 @@
 %def_disable bootstrap
 
 Name: python3-module-%oname
-Version: 7.0.1
+Version: 7.2.1
 Release: alt1
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python3
-License: BSD, EPL and LGPL
+License: EPL-1.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause
 URL: https://docs.enthought.com/traitsui
+
 BuildArch: noarch
 
 # https://github.com/enthought/traitsui.git
@@ -38,9 +39,7 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %add_python3_req_skip wx.animate wx.calendar wx.combo wx.gizmos
 %add_python3_req_skip wx.grid wx.html wx.lib.masked wx.lib.mixins.listctrl
 %add_python3_req_skip wx.lib.scrolledpanel wx.stc wx.wizard
-
-# skip pickle requirements
-%add_python3_req_skip matplotlib.backends.backend_wx matplotlib.backends.backend_wxagg
+%add_python3_req_skip pyface.wx.python_stc wx.adv
 
 %description
 TraitsUI is a set of user interface tools designed to complement Traits.
@@ -50,7 +49,7 @@ the programmer-user. In more sophisticated uses, it can implement a
 Model-View-Controller (MVC) design pattern for Traits-based objects.
 
 %package tests
-Summary: Tests for TraitsUI (Python 3)
+Summary: Tests for TraitsUI
 Group: Development/Python3
 Requires: %name = %EVR
 
@@ -62,6 +61,20 @@ the programmer-user. In more sophisticated uses, it can implement a
 Model-View-Controller (MVC) design pattern for Traits-based objects.
 
 This package contains tests for TraitsUI.
+
+%package examples
+Summary: Examples for TraitsUI
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description examples
+TraitsUI is a set of user interface tools designed to complement Traits.
+In the simplest case, it can automatically generate a user interface for
+editing a Traits-based object, with no additional coding on the part of
+the programmer-user. In more sophisticated uses, it can implement a
+Model-View-Controller (MVC) design pattern for Traits-based objects.
+
+This package contains examples for TraitsUI.
 
 %package docs
 Summary: Documentation for TraitsUI
@@ -79,7 +92,7 @@ This package contains documentation for TraitsUI.
 %package pickles
 Summary: Pickles for TraitsUI
 Group: Development/Python3
-AutoReq: nopython
+AutoReq: nopython3
 
 %description pickles
 TraitsUI is a set of user interface tools designed to complement Traits.
@@ -117,12 +130,14 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc image_LICENSE*.txt LICENSE.txt
-%doc *.rst
-%doc CHANGES.txt TODO.txt
+%doc README.rst
+%doc CHANGES.txt
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/%oname/examples
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/tests
+%exclude %python3_sitelibdir/%oname/testing
 %if_disabled bootstrap
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
@@ -130,9 +145,14 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %files tests
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/*/tests
+%python3_sitelibdir/%oname/testing
+
+%files examples
+%python3_sitelibdir/%oname/examples
 
 %if_disabled bootstrap
 %files docs
+%doc image_LICENSE*.txt LICENSE.txt
 %doc docs/build/html docs/*.txt docs/*.ppt docs/*.pdf
 
 %files pickles
@@ -140,6 +160,10 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.2.1-alt1
+- Updated to upstream version 7.2.1.
+- Updated license.
+
 * Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.1-alt1
 - Updated to upstream version 7.0.1.
 

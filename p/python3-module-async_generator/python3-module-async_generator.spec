@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: Making it easy to write async iterators in Python 3.5
 License: MIT or Apache 2.0
@@ -25,6 +25,20 @@ Check out my 5-minute lightning talk demo from PyCon 2016.)
 Python 3.7 adds some more tools to make them usable,
 like contextlib.asynccontextmanager.
 
+%package tests
+Summary: Making it easy to write async iterators in Python 3.5
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+Python 3.6 added async generators. (What's an async generator?
+Check out my 5-minute lightning talk demo from PyCon 2016.)
+
+Python 3.7 adds some more tools to make them usable,
+like contextlib.asynccontextmanager.
+
+This package contains tests for Python-3.
+
 %prep
 %setup -n %modulename-%version
 
@@ -36,9 +50,16 @@ like contextlib.asynccontextmanager.
 
 %files
 %python3_sitelibdir/%modulename/
+%exclude %python3_sitelibdir/%modulename/_tests
 %python3_sitelibdir/*.egg-info
 %doc *.md *.rst
 
+%files tests
+%python3_sitelibdir/%modulename/_tests
+
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10-alt2
+- Moved tests into separate package.
+
 * Tue Jan 15 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.10-alt1
 - Initial build for Sisyphus

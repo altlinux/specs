@@ -6,7 +6,7 @@
 
 Name: ipython3
 Version: 7.18.1
-Release: alt2
+Release: alt3
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -139,10 +139,51 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %files -n python3-module-%oname
 %python3_sitelibdir/IPython
 %python3_sitelibdir/%oname-%version-py*.egg-info
+# everything except for skipdoctest.py from IPython/testing is packaged into tests package
+%exclude %python3_sitelibdir/IPython/testing/plugin
+%exclude %python3_sitelibdir/IPython/testing/__init__.py
+%exclude %python3_sitelibdir/IPython/testing/__main__.py
+%exclude %python3_sitelibdir/IPython/testing/decorators.py
+%exclude %python3_sitelibdir/IPython/testing/globalipapp.py
+%exclude %python3_sitelibdir/IPython/testing/iptest.py
+%exclude %python3_sitelibdir/IPython/testing/iptestcontroller.py
+%exclude %python3_sitelibdir/IPython/testing/ipunittest.py
+%exclude %python3_sitelibdir/IPython/testing/tools.py
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/__init__.*
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/__main__.*
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/decorators.*
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/globalipapp.*
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/iptest.*
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/iptestcontroller.*
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/ipunittest.*
+%exclude %python3_sitelibdir/IPython/testing/__pycache__/tools.*
 %exclude %python3_sitelibdir/IPython/*/tests
+%exclude %python3_sitelibdir/IPython/external/decorators
+%exclude %python3_sitelibdir/IPython/conftest.py
+%exclude %python3_sitelibdir/IPython/__pycache__/conftest.*
 
 %files -n python3-module-%oname-tests
+%python3_sitelibdir/IPython/testing/plugin
+%python3_sitelibdir/IPython/testing/__init__.py
+%python3_sitelibdir/IPython/testing/__main__.py
+%python3_sitelibdir/IPython/testing/decorators.py
+%python3_sitelibdir/IPython/testing/globalipapp.py
+%python3_sitelibdir/IPython/testing/iptest.py
+%python3_sitelibdir/IPython/testing/iptestcontroller.py
+%python3_sitelibdir/IPython/testing/ipunittest.py
+%python3_sitelibdir/IPython/testing/tools.py
+%python3_sitelibdir/IPython/testing/__pycache__/__init__.*
+%python3_sitelibdir/IPython/testing/__pycache__/__main__.*
+%python3_sitelibdir/IPython/testing/__pycache__/decorators.*
+%python3_sitelibdir/IPython/testing/__pycache__/globalipapp.*
+%python3_sitelibdir/IPython/testing/__pycache__/iptest.*
+%python3_sitelibdir/IPython/testing/__pycache__/iptestcontroller.*
+%python3_sitelibdir/IPython/testing/__pycache__/ipunittest.*
+%python3_sitelibdir/IPython/testing/__pycache__/tools.*
 %python3_sitelibdir/IPython/*/tests
+%python3_sitelibdir/IPython/external/decorators
+%python3_sitelibdir/IPython/conftest.py
+%python3_sitelibdir/IPython/__pycache__/conftest.*
 
 %if_with doc
 %files doc
@@ -156,6 +197,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt3
+- Fixed runtime dependencies.
+
 * Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt2
 - Added conflict to ipython.
 

@@ -1,7 +1,7 @@
 %define oname pyface
 
 Name: python3-module-%oname
-Version: 7.2.0
+Version: 7.3.0
 Release: alt1
 
 Summary: Traits-capable windowing framework
@@ -44,6 +44,8 @@ back-end take care of the details of displaying them.
 %setup
 # Users of Python 3.9 and beyond should use the standard library module
 subst 's|importlib_resources|importlib.resources|' pyface/resource/resource_manager.py pyface/tests/test_image_resource.py
+sed -i -e 's|"importlib-resources>=1.1.0",||' -e 's|"importlib-metadata",||' pyface/__init__.py
+sed -i -e '/importlib-resources/d' -e '/importlib-metadata/d' pyface.egg-info/requires.txt
 
 %build
 %python3_build_debug
@@ -52,12 +54,24 @@ subst 's|importlib_resources|importlib.resources|' pyface/resource/resource_mana
 %python3_install
 %python3_prune
 
+# not all tests are removed. remove remaining ones
+rm -f \
+	%buildroot%python3_sitelibdir/%oname/ui/qt4/util/gui_test_assistant.py \
+	%buildroot%python3_sitelibdir/%oname/ui/qt4/util/modal_dialog_tester.py \
+	%buildroot%python3_sitelibdir/%oname/ui/qt4/util/testing.py \
+	%buildroot%python3_sitelibdir/%oname/util/testing.py \
+	|| exit 1
+
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.3.0-alt1
+- Updated to upstream version 7.3.0.
+- Fixed runtime dependencies.
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 7.2.0-alt1
 - new version (7.2.0) with rpmgs script
 - switch to build from tarball

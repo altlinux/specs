@@ -8,7 +8,7 @@
 
 Name:           python3-module-%oname
 Version:        5.1.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Enthough Tool Suite Application Tools
 
@@ -19,7 +19,9 @@ URL:            https://docs.enthought.com/apptools/
 # Source-url: https://github.com/enthought/apptools/archive/refs/tags/%version.tar.gz
 Source:         %name-%version.tar
 Source1:        README.fedora.python-AppTools
-#Patch1:         %oname-%version-alt-build.patch
+
+# Users of Python 3.9 and beyond should use the standard library module
+Patch1: apptools-5.1.0-python3.9-compat.patch
 
 BuildArch:      noarch
 
@@ -28,6 +30,7 @@ BuildRequires: xvfb-run unzip
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3 >= 3.8
 #BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(tables)
 #BuildRequires: python3-module-setupdocs python3-module-sphinx-devel
@@ -102,6 +105,7 @@ This package contains documentation for AppTools.
 
 %prep
 %setup
+%patch1 -p2
 
 %if_with doc
 %prepare_sphinx3 docs/source
@@ -147,6 +151,9 @@ xvfb-run py.test3
 
 
 %changelog
+* Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.0-alt2
+- Fixed runtime dependencies.
+
 * Sun Apr 18 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
 - new version 5.1.0 (with rpmrb script)
 - build from tarball

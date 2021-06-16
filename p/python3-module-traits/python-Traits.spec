@@ -3,15 +3,11 @@
 %define oname traits
 
 Name: python3-module-%oname
-Version: 6.1.1
+Version: 6.2.0
 Release: alt1
 Summary: Explicitly typed attributes for Python 3
 Group: Development/Python3
-# Images have different licenses. For image license breakdown check
-# image_LICENSE.txt file. Except enthought/traits/ui/editors_gen.py
-# which is GPLv2+ all remaining source or image files are in BSD
-# 3-clause license. Confirmed from upstream.
-License: BSD and EPL and LGPLv2 and GPLv2+
+License: BSD-3-Clause and CC-BY-3.0
 URL: https://docs.enthought.com/traits/
 
 # https://github.com/enthought/traits.git
@@ -73,10 +69,6 @@ definition called a trait. This package contains pickles for it.
 %setup
 %patch1 -p1
 
-# file not utf-8
-iconv -f iso8859-1 -t utf-8 < image_LICENSE_Eclipse.txt > image_LICENSE_Eclipse.txt.conv && \
-	mv -f image_LICENSE_Eclipse.txt.conv image_LICENSE_Eclipse.txt
-
 %prepare_sphinx3 docs
 
 %build
@@ -94,7 +86,7 @@ make -C docs html
 cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
-%doc image_LICENSE*.txt LICENSE.txt
+%doc image_LICENSE*.txt LICENSE.txt LICENSE-CC-BY-3.0.txt
 %doc README.rst CHANGES.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
@@ -109,6 +101,7 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/testing
 
 %files doc
+%doc image_LICENSE*.txt LICENSE.txt LICENSE-CC-BY-3.0.txt
 %doc examples
 %doc docs/build/html
 
@@ -116,6 +109,10 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/pickle
 
 %changelog
+* Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
+- Updated to upstream version 6.2.0.
+- Updated license.
+
 * Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.1-alt1
 - Updated to upstream version 6.1.1.
 
