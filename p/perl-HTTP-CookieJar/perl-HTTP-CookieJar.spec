@@ -9,7 +9,7 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.010
+Version: 0.012
 Release: alt1
 Summary: A minimalist HTTP user agent cookie jar
 Group: Development/Perl
@@ -36,6 +36,9 @@ BuildArch: noarch
 %perl_vendor_privlib/H*
 
 %changelog
+* Thu Jun 17 2021 Igor Vlasenko <viy@altlinux.org> 0.012-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
