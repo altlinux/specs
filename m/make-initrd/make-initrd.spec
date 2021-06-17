@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.18.0
+Version: 2.19.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -262,6 +262,11 @@ fi
 %_datadir/%name/features/kickstart
 
 %changelog
+* Thu Jun 17 2021 Alexey Gladkov <legion@altlinux.ru> 2.19.0-alt1
+- New version (2.19.0).
+- Add add-udev-rules to the list of dependencies of other features (ALT#40228).
+- Check only devices of class PCI_CLASS_DISPLAY_VGA (ALT#40233).
+
 * Tue Jun 08 2021 Alexey Gladkov <legion@altlinux.ru> 2.18.0-alt1
 - New version (2.18.0).
 - Fix definition of default theme (ALT#40090).
