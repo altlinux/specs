@@ -1,5 +1,5 @@
 Name: vym
-Version: 2.8.7
+Version: 2.8.8
 Release: alt1
 
 Summary: QT based MindMap editor
@@ -14,7 +14,6 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: %name-2.8.7-alt-pdf_path.patch
 Patch2: %name-2.8.7-alt-return_type.patch
-Patch3: %name-2.8.7-alt-vymbasedir.patch
 
 Source1: %name.desktop
 
@@ -39,11 +38,10 @@ over complex contexts.
 
 %patch1
 %patch2
-%patch3
 
 %build
-%qmake_qt5 vym.pro PREFIX=%_prefix DATADIR=%_datadir
-%make_build PREFIX=%_prefix DATADIR=%_datadir
+%qmake_qt5 vym.pro PREFIX=%_prefix DATADIR=%_datadir/vym
+%make_build        PREFIX=%_prefix DATADIR=%_datadir/vym VYM_DOCDIR=%_datadir/vym/doc
 
 pushd lang
 for i in *.ts; do
@@ -58,7 +56,7 @@ texi2dvi -p vym_fr.tex > /dev/null
 popd
 
 %install
-%installqt5 PREFIX=%_prefix DATADIR=%_datadir
+%installqt5        PREFIX=%_prefix DATADIR=%_datadir/vym
 install -D -m0644 doc/%name.1.gz %buildroot%_man1dir/%name.1.gz
 install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 sed -e 's#ICONDIR#%_datadir/%name/icons#' -i %buildroot%_desktopdir/%name.desktop
@@ -92,6 +90,9 @@ popd
 
 
 %changelog
+* Thu Jun 17 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.8.8-alt1
+- New version
+
 * Wed Jun 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.8.7-alt1
 - New version
 
