@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.25.1.vz7.180.4
-%define orelease 1160.25.1.vz7.180.4
+#     rh7-3.10.0-1160.25.1.vz7.180.9
+%define orelease 1160.25.1.vz7.180.9
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -101,6 +101,7 @@ BuildRequires: bc
 %{?kgcc_version:BuildRequires: gcc%kgcc_version}
 BuildRequires: module-init-tools >= 3.1
 BuildRequires: patch >= 2.6.1-alt1
+BuildRequires: libelf-devel
 %{?_with_src:BuildRequires: pxz}
 
 %{?_with_firmware:BuildRequires: hardlink}
@@ -112,7 +113,6 @@ BuildRequires: patch >= 2.6.1-alt1
 Requires: bootloader-utils >= 0.4.21
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
-Requires: startup >= 0.9.8.24.1
 
 Provides: kernel = %kversion
 Provides: vzkernel = %kversion
@@ -184,7 +184,7 @@ Group: Development/Kernel
 Requires: kernel-headers-common >= 1.1.5
 Provides: kernel-headers = %version
 %{?base_flavour:Provides: kernel-headers-%base_flavour = %version}
-Provides: %kheaders_dir/include
+Provides: %kheaders_dir/include = %version
 AutoReqProv: no
 
 %description -n kernel-headers-%flavour
@@ -256,6 +256,13 @@ kernel-image-%flavour-%kversion-%krelease
 %prep
 %setup -c -n kernel-image-%flavour-%kversion-%krelease
 cd rh7-%version
+
+# ALT glibc contains strlcpy, so we need disable it there:
+sed -i /strlcpy/d tools/include/linux/string.h
+# Delete \# comments:
+sed -i "/printf .*\\# /d" tools/build/Build.include
+# Fix "error: 'elf_getshnum' is deprecated":
+sed -i '0,/^CFLAGS/{s/\(^CFLAGS.*\)$/\1 -Wno-deprecated-declarations/}' tools/objtool/Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -382,35 +389,22 @@ install -m 0644 net/mac80211/{ieee80211_i,sta_info}.h %buildroot%kbuild_dir/net/
 %endif
 
 # Install files required for building external modules (in addition to headers)
-for f in \
-	.config \
-	Makefile \
-	Module.symvers \
-	scripts/Kbuild.include \
-	scripts/Makefile* \
-	scripts/bin2c \
-	scripts/check{includes,version}.pl \
-	scripts/conmakehash \
-	scripts/depmod.sh \
-	scripts/extract-ikconfig \
-	scripts/gcc-*.sh \
-	scripts/kallsyms \
-	scripts/makelst \
-	scripts/mk{compile_h,makefile,version} \
-	scripts/module-common.lds \
-	scripts/pnmtologo \
-	scripts/recordmcount* \
-	scripts/basic/fixdep \
-	scripts/genksyms/genksyms \
-	scripts/kconfig/conf \
-	scripts/mod/{modpost,mk_elfconfig} \
-	gcc_version.inc
-do
-	if [ -f "$f" ]; then
-		[ -x "$f" ] && mode=0755 || mode=0644
-		install -Dp -m $mode {,%buildroot%kbuild_dir/}$f
-	fi
-done
+find -type f -a '(' -name 'Makefile*' -o -name 'Kbuild*' -o -name 'Kconfig*' ')' \
+        -exec cp -t %buildroot%kbuild_dir --parents -p {} +
+find -type f -a '(' -name '*.sh' -o -name '*.pl' ')' \
+        -exec cp -t %buildroot%kbuild_dir --parents -p {} +
+cp -t %buildroot%kbuild_dir --parents -p gcc_version.inc
+cp -t %buildroot%kbuild_dir --parents -p {Module.symvers,tools/objtool/objtool}
+ln -sr %buildroot/boot/config-%kversion-%flavour-%krelease %buildroot%kbuild_dir/.config
+ln -sr %buildroot/boot/System.map-%kversion-%flavour-%krelease %buildroot%kbuild_dir/System.map
+
+cp -t %buildroot%kbuild_dir --parents -pr arch/x86/include
+cp -t %buildroot%kbuild_dir/arch/x86/include -pr arch/x86/include/*
+cp -t %buildroot%kbuild_dir/include -pr include/*
+cp -t %buildroot%kbuild_dir --parents -pr scripts/*
+find  %buildroot%kbuild_dir/scripts -type f -name '*.[cho]' -exec rm -v {} +
+find  %buildroot%kbuild_dir -type f -name '*.cmd' -exec rm -v {} +
+find  %buildroot%kbuild_dir -type l -follow -exec rm -v {} +
 
 # Provide kbuild directory with old name (without %%krelease)
 ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
@@ -587,6 +581,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Thu Jun 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.9
+- Build rh7-3.10.0-1160.25.1.vz7.180.9
+- remove R: startup
+
 * Wed Jun 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.4
 - Build rh7-3.10.0-1160.25.1.vz7.180.4
 - fix src package
