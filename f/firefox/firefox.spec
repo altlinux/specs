@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        89.0
+Version:        89.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -494,6 +494,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Jun 17 2021 Alexey Gladkov <legion@altlinux.ru> 89.0.1-alt1
+- New release (89.0.1).
+- Security fixes:
+  + CVE-2021-29968: Out of bounds read when drawing text characters onto a Canvas
+
 * Thu Jun 03 2021 Alexey Gladkov <legion@altlinux.ru> 89.0-alt1
 - New release (89.0).
 - Security fixes:
