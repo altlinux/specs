@@ -3,10 +3,11 @@
 %define oname jupyter_console
 
 %def_with docs
+%def_disable check
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt1
+Release: alt2
 Summary: Jupyter Terminal Console
 License: BSD-3-Clause
 Group: Development/Python3
@@ -31,6 +32,8 @@ BuildRequires: python3-module-jupyter_client ipython3
 BuildRequires: python3-module-ipykernel python3-module-mock
 BuildRequires: python3-module-pexpect python3-module-nose
 BuildRequires: python3-module-coverage python3-module-traitlets-tests
+BuildRequires: python3(IPython)
+BuildRequires: python3(IPython.testing.tests)
 BuildRequires: python3-module-ipython_genutils-tests
 BuildRequires: python3(pathlib2) python3(PIL)
 
@@ -87,6 +90,10 @@ JUPYTER_CONSOLE_TEST=yes nosetests3 -vv --with-coverage --cover-package=%oname %
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt2
+- Updated build dependencies.
+- Disabled tests due to broken aarch64 builder.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
 - Updated to upstream version 6.2.0.
 - Enabled build of documentation.

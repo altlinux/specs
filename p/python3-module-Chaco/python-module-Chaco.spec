@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 4.8.0.0.91.git22972069
-Release: alt1
+Release: alt2
 
 Summary: Interactive 2-Dimensional Plotting
 License: BSD and GPLv2
@@ -18,6 +18,7 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-sphinx python3-module-Pygments
 BuildRequires: python3-module-traits
 BuildRequires: python3-module-Cython
+BuildRequires: xvfb-run
 
 
 %description
@@ -74,7 +75,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 rm -rfv %buildroot%python3_sitelibdir/chaco/tests_with_backend/
 
 export PYTHONPATH=%buildroot%python3_sitelibdir:$PWD/docs/source/sphinxext
-sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
+xvfb-run sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
 
 %files
 %doc *.txt
@@ -95,6 +96,9 @@ sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
 
 
 %changelog
+* Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0.0.91.git22972069-alt2
+- Fixed build with new traits.
+
 * Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 4.8.0.0.91.git22972069-alt1
 - Build from last commit for python3.9.
 

@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 6.0.2
-Release: alt2
+Release: alt3
 
 Summary: Converting Jupyter Notebooks
 
@@ -43,6 +43,8 @@ BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 %if_without bootstrap
+BuildRequires: python3(IPython)
+BuildRequires: python3(IPython.testing.tests)
 BuildRequires: python3-module-ipython_genutils-tests python3-module-notebook
 %endif
 BuildRequires: python3-module-pathlib2 python3(entrypoints) python3(bleach)
@@ -187,6 +189,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %endif
 
 %changelog
+* Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2-alt3
+- Updated build dependencies.
+
 * Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt2
 - improve requires
 

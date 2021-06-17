@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.1.7
-Release: alt2
+Release: alt3
 Summary: Jupyter protocol implementation and client libraries
 License: BSD
 Group: Development/Python3
@@ -24,6 +24,7 @@ BuildRequires: python3-module-sphinx_rtd_theme python3-module-pathlib2
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(sphinxcontrib_github_alt)
 BuildRequires: python3(IPython)
+BuildRequires: python3(IPython.testing.tests)
 BuildRequires: python3(async_generator)
 
 %py3_provides %oname
@@ -123,6 +124,9 @@ py.test3 -vv
 %doc docs/_build/html/*
 
 %changelog
+* Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.7-alt3
+- Updated build dependencies.
+
 * Fri Oct 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.7-alt2
 - Updated build dependencies.
 
