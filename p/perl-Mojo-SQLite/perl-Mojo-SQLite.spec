@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-Mojo-SQLite
-Version:        3.005
+Version:        3.006
 Release:        alt1
 Summary:        Tiny Mojolicious wrapper for SQLite
 License:        Artistic 2.0
@@ -10,7 +10,7 @@ URL:            https://metacpan.org/release/Mojo-SQLite/
 Source0:        	http://www.cpan.org/authors/id/D/DB/DBOOK/Mojo-SQLite-%{version}.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(Module/Build.pm) perl(SQL/Abstract/Pg.pm)
 BuildRequires:  perl(warnings.pm)
 BuildRequires: 	perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Term/ReadLine.pm)
@@ -62,6 +62,9 @@ and manage your database schema with migrations.
 %perl_vendorlib/Mojo*
 
 %changelog
+* Thu Jun 17 2021 Igor Vlasenko <viy@altlinux.org> 3.006-alt1
+- automated CPAN update
+
 * Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1
 - automated CPAN update
 
