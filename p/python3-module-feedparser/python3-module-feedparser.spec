@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 6.0.5
+Version: 6.0.6
 Release: alt1
 
 Summary: Universal feed parser for Python
@@ -74,6 +74,9 @@ tox.py3
 %endif
 
 %changelog
+* Thu Jun 17 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.6-alt1
+- 6.0.6
+
 * Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.5-alt1
 - 6.0.5
 
