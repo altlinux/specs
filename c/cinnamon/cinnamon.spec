@@ -1,7 +1,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.0.0
+Version: 5.0.2
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -158,9 +158,6 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 # gnome-shell provides typelib(St) as well
 %filter_from_provides /typelib(St)/d
 
-mkdir -p %buildroot%python3_sitelibdir_noarch
-mv %buildroot/usr/lib/python3/dist-packages/cinnamon %buildroot%python3_sitelibdir_noarch
-
 %files
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
@@ -191,6 +188,9 @@ mv %buildroot/usr/lib/python3/dist-packages/cinnamon %buildroot%python3_sitelibd
 %endif
 
 %changelog
+* Thu Jun 17 2021 Vladimir Didenko <cow@altlinux.org> 5.0.2-alt1
+- 5.0.2-9-g50814dec4
+
 * Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
 - 5.0.0
 

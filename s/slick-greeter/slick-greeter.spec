@@ -2,8 +2,8 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 1.5.2
-Release: alt2
+Version: 1.5.3
+Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -83,6 +83,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man8/slick-greeter.8.*
 
 %changelog
+* Thu Jun 17 2021 Vladimir Didenko <cow@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Wed May 05 2021 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt2
 - add rpm-build-python3 to the build requirements
 

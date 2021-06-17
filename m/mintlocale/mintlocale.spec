@@ -1,6 +1,6 @@
 Name: mintlocale
-Version: 1.5.7
-Release: alt2
+Version: 1.5.8
+Release: alt1
 
 Summary: Language selection tool for Cinnamon
 License: GPLv2+
@@ -65,6 +65,9 @@ echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/def
 %doc debian/copyright debian/changelog
 
 %changelog
+* Thu Jun 17 2021 Vladimir Didenko <cow@altlinux.org> 1.5.8-alt1
+- new version
+
 * Thu Dec 3 2020 Vladimir Didenko <cow@altlinux.org> 1.5.7-alt2
 - add rpm-build-python3 to the build requirements
 
