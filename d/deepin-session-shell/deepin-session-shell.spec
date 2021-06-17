@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.4.5
-Release: alt3
+Release: alt4
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -13,9 +13,10 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-session-shell-5.4.5-gcc10.patch
+Patch1: deepin-session-shell-5.4.5-alt-lightdm-for-lockscreen.patch
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -42,6 +43,7 @@ BuildRequires: libgtest-devel
 %prep
 %setup -n %repo-%version
 %patch -p2
+%patch1 -p1
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i 's|/lib|/libexec|' scripts/lightdm-deepin-greeter
 sed -i 's|/usr/bin/bash|/bin/bash|' src/dde-shutdown/view/contentwidget.cpp
@@ -98,6 +100,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 
 %changelog
+* Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt4
+- Fixed lockscreen.
+
 * Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt3
 - Fixed build with dtk 5.4.13.
 
