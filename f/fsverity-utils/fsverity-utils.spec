@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: fsverity-utils
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Userspace utilities for fs-verity
@@ -84,5 +84,8 @@ fi
 %_pkgconfigdir/libfsverity.pc
 
 %changelog
+* Thu Jun 17 2021 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
+- Update to v1.4 (2021-06-14).
+
 * Fri Jan 22 2021 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
 - First import of v1.3 (2021-01-19).
