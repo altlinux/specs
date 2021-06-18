@@ -6,7 +6,7 @@
 %define flavour %base_flavour-%sub_flavour
 
 #     rh7-3.10.0-1160.25.1.vz7.180.9
-%define orelease 1160.25.1.vz7.180.9
+%define orelease 1160.25.1.vz7.180.9.1
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -25,7 +25,7 @@ Epoch: 1
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version %__gcc_version_base
-%define nprocs 8
+%define __nprocs 8
 
 %def_disable verbose
 %def_with src
@@ -287,7 +287,6 @@ install -m644 %SOURCE1 .
 
 
 %build
-[ "%__nprocs" -gt "%nprocs" ] || export NPROCS=%nprocs
 cd rh7-%version
 export ARCH=%base_arch
 
@@ -389,22 +388,24 @@ install -m 0644 net/mac80211/{ieee80211_i,sta_info}.h %buildroot%kbuild_dir/net/
 %endif
 
 # Install files required for building external modules (in addition to headers)
-find -type f -a '(' -name 'Makefile*' -o -name 'Kbuild*' -o -name 'Kconfig*' ')' \
-        -exec cp -t %buildroot%kbuild_dir --parents -p {} +
-find -type f -a '(' -name '*.sh' -o -name '*.pl' ')' \
-        -exec cp -t %buildroot%kbuild_dir --parents -p {} +
-cp -t %buildroot%kbuild_dir --parents -p gcc_version.inc
-cp -t %buildroot%kbuild_dir --parents -p {Module.symvers,tools/objtool/objtool}
-ln -sr %buildroot/boot/config-%kversion-%flavour-%krelease %buildroot%kbuild_dir/.config
-ln -sr %buildroot/boot/System.map-%kversion-%flavour-%krelease %buildroot%kbuild_dir/System.map
-
-cp -t %buildroot%kbuild_dir --parents -pr arch/x86/include
-cp -t %buildroot%kbuild_dir/arch/x86/include -pr arch/x86/include/*
-cp -t %buildroot%kbuild_dir/include -pr include/*
-cp -t %buildroot%kbuild_dir --parents -pr scripts/*
-find  %buildroot%kbuild_dir/scripts -type f -name '*.[cho]' -exec rm -v {} +
-find  %buildroot%kbuild_dir -type f -name '*.cmd' -exec rm -v {} +
-find  %buildroot%kbuild_dir -type l -follow -exec rm -v {} +
+cp --parents `find  -type f -name "Makefile*" -o -name "Kconfig*"` %buildroot%kbuild_dir/
+cp Module.symvers %buildroot%kbuild_dir/
+cp System.map %buildroot%kbuild_dir/
+if [ -s Module.markers ]; then
+    cp Module.markers %buildroot%kbuild_dir/
+fi
+cp .config %buildroot%kbuild_dir/
+cp gcc_version.inc %buildroot%kbuild_dir/
+cp -a scripts %buildroot%kbuild_dir/
+# copy objtool for kernel-devel (needed for building external modules)
+if grep -q CONFIG_STACK_VALIDATION=y .config; then
+    mkdir -p %buildroot%kbuild_dir/tools/objtool
+    cp -a tools/objtool/objtool %buildroot%kbuild_dir/tools/objtool
+fi
+find %buildroot%kbuild_dir -type f -a \( -name .install -o -name ..install.cmd \) -delete
+find %buildroot%kbuild_dir -type f -name '*.cmd' -delete
+find %buildroot%kbuild_dir -type l -follow -delete
+find %buildroot%kbuild_dir/scripts -type f -name '*.[cho]' -delete
 
 # Provide kbuild directory with old name (without %%krelease)
 ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
@@ -581,6 +582,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Fri Jun 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.9.1
+- adjust __nproc
+- yet another fix of src package
+
 * Thu Jun 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.9
 - Build rh7-3.10.0-1160.25.1.vz7.180.9
 - remove R: startup
