@@ -2,8 +2,8 @@
 
 Name: ravada
 Summary: Remote Virtual Desktops Manager
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 License: AGPL-3.0
 Group: Development/Perl
 Url: https://ravada.upc.edu/
@@ -121,6 +121,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Sat Jun 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Tue Jun 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1-alt2
 - FTBFS: BR: perl-DateTime-Locale
 
