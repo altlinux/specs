@@ -16,8 +16,8 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.0.1
-Release: alt3
+Version: %ver_major.11.0
+Release: alt1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -25,15 +25,12 @@ License: MPL-2.0 and GPL-2.0-or-later LGPL-2.1-or-later and BSD
 Url: https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Releases/
 
 %if_disabled snapshot
-Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}gnome.tar.xz
+Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.bz2
 #Source: https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
 %else
 Vcs: https://github.com/ptomato/mozjs.git
 Source: %name-%version.tar
 %endif
-# fix errors like:
-# dependency (nix) specification is ambiguous. Only one of branch, tag or rev is allowed.
-Patch: mozjs78-rust.patch
 # fc armv7 fix
 Patch17: mozjs78-armv7_disable_WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS.patch
 # 0ad links with SharedArrayRawBufferRefs
@@ -45,7 +42,7 @@ BuildRequires: python3-devel python3-module-setuptools python3-module-six
 BuildRequires: gcc-c++ nasm yasm
 BuildRequires: libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
-BuildRequires: rust-cargo clang-devel llvm-devel
+BuildRequires: rust-cargo >= 1.50 clang-devel llvm-devel
 BuildRequires: zlib-devel
 %{?_with_system_icu:BuildRequires: libicu-devel}
 
@@ -85,8 +82,7 @@ interface to the JavaScript engine.
 
 %prep
 #%%setup -n firefox-%{version}esr
-%setup -n mozjs-%{version}gnome
-%patch -b .rust
+%setup -n mozjs-%version
 %ifarch armh
 # Disable WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS as it causes the compilation to fail
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1526653
@@ -182,6 +178,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Thu Jun 17 2021 Yuri N. Sedunov <aris@altlinux.org> 78.11.0-alt1
+- 78.11.0
+
 * Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 78.0.1-alt3
 - fixed build with rust-1.50
 - export class SharedArrayRawBufferRefs, patch from 0ad
