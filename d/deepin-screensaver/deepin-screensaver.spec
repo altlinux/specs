@@ -1,5 +1,5 @@
 Name: deepin-screensaver
-Version: 5.0.4
+Version: 5.0.5
 Release: alt1
 Summary: Screensaver Tool
 License: GPL-3.0+
@@ -47,5 +47,8 @@ Extra modules for Deepin Screensaver.
 %_prefix/libexec/%name/
 
 %changelog
+* Fri Jun 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.5-alt1
+- New version (5.0.5).
+
 * Fri Sep 11 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.4-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
