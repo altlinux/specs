@@ -4,15 +4,15 @@
 %define optflags_debug -g1
 %endif
 
-%define soname 8.0
+%define soname 8.1
 
 Name: openvdb
-Version: 8.0.1
+Version: 8.1.0
 Release: alt1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
-URL: http://www.openvdb.org/
+URL: https://www.openvdb.org
 
 # https://github.com/AcademySoftwareFoundation/openvdb
 Source: %name-%version.tar
@@ -31,7 +31,6 @@ BuildRequires: pkgconfig(glfw3) >= 2.7
 BuildRequires: ilmbase-devel
 BuildRequires: pkgconfig(jemalloc)
 BuildRequires: pkgconfig(log4cplus) >= 1.0
-BuildRequires: openexr-devel >= 2.2
 BuildRequires: pkgconfig(tbb) >= 3.0
 BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(zlib) > 1.2.7
@@ -96,7 +95,8 @@ sed -i \
 	-DOPENVDB_CORE_SHARED=ON \
 	-DOPENVDB_CORE_STATIC=OFF \
 	-DOPENVDB_ENABLE_RPATH=OFF \
-	-DUSE_EXR=ON \
+	-DOPENVDB_ENABLE_UNINSTALL:BOOL=OFF \
+	-DUSE_IMATH_HALF=ON \
 	-DUSE_LOG4CPLUS=ON \
 	-DOPENVDB_BUILD_PYTHON_MODULE=ON \
 	-DUSE_NUMPY:BOOL=ON \
@@ -128,6 +128,9 @@ sed -i \
 %_libdir/cmake/*
 
 %changelog
+* Fri Jun 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.0-alt1
+- Updated to upstream version 8.1.0.
+
 * Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.1-alt1
 - Updated to upstream version 8.0.1.
 

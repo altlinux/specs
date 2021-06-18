@@ -3,12 +3,12 @@
 %define soname 1.8
 
 Name: alembic
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
 License: BSD-3-Clause and BSL-1.0
-URL: http://alembic.io/
+URL: https://www.alembic.io
 
 # https://github.com/alembic/alembic.git
 Source: %name-%version.tar
@@ -107,6 +107,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Fri Jun 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1
+- Updated to upstream version 1.8.2.
+
 * Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1
 - Updated to upstream version 1.8.1.
 
