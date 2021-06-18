@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: log4cplus
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 Summary: Logging library to C++
 License: Apache-2.0 or BSD-2-Clause
@@ -86,8 +86,11 @@ export PYTHON=python3
 	--enable-static=no \
 	--enable-threads=yes \
 	--with-working-c-locale \
-	--with-python
+	--with-python \
+	%nil
+
 sed -i 's|^\(SWIG =.*\)|\1 -py3|' $(find ./ -name Makefile)
+
 %make_build
 
 pushd docs
@@ -96,9 +99,10 @@ popd
 
 %install
 %makeinstall_std
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-mv %buildroot%python3_sitelibdir_noarch/%name/* \
-	%buildroot%python3_sitelibdir/%name/
+mkdir -p %buildroot%python3_sitelibdir/%name
+mv %buildroot%python3_sitelibdir_noarch/%name/* %buildroot%python3_sitelibdir/%name/
 %endif
 
 install -d %buildroot%_man3dir
@@ -125,6 +129,9 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jun 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.6-alt1
+- Updated to upstream version 2.0.6.
+
 * Mon Oct 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt1
 - Updated to upstream version 2.0.5.
 
