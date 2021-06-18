@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -34,12 +35,12 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 %global cpan_version 2.047
-Version:        2.047
-Release:        alt2_2
+Version:        2.051
+Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETJ/PDL-%{cpan_version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/PDL-%{version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 # Disable Proj support when it's not compatible, bug #839651
@@ -192,6 +193,7 @@ Source44: import.info
 %filter_from_requires /^perl(\(PDL.GIS.Proj\|PDL.IO.HDF.*\).pm)/d
 Patch33: PDL-2.029-alt-link-Slatec-hack.patch
 Patch34: PDL-2.047-alt-gsl-hack.patch
+Patch35: PDL-2.051-alt-fix-croak.patch
 
 %description
 PDL ("Perl Data Language") gives standard Perl the ability to
@@ -211,7 +213,7 @@ Tests from %{name}-%{version}. Execute them
 with "%{_libexecdir}/%{name}/test".
 
 %prep
-%setup -q -n PDL-%{cpan_version}
+%setup -q -n PDL-%{version}
 # Uncomment to enable PDL::IO::Browser
 # %%patch0 -p1 -b .settings
 %if %{without perl_PDL_enables_proj}
@@ -232,6 +234,7 @@ for F in t/*.t; do
 done
 %patch33 -p1
 %patch34 -p1
+%patch35 -p1
 
 # failed on armh
 [ %version == 2.047 ] && rm IO/FlexRaw/t/flexraw_fortran.t
@@ -286,8 +289,7 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 make test
 
 %files
-%doc --no-dereference COPYING
-%doc Changes INTERNATIONALIZATION README TODO
+%doc Changes INTERNATIONALIZATION README Bugs.pod Doc Example
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
@@ -298,6 +300,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Thu Jun 17 2021 Igor Vlasenko <viy@altlinux.org> 2.051-alt1
+- automated CPAN update
+
 * Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 2.047-alt2_2
 - mipsel support thanks to iv@
 
