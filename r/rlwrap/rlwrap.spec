@@ -1,5 +1,5 @@
 Name: rlwrap
-Version: 0.44
+Version: 0.45.1
 Release: alt1
 Epoch: 1
 
@@ -11,7 +11,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tar.gz
 Source1: rlwrap_cmucl_completions
 
-BuildRequires: libreadline-devel libncurses-devel perl-podlators rpm-build-python3
+BuildRequires: libreadline-devel libncurses-devel perl-podlators rpm-build-python3 rpm-build-perl perl-File-Slurp
 %add_perl_lib_path %_datadir/%name/filters
 
 %description
@@ -42,6 +42,10 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 %_datadir/%name
 
 %changelog
+* Fri Jun 18 2021 Ilya Mashkin <oddity@altlinux.ru> 1:0.45.1-alt1
+- 0.45.1
+- Add BR: perl-File-Slurp
+
 * Wed May 05 2021 Ilya Mashkin <oddity@altlinux.ru> 1:0.44-alt1
 - 0.44
 - Add BR: rpm-build-python3
