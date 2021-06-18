@@ -5,7 +5,7 @@
 
 Name:     qtpass
 Version:  1.3.2
-Release:  alt2.gitcfac4db8
+Release:  alt3.gitcfac4db8
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
 Summary(ru_RU.UTF-8): кросс-платформенный интерфейс к менеджеру паролей pass
@@ -21,8 +21,8 @@ Source0: %real_name-%version.tar
 Patch0:  %real_name-%version-%release.patch
 
 Patch1:  %name-1.1.6-alt-desktop.patch
-
 Patch2:  %name-1.3.2-github-pull_559.patch
+Patch3:  %name-1.3.2-alt-key_dates.patch
 
 Source1: %name-16.png
 Source2: %name-32.png
@@ -70,6 +70,7 @@ QtPass -  кроссплатформенный графический интер
 
 %patch1
 %patch2 -p1
+%patch3
 
 ## TEMPORARY FIX program version - 1.3.3 not released yet:
 sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i Doxyfile
@@ -107,6 +108,9 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Jun 18 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3.2-alt3.gitcfac4db8
+- Fix GPG keys info in the users dialog window
+
 * Sun Mar 14 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3.2-alt2.gitcfac4db8
 - Update to current development state
   - Fix renaming passwords and directories failures
