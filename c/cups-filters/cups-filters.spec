@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.28.8
+Version: 1.28.9
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -192,6 +192,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Fri Jun 18 2021 Anton Farygin <rider@altlinux.ru> 1.28.9-alt1
+- 1.28.9
+
 * Thu Apr 01 2021 Anton Farygin <rider@altlinux.org> 1.28.8-alt1
 - 1.28.8
 
