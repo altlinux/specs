@@ -5,7 +5,7 @@
 %define oname cmd2
 
 Name: python3-module-%oname
-Version: 1.5.0
+Version: 2.1.1
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -36,6 +36,7 @@ BuildRequires: python3-module-pyperclip
 %if_enabled check
 BuildRequires: pytest3
 BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-pytest-cov
 %endif
 
 %description
@@ -99,7 +100,7 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
 export PYTHONPATH=$PWD/_build/%python3_sitelibdir
-pytest3 -v
+pytest3
 
 %files
 %doc LICENSE PKG-INFO *.md
@@ -107,9 +108,7 @@ pytest3 -v
 %python3_sitelibdir/*.egg-info
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
-%endif
 
-%if_with docs
 %files docs
 %doc build/html docs/examples
 
@@ -119,6 +118,9 @@ pytest3 -v
 %endif
 
 %changelog
+* Fri Jun 18 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+
 * Mon Feb 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
 - Automatically updated to 1.5.0.
 
