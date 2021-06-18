@@ -1,5 +1,5 @@
 Name:    thefuck
-Version: 3.30
+Version: 3.31
 Release: alt1
 
 Summary: Magnificent app which corrects your previous console command
@@ -36,6 +36,9 @@ rm -v thefuck/system/win32.py
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jun 18 2021 Grigory Ustinov <grenka@altlinux.org> 3.31-alt1
+- Automatically updated to 3.31.
+
 * Sun Mar 22 2020 Grigory Ustinov <grenka@altlinux.org> 3.30-alt1
 - Automatically updated to 3.30.
 
