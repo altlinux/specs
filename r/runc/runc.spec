@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt16.rc93
+Release:        alt17.rc95
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -61,6 +61,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Fri Jun 18 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt17.rc95
+- New version (Fixes: CVE-2021-30465)
+
 * Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt16.rc93
 - Fix build with golang 1.16
 
