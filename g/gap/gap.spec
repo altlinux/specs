@@ -1,6 +1,6 @@
 Name: gap
 Version: 4.11.0
-Release: alt1
+Release: alt2
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
 Group: Sciences/Mathematics
@@ -205,6 +205,11 @@ fdupes %buildroot%_prefix
 %files -n rpm-macros-%name
 %_libexecdir/rpm/macros.d/gap
 
+%files full
+
 %changelog
+* Fri Jun 18 2021 Leontiy Volodin <lvol@altlinux.org> 4.11.0-alt2
+- Added gap-full package.
+
 * Thu Jun 10 2021 Leontiy Volodin <lvol@altlinux.org> 4.11.0-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
