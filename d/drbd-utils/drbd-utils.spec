@@ -5,7 +5,7 @@
 
 Name: drbd-utils
 Version: 9.17.0
-Release: alt1
+Release: alt1.1
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -77,6 +77,10 @@ tar -xf %SOURCE1 -C drbd-headers
 %patch0 -p1
 (echo -e "#define GITHASH \"%githash\""; \
  echo -e "#define GITDIFF \"%gitdiff\"") > user/shared/drbd_buildtag.h
+%ifarch %e2k
+# lcc 1.25.15 barfs at DrbdRole.cpp:36, DrbdVolume.cpp:748
+sed -i 's,-Wshadow,,' user/drbdmon/Makefile*
+%endif
 
 %build
 %autoreconf
@@ -152,6 +156,9 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %_sysconfdir/bash_completion.d/drbdadm*
 
 %changelog
+* Fri Jun 18 2021 Michael Shigorin <mike@altlinux.org> 9.17.0-alt1.1
+- E2K: ftbfs workaround
+
 * Thu Apr 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.17.0-alt1
 - 9.17.0
 
