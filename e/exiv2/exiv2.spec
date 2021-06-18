@@ -7,12 +7,16 @@
 %def_disable tests
 %def_disable check
 
+%ifnarch %e2k
 %define gcc_ver 9
 %set_gcc_version %gcc_ver
+%else
+%define gcc_ver %nil
+%endif
 
 Name: exiv2
 Version: 0.27.4
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -101,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jun 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.4-alt1.1
+- fixed build on %%e2k
+
 * Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.4-alt1
 - 0.27.4 (fixed CVE-2021-3482, CVE-2021-29457,
   CVE-2021-29458, CVE-2021-29470, CVE-2021-29473,
