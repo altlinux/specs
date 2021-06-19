@@ -3,10 +3,10 @@
 
 Name: telepathy-%_name
 Version: 0.8.0
-Release: alt2
+Release: alt3
 
 Summary: SIP connection manager for the Telepathy framework
-License: LGPL v2.1+
+License: LGPL-2.1
 Group: Networking/Instant messaging
 Url: http://sourceforge.net/projects/tp-sofiasip
 
@@ -16,10 +16,12 @@ Obsoletes: telepathy-sofiasip
 Provides: telepathy-sofiasip = %version-%release
 
 BuildRequires: libdbus-devel libdbus-glib-devel libsofia-sip-glib-devel >= 1.12.11 libgio-devel >= 2.30
-BuildRequires: libtelepathy-glib-devel >= 0.17.7 xsltproc
-# for check:
+BuildRequires: libtelepathy-glib-devel >= 0.17.7 
+BuildRequires: python2-base python-modules-xml
+BuildRequires: xsltproc
+%{?_enable_check:
 BuildRequires: python-module-twisted-words python-module-twisted-core-gui dbus-tools-gui
-BuildRequires: python-module-dbus python-module-service-identity
+BuildRequires: python-module-dbus python-module-service-identity}
 
 %description
 %name is a SIP connection manager for the Telepathy framework
@@ -62,6 +64,9 @@ This package provides development files and documentation for telepathy-%name
 %_man8dir/%name.*
 
 %changelog
+* Sun Jun 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt3
+- updated BR
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt2
 - disabled broken %%check (ALT #35672)
 
