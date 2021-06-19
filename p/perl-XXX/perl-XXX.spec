@@ -6,7 +6,7 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators perl(YAML/PP.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-XXX
-Version:        0.35
+Version:        0.36
 Release:        alt1
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
@@ -64,6 +64,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jun 19 2021 Igor Vlasenko <viy@altlinux.org> 0.36-alt1
+- automated CPAN update
+
 * Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
