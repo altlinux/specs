@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.33
+Version: 0.34
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -9,17 +9,15 @@ Url: http://www.sisyphus.ru/packages/viy/srpms
 
 BuildArch: noarch
 
-# TODO: test && drop the req?
+# tested && dropped
 #Requires: docbook-style-xsl
 
 # sun java requires it
 Requires: /proc
 Requires(pre): rpm-build-java
-Requires: jpackage-utils
+#Requires: jpackage-utils
 # as in jdepend; should be detected by peering in SOURCEDIR
 Requires: unzip
-# as in fedora biarch packages; could be detected by peering in SPEC
-#Requires: zip
 
 # hack til migration on 1.8-compat
 Requires: java-devel = 0:1.8.0
@@ -62,8 +60,6 @@ Provides JPackage build environment with java-1.8.0.
 %package -n jpackage-9-compat
 Summary: JPackage build environment with java-9.
 Group: Development/Java
-#Provides: jpackage-core = %version-%release
-#Provides: jpackage-compat = %version-%release
 
 Requires: jpackage-generic-compat
 Requires(pre): java-9-devel >= 9 java-9 >= 9
@@ -77,8 +73,6 @@ Provides JPackage build environment with java-9.
 %package -n jpackage-10-compat
 Summary: JPackage build environment with java-10.
 Group: Development/Java
-#Provides: jpackage-core = %version-%release
-#Provides: jpackage-compat = %version-%release
 
 Requires: jpackage-generic-compat
 Requires(pre): java-10-devel >= 10 java-10 >= 10
@@ -120,6 +114,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Fri Jun 18 2021 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
+- dropped requires on jpackage-utils
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
 - dropped requires on zip
 
