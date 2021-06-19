@@ -1,5 +1,5 @@
 Name: python3-module-pikepdf
-Version: 2.3.0
+Version: 2.12.2
 Release: alt1
 License: MPL-2.0
 Url: https://github.com/pikepdf/pikepdf
@@ -33,6 +33,9 @@ Say it out loud, and it sounds like "pikepdf".
 %python3_sitelibdir/*pikepdf*
 
 %changelog
+* Sat Jun 19 2021 Fr. Br. George <george@altlinux.ru> 2.12.2-alt1
+- Autobuild version bump to 2.12.2
+
 * Wed Jan 13 2021 Fr. Br. George <george@altlinux.ru> 2.3.0-alt1
 - Autobuild version bump to 2.3.0
 
