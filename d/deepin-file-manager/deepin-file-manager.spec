@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.2.0.87
-Release: alt1.1
+Release: alt2
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -19,7 +19,7 @@ Patch2: deepin-file-manager_5.2.0.82_gcc10.patch
 ExcludeArch: armh ppc64le
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -121,6 +121,9 @@ sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-m
 sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/ut_dfilestatisticsjob.cpp
 sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
 
+# hide lockscreen checkbox
+sed -i 's|m_lockScreenBox->show();|m_lockScreenBox->hide();|' dde-wallpaper-chooser/frame.cpp
+
 %build
 %if_enabled clang
 export CC="clang"
@@ -131,12 +134,14 @@ export READELF="llvm-readelf"
 %endif
 %qmake_qt5 \
            CONFIG+=nostrip \
+           DEFINES+="VERSION=%version" \
            unix:LIBS+="-L%_libdir -lgio-2.0 -licui18n -lX11" \
            unix:LIBS+="-L%_K5link -lKF5Codecs" \
            QT.KCodecs.libs=%_K5link \
            PREFIX=%prefix \
            DTK_VERSION=%version \
            LIB_INSTALL_DIR=%_libdir \
+           VERSION=%version \
 %if_enabled clang
            QMAKE_STRIP= -spec linux-clang \
 %endif
@@ -216,6 +221,10 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Sat Jun 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt2
+- Hidden lockscreen checkbox.
+- Fixed version tag.
+
 * Mon Feb 15 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt1.1
 - Rebuilt with Qt 5.15.2.
 
