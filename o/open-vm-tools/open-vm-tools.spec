@@ -15,16 +15,16 @@
 %def_with gtk3
 %def_with gtkmm3
 
-%global majorversion    11.2
-%global minorversion    5
-%global toolsbuild      17337674
+%global majorversion    11.3
+%global minorversion    0
+%global toolsbuild      18090558
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt2
+Release: alt1
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -241,6 +241,8 @@ fi
 %_bindir/vm-support
 %_bindir/vmhgfs-fuse
 %_bindir/vmtoolsd
+%_bindir/vmwgfxctrl
+%_bindir/vmware-alias-import
 %_bindir/vmware-checkvm
 %_bindir/vmware-hgfsclient
 %_bindir/vmware-namespace-cmd
@@ -249,6 +251,7 @@ fi
 %_bindir/vmware-xferlogs
 %_libdir/libDeployPkg.so.*
 %_libdir/libguestlib.so.*
+%_libdir/libguestStoreClient.so.*
 %_libdir/libhgfs.so.*
 %_libdir/libvmtools.so.*
 %dir %_libdir/%name/
@@ -280,6 +283,7 @@ fi
 %_libdir/pkgconfig/*.pc
 %_libdir/libDeployPkg.so
 %_libdir/libguestlib.so
+%_libdir/libguestStoreClient.so
 %_libdir/libhgfs.so
 %_libdir/libvmtools.so
 %if_enabled vgauth
@@ -293,6 +297,9 @@ fi
 
 
 %changelog
+* Sun Jun 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.3.0-alt1
+- 11.3.0
+
 * Wed Mar 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.2.5-alt2
 - fix FTBFS
 
