@@ -2,8 +2,8 @@
 %def_without python
 
 Name: libalsa
-Version: 1.2.5
-Release: alt1.1
+Version: 1.2.5.1
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -13,9 +13,6 @@ Group: System/Libraries
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: 0001-Restore-loading-usr-share-alsa-alsa.conf.d.patch
-# latest upstream fixes
-# FIXME! remove this after 1.2.5.1!
-Patch2: alsa-git.patch
 Url: http://www.alsa-project.org
 
 # tse3 still depends on that, argh
@@ -88,7 +85,6 @@ Advanced Linux Sound Architecture (ALSA) Developer Documentation
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 # Replace "include" with "__include__" in public header files
 # to make them compilable by "gcc -ansi" again.
 find include -type f -print0 |
@@ -191,6 +187,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Sat Jun 19 2021 Michael Shigorin <mike@altlinux.org> 1:1.2.5.1-alt1
+- 1.2.5.1
+
 * Sat Jun 05 2021 L.A. Kostis <lakostis@altlinux.ru> 1:1.2.5-alt1.1
 - Apply latest fixes from git (before 1.2.5.1 will be released).
 

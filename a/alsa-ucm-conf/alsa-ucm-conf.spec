@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
-Version: 1.2.5
-Release: alt1.1
+Version: 1.2.5.1
+Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -8,8 +8,6 @@ Group: System/Libraries
 
 Url: http://www.alsa-project.org
 Source: %name-%version.tar
-# https://github.com/alsa-project/alsa-ucm-conf/commit/3f34021beffba4e39f064a14c5faceeaa224b766?branch=3f34021beffba4e39f064a14c5faceeaa224b766&diff=unified
-Patch: %name.patch
 BuildArch: noarch
 
 %define alsadata %_datadir/alsa
@@ -21,7 +19,6 @@ in a standalone repository.
 
 %prep
 %setup
-%patch -p1
 
 %build
 
@@ -34,6 +31,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Sat Jun 19 2021 Michael Shigorin <mike@altlinux.org> 1.2.5.1-alt1
+- 1.2.5.1
+
 * Sat Jun 05 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.5-alt1.1
 - Apply fix from upstream:
   + HDA-Intel: the lookups are supported from syntax 4

@@ -1,8 +1,8 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.5
-Release: alt1.1
+Version: 1.2.5.1
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -11,9 +11,7 @@ Group: System/Kernel and hardware
 
 Url: http://www.alsa-project.org
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
-# FIXME! delete after 1.2.5.1 release
-Patch1: %name-git.patch
+Patch: %name-%version-%release.patch
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: dialog
@@ -55,8 +53,7 @@ driver.  amixer supports multiple soundcards.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%patch -p1
 touch config.rpath
 
 %build
@@ -106,6 +103,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Sat Jun 19 2021 Michael Shigorin <mike@altlinux.org> 1:1.2.5.1-alt1
+- 1.2.5.1
+
 * Sat Jun 05 2021 L.A. Kostis <lakostis@altlinux.ru> 1:1.2.5-alt1.1
 - Apply upstream fixes from git (before 1.2.5.1 release).
 
