@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
@@ -17,8 +18,8 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 %define _enable_test 1
 
 Name: perl-Sub-Exporter
-Version: 0.987
-Release: alt1.1
+Version: 0.988
+Release: alt1
 
 Summary: a sophisticated exporter for custom-built routines
 
@@ -29,7 +30,7 @@ Url: %CPAN %m_distro
 Packager: Mikhail Pokidko <pma@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Sub-Exporter-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed May 14 2008
 BuildRequires: perl-Data-OptList perl-Package-Generator
@@ -38,7 +39,7 @@ BuildRequires: perl-Data-OptList perl-Package-Generator
 None.
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -46,10 +47,14 @@ None.
 %perl_vendor_install
 
 %files
+%doc README LICENSE Changes
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sat Jun 19 2021 Igor Vlasenko <viy@altlinux.org> 0.988-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.987-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
