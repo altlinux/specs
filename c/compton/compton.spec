@@ -3,7 +3,7 @@
 
 Name: compton
 Version: 5.1
-Release: alt1
+Release: alt2
 Summary: fork of xcompmgr
 Summary(ru_RU.UTF-8): Форк xcompmgr
 License: MPL-2.0 or MIT
@@ -11,6 +11,7 @@ Group: System/X11
 Url: https://github.com/yshui/compton
 Source: %name-%version.tar
 
+BuildRequires: rpm-build-python3
 BuildRequires: meson
 BuildRequires: libX11-devel
 BuildRequires: libXext-devel
@@ -57,6 +58,9 @@ That is, I'm partially doing this out of a desire to learn Xlib.
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Sun Jun 20 2021 Anton Midyukov <antohami@altlinux.org> 5.1-alt2
+- Add missing buildrequires rpm-build-python3
+
 * Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 5.1-alt1
 - new version 5.1
 
