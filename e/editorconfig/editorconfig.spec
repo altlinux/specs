@@ -1,7 +1,7 @@
 %def_enable docs
 
 Name: editorconfig
-Version: 0.12.4
+Version: 0.12.5
 Release: alt1
 
 Summary: Parser for EditorConfig files written in C
@@ -83,6 +83,9 @@ This package contains files needed for development EditorConfig plugins.
 %{?_enable_docs:%_man3dir/%{name}*}
 
 %changelog
+* Sun Jun 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1
+- 0.12.5
+
 * Sun Aug 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1
 - 0.12.4
 - fixed License tag
