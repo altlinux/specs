@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.9
+Version: 0.0.13
 Release: alt1
 Summary: Scriptable debugger library
 License: GPL-3.0-or-later
@@ -13,6 +15,7 @@ Vcs:     https://github.com/osandov/drgn
 # Press: https://lwn.net/Articles/789641/
 # Conf:  https://linuxplumbersconf.org/event/4/contributions/440/
 # Refs:  https://www.kernel.org/doc/html/latest/bpf/drgn.html
+Provides: python-module-drgn
 
 Source: %name-%version.tar
 ExclusiveArch: x86_64
@@ -21,6 +24,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: bzip2-devel
 BuildRequires: flex
 BuildRequires: git-core
+BuildRequires: libdw-devel
+BuildRequires: libelf-devel
 BuildRequires: libgomp-devel
 BuildRequires: liblzma-devel
 BuildRequires: libstdc++-devel
@@ -61,6 +66,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/_drgn.*
 
 %changelog
+* Sun Jun 20 2021 Vitaly Chikunov <vt@altlinux.org> 0.0.13-alt1
+- Update to v0.0.13 (2021-06-07) -4-gc4b174a (2021-06-09).
+
 * Thu Feb 18 2021 Vitaly Chikunov <vt@altlinux.org> 0.0.9-alt1
 - Update to v0.0.9 (2021-02-17).
 
