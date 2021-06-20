@@ -1,6 +1,6 @@
 Name: gap
-Version: 4.11.0
-Release: alt2
+Version: 4.11.1
+Release: alt1
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
 Group: Sciences/Mathematics
@@ -119,8 +119,11 @@ This subpackage will pull in all optional packages of the GAP distribution.
 %setup
 
 sed -i 's/\#$(INSTALL) gac/$(INSTALL) gac/' Makefile.rules
+# Fixed version
+sed -i 's|4.11.0|4.11.1|; s|29-Feb|Feb|; s|2020|2021|' configure.ac
 
 %build
+%autoreconf
 %configure
 %make_build V=1
 
@@ -208,6 +211,9 @@ fdupes %buildroot%_prefix
 %files full
 
 %changelog
+* Sun Jun 20 2021 Leontiy Volodin <lvol@altlinux.org> 4.11.1-alt1
+- New version (4.11.1).
+
 * Fri Jun 18 2021 Leontiy Volodin <lvol@altlinux.org> 4.11.0-alt2
 - Added gap-full package.
 
