@@ -72,8 +72,8 @@
 %endif
 
 Name:    samba
-Version: 4.14.4
-Release: alt4
+Version: 4.14.5
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1922,6 +1922,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Jun 04 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.5-alt1
+- Update to latest release of Samba 4.14 with ensure POSIX default ACL
+  is mapped into returned Windows ACL for directory handles and fix
+  uninitialized memory read in process_symlink_open() when used with
+  vfs_shadow_copy2() for smbd.
+
 * Mon May 17 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.4-alt4
 - winbindd: Fix a startup race with allocate_gid (Samba#14678)
 
