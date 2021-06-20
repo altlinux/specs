@@ -3,8 +3,8 @@
 %def_enable check
 
 Name: upower
-Version: 0.99.11
-Release: alt2
+Version: 0.99.12
+Release: alt1
 
 Summary: Power Management Service
 License: GPLv2+
@@ -131,6 +131,9 @@ PYTHON=%__python3 %make check
 %_girdir/*.gir
 
 %changelog
+* Sun Jun 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.99.12-alt1
+- updated to UPOWER_0_99_12-2-gb64902e
+
 * Thu Jun 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.99.11-alt2
 - updated to UPOWER_0_99_11-12-g0c6fa20 (fixed memory leak in Bluez
   backend)
