@@ -8,17 +8,15 @@
 
 Name: teeworlds
 Version: 0.7.5
-Release: alt1.1
+Release: alt2
+
 Summary: Cute little buggers with guns
 License: distributable
 Group: Games/Arcade
+
 Url: https://www.teeworlds.com
-
-ExclusiveArch: %ix86 x86_64
-
 # https://github.com/teeworlds/teeworlds.git
-Source: %name-%version.tar
-
+Source0: %name-%version.tar
 # git submodules
 Source1: %name-languages-%version.tar
 Source2: %name-maps-%version.tar
@@ -33,7 +31,6 @@ BuildRequires: libalsa-devel libfreetype-devel libwavpack-devel libpnglite-devel
 BuildRequires: libssl-devel
 
 Requires: %name-gamedata = %EVR
-
 Obsoletes: teeworlds-alt < %EVR
 
 %description
@@ -202,6 +199,9 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%name/server-ict
 %_datadir/teeworlds
 
 %changelog
+* Mon Jun 21 2021 Michael Shigorin <mike@altlinux.org> 0.7.5-alt2
+- dropped ExclusiveArch: for good (builds on %%e2k just fine)
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.7.5-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
