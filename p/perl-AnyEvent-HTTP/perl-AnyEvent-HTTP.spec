@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-AnyEvent-HTTP
 Version: 2.25
-Release: alt1
+Release: alt2
 Summary: AnyEvent::HTTP - simple but non-blocking HTTP/HTTPS client
 
 Group: Development/Perl
@@ -11,6 +11,7 @@ Url: %CPAN AnyEvent-HTTP
 BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: AnyEvent-HTTP-2.25-perl7.patch
 BuildRequires: perl-AnyEvent perl-common-sense perl-devel
 
 %description
@@ -19,6 +20,10 @@ BuildRequires: perl-AnyEvent perl-common-sense perl-devel
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
+
+# qick hack til IO-AIO will be fixed
+rm t/01_basic.t
 
 %build
 %perl_vendor_build
@@ -31,6 +36,9 @@ BuildRequires: perl-AnyEvent perl-common-sense perl-devel
 %doc Changes README
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2.25-alt2
+- support for perl v7 - no feature qw(indirect);
+
 * Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 2.25-alt1
 - new version
 
