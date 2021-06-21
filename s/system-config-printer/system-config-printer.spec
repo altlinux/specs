@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.11
-Release: alt10
+Release: alt12
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -9,14 +9,18 @@ Url:     http://cyberelk.net/tim/software/system-config-printer/
 # Git:   https://github.com/zdohnal/system-config-printer
 
 Source: %name-%version.tar
-Patch:  %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 Patch1: fix_search_printer.patch
 Patch2: about_logo.patch
 Patch3: fix-translation-in-troubleshoot-menu.patch
+Patch4: %name-1.5.11-plugins.patch
+Patch5: %name-1.5.11-ru.patch
+Patch6: %name-1.5.11-gtk-grid-attach.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-cups
+BuildRequires: python3-module-pluggy
 BuildRequires: desktop-file-utils
 BuildRequires: cups-devel
 BuildRequires: libusb-devel
@@ -65,10 +69,13 @@ Python module to configure a CUPS print server
 %prep
 %setup -q
 sed -i 's/mod.*ins.*_aft.*//' newprinter.py
-%patch -p1
+%patch0 -p1
 %patch1 -p0
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 ./bootstrap
@@ -80,7 +87,6 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 		 udevhelperdir=/lib/udev
 install -Dm0644 tmpfiles.conf %buildroot%_tmpfilesdir/system-config-printer.conf
 mv %buildroot%_datadir/{metainfo,appdata}
-install -m0644 markjob.py %buildroot/%_datadir/system-config-printer/
 
 %find_lang system-config-printer
 
@@ -116,6 +122,16 @@ exit 0
 
 
 %changelog
+* Mon Jun 21 2021 Paul Wolneykien <manowar@altlinux.org> 1.5.11-alt12
+- Restore the original authconn.py extracting the changes into a
+  separate patch.
+- Restore the original po/ru.po extracting the changes into a
+  separate patch.
+- Restore the original jobviewer.py extracting the changes into a
+  separate patch.
+- Replace the additional "Mark Job" action with a plugin system.
+  Install %{name}-fonarik package for that functionality.
+
 * Tue Jun 15 2021 Paul Wolneykien <manowar@altlinux.org> 1.5.11-alt10
 - Use Python v3 for markjob.py.
 

@@ -4,7 +4,7 @@
 
 Name:          python-module-%oname
 Version:       1.9.74
-Release:       alt1
+Release:       alt2
 %setup_python_module %oname
 
 Group:         Development/Python
@@ -14,10 +14,12 @@ License:       %gpl2plus
 
 # git://git.fedorahosted.org/git/pycups.git
 Source0:       pycups-%{version}.tar
+Patch0:        python-module-cups-1.9.74-alt-extension-copy-document.patch
 
 Packager:      Yury Yurevich <anarresti@altlinux.org>
 
-BuildRequires(pre): rpm-build-licenses libcups-devel
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): libcups-devel >= 2.2.12-alt2
 BuildRequires: python-devel python-module-epydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -52,6 +54,7 @@ API.
 
 %prep
 %setup -n pycups-%version
+%patch0 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -94,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 21 2021 Paul Wolneykien <manowar@altlinux.org> 1.9.74-alt2
+- Added API to support ALT copy document IPP extension.
+
 * Wed May 13 2020 Pavel Vasenkov <pav@altlinux.org> 1.9.74-alt1
 - Version 1.9.74
 
