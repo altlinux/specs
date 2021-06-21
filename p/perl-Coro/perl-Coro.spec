@@ -10,7 +10,7 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 %global cpan_version 6.57
 Name:           perl-Coro
 Version:        6.570
-Release:        alt2_1
+Release:        alt3_1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -85,6 +85,7 @@ Requires:       perl(warnings.pm)
 
 
 Source44: import.info
+Patch33: Coro-6.57-perl7.patch
 %filter_from_requires /:__requires_exclude\|}^perl(AnyEvent.pm)/d
 %filter_from_requires /^perl(AnyEvent\\) >= 4.800001$/d
 %filter_from_requires /^perl(AnyEvent.AIO.pm)/d
@@ -128,6 +129,7 @@ for F in Coro/jit-*.pl; do
 done
 %fix_shbang_line eg/myhttpd
 
+%patch33 -p1
 
 %build
 # Disable FORTIFY_SOURCE on ARM as it breaks setjmp - RHBZ 750805
@@ -159,6 +161,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:6.570-alt3_1
+- partial perl7 patch
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2:6.570-alt2_1
 - prepared for rebuild with perl 5.32
 
