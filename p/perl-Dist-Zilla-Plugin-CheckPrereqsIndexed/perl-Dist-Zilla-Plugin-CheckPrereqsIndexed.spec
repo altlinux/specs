@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-CheckPrereqsIndexed
 
 Name: perl-Dist-Zilla-Plugin-CheckPrereqsIndexed
-Version: 0.020
-Release: alt2
+Version: 0.021
+Release: alt1
 
 Summary: prevent a release if you have prereqs not found on CPAN
 
@@ -33,8 +33,6 @@ not found on CPAN.
 %prep
 %setup -q -n %real_name-%version
 
-rm -f -- t/basic.t
-
 %build
 %perl_vendor_build
 
@@ -46,5 +44,8 @@ rm -f -- t/basic.t
 %perl_vendor_privlib/Dist/Zilla/Plugin/CheckPrereqsIndexed*
 
 %changelog
+* Mon Jun 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.021-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.020-alt2
 - Initial build for ALT Linux Sisyphus
