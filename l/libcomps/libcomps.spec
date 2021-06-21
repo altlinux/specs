@@ -1,57 +1,46 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-mageia-compat
-BuildRequires: gcc-c++ python-devel rpm-build-python
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: python-devel rpm-build-python
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define shortname comps
-%define major 0
-%define libname lib%{shortname}%{major}
-%define libname_devel lib%{shortname}-devel
+%define __cmake_in_source_build 1
 
 Name:           libcomps
-Version:        0.1.15
-Release:        alt1_3
+Version:        0.1.17
+Release:        alt1_1
 Summary:        Comps XML file manipulation library
 
-Group:          System/Libraries
 License:        GPLv2+
 URL:            https://github.com/rpm-software-management/libcomps
-Source0:        https://github.com/rpm-software-management/libcomps/archive/%{name}-%{version}.tar.gz
-BuildRequires:  pkgconfig(zlib)
-BuildRequires:  pkgconfig(libxml-2.0)
-BuildRequires:  pkgconfig(check)
-BuildRequires:  pkgconfig(expat)
-BuildRequires:  ccmake cmake ctest
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
-
-# prevent provides from nonstandard paths:
-%define __provides_exclude_from ^(%{python3_sitelibdir}/.*\\.so)$
+BuildRequires:  gcc-c++
+BuildRequires:  ctest cmake
+BuildRequires:  gcc
+BuildRequires:  libxml2-devel
+BuildRequires:  libcheck-devel
+BuildRequires:  libexpat-devel
+BuildRequires:  zlib-devel
 Source44: import.info
 
 %description
 Libcomps is library for structure-like manipulation with content of
 comps XML files. Supports read/write XML file, structure(s) modification.
 
-%package -n %{libname}
-Summary:        Libraries for %{name}
-Group:          System/Libraries
-
-%description -n %{libname}
-Libraries for %{name}.
-
-%package -n %{libname_devel}
+%package devel
+Group: Development/C
 Summary:        Development files for libcomps library
-Group:          Development/C
-Provides:       %{name}-devel = %{version}-%{release}
-Requires:       %{libname}%{?_isa} = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
-%description -n %{libname_devel}
-Development files for %{name}.
+%description devel
+Development files for libcomps library.
 
 %package doc
+Group: Development/C
 Summary:        Documentation files for libcomps library
-Group:          Development/C
+Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 BuildRequires:  doxygen
 
@@ -59,71 +48,81 @@ BuildRequires:  doxygen
 Documentation files for libcomps library.
 
 %package -n python-module-libcomps-doc
+Group: Development/Python
 Summary:        Documentation files for python bindings libcomps library
-Group:          Development/Python
-Requires:       python3-module-libcomps = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 BuildRequires:  python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
-BuildRequires:  python3-module-sphinx_rtd_theme
+
 
 %description -n python-module-libcomps-doc
 Documentation files for python bindings libcomps library.
 
 %package -n python3-module-libcomps
+Group: Development/Python
 Summary:        Python 3 bindings for libcomps library
-%{?python_provide:%python_provide python3-libcomps}
-Group:          Development/Python
 BuildRequires:  python3-devel
-Requires:       %{libname}%{?_isa} = %{version}-%{release}
-# We're no longer providing the Python 2 subpackage
-Obsoletes:      python2-libcomps < 0.1.11
+%{?python_provide:%python_provide python3-%{name}}
+Requires:       %{name} = %{version}-%{release}
+Obsoletes:      platform-python-%{name} < %{version}-%{release}
 
 %description -n python3-module-libcomps
 Python3 bindings for libcomps library.
 
-
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q -n %{name}-%{version}
 
 
-# Fix build with sphinx 1.8.3
-sed -i -e 's,sphinx.ext.pngmath,sphinx.ext.imgmath,' libcomps/src/python/docs/doc-sources/conf.py.in
+mkdir build-py3
+mkdir build-doc
 
 %build
-%{mageia_cmake} -DPYTHON_DESIRED:STRING=3 -DSPHINX_EXECUTABLE="%{_bindir}/sphinx-build-3" ./libcomps/
-%mageia_cmake_build
-make docs -C %{_vpath_builddir}
-make pydocs -C %{_vpath_builddir}
+pushd build-py3
+  %{fedora_v2_cmake} ../libcomps/
+  %make_build
+popd
 
-%check
-make test -C %{_vpath_builddir}
+pushd build-doc
+  %{fedora_v2_cmake} ../libcomps/
+%make_build docs
+%make_build pydocs
+popd
 
 %install
-%mageia_cmake_install
+pushd build-py3
+  %makeinstall_std
+popd
 
-%files -n %{libname}
-%doc README.md
+%check
+pushd build-py3
+  make test
+  make pytest
+popd
+
+%files
 %doc --no-dereference COPYING
-%{_libdir}/libcomps.so.%{major}
+%doc README.md
+%{_libdir}/%{name}.so.*
 
-%files -n %{libname_devel}
-%{_includedir}/*
-%{_libdir}/libcomps.so
+%files devel
+%{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
+%{_includedir}/%{name}/
 
 %files doc
-%doc build/docs/libcomps-doc/html
+%doc build-doc/docs/libcomps-doc/html
 
 %files -n python-module-libcomps-doc
-%doc build/src/python/docs/html
+%doc build-doc/src/python/docs/html
 
 %files -n python3-module-libcomps
-%{python3_sitelibdir}/libcomps
-%{python3_sitelibdir}/%{name}-%{version}-py%{__python3_version}.egg-info
-
-
+%{python3_sitelibdir}/%{name}/
+#%{python3_sitelibdir}/%{name}-%{version}-py%{__python3_version}.egg-info
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 0.1.17-alt1_1
+- new version
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 0.1.15-alt1_3
 - update by mgaimport
 
