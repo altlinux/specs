@@ -16,7 +16,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.5
-Release: alt1
+Release: alt2
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -910,6 +910,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 11.0.5-alt2
+- Corrected version displayed in web interface.
+
 * Fri Jun 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 11.0.5-alt1
 - Updated to upstream version 11.0.5.
 
