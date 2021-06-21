@@ -14,7 +14,7 @@
 %define binutils_ver %{get_version binutils}
 %define _keep_libtool_files 1
 #define _optlevel s
-%def_disable bootstrap
+%def_enable bootstrap
 %def_disable debug
 %def_disable static_thread
 %def_enable shared_thread
@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt22
+%define rlz alt23
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -1488,6 +1488,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Mon Jun 21 2021 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt23
+- build in bootstrap mode to relax requires
+
 * Thu Mar 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.7-alt22
 - Applied security fixes (fixes: CVE-2020-17507) (thanks zerg@alt)
 - Fixed build with gcc-10+.
