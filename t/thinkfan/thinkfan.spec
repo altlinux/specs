@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: thinkfan
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Summary: simple and lightweight fan control program
 Group: System/Configuration/Hardware
@@ -10,6 +10,8 @@ Url: http://sourceforge.net/projects/thinkfan/
 
 # https://github.com/vmatare/thinkfan.git
 Source: %name-%version.tar
+
+Source100: %name.watch
 
 Patch1: thinkfan-install.patch
 Patch2: thinkfan-alt-paths.patch
@@ -50,6 +52,10 @@ CPU power as possible.
 %_man5dir/*.5*
 
 %changelog
+* Mon Jun 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
+- Updated to upstream version 1.2.2.
+- Added watch file.
+
 * Tue Apr 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1
 - Updated to upstream version 1.2.1.
 
