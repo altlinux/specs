@@ -6,7 +6,7 @@ Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
 Version: 4.75
-Release: alt4
+Release: alt5
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -16,11 +16,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 Patch0:		IO-AIO-4.4-shellbang.patch
 
-# patch1&2: AIO.xs defines add in IO::AIO::GRP
-# but AIO.pm assume add in IO::AIO.
-# starting from perl 5.32.1 it seems to be broken
-# we forcibly allias add in IO::AIO and also due to
-# broken perl parser we use function syntax for add
+# patch1&2: for perl7
 Patch1:		IO-AIO-4.75-alt-add-not-defined.patch
 Patch2:		IO-AIO-4.75-alt-import-add.patch
 
@@ -58,8 +54,10 @@ scripts for %name
 
 # Fix shellbang in treescan (perl 5.32 syntax)
 %patch0
-%patch1 -p1
-%patch2 -p1
+
+# an attempt of perl7 support
+#patch1 -p1
+#patch2 -p1
 
 %build
 %perl_vendor_build
@@ -78,6 +76,9 @@ scripts for %name
 
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:4.75-alt5
+- no need for perl 7 patches
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:4.75-alt4
 - completely patched IO-AIO for perl 5.32+
 - enabled tests
