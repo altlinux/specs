@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt3_14
+Release:        alt4_14
 Summary:        Unicode Text Segmentation Package
 License:        GPLv2+ or Artistic clarified
 URL:            http://sf.net/projects/linefold/
@@ -72,6 +72,9 @@ ln -s sombok-%{_arch}.h %buildroot%_includedir/sombok-i386.h ||:
 %ifarch armh
 ln -s sombok-armh.h %buildroot%_includedir/sombok-arm.h
 %endif
+%ifarch %{e2k}
+mv -f %buildroot%_includedir/{sombok-%{_arch},sombok}.h
+%endif
 
 
 
@@ -90,6 +93,9 @@ ln -s sombok-armh.h %buildroot%_includedir/sombok-arm.h
 
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt4_14
+- e2k support
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt3_14
 - fix for i586
 
