@@ -1,6 +1,6 @@
 Name: nvdock
 Version: 1.02
-Release: alt2
+Release: alt3
 
 Summary: A tray icon to easily launch the nvidia-settings control panel
 
@@ -43,6 +43,9 @@ RPM_OPT_FLAGS="%optflags" \
 %_desktopdir/*
 
 %changelog
+* Mon Jun 21 2021 L.A. Kostis <lakostis@altlinux.ru> 1.02-alt3
+- update -alt patch (more -fno-common fixes).
+
 * Mon Jun 21 2021 L.A. Kostis <lakostis@altlinux.ru> 1.02-alt2
 - add exclusive arch.
 
