@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.19.0
+Version: 2.19.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -174,6 +174,18 @@ AutoReq: noshell, noshebang
 %description kickstart
 Kickstart module for %name
 
+%package sshfs
+Summary: sshfs module for %name
+Group: System/Base
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: fuse-sshfs
+AutoReq: noshell, noshebang
+
+%description sshfs
+Feature adds the ability to mount the root using SSH (more precisely, the SFTP
+subsystem). Most SSH servers support and enable this SFTP access by default, so
+SSHFS is very simple to use.
 
 %prep
 %setup -q
@@ -226,6 +238,7 @@ fi
 %exclude %_datadir/%name/guess/ucode
 %exclude %_datadir/%name/features/iscsi
 %exclude %_datadir/%name/features/kickstart
+%exclude %_datadir/%name/features/sshfsroot
 %doc Documentation/*.md
 
 %files devmapper
@@ -261,7 +274,14 @@ fi
 %files kickstart
 %_datadir/%name/features/kickstart
 
+%files sshfs
+%_datadir/%name/features/sshfsroot
+
 %changelog
+* Mon Jun 21 2021 Alexey Gladkov <legion@altlinux.ru> 2.19.1-alt1
+- New version (2.19.1).
+- Unblock image generation in the absence of drm modules (ALT#40243).
+
 * Thu Jun 17 2021 Alexey Gladkov <legion@altlinux.ru> 2.19.0-alt1
 - New version (2.19.0).
 - Add add-udev-rules to the list of dependencies of other features (ALT#40228).
