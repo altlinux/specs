@@ -4,7 +4,7 @@
 
 Name: perl-AnyEvent-SNMP
 Version: 6.02
-Release: alt1
+Release: alt2
 
 Summary: Perl adaptor to integrate Net::SNMP into AnyEvent
 
@@ -27,6 +27,8 @@ BuildRequires: perl-CPAN-Meta perl-Net-SNMP perl-devel
 
 BuildRequires: perl-Math-BigInt perl-AnyEvent perl-common-sense
 
+Patch: AnyEvent-SNMP-6.02-perl532.patch
+
 %description
 Perl module AnyEvent::SNMP implements an alternative event
 dispatcher for Net::SNMP, using AnyEvent as a backend.
@@ -37,6 +39,7 @@ supported by AnyEvent), they will run in parallel.
 
 %prep
 %setup -q -n %real_name-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -49,6 +52,9 @@ supported by AnyEvent), they will run in parallel.
 %perl_vendor_privlib/AnyEvent/SNMP*
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 6.02-alt2
+- NMU: fixed build with perl 5.32+
+
 * Tue Mar 31 2020 Nikolay A. Fetisov <naf@altlinux.org> 6.02-alt1
 - New version
 
