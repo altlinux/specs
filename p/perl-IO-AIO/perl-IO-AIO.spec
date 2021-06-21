@@ -1,12 +1,12 @@
 #set_perl_req_method relaxed
-%define _without_test 1
+#define _without_test 1
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
 Version: 4.75
-Release: alt3
+Release: alt4
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -15,7 +15,14 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 Patch0:		IO-AIO-4.4-shellbang.patch
-Patch1:		IO-AIO-4.75-alt-perl532.patch
+
+# patch1&2: AIO.xs defines add in IO::AIO::GRP
+# but AIO.pm assume add in IO::AIO.
+# starting from perl 5.32.1 it seems to be broken
+# we forcibly allias add in IO::AIO and also due to
+# broken perl parser we use function syntax for add
+Patch1:		IO-AIO-4.75-alt-add-not-defined.patch
+Patch2:		IO-AIO-4.75-alt-import-add.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel perl(Canary/Stability.pm)
@@ -52,6 +59,7 @@ scripts for %name
 # Fix shellbang in treescan (perl 5.32 syntax)
 %patch0
 %patch1 -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build
@@ -70,6 +78,10 @@ scripts for %name
 
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:4.75-alt4
+- completely patched IO-AIO for perl 5.32+
+- enabled tests
+
 * Sat Jun 19 2021 Igor Vlasenko <viy@altlinux.org> 2:4.75-alt3
 - removed set req method to relaxed
 
