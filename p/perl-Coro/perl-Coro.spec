@@ -1,4 +1,3 @@
-%set_perl_req_method relaxed
 Epoch: 2
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -10,7 +9,7 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 %global cpan_version 6.57
 Name:           perl-Coro
 Version:        6.570
-Release:        alt3_1
+Release:        alt4_1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -129,7 +128,8 @@ for F in Coro/jit-*.pl; do
 done
 %fix_shbang_line eg/myhttpd
 
-%patch33 -p1
+# no need; fixed by rebuild of perl-common-sense
+#patch33 -p1
 
 %build
 # Disable FORTIFY_SOURCE on ARM as it breaks setjmp - RHBZ 750805
@@ -148,7 +148,7 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} %{buildroot}/*
 
 %check
-%if 0
+%if 1
 %{make_build} test
 %endif
 
@@ -161,6 +161,10 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:6.570-alt4_1
+- restored tests
+- removed set_perl_req_method relaxed
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:6.570-alt3_1
 - partial perl7 patch
 
