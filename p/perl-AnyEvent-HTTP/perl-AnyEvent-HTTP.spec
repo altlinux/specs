@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-AnyEvent-HTTP
 Version: 2.25
-Release: alt2
+Release: alt3
 Summary: AnyEvent::HTTP - simple but non-blocking HTTP/HTTPS client
 
 Group: Development/Perl
@@ -22,9 +22,6 @@ BuildRequires: perl-AnyEvent perl-common-sense perl-devel
 %patch -p1
 %patch1 -p1
 
-# qick hack til IO-AIO will be fixed
-rm t/01_basic.t
-
 %build
 %perl_vendor_build
 
@@ -36,6 +33,9 @@ rm t/01_basic.t
 %doc Changes README
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2.25-alt3
+- enabled tests disabled for IO-AIO
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2.25-alt2
 - support for perl v7 - no feature qw(indirect);
 
