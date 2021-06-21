@@ -55,7 +55,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.31.90
+Version: 1.32.0
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -618,6 +618,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Jun 21 2021 Mikhail Efremov <sem@altlinux.org> 1.32.0-alt1
+- Updated to 1.32.0.
+
 * Fri Jun 11 2021 Mikhail Efremov <sem@altlinux.org> 1.31.90-alt1
 - D-Bus service files installed in /usr now.
 - etcnet-alt: Rename libnm-glib-aux function.
