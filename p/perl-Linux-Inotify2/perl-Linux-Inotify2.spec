@@ -2,7 +2,7 @@
 %define dist Linux-Inotify2
 Name: perl-%dist
 Version: 2.2
-Release: alt2
+Release: alt3
 
 Summary: Scalable directory/file change notification
 License: GPL or Artistic
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
-Patch: Linux-Inotify2-2.2-perl532.patch
+Patch: Linux-Inotify2-2.2-perl7.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-common-sense perl-devel
@@ -21,7 +21,7 @@ Inotify file/directory change notification system.
 
 %prep
 %setup -q -n %{dist}-%{version}
-%patch -p1
+#patch -p1
 
 # wrong cancel return value?
 sed -i- 's/watch->cancel,/watch->cancel || 1,/' t/01_inotify.t
@@ -38,6 +38,9 @@ sed -i- 's/watch->cancel,/watch->cancel || 1,/' t/01_inotify.t
 %perl_vendor_autolib/Linux
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2.2-alt3
+- disabled perl 7 patch for now
+
 * Sat May 29 2021 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2
 - perl 5.32 support
 
