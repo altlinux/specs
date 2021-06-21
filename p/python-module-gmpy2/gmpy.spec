@@ -5,27 +5,21 @@ BuildRequires: unzip
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.8
-Release: alt1.1
+Version: 2.1.0
+Release: alt0.1.b5
 Summary: GMP/MPIR, MPFR, and MPC interface
-License: LGPL
+License: LGPL-3.0+
 Group: Development/Python
 Url: http://code.google.com/p/gmpy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/90/f4/9a2e384b325b69bc5827b9a6510a8fb4a51698c915c06a3f25a86458892a/%{oname}-%{version}.zip
 
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-devel libgmp-devel libmpfr-devel libmpc-devel
-#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libgmp-devel libmpfr-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
 BuildRequires: libmpc-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
-
-#BuildRequires: python3-devel
+BuildRequires: python3-devel
 %endif
 
 %description
@@ -135,6 +129,10 @@ popd
 %endif
 
 %changelog
+* Mon Jun 21 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt0.1.b5
+- New version from https://github.com/aleaxit/gmpy/tree/gmpy2-2.1.0b5.
+- Set LGPL version in License tag.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.8-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
