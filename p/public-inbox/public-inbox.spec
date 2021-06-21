@@ -1,8 +1,8 @@
 Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
-Version: 1.6.0.107.g355c345f
-Release: alt2
+Version: 1.6.1.1190.g8e112fe2
+Release: alt1
 
 Group: Networking/Mail
 License: AGPL-3.0
@@ -12,9 +12,11 @@ Source0: %name-%version.tar
 
 Patch0: 0001-Do-not-show-loose-matches.patch
 Patch1: 0002-Hide-from-thread-missing-messages.patch
+Patch2: 0003-tests-fix-failed-testcases.patch
 
 BuildArch: noarch
 
+BuildRequires: curl
 BuildRequires: rpm-build-perl
 BuildRequires: git-core
 BuildRequires: pkg-config
@@ -86,15 +88,14 @@ public-inbox spawned around three main ideas:
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 pushd certs
 perl ./create-certs.perl
 popd
 
-rm -f -- t/eml.t
+rm -f -- t/hl_mod.t
 
 %perl_vendor_build
 
@@ -120,6 +121,12 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Mon Jun 21 2021 Alexey Gladkov <legion@altlinux.ru> 1.6.1.1190.g8e112fe2-alt1
+- New git snapshot (v1.6.1-1190-g8e112fe2).
+
+* Mon Jun 21 2021 Alexey Gladkov <legion@altlinux.ru> 1.6.1-alt1
+- New version (1.6.1).
+
 * Mon Nov 16 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.107.g355c345f-alt2
 - Hide in thread missing messages.
 - Hide in thread loose matches.
