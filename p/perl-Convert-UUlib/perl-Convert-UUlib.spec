@@ -1,11 +1,11 @@
-%set_perl_req_method relaxed
-%define _without_test 1
+#set_perl_req_method relaxed
+#define _without_test 1
 %define _unpackaged_files_terminate_build 1
 %define module	Convert-UUlib
 
 Name: perl-%module
 Version: 1.8
-Release: alt3
+Release: alt4
 Epoch: 3
 Summary: Perl interface to the uulib library (a.k.a. uudeview/uuenview)
 
@@ -49,6 +49,11 @@ binary files into all of these representations except BinHex.
 %perl_vendor_autolib/Convert
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 3:1.8-alt4
+- properly fixed for perl 5.34
+- removed req_method relaxed
+- enabled tests again
+
 * Sun May 30 2021 Igor Vlasenko <viy@altlinux.org> 3:1.8-alt3
 - disabled tests and set req method to relaxed to pass perl 5.32 rebuild
 
