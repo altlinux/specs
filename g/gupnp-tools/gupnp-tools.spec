@@ -2,7 +2,7 @@
 %define ver_major 0.10
 
 Name: gupnp-tools
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A collection of developer tools utilising GUPnP and GTK+3
@@ -67,6 +67,9 @@ test and debug one's UPnP devices and control points.
 %doc AUTHORS README* NEWS
 
 %changelog
+* Tue Jun 22 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
+- 0.10.1
+
 * Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0 (ported to gssdp/gupnp-1.2)
 
