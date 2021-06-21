@@ -4,7 +4,7 @@
 
 Name:    ardour
 Version: 6.7
-Release: alt1
+Release: alt2
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -83,6 +83,11 @@ See the online user manual at http://en.flossmanuals.net/ardour/index/
 
 %prep
 %setup
+%ifarch %e2k
+# wscript set CXXFLAGS_OSX without checking sys.platform
+# GCC silently ignores -Fxxx options, but LCC responds with an error
+sed -i "/conf.env.append_value('CXXFLAGS_OSX', '-F/s|conf.env|pass # conf.env|" wscript
+%endif
 
 # Generate revision number
 echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
@@ -103,7 +108,8 @@ echo 'namespace ARDOUR { const char* revision = "6.7"; const char* date = "'$(da
 
 %__python ./waf build \
     --nls \
-    --docs
+    --docs \
+    -j%__nprocs
 
 %__python ./waf i18n_mo
 
@@ -130,6 +136,10 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png \
 %_iconsdir/ardour6.png
 
 %changelog
+* Mon Jun 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.7-alt2
+- fixed a bug in the build script that appears on Elbrus
+- enabled multithreaded build
+
 * Fri May 28 2021 Grigory Ustinov <grenka@altlinux.org> 6.7-alt1
 - Build new version.
 - Switch to building from git.
