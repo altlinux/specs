@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%def_with bootstrap
+
 %define dist AnyEvent
 Name: perl-%dist
 Version: 7.17
-Release: alt2
+Release: alt3
 
 Summary: Framework for multiple event loops
 License: GPL or Artistic
@@ -10,15 +12,29 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
-Patch: AnyEvent-7.14-syntax-fix.patch
+Patch: AnyEvent-7.17-syntax-fix.patch
 
 BuildArch: noarch
 
-# XXX choose default model?
-%add_findreq_skiplist */AnyEvent/Impl/*.pm
-
 # classified as non-text
 Provides: perl(AnyEvent/Util/uts46data.pl)
+
+# missing
+%add_findreq_skiplist */AnyEvent/Impl/Cocoa.pm
+%add_findreq_skiplist */AnyEvent/Impl/FLTK.pm
+%add_findreq_skiplist */AnyEvent/Impl/Qt.pm
+# in autoimports
+%add_findreq_skiplist */AnyEvent/Impl/UV.pm
+# should be ryun inside Irssi
+%add_findreq_skiplist */AnyEvent/Impl/Irssi.pm
+%if_with bootstrap
+# XXX choose default model?
+%add_findreq_skiplist */AnyEvent/Impl/*.pm
+%else
+BuildRequires: perl(Event.pm) perl(Event/Lib.pm) perl(Glib.pm) perl(IO/Async/Loop.pm) perl(Irssi.pm) perl(POE.pm) perl(Tk.pm)
+# in autoimports 
+#BuildRequires: perl(UV.pm)
+%endif
 
 # Automatically added by buildreq on Wed Oct 26 2011 (-bi)
 BuildRequires: perl-Async-Interrupt perl-EV perl-Guard perl-Net-SSLeay perl-Unicode-Normalize perl-devel perl(IO/AIO.pm) perl(AnyEvent/AIO.pm)
@@ -37,15 +53,10 @@ sed -i 's@require "lib/AnyEvent@require "AnyEvent@' lib/AnyEvent/Util.pm
 # disable archlib hack
 sed -i- '/ PM /,/}/d' Makefile.PL
 
-
-# til IO-AIO will be fixed
-rm t/05_dns.t
-rm t/12_io_ioaio.t
-rm t/81_hosts.t
-
 %build
-# TODO til IO-AIO
-#export PERL_ANYEVENT_LOOP_TESTS=1
+%if_without bootstrap
+export PERL_ANYEVENT_LOOP_TESTS=1
+%endif
 %perl_vendor_build
 
 %install
@@ -57,6 +68,10 @@ rm t/81_hosts.t
 %perl_vendor_privlib/AnyEvent*
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 7.17-alt3
+- enabled IO-AIO tests
+- added bootstrap mode
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 7.17-alt2
 - fixes for perl 5.32+
 
