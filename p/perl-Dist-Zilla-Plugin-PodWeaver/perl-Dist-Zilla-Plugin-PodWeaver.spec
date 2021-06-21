@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-PodWeaver
 
 Name: perl-Dist-Zilla-Plugin-PodWeaver
-Version: 4.008
-Release: alt2
+Version: 4.009
+Release: alt1
 
 Summary: weave Pod together from configuration and Dist::Zilla
 
@@ -44,5 +44,8 @@ reconstructs it as boring old real Pod.
 %perl_vendor_privlib/Dist/Zilla/Plugin/PodWeaver*
 
 %changelog
+* Mon Jun 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.009-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 4.008-alt2
 - Initial build for ALT Linux Sisyphus
