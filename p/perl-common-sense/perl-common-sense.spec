@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 3.75
-Release: alt1
+Release: alt2
 
 Summary: "Common sense" Perl defaults
 License: Perl
@@ -11,6 +11,7 @@ Group: Development/Perl
 
 Url: %CPAN %module
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.gz
+Patch1:	common-sense-3.71-podenc.patch
 
 #BuildArch: noarch
 
@@ -18,15 +19,28 @@ Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.g
 BuildRequires: perl-devel
 
 %description
-This module implements some sane defaults for Perl programs, as defined by two
-typical (or not so typical - use your common sense) specimens of Perl coders:
+This module implements some sane defaults for Perl programs, as defined
+by two typical (or not so typical - use your common sense) specimens of
+Perl coders:
 
- use strict qw(vars subs);
- use feature qw(say state switch);
- no warnings;
+It's supposed to be mostly the same, with much lower memory usage, as:
+
+	use utf8;
+	use strict qw(vars subs);
+	use feature qw(say state switch);
+	use feature qw(unicode_strings unicode_eval current_sub fc evalbytes);
+	no feature qw(array_base);
+	no warnings;
+	use warnings qw(FATAL closed threads internal debugging pack
+			prototype inplace io pipe unpack malloc
+			deprecated glob digit printf layer
+			reserved taint closure semicolon);
+	no warnings qw(exec newline unopened);
+
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch1
 
 %build
 %perl_vendor_build
@@ -39,6 +53,10 @@ typical (or not so typical - use your common sense) specimens of Perl coders:
 %perl_vendor_archlib/common
 
 %changelog
+* Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 3.75-alt2
+- added pom patch
+- rebuilt with perl 5.34
+
 * Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 3.75-alt1
 - automated CPAN update
 
