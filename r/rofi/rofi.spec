@@ -1,7 +1,7 @@
 
 Name: rofi
-Version: 1.5.4
-Release: alt2
+Version: 1.6.1
+Release: alt1
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
 Group: Graphical desktop/Other
@@ -77,6 +77,9 @@ Requires: %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jun 21 2021 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Wed Aug 07 2019 Konstantin Artyushkin <akv@altlinux.org> 1.5.4-alt2
 - New 1.5.4 version
 
