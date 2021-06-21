@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.4.1
-Release: alt2
+Release: alt4
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -8,10 +8,11 @@ Group: System/Configuration/Other
 Url: http://wiki.sisyphus.ru/Alterator
 
 Source: %name-%version.tar
-Patch: alterator-5.1-compilation-workaround.patch
+Patch0: alterator-5.1-compilation-workaround.patch
 Patch1: alterator-guile20.patch
-Patch2: alterator-5.1-call-cc-via-shift.patch
+Patch2: alterator-5.4.1-call-cc-via-shift.patch
 Patch3: alterator-5.1-eval-set-fix.patch
+Patch4: alterator-5.4.1-fix-call-cc-via-shift-for-guile20.patch
 
 #backward compatibility
 Provides: %name-common = %version , %name-menu = %version, %name-help = %version, %name-sdk = %version, %name-autoinstall = %version
@@ -22,8 +23,10 @@ Requires: alterator-l10n >= 2.0-alt2
 Requires: alterator-sh-functions
 %ifarch %e2k
 Requires: guile20 libguile20
+%def_with guile20
 %else
 Requires: guile22
+%def_without guile20
 %endif
 %{?!_with_bootstrap:Requires: alterator-lookout}
 
@@ -74,14 +77,28 @@ Conflicts: %name < 4.7-alt6
 Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
 
+%ifarch %e2k
+%def_with delimited_continuations
+%else
+%def_without delimited_continuations
+%endif
+
 %prep
 %setup
-%patch -p2
+%patch0 -p2
+
 %ifarch %e2k
 sed -i "s:guile/2.2:guile/2.0:g" build/guile-ext.mak
 %patch1 -p2
-%patch2 -p2
 %endif
+
+%if_with delimited_continuations
+%patch2 -p2
+%if_with guile20
+%patch4 -p2
+%endif
+%endif
+
 %patch3 -p2
 
 %build
@@ -167,6 +184,13 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Jun 21 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt4
+- Use additional fixes for delimited continuations with Guile 2.0.
+
+* Fri Jun 11 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt3
+- Added "with delimited_continuations" spec option (on for E2K).
+- New version of the reset/shift hack.
+
 * Wed Aug 26 2020 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt2
 - Disable auto compilation of .scm files.
 

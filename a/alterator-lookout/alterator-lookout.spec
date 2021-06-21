@@ -1,6 +1,6 @@
 Name: alterator-lookout
 Version: 2.7
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -8,15 +8,12 @@ Summary: dialog based interface for alterator
 License: GPL
 Group: System/Configuration/Other
 
-Requires: alterator >= 5.1-alt7
+Requires: alterator >= 5.4.1-alt3
 Requires: alterator-l10n >= 1.5-alt1
 Conflicts: alterator-browser-qt < 2.17.0-alt1
 Conflicts: alterator-wizardface < 1.1-alt3
 
-Patch0: alterator-lookout-2.6-shift-reset.patch
-Patch1: alterator-lookout-2.6-register-fluids.patch
-
-BuildPreReq: alterator >= 5.1-alt7
+BuildPreReq: alterator >= 5.4.1-alt3
 BuildPreReq: guile-devel
 
 %description
@@ -28,10 +25,6 @@ dialog based interface for alterator
 
 %prep
 %setup
-%ifarch %e2k
-%patch0 -p2
-%patch1 -p2
-%endif
 
 %build
 %make_build libdir=%_libdir
@@ -51,6 +44,9 @@ export GUILE_LOAD_PATH="lookout"
 %_alterator_datadir/ui/*
 
 %changelog
+* Fri Jun 11 2021 Paul Wolneykien <manowar@altlinux.org> 2.7-alt3
+- No special patches for partial continuations.
+
 * Fri Sep 11 2020 Michael Shigorin <mike@altlinux.org> 2.7-alt2
 - E2K: generalize BR: and use %%e2k for patches instead of e2k
 

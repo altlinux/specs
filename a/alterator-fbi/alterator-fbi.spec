@@ -2,10 +2,11 @@
 
 Name: alterator-fbi
 Version: 5.49.1
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
-Patch: alterator-fbi-5.42-call-cc-via-reset.patch
+Patch0: alterator-fbi-5.49.1-call-cc-via-reset.patch
+Patch1: alterator-fbi-5.49.1-call-ec-for-escapes.patch
 
 Summary: alterator on rails
 License: GPL
@@ -18,7 +19,7 @@ Obsoletes: alterator-http, ahttpd, httpd-alterator, alterator-ahttpd
 Requires: alterator-sh-functions >= 0.13-alt2
 Requires: avahi-sh-functions >= 0.1-alt2
 Requires: design-alterator
-Requires: alterator >= 5.0-alt1
+Requires: alterator >= 5.4.1-alt3
 Requires: alterator-l10n >= 2.7-alt4
 Requires: alterator-sslkey
 Requires: gettext
@@ -28,11 +29,10 @@ Requires: /etc/cron.d
 Requires(pre): libguile-vhttpd >= 0.7.7-alt1
 Requires(pre): shadow-utils
 
-BuildPreReq: alterator >= 5.0-alt1, libguile-vhttpd, libexpat-devel
+BuildPreReq: alterator >= 5.4.1-alt3, libguile-vhttpd, libexpat-devel
 
 %ifarch %e2k
 BuildRequires: guile20-devel libguile20-devel
-BuildRequires: alterator >= 5.1-alt7
 %else
 BuildPreReq: guile22-devel
 %endif
@@ -46,10 +46,18 @@ this is an alterator based engine (form based interface) to create a simple form
 %add_verify_elf_skiplist %_alterator_libdir/*
 %add_findreq_skiplist %_alterator_libdir/*
 
+%ifarch %e2k
+%def_with delimited_continuations
+%else
+%def_without delimited_continuations
+%endif
+
 %prep
 %setup
-%ifarch %e2k
-%patch -p2
+
+%if_with delimited_continuations
+%patch0 -p2
+%patch1 -p2
 %endif
 
 %build
@@ -153,6 +161,10 @@ fi ||:
 
 
 %changelog
+* Fri Jun 11 2021 Paul Wolneykien <manowar@altlinux.org> 5.49.1-alt2
+- Added "with delimited_continuations" spec option (on for E2K).
+- New version of the reset/shift hack.
+
 * Wed Aug 26 2020 Paul Wolneykien <manowar@altlinux.org> 5.49.1-alt1
 - Disable auto compilation of .scm files.
 
