@@ -3,7 +3,7 @@
 %define real_name Pod-Weaver
 
 Name: perl-Pod-Weaver
-Version: 4.017
+Version: 4.018
 Release: alt1
 
 Summary: Perl module to weave together a Pod document from an outline
@@ -48,6 +48,9 @@ on an existing Pod document or other provided information.
 %perl_vendor_privlib/Pod/Weaver*
 
 %changelog
+* Mon Jun 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.018-alt1
+- New version
+
 * Sat May 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.017-alt1
 - New version
 
