@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.34
+Version: 0.35
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -40,7 +40,6 @@ Requires(pre): java-devel >= 1.8.0 java >= 1.8.0
 Conflicts: java-devel > 1.8.99 java > 1.8.99 java-headless > 1.8.99
 
 Requires: jpackage-generic-compat
-Provides: jpackage-core = %version-%release
 Provides: jpackage-compat = %version-%release
 Obsoletes: jpackage-1.4-compat < %version
 Obsoletes: jpackage-1.5-compat < %version
@@ -57,35 +56,12 @@ JPackage compatibility package. the main goal is to provide all nessssary symlin
 Requires and BuildRequires for ALT to be build compatible with JPackage.
 Provides JPackage build environment with java-1.8.0.
 
-%package -n jpackage-9-compat
-Summary: JPackage build environment with java-9.
-Group: Development/Java
-
-Requires: jpackage-generic-compat
-Requires(pre): java-9-devel >= 9 java-9 >= 9
-Conflicts: java-devel > 9.99 java > 9.99 java-headless > 9.99
-
-%description -n jpackage-9-compat
-JPackage compatibility package. the main goal is to provide all nessssary symlinks,
-Requires and BuildRequires for ALT to be build compatible with JPackage.
-Provides JPackage build environment with java-9.
-
-%package -n jpackage-10-compat
-Summary: JPackage build environment with java-10.
-Group: Development/Java
-
-Requires: jpackage-generic-compat
-Requires(pre): java-10-devel >= 10 java-10 >= 10
-Conflicts: java-devel > 10.99 java > 10.99 java-headless > 10.99
-
-%description -n jpackage-10-compat
-JPackage compatibility package. the main goal is to provide all nessssary symlinks,
-Requires and BuildRequires for ALT to be build compatible with JPackage.
-Provides JPackage build environment with java-10.
-
 %package -n jpackage-11-compat
 Summary: JPackage build environment with java-11.
 Group: Development/Java
+Obsoletes: jpackage-9-compat < %version
+Obsoletes: jpackage-10-compat < %version
+Provides: jpackage-default = %version-%release
 #Provides: jpackage-core = %version-%release
 #Provides: jpackage-compat = %version-%release
 
@@ -109,11 +85,13 @@ install -d $RPM_BUILD_ROOT%_datadir
 
 %files
 %files -n jpackage-1.8-compat
-%files -n jpackage-9-compat
-%files -n jpackage-10-compat
 %files -n jpackage-11-compat
 
 %changelog
+* Tue Jun 22 2021 Igor Vlasenko <viy@altlinux.org> 0.35-alt1
+- added jpackage-default
+- removed unused jpackage-9,10-compat
+
 * Fri Jun 18 2021 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
 - dropped requires on jpackage-utils
 
