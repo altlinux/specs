@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -88,6 +88,11 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri May 28 2021 Alexey Appolonov <alexey@altlinux.org> 0.6.0-alt1
+- Improved API;
+- Ability to have optional nodes in branch drafts;
+- Ability to index selected values.
+
 * Thu Feb 18 2021 Alexey Appolonov <alexey@altlinux.org> 0.5.2-alt1
 - Fixed XML parsing;
 - Validation of XML documents is optional (disabled by default).
