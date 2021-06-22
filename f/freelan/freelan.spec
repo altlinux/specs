@@ -1,6 +1,6 @@
 Name: freelan
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: Peer-to-peer virtual private network daemon
 License: GPLv3+
@@ -36,7 +36,16 @@ gaming.
 %setup
 
 %build
-scons %_smp_mflags --mode=release apps prefix=/ bin_prefix=%_usr --upnp=yes --mongoose=no
+%ifarch %e2k
+# build/release/libs/asiotap/src/posix/posix_tap_adapter.cpp:135
+%add_optflags -Wno-error=unused-function
+%endif
+CXXFLAGS="%optflags" \
+scons %_smp_mflags \
+	--mode=release apps prefix=/ bin_prefix=%_usr \
+	--upnp=yes \
+	--mongoose=no \
+	#
 
 %install
 install -pDm755 build/release/bin/freelan %buildroot/%_bindir/%name
@@ -56,6 +65,9 @@ install -pDm755 %SOURCE2 %buildroot/%_initdir/%name
 %preun
 %preun_service %name
 %changelog
+* Wed Jun 23 2021 Michael Shigorin <mike@altlinux.org> 2.3-alt2
+- E2K: ftbfs workaround
+
 * Thu Dec 17 2020 Nikolay Burykin <bne@altlinux.org> 2.3-alt1
 - Initial build for ALT
 
