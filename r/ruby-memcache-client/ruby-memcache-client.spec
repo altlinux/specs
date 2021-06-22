@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 1.7.8
-Release: alt1
+Release: alt2
 Summary: Ruby client for Danga Interactive's memcached
 License: MIT
 Group: Development/Ruby
@@ -16,8 +16,7 @@ Patch1: remove_require_to_continuum_native.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Jul 08 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-flexmock ruby-tool-rdoc ruby-tool-setup
+BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
 BuildRequires: ruby-test-unit
 
 %description
@@ -51,6 +50,9 @@ rm -f lib/continuum_native.rb
 %ruby_gemdocdir
 
 %changelog
+* Tue Jun 22 2021 Andrey Cherepanov <cas@altlinux.org> 1.7.8-alt2
+- FTBFS: remove ruby-flexmock from build requires.
+
 * Mon Apr 15 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.8-alt1
 - Update to 1.7.8
 - Move to the new scheme
