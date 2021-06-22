@@ -4,8 +4,8 @@
 %define zmgroup _webserver
 
 Name: zoneminder
-Version: 1.36.3
-Release: alt2
+Version: 1.36.4
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -163,6 +163,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Tue Jun 22 2021 Anton Farygin <rider@altlinux.ru> 1.36.4-alt1
+- 1.36.4
+
 * Mon May 31 2021 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2
 - removed include to upstream patch with MySQL-8 support
 - used cmakeinstall_std for compatability with old ALT repositories
