@@ -1,9 +1,9 @@
 Name:    highlight
 Summary: Universal source code to formatted text converter
-Version: 3.58
+Version: 4.1
 Release: alt1
 Group:   Development/Tools
-License: GPLv3
+License: GPL-3.0
 URL:     http://www.andre-simon.de/
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -99,6 +99,9 @@ rm -rf -- %buildroot/%_datadir/doc/%name
 %perl_vendor_archlib/*
 
 %changelog
+* Wed Jun 23 2021 Alexey Gladkov <legion@altlinux.ru> 4.1-alt1
+- New version (4.1).
+
 * Thu Oct 15 2020 Alexey Gladkov <legion@altlinux.ru> 3.58-alt1
 - New version (3.58).
 
