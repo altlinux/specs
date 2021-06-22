@@ -4,7 +4,7 @@
 
 Name:          %pkgname
 Version:       6.0.4
-Release:       alt1
+Release:       alt1.1
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нгинкс
 Group:         System/Servers
@@ -19,8 +19,11 @@ Source2:       %name.conf
 Source3:       %name.start
 Source4:       locations.ini
 
+ExcludeArch: armh
+
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-apache2
+BuildRequires(pre): rpm-build-python3
 BuildRequires: %(eval echo %apache2_apr_buildreq)
 BuildRequires: apache2-devel >= 2.2.5
 BuildRequires: zlib-devel
@@ -31,6 +34,8 @@ BuildRequires: libcurl-devel
 BuildRequires: apache2-httpd-worker
 BuildRequires: gcc-c++
 BuildRequires: gem(rack)
+
+ExcludeArch: armh
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 Requires(pre): apache2 >= %apache2_version-%apache2_release
@@ -85,7 +90,6 @@ Library files for %gemname gem.
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
 Group:         Development/Documentation
-BuildArch:     noarch
 
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
@@ -96,6 +100,9 @@ Documentation files for %gemname gem.
 
 %prep
 %setup
+# Set correct python3 executable in shebang
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
+subst '1i #!%__python3' test/stub/wsgi/passenger_wsgi.py
 
 %build
 %ruby_build --pre=apache2
@@ -184,6 +191,10 @@ fi
 %apache2_libexecdir/%mod_name.so
 
 %changelog
+* Mon Jun 21 2021 Andrey Cherepanov <cas@altlinux.org> 6.0.4-alt1.1
+- FTBFS: use autoreq with python3.
+- Exclude build on armh.
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 6.0.4-alt1
 - ^ 6.0.2 -> 6.0.4
 - ! spec tags
