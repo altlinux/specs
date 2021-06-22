@@ -3,7 +3,7 @@
 %def_with check
 
 Name: freeipa-healthcheck
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: Check the health of a FreeIPA installation
@@ -20,7 +20,6 @@ Requires: python3-module-%name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-ipaserver
-BuildRequires: python3-module-pytest-runner
 
 %if_with check
 BuildRequires: python3(tox)
@@ -109,6 +108,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/ipaclustercheck/
 
 %changelog
+* Fri Jun 18 2021 Stanislav Levin <slev@altlinux.org> 0.9-alt1
+- 0.8 -> 0.9.
+
 * Tue Mar 30 2021 Stanislav Levin <slev@altlinux.org> 0.8-alt1
 - 0.7 -> 0.8.
 
