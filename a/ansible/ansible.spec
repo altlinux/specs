@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.9.23
-Release: alt1
+Release: alt2
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -10,6 +10,7 @@ Source1: hacking.tar
 
 Patch0: %name-alt.patch
 Patch1: ansible-apt_rpm-list-of-packages-support.patch
+Patch2: ansible_native_concat-use-to_text-rather-than-jinja2.patch
 
 Url: http://www.ansible.com
 
@@ -62,6 +63,7 @@ are transferred to managed machines automatically.
 tar xf %SOURCE1
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %python3_build
@@ -88,6 +90,10 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Jun 22 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.23-alt2
+- Apply upstream patch: ansible_native_concat: use to_text rather than jinja2's
+  text_type (thanks sbolshakov@).
+
 * Tue Jun 22 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.23-alt1
 - New version.
 
