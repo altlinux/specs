@@ -1,63 +1,62 @@
 Name: basic256
-Version: 0.9.6
-Release: alt8
-URL: http://kidbasic.sourceforge.net
+Version: 2.0.0.11
+Release: alt1
+Summary: Simple BASIC IDE that allows young children to learn to programming
+License: GPL-2.0+
+Group: Development/Other
+URL: http://basic256.org/
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
 Source: http://ovh.dl.sourceforge.net/sourceforge/kidbasic/%name-%version.tar.gz
 Source1: basic256.desktop
-Source2: basic256_32.png
-Patch0: basic256-0.9.6-alt-fix-say-function.patch
-Patch1: basic256-0.9.6-alt-glibc-2.16.patch
-Patch2: basic256-alt-fix-ambiguous-array.patch
 
-License: GPLv2
-Group: Development/Other
-Packager: Sergey Irupin <lamp@altlinux.org>
-
-BuildRequires: libqt4-devel libSDL-devel libSDL_mixer-devel libsqlite3-devel gcc-c++ flex bison
-
-Summary: Simple BASIC IDE that allows young children to learn to programming
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-multimedia-devel
+BuildRequires: qt5-serialport-devel
+BuildRequires: qt5-tools
+BuildRequires: libespeak-devel
+BuildRequires: libSDL-devel
+BuildRequires: libSDL_mixer-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: flex
+BuildRequires: bison
 
 %description
-BASIC-256 is a simple BASIC IDE that allows young children to learn to program. 
-It was written in response to David Brin's article, "Why Johnny Can't Code," 
-in which he bemoans the lack of a simple, line-oriented programming language 
-for children that runs on modern computers. It features a byte-code compiler 
-and interpreter, a debugger, easy to use graphical and text output, and an editor.
+BASIC-256 is a simple BASIC IDE that allows young children to learn to program.
+It was written in response to David Brin's article, "Why Johnny Can't Code,"
+in which he bemoans the lack of a simple, line-oriented programming language
+for children that runs on modern computers. It features a byte-code compiler
+and interpreter, a debugger, easy to use graphical and text output, and an
+editor.
 
 %prep
 %setup
-cd trunk
-%patch0 -p1
-%patch1 -p3
-%patch2 -p3
 
 %build
-cd trunk
-%add_optflags -D_REENTRANT
-%_libdir/qt4/bin/qmake
+%add_optflags -I%_includedir/espeak
+qmake-qt5
 %make_build CXXFLAGS="%optflags \$(DEFINES)"
-%_libdir/qt4/bin/lrelease Translations/*.ts
+lrelease-qt5 Translations/*.ts
 
 %install
-mkdir -p %buildroot%_datadir/%name/Examples
-mkdir -p %buildroot%_datadir/%name/help
-cd trunk
-install -D BASIC256 %buildroot%_bindir/BASIC256
-install Translations/*.qm %buildroot%_datadir/%name/
+mkdir -p %buildroot
+%make_install INSTALL_ROOT=%buildroot install
 install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
-install -D %SOURCE2 %buildroot%_niconsdir/%name.png
-cp -r Examples %buildroot%_datadir/%name/
-cp -r ./../doc/en/ %buildroot%_datadir/%name/help/
-cp -r ./../doc/ru/ %buildroot%_datadir/%name/help/
+install -Dpm0644 resources/icons/basic256.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 
 %files
-%doc trunk/CONTRIBUTORS trunk/license.txt trunk/ChangeLog
+%doc CONTRIBUTORS
 %_bindir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
-%_niconsdir/%name.png
+%_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Jun 22 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.0.11-alt1
+- New version.
+
 * Wed May 31 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt8
 - Fix executable name in dekstop file
 
@@ -99,7 +98,7 @@ cp -r ./../doc/ru/ %buildroot%_datadir/%name/help/
 - Change help system and add russian help.
 - Change some icons toolbar.
 
-* Wed Apr 10 2010 Sergey Irupin <lamp@altlinux.org> 0.9.5-alt1
+* Sat Apr 10 2010 Sergey Irupin <lamp@altlinux.org> 0.9.5-alt1
 - Updated to 0.9.5.
 - Russian translation updated.
 
