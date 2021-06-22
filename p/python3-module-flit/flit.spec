@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.2.0
 Release: alt1
 Summary: Simplified packaging of Python modules
 # ./flit/logo.py  under ASL 2.0 license
@@ -18,10 +18,6 @@ BuildArch: noarch
 
 # https://github.com/takluyver/flit
 Source: %name-%version.tar
-
-# https://github.com/takluyver/flit/pull/315
-# https://github.com/takluyver/flit/pull/378
-Patch1: %oname-upstream-pull-switch-to-toml.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pip python3-module-requests python3-module-docutils
@@ -50,7 +46,6 @@ so long as they can be imported on Python 3.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 export PYTHONPATH=$(pwd)/flit_core
@@ -78,6 +73,9 @@ pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %
 %_bindir/flit
 
 %changelog
+* Tue Jun 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt1
+- Updated to upstream version 3.2.0.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt1
 - Updated to upstream version 3.0.0.
 
