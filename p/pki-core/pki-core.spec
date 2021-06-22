@@ -12,8 +12,8 @@
 %define ldapjdk_version     4.22.0
 
 Name: pki-core
-Version: 10.10.5
-Release: alt3
+Version: 10.10.6
+Release: alt1
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -44,7 +44,6 @@ BuildRequires: zlib-devel
 BuildRequires: selinux-policy-alt
 
 BuildRequires: jackson
-BuildRequires: velocity
 BuildRequires: ldapjdk >= %ldapjdk_version
 BuildRequires: resteasy-atom-provider
 BuildRequires: resteasy-client
@@ -53,14 +52,12 @@ BuildRequires: tomcatjss >= %tomcatjss_version
 BuildRequires: xalan-j2
 BuildRequires: slf4j-jdk14
 BuildRequires: idm-console-framework
-BuildRequires: jna
 BuildRequires: junit
 
 # build dependency to build man pages
 BuildRequires: go-md2man
 
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-nss
 
 # healthcheck
 BuildRequires: python3-module-pytest-runner
@@ -417,7 +414,6 @@ set +o pipefail
     -DJAVA_HOME=%java_home \
     -DJAVA_LIB_INSTALL_DIR=%_jnidir \
     -DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
-    -DWITH_SYSTEMD_NOTIFICATION:BOOL=ON \
     -DAPP_SERVER=$app_server \
     -DJAXRS_API_JAR=%jaxrs_api_jar \
     -DRESTEASY_LIB=%resteasy_lib \
@@ -508,6 +504,9 @@ then
 fi
 
 %post -n pki-server
+# CVE-2021-3551: Remove world access from existing installation logs
+find /var/log/pki -maxdepth 1 -type f -exec chmod o-rwx {} \;
+
 if [ "$1" -ge 2 ]
 then
     systemctl daemon-reload ||:
@@ -649,7 +648,6 @@ fi
 %_javadir/pki/pki-cms.jar
 %_javadir/pki/pki-cmsbundle.jar
 %_javadir/pki/pki-tomcat.jar
-%_javadir/pki/pki-systemd.jar
 %dir %_sharedstatedir/pki
 %_man1dir/pkidaemon.1.*
 %_man5dir/pki_default.cfg.5.*
@@ -753,6 +751,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Fri Jun 18 2021 Stanislav Levin <slev@altlinux.org> 10.10.6-alt1
+- 10.10.5 -> 10.10.6 (fixes: CVE-2021-3551).
+
 * Fri Jun 11 2021 Stanislav Levin <slev@altlinux.org> 10.10.5-alt3
 - Built with Java11.
 

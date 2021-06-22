@@ -44,7 +44,7 @@
 
 Name: freeipa
 Version: 4.8.9
-Release: alt3
+Release: alt4
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1049,6 +1049,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Mon Jun 21 2021 Stanislav Levin <slev@altlinux.org> 4.8.9-alt4
+- Dropped dependency on python-nss.
+
 * Thu Apr 29 2021 Stanislav Levin <slev@altlinux.org> 4.8.9-alt3
 - Fixed FTBFS(new Pylint 2.8.2).
 
