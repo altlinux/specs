@@ -8,13 +8,16 @@
 %ifarch %ix86
 %define __arch i386
 %endif
+%ifarch %e2k
+%define __arch e2k
+%endif
 
 Name: quake3
 Version: 1.36
-Release: alt4.svn%revision
+Release: alt5.svn%revision
 
 Summary: Quake 3: Arena by ID Software
-License: GPL
+License: GPL-2
 Group: Games/Arcade
 Url: http://ioquake3.org
 
@@ -87,6 +90,10 @@ Quake 3: Arena by ID Software.
 %setup -q -n ioquake3
 %patch0 -p2
 %patch1 -p2
+%ifarch %e2k
+sed -i "/#define ARCH_STRING \"sh\"/a\\\n#elif defined __e2k__\n#define ARCH_STRING \"e2k\"" \
+    code/qcommon/q_platform.h
+%endif
 
 #rm -rf code/zlib code/libspeex
 
@@ -188,6 +195,10 @@ echo "In order to actually play the game, you'll need pak-files from original ga
 %dir %attr(1770,root,%_group) %_home
 
 %changelog
+* Mon Jun 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.36-alt5.svn2349
+- fixed build on Elbrus
+- corrected the license
+
 * Fri Apr 23 2021 Slava Aseev <ptrnine@altlinux.org> 1.36-alt4.svn2349
 - Fix build on ix86 due to --enable-default-pie
 - Disable build on arm
