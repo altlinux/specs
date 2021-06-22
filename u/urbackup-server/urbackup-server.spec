@@ -1,16 +1,20 @@
 Name: urbackup-server
 Version: 2.4.13
-Release: alt1
+Release: alt2
+
 Summary: Efficient Client-Server backup system for Linux and Windows
-Group: Archiving/Backup
 License: AGPL-3.0+
+Group: Archiving/Backup
+
 Url: http://www.urbackup.org/
 Source: %name-%version.tar.gz
 Patch1: urbackup-server-fix-link-sqlite3.patch
 Patch3: urbackup-server-2.4.7-config.patch
 Patch4: urbackup-server-2.4.11-no-update.patch
 
+%ifnarch %e2k
 Requires: guestfs-tools
+%endif
 
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
@@ -106,6 +110,9 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %dir %attr(0755,urbackup,urbackup) %_localstatedir/urbackup
 
 %changelog
+* Tue Jun 22 2021 Michael Shigorin <mike@altlinux.org> 2.4.13-alt2
+- do not R: guestfs-tools on %%e2k (missing by now)
+
 * Thu Mar 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.13-alt1
 - 2.4.13
 
