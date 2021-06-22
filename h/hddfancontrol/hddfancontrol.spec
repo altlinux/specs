@@ -1,8 +1,9 @@
+%def_with doc
 %define oname hddfancontrol
 
 Name: hddfancontrol
 Version: 1.4.3
-Release: alt1
+Release: alt2
 
 Summary: Control system fan speed by monitoring hard drive temperature
 
@@ -17,9 +18,12 @@ BuildArch: noarch
 
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-devel
-BuildRequires: python3-module-pypandoc, python3-module-daemon, python3-module-docutils
+BuildRequires: python3-module-daemon, python3-module-docutils
 BuildRequires: hddtemp, hdparm
 BuildRequires: udev-rules
+%if_with doc
+BuildRequires: python3-module-pypandoc
+%endif
 
 Requires: python3-module-daemon
 Requires: python3-module-docutils
@@ -68,6 +72,9 @@ cp -a systemd/hddfancontrol.conf %buildroot%_sysconfdir/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Jun 22 2021 Michael Shigorin <mike@altlinux.org> 1.4.3-alt2
+- introduce doc knob (on by default): no pandoc on e2k so far
+
 * Thu Apr 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt1
 - new version 1.4.3 (with rpmrb script)
 
