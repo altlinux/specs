@@ -1,6 +1,6 @@
 Name: libksba
-Version: 1.5.0
-Release: alt3
+Version: 1.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: X.509 library
@@ -9,9 +9,8 @@ License: (LGPL-3.0-or-later OR GPL-2.0-or-later) AND GPL-3.0-or-later AND MIT
 
 Source0: %name-%version.tar
 Patch1: %{name}-info.patch
-Patch2: 0001-Fix-a-possible-segv-in-case-of-an-unknown-CMS-object.patch
-Patch3: 0002-Fix-LFS-on-32-bit-systems.patch
-Patch4: 0003-ALT-version-is-not-beta.patch
+Patch2: 0002-Fix-LFS-on-32-bit-systems.patch
+Patch3: 0003-ALT-version-is-not-beta.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -70,6 +69,9 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Wed Jun 23 2021 Alexey Gladkov <legion@altlinux.ru> 1.6.0-alt1
+- New version (1.6.0).
+
 * Thu Dec 31 2020 Alexey Gladkov <legion@altlinux.ru> 1.5.0-alt3
 - Removed the suffix from the version completely.
 
