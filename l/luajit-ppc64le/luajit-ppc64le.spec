@@ -1,10 +1,12 @@
 %global lua_version 5.1
 
-Name: luajit
-Version: 2.1
-Release: alt11.git3f9389ed
+%define _origname luajit
 
-Summary: a Just-In-Time Compiler for Lua
+Name: luajit-ppc64le
+Version: 2.1
+Release: alt12.gitf0e865dd
+
+Summary: a Just-In-Time Compiler for Lua (ppc64le fork)
 License: MIT
 Group: Development/Other
 Url: http://luajit.org
@@ -13,8 +15,9 @@ Source: %name-%version.tar
 Requires: lib%name = %EVR
 BuildRequires(pre): rpm-macros-luajit
 
-ExclusiveArch: %luajit_arches
-ExcludeArch: ppc64le
+ExclusiveArch: ppc64le
+
+Patch1: luajit-2.1.0-fedora-ppc64le-support.patch
 
 %description
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
@@ -35,6 +38,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 Summary:  Development package that includes the luajit header files
 Group: Development/Other
 Requires: lib%name = %EVR
+Provides: %_origname-devel = %version-%release
 
 %description -n lib%name-devel
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
@@ -45,6 +49,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 Summary: static library for luajit
 Group: System/Libraries
 Requires: lib%name-devel = %EVR
+Provides: %_origname-devel-static = %version-%release
 
 %description -n lib%name-devel-static
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
@@ -53,6 +58,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %make_build amalg \
@@ -79,7 +85,7 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 
 %files -n lib%name
 %_libdir/*.so.*
-%_datadir/%name-*
+%_datadir/%_origname-*
 
 %files -n lib%name-devel
 %doc doc/*
@@ -91,9 +97,11 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
-* Wed Jun 23 2021 Vladimir Didenko <cow@altlinux.org> 2.1-alt11.git3f9389ed
-- sync with the latest version of 2.1 branch (closes: #40084)
-- build ppc64le version using a separate fork package
+* Wed Jun 23 2021 Vladimir Didenko <cow@altlinux.org> 2.1-alt12.gitf0e865dd
+- fix build arch
+
+* Wed Jun 23 2021 Vladimir Didenko <cow@altlinux.org> 2.1-alt11.gitf0e865dd
+- use separate fork package to build ppc64le version
 
 * Thu Sep 19 2019 Vladimir Didenko <cow@altlinux.org> 2.1-alt10
 - add lua(abi) = 5.1 to provides
