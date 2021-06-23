@@ -2,7 +2,7 @@
 
 Name:    synfigstudio
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -13,8 +13,8 @@ Url:     http://www.synfig.org
 Source:  %name-%version.tar
 Patch:   %name-%version-%release.patch
 
-# FIXME: would be nice on aarch64 as well
-ExclusiveArch: %ix86 x86_64 %e2k
+# FIXME: crippled zlib-devel (#40274)
+ExcludeArch: armh
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-python3
@@ -60,6 +60,8 @@ BuildRequires: openexr-devel
 BuildRequires: libjack-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libdv-devel
+BuildRequires: ladspa_sdk
+BuildRequires: zlib-devel
 %if_with build_docs
 BuildRequires: docbook-style-dsssl-utils
 BuildRequires: openjade
@@ -214,6 +216,10 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 23 2021 Michael Shigorin <mike@altlinux.org> 1.4.1-alt2
+- BR: ladspa_sdk, zlib-devel to fix ftbfs
+- ExclusiveArch: replaced with ExcludeArch: (see also #40274)
+
 * Tue Apr 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
 - New version.
 
