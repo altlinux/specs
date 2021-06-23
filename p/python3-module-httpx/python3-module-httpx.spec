@@ -1,12 +1,11 @@
 %define  modulename httpx
 
 Name:    python3-module-%modulename
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 
 Summary: A next generation HTTP client for Python
-
-License: BSD 3-Clause License
+License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://www.python-httpx.org/
 
@@ -44,6 +43,9 @@ A 1.0 release is expected to be issued sometime around mid-2020.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.18.0-alt1
+- 0.18.0
+
 * Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.17.1-alt1
 - new version 0.17.1 (with rpmrb script)
 

@@ -1,12 +1,12 @@
 %define  modulename httpcore
 
 Name:    python3-module-%modulename
-Version: 0.12.3
+Version: 0.13.3
 Release: alt1
 
 Summary: A minimal HTTP client
 
-License: BSD 3-Clause License
+License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://www.encode.io/httpcore/
 
@@ -58,6 +58,9 @@ Some things HTTP Core does do:
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.3-alt1
+- 0.13.3
+
 * Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.12.3-alt1
 - new version 0.12.3 (with rpmrb script)
 

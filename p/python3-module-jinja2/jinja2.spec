@@ -1,143 +1,39 @@
-%define oname jinja2
-
-%def_without doc
-%def_without python3
-%def_disable check
-
-Name: python-module-%oname
-Version: 2.11.3
-Release: alt2
+Name: python3-module-jinja2
+Version: 3.0.1
+Release: alt1
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
-Group: Development/Python
-BuildArch: noarch
-Url: http://jinja.pocoo.org/2/
+Group: Development/Python3
+Url: https://pypi.org/project/Jinja2/
 
 # https://github.com/mitsuhiko/jinja2.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-pytest
-%if_with doc
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
-%endif
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
-%endif
-
-%add_findprov_skiplist %python_sitelibdir_noarch/jinja2/asyncfilters.py* %python_sitelibdir_noarch/jinja2/asyncsupport.py*
-%add_findreq_skiplist  %python_sitelibdir_noarch/jinja2/asyncfilters.py* %python_sitelibdir_noarch/jinja2/asyncsupport.py*
-
-Provides: python-module-%oname-tests = %EVR
-Obsoletes: python-module-%oname-tests
+BuildArch: noarch
+BuildRequires: rpm-build-python3 python3-module-setuptools
 
 %description
 Jinja2 is a template engine written in pure Python. It provides a Django
 inspired non-XML syntax but supports inline expressions and an optional
 sandboxed environment.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: The new and improved version of a small but fast template engine (Python 3)
-Group: Development/Python3
-Provides: python3-module-%oname-tests = %EVR
-Obsoletes: python3-module-%oname-tests
-
-%description -n python3-module-%oname
-Jinja2 is a template engine written in pure Python. It provides a Django
-inspired non-XML syntax but supports inline expressions and an optional
-sandboxed environment.
-%endif
-
-%package doc
-Summary: Documentation for Jinja2
-Group: Development/Documentation
-
-%description doc
-Jinja2 is a template engine written in pure Python. It provides a Django
-inspired non-XML syntax but supports inline expressions and an optional
-sandboxed environment.
-
-This package contains HTML documentation for Jinja2.
-
-%package pickles
-Summary: Pickles for Jinja2
-Group: Development/Python
-
-%description pickles
-Jinja2 is a template engine written in pure Python. It provides a Django
-inspired non-XML syntax but supports inline expressions and an optional
-sandboxed environment.
-
-This package contains pickles for Jinja2.
-
 %prep
 %setup
-%if_with python3
-cp -a . ../python3
-%endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
-
-%if_with doc
-%make_build -C docs html
-%make_build -C docs pickle
-%endif
 
 %install
-%python_install
-# IronPython support
-rm -f %buildroot%python_sitelibdir_noarch/jinja2/_ipysupport.py
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-rm -f %buildroot%python3_sitelibdir_noarch/jinja2/_ipysupport.py
-%endif
-
-%if_with doc
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir_noarch/jinja2/
-%endif
-
-%check
-make test
 
 %files
-%doc CHANGES.rst
-%python_sitelibdir_noarch/jinja2/
-%python_sitelibdir_noarch/*.egg-info
-%if_with doc
-%exclude %python_sitelibdir_noarch/jinja2/pickle
-%doc ext/
-%endif
-
-%if_with doc
-%files doc
-%doc docs/_build/html/*
-
-%files pickles
-%dir %python_sitelibdir_noarch/jinja2
-%python_sitelibdir_noarch/jinja2/pickle
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGES.rst
-%python3_sitelibdir_noarch/jinja2/
-%python3_sitelibdir_noarch/*.egg-info
-%endif
+%python3_sitelibdir/jinja2
+%python3_sitelibdir/Jinja2-%version-*-info
 
 %changelog
-* Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.11.3-alt2
-- rebuilt as legacy python2 package
+* Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.1-alt1
+- 3.0.1 released
 
 * Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.11.3-alt1
 - 2.11.3 released

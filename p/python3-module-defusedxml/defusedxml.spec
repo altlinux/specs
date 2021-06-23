@@ -1,41 +1,39 @@
-%define oname defusedxml
+Name: python3-module-defusedxml
+Version: 0.7.1
+Release: alt1
 
-Name: python-module-%oname
-Version: 0.6.0
-Release: alt2
 Summary: XML bomb protection for Python stdlib modules
-License: Python
-Group: Development/Python
+License: Python-2.0
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/defusedxml/
 
-Source: defusedxml-%version.tar.gz
-BuildArch: noarch
+Source0: %name-%version-%release.tar
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildArch: noarch
+BuildRequires: rpm-build-python3 python3-module-setuptools
 
 %description
 defusedxml -- defusing XML bombs and other exploits.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python tests.py
+%__python3 tests.py
 
 %files
-%doc README.txt CHANGES.txt LICENSE
-%python_sitelibdir/*
+%python3_sitelibdir/defusedxml
+%python3_sitelibdir/defusedxml-%version-*-info
 
 %changelog
-* Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt2
-- rebuilt as legacy python2 package
+* Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt1
+- 0.7.1 released
 
 * Thu Jun 20 2019 Fr. Br. George <george@altlinux.ru> 0.6.0-alt1
 - Autobuild version bump to 0.6.0

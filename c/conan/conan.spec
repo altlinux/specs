@@ -2,7 +2,7 @@
 
 Name: conan
 Version: 1.37.1
-Release: alt1
+Release: alt2
 
 Summary: Conan - The open-source C/C++ package manager
 
@@ -51,7 +51,6 @@ AutoProv: no
 %py3_use deprecation >= 2.0
 %py3_use tqdm < 5
 %py3_use tqdm >= 4.28.1
-%py3_use jinja2 < 3
 %py3_use jinja2 >= 2.9
 %py3_use dateutil < 3
 %py3_use dateutil >= 2.7.0
@@ -101,6 +100,9 @@ rm -rfv %buildroot%python_sitelibdir/conans/test_integration/
 %doc README.rst LICENSE.md
 
 %changelog
+* Tue Jun 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.37.1-alt2
+- drop artificial upper bound for jinja2 req
+
 * Fri Jun 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt1
 - new version 1.37.1 (with rpmrb script) (ALT bug 40208)
 - update requires, drop urllib3 < 1.26

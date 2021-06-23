@@ -1,5 +1,5 @@
 Name: python3-module-astral
-Version: 1.10.1
+Version: 2.2
 Release: alt1
 
 Summary: Python calculations for the position of the sun and moon.
@@ -28,10 +28,12 @@ This is astral -- a Python module which calculates:
 %python3_install
 
 %files
-%python3_sitelibdir/astral.py
+%python3_sitelibdir/astral
 %python3_sitelibdir/astral-%version-*-info
-%python3_sitelibdir/__pycache__/astral.*
 
 %changelog
+* Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt1
+- 2.2 released
+
 * Thu Nov 28 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.1-alt1
 - initial
