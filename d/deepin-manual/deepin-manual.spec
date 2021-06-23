@@ -2,7 +2,7 @@
 
 Name: deepin-manual
 Version: 5.7.0.75
-Release: alt1
+Release: alt2
 Summary: Help files for DDE
 License: GPL-3.0+ and (BSD-3-Clause and Qt.Commercial) and ISC
 Group: Graphical desktop/Other
@@ -13,6 +13,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel dtk5-widget-devel qt5-x11extras-devel qt5-webengine-devel libgtest-devel
+Requires: %name-data
 
 %description
 %summary.
@@ -56,6 +57,9 @@ subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 %_datadir/%name/
 
 %changelog
+* Wed Jun 23 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0.75-alt2
+- Added deepin-manual-data in requires.
+
 * Wed Jun 16 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0.75-alt1
 - New version (5.7.0.75) with rpmgs script.
 
