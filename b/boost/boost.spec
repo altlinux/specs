@@ -31,10 +31,11 @@
 %endif
 
 # context
-%ifarch %e2k
-%def_without context
-%else
 %def_with context
+%ifarch %e2k
+%def_without coroutine
+%else
+%def_with coroutine
 %endif
 
 %if_with mpi
@@ -53,7 +54,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -87,6 +88,7 @@ Patch88: boost-1.73.0-fedora-cmakedir.patch
 Patch94: boost-1.73-fedora-locale-empty-vector.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
+Patch2000: boost-1.76-e2k-makecontext.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -229,7 +231,9 @@ Requires: %name-asio-devel = %EVR
 Requires: %name-chrono-devel = %EVR
 %if_with context
 Requires: %name-context-devel = %EVR
+%if_with coroutine
 Requires: %name-coroutine-devel = %EVR
+%endif
 %endif
 Requires: %name-filesystem-devel = %EVR
 Requires: %name-flyweight-devel = %EVR
@@ -1325,11 +1329,20 @@ applications. This package contains python module.
 %patch88 -p1
 %patch94 -p1
 %patch1000 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
 %ifarch %e2k
 COMPILER_FLAGS="$COMPILER_FLAGS -fno-error-always-inline"
+cat >> boost/config/user.hpp << EOF
+
+#if defined(__e2k__) && !defined(BOOST_USE_UCONTEXT)
+#define BOOST_USE_UCONTEXT
+#endif
+EOF
 %endif
 
 cat >> ./tools/build/src/user-config.jam << EOF
@@ -1376,6 +1389,10 @@ build_boost() {
 	optimization=off \
 	debug-symbols=off \
 	pch=off \
+%ifarch %e2k
+	context-impl=ucontext \
+	define=BOOST_USE_UCONTEXT \
+%endif
 	-sHAVE_ICU=1 \
 	--prefix=%{_prefix} \
 	--libdir=%{_libdir} \
@@ -1387,8 +1404,10 @@ build_boost \
 	--without-python \
 %if_without context
 	--without-context \
-	--without-coroutine \
 	--without-fiber \
+%endif
+%if_without coroutine
+	--without-coroutine \
 %endif
 	#
 
@@ -1454,6 +1473,10 @@ install_boost() {
 	optimization=off \
 	debug-symbols=off \
 	pch=off \
+%ifarch %e2k
+	context-impl=ucontext \
+	define=BOOST_USE_UCONTEXT \
+%endif
 	-sHAVE_ICU=1 \
 	--prefix=%{buildroot}%{_prefix} \
 	--libdir=%{buildroot}%{_libdir} \
@@ -1466,8 +1489,10 @@ install_boost \
 	--without-python \
 %if_without context
 	--without-context \
-	--without-coroutine \
 	--without-fiber \
+%endif
+%if_without coroutine
+	--without-coroutine \
 %endif
 	#
 
@@ -1626,7 +1651,9 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_includedir/%name/asio*
 %if_with context
 %exclude %_includedir/%name/context
+%if_with coroutine
 %exclude %_includedir/%name/coroutine
+%endif
 %endif
 %exclude %_includedir/%name/filesystem*
 %exclude %_includedir/%name/flyweight*
@@ -1651,7 +1678,9 @@ rm -f %buildroot%_libdir/*.a || :
 %_libdir/*.so
 %if_with context
 %exclude %_libdir/*_context*.so
+%if_with coroutine
 %exclude %_libdir/*_coroutine*.so
+%endif
 %endif
 %exclude %_libdir/*_filesystem*.so
 %exclude %_libdir/*_locale*.so
@@ -1674,7 +1703,9 @@ rm -f %buildroot%_libdir/*.a || :
 %_libdir/cmake/*
 %if_with context
 %exclude %_libdir/cmake/boost_context-%version
+%if_with coroutine
 %exclude %_libdir/cmake/boost_coroutine-%version
+%endif
 %endif
 %exclude %_libdir/cmake/boost_filesystem-%version
 %exclude %_libdir/cmake/boost_locale-%version
@@ -1705,11 +1736,13 @@ rm -f %buildroot%_libdir/*.a || :
 %_libdir/cmake/boost_context-%version
 %endif
 
+%if_with coroutine
 %files coroutine-devel
 %_includedir/%name/coroutine
 %_libdir/*_coroutine*.so
 %if_with cmake
 %_libdir/cmake/boost_coroutine-%version
+%endif
 %endif
 %endif
 
@@ -1848,8 +1881,10 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_context%version
 %_libdir/*_context*.so.*
 
+%if_with coroutine
 %files -n libboost_coroutine%version
 %_libdir/*_coroutine*.so.*
+%endif
 %endif
 
 %files -n libboost_date_time%version
@@ -2010,6 +2045,9 @@ done
 
 
 %changelog
+* Wed Jun 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.76.0-alt2
+- added makecontext patch for Elbrus
+
 * Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.76.0-alt1
 - Updated to upstream version 1.76.0.
 - Disabled compat python symlinks.
