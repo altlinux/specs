@@ -1,6 +1,6 @@
 Name: man-pages
-Version: 5.11
-Release: alt2
+Version: 5.12
+Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
@@ -73,13 +73,14 @@ man-pages translators.
 
 %prep
 %setup -b1
+sed -i '/--silent/d' Makefile
 
 %build
 rm man3/crypt{,_r}.3
 
 %install
 mkdir -p %buildroot%_datadir/%name
-%makeinstall_std
+%makeinstall_std prefix=%_prefix
 install -pm644 scripts/* %buildroot%_datadir/%name/
 
 # strip COLOPHON section
@@ -94,6 +95,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Tue Jun 22 2021 Dmitry V. Levin <ldv@altlinux.org> 5.12-alt1
+- 5.11 -> 5.12.
+
 * Wed Jun 09 2021 Dmitry V. Levin <ldv@altlinux.org> 5.11-alt2
 - Removed rpcgen(1) manual page (closes: #40187).
 
