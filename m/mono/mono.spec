@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 6.12.0.122
-Release: alt1
+Release: alt2
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -84,6 +84,7 @@ Patch113: mono-6.6.0-fix-multi-arch-issue.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -1319,6 +1320,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Wed Jun 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.122-alt2
+- Fixed dependencies issues introduced by rpm-build (Closes: #40273).
+
 * Tue Apr 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.122-alt1
 - Updated to upstream version 6.12.0.122 (Closes: #39899).
 - Imported changes and patches from Fedora.
