@@ -1,8 +1,8 @@
 %def_without docs
 
 Name:    appstream
-Version: 0.14.3
-Release: alt2
+Version: 0.14.4
+Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -137,6 +137,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Jun 23 2021 Andrey Cherepanov <cas@altlinux.org> 0.14.4-alt1
+- New version.
+
 * Tue Mar 23 2021 Alexey Appolonov <alexey@altlinux.org> 0.14.3-alt2
 - Corrected package URL.
 
