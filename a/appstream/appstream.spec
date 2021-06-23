@@ -2,7 +2,7 @@
 
 Name:    appstream
 Version: 0.14.4
-Release: alt1
+Release: alt2
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -44,28 +44,41 @@ BuildRequires: /proc
 AppStream-Core makes it easy to access application information from the
 AppStream database over a nice GObject-based interface.
 
-%package devel
+%package -n libappstream
+Summary: Library to access AppStream services
+Group: System/Libraries
+
+%description -n libappstream
+%summary.
+
+%package -n libappstream-devel
 Summary:  Development files for %{name}
 Group:	  Development/C
 Requires: %name = %version-%release
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
-%description devel
-%{summary}.
+%description -n libappstream-devel
+%summary.
 
-%package qt
+%package -n libappstream-qt
 Summary: Qt bindings for %{name}
 Group:	  System/Libraries
 Requires: %name = %version-%release
+Provides: %name-qt = %EVR
+Obsoletes: %name-qt < %EVR
 
-%description qt
-%{summary}.
+%description -n libappstream-qt
+%summary.
 
-%package qt-devel
+%package -n libappstream-qt-devel
 Summary:  Development files for %{name}-qt bindings
 Group:	  Development/KDE and QT
 Requires: %name-qt = %version-%release
+Provides: %name-qt-devel = %EVR
+Obsoletes: %name-qt-devel < %EVR
 
-%description qt-devel
+%description -n libappstream-qt-devel
 %{summary}.
 
 %package doc
@@ -104,8 +117,6 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %doc AUTHORS LICENSE.GPLv2 LICENSE.LGPLv2.1 MAINTAINERS NEWS README.md RELEASE
 %config(noreplace) %_sysconfdir/appstream.conf
 %_bindir/appstreamcli
-%_libdir/girepository-1.0/AppStream-1.0.typelib
-%_libdir/libappstream.so.*
 %dir %_datadir/app-info/
 %dir %_datadir/app-info/icons
 %dir %_datadir/app-info/xmls
@@ -118,16 +129,20 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gettext/its/metainfo.*
 %_datadir/metainfo/org.freedesktop.appstream.cli.*.xml
 
-%files devel
+%files -n libappstream
+%_libdir/libappstream.so.*
+%_libdir/girepository-1.0/AppStream-1.0.typelib
+
+%files -n libappstream-devel
 %_includedir/appstream/
 %_libdir/libappstream.so
 %_libdir/pkgconfig/appstream.pc
 %_datadir/gir-1.0/AppStream-1.0.gir
 
-%files qt
+%files -n libappstream-qt
 %_libdir/libAppStreamQt.so.*
 
-%files qt-devel
+%files -n libappstream-qt-devel
 %_includedir/AppStreamQt/
 %_libdir/cmake/AppStreamQt/
 %_libdir/libAppStreamQt.so
@@ -137,6 +152,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Jun 23 2021 Andrey Cherepanov <cas@altlinux.org> 0.14.4-alt2
+- Put libraries to separate packages with appropriate names.
+
 * Wed Jun 23 2021 Andrey Cherepanov <cas@altlinux.org> 0.14.4-alt1
 - New version.
 
