@@ -6,7 +6,7 @@
 
 Name: ipython3
 Version: 7.18.1
-Release: alt3
+Release: alt4
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -17,6 +17,7 @@ BuildArch: noarch
 # https://github.com/ipython/ipython.git
 Source: %name-%version.tar
 Patch1: %name-%version-alt-docs.patch
+Patch2: %name-alt-dont-import-tests.patch
 
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
@@ -103,6 +104,7 @@ This package contains tests for Python-3.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %if_with doc
 %prepare_sphinx3 docs
@@ -197,6 +199,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Jun 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt4
+- Made test imports optional (Closes: #40270).
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt3
 - Fixed runtime dependencies.
 
