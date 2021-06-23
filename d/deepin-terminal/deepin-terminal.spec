@@ -1,6 +1,6 @@
 Name: deepin-terminal
 Version: 5.4.6
-Release: alt1
+Release: alt2
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
 Group: Terminals
@@ -30,6 +30,7 @@ Requires: deepin-menu
 Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
 Requires: %name-data
+Requires: terminalwidget5-data
 #Recommends:     deepin-manual
 #Recommends:     zssh
 
@@ -120,6 +121,9 @@ sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed Jun 23 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.6-alt2
+- Added terminalwidget5-data in requires.
+
 * Wed Jun 23 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.6-alt1
 - New version (5.4.6) with rpmgs script.
 
