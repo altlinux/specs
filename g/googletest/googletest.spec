@@ -1,6 +1,6 @@
 Name: googletest
 Version: 1.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -68,6 +68,10 @@ Development environment for gmock
 %setup -n %name-release-%version
 
 %build
+%ifarch %e2k
+# googletest/src/gtest.cc:2806 wrt testing::<unnamed>::TestNameIs::operator()
+%add_optflags -Wno-error=unused-function
+%endif
 %cmake -DBUILD_SHARED_LIBS:BOOL=TRUE -Dgmock_build_tests:BOOL=TRUE
 %cmake_build
 
@@ -103,6 +107,9 @@ Development environment for gmock
 %_includedir/gmock
 
 %changelog
+* Wed Jun 23 2021 Michael Shigorin <mike@altlinux.org> 1.11.0-alt1.1
+- E2K: ftbfs workaround
+
 * Sat Jun 12 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt1
 - Version 1.11.0
 
