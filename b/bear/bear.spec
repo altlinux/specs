@@ -3,8 +3,8 @@
 %def_with tests
 
 Name: bear
-Version: 3.0.11
-Release: alt1.gitdfa9e262
+Version: 3.0.12
+Release: alt1
 
 Summary: Tool that generates a compilation database for clang tooling
 
@@ -49,10 +49,10 @@ themselves and do not require this tool. Others, including plain Make, do not.
 
 %build
 %cmake
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 for i in CODE_OF_CONDUCT.md CONTRIBUTING.md COPYING INSTALL.md README.md; do
     rm -f %buildroot%_docdir/Bear/$i
@@ -66,6 +66,9 @@ done
 %doc COPYING README.md
 
 %changelog
+* Wed Jun 23 2021 Arseny Maslennikov <arseny@altlinux.org> 3.0.12-alt1
+- 3.0.11-alt1.gitdfa9e262 -> 3.0.12.
+
 * Thu May 13 2021 Vladimir Didenko <cow@altlinux.org> 3.0.11-alt1.gitdfa9e262
 - New version.
 
