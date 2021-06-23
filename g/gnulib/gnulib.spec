@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.4683.4480d
+Version: 0.1.4724.7e3a9
 Release: alt1
 
 Summary: GNU Portability Library
@@ -13,8 +13,6 @@ Source: %name-%version.tar
 Source1: po-%version-%release.tar
 Patch1: gnulib-alt-utimens.patch
 Patch2: gnulib-alt-mktime-internal.patch
-Patch3: gnulib-eggert-tests-Wnull-dereference.patch
-Patch4: gnulib-alt-tests-Wmissing-prototypes.patch
 AutoReqProv: no
 BuildRequires: gnu-config makeinfo
 
@@ -31,8 +29,6 @@ source repository.
 %setup -a1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 
@@ -43,6 +39,7 @@ ls build-aux/po/*.po | sed 's|.*/||; s|\.po$||' > build-aux/po/LINGUAS
 make info
 
 %install
+rm -rf build-check
 mkdir -p %buildroot{%_bindir,%_infodir,%_datadir/%name}
 cp -a * %buildroot%_datadir/%name/
 for f in check-module gnulib-tool; do
@@ -50,12 +47,22 @@ for f in check-module gnulib-tool; do
 done
 mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 
+%check
+./gnulib-tool --create-testdir --dir build-check regex
+cd build-check
+%add_optflags -DDEBUG
+%configure
+%make_build -k check VERBOSE=1
+
 %files
 %_bindir/*
 %_infodir/*
 %_datadir/%name/
 
 %changelog
+* Tue Jun 22 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4724.7e3a9-alt1
+- v0.1-4683-g4480dd39f -> v0.1-4724-g7e3a9c5bd.
+
 * Wed Jun 09 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4683.4480d-alt1
 - v0.1-4669-gfed6ffdbb -> v0.1-4683-g4480dd39f.
 
