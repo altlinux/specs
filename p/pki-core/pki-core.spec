@@ -13,7 +13,7 @@
 
 Name: pki-core
 Version: 10.10.6
-Release: alt1
+Release: alt2
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -75,6 +75,7 @@ BuildRequires: python3-module-pyflakes
 BuildRequires: python3-module-pylint
 BuildRequires: python3-module-selinux
 BuildRequires: python3-module-tox
+BuildRequires: python3(tox_no_deps)
 %endif
 
 # mark upgrade code as Python3 code
@@ -467,7 +468,7 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %check
 export PIP_NO_INDEX=YES
 export TOXENV=lint3,pep8py3,py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+tox.py3 --sitepackages -p auto -o -vvr --no-deps -s false
 %cmake_build -t test
 
 %pre -n pki-server
@@ -751,6 +752,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 10.10.6-alt2
+- Made python-nss really optional.
+
 * Fri Jun 18 2021 Stanislav Levin <slev@altlinux.org> 10.10.6-alt1
 - 10.10.5 -> 10.10.6 (fixes: CVE-2021-3551).
 
