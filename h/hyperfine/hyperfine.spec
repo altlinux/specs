@@ -1,6 +1,6 @@
 Name:     hyperfine
 Version:  1.11.0
-Release:  alt2
+Release:  alt3
 
 Summary:  A command-line benchmarking tool
 License:  Apache-2.0
@@ -14,7 +14,7 @@ Patch: %name-%version.patch
 
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires: rust-cargo
+BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 
 %description
@@ -25,27 +25,22 @@ BuildRequires: /proc
 %patch -p1
 
 %build
-export RUSTFLAGS="-g"
-cargo build \
-    --release \
-    %{?_smp_mflags} \
-    --offline \
-    --target %_arch-unknown-linux-gnu
+%rust_build
 
 %install
-install -Dm 755 target/%_arch-unknown-linux-gnu/release/%name %buildroot%_bindir/%name
+%rust_install
 
 %check
-cargo test \
-    --release \
-    --no-fail-fast \
-    --target %_arch-unknown-linux-gnu
+%rust_test
 
 %files
 %_bindir/*
 %doc *.md
 
 %changelog
+* Wed Jun 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.0-alt3
+- Use rpm-build-rust macros
+
 * Tue Jan 19 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.0-alt2
 - Add generation of debuginfo
 
