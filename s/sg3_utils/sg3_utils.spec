@@ -1,6 +1,6 @@
 Name: sg3_utils
-Version: 1.45
-Release: alt2
+Version: 1.46
+Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
 License: GPL-2.0-or-later and BSD-2-Clause
@@ -9,15 +9,6 @@ Url: http://sg.danny.cz/sg/sg3_utils.html
 # http://sg.danny.cz/sg/p/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch: sg3_utils-alt-rescan-scsi-bus.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1683343
-# sg_turs: improper usage show
-Patch1: sg3_utils-rh-sg_turs-help.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1627657
-# sg_raw -V fail
-Patch2: sg3_utils-rh-sg_raw-version.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1760847
-# FC_TARGET_LUN attribute assigned for non FC device
-Patch3: sg3_utils-rh-fc_wwpn_id-non_FC-devices.patch
 Requires: libsgutils = %EVR
 
 %description
@@ -84,6 +75,9 @@ ln -s libsgutils.so %buildroot%_libdir/libsgutils2.so
 %_libdir/*.so
 
 %changelog
+* Mon Mar 29 2021 Dmitry V. Levin <ldv@altlinux.org> 1.46-alt1
+- 1.45 -> 1.46.
+
 * Tue Nov 03 2020 Dmitry V. Levin <ldv@altlinux.org> 1.45-alt2
 - libsgutils-devel: added libsgutils2.so for compatibility (closes: #39183).
 
