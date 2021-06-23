@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 14.2
-Release: alt4
+Release: alt5
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -325,6 +325,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/vala/vapi/*
 
 %changelog
+* Wed Jun 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt5
+- exclude reexec from pulseaudio startup paths
+
 * Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt4
 - fix build with meson >= 0.58
 
