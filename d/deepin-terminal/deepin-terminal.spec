@@ -1,6 +1,6 @@
 Name: deepin-terminal
-Version: 5.4.0.20
-Release: alt1.1
+Version: 5.4.6
+Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
 Group: Terminals
@@ -72,9 +72,9 @@ Development package for QTermWidget. Contains headers and dev-libs.
 %setup
 # %patch -p2
 # Much upstream weirdness
-sed -i '/<QHash>/i#include <QObject>\n#include <QMap>' 3rdparty/terminalwidget/lib/SessionManager.h
+# sed -i '/<QHash>/i#include <QObject>\n#include <QMap>' 3rdparty/terminalwidget/lib/SessionManager.h
 sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)' 3rdparty/terminalwidget/CMakeLists.txt
-sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.txt
+# sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.txt
 
 %build
 %cmake \
@@ -120,6 +120,9 @@ sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed Jun 23 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.6-alt1
+- New version (5.4.6) with rpmgs script.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 5.4.0.20-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
