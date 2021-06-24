@@ -1,5 +1,5 @@
 Name:      zint
-Version:   2.6.3
+Version:   2.8.0
 Release:   alt1
 Summary:   A barcode generator and library
 License:   GPLv3+
@@ -97,5 +97,8 @@ desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 
 
 %changelog
+* Thu Jun 24 2021 Ivan Razzhivin <underwit@altlinux.org> 2.8.0-alt1
+- New version 2.8.0
+
 * Wed Jun 16 2021 Ivan Razzhivin <underwit@altlinux.org> 2.6.3-alt1
 - Initial build
