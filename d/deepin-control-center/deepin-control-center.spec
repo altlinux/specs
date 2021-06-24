@@ -1,8 +1,11 @@
-%global repo dde-control-center
+%def_disable clang
+
+%define _cmake__builddir BUILD
+%define repo dde-control-center
 
 Name: deepin-control-center
 Version: 5.4.23
-Release: alt1
+Release: alt2.git1362dfe
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,9 +15,18 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 # archlinux patches
 Patch: deepin-control-center-no-user-experience.patch
+# alt patches
+Patch1: deepin-control-center-fix-build-deepinid-syncdaemon.patch
+Patch2: deepin-control-center-fix-build-gcc10.patch
+Patch3: deepin-control-center-disable-timeout-for-the-lockscreen.patch
+Patch4: deepin-control-center-lightdm-lockscreen.patch
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils rpm-build-kf5
-BuildRequires: gcc-c++
+%if_enabled clang
+BuildRequires(pre): clang12.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
 BuildRequires: cmake
 BuildRequires: deepin-dock-devel
 BuildRequires: deepin-network-utils-devel
@@ -63,6 +75,10 @@ Group: Development/Other
 %prep
 %setup -n %repo-%version
 %patch -p2
+%patch1 -p1
+%patch2 -p1
+# %%patch3 -p1
+# %%patch4 -p1
 
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i -E '/add_compile_definitions/d' CMakeLists.txt
@@ -70,6 +86,16 @@ sed -i -E '/add_compile_definitions/d' CMakeLists.txt
 
 # remove after they obey -DDISABLE_SYS_UPDATE properly
 sed -i '/new UpdateModule/d' src/frame/window/mainwindow.cpp
+# remove General Settings
+sed -i '/new CommonInfoModule/d' src/frame/window/mainwindow.cpp
+# disable non-working modules that switch to the lock screen
+# sed -i '/Wakeup Settings/d' \
+#     src/frame/window/modules/power/generalwidget.cpp \
+#     src/frame/window/search/searchwidget.cpp
+sed -i '/m_wakeComputerNeedPassword/d' src/frame/window/modules/power/generalwidget.{cpp,h}
+sed -i '/(GSettingWatcher::instance()->getStatus("systemSuspend") != "Hidden"));/d' src/frame/window/modules/power/generalwidget.cpp
+sed -i '/m_wakeDisplayNeedPassword/d' src/frame/window/modules/power/generalwidget.{cpp,h}
+sed -i '/m_monitorSleepOnPower/d' src/frame/window/modules/power/generalwidget.h
 
 sed -i 's|/lib/|/%_lib/|' \
     com.deepin.controlcenter.develop.policy \
@@ -85,8 +111,19 @@ sed -i 's|/lib/|/%_lib/|' \
 sed -i 's|/etc/deepin/dde-session-ui.conf|/usr/share/dde-session-ui/dde-session-ui.conf|' \
 	src/frame/modules/accounts/accountsworker.cpp
 
+sed -i 's|qDBusRegisterMetaType|qRegisterMetaType|' \
+    src/frame/window/modules/network/connectioneditpage.cpp \
+    src/frame/window/modules/network/sections/ipvxsection.cpp
+
 %build
 export SYSTYPE=Desktop
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
 # export SYSTYPE=$(cat /etc/deepin-version | grep Type= | awk -F'=' '{print $$2}')
 %K5cmake \
     -GNinja \
@@ -97,10 +134,10 @@ export SYSTYPE=Desktop
     -DCVERSION=%version \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 # place holder plugins dir
 mkdir -p %buildroot%_libdir/%repo/plugins
 
@@ -140,6 +177,10 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Thu Jun 24 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.23-alt2.git1362dfe
+- Build git snapshot.
+- Disabled General Settings.
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.23-alt1
 - New version (5.4.23) with rpmgs script.
 
