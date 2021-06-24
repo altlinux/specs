@@ -1,19 +1,22 @@
 Name: goverlay
-Version: 0.3.8
+Version: 0.5.1
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
-License: GPLv3
+License: GPLv3+
 Group: System/Configuration/Hardware
 
 Url: https://github.com/benjamimgois/goverlay
 Source: https://github.com/benjamimgois/goverlay/archive/%version/%name-%version.tar.gz
 Patch: goverlay-enable-debuginfo-generation.patch
 
-ExclusiveArch: %ix86 x86_64
-BuildRequires: lazarus
+#ExclusiveArch: %ix86 x86_64
+ExcludeArch: ppc64le armh
+BuildRequires: lazarus rpm-build-fpc fpc libappstream-glib-devel qt5pas-devel
 
 Requires: mangohud
+Requires: qt5pas
+
 
 #Recommends: git
 #Recommends: mesa-demos
@@ -31,6 +34,7 @@ help manage Linux overlays. Currently supported:
 %setup
 
 %build
+#set_build_flags
 %make_build
 
 %install
@@ -39,12 +43,18 @@ help manage Linux overlays. Currently supported:
 %files
 %doc LICENSE
 %_bindir/%name
-%_desktopdir/%name.desktop
-%_datadir/metainfo/%name.metainfo.xml
+#_desktopdir/%name.desktop
+%_datadir/metainfo/*%name.metainfo.xml
+%{_datadir}/applications/*.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %_man1dir/%name.1*
 
 %changelog
+* Thu Jun 24 2021 Ilya Mashkin <oddity@altlinux.ru> 0.5.1-alt1
+- 0.5.1
+- add more BR
+- Update license to GPLv3+
+
 * Wed Apr 21 2021 Michael Shigorin <mike@altlinux.org> 0.3.8-alt1
 - initial build for ALT Sisyphus (thx Mageia)
 
