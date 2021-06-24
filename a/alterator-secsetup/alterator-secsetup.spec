@@ -1,6 +1,6 @@
 Name: alterator-secsetup
 Version: 2.0
-Release: alt3
+Release: alt4
 
 Source: %name-%version.tar
 
@@ -8,7 +8,7 @@ Summary: alterator module for managing security settings
 License: GPL
 Group: System/Configuration/Other
 
-BuildPreReq: alterator
+BuildPreReq: alterator rpm-build-python3
 Requires: tcb-hash-prefix-control
 
 AutoReq: no
@@ -42,6 +42,9 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %_datadir/alterator-secsetup/*
 
 %changelog
+* Thu Jun 24 2021 Denis Medvedev <nbr@altlinux.org> 2.0-alt4
+- added rpm-build-python3 needed to satisfy dep checks
+
 * Tue Jan 19 2021 Danil Shein <dshein@altlinux.org> 2.0-alt3
 - fixed LibreOffice extension installer path
 
