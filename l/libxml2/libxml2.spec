@@ -1,6 +1,6 @@
 Name: libxml2
-Version: 2.9.10
-Release: alt6
+Version: 2.9.12
+Release: alt1
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -8,7 +8,7 @@ License: MIT
 Group: System/Libraries
 Url: http://xmlsoft.org/
 
-%def_with python3
+%def_with python2
 %def_disable static
 %define srcname %name-%version
 
@@ -19,13 +19,15 @@ Patch: %name-%version-%release.patch
 
 Requires: xml-common
 
-# Automatically added by buildreq on Sun Feb 27 2011
-BuildRequires: liblzma-devel python-devel python-modules-compiler python-modules-xml zlib-devel
+BuildRequires: liblzma-devel zlib-devel
 
-%if_with python3
+%if_with python2
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel
+%endif
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-%endif
 
 %package devel
 Summary: Development environment for building applications manipulating XML files
@@ -145,33 +147,34 @@ export ac_cv_path_XSLTPROC=/usr/bin/xsltproc
 export ac_cv_header_ansidecl_h=no
 mkdir -p m4
 %autoreconf
-
 mkdir build
-cd build
+pushd build
 ln -s ../xmlconf
+mkdir -p fuzz
+ln -s ../../fuzz/seed fuzz/seed
 %define _configure_script ../configure
-
 %configure \
-    --with-python=%_bindir/python2 \
-    --with-python-install-dir=%python_sitelibdir \
+    --with-python=%_bindir/python3 \
+    --with-python-install-dir=%python3_sitelibdir \
     --with-html-dir=%_docdir \
     --with-html-subdir=%name-%version \
     %{subst_enable static} \
     --disable-silent-rules
 %make_build DOC_MODULE=%name-%version
-
-%if_with python3
-mkdir ../python3
-cd ../python3
+popd
+%if_with python2
+mkdir python2
+pushd python2
 %configure \
-	--with-python=%_bindir/python3 \
-	--with-python-install-dir=%python3_sitelibdir \
+	--with-python=%_bindir/python2 \
+	--with-python-install-dir=%python_sitelibdir \
 	--with-html-dir=%_docdir \
 	--with-html-subdir=%name-%version \
 	--disable-static \
 	--disable-silent-rules
 cp -la ../build/{*.la,.libs} .
 %make_build -C python
+popd
 %endif
 
 %check
@@ -179,11 +182,10 @@ cp -la ../build/{*.la,.libs} .
 
 %install
 %makeinstall_std DOC_MODULE=%name-%version -C build
-%if_with python3
-%makeinstall_std -C python3/python
-rm %buildroot%python3_sitelibdir/*.la
+%if_with python2
+%makeinstall_std -C python2/python
 %endif
-
+find %buildroot -type f -name '*.la' -print -delete
 mv %buildroot%_datadir/aclocal/libxml{,2}.m4
 
 %define pkgdocdir %_docdir/%name-%version
@@ -220,18 +222,13 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %_libdir/*.a
 %endif	#enabled static
 
+%if_with python2
 %files -n python-module-%name
 %python_sitelibdir/*
-%dir %pkgdocdir
-%dir %pkgdocdir/python
-%pkgdocdir/python/TODO
-%pkgdocdir/python/examples
-
-%if_with python3
-%files -n python3-module-%name
-%python3_sitelibdir/*.*
-%python3_sitelibdir/__pycache__/*
 %endif
+
+%files -n python3-module-%name
+%python3_sitelibdir/*
 
 %files doc
 %dir %pkgdocdir
@@ -245,9 +242,13 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %pkgdocdir/html
 %pkgdocdir/examples
 %pkgdocdir/tutorial
+%pkgdocdir/python
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 1:2.9.12-alt1
+- 2.9.12 (Fixes: CVE-2021-3516, CVE-2021-3517, CVE-2021-3518, CVE-2021-3537, CVE-2021-3541)
+
 * Sun Feb 14 2021 Ivan A. Melnikov <iv@altlinux.org> 1:2.9.10-alt6
 - Address upstream #132 by cherry-picking the fix from master; see:
   + https://gitlab.gnome.org/GNOME/libxml2/-/issues/132
