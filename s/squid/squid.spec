@@ -9,9 +9,9 @@
 %def_with systemd
 
 Name: squid
-Version: 4.13
+Version: 4.15
 Release: alt1
-%define langpack_ver 20170901 
+%define langpack_ver 20210511
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -297,6 +297,19 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 4.15-alt1
+- 4.15
+- Fixes:
+  + CVE-2020-25097 HTTP Request Smuggling.
+  + CVE-2021-28651 Denial of Service in URN processing.
+  + CVE-2021-28652 Denial of Service issue in Cache Manager.
+  + CVE-2021-28662 Denial of Service in HTTP Response Processing.
+  + CVE-2021-31806 Improper input validation in HTTP Range header.
+  + CVE-2021-31807 Incorrect memory management may lead to DoS.
+  + CVE-2021-31808 An integer overflow may lead to a DoS.
+  + CVE-2021-33620 Denial of Service in HTTP Response processing.
+- update langpack to 20210511
+
 * Sat Oct 24 2020 Alexey Shabalin <shaba@altlinux.org> 4.13-alt1
 - 4.13 (Fixes: CVE-2020-15811, CVE-2020-15810, CVE-2020-24606)
 
