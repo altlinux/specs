@@ -1,12 +1,12 @@
 %define winemonodir %_datadir/wine/mono
 
 Name: wine-mono
-Version: 6.1.1
+Version: 6.2.0
 Release: alt1
 
 Summary: Windows build of Mono to run .NET applications via Wine
 
-License: MPL
+License: GPL, LGPL2.1, MPL-2.0
 Group: Office
 Url: http://wiki.winehq.org/Mono
 
@@ -38,6 +38,9 @@ cp -a * %buildroot%winemonodir/%name-%version/
 %winemonodir/%name-%version/
 
 %changelog
+* Mon Jun 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.2.0-alt1
+- new version 6.2.0 (with rpmrb script)
+
 * Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.1.1-alt1
 - new version 6.1.1 (with rpmrb script)
 

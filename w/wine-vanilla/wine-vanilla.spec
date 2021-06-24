@@ -1,6 +1,23 @@
 %def_disable static
 %define gecko_version 2.47.2
-%define mono_version 6.1.1
+%define mono_version 6.2.0
+
+%ifarch %{ix86}
+%define winepedir i386-windows
+%define winesodir i386-unix
+%endif
+%ifarch x86_64
+%define winepedir x86_64-windows
+%define winesodir x86_64-unix
+%endif
+%ifarch %{arm}
+%define winepedir arm-windows
+%define winesodir arm-unix
+%endif
+%ifarch aarch64
+%define winepedir aarch64-windows
+%define winesodir aarch64-unix
+%endif
 
 # rpm-build-info gives _distro_version
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
@@ -10,8 +27,10 @@
 %def_with faudio
 %endif
 
+%def_with opencl
+
 Name: wine-vanilla
-Version: 6.7
+Version: 6.11
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -51,6 +70,9 @@ ExclusiveArch: %ix86 x86_64 aarch64
    %define winearch wine32
 %endif
 
+%define libdir %_libdir
+%define libwinedir %libdir/wine
+
 %ifarch aarch64
 BuildRequires: clang >= 5.0
 %else
@@ -70,6 +92,7 @@ BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libusb-devel libieee1284-devel libkrb5-devel
 BuildRequires: libv4l-devel
 BuildRequires: libunixODBC-devel
+BuildRequires: libpcap-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 
 %if_with vulkan
@@ -81,6 +104,12 @@ BuildRequires: vkd3d-devel >= 1.2
 %if_with faudio
 BuildRequires: libfaudio-devel
 %endif
+
+%if_with opencl
+BuildRequires: ocl-icd-devel opencl-headers
+%endif
+
+
 # udev needed for udev version detect
 BuildRequires: libudev-devel udev libdbus-devel
 
@@ -273,6 +302,9 @@ export CC=clang
 %endif
 
 %configure --with-x \
+%ifarch %{arm} \
+ --with-float-abi=hard \
+%endif \
 %if_with build64
 	--enable-win64 \
 %endif
@@ -291,6 +323,8 @@ export CC=clang
 
 %install
 %makeinstall_std
+
+mv -v %buildroot%libwinedir/%winesodir/libwine.so.1* %buildroot%libdir
 
 install tools/wineapploader %buildroot%_bindir/wineapploader
 
@@ -312,8 +346,8 @@ rm -rf %buildroot%_mandir/*.UTF-8
 rm -f %buildroot%_desktopdir/wine.desktop
 
 %if_disabled static
-for i in %buildroot%_libdir/wine/*.a ; do
-    [ "$i" == "%buildroot%_libdir/wine/libwinecrt0.a" ] && continue
+for i in %buildroot%libwinedir/%winesodir/*.a ; do
+    [ "$i" == "%buildroot%libwinedir/%winesodir/libwinecrt0.a" ] && continue
     rm -fv $i
 done
 %endif
@@ -351,7 +385,7 @@ done
 %_bindir/winedbg
 %_bindir/wineboot
 %_bindir/winepath
-%_libdir/wine/*.exe.so
+%libwinedir/%winesodir/*.exe.so
 
 #%_initdir/wine
 #%_initdir/wine.outformat
@@ -389,52 +423,61 @@ done
 # for compatibility only
 %_libdir/libwine.so.1
 %_libdir/libwine.so.1.0
-%dir %_libdir/wine/
-%_libdir/wine/fakedlls/
+%dir %libwinedir/
+%dir %libwinedir/%winesodir/
+%dir %libwinedir/%winepedir/
 
 %if_without build64
-%_libdir/wine/*.dll16.so
-%_libdir/wine/*.drv16.so
-%_libdir/wine/*.exe16.so
-%_libdir/wine/winoldap.mod16.so
-%_libdir/wine/*.vxd.so
+%libwinedir/%winesodir/*.dll16.so
+%libwinedir/%winesodir/*.drv16.so
+%libwinedir/%winesodir/*.exe16.so
+%libwinedir/%winesodir/winoldap.mod16.so
+%libwinedir/%winesodir/*.vxd.so
 %endif
 
-%_libdir/wine/ntdll.so
-%_libdir/wine/dnsapi.so
-%_libdir/wine/dwrite.so
-%_libdir/wine/gdi32.so
-%_libdir/wine/user32.so
-%_libdir/wine/bcrypt.so
-%_libdir/wine/qcap.so
-%_libdir/wine/odbc32.so
-%_libdir/wine/windowscodecs.so
-%_libdir/wine/crtdll.so
-%_libdir/wine/crypt32.so
-%_libdir/wine/kerberos.so
-%_libdir/wine/netapi32.so
-%_libdir/wine/wldap32.so
-%_libdir/wine/mscms.so
-%_libdir/wine/msvcr100.so
-%_libdir/wine/msvcr110.so
-%_libdir/wine/msvcr120.so
-%_libdir/wine/msvcr70.so
-%_libdir/wine/msvcr71.so
-%_libdir/wine/msvcr80.so
-%_libdir/wine/msvcr90.so
-%_libdir/wine/msvcrt.so
-%_libdir/wine/msvcrtd.so
-%_libdir/wine/ucrtbase.so
-%_libdir/wine/wmphoto.so
-%_libdir/wine/*.com.so
-%_libdir/wine/*.cpl.so
-%_libdir/wine/*.drv.so
-%_libdir/wine/*.dll.so
-%_libdir/wine/*.acm.so
-%_libdir/wine/*.ocx.so
-%_libdir/wine/*.tlb.so
-%_libdir/wine/*.sys.so
-%_libdir/wine/ksproxy.ax.so
+%libwinedir/%winesodir/ntdll.so
+%libwinedir/%winesodir/dnsapi.so
+%libwinedir/%winesodir/dwrite.so
+%libwinedir/%winesodir/gdi32.so
+%libwinedir/%winesodir/user32.so
+%libwinedir/%winesodir/bcrypt.so
+%libwinedir/%winesodir/qcap.so
+%libwinedir/%winesodir/odbc32.so
+%libwinedir/%winesodir/windowscodecs.so
+%libwinedir/%winesodir/crypt32.so
+%libwinedir/%winesodir/kerberos.so
+%libwinedir/%winesodir/netapi32.so
+%libwinedir/%winesodir/wldap32.so
+%libwinedir/%winesodir/mscms.so
+%libwinedir/%winesodir/wmphoto.so
+%libwinedir/%winesodir/msv1_0.so
+%if_with opencl
+%libwinedir/%winesodir/opencl.so
+%endif
+%libwinedir/%winesodir/secur32.so
+%libwinedir/%winesodir/winepulse.so
+%libwinedir/%winesodir/wpcap.so
+%libwinedir/%winesodir/*.com.so
+%libwinedir/%winesodir/*.cpl.so
+%libwinedir/%winesodir/*.drv.so
+%libwinedir/%winesodir/*.dll.so
+%libwinedir/%winesodir/*.acm.so
+%libwinedir/%winesodir/*.ocx.so
+%libwinedir/%winesodir/*.tlb.so
+%libwinedir/%winesodir/*.sys.so
+%libwinedir/%winesodir/*.ax.so
+
+%libwinedir/%winepedir/*.com
+%libwinedir/%winepedir/*.cpl
+%libwinedir/%winepedir/*.drv
+%libwinedir/%winepedir/*.dll
+%libwinedir/%winepedir/*.acm
+%libwinedir/%winepedir/*.ocx
+%libwinedir/%winepedir/*.tlb
+%libwinedir/%winepedir/*.sys
+%libwinedir/%winepedir/*.exe
+%libwinedir/%winepedir/*.ax
+%libwinedir/%winepedir/*.ds
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
@@ -442,15 +485,16 @@ done
 %_datadir/wine/fonts/
 
 # move to separate packages
-%exclude %_libdir/wine/twain*
-%exclude %_libdir/wine/d3d10.dll.so
-%exclude %_libdir/wine/d3d8.dll.so
-%exclude %_libdir/wine/d3d9.dll.so
-%exclude %_libdir/wine/d3dxof.dll.so
-%exclude %_libdir/wine/opengl32.dll.so
-%exclude %_libdir/wine/glu32.dll.so
-%exclude %_libdir/wine/wined3d.dll.so
-%exclude %_libdir/wine/winevulkan.so
+%exclude %libwinedir/%winesodir/twain_32.dll.so
+%exclude %libwinedir/%winepedir/twain_32.dll
+%exclude %libwinedir/%winesodir/d3d10.dll.so
+%exclude %libwinedir/%winesodir/d3d8.dll.so
+%exclude %libwinedir/%winesodir/d3d9.dll.so
+%exclude %libwinedir/%winesodir/d3dxof.dll.so
+%exclude %libwinedir/%winesodir/opengl32.dll.so
+%exclude %libwinedir/%winesodir/glu32.dll.so
+%exclude %libwinedir/%winesodir/wined3d.dll.so
+%exclude %libwinedir/%winesodir/winevulkan.so
 
 %files full
 
@@ -467,19 +511,20 @@ done
 
 
 %files -n lib%name-twain
-%_libdir/wine/twain*
-%_libdir/wine/gphoto2.ds.so
-%_libdir/wine/sane.ds.so
+%libwinedir/%winepedir/twain_32.dll
+%libwinedir/%winesodir/twain_32.dll.so
+%libwinedir/%winesodir/gphoto2.ds.so
+%libwinedir/%winesodir/sane.ds.so
 
 %files -n lib%name-gl
-%_libdir/wine/d3d10.dll.so
-%_libdir/wine/d3d8.dll.so
-%_libdir/wine/d3d9.dll.so
-%_libdir/wine/d3dxof.dll.so
-%_libdir/wine/opengl32.dll.so
-%_libdir/wine/glu32.dll.so
-%_libdir/wine/wined3d.dll.so
-%_libdir/wine/winevulkan.so
+%libwinedir/%winesodir/d3d10.dll.so
+%libwinedir/%winesodir/d3d8.dll.so
+%libwinedir/%winesodir/d3d9.dll.so
+%libwinedir/%winesodir/d3dxof.dll.so
+%libwinedir/%winesodir/opengl32.dll.so
+%libwinedir/%winesodir/glu32.dll.so
+%libwinedir/%winesodir/wined3d.dll.so
+%libwinedir/%winesodir/winevulkan.so
 
 %files -n lib%name-devel
 %doc LICENSE
@@ -496,8 +541,8 @@ done
 %_bindir/msidb
 
 %_includedir/wine/
-%_libdir/wine/lib*.def
-%_libdir/wine/libwinecrt0.a
+%libwinedir/%winesodir/lib*.def
+%libwinedir/%winesodir/libwinecrt0.a
 #%_aclocaldir/wine.m4
 
 %_man1dir/wmc.*
@@ -512,11 +557,19 @@ done
 
 %if_enabled static
 %files -n lib%name-devel-static
-%_libdir/wine/lib*.a
-%exclude %_libdir/wine/libwinecrt0.a
+%libwinedir/%winesodir/lib*.a
+%exclude %libwinedir/%winesodir/libwinecrt0.a
 %endif
 
 %changelog
+* Sat Jun 19 2021 Vitaly Lipatov <lav@altlinux.ru> 6.11-alt1
+- new version 6.11
+- set strict require wine-mono 6.2.0
+- build with opencl and pcap
+
+* Sat May 08 2021 Vitaly Lipatov <lav@altlinux.ru> 6.8-alt1
+- new version 6.8
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 6.7-alt1
 - new version 6.7
 
