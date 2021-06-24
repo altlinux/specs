@@ -1,7 +1,7 @@
 %define lua lua5.1
 
 Name: ZeroBraneStudio
-Version: 1.80
+Version: 1.90
 Release: alt1
 Summary: lightweight cross-platform Lua IDE
 License: MIT
@@ -12,7 +12,6 @@ BuildArch: noarch
 # https://github.com/pkulchenko/ZeroBraneStudio
 Source: https://github.com/pkulchenko/ZeroBraneStudio/archive/%version.tar.gz
 Source88: %name.watch
-Patch: zbs-1.8.0.patch
 
 Requires: wxlua luarocks5.1(luasocket) >= 3.0 luarocks5.1(luafilesystem) luarocks5.1(lpeg)
 #Requires: luarocks(git)
@@ -30,7 +29,6 @@ others). It originated from the Estrela Editor.
 
 %prep
 %setup
-%patch0 -p1
 rm -rf bin \
 	*.exe \
 	zbstudio/ZeroBraneStudio.app \
@@ -63,6 +61,9 @@ desktop-file-install \
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Mar 02 2020 Ildar Mulyukov <ildar@altlinux.ru> 1.90-alt1
+- new version
+
 * Thu Jun 06 2019 Ildar Mulyukov <ildar@altlinux.ru> 1.80-alt1
 - new version
 - fix lua-5.1 as the interpreter
