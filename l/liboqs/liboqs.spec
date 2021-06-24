@@ -4,16 +4,13 @@
 
 Name: liboqs
 Version: 0.6.0
-Release: alt1
+Release: alt2
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
 Url: https://openquantumsafe.org/liboqs/
 Vcs: https://github.com/open-quantum-safe/liboqs/
 # NIST: https://csrc.nist.gov/Projects/post-quantum-cryptography/
-
-# Only supported arches ar: x86_64, arm64, and arm.
-ExclusiveArch: x86_64 aarch64 armh
 
 Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
@@ -104,6 +101,9 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Wed Jun 23 2021 Vitaly Chikunov <vt@altlinux.org> 0.6.0-alt2
+- Optimistic port to x86 and ppc64le.
+
 * Thu Jun 10 2021 Vitaly Chikunov <vt@altlinux.org> 0.6.0-alt1
 - Update to 0.6.0 (2021-06-08).
 

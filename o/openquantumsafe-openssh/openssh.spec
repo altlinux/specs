@@ -6,7 +6,7 @@
 
 Name: openquantumsafe-openssh
 Version: 7.9p1.202008
-Release: alt1
+Release: alt2
 
 Summary: OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe algorithms
 License: BSD-3-Clause
@@ -14,9 +14,6 @@ Group: Networking/Remote access
 Url: https://openquantumsafe.org/applications/ssh.html
 Vcs: https://github.com/open-quantum-safe/openssh
 Source: %name-%version.tar
-
-# Only arches supported by liboqs
-ExclusiveArch: x86_64 aarch64 armh
 
 %define confdir %_sysconfdir/openssh
 %define _chrootdir /var/empty
@@ -83,6 +80,7 @@ Conflicts: syslogd < 1.4.1-alt11
 Summary: Control rules for the OQS-OpenSSH server configuration
 License: GPLv2+
 Group: System/Servers
+BuildArch: noarch
 Provides: openssh-server-control = %EVR
 Conflicts: openssh-server-control
 Requires: %name-common = %EVR
@@ -90,6 +88,7 @@ Requires: %name-common = %EVR
 %package askpass-common
 Summary: OQS-OpenSSH common passphrase dialog infrastructure
 Group: Networking/Remote access
+BuildArch: noarch
 Provides: openssh-askpass-common = %EVR
 Conflicts: openssh-askpass-common
 Requires: %name-common = %EVR
@@ -305,5 +304,9 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Jun 23 2021 Vitaly Chikunov <vt@altlinux.org> 7.9p1.202008-alt2
+- Build on all arches (add x86 and ppc64le).
+- Make server-control and askpass-common noarch.
+
 * Sun Feb 28 2021 Vitaly Chikunov <vt@altlinux.org> 7.9p1.202008-alt1
 - First import of OQS-OpenSSH-snapshot-2020-08.
