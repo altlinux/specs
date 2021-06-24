@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_enable tests
 %def_enable dummy
 
@@ -17,15 +19,16 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.5.9
+Version: 1.6.1
 Release: alt1
-License: GPLv2+
+License: LGPL-2.1+
 Group: System/Configuration/Hardware
-Url: https://github.com/hughsie/fwupd
+Url: https://github.com/fwupd/fwupd
 Source0: %name-%version.tar
 Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
+
 BuildRequires: bash-completion
 BuildRequires: cmake
 BuildRequires: gcab
@@ -60,6 +63,7 @@ BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-pycairo
 BuildRequires: python3-module-pygobject3
 BuildRequires: vala-tools
+BuildRequires: gi-docgen
 BuildRequires: /proc
 
 %if_enabled uefi
@@ -70,6 +74,7 @@ BuildRequires: fontconfig
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: gnu-efi libefivar-devel
 Requires: gcab
+Requires: fwupd-efi
 Provides: fwupdate
 Obsoletes: fwupdate
 %endif
@@ -112,9 +117,9 @@ Data files for installed tests.
 
 %build
 %meson \
-    -Dgtkdoc=true \
+    -Ddocs=gtkdoc \
     -Dfirmware-packager=true \
-    -Dman=false \
+    -Dman=true \
     -Dlvfs=true \
     -Dsupported_build=true \
     -Dplugin_flashrom=false \
@@ -136,15 +141,13 @@ Data files for installed tests.
     -Dplugin_thunderbolt=true \
 %if_enabled uefi
     -Dplugin_uefi_capsule=true \
+    -Dplugin_uefi_pk=true \
     -Dplugin_redfish=true \
-    -Defi_sbat_distro_id="altlinux" \
-    -Defi_sbat_distro_summary="ALT Linux" \
-    -Defi_sbat_distro_pkgname="%name" \
-    -Defi_sbat_distro_version="%version-%release" \
-    -Defi_sbat_distro_url="http://git.altlinux.org/gears/f/%{name}.git" \
     -Dplugin_nvme=true \
+    -Defi_binary=false \
 %else
     -Dplugin_uefi_capsule=false \
+    -Dplugin_uefi_pk=false \
     -Dplugin_redfish=false \
     -Dplugin_nvme=false \
 %endif
@@ -160,7 +163,7 @@ Data files for installed tests.
 
 %if_enabled tests
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir 
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 %endif
 
@@ -173,6 +176,15 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 
 %files -f %name.lang
 %doc README.md AUTHORS COPYING
+%_man1dir/fwupdtool.1*
+%_man1dir/fwupdagent.1*
+%_man1dir/fwupdmgr.1*
+%_man1dir/fwupdtpmevlog.1*
+%_man1dir/dfu-tool.1*
+%if_enabled uefi
+%_man1dir/fwupdate.1*
+%_man1dir/dbxtool.1*
+%endif
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
 %config(noreplace)%_sysconfdir/fwupd/thunderbolt.conf
 %config(noreplace)%_sysconfdir/fwupd/upower.conf
@@ -191,7 +203,6 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
 %if_enabled uefi
 %_bindir/fwupdate
-%_libdir/efi/fwupd*.efi
 %endif
 %_bindir/dfu-tool
 %if_enabled uefi
@@ -203,8 +214,13 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/*.conf
 %_sysconfdir/pki/fwupd
 %_sysconfdir/pki/fwupd-metadata
+%dir %_datadir/fwupd
+%dir %_datadir/fwupd/metainfo
+%dir %_datadir/fwupd/remotes.d
+%dir %_datadir/fwupd/remotes.d/vendor
 %_datadir/dbus-1/system.d/org.freedesktop.fwupd.conf
 %ifarch x86_64
+%dir %_datadir/fwupd/remotes.d/dell-esrt
 %_datadir/fwupd/remotes.d/dell-esrt/metadata.xml
 %endif
 %_datadir/fwupd/remotes.d/vendor/firmware
@@ -267,6 +283,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_logind.so
 %_libdir/fwupd-plugins-3/libfu_plugin_acpi_dmar.so
 %_libdir/fwupd-plugins-3/libfu_plugin_acpi_facp.so
+%_libdir/fwupd-plugins-3/libfu_plugin_acpi_phat.so
 %_libdir/fwupd-plugins-3/libfu_plugin_bcm57xx.so
 %_libdir/fwupd-plugins-3/libfu_plugin_cros_ec.so
 %_libdir/fwupd-plugins-3/libfu_plugin_elantp.so
@@ -278,6 +295,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_linux_tainted.so
 %if_enabled msr
 %_libdir/fwupd-plugins-3/libfu_plugin_msr.so
+%_modulesloaddir/fwupd-msr.conf
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_pci_bcr.so
 %_libdir/fwupd-plugins-3/libfu_plugin_pci_mei.so
@@ -313,6 +331,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
 %_libdir/fwupd-plugins-3/libfu_plugin_wacom_usb.so
 %_libdir/fwupd-plugins-3/libfu_plugin_wacom_raw.so
+%_libdir/fwupd-plugins-3/libfu_plugin_analogix.so
 
 %ghost %_localstatedir/fwupd/gnupg
 
@@ -324,8 +343,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/libfwupd*.so
 %_libdir/pkgconfig/fwupd.pc
 %_libdir/pkgconfig/fwupdplugin.pc
-%_datadir/vala/vapi/fwupd.*
-%_datadir/vala/vapi/fwupdplugin.*
+%_datadir/vala/vapi/*
 
 %files labels
 %if_enabled uefi
@@ -338,8 +356,14 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.test
 %_datadir/installed-tests/fwupd/*.cab
 %_datadir/installed-tests/fwupd/*.sh
+%_libexecdir/installed-tests/fwupd
 
 %changelog
+* Wed Jun 23 2021 Egor Ignatov <egori@altlinux.org> 1.6.1-alt1
+- 1.6.1
+- cleanup spec
+- enable man pages
+
 * Thu Apr 15 2021 Anton Farygin <rider@altlinux.org> 1.5.9-alt1
 - 1.5.9
 
