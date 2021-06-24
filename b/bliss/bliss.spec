@@ -1,17 +1,17 @@
 Name: bliss
-%define lname   libbliss-0_73
-Version: 0.73
+%define lname   libbliss-0_77
+Version: 0.77
 Release: alt1
 Summary: A Tool for Computing Automorphism Groups and Canonical Labelings of Graphs
 License: LGPL-3.0
 Group: Sciences/Mathematics
-Url: http://www.tcs.hut.fi/Software/bliss/
+Url: https://users.aalto.fi/~tjunttil/bliss/
 
-Source: http://www.tcs.hut.fi/Software/bliss/%name-%version.zip
-Patch1: bliss-am.diff
-Patch2: bliss-nodate.diff
-BuildRequires: automake
+Source: %url/downloads/%name-%version.zip
+Patch1: bliss-nodate.diff
+Patch2: cmake.patch
 BuildRequires: gcc-c++
+BuildRequires: cmake rpm-build-ninja
 BuildRequires: libgmp-devel
 BuildRequires: libtool
 BuildRequires: unzip
@@ -47,28 +47,35 @@ applications that want to make use of the Bliss library.
 %patch2 -p1
 
 %build
-%add_optflags -lgmp
-%autoreconf
-%configure
-%make_build
+%cmake \
+    -GNinja \
+    -DBUILD_STATIC=OFF \
+    -DUSE_GMP=ON \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+#
+%cmake_build
 
 %install
-%makeinstall_std
-rm -f "%buildroot/%_libdir"/*.la
+%cmake_install
 
 %files
 %doc COPYING*
 %_bindir/bliss*
 
 %files -n %lname
-%_libdir/libbliss-0.73.so
-%_libdir/libbliss_gmp-0.73.so
+%_libdir/libbliss.so.%version
 
 %files devel
+%doc CHANGES.txt README.txt
 %_libdir/libbliss.so
-%_libdir/libbliss_gmp.so
 %_includedir/bliss/
 
 %changelog
+* Wed Jun 23 2021 Leontiy Volodin <lvol@altlinux.org> 0.77-alt1
+- New version (0.77) with rpmgs script.
+- Changed url.
+- Built with cmake.
+- Updated patches (thanks opensuse).
+
 * Sat Jun 12 2021 Leontiy Volodin <lvol@altlinux.org> 0.73-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
