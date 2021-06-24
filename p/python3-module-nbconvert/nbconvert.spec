@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 6.0.2
-Release: alt3
+Release: alt4
 
 Summary: Converting Jupyter Notebooks
 
@@ -34,7 +34,7 @@ BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-jinja2-tests python3-module-traitlets-tests
+BuildRequires: python3-module-jinja2 python3-module-traitlets-tests
 %if_with doc
 BuildRequires: python3-module-html5lib python3(pandocfilters)
 BuildRequires: python3(sphinx_rtd_theme) python3(nbsphinx) python3(pandocfilters)
@@ -189,6 +189,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %endif
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.2-alt4
+- drop excessive python3-module-jinja2-tests BR
+
 * Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.2-alt3
 - Updated build dependencies.
 

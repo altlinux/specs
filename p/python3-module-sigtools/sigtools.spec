@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.2
-Release: alt2
+Release: alt3
 
 Summary: Python module to manipulate function signatures
 
@@ -27,7 +27,7 @@ BuildRequires: python3-module-unittest2 python3-module-coverage python3-module-m
 %py3_provides %oname
 %py3_requires six funcsigs sphinx
 
-BuildRequires: python3-module-html5lib python3-module-jinja2-tests python3-module-sphinx
+BuildRequires: python3-module-html5lib python3-module-sphinx
 
 %description
 Utilities for working with 3.3's inspect.Signature objects.
@@ -59,6 +59,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.2-alt3
+- drop excessive python3-module-jinja2-tests BR
+
 * Mon Jun 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt2
 - Drop python2 support.
 

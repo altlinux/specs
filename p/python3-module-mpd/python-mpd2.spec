@@ -1,6 +1,6 @@
 Name: python3-module-mpd
 Version: 0.5.5
-Release: alt2
+Release: alt3
 Summary: A client interface for the Music Player Daemon
 Group: Development/Python3
 License: LGPLv3+
@@ -11,7 +11,7 @@ Conflicts: python-module-python-mpd
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: ctags python3-module-jinja2-tests python3-module-sphinx
+BuildRequires: ctags python3-module-sphinx
 
 %description
 python-mpd2 is a fork of python-mpd. While 0.4.x was backwards compatible with
@@ -49,6 +49,9 @@ make -C doc SPHINXBUILD=py3_sphinx-build html
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.5-alt3
+- drop excessive python3-module-jinja2-tests BR
+
 * Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.5-alt2
 - Drop python2 support.
 

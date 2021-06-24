@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt1
+Release: alt2
 Summary: OpenStack Hacking Guideline Enforcement
 License: Apache-2.0
 Group: Development/Python3
@@ -16,7 +16,7 @@ Url: https://pypi.python.org/pypi/hacking/
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-eventlet python3-module-html5lib python3-module-jinja2-tests python3-module-mock
+BuildRequires: python3-module-coverage python3-module-eventlet python3-module-html5lib python3-module-mock
 BuildRequires: python3-module-setuptools python3-module-sphinx python3-module-testrepository python3-module-yieldfrom.urllib3
 BuildRequires: python3(pycodestyle) python3-module-flake8 python3-module-mccabe python3-module-stestr
 
@@ -59,6 +59,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.2.0-alt2
+- drop excessive python3-module-jinja2-tests BR
+
 * Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Build new version.
 - Build with check.

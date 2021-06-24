@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.6
-Release: alt1
+Release: alt2
 
 Summary: Cornucopia of useful code
 License: LGPLv2+
@@ -16,7 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-jinja2-tests python3-module-nose
+BuildRequires: python3-module-html5lib python3-module-nose
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
@@ -86,6 +86,9 @@ popd
 
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt2
+- drop excessive python3-module-jinja2-tests BR
+
 * Thu Dec 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2.6-alt1
 - Version updated to 1.2.6
 - build for python2 disabled

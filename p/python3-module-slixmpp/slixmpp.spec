@@ -1,7 +1,7 @@
 %def_with docs
 Name: python3-module-slixmpp
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Group: Development/Python3
 License: BSD
 Url: https://dev.louiz.org/projects/slixmpp
@@ -10,8 +10,6 @@ BuildPreReq: python3-devel python3-module-setuptools gpg
 
 Requires: python3-module-pyasn1-modules
 Requires: python3-module-aiodns
-
-BuildRequires: python3-module-jinja2-tests
 
 %if_with docs
 BuildRequires: python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
@@ -51,6 +49,9 @@ python3 setup.py test
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt2
+- drop excessive python3-module-jinja2-tests BR
+
 * Wed Mar 06 2019 Fr. Br. George <george@altlinux.ru> 1.4.2-alt1
 - Autobuild version bump to 1.4.2
 

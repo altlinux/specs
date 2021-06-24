@@ -10,7 +10,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
 Group: Development/Python3
@@ -27,7 +27,7 @@ BuildRequires: gcc-c++ gcc-fortran liblapack-devel
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing
 BuildRequires: python3-module-Cython
-BuildRequires: python3-module-html5lib python3-module-jinja2-tests
+BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-pybind11
 
@@ -138,6 +138,9 @@ done
 %_includedir/%modname-py3
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt2
+- drop excessive python3-module-jinja2-tests BR
+
 * Thu Mar 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1
 - Updated to upstream version 1.6.1.
 

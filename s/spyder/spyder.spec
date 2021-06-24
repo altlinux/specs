@@ -1,6 +1,6 @@
 Name: spyder
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: Scientific Python Development Environment
 
@@ -23,7 +23,7 @@ Requires: python3-module-matplotlib-qt5
 # IPython bug
 #Requires: python-module-zmq
 
-BuildRequires: python3-module-jinja2-tests python3-module-sphinx
+BuildRequires: python3-module-sphinx
 
 %description
 Spyder is a Python development environment with tons of features:
@@ -107,6 +107,9 @@ rm -rf %buildroot%_bindir/spyder_win_post_install.py
 #python3_sitelibdir/spyderplugins/
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.1-alt2
+- drop excessive python3-module-jinja2-tests BR
+
 * Sat Feb 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
 - NMU: build new version (python3)
 

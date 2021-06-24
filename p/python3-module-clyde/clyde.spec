@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1.git20141130.2.1
+Release: alt2
 Summary: Command line interface designer
 License: MIT
 Group: Development/Python3
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-coverage python3-module-jinja2-tests python3-module-nose
+BuildRequires: python3-module-coverage python3-module-jinja2 python3-module-nose
 BuildRequires: python3(sugarbowl)
 %if_with docs
 BuildRequires: python3-module-html5lib python3-module-sphinx-settings python3(sphinx_rtd_theme)
@@ -55,6 +55,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.0-alt2
+- drop excessive python3-module-jinja2-tests BR
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1.git20141130.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
@@ -73,4 +76,3 @@ python3 setup.py test
 
 * Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.git20141130
 - Initial build for Sisyphus
-

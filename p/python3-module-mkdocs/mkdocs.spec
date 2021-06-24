@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.4
-Release: alt3
+Release: alt4
 
 Summary: Python tool to create HTML documentation from markdown sources
 License: BSD
@@ -16,7 +16,6 @@ Source: mkdocs-%version.tar.gz
 Source1: mkdocs.1
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-jinja2-tests
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-watchdog
 
@@ -70,6 +69,9 @@ install -p -m 0644 %SOURCE1 %buildroot/%_man1dir/
 %python3_sitelibdir/*/test*
 
 %changelog
+* Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.4-alt4
+- drop excessive python3-module-jinja2-tests BR
+
 * Mon Jun 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.4-alt3
 - Requires fixed.
 
