@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.2.0.87
-Release: alt2
+Release: alt3
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -15,6 +15,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-file-manager_5.2.0.82_qt5.15.patch
 Patch1: deepin-file-manager_5.2.0.82_desktop.patch
 Patch2: deepin-file-manager_5.2.0.82_gcc10.patch
+Patch3: deepin-file-manager-5.2.0.87-alt-qterminal-instead-xterm.patch
 
 ExcludeArch: armh ppc64le
 
@@ -98,6 +99,7 @@ Deepin desktop environment - desktop module.
 %if_disabled clang
 %patch2 -p2
 %endif
+# %%patch3 -p1
 
 sed -i 's|lrelease|lrelease-qt5|' \
     dde-desktop/translate_generation.sh \
@@ -121,6 +123,8 @@ sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-m
 sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/ut_dfilestatisticsjob.cpp
 sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
 
+sed -i 's|/usr/bin/file-manager.sh|/usr/bin/dde-file-manager|' dde-file-manager/mips/dde-file-manager.desktop
+
 # hide lockscreen checkbox
 sed -i 's|m_lockScreenBox->show();|m_lockScreenBox->hide();|' dde-wallpaper-chooser/frame.cpp
 
@@ -134,6 +138,9 @@ export READELF="llvm-readelf"
 %endif
 %qmake_qt5 \
            CONFIG+=nostrip \
+%ifarch aarch64
+           CONFIG+=DISABLE_ANYTHING \
+%endif
            DEFINES+="VERSION=%version" \
            unix:LIBS+="-L%_libdir -lgio-2.0 -licui18n -lX11" \
            unix:LIBS+="-L%_K5link -lKF5Codecs" \
@@ -221,6 +228,9 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Thu Jun 24 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt3
+- Fixed startup on aarch64 architecture.
+
 * Sat Jun 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt2
 - Hidden lockscreen checkbox.
 - Fixed version tag.
