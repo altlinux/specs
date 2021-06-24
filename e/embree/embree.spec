@@ -5,7 +5,7 @@
 
 Name: embree
 Version: 3.13.0
-Release: alt2
+Release: alt3
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -16,10 +16,14 @@ Source: %name-%version.tar
 
 Source1: %name.watch
 
+Patch2000: %name-e2k.patch
+
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libgif-devel
+%ifarch x86_64 %ix86
 BuildRequires: ispc
+%endif
 BuildRequires: pkgconfig(glut)
 BuildRequires: pkgconfig(glfw3)
 BuildRequires: pkgconfig(xmu)
@@ -30,8 +34,7 @@ BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(OpenImageIO)
 BuildRequires: pkgconfig(tbb)
 
-# https://github.com/embree/embree/issues/186
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %ix86 aarch64 %e2k
 
 %description
 A collection of high-performance ray tracing kernels intended to graphics 
@@ -56,6 +59,17 @@ applications that use %{name}.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
+
+%ifarch %ix86
+# _mm_cvtsi128_si64 is unavailable on 32-bit x86
+sed -i "s|defined(__WIN32__) && !defined(__X86_64__)|!defined(__64BIT__)|" \
+	common/simd/vint4_sse2.h
+sed -i "/return _mm_cvtsi128_si64/s|.*|return v.i[0];|" \
+	common/simd/vllong4_avx2.h
+%endif
 
 %build
 # limit parallel build
@@ -63,10 +77,23 @@ if [ %__nprocs -gt 4 ] ; then
 	export NPROCS=4
 fi
 
+%ifarch %e2k
+%add_optflags -Wno-reduced-alignment -Wno-sign-compare -mno-avx
+%endif
+
 %cmake \
 	-DEMBREE_IGNORE_CMAKE_CXX_FLAGS=OFF \
 	-DEMBREE_TUTORIALS=OFF \
 	-DEMBREE_COMPACT_POLYS=ON \
+%ifnarch x86_64 %ix86
+	-DEMBREE_ISPC_SUPPORT=OFF \
+%endif
+%ifarch %ix86
+	-DEMBREE_MAX_ISA=AVX2 \
+%endif
+%ifarch %e2k
+	-DEMBREE_MAX_ISA=DEFAULT \
+%endif
 	%nil
 
 %cmake_build
@@ -90,6 +117,10 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %_man3dir/*
 
 %changelog
+* Wed Jun 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.13.0-alt3
+- enabled build on ix86 and aarch64 architectures
+- added patch for Elbrus
+
 * Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt2
 - Moved man pages to devel package.
 
