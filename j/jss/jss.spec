@@ -7,7 +7,7 @@
 
 Name: jss
 Version: 4.8.1
-Release: alt2
+Release: alt3
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -32,6 +32,10 @@ BuildRequires: libnspr-devel
 BuildRequires: apache-commons-lang3
 BuildRequires: slf4j
 BuildRequires: slf4j-jdk14
+
+# deps for tools/reproducible_jar.sh
+BuildRequires: zip
+BuildRequires: unzip
 
 %if_with check
 BuildRequires: ctest
@@ -126,6 +130,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Thu Jun 24 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt3
+- Fixed FTBFS(missing deps).
+
 * Fri Jun 11 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2
 - Built with Java11.
 
