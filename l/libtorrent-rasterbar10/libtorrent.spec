@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define soname 2.0
+%define upname libtorrent-rasterbar
+%define soname 10
 
-%def_without python3
-
-Name: libtorrent-rasterbar
+Name: libtorrent-rasterbar10
 Epoch: 4
-Version: 2.0.4
+Version: 1.2.14
 Release: alt2
+
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD-3-Clause and BSL-1.0
 Group: System/Libraries
@@ -16,12 +16,10 @@ Url: https://www.rasterbar.com/products/libtorrent/
 # https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
 
-# git submodules
-Source1: %name-%version-deps-asio-gnutls.tar
-Source2: %name-%version-deps-try_signal.tar
-Source3: %name-%version-simulation-libsimulator.tar
+# Patch from OpenSUSE
+Patch1: libtorrent-rasterbar-fix_library_version.patch
 
-Patch1: libtorrent-fedora-python-sha256.patch
+Patch2: libtorrent-rasterbar-disable-pkgconfig.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -30,39 +28,11 @@ BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: boost-devel boost-asio-devel boost-filesystem
 BuildRequires: boost-filesystem-devel boost-program_options-devel
-BuildRequires: libGeoIP-devel
-%if_with python3
 BuildRequires: python3-devel boost-python3-devel
 BuildRequires: python3(setuptools)
-%endif
+BuildRequires: libGeoIP-devel
 
 %description
-libTorrent is designed to avoid redundant copying and storing of data
-that other clients and libraries suffer from. libTorrent features:
-
-* The client has full control over the polling of sockets.
-* Sigc++ signals makes it easy for the client to react to events.
-* Fast resume which checks the file modification time.
-* Direct reading and writing from network to mmap'ed files.
-* File hash check uses the same thread; client can control the rate;
-  non-blocking and preload to memory with the mincore and madvise.
-* File handler: fine-grained use of file read/write permissions, allows
-  seeding of read-only files; allows torrents with unlimited number of
-  files; opens closed files when mapping chunks to memory, with graceful
-  error handling; support for files larger than 2 GB; different download
-  priorities for files in the torrent.
-* Multi-tracker support.
-* No dependency on any specific HTTP library, the client implements a
-  wrapper class.
-* Dynamic request pipe size.
-* Upload and download throttle.
-* And much more...
-
-%package -n %name%soname
-Summary: libTorrent is a BitTorrent library written in C++ for *nix
-Group: System/Libraries
-
-%description -n %name%soname
 libTorrent is designed to avoid redundant copying and storing of data
 that other clients and libraries suffer from. libTorrent features:
 
@@ -87,32 +57,31 @@ that other clients and libraries suffer from. libTorrent features:
 %package devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C++
-Requires: %name%soname = %EVR
-Provides: libtorrent-rasterbar8-devel = %EVR
+Requires: %name = %EVR
 Conflicts: libtorrent-rasterbar8-devel < %EVR
 Obsoletes: libtorrent-rasterbar8-devel < %EVR
 Conflicts: libtorrent-rasterbar7-devel < %EVR
 Obsoletes: libtorrent-rasterbar7-devel < %EVR
 Conflicts: libtorrent-devel
+Conflicts: %upname-devel
 
 %description devel
 The libtorrent-devel package contains libraries and header files needed
 to develop applications using libTorrent.
 
-%if_with python3
-%package -n python3-module-%name
+%package -n python3-module-%upname
 Summary: libTorrent python bindings
 Group: Development/Python3
-Requires: %name%soname = %EVR
+Requires: %name = %EVR
 
-%description -n python3-module-%name
+%description -n python3-module-%upname
 The python3-module-libtorrent-rasterbar contains
 python-3 bindings to libTorrent.
-%endif
 
 %prep
-%setup -a1 -a2 -a3
+%setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %ifarch %mips32
@@ -122,13 +91,12 @@ export LIBS=-latomic
 %cmake \
 	-DCMAKE_CXX_STANDARD=14 \
 	-Dbuild_examples=ON \
+	-Dbuild_tests=ON \
 	-Dbuild_tools=ON \
-%if_with python3
 	-Dpython-bindings=ON \
 	-Dpython-egg-info=ON \
 	-Dpython-install-system-dir=ON \
 	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3 \
-%endif
 	%nil
 
 %cmake_build
@@ -136,7 +104,7 @@ export LIBS=-latomic
 %install
 %cmakeinstall_std
 
-%files -n %name%soname
+%files
 %doc AUTHORS ChangeLog NEWS README.rst
 %doc COPYING LICENSE
 %_libdir/*.so.%{soname}
@@ -145,23 +113,16 @@ export LIBS=-latomic
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_pkgconfigdir/*
 %_datadir/cmake/Modules/*.cmake
 %_libdir/cmake/*
 
-%if_with python3
-%files -n python3-module-%name
+%files -n python3-module-%upname
 %python3_sitelibdir/libtorrent*.so
 %python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
-* Thu Jun 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4:2.0.4-alt2
-- Rebuilt without python module because deluge doesn't work
-  with libtorrent-rasterbar >= 2.0 yet.
-
-* Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3:2.0.4-alt1
-- Updated to upstream version 2.0.4
+* Thu Jun 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4:1.2.14-alt2
+- Reintroduced due to deluge not working with libtorrent-rasterbar >= 2.0.
 
 * Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.14-alt1
 - Updated to upstream version 1.2.14.
