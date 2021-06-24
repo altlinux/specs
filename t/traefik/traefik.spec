@@ -1,10 +1,10 @@
 %global import_path github.com/traefik/traefik
-%global commit f482e5e84a6aa1e5a5bd547883d9c1cb16ba20b0
+%global commit 5841c9a7a5f6bc7de0f0c15daaafb35d02c7d330
 
 %global _unpackaged_files_terminate_build 1
 
 Name: traefik
-Version: 2.4.3
+Version: 2.4.9
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -134,6 +134,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.9-alt1
+- 2.4.9
+
 * Tue Feb 16 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.3-alt1
 - 2.4.3
 
