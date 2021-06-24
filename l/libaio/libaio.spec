@@ -1,5 +1,5 @@
 Name: libaio
-Version: 0.3.111
+Version: 0.3.112
 Release: alt1
 
 Summary: Linux-native asynchronous I/O access library
@@ -57,6 +57,9 @@ the Linux-native asynchronous I/O facility ("async I/O", or "aio").
 %_libdir/*.a
 
 %changelog
+* Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 0.3.112-alt1
+- new version 0.3.112
+
 * Wed Jun 27 2018 Alexey Shabalin <shaba@altlinux.ru> 0.3.111-alt1
 - 0.3.111
 - add package with static library
