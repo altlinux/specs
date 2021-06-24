@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/git tex(dehypht.tex)
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 4.200
+Version: 4.204
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -13,9 +13,12 @@ Group: Engineering
 License: LGPLv3 or Perl Artistic 2.0
 Url: https://www.veripool.org/wiki/verilator
 Source: %name-%version.tar
+Patch0: 0001-Fix-V3Hash-when-building-m32.patch
 
-BuildRequires: flex gcc-c++ perl-Pod-LaTeX texlive
-BuildRequires: /usr/bin/pod2html
+BuildRequires: flex gcc-c++
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 Verilator is the fastest free Verilog HDL simulator, and beats most commercial
@@ -33,15 +36,14 @@ BuildArch: noarch
 Verilator is the fastest free Verilog HDL simulator, and beats most commercial
 simulators. This package contains documentation and examples.
 
-%define docfiles verilator.txt verilator.html verilator.pdf
-
 %prep
 %setup
+%patch0 -p1
 
 %build
 autoconf
 %configure
-%make_build all %docfiles
+%make_build all info
 
 %check
 %make test
@@ -53,6 +55,7 @@ mv %buildroot%_datadir/pkgconfig/%name.pc %buildroot%_pkgconfigdir/%name.pc
 mkdir -p %buildroot%_docdir/%name/
 mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 
+
 %files -n %name
 %_bindir/*
 %_datadir/%name/
@@ -60,10 +63,15 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_pkgconfigdir/%name.pc
 
 %files -n %name-doc
-%doc %docfiles
+%doc verilator.pdf docs/_build/html
 %_docdir/%name/
 
 %changelog
+* Mon Jun 21 2021 Egor Ignatov <egori@altlinux.org> 4.204-alt1
+- new version
+- add patch to fix build on 32 bit systems
+- documentation format changed
+
 * Tue Apr 20 2021 Egor Ignatov <egori@altlinux.org> 4.200-alt1
 - new version
 - remove pkg-config-version-fix patch
