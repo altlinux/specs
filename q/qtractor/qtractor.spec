@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libXext-devel 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		qtractor
-Version:	0.9.21
+Version:	0.9.22
 Release:	alt1_1
 Summary:	An Audio/MIDI multi-track sequencer
 License:	GPLv2+
@@ -48,6 +48,12 @@ specially dedicated to the personal home-studio.
 %prep
 %setup -q
 %patch0 -p1
+# E2K: fixed SSE detection code (ilyakurdyukov@)
+%ifarch %e2k
+sed -i "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
+  src/qtractor{AudioEngine,AudioMonitor,InsertPlugin,WsolaTimeStretcher}.cpp
+%endif
+
 
 
 %build
@@ -91,6 +97,9 @@ desktop-file-install \
 
 
 %changelog
+* Fri Jun 25 2021 Igor Vlasenko <viy@altlinux.org> 0.9.22-alt1_1
+- new version
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 0.9.21-alt1_1
 - update by mgaimport
 
