@@ -2,7 +2,7 @@
 %global import_path github.com/containers/podman
 
 Name:     podman
-Version:  3.1.2
+Version:  3.2.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -148,6 +148,9 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
+- new version 3.2.1
+
 * Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
 - new version 3.1.2
 
