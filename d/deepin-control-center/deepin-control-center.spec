@@ -5,7 +5,7 @@
 
 Name: deepin-control-center
 Version: 5.4.23
-Release: alt2.git1362dfe
+Release: alt3.git1362dfe
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -20,6 +20,7 @@ Patch1: deepin-control-center-fix-build-deepinid-syncdaemon.patch
 Patch2: deepin-control-center-fix-build-gcc10.patch
 Patch3: deepin-control-center-disable-timeout-for-the-lockscreen.patch
 Patch4: deepin-control-center-lightdm-lockscreen.patch
+Patch5: deepin-control-center-hide-lockscreen-slide-widget.patch
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils rpm-build-kf5
 %if_enabled clang
@@ -79,6 +80,7 @@ Group: Development/Other
 %patch2 -p1
 # %%patch3 -p1
 # %%patch4 -p1
+%patch5 -p1
 
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i -E '/add_compile_definitions/d' CMakeLists.txt
@@ -177,6 +179,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Fri Jun 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.23-alt3.git1362dfe
+- Temporarily hidden the widget to set the lockscreen timeout.
+
 * Thu Jun 24 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.23-alt2.git1362dfe
 - Build git snapshot.
 - Disabled General Settings.
