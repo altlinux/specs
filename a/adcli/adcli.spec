@@ -1,8 +1,8 @@
 
 Name: adcli
-Version: 0.9.0
+Version: 0.9.1
 
-Release: alt2
+Release: alt1
 Summary: Active Directory enrollment
 License: LGPLv2+
 Group: Networking/Other
@@ -58,6 +58,9 @@ documentation.
 %doc %_datadir/doc/adcli
 
 %changelog
+* Sat Jun 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Tue Mar 03 2020 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt2
 - discovery fix
 
