@@ -3,7 +3,7 @@
 %define libsover 25
 Name: openexr
 Version: 2.5.6
-Release: alt2
+Release: alt3
 
 %define _cmake__builddir BUILD
 %define common %name%libsover-common
@@ -22,6 +22,7 @@ Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
 
 Source: %name-%version.tar
+Patch2000: %name-e2k-simd.patch
 
 BuildRequires: gcc-c++ glibc-devel ilmbase-devel zlib-devel
 BuildRequires: cmake
@@ -68,8 +69,7 @@ developing applications with %rname
 %prep
 %setup -q -n %name-%version
 %ifarch %e2k
-# e2k has MMX/SSE but 2.2.0+'s asm needs to be ported
-%add_optflags -U__SSE2__ -U__SSE4_1__
+%patch2000 -p2
 %endif
 
 %build
@@ -104,6 +104,9 @@ make -C BUILD install DESTDIR=%buildroot
 
 
 %changelog
+* Mon Jun 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.6-alt3
+- added SIMD patch for Elbrus
+
 * Wed Jun 09 2021 Sergey V Turchin <zerg@altlinux.org> 2.5.6-alt2
 - compatable with p9
 
