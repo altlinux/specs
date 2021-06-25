@@ -1,8 +1,8 @@
 %define        _name meteor
 
 Name:          %_name
-Version:       0.5.9
-Release:       alt1
+Version:       2.2.0
+Release:       alt0.1
 Summary:       Meteor, the JavaScript App Platform
 License:       MIT
 Group:         Development/Other
@@ -14,6 +14,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-macros-nodejs
 
 %add_findreq_skiplist %%_libexecdir/%_name/**/*
+Autoprov:      yes,noshebang,nopython,noperl,nosymlinks,noshell
 Autoreq:       yes,noshebang,nopython,noperl,nosymlinks,noshell
 Requires:      node
 Requires:      npmjs-fibers
@@ -45,5 +46,9 @@ ln -s %_libdir/%_name/%_name %buildroot/%_bindir/%_name
 
 
 %changelog
+* Fri Jun 11 2021 Pavel Skrylev <majioa@altlinux.org> 2.2.0-alt0.1
+- ^ 0.5.9 -> 2.2.0
+- ! build
+
 * Fri Jan 17 2020 Pavel Skrylev <majioa@altlinux.org> 0.5.9-alt1
 - %_name package built for Sisyphus
