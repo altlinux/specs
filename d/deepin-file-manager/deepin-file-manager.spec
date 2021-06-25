@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.2.0.87
-Release: alt3
+Release: alt4
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -16,6 +16,7 @@ Patch: deepin-file-manager_5.2.0.82_qt5.15.patch
 Patch1: deepin-file-manager_5.2.0.82_desktop.patch
 Patch2: deepin-file-manager_5.2.0.82_gcc10.patch
 Patch3: deepin-file-manager-5.2.0.87-alt-qterminal-instead-xterm.patch
+Patch4: deepin-file-manager-alt-hide-lockscreen-checkbox.patch
 
 ExcludeArch: armh ppc64le
 
@@ -100,6 +101,7 @@ Deepin desktop environment - desktop module.
 %patch2 -p2
 %endif
 # %%patch3 -p1
+%patch4 -p1
 
 sed -i 's|lrelease|lrelease-qt5|' \
     dde-desktop/translate_generation.sh \
@@ -124,9 +126,6 @@ sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/
 sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
 
 sed -i 's|/usr/bin/file-manager.sh|/usr/bin/dde-file-manager|' dde-file-manager/mips/dde-file-manager.desktop
-
-# hide lockscreen checkbox
-sed -i 's|m_lockScreenBox->show();|m_lockScreenBox->hide();|' dde-wallpaper-chooser/frame.cpp
 
 %build
 %if_enabled clang
@@ -228,6 +227,9 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Fri Jun 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt4
+- Hidden lockscreen checkbox more correctly.
+
 * Thu Jun 24 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt3
 - Fixed startup on aarch64 architecture.
 
