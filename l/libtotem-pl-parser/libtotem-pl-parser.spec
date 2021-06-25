@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define _name totem-pl-parser
 %define ver_major 3.26
 %define api_ver 1.0
@@ -6,10 +8,9 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable libgcrypt
-%def_disable quvi
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
@@ -17,23 +18,22 @@ Group: System/Libraries
 License: LGPL-2.0
 Url: http://www.hadess.net/%_name.php3
 
-#Source: %_name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
-%define glib_ver 2.34
-%define soup_ver 2.43
-%define quvi_ver 0.9.1
+%define glib_ver 2.56
 %define archive_ver 3.0
-
-%{?_enable_quvi:Requires: libquvi-scripts0.9 >= %quvi_ver}
 
 BuildRequires(pre): meson
 BuildRequires: gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libarchive-devel >= %archive_ver
 BuildRequires: libgcrypt-devel libxml2-devel
+BuildRequires: libuchardet-devel
 %{?_enable_libgcrypt:BuildRequires: libgcrypt-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5}
-%{?_enable_quvi:BuildRequires: libquvi0.9-devel >= %quvi_ver}
 
 %description
 Shared libraries that come with the Totem media player.
@@ -76,29 +76,23 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the Totem playlist parser library
 
-
 %prep
 %setup -n %_name-%version
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Denable-gtk-doc=true} \
-	%{?_enable_libgcrypt:-Denable-libgcrypt=yes} \
-	%{?_enable_quvi:-Denable-quvi=yes}
+    %{?_enable_gtk_doc:-Denable-gtk-doc=true} \
+    %{?_enable_libgcrypt:-Denable-libgcrypt=yes}
+%nil
 %meson_build
 
 %install
 %meson_install
-
 %find_lang --with-gnome --output=%name.lang %_name %_name-2.0
 
 %files -f %name.lang
 %_libdir/*.so.*
-%if_enabled quvi
-%dir %_libexecdir/%_name
-%_libexecdir/%_name/99-%_name-videosite
-%endif
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files -n %name-devel
 %_includedir/*
@@ -117,6 +111,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 3.26.6-alt1
+- 3.26.6
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.5-alt1
 - 3.26.5
 
