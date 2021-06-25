@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit c3cae160b35d53056e454386c09850a158c049ec
+%global commit 2c52cdf27c7bbd57b52f954eb50d4ca353d62f9d
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2021-03-23T05-46-11Z
-%define version 2021.03.23
+%global tag RELEASE.2021-06-13T17-48-22Z
+%define version 2021.06.13
 
 %global _unpackaged_files_terminate_build 1
 
@@ -11,7 +11,7 @@ Version: %version
 Release: alt1
 Summary: Minio Client for filesystems and object storage
 Group: File tools
-License: Apache-2.0
+License: AGPL-3.0
 Url: https://www.min.io/
 
 Source: %name-%version.tar
@@ -66,6 +66,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 2021.06.13-alt1
+- Update to RELEASE.2021-06-13T17-48-22Z
+
 * Sat Mar 27 2021 Alexey Shabalin <shaba@altlinux.org> 2021.03.23-alt1
 - Update to RELEASE.2021-03-23T05-46-11Z
 
