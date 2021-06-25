@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Better dates & times for Python
@@ -64,6 +64,9 @@ tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 %{?_enable_docs: man/}
 
 %changelog
+* Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Wed Apr 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
