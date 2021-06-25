@@ -1,4 +1,4 @@
-%define ver_major 3.38
+%define ver_major 40
 %define xdg_name org.gnome.Polari
 %define mozjs_ver 78
 
@@ -81,6 +81,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0
+
 * Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
