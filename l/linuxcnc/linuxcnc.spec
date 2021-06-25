@@ -7,8 +7,8 @@
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.8.1
-Release: alt3
+Version: 2.8.2
+Release: alt1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -294,6 +294,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 25 2021 Anton Midyukov <antohami@altlinux.org> 2.8.2-alt1
+- new version 2.8.2
+
 * Wed Apr 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.1-alt3
 - Rebuilt with boost-1.76.0.
 
