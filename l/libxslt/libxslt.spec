@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.34
-Release: alt2
+Release: alt3
 
 Summary: Library providing XSLT support
 License: MIT
@@ -8,7 +8,8 @@ Group: System/Libraries
 Url: http://xmlsoft.org/
 
 %def_disable static
-%def_disable python
+%def_without python
+%def_without crypto
 %define srcname %name-%version
 
 # git://git.gnome.org/libxslt.git
@@ -16,8 +17,10 @@ Source: %srcname.tar
 # git://git.altlinux.org/gears/l/libxslt.git
 Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Mon Mar 21 2011
-BuildRequires: libgcrypt-devel libxml2-devel python-devel python-module-libxml2
+BuildRequires: libxml2-devel
+%if_with crypto
+BuildRequires: libgcrypt-devel
+%endif
 
 %package -n xsltproc
 Summary: XSLT processor using libxslt
@@ -39,10 +42,12 @@ Summary: Static library for XSLT
 Group: Development/C
 Requires: %name-devel = %version-%release
 
+%if_with python
 %setup_python_subpackage %name
 %package -n %packagename
 Summary: Python bindings for the %name library
 Group: Development/Python
+BuildRequires: python-module-libxml2
 %setup_std_python_package_deps
 Requires: %name = %version-%release
 Requires: python-module-libxml2
@@ -50,6 +55,17 @@ Provides: python-modules-%name = %version-%release
 Provides: libxslt-python = %version-%release
 Obsoletes: python-modules-%name < %version-%release
 Obsoletes: libxslt-python < %version-%release
+
+%description -n python-module-%name
+This package contains a module that permits applications
+written in the Python programming language to use the interface
+supplied by the libxslt library to apply XSLT transformations.
+
+This library allows to parse sytlesheets, uses the %name-python
+to load and save XML and HTML files. Direct access to XPath and
+the XSLT transformation context are possible to extend the XSLT language
+with XPath functions written in Python.
+%endif
 
 %description
 XSLT library allows to transform XML files into other XML files
@@ -88,16 +104,6 @@ mechanism.
 This package provides static library required for development of
 statically linked programs with XSLT.
 
-%description -n python-module-%name
-This package contains a module that permits applications
-written in the Python programming language to use the interface
-supplied by the libxslt library to apply XSLT transformations.
-
-This library allows to parse sytlesheets, uses the %name-python
-to load and save XML and HTML files. Direct access to XPath and
-the XSLT transformation context are possible to extend the XSLT language
-with XPath functions written in Python.
-
 %prep
 %setup -n %srcname
 %patch -p1
@@ -111,10 +117,11 @@ export ac_cv_header_ansidecl_h=no
 %configure \
 	--with-html-dir=%_docdir \
 	--with-html-subdir=%name-%version \
+	%{subst_with python} \
+	%{subst_with crypto} \
 	%{subst_enable static}
 
-# SMP-incompatible build.
-make
+%make_build
 
 %install
 %makeinstall_std
@@ -165,7 +172,7 @@ make check
 %_libdir/*.a
 %endif # enabled static
 
-%if_enabled python
+%if_with python
 %files -n python-module-%name
 %python_sitelibdir/*
 %dir %pkgdocdir
@@ -177,6 +184,10 @@ make check
 %endif # enabled python
 
 %changelog
+* Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.34-alt3
+- Build without crypto.
+- Fixed build with libxml2 2.9.12.
+
 * Sun Mar 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.34-alt2
 - Fixed FTBFS: built without Python module.
 
