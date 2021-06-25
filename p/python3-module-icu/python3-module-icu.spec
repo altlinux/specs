@@ -6,7 +6,7 @@
 
 Name: python3-module-%modulename
 # python3 setup.py -V|tail -1
-Version: 2.7.3
+Version: 2.7.4
 Release: alt1
 
 Summary: Python extension wrapping the ICU C++ API
@@ -43,6 +43,9 @@ PyICU - Python 3 extension wrapping the ICU C++ API.
 
 
 %changelog
+* Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
 * Wed Jun 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.7.3-alt1
 - 2.7.3
 
