@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit cf8730309484629d2f5ee95b19db36d5d57ceea5
+%global commit 180eabaa8eb105bdfdf67f988d4bef3a8339074e
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2021-03-26T00-00-41Z
-%define version 2021.03.26
+%global tag RELEASE.2021-06-17T00-10-46Z
+%define version 2021.06.17
 
 %global _unpackaged_files_terminate_build 1
 
@@ -11,7 +11,7 @@ Version: %version
 Release: alt1
 Summary: Cloud Storage Server
 Group: System/Servers
-License: Apache-2.0
+License: AGPL-3.0
 Url: https://www.min.io/
 
 Source: %name-%version.tar
@@ -86,14 +86,17 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %files
 %doc README.md
 %_bindir/minio
-%dir %attr(750,_%name,_%name) %_sysconfdir/%name
-%config(noreplace) %attr(750,_%name,_%name) %_sysconfdir/%name/config.json
-%config(noreplace) %attr(750,root,_%name) %_sysconfdir/sysconfig/%name
+%dir %attr(750,root,_%name) %_sysconfdir/%name
+%config(noreplace) %attr(640,_%name,_%name) %_sysconfdir/%name/config.json
+%config(noreplace) %attr(640,root,_%name) %_sysconfdir/sysconfig/%name
 %dir %attr(750,_%name,_%name) %_sharedstatedir/%name
 %dir %attr(750,_%name,_%name) %_logdir/%name
 %_unitdir/%name.service
 
 %changelog
+* Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 2021.06.17-alt1
+- Update to RELEASE.2021-06-17T00-10-46Z
+
 * Sat Mar 27 2021 Alexey Shabalin <shaba@altlinux.org> 2021.03.26-alt1
 - Update to RELEASE.2021-03-26T00-00-41Z
 
