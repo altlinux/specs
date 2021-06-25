@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        91.0.4472.106
+Version:        91.0.4472.114
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -161,6 +161,7 @@ BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  pkgconfig(wayland-cursor)
+BuildRequires:  pkgconfig(dri)
 BuildRequires:  python
 BuildRequires:  python-modules-json
 BuildRequires:  python-modules-distutils
@@ -457,6 +458,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Jun 25 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.4472.114-alt1
+- New version (91.0.4472.114).
+- Security fixes:
+  - CVE-2021-30554: Use after free in WebGL.
+  - CVE-2021-30555: Use after free in Sharing.
+  - CVE-2021-30556: Use after free in WebAudio.
+  - CVE-2021-30557: Use after free in TabGroups.
+
 * Wed Jun 16 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.4472.106-alt1
 - New version (91.0.4472.106).
 
