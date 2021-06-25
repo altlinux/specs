@@ -1,5 +1,5 @@
 Name:		mdevctl
-Version:	0.78
+Version:	0.81
 Release:	alt1
 Summary:	Mediated device management and persistence utility
 
@@ -38,6 +38,9 @@ vfio-mdev for assignment to virtual machines.
 %_man8dir/lsmdev.8*
 
 %changelog
+* Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 0.81-alt1
+- new version 0.81
+
 * Tue Dec 15 2020 Alexey Shabalin <shaba@altlinux.org> 0.78-alt1
 - new version 0.78
 
