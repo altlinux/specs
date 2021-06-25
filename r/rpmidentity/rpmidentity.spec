@@ -1,5 +1,5 @@
 Name: rpmidentity
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Calculate rpm package identity
@@ -32,6 +32,11 @@ make DESTDIR=%buildroot PREFIX=%_prefix install
 %_datadir/rpmidentity/taglist
 
 %changelog
+* Thu Jun 24 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5-alt1
+- Updated to 0.5.
+- Refactored code.
+- Fixed behavior.
+
 * Sat Apr 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.4-alt1
 - Fixed package arguments parsing.
 - Fixed bug in the regexp that removes disttag from dependency versions.
@@ -49,4 +54,3 @@ make DESTDIR=%buildroot PREFIX=%_prefix install
 
 * Sat Apr 25 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1-alt1
 - Initial build for ALT Sisyphus.
-
