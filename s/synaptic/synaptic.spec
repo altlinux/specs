@@ -4,7 +4,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt24
+Release: alt25
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -20,7 +20,7 @@ Source2: %name.conf
 
 Patch1: %name-%version-alt.patch
 
-BuildRequires: libapt-devel >= 0.5.15lorg2-alt70
+BuildRequires: libapt-devel >= 0.5.15lorg2-alt72
 %if_enabled autotools
 BuildRequires: intltool
 %endif
@@ -64,9 +64,18 @@ intltoolize --force
 %endif
 
 %add_optflags -fno-exceptions
-%ifarch %e2k
-%add_optflags -std=c++14
+
+%ifnarch %e2k
+%add_optflags -std=gnu++17
+%else
+%add_optflags -std=gnu++14
 %endif
+
+# To avoid some errors on API change:
+%add_optflags -Werror=overloaded-virtual
+# A style enforcement: always use the keyword, which helps to avoid API misuse
+%add_optflags -Werror=suggest-override
+
 %configure --with-vte --with-pkg-hold --enable-scripts
 %make_build
 
@@ -94,6 +103,10 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Tue May 11 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.58-alt25
+- Some changes from the previous release reverted or updated, since we recently
+  reverted and updated some changes in the APT API in apt-0.5.15lorg2-alt72.
+
 * Tue May 11 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.58-alt24
 - Fixed a use-after-free bug (appearing as garbage being shown in the size
   columns, notably after recompilation with gcc10). (ALT#40010)

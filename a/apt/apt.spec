@@ -1,26 +1,57 @@
+# Honor both kind of options: --{without,disable} check;
+# and allow to simply write %%if_enabled check below.
+%if_without check
+%else
+%def_enable check
+%endif
+
 Name: apt
 Version: 0.5.15lorg2
-Release: alt71.3
+Release: alt72
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Packaging
 URL: http://apt-rpm.org
-
-Source0: %name-%version.tar
-Source1: apt.conf
-Source2: genbasedir
-Source3: README.rsync
-Source4: apt.ru.po
-Source5: apt.be.po
-Source6: ChangeLog-rpm.old
-
-Patch: apt-%version-%release.patch
-
-# Normally not applied, but useful.
-# still useful?
-Patch101: apt-0.5.4cnc9-alt-getsrc-debug.patch
+# Known upstream "apt-rpm" Git repos:
+# -----------------------------------
+#
+# * http://apt-rpm.org/scm/apt.git
+# * https://github.com/arelixlinux/apt which is said to be a clone from GitLab
+#
+# The second repo has a few more recent commits than the first one, a deeper
+# history (into the past), and some better formatted commit headers (Author).
+# (Compare like this: git range-diff apt-rpm/master...apt-rpm@github/master)
+#
+# To graft it (the 2nd deeper history) to ALT's history locally for yourself:
+#
+# git replace --graft 0.5.15lorg2-alt3 49dff175fb8ea3cd3ef47d45836f3089838246d6 0.5.15cnc6-alt18
+#
+# Then git blame on the source code gives more interesting information.
+# If the two parents are in this order, git blame --first-parent -w shows more
+# intersting individual commits from Conectiva's history, and not ALT's one.
+# (Make sure that the grafted source code is identical to ours:
+#
+# git tag apt-0.5.15lorg2@github 49dff175fb8ea3cd3ef47d45836f3089838246d6
+# git diff apt-0.5.15lorg2@github..0.5.15lorg2-alt3 --stat | fgrep -v ' => '
+#
+# The only reported difference is that they added a contributed script.)
+#
+# The upstream Debian repo:
+# -------------------------
+#
+# https://salsa.debian.org/apt-team/apt.git
+#
+# To attach it to Conectiva's history (locally for yourself):
+#
+# git tag apt-rpm-MERGED-0.5.4.9@github b780834d0d29cca5b0af1b544d3ff7b2a3d1a7a8
+# git tag 0.5.4.9-MERGED-into-CNC 4968036c93552ff78c1f857a91c685f0f3bcb794
+# git replace --graft apt-rpm-MERGED-0.5.4.9@github 0.5.4.9-MERGED-into-CNC apt-rpm-MERGED-0.5.4.9@github^
+#
+# The parent with the richer history is 1st for git blame --first-parent -w.
+Vcs: git://git.altlinux.org/gears/a/apt.git
+Source0: %name-%version-%release.tar
 
 Requires: libapt = %EVR
 Requires: rpm >= 4.13.0.1-alt2, /etc/apt/pkgpriorities, apt-conf
@@ -41,9 +72,6 @@ Conflicts: update-kernel < 0.9.14-alt1
 # of allow-duplicated packages, which changed (due to appending buildtime).
 Conflicts: apt-scripts-nvidia < 0.5.0-alt1
 
-# for autopoint.
-BuildPreReq: cvs
-
 # for apt-pipe.
 BuildPreReq: setproctitle-devel
 
@@ -53,13 +81,22 @@ BuildPreReq: setproctitle-devel
 # should be same version in rpm.spec
 BuildPreReq: liblua5.3-devel
 
-BuildRequires: bzlib-devel cvs docbook-utils gcc-c++ libreadline-devel librpm-devel setproctitle-devel zlib-devel
+BuildRequires: docbook-utils gcc-c++ libreadline-devel librpm-devel setproctitle-devel
 BuildRequires: libgnutls-devel
+
+# dependencies of tests
+%if_enabled check
+BuildRequires: /usr/bin/genbasedir
+BuildRequires: gpg-keygen
+BuildRequires: /usr/sbin/nginx
+BuildRequires: /usr/bin/openssl
+%endif
 
 %package -n libapt
 Summary: APT's core libraries
 Group: System/Libraries
-PreReq: librpm7 >= 4.13.0.1-alt2
+# RPMTAG_AUTOINSTALLED is supported since 4.13.0.1-alt2.
+Requires: librpm7 >= 4.13.0.1-alt2
 
 %package -n libapt-devel
 Summary: Development files and documentation for APT's core libs
@@ -73,13 +110,6 @@ Summary(ru_RU.UTF-8): Статическая библиотека APT для р�
 Group: Development/C
 Requires: libapt-devel = %EVR, librpm-devel-static >= 4.13.0.1-alt2
 
-%package utils
-Summary: Utilities to create APT repositories (the indices)
-Summary(ru_RU.UTF-8): Утилиты для построения APT-репозиториев (индексов)
-Group: Development/Other
-Requires: %name = %EVR, mktemp >= 1:1.3.1, getopt
-Requires: gnupg, sed
-
 %package rsync
 Summary: rsync method support for APT
 Summary(ru_RU.UTF-8): Поддержка метода rsync для APT
@@ -92,7 +122,14 @@ Summary(ru_RU.UTF-8): Поддержка метода https для APT
 Group: Other
 Requires: %name = %EVR
 
-# {{{ descriptions 
+%package tests
+Summary: Test suite for APT
+Summary(ru_RU.UTF-8): Набор тестов для APT
+Group: Other
+BuildArch: noarch
+Requires: %name = %EVR
+
+# {{{ descriptions
 %define risk_usage_en This package is still under development.
 
 %description
@@ -134,15 +171,6 @@ package manipulation library, modified for RPM.
 
 %risk_usage_en
 
-%description utils
-This package contains the utility programs that can prepare a repository of
-RPMS binary and source packages for future access by APT (by generating
-the indices): genbasedir, genpkglist, gensrclist.
-
-It relates to 'apt' package analoguously to how 'rpm' relates to 'rpm-build' package.
-
-%risk_usage_en
-
 %description rsync
 This package contains method 'rsync' for APT.
 
@@ -152,6 +180,9 @@ This package contains method 'rsync' for APT.
 This package contains method 'https' for APT.
 
 %risk_usage_en
+
+%description tests
+This package contains test suite for APT.
 
 %description -n libapt -l ru_RU.UTF-8
 В этом пакете находится библиотеки управления пакетами
@@ -176,15 +207,6 @@ This package contains method 'https' for APT.
 
 %risk_usage
 
-%description utils -l ru_RU.UTF-8
-В этом пакете находятся программы-утилиты, которые могут репозиторий
-бинарных и исходных пакетов RPM приготовить для доступа с помощью APT
-(сгенерировать индексы): genbasedir, genpkglist, gensrclist.
-
-Он относится к пакету 'apt' аналогично тому, как 'rpm'к 'rpm-build'.
-
-%risk_usage
-
 %description rsync -l ru_RU.UTF-8
 В этом пакете находится метод 'rsync' для APT
 
@@ -195,27 +217,13 @@ This package contains method 'https' for APT.
 
 %risk_usage
 
+%description tests -l ru_RU.UTF-8
+В этом пакете находится набор тестов для APT.
+
 # }}}
 
 %prep
-%setup
-%patch -p1
-
-find -type f -name \*.orig -delete
-
-# Ensure system-wide lua5 in use.
-rm -rf lua
-
-# Turn it on only if you want to see the debugging messages:
-#%%patch101 -p1 -b .getsrc-debug
-
-install -pm644 %SOURCE3 %SOURCE6 .
-install -pm644 %SOURCE4 po/ru.po
-install -pm644 %SOURCE5 po/be.po
-sed -i 's|^\(.\+\)$|\1 be|' po/LINGUAS
-
-# Drop obsolete m4/*.m4 files.
-rm m4/*.m4
+%setup -n %name-%version-%release
 
 %build
 # Fix url.
@@ -227,12 +235,32 @@ sed -i 's, > /dev/null 2>&1,,' buildlib/tools.m4
 # Add trivial arch translation.
 printf '%_target_cpu\t%_target_cpu' >> buildlib/archtable
 
+gettextize --force --quiet --no-changelog --symlink
 %autoreconf
-%add_optflags -DAPTRPM_ID=\\\"%name-%{?epoch:%epoch:}%version-%release%{?disttag::%disttag}.%_target_cpu\\\"
-%ifarch %e2k
-%add_optflags -std=c++14
+
+# std::optional support
+# (We set a GNU dialect in -std= in order to minimally diverge
+# from GCC's default, which is also -std=gnu++NN.)
+%ifnarch %e2k
+%add_optflags -std=gnu++17
+%else
+%remove_optflags -Wno-error
+%add_optflags -std=gnu++14
+find -type f -'(' -name '*.cc' -or -name '*.h' -')' -print0 \
+| xargs -0 sed -i -re \
+'s,(std::)(optional|nullopt),\1experimental::\2,g;
+ s,^(#[[:blank:]]*include[[:blank:]]*<)(optional>),\1experimental/\2,'
+find -type f -'(' -name '*.cc' -or -name '*.h' -')' -print0 \
+| xargs -0 sed -i -re \
+'s,(std::)(is_unsigned_v),\1experimental::\2,g;
+ s,^(#[[:blank:]]*include[[:blank:]]*<)(type_traits>),\1experimental/\2,'
+# [[fallthrough]] attribute is not yet known to lcc:
+%add_optflags -Wno-error=attributes
 %endif
-%configure --includedir=%_includedir/apt-pkg %{subst_enable static}
+
+%configure --includedir=%_includedir/apt-pkg --enable-Werror %{subst_enable static}
+echo '#define APTRPM_ID "%name-%{?epoch:%epoch:}%version-%release%{?disttag::%disttag}.%_target_cpu"' \
+	>> include/config.h
 
 # Probably this obsolete now?
 find -type f -print0 |
@@ -245,11 +273,11 @@ mkdir -p %buildroot%_sysconfdir/%name/{%name.conf,sources.list,vendors.list,pref
 mkdir -p %buildroot%_libdir/%name/scripts
 mkdir -p %buildroot%_localstatedir/%name/{lists/partial,prefetch}
 mkdir -p %buildroot%_cachedir/%name/{archives/partial,gen{pkg,src}list}
+mkdir -p %buildroot%_libdir/%name/tests
 
 %makeinstall includedir=%buildroot%_includedir/apt-pkg
 
-install -pm755 %SOURCE2 %buildroot%_bindir/
-install -pm644 %SOURCE1 %buildroot%_sysconfdir/%name/
+install -pm644 apt.conf %buildroot%_sysconfdir/%name/
 
 # This is still needed.
 ln -sf rsh %buildroot%_libdir/%name/methods/ssh
@@ -257,7 +285,6 @@ ln -sf gzip %buildroot%_libdir/%name/methods/bzip2
 ln -sf gzip %buildroot%_libdir/%name/methods/xz
 
 # Cleanup
-find %buildroot%_includedir -type f -name rpmshowprogress.h -delete -print
 rm %buildroot%_libdir/*.la
 
 bzip2 -9fk ChangeLog-rpm.old
@@ -267,16 +294,72 @@ find %buildroot%_includedir -type f -name '*.h' |while read f; do
 
 #include <stdint.h>
 #if __WORDSIZE == 32 && !defined(__USE_FILE_OFFSET64)
-# error "<${f#%buildroot%_includedir/}> cannot be used without -D_FILE_OFFSET_BITS==64"
+# error "<${f#%buildroot%_includedir/}> cannot be used without -D_FILE_OFFSET_BITS=64"
 #endif
 EOF
 done
+
+mkdir -p %buildroot%_datadir/%name
+cp -r test/integration %buildroot%_datadir/%name/tests/
 
 %find_lang %name
 
 unset RPM_PYTHON
 
 %set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
+%check
+set -o pipefail
+
+# Run tests several times to make sure no tests are randomly succeeding.
+pushd test/integration
+
+# force the target arch for the tests
+#
+# By default, the packages would be built for the arch detected by rpm-build
+# (rpmbuild --eval %%_arch). On installation, they would be compared
+# by rpm for compatibility with the arch detected by rpm. Currently,
+# the mismatch in the detection between rpm and rpm-build can lead to problems,
+# at least, on armh. So, we se the target by force to a value that must work.
+system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
+export APT_TEST_TARGET="$system_arch"
+
+# this macro can be prefixed (e.g., by environment assignments),
+# therefore the extra backslash in the first line
+%global runtests \\\
+	LD_LIBRARY_PATH=%buildroot%_libdir \\\
+	PATH=$PATH:%buildroot%_bindir \\\
+	METHODSDIR=%buildroot%_libdir/apt/methods \\\
+		./run-tests
+
+%runtests
+
+# The same tests, but via cdrom:
+APT_TEST_METHOD=cdrom %runtests
+# ...with a missing release:
+#APT_TEST_METHOD=cdrom_missing_release %runtests
+
+# prepare data for rpm --import
+APT_TEST_GPGPUBKEY="$PWD"/example-pubkey.asc
+gpg-keygen --passphrase '' \
+	--name-real 'Some One' --name-email someone@example.com \
+	/dev/null "$APT_TEST_GPGPUBKEY"
+
+export APT_TEST_GPGPUBKEY
+
+# To not run in parallel, build with --define 'nprocs_for_check %nil'
+%{?!nprocs_for_check:%global nprocs_for_check %__nprocs}
+NPROCS=%nprocs_for_check
+TRIES=2
+if [ $TRIES -lt ${NPROCS:-0} ]; then
+	TRIES=$NPROCS
+fi
+
+seq 0 $((TRIES-1)) | xargs -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLEL_SLOT} \
+	-- sh -efuo pipefail -c '%runtests '${NPROCS:+'|& sed --unbuffered -e "s/^/[$PARALLEL_SLOT {}] /"'}
+
+popd
 
 %files -f %name.lang
 %_bindir/apt-*
@@ -319,13 +402,44 @@ unset RPM_PYTHON
 %dir %_libdir/%name/methods
 %_libdir/%name/methods/https
 
+%files tests
+%_datadir/%name/tests/
+
 %changelog
+* Thu Mar 18 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt72
+- Cleaned up the code (thx Dmitry V. Levin ldv@; including
+  quite a few commits cherry-picked from http://apt-rpm.org/scm/apt.git):
+  + to avoid compilation warnings altogether and some unreliable code;
+  + to avoid using any old deprecated RPM API.
+- Reverted (for a while) new features with unreliable implementation introduced
+  in 0.5.15lorg2-alt70 (dynamic resizing of allocated memory; some support
+  for large files). Updated how the other changes look in the history
+  (thx darktemplar@). (The soname has been bumped again.)
+- API changes:
+  + Reverted inessential optimizations that caused incompatibilities with
+    the Debian API (introduced in 0.5.15lorg2-alt70).
+  + Made pkgCacheFile class lazy and immutable so that it better suits
+    the expectations of modern libapt clients such as PackageKit
+    and so that it is less prone to memory leaks and other programming errors.
+  + And changed some other things (how functions return results) to avoid
+    programming errors (which lead to the NULL dereference bugs listed below).
+- Fixed some recently introduced and recently discovered bugs:
+  + APT now can handle packages without ARCH tag (such as gpg-pubkey, brought
+    by 3rd-party packages) without a crash (thx darktemplar@ et al)
+    (ALT#38381, ALT#38642).
+  + Some crashes with incomplete indices (after the old apt-cdrom or for
+    incompatible arch).
+- Increased the default APT::Cache-Limit (up to 192M)
+  to make the "out of space" failure less probable for packagekit.
+
 * Mon Sep 21 2020 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt71.3
 - Fixed copying release information from cdrom (thx Aleksei Nikiforov).
   (Closes: #37531)
 
 * Mon Jul 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt71
 - Introduced new function ListUpdate for improved packagekit support.
+  (Note that the APT::Get::Archive-Cleanup configuration option has no longer
+  any effect after this change. It was off by default.)
 
 * Mon Jul 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.15lorg2-alt70
 - Ported dynamic memory allocation from Debian.
@@ -781,7 +895,7 @@ unset RPM_PYTHON
   + alt-install_virtual.patch
   + alt-install_virtual_version.patch
   + alt-virtual_scores.patch
-  
+
 * Mon Dec 08 2003 Anton V. Denisov <avd@altlinux.org> 0.5.15cnc4-alt0.1
 - Updated to 0.5.15cnc4.
 - Updated alt-distro.patch.

@@ -3,7 +3,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.3
-Release:   alt2
+Release:   alt3
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -273,6 +273,12 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Jun 16 2021 Ivan Zakharyaschev <imz@altlinux.org> 1.2.3-alt3
+- Adapted to changed API in apt-0.5.15lorg2-alt72
+  (pkgCacheFile class in RAII style).
+- This also fixed a memory leak/dangling pointers to the caches.
+  (The old implementation of pkgCacheFile in apt was "wrong".)
+
 * Mon May 24 2021 Ivan Zakharyaschev <imz@altlinux.org> 1.2.3-alt2
 - Fixed /usr/lib/packagekit-direct (that didn't work, because
   it couldn't load the APT backend).

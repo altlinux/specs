@@ -1,6 +1,6 @@
 Name: apt-indicator
 Version: 0.3.20
-Release: alt1
+Release: alt2
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -77,6 +77,10 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 %_iconsdir/hicolor/*/apps/apt-indicator.*
 
 %changelog
+* Wed Jun 16 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.3.20-alt2
+- Adapted to changed API in apt-0.5.15lorg2-alt72
+  (pkgCacheFile class in RAII style).
+
 * Thu Feb 11 2021 Oleg Solovyov <mcpain@altlinux.org> 0.3.20-alt1
 - fix build with new Qt
 

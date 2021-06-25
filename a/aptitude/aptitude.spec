@@ -1,14 +1,13 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+# vim: set ft=spec:
 
 Name: aptitude
 Version: 0.4.5
-Release: alt12
+Release: alt13
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
 License: GPL
 Url: http://people.debian.org/~dburrows/aptitude
-Packager: Sir Raorn <raorn@altlinux.ru>
 
 # git://git.altlinux.org/gears/a/aptitude.git
 Source: %name-%version.tar
@@ -50,7 +49,17 @@ find -type f -name '*.cc' -print0 |
 	xargs -r0 sed -i '1,1 s/^/#include "config.h"\n/' --
 
 %build
-%add_optflags -std=c++14
+# Needed for APT API (e.g., std::optional):
+%ifnarch %e2k
+%add_optflags -std=gnu++17
+%else
+%add_optflags -std=gnu++14
+%endif
+# To avoid some errors on API change:
+%add_optflags -Werror=overloaded-virtual
+# A style enforcement: always use the keyword, which helps to avoid API misuse
+%add_optflags -Werror=suggest-override
+%add_optflags -Werror=return-type
 %add_optflags -fno-strict-aliasing
 # gettext uses mkinstalldirs...
 touch mkinstalldirs
@@ -86,6 +95,12 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Wed Apr  7 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.4.5-alt13
+- Reverted some changes from the previous release, since we recently reverted
+  some changes in the APT API in apt-0.5.15lorg2-alt72;
+  and adapted to the current API (including pkgCacheFile class in RAII style).
+- Fixed some unreliable/questionable code and added stricter compiler checks.
+
 * Thu Jun 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt12
 - Rebuilt with new Apt
 

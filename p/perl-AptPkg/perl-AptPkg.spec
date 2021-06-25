@@ -3,7 +3,7 @@
 
 Name: perl-AptPkg
 Version: 0.1.26
-Release: alt5
+Release: alt6
 
 Summary: Perl interface to libapt-pkg
 License: GPLv2+
@@ -14,7 +14,8 @@ Source: libapt-pkg-perl-%version.tar
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Wed Oct 12 2011
-BuildRequires: apt gcc-c++ libapt-devel perl-devel
+BuildRequires: gcc-c++ libapt-devel perl-devel
+%{?!_without_test:%{?!_disable_test:BuildPreReq: apt}}
 
 %description
 A Perl interface to APT's libapt-pkg which provides modules
@@ -24,13 +25,22 @@ inspection of the binary package cache and source package details.
 %prep
 %setup -n libapt-pkg-perl-%version
 %patch -p1
-cp -a /etc/apt/* t/cache/etc/
+%{?!_without_test:%{?!_disable_test:cp -a /etc/apt/* t/cache/etc/}}
 
 %build
+# Needed by APT API:
+%add_optflags -std=gnu++17
+
 %ifarch %e2k
-%add_optflags -std=c++14
+%remove_optflags -Wno-error
 %endif
-%perl_vendor_build INC=-I%_includedir/rpm ||:
+
+# To avoid some errors on API change:
+%add_optflags -Werror=overloaded-virtual
+# A style enforcement: always use the keyword, which helps to avoid API misuse
+%add_optflags -Werror=suggest-override
+
+%perl_vendor_build INC=-I%_includedir/rpm %{?!_without_test:%{?!_disable_test:||:}}
 
 %install
 %perl_vendor_install
@@ -45,6 +55,15 @@ cp -a /etc/apt/* t/cache/etc/
 	%perl_vendor_autolib/AptPkg/AptPkg.so
 
 %changelog
+* Tue Sep 15 2020 Ivan Zakharyaschev <imz@altlinux.org> 0.1.26-alt6
+- Adapted to changed API in apt-0.5.15lorg2-alt72
+  (pkgCacheFile class in RAII style).
+- (.spec) Just added some compiler flags (which don't change anything)
+  to be sure that APT API has not been used wrongly and will not be.
+  (Namely, to be sure that if a method override was intended, it would
+  actually be overriding and not hiding a virtual method and that it
+  would be marked "override" for future.)
+
 * Thu Jul 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.26-alt5
 - Rebuilt with new Apt
 
