@@ -10,7 +10,7 @@
 %define ver 9.0
 Name: %oname
 Version: %ver.1
-Release: alt4
+Release: alt5
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -73,6 +73,8 @@ Patch16: %oname-%version-alt-SplineDrivenImageSlicer-install-headers.patch
 Patch17: %oname-%version-upstream-follow-camera-direction.patch
 
 Patch18: %oname-%version-upstream-doubleclick-command.patch
+
+Patch19: %oname-%version-alt-fix-uninitialized-memory-use-in-openslide-wrapper.patch
 
 Requires: lib%oname%ver = %EVR
 
@@ -308,6 +310,7 @@ popd
 
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
 
@@ -452,6 +455,9 @@ cp -alL %_cmake__builddir/ExternalData/* %buildroot%_datadir/%oname-%ver
 %_datadir/%oname-%ver
 
 %changelog
+* Thu Jun 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt5
+- Fixed crash in uninitialized memory in OpenSlide wrapper (Closes: #40280, #40282).
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt4
 - Updated build dependencies.
 
