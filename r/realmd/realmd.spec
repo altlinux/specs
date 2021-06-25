@@ -1,8 +1,8 @@
 %def_disable check
 
 Name: realmd
-Version: 0.16.3
-Release: alt4
+Version: 0.17.0
+Release: alt1
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -34,6 +34,7 @@ The %name-devel package contains developer documentation for developing
 applications that use %name.
 
 %define _localstatedir /var
+%define _libexecdir %_prefix/libexec
 
 %prep
 %setup -q
@@ -58,8 +59,8 @@ applications that use %name.
 %doc AUTHORS COPYING NEWS README
 %_sysconfdir/dbus-1/system.d/org.freedesktop.realmd.conf
 %_sbindir/realm
-%dir %_libexecdir/realmd
-%_libexecdir/realmd/*
+%_prefix/lib/realmd
+%_libexecdir/realmd
 %_unitdir/realmd.service
 %_datadir/dbus-1/system-services/org.freedesktop.realmd.service
 %_datadir/polkit-1/actions/org.freedesktop.realmd.policy
@@ -71,6 +72,9 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Sat Jun 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.17.0-alt1
+- 0.17.0
+
 * Tue Mar 03 2020 Alexey Shabalin <shaba@altlinux.org> 0.16.3-alt4
 - upstream snapshot 517fa766782421302da827278ca17e6b2ad57da3
 - disable check
