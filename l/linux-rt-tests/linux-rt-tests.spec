@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
-Version:  1.10
+Version:  2.0
 Release:  alt1
 
 Summary:  Programs that test various rt-linux features
@@ -23,12 +24,9 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 
 %prep
 %setup
-%ifarch aarch64 armh
-  # src/oslat/oslat.c:72:4: error: #error Need frc() for this platform.
-  sed -i '/oslat\.[c8]/d' Makefile
-%endif
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %make_build CFLAGS="%optflags" prefix=/usr
 
 %install
@@ -37,11 +35,13 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 %files
 %doc COPYING MAINTAINERS README.markdown src/hwlatdetect/hwlat.txt
 %_bindir/*
-#%_sbindir/hwlatdetect
 %python3_sitelibdir_noarch/*.py
 %_man8dir/*.8*
 
 %changelog
+* Fri Jun 25 2021 Vitaly Chikunov <vt@altlinux.org> 2.0-alt1
+- Update to v2.0 (2021-06-16).
+
 * Mon Dec 28 2020 Vitaly Chikunov <vt@altlinux.org> 1.10-alt1
 - Update to v1.10 (2020-12-22).
 
