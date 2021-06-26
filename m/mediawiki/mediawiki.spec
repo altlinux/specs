@@ -2,8 +2,8 @@
 %define major 1.36
 
 Name: mediawiki
-Version: %major.0
-Release: alt2
+Version: %major.1
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -419,6 +419,10 @@ fi
 %_mediawiki_settings_dir/50-PdfHandler.php
 
 %changelog
+* Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36.1-alt1
+- new version 1.36.1 (with rpmrb script)
+- (T280226, CVE-2021-35197): Prevent blocked users from purging pages
+
 * Sat Jun 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36.0-alt2
 - fix httpd2 reload
 
