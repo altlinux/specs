@@ -1,5 +1,5 @@
 Name: zlib-ng
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 Summary: Zlib replacement with optimizations
@@ -8,8 +8,6 @@ Group: System/Libraries
 
 Url: https://github.com/%name/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
-
-ExcludeArch: armh
 
 # https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -67,6 +65,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Sat Jun 26 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1
+- Version 2.0.5
+
 * Sat Jun 12 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1
 - Version 2.0.4
 
