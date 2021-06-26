@@ -3,7 +3,7 @@
 
 Name: mediawiki
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -364,15 +364,14 @@ php %webappdir/wiki/maintenance/update.php || :
 fi
 
 %post -n %name-apache2
-%_sbindir/a2chkconfig >/dev/null
-%post_service %apache2_dname
-exit 0
+if [ "$CONF_OK" = "1" ]; then
+    service %apache2_dname condrestart ||:
+fi
 
 %postun -n %name-apache2
-%_sbindir/a2chkconfig >/dev/null
-%post_service %apache2_dname
-exit 0
-
+if [ "$1" = "0" ] ; then # last uninstall
+    service %apache2_dname condrestart ||:
+fi
 
 %files
 
@@ -420,6 +419,9 @@ exit 0
 %_mediawiki_settings_dir/50-PdfHandler.php
 
 %changelog
+* Sat Jun 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36.0-alt2
+- fix httpd2 reload
+
 * Sun Jun 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36.0-alt1
 - new version 1.36.0 (with rpmrb script)
 
