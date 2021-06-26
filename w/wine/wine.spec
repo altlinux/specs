@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_disable static
 %define gecko_version 2.47.2
 %define mono_version 6.2.0
@@ -36,7 +37,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running Windows applications
@@ -508,6 +509,7 @@ done
 %libwinedir/%winesodir/qcap.so
 %libwinedir/%winesodir/odbc32.so
 %libwinedir/%winesodir/windowscodecs.so
+%libwinedir/%winesodir/windows.networking.connectivity.so
 %libwinedir/%winesodir/crypt32.so
 %libwinedir/%winesodir/kerberos.so
 %libwinedir/%winesodir/netapi32.so
@@ -542,6 +544,14 @@ done
 %libwinedir/%winepedir/*.exe
 %libwinedir/%winepedir/*.ax
 %libwinedir/%winepedir/*.ds
+%libwinedir/%winepedir/windows.networking.connectivity
+%if_without build64
+%libwinedir/%winepedir/*.dll16
+%libwinedir/%winepedir/*.drv16
+%libwinedir/%winepedir/*.exe16
+%libwinedir/%winepedir/winoldap.mod16
+%libwinedir/%winepedir/*.vxd
+%endif
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
@@ -626,6 +636,9 @@ done
 %endif
 
 %changelog
+* Fri Jun 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.11.1-alt2
+- fix packing
+
 * Tue Jun 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.11.1-alt1
 - new version 6.11.1 (with rpmrb script)
 - set strict require wine-mono 6.2.0

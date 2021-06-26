@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_disable static
 %define gecko_version 2.47.2
 %define mono_version 6.2.0
@@ -31,11 +32,11 @@
 
 Name: wine-vanilla
 Version: 6.11
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows applications
 
-License: LGPL
+License: LGPLv2+
 Group: Emulators
 Url: http://winehq.org
 
@@ -421,8 +422,8 @@ done
 %files -n lib%name
 %doc LICENSE AUTHORS COPYING.LIB
 # for compatibility only
-%_libdir/libwine.so.1
-%_libdir/libwine.so.1.0
+%libdir/libwine.so.1
+%libdir/libwine.so.1.0
 %dir %libwinedir/
 %dir %libwinedir/%winesodir/
 %dir %libwinedir/%winepedir/
@@ -478,6 +479,13 @@ done
 %libwinedir/%winepedir/*.exe
 %libwinedir/%winepedir/*.ax
 %libwinedir/%winepedir/*.ds
+%if_without build64
+%libwinedir/%winepedir/*.dll16
+%libwinedir/%winepedir/*.drv16
+%libwinedir/%winepedir/*.exe16
+%libwinedir/%winepedir/winoldap.mod16
+%libwinedir/%winepedir/*.vxd
+%endif
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
@@ -562,6 +570,9 @@ done
 %endif
 
 %changelog
+* Fri Jun 25 2021 Vitaly Lipatov <lav@altlinux.ru> 6.11-alt2
+- fix packing
+
 * Sat Jun 19 2021 Vitaly Lipatov <lav@altlinux.ru> 6.11-alt1
 - new version 6.11
 - set strict require wine-mono 6.2.0
