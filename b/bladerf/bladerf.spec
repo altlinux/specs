@@ -4,7 +4,7 @@
 %define bladerf_group bladerf
 %define use_syslog 1
 Name: bladerf
-Version: 2.2.1
+Version: 2021.03
 Release: alt1
 Summary: SDR radio receiver
 License: GPL-2.0-only
@@ -15,8 +15,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Source1: ad9361.tar
-Patch0: 0001-libbladeRF-unambiguous-flash_arch-macro-name.patch
-Patch1: 0002-libbladeRF-define-bladerf2_state_to_string-as-extern.patch
 
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: cmake >= 2.8.4
@@ -45,8 +43,7 @@ use of libbladerf.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 pushd thirdparty/analogdevicesinc/no-OS
 tar -xf %SOURCE1
@@ -88,6 +85,9 @@ getent group %bladerf_group >/dev/null || groupadd -r %bladerf_group
 %_pkgconfigdir/libbladeRF.pc
 
 %changelog
+* Mon Jun 28 2021 Anton Midyukov <antohami@altlinux.org> 2021.03-alt1
+- new version 2021.03
+
 * Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 2.2.1-alt1
 - new version 2.2.1
 - fix build with gcc10
