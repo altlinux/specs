@@ -2,7 +2,7 @@
 
 Name:    playonlinux
 Version: 4.3.4
-Release: alt2
+Release: alt3
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -15,6 +15,7 @@ Source1: playonlinux.sh
 Source2: %oname.desktop
 Patch: playonlinux-remove-capture-plugin.patch
 
+BuildRequires: rpm-build-python
 BuildRequires: python-module-wx3.0
 Requires: ImageMagick-tools
 Requires: wget
@@ -87,6 +88,9 @@ ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 %_libdir/%name/*
 
 %changelog
+* Sun Jun 27 2021 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt3
+- Fixed BR's (Closes: #40289).
+
 * Fri Dec 11 2020 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt2
 - Build new version (Closes: #39392).
 - Add requirement on jq (Closes: #39404).
