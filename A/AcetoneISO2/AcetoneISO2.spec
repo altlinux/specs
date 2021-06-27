@@ -1,6 +1,6 @@
 Name: AcetoneISO2
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Summary: CD/DVD Image Manipulator
 
@@ -14,12 +14,12 @@ Source: %name-%version.tar
 
 Patch0: AcetoneISO2-2.0.3-no-poweriso-for-non-x86.patch
 Patch1: acetoneiso2-2.1.1-install.patch
-Patch2: acetoneiso2-2.1.1-pro.patch
+Patch2: acetoneiso2-port_to_qt5.patch
 
 Provides: acetoneiso2
 Obsoletes: acetoneiso2
 
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: gcc-c++ qt5-base-devel qt5-webkit-devel
 
 Requires: fuseiso
 
@@ -65,14 +65,14 @@ AcetoneISO2: The CD/DVD image manipulator for Linux, it can do the following:
 %setup
 %patch0 -p0
 %patch1 -p2
-%patch2 -p2
+%patch2 -p1
 
 # Fix perms
 chmod -x acetoneiso/sources/*
 
 %build
 pushd acetoneiso
-qmake-qt4
+qmake-qt5
 %make_build
 popd
 
@@ -91,6 +91,9 @@ popd
 %_iconsdir/Acetino2.png
 
 %changelog
+* Sun Jun 27 2021 Grigory Ustinov <grenka@altlinux.org> 2.4-alt2
+- Build with Qt5 (Closes: #40260).
+
 * Thu Mar 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1
 - Build new version (Closes: #38070).
 
