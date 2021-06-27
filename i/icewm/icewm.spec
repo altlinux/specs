@@ -2,8 +2,8 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.3.4
-Release: alt1.1
+Version: 2.5.0
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -34,11 +34,11 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
-# Automatically added by buildreq on Fri Dec 18 2020
-BuildRequires: asciidoctor cmake gcc-c++ gem-did-you-mean imlib2-devel libSM-devel
+# Automatically added by buildreq on Sun Jun 27 2021
+BuildRequires: asciidoctor cmake gcc-c++ imlib2-devel libSM-devel
 BuildRequires: libXcomposite-devel libXdamage-devel libXft-devel libXinerama-devel
 BuildRequires: libXpm-devel libXrandr-devel libalsa-devel librsvg-devel
-BuildRequires: libsndfile-devel perl-Pod-Usage
+BuildRequires: libsndfile-devel perl-Pod-Usage perl-devel
 
 %description
  Window Manager for X Window System. Can emulate the look of Windows'95, OS/2
@@ -118,9 +118,14 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_man5dir/*
 %_datadir/xsessions/*.desktop
 
-%doc AUTHORS NEWS README.ALT README.md %_cmake__builddir/*.html icewm-old-changelog.bz2
+%doc AUTHORS NEWS README.ALT README.md %_cmake__builddir/*.html %_cmake__builddir/man/*.html icewm-old-changelog.bz2
 
 %changelog
+* Sun Jun 27 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.5.0-alt1
+- 2.5.0
+- buildreq
+- fixed build in upstream and installed html documentation (ALT #35451)
+
 * Thu May 13 2021 Arseny Maslennikov <arseny@altlinux.org> 3:2.3.4-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
