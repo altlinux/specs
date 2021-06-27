@@ -11,7 +11,7 @@
 
 Name: icu
 Version: %(echo %real_ver_major | sed -e 's|\(.\)|\1.|').%real_ver_minor
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -26,6 +26,9 @@ Vcs: https://github.com/unicode-org/icu.git
 Source: icu-%version.tar
 %endif
 Patch: icu-6.3.1-alt-e2k.patch
+# https://github.com/unicode-org/icu/pull/1715
+# https://github.com/unicode-org/icu/commit/29f1188d191a7a75ac7ffa4bfa390f625da39c53.patch
+Patch1: icu-69.1-Fix_undefined_behaviour_in_ComplexUnitsConverter.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libstdc++-devel python3-base
@@ -86,6 +89,7 @@ support. This package contains sample code for ICU
 %patch -p2
 %add_optflags -finput-charset=utf8
 %endif
+%patch1 -p2
 
 sed -ri '/^LDFLAGSICUDT=/ s,-nodefaultlibs -nostdlib,,' source/config/mh-linux
 
@@ -136,6 +140,10 @@ cd source
 %_datadir/icu/samples
 
 %changelog
+* Sun Jun 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1:6.9.1-alt2
+- applied patch for ICU-21613: "Fix undefined behaviour in ComplexUnitsConverter::applyRounder"
+  (fixed build for mipsel and riscv64)
+
 * Wed Jun 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1:6.9.1-alt1
 - 6.9.1
 
