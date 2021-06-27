@@ -1,6 +1,6 @@
 Name: fceux
-Version: 2.3.0
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: FCEUX is a Nintendo Entertainment System (NES), Famicom, and Famicom Disk System (FDS) emulator
 Summary(ru_RU.UTF-8): FCEUX - это эмулятор Nintendo Entertainment System ("Денди"), Famicom и Famicom Disk System (FDS)
@@ -118,7 +118,7 @@ sed -i -r 's!(GIT_REV=).+!\1"%{commit}"!' scripts/genGitHdr.sh
 %cmake_install
 
 # install binaries
-install -D -m 755 %_cmake__builddir/src/%name %buildroot/%_bindir/%name
+#install -D -m 755 %_cmake__builddir/src/%name %buildroot/%_bindir/%name
 #install -D -m 755 bin/%name.chm %buildroot/%_bindir/%name.chm
 
 # fix rights for docs
@@ -138,8 +138,18 @@ install -D -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name-big.png
 %_iconsdir/*
 %_desktopdir/*
 %_pixmapsdir/*
+%_man6dir/*
+%_datadir/%name/*
+%dir %_datadir/%name/palettes
+%dir %_datadir/%name/luaScripts
+%dir %_datadir/%name/tools
+
+
 
 %changelog
+* Sun Jun 27 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Tue Apr 13 2021 Arseny Maslennikov <arseny@altlinux.org> 2.3.0-alt2
 - NMU: adapted to altlinux.org/CMakeMigration2021.
 
