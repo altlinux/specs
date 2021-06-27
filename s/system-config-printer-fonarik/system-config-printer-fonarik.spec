@@ -2,7 +2,7 @@
 
 Name:           system-config-printer-fonarik
 Version:        0.1.0
-Release:        alt4
+Release:        alt5
 Summary:        "Fonarik" plugin for the GTK printer job viewer
 Summary(ru_RU.UTF-8): Добавляет операцию "Маркировка задания" в менеджер печати на GTK
 License:        GPLv3+
@@ -59,6 +59,11 @@ python3 setup.py install \
 %python3_sitelibdir_noarch/system_config_printer_fonarik-*.egg-info
 
 %changelog
+* Mon Jun 28 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt5
+- Specify the package version and other metadata.
+- Comment-out install_requires as it is known not to work with
+  some version of pluggy.
+
 * Tue Jun 22 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt4
 - Requires system-config-printer instead of system-config-printer-lib.
 
