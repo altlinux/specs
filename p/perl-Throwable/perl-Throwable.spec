@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Throwable
 
 Name: perl-Throwable
-Version: 0.200013
-Release: alt2
+Version: 1.000
+Release: alt1
 
 Summary: Perl role for classes that are meant to be thrown as exceptions
 
@@ -45,6 +45,9 @@ calls die $self.
 %perl_vendor_privlib/StackTrace*
 
 %changelog
+* Sun Jun 27 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.000-alt1
+- New version
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.200013-alt2
 - Update BuildRequires
 
