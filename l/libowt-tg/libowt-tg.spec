@@ -3,7 +3,7 @@
 %def_without packaged_vpx
 
 Name: libowt-tg
-Version: 4.3.0.4
+Version: 4.3.0.5
 Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
@@ -28,15 +28,19 @@ Patch5: 1958098091b858767e801456625bc324d4e1d0fb.patch
 
 ExcludeArch: armh ppc64le
 
-BuildRequires: libalsa-devel libXtst-devel
+BuildRequires: libalsa-devel
+BuildRequires: libXtst-devel libXcomposite-devel libXdamage-devel libXrender-devel libXrandr-devel
 BuildRequires: libavformat-devel libswresample-devel libswscale-devel
 BuildRequires: libdb4-devel libjpeg-devel libopus-devel libpulseaudio-devel libssl-devel yasm
 BuildRequires: libprotobuf-devel protobuf-compiler
+BuildRequires: pipewire-libs-devel
+BuildRequires: libevent-devel
+BuildRequires: libgio-devel
 
 BuildRequires: gcc-c++ cmake ninja-build
 
 %if_with packaged_vpx
-BuildRequires: libvpx-devel
+BuildRequires: libvpx-devel >= 1.10.0
 %endif
 
 %if_with packaged_openh264
@@ -80,10 +84,10 @@ develop programs which make use of %name.
 
 %prep
 %setup -a2 -a3
-%if_with packaged_vpx
-%patch4 -p1
-%endif
-%patch5 -p1
+#if_with packaged_vpx
+#patch4 -p1
+#endif
+#patch5 -p1
 
 #subst "1iset(CMAKE_CXX_STANDARD 17)" CMakeLists.txt
 
@@ -115,9 +119,6 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %ifarch %ix86
           -DCMAKE_CXX_FLAGS="-fpic" \
 %endif
-%if_with packaged_vpx
-          -DTG_OWT_VPX_PACKAGED_BUILD=TRUE \
-%endif
           ../..
 %make_build
 
@@ -133,6 +134,10 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.5-alt1
+- new version (4.3.0.5) with rpmgs script
+- build from git f03ef05abf665437649a4f71886db1343590e862
+
 * Mon Feb 01 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.4-alt1
 - new version (4.3.0.4) with rpmgs script
 - build from git be23804afce3bb2e80a1d57a7c1318c71b82b7de

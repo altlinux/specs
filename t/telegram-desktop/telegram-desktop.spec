@@ -9,7 +9,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.6.1
+Version: 2.8.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -45,9 +45,11 @@ BuildRequires: gcc-c++ libstdc++-devel python3
 
 # cmake 3.16 as in CMakeLists.txt
 BuildRequires: cmake >= 3.16
+BuildRequires: extra-cmake-modules
 
 BuildRequires: qt5-base-devel >= %tg_qt5_version
 BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-wayland-devel
+BuildRequires: libwebkit2gtk-devel
 # needs for smiles and emojicons
 Requires: qt5-imageformats
 
@@ -79,7 +81,7 @@ BuildRequires: libX11-devel
 BuildRequires: kf5-kwayland-devel
 
 # GTK 3.0 integration
-BuildRequires: libgtk+3-devel libappindicator-gtk3-devel
+BuildRequires: libgtk+3-devel libappindicator-gtk3-devel libglibmm-devel
 # TODO:
 # libdee-devel
 
@@ -90,6 +92,7 @@ BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
 BuildRequires: libowt-tg-devel >= 4.3.0.4
+BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
 #BuildRequires: libopenh264-devel
@@ -137,7 +140,8 @@ BuildRequires: libswresample-devel >= %ffmpeg_version
 Requires: dbus
 
 # instead of internal fonts OpenSans
-Requires: fonts-ttf-open-sans
+# works with system fonts, see https://bugzilla.altlinux.org/show_bug.cgi?id=38986
+#Requires: fonts-ttf-open-sans
 
 # some problems with t_assert
 %add_optflags -fpermissive
@@ -227,6 +231,15 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
+- new version 2.8.1 (with rpmrb script)
+
+* Sat Jun 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
+- new version 2.8.0 (with rpmrb script)
+
+* Sun Mar 21 2021 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
+- new version 2.7.1 (with rpmrb script)
+
 * Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt1
 - new version 2.6.1 (with rpmrb script)
 - needs Qt5 >= 5.15.2
