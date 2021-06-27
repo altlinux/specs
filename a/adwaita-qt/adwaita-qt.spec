@@ -1,68 +1,83 @@
 Name: adwaita-qt
-Version: 1.1.4
-Release: alt1.1
+Version: 1.3.1
+Release: alt1
 Summary: Adwaita theme for Qt-based applications
 License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/MartinBriza/adwaita-qt
-Source0: adwaita-qt-%version.tar
+Packager: Anton Midyukov <antohami@altlinux.org>
+
+Source: adwaita-qt-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: qt4-devel
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-x11extras-devel
 
-Requires: adwaita-qt4
 Requires: adwaita-qt5
+Obsoletes: adwaita-qt4
 
 %description
-Theme to let Qt applications fit nicely into Fedora Workstation
-
-%package -n adwaita-qt4
-Summary: Adwaita Qt4 theme
-Group: Graphical desktop/GNOME
-Requires: qt4
-
-%description -n adwaita-qt4
-Adwaita theme variant for applications utilizing Qt4
+%summary.
 
 %package -n adwaita-qt5
 Summary: Adwaita Qt5 theme
 Group: Graphical desktop/GNOME
-Requires: qt5-qtbase
 
 %description -n adwaita-qt5
 Adwaita theme variant for applications utilizing Qt5
+
+%package -n libadwaita-qt5
+Summary: Adwaita Qt5 library
+Group: Graphical desktop/GNOME
+
+%description -n libadwaita-qt5
+%summary.
+
+%package -n libadwaita-qt5-devel
+Summary: Development files for libadwaita-qt5
+Group: Development/KDE and QT
+Requires: libadwaita-qt5 = %EVR
+
+%description -n libadwaita-qt5-devel
+The libadwaita-qt5-devel package contains libraries and header files for
+developing applications that use libadwaita-qt5.
 
 %prep
 %setup
 
 %build
-%define _cmake__builddir %_target_platform-qt4
-%cmake -DUSE_QT4=true
-%cmake_build
-
 %define _cmake__builddir %_target_platform-qt5
 %cmake
 %cmake_build
 
 %install
-%define _cmake__builddir %_target_platform-qt4
-%cmake_install
 %define _cmake__builddir %_target_platform-qt5
 %cmake_install
-
-%files -n adwaita-qt4
-%doc LICENSE.LGPL2 README.md
-%_libdir/qt4/plugins/styles/adwaita.so
 
 %files -n adwaita-qt5
 %doc LICENSE.LGPL2 README.md
 %_qt5_archdatadir/plugins/styles/adwaita.so
 
-%files
+%files -n libadwaita-qt5
+%_libdir/libadwaitaqt.so.*
+%_libdir/libadwaitaqtpriv.so.*
 
+%files -n libadwaita-qt5-devel
+%dir %_includedir/AdwaitaQt
+%_includedir/AdwaitaQt/*.h
+%dir %_libdir/cmake/AdwaitaQt
+%_libdir/cmake/AdwaitaQt/*.cmake
+%_pkgconfigdir/adwaita-qt.pc
+%_libdir/libadwaitaqt.so
+%_libdir/libadwaitaqtpriv.so
+
+%files
 %changelog
+* Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+- drop qt4 subpackage
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.4-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
