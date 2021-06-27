@@ -1,8 +1,8 @@
 %def_disable firewire
 
 Name: jack-audio-connection-kit
-Version: 1.9.14
-Release: alt2.1
+Version: 1.9.18
+Release: alt1
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -10,7 +10,8 @@ License: GPLv2 and GPLv2+ and LGPLv2+
 Group: Sound
 
 Url: http://www.jackaudio.org
-Source0: https://github.com/jackaudio/jack2/releases/download/v%version/jack2-%version.tar.gz
+Source: jack2-%version.tar
+# Source-url: https://github.com/jackaudio/jack2/archive/refs/tags/v%version.tar.gz
 Source2: %name-script.pa
 Source3: %name-limits.conf
 Source4: svnversion.h
@@ -27,6 +28,9 @@ BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpa
 BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel
 
 BuildRequires: libopus-devel
+BuildRequires: eigen3
+BuildRequires: libportaudio2-devel
+BuildRequires: zita-resampler-devel
 # FIXME: freebob seems obsoleted by ffado
 %{?_enable_firewire:BuildRequires: libfreebob-devel}
 
@@ -158,6 +162,9 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.18-alt1
+- new version (1.9.18) with rpmgs script
+
 * Tue May 04 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.14-alt2.1
 - Remove python3 path /usr/bin. Not needed, it was enough rpm-build-python3
 

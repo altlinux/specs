@@ -2,13 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: guitarix
-Version: 0.42.0
-Release: alt2
+Version: 0.42.1
+Release: alt1
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPL-2.0-or-later
 Url: https://sourceforge.net/projects/guitarix
 Packager: Anton Midyukov <antohami@altlinux.org>
+# Source-url: https://sourceforge.net/projects/guitarix/files/guitarix/guitarix2-%version.tar.xz/download
 Source: %name-%version.tar
 Source1: %name.appdata.xml
 Patch0: %name-glib-2.68.patch
@@ -166,6 +167,9 @@ install -p -m644 %SOURCE1 %buildroot%_datadir/metainfo
 %_libdir/lv2/*
 
 %changelog
+* Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 0.42.1-alt1
+- new version (0.42.1) with rpmgs script
+
 * Thu May 13 2021 Slava Aseev <ptrnine@altlinux.org> 0.42.0-alt2
 - NMU: fix build with GLib 2.68
 

@@ -5,14 +5,15 @@
 
 Summary: Fast, high-quality sample rate conversion library
 Name: zita-resampler
-Version: 1.6.2
-Release: alt3
+Version: 1.8.0
+Release: alt1
 License: GPLv3+
 Group: Sound
 Url: http://kokkinizita.linuxaudio.org/linuxaudio/zita-resampler/resampler.html
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-resampler-%version.tar.bz2
+Source: %name-%version.tar
+# Source-url: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-resampler-%version.tar.bz2
 Patch: zita-resampler-1.6.2-destdir.patch
 BuildRequires: gcc-c++ libsndfile-devel
 
@@ -50,20 +51,28 @@ This package contains the headers and development libraries for %name.
 
 %prep
 %setup
-%patch0 -p1 -b .destdir
+%autopatch -p1
 
-# To make sure to have the correct specific flags:
-sed -i -e 's|-O[23]|%optflags -I../source|' -e 's|ldconfig||' -e 's|-march=native||' source/Makefile
-sed -i -e 's|-O[23]|%optflags -I../source|' -e 's|-march=native||' apps/Makefile
+# To make sure to have the correct ALT specific flags:
+sed -i -e 's|-O[23]||' -e 's|ldconfig||' -e 's|-march=native||' -e '/^CPPFLAGS += -DENABLE_SSE2/d' source/Makefile
+sed -i -e 's|-O[23]||' -e 's|-march=native||' apps/Makefile
 
 %build
-export LDFLAGS="-L../source"
+# Disable avx
 %ifarch %ix86 x86_64
-export CXXFLAGS+='-mno-avx'
+export CXXFLAGS+=' -mno-avx'
 %endif
+# Enable SSE2 on x86_64
+%ifarch x86_64
+CXXFLAGS+=" -DENABLE_SSE2"
+export CXXFLAGS
+%endif
+
 %make_build -C source
 
 ln -sf libzita-resampler.so.%version source/libzita-resampler.so
+export CXXFLAGS+=" -I../source"
+export LDFLAGS+=" -L../source"
 %make_build -C apps
 
 %install
@@ -87,6 +96,9 @@ ln -sf libzita-resampler.so.%version source/libzita-resampler.so
 %_libdir/lib%name.so
 
 %changelog
+* Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
+- new version (1.8.0) with rpmgs script
+
 * Mon May 13 2019 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt3
 - Fix optflags
 
