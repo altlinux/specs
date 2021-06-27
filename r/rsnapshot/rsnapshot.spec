@@ -1,5 +1,5 @@
 Name:    rsnapshot
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: local and remote filesystem snapshot utility
@@ -151,6 +151,9 @@ exit 0
 %_man1dir/rsnapshot*
 
 %changelog
+* Sun Jun 27 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.4.4-alt1
+- New version
+
 * Wed Jun 10 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.4.3-alt1
 - New version
 
