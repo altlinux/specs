@@ -1,6 +1,6 @@
 Name: stm32flash
-Version: 0.5
-Release: alt1.1
+Version: 0.6
+Release: alt1
 Summary: Flash Program for the STM32 Bootloader
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -9,10 +9,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 # Source-url: https://sourceforge.net/projects/stm32flash/files/stm32flash-%version.tar.gz/download
-# PATCH-FIX-UPSTREAM
-Patch1: 0001-Fix-for-device-0x442-System-memory-start-address.patch
-# PATCH-FIX-UPSTREAM
-Patch2: 0003-dev_table-Mark-0x417-0x429-0x427-for-no-mass-erase.patch
 BuildRequires: i2c-tools
 
 %description
@@ -36,8 +32,7 @@ Features:
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 %build
 %make_build
@@ -51,6 +46,9 @@ Features:
 %_mandir/man?/*.*
 
 %changelog
+* Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 0.6-alt1
+- new version (0.6) with rpmgs script
+
 * Thu Jun 28 2018 Anton Midyukov <antohami@altlinux.org> 0.5-alt1.1
 - Rebuilt for aarch64
 
