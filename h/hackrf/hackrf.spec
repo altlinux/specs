@@ -1,5 +1,5 @@
 Name: hackrf
-Version: 2018.01.1
+Version: 2021.03.1
 Release: alt1
 Summary: HackRF Utilities
 
@@ -88,6 +88,9 @@ popd
 %doc doc/*
 
 %changelog
+* Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 2021.03.1-alt1
+- new version 2021.03.1
+
 * Wed Apr 11 2018 Anton Midyukov <antohami@altlinux.org> 2018.01.1-alt1
 - new version 2018.01.1
 
