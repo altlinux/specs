@@ -2,23 +2,25 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-qbrz
-Version: 0.23.2
-Release: alt2.bzr20200724
+Epoch: 1
+Version: 0.4.1
+Release: alt1.bzr20210527
 
 Summary: A simple Qt cross-platform frontend for some of Bazaar commands
 License: GPLv2+
 Group: Development/Python
 
-Url: https://launchpad.net/qbrz
+Url: https://github.com/breezy-team/qbrz
 Packager: Anatoly Kitaikin <cetus@altlinux.org>
 
 Source: qbrz-%version.tar
 
-Patch0: %name-%version-%release.patch
+#Patch0: %name-%version-%release.patch
 
 Provides: qbrz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-PyQt5 python3-module-setuptools python3-module-yieldfrom
 
 %description
 The purpose of this plugin is to provide a graphical user
@@ -46,7 +48,7 @@ This package contains tools and test suites for testing qbrz plugin.
 
 %prep
 %setup -n qbrz-%version
-%patch0 -p1
+#patch0 -p1
 
 %build
 %python3_build
@@ -56,16 +58,23 @@ This package contains tools and test suites for testing qbrz plugin.
 
 %files
 %python3_sitelibdir/breezy/plugins/qbrz
-%exclude %python3_sitelibdir/breezy/plugins/qbrz/*.txt
+%exclude %python3_sitelibdir/breezy/plugins/qbrz/COPYING.txt
+%exclude %python3_sitelibdir/breezy/plugins/qbrz/AUTHORS.txt
+%exclude %python3_sitelibdir/breezy/plugins/qbrz/README.txt
+%exclude %python3_sitelibdir/breezy/plugins/qbrz/NEWS.txt
+%exclude %python3_sitelibdir/breezy/plugins/qbrz/TODO.txt
 %exclude %python3_sitelibdir/breezy/plugins/qbrz/lib/tests
 %python3_sitelibdir/*.egg-info
-%doc AUTHORS.txt NEWS.txt README.txt TODO.txt
+%doc AUTHORS.txt README.txt NEWS.txt TODO.txt
 
 %files tests
 %dir %python3_sitelibdir/breezy/plugins/qbrz/lib
 %python3_sitelibdir/breezy/plugins/qbrz/lib/tests
 
 %changelog
+* Wed May 05 2021 Anatoly Kitaikin <cetus@altlinux.org> 1:0.4.1-alt1.bzr20210527
+- release 0.4.1, dev
+
 * Wed Aug 05 2020 Anatoly Kitaikin <cetus@altlinux.org> 0.23.2-alt2.bzr20200724
 - current snapshot
 
