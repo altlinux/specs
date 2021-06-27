@@ -1,5 +1,5 @@
 Name:    fldigi
-Version: 4.1.18
+Version: 4.1.19
 Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
@@ -23,6 +23,7 @@ BuildRequires: hamlib-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libsndfile-devel
+BuildRequires: libudev-devel
 BuildRequires: perl-RPC-XML
 BuildRequires: perl-Term-ReadLine-Gnu
 
@@ -60,6 +61,9 @@ ARQ data via fldigi.
 %doc %_man1dir/*
 
 %changelog
+* Sun Jun 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.19-alt1
+- new version 4.1.19
+
 * Fri Jan 29 2021 Cronbuild Service <cronbuild@altlinux.org> 4.1.18-alt1
 - new version 4.1.18
 
