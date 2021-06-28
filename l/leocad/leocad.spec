@@ -1,24 +1,26 @@
 Summary: Visual brick construction tool for kids
 Summary (ru_RU.UTF-8): Детский конструктор, использующий блоки с шипами
 Name: leocad
-Version: 18.02
+Version: 21.06
 Release: alt1
 
-License: GPL
+License: GPL-2.0
 Url: http://www.leocad.org
-Source: %name-%version-src.tgz
+# Source-url: https://github.com/leozide/leocad/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
 Group: Games/Puzzles
 Packager: Fr. Br. George <george@altlinux.ru>
 
 Source1: %name.desktop
 
-# Automatically added by buildreq on Mon Aug 26 2013
-# optimized out: fontconfig libGL-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libstdc++-devel zlib-devel
-BuildRequires: gcc-c++ phonon-devel
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools
+BuildRequires: zlib-devel
 
 BuildPreReq: rpm-build-xdg
 
-Requires: %name-data > 3000
+Requires: %name-data >= 1:20.03
 
 %description
 LeoCAD is a CAD program that uses bricks similar to those found in many
@@ -36,11 +38,11 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 авторских прав на эту программу.
 
 %prep
-%setup -n %name
+%setup
 
 %build
 #make PREFIX=/usr
-%qmake_qt4
+%qmake_qt5 QMAKE_LRELEASE=lrelease-qt5
 %make_build
 
 %install
@@ -50,12 +52,17 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 %doc %_defaultdocdir/%name
 %_bindir/*
 %_iconsdir/*/*/*/*
-%_pixmapsdir/%name.png
 %_man1dir/%name.*
 %_desktopdir/%name.desktop
+%_datadir/metainfo/%name.appdata.xml
 %_xdgmimedir/packages/*
 
 %changelog
+* Mon Jun 28 2021 Anton Midyukov <antohami@altlinux.org> 21.06-alt1
+- new version (21.06) with rpmgs script
+- build with qt5
+- fix License Tag
+
 * Mon Jun 04 2018 Grigory Ustinov <grenka@altlinux.org> 18.02-alt1
 - Rebuild, because of version number mistake in previous build (Closes: #34479).
 

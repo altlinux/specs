@@ -1,13 +1,15 @@
 %define progname leocad
+%define progver 21.06
 Summary: Data files for %progname: bricks, textures and font
 Summary(ru_RU.UTF-8): Файлы для %progname: описание блоков, текстуры и шрифт
 Name: leocad-data
-Version: 11331
+Epoch: 1
+Version: 20.03
 Release: alt1
 
 License: Distributable
 Url: http://www.leocad.org
-Source: pieces-%version.zip
+Source: https://github.com/leozide/leocad/releases/download/v%progver/Library-%version.zip
 Group: Games/Puzzles
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -32,6 +34,9 @@ for N in *; do install $N %buildroot%_datadir/%progname/; done
 %_datadir/%progname/*
 
 %changelog
+* Mon Jun 28 2021 Anton Midyukov <antohami@altlinux.org> 1:20.03-alt1
+- Build new version (for %progname 21.06)
+
 * Mon Jun 04 2018 Grigory Ustinov <grenka@altlinux.org> 11331-alt1
 - Build new version (for %progname 18.02) (Closes: #34979).
 
