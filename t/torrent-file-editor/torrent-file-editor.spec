@@ -1,40 +1,25 @@
 Name:		torrent-file-editor
 Version:	0.3.17
-Release:	alt1.2
+Release:	alt3
 License:	GPLv3+
 Summary:	Torrent File Editor
 Group:		File tools
 Url:		https://torrent-file-editor.github.io/
 Source0:	%name-%version.tar.gz
 
-Source1:	%name-qt5.desktop
+Patch0:		torrent-file-editor-0.3.17-uk_UA.patch
 
-Requires:	%name-common
+Provides:	%name-common %name-qt5
+Obsoletes:	%name-common %name-qt5
 
-BuildRequires: cmake gcc-c++ libEGL-devel qt5-tools-devel libqt4-devel qjson-devel
+BuildRequires: ccmake qt5-tools-devel
 
 %description
 Qt based GUI tool designed to create and edit .torrent files
 
-
-%package -n %name-qt5
-Summary:	Torrent File Editor (Qt5)
-Group:		File tools
-Requires:	%name-common
-
-%description -n %name-qt5
-Qt5 based GUI tool designed to create and edit .torrent files
-
-%package -n %name-common
-Summary:	Common files for Torrent File Editor (Qt4 & Qt5)
-Group:		File tools
-BuildArch:	noarch
-
-%description -n %name-common
-Common files for Torrent File Editor (Qt4 & Qt5)
-
 %prep
 %setup
+%patch0 -p1
 
 %build
 mkdir ./build && cd ./build
@@ -45,37 +30,22 @@ cmake ../. \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DENABLE_PCH:BOOL=OFF
 %make_build
-mv ./%name ../%name-qt5
-rm -rf ./*
-
-cmake ../. \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DQT5_BUILD=OFF \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DENABLE_PCH:BOOL=OFF
-%make_build
 
 %install
 cd ./build
 %make DESTDIR=%buildroot install
-install -m 0755 ../%name-qt5 %buildroot%_bindir/%name-qt5
-install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt5.desktop
 
 %files
+%doc README.md LICENSE
 %_bindir/%name
 %_desktopdir/%name.desktop
-
-%files -n %name-qt5
-%_bindir/%name-qt5
-%_desktopdir/%name-qt5.desktop
-
-%files -n %name-common
-%doc README.md LICENSE
 %_datadir/appdata/*.xml
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Mon Jun 28 2021 Motsyo Gennadi <drool@altlinux.ru> 0.3.17-alt3
+- build only with Qt5
+
 * Sat Apr 11 2020 Motsyo Gennadi <drool@altlinux.ru> 0.3.17-alt1.2
 - fix build with cmake 3.17
 
