@@ -2,7 +2,7 @@
 %def_with check
 
 Name: oddjob
-Version: 0.34.6
+Version: 0.34.7
 Release: alt1
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 
@@ -137,6 +137,9 @@ rm %buildroot%_libdir/security/pam_oddjob_mkhomedir.la
 %preun_service oddjobd
 
 %changelog
+* Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 0.34.7-alt1
+- 0.34.6 -> 0.34.7.
+
 * Tue May 12 2020 Stanislav Levin <slev@altlinux.org> 0.34.6-alt1
 - 0.34.4 -> 0.34.6 (fixes: CVE-2020-10737).
 
