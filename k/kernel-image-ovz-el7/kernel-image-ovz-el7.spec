@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.25.1.vz7.180.9
-%define orelease 1160.25.1.vz7.180.9.1
+#     rh7-3.10.0-1160.25.1.vz7.180.12
+%define orelease 1160.25.1.vz7.180.12
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -25,7 +25,7 @@ Epoch: 1
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version %__gcc_version_base
-%define __nprocs 8
+#define __nprocs 8
 
 %def_disable verbose
 %def_with src
@@ -36,6 +36,7 @@ Epoch: 1
 %def_disable module_sig
 %def_without firmware
 %def_without perf
+%def_without objtool
 
 %def_enable debug_section_mismatch
 
@@ -101,7 +102,7 @@ BuildRequires: bc
 %{?kgcc_version:BuildRequires: gcc%kgcc_version}
 BuildRequires: module-init-tools >= 3.1
 BuildRequires: patch >= 2.6.1-alt1
-BuildRequires: libelf-devel
+%{?_with_objtool:BuildRequires: libelf-devel}
 %{?_with_src:BuildRequires: pxz}
 
 %{?_with_firmware:BuildRequires: hardlink}
@@ -399,8 +400,10 @@ cp gcc_version.inc %buildroot%kbuild_dir/
 cp -a scripts %buildroot%kbuild_dir/
 # copy objtool for kernel-devel (needed for building external modules)
 if grep -q CONFIG_STACK_VALIDATION=y .config; then
+    [ -f tools/objtool/objtool ] && {
     mkdir -p %buildroot%kbuild_dir/tools/objtool
     cp -a tools/objtool/objtool %buildroot%kbuild_dir/tools/objtool
+    }
 fi
 find %buildroot%kbuild_dir -type f -a \( -name .install -o -name ..install.cmd \) -delete
 find %buildroot%kbuild_dir -type f -name '*.cmd' -delete
@@ -582,6 +585,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Mon Jun 28 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.12
+- Build rh7-3.10.0-1160.25.1.vz7.180.12
+- due to race switch off building objtool
+
 * Fri Jun 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.9.1
 - adjust __nproc
 - yet another fix of src package
