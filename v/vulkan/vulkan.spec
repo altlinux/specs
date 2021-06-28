@@ -2,7 +2,7 @@
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: vulkan
-Version: 1.2.176
+Version: 1.2.182
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -25,9 +25,9 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 11.4.0
-BuildRequires: libspirv-tools-devel = 2021.1
-BuildRequires: spirv-headers >= 1.5.4
+BuildRequires: glslang-devel = 11.5.0
+BuildRequires: libspirv-tools-devel = 2021.2
+BuildRequires: spirv-headers >= 1.5.4-alt2
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
 
@@ -180,6 +180,7 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %files validation-layers
 %_includedir/*
 %exclude %_includedir/vulkan
+%exclude %_includedir/vk_video
 %_datadir/vulkan/explicit_layer.d/*.json
 %_libdir/libVkLayer*.so
 %_libdir/libVkLayer*.a
@@ -193,6 +194,9 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Sun Jun 27 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.182-alt1
+- Updated to 1.2.182.
+
 * Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.176-alt1
 - Updated to 1.2.176.
 - BR: add librobin dependency.
