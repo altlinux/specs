@@ -1,7 +1,7 @@
 %define distro alt-server-v
 
 Name: installer-distro-%distro
-Version: 9.0.1
+Version: 9.2.0
 Release: alt1
 
 Summary: Installer configuration (Server V)
@@ -79,6 +79,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Tue Jun 01 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.2.0-alt1
+- simplify FS profiles
+
 * Mon Jul 06 2020 Alexey Shabalin <shaba@altlinux.org> 9.0.1-alt1
 - update title for /var/lib/vz (ALT #38193)
 - drop Generic server (large /srv) profile in vm
