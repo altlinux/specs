@@ -1,8 +1,8 @@
 %define real_name    cr3
 
 Name:     coolreader3
-Version:  3.2.32
-Release:  alt3
+Version:  3.2.57
+Release:  alt1
 
 Summary:  E-Book reader
 License:  %gpl2only
@@ -10,19 +10,23 @@ Group:    Text tools
 
 Url:      https://github.com/buggins/coolreader/
 #URL:     http://sourceforge.net/projects/crengine
-Packager: Nikolay Fetisov <naf@altlinux.ru>
+Packager: Nikolay Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
 
 Source1: %real_name-16.png
 Source2: %real_name-32.png
 Source3: %real_name-48.png
 
+Patch1: %name-3.2.57-textlang.patch
+
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: cmake gcc-c++ libicu-devel libjpeg-devel qt5-phonon-devel
 BuildRequires: qt5-tools-devel libfreetype-devel fontconfig-devel
-BuildRequires: libpcre-devel libuuid-devel libexpat-devel
+BuildRequires: libpcre-devel libuuid-devel libexpat-devel libtextstyle-devel
+BuildRequires: libunibreak-devel libfribidi-devel
 BuildRequires(pre): libpng-devel
 
 %description
@@ -33,6 +37,10 @@ CHM, PDB.
 
 %prep
 %setup
+%patch0 -p1
+
+%patch1
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
@@ -81,6 +89,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Mon Jun 28 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.2.57-alt1
+- New version
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.32-alt3
 - Fix URL (Closes: #36164).
 
