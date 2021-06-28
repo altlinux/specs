@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3003
-Release: alt2
+Version: 3003.1
+Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -20,6 +20,7 @@ Source5: salt-minion.init
 Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
+Patch2: salt-alt-use-build-in-contextvars-for-python3.9.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -50,8 +51,7 @@ through a simple yet manageable interface.
 Summary: Management component for salt, a parallel remote execution system
 Group: Development/Python
 Obsoletes: python-module-salt 
-Requires: python3-module-yaml python3-module-msgpack 
-Requires: python3-module-pycryptodomex
+%py3_requires yaml msgpack pycryptodomex contextvars
 
 %description  -n python3-module-salt
 Salt is a distributed remote execution system used to execute commands
@@ -92,6 +92,7 @@ with XMLRPC or even a Websocket API.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
@@ -239,6 +240,10 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Thu Jun 24 2021 Andrey Cherepanov <cas@altlinux.org> 3003.1-alt1
+- New version.
+- Security fixes: CVE-2021-31607
+
 * Fri Apr 02 2021 Andrey Cherepanov <cas@altlinux.org> 3003-alt2
 - Fixed: CVE-2020-28243, CVE-2020-28972, CVE-2020-35662, CVE-2021-3148,
   CVE-2021-3144, CVE-2021-25281, CVE-2021-25282, CVE-2021-25283,

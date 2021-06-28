@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 3.9.9
-Release: alt1
+Release: alt2
 
 Summary: A self-contained cryptographic library for Python
 License: BSD-2-Clause
@@ -21,6 +21,8 @@ Patch1:  python-pycryptodomex-3.7.3-use_external_libtomcrypt.patch
 
 Provides: python3-pycryptodomex = %EVR
 Obsoletes: python3-pycryptodomex < %EVR
+
+%py3_provides pycryptodomex
 
 %description
 PyCryptodome is a self-contained Python package of low-level cryptographic
@@ -68,6 +70,9 @@ respect to the last official version of PyCrypto (2.6.1):
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jun 28 2021 Andrey Cherepanov <cas@altlinux.org> 3.9.9-alt2
+- Provides python3(pycryptodomex).
+
 * Mon Nov 02 2020 Andrey Cherepanov <cas@altlinux.org> 3.9.9-alt1
 - New version.
 
