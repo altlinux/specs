@@ -12,7 +12,7 @@
 
 Name: plasma5-%rname
 Version: 5.21.5
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -222,6 +222,9 @@ done
 
 
 %changelog
+* Mon Jun 28 2021 Oleg Solovyov <mcpain@altlinux.org> 5.21.5-alt2
+- enable offline updates by default (discoverrc)
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 
