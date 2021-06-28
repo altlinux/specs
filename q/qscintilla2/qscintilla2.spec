@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with python
-%def_with qt4
+%def_without qt4
 %def_with python3
 %def_with python3qt5
 
@@ -9,7 +9,7 @@
 %define suff 15
 Name: %oname
 Version: 2.11.5
-Release: alt1
+Release: alt2
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 
@@ -579,6 +579,9 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Mon Jun 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.11.5-alt2
+- Rebuilt without qt4.
+
 * Mon Sep 07 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.5-alt1
 - new version 2.11.5 (with rpmrb script)
 - fix order of fields
