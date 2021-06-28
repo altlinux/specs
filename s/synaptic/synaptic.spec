@@ -4,7 +4,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt25
+Release: alt26
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -103,6 +103,9 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Mon Jun 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt26
+- Reintroduced optimizations and improvements disabled in previous builds.
+
 * Tue May 11 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.58-alt25
 - Some changes from the previous release reverted or updated, since we recently
   reverted and updated some changes in the APT API in apt-0.5.15lorg2-alt72.
