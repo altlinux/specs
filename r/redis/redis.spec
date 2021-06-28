@@ -1,5 +1,5 @@
 Name: redis
-Version: 5.0.12
+Version: 6.2.4
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -22,8 +22,9 @@ Source6: redis-server.logrotate
 Source7: redis.init
 Source8: redis.sysconfig
 Source9: redis.service
+Source10: redis-sentinel.service
 
-Patch1: %name-5.0.8-alt-mips32.patch
+Patch1: %name-6.2.3-alt-mips32.patch
 
 # for check section
 BuildPreReq: tcl >= 8.5
@@ -87,6 +88,8 @@ mkdir -p %buildroot%_sbindir/
 mkdir -p %buildroot%_sysconfdir/%name
 mv %buildroot%_bindir/redis-server %buildroot%_sbindir/
 mv %buildroot%_bindir/redis-sentinel %buildroot%_sbindir/
+ln -nsf ../sbin/redis-server %buildroot%_bindir/redis-check-aof
+ln -nsf ../sbin/redis-server %buildroot%_bindir/redis-check-rdb
 
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_logdir/%name
@@ -105,6 +108,7 @@ sed -e '/^timeout[[:blank:]]/ s/0/300/' \
     -e '/^dir[[:blank:]]/ s^\./^/var/lib/redis^' \
     -i %name.conf
 install -m644 %name.conf %buildroot%_sysconfdir/%name/
+install -m644 sentinel.conf %buildroot%_sysconfdir/%name/
 
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
 install -m 644 %SOURCE5 %buildroot%_sysconfdir/bash_completion.d/redis-cli
@@ -119,7 +123,8 @@ mkdir -p %buildroot%_sysconfdir/sysconfig
 install -m 0640 %SOURCE8 %buildroot%_sysconfdir/sysconfig/%name
 
 mkdir -p  %buildroot%_unitdir
-install -m 0644 %SOURCE9 %buildroot%_unitdir/%name.service
+install -m 0644 %SOURCE9  %buildroot%_unitdir/%name.service
+install -m 0644 %SOURCE10 %buildroot%_unitdir/%name-sentinel.service
 
 mkdir -p  %buildroot%_tmpfilesdir
 echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.conf
@@ -132,21 +137,24 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 %post
 %post_service %name
+%post_service %name-sentinel
 
 %preun
 %preun_service %name
+%preun_service %name-sentinel
 
 %files
 %doc COPYING 00-RELEASENOTES README.md BUGS MANIFESTO
 
 %attr(0750,root,%redis_group) %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/redis.conf
+%config(noreplace) %_sysconfdir/%name/sentinel.conf
 
 %config %_logrotatedir/redis-server
 %config %_sysconfdir/bash_completion.d/redis-cli
 %attr(0750,root,%redis_group) %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_initdir/%name
-%_unitdir/%name.service
+%_unitdir/*.service
 %_tmpfilesdir/%name.conf
 
 %_bindir/redis-check-aof
@@ -163,6 +171,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Mon Jun 28 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.2.4-alt1
+- New major version (Closes: 40279)
+
 * Sun May 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 5.0.12-alt1
 - New version
 - Security fixes:
