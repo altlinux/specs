@@ -1,9 +1,9 @@
-%define ver_major 3.9
+%define ver_major 12.0
 %define gst_api_ver 1.0
 %def_with recording
 
 Name: gnome-internet-radio-locator
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -18,13 +18,13 @@ Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: dconf geoclue2
 
-%define gtk_ver 3.0
+%define gtk_ver 4.0.3
 
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
-BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel libchamplain-gtk3-devel
-BuildRequires: libgeocode-glib-devel pkgconfig(libgeoclue-2.0)
+BuildRequires: libgtk4-devel >= %gtk_ver libxml2-devel libchamplain-gtk3-devel
 BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
 BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: libgeocode-glib-devel pkgconfig(libgeoclue-2.0) pkgconfig(geoclue-2.0)
 
 %description
 GNOME Internet Radio Locator is a Free Software program that allows
@@ -57,6 +57,12 @@ with the help of a map.
 
 
 %changelog
+* Mon Jun 28 2021 Yuri N. Sedunov <aris@altlinux.org> 12.0.0-alt1
+- 12.0.0
+
+* Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Tue Feb 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.9.1-alt1
 - 3.9.1
 
