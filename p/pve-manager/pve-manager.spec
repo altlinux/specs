@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.3.3
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -79,6 +79,7 @@ Patch46: pve-manager-timezone.patch
 Patch47: qemu-server-pci-rng-audio-M90P.patch
 Patch50: pve-container-ENV.patch
 Patch51: pve-manager-ver-v.patch
+Patch52: pve-qmeventd.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -205,6 +206,7 @@ This is used to implement the PVE REST API
 %patch47 -p0 -b .rng
 %patch50 -p0 -b .ENV
 %patch51 -p0 -b .ver-v
+%patch52 -p0 -b .qmevent
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -552,6 +554,7 @@ __EOF__
 %_datadir/zsh/vendor-completions/_qmrestore
 %config(noreplace) %_sysconfdir/modules-load.d/qemu-server.conf
 %systemd_unitdir/qmeventd.service
+%systemd_unitdir/qmeventd.socket
 %_prefix/lib/qemu-server
 %_sbindir/qm
 %_sbindir/qmrestore
@@ -608,6 +611,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Mon Jun 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt4
+- pve-guests.service wants qmeventd.service
+
 * Mon May 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt3
 - qemu-server: naming network interfaces as in branch p9
 
