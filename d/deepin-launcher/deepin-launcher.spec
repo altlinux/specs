@@ -1,8 +1,8 @@
-%global repo dde-launcher
+%define repo dde-launcher
 
 Name: deepin-launcher
 Version: 5.4.11
-Release: alt1
+Release: alt1.1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -43,14 +43,14 @@ Header files and libraries for %name.
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 
 %build
-%cmake_insource \
+%cmake \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DWITHOUT_UNINSTALL_APP=1
-%ninja_build
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 
 %files
 %doc LICENSE
@@ -66,6 +66,9 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 %_includedir/%repo/
 
 %changelog
+* Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.11-alt1.1
+- NMU: spec: adapted to new cmake macros.
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.11-alt1
 - New version (5.4.11) with rpmgs script.
 
