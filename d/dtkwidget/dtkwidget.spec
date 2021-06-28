@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.4.20
+Version: 5.5.7
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -62,6 +62,11 @@ Header files and libraries for %name.
 %patch -p2
 %patch1 -p2
 sed -i "s|'/lib'|'/%_lib'|" conanfile.py
+sed -i 's|dtkcore5.5|dtkcore|; s|dtkgui5.5|dtkgui|; s|dtkwidget5.5|dtkwidget|' \
+    examples/dwidget-examples/collections/collections.pro \
+    src/src.pro \
+    tests/tests.pro \
+    tools/svgc/svgc.pro
 
 %build
 export PATH=%{_qt5_bindir}:$PATH
@@ -95,6 +100,9 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/lib%name.so
 
 %changelog
+* Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.7-alt1
+- New version (5.5.7) with rpmgs script.
+
 * Mon May 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.20-alt1
 - New version (5.4.20) with rpmgs script.
 

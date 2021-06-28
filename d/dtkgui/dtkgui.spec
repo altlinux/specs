@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.4.13
+Version: 5.5.2
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -36,6 +36,20 @@ Header files and libraries for %name.
 
 %prep
 %setup
+sed -i 's|dtkcore5.5|dtkcore|' \
+    examples/dnd-example/dnd-test-client.pro \
+    examples/dnd-example/dnd-test-server.pro \
+    examples/test-taskbar/taskbar.pro \
+    src/src.pro \
+    tests/tests.pro \
+    tools/deepin-gui-settings/deepin-gui-settings.pro
+sed -i 's|dtkgui5.5|dtkgui|' \
+    examples/dnd-example/dnd-test-client.pro \
+    examples/dnd-example/dnd-test-server.pro \
+    examples/test-taskbar/taskbar.pro \
+    src/src.pro \
+    tests/tests.pro \
+    tools/deepin-gui-settings/deepin-gui-settings.pro
 
 %build
 %qmake_qt5 \
@@ -69,6 +83,9 @@ Header files and libraries for %name.
 %_libdir/libdtkgui.so
 
 %changelog
+* Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.2-alt1
+- New version (5.5.2) with rpmgs script.
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
 - New version (5.4.13) with rpmgs script.
 
