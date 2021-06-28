@@ -1,13 +1,11 @@
 %def_disable libcap
 %def_enable qt5
-%ifnarch riscv64
-%def_enable qt4
-%endif
+%def_disable qt4
 %def_disable fltk
 
 Name: pinentry
 Version: 1.1.0
-Release: alt5
+Release: alt6
 
 Summary: Simple PIN or passphrase entry dialog
 License: GPLv2+
@@ -74,7 +72,6 @@ Requires: xprop
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
 
-%if_enabled qt5
 %package qt5
 Group: %group
 Summary: %summary
@@ -84,9 +81,7 @@ Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
 Provides: pinentry-qt = %EVR
 Obsoletes: pinentry-qt < %EVR
-%endif
 
-%if_enabled qt4
 %package qt4
 Group: %group
 Summary: %summary
@@ -94,7 +89,6 @@ Requires: xprop
 Requires: %name-common = %EVR
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
-%endif
 
 %description gtk2
 This is simple PIN or passphrase entry dialog which utilize
@@ -102,16 +96,12 @@ the Assuan protocol as described by the aegypten project.
 %description gnome3
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
-%if_enabled qt5
 %description qt5
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
-%endif
-%if_enabled qt4
 %description qt4
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
-%endif
 %description common
 This package contains common files and documentation for %name.
 
@@ -264,6 +254,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Mon Jun 28 2021 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt6
+- disable qt4 UI
+
 * Mon Jul 29 2019 Nikita Ermakov <arei@altlinux.org> 1.1.0-alt5
 - NMU: Clean up spec file.
   + Make qt4 optional and disable it for riscv64 architecture.
