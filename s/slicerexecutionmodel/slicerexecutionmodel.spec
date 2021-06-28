@@ -2,7 +2,7 @@
 
 Name: slicerexecutionmodel
 Version: 2.0.0
-Release: alt1.git.f19d6e8
+Release: alt2.git.f19d6e8
 Summary: An open-source CMake-based project that provides macros and associated tools for the easy building of 3D Slicer command line interface (CLI) modules
 License: BSD-style
 Group: Development/Tools
@@ -19,6 +19,7 @@ BuildRequires: gcc-c++ cmake
 BuildRequires: libitk-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: parameterserializer-devel
+BuildRequires: libtclap-devel
 
 %description
 The SlicerExecutionModel is a CMake-based project providing macros
@@ -61,6 +62,7 @@ Summary: An open-source CMake-based project that provides macros and associated 
 Group: Development/C++
 Requires: lib%name = %EVR
 Requires: parameterserializer-devel
+Requires: libtclap-devel
 
 %description devel
 The SlicerExecutionModel is a CMake-based project providing macros
@@ -83,6 +85,9 @@ This package contains development files for SlicerExecutionModel.
 %setup
 %patch1 -p1
 
+# ensure bundled tclap is not used
+rm -rf tclap
+
 %build
 %cmake \
 	-DSlicerExecutionModel_USE_UTF8:BOOL=ON \
@@ -96,7 +101,6 @@ This package contains development files for SlicerExecutionModel.
 	-DModuleDescriptionParser_USE_SERIALIZER:BOOL=ON \
 	-DModuleDescriptionParser_INSTALL_NO_DEVELOPMENT:BOOL=OFF \
 	-DModuleDescriptionParser_LIBRARY_PROPERTIES='VERSION;0;SOVERSION;0' \
-	-DTCLAP_INSTALL_NO_DEVELOPMENT:BOOL=OFF \
 	%nil
 
 %cmake_build
@@ -116,5 +120,8 @@ This package contains development files for SlicerExecutionModel.
 %_libdir/cmake/*
 
 %changelog
+* Mon Jun 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2.git.f19d6e8
+- Rebuilt with system tclap.
+
 * Fri May 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1.git.f19d6e8
 - Initial build for ALT.
