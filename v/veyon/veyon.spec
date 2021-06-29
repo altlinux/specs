@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.5.6
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -36,7 +36,9 @@ BuildRequires: libldap-devel
 BuildRequires: libpam0-devel
 BuildRequires: libprocps-devel
 BuildRequires: libsasl2-devel
-BuildRequires: libqca2-devel
+BuildRequires: libpng-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXinerama-devel
 BuildRequires: libqca-qt5-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXtst-devel
@@ -110,6 +112,9 @@ rm -rf ./3rdparty
 %_datadir/%name
 
 %changelog
+* Tue Jun 29 2021 Egor Ignatov <egori@altlinux.org> 4.5.6-alt2
+- update build dependencies
+
 * Wed Jun 02 2021 Egor Ignatov <egori@altlinux.org> 4.5.6-alt1
 - new version
 
