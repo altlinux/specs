@@ -2,8 +2,8 @@
 %define oname infinity
 
 Name: python3-module-%oname
-Version: 1.4
-Release: alt4
+Version: 1.5
+Release: alt1
 Summary: All-in-one infinity value for Python. Can be compared to any object
 License: BSD
 Group: Development/Python3
@@ -37,6 +37,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.5-alt1
+- Build new version.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt4
 - Drop python2 support.
 
