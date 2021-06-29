@@ -2,7 +2,7 @@
 
 Name: fprintd
 Version: 1.90.9
-Release: alt1
+Release: alt1.1
 Summary: D-Bus service for Fingerprint reader access
 Group: System/Servers
 Url: https://www.freedesktop.org/wiki/Software/fprint/fprintd
@@ -11,6 +11,7 @@ License: GPLv2+
 # https://gitlab.freedesktop.org/libfprint/fprintd
 Source: %name-%version.tar
 Source1: system-auth-fprintd
+Source2: system-auth-use_first_pass-fprintd
 
 Patch: %name-%version.patch
 
@@ -30,6 +31,8 @@ BuildRequires: python3-module-dbus
 BuildRequires: python3-module-dbusmock
 BuildRequires: python3-module-libpamtest
 BuildRequires: python3(gi)
+
+Requires: %name-clients = %EVR
 
 %description
 D-Bus service to access fingerprint readers.
@@ -54,6 +57,13 @@ BuildArch: noarch
 Development documentation for fprintd, the D-Bus service for
 fingerprint readers access.
 
+%package clients
+Summary: %name clients
+Group: System/Base
+
+%description clients
+Client appications to access fingerprint readers
+
 %prep
 %setup -q
 %patch -p1
@@ -66,15 +76,17 @@ fingerprint readers access.
 %meson_install
 %find_lang %name
 
+mkdir -p %buildroot%_sysconfdir/pam.d
+install -m0644 -p %SOURCE1 %buildroot%_sysconfdir/pam.d/
+install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
+
 %check
 %meson_test
 
 %files -f %name.lang
 %doc README COPYING AUTHORS TODO
 %config(noreplace) %_sysconfdir/fprintd.conf
-#_sysconfdir/pam.d/system-auth-fprintd
 %_datadir/dbus-1/system.d/net.reactivated.Fprint.conf
-%_bindir/fprintd-*
 %_prefix/lib/fprintd
 %_unitdir/fprintd.service
 %_datadir/dbus-1/system-services/net.reactivated.Fprint.service
@@ -85,13 +97,21 @@ fingerprint readers access.
 %doc pam/README
 /%_lib/security/pam_fprintd.so
 %_man8dir/pam_fprintd.8*
+%_sysconfdir/pam.d/system-auth-*
 
 %files devel
 #_datadir/gtk-doc/html/fprintd
 %_datadir/dbus-1/interfaces/net.reactivated.Fprint.Device.xml
 %_datadir/dbus-1/interfaces/net.reactivated.Fprint.Manager.xml
 
+%files clients
+%_bindir/%name-*
+
 %changelog
+* Tue Jun 29 2021 L.A. Kostis <lakostis@altlinux.ru> 1.90.9-alt1.1
+- Split -clients pkg (to use them with other fingerprint providers).
+- Add pam.d configuration into pam pkg.
+
 * Mon Apr 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.90.9-alt1
 - Updated to upstream version 1.90.9.
 - Cleaned up spec and patches.
