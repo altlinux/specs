@@ -1,8 +1,8 @@
 %define module_name blinker
 
 Name: python3-module-%module_name
-Version: 1.3
-Release: alt2.git20130703
+Version: 1.4
+Release: alt1
 Group: Development/Python3
 License: MIT License
 Summary: Fast, simple object-to-object and broadcast signaling
@@ -38,10 +38,13 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make SPHINXBUILD="sphinx-build-3" -C docs/source html
 
 %files
-%doc AUTHORS CHANGES LICENSE README docs/html
+%doc AUTHORS CHANGES LICENSE README.md docs/html
 %python3_sitelibdir/%{module_name}*
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt1
+- Build new version.
+
 * Mon Jun 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.3-alt2.git20130703
 - Drop python2 support.
 
