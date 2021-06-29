@@ -87,7 +87,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.5
+Version: %{pybasever}.6
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -410,11 +410,7 @@ cp -rl * ../build-shared/
 # ======================================================
 # Configuring and building the code:
 # ======================================================
-
 %build
-topdir=$(pwd)
-
-build() {
 #see ALT39329
 %remove_optflags -g -O3
 
@@ -429,31 +425,18 @@ build() {
   --enable-loadable-sqlite-extensions \
   --with-lto \
   --with-ssl-default-suites=openssl \
-%if 0%{?with_valgrind}
+%if_with valgrind
   --with-valgrind \
 %endif
   --without-ensurepip \
   $*
 
 %make_build
-}
-
-pushd ../build-shared
-build  --enable-shared
-popd
-
-build
 
 # ======================================================
 # Installing the built code:
 # ======================================================
-
 %install
-
-pushd ../build-shared
-make install DESTDIR=%buildroot INSTALL="install -p"
-popd
-
 find build -exec touch {} \;
 make install DESTDIR=%buildroot INSTALL="install -p"
 
@@ -1006,6 +989,11 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.6-alt1
+- Updated to upstream version 3.9.6.
+- Removed duplicated shared building (Closes: #40291).
+- Enabled valgrind on some arches.
+
 * Tue May 11 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.5-alt1
 - Updated to upstream version 3.9.5.
 
