@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -8,7 +8,11 @@
 
 %def_enable gstreamer
 %def_enable systemd
+%def_enable libusb
 %def_enable libcamera
+%def_enable avahi
+%def_enable webrtc
+%def_enable sdl
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
 %def_enable vulkan
@@ -17,12 +21,12 @@
 %else
 %def_enable examples
 %endif
-%def_enable docs
+%def_disable docs
 %def_enable man
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.28
+Version: %ver_major.31
 Release: alt1
 
 Summary: Media Sharing Server
@@ -53,7 +57,7 @@ BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
-#https://github.com/pali/libopenaptx
+# https://github.com/pali/libopenaptx
 BuildRequires: libopenaptx-devel
 # for pw-top
 BuildRequires: libncursesw-devel
@@ -66,10 +70,14 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %endif
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
+%{?_enable_libusb:BuildRequires: pkgconfig(libusb-1.0)}
 %{?_enable_libcamera:BuildRequires: libcamera-devel libdrm-devel}
-%{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
+%{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
+%{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing)}
+%{?_enable_sdl:BuildRequires: libSDL2-devel}
+%{?_enable_docs:BuildRequires: doxygen graphviz fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
 %{?_enable_man:BuildRequires: xmltoman}
-%{?_enable_check:BuildRequires: /proc gcc-c++}
+%{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
 
 %description
 PipeWire is a multimedia server for Linux and other Unix like operating
@@ -112,6 +120,7 @@ This package contains command line utilities for the PipeWire media server.
 
 %prep
 %setup
+#echo -e "SHORT_NAMES = YES\nDIRECTORY_GRAPH = NO\n" >> doc/Doxyfile.in
 #%%patch
 
 %build
@@ -121,7 +130,11 @@ export LIB=%_lib
 	%{?_disable_man:-Dman=disabled} \
 	%{?_enable_gstreamer:-Dgstreamer=enabled} \
 	%{?_disable_vulkan:-Dvulkan=disabled} \
+	%{?_disable_libusb:-Dlibusb=disabled} \
 	%{?_disable_libcamera:-Dlibcamera=disabled} \
+	%{?_disable_avahi:-Davahi=disabled} \
+	%{?_disable_webrtc:-Decho-cancel-webrtc=disabled} \
+	%{?_disable_sdl:-Dsdl=disabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled}
@@ -159,6 +172,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
 %_datadir/%name/media-session.d/bluez-monitor.conf
+%_datadir/%name/media-session.d/bluez-hardware.conf
 %_datadir/%name/media-session.d/media-session.conf
 %_datadir/%name/media-session.d/v4l2-monitor.conf
 %_datadir/%name/media-session.d/with-jack
@@ -187,7 +201,6 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %if_enabled man
 %_man1dir/%name.1*
 %_man1dir/pw-jack.1*
-#%_man1dir/pw-pulse.1*
 %_man5dir/%name.conf.5*
 %endif
 %doc README* NEWS
@@ -237,7 +250,6 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
 %_man1dir/pw-dot.1.*
-#%_man1dir/pw-dump.1.*
 %_man1dir/pw-metadata.1.*
 %_man1dir/pw-mididump.1.*
 %_man1dir/pw-mon.1*
@@ -246,6 +258,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Mon Jun 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.31-alt1
+- updated to 0.3.31-2-g5497d2d90
+
 * Wed May 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.28-alt1
 - 0.3.28
 
