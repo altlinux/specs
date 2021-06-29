@@ -1,5 +1,5 @@
 Name:    blink-qt
-Version: 4.1.0
+Version: 5.1.1
 Release: alt1
 
 Summary: Blink SIP Client
@@ -8,6 +8,9 @@ Group:   Other
 URL:     http://icanblink.com/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+# python3-module-sipsimple adapted only for x86_64
+ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libvncserver-devel
@@ -60,6 +63,13 @@ install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 %_man1dir/blink.1*
 
 %changelog
+* Mon Jun 28 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt1
+- New version.
+- Build only for x86_64.
+
+* Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+
 * Fri May 21 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
 - New version.
 

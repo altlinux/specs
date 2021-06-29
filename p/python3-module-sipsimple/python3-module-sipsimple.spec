@@ -1,7 +1,7 @@
 %define modulename sipsimple
 
 Name: python3-module-%modulename
-Version: 4.0.1
+Version: 5.2.2
 Release: alt1
 
 Summary: SIP SIMPLE implementation for Python
@@ -10,23 +10,29 @@ Group: Development/Python3
 
 Url: https://github.com/AGProjects/python3-sipsimple
 Source: python3-%modulename-%version.tar
+Source1: deps.tar
 Patch: python-module-sipsimple-alt-add-arch-webrtc-defines.patch
-Patch1: pj-attr-gcc10.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-distribute
 BuildRequires: python3-module-setuptools_cython
 BuildRequires: gcc-c++
+BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
-BuildRequires: libswscale-devel
-BuildRequires: libvpx-devel
+BuildRequires: libopus-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libssl-devel
+BuildRequires: libswscale-devel
 BuildRequires: libv4l-devel
-BuildRequires: libalsa-devel
+BuildRequires: libvpx-devel
+BuildRequires: libwebrtc-devel
+# TODO: Unable to detect /usr/include/silk/SKP_Silk_SDK_API.h
+#BuildRequires: libsilk-devel
 
 %description
 SIP SIMPLE client SDK is a Software Development Kit for easy development
@@ -36,14 +42,14 @@ types can be easily added by using an extensible high-level API.
 
 %prep
 %setup -n python3-%modulename-%version
+tar xf %SOURCE1
 %patch -p1
-%patch1 -p2
 cp -at deps/pjsip/ -- /usr/share/gnu-config/config.*
 chmod +x deps/pjsip/*configure
 %ifarch %e2k
 # more 64-bit little endian arches
 sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
-	deps/pjsip/third_party/webrtc/src/typedefs.h
+	deps/pjsip/third_party/webrtc/src/webrtc/typedefs.h
 %endif
 
 %build
@@ -53,12 +59,18 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %python3_install
 
 %files
-%doc AUTHORS README
+%doc README
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
 
-
 %changelog
+* Mon Jun 28 2021 Andrey Cherepanov <cas@altlinux.org> 5.2.2-alt1
+- New version.
+- Build only for x86_64.
+
+* Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
+- New version.
+
 * Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
 - New version.
 
