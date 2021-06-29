@@ -5,7 +5,7 @@
 %def_enable wayland
 
 Name: vlc
-Version: 3.0.14
+Version: 3.0.16
 Release: alt1
 
 Summary: VLC media player
@@ -1405,6 +1405,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Jun 29 2021 Anton Farygin <rider@altlinux.ru> 3.0.16-alt1
+- 3.0.16
+
 * Wed May 12 2021 Anton Farygin <rider@altlinux.ru> 3.0.14-alt1
 - 3.0.14
 - built with SDL_image for SDL based image decoding
