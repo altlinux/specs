@@ -3,8 +3,8 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.4.5
-Release: alt4
+Version: 5.4.13
+Release: alt1
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,8 +12,8 @@ Url: https://github.com/linuxdeepin/dde-session-shell
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-session-shell-5.4.5-gcc10.patch
 Patch1: deepin-session-shell-5.4.5-alt-lightdm-for-lockscreen.patch
+Patch2: deepin-session-shell-5.4.13-hide-sleep-and-hibernate.patch
 
 %if_enabled clang
 BuildRequires(pre): clang12.0-devel
@@ -42,8 +42,8 @@ BuildRequires: libgtest-devel
 
 %prep
 %setup -n %repo-%version
-%patch -p2
 %patch1 -p1
+%patch2 -p1
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i 's|/lib|/libexec|' scripts/lightdm-deepin-greeter
 sed -i 's|/usr/bin/bash|/bin/bash|' src/dde-shutdown/view/contentwidget.cpp
@@ -58,8 +58,13 @@ sed -i 's|/usr/bin/bash|/bin/bash|' src/dde-shutdown/view/contentwidget.cpp
 #sed -i 's|theme/background/default_background.jpg|theme/background.png|' \
 #    src/dde-lock/logintheme.qrc \
 #    src/lightdm-deepin-greeter/logintheme.qrc
-#sed -i 's/common-auth/system-login/' src/libdde-auth/authagent.cpp
+# We use system-auth instead common-auth on ALT
+sed -i 's/common-auth/system-auth/' src/libdde-auth/authagent.cpp
 sed -i 's|qdbusxml2cpp|qdbusxml2cpp-qt5|' CMakeLists.txt
+sed -i 's|5\.5||' \
+    CMakeLists.txt \
+    tests/dde-lock/CMakeLists.txt \
+    tests/lightdm-deepin-greeter/CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -67,7 +72,7 @@ export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 %endif
-%cmake_insource \
+%cmake \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
 %if_enabled clang
@@ -82,10 +87,10 @@ export AR="llvm-ar"
     -DLLVM_ENABLE_ZLIB:BOOL=ON \
 %endif
     #
-%ninja_build
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 chmod +x %buildroot%_bindir/deepin-greeter
 
 %files
@@ -98,8 +103,12 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_desktopdir/dde-lock.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
+%_datadir/glib-2.0/schemas/com.deepin.dde.session-shell.gschema.xml
 
 %changelog
+* Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
+- New version (5.4.13).
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt4
 - Fixed lockscreen.
 
