@@ -3,8 +3,8 @@
 %define oname cgen
 
 Name: python3-module-%oname
-Version: 2017.1
-Release: alt2
+Version: 2020.1
+Release: alt1
 Summary: C/C++ source generation from an AST
 License: MIT
 Group: Development/Python3
@@ -35,6 +35,9 @@ C/C++ source generation from an AST.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 2020.1-alt1
+- Automatically updated to 2020.1.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 2017.1-alt2
 - Drop python2 support.
 
