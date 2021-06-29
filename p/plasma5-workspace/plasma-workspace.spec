@@ -35,7 +35,7 @@
 
 Name: plasma5-workspace
 Version: 5.21.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -108,7 +108,7 @@ BuildRequires: appstream-qt-devel
 %endif
 BuildRequires: libwayland-client-devel libwayland-server-devel libdrm-devel
 BuildRequires: pipewire-libs-devel
-BuildRequires: libxapian-devel prison-devel libnm-devel
+BuildRequires: libxapian-devel libnm-devel
 BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
@@ -481,6 +481,9 @@ done
 
 
 %changelog
+* Tue Jun 29 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt2
+- fix build requires
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
 - new version
 
