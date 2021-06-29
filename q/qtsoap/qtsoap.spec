@@ -1,6 +1,6 @@
 Name: qtsoap
 Version: 2.7
-Release: alt6
+Release: alt7
 
 Summary: The Simple Object Access Protocol Qt-based client side library
 License: LGPLv2 with exceptions or GPLv3
@@ -13,7 +13,7 @@ Source: qtsoap-%version.tar.gz
 Patch1: qtsoap-2.7_1-opensource-install-pub-headers.patch
 Patch2: qtsoap-2.7_1-qt5-cleanups.patch
 
-BuildRequires: gcc-c++ glibc-devel-static phonon-devel libqt4-devel qt5-base-devel
+BuildRequires: gcc-c++ glibc-devel-static qt5-base-devel
 
 %description
 The SOAP (Simple Object Access Protocol) library uses the XML standard
@@ -72,16 +72,6 @@ cp -a %name-%version qtsoap5-%version
 %add_optflags -std=c++11
 %endif
 
-pushd %name-%version
-# we want shared library
-echo "SOLUTIONS_LIBRARY = yes" > config.pri
-echo "QTSOAP_LIBNAME = \$\$qtLibraryTarget(qtsoap)" >> common.pri
-echo "VERSION=%version" >> common.pri
-
-qmake-qt4 PREFIX=%prefix 'QMAKE_CFLAGS+=%optflags' 'QMAKE_CXXFLAGS+=%optflags'
-%make_build
-popd
-
 pushd qtsoap5-%version
 # we want shared library
 echo "SOLUTIONS_LIBRARY = yes" > config.pri
@@ -95,21 +85,9 @@ echo "VERSION=%{version}" >> common.pri
 popd
 
 %install
-pushd %name-%version
-make INSTALL_ROOT=%buildroot install
-popd
-
 pushd qtsoap5-%version
 make INSTALL_ROOT=%buildroot install
 popd
-
-%files -n lib%name
-%doc %name-%version/README.TXT
-%_libdir/libqtsoap.so.*
-
-%files devel
-%_libdir/libqtsoap.so
-%_includedir/qt4/QtSoap/
 
 %files -n libqtsoap5
 %doc %name-%version/README.TXT
@@ -120,6 +98,9 @@ popd
 %_includedir/qt5/QtSoap/
 
 %changelog
+* Tue Jun 29 2021 Sergey V Turchin <zerg@altlinux.org> 2.7-alt7
+- don't build qt4 part
+
 * Thu Oct 01 2020 Sergey V Turchin <zerg@altlinux.org> 2.7-alt6
 - make debuginfo for libqtsoap5
 
