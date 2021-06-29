@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.10.1
+Version: 1.11.0
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
@@ -219,6 +219,7 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 
 %files -n lib%name
 %doc CHANGELOG CONTRIBUTORS libversion LICENSE NEWS README* VERSION
+%_libdir/libPocoActiveRecord*.so.*
 %_libdir/libPocoFoundation*.so.*
 %_libdir/libPocoXML*.so.*
 %_libdir/libPocoJSON*.so.*
@@ -274,6 +275,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Tue Jun 29 2021 Alexei Takaseev <taf@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Wed Feb 26 2020 Alexei Takaseev <taf@altlinux.org> 1.10.1-alt1
 - 1.10.1
 - Add subpackage jwt
