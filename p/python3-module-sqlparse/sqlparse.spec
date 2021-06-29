@@ -2,15 +2,15 @@
 %define oname sqlparse
 
 Name: python3-module-%oname
-Version: 0.2.2
-Release: alt2
+Version: 0.4.1
+Release: alt1
 Summary: Non-validating SQL parser
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/sqlparse/
 
 # https://github.com/andialbrecht/sqlparse.git
-Source0: https://pypi.python.org/packages/55/ce/3944e990b03f80f36f0050b407ad46cde192a210d473f0d705b554bddd1d/%{oname}-%{version}.tar.gz
+Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -46,7 +46,7 @@ parsing, splitting and formatting SQL statements.
 This package contains documentation for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
@@ -67,7 +67,7 @@ install -d %buildroot%_man1dir
 install -p -m644 docs/*.1 %buildroot%_man1dir/
 
 %files
-%doc AUTHORS *.rst TODO CHANGELOG PKG-INFO docs
+%doc AUTHORS *.rst TODO CHANGELOG docs
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/pickle
@@ -80,6 +80,9 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
+- Build new version.
+
 * Tue Jun 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt2
 - Drop python2 support.
 
