@@ -1,8 +1,8 @@
 %define oname routes
 
 Name: python3-module-%oname
-Version: 2.4.1
-Release: alt2
+Version: 2.5.1
+Release: alt1
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python3
@@ -68,13 +68,16 @@ install -d %buildroot%_docdir/%name
 popd
 
 %files
-%doc CHANGELOG LICENSE README TODO
+%doc *.rst *.txt
 %python3_sitelibdir/*
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
+- Automatically updated to 2.5.1.
+
 * Tue Jun 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt2
 - Drop python2 support.
 
