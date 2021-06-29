@@ -1,7 +1,7 @@
 %define _name etr
 
 Name: extreme-tuxracer
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Epoch: 1
 
@@ -70,6 +70,9 @@ EOF
 %_datadir/appdata/etr.appdata.xml
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 1:0.8.1-alt1
+- Build new version.
+
 * Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 1:0.8.0-alt1
 - Build new version.
 
