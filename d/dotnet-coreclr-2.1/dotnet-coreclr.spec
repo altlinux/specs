@@ -12,7 +12,7 @@
 
 Name: dotnet-coreclr-%_dotnet_major
 Version: 2.1.25
-Release: alt1
+Release: alt2
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -43,7 +43,7 @@ BuildRequires: libunwind-devel
 BuildRequires: liblttng-ust-devel liblwp-devel
 #BuildRequires: lldb-devel
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel libssl-devel
-BuildRequires: python-modules-xml
+#BuildRequires: python-modules-xml
 
 # it is not linked directly (the same like in libicu-devel)
 # there are icu detection in a version range
@@ -75,6 +75,13 @@ cross platform applications that work on Linux, Mac and Windows.
 #patch1 -p1
 #patch2 -p1
 %patch3 -p2
+
+%__subst "s|python2.7|python3|" CMakeLists.txt build.sh
+
+# Starting with ICU 68 (2020q4), there is no longer TRUE and FALSE defines in public header files
+# https://unicode-org.github.io/icu/userguide/dev/codingguidelines.html
+#add_optflags -DU_DEFINE_FALSE_AND_TRUE=1
+%__subst "s|-Wall|-Wall -DU_DEFINE_FALSE_AND_TRUE=1|" src/pal/tools/clang-compiler-override.txt
 
 # make strange error if uncomment due isMSBuildOnNETCoreSupported initialized
 find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
@@ -150,6 +157,9 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_rpmlibdir/%name.filetrigger
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt2
+- fix build
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt1
 - new version (2.1.25) with rpmgs script
 - CVE-2021-1721: .NET Core Denial of Service Vulnerability
