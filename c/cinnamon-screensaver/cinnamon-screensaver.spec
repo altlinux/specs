@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -119,6 +119,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Mon Jun 28 2021 Vladimir Didenko <cow@altlinux.org> 5.0.6-alt1
+- 5.0.6
+
 * Wed Jun 16 2021 Vladimir Didenko <cow@altlinux.org> 5.0.5-alt1
 - 5.0.5
 

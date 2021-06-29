@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 5.0.0
-Release: alt2
+Version: 5.0.1
+Release: alt1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -318,6 +318,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %python3_sitelibdir_noarch/nemo_compare-*.egg-*
 
 %changelog
+* Mon Jun 28 2021 Vladimir Didenko <cow@altlinux.org> 5.0.1-alt1
+- 5.0.1
+
 * Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt2
 - Don't pack gir development files as part of nemo-preview extension
 
