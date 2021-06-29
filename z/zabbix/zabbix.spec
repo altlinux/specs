@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		c60195b3f9
+%define svnrev		c218b76dad
 
 %def_with pgsql
 %def_enable java
@@ -15,10 +15,13 @@
 %define _unitdir %systemd_unitdir
 %endif
 
+%ifnarch %e2k
+%def_disable agent2
+%endif
 
 Name: zabbix
-Version: 5.0.12
-Release: alt3
+Version: 5.0.13
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -667,6 +670,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Jun 29 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.13-alt1
+- 5.0.13
+- Disable build agent2 on Elbrus arch
+
 * Tue Jun 01 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.12-alt3
 - (ALT #40122)
 
