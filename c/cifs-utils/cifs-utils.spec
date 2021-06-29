@@ -1,8 +1,8 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 6.12
-Release: alt2
+Version: 6.13
+Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -108,6 +108,10 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Sat May 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.13-alt1
+- Update to latest release supported cifs.upcall trying to use container
+  ipc/uts/net/pid/mnt/user namespaces
+
 * Sat May 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.12-alt2
 - Rebuild with python3 only
 
