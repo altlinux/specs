@@ -3,10 +3,10 @@
 
 Name: tcl-tktable
 Version: 2.10
-Release: alt1
+Release: alt2
 
 Summary: tkTable - table/matrix widget extension to Tcl/Tk.
-License: BSD
+License: TCL
 Group: System/Libraries
 Url: http://tktable.sourceforge.net/
 
@@ -30,7 +30,7 @@ tkTable - table/matrix widget extension to Tcl/Tk
 DIRECTORY=%buildroot/%_tcllibdir/%teaname%major
 install -d $DIRECTORY
 install libTktable%major.so $DIRECTORY/
-install -m 644 pkgIndex.tcl library/tkTable.tcl library/tktable.py $DIRECTORY
+install -m 644 pkgIndex.tcl library/tkTable.tcl $DIRECTORY
 install -d %buildroot/%_mandir/mann
 install -m 644 doc/tkTable.n %buildroot/%_mandir/mann
 install -d %buildroot/%_docdir/%name
@@ -50,6 +50,10 @@ cp -r demos %buildroot/%_docdir/%name
 %_mandir/mann/*
 
 %changelog
+* Tue Jun 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.10-alt2
+- Fixed FTBFS: do not pack obsolete python2 wrapper (closes #40311).
+- Fixed license field.
+
 * Wed Jul 03 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.10-alt1
 - v.2.10
 
