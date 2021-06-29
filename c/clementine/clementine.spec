@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.4.0
-Release: alt3.gitf1678fd33
+Release: alt4.git67a947f11
 Summary: A music player and library organiser
 
 Group: Sound
@@ -14,7 +14,7 @@ Source0: %name-%version.tar.gz
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake cmake
 BuildRequires: boost-devel-headers gcc-c++
-BuildRequires: libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel
+BuildRequires: libgio-devel libglew-devel libgpod-devel libmtp-devel
 BuildRequires: libqt5-opengl libqt5-sql libqt5-webkit libqt5-xmlpatterns qt5-x11extras-devel
 BuildRequires: libtag-devel
 BuildRequires: gstreamer%{gst_api_ver}-devel gst-plugins%gst_api_ver-devel gstreamer%gst_api_ver-utils
@@ -65,6 +65,10 @@ Clementine is a modern music player and library organizer
 
 
 %changelog
+* Tue Jun 29 2021 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt4.git67a947f11
+- Update upstream source to 1.4.0-alt4.git67a947f11
+- Build without liblastfm
+
 * Mon Jan 18 2021 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt3.gitf1678fd33
 - Update upstream source to 1.4.0rc1-429-gf1678fd33
 
