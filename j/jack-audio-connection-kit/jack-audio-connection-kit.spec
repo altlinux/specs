@@ -2,7 +2,7 @@
 
 Name: jack-audio-connection-kit
 Version: 1.9.18
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -24,15 +24,14 @@ Obsoletes: jackd < %epoch:%version
 
 BuildRequires: rpm-build-python3
 
-BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel
+BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel
 BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel
 
 BuildRequires: libopus-devel
 BuildRequires: eigen3
 BuildRequires: libportaudio2-devel
 BuildRequires: zita-resampler-devel
-# FIXME: freebob seems obsoleted by ffado
-%{?_enable_firewire:BuildRequires: libfreebob-devel}
+%{?_enable_firewire:BuildRequires: libffado-devel}
 
 %description
 JACK is a low-latency audio server, written primarily for the Linux
@@ -162,6 +161,9 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Tue Jun 29 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.18-alt2
+- rebuild without libffado (firewire disable)
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.18-alt1
 - new version (1.9.18) with rpmgs script
 
