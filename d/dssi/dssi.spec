@@ -1,20 +1,19 @@
-%define qtdir %_libdir/qt4
 
 Name: dssi
 Version: 1.1.1
-Release: alt1.1
+Release: alt2
 
 Summary: Disposable Soft Synth Interface specification & examples
-License: LGPL
+License: LGPL-2.1
 Group: Sound
 Url: http://%name.sourceforge.net
 Packager: Alex Karpov <karpov@altlinux.ru>
 
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
-# Patch: %name-0.4-alt-textrel.patch
+Patch1: alt-qt5.patch
 
 # Automatically added by buildreq on Mon Apr 06 2009
-BuildRequires: gcc-c++ gcc-fortran glibc-devel-static jackit-devel ladspa_sdk libalsa-devel liblo-devel libqt4-devel libsamplerate-devel libsndfile-devel
+BuildRequires: gcc-c++ gcc-fortran glibc-devel-static jackit-devel ladspa_sdk libalsa-devel liblo-devel qt5-base-devel libsamplerate-devel libsndfile-devel
 
 %description
 This is the Disposable Soft Synth Interface specification.
@@ -41,11 +40,12 @@ This package contents development stuff for %name.
 
 %prep
 %setup -q
+%patch1 -p1
 %autoreconf
 
 %build
-export QTDIR=%qtdir
-%configure
+export QTDIR=%_qt5_prefix
+%configure --with-qt
 %make_build
 
 %install
@@ -68,6 +68,9 @@ export QTDIR=%qtdir
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Jun 29 2021 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
+- port to Qt5
+
 * Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1.1
 - Rebuild with new version liblo
 
