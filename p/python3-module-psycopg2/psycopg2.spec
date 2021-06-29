@@ -1,6 +1,6 @@
 %define oname psycopg2
 
-Version: 2.8.6
+Version: 2.9.1
 Release: alt1
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python3
@@ -50,6 +50,9 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 %doc AUTHORS INSTALL README* doc
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 2.9.1-alt1
+- Build new version.
+
 * Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 2.8.6-alt1
 - Build new version.
 
