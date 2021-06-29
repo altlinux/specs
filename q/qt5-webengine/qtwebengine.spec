@@ -30,7 +30,7 @@
 
 Name: qt5-webengine
 Version: 5.15.2
-Release: alt1
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -44,27 +44,30 @@ Patch1:  qtwebengine-everywhere-src-5.15.0-linux-pri.patch
 #
 Patch3:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
-Patch5:  qtwebengine-everywhere-src-5.10.0-system-icu-utf.patch
+Patch5:  qtwebengine-everywhere-src-5.11.0-no-icudtl-dat.patch
 Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 #
 Patch9: qtwebengine-opensource-src-5.15.0-webrtc-neon-detect.patch
 Patch10: qtwebengine-everywhere-src-5.15.0-gn-bootstrap-verbose.patch
 Patch11: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
+Patch12: qtwebengine-everywhere-src-5.15.2-#1904652.patch
+Patch13: qtwebengine-everywhere-src-5.15.2-sandbox-time64-syscalls.patch
 # SuSE
 Patch30: chromium-non-void-return.patch
 Patch31: armv6-ffmpeg-no-thumb.patch
 Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
-Patch33: icu-v67.patch
+Patch33: 0001-Fix-build-with-system-ICU-69.patch
+Patch34: 0001-Fix-build-with-GCC-11.patch
 
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
 Patch103: qtwebengine-everywhere-src-5.15.0-chromium-add-ppc64le-support.patch
 Patch104: qtwebengine-everywhere-src-5.15.0-add-ppc64le-support.patch
-#
 Patch105: alt-openh264-x86-no-asm.patch
 Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
+Patch107: alt-ftbfs.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -179,9 +182,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #
 %patch3 -p1
 #patch4 -p1
-%if_enabled system_icu
-#patch5 -p1
-%endif
+%patch5 -p1
 %if_enabled no_sse2
 %patch6 -p1
 %endif
@@ -190,19 +191,22 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch9 -p1
 #%patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%patch13 -p1
 #
 #%patch30 -p1
 %patch31 -p1
 %patch32 -p1
-#%patch33 -p1
+%patch33 -p1
+%patch34 -p1
 #
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
-#
 %patch105 -p1
 %patch106 -p1
+%patch107 -p1
 
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
 #sed -i -e 's!gpu//!gpu/!g' \
@@ -403,6 +407,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Tue Jun 29 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
+- fix compile
+
+* Wed Jun 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
+- fix to build with icu-69
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 

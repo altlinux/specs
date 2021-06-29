@@ -7,7 +7,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt19
+Release: alt21
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -18,6 +18,8 @@ Source: %qt_module-everywhere-src-%version.tar
 # FC
 Patch2: qtwebkit-5.212.0_cmake_cmp0071.patch
 Patch3: qtwebkit-5.212.0-add-riscv64.patch
+# Gentoo
+Patch7: qtwebkit-5.212.0_pre20200309-icu-68.patch
 # ALT
 Patch10: alt-flags.patch
 
@@ -92,6 +94,8 @@ Requires: libqt5-core = %_qt5_version
 %setup -n %qt_module-everywhere-src-%version
 %patch2 -p1
 %patch3 -p1
+#
+%patch7 -p1
 #
 %patch10 -p1
 syncqt.pl-qt5 Source -version %version
@@ -203,6 +207,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt21
+- fix to build with new icu
+
 * Mon Apr 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt19
 - update from 5.212 branch
 
