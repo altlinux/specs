@@ -1,8 +1,8 @@
 %define oname facepy
 
 Name: python3-module-%oname
-Version: 1.0.3
-Release: alt2
+Version: 1.0.12
+Release: alt1
 Summary: Facepy makes it really easy to interact with Facebook's Graph API
 License: MIT
 Group: Development/Python3
@@ -41,6 +41,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.12-alt1
+- Automatically updated to 1.0.12.
+
 * Wed Jun 09 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt2
 - Drop python2 support.
 
