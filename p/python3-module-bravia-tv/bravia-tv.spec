@@ -1,5 +1,5 @@
 Name: python3-module-bravia-tv
-Version: 1.0.6
+Version: 1.0.11
 Release: alt1
 
 Summary: Python library to communicate with TV set
@@ -30,6 +30,8 @@ via http protocol with Sony Bravia TVs 2013 and newer.
 %python3_sitelibdir/bravia_tv-%version-*-info
 
 %changelog
+* Tue Jun 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.11-alt1
+- 1.0.11 released
+
 * Mon Jul 20 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.6-alt1
 - initial
-
