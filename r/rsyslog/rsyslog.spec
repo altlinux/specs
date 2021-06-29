@@ -9,6 +9,7 @@
 %def_disable ksi_ls12
 %def_disable omamqp1
 %def_enable omhiredis
+%def_enable imhiredis
 %def_enable ommongodb
 %def_enable omhttp
 %def_disable imhttp
@@ -24,7 +25,7 @@
 %def_enable impcap
 
 Name: rsyslog
-Version: 8.2102.0
+Version: 8.2106.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -61,6 +62,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_omhttp:BuildRequires: libcurl-devel}
 %{?_enable_imhttp:BuildRequires: libcivetweb-devel}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
+%{?_enable_imhiredis:BuildRequires: libhiredis-devel >= 0.10.1 libevent-devel >= 2.0}
 %{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
 %{?_enable_mmkubernetes:BuildRequires: libcurl-devel}
 %{?_enable_clickhouse:BuildRequires: libcurl-devel}
@@ -68,7 +70,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_impcap:BuildRequires: libpcap-devel}
 
 BuildRequires: iproute2
-BuildRequires: /usr/bin/rst2man
+BuildRequires: /usr/bin/rst2man.py
 BuildRequires: /usr/bin/lsb_release
 
 %define mod_dir /%_lib/%name
@@ -337,6 +339,7 @@ The rsyslog-hiredis package contains a dynamic shared object that will add
 feed logs directly into hiredis.
 
  o omhiredis.so - This module provides output to Redis.
+ o imhiredis.so - This module provides input from Redis.
 
 %package mmkubernetes
 Summary: Provides the mmkubernetes module
@@ -433,6 +436,7 @@ export HIREDIS_LIBS=-lhiredis
 	%{subst_enable omhttpfs} \
 	%{subst_enable omamqp1} \
 	%{subst_enable omhiredis} \
+	%{subst_enable imhiredis} \
 	--enable-omjournal \
 	%{subst_enable ommongodb} \
 	--enable-omprog \
@@ -631,6 +635,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %if_enabled omhiredis
 %files hiredis
 %mod_dir/omhiredis.so
+%mod_dir/imhiredis.so
 %endif
 
 %files extra
@@ -674,6 +679,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Wed Jun 30 2021 Alexey Shabalin <shaba@altlinux.org> 8.2106.0-alt1
+- new version 8.2106.0
+
 * Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 8.2102.0-alt1
 - new version 8.2102.0
 
