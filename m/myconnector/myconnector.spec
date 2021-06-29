@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.1.1
+Version:  2.1.2
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -136,6 +136,12 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Tue Jun 29 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.1.2-alt1
+- Fixed pop-up menu if nothing is selected
+- Fixed removing the autostart shortcut
+- Added removing autostart shorcut when deleting a connection
+- Fixed icaclient start
+
 * Thu May 13 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.1.1-alt1
 - Fixed saving the password from authentication window
 
