@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.34.0.13.66b59fcc
+Version: 1.34.0.16.12d67f44
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -68,6 +68,9 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Jun 01 2021 Dmitry V. Levin <ldv@altlinux.org> 1.34.0.16.12d67f44-alt1
+- tar: release_1_34-13-g66b59fcc -> release_1_34-16-g12d67f44.
+
 * Tue Apr 13 2021 Dmitry V. Levin <ldv@altlinux.org> 1.34.0.13.66b59fcc-alt1
 - tar: release_1_32 -> release_1_34-13-g66b59fcc.
 - gnulib BR: v0.1-2313-g4652c7baf -> v0.1-4460-g783f2967e.
