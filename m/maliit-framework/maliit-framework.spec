@@ -1,7 +1,7 @@
 
 Name: maliit-framework
 Version: 2.0.0
-Release: alt1
+Release: alt2
 %define sover 2
 %define libmaliit libmaliit%sover
 %define libmaliit_glib libmaliit-glib%sover
@@ -129,7 +129,7 @@ Requires: %name = %version-%release
 %build
 export PATH=%_qt5_bindir:$PATH
 %K5build \
-    -DMALIIT_SERVER_ARGUMENTS="-software -bypass-wm-hint" \
+    -DMALIIT_SERVER_ARGUMENTS="" \
     -Denable-dbus-activation:BOOL=ON \
     -Denable-qt5-inputcontext:BOOL=ON \
     -Denable-wayland-gtk=ON \
@@ -218,6 +218,9 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 #%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt2
+- don't add custom argumetrs to maliit-server startup
+
 * Fri Jun 04 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
 - new version
 
