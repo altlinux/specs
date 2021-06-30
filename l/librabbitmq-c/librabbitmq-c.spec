@@ -1,14 +1,12 @@
 Name:           librabbitmq-c
-Version:        0.9.0
-Release:        alt1.1
+Version:        0.11.0
+Release:        alt1
 Summary:        This is a C-language AMQP client library for use with AMQP servers speaking protocol versions 0-9-1
 Group:          System/Libraries
 License:        MIT
 URL:            https://github.com/alanxz/rabbitmq-c
 # https://github.com/alanxz/rabbitmq-c.git
 Source:         %name-%version.tar
-# https://github.com/rabbitmq/rabbitmq-codegen.git
-Source1:        codegen.tar
 
 BuildRequires: python-module-json libpopt-devel xmlto cmake ctest libssl-devel doxygen
 BuildRequires: graphviz
@@ -28,14 +26,12 @@ developing applications that use %name.
 
 %prep
 %setup
-tar -xf %SOURCE1
 
 %build
 %cmake \
 	-DCMAKE_SKIP_RPATH:BOOL=NO \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
 	-DBUILD_API_DOCS=ON \
-	-DREGENERATE_AMQP_FRAMING:BOOL=ON \
 	-DBUILD_TOOLS_DOCS:BOOL=ON
 
 %cmake_build
@@ -59,9 +55,13 @@ popd
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
+%_libdir/cmake
 %_man7dir/*
 
 %changelog
+* Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Build new version (Closes: #40331).
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
