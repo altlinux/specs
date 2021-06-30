@@ -3,11 +3,12 @@
 %define _localstatedir %_var
 %define _libexecdir    /usr/libexec
 %define spice_html5_version 0.3.0-alt1
+%define cockpit_version 247
 %def_with check
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt7
+Release: alt8
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -47,10 +48,9 @@ BuildRequires: samba-common
 %add_python3_path %_datadir/fleet-commander-admin/python/
 %add_python3_compile_exclude %_datadir/fleet-commander-admin/python/
 
-Requires: cockpit-bridge
-Requires: cockpit-dashboard
-Requires: cockpit-shell
-Requires: cockpit-ws
+Requires: cockpit-bridge >= %cockpit_version
+Requires: cockpit-shell >= %cockpit_version
+Requires: cockpit-ws >= %cockpit_version
 Requires: python3-module-freeipa-desktop-profile-client
 Requires: realmd
 Requires: samba-common
@@ -160,6 +160,9 @@ ln -s %_datadir/spice-html5 \
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Tue Jun 29 2021 Stanislav Levin <slev@altlinux.org> 0.15.1-alt8
+- Dropped dependency on cockpit-dashboard.
+
 * Thu Apr 29 2021 Stanislav Levin <slev@altlinux.org> 0.15.1-alt7
 - Fixed FTBFS(new Pylint 2.8.2).
 

@@ -6,31 +6,18 @@
 %define cockpit_group  _cockpit-ws
 %define cockpit_wsinstance_user  _cockpit-wsinstance
 
-%def_with dashboard
-%def_with basic
 %def_with optional
 %def_with doc
 %def_with pcp
+%def_with packagekit
 
-%ifarch aarch64 x86_64 ppc64le
-%def_enable docker
-%else
-%def_disable docker
-%endif
 %def_with check
-
-# currently are not packaged on ALTLinux
-# https://github.com/dm-vdo/vdo
-%def_with vdo
-# http://www.freedesktop.org/software/PackageKit
-%def_without packagekit
-#
 
 ###############################################################################
 
 Name: cockpit
-Version: 209
-Release: alt1.1
+Version: 247
+Release: alt1
 
 Summary: Web Console for Linux servers
 License: LGPLv2+
@@ -40,6 +27,7 @@ Url: https://cockpit-project.org/
 Source0: %name-%version.tar
 Source1: cockpit.alt.pam
 Source2: node_modules.tar.gz
+Source3: package-lock.json.tar.gz
 Patch: %name-%version-alt.patch
 
 BuildRequires: node
@@ -50,9 +38,7 @@ BuildRequires: libpolkit-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libpam0-devel
 
-%if_with dashboard
-BuildRequires: libssh-devel
-%endif
+BuildRequires: libssh-devel >= 0.8.5
 
 %if_with doc
 BuildRequires: xsltproc
@@ -77,12 +63,6 @@ Requires: cockpit-bridge
 Requires: cockpit-ws
 Requires: cockpit-system
 # Optional components
-%if_with dashboard
-Requires: cockpit-dashboard
-%endif
-%if_enabled docker
-Requires: cockpit-docker
-%endif
 Requires: cockpit-networkmanager
 Requires: cockpit-storaged
 %if_with packagekit
@@ -91,7 +71,6 @@ Requires: cockpit-packagekit
 %if_with pcp
 Requires: cockpit-pcp
 %endif
-Requires: cockpit-selinux
 
 %description
 The Cockpit Web Console enables users to administer GNU/Linux servers using a
@@ -101,7 +80,6 @@ It offers network configuration, log inspection, diagnostic reports, SELinux
 troubleshooting, interactive command-line sessions, and more.
 
 ###############################################################################
-%if_with basic
 
 %package bridge
 Summary: Cockpit bridge server-side component
@@ -140,26 +118,24 @@ embed or extend Cockpit.
 Summary: Cockpit admin interface package for configuring and troubleshooting a system
 Group: System/Base
 BuildArch: noarch
-Requires: libpwquality
-Requires: cockpit-bridge >= %EVR
-Requires: cockpit-realmd = %EVR
-Requires: cockpit-shell = %EVR
-Requires: cockpit-systemd = %EVR
-Requires: cockpit-tuned = %EVR
-Requires: cockpit-users = %EVR
+Requires: cockpit-bridge
+Requires: cockpit-shell
+Requires: cockpit-systemd
+Requires: cockpit-tuned
+Requires: cockpit-users
+Requires: cockpit-metrics
 %description system
 This package contains the Cockpit shell and system configuration interfaces.
 
 ###############################################################################
 
-%package realmd
-Summary: Cockpit admin interface package for configuring realmd
+%package metrics
+Summary: Cockpit admin interface package for metrics
 Group: System/Base
 BuildArch: noarch
-Requires: realmd
 
-%description realmd
-This package contains the Cockpit realmd configuration interfaces.
+%description metrics
+This package contains the Cockpit metrics configuration interfaces.
 
 ###############################################################################
 
@@ -167,6 +143,8 @@ This package contains the Cockpit realmd configuration interfaces.
 Summary: Cockpit admin interface package for configuring shell
 Group: System/Base
 BuildArch: noarch
+Conflicts: cockpit-dashboard
+Obsoletes: cockpit-dashboard < 247
 
 %description shell
 This package contains the Cockpit shell configuration interfaces.
@@ -177,6 +155,8 @@ This package contains the Cockpit shell configuration interfaces.
 Summary: Cockpit admin interface package for configuring systemd
 Group: System/Base
 BuildArch: noarch
+Conflicts: cockpit-realmd
+Obsoletes: cockpit-realmd < 247
 
 %description systemd
 This package contains the Cockpit systemd configuration interfaces.
@@ -198,6 +178,9 @@ This package contains the Cockpit tuned configuration interfaces.
 Summary: Cockpit admin interface package for configuring users
 Group: System/Base
 BuildArch: noarch
+
+# /usr/bin/pwqcheck
+Requires: passwdqc-utils
 
 %description users
 This package contains the Cockpit users configuration interfaces.
@@ -262,23 +245,6 @@ NetworkManager.
 
 ###############################################################################
 
-%package selinux
-Summary: Cockpit SELinux package
-Group: System/Base
-BuildArch: noarch
-Requires: cockpit-bridge
-Requires: cockpit-shell
-# not packaged yet
-# Requires: setroubleshoot-server
-
-%description selinux
-This package contains the Cockpit user interface integration with the
-utility setroubleshoot to diagnose and resolve SELinux issues.
-
-###############################################################################
-
-%endif # base
-
 %if_with optional
 
 %package storaged
@@ -311,22 +277,6 @@ These files are not required for running Cockpit.
 
 ###############################################################################
 
-%package machines
-BuildArch: noarch
-Summary: Cockpit user interface for virtual machines
-Group: System/Base
-Requires: cockpit-bridge
-Requires: cockpit-system
-Requires: libvirt
-Requires: libvirt-client
-
-%description machines
-The Cockpit components for managing virtual machines.
-
-If "virt-install" is installed, you can also create new virtual machines.
-
-###############################################################################
-
 %if_with pcp
 %package pcp
 Summary: Cockpit PCP integration
@@ -340,41 +290,13 @@ Cockpit support for reading PCP metrics and loading PCP archives.
 
 ###############################################################################
 
-%if_with dashboard
-%package dashboard
-Summary: Cockpit remote servers and dashboard
-Group: System/Base
-BuildArch: noarch
-Requires: cockpit-ssh
-
-%description dashboard
-Cockpit support for connecting to remote servers (through ssh),
-bastion hosts, and a basic dashboard.
-%endif
-
-###############################################################################
-
-%package docker
-Summary: Cockpit user interface for Docker containers
-Group: System/Base
-Requires: cockpit-bridge
-Requires: cockpit-shell
-Requires: docker-ce
-
-%description docker
-The Cockpit components for interacting with Docker and user interface.
-This package is not yet complete.
-
-###############################################################################
-
 %if_with packagekit
 %package packagekit
 Summary: Cockpit user interface for packages
 Group: System/Base
 BuildArch: noarch
 Requires: cockpit-bridge
-# TODO package PackageKit http://www.freedesktop.org/software/PackageKit
-# Requires: PackageKit
+Requires: packagekit
 
 %description packagekit
 The Cockpit components for installing OS updates and Cockpit add-ons,
@@ -386,10 +308,8 @@ via PackageKit.
 ###############################################################################
 
 %prep
-%setup
+%setup -a 2 -a 3
 %patch -p1
-
-tar -xzf %SOURCE2
 
 echo '%version' > .tarball
 # newusers executable is not on the user PATH
@@ -432,91 +352,57 @@ sed -i \
     --disable-silent-rules \
     %{?_without_pcp:--disable-pcp } \
     %{?_without_doc:--disable-doc } \
-    %{?_with_vdo:--with-vdo-package='"vdo"' } \
     --with-cockpit-user=%cockpit_user \
     --with-cockpit-ws-instance-user=%cockpit_wsinstance_user \
-    --with-selinux-config-type=etc_t \
-    --with-appstream-data-packages='[ "appstream-data" ]' \
-    --with-nfs-client-package='"nfs-utils"' \
-    --with-pamdir=/%_lib/security \
+    --with-pamdir=%_pam_modules_dir \
     %nil
 
 %make -j4 all
 
 %check
-#TMPDIR=/tmp %make -j4 check || { cat ./test-suite.log; exit 1; }
+TMPDIR=/tmp %make -j4 VERBOSE=1 check
 
 %install
 %makeinstall_std
 %make install-tests DESTDIR=%buildroot
 mkdir -p %buildroot%_sysconfdir/pam.d
 install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/pam.d/cockpit
-rm -f %buildroot/%_libdir/cockpit/*.so
-rm -f %buildroot/usr/lib/firewalld/services/cockpit.xml
-
-%if_without dashboard
-rm -rf %buildroot/%_datadir/cockpit/dashboard
-%endif
 
 %if_without packagekit
-rm -rf %buildroot/%_datadir/cockpit/packagekit
-rm -rf %buildroot/%_datadir/cockpit/apps
+rm -r %buildroot/%_datadir/cockpit/packagekit
+rm -r %buildroot/%_datadir/cockpit/apps
 %endif
 
 %if_without pcp
-rm -f %buildroot%_libexecdir/cockpit-pcp
-rm -f %buildroot%_localstatedir/lib/pcp/config/pmlogconf/tools/cockpit
-rm -rf %buildroot%_datadir/cockpit/pcp/
+rm %buildroot%_libexecdir/cockpit-pcp
+rm %buildroot%_sharedstatedir/pcp/config/pmlogconf/tools/cockpit
+rm -r %buildroot%_datadir/cockpit/pcp/
 %endif
 
-%if_disabled docker
-rm -rf %buildroot/%_datadir/cockpit/docker/
-%endif
-
-%if_without basic
-for pkg in base1 branding motd kdump networkmanager realmd selinux shell sosreport ssh static systemd tuned users; do
-    rm -r %buildroot/%_datadir/cockpit/$pkg
-    rm -f %buildroot/%_datadir/metainfo/org.cockpit-project.cockpit-${pkg}.metainfo.xml
-done
-for data in doc locale man pixmaps polkit-1; do
-    rm -r %buildroot/%_datadir/$data
-done
-for lib in systemd tmpfiles.d; do
-    rm -r %buildroot/lib/$lib
-done
-for libexec in cockpit-askpass cockpit-session cockpit-ws cockpit-tls cockpit-desktop; do
-    rm %buildroot/%_libexecdir/$libexec
-done
-rm -r %buildroot/%_lib/security
-rm -r %buildroot/%_sysconfdir/{pam.d,motd.d,issue.d}
-rm %buildroot%_bindir/cockpit-bridge %buildroot%_sbindir/remotectl
-rm -f %buildroot%_libexecdir/cockpit-ssh
-rm -f %buildroot%_datadir/metainfo/cockpit.appdata.xml
-
-%else
 %find_lang cockpit
-%endif
+
+# remove selinux stuff
+rm -r %buildroot/%_datadir/cockpit/selinux
+rm %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-selinux.metainfo.xml
 
 %if_without optional
-for pkg in apps dashboard docker machines packagekit pcp playground storaged; do
-    rm -rf %buildroot/%_datadir/cockpit/$pkg
+for pkg in apps packagekit pcp playground storaged; do
+    rm -r %buildroot/%_datadir/cockpit/$pkg
 done
-rm -r %buildroot/usr/lib/cockpit-test-assets %buildroot/%_sysconfdir/cockpit/cockpit.conf
-rm -r %buildroot/%_libexecdir/cockpit-pcp %buildroot/%_localstatedir/lib/pcp/
-rm -f %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-machines.metainfo.xml
-rm -f %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-storaged.metainfo.xml
+rm -r %buildroot%_usr/lib/cockpit-test-assets
+rm -r %buildroot/%_libexecdir/cockpit-pcp %buildroot%_sharedstatedir/pcp/
+rm %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-storaged.metainfo.xml
 %endif
 
-# don't package css and js debug files
-rm -rf %buildroot%_usrsrc/debug
-
 # remove not default brandings, as they have broken symlinks
-for brand in centos debian fedora rhel ubuntu scientific; do
-    rm -r %buildroot%_datadir/cockpit/branding/$brand
-done
-###############################################################################
+pushd %buildroot/%_datadir/cockpit/branding
+ls -1 | (. /etc/os-release; grep -v "default\|$ID") | xargs rm -vr
+popd
 
-%if_with basic
+# for backward compatibility
+ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
+
+###############################################################################
 
 %files
 %doc AUTHORS COPYING README.md
@@ -542,8 +428,8 @@ done
 
 %files system
 
-%files realmd
-%_datadir/cockpit/realmd/
+%files metrics
+%_datadir/cockpit/metrics/
 
 %files shell
 %_datadir/cockpit/shell/
@@ -567,8 +453,11 @@ done
 %doc %_man8dir/pam_ssh_add.8.*
 %config(noreplace) %_sysconfdir/cockpit/ws-certs.d/
 %config(noreplace) %_sysconfdir/pam.d/cockpit
-%config %_sysconfdir/issue.d/cockpit.issue
-%config %_sysconfdir/motd.d/cockpit
+
+# managed by post script
+%ghost %_sysconfdir/issue.d/cockpit.issue
+%ghost %_sysconfdir/motd.d/cockpit
+
 %_datadir/cockpit/motd/update-motd
 %_datadir/cockpit/motd/inactive.motd
 %_unitdir/cockpit.service
@@ -585,14 +474,15 @@ done
 %_unitdir/system-cockpithttps.slice
 %_tmpfilesdir/cockpit-tempfiles.conf
 %_sbindir/remotectl
-/%_lib/security/pam_ssh_add.so
-/%_lib/security/pam_cockpit_cert.so
+%_pam_modules_dir/pam_ssh_add.so
+%_pam_modules_dir/pam_cockpit_cert.so
 %_libexecdir/cockpit-ws
 %_libexecdir/cockpit-wsinstance-factory
 %_libexecdir/cockpit-tls
 %_libexecdir/cockpit-desktop
+%_libexecdir/cockpit-certificate-helper
+%_libexecdir/cockpit-certificate-ensure
 %attr(4710, root, %cockpit_wsinstance_user) %_libexecdir/cockpit-session
-%attr(775, root, wheel) %_sharedstatedir/cockpit
 %_datadir/cockpit/static/
 %_datadir/cockpit/branding/
 
@@ -606,24 +496,20 @@ done
 /dev/null -c "User for cockpit-ws instances" %cockpit_wsinstance_user >/dev/null 2>&1 ||:
 
 %post ws
-if [ $1 -eq 1 ] ; then
-        # Initial installation
-        systemctl --no-reload -q preset cockpit.socket ||:
+if [ "$1" -eq 1 ]; then
+    # in ALT nothing provides these dirs yet
+    mkdir -p %_sysconfdir{motd.d,issue.d}
+
+    ln -s /run/cockpit/motd %_sysconfdir/motd.d/cockpit
+    ln -s /run/cockpit/motd %_sysconfdir/issue.d/cockpit.issue
 fi
+systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
+%post_service cockpit.socket
+%post_service cockpit.service
 
 %preun ws
-if [ $1 -eq 0 ] ; then
-        # Package removal, not upgrade
-        systemctl --no-reload -q disable cockpit.socket ||:
-fi
-
-%postun ws
-if [ $1 -ge 1 ] ; then
-        # Package upgrade, not uninstall
-        systemctl daemon-reload ||:
-        systemctl try-restart cockpit.socket ||:
-        systemctl try-restart cockpit.service ||:
-fi
+%preun_service cockpit.socket
+%preun_service cockpit.service
 
 %files kdump
 %_datadir/cockpit/kdump/
@@ -637,12 +523,6 @@ fi
 %files networkmanager
 %_datadir/cockpit/networkmanager/
 
-%files selinux
-%_datadir/cockpit/selinux/
-%_datadir/metainfo/org.cockpit-project.cockpit-selinux.metainfo.xml
-
-%endif # build basic packages
-
 %if_with optional
 
 %files storaged
@@ -650,13 +530,8 @@ fi
 %_datadir/metainfo/org.cockpit-project.cockpit-storaged.metainfo.xml
 
 %files tests
-%config(noreplace) %_sysconfdir/cockpit/cockpit.conf
 %_datadir/cockpit/playground/
-/usr/lib/cockpit-test-assets/
-
-%files machines
-%_datadir/cockpit/machines/
-%_datadir/metainfo/org.cockpit-project.cockpit-machines.metainfo.xml
+%_usr/lib/cockpit-test-assets/
 
 %if_with pcp
 %files pcp
@@ -668,16 +543,6 @@ fi
 %post_service pcp
 %endif
 
-%if_with dashboard
-%files dashboard
-%_datadir/cockpit/dashboard/
-%endif
-
-%if_enabled docker
-%files docker
-%_datadir/cockpit/docker/
-%endif
-
 %if_with packagekit
 %files packagekit
 %_datadir/cockpit/apps/
@@ -687,6 +552,9 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Mon Jun 28 2021 Stanislav Levin <slev@altlinux.org> 247-alt1
+- 209 -> 247.
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 209-alt1.1
 - NMU: applied logoved fixes
 

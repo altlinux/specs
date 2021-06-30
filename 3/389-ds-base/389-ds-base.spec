@@ -9,8 +9,12 @@
 %def_without debug
 %def_with cockpit
 
+%if_with cockpit
+%define cockpit_version 247
+%endif
+
 Name: 389-ds-base
-Version: 1.4.3.23
+Version: 1.4.3.24
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -135,11 +139,10 @@ Summary: Cockpit UI Plugin for configuring and administering the 389 Directory S
 BuildArch: noarch
 Group: System/Base
 
-Requires: cockpit-bridge
-Requires: cockpit-dashboard
-Requires: cockpit-shell
-Requires: cockpit-systemd
-Requires: cockpit-ws
+Requires: cockpit-bridge >= %cockpit_version
+Requires: cockpit-shell >= %cockpit_version
+Requires: cockpit-systemd >= %cockpit_version
+Requires: cockpit-ws >= %cockpit_version
 %py3_requires lib389
 
 Obsoletes: 389-console
@@ -393,6 +396,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 28 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.24-alt1
+- 1.4.3.23 -> 1.4.3.24.
+
 * Mon May 24 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.23-alt1
 - 1.4.3.22 -> 1.4.3.23.
 
