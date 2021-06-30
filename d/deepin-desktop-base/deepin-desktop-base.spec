@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2021.5.07
+Version: 2021.06.16
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -36,7 +36,7 @@ sed -E '/lsb-release|systemd|apt|back/d' Makefile
 sed -i 's|/usr/lib|%_datadir|' Makefile
 
 # Set deepin type to Desktop
-sed -i 's|Type=.*|Type=Desktop|; /Type\[/d; s|Version=.*|Version=20.2.1|' files/desktop-version*.in
+sed -i 's|Type=.*|Type=Desktop|; /Type\[/d; s|Version=.*|Version=20.2.2|' files/desktop-version*.in
 
 sed -i 's|/etc/systemd/|/lib/systemd/|' Makefile
 
@@ -59,7 +59,6 @@ ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
 %_datadir/deepin/desktop-version
 %_sysconfdir/deepin-version
 %exclude %_datadir/plymouth/deepin-logo.png
-%exclude %_datadir/deepin/uos_logo.svg
 %exclude %_sysconfdir/lsb-release
 /lib/systemd/system.conf.d/deepin-base.conf
 /lib/systemd/logind.conf.d/deepin-base.conf
@@ -67,6 +66,9 @@ ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
 %exclude %_datadir/python-apt/templates/Deepin.mirrors
 
 %changelog
+* Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 2021.06.16-alt1
+- New version (2021.06.16).
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 2021.5.07-alt1
 - New version (2021.5.07) with rpmgs script.
 
