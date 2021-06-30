@@ -1,13 +1,15 @@
 Name: libpjsip
-Version: 2.8
+Version: 2.11
 Release: alt1
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
+
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.pjsip.org
 
-Source: http://www.pjsip.org/release/%version/pjproject-%version.tar
+# Source-url: https://github.com/pjsip/pjproject/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel libgsm-devel libsrtp2-devel libuuid-devel
@@ -78,7 +80,7 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_libdir/libpjsip-ua.so.2
 %_libdir/libpjsip.so.2
 %_libdir/libpjsua.so.2
-%_libdir/libpjsua2.so.2
+#_libdir/libpjsua2.so.2
 %_libdir/libresample.so.2
 
 %files devel
@@ -101,6 +103,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 2.11-alt1
+- new version 2.11 (with rpmrb script) (ALT bug 40295)
+
 * Thu Sep 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.8-alt1
 - 2.8 released
 
