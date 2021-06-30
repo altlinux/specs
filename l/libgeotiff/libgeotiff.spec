@@ -1,7 +1,7 @@
 %define soversion 5
 Name: libgeotiff
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Library for reading and writing GeoTIFF information tags.
 License: Public domain
@@ -88,14 +88,17 @@ This package contains CSV data files derived from the EPSG Tables.
 %install
 %makeinstall_std
 
+# install manualy some file
+install -p -m 755 bin/makegeo %{buildroot}%{_bindir}
+
 # install pkgconfig file
-cat > %{name}.pc <<EOF
+cat > geotiff.pc <<EOF
 prefix=%{_prefix}
 exec_prefix=%{_prefix}
 libdir=%{_libdir}
 includedir=%{_includedir}/%{name}
 
-Name: %{name}
+Name: geotiff
 Description: GeoTIFF file format library
 Version: %{version}
 Libs: -L\${libdir} -lgeotiff
@@ -103,11 +106,12 @@ Cflags: -I\${includedir}
 EOF
 
 mkdir -p %buildroot%_pkgconfigdir/
-install -p -m 644 %{name}.pc %buildroot%_pkgconfigdir/
+install -p -m 644 geotiff.pc %buildroot%_pkgconfigdir/
 
 
 %files -n %name%soversion
-%_libdir/%name.so.%{soversion}*
+%_libdir/%name.so.%{soversion}
+%_libdir/%name.so.%{soversion}.*
 %doc README
 %doc LICENSE
 
@@ -117,7 +121,7 @@ install -p -m 644 %{name}.pc %buildroot%_pkgconfigdir/
 
 %files devel
 %_libdir/%name.so
-%_pkgconfigdir/%name.pc
+%_pkgconfigdir/geotiff.pc
 %_includedir/%name
 # EPSG data files. Check license!
 #%_includedir/%name/*.inc*
@@ -133,6 +137,10 @@ install -p -m 644 %{name}.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Wed Jun 30 2021 Igor Vlasenko <viy@altlinux.org> 1.6.0-alt2
+- install makegeo
+- pkgconfig should be geotiff.pc
+
 * Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
 - updated to 1.6.0 (closes: #38967)
 - switched to shared libs policy (%%name%%soversion lib package)
