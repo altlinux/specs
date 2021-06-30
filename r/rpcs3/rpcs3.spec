@@ -1,24 +1,22 @@
 %define clang_version 12
 
-%define git_ver 12199
-%define git_commit b8477a470f151ea46ec033b3c49987f5e8bec463
+%define git_ver 12433
+%define git_commit 020fdcc781a9d279ce654eb8725b7f424c5b4b99
 
 %define glslang_version 11.4.0
 %define asmjit_commit 723f58581afc0f4cb16ba13396ff77e425896847
 %define pugixml_version 1.11.4
-%define hidapi_commit 8961cf86ebc4756992a7cd65c219c743e94bab19
+%define hidapi_commit 01f601a1509bf9c67819fbf521df39644bab52d5
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
 %define xx_hash_version 0.8.0
-%define llvm_commit 4d88105d4a89f2f74518e3f1170af7bff2b00324
-%define cereal_commit 60c69df968d1c72c998cd5f23ba34e2e3718a84b
+%define llvm_commit 5836324d6443a62ed09b84c125029e98324978c3
 %define faudio_version 21.04
-%define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
 %define wolfssl_commit 39b5448601271b8d1deabde8a0d33dc64d2a94bd
 
 Name: rpcs3
-Version: 0.0.16
+Version: 0.0.17
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -46,18 +44,14 @@ Source5: yaml-cpp-%yaml_cpp_commit.tar
 Source6: xxHash-%xx_hash_version.tar
 # https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-mirror-%llvm_commit.tar.gz
 Source7: llvm-mirror-%llvm_commit.tar
-# https://github.com/RPCS3/cereal/archive/%cereal_commit/cereal-%cereal_commit.tar.gz
-Source8: cereal-%cereal_commit.tar
 # https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
-Source9: FAudio-%faudio_version.tar
-# https://github.com/tcbrindle/span/archive/%span_commit/span-%span_commit.tar.gz
-Source10: span-%span_commit.tar
+Source8: FAudio-%faudio_version.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
-Source11: SPIRV-Headers-%spirv_headers_version.tar
+Source9: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
-Source12: SPIRV-Tools-%spirv_tools_version.tar
+Source10: SPIRV-Tools-%spirv_tools_version.tar
 # https://github.com/RipleyTom/wolfssl/archive/%wolfssl_commit/wolfssl-%wolfssl_commit.tar.gz
-Source13: wolfssl-%wolfssl_commit.tar
+Source11: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
 
@@ -100,22 +94,20 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 
 %patch0 -p1
 
-%__mv -Tf ../glslang-%glslang_version Vulkan/glslang
-%__mv -Tf ../asmjit-%asmjit_commit asmjit
+%__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
+%__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../pugixml-%pugixml_version 3rdparty/pugixml
-%__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi
+%__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi/hidapi
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
 %__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
-%__mv -Tf ../cereal-%cereal_commit 3rdparty/cereal
 %__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
-%__mv -Tf ../span-%span_commit 3rdparty/span
-%__mv -Tf ../SPIRV-Headers-%spirv_headers_version Vulkan/spirv-headers
-%__mv -Tf ../SPIRV-Tools-%spirv_tools_version Vulkan/spirv-tools
+%__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
+%__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
 %__mv -Tf ../wolfssl-%wolfssl_commit 3rdparty/wolfssl
 
 #Generate Version Strings
@@ -147,7 +139,7 @@ export RANLIB="llvm-ranlib-%clang_version"
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
 	-DUSE_SYSTEM_CURL:BOOL=TRUE \
-	-DUSE_SYS_LIBUSB:BOOL=TRUE \
+	-DUSE_SYSTEM_LIBUSB:BOOL=TRUE \
 	-DLLVM_USE_LINKER:STRING="$LINKER" \
 	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
@@ -164,9 +156,12 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_liconsdir/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Thu Jul 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt1
+- Version 0.0.17
+
 * Sat May 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.16-alt1
 - Version 0.0.16
 
