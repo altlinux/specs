@@ -1,6 +1,6 @@
 Name: wkhtmltopdf
 Version: 0.12.6
-Release: alt1
+Release: alt2
 
 Summary: Command line utility to convert html to pdf using WebKit
 License: %gpl3plus
@@ -13,9 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Fri Mar 26 2010
-BuildRequires: gcc-c++ libqt4-devel
-
-Requires: libwkhtmltox = %EVR
+BuildRequires: qt5-base-devel qt5-webkit-devel qt5-xmlpatterns-devel qt5-svg-devel
 
 %description
 wkhtmltopdf is a command line program which permits to create a pdf from
@@ -52,7 +50,7 @@ This package contains development files of libwkhtmltox.
 %setup
 
 %build
-PATH=$PATH:%_qt4dir/bin qmake
+%qmake_qt5
 %make_build
 
 %install
@@ -75,6 +73,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %_libdir/*.so
 
 %changelog
+* Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.12.6-alt2
+- build with Qt5
+
 * Fri Jun 18 2021 Andrey Cherepanov <cas@altlinux.org> 0.12.6-alt1
 - New version.
 
