@@ -1,5 +1,7 @@
+%def_disable clang
+
 Name: deepin-editor
-Version: 5.9.0.49
+Version: 5.9.7
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -8,9 +10,14 @@ Url: https://github.com/linuxdeepin/deepin-editor
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-editor-5.9.7-gcc10.patch
 
+%if_enabled clang
+BuildRequires(pre): rpm-macros-llvm-common clang12.0-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: libfreeimage-devel
 BuildRequires: kf5-kcodecs-devel
@@ -39,6 +46,7 @@ BuildRequires: libuchardet-devel-static
 
 %prep
 %setup
+%patch -p1
 sed -i 's|lrelease|lrelease-qt5|; s|lupdate|lupdate-qt5|' translate_generation.sh
 # use system libuchardet.a
 sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/lib/lib/libuchardet.a|%_libdir/libuchardet.a|' \
@@ -46,17 +54,36 @@ sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/lib/lib/libuchardet.a|%_libdir
 	tests/CMakeLists.txt
 
 %build
-%cmake_insource \
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
+%cmake \
     -GNinja \
+%if_enabled clang
+    -DCMAKE_INSTALL_PREFIX=%llvm_prefix \
+%else
     -DCMAKE_INSTALL_PREFIX=%_prefix \
+%endif
     -DCMAKE_BUILD_TYPE=Release \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
-    -DCMAKE_INSTALL_LIBDIR=%_libdir
-%ninja_build
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
+%if_enabled clang
+    -DLLVM_PARALLEL_LINK_JOBS=1 \
+    -DLLVM_TARGETS_TO_BUILD="all" \
+    -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
+    -DLLVM_ENABLE_LIBCXX:BOOL=OFF \
+    -DLLVM_ENABLE_ZLIB:BOOL=ON \
+%endif
+#
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 %find_lang %name
 
 %check
@@ -68,9 +95,16 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_datadir/deepin-manual/manual-assets/application/%name/editor/*/*
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%name/
+%_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.7-alt1
+- New version (5.9.7).
+
 * Thu Apr 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.0.49-alt1
 - New version (5.9.0.49) with rpmgs script.
 
