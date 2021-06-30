@@ -2,7 +2,7 @@
 %define        pkgname facter
 
 Name:          gem-%pkgname
-Version:       2.5.7.1
+Version:       4.2.1
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems
 Group:         Development/Ruby
@@ -13,7 +13,6 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         %name-2.5.7-timeout.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libcpp-hocon-devel
 BuildRequires: libyaml-cpp-devel
@@ -68,8 +67,7 @@ addresses, and SSH keys.
 
 %prep
 %setup
-%patch -p1
-sed -e 's/ALT /ALT/g' -e 's/ALTLinux/ALT/' -i lib/facter/operatingsystem/linux.rb
+#sed -e 's/ALT /ALT/g' -e 's/ALTLinux/ALT/' -i lib/facter/operatingsystem/linux.rb
 
 %build
 %ruby_build --ignore=acceptance --use=%gemname --version-replace=%version
@@ -93,6 +91,12 @@ sed -e 's/ALT /ALT/g' -e 's/ALTLinux/ALT/' -i lib/facter/operatingsystem/linux.r
 
 
 %changelog
+* Thu Jun 17 2021 Andrey Cherepanov <cas@altlinux.org> 4.2.1-alt1
+- New version.
+
+* Mon Jan 25 2021 Andrey Cherepanov <cas@altlinux.org> 4.0.49-alt1
+- New version.
+
 * Thu Apr 16 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.7.1-alt1
 - ! renaming ALT Linux to ALT (closes #38358)
 - ^ 2.5.7 -> 2.5.7.1pre
