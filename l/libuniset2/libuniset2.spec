@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.11.1
+Version: 2.12.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -572,7 +572,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %files extension-common-devel
 %dir %_includedir/%oname/extensions
 %_includedir/%oname/extensions/*.*
+%if_enabled opentsdb
 %exclude %_includedir/%oname/extensions/BackendOpenTSDB.h
+%endif
 %_libdir/libUniSet2Extensions.so
 %_libdir/libUniSet2MB*.so
 %_libdir/libUniSet2RT*.so
@@ -592,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Wed Jun 30 2021 Pavel Vainerman <pv@altlinux.ru> 2.12.1-alt1
+- [unet]: supported ip multicast as transport
+
 * Sat Jun 05 2021 Pavel Vainerman <pv@altlinux.ru> 2.11.1-alt1
 - supported "external xml" for configuration
 
