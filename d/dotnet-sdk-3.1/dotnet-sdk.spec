@@ -2,17 +2,17 @@
 
 %define _dotnet_major 3.1
 # CHECKME
-%define _dotnet_templatesrelease 3.1.13
-%define _dotnet_apprefrelease 3.1.12
-%define _dotnet_corerelease 3.1.12
+%define _dotnet_templatesrelease 3.1.17
+%define _dotnet_apprefrelease 3.1.16
+%define _dotnet_corerelease 3.1.16
 %define _dotnet_sdkrelease %version
 #define _dotnet_netstandartrelease 2.1.0
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 3.1.406
-Release: alt2
+Version: 3.1.410
+Release: alt1
 
 Summary: SDK for the .NET Core 3.1
 
@@ -94,6 +94,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %_dotnetdir/templates/%_dotnet_templatesrelease/*.nupkg
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.410-alt1
+- .NET Core SDK 3.1.410
+
 * Sat Feb 20 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.406-alt2
 - don't pack netstandard-targeting-pack-2.1.0
 - add require dotnet-3.1

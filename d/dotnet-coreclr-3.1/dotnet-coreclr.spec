@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 3.1
-%define _dotnet_corerelease 3.1.12
+%define _dotnet_corerelease %version
 %define commithash %version-%release
 
 %def_with bootstrap
@@ -12,8 +12,8 @@
 %define pre %nil
 
 Name: dotnet-coreclr-%_dotnet_major
-Version: 3.1.12
-Release: alt2
+Version: 3.1.16
+Release: alt1
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -50,7 +50,7 @@ BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel
 Requires: libicu
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap-%_dotnet_major = %version
+BuildRequires: dotnet-bootstrap-runtime-%_dotnet_major = %version
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 %else
 BuildRequires: dotnet
@@ -76,6 +76,11 @@ cross platform applications that work on Linux, Mac and Windows.
 #patch1 -p1
 #patch2 -p1
 #patch3 -p2
+
+# Starting with ICU 68 (2020q4), there is no longer TRUE and FALSE defines in public header files
+# https://unicode-org.github.io/icu/userguide/dev/codingguidelines.html
+#add_optflags -DU_DEFINE_FALSE_AND_TRUE=1
+#__subst "s|-DPIC|-DPIC -DU_DEFINE_FALSE_AND_TRUE=1|" src/corefx/System.Globalization.Native/CMakeLists.txt
 
 # replace obsoleted FindPythonInterp with FindPython3
 sed -i -e 's|FindPythonInterp|FindPython3|' -e 's|PYTHON_EXECUTABLE|Python3_EXECUTABLE|' \
@@ -165,6 +170,14 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_rpmlibdir/%name.filetrigger
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.16-alt1
+- new version 3.1.16 (with rpmrb script)
+- .NET Core 3.1.16
+- CVE-2021-31204: .NET Core Elevation of Privilege Vulnerability
+
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt3
+- fix build
+
 * Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt2
 - fix python3 using, add conflicts to dotnet-coreclr
 

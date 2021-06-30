@@ -5,12 +5,11 @@
 %define pre %nil
 
 %define _dotnet_major 3.1
-%define _dotnet_corerelease 3.1.12
 
 %remove_optflags -frecord-gcc-switches
 
 Name: dotnet-corefx-%_dotnet_major
-Version: 3.1.12
+Version: 3.1.16
 Release: alt1
 
 Summary: .NET Core foundational libraries, called CoreFX
@@ -30,6 +29,8 @@ AutoProv: no
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-dotnet
 
+%define _dotnet_corerelease %version
+
 %if_with bootstrap
 BuildRequires: dotnet-bootstrap-%_dotnet_major
 #= %version
@@ -46,7 +47,7 @@ BuildRequires: clang llvm cmake libstdc++-devel
 BuildRequires: libcurl-devel libssl-devel zlib-devel libkrb5-devel
 
 #Requires: dotnet-common
-Requires: dotnet-coreclr-%_dotnet_major = %version
+Requires: dotnet-coreclr-%_dotnet_major = %_dotnet_corerelease
 
 Conflicts: dotnet-corefx
 
@@ -143,6 +144,9 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.16-alt1
+- new version (3.1.16) with rpmgs script
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt1
 - .NET Core 3.1.12
 - CVE-2021-1721: .NET Core Denial of Service Vulnerability

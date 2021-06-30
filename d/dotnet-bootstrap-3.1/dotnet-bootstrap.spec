@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sdkversion 3.1.406
-%define coreversion 3.1.12
-%define templatesversion 3.1.13
+%define sdkversion 3.1.410
+%define coreversion 3.1.16
+%define templatesversion 3.1.17
 
 Name: dotnet-bootstrap-3.1
-Version: 3.1.12
+Version: 3.1.16
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -16,10 +16,10 @@ Group: Development/Other
 
 # Update from https://www.microsoft.com/net/download/dotnet-core/3.1
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/d7b8da76-a160-44a1-8038-b4b91404b8f2/af410f6d2e213ef7ee9dfefd853e97c0/dotnet-sdk-3.1.406-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/e6ae53a9-8567-4f44-b6ce-684d4f4a0b27/e0c29635c1c2ae9424390a41fecc95f1/dotnet-sdk-3.1.410-linux-x64.tar.gz
 Source: %name-%version.tar
 
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/fc9051ee-4071-4808-9e71-82d69328ab47/32ae2b7177d082fc52d89774e4f127fa/dotnet-sdk-3.1.406-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/0d0ad29d-da90-42ce-a88d-94f47f9ddc09/bbfafc31b9a7e36140a74e0e157e9e3e/dotnet-sdk-3.1.410-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -137,6 +137,16 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.16-alt1
+- new version 3.1.16 (with rpmrb script)
+- .NET Core 3.1.16 and .NET Core SDK 3.1.410
+- CVE-2021-31957: ASP.NET Denial of Service Vulnerability
+- CVE-2021-31204: .NET Core Elevation of Privilege Vulnerability
+
+* Sat Apr 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.14-alt1
+- .NET Core 3.1.14 and .NET Core SDK 3.1.408
+- CVE-2021-26701 | .NET Core Remote Code Execution Vulnerability
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt1
 - new version (3.1.12) with rpmgs script
 - CVE-2021-1721: .NET Core Denial of Service Vulnerability

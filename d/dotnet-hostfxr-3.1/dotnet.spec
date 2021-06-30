@@ -1,19 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
-
-%def_without bootstrap
 %define pre %nil
-
 %define _dotnet_major 3.1
-%define _dotnet_corerelease 3.1.12
 #define _dotnet_sdkrelease 5.0.103
 
 %define exedir artifacts/bin/%_dotnet_rid.Debug/corehost
 
 
 Name: dotnet-hostfxr-%_dotnet_major
-Version: 3.1.12
-Release: alt2
+Version: 3.1.16
+Release: alt1
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -24,6 +20,9 @@ Group: Development/Other
 # Source-url: %url/archive/v%version%pre.tar.gz
 Source: %name-%version.tar
 
+%define _dotnet_corerelease %version
+
+
 ExclusiveArch: aarch64 x86_64
 
 BuildRequires: clang llvm
@@ -31,14 +30,6 @@ BuildRequires: clang llvm
 BuildRequires: cmake libstdc++-devel
 
 BuildRequires(pre): rpm-macros-dotnet
-
-%if_with bootstrap
-BuildRequires: dotnet-bootstrap-%_dotnet_major = %_dotnet_corerelease
-%define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
-%else
-#BuildRequires: dotnet
-%define bootstrapdir %_dotnetdir
-%endif
 
 Conflicts: dotnet <= 3.1.6-alt1
 
@@ -86,9 +77,7 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_dotnetdir/fake-os-release|g"
 
 %build
-#DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build.sh x64 release verbose
 cd src/corehost
-#DOTNET_TOOL_DIR=%bootstrapdir
 sh -x ./build.sh \
     --arch %_dotnet_arch \
     --hostver %_dotnet_corerelease \
@@ -121,6 +110,7 @@ install -m644 %exedir/nethost.h %buildroot%_dotnet_shared/
 %doc THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md LICENSE.TXT
 %dir %_dotnet_hostfxr/
 %_dotnet_hostfxr/libhostfxr.so
+%dir %_dotnet_shared/
 %_dotnet_shared/libhostpolicy.so
 
 # some duplicate
@@ -138,6 +128,9 @@ install -m644 %exedir/nethost.h %buildroot%_dotnet_shared/
 %files -n dotnet-%_dotnet_major
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.16-alt1
+- new version (3.1.16) with rpmgs script
+
 * Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt2
 - add dotnet-3.1 virtual package
 
