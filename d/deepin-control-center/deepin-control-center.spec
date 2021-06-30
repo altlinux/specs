@@ -4,8 +4,8 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.4.23
-Release: alt3.git1362dfe
+Version: 5.4.47
+Release: alt1.git1362dfe
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -179,6 +179,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.47-alt1.git1362dfe
+- Fixed version tag.
+
 * Fri Jun 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.23-alt3.git1362dfe
 - Temporarily hidden the widget to set the lockscreen timeout.
 
