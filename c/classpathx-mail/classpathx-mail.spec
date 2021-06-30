@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           classpathx-mail
 Version:        1.1.2
-Release:        alt3_1jpp5
+Release:        alt4_1jpp5
 Epoch:          0
 Summary:        GNU JavaMail(tm)
 
@@ -64,7 +64,7 @@ BuildRequires: %{_bindir}/perl
 Requires: jaf_1_1_api
 Requires(preun): alternatives >= 0:0.4
 Requires(post): alternatives >= 0:0.4
-Provides:       javamail_1_3_1_api
+#Provides:       javamail_1_3_1_api
 
 %if %{gcj_support}
 BuildRequires: java-gcj-compat-devel
@@ -73,8 +73,8 @@ Requires(postun): java-gcj-compat
 %endif
 Source44: import.info
 # required for fedora tomcat
-Provides: javamail = 0:1.3.1
-Provides: javamail-monolithic = 0:1.3.1
+#Provides: javamail = 0:1.3.1
+#Provides: javamail-monolithic = 0:1.3.1
 
 %description
 GNU JavaMail(tm) is a free implementation of the JavaMail API.
@@ -83,7 +83,7 @@ GNU JavaMail(tm) is a free implementation of the JavaMail API.
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
 Provides:       javamail-javadoc = 0:%{jmailver}
-BuildRequires: java-javadoc jaf-javadoc
+BuildRequires: java-javadoc
 BuildArch: noarch
 
 %description    javadoc
@@ -208,6 +208,9 @@ EOF
 
 
 %changelog
+* Wed Jun 30 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.2-alt4_1jpp5
+- dropped javamail provides 
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt3_1jpp5
 - build without classpathx-jaf
 
