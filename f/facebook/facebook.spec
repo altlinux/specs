@@ -1,6 +1,6 @@
 Version:	1.0
 Name:		facebook
-Release:	alt1
+Release:	alt2
 Summary:	Simple Facebook client
 Summary(ru_RU.UTF8): Простой клиент Facebook
 Summary(uk_UA.UTF8): Простий клієнт Facebook
@@ -11,7 +11,7 @@ Url:		http://qt-apps.org/content/show.php/Facebook?content=156543
 Source0:	%name.tar.bz2
 Source1:	%name.desktop
 
-BuildRequires: gcc-c++ libqt4-devel ImageMagick-tools
+BuildRequires: qt5-base-devel qt5-webkit-devel ImageMagick-tools
 
 %description
 Simple and stylish Facebook app. This app provides native Facebook
@@ -29,7 +29,7 @@ Facebook та значок у системному лотку для спові�
 %setup -q -n %name
 
 %build
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" Facebook.pro
+%qmake_qt5 Facebook.pro
 %make_build
 
 %install
@@ -50,5 +50,8 @@ convert -resize 16x16 ./res/logo/%name-256x256.png %buildroot%_miconsdir/%name.p
 %_miconsdir/%name.png
 
 %changelog
+* Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.0-alt2
+- build with Qt5
+
 * Wed Sep 04 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0-alt1
 - initial build for ALT Linux
