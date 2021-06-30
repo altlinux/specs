@@ -1,8 +1,9 @@
 %def_without autotools
 
 %define oname	cryptopp
+
 Name: libcryptopp
-Version: 8.2.0
+Version: 8.5.0
 Release: alt1
 
 # convert 5.6.2 -> 562 format
@@ -130,6 +131,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 8.5.0-alt1
+- new version 8.5.0 (with rpmrb script)
+
 * Thu Jun 13 2019 Vitaly Lipatov <lav@altlinux.ru> 8.2.0-alt1
 - new version 8.2.0 (with rpmrb script)
 
