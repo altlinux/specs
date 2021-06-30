@@ -1,6 +1,6 @@
 Name: mytetra
 Version: 1.42.2
-Release: alt1.qa1
+Release: alt2
 
 Summary: Simple cross-platform manager for data collecting
 Summary(ru_RU.UTF-8): несложный кроссплатформенный менеджер накопления информации
@@ -12,8 +12,7 @@ Packager: Malo Skryleve <malo@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-qt5
-# Automatically added by buildreq on Wed Mar 16 2011
-BuildRequires: gcc-c++ phonon-devel desktop-file-utils
+BuildRequires: gcc-c++ desktop-file-utils
 BuildRequires: qt5-base-devel qt5-svg-devel
 
 %description
@@ -58,6 +57,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_liconsdir/%name.png
 
 %changelog
+* Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 1.42.2-alt2
+- Fixed BuildRequires.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.42.2-alt1.qa1
 - NMU: applied repocop patch
 
