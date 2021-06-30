@@ -1,6 +1,6 @@
 Name: pictomir
 Version: 0.16.2
-Release: alt3
+Release: alt4
 
 Summary: PictoMir education system
 License: GPL / CC BY
@@ -8,14 +8,13 @@ Group: Education
 
 Url: https://gitorious.org/pictomir
 # VCS: https://gitorious.org/pictomir/pictomir.git
-Source: %name-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires: qt4-devel >= 4.6.0
-BuildRequires: gcc-c++
-BuildRequires: libqt4-webkit-devel >= 1:2.3.4-alt3
-BuildRequires: phonon-devel
 Requires: icon-theme-hicolor
+
+Source: %name-%version.tar
+Patch1: alt-qt5.patch
+BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-webkit-devel qt5-tools
 
 %description
 This package provides a child's icon programming environment.
@@ -31,11 +30,30 @@ WebKit-based web browser to use within PictoMir.
 
 %prep
 %setup
-qmake-qt4 %name.pro
+# port to Qt5
+%patch1 -p1
+sed -i 's|qt4|qt5|' share/pictomir/Languages/Languages.pro
+sed -i '/\.cpp/s,^[[:space:]]*,3rd-party/cookiejar/,' src/3rd-party/cookiejar/cookiejar.pri
+sed -i '/\.h/s,^[[:space:]]*,3rd-party/cookiejar/,'   src/3rd-party/cookiejar/cookiejar.pri
+sed -i '/\.ui/s,^[[:space:]]*,3rd-party/cookiejar/,'  src/3rd-party/cookiejar/cookiejar.pri
+find ./ -name *\.cpp -o -name *\.h | \
+while read f; do
+    sed -i '/^.*include.*<QtGui>.*$/s|$|\n#include <QtWidgets>|' $f
+    sed -i '/^.*include.*<QtWebKit>.*$/s|$|\n#include <QtWebKitWidgets>|' $f
+    sed -i 's|fromAscii|fromLatin1|' $f
+    sed -i 's|fromAscii|fromLatin1|' $f
+    sed -i 's|toAscii|toLatin1|' $f
+    sed -i '/QDesktopServices/s|storageLocation|writableLocation|' $f
+    sed -i 's|QDesktopServices|QStandardPaths|g' $f
+done
+sed -i 's|.*include.*qnetworkcookie.*|#include <QtNetwork>|' src/3rd-party/cookiejar/networkcookiejar/networkcookiejar.h
+# end port to Qt5
+%qmake_qt5 WITH_PHONON=no DEFINES+="QT_DISABLE_DEPRECATED_BEFORE=0" %name.pro
 cd src
-lrelease-qt4 src.pro
+lrelease-qt5 src.pro
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %make_build
 
 %install
@@ -50,6 +68,9 @@ install -pm644 *.desktop %buildroot/%_desktopdir
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.16.2-alt4
+- port to Qt5
+
 * Fri Feb 01 2019 Michael Shigorin <mike@altlinux.org> 0.16.2-alt3
 - Fixed BR: (-devel part of libqt4-webkit is actually needed)
 - Minor spec cleanup
