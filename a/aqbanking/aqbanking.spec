@@ -1,5 +1,5 @@
 Name:     aqbanking
-Version:  6.2.5
+Version:  6.3.0
 Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
@@ -219,6 +219,9 @@ rm -f %buildroot%_docdir/aqebics/aqebics-tool/README
 %_docdir/%name/
 
 %changelog
+* Fri Jun 25 2021 Andrey Cherepanov <cas@altlinux.org> 6.3.0-alt1
+- New version.
+
 * Wed Dec 23 2020 Andrey Cherepanov <cas@altlinux.org> 6.2.5-alt1
 - New version.
 
