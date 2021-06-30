@@ -2,7 +2,7 @@
 
 Name:       hedgewars
 Version:    1.0.0
-Release:    alt4
+Release:    alt5
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -37,8 +37,8 @@ BuildRequires: ghc8.6.4-utf8-string ghc8.6.4-zlib
 BuildRequires: libGLEW-devel libSDL2_image-devel libSDL2_mixer-devel
 BuildRequires: libSDL2_net-devel libSDL2_ttf-devel libavformat-devel
 BuildRequires: libffi-devel libfreeglut-devel libgmp-devel liblua5.1-compat-devel
-BuildRequires: libphysfs-devel libqt5-quickshapes
-BuildRequires: libswresample-devel phonon-devel qt5-tools-devel
+BuildRequires: libphysfs-devel libqt5-quickshapes libpng-devel
+BuildRequires: libswresample-devel qt5-tools-devel
 BuildRequires: desktop-file-utils chrpath
 %ifarch %ix86
 BuildRequires: clang
@@ -155,6 +155,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt5
+- Fixed BuildRequires.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.0-alt4
 - NMU: fixed FTBFS: skip rpaths.
 
