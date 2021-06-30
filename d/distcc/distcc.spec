@@ -1,12 +1,12 @@
 # TODO: drop bundled lzo, popt
 
 Name: distcc
-Version: 3.3.5
+Version: 3.4
 Release: alt1
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
-License: GNU GPL
+License: GPLv2
 Group: Development/Tools
 Url: http://distcc.org
 
@@ -120,6 +120,9 @@ rm -rf %buildroot/%_docdir/
 %python3_sitelibdir/include_server*
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
+- new version 3.4 (with rpmrb script) (ALT bug 40303)
+
 * Mon Feb 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.5-alt1
 - new version 3.3.5 (with rpmrb script)
 
