@@ -1,8 +1,7 @@
-%def_disable qt4
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.9
-Release: alt1.1
+Release: alt2
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -26,13 +25,10 @@ BuildRequires(pre): rpm-build-ninja
 BuildRequires: libsuitesparse-devel libscotch-devel libgoogle-sparsehash
 %endif
 BuildRequires: gcc-c++ doxygen
-%if_enabled qt4
-BuildRequires: libqt4-devel
-%endif
 BuildRequires: libsuperlu-devel libmpfr-devel libgmp-devel
 BuildRequires: libfftw3-devel libGLU-devel libgsl-devel gcc-fortran
 BuildRequires: liblapack-devel libglew-devel libGLUT-devel libXi-devel
-BuildRequires: libXmu-devel libmetis-devel phonon-devel libXres-devel
+BuildRequires: libXmu-devel libmetis-devel libXres-devel
 BuildRequires: libXcomposite-devel libXdamage-devel libXdmcp-devel
 BuildRequires: libXft-devel libxkbfile-devel libXpm-devel
 BuildRequires: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
@@ -93,9 +89,7 @@ export PATH=$PATH:%_libdir/pastix/bin
 	-DCHOLMOD_INCLUDES=%_includedir/suitesparse \
 	-DUMFPACK_INCLUDES=%_includedir/suitesparse \
 %endif
-%if_disabled qt4
 	-DEIGEN_TEST_NOQT=ON \
-%endif
 	-DSUPERLU_LIBRARIES=-lsuperlu_4.0 \
 	-DCMAKE_STRIP="/bin/echo" \
 	-DGOOGLEHASH_INCLUDES="%_includedir/google" \
@@ -134,6 +128,9 @@ cd -
 %endif
 
 %changelog
+* Wed Jun 30 2021 Andrey Cherepanov <cas@altlinux.org> 3.3.9-alt2
+- FTBFS: completely remove qt4 and phonon support.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.3.9-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
