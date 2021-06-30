@@ -20,8 +20,8 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.7.1
-Release: alt2
+Version: 2.53.8
+Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
 License: MPL-2.0
@@ -61,8 +61,6 @@ Patch120: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
 Patch121: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
 Patch122: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
 Patch124: 0024-MOZILLA-1605273-only-run-CRLite-on-certificates-with.patch
-Patch125: seamonkey-update-packed_simd-for-rust-1.48.patch
-Patch126: seamonkey-cfg-if-1.10.patch
 
 Requires(pre,postun): urw-fonts
 
@@ -136,11 +134,17 @@ BuildRequires: libnss-devel        >= 3.15.1-alt1
 BuildRequires: libnss-devel-static >= 3.15.1-alt1
 
 # Python requires
+BuildRequires: python2-base
 BuildRequires: python-module-distribute
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
+
+BuildRequires: python3-base
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pip
+BuildRequires: python3-modules-sqlite3
 
 Requires: hunspell-ru
 
@@ -213,8 +217,6 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %patch121 -p2
 %patch122 -p2
 %patch124 -p2
-#patch125 -p0
-#patch126 -p2
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -265,14 +267,23 @@ export CXXFLAGS="$CXXFLAGS -Wl,--no-keep-memory -Wl,--reduce-memory-overheads -W
 
 export CC="clang"
 export CXX="clang++"
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export RANLIB="llvm-ranlib"
+export LLVM_PROFDATA="llvm-profdata"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
 export SHELL="/bin/bash"
 export srcdir="$PWD"
 export MOZILLA_SRCDIR="$srcdir"
+export SHELL=/bin/sh
+export MOZILLA_OBJDIR="$PWD"
+export PATH="$CBINDGEN_BINDIR:$PATH"
 
-autoconf
+#autoconf
 
 export NPROCS=%build_parallel_jobs
 # Decrease NPROCS prevents oomkill terror on x86_64
@@ -284,14 +295,10 @@ export NPROCS=16
 export NPROCS=1
 %endif
 
-# a kludge since 2.26 ...
-mkdir objdir
-%make_build -f client.mk build \
-	-j $NPROCS \
-	MOZ_PARALLEL_BUILD=$NPROCS \
-	mozappdir=%sm_prefix \
-	STRIP="/bin/true" \
-	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+#./mach python --exec-file /dev/null
+./mach configure
+./mach build -j $NPROCS
+./mach buildsymbols
 
 %if_with enigmail
 cd mailnews/extensions/enigmail
@@ -469,6 +476,12 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Jun 29 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.8-alt1
+- New version.
+
+* Mon May 10 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.7.1-alt3
+- FTBFS: Update cbindgen-vendor to 0.18.0 for rust 1.52.0.
+
 * Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.7.1-alt2
 - Build with bundled libvpx.
 
