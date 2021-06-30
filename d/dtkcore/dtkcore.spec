@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.4.15
+Version: 5.4.17
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -99,6 +99,9 @@ chmod +x %buildroot%_libdir/libdtk-%version/DCore/bin/dtk-translate.py
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.17-alt1
+- New version (5.4.17).
+
 * Mon May 17 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.15-alt1
 - New version (5.4.15) with rpmgs script.
 
