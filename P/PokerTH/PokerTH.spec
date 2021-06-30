@@ -2,11 +2,11 @@
 
 Name: PokerTH
 Version: 1.1.2
-Release: alt6
+Release: alt7
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
-License: %gagpl3plus
+License: AGPL-3.0+
 Url: http://www.pokerth.net/
 
 Source: %name-%version.tar
@@ -18,11 +18,9 @@ Patch2: PokerTH-upstream-boost-compat-2.patch
 
 Patch3: %name-%version-alt-boost-1.73.0-compat.patch
 
-BuildRequires(pre): rpm-build-licenses >= 2.0.5-alt1
+BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libgnutls-openssl-devel libgsasl-devel qt5-base-devel
 
-BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libdb4-devel libgnutls-openssl-devel libgsasl-devel qt5-base-devel
-
-BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel phonon-devel tinyxml-devel libircclient-devel libprotobuf-devel
+BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel tinyxml-devel libircclient-devel libprotobuf-devel
 BuildPreReq: protobuf-compiler
 
 Requires: %name-data = %version-%release
@@ -37,6 +35,7 @@ play network games with people all over the world.
 %package data
 Summary: Data files for %name
 Group: Games/Cards
+License: ALT-Public-Domain and GPLv2+
 BuildArch: noarch
 Requires: %name = %version-%release
 
@@ -92,6 +91,11 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Wed Jun 30 2021 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt7
+- Fixed data package License tag.
+- Don't use rpm-build-licenses.
+- Cleanup BR.
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt6
 - Rebuilt with boost-1.73.0.
 
