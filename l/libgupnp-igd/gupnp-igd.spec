@@ -7,11 +7,11 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-%def_enable check
+%def_disable check
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: A library to handle UPnP IGD port mapping
 Group: System/Libraries
@@ -124,6 +124,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Jun 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.2
+- disabled %%check until
+  https://gitlab.gnome.org/GNOME/gupnp/-/issues/12 will be fixed
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.1
 - made twice as much tests timeout 
 
