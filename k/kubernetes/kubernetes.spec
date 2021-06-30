@@ -1,12 +1,12 @@
 
 %global import_path github.com/kubernetes/kubernetes
-%global commit faecb196815e248d3ecfb03c680a4507229c2a56
+%global commit 5575935422cc1cf5169dfc8847cb587aa47bac5a
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.20.2
+Version: 1.20.8
 Release: alt1
 Summary: Container cluster management
 
@@ -329,6 +329,9 @@ done
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed Jun 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.8-alt1
+- 1.20.8
+
 * Thu Jan 21 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.2-alt1
 - 1.20.2
 - crio support
