@@ -11,7 +11,7 @@
 
 Name: telepathy-qt5
 Version: 0.9.8
-Release: alt2
+Release: alt3
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -24,7 +24,7 @@ Source: telepathy-qt-%version.tar
 
 BuildRequires(pre): qt5-base-devel qt5-tools
 BuildRequires: python < 3 python >= 2.7
-BuildRequires: cmake doxygen gcc-c++ git-core graphviz phonon-devel
+BuildRequires: cmake doxygen gcc-c++ git-core graphviz
 BuildRequires: libxml2-devel glib2-devel libdbus-devel libdbus-glib-devel
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: %farstream_dev
@@ -140,6 +140,9 @@ make -C BUILD install DESTDIR=%buildroot
 #%_libdir/lib*.a
 
 %changelog
+* Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt3
+- fix build requires
+
 * Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt2
 - compatable with p9
 
