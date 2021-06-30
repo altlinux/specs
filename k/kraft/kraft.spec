@@ -1,6 +1,6 @@
 Name: kraft
 Version: 0.96
-Release: alt1
+Release: alt2
 
 Summary: Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -8,6 +8,8 @@ License: GPL-2.0
 Group: Office
 # VCS: https://github.com/dragotin/kraft
 URL: http://www.volle-kraft-voraus.de/
+
+Requires: libctemplate trmltools kde5-akonadi
 
 Source0: kraft-%version.tar
 
@@ -23,7 +25,6 @@ BuildRequires: kf5-kcodecs-devel
 BuildRequires: libctemplate-devel
 BuildRequires: grantlee5-devel
 
-Requires: libctemplate trmltools akonadi
 %py3_requires reportlab
 
 %description
@@ -54,6 +55,9 @@ subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' 
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.96-alt2
+- fix requires (ALT #40014)
+
 * Mon May 17 2021 Andrey Cherepanov <cas@altlinux.org> 0.96-alt1
 - New version (from upstream git tag).
 - Build with Qt5/KF5 (ALT #40014).
