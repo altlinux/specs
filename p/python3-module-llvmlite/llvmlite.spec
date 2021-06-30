@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 0.36.0
-Release: alt1
+Release: alt1.git.dd00288
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -12,10 +12,10 @@ URL:     https://pypi.org/project/llvmlite
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3 python3-dev
-BuildRequires: clang10.0 llvm10.0-devel libstdc++-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: clang11.0 llvm11.0-devel libstdc++-devel
 
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 %description
 A lightweight LLVM python binding for writing JIT compilers
@@ -35,7 +35,7 @@ following approach:
   need for Numba.
 
 %prep
-%setup -n %oname-%version
+%setup
 %ifarch armh
 sed -ri '/^\S+FLTO_FLAGS/ s,=.+$,=,' ffi/Makefile.linux
 %endif
@@ -55,12 +55,17 @@ export LLVMLITE_SKIP_LLVM_VERSION_CHECK=1
 %install
 %python3_install
 
+mv %buildroot%python3_sitelibdir/%oname-*.egg-info %buildroot%python3_sitelibdir/%oname-%version-py$(python3 -V | sed 's|^P.*\(3\.[0-9]\).*|\1|').egg-info
+
 %files
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
 %doc *.rst
 
 %changelog
+* Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 0.36.0-alt1.git.dd00288
+- Build from last commit.
+
 * Mon Mar 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.36.0-alt1
 - Build new version.
 
