@@ -2,7 +2,7 @@
 %define repo dde-printer
 
 Name: deepin-printer
-Version: 0.8.5
+Version: 0.8.7
 Release: alt1
 Summary: Printing utility for DDE
 License: GPL-3.0+
@@ -71,5 +71,8 @@ chmod +x %buildroot%_sysconfdir/xdg/autostart/%repo-watch.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/print-manager/
 
 %changelog
+* Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 0.8.7-alt1
+- New version (0.8.7).
+
 * Thu Mar 18 2021 Leontiy Volodin <lvol@altlinux.org> 0.8.5-alt1
 - Initial build for ALT Sisyphus.
