@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 5.8.6
-Release: alt1.1
+Version: 5.8.8
+Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
 Group: Monitoring
@@ -84,6 +84,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/*/*
 
 %changelog
+* Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.8-alt1
+- New version (5.8.8).
+
 * Wed May 19 2021 Arseny Maslennikov <arseny@altlinux.org> 5.8.6-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
