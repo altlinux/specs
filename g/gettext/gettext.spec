@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.20.2
-Release: alt2
+Version: 0.21
+Release: alt1
 
 %define libintl libintl3
 
@@ -14,6 +14,8 @@ Source: gettext-%version.tar
 Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
+
+Patch0: gnulib-up-perror-strerror_r-remove-unportable-tests.patch
 
 Patch10: gettext-alt-autogen.patch
 Patch11: gettext-alt-gettextize-quiet.patch
@@ -37,7 +39,7 @@ BuildPreReq: gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc} %{?_with_emacs:emac
 # Otherwise, embedded versions are used, which is forbidden by policy.
 BuildRequires: glib2-devel libcroco-devel libncurses-devel libunistring-devel libxml2-devel
 # Needed for the test suite.
-%{?!_without_check:%{?!_disable_check:BuildRequires: python-modules}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3}}
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
@@ -85,6 +87,7 @@ License: GPLv2+
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-tools = %version-%release
+BuildRequires: rpm-build-python3
 
 %package doc
 Summary: The GNU gettext manual
@@ -187,6 +190,9 @@ a text styling library.
 
 %prep
 %setup
+cd gettext-tools/gnulib-tests
+%patch0 -p2
+cd - > /dev/null
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -368,6 +374,15 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libtextstyle/
 
 %changelog
+* Thu Jul 01 2021 Dmitry V. Levin <ldv@altlinux.org> 0.21-alt1
+- 0.20.2 -> 0.21 (closes: #31007).
+
+* Wed Jun 30 2021 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt4
+- Backported tests fixes from gnulib to fix FTBFS.
+
+* Mon May 03 2021 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt3
+- Fixed FTBFS by adding rpm-build-python3 to BuildRequires.
+
 * Tue Jul 14 2020 Michael Shigorin <mike@altlinux.org> 0.20.2-alt2
 - Fixed emacs knob given nonzero _unpackaged_files_terminate_build.
 
