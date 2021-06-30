@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.12
+%define kernel_base_version 5.13
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -14,7 +14,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -37,6 +37,7 @@ BuildRequires: libhugetlbfs-devel
 BuildRequires: liblzma-devel
 BuildRequires: libmnl-devel
 BuildRequires: libmount-devel
+BuildRequires: libpopt-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
 %endif
@@ -222,7 +223,7 @@ sed -i '/#include/a typedef struct { __u32 u[4]; } __vector128;' include/uapi/li
 # Fix `trace/beauty/generated/fsconfig_arrays.c:2:3: error: expected expression before ']' token'.
 sed -i 's/*+/*/' perf/trace/beauty/fsconfig.sh
 
-sed -i 's/-s/-g/' testing/selftests/size/Makefile
+sed -i 's/-s\b/-g/' testing/selftests/size/Makefile
 sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
 
@@ -294,7 +295,7 @@ sed -i /^install:/s/runqslower_install// bpf/Makefile
 # acpi cannot make in parrallel.
 make acpi
 
-%make_build \
+%make_build ASFLAGS=-g \
 	cgroup \
 	firmware \
 	freefall \
@@ -582,6 +583,9 @@ fi
 %_libexecdir/kselftests
 
 %changelog
+* Wed Jun 30 2021 Vitaly Chikunov <vt@altlinux.org> 5.13-alt1
+- Update to v5.13 (2021-06-27).
+
 * Fri Apr 30 2021 Vitaly Chikunov <vt@altlinux.org> 5.12-alt2
 - Build kselftests.
 
