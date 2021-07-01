@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.45.6.0.24.af1a
+Version: 1.46.2.0.16.f114
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -393,6 +393,12 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Fri May 07 2021 Dmitry V. Levin <ldv@altlinux.org> 1.46.2.0.16.f114-alt1
+- v1.44.7 -> v1.46.2-16-gf1144831.
+
+* Fri Jan 29 2021 Dmitry V. Levin <ldv@altlinux.org> 1.45.7-alt1
+- v1.45.6-24-gaf1a882f -> v1.44.7.
+
 * Wed Oct 28 2020 Dmitry V. Levin <ldv@altlinux.org> 1.45.6.0.24.af1a-alt1
 - v1.44.6 -> v1.45.6-24-gaf1a882f (fixes: CVE-2019-5094, CVE-2019-5188).
 
