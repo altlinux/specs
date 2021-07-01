@@ -1,11 +1,14 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          BareBonesBrowserLaunch
 Version:       3.1
-Release:       alt1_22jpp11
+Release:       alt2_22jpp11
 Summary:       Simple library to launch a browser window from Java
 License:       Public Domain
 URL:           http://www.centerkey.com/java/browser/
@@ -36,9 +39,9 @@ rm -rf doc/*
 
 %build
 
-%{javac} com/centerkey/utils/BareBonesBrowserLaunch.java
+%{javac} -target 1.8 -source 1.8 com/centerkey/utils/BareBonesBrowserLaunch.java
 %{jar} -cf %{name}.jar com/centerkey/utils/BareBonesBrowserLaunch.class
-%{javadoc} -encoding UTF-8 -d doc com/centerkey/utils/BareBonesBrowserLaunch.java -windowtitle "%{name} %{version}"
+%{javadoc} -source 1.8 -encoding UTF-8 -d doc com/centerkey/utils/BareBonesBrowserLaunch.java -windowtitle "%{name} %{version}"
 
 %install
 %mvn_artifact com.centerkey.utils:%{name}:%{version} %{name}.jar
@@ -50,6 +53,9 @@ rm -rf doc/*
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1-alt2_22jpp11
+- really added unzip BR
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1-alt1_22jpp11
 - jvm11 build, added unzip BR
 
