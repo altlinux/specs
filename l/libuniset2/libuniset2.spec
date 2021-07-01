@@ -26,7 +26,7 @@
 
 Name: libuniset2
 Version: 2.12.1
-Release: alt1
+Release: alt2
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -594,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Jul 01 2021 Pavel Vainerman <pv@altlinux.ru> 2.12.1-alt2
+- fixed lib version
+
 * Wed Jun 30 2021 Pavel Vainerman <pv@altlinux.ru> 2.12.1-alt1
 - [unet]: supported ip multicast as transport
 
