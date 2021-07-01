@@ -2,8 +2,8 @@
 %def_disable check
 
 Name: libgit2
-Version: 1.1.0
-Release: alt1.1
+Version: 1.1.1
+Release: alt1
 
 Summary: linkable library for Git
 License: GPL-2.0
@@ -67,6 +67,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Jul 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1.1
 - rebuild with new cmake macros
 
