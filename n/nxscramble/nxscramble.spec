@@ -1,17 +1,21 @@
 Name: nxscramble
-Version: 0.1
-Release: alt4.qa1
+Version: 0.2
+Release: alt1
 
 Summary: Utility which scrambles password string same way as Nomachine NX client
+
+License: GPLv2
 Group: Text tools
-License: GPL
+Url: http://www.nomachine.com/ar/view.php?ar_id=AR01C00125
 
 Source: %name-%version.tar
 
-Url: http://www.nomachine.com/ar/view.php?ar_id=AR01C00125
 Packager: Lenar Shakirov <snejok@altlinux.org>
 
-BuildRequires: libxml2-devel libqt4-devel cmake gcc-c++ qt4-settings
+BuildRequires: rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: libxml2-devel
+BuildRequires: qt5-base-devel
 
 %description
 Small tool which scrambles an plain text string the same way as Nomachine
@@ -21,18 +25,19 @@ NX Client does it.
 %setup
 
 %build
-cd build
-cmake ..
+%cmake_insource
 %make
 
 %install
-cd build
-%makeinstall DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_bindir/nxscramble
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- cleanup spec, build with Qt5
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
