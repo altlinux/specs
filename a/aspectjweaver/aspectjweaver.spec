@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          aspectjweaver 
 Version:       1.8.9
-Release:       alt1_8jpp8
+Release:       alt2_8jpp8
 Summary:       Java byte-code weaving library
 License:       EPL
 URL:           http://eclipse.org/aspectj/
@@ -80,6 +80,9 @@ LANG=en_US.ISO8859-1 CLASSPATH=$( build-classpath objectweb-asm/asm commons-logg
 %doc --no-dereference epl-v10.txt
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.8.9-alt2_8jpp8
+- added BR: unzip
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.8.9-alt1_8jpp8
 - new version
 
