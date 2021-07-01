@@ -3,7 +3,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.26.5
+Version: 1.26.6
 Release: alt1
 
 Epoch: 2
@@ -112,6 +112,9 @@ py.test-3
 %endif
 
 %changelog
+* Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.26.6-alt1
+- 1.26.5 -> 1.26.6.
+
 * Fri Jun 11 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.26.5-alt1
 - 1.25.10 -> 1.26.5 (Closes: #40197)
 - Build without python2 support.
