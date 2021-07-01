@@ -1,6 +1,6 @@
 Name:     adp
 Version:  1.0
-Release:  alt3
+Release:  alt4
 
 Summary:  ALT Domain Policy
 License:  GPL-3.0+
@@ -24,6 +24,8 @@ Requires: python3-modules-sqlite3
 Requires: pam-config >= 1.9.0
 
 BuildArch: noarch
+
+%filter_from_requires /grub-common/d
 
 %description
 Apply Linux-specific domain policies for Active Directory user or machine.
@@ -111,6 +113,9 @@ make check
 %_alterator_datadir/ui/*/*
 
 %changelog
+* Thu Jul 01 2021 Andrey Cherepanov <cas@altlinux.org> 1.0-alt4
+- FTBFS: do not require grub-common (ALT #40326).
+
 * Wed Nov 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.0-alt3
 - Add support system-policy for PAM settings
 
