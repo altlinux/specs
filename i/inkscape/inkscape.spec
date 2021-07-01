@@ -10,7 +10,7 @@
 
 Name: inkscape
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -22,6 +22,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://media.inkscape.org/dl/resources/file/inkscape-%version.tar.xz
 Source: %name-%version.tar
+
+Source1: inkview.desktop
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -173,6 +175,8 @@ rm -rf %buildroot%_datadir/%name/extensions/{setup.py,setup.cfg}
 
 %find_lang %name
 
+install -m644 %SOURCE1 %buildroot%_desktopdir/inkview.desktop
+
 %check
 $(INKSCAPE) -z -f $< --export-eps=$@
 $(INKSCAPE) -z -f $< --export-png=$@
@@ -185,7 +189,7 @@ true
 %_datadir/%name/
 %exclude %_datadir/inkscape/tutorials/
 #_datadir/appdata/inkscape*
-%_desktopdir/*.desktop
+%_desktopdir/org.inkscape.Inkscape.desktop
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/inkscape*
@@ -196,6 +200,7 @@ true
 %files viewer
 %_bindir/inkview
 %_man1dir/inkview*
+%_desktopdir/inkview.desktop
 
 %if_with shared
 %files -n lib%name
@@ -208,6 +213,9 @@ true
 %files checkinstall
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt2
+- add desktop file for inkview (ALT bug 34135)
+
 * Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
 - new version 1.1 (with rpmrb script) (ALT bug 40171)
 
