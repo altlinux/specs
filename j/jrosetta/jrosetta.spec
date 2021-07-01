@@ -1,14 +1,14 @@
-BuildRequires: maven-assembly-plugin
+BuildRequires: maven-assembly-plugin unzip
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jrosetta
 Version:        1.0.4
-Release:        alt2_14jpp8
+Release:        alt3_14jpp11
 Summary:        A common base to build a graphical console
 
 Group:          Development/Other
@@ -51,7 +51,7 @@ rm CHANGE.txt.CRLF
 %pom_xpath_remove "pom:build/pom:extensions" pom.xml
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -62,6 +62,10 @@ rm CHANGE.txt.CRLF
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt3_14jpp11
+- added BR: unzip
+- java11 build
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_14jpp8
 - added BR: maven-assembly-plugin for javapackages 5
 
