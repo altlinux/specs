@@ -1,7 +1,7 @@
 %def_without asserts
 Name: libuv
 Version: 1.41.0
-Release: alt2
+Release: alt3
 
 Summary: Evented I/O for NodeJS
 
@@ -11,6 +11,8 @@ Url: https://github.com/libuv/libuv
 
 # Source-url: https://github.com/libuv/libuv/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch: a7496aba0a.patch
 
 BuildRequires: gcc-c++ openssl-devel zlib-devel
 
@@ -29,6 +31,7 @@ libuv header and build tools.
 
 %prep
 %setup
+%patch -p3
 
 %build
 # due option hack in autogen.sh
@@ -59,6 +62,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.41.0-alt3
+- CVE-2021-22918: idna: fix Out of bounds read in punycode decoder
+
 * Fri Mar 12 2021 Anton Farygin <rider@altlinux.org> 1.41.0-alt2
 - disabled assertions debug by default
 
