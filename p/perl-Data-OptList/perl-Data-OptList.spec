@@ -17,8 +17,8 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 %define _enable_test 1
 
 Name: perl-Data-OptList
-Version: 0.110
-Release: alt1.1
+Version: 0.112
+Release: alt1
 
 Summary: Data-OptList - Perl module
 
@@ -29,7 +29,7 @@ Url: http://www.cpan.org
 Packager: Mikhail Pokidko <pma@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Data-OptList-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 21 2010
 BuildRequires: perl-Params-Util perl-Sub-Install
@@ -38,7 +38,7 @@ BuildRequires: perl-Params-Util perl-Sub-Install
 None.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -50,6 +50,9 @@ None.
 %perl_vendor_privlib/Data*
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0.112-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.110-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
