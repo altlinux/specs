@@ -1,15 +1,15 @@
 Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jcip-annotations
 Version:        1
-Release:        alt3_30.20060626jpp11
+Release:        alt3_32.20060626jpp11
 Summary:        Java annotations for multithreaded software
 
 License:        CC-BY
@@ -17,8 +17,6 @@ URL:            http://www.jcip.net/
 Source0:        http://jcip.net.s3-website-us-east-1.amazonaws.com/%{name}-src.jar
 Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/net/jcip/%{name}/1.0/%{name}-1.0.pom
 
-# Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
-# See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
 BuildRequires:  javapackages-local
 
 # There is no point in building native libraries, as the sources contain only
@@ -54,11 +52,16 @@ since sinjdoc does not understand annotations.
 %prep
 %setup -q -c
 
+cp %{SOURCE1} pom.xml
+
 # Get rid of the manifest created upstream with ant
 rm -fr META-INF
 
 # Fix DOS line endings
 sed -i 's/\r//' net/jcip/annotations/package.html
+
+%mvn_file net.jcip:%{name} %{name}
+%mvn_alias "net.jcip:%{name}" "com.github.stephenc.jcip:jcip-annotations"
 
 %build
 mkdir classes
@@ -68,25 +71,20 @@ cd classes
 cd ..
 %javadoc -Xdoclint:none -d docs -source 1.8 net.jcip.annotations
 
+%mvn_artifact pom.xml %{name}.jar
+
 %install
-mkdir -p %{buildroot}%{_javadir}
-mv %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# install maven metadata
-mkdir -p %{buildroot}/%{_mavenpomdir}
-cp %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a com.github.stephenc.jcip:jcip-annotations
-
-# install javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J docs
 
 %files -f .mfiles
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1-alt3_32.20060626jpp11
+- jvm11 build, added unzip BR
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1-alt3_30.20060626jpp11
 - update
 
