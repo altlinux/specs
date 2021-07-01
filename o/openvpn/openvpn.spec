@@ -15,13 +15,13 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.9
+Version: 2.5.3
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
 Summary(ru_RU.UTF-8): полнофункциональное решение VPN на базе SSL
 
-License: %gpl2only
+License: %gpl2only with OpenSSL exception
 Group: System/Servers
 Url: http://www.openvpn.net
 
@@ -31,6 +31,7 @@ Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-2.4.2-alt-pkcs11_pin_prompt.patch
+Patch2:  %name-2.5.3-alt-python_docutils.patch
 
 Source1: %name.init
 Source2: %name-startup
@@ -42,17 +43,23 @@ Source7: %name-README.ALT.utf-8
 Source8: %name-server.conf
 Source9: %name-client.conf
 Source10: %name.tmpfiles
+Source11: %name.service
+Source12: %name@.service
+Source13: %name-server@.service
+Source14: %name-client@.service
 
 # Because of /etc/syslog.d/ feature
 Conflicts: syslogd < 1.4.1-alt11
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Mon Nov 16 2020
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libpkcs11-helper libssl-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
-BuildRequires: cmake git-core glibc-devel-static iproute2 liblz4-devel liblzo2-devel libselinux-devel net-tools
+# Automatically added by buildreq on Tue Jun 29 2021
+# optimized out: libgpg-error libpkcs11-helper libssl-devel perl pkg-config python-module-Pygments python-module-docutils python-modules python-modules-compiler python-modules-encodings python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
+BuildRequires: cmake git-core glibc-devel-static iproute2 liblz4-devel liblzo2-devel libselinux-devel net-tools time
+
+BuildRequires: python3-module-docutils
 
 %{?_with_systemd:BuildRequires: libsystemd-devel}
-%{?_with_pkcs11:BuildRequires: pkcs11-helper-devel}
+%{?_with_pkcs11:BuildRequires: libpkcs11-helper-devel}
 %{?_with_plugins:BuildRequires: libpam-devel}
 
 
@@ -135,6 +142,7 @@ for third-party plugin development.
 %patch0 -p1
 
 %patch1 -p1
+%patch2
 
 cp -- %SOURCE7 README.ALT.utf-8
 cp -- %SOURCE8 server.conf
@@ -171,23 +179,9 @@ cp -f -- %SOURCE10 distro/systemd/tmpfiles-openvpn.conf
 subst 's|nobody|%ovpn_user|' sample/sample-config-files/*
 
 %if_with plugins
-# Building 'simple' plugin
-pushd sample/sample-plugins/simple
-CPPFLAGS="${CPPFLAGS:--I../../../include}" ./build simple
-mv -- simple.so %name-plugin-simple.so
-popd
-
-# Building 'defer' plugin
-pushd sample/sample-plugins/defer
-CPPFLAGS="${CPPFLAGS:--I../../../include}" ./build simple
-mv -- simple.so %name-plugin-defer.so
-popd
-
-# Building 'log_v3' plugin
-pushd sample/sample-plugins/log
-CPPFLAGS='-I../../../include' ./build log_v3
-mv -- log_v3.so %name-plugin-log.so
-popd
+# Prepare build:
+pushd sample/sample-plugins/
+%make all
 %endif
 
 %ifndef __BTE
@@ -226,6 +220,15 @@ mkdir -p -- %buildroot/%_sysconfdir/sysconfig
 install -m 0755 -- %SOURCE1 %buildroot%_initdir/%name
 install -m 0750 -- %SOURCE2 %buildroot%_sysconfdir/%name
 install -m 0640 -- %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+
+%if_with systemd
+rm -f -- %buildroot%_unitdir/*
+install -m 0644 -- %SOURCE11 %buildroot%_unitdir/%name.service
+install -m 0644 -- %SOURCE12 %buildroot%_unitdir/%name@.service
+install -m 0644 -- %SOURCE13 %buildroot%_unitdir/%name-server@.service
+install -m 0644 -- %SOURCE14 %buildroot%_unitdir/%name-client@.service
+%endif
+
 
 # update_chrooted files
 install -p -m 0750 -D -- %SOURCE4 %buildroot%_sysconfdir/chroot.d/%name.lib
@@ -302,7 +305,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %config             %_initdir/%name
 
 %if_with systemd
-%_unitdir/%name-*.service
+%_unitdir/%{name}*.service
 %_tmpfilesdir/%name.conf
 %endif
 
@@ -338,6 +341,11 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Thu Jul 01 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.5.3-alt1
+- New major version
+- Using /run for pid and lock files (Closes: 39989)
+- Force chroot in systemd services
+
 * Mon Nov 16 2020 Nikolay A. Fetisov <naf@altlinux.org> 2.4.9-alt1
 - New version
 - Security fixes:
