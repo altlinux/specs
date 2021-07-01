@@ -1,25 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mixxx
-Version: 2.2.4
+Version: 2.3.0
 Release: alt1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
-License: GPLv2+
+License: GPL-2.0+
 Group: Sound
 Url: http://mixxx.org
 
 # https://github.com/mixxxdj/mixxx.git
 Source: %name-%version.tar
 
-ExcludeArch: armh
+# ExcludeArch: armh
 
-Patch1: %name-%version-alt-find-shout2.patch
-Patch2: %name-%version-alt-rpath.patch
+Patch1: %name-2.2.4-alt-find-shout2.patch
+Patch2: %name-2.2.4-alt-rpath.patch
 
-BuildPreReq: rpm-macros-qt5
-BuildRequires: flex gcc-c++ libflac-devel libid3tag-devel libmad-devel
+BuildPreReq: rpm-macros-qt5 rpm-build-ninja
+BuildRequires: flex gcc-c++ cmake libflac-devel libid3tag-devel libmad-devel
 BuildRequires: libportaudio2-devel libportmidi-devel
 BuildRequires: libsndfile-devel libtag-devel python-devel
 BuildRequires: python-module-Reportlab python-module-bzr-fastimport scons
@@ -31,6 +31,8 @@ BuildRequires: libwavpack-devel libfaad-devel libmp4v2-devel
 BuildRequires: libupower-devel
 BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel qt5-x11extras-devel
 BuildRequires: liblilv-devel libsoundtouch-devel libvorbis-devel libspeex-devel libtheora-devel
+BuildRequires: liblame-devel libqtkeychain-qt5-devel libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libavdevice-devel libavfilter-devel libpostproc-devel libswscale-devel
+BuildRequires: libhidapi-devel libkeyfinder-devel
 
 Requires: %name-data = %EVR
 Requires: qt5-sql-sqlite3
@@ -52,74 +54,74 @@ BuildArch: noarch
 %description data
 This package contains data files for Mixxx.
 
-%package -n vamp-%name-plugin
-Summary: %name plugin for Vamp
-Group: Sound
-
-%description -n vamp-%name-plugin
-Mixxx is free, open source DJ software that gives you everything
-you need to perform live mixes.
-
-This package contains %name plugin for Vamp.
-
-%package -n soundsource-%name-plugin
-Summary: %name plugin for Soundsource
-Group: Sound
-
-%description -n soundsource-%name-plugin
-Mixxx is free, open source DJ software that gives you everything
-you need to perform live mixes.
-
-This package contains %name plugin for Soundsource.
+# %package -n vamp-%name-plugin
+# Summary: %name plugin for Vamp
+# Group: Sound
+#
+# %description -n vamp-%name-plugin
+# Mixxx is free, open source DJ software that gives you everything
+# you need to perform live mixes.
+#
+# This package contains %name plugin for Vamp.
+#
+# %package -n soundsource-%name-plugin
+# Summary: %name plugin for Soundsource
+# Group: Sound
+#
+# %description -n soundsource-%name-plugin
+# Mixxx is free, open source DJ software that gives you everything
+# you need to perform live mixes.
+#
+# This package contains %name plugin for Soundsource.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+# %patch1 -p1
+# %patch2 -p1
 
 %build
-scons \
-	prefix=%_prefix \
-	qtdir=%_qt5_prefix \
-	qt5=1 \
-	faad=1 \
-	wv=1
+%cmake \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+#
+%cmake_build
 
 %install
-scons \
-	prefix=%_prefix \
-	qtdir=%_qt5_prefix \
-	qt5=1 \
-	faad=1 \
-	wv=1 \
-	install_root=%buildroot%_prefix \
-	install
+%cmake_install
 
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/mixxx/plugins/vampqt5 \
-	%buildroot%_libdir/
-mv %buildroot%_libexecdir/mixxx/plugins/soundsourceqt5 \
-	%buildroot%_libdir/
+# install -d %buildroot%_libdir
+# mv %buildroot%_libexecdir/mixxx/plugins/vampqt5 \
+# 	%buildroot%_libdir/
+# mv %buildroot%_libexecdir/mixxx/plugins/soundsourceqt5 \
+# 	%buildroot%_libdir/
+mkdir -p %buildroot%_udevrulesdir/
+mv %buildroot%_datadir/mixxx/udev/rules.d/* \
+    %buildroot%_udevrulesdir/
 
 %files
 %_bindir/%name
-%_libexecdir/%name
 
 %files data
 %exclude %_datadir/doc
-%doc README README.md COPYING LICENSE Mixxx-Manual.pdf
+%doc README.md COPYING LICENSE res/Mixxx-Keyboard-Shortcuts.pdf
 %_datadir/%name
-%_datadir/appdata/*
+%_datadir/metainfo/%name.metainfo.xml
 %_desktopdir/%name.desktop
-%_pixmapsdir/%{name}_icon.svg
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/32x32/apps/%name.png
+%_udevrulesdir/%name-usb-uaccess.rules
 
-%files -n vamp-%name-plugin
-%_libdir/vampqt5
-
-%files -n soundsource-%name-plugin
-%_libdir/soundsourceqt5
+# %files -n vamp-%name-plugin
+# %_libdir/vampqt5
+#
+# %files -n soundsource-%name-plugin
+# %_libdir/soundsourceqt5
 
 %changelog
+* Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.0-alt1
+- Updated to upstream release version 2.3.0 (ALT #40319).
+- Built with cmake and ninja.
+
 * Tue Jun 01 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.4-alt1
 - Updated to upstream release version 2.2.4.
 - Added bpm-tools into Requires (ALT #39724).
