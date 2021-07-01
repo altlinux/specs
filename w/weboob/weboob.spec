@@ -1,6 +1,6 @@
 Name:    weboob
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: Weboob is a collection of applications able to interact with websites, without requiring the user to open them in a browser
 License: AGPL-3.0+
@@ -10,13 +10,8 @@ URL:     http://weboob.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires: rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-distribute
 BuildRequires: python3-module-PyQt5-devel
-BuildRequires: rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
-BuildRequires: python-module-PyQt5-devel
 
 BuildArch: noarch
 
@@ -35,13 +30,6 @@ Group: Development/Python3
 %description -n python3-module-weboob
 Python module for Weboob.
 
-%package -n python-module-weboob
-Summary: Python module for Weboob
-Group: Development/Python3
-
-%description -n python-module-weboob
-Python module for Weboob.
-
 %prep
 %setup -n %name-%version
 %patch1 -p1
@@ -50,18 +38,11 @@ Python module for Weboob.
 rm -rf weboob/tools/application/formatters/webkit
 # Set correct python3 executable in shebang
 subst 's|#!.*python[0-9.]*$|#!%__python3|' $(grep -Rl '#!.*python[0-9.]*$' *)
-cp -R . -T ../python2
 
 %build
 %python3_build
-pushd ../python2
-%python_build
-popd
 
 %install
-pushd ../python2
-%python_install
-popd
 %python3_install
 mkdir -p %buildroot%_desktopdir
 cp -a desktop/*.desktop %buildroot%_desktopdir
@@ -78,11 +59,10 @@ cp -a icons/*.png %buildroot%_iconsdir/hicolor/64x64/apps
 %python3_sitelibdir/%name/
 %python3_sitelibdir/*.egg-info
 
-%files -n python-module-weboob
-%python_sitelibdir/%name/
-%python_sitelibdir/*.egg-info
-
 %changelog
+* Mon Jun 28 2021 Grigory Ustinov <grenka@altlinux.org> 2.0-alt2
+- Drop python2 support.
+
 * Fri Feb 14 2020 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
 - New version.
 - Build both modules for Python2 and Python3.
