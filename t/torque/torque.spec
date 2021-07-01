@@ -29,7 +29,7 @@ Name:           torque
 Summary:        The Torque resource and queue manager
 Group:          Sciences/Computer science
 Version:        6.1.2
-Release:        alt3_5
+Release:        alt4_5
 License:        TORQUEv1.1
 URL:            http://www.adaptivecomputing.com/products/open-source/torque/
 
@@ -308,6 +308,8 @@ rm -f %{buildroot}%{_mandir}/man1/basl2c.1*
 
 rm -rf %buildroot/usr/share/doc/torque-drmaa/src
 
+mv %buildroot%{_bindir}/qstat %buildroot%{_bindir}/qstat-torque
+
 %post
 %{_sbindir}/torque_addport
 sed -i 's|MYSERVERNAME|'"$HOSTNAME"'|g' %{_sysconfdir}/%{name}/server_name
@@ -399,7 +401,7 @@ sed -i 's|MYSERVERNAME|'"$HOSTNAME"'|g' %{torquedir}/server_priv/serverdb
 %{_bindir}/qrerun
 %{_bindir}/qrls
 %{_bindir}/qsub
-%{_bindir}/qstat
+%{_bindir}/qstat-torque
 %{_bindir}/qsig
 %{_bindir}/qselect
 %{_bindir}/chk_tree
@@ -503,6 +505,9 @@ sed -i 's|MYSERVERNAME|'"$HOSTNAME"'|g' %{torquedir}/server_priv/serverdb
 
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 6.1.2-alt4_5
+- renamed qstat to qstat-torque (closes: #40300)
+
 * Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 6.1.2-alt3_5
 - don't pack /etc/ld.so.conf.d/torque.conf (closes: #37530)
 
