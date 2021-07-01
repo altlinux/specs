@@ -1,6 +1,6 @@
 Name: basic256
 Version: 2.0.0.11
-Release: alt1
+Release: alt2
 Summary: Simple BASIC IDE that allows young children to learn to programming
 License: GPL-2.0+
 Group: Development/Other
@@ -10,6 +10,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: http://ovh.dl.sourceforge.net/sourceforge/kidbasic/%name-%version.tar.gz
 Source1: basic256.desktop
+Source2: basic256_ru.ts
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
@@ -33,6 +34,8 @@ editor.
 
 %prep
 %setup
+install -Dpm0644 %SOURCE2 Translations/basic256_ru.ts
+lupdate-qt5 *.pro
 
 %build
 %add_optflags -I%_includedir/espeak
@@ -54,6 +57,9 @@ install -Dpm0644 resources/icons/basic256.png %buildroot%_iconsdir/hicolor/64x64
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Thu Jun 24 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.0.11-alt2
+- Complete Russian translations (thanks Olesya Gerasimenko).
+
 * Tue Jun 22 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.0.11-alt1
 - New version.
 
