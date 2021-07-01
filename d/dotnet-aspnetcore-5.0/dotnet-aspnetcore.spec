@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 5.0
-%define _dotnet_corerelease 5.0.3
+%define _dotnet_corerelease 5.0.7
 
 %define _dotnet_asppackrelease 5.0.0
 %define _dotnet_aspnetcore_app %_dotnetdir/shared/Microsoft.AspNetCore.App/%_dotnet_corerelease/
@@ -12,8 +12,8 @@
 %define pre %nil
 
 Name: dotnet-aspnetcore-%_dotnet_major
-Version: 5.0.3
-Release: alt2
+Version: 5.0.7
+Release: alt1
 
 Summary: ASP.NET is a cross-platform .NET framework for building modern cloud-based web application
 
@@ -152,6 +152,14 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/*
 %_dotnetdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.7-alt1
+- ASP.NET 5.0.7
+- CVE-2021-31957: ASP.NET Denial of Service Vulnerability
+
+* Sat Apr 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt1
+- .NET 5.0.5 and .NET SDK 5.0.202
+- CVE-2021-26701: .NET Core Remote Code Execution Vulnerability
+
 * Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.3-alt2
 - fix requires
 

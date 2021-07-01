@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 5.0
-%define _dotnet_corerelease 5.0.3
-%define _dotnet_sdkrelease 5.0.103
+%define _dotnet_corerelease %version
+%define _dotnet_sdkrelease 5.0.204
 %define commithash %version-%release
 
 %def_with bootstrap
@@ -11,8 +11,8 @@
 %def_with libunwind
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 5.0.3
-Release: alt2
+Version: 5.0.7
+Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -22,6 +22,8 @@ Group: Development/Other
 
 # Source-url: https://github.com/dotnet/runtime/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: genmoduleindex.sh.patch
 
 ExclusiveArch: aarch64 x86_64
 
@@ -159,6 +161,7 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 
 %prep
 %setup
+%patch1 -p2
 
 # set global runtime location
 %__subst "s|/usr/share/dotnet|%_dotnetdir|" src/installer/corehost/cli/hostmisc/pal.unix.cpp
@@ -188,7 +191,10 @@ EOF
 # build CLR
 cd src/coreclr/
 bash -x ./build-runtime.sh -release -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
-    -cmakeargs -DENABLE_LLDBPLUGIN=0 -cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 \
+    -cmakeargs -DENABLE_LLDBPLUGIN=0 \
+%if_without single_file_diagnostics
+    -cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 \
+%endif
 %if_with libunwind
     -cmakeargs -DCLR_CMAKE_USE_SYSTEM_LIBUNWIND=1 \
 %endif
@@ -354,6 +360,13 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.7-alt1
+- new version 5.0.7 (with rpmrb script)
+
+* Sat Apr 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt1
+- .NET 5.0.5
+- CVE-2021-26701: .NET Core Remote Code Execution Vulnerability
+
 * Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.3-alt2
 - pack dotnet-5.0 full installation package, fix requires
 

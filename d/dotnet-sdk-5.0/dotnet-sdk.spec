@@ -3,17 +3,17 @@
 
 %define _dotnet_major 5.0
 # CHECKME
-%define _dotnet_templatesrelease 5.0.3
+%define _dotnet_templatesrelease 5.0.7
 %define _dotnet_apprefrelease 5.0.0
-%define _dotnet_corerelease 5.0.3
-%define _dotnet_sdkrelease 5.0.103
+%define _dotnet_corerelease 5.0.7
+%define _dotnet_sdkrelease 5.0.204
 %define _dotnet_netstandartrelease 2.1.0
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 5.0.103
-Release: alt2
+Version: 5.0.204
+Release: alt1
 
 Summary: SDK for the .NET
 
@@ -62,6 +62,7 @@ Just copying managed code now.
 # Note: one for all versions
 %package -n netstandard-targeting-pack-2.1
 Version: %_dotnet_netstandartrelease
+Release: alt2
 Group: Development/Other
 Summary: NETStandard.Library.Ref 2.1
 
@@ -125,6 +126,13 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %_dotnetdir/packs/NETStandard.Library.Ref/%_dotnet_netstandartrelease/
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.204-alt1
+- .NET SDK 5.0.204
+
+* Sat Apr 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.202-alt1
+- .NET SDK 5.0.202
+- CVE-2021-26701: .NET Core Remote Code Execution Vulnerability
+
 * Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.103-alt2
 - drop sdk/NuGetFallbackFolder
 - build netstandard-targeting-pack-2.1 separately

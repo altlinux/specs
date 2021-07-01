@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sdkversion 5.0.103
-%define coreversion 5.0.3
+%define major 5.0
+%define sdkversion 5.0.204
+%define coreversion 5.0.7
 %define apprefversion 5.0.0
 %define netstandartversion 2.1.0
 
 Name: dotnet-bootstrap-5.0
-Version: 5.0.3
+Version: 5.0.7
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -18,10 +19,10 @@ Group: Development/Other
 # To check we manually update download url
 # from https://github.com/dotnet/core/blob/master/release-notes/5.0/5.0.2/5.0.2.md
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/a2052604-de46-4cd4-8256-9bc222537d32/a798771950904eaf91c0c37c58f516e1/dotnet-sdk-5.0.103-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/8d4759e7-b95e-4934-854b-088a3c719d47/bf4a2474c123ccf99405e9375d3439da/dotnet-sdk-5.0.204-linux-x64.tar.gz
 Source: %name-%version.tar
 
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/5c2e5668-d7f9-4705-acb0-04ceeda6dadf/4eca3d1ffd92cb2b5f9152155a5529b4/dotnet-sdk-5.0.103-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/36fbba7c-ae8f-4ae2-82f4-0ef93688fbb9/901237fc7af7b1b14ae4620c3d5fe85e/dotnet-sdk-5.0.204-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -46,8 +47,12 @@ BuildRequires: libkrb5
 # there are icu detection in a version range
 Requires: libicu
 
+# LTS provides
 Provides: dotnet-bootstrap-runtime = %coreversion
 Provides: dotnet-bootstrap-sdk = %sdkversion
+
+Provides: dotnet-bootstrap-runtime-%major = %coreversion
+Provides: dotnet-bootstrap-sdk-%major = %sdkversion
 
 %description
 This package contains full .NET 5.0 SDK binaries, needed for bootstrap build.
@@ -135,6 +140,15 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.7-alt1
+- new version 5.0.7 (with rpmrb script)
+- CVE-2021-31204: .NET Core Elevation of Privilege Vulnerability
+- CVE-2021-31957: ASP.NET Denial of Service Vulnerability
+
+* Sat Apr 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt1
+- .NET 5.0.5 and .NET SDK 5.0.202
+- CVE-2021-26701: .NET Core Remote Code Execution Vulnerability
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.3-alt1
 - .NET 5.0.3 and .NET SDK 5.0.103
 - CVE-2021-1721: .NET Core Denial of Service Vulnerability
