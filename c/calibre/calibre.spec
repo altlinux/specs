@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 4.23.0
-Release: alt2
+Release: alt3
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -27,6 +27,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 1.9.19
 
 AutoReq:yes,nopython
+
+# Starting with ICU 68 (2020q4), there is no longer TRUE and FALSE defines in public header files
+# https://unicode-org.github.io/icu/userguide/dev/codingguidelines.html
+%add_optflags -DU_DEFINE_FALSE_AND_TRUE=1
 
 # FIXME: hack
 %add_python3_req_skip calibre.ebooks.markdown.__main__
@@ -172,6 +176,9 @@ find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/python2$|#!/usr/bin/py
 # fix default libdir
 %__subst "s|/usr/lib|%_libdir|" setup/build_environment.py
 
+# drop bool override
+%__subst "s|typedef unsigned char bool;||" src/calibre/utils/matcher.c
+
 %build
 export CALIBRE_PY3_PORT=1
 export SIP_BIN=sip3
@@ -212,6 +219,9 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 4.23.0-alt3
+- fix build with ICU >= 68
+
 * Tue Feb 16 2021 Vitaly Lipatov <lav@altlinux.ru> 4.23.0-alt2
 - drop python2 requires
 
