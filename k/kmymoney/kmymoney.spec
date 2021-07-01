@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 5.1.2
-Release: alt1
+Release: alt2
 
 Summary: A Personal Finance Manager for KDE
 Summary(ru_RU.UTF-8): Учёт финансов под KDE
@@ -376,6 +376,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Thu Jul 01 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt2
+- Complete Russian localization (thanks Olesya Gerasimenko).
+
 * Fri Jun 25 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt1
 - New version.
 
