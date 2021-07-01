@@ -6,7 +6,7 @@ BuildRequires: perl(B/Deparse.pm) perl(Data/Dump.pm) perl(Exporter.pm) perl(ExtU
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.240
+Version: 0.241
 Release: alt1
 Summary: Dump Perl data structures
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0.241-alt1
+- automated CPAN update
+
 * Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.240-alt1
 - automated CPAN update
 
