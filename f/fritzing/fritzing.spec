@@ -1,6 +1,6 @@
 Name: fritzing
-Version: 0.9.4
-Release: alt2
+Version: 0.9.6
+Release: alt1
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv3, CC-BY-SA-3.0
@@ -13,19 +13,20 @@ Source0: %name-%version.tar
 Source1: %name-parts.tar
 # Need to refresh at every update of fritzing-parts
 # Execute Fritzing -db parts.db in fritzing-parts directory
+# 1. Install new version of Fritzing and parts
+# 2. cd /usr/share/fritzing/fritzing-parts/core
+# 3. git init . ; git add . ; git commit
+# 4. Fritzing . -db ~/parts.db
+# 5. ???
+# 6. PROFIT!!!
 Source2: parts.db
 
 Patch: fritzing-desktop-file-translation.patch
 
-# Translations
-Patch1: 430dc369b4418f783aa6e367ea5e2dcfdf38a2cf.patch
-# Fix building with libgit2 >= 1.0
-Patch2: 472951243d70eeb40a53b1f7e16e6eab0588d079.patch
-
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires: boost-devel-headers desktop-file-utils gcc-c++ glibc-devel-static
-BuildRequires: phonon-devel rpm-build-python3 rpmbuild-helper-desktop
+BuildRequires: rpm-build-python3 rpmbuild-helper-desktop zlib-devel
 BuildRequires: rpmbuild-helper-sugar-activity ruby ruby-stdlibs qt5-tools
 BuildRequires: libgit2-devel qt5-base-devel qt5-svg-devel qt5-serialport-devel
 
@@ -61,8 +62,6 @@ This package contains shared data files for Fritzing.
 sed -i 's/LIBGIT_STATIC = true/LIBGIT_STATIC = false/' phoenix.pro
 
 %patch -p1
-%patch1 -p1
-%patch2 -p1
 
 # make sure that russian translation will be removed
 rm translations/fritzing_ru.qm
@@ -100,6 +99,9 @@ install -m0644 %SOURCE2 "%buildroot/%_datadir/%name/%name-parts/parts.db"
 %_datadir/%name
 
 %changelog
+* Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt1
+- Build new version (Closes: #40330).
+
 * Tue Nov 03 2020 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt2
 - Fix building with libgit2 >= 1.0.
 
