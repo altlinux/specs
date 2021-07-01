@@ -1,8 +1,8 @@
 %define oname netifaces
 
 Name: python3-module-%oname
-Version: 0.10.9
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: Portable network interface information
 
@@ -46,6 +46,9 @@ data provided by the socket options is normally less complete.
 %python3_sitelibdir/%oname.*.so
 
 %changelog
+* Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Build new version.
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.9-alt2
 - Drop python2 support.
 
