@@ -3,13 +3,13 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global githash 9883b981ab5103cc6944fbf8f3b973994777350f
 Name:          aws-sdk-java
 Version:       1.11.3
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       AWS SDK for Java
 # Some source files are without license headers
 # reported @ https://github.com/aws/aws-sdk-java/issues/719
@@ -827,7 +827,7 @@ done
 # Tests require networking and unavailable test deps:
 # com.github.tomakehurst:wiremock:1.55
 # nl.jqno.equalsverifier:equalsverifier:1.7.5
-%mvn_build -sf
+%mvn_build -sf -j
 
 %install
 %mvn_install
@@ -933,10 +933,13 @@ done
 %files waf -f .mfiles-aws-java-sdk-waf
 %files workspaces -f .mfiles-aws-java-sdk-workspaces
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+#files javadoc -f .mfiles-javadoc
+#doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 1.11.3-alt2_7jpp8
+- build w/o javadoc (out of memory on i586)
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_7jpp8
 - new version
 
