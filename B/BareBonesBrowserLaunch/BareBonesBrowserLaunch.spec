@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          BareBonesBrowserLaunch
 Version:       3.1
-Release:       alt1_19jpp8
+Release:       alt1_22jpp11
 Summary:       Simple library to launch a browser window from Java
 License:       Public Domain
 URL:           http://www.centerkey.com/java/browser/
@@ -50,6 +50,9 @@ rm -rf doc/*
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1-alt1_22jpp11
+- jvm11 build, added unzip BR
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_19jpp8
 - fc update
 
