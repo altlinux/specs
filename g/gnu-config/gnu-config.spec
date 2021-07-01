@@ -1,5 +1,5 @@
 Name: gnu-config
-Version: 2021.05.05
+Version: 2021.06.03
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
@@ -36,6 +36,9 @@ install -pm644 doc/config.guess.1 doc/config.sub.1 %buildroot%_man1dir/
 %_man1dir/*.1*
 
 %changelog
+* Fri Jun 04 2021 Dmitry V. Levin <ldv@altlinux.org> 2021.06.03-alt1
+- 2021-05-05 -> 2021-06-03.
+
 * Wed May 05 2021 Dmitry V. Levin <ldv@altlinux.org> 2021.05.05-alt1
 - 2021-03-10 -> 2021-05-05.
 
