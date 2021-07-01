@@ -1,14 +1,14 @@
 %define dist Net-Telnet
 Name: perl-Net-Telnet
-Version: 3.04
-Release: alt3
+Version: 3.05
+Release: alt1
 
 Summary: Script telnetable connections
 License: GPL
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JR/JROGERS/Net-Telnet-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JR/JROGERS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ to specify a time-out and to wait for patterns to appear in the
 stream, such as the prompt from a shell.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +39,9 @@ stream, such as the prompt from a shell.
 %perl_vendor_privlib/Net*
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 3.05-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.04-alt3
 - Reverted previous change.
 
