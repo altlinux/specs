@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jtoaster
 Version:       1.0.5
-Release:       alt2_12jpp8
+Release:       alt3_12jpp11
 Summary:       Java utility class for swing applications
 License:       ASL 2.0
 URL:           http://jtoaster.sourceforge.net/
@@ -50,12 +50,12 @@ mv ./\ com/nitido/utils/toaster/Toaster.java src/com/nitido/utils/toaster/
 
 %build
 
-%javac -encoding UTF-8 $(find src -type f -name "*.java")
+%javac -source 8 -target 8 -encoding UTF-8 $(find src -type f -name "*.java")
 (
   cd src
   %jar cvf ../%{name}.jar $(find . -name "*.class")
 )
-%javadoc -d docs -encoding UTF-8 $(find src -type f -name "*.java")
+%javadoc -source 8 -d docs -encoding UTF-8 $(find src -type f -name "*.java")
 
 %install
 
@@ -78,6 +78,10 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}/
 %doc --no-dereference apache2.0_license.txt
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt3_12jpp11
+- java11 build
+- added BR: unzip
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_12jpp8
 - new version
 
