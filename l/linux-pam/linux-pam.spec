@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.5.1
+Version: 1.5.1.0.43.f220
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -179,10 +179,18 @@ find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
 	%{subst_enable nls} \
 	%{subst_enable static} \
 	#
-%make_build sepermitlockdir=%_lockdir/sepermit servicedir=%_unitdir
+%make_build \
+	pkgconfigdir=%_pkgconfigdir \
+	sepermitlockdir=%_lockdir/sepermit \
+	servicedir=%_unitdir \
+	#
 
 %install
-%makeinstall_std sepermitlockdir=%_lockdir/sepermit servicedir=%_unitdir
+%makeinstall_std \
+	pkgconfigdir=%_pkgconfigdir \
+	sepermitlockdir=%_lockdir/sepermit \
+	servicedir=%_unitdir \
+	#
 
 # Relocate development libraries from /%_lib/ to %_libdir/.
 mkdir -p %buildroot%_libdir
@@ -287,6 +295,7 @@ done
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libpam-devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*.pc
 %_man3dir/*
 %dir %docdir
 %docdir/PAM*
@@ -340,6 +349,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Tue Jun 29 2021 Dmitry V. Levin <ldv@altlinux.org> 1.5.1.0.43.f220-alt1
+- v1.5.1 -> v1.5.1-43-gf220cace.
+
 * Tue Nov 24 2020 Dmitry V. Levin <ldv@altlinux.org> 1.5.1-alt1
 - v1.5.0 -> v1.5.1.
 
