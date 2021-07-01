@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Data-Dump
 Name: perl-%dist
-Version: 1.23
+Version: 1.25
 Release: alt1
 
 Summary: Pretty printing of data structures
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GA/GAAS/Data-Dump-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GA/GARU/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ and produces a string as its result. The string contains Perl code that,
 when "eval"ed, produces a deep copy of the original arguments.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +31,13 @@ when "eval"ed, produces a deep copy of the original arguments.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/Data
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 1.25-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
 - automated CPAN update
 
