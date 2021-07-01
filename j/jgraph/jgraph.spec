@@ -1,5 +1,5 @@
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-default
 # Copyright (c) 2000-2011, JPackage Project
 # All rights reserved.
 #
@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           jgraph
 Version:        5.12.1.0
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Epoch:          0
 Summary:        JGraph Diagram Component
 License:        LGPLv2+
@@ -41,9 +41,10 @@ Group:          Development/Java
 URL:            http://sourceforge.net/projects/jgraph/
 Source0:        http://downloads.sourceforge.net/sourceforge/jgraph/jgraph-5.12.1.0-lgpl-src.jar
 Patch0:         jgraph-5.12.1.0-javadoc-crosslink.patch
-BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires:  jpackage-utils 
 BuildRequires:  ant >= 0:1.7.1
 BuildRequires:  java-javadoc
+BuildRequires:  unzip
 BuildArch:      noarch
 Source44: import.info
 
@@ -72,7 +73,7 @@ perl -pi -e 's/\r$//g' LICENSE
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -Dbuild.sysclasspath=only
 
 %install
 
@@ -96,6 +97,10 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0:5.12.1.0-alt2_2jpp6
+- java11 build
+- added BR: unzip
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.12.1.0-alt1_2jpp6
 - new jpp relase
 
