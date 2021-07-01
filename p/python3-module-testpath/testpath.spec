@@ -1,8 +1,8 @@
 %global oname testpath
 
 Name:           python3-module-%oname
-Version:        0.3.1
-Release:        alt2
+Version:        0.5.0
+Release:        alt1
 Summary:        Test utilities for code working with files and commands
 BuildArch:      noarch
 License:        MIT
@@ -55,6 +55,9 @@ python3 -m pytest -v
 %doc doc/_build/html
 
 %changelog
+* Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
+- Automatically updated to 0.5.0.
+
 * Tue Jun 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt2
 - Drop python2 support.
 
