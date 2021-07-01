@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Abstract
 Name: perl-%dist
-Version: 3.008
+Version: 3.009
 Release: alt1
 
 Summary: unified interface to mail representations
@@ -9,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Abstract-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,7 +34,7 @@ All modules installed under the "Email::Abstract" hierarchy will be
 automatically picked up and used.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -43,10 +43,13 @@ automatically picked up and used.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README
 %perl_vendor_privlib/Email
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 3.009-alt1
+- automated CPAN update
+
 * Mon Dec 29 2014 Igor Vlasenko <viy@altlinux.ru> 3.008-alt1
 - automated CPAN update
 
