@@ -1,6 +1,6 @@
 Name: zstd
 Version: 1.5.0
-Release: alt1
+Release: alt2
 Summary: Zstd compression library and tools
 License: BSD-3-Clause
 Group: Archiving/Compression
@@ -76,7 +76,7 @@ done
 %install
 export CC=false CXX=false # nothing should be compiled or linked during install
 for dir in lib programs; do
-	%makeinstall_std -C $dir INSTALL_SCRIPT=: %make_params
+	%makeinstall_std -C $dir %make_params
 done
 %{?!_disable_pzstd:%makeinstall_std -C contrib/pzstd %make_params}
 
@@ -122,6 +122,10 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 01 2021 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt2
+- Removed zstdgrep.1 and zstdless.1 manpages that are already packaged
+  in gzip-utils along with scripts themselves.
+
 * Fri May 14 2021 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt1
 - 1.4.9 -> 1.5.0.
 
