@@ -2,7 +2,7 @@ Epoch: 0
 Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: zip
+BuildRequires: zip unzip
 # END SourceDeps(oneline)
 %filter_from_requires /.etc.java.jing-trang.conf/d
 %filter_from_requires /^.usr.bin.run/d
@@ -22,7 +22,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jing-trang
 Version:        20151127
-Release:        alt3_8jpp8
+Release:        alt4_8jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
@@ -190,6 +190,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0:20151127-alt4_8jpp8
+- added BR: unzip
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0:20151127-alt3_8jpp8
 - build with compat relaxngDatatype
 
