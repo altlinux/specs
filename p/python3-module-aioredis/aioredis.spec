@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: asyncio (PEP 3156) Redis client library
 License: MIT
@@ -19,11 +19,13 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: /proc
 BuildRequires: redis
 BuildRequires: python3(async_timeout)
 BuildRequires: python3(hiredis)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -51,12 +53,6 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 cat > tox.ini <<EOF
 [testenv]
 usedevelop=True
-whitelist_externals =
-    /bin/cp
-    /bin/sed
-commands_pre =
-    /bin/cp %_bindir/py.test3 {envbindir}/py.test
-    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
 commands =
     {envbindir}/py.test {posargs:-vra}
 EOF
@@ -71,7 +67,7 @@ export REDIS_7935=yes
 export TOX_TESTENV_PASSENV='REDIS_7935'
 %endif
 
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
 %doc README.rst CHANGES.txt LICENSE
@@ -79,5 +75,8 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Jul 01 2021 Stanislav Levin <slev@altlinux.org> 1.3.1-alt2
+- Fixed FTBFS (Redis 5 -> 6).
+
 * Thu Oct 15 2020 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus.
