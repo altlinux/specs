@@ -1,6 +1,6 @@
 Name: tuxpaint
-Version: 0.9.25
-Release: alt2
+Version: 0.9.26
+Release: alt1
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -111,6 +111,9 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.26-alt1
+- Build new version.
+
 * Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt2
 - Fixed FTBFS.
 
