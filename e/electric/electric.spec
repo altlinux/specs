@@ -1,7 +1,7 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           electric
 Version:        8.09
-Release:        alt1_18jpp8
+Release:        alt2_18jpp8
 Summary:        Sophisticated ASIC and MEM CAD System
 
 License:        GPLv3
@@ -109,6 +109,9 @@ cp -rp apidoc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 8.09-alt2_18jpp8
+- added BR: unzip
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_18jpp8
 - fc update
 
