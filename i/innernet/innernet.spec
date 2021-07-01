@@ -3,7 +3,7 @@
 
 Name: innernet
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: a private network system that uses WireGuard under the hood
 Summary(ru_RU.UTF-8): система построения сетей VPN на базе WireGuard
@@ -32,7 +32,7 @@ BuildRequires: /proc
 
 # Automatically added by buildreq on Sat Jun 19 2021
 # optimized out: ca-trust clang10.0 clang10.0-libs glibc-kernheaders-generic glibc-kernheaders-x86 libsasl2-3 llvm10.0-libs llvm11.0-libs pkg-config python-modules python2-base python3 python3-base python3-module-mpl_toolkits python3-module-paste ruby ruby-stdlibs rust sh4
-BuildRequires: clang10.0-devel libsqlite3-devel rust-cargo
+BuildRequires: clang-devel libsqlite3-devel rust-cargo
 
 # Extra automatic requires, need to remove (no lsb-core on ppc64le)
 #BuildRequires: lsb-core
@@ -164,5 +164,8 @@ install -m 0700 -d %buildroot/var/lib/%{name}-server
 
 
 %changelog
+* Thu Jul 01 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3.1-alt2
+- Update BuildRequires to use clang 11.0
+
 * Thu Jun 24 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3.1-alt1
 - Initial build for ALT Linux Sisyphus
