@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.3.15
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: Let your Python tests travel through time
 License: Apache-2.0
 Group: Development/Python3
@@ -53,6 +53,9 @@ py.test3 -vra
 %python3_sitelibdir/freezegun-*.egg-info/
 
 %changelog
+* Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.15-alt2
 - Drop python2 support.
 
