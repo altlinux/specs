@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 21.01.0
+Version: 21.02.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -63,7 +63,7 @@ Requires: kf5-qqc2-desktop-style
 Requires: kde5-plasma-applet-places-widget
 Requires: plasma5-kde-gtk-config kf5-baloo plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass
 Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-integration
-#Requires: plasma5-disks
+Requires: plasma5-disks
 Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd kde5-kgpg
 Requires: plasma5-kmenuedit plasma5-kgamma plasma5-thunderbolt
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
@@ -85,12 +85,13 @@ Requires: plasma5-workspace-wallpapers
 Requires: plasma5-kwrited
 Requires: plasma5-user-manager kde5-ksystemlog
 Requires: kde5-konversation kde5-kate kde5-krdc
-Requires: kde5-pim kde5-pim-addons kde5-kcron kde5-kruler kde5-ffmpegthumbs
+Requires: kde5-pim kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kde5-connect
 Requires: kde5-krfb
 Requires: kde5-kdf
 Requires: kid3-ui-kde5
 Requires: kde5-kipi-plugins-core
+Requires: kde5-graphics-thumbnailers
 %description -n kde5-big
 %summary
 
@@ -105,6 +106,7 @@ Requires: kde5-printing
 Requires: kde5-scanning
 #
 Requires: plasma5-discover-maxi
+#Requires: plasma5-desktop-maxi
 Requires: kde5-konqueror kde5-keditbookmarks
 Requires: kde5-kfloppy
 Requires: kde5-dragon
@@ -177,7 +179,7 @@ Requires: kde5-kontact kde5-pim-data-exporter
 Requires: kde5-email-client
 Requires: kde5-akregator kde5-kalarm kde5-knotes
 Requires: kde5-korganizer kde5-akonadi-calendar-tools
-Requires: kde5-kaddressbook
+Requires: kde5-kaddressbook kde5-pim-addons
 ##Requires:  kde5-blogilo
 # akonadi based email client
 #Requires: kde5-akonadi-import-wizard kde5-mbox-importer kde5-pim-sieve-editor kde5-mbox-importer kde5-pim-sieve-editor kde5-grantlee-editor
@@ -200,6 +202,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 21.02.0-alt1
+- update requires
+
 * Mon Apr 05 2021 Sergey V Turchin <zerg@altlinux.org> 21.01.0-alt1
 - require kde5-display-manager instead of sddm
 - temporary discard plasma5-disks
