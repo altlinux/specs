@@ -1,9 +1,9 @@
-%def_enable clang
+%def_disable clang
 
 %define repo dmusic
 
 Name: deepin-music
-Version: 6.1.4
+Version: 6.1.7
 Release: alt1
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+ and LGPL-2.1+
@@ -74,15 +74,17 @@ export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
 
-%cmake_insource \
+%cmake \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DLIB_INSTALL_DIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%ninja_build
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 %find_lang %name
 
 %files -f %name.lang
@@ -104,6 +106,12 @@ export READELF="llvm-readelf"
 %_libdir/*.a
 
 %changelog
+* Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 6.1.7-alt1
+- New version (6.1.7).
+- Built with gcc10 instead clang12.
+- spec:
+  + Adapted to new cmake macros.
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 6.1.4-alt1
 - New version (6.1.4) with rpmgs script.
 
