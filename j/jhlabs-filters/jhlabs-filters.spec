@@ -1,6 +1,6 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-default
 # Copyright (c) 2000-2010, JPackage Project
 # All rights reserved.
 #
@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           jhlabs-filters
 Version:        2.0
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        Java Image Filters
 
 Group:          Development/Java
@@ -43,10 +43,9 @@ Source0:        http://www.jhlabs.com/ip/filters/Filters.zip
 Patch0:         jhlabs-filters-build.patch
 BuildArch:      noarch
 
-BuildRequires: jpackage-utils >= 0:5.0.0
+BuildRequires: jpackage-utils
 BuildRequires: ant
-
-Requires: jpackage-utils >= 0:5.0.0
+BuildRequires: unzip
 
 %description
 A large collection of Java2D image filters, including blur,
@@ -86,6 +85,10 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 2.0-alt2_1jpp6
+- java11 build
+- added BR: unzip
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_1jpp6
 - new version
 
