@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Class-Accessor-Class
-Version: 0.503
+Version: 0.504
 Release: alt1
 
 Summary: simple class variable accessors
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Class-Accessor-Class/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Class-Accessor-Class-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Sep 08 2008 (-bi)
 BuildRequires: perl-Class-Accessor perl-Test-Pod perl-Test-Pod-Coverage perl(parent.pm)
@@ -43,7 +43,7 @@ benefit, a class that isa Class::Accessor::Class is also a Class::Accessor
 and can use its methods.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -52,9 +52,12 @@ and can use its methods.
 
 %files
 %perl_vendor_privlib/Class*
-%doc Changes LICENSE README
+%doc Changes README
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0.504-alt1
+- automated CPAN update
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.503-alt1
 - automated CPAN update
 
