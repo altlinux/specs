@@ -5,7 +5,7 @@
 
 Name: custodia
 Version: 0.6.0
-Release: alt6
+Release: alt7
 
 Summary: A tool for managing secrets
 License: GPLv3+
@@ -152,6 +152,9 @@ fi
 %_bindir/custodia-cli
 
 %changelog
+* Thu Jul 01 2021 Stanislav Levin <slev@altlinux.org> 0.6.0-alt7
+- Fixed FTBFS(flaky test).
+
 * Mon Mar 16 2020 Stanislav Levin <slev@altlinux.org> 0.6.0-alt6
 - Added missing Provides.
 
