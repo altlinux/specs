@@ -9,7 +9,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.0.4
-Release: alt1.3
+Release: alt1.4
 Group: Sciences/Geosciences
 
 License: MIT
@@ -28,7 +28,7 @@ Patch8: %name-3.0.4-arch-jpeg2000-issue-vendor.patch
 
 %define libname lib%name
 
-BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel swig
+BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel perl-devel postgresql-devel swig
 
 BuildRequires: chrpath libnetcdf-devel
 BuildRequires: libproj-devel
@@ -36,6 +36,7 @@ BuildRequires: perl-Encode
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python3-module-genshi
 BuildRequires: python3-module-xlwt
+BuildRequires: libxerces-c-devel
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
@@ -254,6 +255,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Thu Jul 01 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1.4
+- FTBFS: build with libxerces-c-devel (ALT #40327)
+
 * Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 3.0.4-alt1.3
 - fixed ftbfs with archlinux patch, dropped -fpermissive quick hack
 
