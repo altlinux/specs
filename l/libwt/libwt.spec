@@ -2,21 +2,23 @@
 
 Name: libwt
 Version: 4.5.0
-Release: alt1
+Release: alt2
+
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
+
 License: GPL
 Group: Development/C++
 Url: https://www.webtoolkit.eu
 
 # Source-url: https://github.com/emweb/wt/archive/%version.tar.gz
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
-BuildPreReq: libssl-devel libmariadb-devel
-
-# Automatically added by buildreq on Mon Nov 26 2018
-# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig fontconfig-devel glib2-devel glibc-devel-static libGL-devel libX11-devel libcom_err-devel libfreetype-devel libkrb5-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libssl-devel libstdc++-devel libunixODBC-devel libunixODBC-devel-compat pkg-config python-base python-modules python3 python3-base zlib-devel
-BuildRequires: boost-asio-devel boost-filesystem-devel boost-interprocess-devel boost-program_options-devel doxygen graphviz libharu-devel libpango-devel libqt4-devel libqt4-webkit-devel phonon-devel python3-dev
+BuildRequires: rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
+BuildRequires: libsqlite3-devel libmariadb-devel libunixODBC-devel
+BuildRequires: libssl-devel zlib-devel libpcre-devel
+BuildRequires: boost-asio-devel boost-filesystem-devel boost-interprocess-devel boost-program_options-devel
+BuildRequires: libharu-devel libpango-devel libpng-devel
 
 %description
 Wt (pronounced as witty) is a C++ library for developing web applications.
@@ -138,37 +140,19 @@ you can focus on actual functionality with a rich set of feature-complete widget
 
 
 %prep
-%setup -q -n %oname-%version
+%setup
 
 %build
-
-ADD_CFLAGS=`pkg-config --cflags pango`
-
-%add_optflags -I%_includedir/pcre -fno-strict-aliasing ${ADD_CFLAGS}
-cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX=64 \
-%endif
-	-DCMAKE_BUILD_TYPE:STRING=Release \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+%cmake_insource \
 	-DPCRE_INCLUDE_DIR:STRING="%optflags" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DPOCO_UNBUNDLED:BOOL=ON \
-	-DWT_CPP_11_MODE=-std=c++0x \
-	.
+	-DWT_CPP_11_MODE=-std=c++0x
 
 %make_build VERBOSE=1
 
 %install
 %makeinstall_std
-
-%if %_lib == lib64
-mkdir -p %buildroot/%_libdir
-mv %buildroot/usr/lib/* %buildroot/%_libdir
-%endif
 
 
 %files
@@ -177,6 +161,7 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 %exclude %_libdir/lib*test*.so.*
 %exclude %_libdir/lib*http*.so.*
 %_libdir/lib*.so.*
+%_datadir/Wt/
 
 %files dbo
 %_libdir/libwtdbo.so.*
@@ -199,11 +184,15 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 %_libdir/lib*.so
 %exclude %_libdir/lib*test*.so
 %dir %_sysconfdir/wt/
+%_libdir/cmake/wt/
 %config(noreplace) %_sysconfdir/wt/wt_config.xml
 
 #files docs
 
 %changelog
+* Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 4.5.0-alt2
+- cleanup spec, fix build requires
+
 * Mon Jan 25 2021 Pavel Vainerman <pv@altlinux.ru> 4.5.0-alt1
 - new version (4.5.0) with rpmgs script
 
