@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Data-GUID
-Version:        0.049
-Release:        alt1_10
+Version:        0.050
+Release:        alt1
 Summary:        Globally unique identifiers
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Data-GUID
-Source0:        https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Data-GUID-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Data-GUID-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
@@ -50,10 +50,12 @@ make test
 
 %files
 %doc Changes README
-%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0.050-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1_10
 - update to new release by fcimport
 
