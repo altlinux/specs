@@ -1,11 +1,14 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xmpcore
 Version:       5.1.2
-Release:       alt1_13jpp8
+Release:       alt1_16jpp11
 Summary:       Java XMP Library
 License:       BSD
 URL:           http://www.adobe.com/devnet/xmp.html
@@ -61,6 +64,9 @@ sed -i 's/\r//' BSD-License.txt
 %doc --no-dereference BSD-License.txt
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 5.1.2-alt1_16jpp11
+- jvm11 build, added unzip BR
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_13jpp8
 - fc update
 
