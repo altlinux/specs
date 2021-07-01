@@ -1,12 +1,15 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jmock
 Version:        2.12.0
-Release:        alt1_2jpp11
+Release:        alt1_3jpp11
 Summary:        Java library for testing code with mock objects
 License:        BSD
 
@@ -151,7 +154,7 @@ This package contains javadoc for %{name}.
 
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s
 
 
 %install
@@ -180,6 +183,9 @@ This package contains javadoc for %{name}.
 
 
 %changelog
+* Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_3jpp11
+- jvm11 build, added unzip BR
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_2jpp11
 - new version
 
