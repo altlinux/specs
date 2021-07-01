@@ -1,6 +1,6 @@
 Name: zstd
-Version: 1.4.5
-Release: alt2
+Version: 1.5.0
+Release: alt1
 Summary: Zstd compression library and tools
 License: BSD-3-Clause
 Group: Archiving/Compression
@@ -89,7 +89,7 @@ done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 if grep -Frsl /usr/local %buildroot; then
-	printf >&2 '%s leaked into %s\n' /usr/local %buildroot
+	printf >&2 '%%s leaked into %%s\n' /usr/local %buildroot
 	exit 1
 fi
 
@@ -122,6 +122,15 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri May 14 2021 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt1
+- 1.4.9 -> 1.5.0.
+
+* Tue Mar 02 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.9-alt1
+- 1.4.8 -> 1.4.9.
+
+* Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.8-alt1
+- 1.4.5 -> 1.4.8.
+
 * Tue Jun 23 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.5-alt2
 - Fixed /usr/local leaking into installed files.
 
