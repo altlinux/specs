@@ -2,7 +2,7 @@
 %define cppsoversion 6
 
 Name: flac
-Version: 1.3.3.0.62.ce6d
+Version: 1.3.3.0.79.37d1
 Release: alt1
 
 Summary: An encoder/decoder for the Free Lossless Audio Codec
@@ -201,6 +201,9 @@ rm %buildroot%flacdocs/FLAC.tag
 %endif
 
 %changelog
+* Sat Jun 26 2021 Dmitry V. Levin <ldv@altlinux.org> 1.3.3.0.79.37d1-alt1
+- 1.3.3-62-gce6dd6b5 -> 1.3.3-79-g37d1a620.
+
 * Thu Nov 19 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.3.0.62.ce6d-alt1
 - 1.3.3 -> 1.3.3-62-gce6dd6b5.
 - Disabled generation and packaging of API documentation.
