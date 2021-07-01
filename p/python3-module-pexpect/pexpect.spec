@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 4.8.0
-Release: alt1
+Release: alt2
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
 
@@ -54,6 +54,7 @@ This package contains documentation for %oname.
 # fix some incompatibility
 %__subst 's|"time"|"time -p true"|' tests/test_async.py
 %__subst 's|"python"|"python3"|' pexpect/replwrap.py
+%__subst "s|'python'|'python3'|" tests/*.py
 
 fix_env_python () {
     # change shebang /usr/bin/env python -> /usr/bin/$PYTHON
@@ -110,6 +111,9 @@ py.test3 -v
 %endif
 
 %changelog
+* Fri Jul 02 2021 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt2
+- run python3 from tests
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt1
 - new version 4.8.0 (with rpmrb script)
 - temp. disable doc subpackage build (wait for fixes for sphinx)
