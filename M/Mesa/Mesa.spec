@@ -76,7 +76,7 @@
 %endif
 
 Name: Mesa
-Version: 21.1.3
+Version: 21.1.4
 Release: alt1
 Epoch: 4
 License: MIT
@@ -97,7 +97,7 @@ BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-dev
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0 clang-devel >= 11.0.0
-BuildRequires: glslang rpm-build-python3
+#BuildRequires: glslang rpm-build-python3
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -529,6 +529,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jul 01 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.1.4-alt1
+- 21.1.4
+
 * Tue Jun 22 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.1.3-alt1
 - 21.1.3
 
