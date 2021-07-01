@@ -55,7 +55,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.32.0
+Version: 1.32.2
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -618,6 +618,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Jul 01 2021 Mikhail Efremov <sem@altlinux.org> 1.32.2-alt1
+- Updated to 1.32.2 (fixes: CVE-2020-13529).
+
 * Mon Jun 21 2021 Mikhail Efremov <sem@altlinux.org> 1.32.0-alt1
 - Updated to 1.32.0.
 
