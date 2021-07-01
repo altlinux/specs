@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 5.3.0.3
-Release: alt2
+Version: 5.4.7
+Release: alt1
 Summary: Deepin Polkit Agent
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -38,7 +38,9 @@ sed -i 's|lupdate|lupdate-qt5|' lupdate.sh
 # sed -i 's|/usr/lib|/usr/libexec|' dde-polkit-agent.pro polkit-dde-authentication-agent-1.desktop \
 #     pluginmanager.cpp
 # https://github.com/linuxdeepin/developer-center/issues/1721
-# sed -i 's/bool is_deepin = true/bool is_deepin = false/' policykitlistener.cpp
+sed -i 's/bool is_deepin = true/bool is_deepin = false/' policykitlistener.cpp
+# https://github.com/linuxdeepin/dde-polkit-agent/issues/26
+sed -i '/setCancel/d' policykitlistener.cpp
 
 %build
 %qmake_qt5 \
@@ -65,6 +67,9 @@ sed -i 's|lupdate|lupdate-qt5|' lupdate.sh
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.7-alt1
+- New version (5.4.7).
+
 * Tue Apr 27 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.0.3-alt2
 - Changed location of the libraries.
 
