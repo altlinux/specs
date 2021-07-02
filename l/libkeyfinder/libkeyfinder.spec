@@ -1,6 +1,8 @@
+%define _cmake__builddir BUILD
+
 Name: libkeyfinder
 Version: 2.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: Musical key detection for digital audio
 Summary(ru_RU.UTF-8): Обнаружение музыкального ключа для цифрового звука
@@ -10,7 +12,7 @@ Url: https://mixxxdj.github.io/libkeyfinder
 
 Source: https://github.com/mixxxdj/libkeyfinder/archive/%version/%name-%version.tar.gz
 
-BuildPreReq: rpm-build-ninja
+# BuildPreReq: rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: libfftw3-devel
@@ -39,7 +41,6 @@ sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 
 %build
 %cmake \
-    -GNinja \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
 #
 %cmake_build
@@ -57,5 +58,8 @@ sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 %_libdir/cmake/KeyFinder/*
 
 %changelog
+* Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.4-alt1.1
+- Adapted build for p9 branch.
+
 * Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.4-alt1
 - Initial build for ALT Sisyphus.

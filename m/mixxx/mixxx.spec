@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _cmake__builddir BUILD
 
 Name: mixxx
 Version: 2.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -13,12 +14,11 @@ Url: http://mixxx.org
 # https://github.com/mixxxdj/mixxx.git
 Source: %name-%version.tar
 
-# ExcludeArch: armh
-
 Patch1: %name-2.2.4-alt-find-shout2.patch
 Patch2: %name-2.2.4-alt-rpath.patch
 
-BuildPreReq: rpm-macros-qt5 rpm-build-ninja
+BuildPreReq: rpm-macros-qt5
+# BuildPreReq: rpm-build-ninja
 BuildRequires: flex gcc-c++ cmake libflac-devel libid3tag-devel libmad-devel
 BuildRequires: libportaudio2-devel libportmidi-devel
 BuildRequires: libsndfile-devel libtag-devel python-devel
@@ -32,7 +32,7 @@ BuildRequires: libupower-devel
 BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel qt5-x11extras-devel
 BuildRequires: liblilv-devel libsoundtouch-devel libvorbis-devel libspeex-devel libtheora-devel
 BuildRequires: liblame-devel libqtkeychain-qt5-devel libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libavdevice-devel libavfilter-devel libpostproc-devel libswscale-devel
-BuildRequires: libhidapi-devel libkeyfinder-devel
+BuildRequires: libhidapi-devel libkeyfinder-devel libssl-devel
 
 Requires: %name-data = %EVR
 Requires: qt5-sql-sqlite3
@@ -81,7 +81,6 @@ This package contains data files for Mixxx.
 
 %build
 %cmake \
-    -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
 #
 %cmake_build
@@ -118,6 +117,9 @@ mv %buildroot%_datadir/mixxx/udev/rules.d/* \
 # %_libdir/soundsourceqt5
 
 %changelog
+* Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.0-alt1.1
+- Adapted build for p9 branch.
+
 * Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.0-alt1
 - Updated to upstream release version 2.3.0 (ALT #40319).
 - Built with cmake and ninja.
