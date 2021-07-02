@@ -3,7 +3,7 @@
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 # grep -Fhwr SPDX-License-Identifier: /usr/include/linux-default/include |sort |uniq -c |sort -n
@@ -33,6 +33,8 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
 Url: http://www.kernel.org/
+
+Source1: cyclades.h
 
 # git://git.altlinux.org/gears/g/%name.git
 #Patch: %name-%version-%release.patch
@@ -200,6 +202,7 @@ for hdr_arch in %kernel_arches; do
 	[ -z "$rc" ] || exit $rc
 	find headers/"$hdr_arch"/include -name "*.install*" -delete
 	mv headers/"$hdr_arch"/include/asm{,-"$hdr_arch"}
+	install -pm644 %_sourcedir/cyclades.h headers/"$hdr_arch"/include/linux/
 	(cd headers/"$hdr_arch"/include && find -type f -exec sha1sum {} +) |
 		LC_COLLATE=C sort > "$hdr_arch".list
 	if [ -s generic.list ]; then
@@ -319,6 +322,10 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Fri Jul 02 2021 Dmitry V. Levin <ldv@altlinux.org> 5.13-alt2
+- Temporarily reintroduced <linux/cyclades.h> which is still used
+  by a few packages.
+
 * Sun Jun 27 2021 Dmitry V. Levin <ldv@altlinux.org> 5.13-alt1
 - v5.12 -> v5.13.
 
