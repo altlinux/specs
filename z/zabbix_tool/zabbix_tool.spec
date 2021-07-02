@@ -1,11 +1,13 @@
 Name:       zabbix_tool
 Version:    0.1
-Release:    alt5
+Release:    alt6
 
 Summary:    Tool for CLI interaction with the Zabbix API
+
 License:    MIT
 Group:      Development/Python3
 Url:        https://github.com/BrianGallew/zabbix_tool
+
 Packager:   Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch:  noarch
@@ -13,6 +15,8 @@ BuildArch:  noarch
 Source:     %name.tar
 Patch:      %name-alt.patch
 Patch1:     port-on-python3.patch
+
+BuildRequires: rpm-build-python3
 
 Requires:   python3-module-zabbix-api
 
@@ -37,6 +41,9 @@ install -m 755 %name %buildroot%_bindir/%name
 
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt6
+- fix build
+
 * Wed Jan 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1-alt5
 - Porting on Python3.
 
