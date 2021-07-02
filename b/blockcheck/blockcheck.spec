@@ -1,15 +1,21 @@
 Name: blockcheck
 Version: 0.0.9.8
-Release: alt1
+Release: alt2
+
 Summary: Checks Russian ISP blocking type
+
 License: MIT
 Group: Security/Networking
 Url: https://github.com/ValdikSS/blockcheck/
+
 Packager: Evgenii Terechkov <evg@altlinux.org>
+
 BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+BuildRequires: rpm-build-python3
 
 Requires: python3-module-dns python3-module-ipwhois
 
@@ -18,6 +24,7 @@ Checks Russian ISP blocking type
 
 %prep
 %setup
+
 %build
 
 %install
@@ -28,6 +35,9 @@ install -Dp -m 755 %name.py %buildroot%_bindir/%name.py
 %doc README.md we_need_your_help_isp_list.txt
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.0.9.8-alt2
+- fix build
+
 * Tue Sep 24 2019 Terechkov Evgenii <evg@altlinux.org> 0.0.9.8-alt1
 - 0.0.9.8
 
