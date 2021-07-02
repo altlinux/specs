@@ -1,12 +1,12 @@
 Name: diffstat
-Version: 1.63
+Version: 1.64
 Release: alt1
 
 Summary: An utility which provides statistics based on the output of diff
 License: MIT
 Group: Development/Other
 Url: https://invisible-island.net/diffstat/
-# ftp://ftp.invisible-island.net/pub/diffstat/diffstat-%version.tgz
+# https://invisible-mirror.net/archives/diffstat/diffstat-%version.tgz
 Source: diffstat-%version.tar
 
 Requires: diffutils
@@ -21,11 +21,16 @@ to provide a summary of the changes in large, complex patch files.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %configure --with-warnings
 %make_build
 
 %install
 %makeinstall_std
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 %make_build -k check
@@ -36,6 +41,9 @@ to provide a summary of the changes in large, complex patch files.
 %doc CHANGES COPYING README
 
 %changelog
+* Wed Jan 13 2021 Dmitry V. Levin <ldv@altlinux.org> 1.64-alt1
+- 1.63 -> 1.64.
+
 * Fri Nov 29 2019 Dmitry V. Levin <ldv@altlinux.org> 1.63-alt1
 - 1.62 -> 1.63.
 
