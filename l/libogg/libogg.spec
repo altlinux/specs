@@ -1,5 +1,5 @@
 Name: libogg
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: Ogg Bitstream Library
@@ -48,7 +48,6 @@ statically linked libogg-based software.
 
 %prep
 %setup
-sed -i 's,-O20,,g' configure*
 
 %build
 %autoreconf
@@ -59,6 +58,10 @@ sed -i 's,-O20,,g' configure*
 %makeinstall_std
 %define docdir %_docdir/%name
 install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files
 %_libdir/*.so.*
@@ -79,6 +82,9 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Fri Jun 04 2021 Dmitry V. Levin <ldv@altlinux.org> 1.3.5-alt1
+- 1.3.4 -> 1.3.5.
+
 * Sat Aug 31 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.4-alt1
 - 1.3.3 -> 1.3.4.
 
