@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.8.6
+Version: 1.8.7
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -256,6 +256,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 15 2021 Dmitry V. Levin <ldv@altlinux.org> 1.8.7-alt1
+- v1.8.6 -> v1.8.7.
+
 * Sun Nov 22 2020 Dmitry V. Levin <ldv@altlinux.org> 1.8.6-alt1
 - v1.8.5-4-g848b4889 -> v1.8.6.
 

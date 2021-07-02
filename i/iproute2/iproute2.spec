@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 5.10.0
+Version: 5.13.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -108,6 +108,15 @@ done
 %_man3dir/*
 
 %changelog
+* Tue Jun 29 2021 Dmitry V. Levin <ldv@altlinux.org> 5.13.0-alt1
+- 5.12.0 -> 5.13.0.
+
+* Tue Apr 27 2021 Dmitry V. Levin <ldv@altlinux.org> 5.12.0-alt1
+- 5.11.0 -> 5.12.0.
+
+* Tue Feb 23 2021 Dmitry V. Levin <ldv@altlinux.org> 5.11.0-alt1
+- 5.10.0 -> 5.11.0.
+
 * Tue Dec 15 2020 Dmitry V. Levin <ldv@altlinux.org> 5.10.0-alt1
 - 5.9.0 -> 5.10.0.
 
