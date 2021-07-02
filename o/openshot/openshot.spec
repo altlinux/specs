@@ -4,7 +4,7 @@
 
 Name: openshot
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -30,6 +30,8 @@ Requires: blender inkscape xdg-utils
 %add_python3_req_skip classes classes.legacy.openshot.classes images
 # should be provided by blender
 %add_python3_req_skip bpy.props
+# drop obsolete QtWebkit deps
+%add_python3_req_skip QtWebKitWidgets
 
 %define __python %nil
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
@@ -66,6 +68,9 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Fri Jul 02 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt2
+- removed QtWebKitWidgets dependency (ALT #40362)
+
 * Sun Feb 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
 - 2.5.2
 
