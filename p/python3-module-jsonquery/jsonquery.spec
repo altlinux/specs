@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Summary: Basic json -> sqlalchemy query builder
 License: MIT
@@ -17,7 +17,6 @@ Source: %{oname}-%{version}.tar.gz
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-SQLAlchemy
 BuildRequires: python3-modules-sqlite3
-BuildRequires: python3-module-pytest
 
 %py3_provides %oname
 %py3_requires json sqlalchemy
@@ -38,7 +37,6 @@ Basic json -> sqlalchemy query builder.
 %python3_install
 
 %check
-%__python3 setup.py test
 
 %files
 %doc *.rst
@@ -46,6 +44,9 @@ Basic json -> sqlalchemy query builder.
 
 
 %changelog
+* Fri Jul 02 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt4
+- drop run empty tests
+
 * Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt3
 - python2 disabled
 
