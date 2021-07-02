@@ -1,5 +1,5 @@
 Name: unrar
-Version: 5.8.5
+Version: 6.0.7
 Release: alt1
 
 Summary: RAR unarchiver
@@ -37,14 +37,15 @@ sed -ri 's/^(lib:[[space:]]+)clean[[:space:]]+/\1/' makefile
 sed -i '1i#define _UNIX' dll.hpp
 
 %build
-%make_build STRIP=touch
-%make_build clean
 %make_build lib STRIP=touch
+mv libunrar.so ..
+%make_build clean
+%make_build unrar STRIP=touch
 #make_build lib LDFLAGS+='-Wl,-soname=libunrar.so.0' STRIP=touch
 
 %install
 install -pD -m755 unrar %buildroot%_bindir/unrar
-install -D libunrar.so %buildroot%_libdir/libunrar.so
+install -D ../libunrar.so %buildroot%_libdir/libunrar.so
 install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 
 %files
@@ -60,6 +61,9 @@ install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 %_includedir/libunrar/dll.hpp
 
 %changelog
+* Fri Jul 02 2021 Fr. Br. George <george@altlinux.ru> 6.0.7-alt1
+- Autobuild version bump to 6.0.7
+
 * Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 5.8.5-alt1
 - Autobuild version bump to 5.8.5
 
