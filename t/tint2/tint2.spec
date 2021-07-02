@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tint2
-Version: 16.7
+Version: 17.0.1
 Release: alt1
 Summary: Simple panel/taskbar made for modern x window managers
 
@@ -18,7 +18,7 @@ BuildRequires: cmake gcc-c++ imlib2-devel libXcomposite-devel libXdamage-devel l
 BuildRequires: libstartup-notification-devel
 BuildRequires: libcairo-devel libpixman-devel libexpat-devel
 BuildRequires: libXdmcp-devel libXxf86vm-devel libharfbuzz-devel
-BuildRequires: libgtk+2-devel librsvg-devel
+BuildRequires: libgtk+3-devel librsvg-devel
 
 %description
 tint2 is a simple panel/taskbar made for modern x window managers.
@@ -52,6 +52,9 @@ other window managers (GNOME, KDE, etc...).
 %_datadir/mime/packages/tint2conf.xml
 
 %changelog
+* Fri Jul 02 2021 Konstantin Rybakov <kastet@altlinux.org> 17.0.1-alt1
+- Updated to upstream version 17.0.1
+
 * Tue Nov 05 2019 Konstantin Rybakov <kastet@altlinux.org> 16.7-alt1
 - Updated to upstream version 16.7 
 
