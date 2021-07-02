@@ -1,6 +1,7 @@
 Name:    kmymoney
 Version: 5.1.2
-Release: alt2
+Release: alt3
+%K5init no_altplace
 
 Summary: A Personal Finance Manager for KDE
 Summary(ru_RU.UTF-8): Учёт финансов под KDE
@@ -60,7 +61,6 @@ BuildRequires: kf5-kross-devel
 BuildRequires: kde5-kpimtextedit-devel
 BuildRequires: kf5-kparts-devel
 BuildRequires: kf5-kdiagram-devel
-BuildRequires: kf5-kdewebkit-devel
 
 BuildRequires: boost-devel
 BuildRequires: glib2-devel
@@ -101,7 +101,6 @@ The ultimate objectives of KMyMoney are...
   finance manager to use, especially for the non-technical user.
 * Familiar Features.  Intends to provide all important features
   found in the commercially-available, personal finance managers.
-
 
 %package devel
 Summary: Include files and libraries mandatory for KMyMoney development
@@ -260,10 +259,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %build
 # Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
 #export NPROCS=1
-%K5init no_altplace
 %K5build -DCMAKE_SKIP_RPATH=1 \
          -DKDE_INSTALL_METAINFODIR=%_datadir/appdata \
-         -DENABLE_WEBENGINE=OFF \
+         -DENABLE_WEBENGINE=ON \
          -DENABLE_SQLCIPHER=OFF
 
 %install
@@ -376,6 +374,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Fri Jul 02 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt3
+- Build with qt5-webengine (thanks zerg@).
+
 * Thu Jul 01 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt2
 - Complete Russian localization (thanks Olesya Gerasimenko).
 
