@@ -38,8 +38,8 @@
 
 
 Name: mnogosearch
-Version: 3.3.14
-Release: alt2.1
+Version: 3.4.1
+Release: alt1
 
 Summary: a full-featured search engine for intranet and internet servers
 Summary(ru_RU.UTF-8): поисковая машина для серверов интернет и интранет
@@ -55,14 +55,11 @@ Source2: mnogosearch.png
 Source3: udm-config.1
 Patch0: indexer.conf.5.patch
 Patch1: %name-3.3.7-alt-docbook.patch
-Patch3: %name-3.3.14-alt-local_button.patch
 Patch5: %name-3.3.7-debian-url_escape.patch
-Patch7: %name-3.3.14-alt-overflow_fix.patch
-Patch8: %name-3.3.14-alt-format_fix.patch
-Patch9: %name-3.3.14-alt-uninitialized_fix.patch
-#Patch10: %name-3.3.12-removing_unused_variables.patch
-Patch11: %name-3.3.14-alt-check_io_results.patch
-Patch12: %name-3.3.14-alt-fix_misc_errors.patch
+#Patch8: %name-3.3.14-alt-format_fix.patch
+#Patch9: %name-3.3.14-alt-uninitialized_fix.patch
+#Patch11: %name-3.3.14-alt-check_io_results.patch
+#Patch12: %name-3.3.14-alt-fix_misc_errors.patch
 
 Requires: %name-backend = %version
 
@@ -72,6 +69,7 @@ BuildRequires(pre): rpm-build-licenses rpm-macros-apache2
 #       the DTDs in doc/catalog and doc/Makefile.in
 # Using pre-build html documentation instead rebuild it from XML files.
 # BuildRequires: openjade docbook-style-dsssl-utils
+BuildRequires: glibc-devel-static
 BuildRequires: libssl-devel libreadline-devel libtinfo-devel zlib-devel
 
 %if_with mysql
@@ -228,14 +226,11 @@ Requires: %name = %version, webserver-common
 %setup -n %name-%version -q
 %patch0 -p0
 %patch1 -p0
-%patch3 -p2
 %patch5 -p0
-%patch7 -p2
-%patch8 -p2
-%patch9 -p2
-#%%patch10 -p0
-%patch11 -p2
-%patch12 -p2
+#%%patch8 -p2
+#%%patch9 -p2
+#%%patch11 -p2
+#%%patch12 -p2
 
 mv -f -- COPYING COPYING.GPL.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -374,6 +369,7 @@ mkdir -p %buildroot%_prefix/doc/
 cp -- doc/*.html doc/mnogo.css %buildroot%_prefix/doc/
 cp -r -- doc/samples  %buildroot%_prefix/doc/
 mv -- %buildroot%_prefix/doc %buildroot%_datadir/%name/html
+rm -rf -- %buildroot%_datadir/doc/%name
 
 # Moving headers into subdir
 mkdir -p  %buildroot%_includedir/%name
@@ -555,7 +551,7 @@ fi
 
 %_sysconfdir/cron.daily/%name-dbgen
 
-%_libdir/libmnogocharset-3.3.so
+%_libdir/libmnogocharset-3.4.so
 
 
 %files cgi
@@ -566,48 +562,49 @@ fi
 
 
 %files multidb
-%_libdir/lib%{name}-multidb-3.3.so
+%_libdir/lib%{name}-multidb-3.4.so
 %_bindir/*-multidb
 %_altdir/%name-multidb
 
 %if_with mysql
 %files mysql
-%_libdir/lib%{name}-mysql-3.3.so
+%_libdir/lib%{name}-mysql-3.4.so
 %_bindir/*-mysql
 %_altdir/%name-mysql
 %endif
 
 %if_with pgsql
 %files pgsql
-%_libdir/lib%{name}-pgsql-3.3.so
+%_libdir/lib%{name}-pgsql-3.4.so
 %_bindir/*-pgsql
 %_altdir/%name-pgsql
 %endif
 
 %if_with sqlite
 %files sqlite
-%_libdir/lib%{name}-sqlite-3.3.so
+%_libdir/lib%{name}-sqlite-3.4.so
 %_bindir/*-sqlite
 %_altdir/%name-sqlite
 %endif
 
 %if_with sqlite3
 %files sqlite3
-%_libdir/lib%{name}-sqlite3-3.3.so
+%_libdir/lib%{name}-sqlite3-3.4.so
 %_bindir/*-sqlite3
 %_altdir/%name-sqlite3
 %endif
 
 %if_with unixODBC
 %files odbc
-%_libdir/lib%{name}-odbc-3.3.so
+%_libdir/lib%{name}-odbc-3.4.so
 %_bindir/*-odbc
 %_altdir/%name-odbc
 %endif
 
 
 %files doc
-%_datadir/%name/html*
+%_datadir/%name/html
+
 
 %files -n lib%name-devel
 %_bindir/udm-config
@@ -639,6 +636,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 02 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.4.1-alt1
+- New version (Closes: 32446)
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 3.3.14-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
