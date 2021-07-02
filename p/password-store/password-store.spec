@@ -1,8 +1,8 @@
 # SPEC file for password-store package
 
 Name:    password-store
-Version: 1.7.1
-Release: alt2
+Version: 1.7.4
+Release: alt1
 
 Summary: a simple password manager using standard Unix tools
 Summary(ru_RU.UTF-8): простой и использующий стандартные средства менеджер паролей
@@ -30,7 +30,13 @@ BuildRequires(pre): rpm-build-licenses rpm-build-vim
 # optimized out: libgpg-error python-base python-modules python3 tzdata
 BuildRequires: dirtree git-core gnupg gnupg2 pwgen
 
-Requires: gnupg2 /usr/bin/qdbus
+# Skip extra requires:
+%add_findreq_skiplist %_bindir/pass
+
+# Requires for pass:
+Requires: /bin/bash
+Requires: gnupg2 dirtree coreutils diffutils findutils git-core procps sed which
+
 
 %description
 A simple console password manager that follows Unix philosophy.
@@ -59,6 +65,33 @@ Password changes can be tracked using git.
 случая использования pass в совместной работе, разные
 каталоги могут иметь разные наборы ключей GPG.
 Все изменения паролей могут отслеживаться в репозитории Git.
+
+
+%package gui
+Summary: GUI support for password-store
+Summary(ru_RU.UTF-8): графический интерфейс к password-store
+Group: Text tools
+Requires: %name = %version-%release
+
+Requires: qt5-dbus xclip
+Requires: xdotool dmenu
+Requires: qrencode feh
+
+%description gui
+Password-store (pass) is a simple console password manager that
+follows Unix philosophy.
+
+This package contains passmenu utility - a simple GUI interface
+to pass, and installs X11 utilities to work with clipboard and
+display passwords as QR codes.
+
+%description gui -l ru_RU.UTF-8
+Password-store (pass) - простой консольный менеджер паролей,
+следующий философии Unix.
+
+Данный пакет содержит утилиту passmenu - простой графический
+интерфейс к pass, и зависимости на утилиты X11 для работы
+с буфером обмена и выводом паролей как QR-кодов.
 
 
 %prep
@@ -94,8 +127,11 @@ mv -f -- %buildroot%_datadir/bash-completion/completions/pass %buildroot%_syscon
 chmod 644 -- contrib/importers/*
 
 install -dp %buildroot%vim_plugin_dir
-mv -f -- contrib/vim/noplaintext.vim %buildroot%vim_plugin_dir/password-store.vim
+mv -f -- contrib/vim/*  %buildroot%vim_plugin_dir/
 rmdir -- contrib/vim/
+
+# passmenu
+install -m 755 contrib/dmenu/passmenu %buildroot%_bindir/passmenu
 
 %files
 %doc README contrib
@@ -105,13 +141,28 @@ rmdir -- contrib/vim/
 %_man1dir/pass.*
 
 %_sysconfdir/bash_completion.d/pass
-%vim_plugin_dir/password-store.vim
+%vim_plugin_dir/*
 
-%exclude %_datadir/fish*
-%exclude %_datadir/zsh*
+%_datadir/fish/vendor_completions.d/pass.fish
+%_datadir/zsh/site-functions/_pass
+
+%files gui
+%doc contrib/dmenu/README.md
+%_bindir/passmenu
 
 
 %changelog
+* Fri Jul 02 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.7.4-alt1
+- New version (Closes: 36738)
+- Pack fish and zsh completions (Closes: 34654)
+- Add subpackage -gui with GUI-related dependencies
+
+* Tue Jun 19 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.7.2-alt1
+- New version
+  * Ensure signature regexes are anchored, fix for CVE-2018-12356
+  * Allow grep options and arguments for 'search' command
+  * Other changes and bug fixes
+
 * Mon Sep 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.7.1-alt2
 - Fix Bash completion code
 
