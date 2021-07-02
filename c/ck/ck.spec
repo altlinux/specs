@@ -1,9 +1,12 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+# unstable, tests may hang
+%def_without check
+
 Name:    ck
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: Library for high performance concurrent programming
 License: BSD
 URL:     https://github.com/concurrencykit/ck
@@ -45,7 +48,9 @@ export CFLAGS="%optflags"
 	--libdir=%_libdir \
 	--includedir=%_includedir/%name \
 	--mandir=%_mandir \
-	--prefix=%_prefix
+	--prefix=%_prefix \
+	--cores=%__nprocs \
+	--disable-static
 %make_build
 
 %install
@@ -54,8 +59,8 @@ export CFLAGS="%optflags"
 # fix weird mode of the shared library
 chmod 0755 %buildroot%_libdir/libck.so.*
 
-# remove static library
-rm %buildroot%_libdir/libck.a
+%check
+%make_build check
 
 %files
 %doc LICENSE
@@ -68,6 +73,10 @@ rm %buildroot%_libdir/libck.a
 %_mandir/man3/*.3.*
 
 %changelog
+* Fri Jul 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.7.1-alt2
+- added check (disabled by default)
+- static library disabled by option
+
 * Fri Jul 02 2021 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt1
 - new version 0.7.1
 - drop old upstream patch
