@@ -3,7 +3,7 @@
 Name: pari
 %define sover 7
 %define lname   libpari-gmp-tls%sover
-Version: 2.13.1
+Version: 2.13.2
 Release: alt1
 Summary: Computer Algebra System for computations in Number Theory
 License: GPL-2.0-only
@@ -13,13 +13,13 @@ Url: https://pari.math.u-bordeaux.fr/
 #Git-Web:	https://pari.math.u-bordeaux.fr/cgi-bin/gitweb.cgi
 
 Source: https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-%version.tar.gz
-Source2: https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-%version.tar.gz.asc
 Patch1: pari-nodate.diff
 BuildRequires: libfltk-devel
 BuildRequires: libgmp-devel
 BuildRequires: libX11-devel
 BuildRequires: libreadline-devel
 BuildRequires: xorg-proto-devel
+BuildRequires: texlive
 
 %description
 PARI/GP is a computer algebra system designed for fast computations
@@ -102,5 +102,8 @@ functions.
 %_libdir/libpari.so
 
 %changelog
+* Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.13.2-alt1
+- New version (2.13.2) with rpmgs script.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 2.13.1-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
