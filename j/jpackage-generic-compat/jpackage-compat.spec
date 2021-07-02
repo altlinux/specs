@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -15,9 +15,8 @@ BuildArch: noarch
 # sun java requires it
 Requires: /proc
 Requires(pre): rpm-build-java
-#Requires: jpackage-utils
-# as in jdepend; should be detected by peering in SOURCEDIR
-Requires: unzip
+# should be detected by logoved or by peering in SOURCEDIR
+# Requires: unzip
 
 # hack til migration on 1.8-compat
 Requires: java-devel = 0:1.8.0
@@ -88,6 +87,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 0.36-alt1
+- dropped requires on unzip
+
 * Tue Jun 22 2021 Igor Vlasenko <viy@altlinux.org> 0.35-alt1
 - added jpackage-default
 - removed unused jpackage-9,10-compat
