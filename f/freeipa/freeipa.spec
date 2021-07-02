@@ -44,7 +44,7 @@
 
 Name: freeipa
 Version: 4.8.9
-Release: alt4
+Release: alt5
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1049,6 +1049,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Fri Jul 02 2021 Stanislav Levin <slev@altlinux.org> 4.8.9-alt5
+- Improved error message for missing supported NTP (closes: #40343).
+
 * Mon Jun 21 2021 Stanislav Levin <slev@altlinux.org> 4.8.9-alt4
 - Dropped dependency on python-nss.
 
