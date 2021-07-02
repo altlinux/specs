@@ -1,5 +1,5 @@
 Name: help2man
-Version: 1.47.16
+Version: 1.48.3
 Release: alt1
 
 Summary: help2man creates simple man pages from the output of programs
@@ -62,6 +62,9 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' help2man.*.1
 %doc ChangeLog NEWS README* THANKS help2man.h2m
 
 %changelog
+* Wed Mar 31 2021 Dmitry V. Levin <ldv@altlinux.org> 1.48.3-alt1
+- 1.47.16 -> 1.48.3.
+
 * Fri Jul 03 2020 Dmitry V. Levin <ldv@altlinux.org> 1.47.16-alt1
 - 1.47.12 -> 1.47.16.
 
