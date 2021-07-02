@@ -1,6 +1,6 @@
 Name:    codelite
 Version: 15.0.3
-Release: alt1
+Release: alt2
 
 Summary: CodeLite is a powerful open-source, cross platform code editor for C/C++
 
@@ -22,7 +22,6 @@ BuildRequires: libXdamage-devel libXxf86vm-devel libdrm-devel libXinerama-devel
 BuildRequires: libXi-devel libXrandr-devel libXcursor-devel libXcomposite-devel
 BuildRequires: wayland-protocols libxkbcommon-devel libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel libepoxy-devel libhunspell-devel
-BuildRequires: libwxGTK3.1-sqlite3-devel
 BuildRequires: libXtst-devel at-spi2-atk-devel libat-spi2-core-devel
 
 %add_python_req_skip gdb
@@ -77,6 +76,9 @@ rm -f %buildroot%_bindir/codelite_open_helper.py
 %dir %_iconsdir/hicolor/64x64@2x/apps
 
 %changelog
+* Fri Jul 02 2021 Grigory Ustinov <grenka@altlinux.org> 15.0.3-alt2
+- Fixed FTBFS.
+
 * Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 15.0.3-alt1
 - Automatically updated to 15.0.3.
 
