@@ -1,8 +1,6 @@
-%def_with qt5
-
 Name:     gwenhywfar
 Version:  5.6.0
-Release:  alt1
+Release:  alt2
 
 Summary:  A multi-platform helper library for other libraries
 License:  LGPL-2.1+
@@ -17,12 +15,9 @@ Patch2:   %name-fix-build-with-qt5.patch
 
 BuildRequires: gcc-c++ glibc-devel graphviz libcom_err-devel 
 BuildRequires: libgnutls-devel libssl-devel tzdata
-BuildRequires: libqt4-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libgtk+3-devel
-%if_with qt5
 BuildRequires: qt5-base-devel qt5-tools
-%endif
 BuildRequires: zlib-devel libgcrypt-devel ncurses-devel
 BuildRequires: ca-certificates
 
@@ -66,15 +61,6 @@ Requires: lib%name = %version-%release
 %description -n lib%name-gtk3
 Gwenhywfar support for GTK+ 3.x.
 
-%package  -n lib%name-qt4
-Summary:  Gwenhywfar support for Qt4
-Group:    System/Libraries
-Requires: lib%name = %version-%release
-
-%description -n lib%name-qt4
-Gwenhywfar support for Qt4
-
-%if_with qt5
 %package  -n lib%name-qt5
 Summary:  Gwenhywfar support for Qt5
 Group:    System/Libraries
@@ -82,17 +68,13 @@ Requires: lib%name = %version-%release
 
 %description -n lib%name-qt5
 Gwenhywfar support for Qt5
-%endif
 
 %package  -n lib%name-devel
 Summary:  Gwenhywfar development kit
 Group:    Development/C
 Requires: lib%name = %version-%release
 Requires: lib%name-gtk2 = %version-%release
-Requires: lib%name-qt4  = %version-%release
-%if_with qt5
 Requires: lib%name-qt5  = %version-%release
-%endif
 
 %description -n lib%name-devel
 This package contains gwenhywfar-config and header files for writing and
@@ -105,20 +87,13 @@ compiling programs using Gwenhywfar.
 %build
 %undefine _configure_gettext
 %autoreconf
-%if_with qt5
 export PATH=$PATH:%_qt5_bindir
-%endif
 %configure \
 	--disable-static \
-%if_with qt5
-	--with-guis="gtk2 gtk3 qt4 qt5" \
+	--with-guis="gtk2 gtk3 qt5" \
 	--with-qt5-qmake=%_bindir/qmake-qt5 \
 	--with-qt5-moc=%_bindir/moc-qt5 \
-	--with-qt5-uic=%_bindir/uic-qt5 \
-%else
-	--with-guis="gtk2 gtk3 qt4" \
-%endif
-	--with-qt4-libs="%_libdir"
+	--with-qt5-uic=%_bindir/uic-qt5
 
 %make_build
 
@@ -137,10 +112,7 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/*.so.*
 %exclude %_libdir/libgwengui-gtk2.so.*
 %exclude %_libdir/libgwengui-gtk3.so.*
-%exclude %_libdir/libgwengui-qt4.so.*
-%if_with qt5
 %exclude %_libdir/libgwengui-qt5.so.*
-%endif
 %_libdir/%name/
 %_datadir/gwenhywfar/ca-bundle.crt
 %_datadir/gwenhywfar/dialogs/*.dlg
@@ -151,13 +123,8 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %files -n lib%name-gtk3
 %_libdir/libgwengui-gtk3.so.*
 
-%files -n lib%name-qt4
-%_libdir/libgwengui-qt4.so.*
-
-%if_with qt5
 %files -n lib%name-qt5
 %_libdir/libgwengui-qt5.so.*
-%endif
 
 %files -n lib%name-devel
 %_bindir/%name-config
@@ -173,6 +140,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Fri Jul 02 2021 Andrey Cherepanov <cas@altlinux.org> 5.6.0-alt2
+- Build without qt4.
+
 * Tue Feb 16 2021 Andrey Cherepanov <cas@altlinux.org> 5.6.0-alt1
 - New version.
 
