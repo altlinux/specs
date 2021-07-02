@@ -5,7 +5,7 @@
 
 Name:     keepassx
 Version:  0.4.4
-Release:  alt1
+Release:  alt2
 
 Summary: KeePassX Password Safe - light-weight cross-platform password manager
 Summary(ru_RU.UTF-8): простой кросс-платформенный менеджер паролей KeePassX Password Safe
@@ -30,11 +30,11 @@ Source3: %name-48.png
 
 AutoReqProv: yes
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Tue Jan 05 2016
-# optimized out: fontconfig libX11-devel libXi-devel libXtst-devel libqt4-core libqt4-devel libqt4-gui libqt4-xml libstdc++-devel phonon-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ glibc-devel-static libqt4-webkit-devel
+# Automatically added by buildreq on Fri Jul 02 2021
+# optimized out: gcc-c++ kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libglvnd-devel libqt5-core libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby ruby-stdlibs sh4
+BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kwallet-devel qt5-multimedia-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
 
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils qt5-tools
 
 
 %description
@@ -81,14 +81,18 @@ mv -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
-%_qt4dir/bin/qmake PREFIX=%buildroot%{prefix}
+%qmake_qt5 PREFIX=%buildroot%prefix
 %make
 ./translations_release.sh
 
 %install
 sed -i 's@AppDir+"/../share/keepassx/license.html"@"%_datadir/keepassx/license.html"@g' src/dialogs/AboutDlg.cpp
 sed -i 's@AppDir+"/../share/doc/keepassx/index.html"@"%_datadir/keepassx/doc/index.html"@g' src/mainwindow.cpp
-%makeinstall
+
+mkdir -p -- %buildroot%_datadir
+cp -a -- share/{applications,keepassx,mime,mimelnk,pixmaps} %buildroot%_datadir
+
+install -pDm 0755 src/src  %buildroot%_bindir/%{name}
 
 mkdir -p -- %buildroot%_miconsdir %buildroot%_liconsdir %buildroot%_niconsdir
 install -m0644 -- %SOURCE1 %buildroot%_miconsdir/%name.png
@@ -114,6 +118,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Fri Jul 02 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.4.4-alt2
+- Build with QT5
+
 * Tue Jan 05 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.4-alt1
 - New version: security fixes
 - Fix CVE-2015-8378: Canceling XML export operation creates export as ".xml"
