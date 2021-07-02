@@ -1,6 +1,6 @@
 Name: fftw3
 Version: 3.3.8
-Release: alt1
+Release: alt2
 
 Summary: Library for computing Fast Fourier Transforms
 License: GPLv2+
@@ -10,6 +10,7 @@ Url: http://www.fftw.org/
 # ftp://ftp.fftw.org/pub/fftw/fftw-%version.tar.gz
 Source: fftw-%version.tar
 Patch: fftw-alt-link.patch
+Patch2000: %name-e2k-simd.patch
 
 %def_enable check
 %def_disable bigcheck
@@ -18,7 +19,11 @@ Patch: fftw-alt-link.patch
 %def_enable openmp
 %def_enable sse
 %def_enable sse2
+%ifnarch %e2k
 %def_enable avx
+%else
+%def_disable avx
+%endif
 %ifarch %ix86 x86_64
 %def_enable quad
 %else
@@ -180,6 +185,9 @@ library in html and pdf formats.
 %setup -n fftw-%version
 rm m4/l*.m4
 %patch -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 rm doc/fftw3.info*
 
 %build
@@ -198,7 +206,7 @@ options_single=
 options_double=
 options_long=
 options_quad=
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 %e2k
 options_single='%{subst_enable sse} %{subst_enable avx}'
 options_double='%{subst_enable sse2} %{subst_enable avx}'
 %endif
@@ -283,6 +291,9 @@ fi
 %docdir/*.pdf
 
 %changelog
+* Tue Jun 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.8-alt2
+- added SIMD patch for Elbrus
+
 * Mon May 28 2018 Dmitry V. Levin <ldv@altlinux.org> 3.3.8-alt1
 - 3.3.7 -> 3.3.8.
 
