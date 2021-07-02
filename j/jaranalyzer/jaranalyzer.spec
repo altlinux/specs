@@ -1,8 +1,5 @@
-BuildRequires: javapackages-local
-Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: /proc
-BuildRequires: jpackage-compat
 # Copyright (c) 2000-2008, JPackage Project
+# Copyright (c) 2009-2021, Altlinux
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,40 +29,28 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
-
 Summary:        Dependency Management Utility
 Name:           jaranalyzer
-Version:        1.1
-Release:	alt6_2jpp6
+Version:        1.2
+Release:	alt1_0jpp6
 Epoch:          0
 License:        BSD-style
 URL:            http://www.kirkk.com/main/Main/JarAnalyzer
 Group:          Development/Java
-Source0:        http://www.kirkk.com/main/zip/JarAnalyzer-src-1.1.zip
-Source1:        jaranalyzer-1.1.script
-Source2:        jaranalyzer-1.1.pom
-Patch0:         jaranalyzer-1.1-build_xml.patch
-BuildRequires: jpackage-utils
-BuildRequires: ant 
+Source0:        %name-%version.tar
+Source1:        jaranalyzer-1.2.pom
+Patch0:         jaranalyzer-1.2-build_xml.patch
+Packager:	Igor Vlasenko <viy@altlinux.ru>
+
+BuildRequires: jpackage-default
+BuildRequires: /proc
+BuildRequires: javapackages-local
+BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: bcel
 BuildRequires: regexp
 
-Requires: bcel
-Requires: regexp
-%if ! %{gcj_support}
 BuildArch:      noarch
-%endif
-%if %{gcj_support}
-BuildRequires: gnu-crypto
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-Requires(post): jpackage-utils >= 0:1.7.4
-Requires(postun): jpackage-utils >= 0:1.7.4
 
 %description
 JarAnalyzer is a dependency management utility for jar files. 
@@ -83,7 +68,7 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q -c -n %{name}-%{version}
+%setup -q
 # remove all binary libs
 for j in $(find lib -name "*.jar"); do
     mv $j $j.no
@@ -94,47 +79,31 @@ done
 %build
 pushd lib
 ln -sf $(build-classpath regexp) jakarta-regexp-1.3.jar
-ln -sf $(build-classpath bcel) bcel-5.1.jar
+ln -sf $(build-classpath bcel) bcel-5.2.jar
 popd
 
-ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6
+
+# request maven artifact installation
+%mvn_artifact %{SOURCE1} bin/%{name}-%{version}.jar
 
 %install
+%mvn_install -J docs
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_bindir}
-install -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/runxmlsummary
-
-# jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-
-install -m 0644 bin/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm
-%endif
-
-# pom and depmap frags
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%jpackage_script com.kirkk.analyzer.textui.XMLUISummary "" "" bcel/bcel:regexp/regexp:jaranalyzer/jaranalyzer runxmlsummary true
+%jpackage_script com.kirkk.analyzer.textui.DOTSummary "" "" bcel/bcel:regexp/regexp:jaranalyzer/jaranalyzer rundotsummary true
 
 %files -f .mfiles
 %doc bin/license.txt
-%attr(755,root,root) %{_bindir}/runxmlsummary
-%{_javadir}/*.jar
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%{_bindir}/runxmlsummary
+%{_bindir}/rundotsummary
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_0jpp6
+- new version
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt6_2jpp6
 - added BR: javapackages-local for javapackages 5
 
