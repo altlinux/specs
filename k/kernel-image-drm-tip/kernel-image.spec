@@ -7,7 +7,7 @@ Name: kernel-image-drm-tip
 %define kernel_source_version	5.12
 %define kernel_base_version	5.13
 %define kernel_sublevel .0
-%define kernel_extra_version	+rc7.20210625
+%define kernel_extra_version	+rel.20210702
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1
 
@@ -56,7 +56,7 @@ BuildRequires: openssl-devel openssl
 BuildRequires: dwarves >= 1.16
 BuildRequires: banner
 # For check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run ltp iproute2}}
 
 Requires: coreutils
 Requires: bootloader-utils
@@ -189,7 +189,13 @@ ln -s %kbuild_dir %buildroot%modules_dir/build
 mkdir %buildroot%modules_dir/{extra,updates}
 
 %check
-vm-run 'banner `uname -r`'
+export TMP=/tmp
+if ! timeout 999 vm-run --kvm=cond \
+        "/sbin/sysctl kernel.printk=8;
+         runltp -S $PWD/.gear/skiplist -f syscalls -o out"; then
+        cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed
+        exit 1
+fi
 
 %files
 %doc README integration-manifest LICENSES/preferred/GPL-2.0 LICENSES/exceptions/Linux-syscall-note
@@ -211,6 +217,6 @@ vm-run 'banner `uname -r`'
 %modules_dir/build
 
 %changelog
-* Sat Jun 26 2021 Kernel Pony <kernelpony@altlinux.org> 5.13.0+rc7.20210625-alt1
-- drm-tip 2021y-06m-25d-16h-18m-41s (67f5a1812877).
+* Sat Jul 03 2021 Kernel Pony <kernelpony@altlinux.org> 5.13.0+rel.20210702-alt1
+- drm-tip 2021y-07m-02d-19h-49m-58s (3d3b5479895d).
 
