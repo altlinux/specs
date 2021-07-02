@@ -1,9 +1,11 @@
 # SPEC-file for Janus WebRTC server
 
+%def_without websockets
+%def_without aes_gcm
 
 Name: janus
-Version: 0.10.4
-Release: alt1
+Version: 0.11.3
+Release: alt2
 
 Summary: Janus WebRTC Server
 
@@ -29,7 +31,10 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Sat May 23 2020
 # optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libgio-devel libgpg-error libgupnp-igd libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libssl-devel libx265-176 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libpcap-devel libsrtp2-devel libwebsockets-devel zlib-devel
+BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libpcap-devel libsrtp2-devel zlib-devel
+BuildRequires: libssl-devel
+
+%{?_with_websockets:BuildRequires: libwebsockets-devel}
 
 %description
 Janus is a general purpose WebRTC Gateway with a minimal footprint.
@@ -106,7 +111,8 @@ ln -s $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING.GPL) COPYING.GPL
   --enable-docs \
   --enable-rest \
   --enable-post-processing \
-  --disable-aes-gcm \
+  %{?_without_aes_gcm:--disable-aes-gcm} \
+  %{?_without_websockets:--disable-websockets} \
   %nil
 
 %make_build
@@ -188,6 +194,18 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Fri Jul 02 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.3-alt2
+- Disable websockets support
+
+* Tue Jun 29 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.3-alt1
+- New version
+
+* Mon Mar 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.10.10-alt1
+- New version
+
+* Thu Nov 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.10.7-alt1
+- New version
+
 * Sat Aug 08 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.10.4-alt1
 - New version
 
