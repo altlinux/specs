@@ -19,8 +19,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.82.0
-Release: alt2
+Version: 5.83.0
+Release: alt1
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -48,7 +48,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake qt5-tools qt5-tools-devel
 %if_enabled doc
 #BuildRequires: python3-module-sphinx /usr/bin/sphinx-build
-BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinx python-module-future
 %endif
 
 
@@ -88,6 +88,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.83.0-alt1
+- new version
+
 * Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.82.0-alt2
 - fix build requires
 

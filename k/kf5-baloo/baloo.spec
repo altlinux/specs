@@ -5,7 +5,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.82.0
+Version: 5.83.0
 Release: alt1
 %K5init altplace
 
@@ -103,7 +103,7 @@ done
 %_K5plug/kf5/kio/*.so
 %_K5qml/org/kde/baloo/
 %_K5start/baloo*.desktop
-%_K5srv/*.protocol
+#%_K5srv/*.protocol
 %_unitdir_user/*.service
 
 #%files -n polkit-kde-baloo
@@ -124,6 +124,9 @@ done
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.83.0-alt1
+- new version
+
 * Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.82.0-alt1
 - new version
 

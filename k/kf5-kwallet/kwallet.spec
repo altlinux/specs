@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.82.0
-Release: alt3
+Version: 5.83.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -72,7 +72,7 @@ KF5 library
 %setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
-%patch4 -p2
+%patch4 -p2 -b .secrets
 
 cat %SOURCE1 >> po/ru/kwalletd5.po
 
@@ -115,6 +115,9 @@ BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.83.0-alt1
+- new version
+
 * Fri Jun 04 2021 Slava Aseev <ptrnine@altlinux.org> 5.82.0-alt3
 - Do not keep dbus-daemon waiting if KWallet is disabled (fixes: #40132)
 
