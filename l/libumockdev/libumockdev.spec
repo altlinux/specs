@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.15.5
+Version: 0.16.0
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -26,8 +26,10 @@ Source: %_name-%version.tar
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libudev-devel libgudev-devel
+BuildRequires: libpcap-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
+
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:
 BuildRequires: /proc /dev/pts udev valgrind
@@ -126,6 +128,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Thu Jul 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.5-alt1
 - 0.15.5
 
