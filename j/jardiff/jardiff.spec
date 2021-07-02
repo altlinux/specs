@@ -1,7 +1,8 @@
-BuildRequires: javapackages-local
+%def_without asm3
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-default
+BuildRequires: javapackages-local
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -32,12 +33,10 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
 
 Name:           jardiff
 Version:        0.2
-Release:	alt10_3jpp6
+Release:	alt11_3jpp6
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -46,30 +45,21 @@ URL:            http://www.osjava.org/jardiff/
 Source0:        http://dist.osjava.org/releases/official/jardiff/jardiff-0.2-src.tar.gz
 Source1:        %{name}-%{version}.pom
 
-# debian patches from jardiff_0.2-4.debian
+#see https://packages.debian.org/ru/sid/jardiff
+# debian patches from jardiff_0.2-5.debian
 Patch1: 01_fix_build_with_asm3.diff
 Patch2: 02_fix_build_with_asm4.diff
 
-%if %{gcj_support}
-BuildRequires: gnu-crypto
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-
-%if ! %{gcj_support}
 BuildArch:      noarch
-%endif
 
-BuildRequires: jpackage-utils 
-BuildRequires: ant 
-BuildRequires: ant-junit
-BuildRequires: objectweb-asm3
+BuildRequires: ant ant-junit
 BuildRequires: apache-commons-cli
-
+%if_with asm3
+BuildRequires: objectweb-asm3
 Requires: objectweb-asm3
-Requires: apache-commons-cli
+%else
+BuildRequires: objectweb-asm
+%endif
 
 %description
 A tool to help visualise API differences between two 
@@ -92,51 +82,49 @@ for j in $(find . -name "*.jar"); do
 done
 
 %patch1 -p1
-# TODO for objectweb-asm4
-#patch2 -p1
+# for objectweb-asm4,5
+%if_without asm3
+%patch2 -p1
+%endif
 
 %build
 export CLASSPATH=$(build-classpath \
+commons-cli \
+%if_with asm3
 objectweb-asm3/asm \
 objectweb-asm3/asm-commons \
-commons-cli \
+%else
+objectweb-asm/asm \
+objectweb-asm/asm-commons \
+%endif
 )
 ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  -Dbuild.sysclasspath=only jar test javadoc
 
+%if_with asm3
+%pom_change_dep org.ow2.asm: asm:
+%endif
+
+%mvn_artifact %{SOURCE1} target/%{name}-%{version}.jar
 
 %install
-# jars
-install -d -m 755 %buildroot%{_javadir}
-install -m 644 target/%{name}-%{version}.jar %buildroot%{_javadir}/%{name}.jar
+%mvn_install -J dist/docs
 
-# TODO maven support
-install -d -m 755 %buildroot%{_mavenpomdir}
-install -m 644 %{SOURCE1} %buildroot%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
+%if_with asm3
 %jpackage_script org.osjava.jardiff.Main "" "" jardiff:commons-cli:objectweb-asm3/asm:objectweb-asm3/asm-commons %name true
-
-# javadoc
-install -d -m 755 %buildroot%{_javadocdir}/%{name}
-cp -pr dist/docs/api/* %buildroot%{_javadocdir}/%{name}
-
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm
+%else
+%jpackage_script org.osjava.jardiff.Main "" "" jardiff:commons-cli:objectweb-asm/asm:objectweb-asm/asm-commons %name true
 %endif
 
 %files -f .mfiles
 %{_bindir}/%name
-%{_javadir}/*
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 0:0.2-alt11_3jpp6
+- java11 build
+- build with objectweb-asm 8
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:0.2-alt10_3jpp6
 - use jvm_run
 
