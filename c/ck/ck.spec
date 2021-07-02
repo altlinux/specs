@@ -2,14 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    ck
-Version: 0.6.0
+Version: 0.7.1
 Release: alt1
 Summary: Library for high performance concurrent programming
 License: BSD
 URL:     https://github.com/concurrencykit/ck
 Group:   Other
 Source:  ck-%version.tar
-Patch0:  ck-config-s390x.patch
 
 BuildRequires: gcc
 
@@ -39,7 +38,6 @@ resources needed for developing Concurrency Kit applications.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 export CFLAGS="%optflags"
@@ -70,5 +68,9 @@ rm %buildroot%_libdir/libck.a
 %_mandir/man3/*.3.*
 
 %changelog
+* Fri Jul 02 2021 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt1
+- new version 0.7.1
+- drop old upstream patch
+
 * Mon Mar 04 2019 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus
