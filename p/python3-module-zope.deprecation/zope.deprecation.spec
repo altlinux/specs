@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 4.4.0
-Release: alt2
+Release: alt3
 
 Summary: Zope 3 Deprecation Infrastructure (Python 3)
 License: ZPLv2.1
@@ -21,6 +21,7 @@ BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.security
 BuildRequires: python3-module-sphinx-devel
 %endif
 
@@ -94,6 +95,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/__pycache__/tests.*
 
 %changelog
+* Fri Jul 02 2021 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.0-alt3
+- NMU: fix build
+
 * Wed Dec 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 1:4.4.0-alt2
 - NMU: Remove python2 module build
 - Add unittests execution
