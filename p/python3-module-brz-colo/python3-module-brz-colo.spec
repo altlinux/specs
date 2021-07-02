@@ -4,7 +4,7 @@
 
 Name: python3-module-brz-colo
 Version: 0.4.0
-Release: alt3
+Release: alt4
 
 Summary: Colocated branches in Bazaar using present technology
 License: GPL-2.0+
@@ -57,6 +57,9 @@ This package contain tools and test suites for testing brz-colo
 %python3_sitelibdir/breezy/plugins/colo/tests
 
 %changelog
+* Fri Jul 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 0.4.0-alt4
+- Build with PyQt5
+
 * Wed Nov 11 2020 Anatoly Kitaykin <cetus@altlinux.org> 0.4.0-alt3
 - Fixed brz error: No module named 'breezy.repofmt'
 
