@@ -1,8 +1,8 @@
 %define gcc_branch 10
 
 Name: gcc%gcc_branch
-Version: 10.2.1
-Release: alt3
+Version: 10.3.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -135,7 +135,6 @@ Url: https://gcc.gnu.org/
 Source: %srcfilename.tar
 
 # Backports from upstream.
-Patch001: testsuite-expect-additional-warning-in-analyzer-pr93.patch
 
 # Fedora patches.
 Patch100: gcc-hack.patch
@@ -1045,7 +1044,6 @@ version %version.
 %setup -n %srcdirname
 
 # Backports from upstream.
-%patch001 -p1
 
 # Fedora patches.
 %patch100 -p0
@@ -2173,6 +2171,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Fri Jul 02 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt1
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git (fixes FTBFS
+  with linux kernel headers >= 5.13):
+  + vendors/redhat/heads/gcc-10-branch
+  commit dc5e381a715a658cfcc08ba3cbaa6bc53adc596f;
+  + heads/releases/gcc-10
+  commit 8ce35e4c066b68d0cbc656b000ece84f7ea7741a;
+
 * Mon Mar 15 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.1-alt3
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git (ALT#39798):
   + vendors/redhat/heads/gcc-10-branch
