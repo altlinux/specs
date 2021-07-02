@@ -31,23 +31,12 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/sun-jaf/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
 %define jafver  1.1
 %define jar_name activation
 
 Name:           glassfish-jaf
 Version:        1.1.0
-Release:        alt5_6jpp6
+Release:        alt6_6jpp6
 Epoch:          0
 Summary:        Glassfish - JavaBeans Activation Framework
 License:        CDDL
@@ -62,10 +51,10 @@ Source3:        %{name}-component-info.xml
 Patch0:                %{name}-%{version}-ant-hack.patch
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: jpackage-utils >= 0:1.7.3
-Provides:       jaf = 0:%{jafver}
-Provides:       jaf_api = 0:%{jafver}
-Provides:       jaf_1_1_api
-Provides:        activation
+#Provides:       jaf = 0:%{jafver}
+#Provides:       jaf_api = 0:%{jafver}
+#Provides:       jaf_1_1_api
+#Provides:        activation
 BuildArch:      noarch
 Source44: import.info
 
@@ -120,7 +109,6 @@ touch $RPM_BUILD_ROOT%{_javadir}/jaf_1_1_api.jar
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE2} \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
-#add_to_maven_depmap javax.activation activation %{version} JPP %{name}
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -148,9 +136,6 @@ EOF
 %doc build/META-INF/LICENSE.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-#%{_mavenpomdir}/*
-#%{_mavendepmapfragdir}/*
-#%{_javadir}/jaf-%{jafver}.jar
 %exclude %{_javadir}/jaf.jar
 # Do not ghost (which would be the right thing) because of a bug in the
 # classpathx-jaf package and some RPM bug with ghosts (already fixed in RHEL-5)
@@ -163,6 +148,10 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.0-alt6_6jpp6
+- removed extra provides
+- java11 build
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt5_6jpp6
 - fixed build
 
