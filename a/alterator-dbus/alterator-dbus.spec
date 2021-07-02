@@ -1,7 +1,7 @@
 %define dname ru.basealt.alterator
 
 Name: alterator-dbus
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 
 Summary: D-Bus woo-bus gate
@@ -34,6 +34,9 @@ D-Bus woo-bus gate.
 %_datadir/polkit-1/rules.d/%dname.rules
 
 %changelog
+* Fri Jul 02 2021 Valery Sinelnikov <greh@altlinux.org> 0.0.2-alt1
+- Update to newest version 0.0.2
+
 * Wed Apr 21 2021 Valery Sinelnikov <greh@altlinux.org> 0.0.1-alt1
 - Initial build
 
