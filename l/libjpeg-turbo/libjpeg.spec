@@ -1,6 +1,9 @@
+
+%def_enable profiling
+
 Name: libjpeg-turbo
 Version: 2.0.6
-Release: alt2.1
+Release: alt3
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -124,6 +127,22 @@ local: *;
 EOF
 
 %build
+# using PGO makes the code about 10% faster
+# up to 50% on e2k for progressive JPEG decoding
+%if_enabled profiling
+%add_optflags -fprofile-generate
+%cmake -G'Unix Makefiles'
+%cmake_build
+# it's better not to do it in parallel
+( cd %_cmake__builddir ; make -k test ; make clean )
+%remove_optflags -fprofile-generate
+%ifarch %e2k
+%add_optflags -fprofile-use=%_builddir/%name-%version-%release/%_cmake__builddir/eprof.sum
+%else
+%add_optflags -fprofile-use
+%endif
+%endif
+
 %cmake -G'Unix Makefiles'
 %cmake_build
 make jpegexiforient
@@ -177,6 +196,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Tue Jun 29 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.0.6-alt3
+- added PGO (profile-guided optimization)
+
 * Thu May 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2:2.0.6-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
