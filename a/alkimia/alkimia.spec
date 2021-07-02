@@ -2,7 +2,7 @@
 
 Name:    alkimia
 Version: 8.0.4
-Release: alt1
+Release: alt2
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-base-devel
-BuildRequires: qt5-webkit-devel
+BuildRequires: qt5-webengine-devel
 BuildRequires: libgmp_cxx-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: kf5-kconfig-devel
@@ -61,6 +61,8 @@ Headers and other files for develop with %name.
 %build
 %K5init no_altplace
 %K5build -DCMAKE_SKIP_RPATH=1 \
+         -DBUILD_WITH_WEBKIT=OFF \
+         -DBUILD_WITH_WEBENGINE=ON \
          -DAPPDATA_INSTALL_DIR=%_datadir
 
 %install
@@ -90,6 +92,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Fri Jul 02 2021 Andrey Cherepanov <cas@altlinux.org> 8.0.4-alt2
+- Build with qt5-webengine (thanks zerg@).
+
 * Wed Dec 23 2020 Andrey Cherepanov <cas@altlinux.org> 8.0.4-alt1
 - New version.
 - Rename source package to upstream name alkimia.
