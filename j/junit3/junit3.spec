@@ -3,13 +3,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+BuildRequires: jpackage-default
+BuildRequires: javapackages-local
 # Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
@@ -40,23 +35,9 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with gcj_support
-%bcond_with gcj_support
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
 Name:           junit3
 Version:        3.8.2
-Release:	alt11_10jpp6
+Release:	alt12_10jpp6
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -67,42 +48,16 @@ Source0:        junit3.8.2.zip
 Source1:        junit3.8.2-build.xml
 Source2:        junit-component-info.xml
 Source3:        http://repo1.maven.org/maven2/junit/junit/3.8.2/junit-3.8.2.pom
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
-%if %{gcj_support}
-BuildRequires:  java-gcj-compat-devel
-%else
 Buildarch:      noarch
-%endif
 Source44: import.info
 Conflicts: junit < 3.8.3
-#Obsoletes: junit < 3.8.3
-
-%define repodir %{_javadir}/repository.jboss.com/junit/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
 
 %description
 JUnit is a regression testing framework written by Erich Gamma and Kent
 Beck. It is used by the developer who implements unit tests in Java.
 JUnit is Open Source Software, released under the IBM Public License and
 hosted on SourceForge.
-
-%if_with alternatives
-%package -n junit-junit3
-Group:          Development/Java
-Summary:        %{oldname} provider
-BuildArch: noarch
-Requires: %name = %epoch:%{version}-%{release}
-Provides: junit = 0:%{version}
-Provides: junit = %{epoch}:%{version}-%{release}
-Provides: %_javadir/junit.jar
-
-%description -n junit-junit3
-Virtual junit package based on %{name}.
-%endif
 
 %package manual
 Group:          Development/Java
@@ -140,66 +95,33 @@ export CLASSPATH=
 export OPT_JAR_LIST=:
 %{ant} -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  dist
 
+%mvn_artifact %{SOURCE3} %{oldname}%{version}/%{oldname}.jar
+%mvn_compat_version : 3 %{version}
+
 %install
-
-# jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p %{oldname}%{version}/%{oldname}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -pr %{oldname}%{version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
-
-# pom
-%{__mkdir_p} %{buildroot}%{_mavenpomdir}
-%{__cp} -p %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-#%add_to_maven_depmap junit junit %{version} JPP %{name}
+%mvn_install -J %{oldname}%{version}/javadoc
 
 # demo
 # Not using %%name for last part because it is part of package name
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}/demo/junit
-%{__cp} -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/junit
+mkdir -p %{buildroot}%{_datadir}/%{name}/demo/junit
+cp -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/junit
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-%if_with alternatives
-mkdir -p %buildroot%_altdir
-cat >>%buildroot%_altdir/%{name}<<EOF
-%{_javadir}/junit.jar	%{_javadir}/%{name}.jar	3820
-EOF
-%endif
-
-%files
+%files -f .mfiles
 %doc cpl-v10.html README.html
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-#%{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/junit3.jar.*
-%endif
+
+%files javadoc -f .mfiles-javadoc
 
 %files manual
 # FIXME: (dwalluck) Manuals are usually stored in an absolute location inside %%{_docdir}
 %doc %{oldname}%{version}/doc/*
 
-%files javadoc
-%{_javadocdir}/%{name}
-
 %files demo
 %{_datadir}/%{name}
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/demo.*
-%endif
-
-%if_with alternatives
-%files -n junit-junit3
-%_altdir/%{name}
-%endif
 
 %changelog
+* Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 1:3.8.2-alt12_10jpp6
+- java11 build
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt11_10jpp6
 - fixed conflict
 
