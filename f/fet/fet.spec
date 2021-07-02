@@ -3,11 +3,11 @@
 #	- fet doesn't respect locale settings
 #
 Name: fet
-Version: 5.40.3
+Version: 6.0.4
 Release: alt1
 
 Summary: FET is open source free software for automatically scheduling the timetable
-License: GPL v2
+License: GPLv3
 Group: Office
 
 Url: http://www.lalescu.ro/liviu/fet
@@ -17,9 +17,9 @@ Source1: http://www.lalescu.ro/liviu/fet/doc/en/faq.html
 Source2: http://www.lalescu.ro/liviu/fet/doc/en/instructions.html
 Source3: http://www.lalescu.ro/liviu/fet/doc/en/tips.html
 
-# Automatically added by buildreq on Mon Jul 11 2011
-# optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel
-BuildRequires: gcc-c++ phonon-devel ImageMagick-tools
+# Automatically added by buildreq on Fri Jul 02 2021
+# optimized out: fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libImageMagick6-common libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-printsupport libqt5-widgets libstdc++-devel python3 python3-base qt5-base-devel sh4
+BuildRequires: ImageMagick-tools qt5-phonon-devel qt5-tools-devel
 
 Summary(hu.UTF-8):	FET egy nyílt forrású órarend-készítő program
 Summary(pl.UTF-8):	Narzędzie do automatycznego układania planów dla szkół i uczelni
@@ -114,7 +114,7 @@ done
 # -std=c++03 by default as of lcc 1.23.20
 %add_optflags -std=c++11
 %endif
-%qmake_qt4 fet.pro
+%qmake_qt5 fet.pro
 %make_build
 
 %install
@@ -141,6 +141,12 @@ done
 %_datadir/%name/examples
 
 %changelog
+* Fri Jul 02 2021 Fr. Br. George <george@altlinux.ru> 6.0.4-alt1
+- Autobuild version bump to 6.0.4
+
+* Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 5.42.2-alt1
+- Autobuild version bump to 5.42.2
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 5.40.3-alt1
 - Autobuild version bump to 5.40.3
 
