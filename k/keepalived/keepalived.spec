@@ -17,7 +17,7 @@
 
 Name: keepalived
 Version: 2.2.2
-Release: alt1
+Release: alt2
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPLv2
@@ -124,6 +124,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Fri Jul 02 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.2-alt2
+- Fixed build (ALT#40355).
+
 * Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 2.2.2-alt1
 - 2.2.2
 
