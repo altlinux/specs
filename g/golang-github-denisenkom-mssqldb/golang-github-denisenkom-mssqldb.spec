@@ -3,7 +3,7 @@
 %global goipath github.com/denisenkom/go-mssqldb
 
 Name: golang-github-denisenkom-mssqldb
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1.pre1
 Summary: Microsoft SQL server driver written in Go language
 Group: Development/Other
@@ -72,6 +72,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/examples
 
 %changelog
+* Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 0.10.0-alt1.pre1
+- New version (pre-release 0.10.0).
+
 * Mon Jan 11 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.0-alt1.pre1
 - New version (pre-release 0.9.0).
 
