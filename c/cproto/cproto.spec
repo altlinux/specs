@@ -1,13 +1,12 @@
 Name: cproto
-Version: 4.7q
+Version: 4.7s
 Release: alt1
 
 Summary: Generates function prototypes and variable declarations from C code
 License: ALT-Public-Domain
 Group: Development/Tools
 Url: https://invisible-island.net/cproto/cproto.html
-
-# ftp://ftp.invisible-island.net/cproto/cproto-%version.tgz
+# https://invisible-mirror.net/archives/cproto/cproto-%version.tgz
 Source: %name-%version.tar
 
 BuildRequires: bison flex
@@ -35,8 +34,9 @@ implementing the entire C language grammar.
 %install
 %makeinstall_std
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 %make_build -k check
@@ -47,6 +47,9 @@ implementing the entire C language grammar.
 %doc AUTHORS CHANGES README
 
 %changelog
+* Thu Mar 04 2021 Dmitry V. Levin <ldv@altlinux.org> 4.7s-alt1
+- 4.7q -> 4.7s.
+
 * Sun Oct 11 2020 Dmitry V. Levin <ldv@altlinux.org> 4.7q-alt1
 - 4.7p -> 4.7q.
 
