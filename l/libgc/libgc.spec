@@ -1,6 +1,6 @@
 Name: libgc
 Version: 7.6.8
-Release: alt2
+Release: alt3
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
 
@@ -15,6 +15,7 @@ Patch: gc-aarch64.patch
 Patch1: libgc-7.6.0-upstream-c++.patch
 # https://github.com/ivmai/bdwgc/pull/318
 Patch2: gc-riscv64.patch
+Patch2000: %name-e2k.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libatomic_ops-devel-static
@@ -55,6 +56,9 @@ This package contains static libgc library.
 #patch -p1
 #patch1 -p1
 %patch2 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 # see bugzilla.redhat.com/689877
@@ -105,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Fri Jul 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.6.8-alt3
+- Added e2k architecture support.
+
 * Mon Jun 15 2020 Nikita Ermakov <arei@altlinux.org> 7.6.8-alt2
 - Make __data_start a weak symbol on RISC-V.
 
