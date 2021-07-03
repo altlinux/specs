@@ -1,6 +1,6 @@
 Name: pdnsd
 Version: 1.2.9a
-Release: alt1
+Release: alt2
 
 Summary: A caching DNS proxy for small networks and dialup users
 License: %gpl3plus
@@ -74,6 +74,9 @@ chown root:%name %_cachedir/%name/%name.cache
 %preun_service %name
 
 %changelog
+* Sat Jul 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2.9a-alt2
+- Fixed FTBFS (closes #40365).
+
 * Fri May 11 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2.9a-alt1
 - 1.2.9a
 - rediffed patches
