@@ -1,6 +1,6 @@
 Name: atop
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -8,6 +8,7 @@ URL: http://www.%{name}tool.nl
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires: rpm-build-python3
 BuildRequires: libncurses-devel zlib-devel
 
 %description
@@ -60,6 +61,9 @@ done
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Sat Jul 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt2
+- NMU: Fixed FTBFS with rpm-build-python3
+
 * Sun Dec  1 2019 Terechkov Evgenii <evg@altlinux.org> 2.5.0-alt1
 - atop 2.5.0
 - Switch atopgpud to python3
