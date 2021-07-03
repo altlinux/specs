@@ -1,6 +1,6 @@
 Name: apt-printchanges
 Version: 0.02
-Release: alt1
+Release: alt2
 
 Summary: Print last changelog for each installed/upgraded package
 License: GPLv3+
@@ -11,6 +11,8 @@ BuildArch: noarch
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 Source0: %name-%version.tar
+
+BuildRequires: rpm-build-python3
 
 Requires: python3-module-rpm
 
@@ -29,6 +31,9 @@ install -pD -m644 apt.conf %buildroot/etc/apt/apt.conf.d/20-%name.conf
 %config(noreplace) /etc/apt/apt.conf.d/*
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.02-alt2
+- NMU: add BR: rpm-build-python3
+
 * Sun Nov 24 2019 Terechkov Evgenii <evg@altlinux.org> 0.02-alt1
 - Port to python3
 
