@@ -10,8 +10,8 @@
 %define distro_name ALT Starterkit
 
 Name: branding-%flavour
-Version: p9
-Release: alt9
+Version: p10
+Release: alt1
 
 Url: http://en.altlinux.org/starterkits
 
@@ -335,6 +335,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Fri Jul 02 2021 Anton Midyukov <antohami@altlinux.org> p10-alt1
+- first release for p10
+
 * Sat May 29 2021 Anton Midyukov <antohami@altlinux.org> p9-alt9
 - Fix License Tag (Replace GPL to GPLv2+)
 - Fix obsolete itself
