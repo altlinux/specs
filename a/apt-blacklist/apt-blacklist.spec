@@ -1,6 +1,6 @@
 Name:       apt-blacklist
 Version:    0.01.2
-Release:    alt2
+Release:    alt3
 
 Summary:    Forbids installation of packages based on some criteria
 License:    GPLv3+
@@ -11,6 +11,8 @@ BuildArch:  noarch
 
 Source0:    %name-%version.tar
 Patch0:     port-on-python3.patch
+
+BuildRequires: rpm-build-python3
 
 Requires:   python3-module-rpm >= 4.13.0
 
@@ -45,6 +47,9 @@ install -pD -m644 apt.conf %buildroot/etc/apt/apt.conf.d/10-%name.conf
 
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.01.2-alt3
+- NMU: add BR: rpm-build-python3
+
 * Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.01.2-alt2
 - Porting on Python3.
 
