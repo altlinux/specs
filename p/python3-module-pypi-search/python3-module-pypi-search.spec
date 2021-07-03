@@ -1,7 +1,7 @@
 %define  modulename pypi-search
 
 Name:    python3-module-%modulename
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Get Information on Python Packages From PyPI
@@ -46,5 +46,8 @@ open up the PyPI website.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jul 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
+- New version.
+
 * Thu Jun 10 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus.
