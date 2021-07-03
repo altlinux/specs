@@ -1,5 +1,5 @@
 Name: libwebsockets
-Version: 2.4.2
+Version: 4.2.0
 Release: alt1
 
 Summary: A lightweight C library for Websockets
@@ -17,10 +17,16 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/warmcat/libwebsockets/archive/v%version.tar.gz#/%name-%version.tar.gz
 Source: %name-%version.tar
 
+# Automatically added by buildreq on Tue Jun 29 2021
+# optimized out: cmake-modules libsasl2-3 libssl-devel libstdc++-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
+BuildRequires: cmake cvs gcc-c++ gem-did-you-mean git-core libcap-devel libssl-devel-static openssl python3-dev python3-module-mpl_toolkits subversion valgrind
+
 BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libev-devel
+BuildRequires: libcap-devel
 
 # https://fedoraproject.org/wiki/Bundled_Libraries
 Provides: bundled(sha1-hollerbach)
@@ -76,7 +82,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %files devel
 %doc READMEs/README.coding.md READMEs/ changelog
 %doc LICENSE
-%_includedir/*.h
+%_includedir/%name.h
+%_includedir/lws_config.h
+%_includedir/%name
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
@@ -87,6 +95,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Tue Jun 29 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.2.0-alt1
+- New version
+
 * Thu Oct 11 2018 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
 - initial build for ALT Sisyphus
 
