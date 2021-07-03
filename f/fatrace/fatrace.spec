@@ -1,14 +1,19 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 Name: fatrace
-Version: 0.13
-Release: alt2
+Version: 0.15
+Release: alt1
+
 Summary: Reports file access events from all running processes
+
 Group: File tools
 License: GPLv3+
 Url: https://launchpad.net/fatrace
+
 Source0: https://launchpad.net/fatrace/trunk/%version/+download/fatrace-%version.tar.bz2
 Source44: import.info
+
+BuildRequires: rpm-build-python3
 
 %description
 fatrace reports file access events from all running processes.
@@ -32,6 +37,9 @@ unnecessarily and thus prevent some power saving.
 %_mandir/man*/*
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.15-alt1
+- NMU: new version 0.15 (with rpmrb script), cleanup sepec
+
 * Wed Dec 04 2019 Lenar Shakirov <snejok@altlinux.org> 0.13-alt2
 - First build for ALT (thanks to Autoimports!)
 - Spec cleaned, thanks to "cleanup_spec"
