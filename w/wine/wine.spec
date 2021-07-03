@@ -3,8 +3,9 @@
 %define gecko_version 2.47.2
 %define mono_version 6.2.0
 
-%define major 6.11
+%define major 6.12
 %define rel %nil
+%define stagingrel .1
 
 %def_with gtk3
 
@@ -37,7 +38,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running Windows applications
@@ -52,7 +53,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://dl.winehq.org/wine/source/6.x/wine-%major%rel.tar.xz
 Source: %name-%version.tar
-# Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%rel.tar.gz
+# Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%stagingrel.tar.gz
 Source1: %name-staging-%version.tar
 
 Source3: %name-%version-desktop.tar
@@ -112,7 +113,8 @@ BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libusb-devel libieee1284-devel libkrb5-devel
 BuildRequires: libv4l-devel
 BuildRequires: libunixODBC-devel
-BuildRequires: libnetapi-devel libpcap-devel 
+BuildRequires: libpcap-devel
+BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 # TODO: osmesa
 
@@ -512,6 +514,7 @@ done
 %libwinedir/%winesodir/windows.networking.connectivity.so
 %libwinedir/%winesodir/crypt32.so
 %libwinedir/%winesodir/kerberos.so
+%libwinedir/%winesodir/light.msstyles.so
 %libwinedir/%winesodir/netapi32.so
 %libwinedir/%winesodir/wldap32.so
 %libwinedir/%winesodir/mscms.so
@@ -545,6 +548,7 @@ done
 %libwinedir/%winepedir/*.ax
 %libwinedir/%winepedir/*.ds
 %libwinedir/%winepedir/windows.networking.connectivity
+%libwinedir/%winepedir/light.msstyles
 %if_without build64
 %libwinedir/%winepedir/*.dll16
 %libwinedir/%winepedir/*.drv16
@@ -636,6 +640,9 @@ done
 %endif
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.12.1-alt1
+- new version 6.12.1 (with rpmrb script)
+
 * Fri Jun 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.11.1-alt2
 - fix packing
 
