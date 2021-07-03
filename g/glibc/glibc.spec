@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.32
-Release: alt2
+Release: alt3
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -787,6 +787,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Thu Jun 10 2021 Dmitry V. Levin <ldv@altlinux.org> 6:2.32-alt3
+- Updated to glibc-2.32-48-g16949aeaa0 from 2.32 branch
+  (fixes: CVE-2021-33574).
+
 * Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.32-alt2
 - Added conflicts with openssh-server packages versions lacking support
   of this libc in seccomp filters.
