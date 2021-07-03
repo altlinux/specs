@@ -1,11 +1,11 @@
 # SPEC-file for Janus WebRTC server
 
-%def_without websockets
+%def_with    websockets
 %def_without aes_gcm
 
 Name: janus
 Version: 0.11.3
-Release: alt2
+Release: alt3
 
 Summary: Janus WebRTC Server
 
@@ -128,7 +128,7 @@ install -m 0644 %SOURCE1 %buildroot%_unitdir/%name.service
 mv -f -- html html.src
 mv -f -- %buildroot%_docdir/janus-gateway/janus-gateway-%version/html .
 rm -f -- %buildroot%_docdir/janus-gateway/README.md
- 
+
 mkdir -p -- %buildroot/%_logdir/%name
 mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
@@ -194,6 +194,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Sat Jul 03 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.3-alt3
+- Re-enable websockets support
+
 * Fri Jul 02 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.3-alt2
 - Disable websockets support
 
