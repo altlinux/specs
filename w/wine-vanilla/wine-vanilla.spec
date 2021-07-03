@@ -31,8 +31,8 @@
 %def_with opencl
 
 Name: wine-vanilla
-Version: 6.11
-Release: alt2
+Version: 6.12
+Release: alt1
 
 Summary: Wine - environment for running Windows applications
 
@@ -447,6 +447,7 @@ done
 %libwinedir/%winesodir/windowscodecs.so
 %libwinedir/%winesodir/crypt32.so
 %libwinedir/%winesodir/kerberos.so
+%libwinedir/%winesodir/light.msstyles.so
 %libwinedir/%winesodir/netapi32.so
 %libwinedir/%winesodir/wldap32.so
 %libwinedir/%winesodir/mscms.so
@@ -467,7 +468,6 @@ done
 %libwinedir/%winesodir/*.tlb.so
 %libwinedir/%winesodir/*.sys.so
 %libwinedir/%winesodir/*.ax.so
-
 %libwinedir/%winepedir/*.com
 %libwinedir/%winepedir/*.cpl
 %libwinedir/%winepedir/*.drv
@@ -479,6 +479,7 @@ done
 %libwinedir/%winepedir/*.exe
 %libwinedir/%winepedir/*.ax
 %libwinedir/%winepedir/*.ds
+%libwinedir/%winepedir/light.msstyles
 %if_without build64
 %libwinedir/%winepedir/*.dll16
 %libwinedir/%winepedir/*.drv16
@@ -570,6 +571,9 @@ done
 %endif
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 6.12-alt1
+- new version 6.12
+
 * Fri Jun 25 2021 Vitaly Lipatov <lav@altlinux.ru> 6.11-alt2
 - fix packing
 
