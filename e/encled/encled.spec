@@ -1,6 +1,6 @@
 Name:       encled
 Version:    2018
-Release:    alt3
+Release:    alt4
 
 Summary:    utility to change location / fault LED for enclosure
 License:    GPLv2+
@@ -12,6 +12,7 @@ BuildArch:  noarch
 Source0:    %name-%version.tar
 Patch0:     port-on-python3.patch
 
+BuildRequires: rpm-build-python3
 
 %description
 Encled - utility to change location / fault LED for enclosure.
@@ -43,6 +44,9 @@ install -p -m 644 -D encled.8 %buildroot%_man8dir/encled.8
 
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 2018-alt4
+- NMU: add BR: rpm-build-python3
+
 * Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 2018-alt3
 - Porting on Python3.
 
