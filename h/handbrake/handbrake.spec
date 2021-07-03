@@ -2,7 +2,7 @@
 
 Name: handbrake
 Version: 1.3.1
-Release: alt3
+Release: alt4
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 Source0: HandBrake-%version.tar.bz2
@@ -27,7 +27,7 @@ License: GPLv2+
 
 BuildRequires: bzlib-devel doxygen gcc-c++ intltool libass-devel libdbus-glib-devel libfribidi-devel libglademm-devel libgtk+3-devel
 BuildRequires: libharfbuzz-devel libjansson-devel liblame-devel libnotify-devel libopus-devel libsamplerate-devel libssl-devel libtheora-devel
-BuildRequires: libvorbis-devel libx264-devel libxml2-devel python-modules-json cmake libspeex-devel liblzma-devel libnuma-devel libvpx5-devel
+BuildRequires: libvorbis-devel libx264-devel libxml2-devel python-modules-json cmake libspeex-devel liblzma-devel libnuma-devel libvpx-devel
 BuildRequires: nasm meson
 
 ExclusiveArch: x86_64
@@ -110,6 +110,9 @@ popd
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt4
+- NMU: fix BR
+
 * Sat Mar 28 2020 Motsyo Gennadi <drool@altlinux.ru> 1.3.1-alt3
 - ExclusiveArch x86_64 only
 
