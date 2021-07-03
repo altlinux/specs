@@ -1,10 +1,10 @@
 Name: engineering-meta
 Version: p10
-Release: alt1
+Release: alt2
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
-License: Public domain
+License: GPL-2.0-or-later
 Url: https://altlinux.org/Engineering
 
 Requires: engineering-2D-CAD = %EVR
@@ -161,6 +161,7 @@ Summary(ru_RU.UTF-8): Метапакет для установки САПР эл
 Group: Engineering
 
 Requires: kicad
+Requires: ktechlab
 Requires: qucs
 Requires: qucs-s
 
@@ -199,6 +200,10 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Sat Jul 03 2021 Anton Midyukov <antohami@altlinux.org> p10-alt2
+- Add ktechlab to engineering-EDA
+- Change License to GPL-2.0
+
 * Tue Jun 29 2021 Anton Midyukov <antohami@altlinux.org> p10-alt1
 - Initial build for future p10
 
