@@ -3,7 +3,7 @@
 %define oname greenlet
 
 Name: python3-module-%oname
-Version: 0.4.17
+Version: 1.1.0
 Release: alt1
 
 Summary: Lightweight in-process concurrent programming
@@ -52,15 +52,16 @@ unmodified interpreter.
 
 %check
 %__python3 setup.py test -v
-export PYTHONPATH=$PWD
-%__python3 run-tests.py -n
 
 %files
-%doc AUTHORS LICENSE NEWS README* doc/*.txt
+%doc AUTHORS CHANGES.rst LICENSE* README*
 %python3_sitelibdir/*
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 
 %changelog
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Fri Nov 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.17-alt1
 - new version 0.4.17 (with rpmrb script)
 
