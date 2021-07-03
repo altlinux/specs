@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 21.42
+Version: 21.44
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -82,6 +82,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sat Jul 03 2021 Yuri N. Sedunov <aris@altlinux.org> 21.44-alt1
+- 21.44
+
 * Sun Jun 20 2021 Yuri N. Sedunov <aris@altlinux.org> 21.42-alt1
 - 21.42
 
