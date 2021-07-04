@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -128,6 +128,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Sun Jul 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
+- 0.16.1
+
 * Thu Jul 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
