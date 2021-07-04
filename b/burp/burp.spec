@@ -1,34 +1,32 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name:		burp
-Version:	2.4.0
+Version:	2.5.2
 Release:	alt1
-
 Summary:	Burp is a network-based backup and restore program
 License:	AGPL-3.0 and BSD and GPLv2+ and LGPLv2+
 Group:		Archiving/Backup
 Url:		https://burp.grke.org/
 Vcs:		https://github.com/grke/burp.git
 
-Source:		%name-%version.tar
+%add_findreq_skiplist %_datadir/%name/scripts/*
 
-BuildRequires:  libtool
-BuildRequires:  librsync-devel
-BuildRequires:  zlib-devel
-BuildRequires:  openssl-devel
-BuildRequires:  libncurses-devel
+Source:		%name-%version.tar
+BuildRequires:  check
 BuildRequires:  libacl-devel
+BuildRequires:  libcap-devel
+BuildRequires:  libcheck-devel
+BuildRequires:  libncurses-devel
+BuildRequires:  librsync-devel
+BuildRequires:  libtool
 BuildRequires:  libuthash-devel
 BuildRequires:  libyajl-devel
-BuildRequires:  check libcheck-devel
-BuildRequires:  libcap-devel
 BuildRequires:  openssl
-
-BuildRequires: rpm-macros-intro-conflicts
-%add_findreq_skiplist %_datadir/%name/scripts/*
-%add_optflags -Wno-error=unused-variable
+BuildRequires:  openssl-devel
+BuildRequires:  zlib-devel
 
 %description
 Burp is a network backup and restore program, using client and server.
@@ -38,7 +36,16 @@ amount of space that is used by each backup.
 %prep
 %setup
 
+# Replace implicit root user with _burp user and readall=1.
+sed -i  -e 's/# \(user\|group\)=\(nogroup\|graham\)/\1 = _burp/' \
+	-e 's/# readall=1/readall = 1/' \
+	-e 's/=\/home/ = \/boot/' \
+	-e 's/\(exclude_comp\)=/\1 = /' \
+	configs/*/burp.conf.in
+
 %build
+%define _localstatedir %_var
+%add_optflags -Wno-error=unused-variable
 %autoreconf
 %configure \
     --sysconfdir="%_sysconfdir/burp" \
@@ -53,7 +60,10 @@ install -D -p -m 0644 .gear/burp.service %buildroot%_unitdir/burp-server.service
 %__subst "s,password,#password,g" %buildroot%_sysconfdir/burp/clientconfdir/testclient
 
 %check
-%make_build check
+if ! %make_build check; then
+	cat test-suite.log
+	exit 1
+fi
 .gear/test-burp.sh
 
 %files
@@ -65,6 +75,8 @@ install -D -p -m 0644 .gear/burp.service %buildroot%_unitdir/burp-server.service
 %_bindir/vss_strip
 %_sbindir/*
 %_man8dir/*
+%defattr(640,root,_burp,0770)
+%dir %_spooldir/%name/
 %defattr(640,root,_burp,3770)
 %dir %_sysconfdir/burp/
 %dir %_sysconfdir/burp/CA-client/
@@ -85,6 +97,10 @@ install -D -p -m 0644 .gear/burp.service %buildroot%_unitdir/burp-server.service
 %preun_service burp-server
 
 %changelog
+* Sat Jul 03 2021 Vitaly Chikunov <vt@altlinux.org> 2.5.2-alt1
+- Update to 2.5.2 (2021-07-02).
+- Make burp configs non-root by default.
+
 * Tue May 11 2021 Vitaly Chikunov <vt@altlinux.org> 2.4.0-alt1
 - Update to 2.4.0 (2021-04-01).
 
