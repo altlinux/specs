@@ -1,11 +1,11 @@
 Name: udns
-Version: 0.2
+Version: 0.4
 Release: alt1
 Summary: A collection of useful DNS resolver utilities
 License: LGPLv2+
 Group: System/Libraries
-URL: http://www.corpit.ru/mjt/udns.html
-# http://www.corpit.ru/mjt/udns/%name-%version.tar.gz
+URL: https://www.corpit.ru/mjt/udns.html
+# https://www.corpit.ru/mjt/udns/%name-%version.tar.gz
 Source: %name-%version.tar
 Requires: lib%name = %version-%release
 
@@ -40,7 +40,7 @@ This package provides libudns development library and header files.
 %setup
 
 %build
-CFLAGS='%optflags' ./configure --enable-ipv6
+CFLAGS="$RPM_OPT_FLAGS $(getconf LFS_CFLAGS)" ./configure --enable-ipv6
 %make_build shared
 mv dnsget{_s,}
 mv rblcheck{_s,}
@@ -53,6 +53,10 @@ install -pm755 dnsget rblcheck %buildroot%_bindir/
 install -pm644 dnsget.1 rblcheck.1 %buildroot%_man1dir/
 install -pm644 udns.3 %buildroot%_man3dir/
 install -pm644 udns.h %buildroot%_includedir/
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files
 %_bindir/*
@@ -68,6 +72,9 @@ install -pm644 udns.h %buildroot%_includedir/
 %_man3dir/*
 
 %changelog
+* Sun Jul 04 2021 Dmitry V. Levin <ldv@altlinux.org> 0.4-alt1
+- 0.2 -> 0.4.
+
 * Mon Jan 16 2012 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt1
 - Updated to 0.2.
 - Rewrote specfile.
