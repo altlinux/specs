@@ -7,7 +7,7 @@
 
 Name: gtk-vnc
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: VNC viewer widget
 Group: System/Libraries
@@ -15,6 +15,7 @@ License: LGPLv2.1+
 Url: https://wiki.gnome.org/Projects/gtk-vnc
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: gtk-vnc-1.2.0-alt-e2k-makecontext.patch
 
 Requires: libgtk3vnc = %EVR
 
@@ -149,6 +150,9 @@ library.
 
 %prep
 %setup
+%ifarch %e2k
+%patch -p1
+%endif
 
 %build
 %meson \
@@ -218,6 +222,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Jul 04 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt2
+- E2K: added makecontext patch by ilyakurdyukov@
+
 * Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
