@@ -1,6 +1,6 @@
 Name: tcl-tkXwin
 Version: 1.0
-Release: alt5
+Release: alt6
 
 Summary: TkXwin autoaway support for Tcl/Tk aplication.
 License: GPL
@@ -9,7 +9,7 @@ Url: http://beepcore-tcl.sourceforge.net/
 
 Source: %name-%version.tar.gz
 
-BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1 tcl-devel >= 8.4.0 tk-devel >= 8.4.0
+BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.5.2-alt1 tcl-devel >= 8.4.0 tk-devel >= 8.4.0
 BuildRequires: libXScrnSaver-devel libXt-devel libXext-devel
 
 %description
@@ -17,7 +17,7 @@ TkXwin autoaway support for Tcl/Tk aplication.
 
 %prep
 %setup -qc
-%teapatch
+%tea_patch
 sed -i 's,@lib@,%_lib,' pkgIndex.tcl.in
 
 %build
@@ -31,10 +31,12 @@ autoconf
 
 %files
 %doc AUTHORS README
-%_tcllibdir/libtkXwin%version.so
-%_tcldatadir/tkXwin%version
+%_tcllibdir/tkXwin%version
 
 %changelog
+* Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0-alt6
+- Built with %%tea_patch.
+
 * Sat Jun 18 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt5
 - buildreqs reordered
 
