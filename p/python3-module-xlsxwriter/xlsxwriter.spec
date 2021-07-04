@@ -1,13 +1,11 @@
 %define oname xlsxwriter
-%def_without python2
-%def_with python3
 
-Name:    python-module-%oname
+Name:    python3-module-%oname
 Version: 1.4.3
-Release: alt1
+Release: alt2
 Summary: A Python module for creating Excel XLSX files
 License: BSD
-Group:   Development/Python
+Group:   Development/Python3
 Url:     https://github.com/jmcnamara/XlsxWriter
 Packager: Python Development Team <python@packages.altlinux.org>
 
@@ -15,21 +13,10 @@ Source: %oname-%version.tar
 #VCS: https://github.com/jmcnamara/XlsxWriter
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-sphinx
-%if_with python2
-BuildRequires: python-module-alabaster
-BuildRequires: python-module-docutils
-BuildRequires: python-module-html5lib
-BuildRequires: python-module-pytest
-%endif
-BuildRequires: python-module-objects.inv
-BuildRequires: time
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: time
 # Provides py.test3 for us without the minor version:
 BuildRequires: python3-module-pytest >= 3.0.5-alt2
-%endif
 
 %description
 XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
@@ -39,116 +26,35 @@ XlsxWriter can be used to write text, numbers, formulas and hyperlinks
 to multiple worksheets and it supports features such as formatting and
 many more.
 
-%package -n python3-module-%oname
-Summary: A Python module for creating Excel XLSX files
-Group: Development/Python3
-
-%description -n python3-module-%oname
-XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
-file format.
-
-XlsxWriter can be used to write text, numbers, formulas and hyperlinks
-to multiple worksheets and it supports features such as formatting and
-many more.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
-file format.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
-file format.
-
-This package contains documentation for %oname.
-
 %prep
 %setup -q -n %oname-%version
-%if_with python3
-cp -R . -T ../python3
-%endif
-
-%prepare_sphinx dev/docs
-ln -s ../objects.inv -t dev/docs/source/
+subst 's|python|%__python3|' setup.py
 
 %build
-%if_with python2
-%python_build_debug
-%endif
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 pushd %buildroot%_bindir
 for i in *; do
-	mv "$i" "${i}3"
+       cp "$i" "${i}3"
 done
 popd
-%endif
-%if_with python2
-%python_install
-%endif
-
-%if_with python2
-%make -C dev/docs pickle
-cp -R dev/docs/build/pickle -t %buildroot%python_sitelibdir/%oname/
-%endif
-%make -C dev/docs html
 
 %check
-%if_with python2
-python setup.py test
-py.test -vv
-%endif
-%if_with python3
-pushd ../python3
-python3 setup.py test
+%__python3 setup.py test
 py.test3 -vv
-popd
-%endif
 
-%if_with python2
 %files
 %doc Changes *.md *.rst examples dev/performance
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
-%endif
-
-%files docs
-%doc docs/* dev/docs/build/html
-
-%if_with python3
-%files -n python3-module-%oname
-%doc Changes *.md *.rst examples dev/performance
-%_bindir/*.py3
+%_bindir/*.py*
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sun Jul 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt2
+- Spec cleanup, build only python3 module.
+- FTBFS: use versioned python interpreter for tests.
+
 * Wed May 12 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
 - New version.
 
