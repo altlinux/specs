@@ -1,44 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
 %define oname gmpy2
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.1.0
-Release: alt0.1.b5
+Release: alt1
+
 Summary: GMP/MPIR, MPFR, and MPC interface
+
 License: LGPL-3.0+
-Group: Development/Python
+Group: Development/Python3
 Url: http://code.google.com/p/gmpy/
 
-Source0: https://pypi.python.org/packages/90/f4/9a2e384b325b69bc5827b9a6510a8fb4a51698c915c06a3f25a86458892a/%{oname}-%{version}.zip
+# Source-url: https://pypi.python.org/packages/90/f4/9a2e384b325b69bc5827b9a6510a8fb4a51698c915c06a3f25a86458892a/%{oname}-%{version}.zip
+Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: libmpc-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel
-%endif
+BuildRequires: libmpc-devel
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 
 %description
 A C-coded Python extension module that wraps the GMP library to provide
 to Python code fast multiprecision arithmetic (integer, rational, and
 float), random number generation, advanced number-theoretical functions,
 and more.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: General MultiPrecision arithmetic for Python 3
-Group: Development/Python3
-
-%description -n python3-module-%oname
-A C-coded Python extension module that wraps the GMP library to provide
-to Python code fast multiprecision arithmetic (integer, rational, and
-float), random number generation, advanced number-theoretical functions,
-and more.
-%endif
 
 %package docs
 Summary: Documentation and tests for GMPY
@@ -66,69 +52,38 @@ and more.
 This package contains pickles for GMPY.
 
 %prep
-%setup -q -n %{oname}-%{version}
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+%prepare_sphinx3 .
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
-%make -C docs pickle
 %make -C docs html
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+#install -d %buildroot%python_sitelibdir/%oname
+#cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-python test/gmpy_test.py
-python test/runtests.py
-rm -f test/*.pyc
-%if_with python3
-pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 test/gmpy_test.py
 python3 test/runtests.py
-popd
-%endif
 
 %files
 %doc README
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*
 
 %files docs
 %doc docs/_build/html test*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc README
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- build python3 module only
+
 * Mon Jun 21 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt0.1.b5
 - New version from https://github.com/aleaxit/gmpy/tree/gmpy2-2.1.0b5.
 - Set LGPL version in License tag.
