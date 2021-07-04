@@ -1,17 +1,22 @@
+# check version in include/libyuv/version.h
 Name: libyuv
+Version: 0.0.1767
+Release: alt1
+
 Summary: YUV conversion and scaling functionality library
-Version: 0.0.1433
-Release: alt2.1
+
 License: BSD
 Group: Development/C
 Url: http://code.google.com/p/libyuv/
-# https://freeswitch.org/stash/scm/sd/libyuv.git
-# http://files.freeswitch.org/repo/deb/debian/pool/main/liby/libyuv/
-Source0: %name-%version.tar
+
+# Source-url: https://chromium.googlesource.com/libyuv/libyuv/+archive/ad890067f661dc747a975bc55ba3767fe30d4452.tar.gz
+Source: %name-%version.tar
+
 Patch0: libyuv-alt-buildfix.patch
-Patch1: libyuv-alt-neon64.patch
-BuildRequires: libgtest-devel gcc-c++
-BuildRequires: libjpeg-devel cmake
+
+BuildRequires: gcc-c++ cmake
+BuildRequires: libjpeg-devel
+BuildRequires: libgtest-devel
 
 %description
 This is an open source project that includes YUV conversion and scaling
@@ -24,37 +29,58 @@ with point, bilinear or box filter.
 Summary: The development files for %name
 Group: Development/C
 Requires: pkgconfig
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Additional header files for development with %name.
 
+%package tools
+Summary: Tools for %name
+Group: File tools
+Requires: pkgconfig
+Requires: %name = %EVR
+
+%description tools
+yuvconvert tool.
+
 %prep
 %setup
 %patch0 -p2
-%patch1 -p2
 
 %build
 %ifarch %ix86
     %add_optflags -msse2
 %endif
-%cmake
+%cmake \
+    -DENABLE_TEST=1 \
+    -DCMAKE_SKIP_BUILD_RPATH=1
 %cmake_build
 
 %install
 %cmake_install
+rm -rfv %buildroot/usr/lib/libyuv.a
+
+%check
+$(echo */libyuv_unittest)
 
 %files
 %doc AUTHORS LICENSE PATENTS
 %_libdir/%name.so.*
 
+%files tools
+%_bindir/yuvconvert
+
 %files devel
-%_includedir/%name
+%_includedir/%name/
 %_includedir/%name.h
 %_libdir/%name.so
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.0.1767-alt1
+- new version from git ad890067f661dc747a975bc55ba3767fe30d4452
+- new version (0.0.1767) with rpmgs script
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.0.1433-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
