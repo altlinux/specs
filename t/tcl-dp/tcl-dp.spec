@@ -6,7 +6,7 @@
 
 Name: tcl-dp
 Version: 4.0b2
-Release: alt4
+Release: alt5
 
 Summary: The package provides UDP, TCP, IP-multicast, and RPC for Tcl
 Summary(ru_RU.UTF-8): Пакет, добавляет возможности UDP, TCP, IP-multicast и RPC к языку Tcl
@@ -26,7 +26,7 @@ Patch6: tcl-dp-4.0b2-alt1-fix-serial-module.patch
 Patch7: tcl-dp-4.0b2-alt1-pkgindex.patch
 Patch8: tcl-dp-4.0b2-alt-tcltk8.6.patch
 
-BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
+BuildRequires(pre): rpm-build-tcl >= 0.5.2-alt1
 BuildRequires: tcl-devel zlib-devel
 Requires: tcl >= 8.0 tcl <= 9.0
 
@@ -54,7 +54,7 @@ primitives is also provided.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%teapatch
+%tea_patch
 sed 's,@lib@,%_lib,' -i tekilib/pkgIndex.tcl
 
 %build
@@ -88,6 +88,9 @@ install tekilib/pkgIndex.tcl %pkg_dir/
 %_tcllibdir/lib%teaname%teaversion.so
 
 %changelog
+* Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0b2-alt5
+- Built with %%tea_patch.
+
 * Tue Mar 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0b2-alt4
 - Fixed FTBFS: built with system zlib
 
@@ -97,7 +100,7 @@ install tekilib/pkgIndex.tcl %pkg_dir/
 
 * Wed Jan 02 2013 Malo Skryleve <malo@altlinux.org> 4.0b2-alt2
 - Removed 5th patch to allow the package building, and replaced
-BuildPreReq to BuildRequires(pre) define
+  BuildPreReq to BuildRequires(pre) define
 
 * Sun Feb 13 2011 Malo Skryleve <malo@altlinux.org> 4.0b2-alt1
 - initial build for ALT Linux Sisyphus
