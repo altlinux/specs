@@ -1,32 +1,32 @@
-%def_disable snapshot
-%define _name openh264
+%define oname openh264
 %def_enable check
+%def_without meson
 
-Name: lib%_name
+Name: libopenh264
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: H.264 codec library
+
 Group: System/Libraries
 License: BSD
-Url: http://www.%_name.org/
+Url: http://www.openh264.org/
 
-%if_disabled snapshot
-Source: https://github.com/cisco/%_name/archive/v%version/%_name-%version.tar.gz
-%else
-Source: %_name-%version.tar
-%endif
+# Source-url: https://github.com/cisco/openh264/archive/v%version/%oname-%version.tar.gz
+Source: %name-%version.tar
+
+Patch: libopenh264-meson-update.patch
 
 %ifarch %ix86
 %add_optflags -msse2 -mfpmath=sse
 %set_verify_elf_method textrel=relaxed
 %endif
 
-ExclusiveArch: x86_64
-#ExcludeArch: %ix86 ppc64le
-
+%if_with meson
 BuildRequires(pre): meson
+%endif
 BuildRequires: gcc-c++ nasm
+
 %{?_enable_check:BuildRequires: libgtest-devel}
 
 %description
@@ -48,21 +48,44 @@ Group: Development/C++
 Requires: %name-devel = %EVR
 
 %description devel-static
-This package provides %_name static library.
+This package provides %name static library.
 
 %prep
-%setup -n %_name-%version
+%setup
+%patch -p2
+# setup build options
+%add_optflags %optflags_shared
+%ifarch %ix86
+%add_optflags -msse2 -mfpmath=sse
+sed -i 's|^USE_ASM[[:space:]][[:space:]]*=.*|USE_ASM = No|' Makefile
+sed -i 's|^HAVE_AVX2[[:space:]][[:space:]]*:=.*|HAVE_AVX2 := No|' build/arch.mk
+%endif
+sed -i -e 's|^CFLAGS_OPT=.*$|CFLAGS_OPT=%{optflags}|' Makefile
+#sed -i -e '/^CFLAGS_OPT=/i LDFLAGS={ldflags}' Makefile
+sed -i -e 's|^PREFIX=.*$|PREFIX=%{_prefix}|' Makefile
+sed -i -e 's|^LIBDIR_NAME=.*$|LIBDIR_NAME=%{_lib}|' Makefile
+sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 
 %build
+%if_with meson
 %meson
 %meson_build
+%else
+%make_build
+%endif
 
 %install
+%if_with meson
 %meson_install
+%else
+%makeinstall_std
+%endif
 
 %check
+%if_with meson
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
+%endif
 
 %files
 %_libdir/%name.so.*
@@ -71,12 +94,16 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files devel
 %_includedir/wels/
 %_libdir/%name.so
-%_pkgconfigdir/%_name.pc
+%_pkgconfigdir/%oname.pc
 
 %files devel-static
 %_libdir/%name.a
 
 %changelog
+* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt2
+- cleanup spec, drop ExclusiveArch
+- switch build to makefile (thanks, zerg@!), fix build (ALT bug 38832)
+
 * Wed Jun 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
