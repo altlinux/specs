@@ -3,7 +3,7 @@
 
 Name: tcl-tix
 Version: 8.4.3
-Release: alt3
+Release: alt4
 
 Summary: A set of capable widgets for Tk
 License: BSD
@@ -12,7 +12,7 @@ Url: http://tix.sourceforge.net/
 
 Source: %name-%version-%release.tar
 
-BuildRequires(pre): rpm-build-tcl
+BuildRequires(pre): rpm-build-tcl >= 0.5.2-alt1
 BuildRequires: tk-devel >= 8.5.0
 
 Provides: tix = 1:%version-%release
@@ -52,7 +52,7 @@ the features of the Tix widget set.
 
 %prep
 %setup
-%teapatch
+%tea_patch
 
 %build
 %autoreconf
@@ -60,6 +60,8 @@ the features of the Tix widget set.
 %make_build
 
 %install 
+# FIXME: improve %%tea_patch
+mkdir -p %buildroot%_tcldatadir/Tix%version
 %makeinstall
 rm -f %buildroot%_tcldatadir/Tix%version/pref/WmDefault.py
 rm -f %buildroot%_tcllibdir/README.txt
@@ -71,7 +73,6 @@ cp -a demos %buildroot%_tcldatadir/Tix%version
 %doc README.txt docs/FAQ.txt license.terms
 %doc docs/html
 
-%_tcllibdir/libTix%version.so
 %_tcllibdir/Tix%version
 
 %_tcldatadir/Tix%version
@@ -81,6 +82,9 @@ cp -a demos %buildroot%_tcldatadir/Tix%version
 %_tcldatadir/Tix%version/demos
 
 %changelog
+* Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.4.3-alt4
+- Built with %%tea_patch.
+
 * Wed Sep 19 2018 Ivan A. Melnikov <iv@altlinux.org> 8.4.3-alt3
 - Package pkgIndex.tcl to fix provides
 
