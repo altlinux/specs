@@ -5,7 +5,7 @@
 
 Name: tcl-memchan
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: A tcl extension implementing memory channels
 License: TCL
@@ -22,7 +22,7 @@ Source: %teaname%version.tar
 Patch0: tcl-memchan-2.2-alt-warn.patch
 
 Requires: tcl >= 8.4.0-alt1
-BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1 tcl-devel >= 8.4.0-alt1 tcllib
+BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.5.2-alt1 tcl-devel >= 8.4.0-alt1 tcllib
 
 %description
 This package contains a freely distributable extension to Tcl
@@ -32,7 +32,7 @@ placed into them in memory, not on disk.
 %prep
 %setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname%version}
 %patch0 -p1
-%teapatch
+%tea_patch
 
 %build
 %autoreconf
@@ -47,11 +47,13 @@ rm %buildroot%_mandir/mann/random.n
 make test
 
 %files
-%_tcllibdir/libMemchan%version.so
 %_tcllibdir/Memchan%version
 %_mandir/mann/*
 
 %changelog
+* Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3-alt2
+- Built with %%tea_patch.
+
 * Thu Nov 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3-alt1
 - Updated to 2.3.
 - Built according ALT Tcl/Tk extension policy.
