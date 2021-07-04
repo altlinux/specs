@@ -1,37 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define oname simplejson
 
-%def_without python3
+Name: python3-module-%oname
+Version: 3.17.2
+Release: alt1
 
-Name: python-module-%oname
-Version: 3.15.0
-Release: alt4
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
+
 License: MIT/X Consortium
-Group: Development/Python
+Group: Development/Python3
 Url: https://simplejson.readthedocs.io/
 
-# https://github.com/simplejson/simplejson.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch: %oname-3.5.3-alt-python3.patch
 
-BuildRequires: python-devel python-module-setuptools python-module-sphinx
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-%endif
 
+BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
-Simplejson is a simple, fast, complete, correct and extensible JSON
-encoder and decoder for Python 2.3+. It is pure Python code with no
-dependencies.
-
-%package -n python3-module-%oname
-Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Simplejson is a simple, fast, complete, correct and extensible JSON
 encoder and decoder for Python 2.3+. It is pure Python code with no
 dependencies.
@@ -51,60 +40,33 @@ This package contains documentation for simplejson.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-pushd ../python3
-%patch -p2
-popd
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
-python2 ./scripts/make_docs.py
+python3 ./scripts/make_docs.py
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+# python2 compat only
+rm -f %buildroot/%python3_sitelibdir/%oname/ordered_dict.py
 
 %check
-python2 setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
-%python_sitelibdir/%oname/
-%exclude %python_sitelibdir/%oname/tests
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname/
+%exclude %python3_sitelibdir/%oname/tests
+%python3_sitelibdir/*.egg-info
 
 %files doc
 %doc docs/*
 
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
-* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 3.15.0-alt4
-- NMU: build python2 module only
+* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 3.17.2-alt1
+- build python3 module separately
+- new version 3.17.2 (with rpmrb script)
 
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.15.0-alt3.qa1
 - NMU: remove rpm-build-ubt from BR:
