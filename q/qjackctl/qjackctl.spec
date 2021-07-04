@@ -1,19 +1,12 @@
-%define cvsbuild 1
-%undefine cvsbuild
-%define cvsdate 20060910
-%define prerel %nil
-
-%def_enable qt5
+%def_disable snapshot
+%def_disable qt6
 # enable/disable JACK version support
 %def_enable jack_version
+%def_enable portaudio
 
 Name: qjackctl
-Version: 0.9.3
-%ifdef cvsbuild
-Release: alt0.cvs%cvsdate
-%else
-Release: alt1%prerel
-%endif
+Version: 0.9.4
+Release: alt1
 
 Summary: Qjackctl is a programm to control the JACK sound server daemon
 Summary(ru_RU.UTF-8): Qjackctl -- это программа для контроля над демоном JACK-сервера
@@ -21,22 +14,25 @@ Group: Sound
 License: GPL-2.0-or-later
 Url: https://%name.sourceforge.net
 
-%ifdef cvsbuild
+%if_enabled snapshot
 Vcs: https://github.com/rncbc/qjackctl.git
 Source: %name-%cvsdate.tar
 %else
-Source: https://prdownloads.sourceforge.net/%name/%name-%version%prerel.tar.gz
+Source: https://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 %endif
 
 %define jack_ver 0.118
 Requires: jackd >= %jack_ver
 
-BuildRequires(pre): jackit-devel >= %jack_ver
-BuildRequires: gcc-c++ libalsa-devel libX11-devel libXext-devel
-%if_enabled qt5
-BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: jackit-devel >= %jack_ver
+BuildRequires: cmake gcc-c++ libalsa-devel
+%{?_enable_portaudio:BuildRequires: pkgconfig(portaudio-2.0)}
+BuildRequires: libX11-devel libXext-devel
+%if_enabled qt6
+BuildRequires: qt6-base-devel qt6-x11extras-devel qt6-tools-devel
 %else
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
 %endif
 
 %description
@@ -53,29 +49,21 @@ Qjackctl -- это удобная программа с графическим �
 JACK-клиентов.
 
 %prep
-%ifdef cvsbuild
-%setup -n %name
-%autoreconf
-%else
-%setup -n %name-%version%prerel
-%endif
+%setup -n %name-%version
 
 # don't compress man pages
-sed -i '/@gzip/d' Makefile*
+#sed -i '/@gzip/d' Makefile*
 
 %build
-%if_disabled qt5
-export QTDIR=%_qt4dir
-export PATH=%_qt4dir/bin:$PATH
-%endif
 %add_optflags %(getconf LFS_CFLAGS)
-%configure \
-	--localedir=%_datadir/%name/locale \
-	%{?_enable_jack_version:--enable-jack-version}
-%make_build
+%cmake \
+    %{?_enable_jack_version:-DCONFIG_JACK_VERSION=ON} \
+    %{?_disable_portaudio:-DCONFIG_PORTAUDIO=OFF}
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %find_lang --with-qt --with-man --all-name --output=%name.lang %name
 
@@ -90,6 +78,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
+- 0.9.4 (ported to CMake build system)
+
 * Wed May 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
 - 0.9.3
 
@@ -194,7 +185,7 @@ export PATH=%_qt4dir/bin:$PATH
 * Sun Sep 10 2006 L.A. Kostis <lakostis@altlinux.ru> 0.2.20.17-alt0.cvs20060910
 - CVS snapshot 2006-09-10.
 
-* Mon Apr 04 2006 LAKostis <lakostis at altlinux.ru> 0.2.20-alt1
+* Tue Apr 04 2006 LAKostis <lakostis at altlinux.ru> 0.2.20-alt1
 - 0.2.20.
 - cleanup buildreq.
 

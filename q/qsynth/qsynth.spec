@@ -1,7 +1,7 @@
-%def_enable qt5
+%def_disable qt6
 
 Name: qsynth
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -15,11 +15,12 @@ Source: https://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 
 Requires: fluidsynth
 
-BuildRequires: gcc-c++ ladspa_sdk libfluidsynth-devel libXext-devel
-%if_enabled qt5
-BuildRequires: qt5-tools qt5-x11extras-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ ladspa_sdk libfluidsynth-devel libXext-devel
+%if_enabled qt6
+BuildRequires: qt6-tools-devel qt6-x11extras-devel
 %else
-BuildRequires: libqt4-devel
+BuildRequires: qt5-tools-devel qt5-x11extras-devel
 %endif
 
 %description
@@ -41,22 +42,15 @@ QSynth -- это графическая надстройка над FluidSynth. 
 %prep
 %setup
 # don't compress man pages
-sed -i '/@gzip/d' Makefile*
+#sed -i '/@gzip/d' Makefile*
 
 %build
-%if_disabled qt5
-export QTDIR=%qtdir
-export PATH=%qtdir/bin:$PATH
-%endif
 %add_optflags %(getconf LFS_CFLAGS)
-%configure --localedir=%_datadir/%name/locale
-
-# SMP-incompatible build
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
-
+%cmake_install
 %find_lang --with-qt --with-man --all-name --output=%name.lang %name
 
 %files -f %name.lang
@@ -70,6 +64,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
+- 0.9.4 (ported to CMake build system)
+
 * Wed May 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
 - 0.9.3
 
