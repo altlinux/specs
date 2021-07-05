@@ -1,7 +1,7 @@
 %global appid net.lutris.Lutris
 Name: lutris
-Version: 0.5.8.3
-Release: alt2
+Version: 0.5.8.4
+Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
@@ -58,6 +58,9 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %_man1dir/%name.1.xz
 
 %changelog
+* Mon Jul 05 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.8.4-alt1
+- New version (0.5.8.4).
+
 * Tue Feb 02 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.8.3-alt2
 - Fixed sisyphus_check error.
 
