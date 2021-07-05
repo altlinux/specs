@@ -4,28 +4,34 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global base_name       beanutils
-%global short_name      commons-%{base_name}
+%bcond_with bootstrap
 
-Name:           apache-%{short_name}
+Name:           apache-commons-beanutils
 Version:        1.9.4
-Release:        alt1_2jpp11
+Release:        alt1_6jpp11
 Summary:        Java utility methods for accessing and modifying the properties of arbitrary JavaBeans
 License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}
+URL:            http://commons.apache.org/beanutils
 BuildArch:      noarch
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/commons/beanutils/source/commons-beanutils-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(commons-collections:commons-collections-testframework)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -43,7 +49,7 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-beanutils-%{version}-src
 sed -i 's/\r//' *.txt
 
 %pom_remove_plugin :maven-assembly-plugin
@@ -51,10 +57,11 @@ sed -i 's/\r//' *.txt
 %mvn_alias :{*} :@1-core :@1-bean-collections
 %mvn_alias :{*} org.apache.commons:@1 org.apache.commons:@1-core org.apache.commons:@1-bean-collections
 %mvn_file : %{name} %{name}-core %{name}-bean-collections
-%mvn_file : %{short_name} %{short_name}-core %{short_name}-bean-collections
+%mvn_file : commons-beanutils commons-beanutils-core commons-beanutils-bean-collections
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+# Some tests fail in Koji
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.beanutils
 
 %install
 %mvn_install
@@ -67,6 +74,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 05 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.4-alt1_6jpp11
+- quick fix (closes: #40375)
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.4-alt1_2jpp11
 - new version
 
