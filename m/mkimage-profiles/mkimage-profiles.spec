@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.13
+Version: 1.4.14
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,22 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jul 05 2021 Anton Midyukov <antohami@altlinux.org> 1.4.14-alt1
+- reports.mk: fix launch together with the CHECK option
+- Makefile: Create a report directory at each iteration
+- Makefile, profile.mk: not create temp directories with DIRECT_TARGETS
+- log.mk:  Don't write anything to build.log when DIRECT_TARGETS
+- Do not rsync .gitignore to build directories
+- regular-vm.mk: add deepin rootfs targets
+- engineering: use metapackage instead list
+- dev, kernel: not set BIGRAM to std-def
+- regulars: require the entire metapackage chain
+- grub: Updating 95fwsetup_efi.cfg. Replace "System setup" to
+  "UEFI Firmware Settings"
+- build-vm: overwrite existing output file
+- workstation: 9.2 rc1
+- server-v: 9.2 rc1
+
 * Mon Jun 07 2021 Anton Midyukov <antohami@altlinux.org> 1.4.13-alt1
 - add parametr's BRANCH, NO_SYMLINK
 - fix usage AUTOCLEAN parameter with DEBUG
