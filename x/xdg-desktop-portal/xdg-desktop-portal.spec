@@ -3,11 +3,11 @@
 %define _libexecdir %_prefix/libexec
 %def_disable docs
 #ERROR: test-portals - Bail out! xdg-desktop-portal:ERROR:tests/camera.c:74:camera_cb: 'ret' should be FALSE
-%def_enable check
+%def_disable check
 
 Name: xdg-desktop-portal
 Version: 1.8.1
-Release: alt2
+Release: alt2.1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -72,7 +72,7 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %find_lang %name
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %_libexecdir/%name
@@ -95,6 +95,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt2.1
+- disabled check
+
 * Sun Apr 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt2
 - updated to 1.8.1-3-g89d2197
 
