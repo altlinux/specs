@@ -1,10 +1,10 @@
 %define oname mpmath
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.19
-Release: alt1.git20150621.1.1.1.1
+Release: alt1.git20150621.2
 Summary: Python library for arbitrary-precision floating-point arithmetic
 License: New BSD License
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildRequires(pre): rpm-build-python3
 # optimized out: at-spi2-atk at-spi2-core colord dbus dbus-tools-gui fakeroot fontconfig fonts-bitmap-misc glib-networking gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libcap-ng libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl libwayland-server python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-cycler python-module-dateutil python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib-gtk3 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base shared-mime-info xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb
 BuildRequires: fonts-type1-urw python-module-alabaster python-module-docutils python-module-gmpy python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-pycairo python-module-pygobject3 rpm-build-python3 time
 %{?!_disable_check:BuildRequires: xvfb-run}
+BuildRequires: python-module-sphinx
 
 #BuildRequires: python3-devel python3-module-gmpy python-tools-2to3
 #BuildPreReq: python3-module-matplotlib python3-module-pycairo
@@ -161,10 +162,10 @@ pushd ../python3
 popd
 %endif
 
-pushd doc
-python build.py
-sphinx-build -b pickle -E source pickle
-popd
+#pushd doc
+#python2 build.py
+#sphinx-build -b pickle -E source pickle
+#popd
 
 %install
 %python_install
@@ -174,34 +175,34 @@ pushd ../python3
 popd
 %endif
 
-cp -fR doc/pickle %buildroot%python_sitelibdir/%oname/
+#cp -fR doc/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-xvfb-run python mpmath/tests/runtests.py
+#export PYTHONPATH=%buildroot%python_sitelibdir
+#xvfb-run python2 mpmath/tests/runtests.py
 
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
-xvfb-run python mpmath/tests/runtests.py
+xvfb-run python3 mpmath/tests/runtests.py
 popd
 %endif
 
 %files
 %doc CHANGES LICENSE README*
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/pickle
-%exclude %python_sitelibdir/%oname/tests
+#exclude %python_sitelibdir/%oname/pickle
+#exclude %python_sitelibdir/%oname/tests
 #exclude %python_sitelibdir/%oname/libmp/exec_py3.py*
 
-%files tests
-%python_sitelibdir/%oname/tests
+#files tests
+#python_sitelibdir/%oname/tests
 
-%files doc
-%doc doc/build/* demo
+#files doc
+#doc doc/build/* demo
 
-%files pickles
-%python_sitelibdir/%oname/pickle
+#files pickles
+#python_sitelibdir/%oname/pickle
 
 %if_with python3
 %files -n python3-module-%oname
@@ -215,6 +216,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.19-alt1.git20150621.2
+- build python2 module only, disable doc, test, pickles subpackages
+
 * Fri Jun 02 2017 Michael Shigorin <mike@altlinux.org> 0.19-alt1.git20150621.1.1.1.1
 - BOOTSTRAP: put xvfb-run under check knob
 
