@@ -14,7 +14,7 @@
 
 Name: kde5-%rname
 Version: 21.04.2
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -109,7 +109,7 @@ KF5 library
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
 cat > %buildroot/%_sysconfdir/alternatives/packages.d/kde5-konsole <<__EOF__
-%_x11bindir/xvt %_K5bin/konsole        50
+%_x11bindir/xvt %_K5bin/konsole        55
 __EOF__
 
 
@@ -154,6 +154,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Mon Jul 05 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt2
+- resolve duplicate provides
+
 * Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
 - new version
 
