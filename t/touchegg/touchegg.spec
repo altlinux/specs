@@ -1,7 +1,7 @@
 %define _cmake__builddir BUILD
 
 Name:     touchegg
-Version:  2.0.10
+Version:  2.0.11
 Release:  alt1
 
 Summary:  Linux multi-touch gesture recognizer
@@ -58,6 +58,9 @@ make on your touchpad into visible actions in your desktop.
 %_unitdir/%name.service
 
 %changelog
+* Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.11-alt1
+- New version.
+
 * Tue Jun 08 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.10-alt1
 - New version.
 
