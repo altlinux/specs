@@ -1,18 +1,20 @@
 Name: cilk
 Version: 5.4.6
-Release: alt11
+Release: alt12
 Summary: Language for multithreaded parallel programming based on ANSI C
 License: GPL v2 or later
 Group: Development/C
 Url: http://supertech.csail.mit.edu/cilk/
 
 Source: http://supertech.csail.mit.edu/cilk/cilk-5.4.6.tar.gz
+Patch2000: %name-e2k.patch
 
 Requires: lib%name-devel = %version-%release
 Conflicts: lib%name-devel-static < %version-%release
 Obsoletes: lib%name-devel-static < %version-%release
 
 BuildRequires: flex chrpath
+ExcludeArch: armh aarch64
 
 %description
 Cilk is a language for multithreaded parallel programming based on ANSI
@@ -140,6 +142,9 @@ This package contains documentation for Cilk.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %add_optflags %optflags_shared -DHAVE_SYS_TIME_H -fgnu89-inline
@@ -200,6 +205,10 @@ install -m644 FAQ/%name-faq.html/* \
 %doc examples
 
 %changelog
+* Mon Jul 05 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.4.6-alt12
+- Added e2k support
+- Excluded unsupported armh and aarch64
+
 * Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4.6-alt11
 - Fixed build with gcc-6.
 
