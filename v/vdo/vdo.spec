@@ -2,7 +2,7 @@
 
 Summary: Management tools for Virtual Data Optimizer
 Name: vdo
-Version: 6.2.4.14
+Version: 6.2.5.41
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -58,6 +58,7 @@ This package provides the user-space support tools for VDO.
 
 %files
 %_bindir/vdo
+%_bindir/vdo2lvm
 %_bindir/vdostats
 %_bindir/vdodmeventd
 %_bindir/vdodumpconfig
@@ -74,6 +75,7 @@ This package provides the user-space support tools for VDO.
 %doc %_defaultdocdir/%name/COPYING
 %_defaultdocdir/%name/examples
 %_man8dir/vdo.8*
+%_man8dir/vdo2lvm.8*
 %_man8dir/vdostats.8*
 %_man8dir/vdodmeventd.8*
 %_man8dir/vdodumpconfig.8*
@@ -99,6 +101,9 @@ This package provides the user-space support tools for VDO.
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Mon Jul 05 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.5.41-alt1
+- 6.2.5.41
+
 * Wed Dec 16 2020 Alexey Shabalin <shaba@altlinux.org> 6.2.4.14-alt1
 - 6.2.4.14
 

@@ -1,6 +1,6 @@
 Name: kvdo
-Version: 6.2.4.26
-Release: alt2
+Version: 6.2.5.41
+Release: alt1
 
 Summary: Kernel Modules for Virtual Data Optimizer
 License: GPL-2.0-only
@@ -35,6 +35,9 @@ install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%na
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
 
 %changelog
+* Mon Jul 05 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.5.41-alt1
+- 6.2.5.41
+
 * Tue Mar 02 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.4.26-alt2
 - Sync with rhawalsh patches:
   + Removed currentTime() from exported symbols list for uds.
