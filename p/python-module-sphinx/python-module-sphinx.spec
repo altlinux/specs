@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.6.5
-Release: alt8
+Release: alt9
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -158,8 +158,8 @@ rm tests/py35/test_autodoc_py35.py
 %python_build
 
 # docs
-%make_build -C doc html
-%make_build -C doc man
+%make_build -C doc html PYTHON=python2 SPHINXBUILD="python2 ../sphinx-build.py"
+%make_build -C doc man  PYTHON=python2 SPHINXBUILD="python2 ../sphinx-build.py"
 
 %install
 %python_install
@@ -179,7 +179,7 @@ install -d %buildroot%_rpmmacrosdir
 sed -e 's:@SPHINX_DIR@:%sphinx_dir:g' < macro > %buildroot%_rpmmacrosdir/sphinx
 
 # add pickle files
-%make_build -C doc pickle
+%make_build -C doc pickle PYTHON=python2 SPHINXBUILD="python2 ../sphinx-build.py"
 
 install -d %buildroot%sphinx_dir/doctrees
 install -p -m644 doc/_build/doctrees/*.pickle \
@@ -198,7 +198,7 @@ EOF
 export LC_ALL=en_US.utf8 # some tests fail otherwise, because they use paths with Unicode
 
 rm -f tests/test_build_linkcheck.py
-PYTHONPATH=$(pwd) %make_build test
+PYTHONPATH=$(pwd) %make_build test PYTHON=python2
 
 %files
 %_bindir/*
@@ -225,6 +225,9 @@ PYTHONPATH=$(pwd) %make_build test
 %_rpmlibdir/%name-files.req.list
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.5-alt9
+- fix build
+
 * Wed Apr 29 2020 Grigory Ustinov <grenka@altlinux.org> 1:1.6.5-alt8
 - Fixed FTBFS (Removed copying tests).
 
