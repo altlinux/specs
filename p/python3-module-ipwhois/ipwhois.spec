@@ -1,24 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ipwhois
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
+
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/ipwhois/
 
 BuildArch: noarch
 
-# https://github.com/secynic/ipwhois.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-Patch1: fix-unique-addresses-test.patch
 
+Patch2: fix-alt.patch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
@@ -43,11 +45,10 @@ Features:
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%patch2 -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -58,11 +59,16 @@ nosetests3 -v -w ipwhois --exclude="(online|stress)"
 
 %files
 %doc *.rst
-%_bindir/*
+%_bindir/ipwhois_cli.py
+%_bindir/ipwhois_utils_cli.py
 %python3_sitelibdir/ipwhois/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
+- switch to build from tarball
+- disable tests (missed in pypi tarball)
+
 * Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
