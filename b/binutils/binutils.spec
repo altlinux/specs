@@ -1,8 +1,8 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.35.1
-Release: alt3
+Version: 2.35.2
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -20,6 +20,11 @@ Source5: output-format.sed
 
 Patch: binutils-2_35-branch.patch
 
+# Backports from upstream
+Patch1001: 0001-ld-elf-x86-Don-t-compare-IFUNC-address-in-the-shared.patch
+Patch1002: 0002-gold-Remove-the-circular-IFUNC-dependency-in-ifuncma.patch
+
+# ALT patches
 Patch01: 0001-ld-testsuite-ld-ifunc-pr18808b.c-pass-Wno-return-typ.patch
 Patch02: 0002-ld-testsuite-ld-elf-pr22269-1.c-pass-Wno-return-type.patch
 Patch03: 0003-bfd-export-demangle.h-and-hashtab.h.patch
@@ -101,6 +106,11 @@ This package contains source code of GNU Binutils.
 %patch -p1
 chmod +x gold/testsuite/plugin_pr22868.sh
 
+# Backports from upstream
+%patch1001 -p1
+%patch1002 -p1
+
+# ALT patches
 %patch01 -p1
 %patch02 -p1
 %patch03 -p1
@@ -309,6 +319,10 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Mon Jul 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.2-alt1
+- Updated to binutils-2_35_2-3-g3437a8bad8a.
+- Fixed FTBFS with glibc >= 2.32-alt3.
+
 * Mon Jan 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.1-alt3
 - Updated to 2.35.1 20210104.
 - Fixed FTBFS with gcc10.
