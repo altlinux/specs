@@ -11,7 +11,7 @@ BuildRequires: perl(AutoLoader.pm) perl(Exporter.pm) perl(XSLoader.pm) perl-podl
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt4_19
+Release:    alt4_20
 
 Summary:    Perl interface to the personality(2) Linux system call
 License:    GPL+ or Artistic
@@ -57,6 +57,9 @@ program.
 
 
 %changelog
+* Mon Jul 05 2021 Igor Vlasenko <viy@altlinux.org> 0.01-alt4_20
+- update by mgaimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.01-alt4_19
 - update by mgaimport
 
