@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 1.4.4
-Release: alt1
+Release: alt2
 Summary: A Python module for creating Excel XLSX files
 License: BSD
 Group:   Development/Python3
@@ -17,6 +17,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: time
 # Provides py.test3 for us without the minor version:
 BuildRequires: python3-module-pytest >= 3.0.5-alt2
+
+Provides: python-module-%oname = %EVR
+Obsoletes: python-module-%oname < %EVR
 
 %description
 XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
@@ -51,6 +54,9 @@ py.test3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt2
+- Conflicts with python-module-%oname.
+
 * Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
 - New version.
 
