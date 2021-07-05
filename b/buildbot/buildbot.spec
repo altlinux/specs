@@ -1,5 +1,5 @@
 Name: buildbot
-Version: 3.0.2
+Version: 3.2.0
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -10,6 +10,9 @@ Url: https://buildbot.net
 # https://github.com/buildbot/buildbot
 Source: %name-%version.tar
 
+###############################################################################
+# Wheel sources
+###############################################################################
 Source1: buildbot_www-%version-py3-none-any.whl
 Source2: buildbot_console_view-%version-py3-none-any.whl
 Source3: buildbot_grid_view-%version-py3-none-any.whl
@@ -17,13 +20,25 @@ Source4: buildbot_waterfall_view-%version-py3-none-any.whl
 Source5: buildbot_badges-%version-py3-none-any.whl
 Source6: buildbot_wsgi_dashboards-%version-py3-none-any.whl
 
+###############################################################################
+# Completion sources
+###############################################################################
+Source21: _buildbot
+Source22: _buildbot-worker
+
+###############################################################################
+# Systemd sources
+###############################################################################
+Source31: buildbot@.service
+Source32: buildbot-worker@.service
+
 Patch1: alt-disable-sending-usage-by-default.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-Requires: python3-module-service-identity buildbot-www
+Requires: python3-module-service-identity buildbot-www buildbot-sqlalchemy
 
 ###############################################################################
 # Skip win requires
@@ -41,6 +56,10 @@ Requires: python3-module-service-identity buildbot-www
 %filter_from_requires /python3(win32serviceutil)/d
 %filter_from_requires /python3(winerror)/d
 
+###############################################################################
+# Change sqlalchemy requires
+###############################################################################
+%filter_from_requires s/python3(sqlalchemy.*).*/buildbot-sqlalchemy/
 
 ###############################################################################
 # Main Package
@@ -61,7 +80,7 @@ inconvenienced by the failure.
 %package worker
 Group: Development/Python
 Summary: Buildbot worker implementation
-Requires: git-core
+Requires: git-core python3(service_identity)
 
 %description worker
 %summary.
@@ -118,6 +137,7 @@ Requires: python3-module-buildbot-www-extra-plugins = %EVR
 %description www-extra-plugins
 %summary.
 
+
 ###############################################################################
 # Package buildbot-checkinstall
 ###############################################################################
@@ -159,6 +179,11 @@ pushd worker
 install -Dm 0644 docs/buildbot-worker.1 %buildroot/%_man1dir/buildbot-worker.1
 popd
 
+change_path="sys.path.insert(0, '/usr/lib64/buildbot/modules')"
+for b in %buildroot%_bindir/buildbot %buildroot%_bindir/buildbot-worker; do
+    sed -i "/if __name__ == '__main__':/a\ \ \ \ $change_path" "$b"
+done
+
 python3 -mzipfile -e %SOURCE1 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE2 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE3 %buildroot/%python3_sitelibdir
@@ -166,9 +191,34 @@ python3 -mzipfile -e %SOURCE4 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE5 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE6 %buildroot/%python3_sitelibdir
 
+install -Dm 0644 %SOURCE21 %buildroot/%_datadir/zsh/site-functions/_buildbot
+install -Dm 0644 %SOURCE22 \
+    %buildroot/%_datadir/zsh/site-functions/_buildbot-worker
+
+mkdir -p %buildroot%_localstatedir/%{name}-worker
+mkdir -p %buildroot%_localstatedir/%name
+
+mkdir -p %buildroot%_unitdir
+install -m 0644 %SOURCE31 %buildroot%_unitdir/
+install -m 0644 %SOURCE32 %buildroot%_unitdir/
+
 rm %buildroot%_bindir/buildbot_windows_service
 rm %buildroot%_bindir/buildbot_worker_windows_service
 rm %buildroot%python3_sitelibdir/buildbot-*.egg-info/requires.txt
+
+
+###############################################################################
+# Pre
+###############################################################################
+%pre
+groupadd -r -f _%name 2>/dev/null ||:
+useradd -r -g _%name -c 'Buildbot master' \
+        -d %_localstatedir/%name _%name 2>/dev/null ||:
+
+%pre worker
+groupadd -r -f _%{name}-worker 2>/dev/null ||:
+useradd -r -g _%{name}-worker -c 'Buildbot worker' \
+        -d %_localstatedir/%{name}-worker  _%{name}-worker 2>/dev/null ||:
 
 
 ###############################################################################
@@ -209,6 +259,9 @@ trial -e buildbot.test buildbot_worker.test
 %_bindir/buildbot-worker
 %python3_sitelibdir/buildbot_worker
 %python3_sitelibdir/buildbot_worker-*.egg-info
+%dir %attr(0750,_%{name}-worker,_%{name}-worker) %_localstatedir/%{name}-worker
+%_unitdir/%{name}-worker*
+%_datadir/zsh/site-functions/_%{name}-worker
 
 %files
 %doc README.rst master/docs
@@ -216,10 +269,19 @@ trial -e buildbot.test buildbot_worker.test
 %_bindir/buildbot
 %python3_sitelibdir/buildbot
 %python3_sitelibdir/buildbot-*.egg-info
+%dir %attr(0750,_%name,_%name) %_localstatedir/%name
+%_unitdir/%{name}*
+%exclude %_unitdir/%{name}-worker*
+%_datadir/zsh/site-functions/_%name
 
 %files checkinstall
 
 %changelog
+* Wed Jun 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.2.0-alt1
+- new version 3.2.0
+- add zsh completion
+- add service files
+
 * Thu Apr 01 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.2-alt1
 - new version 3.0.2
 
