@@ -1,29 +1,28 @@
 %define oname testscenarios
-%def_with bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.0
 Release: alt3
 
 Summary: Testscenarios, a pyunit extension for dependency injection
+
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/testscenarios/
+
 BuildArch: noarch
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-%py_provides %oname
-%py_requires testtools
+BuildRequires: python3-module-testtools
+BuildRequires: python3-module-pytest python3-module-unittest2 python3-module-pbr
 
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-extras python-module-linecache2 python-module-mimeparse python-module-pbr python-module-pyasn1 python-module-serial python-module-setuptools python-module-six python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-pytest python-module-pbr
-BuildRequires: python-module-testtools
-
+%py3_provides %oname
+%py3_requires testtools
 
 %description
 testscenarios provides clean dependency injection for python unittest
@@ -36,22 +35,23 @@ itself, allowing easy testing in different situations).
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python2 -m testtools.run -v testscenarios.test_suite
+python3 -m testtools.run -v testscenarios.test_suite
 
 %files
 %doc Apache-2.0 BSD COPYING GOALS HACKING NEWS README doc
 %doc AUTHORS ChangeLog
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt3
-- build python2 module separately (needed for testtools only)
+- build python3 separately
 
 * Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.5.0-alt2.1
 - rebuild with all requires
