@@ -1,15 +1,15 @@
 %define _name gssdp
-%define ver_major 1.2
+%define ver_major 1.3
 %define api_ver 1.2
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_disable sniffer
 %def_enable check
 
-Name: lib%_name%ver_major
-Version: %ver_major.3
+Name: lib%_name%api_ver
+Version: %ver_major.0
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -17,11 +17,13 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gupnp.org/
 
+Vcs: https://gitlab.gnome.org/GNOME/gssdp.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: gtk-doc libsoup-devel >= 2.26.1 libgio-devel >= 2.54
+BuildRequires(pre): meson >= 0.54.0 rpm-build-gir
+BuildRequires: libsoup-devel >= 2.26.1 libgio-devel >= 2.54
 BuildRequires: vala-tools rpm-build-vala libvala-devel
+%{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel}
 %{?_enable_sniffer:BuildRequires: libgtk+3-devel >= 3.12}
 
@@ -93,7 +95,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files
 %_libdir/lib%_name-%api_ver.so.*
-%doc AUTHORS README NEWS ChangeLog
+%doc AUTHORS README* NEWS
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -104,7 +106,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name
+#%_datadir/gtk-doc/html/%_name
+%_datadir/doc/%_name-%api_ver
 %endif
 
 %if_enabled introspection
@@ -122,6 +125,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Tue Jun 23 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 

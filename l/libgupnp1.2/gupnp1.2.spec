@@ -1,15 +1,15 @@
 %define _name gupnp
-%define ver_major 1.2
+%define ver_major 1.3
 %define api_ver 1.2
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
 %def_enable check
 
-Name: lib%_name%ver_major
-Version: %ver_major.7
+Name: lib%_name%api_ver
+Version: %ver_major.0
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -21,10 +21,11 @@ Vcs: https://gitlab.gnome.org/GNOME/gupnp.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: libgssdp%ver_major-devel >= 1.2.3 libgio-devel >= 2.66.0
-BuildRequires: libxml2-devel libsoup-devel >= 2.48 libuuid-devel gtk-doc
+BuildRequires: libgssdp%api_ver-devel >= 1.3.0 libgio-devel >= 2.66.0
+BuildRequires: libxml2-devel libsoup-devel >= 2.48 libuuid-devel
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgssdp%ver_major-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgssdp%api_ver-gir-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 
 %description
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -96,7 +97,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/%_name-binding-tool-%api_ver
 %_libdir/lib%_name-%api_ver.so.*
 %_man1dir/%_name-binding-tool*.1*
-%doc AUTHORS README ChangeLog
+%doc AUTHORS README* NEWS
 
 %files devel
 %_pkgconfigdir/%_name-%api_ver.pc
@@ -120,6 +121,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sun Jun 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.7-alt1
 - 1.2.7
 
