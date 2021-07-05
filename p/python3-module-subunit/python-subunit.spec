@@ -1,29 +1,29 @@
-%define oname subunit
+%define oname python-subunit
 
-Name: python-module-%oname
+Name: python3-module-subunit
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: Python implementation of subunit test streaming protocol
-License: Apache or BSD
-Group: Development/Python
-Url: http://pypi.python.org/pypi/python-subunit/
-BuildArch: noarch
 
+License: Apache or BSD
+Group: Development/Python3
+Url: http://pypi.python.org/pypi/python-subunit/
+
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
+BuildArch: noarch
+
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-testscenarios
 BuildRequires: python3(hypothesis) python3(fixtures)
 BuildRequires: python3-module-testtools
 
-Provides: python-module-python-%oname = %EVR
-Obsoletes: python-module-python-%oname < %EVR
-
+%add_python3_req_skip gtk pynotify
 %add_python3_req_skip gtk.gdk
 
 %description
@@ -36,113 +36,29 @@ Subunit comes with command line filters to process a subunit stream and
 language bindings for python, C, C++ and shell. Bindings are easy to
 write for other languages.
 
-%package -n python3-module-%oname
-Summary: Python 3 implementation of subunit test streaming protocol
-Group: Development/Python3
-Provides: python3-module-python-%oname = %EVR
-Obsoletes: python3-module-python-%oname < %EVR
-%add_python3_req_skip gtk pynotify
-
-%description -n python3-module-%oname
-Subunit is a streaming protocol for test results. The protocol is human
-readable and easily generated and parsed. By design all the components
-of the protocol conceptually fit into the xUnit TestCase->TestResult
-interaction.
-
-Subunit comes with command line filters to process a subunit stream and
-language bindings for python, C, C++ and shell. Bindings are easy to
-write for other languages.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for python-subunit (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-Provides: python3-module-python-%oname-tests = %EVR
-Obsoletes: python3-module-python-%oname-tests < %EVR
-
-%description -n python3-module-%oname-tests
-Subunit is a streaming protocol for test results. The protocol is human
-readable and easily generated and parsed. By design all the components
-of the protocol conceptually fit into the xUnit TestCase->TestResult
-interaction.
-
-Subunit comes with command line filters to process a subunit stream and
-language bindings for python, C, C++ and shell. Bindings are easy to
-write for other languages.
-
-This package contains tests for python-subunit.
-
-%package tests
-Summary: Tests for python-subunit
-Group: Development/Python
-Requires: %name = %version-%release
-Provides: python-module-python-%oname-tests = %EVR
-Obsoletes: python-module-python-%oname-tests < %EVR
-
-%description tests
-Subunit is a streaming protocol for test results. The protocol is human
-readable and easily generated and parsed. By design all the components
-of the protocol conceptually fit into the xUnit TestCase->TestResult
-interaction.
-
-Subunit comes with command line filters to process a subunit stream and
-language bindings for python, C, C++ and shell. Bindings are easy to
-write for other languages.
-
-This package contains tests for python-subunit.
-
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
-#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
-popd
 
 %install
-%python_install
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i py2_$i
-done
-popd
-pushd ../python3
 %python3_install
-popd
-
+%python3_prune
 
 %check
-pushd ../python3
-python3 setup.py test
-popd
+#python3 setup.py test
 
 %files
 %doc NEWS README.rst
-%_bindir/py2_*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files -n python3-module-%oname
-%doc NEWS README.rst
 %_bindir/*
-%exclude %_bindir/py2_*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
 
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt3
+- build python3 module separately
+
 * Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
 - Dropped dependency on tests packages(Python2).
 
