@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.35.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -172,6 +172,7 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 %endif
 	--enable-relro \
 	--enable-textrel-check=warning \
+	--enable-deterministic-archives \
 	$ADDITIONAL_TARGETS
 
 for t in configure-host maybe-all-{libiberty,bfd,opcodes} all; do
@@ -319,6 +320,9 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Tue Jul 06 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.2-alt2
+- Enabled deterministic mode in ar(1) and objcopy(1) by default.
+
 * Mon Jul 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.2-alt1
 - Updated to binutils-2_35_2-3-g3437a8bad8a.
 - Fixed FTBFS with glibc >= 2.32-alt3.

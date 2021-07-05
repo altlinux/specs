@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 10.3.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20201125
+%define snapshot 20210703
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -2171,6 +2171,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Jul 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt2
+- Backported upstream PR:
+  + libstdc++/100900: add missing typename for dependent type in
+  ranges::elements_view (ALT#40369).
+
 * Fri Jul 02 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt1
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git (fixes FTBFS
   with linux kernel headers >= 5.13):
