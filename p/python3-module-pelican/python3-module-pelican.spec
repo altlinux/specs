@@ -18,14 +18,14 @@ Pelican is a static site generator, written in Python_.\
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 Name: python3-module-%{pypi_name}
-Version: 4.1.0
-Release: alt5
+Version: 4.6.0
+Release: alt1
 Summary: %{short_desc}
 Group: Development/Python3
 
 License: AGPLv3
 Url: http://getpelican.com/
-# https://github.com/getpelican/pelican/archive/%{version}.tar.gz#/%{pypi_name}-%{version}.tar.gz
+# https://github.com/getpelican/%{pypi_name}/archive/%{version}.tar.gz#/%{pypi_name}-%{version}.tar.gz
 Source: %{pypi_name}-%{version}.tar
 
 BuildArch: noarch
@@ -50,7 +50,7 @@ Conflicts: python-module-%{pypi_name}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-%package -n pelican
+%package -n %{pypi_name}
 Summary: %{short_desc}
 Group: Publishing
 
@@ -61,7 +61,7 @@ Requires: python3-module-feedgenerator
 Requires: python3-module-markdown
 Requires: python3-module-unidecode
 
-%description -n pelican
+%description -n %{pypi_name}
 %{full_desc}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -71,26 +71,29 @@ Requires: python3-module-unidecode
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
-# remove bagpath #!/usr/bin/env from files
-sed -i '1d' pelican/tools/pelican_import.py
-sed -i '1d' pelican/tools/pelican_quickstart.py
-sed -i '1d' pelican/tools/pelican_themes.py
-sed -i '1d' pelican/tools/templates/pelicanconf.py.jinja2
-sed -i '1d' pelican/tools/templates/publishconf.py.jinja2
+# Remove bagpath #!/usr/bin/env from files
+sed -i '1d' %{pypi_name}/tools/%{pypi_name}_import.py
+sed -i '1d' %{pypi_name}/tools/%{pypi_name}_quickstart.py
+sed -i '1d' %{pypi_name}/tools/%{pypi_name}_themes.py
+sed -i '1d' %{pypi_name}/tools/templates/pelicanconf.py.jinja2
+sed -i '1d' %{pypi_name}/tools/templates/publishconf.py.jinja2
 
-# substitute feedgenerator with it's original django
+# Substitute feedgenerator with it's original django
 %if_without standalone_feedgenerator
-sed -i 's|feedgenerator|django.utils.feedgenerator|' pelican/writers.py
+sed -i 's|feedgenerator|django.utils.feedgenerator|' %{pypi_name}/writers.py
 sed -i "s|'feedgenerator >= 1.9', ||" setup.py
 %endif
+
+# Calm down the rpm-build-python3 utility
+touch %{pypi_name}/plugins/__init__.py
 
 %build
 %{python3_build}
 
-# build docs (can't be exec without python3-module-pelican itself!)
+# Build docs (can't be exec without python3-module-%{pypi_name} itself!)
 %if_without bootstrap
 sphinx-build-3 docs html
-# remove leftovers from sphinxbuild
+# Remove leftovers from sphinxbuild
 rm html/_static/theme-basic.zip
 rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 %endif
@@ -100,7 +103,7 @@ rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 
 %check
 %if_with tests
-nosetests-3 -sv --with-coverage --cover-package=pelican pelican
+nosetests-3 -sv --with-coverage --cover-package=%{pypi_name} %{pypi_name}
 %endif
 
 %files
@@ -108,18 +111,21 @@ nosetests-3 -sv --with-coverage --cover-package=pelican pelican
 %doc html
 %endif
 %doc README.rst LICENSE
-%_bindir/pelican
-%_bindir/pelican-import
-%_bindir/pelican-quickstart
-%_bindir/pelican-themes
+%_bindir/%{pypi_name}
+%_bindir/%{pypi_name}-import
+%_bindir/%{pypi_name}-quickstart
+%_bindir/%{pypi_name}-themes
 %{python3_sitelibdir_noarch}/%{pypi_name}
 %{python3_sitelibdir_noarch}/%{pypi_name}-*-py?.?.egg-info
 
-%files -n pelican
+%files -n %{pypi_name}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Jun 29 2021 Alexey Appolonov <alexey@altlinux.org> 4.6.0-alt1
+- New version.
+
 * Fri Mar 27 2020 Alexey Appolonov <alexey@altlinux.org> 4.1.0-alt5
 - Fixed build.
 
