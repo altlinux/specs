@@ -1,6 +1,6 @@
 BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck gcc-c++
+BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck gcc-c++ pkgconfig(nss)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,17 +9,13 @@ BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck gcc-c++
 %define develname	libczmq-devel
 
 Name:           czmq
-Version:        4.2.0
-Release:        alt1_3
+Version:        4.2.1
+Release:        alt1_1
 Summary:        High-level C binding for 0MQ (ZeroMQ)
 Group:          Development/Other
 License:        MPLv2.0
 URL:            http://czmq.zeromq.org/
 Source0:        https://github.com/zeromq/czmq/releases/download/v%{version}/czmq-%{version}.tar.gz
-
-# Fix
-# https://github.com/zeromq/czmq/issues/2125
-Patch0: czmq-4.2.0-zarmour.patch
 
 BuildRequires:  gcc
 BuildRequires:  libuuid-devel
@@ -30,7 +26,7 @@ BuildRequires:  pkgconfig(libmicrohttpd)
 BuildRequires:  pkgconfig(systemd)
 # --with-docs
 BuildRequires:  perl
-BuildRequires:  asciidoc asciidoc-a2x
+BuildRequires:  asciidoc
 BuildRequires:  xmlto
 Source44: import.info
 
@@ -64,7 +60,6 @@ This package contains files needed to develop applications using czmq.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -105,6 +100,9 @@ make check
 
 
 %changelog
+* Mon Jul 05 2021 Igor Vlasenko <viy@altlinux.org> 4.2.1-alt1_1
+- update by mgaimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_3
 - update by mgaimport
 
