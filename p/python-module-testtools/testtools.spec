@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt3
+Release: alt4
 Summary: extensions to the Python standard library's unit testing framework
 Group: Development/Python
 License: MIT
@@ -63,7 +63,7 @@ export PBR_VERSION=%version
 %python_build
 
 export PYTHONPATH=$PWD
-%make -C doc pickle
+%make -C doc pickle PYTHON=python2
 
 %install
 export PBR_VERSION=%version
@@ -75,7 +75,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %check
 export PBR_VERSION=%version
 
-%make check
+%make check PYTHON=python2
 
 %files
 %python_sitelibdir/testtools*
@@ -87,6 +87,9 @@ export PBR_VERSION=%version
 
 
 %changelog
+* Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt4
+- fix build
+
 * Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt3
 - build python2 only
 
