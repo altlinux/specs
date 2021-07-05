@@ -7,12 +7,11 @@
 %def_without docs
 %def_enable check
 
-%global py2_libbuilddir %(python -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
-%global py3_libbuilddir %(python3 -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
+%global py2_libbuilddir %(python2 -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
 
 Name: python-module-%oname
 Version: 6.2.0
-Release: alt2
+Release: alt3
 
 Summary: Python image processing library
 
@@ -167,11 +166,13 @@ cp -fR docs/_build_py3/pickle %buildroot%python3_sitelibdir/PIL/pickle
 %check
 # Check Python 2 modules
 #ln -s $PWD/Images $PWD/build/%py2_libbuilddir/Images
-cp -R $PWD/Tests $PWD/build/%py2_libbuilddir/Tests
-cp -R $PWD/selftest.py $PWD/build/%py2_libbuilddir/selftest.py
-pushd build/%py2_libbuilddir
-PYTHONPATH=$PWD %{__python2} selftest.py
-popd
+#cp -R $PWD/Tests $PWD/build/%py2_libbuilddir/Tests
+#cp -R $PWD/selftest.py $PWD/build/%py2_libbuilddir/selftest.py
+#pushd build/%py2_libbuilddir
+#PYTHONPATH=$PWD %{__python2} selftest.py
+#popd
+export PYTHONPATH=build/%py2_libbuilddir
+python2 selftest.py
 
 %if_with python3
 # Check Python 3 modules
@@ -199,21 +200,10 @@ popd
 %doc docs/_build_py3/html/*
 %endif
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst docs/COPYING LICENSE *.md
-%python3_sitelibdir/PIL/
-%python3_sitelibdir/%oname-*.egg-info/
-%if_with docs
-%exclude %python3_sitelibdir/PIL/pickle/
-%endif
-
-%files -n python3-module-%oname-devel
-# Here, we re-use the same path as in the build system
-%__python3_includedir/*
-%endif
-
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 6.2.0-alt3
+- fix build
+
 * Mon Sep 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.2.0-alt2
 - rebuilt without python3
 
