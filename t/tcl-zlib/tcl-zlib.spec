@@ -1,16 +1,16 @@
 
 Name: tcl-zlib
 Version: 2.0.1
-Release: alt3
+Release: alt4
 
 Summary: Zlib support for Tcl
-License: BSD
+License: TCL
 Group: Development/Tcl
 Url: http://svn.scheffers.net/zlib
 
 Source: %name-%version-%release.tar
 
-BuildRequires: rpm-build-tcl >= 0.2.1-alt1 tcl-devel >= 8.4.0 zlib-devel
+BuildRequires: rpm-build-tcl >= 0.5.2-alt1 tcl-devel >= 8.4.0 zlib-devel
 
 %description
 %name adds Zlib support for Tcl, as described in TIP234,
@@ -18,7 +18,7 @@ see http://www.tcl.tk/cgi-bin/tct/tip/234
 
 %prep
 %setup
-%teapatch
+%tea_patch
 sed -i 's,@lib@,%_lib,' pkgIndex.tcl.in
 
 %build
@@ -32,10 +32,13 @@ aclocal
 
 %files
 %doc README ChangeLog
-%_tcllibdir/libzlib%version.so
-%_tcllibdir/zlib%version/pkgIndex.tcl
+%_tcllibdir/zlib%version
 
 %changelog
+* Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.1-alt4
+- Built with %%tea_patch.
+- Fixed license field.
+
 * Thu Mar 14 2019 Ivan A. Melnikov <iv@altlinux.org> 2.0.1-alt3
 - fix packaginng of pkgIndex.tcl
 
