@@ -1,15 +1,15 @@
-%define py_geoip_pkg python-module-GeoIP
+%define py_geoip_pkg python3-module-GeoIP
 %define oname nicotine+
 
 Name: nicotine-plus
-Version: 1.4.1
-Release: alt2
+Version: 3.0.6
+Release: alt1
 
 Summary: The client program for the SoulSeek filesharing system
 Summary(ru_RU.UTF-8): Клиент для файлообменной сети SoulSeek
 
 Group: Networking/File transfer
-License: GPL
+License: GPLv2
 Url: https://github.com/Nicotine-Plus/nicotine-plus
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -21,22 +21,25 @@ Patch: %name-alt-desktop-entry.patch
 
 BuildArch: noarch
 
+AutoProv:yes,nopython3
+
 Provides: nicotine
 Obsoletes: nicotine
 
-# manually removed: eric
-# Automatically added by buildreq on Sat May 26 2007
-BuildRequires: python-devel python-module-pygobject python-modules-compiler
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro
 
-BuildPreReq: rpm-build-python
+%py3_use pygobject3 >= 3.18
+BuildRequires: python3-devel
 
-Requires: python-module-sexy python-module-pygtk-libglade
-
-%add_python_req_skip pywintypes win32con win32gui
 BuildRequires: desktop-file-utils
 
+Requires: libgtk+3-gir
+#add_python_req_skip pywintypes win32con win32gui
+#Requires: python-module-sexy python-module-pygtk-libglade
+
 # Mozilla does not embedding anymore
-%add_python_req_skip gtkmozembed
+#add_python_req_skip gtkmozembed
 
 %description
 Nicotine is a feature-complete client for the SoulSeek filesharing network that
@@ -77,31 +80,29 @@ Nicotine поддерживает оптимизатор кода psyco, вы м
 %setup -n %oname-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %find_lang nicotine
-
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Application \
-	--add-category=FileTransfer \
-	--add-category=P2P \
-	%buildroot%_desktopdir/nicotine.desktop
 
 %files -f nicotine.lang
 %_bindir/nicotine
 %doc %_docdir/nicotine/
-%python_sitelibdir/pynicotine/
-%python_sitelibdir/nicotine*egg-info
+%python3_sitelibdir/pynicotine/
+%python3_sitelibdir/nicotine*egg-info
 %_desktopdir/*
-%_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
+%_iconsdir/hicolor/symbolic/apps/*.svg
 %_man1dir/*
-%_datadir/nicotine/
+%_datadir/metainfo/
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.6-alt1
+- new version 3.0.6 (with rpmrb script)
+- switch to python3, cleanup spec
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4.1-alt2
 - fix build requires.
 
