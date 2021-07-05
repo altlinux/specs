@@ -1,58 +1,64 @@
-Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           perl-Data-GUID
-Version:        0.050
-Release:        alt1
-Summary:        Globally unique identifiers
-License:        GPL+ or Artistic
-URL:            https://metacpan.org/release/Data-GUID
-Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Data-GUID-%{version}.tar.gz
-BuildArch:      noarch
-BuildRequires:  rpm-build-perl
-BuildRequires:  perl(Carp.pm)
-BuildRequires:  perl(Data/UUID.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(File/Spec.pm)
-BuildRequires:  perl(Sub/Exporter.pm)
-BuildRequires:  perl(Sub/Install.pm)
-BuildRequires:  perl(bytes.pm)
-BuildRequires:  perl(overload.pm)
-BuildRequires:  perl(strict.pm)
-BuildRequires:  perl(warnings.pm)
+%define upstream_name    Data-GUID
+%define upstream_version 0.050
 
-# tests
-BuildRequires:  perl(Test/More.pm)
+%{?perl_default_filter}
+
+Name:       perl-%{upstream_name}
+Version:    %{upstream_version}
+Release:    alt1_1
+
+Summary:    Globally unique identifiers
+License:    GPL+ or Artistic
+Group:      Development/Perl
+Url:        https://metacpan.org/release/%{upstream_name}
+Source0:    https://cpan.metacpan.org/modules/by-module/Data/%{upstream_name}-%{upstream_version}.tar.gz
+
+BuildRequires: perl(Carp.pm)
+BuildRequires: perl(Data/UUID.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(File/Spec.pm)
+BuildRequires: perl(Sub/Exporter.pm)
+BuildRequires: perl(Sub/Install.pm)
+BuildRequires: perl(Test/More.pm)
+BuildRequires: perl(bytes.pm)
+BuildRequires: perl(overload.pm)
+BuildRequires: perl(strict.pm)
+BuildRequires: perl(warnings.pm)
+BuildArch:  noarch
 Source44: import.info
-
 
 %description
 Data::GUID provides a simple interface for generating and using globally
 unique identifiers.
 
 %prep
-%setup -q -n Data-GUID-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+
 %make_build
 
-%install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-# %{_fixperms} $RPM_BUILD_ROOT/*
-
 %check
-make test
+%make_build test
+
+%install
+%makeinstall_std
 
 %files
-%doc Changes README
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Jul 05 2021 Igor Vlasenko <viy@altlinux.org> 0.050-alt1_1
+- update by mgaimport
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0.050-alt1
 - automated CPAN update
 
