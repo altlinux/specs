@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210608
+Version: 20210628
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,36 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Jul 05 2021 Cronbuild Service <cronbuild@altlinux.org> 20210628-alt1
+- upstream changes (GIT d79c267):
+  + amdgpu: update vcn firmware for green sardine for 21.20 (thx Alex Deucher)
+  + amdgpu: update vcn firmware for renoir for 21.20 (thx Alex Deucher)
+  + amdgpu: update vcn firmware for navi14 for 21.20 (thx Alex Deucher)
+  + amdgpu: update vcn firmware for navi12 for 21.20 (thx Alex Deucher)
+  + amdgpu: update vcn firmware for navi10 for 21.20 (thx Alex Deucher)
+  + amdgpu: add initial dimgrey cavefish firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update vega20 firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update Picasso firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update green sardine firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update navi12 firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update renoir firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update arcturus firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update raven firmware from 21.20 (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware from 21.20 (thx Alex Deucher)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xD9A8_A0CD (thx Hilda Wu)
+  + update firmware for MT7921 WiFi device to 20210612122753 (thx Sean Wang)
+  + rtl_bt: Update RTL8822C BT(UART I/F) FW to 0x05A8_C6B4 (thx Hilda Wu)
+  + QCA: Update Bluetooth firmware for QCA6174 (thx Rocky Liao)
+
 * Mon Jun 14 2021 Cronbuild Service <cronbuild@altlinux.org> 20210608-alt1
 - upstream changes (GIT 0f66b74):
   + cypress: update firmware for cyw54591 pcie (thx Chi-Hsien Lin)
