@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: TkTreeCtrl is a multi-column hierarchical listbox widget for the Tk GUI toolkit
 License: BSD
@@ -14,14 +14,14 @@ Url: http://tktreectrl.sourceforge.net/
 Source: %name-%version-%release.tar
 
 Requires: tk >= 8.4.0-alt1
-BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1 tk-devel >= 8.4.0-alt1
+BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.5.2-alt1 tk-devel >= 8.4.0-alt1
 
 %description
 TkTreeCtrl is a multi-column hierarchical listbox widget for the Tk GUI toolkit
 
 %prep
 %setup -c
-%teapatch
+%tea_patch
 
 %build
 chmod +x ./configure
@@ -30,17 +30,19 @@ chmod +x ./configure
 
 %install
 %makeinstall
-mv %buildroot%_tcllibdir/htmldoc .
+mv %buildroot%_tcllibdir/treectrl%version/htmldoc .
 cat doc/man.macros doc/treectrl.n |grep -v '^.so man.macros' > treectrl.n
 install -m0644 -D treectrl.n %buildroot%_mandir/mann/treectrl.n
 
 %files
 %doc ChangeLog demos htmldoc
-%_tcllibdir/libtreectrl%major.so
-%_tcldatadir/treectrl%version
+%_tcllibdir/treectrl%version
 %_mandir/mann/*
 
 %changelog
+* Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.1-alt2
+- Built with %%tea_patch.
+
 * Tue Jul 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.1-alt1
 - 2.4.1 released (ALT#30850)
 
