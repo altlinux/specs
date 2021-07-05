@@ -10,7 +10,7 @@
 
 Name: telegram-desktop
 Version: 2.8.1
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -164,6 +164,8 @@ or business messaging needs.
 %prep
 %setup
 %__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
+# TODO: there are incorrec using and linking libyuv
+%__subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv|" Telegram/cmake/lib_tgcalls.cmake
 
 rm -rf Telegram/ThirdParty/variant \
 	Telegram/ThirdParty/GSL \
@@ -201,7 +203,7 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
     %nil
 
-%make_build
+%make_build VERBOSE=1
 
 %install
 %makeinstall_std
@@ -231,6 +233,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt2
+- fix build with updated libowt-tg
+
 * Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
 - new version 2.8.1 (with rpmrb script)
 

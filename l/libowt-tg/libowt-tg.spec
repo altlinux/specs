@@ -1,10 +1,6 @@
-# https://bugzilla.altlinux.org/show_bug.cgi?id=38832
-%def_without packaged_openh264
-%def_without packaged_vpx
-
 Name: libowt-tg
 Version: 4.3.0.5
-Release: alt1
+Release: alt2
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -15,16 +11,8 @@ Url: https://github.com/desktop-app/tg_owt
 # Source-url: https://github.com/desktop-app/tg_owt/archive/master.zip
 Source: %name-%version.tar
 
-# TODO: build with packaged libyuv
-# Source2-url: https://chromium.googlesource.com/libyuv/libyuv/+archive/ad890067f661dc747a975bc55ba3767fe30d4452.tar.gz
-Source2: %name-libyuv-%version.tar
-
-# TODO: build with packaged libvpx
-# Source3-url: https://chromium.googlesource.com/webm/libvpx/+archive/5b63f0f821e94f8072eb483014cfc33b05978bb9.tar.gz
-Source3: %name-libvpx-%version.tar
-
-Patch4: 0001-add-support-for-packaged-libvpx-enabled-via-TG_OWT_V.patch
-Patch5: 1958098091b858767e801456625bc324d4e1d0fb.patch
+Patch5: ad47b06841f36702ec6ce4d8609ce358c5155cbf.patch
+Patch6: c22f796fe1eb6b37f8f891068941bb0e6e19f6cb.patch
 
 ExcludeArch: armh ppc64le
 
@@ -33,22 +21,21 @@ BuildRequires: libXtst-devel libXcomposite-devel libXdamage-devel libXrender-dev
 BuildRequires: libavformat-devel libswresample-devel libswscale-devel
 BuildRequires: libdb4-devel libjpeg-devel libopus-devel libpulseaudio-devel libssl-devel yasm
 BuildRequires: libprotobuf-devel protobuf-compiler
-BuildRequires: pipewire-libs-devel
-BuildRequires: libevent-devel
 BuildRequires: libgio-devel
 
-BuildRequires: gcc-c++ cmake ninja-build
-
-%if_with packaged_vpx
+# instead of third party
+# FIXME:
+# on aarch64 missed libs during linking:
+# verify-elf: ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021032414ascii_internal13kPropertyBit
+#BuildRequires: libabseil-cpp-devel
+BuildRequires: libusrsctp-devel libopenh264-devel
 BuildRequires: libvpx-devel >= 1.10.0
-%endif
+BuildRequires: pipewire-libs-devel
+BuildRequires: libevent-devel
+BuildRequires: libyuv-devel
+# TODO: libsrtp2-devel
 
-%if_with packaged_openh264
-BuildRequires: libopenh264-devel
-%endif
-
-# TODO: obsoleted in the distro
-#BuildRequires: libyuv-devel
+BuildRequires: gcc-c++ cmake ninja-build
 
 #add_optflags -D_FILE_OFFSET_BITS=64
 # TODO: enable logging and debugging
@@ -71,41 +58,29 @@ WebRTC implements the W3C's proposal for video conferencing on the web.
 
 %package devel
 Summary: Open WebRTC Toolkit library and header files
-Group: Development/C
-#Requires: %name = %EVR
+Group: Development/C++
+Requires: %name = %EVR
 Requires: libjpeg-devel libopus-devel
-%if_with packaged_vpx
 Requires: libvpx-devel
-%endif
+Requires: libyuv-devel
+
 
 %description devel
 %name-devel contains the libraries and header files needed to
 develop programs which make use of %name.
 
 %prep
-%setup -a2 -a3
-#if_with packaged_vpx
-#patch4 -p1
-#endif
-#patch5 -p1
+%setup
+%patch5 -p1
+%patch6 -p1
+rm -rfv src/third_party/{libvpx,openh264,pipewire,usrsctp} src/base/third_party/libevent/
+rm -fv cmake/{libvpx,libopenh264,libusrsctp,libevent,libyuv}.cmake
+rm -rfv src/base/android/
 
-#subst "1iset(CMAKE_CXX_STANDARD 17)" CMakeLists.txt
+# FIXME: fix direct include paths
+mkdir -p src/third_party/libyuv
+ln -s %_includedir src/third_party/libyuv
 
-%if_with packaged_vpx
-rm -rfv src/third_party/libvpx/
-%endif
-
-%if_with packaged_openh264
-rm -rfv src/third_party/openh264/
-mkdir -p src/third_party/openh264/src/codec/api/
-ln -s %_includedir/wels src/third_party/openh264/src/codec/api/svc
-%__subst "s|.*openh264.*||" CMakeLists.txt
-%endif
-
-# TODO
-#rm -rfv src/third_party/libyuv/
-#mkdir -p src/third_party/libyuv/
-#ln -s %_includedir src/third_party/libyuv/include
 
 %build
 %ifarch %ix86 x86_64 %arm
@@ -114,16 +89,21 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %cmake_insource \
           -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DBUILD_SHARED_LIBS:BOOL=ON \
+          -DTG_OWT_PACKAGED_BUILD:BOOL=ON \
           -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
           -DTG_OWT_USE_PROTOBUF:BOOL=ON \
 %ifarch %ix86
           -DCMAKE_CXX_FLAGS="-fpic" \
 %endif
           ../..
-%make_build
+%make_build VERBOSE=1
 
 %install
 %makeinstall_std
+rm -rfv %buildroot%_includedir/tg_owt/sdk/{objc,android}/
+rm -rfv %buildroot%_includedir/tg_owt/base/android/
+rm -rfv %buildroot%_includedir/tg_owt/modules/audio_device/android
+#rm -rfv %buildroot%_includedir/tg_owt/third_party/libyuv
 
 %files
 %_libdir/libtg_owt.so.*
@@ -134,6 +114,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.5-alt2
+- build with external libyuv, libvpx, libusrsctp, libopenh264
+
 * Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.5-alt1
 - new version (4.3.0.5) with rpmgs script
 - build from git f03ef05abf665437649a4f71886db1343590e862
