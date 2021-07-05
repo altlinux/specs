@@ -1,22 +1,25 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-mageia-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define	major 0
+%define	major 1
 %define	libname libxdiff%{major}
 %define develname libxdiff-devel
+	
+# Matches 1.0 tag.
+%global commit 9c6289c5a088bf24f18f0b7bf8acaaf643aa411d
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		libxdiff
-Version:	0.23
-Release:	alt1_7
+Version:	1.0
+Release:	alt1_1
 Summary:	Create diffs/patches for text/binary files
 License:	LGPLv2.1+
 Group:		System/Libraries
-URL:		http://www.xmailserver.org/xdiff-lib.html
-Source0:	http://www.xmailserver.org/%{name}-%{version}.tar.gz
-Patch0:		am-fixes.patch
+URL:		https://github.com/spotrh/libxdiff
+Source0:	https://github.com/spotrh/libxdiff/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Patch0:		%{name}-1.0-big-endian.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -71,36 +74,35 @@ Header files for libxdiff library.
 
 
 %prep
-%setup -q
-%patch0 -p0
+%setup -q -n %{name}-%{commit}
+%patch0 -p1
+
 
 %build
-%serverbuild
-autoreconf -fis
-
-%configure \
-    --with-pic
-
-%make
+%configure --disable-static
+%make_build
 
 %install
 %makeinstall_std
-
 #don't ship static libraries
 rm -f %{buildroot}%{_libdir}/*.*a
 
 %files -n %{libname}
 %doc AUTHORS COPYING ChangeLog
 %{_libdir}/*.so.%{major}
-%{_libdir}/*.so.%{major}.*
+%{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%{_includedir}/*.h
+%{_includedir}/xdiff
 %{_libdir}/*.so
-%{_mandir}/man?/*
+%{_libdir}/pkgconfig/libxdiff.pc
+
 
 
 %changelog
+* Mon Jul 05 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_1
+- update by mgaimport
+
 * Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_7
 - new version
 
