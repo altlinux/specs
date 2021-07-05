@@ -1,70 +1,51 @@
-Name: python-module-pyusb
-Version: 1.1.1
+%global modulename pyusb
+Name: python3-module-pyusb
+Version: 1.2.0
 Release: alt1
 
 Summary: Python module which provides easy USB access
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD-3-Clause
 Url: http://pyusb.sourceforge.net/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-%setup_python_module pyusb
+Packager: Andrey Cherepaanov <cas@altlinux.org>
 
 BuildArch: noarch
 
 # Source-url: https://github.com/walac/pyusb/archive/%version.tar.gz
 Source: pyusb-%version.tar
 
-BuildRequires: libusb-devel python-devel
-BuildRequires: python-module-setuptools_scm
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: libusb-devel
 
 %description
 PyUSB is a Python module which provides easy USB access. For uncountable
 reasons, PyUSB has been frozen for a while, but the project is coming
 back soon. Meanwhile, you can access the current project page here.
 
-%package -n python3-module-%modulename
-Summary: Python module which provides easy USB access
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-PyUSB is a Python module which provides easy USB access. For uncountable
-reasons, PyUSB has been frozen for a while, but the project is coming
-back soon. Meanwhile, you can access the current project page here.
-
 %prep
 %setup -n %modulename-%version
-cp -fR . ../python3
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_build
-pushd ../python3
 %python3_build
-popd
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_install
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc README.rst
-%python_sitelibdir/usb/
-%python_sitelibdir/*egg-info
-
-%files -n python3-module-%modulename
 %doc README.rst
 %python3_sitelibdir/usb/
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version.
+- Build only module for Python3.
+
 * Wed Jan 20 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - New version.
 
