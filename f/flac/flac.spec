@@ -3,7 +3,7 @@
 
 Name: flac
 Version: 1.3.3.0.79.37d1
-Release: alt1
+Release: alt2
 
 Summary: An encoder/decoder for the Free Lossless Audio Codec
 License: GPL-2.0-or-later and BSD-3-Clause and GFDL-1.1-or-later
@@ -201,6 +201,10 @@ rm %buildroot%flacdocs/FLAC.tag
 %endif
 
 %changelog
+* Fri Jul 02 2021 Dmitry V. Levin <ldv@altlinux.org> 1.3.3.0.79.37d1-alt2
+- Revert upstream commit 1.3.3-64-g159cd6c4 to make audiofile FLAC test pass
+  (closes: #40352).
+
 * Sat Jun 26 2021 Dmitry V. Levin <ldv@altlinux.org> 1.3.3.0.79.37d1-alt1
 - 1.3.3-62-gce6dd6b5 -> 1.3.3-79-g37d1a620.
 
