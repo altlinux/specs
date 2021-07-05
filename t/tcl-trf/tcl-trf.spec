@@ -1,9 +1,9 @@
 Name: tcl-trf
 Version: 2.1.4
-Release: alt2
+Release: alt3
 
 Summary: A tcl extension called Tcl Data transformations
-License: BSD
+License: TCL
 Group: Development/Tcl
 Url: http://tcltrf.sourceforge.net/
 
@@ -12,7 +12,7 @@ Url: http://tcltrf.sourceforge.net/
 Source: %name-%version-%release.tar
 
 Requires: tcl >= 8.6.7-alt2
-BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 tcl-memchan rpm-build-tcl >= 0.5-alt1
+BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 tcl-memchan rpm-build-tcl >= 0.5.2-alt1
 
 %description
 %name is a collection of data transformation:
@@ -27,7 +27,7 @@ BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 tcl-m
 
 %prep
 %setup -n %name-%version-%release
-%teapatch
+%tea_patch
 
 %build
 %autoreconf
@@ -62,11 +62,13 @@ TCLLIBPATH=%buildroot%_tcllibdir ./test.tcl
 
 %files
 %doc ChangeLog README doc/license.terms
-%_tcllibdir/libTrf%version.so
-%_tcllibdir/Trf%version/pkgIndex.tcl
 %_tcllibdir/Trf%version
 
 %changelog
+* Mon Jul 05 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt3
+- Built with %%tea_patch.
+- Fixed license field.
+
 * Sun Nov 03 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt2
 - Replaced aclocal and autoconf calls with %%autoreconf in the %%build
   (fixed FTBFS).
