@@ -3,7 +3,7 @@
 
 Name: vitastor
 Version: 0.6.4
-Release: alt1
+Release: alt2
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -74,15 +74,6 @@ License: VNPL-1.1 OR GPL-2.0+
 %description -n lib%name-client
 Vitastor SDS user-space client library.
 
-%package -n lib%name-client-devel
-Group: Development/C++
-Summary: Vitastor SDS headers of client library
-License: VNPL-1.1 OR GPL-2.0+
-
-%description -n lib%name-client-devel
-This package contains libraries and headers needed to develop programs
-that use Vitastor SDS client library.
-
 %package -n lib%name-blk
 Group: System/Libraries
 Summary: Vitastor SDS blk library
@@ -90,13 +81,15 @@ Summary: Vitastor SDS blk library
 %description -n lib%name-blk
 Vitastor SDS blk library.
 
-%package -n lib%name-blk-devel
+%package -n lib%name-devel
 Group: Development/C++
-Summary: Vitastor SDS blk headers
+Summary: Vitastor SDS headers of client and blk library
+License: VNPL-1.1 OR GPL-2.0+
+Requires: lib%name-blk = %EVR lib%name-client = %EVR
 
-%description -n lib%name-blk-devel
+%description -n lib%name-devel
 This package contains libraries and headers needed to develop programs
-that use Vitastor SDS blk library.
+that use Vitastor SDS library.
 
 %prep
 %setup
@@ -105,7 +98,10 @@ tar -xf %SOURCE2 -C cpp-btree
 tar -xf %SOURCE3 -C json11
 
 %build
-%cmake -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+%cmake \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
+	-DWITH_QEMU=OFF \
+	-DWITH_FIO=OFF
 %cmake_build
 
 %install
@@ -157,16 +153,19 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 %files -n lib%name-blk
 %_libdir/lib%{name}_blk.so.*
 
-%files -n lib%name-blk-devel
-%_libdir/lib%{name}_blk.so
-
 %files -n lib%name-client
 %_libdir/lib%{name}_client.so.*
 
-%files -n lib%name-client-devel
-%_libdir/lib%{name}_client.so
+%files -n lib%name-devel
+%_libdir/*.so
+%_includedir/*
 
 %changelog
+* Fri Jul 02 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.4-alt2
+- build master snapshot 30bb6026818b66bbe05bde38d70673e4633313e9
+- package client header to devel package
+- merge blk and client devel packages
+
 * Wed May 19 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.4-alt1
 - 0.6.4
 
