@@ -14,7 +14,7 @@
 
 Name:    freecad
 Version: 0.19.2
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -32,6 +32,7 @@ Patch1: %name-remove-3rdParty.patch
 Patch2: %name-0.18.4-alt-boost-1.73.0-compat.patch
 Patch3: freecad-0.19.2-upstream-vtk9-compat.patch
 Patch4: freecad-0.19.2-alt-boost-link.patch
+Patch5: freecad-alt-fix-icon-name-in-menu.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -148,6 +149,7 @@ rm -rf src/3rdParty
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -240,6 +242,9 @@ sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod
 %ldir/doc
 
 %changelog
+* Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.19.2-alt3
+- Fix icon name in desktop file (ALT #40371).
+
 * Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.19.2-alt2
 - Rebuilt with VTK-9.0.1.
 
