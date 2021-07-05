@@ -1,49 +1,29 @@
 %define oname docopt
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.6.2
-Release: alt2.1
+Release: alt3
 
 Summary: Pythonic argument parser, that will make you smile
 
 License: MIT
-Group: File tools
+Group: Development/Python3
 Url: https://github.com/docopt/docopt
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# https://github.com/docopt/docopt.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-# buildreq add all packages :)
-BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-pytest
-BuildRequires:  python-module-nose python-modules-json
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-nose
-BuildRequires:  python3-module-pytest
-%endif
+BuildRequires: python3-devel python3-module-setuptools
+#BuildRequires: python3-module-pytest python3-module-nose
 
 %description
-Isn't it awesome how optparse and argparse generate help messages
-based on your code?!
-
-Hell no! You know what's awesome? It's when the option parser is
-generated based on the beautiful help message that you write yourself!
-This way you don't need to write thisstupid repeatable parser-code,
-and instead can write only the help message--*the way you want it*.
-
-%package -n python3-module-%oname
-Summary: Pythonic argument parser, that will make you smile
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Isn't it awesome how optparse and argparse generate help messages
 based on your code?!
 
@@ -58,48 +38,24 @@ and instead can write only the help message--*the way you want it*.
 # remove upstream egg-info
 rm -rf *.egg-info
 
-%if_with python3
-cp -fR . ../python3-module-%oname
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3-module-%oname
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3-module-%oname
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test -v
-%if_with python3
-pushd ../python3-module-%oname
-python3 setup.py test -v
-popd
-%endif
+#python3_check
 
 %files
-%python_sitelibdir/%oname.py*
-%python_sitelibdir/%oname-*.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/%oname.py
 %python3_sitelibdir/__pycache__/%oname.*
 %python3_sitelibdir/%oname-*.egg-info
-%endif
 
 %changelog
+* Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt3
+- build python3 module separately
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.2-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
