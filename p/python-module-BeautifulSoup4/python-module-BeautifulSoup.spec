@@ -3,7 +3,7 @@
 %define oname BeautifulSoup4
 Name: python-module-%oname
 Version: 4.9.0
-Release: alt2
+Release: alt3
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -98,7 +98,7 @@ popd
 
 %check
 export LC_ALL=en_US.UTF-8
-python -m unittest discover -s bs4
+python2 -m unittest discover -s bs4
 %if_with python3
 pushd ../python3
 python3 -m unittest discover -s bs4
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 4.9.0-alt3
+- use python2 command
+
 * Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 4.9.0-alt2
 - build python2 only
 
