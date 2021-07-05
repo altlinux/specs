@@ -5,7 +5,7 @@
 
 Name: tcl-udp
 Version: 1.0.11
-Release: alt1
+Release: alt2
 
 Summary: A tcl extension, wich provides UDP sockets for Tcl
 License: MIT
@@ -14,7 +14,7 @@ Url: http://tcludp.sourceforge.net/
 
 Source: %name-%version.tar
 
-BuildPreReq:  rpm-build-tcl >= 0.2-alt1
+BuildPreReq:  rpm-build-tcl >= 0.5.2-alt1
 BuildRequires: tcl-devel >= 8.4.0-alt1
 Requires: tcl >= 8.4.0-alt1
 Conflicts: scotty
@@ -24,7 +24,7 @@ Conflicts: scotty
 
 %prep
 %setup
-%teapatch
+%tea_patch
 
 %build
 %configure
@@ -38,12 +38,13 @@ make test TCLLIBPATH=%buildroot%_tcllibdir
 
 %files
 %doc ChangeLog README license.terms
-%_tcllibdir/libudp%version.so
 %_tcllibdir/udp%version
-%_tcldatadir/udp%version
 %_mandir/mann/udp.*
 
 %changelog
+* Mon Jul 05 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.11-alt2
+- Built with %%tea_patch.
+
 * Thu Nov 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.11-alt1
 - Updated to 1.0.11.
 - Fixed license field.
