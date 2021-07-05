@@ -1,27 +1,33 @@
 # need because asm used
 %set_verify_elf_method textrel=relaxed
 %def_without opts
+%def_with clang
 
 %define oname objc2
 
 Name: gnustep-%oname
-Version: 1.7.0
-Release: alt14.svn20140704
+Version: 2.1
+Release: alt1
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/libobjc2/trunk/
-Source: %name-%version.tar
-Source1: Makefile
-Patch:  gnustep-objc2-1.6.1-alt-i586.patch
-Patch1: gnustep-objc2-fix-build-gcc7.patch
+Source: lib%oname-%version.tar
+Source1: robin-map.tar
+Patch: objc2-fix-generate-eh_trampoline.s.patch
+
+ExcludeArch: armh
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): cmake
 BuildRequires: gcc-objc gcc-c++ libstdc++-devel
+%if_with clang
+BuildRequires: clang-devel
+BuildRequires: llvm-devel
+%endif
 
 %description
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
@@ -83,12 +89,13 @@ This package contains development files of GNUstep Runtime Optimisations.
 %endif
 
 %prep
-%setup
-#ifnarch x86_64
-#patch -p1
-#endif
-%patch1 -p1
-
+%setup -n lib%oname-%version
+%patch -p1
+tar xf %SOURCE1
+%if_without clang
+# Remove Xclang unsupported by gcc
+subst 's/ -Xclang//g' CMakeLists.txt Test/CMakeLists.txt
+%endif
 cp -fR objc objc2
 #chmod +x build_opts.sh
 
@@ -104,9 +111,15 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_ASM_FLAGS:STRING="%optflags" \
+%if_with clang
+	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/clang' \
+	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/clang' \
+	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/clang++' \
+%else
 	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/cc' \
 	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/cc' \
 	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/g++' \
+%endif
 	-DLLVM_DIR:PATH='%_datadir/cmake/Modules' \
 	-DCMAKE_STRIP:FILEPATH='/bin/true' \
 	-DCPACK_STRIP_FILES:BOOL=OFF \
@@ -116,7 +129,11 @@ cmake \
 	-DINCLUDE_DIRECTORY:STRING=objc2 \
 	-DLEGACY_COMPAT:BOOL=ON \
 	-DLIBOBJC_NAME:STRING=objc2 \
+%if_with clang
+	-DLLVM_ON_UNIX:BOOL=ON \
+%else
 	-DLLVM_ON_UNIX:BOOL=OFF \
+%endif
 	-DLLVM_OPTS:BOOL=FALSE \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DTESTS:BOOL=OFF \
@@ -132,27 +149,27 @@ cmake \
 	HEADER_DIR=%_includedir
 
 %install
-cp -f %SOURCE1 GNUmakefile
-%make_install \
+rm -f GNUmakefile
+%makeinstall_std \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	PREFIX=%buildroot%prefix \
-	LIB_DIR=%buildroot%_libdir \
-	HEADER_DIR=%buildroot%_includedir \
 	install
+#	PREFIX=%buildroot%prefix \
+#	LIB_DIR=%buildroot%_libdir \
+#	HEADER_DIR=%buildroot%_includedir \
 
 sed -i 's|#include "visibility.h"|#include "objc2/visibility.h"|' \
 	class.h
-install -p -m644 class.h visibility.h method_list.h ivar.h protocol.h \
-	selector.h sarray2.h category.h \
-	%buildroot%_includedir/objc2/
+#install -p -m644 class.h visibility.h method_list.h ivar.h protocol.h \
+#	selector.h sarray2.h category.h \
+#	%buildroot%_includedir/objc2/
 
 ln -s objc2 %buildroot%_includedir/objc
 
 %files -n lib%name
-%doc ANNOUNCE* API README
+%doc ANNOUNCE* API README.md
 %_libdir/*.so.*
 %if_with opts
 %exclude %_libdir/libGNUObjCRuntime.so.*
@@ -160,11 +177,12 @@ ln -s objc2 %buildroot%_includedir/objc
 
 %files -n lib%name-devel
 %_includedir/*
-%exclude %_includedir/objc2/opts
 %_libdir/*.so
 %if_with opts
+%exclude %_includedir/objc2/opts
 %exclude %_libdir/libGNUObjCRuntime.so
 %endif
+%_pkgconfigdir/libobjc.pc
 
 %if_with opts
 %files -n lib%name-opts
@@ -177,6 +195,16 @@ ln -s objc2 %buildroot%_includedir/objc
 %endif
 
 %changelog
+* Thu Aug 27 2020 Andrey Cherepanov <cas@altlinux.org> 2.1-alt1
+- New version.
+- Exclude armh from build architectures.
+
+* Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
+- New version.
+
+* Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
+- New version.
+
 * Sat Feb 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt14.svn20140704
 - Avoid build cycle with gnustep-make package.
 
