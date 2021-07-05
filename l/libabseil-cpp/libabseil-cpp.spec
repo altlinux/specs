@@ -1,7 +1,7 @@
 # wait for GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST
 %def_without test
 Name: libabseil-cpp
-Version: 20200923.3
+Version: 20210324.2
 Release: alt1
 
 Summary: C++ Common Libraries
@@ -67,13 +67,18 @@ ctest
 
 %files devel
 %doc LICENSE
-%doc FAQ.md LTS.md README.md UPGRADES.md
+%doc *.md
 %_libdir/libabsl_*.a
 #files devel
 %_includedir/absl/
 %_libdir/cmake/absl/
+%_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 20210324.2-alt1
+- Abseil LTS branch, March 2021, Patch 2
+- new version 20210324.2 (with rpmrb script)
+
 * Fri Mar 26 2021 Vitaly Lipatov <lav@altlinux.ru> 20200923.3-alt1
 - new version (20200923.3) with rpmgs script
 - build with -DCMAKE_CXX_STANDARD=17
