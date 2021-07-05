@@ -3,7 +3,7 @@
 %define name2 ardour6
 
 Name:    ardour
-Version: 6.7
+Version: 6.8
 Release: alt2
 
 Summary: Professional multi-track audio recording application
@@ -91,10 +91,10 @@ sed -i "/conf.env.append_value('CXXFLAGS_OSX', '-F/s|conf.env|pass # conf.env|" 
 
 # Generate revision number
 echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
-echo 'namespace ARDOUR { const char* revision = "6.7"; const char* date = "'$(date --rfc-3339=date)'"; }' >> libs/ardour/revision.cc
+echo 'namespace ARDOUR { const char* revision = "%version"; const char* date = "'$(date --rfc-3339=date)'"; }' >> libs/ardour/revision.cc
 
 %build
-%__python ./waf configure \
+%__python3 ./waf configure \
     --prefix=%_prefix \
     --libdir=%_libdir \
     --configdir=%_sysconfdir \
@@ -106,15 +106,15 @@ echo 'namespace ARDOUR { const char* revision = "6.7"; const char* date = "'$(da
     --nls \
     --docs
 
-%__python ./waf build \
+%__python3 ./waf build \
     --nls \
     --docs \
     -j%__nprocs
 
-%__python ./waf i18n_mo
+%__python3 ./waf i18n_mo
 
 %install
-%__python ./waf install --destdir=%buildroot
+%__python3 ./waf install --destdir=%buildroot
 
 install -d -m 0755 %buildroot%_desktopdir
 install -m 644 %SOURCE1 %buildroot%_desktopdir/
@@ -136,6 +136,9 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png \
 %_iconsdir/ardour6.png
 
 %changelog
+* Mon Jul 05 2021 Grigory Ustinov <grenka@altlinux.org> 6.8-alt2
+- Build new version.
+
 * Mon Jun 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.7-alt2
 - fixed a bug in the build script that appears on Elbrus
 - enabled multithreaded build
