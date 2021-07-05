@@ -1,11 +1,11 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define beta %nil
 %def_enable noise_tools
 %def_disable libavif
 
 Name: darktable
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -19,7 +19,7 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 #See https://bugzilla.altlinux.org/38215
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
-Patch1: darktable-3.4.0-alt-disable-use-of-gcc-graphite.patch
+Patch1: darktable-3.6.0-alt-disable-use-of-gcc-graphite.patch
 
 ExcludeArch: %ix86 armh
 
@@ -84,7 +84,7 @@ light table. It also enables you to develop raw images and enhance them.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 ln -s %name/lib%name.so %buildroot%_libdir/lib%name.so
 
@@ -102,7 +102,7 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %{?_enable noise_tools:
 %_libexecdir/%name/tools/%name-gen-noiseprofile
 %_libexecdir/%name/tools/%name-noiseprofile
@@ -111,6 +111,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Sun Jul 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Jun 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1.1
 - fixed BR
 
