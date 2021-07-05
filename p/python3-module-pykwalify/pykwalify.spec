@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 1.7.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Epoch: 1
 Summary: Python lib/cli for JSON/YAML schema validation
 License: MIT
@@ -52,6 +52,9 @@ py.test-%_python3_version -vv
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jun 18 2021 Nikolai Kostrigin <nickel@altlinux.org> 1:1.8.0-alt1
+- 1.7.0 -> 1.8.0
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1:1.7.0-alt2
 - Dropped dependency on coveralls.
 
