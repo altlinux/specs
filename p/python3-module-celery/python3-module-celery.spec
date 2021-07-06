@@ -12,8 +12,8 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 4.4.7
-Release: alt2
+Version: 5.1.2
+Release: alt1
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 
@@ -51,7 +51,7 @@ BuildRequires: python3-module-sphinx
 
 %py3_use kombu >= 4.6.10
 %py3_use billiard >= 3.6.3
-%py3_use vine = 1.3.0
+%py3_use vine >= 1.3.0
 
 %if_enabled check
 # /proc is required for some tests
@@ -117,7 +117,7 @@ Sphinx documentation plugin used to document tasks.
 #patch1 -p1
 #patch10 -p1
 %patch11 -p1
-%patch12 -p1
+#patch12 -p1
 
 # disable moto using (needed for S3 tests)
 subst "s|moto==.*||" requirements/test.txt
@@ -159,6 +159,9 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.2-alt1
+- new version 5.1.2 (with rpmrb script)
+
 * Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt2
 - separate sphinx plugin
 

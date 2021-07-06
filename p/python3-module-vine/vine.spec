@@ -2,8 +2,8 @@
 %define oname vine
 
 Name: python3-module-%oname
-Version: 1.3.0
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: Python promises
 
@@ -34,9 +34,12 @@ Promises, promises, promises.
 %files
 %doc README.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname-*-py*.egg-info
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (with rpmrb script)
+
 * Tue Oct 13 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
 - Stopped Python2 package build(Python2 EOL).
 
