@@ -3,14 +3,14 @@
 
 %add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
 %add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
-%add_findreq_skiplist  %python3_sitelibdir/gns3server/utils/asyncio/embed_shell.py
-%add_findprov_skiplist %python3_sitelibdir/gns3server/utils/asyncio/embed_shell.py
-%add_findreq_skiplist  %python3_sitelibdir/gns3server/utils/asyncio/input_stream.py
-%add_findprov_skiplist %python3_sitelibdir/gns3server/utils/asyncio/input_stream.py
+%add_python3_req_skip prompt_toolkit.eventloop.base
+%add_python3_req_skip prompt_toolkit.interface
+%add_python3_req_skip prompt_toolkit.key_binding.input_processor
+%add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.11
-Release: alt2
+Version: 2.2.21
+Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
 License: GPLv3
@@ -27,17 +27,14 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-Requires: python3-module-yarl >= 1.3
-Requires: python3-module-aiohttp >= 3.5.0
+Requires: python3-module-aiofiles >= 0.6.0
+Requires: python3-module-aiohttp >= 3.7.4
 Requires: python3-module-aiohttp-cors >= 0.7.0
-Requires: python3-module-jinja2 >= 2.7.3 
-Requires: python3-module-aiohttp >= 3.5.4
-Requires: python3-module-aiofiles >= 0.4.0
-Requires: python3-module-async_generator >= 1.10
 Requires: python3-module-async-timeout >= 3.0.1
-Requires: python3-module-jsonschema >= 2.6.0
-Requires: python3-module-raven >= 5.23.0
-Requires: python3-module-psutil >= 5.6.6
+Requires: python3-module-jinja2 >= 2.11.3 
+Requires: python3-module-jsonschema >= 3.2.0
+Requires: python3-module-psutil >= 5.7.1
+#Requires: python3-module-sentry-sdk >= 1.0.0
 Requires: iouyap
 Requires: ubridge
 Requires: vpcs
@@ -65,6 +62,9 @@ echo '' > requirements.txt
 %exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Mon Jul 05 2021 Anton Midyukov <antohami@altlinux.org> 2.2.21-alt1
+- new version 2.2.21
+
 * Tue Sep 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.11-alt2
 - Updated provides and requires due to prompt_toolkit update.
 
