@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 0.8.18
+Version: 0.8.20
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -18,10 +18,12 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(setuptools_scm)
 BuildRequires: librsync-devel
 
-# No required by default
+# No required by default (Dropbox)
 %add_python3_req_skip dropbox
 # No required by default (OpenStack)
 %add_python3_req_skip pyrax
+# No required by default (box)
+%add_python3_req_skip boxsdk
 
 %description
 Duplicity incrementally backs up files and directory by encrypting
@@ -54,6 +56,9 @@ hard links.
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.20-alt1
+- new version 0.8.20 (with rpmrb script)
+
 * Wed Feb 24 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.18-alt1
 - new version 0.8.18 (with rpmrb script)
 
