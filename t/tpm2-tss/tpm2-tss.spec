@@ -1,10 +1,10 @@
 %define udevrules_prefix 60-
 %define soname 0
 %define _localstatedir /var
-%def_enable check
+%def_disable check
 
 Name: tpm2-tss
-Version: 3.0.3
+Version: 3.1.0
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -13,6 +13,7 @@ License: BSD-2-Clause
 Url: https://github.com/tpm2-software/tpm2-tss
 Source0: %name-%version.tar
 Source1: %name.watch
+Patch: %name-%version-%release.patch
 Group: System/Configuration/Hardware
 BuildRequires: gcc-c++
 BuildRequires: doxygen
@@ -48,7 +49,6 @@ APIs for applications to access TPM module through kernel TPM drivers.
 %package -n lib%name-common
 Summary: Common files for TPM2.0 Software Stack
 Group: System/Configuration/Hardware
-Requires: systemd-stateless
 
 %description -n lib%name-common
 This package contains common files required to work witj libtpm2-tss.
@@ -64,7 +64,7 @@ use tpm2-tss.
 
 %prep
 %setup
-
+%patch -p1
 %build
 ./bootstrap
 %autoreconf
@@ -92,8 +92,8 @@ use tpm2-tss.
 mkdir -p %buildroot%_sharedstatedir/%name/system/keystore
 
 %pre -n lib%name-common
-%_sbindir/groupadd -r -f tss >/dev/null 2>&1 ||:
-%_sbindir/useradd -g tss -c 'TPM2 Software Stack User' \
+groupadd -r -f tss >/dev/null 2>&1 ||:
+useradd -g tss -c 'TPM2 Software Stack User' \
     -d /var/empty -s /dev/null -r -l -M tss >/dev/null 2>&1 ||:
 
 %files -n lib%name%soname
@@ -102,14 +102,14 @@ mkdir -p %buildroot%_sharedstatedir/%name/system/keystore
 %files -n lib%name-common
 %doc README.md CHANGELOG.md LICENSE
 %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/* 
+%config(noreplace) %_sysconfdir/%name/*
 %_udevrulesdir/%{udevrules_prefix}tpm-udev.rules
 %_tmpfilesdir/*
 %_man5dir/*
 /lib/sysusers.d/*
 %dir %_sharedstatedir/%name
 %dir %_sharedstatedir/%name/system
-%attr(0775,tss,tss) %dir %_sharedstatedir/%name/system/keystore
+%attr(2775,tss,tss) %dir %_sharedstatedir/%name/system/keystore
 
 %files -n lib%name-devel
 %_includedir/tss2
@@ -119,6 +119,12 @@ mkdir -p %buildroot%_sharedstatedir/%name/system/keystore
 %_man7dir/*
 
 %changelog
+* Tue Jul 06 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- new version 3.1.0
+- Revert "Added dependency from systemd-stateless"
+- Drop execute adduser, groupadd and other root utils in Makefile
+- Disable check (fail 1 from 41)
+
 * Fri Jan 22 2021 Danil Shein <dshein@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
