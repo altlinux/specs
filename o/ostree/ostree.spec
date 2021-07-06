@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: ostree
-Version: 2020.8
+Version: 2021.2
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -18,8 +18,6 @@ Source: %name-%version.tar
 Source1: libglnx.tar
 # Source2-url: https://github.com/mendsley/bsdiff/archive/master.zip
 Source2: bsdiff.tar
-
-Source44: import.info
 
 Requires: libostree = %version-%release
 Requires: %_bindir/gpg2
@@ -70,7 +68,7 @@ This package contains development documentation for lib%name.
 NOCONFIGURE=1 sh -x ./autogen.sh
 
 %configure --disable-silent-rules \
-	   --without-dracut \
+	   --with-dracut \
            --with-selinux \
            --with-curl \
            --with-openssl \
@@ -84,7 +82,6 @@ echo "#include <libgen.h>" >>config.h
 
 %install
 %makeinstall_std
-rm -rf %buildroot/etc/dracut.conf.d/ %buildroot/usr/lib/dracut/
 rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
 rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 
@@ -96,6 +93,8 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 #%_sysconfdir/grub.d/15_ostree
 %_bindir/ostree
 %_bindir/rofiles-fuse
+%_sysconfdir/dracut.conf.d/*
+%prefix/lib/dracut/*
 %_libexecdir/lib%name/
 %_libexecdir/%name/
 %exclude /usr/lib/libostree/grub2-15_ostree
@@ -123,6 +122,13 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Tue Jul 06 2021 Andrey Sokolov <keremet@altlinux.org> 2021.2-alt1
+- 2021.2
+- remove unused file import.info
+
+* Fri Jul 02 2021 Andrey Sokolov <keremet@altlinux.org> 2020.8-alt2
+- add dracut module
+
 * Sun Jan 17 2021 Yuri N. Sedunov <aris@altlinux.org> 2020.8-alt1
 - 2020.8
 
