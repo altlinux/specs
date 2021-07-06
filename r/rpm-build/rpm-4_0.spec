@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt169
+Release: alt170
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -413,6 +413,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Jul 06 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt170
+- rpm-build: do not record directory sizes in packages.
+
 * Fri Jun 04 2021 Arseny Maslennikov <arseny@altlinux.org> 4.0.4-alt169
 - Introduced %%_smp_build_ncpus macro.
 
