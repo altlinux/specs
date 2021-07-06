@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
 Summary: Zope testrunner script
 
@@ -56,16 +56,23 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot{%python3_sitelibdir_noarch/*,%python3_sitelibdir}
 %endif
 
+cp -al %buildroot%_bindir/zope-testrunner{,3}
+
 %check
 export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=build/lib
 tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 
 %files
 %doc *.rst
 %_bindir/zope-testrunner
+%_bindir/zope-testrunner3
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt2
+- pack zope-testrunner3 for compatibility
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt1
 - new version 5.3.0 (with rpmrb script)
 - don't pack tests
