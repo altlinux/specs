@@ -4,7 +4,7 @@
 
 Name: python3-module-py%oname
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the remote Jenkins API
 License: BSD
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: git-core python3-module-coverage
-BuildRequires: python3-module-subunit-tests
+BuildRequires: python3-module-subunit
 
 %if_with docs
 BuildRequires: python3-module-sphinx
@@ -97,6 +97,9 @@ cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
+- drop unneeded BR: python3-module-subunit-tests
+
 * Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5.0-alt1
 - Version updated to 1.5.0
 - build for python2 disabled
