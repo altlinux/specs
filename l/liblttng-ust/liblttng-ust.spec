@@ -1,12 +1,12 @@
 Name: liblttng-ust
-Version: 2.11.1
+Version: 2.12.2
 Release: alt1
 
 Summary: Linux Trace Toolkit Userspace Tracer library
 
 License: GPLv2
 Group: Development/C++
-Url: http://lttng.org/lttng2.0
+Url: http://lttng.org
 
 # Source-url: http://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
 Source: %name-%version.tar
@@ -88,6 +88,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/tracepoint_enabled.3.*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt1
+- new version 2.12.2 (with rpmrb script)
+
 * Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
 - new version 2.11.1 (with rpmrb script)
 
