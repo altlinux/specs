@@ -1,10 +1,10 @@
 Name: uncrustify
-Version: 0.72.0
+Version: 0.73.0
 Release: alt1
 
 Summary: Uncrustify is a source code beautifier
 
-License: GPL
+License: GPLv2
 Group: Text tools
 Url: http://uncrustify.sourceforge.net/
 
@@ -17,7 +17,8 @@ Patch: uncrustify-0.59-alt-glibc-2.16.patch
 
 BuildPreReq: rpm-macros-cmake cmake
 
-BuildRequires: python-module-argparse
+BuildRequires: python3
+#BuildRequires: python3-module-argparse
 
 # Automatically added by buildreq on Tue Jul 18 2006
 BuildRequires: gcc-c++
@@ -46,6 +47,9 @@ configurable, and is easy to modify.
 %_man1dir/*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.73.0-alt1
+- new version 0.73.0 (with rpmrb script)
+
 * Tue Dec 01 2020 Vitaly Lipatov <lav@altlinux.ru> 0.72.0-alt1
 - new version 0.72.0 (with rpmrb script)
 
