@@ -1,9 +1,9 @@
 Name: app-defaults
 Version: 0.2.8.5
-Release: alt1
+Release: alt2
 
 Summary: Localized X11 Resources
-License: GPL
+License: GPLv2+
 Group: System/Internationalization
 BuildArch: noarch
 Packager: Etcskel Development Team <etcskel@packages.altlinux.org>
@@ -63,6 +63,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/Xresources-site
 
 %changelog
+* Tue Jul 06 2021 Dmitry V. Levin <ldv@altlinux.org> 0.2.8.5-alt2
+- Fixed License tag.
+
 * Thu Nov 20 2008 Vladislav Zavjalov <slazav@altlinux.org> 0.2.8.5-alt1
 - add *customization: -color to Xresources
   this tells libXt to load *-color app-defaults if possible
@@ -133,7 +136,7 @@ fi
   name used in XFree86-cyr_rfx-fonts-koi8-u-1.1-alt1)
   (resolves \#834 at bugs.altlinux.ru);
 
-* Mon Apr  4 2002 Ivan Zakharyaschev <imz@altlinux.ru> 0.2.1-alt1
+* Thu Apr  4 2002 Ivan Zakharyaschev <imz@altlinux.ru> 0.2.1-alt1
 - s/emacs/Emacs/g: use class instead of simple name (the second part of the
   fix for \#764 at bugs.altlinux.ru).
 
