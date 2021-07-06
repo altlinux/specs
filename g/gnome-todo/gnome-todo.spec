@@ -12,7 +12,7 @@
 
 Name: gnome-todo
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -24,6 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: gnome-todo-40.1-alt-build.patch
 
 %define gtk_ver 4.2.1
 %define libadwaita_ver 1.1.0
@@ -76,6 +77,7 @@ GObject introspection devel data for the GNOME Todo.
 
 %prep
 %setup
+%patch
 
 %build
 %meson %{?_enable_gtk_doc:-Ddocumentation=true} \
@@ -110,6 +112,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1.1
+- fixed build
+
 * Wed Jun 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 
