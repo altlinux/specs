@@ -1,8 +1,8 @@
 %define module_name pygraphviz
 
 Name: python3-module-%module_name
-Version: 1.5
-Release: alt5
+Version: 1.7
+Release: alt1
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
@@ -44,6 +44,9 @@ It can be used to create and draw networks and graphs with Graphviz.
 %python3_sitelibdir/pygraphviz-*.egg-info
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
+- new version 1.7 (with rpmrb script)
+
 * Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt5
 - build python3 module (don't pack tests, fix tests depends)
 
