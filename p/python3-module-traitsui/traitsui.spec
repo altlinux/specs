@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 7.2.1
-Release: alt1
+Release: alt2
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python3
 License: EPL-1.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause
@@ -18,6 +18,7 @@ BuildArch: noarch
 Source: %oname-%version.tar
 
 Patch1: %oname-alt-docs.patch
+Patch2: %oname-mayavi-altbug-40382-hack.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs
@@ -106,6 +107,7 @@ This package contains pickles for TraitsUI.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %if_disabled bootstrap
 %prepare_sphinx3 docs
@@ -160,6 +162,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Jul 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.2.1-alt2
+- Added NoneType comparison behaviour similar to python-2 (Closes: #40382).
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.2.1-alt1
 - Updated to upstream version 7.2.1.
 - Updated license.
