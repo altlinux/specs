@@ -2,7 +2,7 @@
 
 Name: zabbix-in-telegram
 Version: 20200425
-Release: alt1
+Release: alt2
 
 Summary: Zabbix Notifications with graphs in Telegram
 
@@ -14,7 +14,6 @@ BuildArch: noarch
 
 # Source-git: https://github.com/ableev/Zabbix-in-Telegram.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
@@ -50,6 +49,9 @@ install -p -m 644 zbxtg_settings.example.py %buildroot%z_dir/zbxtg_settings.py
 
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 20200425-alt2
+- real pack new sources
+
 * Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 20200425-alt1
 - update to 4ca3585b4b568060370f17a864a8cbceb14438ca
 - add requires
