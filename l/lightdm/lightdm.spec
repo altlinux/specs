@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.30.0
-Release: alt13
+Release: alt14
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -286,6 +286,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Thu Jul 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.30.0-alt14
+- Fixed tty locking: enabled it only for wayland sessions.
+
 * Tue Jun 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.30.0-alt13
 - Reworked wayland session support to use "wayland-session-wrapper"
   and "wayland-guest-wrapper" settings.
