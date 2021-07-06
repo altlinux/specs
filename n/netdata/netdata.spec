@@ -9,11 +9,11 @@
 %def_without pyod
 
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 9580ed4d13125adac01483bac14a18c952afd13e
+%define release_commit 2f130c01aa487d2541a9f3045ff9970f91cc4fc9
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.30.1
+Version: 1.31.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -70,6 +70,12 @@ AutoReq: yes, noshell
 %add_findreq_skiplist %_libexecdir/%name/charts.d/*.sh
 
 %add_python3_req_skip UserDict
+
+# make optionally (wait for asks)
+%add_python3_req_skip pandas netdata_pandas netdata_pandas.data
+# make optionally (reqs numpy)
+%add_python3_req_skip changefinder
+
 
 # FIXME netdata-postgres
 #python3(python_modules.bases.FrameworkServices.ExecutableService)
@@ -285,6 +291,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.31.0-alt1
+- new version 1.31.0 (with rpmrb script)
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.30.1-alt1
 - new version 1.30.1 (with rpmrb script)
 
