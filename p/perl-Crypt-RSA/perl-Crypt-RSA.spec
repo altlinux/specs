@@ -1,7 +1,7 @@
 %define dist Crypt-RSA
 Name: perl-%dist
 Version: 1.99
-Release: alt1
+Release: alt2
 
 Summary: RSA public-key cryptosystem
 License: GPL or Artistic
@@ -35,6 +35,9 @@ computations.
 %perl_vendor_privlib/Crypt
 
 %changelog
+* Tue Jul 06 2021 Igor Vlasenko <viy@altlinux.org> 1.99-alt2
+- fixed build (closes: #40378)
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 1.99-alt1
 - 1.96 -> 1.99
 
