@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 19.0.0
-Release: alt2
+Release: alt3
 Summary: OpenStack Integration Testing Suite
 
 Group: Development/Python3
@@ -30,7 +30,7 @@ BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-yaml >= 3.12
-BuildRequires: python3-module-subunit python3-module-subunit-tests
+BuildRequires: python3-module-subunit
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-urllib3 >= 1.21.1
@@ -104,6 +104,9 @@ rm -rf %buildroot/usr/etc/tempest
 %doc build/sphinx/html
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 19.0.0-alt3
+- drop unneeded BR: python3-module-subunit-tests
+
 * Fri Oct 25 2019 Grigory Ustinov <grenka@altlinux.org> 19.0.0-alt2
 - Build without python2.
 
