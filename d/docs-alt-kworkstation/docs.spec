@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 9.1
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -27,6 +27,7 @@ Obsoletes: docs-kworkstation <= 8.0
 BuildRequires(pre):rpm-build-licenses
 BuildRequires: publican
 BuildRequires: perl-podlators
+BuildRequires: libwebp-tools
 
 %description
 %Variant documentation.
@@ -40,12 +41,17 @@ BuildRequires: perl-podlators
 %install
 %make_install DESTDIR=%buildroot docdir=%_docsinstalldir install
 ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationdir
+sed -i 's/src="images\/\(.*\).png"/src="images\/\1.webp"/g' %buildroot%_docsinstalldir/ru-RU/index.html
+for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %buildroot%_docsinstalldir/ru-RU/images/$(basename $file .png).webp -quiet && rm $file; done
 
 %files
 %_docsinstalldir
 %_documentationdir
 
 %changelog
+* Tue Jul 06 2021 Artem Zolochevskiy <azol@altlinux.org> 9.1-alt5
+- reduce package size
+
 * Tue Apr 06 2021 Elena Mishina <lepata@altlinux.org> 9.1-alt4
 - fix some typos
 - update screenshots
