@@ -2,32 +2,35 @@
 %define oname zope.datetime
 
 # FIXME: one test always fails on i586
-%ifarch %ix86
+%ifarch %ix86 armh
 %def_without check
 %else
 %def_with check
 %endif
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
+
 Summary: Zope datetime
+
 License: ZPLv2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.datetime/
 #Git: https://github.com/zopefoundation/zope.datetime.git
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testrunner
-BuildRequires: time
 %endif
 
 %py3_requires zope
@@ -48,13 +51,14 @@ This package contains tests for zope.datetime.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %python3_build
 
 %install
 %python3_install
+%python3_prune
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -78,12 +82,12 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/*/tests
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
+- new version (4.3.0) with rpmgs script
+- cleanup build
+
 * Wed Dec 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.2.0-alt1
 - NMU: 4.1.0 -> 4.2.0
 - Remove python2 module build
