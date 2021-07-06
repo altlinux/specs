@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.35.1
+Version: 1.37.1
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -12,9 +12,6 @@ Url: http://matrix.org
 Source: %name-%version.tar
 
 Source1: %name.service
-
-# https://github.com/matrix-org/synapse/issues/10128
-Patch: 260db82a374e1a51ddc3ab44846483ba388d49f5.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
@@ -46,7 +43,7 @@ BuildRequires: python3 >= 3.6
 %py3_use msgpack >= 0.5.2
 %py3_use phonenumbers >= 8.2.0
 %py3_use prometheus_client >= 0.4.0
-%py3_use attrs >= 19.1.0
+%py3_use attrs >= 19.2.0
 %py3_use attrs >= 21.1.0
 %py3_use netaddr >= 0.7.18
 %py3_use jinja2 >= 2.9
@@ -54,6 +51,7 @@ BuildRequires: python3 >= 3.6
 %py3_use typing-extensions >= 3.7.4
 %py3_use cryptography >= 3.4.7
 %py3_use ijson >= 3.0
+
 
 # Conditional (from synapse/python_dependencies.py)
 #py3_use matrix-synapse-ldap3 >= 0.1
@@ -104,7 +102,6 @@ Synapse is the reference python/twisted Matrix homeserver implementation.
 
 %prep
 %setup
-%patch -p1
 #__subst "s|nacl==0.3.0|nacl>=0.3.0|g" synapse/python_dependencies.py
 
 %build
@@ -158,6 +155,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt1
+- new version 1.37.1 (with rpmrb script)
+
 * Thu Jun 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.35.1-alt1
 - new version 1.35.1 (with rpmrb script)
 
