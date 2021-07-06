@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.16.0.0
-Release: alt1.1
+Release: alt2
 Summary: Use version control tags to discover version numbers
 License: ISCL
 Group: Development/Python
@@ -88,11 +88,11 @@ popd
 %endif
 
 %check
-python setup.py test
+%__python setup.py test
 py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test
+%__python3 setup.py test
 py.test3 -vv
 popd
 %endif
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 06 2021 Grigory Ustinov <grenka@altlinux.org> 2.16.0.0-alt2
+- Fixed FTBFS.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.16.0.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
