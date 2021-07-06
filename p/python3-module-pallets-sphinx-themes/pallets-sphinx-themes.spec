@@ -1,8 +1,8 @@
 %define oname Pallets-Sphinx-Themes
 
 Name: python3-module-pallets-sphinx-themes
-Version: 1.1.3
-Release: alt3
+Version: 1.2.3
+Release: alt1
 
 Summary: Sphinx themes for Pallets and related projects.
 
@@ -38,6 +38,9 @@ appropriate theme to make your documentation look consistent.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
+- new version 1.2.3 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt3
 - build python3 package separately
 
