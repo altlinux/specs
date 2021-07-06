@@ -1,6 +1,6 @@
 Name: xxhash
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Extremely fast hash algorithm
 # xxhash.c and xxhash.h are BSD-2-Clause
@@ -42,7 +42,6 @@ Development files for the xxhash library.
 %setup -n %name-%version-%release
 
 %build
-%global _optlevel 3
 %add_optflags %(getconf LFS_CFLAGS)
 %make_build libxxhash xxhsum xxh32sum xxh64sum xxh128sum xxhsum_inlinedXXH \
 	MOREFLAGS="$RPM_OPT_FLAGS"
@@ -53,8 +52,9 @@ mv xxhsum_inlinedXXH xxhsum
 export CC=false CXX=false # nothing should be compiled or linked during install
 %makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 export CC=false CXX=false # nothing should be compiled or linked during check
@@ -77,6 +77,9 @@ make test-xxhsum-c
 %_pkgconfigdir/libxxhash.pc
 
 %changelog
+* Tue Jul 06 2021 Dmitry V. Levin <ldv@altlinux.org> 0.8.0-alt2
+- Use default %%_optlevel to fix build on ppc64le (by glebfm@).
+
 * Sun Aug 02 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.0-alt1
 - 0.7.4 -> 0.8.0.
 
