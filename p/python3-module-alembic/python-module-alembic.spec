@@ -3,7 +3,7 @@
 %def_without test
 
 Name: python3-module-alembic
-Version: 1.4.3
+Version: 1.5.8
 Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
@@ -77,6 +77,9 @@ rm -rfv %buildroot%python3_sitelibdir/alembic/testing/
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.8-alt1
+- new version 1.5.8 (with rpmrb script)
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt1
 - new version 1.4.3 (with rpmrb script)
 
