@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20150306.2.1
+Release: alt1.git20150306.3
 Summary: Backports of the linecache module
 License: Python
 Group: Development/Python
@@ -104,10 +104,10 @@ popd
 %endif
 
 %check
-python -m unittest2 -v
+%__python -m unittest2 -v
 %if_with python3
 pushd ../python3
-python3 -m unittest2 -v
+%__python3 -m unittest2 -v
 popd
 %endif
 
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1.git20150306.3
+- Fixed FTBFS.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.git20150306.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
