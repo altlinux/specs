@@ -4,7 +4,7 @@
 
 Name:           python-tools-%{module_name}
 Version:        1.6.2
-Release:        alt2
+Release:        alt3
 Summary:        Python style guide checker
 
 Group:          Development/Python
@@ -79,8 +79,8 @@ popd
 %python_install
 
 %check
-python pep8.py --testsuite testsuite
-python pep8.py --doctest
+%__python pep8.py --testsuite testsuite
+%__python pep8.py --doctest
 
 %if_with python3
 pushd ../python3
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.6.2-alt3
+- Fixed FTBFS.
+
 * Thu Jan 31 2019 Stanislav Levin <slev@altlinux.org> 1.6.2-alt2
 - Applied patch from upstream for Python 3.6.7+ support.
 
