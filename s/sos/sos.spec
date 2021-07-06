@@ -5,7 +5,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 3.5
-Release: alt9
+Release: alt9.1
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -37,7 +37,7 @@ support technicians and developers.
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std PYTHON=%__python
 cp -f %SOURCE1 %buildroot%_sysconfdir/
 rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %find_lang %name
@@ -53,6 +53,9 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
+* Tue Jul 06 2021 Andrey Cherepanov <cas@altlinux.org> 3.5-alt9.1
+- FTBFS: fix install using %%__python.
+
 * Fri Nov 22 2019 Dmitry Terekhin <jqt4@altlinux.org> 3.5-alt9
 - Replaced Python with Python 2.7 to prepare for
 - the transition to Python 3 by default
