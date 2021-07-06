@@ -1,7 +1,7 @@
 %define rname oxygen
 
 Name: plasma5-%rname
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -102,6 +102,9 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
 - new version
 

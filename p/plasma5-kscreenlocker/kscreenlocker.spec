@@ -6,7 +6,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: plasma5-%rname
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 Epoch: 2
 %K5init altplace
@@ -15,6 +15,11 @@ Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Screen Locker
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Requires: plasma5-layer-shell-qt
+
+Provides: kf5-kscreenlocker = %EVR
+Obsoletes: kf5-kscreenlocker < %EVR
 
 Source: %rname-%version.tar
 Source10: pam-kf5-screenlocker
@@ -39,9 +44,7 @@ BuildRequires: kf5-kidletime-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel
-
-Provides: kf5-kscreenlocker = %EVR
-Obsoletes: kf5-kscreenlocker < %EVR
+BuildRequires: plasma5-layer-shell-qt-devel
 
 %description
 %summary
@@ -77,7 +80,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
+#%patch3 -p2
 
 %build
 %K5build \
@@ -125,6 +128,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 2:5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 2:5.21.5-alt1
 - new version
 

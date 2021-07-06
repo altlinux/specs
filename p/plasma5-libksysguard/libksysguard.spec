@@ -9,9 +9,10 @@
 %define libksysguardformatter libksysguardformatter%sover2
 %define libksysguardfaces libksysguardfaces%sover2
 %define libksysguardsensors libksysguardsensors%sover2
+%define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma5-%rname
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -21,6 +22,11 @@ Summary: KDE Workspace 5 performance monitor library
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
+Provides: kf5-libksysguard = %EVR
+Obsoletes: kf5-libksysguard < %EVR
+Conflicts: plasma5-ksysguard < 5.22
+Requires(post): /sbin/setcap
+
 Source: %rname-%version.tar
 Patch: alt-killbtn.patch
 
@@ -28,7 +34,8 @@ Patch: alt-killbtn.patch
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel python-module-google qt5-script-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-gir rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ zlib-devel
+BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: zlib-devel libnl-devel libcap-devel libpcap-devel
 BuildRequires: qt5-script-devel qt5-x11extras-devel qt5-tools-devel
 BuildRequires: qt5-webengine-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
@@ -36,9 +43,6 @@ BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-de
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel
 BuildRequires: kf5-kglobalaccel-devel kf5-kio-devel kf5-kdeclarative-devel kf5-knewstuff-devel
-
-Provides: kf5-libksysguard = %EVR
-Obsoletes: kf5-libksysguard < %EVR
 
 %description
 Performance monitor library
@@ -50,6 +54,7 @@ BuildArch: noarch
 Requires: kf5-filesystem
 Provides: kf5-libksysguard-common = %EVR
 Obsoletes: kf5-libksysguard-common < %EVR
+Conflicts: plasma5-ksysguard-common < 5.22
 %description common
 %name common package
 
@@ -66,67 +71,74 @@ developing applications that use %name.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n polkit-kde-ksysguard
 Common polkit files for %name
 
 %package -n %libksgrd
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 %description -n %libksgrd
-KF5 library
+%name library
 
 %package -n %libksignalplotter
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 %description -n %libksignalplotter
-KF5 library
+%name library
 
 %package -n %libprocesscore
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 Requires: polkit-kde-ksysguard
 %description -n %libprocesscore
-KF5 library
+%name library
 
 %package -n %liblsofui
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 Requires: lsof
 %description -n %liblsofui
-KF5 library
+%name library
 
 %package -n %libprocessui
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 %description -n %libprocessui
-KF5 library
+%name library
 
 %package -n %libksysguardformatter
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 %description -n %libksysguardformatter
-KF5 library
+%name library
 
 %package -n %libksysguardfaces
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 %description -n %libksysguardfaces
-KF5 library
+%name library
 
 %package -n %libksysguardsensors
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common
 %description -n %libksysguardsensors
-KF5 library
+%name library
+
+%package -n %libksysguardsystemstats
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libksysguardsystemstats
+%name library
 
 %prep
 %setup -n %rname-%version
@@ -142,16 +154,23 @@ KF5 library
 %K5install_move data ksysguard knsrcfiles
 %find_lang %name --all-name
 
+%post
+/sbin/setcap CAP_NET_RAW=+ep %_K5libexecdir/ksysguard/ksgrd_network_helper ||:
+
 %files common -f %name.lang
 %doc COPYING.LIB
 %dir %_K5data/ksysguard/
 %_datadir/qlogging-categories5/*.*categories
 
 %files
-%_K5libexecdir/kauth/ksysguardprocesslist_helper
+%dir %_K5plug/ksysguard/
+%dir %_K5plug/ksysguard/process/
+%_K5libexecdir/kauth/*ksysguard*
+%_K5libexecdir/ksysguard/ksgrd_network_helper
 %_K5dbus/system.d/org.kde.ksysguard.processlisthelper.conf
 %_K5dbus_sys_srv/org.kde.ksysguard.processlisthelper.service
 %_K5plug/kpackage/packagestructure/sensor*.so
+%_K5plug/ksysguard/process/ksysguard_*.so
 %_K5qml/org/kde/ksysguard/
 %_K5data/ksysguard/
 %_K5data/knsrcfiles/*
@@ -193,9 +212,14 @@ KF5 library
 %files -n %libksysguardsensors
 %_K5lib/libKSysGuardSensors.so.%sover2
 %_K5lib/libKSysGuardSensors.so.*
-
+%files -n %libksysguardsystemstats
+%_K5lib/libKSysGuardSystemStats.so.%sover2
+%_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
 - new version
 

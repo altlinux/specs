@@ -1,7 +1,7 @@
 %define rname libkscreen
 
 Name: plasma5-%rname
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 %K5init altplace
 
@@ -74,7 +74,7 @@ Obsoletes: kf5-libkscreen-utils < %EVR
 %find_lang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING.LIB
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files utils
@@ -95,6 +95,9 @@ Obsoletes: kf5-libkscreen-utils < %EVR
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 

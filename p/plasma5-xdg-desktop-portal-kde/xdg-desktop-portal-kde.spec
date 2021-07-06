@@ -1,7 +1,7 @@
 %define rname xdg-desktop-portal-kde
 
 Name: plasma5-%rname
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 %K5init altplace
 
@@ -48,7 +48,7 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %find_lang %name --all-name
 
 %files -f %name.lang
-%doc COPYING* README.md
+%doc LICENSES/*
 %_K5xdgapp/*portal*.desktop
 %_K5libexecdir/*portal*kde*
 %_K5dbus_srv/*portal*kde*.service
@@ -58,6 +58,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %config(noreplace) %_K5xdgconf/plasma-workspace/env/*.sh
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 

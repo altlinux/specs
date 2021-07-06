@@ -1,7 +1,7 @@
 %define rname plasma-nano
 
 Name: plasma5-nano
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 %K5init altplace
 
@@ -57,13 +57,16 @@ Requires: %name-common
 %find_lang %name --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5qml/org/kde/plasma/private/nanoshell/
 %_K5data/plasma/packages/org.kde.plasma.nano.desktoptoolbox/
 %_K5data/plasma/shells/org.kde.plasma.nano/
 %_K5srv/*nano*.desktop
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 

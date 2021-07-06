@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: plasma5-nm
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -57,7 +57,7 @@ the default NetworkManager service.
 
 %package maxi
 Group: Graphical desktop/KDE
-Summary: Mobile support for %name
+Summary: %name maximum package
 BuildArch: noarch
 Requires: %name
 Requires: %name-connect-mobile
@@ -284,6 +284,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
 - new version
 

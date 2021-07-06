@@ -4,7 +4,7 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: plasma5-%rname
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -14,6 +14,8 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: qml(org.kde.kcm) kf5-kirigami
+Provides: kf5-systemsettings = %EVR
+Obsoletes: kf5-systemsettings < %EVR
 
 Source: %rname-%version.tar
 
@@ -31,9 +33,6 @@ BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knot
 BuildRequires: kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kactivities-devel kf5-kactivities-stats-devel kf5-kirigami-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kpackage-devel kf5-kcrash-devel kf5-kitemmodels-devel
-
-Provides: kf5-systemsettings = %EVR
-Obsoletes: kf5-systemsettings < %EVR
 
 %description
 KDE System Settings
@@ -91,7 +90,7 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -111,11 +110,14 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 #%_K5inc/systemsettingsview/
 #%_K5link/lib*.so
 
-#%files -n %libsystemsettingsview
-#%_K5lib/libsystemsettingsview.so.*
-#%_K5lib/libsystemsettingsview.so.%systemsettingsview_sover
+%files -n %libsystemsettingsview
+%_K5lib/libsystemsettingsview.so.%systemsettingsview_sover
+%_K5lib/libsystemsettingsview.so.*
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 

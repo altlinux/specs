@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 21.02.0
+Version: 21.04.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -39,7 +39,7 @@ Requires: webclient
 Requires: icon-theme-breeze
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
 Requires: kde5-display-manager
-Requires: plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-ksysguard
+Requires: plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-systemmonitor
 Requires: plasma5-drkonqi plasma5-milou plasma5-systemsettings plasma5-integration
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kcalc kde5-kdebugsettings kde5-kross-python
@@ -202,6 +202,9 @@ Requires: kde5-kaddressbook kde5-pim-addons
 %files -n kde5-pim
 
 %changelog
+* Tue Jul 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.0-alt1
+- fix requires
+
 * Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 21.02.0-alt1
 - update requires
 

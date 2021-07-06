@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma5-integration
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -10,6 +10,8 @@ Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 integration of Qt applications
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Requires: %name-common
 
 Source: %rname-%version.tar
 Patch1: alt-def-font.patch
@@ -34,6 +36,23 @@ Obsoletes: kf5-plasma-integration < %EVR
 Framework Integration is a set of plugins responsible for better integration of
 Qt applications when running on a KDE Plasma workspace.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+
 %prep
 %setup -n %rname-%version
 %patch1 -p1
@@ -43,6 +62,7 @@ Qt applications when running on a KDE Plasma workspace.
 %K5build \
     -DCMAKE_DISABLE_FIND_PACKAGE_FontNotoSans=ON \
     -DCMAKE_DISABLE_FIND_PACKAGE_FontHack=ON \
+    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     #
 
 # cleanup
@@ -53,11 +73,20 @@ rm -f %_K5data/kconf_update/fonts_*
 %K5install_move data kconf_update
 %find_lang %name --all-name
 
-%files -f %name.lang
-%doc README.md
+%files common -f %name.lang
+%files
+%doc README.md COPYING*
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme.so
+%_K5plug/platforminputcontexts/plasmaimplatforminputcontextplugin.so
+
+%files devel
+%_K5inc/PlasmaKeyData/
+%_libdir/pkgconfig/plasma-key-data.pc
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
 - new version
 

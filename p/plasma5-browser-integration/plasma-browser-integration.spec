@@ -1,7 +1,7 @@
 %define rname plasma-browser-integration
 
 Name: plasma5-browser-integration
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 %K5init altplace
 
@@ -69,7 +69,7 @@ Requires: %name-common
 #%files common -f %name.lang
 
 %files -f %name.lang
-%doc COPYING* README.md
+%doc LICENSES/*
 %config %_sysconfdir/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %config %_sysconfdir/opt/chrome/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %config %_sysconfdir/opt/edge/native-messaging-hosts/org.kde.plasma.browser_integration.json
@@ -78,6 +78,7 @@ Requires: %name-common
 %_K5plug/kf5/kded/browserintegrationreminder.so
 #%_K5plug/kf5/krunner/*.so
 %_K5data/krunner/dbusplugins/plasma-runner-*.desktop
+%_K5xdgapp/*browser_integration*.desktop
 
 #%files devel
 #%_K5inc/plasma-browser-integration_version.h
@@ -90,6 +91,9 @@ Requires: %name-common
 #%_K5lib/libplasma-browser-integration.so.*
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 

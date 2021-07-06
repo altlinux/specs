@@ -9,7 +9,7 @@
 %define rname polkit-kde-agent-1
 
 Name: plasma5-polkit-kde-agent
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -24,7 +24,6 @@ Requires: polkit
 Source: %rname-%version.tar
 Patch1: alt-stay-on-top.patch
 Patch2: alt-show-only-one-user-too.patch
-Patch3: alt-ecm-req.patch
 
 # Automatically added by buildreq on Fri Feb 27 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libjson-c libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel
@@ -73,7 +72,6 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %K5build \
@@ -94,6 +92,9 @@ KF5 library
 %endif
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.21.5-alt1
 - new version
 

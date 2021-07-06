@@ -18,7 +18,7 @@
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.21.5
+Version: 5.22.2
 Release: alt1
 %K5init altplace
 
@@ -47,7 +47,7 @@ Patch4: alt-hwdatabase.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel-static qt5-declarative-devel
-#BuildRequires: libqaccessibilityclient-qt5-devel
+BuildRequires: libqaccessibilityclient-qt5-devel
 BuildRequires: libcap-utils libcap-devel zlib-devel
 BuildRequires: libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-cursor-devel libxcbutil-keysyms-devel
 BuildRequires: libxkbcommon-devel libgbm-devel libdrm-devel libEGL-devel
@@ -165,7 +165,7 @@ KF5 library
 #%_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/kpackage/packagestructure/kwin_packagestructure_*.so
 %_K5plug/kwin/
-%_K5plug/kcms/*kwin*.so
+%_K5plug/kcms/*.so
 %_K5plug/org.kde.kdecoration2/
 %_K5plug/org.kde.*kwin*/
 %_K5plug/*.so
@@ -173,7 +173,7 @@ KF5 library
 %_K5conf_up/kwin*
 %_K5qml/org/kde/kwin/
 %_K5cfg/*.kcfg
-%_K5data/kpackage/kcms/kcm_kwin*/
+%_K5data/kpackage/kcms/kcm_*/
 %_K5data/kwin/
 %_K5data/knsrcfiles/*.knsrc
 %_K5data/krunner/dbusplugins/*.desktop
@@ -210,6 +210,9 @@ KF5 library
 
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Thu May 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - new version
 

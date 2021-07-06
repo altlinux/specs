@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.21.5
-Release: alt3
+Version: 5.22.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -38,8 +38,6 @@ Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-users-use-gost-yescrypt.patch
 Patch18: alt-taskgroup-performance.patch
 Patch19: alt-kxkb-indicator-uppercase.patch
-# FC
-Patch100: plasma-desktop-python-shebang.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libusb-compat libxcb-devel libxcbutil-image libxcbutil-keysyms libxkbfile-devel mkfontscale pkg-config python-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -133,7 +131,6 @@ Common polkit files for %name
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
-%patch100 -p1
 
 pushd kcms
     tar xvf %SOURCE1
@@ -186,16 +183,17 @@ done
 %exclude %_K5bin/*emojier*
 %_K5exec/*
 %_K5libexecdir/kauth/*
-%_K5lib/libkdeinit5_*.so
+#%_K5lib/libkdeinit5_*.so
 %_K5plug/*.so
 %_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/krunner/*.so
 %_K5plug/plasma/dataengine/*.so
+%_K5qml/org/kde/activities/settings/
 %_K5qml/org/kde/plasma/private/*/
 %_K5qml/org/kde/private/*/
 %_K5qml/org/kde/plasma/activityswitcher/
-%_K5qml/org/kde/activities/settings/
+%_K5qml/org/kde/plasma/emoji/
 %_K5xdgapp/*
 %exclude %_K5xdgapp/*emojier*
 %_K5start/*.desktop
@@ -238,6 +236,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Wed Jun 02 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt3
 - arrange desktop icons by columns by default
 

@@ -11,8 +11,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.21.5
-Release: alt2
+Version: 5.22.2
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -52,7 +52,7 @@ BuildRequires: kf5-plasma-framework-devel
 KDE and Plasma resources management GUI.
 
 %package maxi
-Summary: Plasma Discover core files
+Summary: Plasma Discover maximum package
 Group: System/Configuration/Packaging
 Requires: %name-kns
 Requires: %name-packagekit
@@ -61,7 +61,7 @@ Requires: %name-flatpak
 Requires: %name-fwupd
 %endif
 %description maxi
-Plasma Discover core files.
+Plasma Discover maximum package.
 
 %package core
 Summary: Plasma Discover core files
@@ -222,6 +222,9 @@ done
 
 
 %changelog
+* Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
+- new version
+
 * Mon Jun 28 2021 Oleg Solovyov <mcpain@altlinux.org> 5.21.5-alt2
 - enable offline updates by default (discoverrc)
 
