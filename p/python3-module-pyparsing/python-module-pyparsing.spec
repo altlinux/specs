@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-pyparsing
-Version: 2.4.2
-Release: alt2
+Version: 2.4.7
+Release: alt1
 
 Summary: Python parsing module
 
@@ -62,6 +62,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/__pycache__/%oname.cpython-*.py*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.7-alt1
+- new version 2.4.7 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt2
 - build python3 package separately, cleanup spec
 
