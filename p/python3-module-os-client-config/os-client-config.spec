@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: OpenStack Client Configuration Library
 Group: Development/Python3
 License: Apache-2.0
@@ -30,7 +30,6 @@ BuildRequires: python3-module-testtools
 BuildRequires: python3-module-testscenarios
 BuildRequires: python3-module-testrepository
 BuildRequires: python3-module-subunit
-BuildRequires: python3-module-subunit-tests
 BuildRequires: python3-module-extras
 BuildRequires: python3-module-openstacksdk >= 0.13.0
 BuildRequires: python3-module-oslotest
@@ -96,6 +95,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
+- drop unneeded BR: python3-module-subunit-tests
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 - Renamed spec file.
