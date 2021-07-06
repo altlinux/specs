@@ -1,8 +1,8 @@
 %define lib_name libalkimia5
 
 Name:    alkimia
-Version: 8.0.4
-Release: alt2
+Version: 8.1.0
+Release: alt1
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -79,7 +79,7 @@ Headers and other files for develop with %name.
 %_datadir/metainfo/*.appdata.xml
 %_K5data/plasma/plasmoids/org.wincak.foreigncurrencies2
 %_K5srv/*.desktop
-%_K5xdgconf/*.knsrc
+%_datadir/knsrcfiles//*.knsrc
 
 %files -n lib%name
 %_libdir/%lib_name.so.*
@@ -92,6 +92,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Tue Jul 06 2021 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
+- New version.
+
 * Fri Jul 02 2021 Andrey Cherepanov <cas@altlinux.org> 8.0.4-alt2
 - Build with qt5-webengine (thanks zerg@).
 
