@@ -5,8 +5,8 @@
 %def_without check
 
 Name: cmake
-Version: 3.19.7
-Release: alt4
+Version: 3.20.5
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -208,7 +208,6 @@ rm -rfv %buildroot/%prefix/share/%name/Modules/Platform/AIX/
 
 install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
-install -p  build/Source/libCMakeServerLib.so %buildroot%_libdir/
 
 %check
 %if_with check
@@ -228,7 +227,6 @@ popd
 %_bindir/cpack
 %_libdir/libCMakeLib.so
 %_libdir/libCPackLib.so
-%_libdir/libCMakeServerLib.so
 %_libdir/libcmsys.so
 %_libdir/libcmsys_c.so
 %_datadir/%name/
@@ -303,6 +301,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 3.20.5-alt1
+- new version 3.20.5 (with rpmrb script)
+
 * Fri Jun 04 2021 Arseny Maslennikov <arseny@altlinux.org> 3.19.7-alt4
 - macros: honor NPROCS in addition to %%__nprocs. (fixes ALT bug 40153)
 
