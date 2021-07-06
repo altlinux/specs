@@ -6,7 +6,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.14
-Release: alt5
+Release: alt5.1
 License: copyleft-next-0.3.0
 Group: Networking/Other
 
@@ -63,6 +63,9 @@ Regulatory Database Agent daemon (CRDA).
 %setup -c
 %setup -T -D -a 1
 
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+
 cd %name-%version
 %patch -p1 -b .setregdomain
 %patch1 -p1 -b .ldconfig-remove
@@ -118,6 +121,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Tue Jul 06 2021 Andrey Cherepanov <cas@altlinux.org> 4.14-alt5.1
+- FTBFS: use %%_python in Python shebangs.
+
 * Sun Jun 06 2021 L.A. Kostis <lakostis@altlinux.ru> 4.14-alt5
 - regdb updated to 20210421
 
