@@ -1,5 +1,5 @@
 Name: python3-module-QtAwesome
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 License: MIT
@@ -36,6 +36,9 @@ It started as a Python port of the QtAwesome C++ library by Rick Blommers.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3 (with rpmrb script)
+
 * Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2 (with rpmrb script)
 
