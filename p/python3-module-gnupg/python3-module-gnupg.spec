@@ -1,7 +1,7 @@
 %define oname python-gnupg
 
 Name: python3-module-gnupg
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Summary: A Python wrapper for GnuPG
@@ -41,6 +41,9 @@ using proven Public Key Infrastructure (PKI) encryption technology based on Open
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.7-alt1
+- new version 0.4.7 (with rpmrb script)
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.6-alt1
 - new version 0.4.6 (with rpmrb script)
 
