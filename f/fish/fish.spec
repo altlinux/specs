@@ -1,6 +1,6 @@
 Name: fish
-Version: 3.2.2
-Release: alt1.1
+Version: 3.3.0
+Release: alt1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -75,6 +75,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Tue Jul 06 2021 Alexey Shabalin <shaba@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 3.2.2-alt1.1
 - NMU: spec: adapt to new cmake macros.
 
