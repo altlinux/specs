@@ -79,7 +79,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -93,7 +93,6 @@ Source4: altlinux-openresolv.path
 Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
-Source8: altlinux-clock-setup.service
 Source10: systemd-udev-trigger-no-reload.conf
 Source11: env-path-user.conf
 Source12: env-path-system.conf
@@ -116,6 +115,11 @@ Source44: 10-oomd-defaults.conf
 Source45: 10-oomd-root-slice-defaults.conf
 Source46: 10-oomd-user-service-defaults.conf
 
+# startup stuff
+Source51: inittab
+Source52: modules
+Source53: sysctl.conf.README
+
 # simpleresolv
 Source68: altlinux-simpleresolv.path
 Source69: altlinux-simpleresolv.service
@@ -129,6 +133,12 @@ Source75: systemd-sysctl.filetrigger
 Source76: systemd-binfmt.filetrigger
 Source77: journal-catalog.filetrigger
 Source78: systemd-sysusers.filetrigger
+Source79: systemd-modules-load.filetrigger
+
+Source81: systemd-tmpfiles-standalone.filetrigger
+Source82: systemd-sysctl-standalone.filetrigger
+Source83: systemd-sysusers-standalone.filetrigger
+Source84: systemd-modules-load-standalone.filetrigger
 
 Patch1: %name-%version.patch
 
@@ -194,14 +204,32 @@ Requires: libseccomp >= 2.3.1
 %{?_enable_libidn:Requires: libidn >= 1.33-alt2}
 %{?_enable_libidn2:Requires: libidn2 > 2.0.4-alt3}
 
-
 # Requires: selinux-policy >= 3.8.5
-Requires: %name-utils = %EVR
-Requires: %name-services = %EVR
+Provides: %name-utils = %EVR
+Obsoletes: %name-utils < %EVR
 %{?_enable_efi:Requires: %name-boot-efi = %EVR}
-Requires: pam_%name = %EVR
 
+Provides: /sbin/systemctl
+Provides: /bin/systemctl
+Provides: /usr/bin/systemctl
+Provides: /bin/journalctl
+Provides: /sbin/journalctl
+Provides: journalctl = %EVR
+Obsoletes: journalctl < %EVR
+Obsoletes: libsystemd-shared < %EVR
+Obsoletes: bash-completion-%name < %EVR
+Obsoletes: bash-completion-journalctl < %EVR
+Obsoletes: zsh-completion-%name < %EVR
+Obsoletes: zsh-completion-journalctl < %EVR
+
+Provides: %name-services = %EVR
+Obsoletes: %name-services < %EVR
 Requires: libnss-myhostname = %EVR
+Requires: pam_%name = %EVR
+Requires: dbus >= %dbus_ver
+Conflicts: service <= 0.5.25-alt1
+Conflicts: chkconfig <= 1.3.59-alt3
+Conflicts: ConsoleKit2 ConsoleKit2-x11
 
 # Copy from SysVinit
 Requires: coreutils
@@ -211,6 +239,8 @@ Requires: sysvinit-utils
 Obsoletes: systemd-units < 0:43-alt1
 Provides: systemd-units = %EVR
 Provides: syslogd-daemon
+
+Conflicts: startup
 
 %description
 systemd is a system and session manager for Linux, compatible with
@@ -313,7 +343,7 @@ Summary: libnss-mymachines is plugin for local system host name resolution
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: dbus >= %dbus_ver
-Requires: %name-services = %EVR
+Requires: %name = %EVR
 Requires: systemd-container
 
 %description -n libnss-mymachines
@@ -376,52 +406,6 @@ BuildArch: noarch
 
 %description sysvinit
 Drop-in replacement for the System V init tools of systemd.
-
-%package utils
-Group: System/Configuration/Boot and Init
-Summary: systemd utils
-Provides: /sbin/systemctl
-Provides: /bin/systemctl
-Provides: /usr/bin/systemctl
-Provides: /bin/journalctl
-Provides: /sbin/journalctl
-Provides: journalctl = %EVR
-Obsoletes: journalctl < %EVR
-Obsoletes: libsystemd-shared < %EVR
-Obsoletes: bash-completion-%name < %EVR
-Obsoletes: bash-completion-journalctl < %EVR
-Obsoletes: zsh-completion-%name < %EVR
-Obsoletes: zsh-completion-journalctl < %EVR
-
-%description utils
-This package contains utils from systemd:
- - systemd-binfmt
- - systemd-modules-load
- - systemd-sysctl
- - systemd-tmpfiles
- - systemd-firstboot
- - systemctl
- - journalctl
-
-%package services
-Group: System/Configuration/Boot and Init
-Summary: systemd services
-Conflicts: %name < %EVR
-Requires: pam_%name = %EVR
-Requires: %name-utils = %EVR
-Requires: dbus >= %dbus_ver
-Conflicts: service <= 0.5.25-alt1
-Conflicts: chkconfig <= 1.3.59-alt3
-Conflicts: ConsoleKit2 ConsoleKit2-x11
-
-%description services
-This package contains dbus services and utils from systemd:
- - systemd-hostnamed and hostnamectl
- - systemd-localed and localectl
- - systemd-logind and loginctl
- - systemd-oomd and oomctl
- - systemd-timedated and timedatectl
- - systemd-userdbd and userdbctl
 
 %package networkd
 Group: System/Base
@@ -530,6 +514,7 @@ systemd-coredump and coredumpctl utils.
 Group: System/Servers
 Summary: systems that boot up with an empty /etc directory
 Requires: %name = %EVR
+Conflicts: %name-sysusers-standalone
 
 %description stateless
 This package contains:
@@ -552,7 +537,6 @@ Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
 Requires: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
-Requires: systemd-utils = %EVR
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Provides: udev-extras = %EVR
@@ -772,9 +756,6 @@ ln -s ../altlinux-simpleresolv.path %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-libresolv.path
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
 ln -s ../altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants
-install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
-ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
-ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
 ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
 ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
@@ -827,6 +808,15 @@ EOF
 # don't enable wall ask password service, it spams every console
 rm -f %buildroot%_unitdir/multi-user.target.wants/systemd-ask-password-wall.path
 
+# startup compat
+mkdir -p %buildroot%_sysconfdir/sysconfig
+install -p -m644 %SOURCE51 %buildroot%_sysconfdir/inittab
+mkdir -p %buildroot/run
+mkdir -p %buildroot%_logdir
+touch %buildroot{%_sysconfdir/firsttime.flag,%_logdir/{w,b}tmp,/run/utmp}
+touch %buildroot%_sysconfdir/sysconfig/{clock,i18n,init,system}
+mkdir -p %buildroot%_sysconfdir/firsttime.d
+
 # disable legacy services
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
 ln -s /dev/null %buildroot%_unitdir/keytable.service
@@ -837,10 +827,12 @@ ln -s /dev/null %buildroot%_unitdir/netfs.service
 # create modules.conf as a symlink to /etc/modules
 mkdir -p %buildroot/lib/modules-load.d
 mkdir -p %buildroot%_sysconfdir/modules-load.d
+install -p -m644 %SOURCE52 %buildroot%_sysconfdir/modules
 ln -r -s %buildroot%_sysconfdir/modules %buildroot%_sysconfdir/modules-load.d/modules.conf
 
 # create /etc/sysctl.d/99-sysctl.conf as a symlink to /etc/sysctl.conf
 mkdir -p %buildroot%_sysconfdir/sysctl.d
+install -p -m644 %SOURCE53 %buildroot%_sysconfdir/sysctl.conf
 ln -r -s %buildroot%_sysconfdir/sysctl.conf %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf
 
 # Make sure directories in /var exist
@@ -912,6 +904,12 @@ install -pD -m755 %SOURCE75 %buildroot%_rpmlibdir/systemd-sysctl.filetrigger
 install -pD -m755 %SOURCE76 %buildroot%_rpmlibdir/systemd-binfmt.filetrigger
 install -pD -m755 %SOURCE77 %buildroot%_rpmlibdir/journal-catalog.filetrigger
 install -pD -m755 %SOURCE78 %buildroot%_rpmlibdir/systemd-sysusers.filetrigger
+install -pD -m755 %SOURCE79 %buildroot%_rpmlibdir/systemd-modules-load.filetrigger
+install -pD -m755 %SOURCE81 %buildroot%_rpmlibdir/systemd-tmpfiles-standalone.filetrigger
+install -pD -m755 %SOURCE82 %buildroot%_rpmlibdir/systemd-sysctl-standalone.filetrigger
+install -pD -m755 %SOURCE83 %buildroot%_rpmlibdir/systemd-sysusers-standalone.filetrigger
+install -pD -m755 %SOURCE84 %buildroot%_rpmlibdir/systemd-modules-load-standalone.filetrigger
+
 
 cat >>%buildroot/lib/sysctl.d/50-mmap-min-addr.conf <<EOF
 # Indicates the amount of address space which a user process will be
@@ -989,6 +987,8 @@ useradd -g systemd-omm -c 'systemd Userspace OOM Killer' \
     -d /var/empty -s /dev/null -r -l -M systemd-omm >/dev/null 2>&1 ||:
 
 %post
+systemd-machine-id-setup >/dev/null 2>&1 || :
+
 # Move old stuff around in /var/lib
 [ -d %_localstatedir/lib/systemd/random-seed ] && rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
 [ -e %_localstatedir/lib/random-seed ] && mv %_localstatedir/lib/random-seed %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
@@ -1026,7 +1026,87 @@ if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
         systemctl preset-all >/dev/null 2>&1 || :
         systemctl --global preset-all >/dev/null 2>&1 || :
+	touch /etc/firsttime.flag
 fi
+
+for f in /var/log/{w,b}tmp /run/utmp; do
+        if [ ! -f "$f" ]; then
+                :>>"$f"
+                chown root:utmp "$f"
+                chmod 664 "$f"
+        fi
+done
+
+
+# Migrate /etc/sysconfig/clock
+SYSCONFIG_CLOCK=/etc/sysconfig/clock
+if [ ! -L /etc/localtime -a -e "$SYSCONFIG_CLOCK" ] ; then
+       . "$SYSCONFIG_CLOCK" >/dev/null 2>&1 || :
+       if [ -n "$ZONE" -a -e "/usr/share/zoneinfo/$ZONE" ] ; then
+              ln -sf "../usr/share/zoneinfo/$ZONE" /etc/localtime >/dev/null 2>&1 || :
+       fi
+fi
+#rm -f "$SYSCONFIG_CLOCK" >/dev/null 2>&1 || :
+
+# Migrate /etc/sysconfig/i18n
+SYSCONFIG_I18N=/etc/sysconfig/i18n
+if [ -e "$SYSCONFIG_I18N" -a ! -e /etc/locale.conf ]; then
+        unset LANG
+        unset LC_CTYPE
+        unset LC_NUMERIC
+        unset LC_TIME
+        unset LC_COLLATE
+        unset LC_MONETARY
+        unset LC_MESSAGES
+        unset LC_PAPER
+        unset LC_NAME
+        unset LC_ADDRESS
+        unset LC_TELEPHONE
+        unset LC_MEASUREMENT
+        unset LC_IDENTIFICATION
+        . "$SYSCONFIG_I18N" >/dev/null 2>&1 || :
+        [ -n "$LANG" ] && echo LANG=$LANG > /etc/locale.conf 2>&1 || :
+        [ -n "$LC_CTYPE" ] && echo LC_CTYPE=$LC_CTYPE >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_NUMERIC" ] && echo LC_NUMERIC=$LC_NUMERIC >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_TIME" ] && echo LC_TIME=$LC_TIME >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_COLLATE" ] && echo LC_COLLATE=$LC_COLLATE >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_MONETARY" ] && echo LC_MONETARY=$LC_MONETARY >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_MESSAGES" ] && echo LC_MESSAGES=$LC_MESSAGES >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_PAPER" ] && echo LC_PAPER=$LC_PAPER >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_NAME" ] && echo LC_NAME=$LC_NAME >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_ADDRESS" ] && echo LC_ADDRESS=$LC_ADDRESS >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_TELEPHONE" ] && echo LC_TELEPHONE=$LC_TELEPHONE >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_MEASUREMENT" ] && echo LC_MEASUREMENT=$LC_MEASUREMENT >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_IDENTIFICATION" ] && echo LC_IDENTIFICATION=$LC_IDENTIFICATION >> /etc/locale.conf 2>&1 || :
+fi
+#rm -f "$SYSCONFIG_I18N" >/dev/null 2>&1 || :
+
+# Migrate /etc/sysconfig/keyboard and /etc/sysconfig/consolefont
+SYSCONFIG_KEYBOARD=/etc/sysconfig/keyboard
+SYSCONFIG_CONSOLEFONT=/etc/sysconfig/consolefont
+if [ -e "$SYSCONFIG_KEYBOARD" -a -e "$SYSCONFIG_CONSOLEFONT" -a ! -e /etc/vconsole.conf ]; then
+        unset SYSFONT
+	unset SYSFONTACM
+	unset UNIMAP
+        unset KEYTABLE
+        [ -e "$SYSCONFIG_KEYBOARD" ] && . "$SYSCONFIG_KEYBOARD" >/dev/null 2>&1 || :
+        [ -e "$SYSCONFIG_CONSOLEFONT" ] && . "$SYSCONFIG_CONSOLEFONT" >/dev/null 2>&1 || :
+        [ -n "$SYSFONT" ] && echo FONT=$SYSFONT > /etc/vconsole.conf 2>&1 || :
+        [ -n "$SYSFONTACM" ] && echo FONT_MAP=$SYSFONTACM >> /etc/vconsole.conf 2>&1 || :
+        [ -n "$UNIMAP" ] && echo FONT_UNIMAP=$UNIMAP >> /etc/vconsole.conf 2>&1 || :
+        [ -n "$KEYTABLE" ] && echo KEYMAP=$KEYTABLE >> /etc/vconsole.conf 2>&1 || :
+fi
+#rm -f "$SYSCONFIG_KEYBOARD" >/dev/null 2>&1 || :
+#rm -f "$SYSCONFIG_CONSOLEFONT" >/dev/null 2>&1 || :
+
+# Migrate HOSTNAME= from /etc/sysconfig/network
+SYSCONFIG_NETWORK=/etc/sysconfig/network
+if [ -e "$SYSCONFIG_NETWORK" -a ! -e /etc/hostname ]; then
+        unset HOSTNAME
+        . "$SYSCONFIG_NETWORK" >/dev/null 2>&1 || :
+        [ -n "$HOSTNAME" ] && echo $HOSTNAME > /etc/hostname 2>&1 || :
+fi
+#sed -i '/^HOSTNAME=/d' "$SYSCONFIG_NETWORK" >/dev/null 2>&1 || :
 
 %preun
 if [ $1 -eq 0 ] ; then
@@ -1041,8 +1121,16 @@ if [ $1 -eq 0 ] ; then
         rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
 fi
 
-%post utils
-systemd-machine-id-setup >/dev/null 2>&1 || :
+%triggerpostun -- startup < 0:0.9.9.9-alt1
+for f in %_sysconfdir/{modules,sysconfig/{clock,i18n,init,system}}; do
+        if [ ! -f "$f" ]; then
+                if [ -f "$f".rpmsave ]; then
+                        cp -pf "$f".rpmsave "$f"
+                elif [ -f "$f".rpmnew ]; then
+                        cp -pf "$f".rpmnew "$f"
+                fi
+        fi
+done
 
 %if_enabled networkd
 %pre networkd
@@ -1250,11 +1338,26 @@ udevadm hwdb --update &>/dev/null
 %preun_service udevd
 
 %files -f %name.lang
+# startup stuff
+%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/sysconfig/*
+%_sysconfdir/inittab
+%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/modules
+%config(noreplace) %_sysconfdir/sysctl.conf
+%ghost %attr(0664,root,utmp) /run/utmp
+%ghost %attr(0664,root,utmp) %_logdir/wtmp
+%ghost %attr(0660,root,utmp) %_logdir/btmp
+%ghost %config(missingok) %_sysconfdir/firsttime.flag
+%dir %_sysconfdir/firsttime.d
+
 %dir %_sysconfdir/systemd/system
 %dir %_sysconfdir/systemd/user
 
 %_sysconfdir/profile.d/systemd.sh
 
+/lib/modprobe.d/README
+/lib/sysctl.d/README
+/lib/sysusers.d/README
+/lib/tmpfiles.d/README
 
 %_tmpfilesdir/systemd-nologin.conf
 %_tmpfilesdir/systemd.conf
@@ -1267,9 +1370,81 @@ udevadm hwdb --update &>/dev/null
 %config(noreplace) %_sysconfdir/systemd/sleep.conf
 %config(noreplace) %_sysconfdir/systemd/system.conf
 %config(noreplace) %_sysconfdir/systemd/user.conf
-%_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
 
 %_rpmlibdir/systemd.filetrigger
+%dir /lib/systemd
+/lib/systemd/libsystemd-shared-%ver_major.so
+
+/sbin/systemctl
+/bin/systemctl
+%_bindir/systemctl
+%_man1dir/systemctl.*
+
+/bin/journalctl
+/sbin/journalctl
+%_man1dir/journalctl.*
+
+/bin/systemd-escape
+%_mandir/*/*escape*
+
+/sbin/systemd-tmpfiles
+%_mandir/*/*tmpfiles*
+%_rpmlibdir/systemd-tmpfiles.filetrigger
+%_tmpfilesdir/legacy.conf
+%_tmpfilesdir/x11.conf
+%_tmpfilesdir/tmp.conf
+%_tmpfilesdir/systemd-tmp.conf
+%_tmpfilesdir/var.conf
+%_tmpfilesdir/home.conf
+
+/lib/systemd/systemd-binfmt
+/sbin/systemd-binfmt
+%_rpmlibdir/systemd-binfmt.filetrigger
+%_mandir/*/*binfmt*
+
+/lib/systemd/systemd-modules-load
+%_sysconfdir/modules-load.d/modules.conf
+/sbin/systemd-modules-load
+%_rpmlibdir/systemd-modules-load.filetrigger
+%_mandir/*/*modules-load*
+
+/lib/systemd/systemd-sysctl
+/sbin/systemd-sysctl
+%_rpmlibdir/systemd-sysctl.filetrigger
+%config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
+/lib/sysctl.d/49-coredump-disable.conf
+/lib/sysctl.d/50-default.conf
+/lib/sysctl.d/50-net.conf
+/lib/sysctl.d/50-mmap-min-addr.conf
+%if %_lib == lib64
+/lib/sysctl.d/50-pid-max.conf
+%endif
+%_mandir/*/*sysctl*
+
+/lib/systemd/systemd-backlight
+%_mandir/*/*backlight*
+%ghost %dir %_localstatedir/lib/systemd/backlight
+
+/sbin/systemd-machine-id-setup
+%_man8dir/systemd-machine-id-*
+
+/bin/systemd-sysext
+%_man8dir/systemd-sysext.*
+
+/usr/bin/systemd-cryptenroll
+%_man1dir/systemd-cryptenroll.*
+%_man5dir/veritytab.*
+
+%if_enabled firstboot
+/sbin/systemd-firstboot
+%_man8dir/systemd-firstboot.*
+%endif
+
+%ghost %config(noreplace) %_sysconfdir/machine-info
+%ghost %config(noreplace) %_sysconfdir/hostname
+%ghost %config(noreplace) %_sysconfdir/vconsole.conf
+%ghost %config(noreplace) %_sysconfdir/locale.conf
+
 /sbin/systemd
 /sbin/systemd-ask-password
 /bin/systemd-inhibit
@@ -1299,6 +1474,22 @@ udevadm hwdb --update &>/dev/null
 %_bindir/systemd-path
 /bin/systemd-repart
 /bin/systemd-run
+/bin/loginctl
+/lib/systemd/systemd-logind
+/bin/userdbctl
+/lib/systemd/systemd-userdbd
+/lib/systemd/systemd-userwork
+%_bindir/hostnamectl
+/lib/systemd/systemd-hostnamed
+%_bindir/localectl
+/lib/systemd/systemd-localed
+%_bindir/timedatectl
+/lib/systemd/systemd-timedated
+%dir /lib/systemd/ntp-units.d
+%dir %_sysconfdir/systemd/ntp-units.d
+/bin/oomctl
+/lib/systemd/systemd-oomd
+%config(noreplace) %_sysconfdir/systemd/oomd.conf
 %_bindir/systemd-stdio-bridge
 /lib/systemd/systemd
 /lib/systemd/systemd-ac-power
@@ -1479,7 +1670,17 @@ udevadm hwdb --update &>/dev/null
 %_man8dir/systemd-poweroff*
 %_man8dir/systemd-volatile-root*
 %_man8dir/systemd-xdg-autostart-generator*
+%_mandir/*/*login*
+%_mandir/*/*userdb*
+%_mandir/*/*hostname*
+%exclude %_man8dir/*myhostname*
+%exclude %_man8dir/*mymachines*
+%_mandir/*/*locale*
+%_mandir/*/*timedate*
+%_man5dir/*LogControl1*
+%_mandir/*/*oom*
 
+%exclude %_man3dir/*
 %exclude %_mandir/*/*sysusers*
 %exclude %_datadir/factory
 %exclude %_tmpfilesdir/etc.conf
@@ -1505,14 +1706,42 @@ udevadm hwdb --update &>/dev/null
 /lib/udev/rules.d/90-vconsole.rules
 /lib/udev/rules.d/99-systemd.rules
 
+%dir %_sysconfdir/systemd
 %dir %_datadir/systemd
 %_datadir/systemd/kbd-model-map
 %_datadir/systemd/language-fallback-map
-%_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
-%_datadir/dbus-1/services/org.freedesktop.systemd1.service
-
+%_datadir/dbus-1/services/*
+%config(noreplace) %_sysconfdir/systemd/logind.conf
+%_datadir/dbus-1/system.d/*
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.timesync1.conf
+%if_enabled homed
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.home1.conf
+%endif
+%_datadir/dbus-1/system-services/*
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.import1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
+%if_enabled homed
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.home1.service
+%endif
 %if_enabled polkit
-%_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
+%_datadir/polkit-1/actions/*.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.network1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.portable1.policy
+%if_enabled homed
+%exclude %_datadir/polkit-1/actions/org.freedesktop.home1.policy
+%endif
 %endif
 
 %ghost %dir %attr(2755, root, systemd-journal) %verify(not mode) %_logdir/journal
@@ -1526,6 +1755,11 @@ udevadm hwdb --update &>/dev/null
 %ghost %_localstatedir/lib/systemd/catalog/database
 %ghost %_localstatedir/lib/systemd/random-seed
 %ghost %dir %_localstatedir/lib/systemd/linger
+
+%_datadir/bash-completion/completions/*
+%exclude %_datadir/bash-completion/completions/udevadm
+%_datadir/zsh/site-functions/*
+%exclude %_datadir/zsh/site-functions/_udevadm
 
 %_defaultdocdir/%name-%version
 %_logdir/README
@@ -1614,154 +1848,6 @@ udevadm hwdb --update &>/dev/null
 %_man8dir/telinit*
 %_man8dir/runlevel*
 %_initdir/README
-
-%files utils
-%dir /lib/systemd
-/lib/systemd/libsystemd-shared-%ver_major.so
-
-/lib/modprobe.d/README
-/lib/sysctl.d/README
-/lib/sysusers.d/README
-/lib/tmpfiles.d/README
-
-/sbin/systemctl
-/bin/systemctl
-%_bindir/systemctl
-%_man1dir/systemctl.*
-
-/bin/journalctl
-/sbin/journalctl
-%_man1dir/journalctl.*
-
-/bin/systemd-escape
-%_mandir/*/*escape*
-
-/sbin/systemd-tmpfiles
-%_mandir/*/*tmpfiles*
-%_rpmlibdir/systemd-tmpfiles.filetrigger
-%_tmpfilesdir/legacy.conf
-%_tmpfilesdir/x11.conf
-%_tmpfilesdir/tmp.conf
-%_tmpfilesdir/systemd-tmp.conf
-%_tmpfilesdir/var.conf
-%_tmpfilesdir/home.conf
-
-/lib/systemd/systemd-binfmt
-/sbin/systemd-binfmt
-%_rpmlibdir/systemd-binfmt.filetrigger
-%_mandir/*/*binfmt*
-
-/lib/systemd/systemd-modules-load
-%_sysconfdir/modules-load.d/modules.conf
-/sbin/systemd-modules-load
-%_mandir/*/*modules-load*
-
-/lib/systemd/systemd-sysctl
-/sbin/systemd-sysctl
-%_rpmlibdir/systemd-sysctl.filetrigger
-%config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
-/lib/sysctl.d/49-coredump-disable.conf
-/lib/sysctl.d/50-default.conf
-/lib/sysctl.d/50-net.conf
-/lib/sysctl.d/50-mmap-min-addr.conf
-%if %_lib == lib64
-/lib/sysctl.d/50-pid-max.conf
-%endif
-%_mandir/*/*sysctl*
-
-/lib/systemd/systemd-backlight
-%_mandir/*/*backlight*
-%ghost %dir %_localstatedir/lib/systemd/backlight
-
-/sbin/systemd-machine-id-setup
-%_man8dir/systemd-machine-id-*
-
-/bin/systemd-sysext
-%_man8dir/systemd-sysext.*
-
-/usr/bin/systemd-cryptenroll
-%_man1dir/systemd-cryptenroll.*
-%_man5dir/veritytab.*
-
-%if_enabled firstboot
-/sbin/systemd-firstboot
-%_man8dir/systemd-firstboot.*
-%endif
-
-%ghost %config(noreplace) %_sysconfdir/machine-info
-%ghost %config(noreplace) %_sysconfdir/hostname
-%ghost %config(noreplace) %_sysconfdir/vconsole.conf
-%ghost %config(noreplace) %_sysconfdir/locale.conf
-
-%files services
-%dir %_sysconfdir/systemd
-%config(noreplace) %_sysconfdir/systemd/logind.conf
-%_datadir/dbus-1/system.d/org.freedesktop.*.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.timesync1.conf
-%if_enabled homed
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.home1.conf
-%endif
-%_datadir/dbus-1/system-services/org.freedesktop.*.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.import1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
-%if_enabled homed
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.home1.service
-%endif
-%if_enabled polkit
-%_datadir/polkit-1/actions/*.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.network1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.portable1.policy
-%if_enabled homed
-%exclude %_datadir/polkit-1/actions/org.freedesktop.home1.policy
-%endif
-%endif
-
-/bin/loginctl
-/lib/systemd/systemd-logind
-/bin/userdbctl
-/lib/systemd/systemd-userdbd
-/lib/systemd/systemd-userwork
-%_bindir/hostnamectl
-/lib/systemd/systemd-hostnamed
-%_bindir/localectl
-/lib/systemd/systemd-localed
-%_bindir/timedatectl
-/lib/systemd/systemd-timedated
-%dir /lib/systemd/ntp-units.d
-%dir %_sysconfdir/systemd/ntp-units.d
-/bin/oomctl
-/lib/systemd/systemd-oomd
-%config(noreplace) %_sysconfdir/systemd/oomd.conf
-
-%_datadir/bash-completion/completions/*
-%exclude %_datadir/bash-completion/completions/udevadm
-%_datadir/zsh/site-functions/*
-%exclude %_datadir/zsh/site-functions/_udevadm
-
-%_mandir/*/*login*
-%_mandir/*/*userdb*
-%exclude %_man3dir/*
-%_mandir/*/*hostname*
-%exclude %_man8dir/*myhostname*
-%exclude %_man8dir/*mymachines*
-%_mandir/*/*locale*
-%_mandir/*/*timedate*
-%_man5dir/*LogControl1*
-%_mandir/*/*oom*
 
 %if_enabled networkd
 %files networkd
@@ -1977,16 +2063,20 @@ udevadm hwdb --update &>/dev/null
 
 %files sysusers-standalone
 /sbin/systemd-sysusers.standalone
+%_rpmlibdir/systemd-sysusers-standalone.filetrigger
 %endif #sysuser
 
 %files modules-load-standalone
 /sbin/systemd-modules-load.standalone
+%_rpmlibdir/systemd-modules-load-standalone.filetrigger
 
 %files sysctl-standalone
 /sbin/systemd-sysctl.standalone
+%_rpmlibdir/systemd-sysctl-standalone.filetrigger
 
 %files tmpfiles-standalone
 /sbin/systemd-tmpfiles.standalone
+%_rpmlibdir/systemd-tmpfiles-standalone.filetrigger
 
 %files -n libudev1
 /%_lib/libudev.so.*
@@ -2039,6 +2129,17 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Sat Jun 26 2021 Alexey Shabalin <shaba@altlinux.org> 1:248.3-alt2
+- Add rpm filetrigger for systemd-modules-load.
+- Add rpm filetriggers for standalone utils.
+- Switch to systemd-tmpfiles.standalone in udevd.init SysV script.
+- udev do not requires systemd-utils.
+- Drop altlinux-clock-setup.service.
+- Add Conflicts with startup.
+- Merge services files to main systemd package.
+- Merge utils files to main systemd package.
+- Add migrate /etc/sysconfig/ i18n, keyboard, consolefont, network files/variables to %%post.
+
 * Thu May 27 2021 Alexey Shabalin <shaba@altlinux.org> 1:248.3-alt1
 - 248.3
 - Create systemd-oomd-defaults subpackage to install unit drop-ins that will
