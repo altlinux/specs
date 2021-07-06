@@ -4,7 +4,7 @@
 
 Name: luajit-ppc64le
 Version: 2.1
-Release: alt13.gitf0e865dd
+Release: alt14.gitf0e865dd
 
 Summary: a Just-In-Time Compiler for Lua (ppc64le fork)
 License: MIT
@@ -41,7 +41,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 Summary:  Development package that includes the luajit header files
 Group: Development/Other
 Requires: lib%name = %EVR
-Provides: %_origname-devel = %version-%release
+Provides: lib%_origname-devel = %version-%release
 
 %description -n lib%name-devel
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
@@ -52,7 +52,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 Summary: static library for luajit
 Group: System/Libraries
 Requires: lib%name-devel = %EVR
-Provides: %_origname-devel-static = %version-%release
+Provides: lib%_origname-devel-static = %version-%release
 
 %description -n lib%name-devel-static
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
@@ -100,6 +100,9 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Tue Jul 6 2021 Vladimir Didenko <cow@altlinux.org> 2.1-alt14.gitf0e865dd
+- fix provides for devel packages
+
 * Mon Jun 28 2021 Vladimir Didenko <cow@altlinux.org> 2.1-alt13.gitf0e865dd
 - provide the same binary packages as the original luajit
 
