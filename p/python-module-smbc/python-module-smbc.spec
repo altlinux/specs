@@ -1,13 +1,15 @@
 %define mname smbc
 
-Name: python3-module-%mname
-Version: 1.0.15.3
-Release: alt2
+Name: python-module-%mname
+Version: 1.0.23
+Release: alt1
 
 Summary: Python interface for smbclient
-Group: Development/Python3
+Group: Development/Python
 License: GPLv2+
 URL: https://pypi.python.org/pypi/pysmbc/
+
+%setup_python_module %mname
 
 Source: https://pypi.python.org/packages/source/p/pysmbc//py%mname-%version.tar
 
@@ -17,22 +19,40 @@ BuildRequires: rpm-build-python3 python3-devel
 %description
 The smbc module provides an interface to the Samba client API.
 
+%package -n python3-module-%mname
+Summary: Python3 interface for smbclient
+Group: Development/Python3
+
+%description -n python3-module-%mname
+The smbc module provides an interface to the Samba client API.
+
 %prep
 %setup -n py%mname-%version -a0
+mv py%mname-%version py3build
 
 %build
+CFLAGS=-I/usr/include/samba-4.0/ %python_build
+pushd py3build
 CFLAGS=-I/usr/include/samba-4.0/ %python3_build
+popd
 
 %install
+%python_install
+pushd py3build
 %python3_install
+popd
 
 %files
+%python_sitelibdir/*
+%doc README.md NEWS PKG-INFO
+
+%files -n python3-module-%mname
 %python3_sitelibdir/*
-%doc README NEWS PKG-INFO
+%doc README.md NEWS PKG-INFO
 
 %changelog
-* Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.15.3-alt2
-- Drop python2 support.
+* Mon Jul 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.0.23-alt1
+- updated to 1.0.23
 
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.15.3-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.

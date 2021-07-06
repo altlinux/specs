@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: GPT applier
@@ -13,7 +13,7 @@ BuildArch: noarch
 Requires: control
 
 BuildRequires: rpm-build-python3
-BuildRequires: python-tools-i18n
+BuildRequires: gettext-tools
 Requires: python3-module-rpm
 Requires: python3-module-dbus
 Requires: oddjob-%name >= 0.2.0
@@ -40,7 +40,7 @@ cp -r gpoa \
 	%buildroot%python3_sitelibdir/
 
 # Generate translations
-pymsgfmt \
+msgfmt \
 	-o %buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.mo \
 	%buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.po
 
@@ -112,6 +112,11 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Jun 25 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.0-alt1
+- Change policies.json location for Firefox
+- Set GSettings, Chromium and Firefox appliers
+  not experimental and enabled by default
+
 * Tue Dec 22 2020 Igor Chudov <nir@altlinux.org> 0.8.2-alt1
 - Increased D-Bus timeouts on calls
 - Minor logging fixes
