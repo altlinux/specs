@@ -23,7 +23,7 @@
 
 Name: rygel
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: A UPnP v2 Media Server
 Group: System/Servers
@@ -35,6 +35,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: rygel-0.40.1-up-vapi.patch
 
 %define libxml_ver 2.7
 %define vala_ver 0.36.0
@@ -169,6 +170,7 @@ GObject introspection devel data for the %name
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -236,6 +238,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.40.1-alt1.1
+- fixed build
+
 * Sat Feb 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.40.1-alt1
 - 0.40.1
 
