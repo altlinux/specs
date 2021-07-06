@@ -3,21 +3,23 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 5.2
-Release: alt2
+Name: python3-module-%oname
+Version: 5.3.0
+Release: alt1
 
 Summary: Zope testrunner script
+
 License: ZPL-2.1
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/zopefoundation/zope.testrunner.git
 Url: http://pypi.python.org/pypi/zope.testrunner
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
@@ -27,42 +29,12 @@ BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-six
 %endif
 
-%py_requires zope.exceptions zope.interface
+Conflicts: python-module-%oname
 
-%add_findreq_skiplist /usr/lib*/python2.7/site-packages/zope/testrunner/tests/testrunner-ex/sample2/badsyntax.py
-%add_findreq_skiplist /usr/lib*/python3/site-packages/zope/testrunner/tests/testrunner-ex/sample2/badsyntax.py
+%py3_requires zope
 
 %description
 This package provides a flexible test runner with layer support.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-This package provides a flexible test runner with layer support.
-
-This package contains tests for %oname.
-
-%package -n python3-module-%oname
-Summary: Zope testrunner script (Python 3)
-Group: Development/Python3
-%py3_requires zope
-
-%description -n python3-module-%oname
-This package provides a flexible test runner with layer support.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-%add_python3_req_skip zope.testrunner.huh
-
-%description -n python3-module-%oname-tests
-This package provides a flexible test runner with layer support.
-
-This package contains tests for %oname.
 
 %prep
 %setup
@@ -71,60 +43,36 @@ This package contains tests for %oname.
 # Likewise this file should be removed before tests run.
 sed -i '/commands[[:space:]]*=/a \    bash -c "rm -f {envsitepackagesdir}/*-nspkg.pth"' \
        tox.ini
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
+%python3_prune
 
-mv %buildroot%_bindir/zope-testrunner{,3}
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot{%python3_sitelibdir_noarch/*,%python3_sitelibdir}
 %endif
 
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot{%python_sitelibdir_noarch/*,%python_sitelibdir}
-%endif
-
 %check
-
 export PIP_INDEX_URL=http://host.invalid./
-pushd ../python3
 tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
-popd
 
 %files
 %doc *.rst
 %_bindir/zope-testrunner
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/zope-testrunner3
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt1
+- new version 5.3.0 (with rpmrb script)
+- don't pack tests
+
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.2-alt3
+- build python3 module separately
+
 * Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 5.2-alt2
 - Disabled testing against Python2.
 
