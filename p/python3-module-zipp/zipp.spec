@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.5.0
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
 
@@ -59,6 +59,9 @@ py.test3
 %python3_sitelibdir/zipp-*.egg-info/
 
 %changelog
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt2
 - NMU: build python3 module only, cleanup spec
 
