@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.25
-Release: alt1
+Release: alt2
 
 Summary: A MySQL visual database modeling tool
 
@@ -40,6 +40,13 @@ Obsoletes: mysql-query-browser < %version-%release
 
 # internal Workbench's libraries
 %add_python3_req_skip wb workbench cairo_utils wb_common
+
+# for p9 compatibility
+%ifdef add_python_req_skip
+%add_python_req_skip _mforms grt mforms
+%add_python_req_skip wb workbench cairo_utils wb_common
+%endif
+BuildRequires(pre): rpm-build-python3
 
 %add_python3_req_skip workbench.change_tracker workbench.client_utils workbench.db_driver
 %add_python3_req_skip workbench.db_utils workbench.exceptions workbench.graphics.cairo_utils
@@ -227,6 +234,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Tue Jul 06 2021 Sergey Y. Afonin <asy@altlinux.org> 8.0.25-alt2
+- Updated spec-file for compatibility with p9
+
 * Tue Jun 01 2021 Sergey Y. Afonin <asy@altlinux.org> 8.0.25-alt1
 - Updated to last release
 - Updated antlr jar to antlr-4.9.1-complete.jar from http://www.antlr4.org/download/
