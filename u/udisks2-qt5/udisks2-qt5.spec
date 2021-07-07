@@ -1,5 +1,5 @@
 Name: udisks2-qt5
-Version: 5.0.5
+Version: 5.0.6
 Release: alt1
 Summary: Qt5 binding for udisks2
 License: LGPL-3.0+
@@ -30,12 +30,15 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%__subst 's|/lib|/%_lib|' udisks2.pro
+subst 's|/lib|/%_lib|' udisks2.pro
 
 %build
 %qmake_qt5 \
     CONFIG+=nostrip \
-    PREFIX=%_prefix
+    PREFIX=%_prefix \
+    VERSION=%version \
+    LIB_INSTALL_DIR=%_libdir \
+#
 %make_build
 
 %install
@@ -43,7 +46,7 @@ Header files and libraries for %name.
 
 %files -n lib%name
 %doc CHANGELOG.md
-%_libdir/lib%name.so.0*
+%_libdir/lib%name.so.5*
 
 %files devel
 %_includedir/%name
@@ -51,6 +54,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jul 07 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.6-alt1
+- New version (5.0.6).
+
 * Fri Oct 16 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.5-alt1
 - New version (5.0.5) with rpmgs script.
 
