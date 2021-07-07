@@ -1,6 +1,6 @@
 Name: libwebsockets
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: A lightweight C library for Websockets
 
@@ -64,6 +64,9 @@ This package contains the tests for %name applications.
     -DLWS_WITHOUT_BUILTIN_GETIFADDRS=ON \
     -DLWS_USE_BUNDLED_ZLIB=OFF \
     -DLWS_WITHOUT_BUILTIN_SHA1=ON \
+%ifarch %e2k
+    -DDISABLE_WERROR=ON \
+%endif
     -DLWS_WITH_STATIC=OFF
 %cmake_build
 
@@ -95,6 +98,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Wed Jul 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.2.0-alt2
+- Disabled -Werror for Elbrus
+
 * Tue Jun 29 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.2.0-alt1
 - New version
 
