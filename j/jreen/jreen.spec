@@ -1,6 +1,6 @@
 Name: jreen
 Version: 1.2.1
-Release: alt1.qa1
+Release: alt1.qa2
 Epoch: 7
 
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
@@ -17,9 +17,7 @@ Patch0: %name-%version-qt56-alt.patch
 
 BuildRequires: cmake
 BuildRequires: libgsasl-devel
-BuildRequires: libqt4-webkit-devel
 BuildRequires: libspeex-devel
-BuildRequires: phonon-devel
 BuildRequires: qt4-designer
 BuildRequires: qt5-base-devel
 
@@ -193,6 +191,9 @@ popd
 %_includedir/%name-qt5/%name/experimental/*.h
 
 %changelog
+* Wed Jul 07 2021 Grigory Ustinov <grenka@altlinux.org> 7:1.2.1-alt1.qa2
+- Fixed FTBFS.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 7:1.2.1-alt1.qa1
 - NMU: applied repocop patch
 
