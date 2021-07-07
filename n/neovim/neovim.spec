@@ -1,6 +1,6 @@
 Name: neovim
-Version: 0.4.4
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: heavily refactored vim fork
 
@@ -26,14 +26,9 @@ BuildRequires: luajit libluajit-devel
 BuildRequires: lua5.1-module-lpeg lua5.1-mpack
 BuildRequires: libluv-devel
 BuildRequires: unibilium-devel
+BuildRequires: libtree-sitter-devel
 
-# @cow: Right now Neovim + Luajit is broken on aarch64 - see
-# https://github.com/neovim/neovim/issues/7879 for details. Some distros
-# workaround this issue using plain Lua on aarch64 platform but right now
-# I am not ready to spend my time trying to fix this issue. If anyone wants
-# to fix it - start with libluv library first because it is compiled with
-# libluajit exclusively.
-ExcludeArch: aarch64 armh
+ExcludeArch: armh
 
 Provides: nvim = %EVR
 Requires: %name-runtime = %EVR
@@ -69,7 +64,7 @@ This package contains runtime files.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 %find_lang nvim
 
 gzip -9 LICENSE
@@ -84,6 +79,7 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 
 %_desktopdir/nvim.desktop
 %_pixmapsdir/nvim.png
+%_iconsdir/hicolor/*/apps/nvim.png
 
 %files runtime
 %dir %_datadir/nvim
@@ -91,6 +87,10 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Tue Jul 6 2021 Vladimir Didenko <cow@altlinux.org> 0.5.0-alt1
+- New version
+- Enable package build on aarch64
+
 * Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 0.4.4-alt2
 - Fix build with a new cmake macros
 

@@ -1,6 +1,6 @@
 Name: tree-sitter
-Version: 0.19.3
-Release: alt2
+Version: 0.20.0
+Release: alt1.git0926fad1
 
 Summary: Parser generator tool and an incremental parsing library
 
@@ -82,6 +82,9 @@ install -m 0755 target/release/%name %buildroot%_bindir
 %_bindir/%name
 
 %changelog
+* Tue Jul 6 2021 Vladimir Didenko <cow@altlinux.ru> 0.20.0-alt1.git0926fad1
+- new version
+
 * Wed Mar 17 2021 Vladimir Didenko <cow@altlinux.ru> 0.19.3-alt2
 - build CLI tool
 
@@ -90,4 +93,3 @@ install -m 0755 target/release/%name %buildroot%_bindir
 
 * Tue Nov 24 2020 Vladimir Didenko <cow@altlinux.ru> 0.17.3-alt1
 - initial build for Sisyphus
-

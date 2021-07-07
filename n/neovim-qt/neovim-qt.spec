@@ -1,6 +1,6 @@
 Name: neovim-qt
 Version: 0.2.16.1
-Release: alt3
+Release: alt4.gite79fdbcf
 
 Summary: Neovim client library and GUI, in Qt5.
 
@@ -19,7 +19,7 @@ BuildRequires: qt5-svg-devel
 
 Requires: neovim
 
-ExcludeArch: aarch64 armh
+ExcludeArch: armh
 
 %description
 Neovim client library and GUI, in Qt5.
@@ -36,17 +36,23 @@ Neovim client library and GUI, in Qt5.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
-%doc %_datadir/nvim-qt/runtime/README.md
+%doc README.md
+%doc %_datadir/nvim-qt/LICENSE
 %doc %_datadir/nvim-qt/runtime/doc/*
 %_bindir/nvim-qt
 %_desktopdir/nvim-qt.desktop
 %_datadir/nvim-qt/runtime/plugin/nvim_gui_shim.vim
 %_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Tue Jul 6 2021 Vladimir Didenko <cow@altlinux.org> 0.2.16.1-alt4.gite79fdbcf
+- New version (gite79fdbcf)
+- Enable package build on aarch64
+
 * Mon May 31 2021 Vladimir Didenko <cow@altlinux.org> 0.2.16.1-alt3
 - Fix build with a new cmake macros
 
