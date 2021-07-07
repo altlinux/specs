@@ -1,57 +1,81 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: xsecurelock
-Version: 0.0.1
+Version: 1.7.0
 Release: alt1
 URL: https://github.com/google/xsecurelock
-
-Summary: X11 screen lock utility
-License: Apache
+Summary: X11 screen lock utility with security in mind
+License: Apache-2.0
 Group: System/X11
 
-Source: %name-%version.tar
-Source1: %name.pam
+# Optional savers and examples.
+%filter_from_requires /\b\(htpasswd\|mplayer\|mpv\|grep\|coreutils\|sh\)\b/d
 
-# Automatically added by buildreq on Fri Aug 01 2014
-# optimized out: libX11-devel xorg-scrnsaverproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
-BuildRequires: doxygen libXScrnSaver-devel libXxf86misc-devel libpam-devel
+Source: %name-%version.tar
+
+BuildRequires: fontconfig-devel
+BuildRequires: libbsd-devel
+BuildRequires: libpam-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXext-devel
+BuildRequires: libXft-devel
+BuildRequires: libXmu-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXScrnSaver-devel
+BuildRequires: pandoc
 
 %description
-XSecureLock is an X11 screen lock utility designed with the primary goal of
-security.
+XSecureLock is an X11 screen lock utility designed with the primary
+goal of security.
 
-Security is achieved using a modular design to avoid the usual pitfalls of
-screen locking utility design.
+Screen lock utilities are widespread. However, in the past they often
+had security issues regarding authentication bypass (a crashing screen
+locker would unlock the screen), information disclosure (notifications
+may appear on top of the screen saver), or sometimes even worse.
+
+In XSecureLock, security is achieved using a modular design to avoid
+the usual pitfalls of screen locking utility design on X11.
 
 %prep
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-     --with-pam-service-name=%name
+	--with-pam-service-name=system-auth \
+	--with-dpms \
+	--with-fontconfig \
+	--with-htpasswd=/usr/bin/htpasswd \
+	--with-libbsd \
+	--with-mplayer=/usr/bin/mplayer \
+	--with-mpv=/usr/bin/mpv \
+	--with-pam \
+	--with-pandoc \
+	--with-xfixes \
+	--with-xft \
+	--with-xkb \
+	--with-xscreensaver=/usr/libexec/xscreensaver \
+	--with-xss \
 
-%make_build
+%make_build GIT_VERSION=v%version
 
 %install
-install -pm0644 -D %{S:1} %buildroot%_sysconfdir/pam.d/%name
-%makeinstall
-
+%makeinstall_std
 
 %files
-%_bindir/%name
-%_sysconfdir/pam.d/%name    
-%dir %_libexecdir/%name
-
-%_libexecdir/%name/auth_htpasswd
-%_libexecdir/%name/auth_pamtester
-%attr(2711,root,chkpwd) %_libexecdir/%name/auth_pam_x11
-%_libexecdir/%name/saver_blank
-%_libexecdir/%name/saver_mplayer
-%_libexecdir/%name/saver_mpv
-%_libexecdir/%name/saver_xscreensaver
-
-%exclude /usr/share/doc/xsecurelock/
-%doc README.md LICENSE CONTRIBUTING
+%_bindir/xsecurelock
+%attr(2711,root,chkpwd) %_libexecdir/xsecurelock/authproto_pam
+%_libexecdir/xsecurelock
+%_defaultdocdir/xsecurelock
+%_man1dir/xsecurelock.1*
 
 %changelog
+* Mon Jul 05 2021 Vitaly Chikunov <vt@altlinux.org> 1.7.0-alt1
+- Update to v1.7.0 (2020-01-15).
+
 * Fri Aug 01 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1
 - first build for Sisyphus
