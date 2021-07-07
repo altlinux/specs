@@ -1,53 +1,36 @@
-%define sover 2
-%define desc FlatBuffers is a cross platform serialization library architected \
-for maximum memory efficiency. It allows you to directly access serialized data \
-without parsing/unpacking it first, while still having great forwards/backwards \
-compatibility.
-
-Name: libflatbuffers
-Version: 2.0.0
-Release: alt1
+Name: flatbuffers1
+Version: 1.12.0
+Release: alt4
 
 Summary: Memory Efficient Serialization Library
 License: APL
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: https://google.github.io/flatbuffers/
 
-Source: %name-%version.tar
+Source: libflatbuffers-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-setuptools
 BuildRequires: cmake ctest gcc-c++
 
+%define desc FlatBuffers is a cross platform serialization library architected \
+for maximum memory efficiency. It allows you to directly access serialized data \
+without parsing/unpacking it first, while still having great forwards/backwards \
+compatibility.
+
 %description
 %desc
 
-%package -n %name%sover
+%package -n libflatbuffers
 Summary: Memory Efficient Serialization Library
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%description -n %name%sover
+%description -n libflatbuffers
 %desc
-
-%package devel
-Summary: Memory Efficient Serialization Library
-Group: Development/C++
-
-%description devel
-%desc
-This package contains development part of FlatBuffers.
-
-%package -n python3-module-flatbuffers
-Summary: Python3 files for %name
-Group: Development/Python3
-Requires: %name%sover = %EVR
-
-%description -n python3-module-flatbuffers
-This package contains python files for %name.
 
 %prep
-%setup
+%setup -n libflatbuffers-%version
 %add_optflags -Wno-class-memaccess -Wno-stringop-overflow
 %ifarch %e2k
 sed -i 's,-Werror -Wextra -Werror=shadow,,' CMakeLists.txt
@@ -83,22 +66,12 @@ popd
     mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir
   )
 
-%files -n %name%sover
-%_libdir/%name.so.*
-
-%files devel
-%_bindir/flatc
-%_includedir/flatbuffers
-%_libdir/cmake/flatbuffers
-%_libdir/%name.so
-%_pkgconfigdir/flatbuffers.pc
-
-%files -n python3-module-flatbuffers
-%python3_sitelibdir/*
+%files -n libflatbuffers
+%_libdir/lib*.so.*
 
 %changelog
-* Wed Jul 07 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
-- 2.0.0 released
+* Wed Jul 07 2021 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt4
+- Build as legacy library
 
 * Thu May 20 2021 Anton Midyukov <antohami@altlinux.org> 1.12.0-alt3
 - build python3-module-flatbuffers

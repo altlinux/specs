@@ -5,10 +5,8 @@
 
 %define glslang_version 11.4.0
 %define asmjit_commit 723f58581afc0f4cb16ba13396ff77e425896847
-%define pugixml_version 1.11.4
 %define hidapi_commit 01f601a1509bf9c67819fbf521df39644bab52d5
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
-%define xx_hash_version 0.8.0
 %define llvm_commit 5836324d6443a62ed09b84c125029e98324978c3
 %define faudio_version 21.04
 %define spirv_headers_version 1.5.3.reservations1
@@ -17,7 +15,7 @@
 
 Name: rpcs3
 Version: 0.0.17
-Release: alt1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -34,32 +32,29 @@ Source0: %name-%version.tar
 Source1: glslang-%glslang_version.tar
 # https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
 Source2: asmjit-%asmjit_commit.tar
-# https://github.com/zeux/pugixml/archive/v%pugixml_version/pugixml-%pugixml_version.tar.gz
-Source3: pugixml-%pugixml_version.tar
 # https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
-Source4: hidapi-%hidapi_commit.tar
+Source3: hidapi-%hidapi_commit.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
-Source5: yaml-cpp-%yaml_cpp_commit.tar
-# https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
-Source6: xxHash-%xx_hash_version.tar
+Source4: yaml-cpp-%yaml_cpp_commit.tar
 # https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-mirror-%llvm_commit.tar.gz
-Source7: llvm-mirror-%llvm_commit.tar
+Source5: llvm-mirror-%llvm_commit.tar
 # https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
-Source8: FAudio-%faudio_version.tar
+Source6: FAudio-%faudio_version.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
-Source9: SPIRV-Headers-%spirv_headers_version.tar
+Source7: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
-Source10: SPIRV-Tools-%spirv_tools_version.tar
+Source8: SPIRV-Tools-%spirv_tools_version.tar
 # https://github.com/RipleyTom/wolfssl/archive/%wolfssl_commit/wolfssl-%wolfssl_commit.tar.gz
-Source11: wolfssl-%wolfssl_commit.tar
+Source9: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
 
+BuildRequires: /proc
 BuildRequires: clang%clang_version.0
-BuildRequires: cmake >= 3.14.1
-BuildRequires: cvs
+BuildRequires: cmake >= 3.16.9
 BuildRequires: git-core
 BuildRequires: libflatbuffers-devel
+BuildRequires: libpugixml-devel
 BuildRequires: pkgconfig(FAudio)
 BuildRequires: pkgconfig(Qt5) >= 5.15.2
 BuildRequires: pkgconfig(alsa)
@@ -73,19 +68,17 @@ BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libxxhash)
 BuildRequires: pkgconfig(openal)
 BuildRequires: pkgconfig(python3)
 BuildRequires: pkgconfig(sdl2)
-BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: lld%clang_version.0
 BuildRequires: llvm%clang_version.0
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-module-yaml
-BuildRequires: subversion
 
 BuildPreReq: pkgconfig(libswresample)
 BuildPreReq: python3-module-Pygments
@@ -94,16 +87,14 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
 
 %patch0 -p1
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
-%__mv -Tf ../pugixml-%pugixml_version 3rdparty/pugixml
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi/hidapi
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
-%__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
 %__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
@@ -140,6 +131,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
 	-DUSE_SYSTEM_CURL:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBUSB:BOOL=TRUE \
+	-DUSE_SYSTEM_FLATBUFFERS:BOOL=TRUE \
+	-DUSE_SYSTEM_PUGIXML:BOOL=TRUE \
+	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
 	-DLLVM_USE_LINKER:STRING="$LINKER" \
 	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
@@ -159,6 +153,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Jul 07 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt2
+- Build with system flatbuffers, pugixml and xxhash
+
 * Thu Jul 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt1
 - Version 0.0.17
 
