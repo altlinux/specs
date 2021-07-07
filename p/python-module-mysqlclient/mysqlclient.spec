@@ -8,7 +8,7 @@ merges some pull requests.
 
 Name: %fname
 Version: 1.4.4
-Release: alt1
+Release: alt2
 
 %if ""==""
 Summary: Python interface to MySQL
@@ -83,7 +83,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %if ""==""
 %check
-python setup.py test
+%__python setup.py test
 
 %files
 %doc HISTORY* *.md
@@ -99,6 +99,9 @@ python setup.py test
 %endif
 
 %changelog
+* Wed Jul 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.4-alt2
+- Fixed FTBFS.
+
 * Mon Aug 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.4-alt1
 - Build new version.
 
