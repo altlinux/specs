@@ -1,6 +1,6 @@
 Name: u-boot-rpi3
-Version: 2021.04
-Release: alt3
+Version: 2021.07
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -48,6 +48,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Jul 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.07-alt1
+- 2021.07 released
+
 * Tue Apr 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt3
 - fix usb keyboard handling (closes: 39978)
 

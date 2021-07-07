@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2021.04
+Version: 2021.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -38,6 +38,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Wed Jul 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.07-alt1
+- 2021.07 released
+
 * Wed Apr 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.04-alt1
 - 2021.04 released
 
