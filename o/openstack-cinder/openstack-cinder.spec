@@ -5,7 +5,7 @@
 Name: openstack-%oname
 Epoch: 1
 Version: 15.4.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Volume service
 
@@ -106,7 +106,6 @@ BuildRequires: python3-module-castellan >= 0.16.0
 BuildRequires: python3-module-cryptography >= 2.1
 BuildRequires: python3-module-cursive >= 0.2.1
 BuildRequires: python3-module-testtools
-BuildRequires: python3-module-subunit-tests
 
 %if_enabled doc
 BuildRequires: python3-module-sphinx
@@ -325,6 +324,9 @@ rm -rf %buildroot/usr/etc
 %endif
 
 %changelog
+* Wed Jul 07 2021 Grigory Ustinov <grenka@altlinux.org> 1:15.4.0-alt2
+- Fixed BuildRequires.
+
 * Wed Dec 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1:15.4.0-alt1
 - NMU: new version 15.4.0 (with rpmrb script)
 - NMU: use suds instead of suds-jurko (obsoleted)
