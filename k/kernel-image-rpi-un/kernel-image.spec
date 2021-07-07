@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-rpi-un
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	5.12
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -101,7 +101,6 @@ BuildRequires: ccache
 Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
-Requires: startup >= 0.8.3-alt1
 
 Provides: kernel = %kversion
 
@@ -496,6 +495,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed Jul 07 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.12.6-alt2
+- Remove dependency on startup package. See ALT bug 39840.
+
 * Mon May 31 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.12.6-alt1
 - Updated to 5.12.6 (still RPi-specific)
 - https://github.com/raspberrypi/linux.git rpi-5.12.y
