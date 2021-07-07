@@ -1,30 +1,27 @@
 # Spec file for TinyCA2 utility
-# --with/--without options: 'ru'
 
-%define with_ru 0
-%if_with ru
-  %define with_ru 1
-%endif
+%def_without ru_locale
 
 Name: tinyca2
-Version: 0.7.5
-Release: alt5
+Version: 0.7.6
+Release: alt1.git1f402a5
 
 Summary: graphical tool for managing a Certification Authority
 Summary(ru_RU.UTF-8): графическая утилита для управления Certification Authority
 
 License: GPL
 Group: Security/Networking
+URL: https://github.com/thooge/tinyca
+#URL: https://www.hoogi.de/tinyca/
+#URL: https://github.com/simonswine/tinyca2_debian
 #URL: http://tinyca.sm-zone.net/
-URL: https://github.com/simonswine/tinyca2_debian
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
 
-Provides: tinyca = %version
-Obsoletes: tinyca
-
 Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
 #Source1: %%name.png
 Source2: %name.po
 
@@ -32,15 +29,13 @@ Source3: %name-16.png
 Source4: %name-32.png
 Source5: %name-48.png
 
-Patch0: %name-0.7.0-alt-ru_po.patch
-Patch1: %name-0.7.2-alt-Gtk2_init.patch
-Patch2: %name-0.72-alt-desktop_l10n.patch
-
-Patch3: %name-0.7.5_6-alt-sha1.patch
-Patch4: %name-0.7.5_6-alt-sha256.patch
-Patch5: %name-0.7.5_6-alt-sort.patch
+Patch1: %name-0.7.0-alt-ru_po.patch
+Patch2: %name-0.7.2-alt-Gtk2_init.patch
+Patch3: %name-0.72-alt-desktop_l10n.patch
+Patch4: %name-0.7.5_7-alt-pathes.patch
 
 BuildRequires: perl-devel, perl-Glib, perl-Gtk2, perl-Locale-gettext
+BuildRequires: perl-Config-Tiny
 Requires: openssl
 
 %description
@@ -79,51 +74,42 @@ TinyCA2 поддерживает:
 %define localedir	%_datadir/locale
 
 # Defining _perl_lib_path for correct work of AutoReqProv
-%define _perl_lib_path %libdir
+%global _perl_lib_path %libdir
 
 %prep
 %setup
-
-%if "%with_ru" == "1"
 %patch0 -p1
+
+%if_with ru_locale
+%patch1
+/bin/install -m 0644 -- %SOURCE2 po/ru.po
+/bin/mkdir -p -- locale/ru/LC_MESSAGES
 %endif
 
-%patch1 -p1
 %patch2
-
 %patch3
 %patch4
-%patch5
 
-%if "%with_ru" == "1"
-  /bin/install -m 0644 %SOURCE2 po/ru.po
-  /bin/mkdir -p locale/ru/LC_MESSAGES
-%endif
 
 %build
 # Configure sources
 ./install.sh
-
-sed -e 's@./lib@%libdir@g' -i %name
-sed -e 's@./templates@%templatesdir@g' -i %name
-sed -e 's@./locale@%localedir@g' -i %name
 /usr/bin/make -C po
 
 %install
-%if "%with_ru" == "1"
-  LANGUAGES="de es cs fr sv ru"
-%else
-  LANGUAGES="de es cs fr sv"
-%endif
+LANGUAGES="de es cs fr sv %{?_with_ru_locale:ru}"
 
 /bin/mkdir -p -- %buildroot%_bindir
 /bin/mkdir -p -- %buildroot%libdir
 /bin/mkdir -p -- %buildroot%libdir/GUI
+/bin/mkdir -p -- %buildroot%libdir/icons
 /bin/mkdir -p -- %buildroot%templatesdir
 
 /bin/install -m 0644 -- lib/*.pm %buildroot%libdir/
 /bin/install -m 0644 -- lib/GUI/*.pm %buildroot%libdir/GUI/
+/bin/install -m 0644 -- icons/* %buildroot%libdir/icons/
 /bin/install -m 0644 -- templates/openssl.cnf %buildroot%templatesdir/
+/bin/install -m 0644 -- templates/tinyca.cnf %buildroot%templatesdir/
 /bin/install -m 0755 -- %name %buildroot%_bindir/
 
 for LANG in $LANGUAGES; do
@@ -148,12 +134,17 @@ done
 %{libdir}*
 %dir %templatesdir
 %config %templatesdir/openssl.cnf
+%config %templatesdir/tinyca.cnf
 %_desktopdir/%name.desktop
 %_miconsdir/%{name}*
 %_niconsdir/%{name}*
 %_liconsdir/%{name}*
 
 %changelog
+* Tue Jul 06 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.7.6-alt1.git1f402a5
+- New version
+- Switch to the new upstream fork
+
 * Wed Dec 02 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.5-alt5
 - Switching to the Debian fork
 - Set default message digest to SHA256
