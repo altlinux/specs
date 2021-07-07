@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.21
+Version: 0.5.22
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,9 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Wed Jul 07 2021 Anton Midyukov <antohami@altlinux.org> 0.5.22-alt1
+- use systemd-tmpfiles.standalone as fallback
+
 * Fri Jun 04 2021 Anton Midyukov <antohami@altlinux.org> 0.5.21-alt1
 - install2-remount-functions: Add mount/umount runfs to destination/run
   (Closes: 40142)
