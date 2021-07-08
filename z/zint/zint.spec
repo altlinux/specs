@@ -1,5 +1,5 @@
 Name:      zint
-Version:   2.8.0
+Version:   2.9.1
 Release:   alt2
 Summary:   A barcode generator and library
 Summary(ru_RU.UTF-8): Генератор штрихкодов и библиотека
@@ -100,7 +100,7 @@ C library and header files needed to develop applications using %name-qt.
 
 %prep
 %setup -q
-%patch -p 1
+## patch -p 1
 %patch10 -p 1
 
 %build
@@ -135,6 +135,9 @@ desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 
 
 %changelog
+* Thu Jul 08 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.1-alt2
+- New version 2.9.1 (closes: #40294)
+
 * Tue Jun 29 2021 Ivan Razzhivin <underwit@altlinux.org> 2.8.0-alt2
 - Add russian translation
 
