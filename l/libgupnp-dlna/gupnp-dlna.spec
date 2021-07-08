@@ -1,10 +1,14 @@
 %define _name gupnp-dlna
-%define ver_major 0.10
+%define ver_major 0.11
+%define api_ver 2.0
+
+%def_enable introspection
+%def_enable vala
 %def_enable gtk_doc
 
 Name: libgupnp-dlna
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 Summary: A collection of helpers for building UPnP AV applications
 
 Group: System/Libraries
@@ -13,17 +17,16 @@ Url: http://www.gupnp.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: libgio-devel >= 2.38
-BuildRequires: pkgconfig(glib-2.0) >= 2.32 pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0)
+BuildRequires: libgio-devel >= 2.58 pkgconfig(libxml-2.0) >= 2.5.0
 BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0 pkgconfig(gstreamer-pbutils-1.0) >= 1.0
-BuildRequires: gir(GObject) = 2.0 gir(Gst) = 1.0 gir(GstPbutils) = 1.0
-BuildRequires: vala-tools >= 0.18 rpm-build-vala libvala-devel
+%{?_enable_introspection:
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.36.0
+BuildRequires: gir(GObject) = 2.0 gir(Gst) = 1.0 gir(GstPbutils) = 1.0}
+%{?_enable_vala:
+BuildRequires: vala-tools >= 0.18 rpm-build-vala libvala-devel
 BuildRequires: vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0)
-BuildRequires: vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)
-BuildRequires: pkgconfig(libxml-2.0) >= 2.5.0
-BuildRequires: gtk-doc xml-utils
-
+BuildRequires: vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
 GUPnP is an object-oriented open source framework for creating UPnP
@@ -81,31 +84,40 @@ Contains developer documentation for %_name.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %_bindir/*
 %_libdir/lib*.so.*
 %_datadir/%{_name}*
 %_libdir/%_name/*.so
 %exclude %_libdir/%_name/*.la
-%doc AUTHORS COPYING README TODO
+%doc AUTHORS NEWS README TODO
 
 %files devel
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 %_includedir/*
+%{?_enable_vala:
 %_vapidir/*.deps
-%_vapidir/*.vapi
+%_vapidir/*.vapi}
 
+%if_enabled introspection
 %files gir
-%_typelibdir/*.typelib
+%_typelibdir/GUPnPDLNA*-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*.gir
+%_girdir/GUPnPDLNA*-%api_ver.gir
+%endif
 
 %{?_enable_gtk_doc:%files devel-doc
 %_datadir/gtk-doc/html/*}
 
 %changelog
+* Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Sun Apr 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt2
 - fixed buildreqs
 

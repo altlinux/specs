@@ -1,25 +1,27 @@
 %define _name gupnp-av
-%define ver_major 0.12
+%define ver_major 0.13
+%define api_ver 1.0
 
-%def_disable static
-%def_disable gtk_doc
 %def_enable introspection
+%def_enable vala
+%def_enable gtk_doc
 
 Name: libgupnp-av
-Version: %ver_major.11
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1
 Url: http://www.gupnp.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: glib2-devel >= 2.14 gtk-doc
-BuildRequires: libxml2-devel
-BuildRequires: vala-tools rpm-build-vala libvala-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
+BuildRequires(pre): meson
+BuildRequires: glib2-devel >= 2.58 libxml2-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -32,7 +34,7 @@ implementation of UPnP A/V profiles
 %package devel
 Summary: Development files and libraries for gUPnP-IGD
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -61,7 +63,7 @@ This package provides development documentations for gUPnP-AV.
 %package gir
 Summary: GObject introspection data for the GUPnP A/V library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GUPnP A/V library
@@ -70,55 +72,60 @@ GObject introspection data for the GUPnP A/V library
 Summary: GObject introspection devel data for the GUPnP A/V library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GUPnP A/V library
 
 
 %prep
-%setup -q -n %_name-%version
-[ ! -d m4 ] && mkdir m4
+%setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --disable-static \
-%{?_enable_gtk_doc:--enable-gtk-doc} \
-%{subst_enable introspection}
-
-%make_build
+%meson \
+%{?_disable_introspection:-Dintrospection=false} \
+%{?_disable_vala:-Dvapi=false} \
+%{?_enable_gtk_doc:-Dgtk_doc=true}
+%nil
+%meson_build
 
 %check
-%make check
+%meson_test
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS README ChangeLog
+%doc AUTHORS README* NEWS
 %_datadir/%_name
 
 %files devel
 %_pkgconfigdir/*
 %_libdir/*.so
 %_includedir/*
-%_vapidir/*.deps
-%_vapidir/*.vapi
+%{?_enable_vala:%_vapidir/*.deps
+%_vapidir/*.vapi}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*.typelib
+%_typelibdir/GUPnPAV-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*.gir
+%_girdir/GUPnPAV-%api_ver.gir
 %endif
 
 
 %changelog
+* Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0 (ported to Meson build system)
+
 * Thu Nov 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.11-alt1
 - 0.12.11
 
