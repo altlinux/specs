@@ -1,7 +1,7 @@
 
 Name: ipmiutil
 Version: 3.1.3
-Release: alt1
+Release: alt2
 
 Summary: IPMI server management utilities
 License: BSD
@@ -71,6 +71,9 @@ the SEL must be done occasionally, as needed.
 
 %prep
 %setup
+# Makefile uses the TMPDIR environment variable, the same is used
+# by the Elbrus compiler to set the directory for temporary files.
+sed -i "s|TMPDIR|TMPDIR1|g" Makefile*
 
 %build
 export NPROCS=8
@@ -104,6 +107,9 @@ install -dm700 %buildroot%_localstatedir/%name
 %_sysconfdir/cron.daily/checksel
 
 %changelog
+* Thu Jul 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.1.3-alt2
+- fixed Elbrus build
+
 * Tue Oct 02 2018 Alexey Shabalin <shaba@altlinux.org> 3.1.3-alt1
 - 3.1.3
 - add packages: libipmiutils, devel, static
