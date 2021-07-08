@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.3.3
-Release: alt4
+Release: alt5
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -80,6 +80,7 @@ Patch47: qemu-server-pci-rng-audio-M90P.patch
 Patch50: pve-container-ENV.patch
 Patch51: pve-manager-ver-v.patch
 Patch52: pve-qmeventd.patch
+Patch53: pve-container-syscalld.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -207,6 +208,7 @@ This is used to implement the PVE REST API
 %patch50 -p0 -b .ENV
 %patch51 -p0 -b .ver-v
 %patch52 -p0 -b .qmevent
+%patch53 -p0 -b .syscall
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -611,6 +613,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Thu Jul 08 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt5
+- pve-container@.service wants pve-lxc-syscalld.service
+
 * Mon Jun 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt4
 - pve-guests.service wants qmeventd.service
 
