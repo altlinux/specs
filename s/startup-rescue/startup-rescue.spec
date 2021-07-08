@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -65,6 +65,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Wed Jul 07 2021 Anton Midyukov <antohami@altlinux.org> 0.37-alt1
+- Use standalone versions of systemd utilities.
+
 * Tue Apr 13 2021 Anton Midyukov <antohami@altlinux.org> 0.36-alt1
 - find-fstab: ignore ram device (Closes: 39835)
 
