@@ -1,11 +1,10 @@
 %define pkgname mbedtls
-%define so_tls_version 13
 %define so_crypto_version 5
 %def_disable static
 
-Name: %pkgname%so_tls_version
+Name: mbedcrypto%so_crypto_version
 Version: 2.24.0
-Release: alt2
+Release: alt3
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -28,11 +27,11 @@ library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n libmbedcrypto%so_crypto_version
+%package -n lib%name
 Summary: Cryptographic base library for mbedtls
 Group: System/Legacy libraries
 
-%description -n libmbedcrypto%so_crypto_version
+%description -n lib%name
 This subpackage of mbedtls contains a library that exposes
 cryptographic ciphers, hashes, algorithms and format support such as
 AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
@@ -77,10 +76,13 @@ popd
 %__rm -rf %buildroot%_libdir/lib%pkgname.so.*
 %__rm -rf %buildroot%_libdir/libmbedx509.so.*
 
-%files -n libmbedcrypto%so_crypto_version
+%files -n lib%name
 %_libdir/libmbedcrypto.so.*
 
 %changelog
+* Thu Jul 08 2021 Nazarov Denis <nenderus@altlinux.org> 2.24.0-alt3
+- Rename package name
+
 * Sat Dec 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.24.0-alt2
 - Build as legacy library
 
