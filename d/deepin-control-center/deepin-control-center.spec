@@ -5,7 +5,7 @@
 
 Name: deepin-control-center
 Version: 5.4.47
-Release: alt1.git1362dfe
+Release: alt2.git1362dfe
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -46,7 +46,7 @@ BuildRequires: qt5-linguist
 BuildRequires: udisks2-qt5-devel
 BuildRequires: kf5-networkmanager-qt-devel
 BuildRequires: libpwquality-devel
-BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
 BuildRequires: libpolkitqt5-qt5-devel
 BuildRequires: deepin-pw-check-devel
 BuildRequires: deepin-desktop-base
@@ -129,6 +129,7 @@ export READELF="llvm-readelf"
 # export SYSTYPE=$(cat /etc/deepin-version | grep Type= | awk -F'=' '{print $$2}')
 %K5cmake \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DDCC_DISABLE_GRUB=YES \
     -DDISABLE_SYS_UPDATE=YES \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
@@ -179,6 +180,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.47-alt2.git1362dfe
+- Fixed build with libgmock.so.1.11.0.
+
 * Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.47-alt1.git1362dfe
 - Fixed version tag.
 
