@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.6.7
+Version: 4.6.8
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -71,6 +71,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Thu Jul 08 2021 Anton Midyukov <antohami@altlinux.org> 4.6.8-alt1
+- revert 4.6.7-alt1
+
 * Wed Jul 07 2021 Anton Midyukov <antohami@altlinux.org> 4.6.7-alt1
 - not require /etc/rc.d/init.d/clock, /etc/init.d/clock (closes: 40389)
 
