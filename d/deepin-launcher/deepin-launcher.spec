@@ -2,7 +2,7 @@
 
 Name: deepin-launcher
 Version: 5.4.11
-Release: alt1.1
+Release: alt2
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -23,7 +23,7 @@ BuildRequires: libxcbutil-icccm-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-x11extras-devel
-BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
 BuildRequires: dtk5-common
 # Requires: deepin-menu deepin-daemon startdde icon-theme-hicolor
 
@@ -45,7 +45,7 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 %build
 %cmake \
     -GNinja \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DWITHOUT_UNINSTALL_APP=1
 %cmake_build
 
@@ -66,6 +66,9 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 %_includedir/%repo/
 
 %changelog
+* Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.11-alt2
+- Fixed build with libgmock.so.1.11.0.
+
 * Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.11-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
