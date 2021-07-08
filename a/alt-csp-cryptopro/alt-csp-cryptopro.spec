@@ -1,6 +1,6 @@
 Name: alt-csp-cryptopro
-Version: 0.1.5
-Release: alt2
+Version: 0.1.6
+Release: alt1
 
 Group: File tools
 Summary: CryptoPRO GUI tool
@@ -42,6 +42,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Thu Jul 08 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.6-alt1
+- new version
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.1.5-alt2
 - NMU: spec: adapted to new cmake macros.
 
