@@ -2,7 +2,7 @@
 
 Name: deepin-manual
 Version: 5.7.0.75
-Release: alt2
+Release: alt3
 Summary: Help files for DDE
 License: GPL-3.0+ and (BSD-3-Clause and Qt.Commercial) and ISC
 Group: Graphical desktop/Other
@@ -12,7 +12,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel dtk5-widget-devel qt5-x11extras-devel qt5-webengine-devel libgtest-devel
+BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel dtk5-widget-devel qt5-x11extras-devel qt5-webengine-devel libgmock-devel
 Requires: %name-data
 
 %description
@@ -33,8 +33,7 @@ subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 %build
 %cmake \
     -GNinja \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
     -DLIB_INSTALL_DIR=%_libdir \
@@ -57,6 +56,9 @@ subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 %_datadir/%name/
 
 %changelog
+* Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0.75-alt3
+- Fixed build with libgmock.so.1.11.0.
+
 * Wed Jun 23 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0.75-alt2
 - Added deepin-manual-data in requires.
 
