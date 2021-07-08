@@ -1,36 +1,40 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/dpkg /usr/bin/latex /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel python-devel rpm-build-python unzip
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: /usr/bin/dpkg /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel python-devel rpm-build-python
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 %define oldname flann
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%undefine __cmake_in_source_build
 %global srcname flann
+%global soversion 1.9
 
 Name:           libflann
-Version:        1.8.4
-Release:        alt2_24
+Version:        1.9.1
+Release:        alt1_4
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
-URL:            http://www.cs.ubc.ca/~mariusm/index.php/FLANN/FLANN
-Source0:        http://www.cs.ubc.ca/~mariusm/uploads/FLANN/%{oldname}-%{version}-src.zip
+URL:            http://www.cs.ubc.ca/research/flann
+Source0:        https://www.github.com/mariusmuja/%{oldname}/archive/%{version}/%{oldname}-%{version}.tar.gz
 
 # Prevent the buildsysem from running setup.py, and use system-installed libflann.so
 # Not submitted upstream
-Patch0:         flann-1.8.4-fixpyflann.patch
-# Fix build failures with c++11/gcc6
-Patch1:         flann-1.8.4-gcc6.patch
+Patch0:         flann-1.9.1-fixpyflann.patch
 # Add a file to shared library targets
 Patch2:         flann-1.8.4-srcfile.patch
 BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
 BuildRequires:  zlib-devel
 
-BuildRequires:  libhdf5-devel
+BuildRequires:  hdf5-tools libhdf5-devel
 BuildRequires:  libgtest-devel
+BuildRequires:  libgmock-devel
+
+BuildRequires:  latex2html
+BuildRequires:  texlive texlive-collection-basic texlive-dist
 
 BuildRequires:  python3-devel
 Source44: import.info
@@ -72,30 +76,26 @@ Requires: %{name} = %{version}-%{release}
 Python 3 bindings for flann
 
 %prep
-%setup -q -n %{oldname}-%{version}-src
+%setup -n %{oldname}-%{version} 
 %patch0 -p0 -b .fixpyflann
-%patch1 -p0 -b .gcc6
 %patch2 -p0 -b .srcfile
 
 # Fix library install directory
 sed -i 's/"lib"/"%{_lib}"/' cmake/flann_utils.cmake
 
 %build
-mkdir %{_target_platform}
-pushd %{_target_platform}
-%{fedora_cmake} -DBUILD_MATLAB_BINDINGS=OFF  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_PYTHON_BINDINGS=ON ..
-popd
-make -C %{_target_platform}
-
+%{fedora_v2_cmake} -DBUILD_MATLAB_BINDINGS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON_BINDINGS=ON 
+%fedora_v2_cmake_build
+%fedora_v2_cmake_build %{!?rhel:--target} doc
 
 %install
-make install DESTDIR=%{buildroot} -C %{_target_platform}
+%fedora_v2_cmake_install
 rm -rf %{buildroot}%{_datadir}/%{oldname}/python
 
 # install the python bindings
 cp -r src/python src/python3
 
-cp %{_target_platform}/src/python/setup.py src/python3
+cp %{_vpath_builddir}/src/python/setup.py src/python3
 
 pushd src/python3
 %{__python3} setup.py install --prefix=/usr --root=%{buildroot} --install-lib=%{python3_sitelibdir}
@@ -108,11 +108,10 @@ rm -rf %{buildroot}%{_bindir}*
 # Remove installed documentation, we'll install it later with the doc macro
 rm -rf %{buildroot}%{_datadir}/doc/flann
 
-
-
 %files
 %doc doc/manual.pdf
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{version}
+%{_libdir}/*.so.%{soversion}
 
 %files devel
 %{_libdir}/*.so
@@ -127,6 +126,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Tue Jul 06 2021 Igor Vlasenko <viy@altlinux.org> 1.9.1-alt1_4
+- new version (closes: #40407)
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2_24
 - update to new release by fcimport
 
