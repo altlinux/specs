@@ -2,7 +2,7 @@
 
 
 Name: plasma5-desktop
-Version: 5.22.2
+Version: 5.22.3
 Release: alt1
 %K5init altplace no_appdata
 
@@ -236,6 +236,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt1
+- new version
+
 * Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
 - new version
 

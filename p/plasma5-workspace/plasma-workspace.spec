@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.22.2
-Release: alt2
+Version: 5.22.3
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -495,6 +495,9 @@ done
 
 
 %changelog
+* Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.3-alt1
+- new version
+
 * Wed Jul 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.22.2-alt2
 - Updated and reapplied PAM support patch
 

@@ -4,7 +4,7 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: plasma5-%rname
-Version: 5.22.2
+Version: 5.22.3
 Release: alt1
 %K5init altplace no_appdata
 
@@ -115,6 +115,9 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5lib/libsystemsettingsview.so.*
 
 %changelog
+* Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt1
+- new version
+
 * Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
 - new version
 

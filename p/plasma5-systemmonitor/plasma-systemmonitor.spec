@@ -1,7 +1,7 @@
 %define rname plasma-systemmonitor
 
 Name: plasma5-systemmonitor
-Version: 5.22.2
+Version: 5.22.3
 Release: alt1
 %K5init altplace
 
@@ -10,7 +10,7 @@ Summary: KDE Plasma 5 system resources monitor
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: lm_sensors plasma5-libksysguard
+Requires: lm_sensors plasma5-libksysguard plasma5-ksystemstats
 Provides: plasma5-plasma-systemmonitor = %EVR
 Obsoletes: plasma5-plasma-systemmonitor = %EVR
 Provides: plasma5-plasma-systemmonitor-common = %EVR
@@ -92,5 +92,8 @@ Requires: %name-common
 #%_K5lib/libplasma-systemmonitor.so.*
 
 %changelog
+* Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt1
+- new version
+
 * Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.2-alt1
 - initial build
