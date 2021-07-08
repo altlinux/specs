@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.4.13
-Release: alt1
+Release: alt2
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -34,7 +34,7 @@ BuildRequires: qt5-svg-devel
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: gsettings-qt-devel
 BuildRequires: lightdm-devel
-BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
 # deepin-gettext-tools dtk5-widget-devel deepin-qt-dbus-factory-devel gsettings-qt-devel libgtk+2-devel lightdm-devel libsystemd-devel qt5-base-devel qt5-svg-devel qt5-x11extras-devel qt5-multimedia-devel libxcbutil-icccm-devel libXcursor-devel libXtst-devel libpam0-devel qt5-linguist
 
 %description
@@ -74,13 +74,9 @@ export AR="llvm-ar"
 %endif
 %cmake \
     -GNinja \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 %if_enabled clang
     -DLLVM_PARALLEL_LINK_JOBS=1 \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=%llvm_prefix \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-    -DBUILD_SHARED_LIBS:BOOL=OFF \
     -DLLVM_TARGETS_TO_BUILD="all" \
     -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
     -DLLVM_ENABLE_LIBCXX:BOOL=OFF \
@@ -106,6 +102,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/glib-2.0/schemas/com.deepin.dde.session-shell.gschema.xml
 
 %changelog
+* Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt2
+- Fixed build with libgmock.so.1.11.0.
+
 * Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
 - New version (5.4.13).
 
