@@ -1,16 +1,15 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.41
-%define kernel_rt_release	rt42
+%define kernel_sublevel		.47
+%define kernel_rt_release	rt45
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
-# Numeric extra version scheme developed by Alexander Bokovoy:
-# 0.0.X -- preX
-# 0.X.0 -- rcX
-# 1.0.0 -- release
-%define kernel_extra_version_numeric 1.0.0
 
 %define krelease	%release
 
@@ -21,13 +20,6 @@ Release: alt1.%kernel_rt_release
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
-
-# Enable/disable SGML docs formatting
-%if "%sub_flavour" == "def" && %kgcc_version > 5
-%def_enable docs
-%else
-%def_disable docs
-%endif
 
 #Remove oss
 %def_disable oss
@@ -46,7 +38,7 @@ Summary: The Linux kernel with PREEMPT_RT patches (Real-Time Linux)
 License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: https://wiki.linuxfoundation.org/realtime/
-# git://git.kernel.org/pub/scm/linux/kernel/git/rt/linux-stable-rt.git
+Vcs: git://git.kernel.org/pub/scm/linux/kernel/git/rt/linux-stable-rt.git
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
@@ -79,42 +71,24 @@ BuildRequires: dev86
 %endif
 BuildRequires: flex
 BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
-BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
-BuildRequires: module-init-tools >= 3.16
+BuildRequires: gcc%kgcc_version
+BuildRequires: gcc%kgcc_version-c++
+BuildRequires: gcc%kgcc_version-plugin-devel
+BuildRequires: libgmp-devel
+BuildRequires: libmpc-devel
+BuildRequires: kernel-source-%kernel_base_version = 1.0.0
+BuildRequires: kmod
 BuildRequires: lzma-utils
 BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel
 BuildRequires: rsync
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15 ltp iproute2}}
-Provides: kernel-modules-eeepc-%flavour = %version-%release
-Provides: kernel-modules-drbd83-%flavour = %version-%release
-Provides: kernel-modules-igb-%flavour = %version-%release
-Provides:  kernel-modules-alsa = %version-%release
-%ifarch aarch64
-Provides: kernel-modules-kvm-%flavour = %version-%release
-Provides: kernel-modules-kvm-%kversion-%flavour-%krelease = %version-%release
-%endif
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15 ltp >= 20210524-alt2 iproute2}}
 
-%if_enabled docs
-BuildRequires: python-module-sphinx perl-Pod-Usage
-%endif
-
-%if_enabled ccache
-BuildRequires: ccache
-%endif
-
-%ifdef use_ccache
-BuildRequires: ccache
-%endif
-
-Requires: bootloader-utils >= 0.4.24-alt1
-Requires: module-init-tools >= 3.1
-Requires: mkinitrd >= 1:2.9.9-alt1
-Requires: startup >= 0.8.3-alt1
+Requires: bootloader-utils
+Requires: kmod
+Requires: mkinitrd
 Requires: coreutils
 
 Provides: kernel = %kversion
@@ -128,7 +102,7 @@ with PREEMPT_RT patches (%kernel_extra_version) with some OSADL patches.
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
-Requires: kernel-headers-common >= 1.1.5
+Requires: kernel-headers-common
 Provides: kernel-headers = %version
 AutoReqProv: nocpp
 #Provides: kernel-headers-%base_flavour = %version-%release
@@ -263,11 +237,6 @@ grep CPU_IDLERUNTIME .config
 
 echo "Kernel built $KernelVer"
 
-%if_enabled docs
-# psdocs, pdfdocs don't work yet
-%make_build htmldocs
-%endif
-
 %install
 export ARCH=%base_arch
 KernelVer=%kversion-%flavour-%krelease
@@ -401,12 +370,6 @@ rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,devname,softdep,symbols}
 
-# install documentation
-%if_enabled docs
-install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
-cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
-%endif # if_enabled docs
-
 # On some architectures (at least ppc64le) kernel image is ELF and
 # eu-findtextrel will fail if it is not a DSO or PIE.
 %add_verify_elf_skiplist /boot/vmlinuz-*
@@ -417,10 +380,9 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %check
 vm-run --depmod cat /sys/kernel/realtime
 
-export TMP=/tmp
-if ! timeout 600 vm-run --kvm=cond \
+if ! timeout 999 vm-run --kvm=cond \
 	"/sbin/sysctl kernel.printk=8;
-	 runltp -S $PWD/skiplist -f syscalls -o out"; then
+	 runltp -f kernel-alt-vm -S skiplist-alt-vm -o out"; then
 	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed
 	exit 1
 fi
@@ -457,12 +419,12 @@ fi
 %dir %modules_dir
 %modules_dir/build
 
-%if_enabled docs
-%files -n kernel-doc-%base_flavour
-%doc %_docdir/kernel-doc-%base_flavour-%version
-%endif
-
 %changelog
+* Wed Jul 07 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.47-alt1.rt45
+- Update to v5.10.47-rt45 (02 Jul 2021).
+- Remove startup from Requires.
+- spec: Change way LTP is run.
+
 * Thu Jun 10 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.41-alt1.rt42
 - Update to v5.10.41-rt42 (04 Jun 2021)
 - spec: Run LTP tests in %%check.
