@@ -4,10 +4,11 @@
 %def_without directfb
 # see https://github.com/FreeRDP/FreeRDP/issues/4348
 %def_without gss
+%def_without mbedtls
 
 Name: freerdp
 Version: 2.3.2
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -52,7 +53,9 @@ BuildRequires: libcups-devel libjpeg-devel zlib-devel
 %{?_with_x264:BuildRequires: libx264-devel}
 BuildRequires: libkrb5-devel
 BuildRequires: wayland-devel
+%if_with mbedtls
 BuildRequires: libmbedtls-devel
+%endif
 BuildRequires: libgsm-devel
 BuildRequires: liblame-devel
 BuildRequires: libfaad-devel
@@ -227,7 +230,7 @@ the RDP protocol.
     -DWITH_LAME=ON \
     -DWITH_LIBRARY_VERSIONING=ON \
     -DWITH_MANPAGES=ON \
-    -DWITH_MBEDTLS=ON \
+    %{?_with_mbetls:-DWITH_MBEDTLS=ON} \
     -DWITH_OPENH264=OFF \
     -DWITH_OPENSSL=ON \
     -DWITH_PCSC=ON \
@@ -339,6 +342,9 @@ patchelf --set-rpath %_libdir/freerdp2 %buildroot%_bindir/freerdp-proxy
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Jul 08 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt2
+- FTBFS: disable build with mbedtls-3.0.0 (https://github.com/FreeRDP/FreeRDP/issues/7163).
+
 * Tue Mar 16 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt1
 - New version.
 
