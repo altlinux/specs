@@ -1,7 +1,7 @@
 Name:		xmrig
-Version:	6.12.1
+Version:	6.13.1
 Release:	alt1
-Summary:	RandomX and CryptoNight CPU miner
+Summary:	RandomX, CryptoNight, AstroBWT and Argon2 miner
 Url:		https://github.com/xmrig/xmrig
 Group:		Office
 License:	GPLv3
@@ -16,8 +16,10 @@ BuildRequires:	cmake gcc-c++ libmicrohttpd-devel libssl-devel-static libstdc++-d
 ExcludeArch:	ppc64le aarch64 armh
 
 %description
-XMRig is high performance RandomX and CryptoNight CPU miner, with the official full
-Windows support. Originally based on cpuminer-multi with heavy optimizations/rewrites
+XMRig is a high performance, open source, cross platform RandomX, KawPow, CryptoNight
+and AstroBWT unified miner and RandomX benchmark: https://xmrig.com/benchmark
+
+Originally based on cpuminer-multi with heavy optimizations/rewrites
 and removing a lot of legacy code, since version 1.0.0 complete rewritten from scratch
 on C++.
 
@@ -50,6 +52,9 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Jul 08 2021 Motsyo Gennadi <drool@altlinux.ru> 6.13.1-alt1
+- 6.13.1
+
 * Sat May 08 2021 Motsyo Gennadi <drool@altlinux.ru> 6.12.1-alt1
 - 6.12.1
 
