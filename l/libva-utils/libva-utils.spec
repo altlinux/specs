@@ -1,5 +1,5 @@
 Name: libva-utils
-Version: 2.11.1
+Version: 2.12.0
 Release: alt1
 Summary: Tools for VAAPI (including vainfo)
 License: MIT and BSD
@@ -61,6 +61,7 @@ autoreconf -fisv
 %_bindir/putsurface_wayland
 %_bindir/sfcsample
 %_bindir/vacopy
+%_bindir/vpp3dlut
 %_bindir/vppscaling_n_out_usrptr
 %_bindir/vppblending
 %_bindir/vppchromasitting
@@ -70,6 +71,9 @@ autoreconf -fisv
 
 
 %changelog
+* Wed Jul 07 2021 Anton Farygin <rider@altlinux.ru> 2.12.0-alt1
+- 2.12.0
+
 * Tue Apr 13 2021 Anton Farygin <rider@altlinux.org> 2.11.1-alt1
 - 2.11.1
 
