@@ -2,7 +2,7 @@
 
 Name: deepin-calendar
 Version: 5.8.2
-Release: alt1
+Release: alt2
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -21,7 +21,7 @@ BuildRequires: dtk5-common
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
 BuildRequires: qt5-tools-devel
 Requires: icon-theme-hicolor
 
@@ -37,17 +37,17 @@ sed -i 's|lib/deepin-daemon/|libexec/deepin-daemon/|' \
     calendar-service/assets/data/com.deepin.dataserver.Calendar.service
 
 %build
-%cmake_insource \
+%cmake \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%ninja_build
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 %find_lang %repo
 
 %check
@@ -73,6 +73,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/calendar/
 
 %changelog
+* Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.2-alt2
+- Fixed build with libgmock.so.1.11.0.
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.2-alt1
 - New version (5.8.2) with rpmgs script.
 
