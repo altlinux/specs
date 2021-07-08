@@ -1,22 +1,23 @@
 %define php_sapi cli
+%def_with check
 
 %ifarch %mips
 %add_optflags -DSLJIT_IS_FPU_AVAILABLE=0
 %endif
 %define php_name      %name
 %define _php_version  %version
-%define _php_major  7
-%define _php_minor  4
-%define _php_suffix %_php_major
+%define _php_major  8
+%define _php_minor  0
+%define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
 %add_findreq_skiplist %_usrsrc/php%_php_suffix-devel/*
 %define php_macros_file 01-php%_php_major-%_php_minor-version
 
-Summary: The PHP7 scripting language
+Summary: The PHP scripting language
 Name:	 php%_php_suffix
-Version: 7.4.20
-Release: alt2
+Version: 8.0.7
+Release: alt1
 
 
 License: PHP-3.01
@@ -24,19 +25,20 @@ Group:	 Development/Other
 Url: http://www.php.net/
 #Git: http://git.php.net/repository/php-src.git
 
-Source0: php%_php_major-source.tar
+Source0: php-source.tar
 Source1: phpver.rpm.macros.standalone
 Source2: php-packaging.readme
 Source3: php.ini
 Source4: phpinfo.tar
 
+Patch0: php8-enable-compile-with-PIC.patch
 Patch1: php-version.patch
 Patch2: php-shared-1.patch
 Patch3: php-cli-build.patch
 Patch5: php-5.3.3-sapi-scandir.patch
 Patch6: php-devel-scripts-alternatives.patch
 Patch8: php7-source-7.4-cxx.patch
-Patch9: php-7.4-no-static-program.patch
+Patch9: php-8.0-no-static-program.patch
 Patch10: php-set-session-save-path.patch
 Patch11: php7-7.1.10-alt-lsattr.patch
 Patch12: php-7.4-save-ldlibs.patch
@@ -44,18 +46,17 @@ Patch13: php5-5.5.9-phar-phppath.patch
 Patch14: php-mysqlnd-socket.patch
 Patch15: php-7.2.14-alt-zend-signal-visibility.patch
 Patch16: php-7.2-alt-phar-manfile-suffix.patch
-Patch17: php7-7.4-phpize-php-config-name.patch
-Patch18: php7-7.3-alt-tests-fix.patch
+Patch17: php8-8.0-phpize-php-config-name.patch
+Patch18: php8-8.0-alt-tests-fix.patch
 Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 
-Patch50: php-upstream-libxml-2.9.12-tests-fixes.patch
-Patch51: php7-7.4-libxml-2.9.12-tests-addon-fixes.patch
+Patch30: php8-fix-tests-libxml-2.9.12.patch
 
-Patch70: php7-debian-Add-support-for-use-of-the-system-timezone-database.patch
-Patch71: php7-debian-Use-system-timezone.patch
+Patch70: php8.0-debian-Add-support-for-use-of-the-system-timezone-database.patch
+Patch71: php8.0-debian-Use-system-timezone.patch
 
-Requires(pre):  php%_php_major-libs = %EVR
+Requires(pre):  php%_php_suffix-libs = %EVR
 Provides: php-engine = %EVR
 Provides: php = %EVR
 
@@ -67,7 +68,7 @@ BuildRequires: /proc
 BuildRequires(pre): rpm-build-php rpm-macros-alternatives
 
 %description
-PHP7 is a widely-used general-purpose scripting language that is
+PHP is a widely-used general-purpose scripting language that is
 especially suited for Web development and can be embedded into HTML.
 The most common use of PHP coding is probably as a replacement
 for CGI scripts.
@@ -82,7 +83,7 @@ BuildArch:	noarch
 
 %description -n rpm-build-php%_php_suffix-version
 These helper macros provide possibility to rebuild
-PHP7 packages by some Alt Linux Team Policy compatible way.
+PHP packages by some Alt Linux Team Policy compatible way.
 
 %package mysqlnd
 Group: System/Servers
@@ -98,67 +99,65 @@ Summary: Development package for PHP7
 # php-cli is needed for tests (package php%_php_suffix)
 Requires: php%_php_suffix = %EVR 
 Requires: php%_php_suffix-libs = %EVR
+Requires: rpm-build-php >= 8.0
 Requires: rpm-build-php%_php_suffix-version = %EVR
-Provides: php-devel = %EVR
 # for phpize
 Requires: libtool, autoconf, automake
 
-Provides: php-devel
-Provides: php-engine-devel = %version-%release
+Provides: php-devel = %EVR
+Provides: php-engine-devel = %EVR
 
 %description devel
-The php7-devel package lets you compile dynamic extensions to PHP7.
+The php-devel package lets you compile dynamic extensions to PHP.
 Instead of recompiling the whole php binary, install this package
 and use the new self-contained extensions support. For more information,
 read the file SELF-CONTAINED-EXTENSIONS.
 
 %package libs
 Group: Development/C
-Summary: Package with common data for various PHP7 packages
+Summary: Package with common data for various PHP packages
 Requires: php-base >= 2.5
 
-Provides: php%_php_major-bcmath = %php_version-%php_release
-Provides: php%_php_major-ctype = %php_version-%php_release
-Provides: php%_php_major-date = %php_version-%php_release
-Provides: php%_php_major-filter = %php_version-%php_release
-Provides: php%_php_major-ftp = %php_version-%php_release
-Provides: php%_php_major-gettext = %php_version-%php_release
-Provides: php%_php_major-hash = %php_version-%php_release
-Provides: php%_php_major-iconv = %php_version-%php_release
-Provides: php%_php_major-json = %php_version-%php_release
-Provides: php%_php_major-libxml = %php_version-%php_release
-Provides: php%_php_major-mhash = %php_version-%php_release
-Provides: php%_php_major-pcre = %php_version-%php_release
-Provides: php%_php_major-posix = %php_version-%php_release
-Provides: php%_php_major-reflection = %php_version-%php_release
-Provides: php%_php_major-session = %php_version-%php_release
-Provides: php%_php_major-shmop = %php_version-%php_release
-Provides: php%_php_major-simplexml = %php_version-%php_release
-Provides: php%_php_major-spl = %php_version-%php_release
-Provides: php%_php_major-standard = %php_version-%php_release
-Provides: php%_php_major-sysvmsg = %php_version-%php_release
-Provides: php%_php_major-sysvsem = %php_version-%php_release
-Provides: php%_php_major-sysvshm = %php_version-%php_release
-Provides: php%_php_major-tokenizer = %php_version-%php_release
-Provides: php%_php_major-wddx = %php_version-%php_release
-Provides: php%_php_major-xml = %php_version-%php_release
-Provides: php%_php_major-dom = %php_version-%php_release
-Provides: php%_php_major-xmlwriter = %php_version-%php_release
-Provides: php%_php_major-zlib = %php_version-%php_release
-Provides: php%_php_major-libs = %php_version-%release
-
-Obsoletes: php%_php_major-simplexml php%_php_major-mhash
-Obsoletes: php%_php_major-dom < %EVR
+Provides: php%_php_suffix-bcmath = %php_version-%php_release
+Provides: php%_php_suffix-ctype = %php_version-%php_release
+Provides: php%_php_suffix-date = %php_version-%php_release
+Provides: php%_php_suffix-filter = %php_version-%php_release
+Provides: php%_php_suffix-ftp = %php_version-%php_release
+Provides: php%_php_suffix-gettext = %php_version-%php_release
+Provides: php%_php_suffix-hash = %php_version-%php_release
+Provides: php%_php_suffix-iconv = %php_version-%php_release
+Provides: php%_php_suffix-json = %php_version-%php_release
+Provides: php%_php_suffix-libxml = %php_version-%php_release
+Provides: php%_php_suffix-mhash = %php_version-%php_release
+Provides: php%_php_suffix-pcre = %php_version-%php_release
+Provides: php%_php_suffix-posix = %php_version-%php_release
+Provides: php%_php_suffix-reflection = %php_version-%php_release
+Provides: php%_php_suffix-session = %php_version-%php_release
+Provides: php%_php_suffix-shmop = %php_version-%php_release
+Provides: php%_php_suffix-simplexml = %php_version-%php_release
+Provides: php%_php_suffix-spl = %php_version-%php_release
+Provides: php%_php_suffix-standard = %php_version-%php_release
+Provides: php%_php_suffix-sysvmsg = %php_version-%php_release
+Provides: php%_php_suffix-sysvsem = %php_version-%php_release
+Provides: php%_php_suffix-sysvshm = %php_version-%php_release
+Provides: php%_php_suffix-tokenizer = %php_version-%php_release
+Provides: php%_php_suffix-wddx = %php_version-%php_release
+Provides: php%_php_suffix-xml = %php_version-%php_release
+Provides: php%_php_suffix-dom = %php_version-%php_release
+Provides: php%_php_suffix-xmlwriter = %php_version-%php_release
+Provides: php%_php_suffix-zlib = %php_version-%php_release
+Provides: php%_php_suffix-libs = %php_version-%release
 
 %description libs
-The php7-libs package contains parts of PHP7 distribution which are
-in use by other PHP7-related packages.
+The php-libs package contains parts of PHP distribution which are
+in use by other PHP-related packages.
 
 %prep
-%setup -q -n php%_php_major-source
-%setup -q -n php%_php_major-source -T -D -a4
+%setup -q -n php-source
+%setup -q -n php-source -T -D -a4
+%patch0 -p1
 %patch1 -p2
-%patch2 -p2
+%patch2 -p1
 %patch3 -p2
 %patch5 -p1 -b .scandir
 %patch6 -p2 -b .alternatives
@@ -176,8 +175,7 @@ in use by other PHP7-related packages.
 %patch19 -p1
 %patch20 -p1
 
-%patch50 -p1
-%patch51 -p1
+%patch30 -p1
 
 %patch70 -p1
 %patch71 -p1
@@ -238,9 +236,9 @@ touch configure.ac
 	--enable-wddx \
 	--disable-fileinfo \
 	--disable-xmlreader \
-	--enable-shared=yes \
-	--enable-static=no \
-	\
+	--enable-shared \
+	--disable-static \
+	--disable-embed \
 	--with-layout=GNU \
 	--with-exec-dir=%_bindir \
 	--with-zlib=%_usr \
@@ -309,7 +307,7 @@ cat << EOF > %buildroot/%_altdir/php%_php_suffix-devel
 EOF
 
 # Make backup some files to make devel package.
-%make clean
+make clean
 
 mkdir -p %buildroot%_usrsrc/php%_php_suffix-devel/{ext,sapi,main,conf}
 cp -dpR php.ini* %buildroot%_usrsrc/php%_php_suffix-devel/conf
@@ -339,7 +337,9 @@ echo "extension=mysqlnd.so" >%buildroot/%php_extconf/mysqlnd/config
 
 # rpm macros 
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
-install -m0644 %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
+cp %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
+
+
 
 subst 's,@php_name@,%php_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@_php_version@,%_php_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
@@ -369,8 +369,12 @@ export SKIP_IO_CAPTURE_TESTS=1
 rm -f tests/basic/bug54514.phpt
 # the test fails due to an error in glibc-2.27 packaged for ALT: https://bugzilla.altlinux.org/show_bug.cgi?id=37368
 rm -f ext/standard/tests/strings/setlocale_variation2.phpt
+# the test always fails when run in the hasher environment
+rm -f ext/standard/tests/file/bug69442.phpt
+rm -f ext/posix/tests/posix_ttyname_error_wrongparams.phpt
+rm -f ext/standard/tests/general_functions/sys_getloadavg.phpt
 
-if ! make test; then
+if ! make -j${NPROCS:-16} test; then
   set +x
   for f in $(find .. -name \*.diff -type f -print); do
     if ! grep -q XFAIL "${f/.diff/.phpt}"
@@ -450,12 +454,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
-* Thu Jul 01 2021 Anton Farygin <rider@altlinux.ru> 7.4.20-alt2
+* Fri Jun 25 2021 Anton Farygin <rider@altlinux.ru> 8.0.7-alt1
+- 8.0.7
+
+* Thu Jun 24 2021 Anton Farygin <rider@altlinux.ru> 7.4.20-alt2
 - switched to universal (independent of php version)  macros
   from the rpm-build-php 8.0
-- added upstream patch for compatability with libxml 2.9.12 in tests
-- PreReq was changed to Requires(pre)
-- removed explicit duplicated Provides
 
 * Thu Jun 10 2021 Anton Farygin <rider@altlinux.ru> 7.4.20-alt1
 - 7.4.20
