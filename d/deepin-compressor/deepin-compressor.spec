@@ -4,7 +4,7 @@
 
 Name: deepin-compressor
 Version: 5.10.5
-Release: alt1
+Release: alt2
 Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
 Group: Archiving/Compression
@@ -40,7 +40,7 @@ BuildRequires: qt5-tools-devel
 BuildRequires: deepin-gettext-tools
 BuildRequires: qt5-svg-devel
 BuildRequires: gsettings-qt-devel
-BuildRequires: libgtest-devel
+BuildRequires: libgmock-devel
 # Requires: icon-theme-hicolor
 # Requires: p7zip
 
@@ -77,7 +77,7 @@ export READELF="llvm-readelf"
 export PATH=%_qt5_bindir:$PATH
 %K5cmake \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
@@ -111,6 +111,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.5-alt2
+- Fixed build with libgmock.so.1.11.0.
+
 * Wed Jun 16 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.5-alt1
 - New version (5.10.5) with rpmgs script.
 - NMU: spec: adapted to new cmake macros.
