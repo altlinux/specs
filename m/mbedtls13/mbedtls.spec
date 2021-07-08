@@ -4,9 +4,9 @@
 %define so_x509_version 1
 %def_disable static
 
-Name: %pkgname-legacy
+Name: %pkgname%so_tls_version
 Version: 2.26.0
-Release: alt2
+Release: alt3
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -95,6 +95,9 @@ and read Certificate Revocation Lists.
 %_libdir/libmbedx509.so.*
 
 %changelog
+* Thu Jul 08 2021 Nazarov Denis <nenderus@altlinux.org> 2.26.0-alt3
+- Rename package name
+
 * Wed Jul 07 2021 Nazarov Denis <nenderus@altlinux.org> 2.26.0-alt2
 - Buid as legacy library
 
