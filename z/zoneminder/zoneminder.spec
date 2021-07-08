@@ -4,7 +4,7 @@
 %define zmgroup _webserver
 
 Name: zoneminder
-Version: 1.36.4
+Version: 1.36.5
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -163,6 +163,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Thu Jul 08 2021 Anton Farygin <rider@altlinux.ru> 1.36.5-alt1
+- 1.36.5
+
 * Tue Jun 22 2021 Anton Farygin <rider@altlinux.ru> 1.36.4-alt1
 - 1.36.4
 
