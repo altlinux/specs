@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 21.04.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -84,7 +84,7 @@ Requires: plasma5-xdg-desktop-portal-kde
 Requires: plasma5-workspace-wallpapers
 Requires: plasma5-kwrited
 Requires: plasma5-user-manager kde5-ksystemlog
-Requires: kde5-konversation kde5-kate kde5-krdc
+Requires: kde5-kate kde5-krdc
 Requires: kde5-pim kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kde5-connect
 Requires: kde5-krfb
@@ -113,7 +113,7 @@ Requires: kde5-dragon
 Requires: kde5-kmousetool kde5-kmag
 Requires: kde5-juk kde5-kmouth
 Requires: kdenlive
-Requires: kde5-k3b kde5-kwave
+Requires: kde5-k3b kde5-kwave kde5-konversation
 Requires: kde5-digikam kde5-kipi-plugins
 %description -n kde5-maxi
 %summary
@@ -202,6 +202,9 @@ Requires: kde5-kaddressbook kde5-pim-addons
 %files -n kde5-pim
 
 %changelog
+* Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.0-alt2
+- move kde5-konversation to maxi subpackage
+
 * Tue Jul 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.0-alt1
 - fix requires
 
