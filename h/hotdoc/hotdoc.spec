@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: hotdoc
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Hotdoc is a documentation framework
 License: LGPL-2.1-or-later
@@ -83,6 +83,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.4-alt1
+- 0.13.4
+
 * Tue Jun 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.3-alt2
 - updated c-extension dependencies
 
