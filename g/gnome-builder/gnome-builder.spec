@@ -20,7 +20,7 @@
 
 Name: gnome-builder
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -59,7 +59,9 @@ Source: %name-%version.tar
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
 Requires(pre): %name-data = %EVR
+# src/libide/gui/ide-application-plugins.c
 Requires: typelib(WebKit2) = 4.0
+Requires: typelib(Jsonrpc) = 1.0
 
 %{?_with_autotools:Requires: automake autoconf libtool}
 #%{?_with_flatpak:Requires: flatpak-builder}
@@ -242,6 +244,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %endif
 
 %changelog
+* Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.2-alt1.1
+- required "typelib(Jsonrpc) = 1.0" (ALT #40399)
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.2-alt1
 - updated to 3.40.2-5-gb7eb24645
 
