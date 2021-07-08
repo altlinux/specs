@@ -1,19 +1,21 @@
-Summary: DSR - A program for modelling of disordered solvents with SHELXL
 Name: DSR
 Version: 233
-Release: alt1
-BuildArch: noarch
-URL: https://www.xs3.uni-freiburg.de/research/dsr
+Release: alt2
+
+Summary: DSR - A program for modelling of disordered solvents with SHELXL
 License: Beerware
 Group: Sciences/Chemistry
+URL: https://www.xs3.uni-freiburg.de/research/dsr
+
+BuildArch: noarch
+
 Source: %name-%version.tar.gz
 Source1: changelog.txt
 
-BuildRequires: rpm-build-python
+%add_python3_compile_include %_datadir/%name
 
-%add_python_compile_include %_datadir/%name
-
-PreReq: xclip 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: xclip
 
 %description
 This program consists of a text database with fragments of molecules and
@@ -28,11 +30,14 @@ Development is on GitHub: https://github.com/dkratzert/dsr
 %setup -q
 cp -a %SOURCE1 .
 
+sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
+sed -i 's|time.clock|time.process_time|' dsr.py
+
 %build
 cat > %name.sh << EOF
 #!/bin/sh
 export DSR_DIR=%_datadir/DSR
-PYTHON_EXE=%__python
+PYTHON_EXE=%__python3
 if [ \$# -eq 0 ]; then
     \$PYTHON_EXE \$DSR_DIR/dsr.py --help
 else
@@ -45,7 +50,6 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/%name/manuals
 mkdir -p %buildroot%_datadir/%name/example
-mkdir -p %buildroot%_datadir/%name/networkx
 mkdir -p %buildroot%_datadir/%name/fit
 
 install -m 755 %name.sh %buildroot%_bindir/dsr
@@ -53,7 +57,6 @@ install -m 644 *.py %buildroot%_datadir/%name
 install -m 644 dsr_db.txt %buildroot%_datadir/%name
 install -m 644 manuals/DSR-manual.pdf %buildroot%_datadir/%name/manuals
 install -m 644 example/* %buildroot%_datadir/%name/example
-cp -R networkx %buildroot%_datadir/%name
 cp -R fit %buildroot%_datadir/%name
 
 %files
@@ -62,6 +65,9 @@ cp -R fit %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Wed Jul 07 2021 Denis G. Samsonenko <ogion@altlinux.org> 233-alt2
+- build with python3 (fix #39171)
+
 * Fri Apr 30 2021 Denis G. Samsonenko <ogion@altlinux.org> 233-alt1
 - new version
 
