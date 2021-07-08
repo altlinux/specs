@@ -1,6 +1,6 @@
 Name: googletest
 Version: 1.11.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -40,6 +40,7 @@ running the tests, and XML test report generation.
 %package -n libgtest-devel
 Summary: Development environment for gtest
 Group: Development/C++
+Requires: libgmock-devel = %EVR
 
 %description -n libgtest-devel
 Development environment for gtest
@@ -107,6 +108,9 @@ Development environment for gmock
 %_includedir/gmock
 
 %changelog
+* Thu Jul 08 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt1.2
+- Add requires on libgmock-devel for libgtest-devel (ALT #40408)
+
 * Wed Jun 23 2021 Michael Shigorin <mike@altlinux.org> 1.11.0-alt1.1
 - E2K: ftbfs workaround
 
