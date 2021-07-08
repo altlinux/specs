@@ -2,7 +2,7 @@ Summary: Visual brick construction tool for kids
 Summary (ru_RU.UTF-8): Детский конструктор, использующий блоки с шипами
 Name: leocad
 Version: 21.06
-Release: alt1
+Release: alt2
 
 License: GPL-2.0
 Url: http://www.leocad.org
@@ -43,6 +43,13 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 %build
 #make PREFIX=/usr
 %qmake_qt5 QMAKE_LRELEASE=lrelease-qt5
+%ifarch %e2k
+# fixes the include of a non-existent file for the Elbrus compiler
+# from the gcc arguments: "-include build/release/.obj/leocad"
+# also fixes missing declarations from "lc_global.h" for the other headers
+# how does this work with GCC?
+echo '#include "lc_global.h"' > build/release/.obj/leocad
+%endif
 %make_build
 
 %install
@@ -58,6 +65,9 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 %_xdgmimedir/packages/*
 
 %changelog
+* Thu Jul 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 21.06-alt2
+- fixed Elbrus build
+
 * Mon Jun 28 2021 Anton Midyukov <antohami@altlinux.org> 21.06-alt1
 - new version (21.06) with rpmgs script
 - build with qt5
