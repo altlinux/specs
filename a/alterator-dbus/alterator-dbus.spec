@@ -2,7 +2,7 @@
 
 Name: alterator-dbus
 Version: 0.0.2
-Release: alt2
+Release: alt3
 
 Summary: D-Bus woo-bus gate
 License: GPL-2
@@ -34,6 +34,9 @@ D-Bus woo-bus gate.
 %_datadir/polkit-1/rules.d/%dname.rules
 
 %changelog
+* Thu Jul 08 2021 Valery Sinelnikov <greh@altlinux.org> 0.0.2-alt3
+- Fixed losing arguments when querying woobus
+
 * Mon Jul 05 2021 Valery Sinelnikov <greh@altlinux.org> 0.0.2-alt2
 - Fix for p9
 
