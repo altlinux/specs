@@ -4,10 +4,11 @@
 %set_verify_elf_method textrel=relaxed 
 Name: deadbeef
 Version: 1.8.4
-Release: alt2
+Release: alt3
 Summary: DeaDBeeF is an audio player
 Url: https://github.com/Alexey-Yakovenko/deadbeef
 Source: %name-%version.tar
+Patch2000: %name-e2k.patch
 Group: Sound
 License: zlib, GPLv2, LGPLv2.1
 
@@ -532,6 +533,9 @@ ReplayGain-Scanner plugin for DeaDBeeF
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 sed -i '/m4/ d' Makefile.am
 
@@ -721,6 +725,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Thu Jul 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.4-alt3
+- added patch for Elbrus
+
 * Fri Mar 26 2021 Anton Midyukov <antohami@altlinux.org> 1.8.4-alt2
 - add missing help.ru.txt (Closes: 39842)
 
