@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.4.3
-Release: alt3
+Version: 1.4.4
+Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -142,9 +142,6 @@ Requires: puppet
 Requires: x11spice
 %endif
 Requires: openssh-server
-Requires: python-module-yaml
-Requires: python-module-jinja2
-Requires: python-modules-json
 # LibreOffice
 %ifnarch %e2k
 %define lo_name LibreOffice-still
@@ -343,7 +340,6 @@ Requires: kde5-khelpcenter
 %ifarch %ix86 x86_64 aarch64 ppc64le
 Requires: freecad
 %endif
-Requires: python-module-pip
 Requires: python3-module-pip
 %description highschool
 %{summary}.
@@ -379,7 +375,6 @@ Requires: python3-tools
 Requires: python3-module-pygame
 Requires: python3-module-pygame-doc
 Requires: python3-modules-curses
-Requires: python-module-pip
 Requires: python3-module-pip
 %description secondary-vocational
 %{summary}.
@@ -424,7 +419,6 @@ Requires: python3-tools
 Requires: python3-module-pygame
 Requires: python3-module-pygame-doc
 Requires: python3-modules-curses
-Requires: python-module-pip
 Requires: python3-module-pip
 %description university
 %{summary}.
@@ -599,6 +593,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Jul 07 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
+- Remove python2 modules.
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.3-alt3
 - Replaced openfire with ejabberd.
 
