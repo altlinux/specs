@@ -1,6 +1,6 @@
 Name: libowt-tg
 Version: 4.3.0.5
-Release: alt2
+Release: alt3
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -77,9 +77,10 @@ rm -rfv src/third_party/{libvpx,openh264,pipewire,usrsctp} src/base/third_party/
 rm -fv cmake/{libvpx,libopenh264,libusrsctp,libevent,libyuv}.cmake
 rm -rfv src/base/android/
 
-# FIXME: fix direct include paths
-mkdir -p src/third_party/libyuv
-ln -s %_includedir src/third_party/libyuv
+# FIXME: fix direct include paths (used in telegram build too)
+mkdir -p src/third_party/libyuv/include
+cp %_includedir/libyuv.h src/third_party/libyuv/include/libyuv.h
+cp -a %_includedir/libyuv/ src/third_party/libyuv/include
 
 
 %build
@@ -114,6 +115,9 @@ rm -rfv %buildroot%_includedir/tg_owt/modules/audio_device/android
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Thu Jul 08 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.5-alt3
+- don't pack symlink
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.5-alt2
 - build with external libyuv, libvpx, libusrsctp, libopenh264
 
