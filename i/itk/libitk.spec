@@ -11,7 +11,7 @@
 
 Name: itk
 Version: %itkver.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -81,7 +81,7 @@ BuildRequires: libvxl-devel libvtk-devel zlib-devel
 BuildRequires: libblas-devel liblapack-devel libnetcdf-devel jsoncpp-devel
 BuildRequires: libexpat-devel dcmtk
 
-BuildRequires: libfftw3-devel libgtest-devel eigen3-devel
+BuildRequires: libfftw3-devel libgtest-devel libgmock-devel eigen3-devel
 BuildRequires: libminc-devel
 BuildRequires: libniftilib-devel
 BuildRequires: libXext-devel
@@ -121,6 +121,8 @@ Requires: lib%name%itkver = %EVR
 Requires: lib%name%itkver-glue = %EVR
 Requires: %name-testdriver = %EVR
 # Following dependencies are duplicates from build dependencies
+Requires: libgtest-devel
+Requires: libgmock-devel
 Requires: eigen3-devel
 Requires: gdcm-devel
 Requires: libfftw3-devel
@@ -387,6 +389,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ %_cmake__builddir/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.*
 
 %changelog
+* Wed Jul 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt3
+- Updated dependencies.
+
 * Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt2
 - Added compatibility to p9.
 
