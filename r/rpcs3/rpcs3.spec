@@ -11,11 +11,10 @@
 %define faudio_version 21.04
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
-%define wolfssl_commit 39b5448601271b8d1deabde8a0d33dc64d2a94bd
 
 Name: rpcs3
 Version: 0.0.17
-Release: alt2
+Release: alt3
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -44,8 +43,6 @@ Source6: FAudio-%faudio_version.tar
 Source7: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
 Source8: SPIRV-Tools-%spirv_tools_version.tar
-# https://github.com/RipleyTom/wolfssl/archive/%wolfssl_commit/wolfssl-%wolfssl_commit.tar.gz
-Source9: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
 
@@ -75,6 +72,7 @@ BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
+BuildRequires: pkgconfig(wolfssl)
 BuildRequires: llvm%clang_version.0
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
@@ -87,7 +85,7 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
 
 %patch0 -p1
 
@@ -99,7 +97,6 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
-%__mv -Tf ../wolfssl-%wolfssl_commit 3rdparty/wolfssl
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -134,6 +131,7 @@ export RANLIB="llvm-ranlib-%clang_version"
 	-DUSE_SYSTEM_FLATBUFFERS:BOOL=TRUE \
 	-DUSE_SYSTEM_PUGIXML:BOOL=TRUE \
 	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
+	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DLLVM_USE_LINKER:STRING="$LINKER" \
 	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
@@ -153,6 +151,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Thu Jul 08 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt3
+- Build with system wolfssl
+
 * Wed Jul 07 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt2
 - Build with system flatbuffers, pugixml and xxhash
 
