@@ -10,7 +10,7 @@
 
 Name: inkscape
 Version: %major
-Release: alt2
+Release: alt3
 
 Summary: A Vector Drawing Application
 
@@ -24,6 +24,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: inkview.desktop
+
+Patch: inkscape-1.1-fix-build-witch-gcc7.5.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -133,6 +135,7 @@ Run checkinstall tests for %name.
 
 %prep
 %setup
+%patch -p1
 rm -rfv src/3rdparty/2geom/
 
 %build
@@ -213,6 +216,9 @@ true
 %files checkinstall
 
 %changelog
+* Thu Jul 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt3
+- fix build with gcc-7.5 and lcc (e2k)
+
 * Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt2
 - add desktop file for inkview (ALT bug 34135)
 
