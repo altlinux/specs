@@ -3,7 +3,7 @@
 
 Name: setBfree
 Version: 0.8.11
-Release: alt1.gitbdb2cc6
+Release: alt2.gitbdb2cc6
 Summary: A DSP Tonewheel Organ emulator
 
 License: GPLv2+ and GPLv3+ and ISC
@@ -77,6 +77,8 @@ This package contains setBfree build as LV2 plugin.
     VERSION=%version \
     FONTFILE=%_ttffontsdir/TrueType-vera/VeraBd.ttf \
     PREFIX=%prefix \
+    INSTALL_EXTRA_LV2=yes \
+    STRIP=: \
     lv2dir=%_libdir/lv2
 
 %install
@@ -85,6 +87,8 @@ This package contains setBfree build as LV2 plugin.
     VERSION=%version \
     FONTFILE=%_ttffontsdir/TrueType-vera/VeraBd.ttf \
     PREFIX=%prefix \
+    INSTALL_EXTRA_LV2=yes \
+    STRIP=: \
     lv2dir=%_libdir/lv2
 
 mkdir -p %buildroot%_man1dir
@@ -104,6 +108,10 @@ install -Dm644 doc/*.1 %buildroot%_man1dir
 %_libdir/lv2/*
 
 %changelog
+* Fri Jul 09 2021 Ivan A. Melnikov <iv@altlinux.org> 0.8.11-alt2.gitbdb2cc6
+- install extra lv2 plugins
+- avoid stripping binaries
+
 * Wed Jun 02 2021 Ivan A. Melnikov <iv@altlinux.org> 0.8.11-alt1.gitbdb2cc6
 - initial build for Sisyphus
   + build from snapshot for MIDINAM fixes
