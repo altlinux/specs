@@ -1,16 +1,18 @@
 Name: kaptain
 Summary: An universal graphical front-end for command line programs
-Version: 0.73
-Release: alt2
-Source0: http://sourceforge.net/projects/kaptain/files/kaptain/0.73/kaptain-0.73.tgz
+Version: 0.72
+Release: alt1
+Epoch: 1
+Source0: %name-%version.tar.gz
+Source1: %name.info
 Url: http://kaptain.sourceforge.net
 Group: Shells
 License: GPLv2
-Patch: kaptain-0.73-bison.patch
+Patch2: kaptain-0.72-fix.patch
 
-# Automatically added by buildreq on Thu Sep 05 2013
-# optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel
-BuildRequires: flex gcc-c++ phonon-devel
+# Automatically added by buildreq on Thu Jul 08 2021
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libstdc++-devel python3 python3-base sh4
+BuildRequires: flex gcc-c++ libqt3-devel
 
 %description
 Kaptain is a universal graphical front-end for command line programs.
@@ -18,27 +20,30 @@ It works on linux/UNIX platforms whereever Qt3 and Qt4 is available.
 
 %prep
 %setup
-%patch -p1
+cp %SOURCE1 doc
+%patch2 -p1
 
 %build
-%qmake_qt4 PREFIX=%prefix
-make parser_yacc.o # Doesn't parallel
+%configure
 %make_build
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%makeinstall INSTALL_ROOT=%buildroot # /usr/lib64/qt3/src
 mkdir -p %buildroot%_libexecdir
 mv %buildroot%_datadir/%name %buildroot%_libexecdir/%name
+chmod +x %buildroot%_libexecdir/%name/*.kaptn
 
 %files
 %doc README COPYING AUTHORS INSTALL ChangeLog
-%doc %_defaultdocdir/%name
 %_bindir/%name
-%attr(0755,root,root) %_libexecdir/%name/*.kaptn
-%_libexecdir/%name/*.tgz
+%_libexecdir/%name
 %_man1dir/*
+%_infodir/%{name}*
 
 %changelog
+* Fri Jul 09 2021 Fr. Br. George <george@altlinux.ru> 1:0.72-alt1
+- Build with Qt3
+
 * Sun Apr 18 2021 Fr. Br. George <george@altlinux.ru> 0.73-alt2
 - Fix build with bison3.7
 - Fix parallel build race
