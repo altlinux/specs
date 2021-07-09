@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.5.2
-Release: alt1.1
+Version: 0.6.0
+Release: alt1
 
 Summary: AD editor
 License: GPLv3+
@@ -21,7 +21,6 @@ BuildRequires: samba-devel
 BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libsmbclient-devel
-BuildRequires: libcmocka-devel
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
 BuildRequires: libuuid-devel
@@ -62,7 +61,7 @@ Tests for ADMC
 
 %files
 %doc README.md
-%_datadir/admc.qch
+%_docdir/admc/admc.qch
 %_bindir/admc
 %_libdir/libadldap.so
 %_man1dir/admc*
@@ -76,8 +75,23 @@ Tests for ADMC
 %_bindir/admc_test_country_edit
 %_bindir/admc_test_gplink
 %_bindir/admc_test_ad_interface
+%_bindir/admc_test_select_base_widget
+%_bindir/admc_test_filter_widget
+%_bindir/admc_test_security_tab
+%_bindir/admc_test_attributes_tab
+%_bindir/admc_test_member_of_tab
+%_bindir/admc_test_members_tab
+%_bindir/admc_test_select_object_dialog
+%_bindir/admc_test_logon_hours_dialog
+%_bindir/admc_test_logon_computers
 
 %changelog
+* Fri Jul 09 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
+* Mon Jun 21 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.5.3-alt1
+- 0.5.3
+
 * Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 0.5.2-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
