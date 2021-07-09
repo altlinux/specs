@@ -16,7 +16,7 @@
 %define libfolderconfiguresettings libfolderconfiguresettings%sover
 
 Name: kde5-pim-addons
-Version: 21.04.2
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -285,6 +285,9 @@ KF5 library
 %_K5lib/libfolderconfiguresettings.so.*
 
 %changelog
+* Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
 * Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
 - new version
 
