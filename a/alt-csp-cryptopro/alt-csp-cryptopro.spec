@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,12 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Fri Jul 09 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.7-alt1
+- fix cleaning up result window right after completing task
+- refactor source code
+- update translation
+- remove dead timestamp checking code
+
 * Thu Jul 08 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.6-alt1
 - new version
 
