@@ -4,7 +4,7 @@
 %define libkmixcore libkmixcore%sover
 
 Name: kde5-%rname
-Version: 21.04.2
+Version: 21.04.3
 Release: alt1
 %K5init altplace  no_appdata
 
@@ -95,6 +95,9 @@ KF5 library
 %_K5lib/libkmixcore.so.%sover
 
 %changelog
+* Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
 * Fri Jun 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
 - new version
 
