@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.6.1
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -131,6 +131,7 @@ library.
 %build
 cp -at . -- /usr/share/gnu-config/config.{sub,guess}
 %add_optflags -fPIC
+%autoreconf
 ./autogen.sh
 %configure \
 %if_without java
@@ -144,7 +145,7 @@ cp -at . -- /usr/share/gnu-config/config.{sub,guess}
 %endif
 %if_with php
            --enable-php7=yes \
-           --with-php7-config-dir=%php7_sysconfdir \
+           --with-php7-config-dir=/etc/php/%_php_major \
 %else
            --enable-php7=no \
 %endif
@@ -183,8 +184,8 @@ install -m 755 -d %buildroot%php7_datadir/%name
 mv %buildroot%php7_datadir/lasso.php %buildroot%php7_datadir/%name/
 
 # rename the PHP config file when needed (PHP 5.6+)
-mkdir -p %buildroot%php7_sysconfdir/cli/php.d
-mv %buildroot%php7_sysconfdir/%name.ini %buildroot%php7_sysconfdir/cli/php.d/%name.ini
+mkdir -p %buildroot/etc/php/%_php_major/cli/php.d
+mv %buildroot/etc/php/%_php_major/%name.ini %buildroot/etc/php/%_php_major/cli/php.d/%name.ini
 %endif
 
 # Remove bogus doc files
@@ -220,8 +221,8 @@ make check
 
 %if_with php
 %files -n php7-%name
-%php7_extdir/lasso.so
-%config(noreplace) %php7_sysconfdir/cli/php.d/%name.ini
+%_libdir/php/%_php_version/extensions/lasso.so
+%config(noreplace) /etc/php/%_php_major/cli/php.d/%name.ini
 %dir %php7_datadir/%name
 %php7_datadir/%name/lasso.php
 %endif
@@ -234,6 +235,9 @@ make check
 %endif
 
 %changelog
+* Fri Jul 09 2021 Leontiy Volodin <lvol@altlinux.org> 2.6.1-alt3
+- Fixed build with php7 macros.
+
 * Fri Jan 29 2021 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2
 - Respect all versions of python3.
 
