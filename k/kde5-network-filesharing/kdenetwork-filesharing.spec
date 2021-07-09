@@ -2,12 +2,12 @@
 %define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 21.04.2
+Version: 21.04.3
 Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
-Summary: Fileshare Konqueror Directory Properties Page
+Summary: Samba Filesharing Plugin
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
@@ -32,7 +32,7 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-kd
 BuildRequires: kf5-kpackage-devel
 
 %description
-%summary.
+Adds Configuration of Samba sharing for folders in Dolphin.
 
 %prep
 %setup -n %rname-%version
@@ -63,6 +63,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
 * Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
 - new version
 

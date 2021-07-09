@@ -13,8 +13,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 21.04.2
-Release: alt2
+Version: 21.04.3
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -154,6 +154,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
 * Mon Jul 05 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt2
 - resolve duplicate provides
 

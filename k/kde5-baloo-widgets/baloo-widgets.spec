@@ -1,7 +1,7 @@
 %define rname baloo-widgets
 
 Name: kde5-%rname
-Version: 21.04.2
+Version: 21.04.3
 Release: alt1
 %K5init altplace
 
@@ -82,6 +82,9 @@ KF5 library
 %_K5srv/*baloo*.desktop
 
 %changelog
+* Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
 * Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.2-alt1
 - new version
 
