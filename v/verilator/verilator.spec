@@ -1,11 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/git tex(dehypht.tex)
-# END SourceDeps(oneline)
-
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 4.204
+Version: 4.210
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -13,10 +9,10 @@ Group: Engineering
 License: LGPLv3 or Perl Artistic 2.0
 Url: https://www.veripool.org/wiki/verilator
 Source: %name-%version.tar
-Patch0: 0001-Fix-V3Hash-when-building-m32.patch
 
 BuildRequires: flex gcc-c++
 BuildRequires: rpm-build-python3
+BuildRequires: perl-podlators tex(dehypht.tex)
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
@@ -38,7 +34,6 @@ simulators. This package contains documentation and examples.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 autoconf
@@ -67,6 +62,10 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Fri Jul 09 2021 Egor Ignatov <egori@altlinux.org> 4.210-alt1
+- new version 4.210
+- remove 0001-Fix-V3Hash-when-building-m32 patch
+
 * Mon Jun 21 2021 Egor Ignatov <egori@altlinux.org> 4.204-alt1
 - new version
 - add patch to fix build on 32 bit systems
