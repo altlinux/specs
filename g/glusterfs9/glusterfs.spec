@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 9.0
+%define major 9.3
 %define somajor 9
 #define _localstatedir /var
 %def_enable epoll
@@ -17,7 +17,7 @@
 
 Name: glusterfs9
 Version: %major
-Release: alt3
+Release: alt1
 
 Summary: Cluster File System
 
@@ -71,7 +71,7 @@ BuildRequires: python3-dev
 # liblvm2-devel: disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
-BuildRequires: libssl-devel libcurl-devel zlib-devel
+BuildRequires: libssl-devel libcurl-devel zlib-devel liburing-devel
 BuildRequires: libtirpc-devel
 # glibc-utils on p9
 BuildRequires: /usr/bin/rpcgen
@@ -763,6 +763,9 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 9.3-alt1
+- new version 9.3 (with rpmrb script)
+
 * Wed Mar 24 2021 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt3
 - set conflicts cli with glusterfs7
 
