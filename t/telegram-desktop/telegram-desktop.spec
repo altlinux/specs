@@ -9,8 +9,8 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.8.1
-Release: alt2
+Version: 2.8.6
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -20,6 +20,8 @@ Url: https://telegram.org/
 
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
+
+Patch: telegram-desktop-fix-glib2-build.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -122,6 +124,8 @@ BuildRequires: libdbusmenu-qt5-devel
 # need for /usr/lib64/cmake/Qt5XkbCommonSupport/Qt5XkbCommonSupportConfig.cmake
 BuildRequires: libxkbcommon-devel
 
+BuildRequires: libjemalloc-devel
+
 # FIXME: libva need only for linking, extra deps?
 
 Provides: tdesktop = %version-%release
@@ -163,6 +167,7 @@ or business messaging needs.
 
 %prep
 %setup
+%patch -p2
 %__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
 # TODO: there are incorrec using and linking libyuv
 %__subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv|" Telegram/cmake/lib_tgcalls.cmake
@@ -233,6 +238,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Jul 07 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.6-alt1
+- new version 2.8.6 (with rpmrb script)
+- add BR: libjemalloc-devel
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt2
 - fix build with updated libowt-tg
 
