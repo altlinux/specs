@@ -1,12 +1,12 @@
-%define php7_extension jpgraph
+%define php_extension jpgraph
 
-%define confextensiondir %_sysconfdir/php/%php7_extension
-%define extensiondir %php7_moddir/%php7_extension
+%define confextensiondir %_sysconfdir/php/%php_extension
+%define extensiondir %php_moddir/%php_extension
 %define docdir %_docdir/%name-%version
 
-Name: php7-%php7_extension
+Name: php7-%php_extension
 Version: 4.3.4
-Release: alt1
+Release: alt2
 
 Summary: 2D graph plotting library for PHP
 License: %qpl1
@@ -32,7 +32,7 @@ Requires: php7 >= 7.0
 Requires: php7-gd2
 Requires: %docdir
 
-BuildRequires(pre): rpm-build-php7
+BuildRequires(pre): rpm-build-php7-version
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2
 BuildPreReq: rpm-build-licenses >= 2.0.4
@@ -106,7 +106,7 @@ for displaying HTML documentation JpGraph library.
 %patch0 -p1
 
 %install
-mkdir -p %buildroot%php7_moddir/
+mkdir -p %buildroot%php_moddir/
 mkdir -p %buildroot%confextensiondir/
 cp -a src %buildroot%extensiondir
 mv %buildroot%extensiondir/jpg-config.inc.php \
@@ -140,7 +140,7 @@ touch %buildroot%apache2_extra_enabled/%name-examples.conf
 # Substitute the real paths in configs
 find %buildroot%_sysconfdir -type f -print0 \
 	| xargs -r0 sed -ri -e 's@%%docdir([-[:space:]/.,:}%%])@%docdir\1@g' \
-		-e 's@%%php7_extension([-[:space:]/.,:}%%])@%php7_extension\1@g' \
+		-e 's@%%php_extension([-[:space:]/.,:}%%])@%php_extension\1@g' \
 		-e 's@%%extensiondir([-[:space:]/.,:}%%])@%extensiondir\1@g' \
 		-e 's@%%name([-[:space:]/.,:}%%])@%name\1@g'
 
@@ -170,6 +170,9 @@ find %buildroot%_sysconfdir -type f -print0 \
 %config(noreplace) %apache2_mods_start/100-%name-doc.conf
 
 %changelog
+* Fri Jul 09 2021 Anton Farygin <rider@altlinux.ru> 4.3.4-alt2
+- switch to universal, version-independed macros from rpm-build-php 8.0
+
 * Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 4.3.4-alt1
 - 4.3.4
 - removed all rpm post scripts (they moved to filetriggers from apache package)
