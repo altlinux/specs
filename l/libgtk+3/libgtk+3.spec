@@ -16,14 +16,13 @@
 %def_enable wayland
 # broadway (HTML5) gdk backend
 %def_enable broadway
-%def_disable cloudprint
 %def_disable cloudproviders
 %def_disable tracker3
 %def_enable installed_tests
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.29
+Version: %ver_major.30
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -92,7 +91,6 @@ BuildRequires: libfribidi-devel >= %fribidi_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
-%{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0)}
 # for examples
@@ -270,7 +268,6 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_wayland:--enable-wayland-backend} \
     %{?_enable_broadway:--enable-broadway-backend} \
     %{?_enable_installed_tests:--enable-installed-tests} \
-    %{subst_enable cloudprint} \
     %{?_enable_tracker3:--enable-tracker3=yes} \
     %{?_enable_debug:--enable-debug=yes}
 %make_build
@@ -465,6 +462,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.30-alt1
+- 3.24.30
+
 * Fri Apr 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.29-alt1
 - 3.24.29
 
