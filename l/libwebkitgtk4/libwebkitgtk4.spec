@@ -26,8 +26,8 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -337,6 +337,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Jul 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.2-alt1
+- 2.32.2
+
 * Mon May 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1.1
 - adapted to new cmake macros
 
