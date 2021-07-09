@@ -5,7 +5,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Terminal
@@ -61,7 +61,7 @@ Nautilus file manager.
 %__ln_s -f %_licensedir/GPL-3 COPYING
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--disable-static \
@@ -73,10 +73,10 @@ Nautilus file manager.
 %install
 %makeinstall_std
 
-# alternatives
+# alternatives (xterm -- 40)
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
-%_bindir/xvt	%_bindir/%name	40
+%_bindir/xvt	%_bindir/%name	39
 EOF
 
 %find_lang --with-gnome %name
@@ -106,6 +106,9 @@ EOF
 %endif
 
 %changelog
+* Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.3-alt1
+- 3.40.3
+
 * Sat Jun 05 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.2-alt1
 - 3.40.2
 
