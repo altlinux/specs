@@ -2,7 +2,7 @@
 
 Name: ostree
 Version: 2021.2
-Release: alt1
+Release: alt2
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -73,6 +73,7 @@ NOCONFIGURE=1 sh -x ./autogen.sh
            --with-curl \
            --with-openssl \
            --enable-gtk-doc \
+	   --enable-trivial-httpd-cmdline \
 	   --without-grub2-mkconfig-path
 
 # hack to fix missed dirname declaration
@@ -122,6 +123,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Fri Jul 09 2021 Andrey Sokolov <keremet@altlinux.org> 2021.2-alt2
+- add trivial-httpd command
+
 * Tue Jul 06 2021 Andrey Sokolov <keremet@altlinux.org> 2021.2-alt1
 - 2021.2
 - remove unused file import.info
