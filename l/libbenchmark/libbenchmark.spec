@@ -1,6 +1,6 @@
 Name: libbenchmark
-Version: 1.5.2
-Release: alt2
+Version: 1.5.5
+Release: alt1
 
 Summary: A microbenchmark support library
 
@@ -55,6 +55,9 @@ This package contains the header files for %name.
 %_pkgconfigdir/benchmark.pc
 
 %changelog
+* Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt1
+- new version 1.5.5 (with rpmrb script)
+
 * Thu Jun 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.2-alt2
 - added patch for Elbrus
 - corrected license
