@@ -1,5 +1,5 @@
 Name: systemd-settings
-Version: 4
+Version: 5
 Release: alt1
 Summary: Settings for systemd
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
@@ -60,13 +60,20 @@ Group: System/Configuration/Boot and Init
 %description enable-log-to-tty12
 %summary
 
+%package disable-resolve-llmnr
+Summary: Set global LLMNR=no for resolve
+Group: System/Configuration/Boot and Init
+
+%description disable-resolve-llmnr
+%summary
+
 %prep
 %setup
 
 %build
 
 %install
-mkdir -p %buildroot/lib/systemd/{logind.conf.d,system.conf.d,journald.conf.d,system/user@.service.d}
+mkdir -p %buildroot/lib/systemd/{{logind,system,journald,resolved}.conf.d,system/user@.service.d}
 
 install -p -m644 disable-kill-user-processes.conf \
     %buildroot/lib/systemd/logind.conf.d/disable-kill-user-processes.conf
@@ -78,6 +85,8 @@ install -p -m644 disable-dumpcore.conf \
     %buildroot/lib/systemd/system.conf.d/disable-dumpcore.conf
 install -p -m644 enable-log-to-tty12.conf \
     %buildroot/lib/systemd/journald.conf.d/enable-log-to-tty12.conf
+install -p -m644 disable-resolve-llmnr.conf \
+    %buildroot/lib/systemd/resolved.conf.d/disable-resolve-llmnr.conf
 
 install -p -m644 disable-user-systemd-for-selinux.conf \
     %buildroot/lib/systemd/system/user@.service.d/disable-user-systemd-for-selinux.conf
@@ -97,10 +106,16 @@ install -p -m644 disable-user-systemd-for-selinux.conf \
 %files disable-dumpcore
 /lib/systemd/system.conf.d/disable-dumpcore.conf
 
+%files disable-resolve-llmnr
+/lib/systemd/resolved.conf.d/disable-resolve-llmnr.conf
+
 %files enable-log-to-tty12
 /lib/systemd/journald.conf.d/enable-log-to-tty12.conf
 
 %changelog
+* Fri Jul 09 2021 Alexey Shabalin <shaba@altlinux.org> 5-alt1
+- Added disable-resolve-llmnr package
+
 * Tue Apr 27 2021 Vitaly Chikunov <vt@altlinux.org> 4-alt1
 - Undo logind restart introduced in 3-alt1 (closes: #40002).
 
