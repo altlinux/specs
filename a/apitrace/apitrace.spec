@@ -13,8 +13,8 @@
 %filter_from_requires /^libc.so.6(GLIBC_PRIVATE)/d
 
 Name: apitrace
-Version: 9.0
-Release: alt4
+Version: 10.0
+Release: alt1
 
 Summary: Tools for tracing OpenGL
 
@@ -89,7 +89,7 @@ This package contains qapitrace, the Graphical frontend for apitrace.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 # fix WRAPPER_DIR
 %__subst "s|dpkg-architecture|no-dpkg-architecture|" CMakeLists.txt
 
@@ -147,6 +147,9 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 10.0-alt1
+- new version 10.0 (with rpmrb script)
+
 * Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0-alt4
 - Updated build dependencies.
 
