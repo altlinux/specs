@@ -23,8 +23,8 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 1.20.11
-Release: alt2
+Version: 1.20.12
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -311,6 +311,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Jul 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.12-alt1
+- 1.20.12
+
 * Tue Jun 15 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.11-alt2
 - removed package startup from dependencies
 
