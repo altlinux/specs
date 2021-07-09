@@ -9,7 +9,7 @@
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -133,6 +133,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Jul 09 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
+- 40.3
+
 * Fri Jun 04 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 
