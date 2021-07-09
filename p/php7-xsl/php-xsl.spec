@@ -13,7 +13,7 @@ Prereq:		php%_php_suffix-dom
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
 
-BuildRequires(pre): rpm-build-php8.0-version
+BuildRequires(pre): rpm-build-php7-version
 BuildRequires:	php-devel = %php_version
 
 # Automatically added by buildreq on Fri Jul 01 2005
