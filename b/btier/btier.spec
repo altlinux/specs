@@ -4,7 +4,7 @@
 
 Name:       btier
 Version:    1.3.0
-Release:    alt2
+Release:    alt3
 
 Summary:    %Name - a blockdevice that provides automated tiered storage
 License:    GPLv2
@@ -15,6 +15,7 @@ Source:     %name-%version%rel.tar
 Patch:      %name-%version-%release.patch
 Patch1:     fix-code-style.patch
 
+BuildRequires: rpm-build-python3
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: python-tools-2to3 xz
 
@@ -96,6 +97,9 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt3
+- add BR: rpm-build-python3
+
 * Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2
 - Porting on Python3.
 
