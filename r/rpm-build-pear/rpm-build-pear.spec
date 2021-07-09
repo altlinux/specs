@@ -1,5 +1,5 @@
 Name: rpm-build-pear
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: RPM helper scripts for build PEAR packages
@@ -13,8 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-php7 rpm-build-compat
-Requires: rpm-build-php7 php7 php7-simplexml
+BuildRequires: rpm-build-php rpm-build-compat
+Requires: rpm-build-php php7 php7-simplexml
 
 %description
 RPM helper scripts for build PEAR packages.
@@ -27,16 +27,22 @@ See %url for detailed PEAR packaging policy.
 
 %install
 install -D -m644 macros %buildroot/%_rpmmacrosdir/pear
-install -D -m644 xml2changelog %buildroot/%php7_peardir/xml2changelog
-install -D -m644 PHP-LICENSE-3.01 %buildroot/%php7_peardir/PHP-LICENSE-3.01
+install -D -m644 xml2changelog %buildroot/%php_peardir/xml2changelog
+install -D -m644 PHP-LICENSE-3.01 %buildroot/%php_peardir/PHP-LICENSE-3.01
 
 %files
 %doc README
 %_rpmmacrosdir/pear
-%php7_peardir/xml2changelog
-%php7_peardir/PHP-LICENSE-3.01
+%php_peardir/xml2changelog
+%php_peardir/PHP-LICENSE-3.01
 
 %changelog
+* Thu Jul 08 2021 Dmitry V. Levin <ldv@altlinux.org> 0.6-alt1
+- Fixed build.
+
+* Thu Jul 08 2021 Anton Farygin <rider@altlinux.ru> 0.6-alt1
+- switched to universal version-independent macros for php
+
 * Wed Feb 13 2019 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - switch to php7
 
