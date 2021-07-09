@@ -1,6 +1,6 @@
 Name: neko
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 # commit: b68336cbc250937fda2741dedc7866b4d5f14d27
 
@@ -20,7 +20,8 @@ BuildRequires: /proc
 
 BuildRequires: rpm-macros-cmake cmake git-core
 
-BuildRequires: apache2-devel libgc-devel libgtk+2-devel libssl-devel libmysqlclient-devel libpcre-devel libsqlite3-devel libmbedtls-devel libaprutil1-devel libapr1-devel
+BuildRequires: apache2-devel libgc-devel libgtk+2-devel libmariadb-devel libpcre-devel libsqlite3-devel libaprutil1-devel libapr1-devel
+#BuildRequires: libmbedtls-devel libssl-devel 
 
 Requires: lib%name = %version-%release
 
@@ -62,7 +63,7 @@ This package provides development files for %name.
 %patch1 -p2
 
 %build
-%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_libdir
+%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_libdir -DWITH_SSL=OFF
 %make_build || %__make
 
 %install
@@ -90,6 +91,9 @@ mv %buildroot%_libdir/cmake/Neko %buildroot/usr/share/cmake/Modules/
 
 
 %changelog
+* Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt2
+- build without SSL support (can't build with new libmbedtls-devel)
+
 * Sun Nov 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 
