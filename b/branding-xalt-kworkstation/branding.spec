@@ -12,8 +12,8 @@
 %define fakebrand xalt
 
 %define major 9
-%define minor 1
-%define bugfix 6
+%define minor 2
+%define bugfix 0
 %define altversion %major.%minor
 
 Name: branding-%fakebrand-%smalltheme
@@ -23,8 +23,8 @@ Release: alt1
 %define theme %name
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
-%define design_graphics_abi_minor 0
-%define design_graphics_abi_bugfix 0
+%define design_graphics_abi_minor 1
+%define design_graphics_abi_bugfix 1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -460,6 +460,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Jul 08 2021 Sergey V Turchin <zerg at altlinux dot org> 9.2.0-alt1
+- new version
+
 * Tue Apr 27 2021 Sergey V Turchin <zerg at altlinux dot org> 9.1.6-alt1
 - fix os-release for livecd
 
