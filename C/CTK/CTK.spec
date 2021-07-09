@@ -2,7 +2,7 @@
 
 Name: CTK
 Version: 0.1.0
-Release: alt1.git.dc2e1289
+Release: alt2.git.dc2e1289
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
@@ -108,6 +108,7 @@ This package provides Python bindings to CTK.
 	-DCTK_ENABLE_Python_Wrapping:BOOL=ON \
 	-DCTK_PLUGIN_LIBRARY_OUTPUT_DIRECTORY:STRING=%_lib/ctk/plugins \
 	-DCTK_INSTALL_PLUGIN_DIR:STRING=%_lib/ctk/plugins \
+	-DPYTHON_EXECUTABLE=%__python3 \
 	%nil
 
 %cmake_build
@@ -149,5 +150,8 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Jul 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.0-alt2.git.dc2e1289
+- Fixed compatibility with p9.
+
 * Fri May 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.0-alt1.git.dc2e1289
 - Initial build for ALT.
