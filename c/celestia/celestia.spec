@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.2.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A real-time visual space simulation
@@ -9,6 +9,7 @@ License: GPL-2.0
 Group: Education
 Url: https://celestia.space
 
+Requires: celestia-common
 Provides: celestia-ui = %EVR
 Provides: celestia-qt = %EVR celestia-gtk = %EVR celestia-glut = %EVR
 Obsoletes: celestia-qt < %EVR celestia-gtk < %EVR celestia-glut < %EVR
@@ -48,7 +49,6 @@ travelthroughout the solar system, to any of over
 %package common
 Group: Education
 Summary: A real-time visual space simulation (common part)
-#Requires: celestia-ui = %EVR
 %description common
 This is a common part of Celestia
 
@@ -184,6 +184,9 @@ rm -fv %buildroot%_libdir/libcelmodel.a
 #/etc/alternatives/packages.d/%name-qt
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.6.2.2-alt2
+- fix requires (closes: 40394)
+
 * Thu Feb 25 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.6.2.2-alt1
 - new version
 
