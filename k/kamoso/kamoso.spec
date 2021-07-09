@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 21.04.2
+Version: 21.04.3
 Release: alt1
 
 Group:   Video
@@ -97,6 +97,9 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Fri Jul 09 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.3-alt1
+- New version.
+
 * Sat Jun 12 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.2-alt1
 - New version.
 
