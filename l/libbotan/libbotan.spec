@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libbotan
-Version: 2.18.0
-Release: alt2
+Version: 2.18.1
+Release: alt1
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -105,6 +105,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 2.18.1-alt1
+- new version 2.18.1 (with rpmrb script)
+
 * Thu Jun 03 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.18.0-alt2
 - added SIMD patch for Elbrus
 
