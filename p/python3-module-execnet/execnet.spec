@@ -12,8 +12,8 @@ a minimal and fast API targetting the following uses: \
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.7.0
-Release: alt3
+Version: 1.9.0
+Release: alt1
 
 Summary: Rapid multi-Python deployment
 Group: Development/Python3
@@ -120,6 +120,9 @@ TOXENV=py%{python_version_nodots python3} tox.py3 --sitepackages -rv
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Fri Jul 09 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
+- Automatically updated to 1.9.0.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt3
 - Drop specsubst scheme.
 
