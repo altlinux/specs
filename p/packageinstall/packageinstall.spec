@@ -1,18 +1,17 @@
+Name:	 packageinstall
+Version: 1.2
+Release: alt1
+Summary: GUI frontend for install packages using apt-get
 
-Name:		packageinstall
-Version:	1.1.2
-Release:	alt1
-Summary:	GUI frontend for install packages using apt-get
+License: GPL-3.0+
+Group:   System/Configuration/Packaging
+URL:     http://www.altlinux.org/PackageInstall
 
-License:	GPL
-Group:		System/Configuration/Packaging
-URL:		http://www.altlinux.org/PackageInstall
-
-Packager:   	Andrey Cherepanov <cas@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Requires: apt consolehelper
 
-Source0:	%name-%version.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): libpam-devel
 BuildRequires: gcc-c++
@@ -23,9 +22,9 @@ This application is GUI frontend for install package(s) using apt-get.
 
 %prep
 %setup -q
-%qmake_qt5 PREFIX=%_prefix %name.pro
 
 %build
+%qmake_qt5 PREFIX=%_prefix %name.pro
 %make_build
 lrelease-qt5 %name.pro
 
@@ -39,7 +38,7 @@ install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%n
 for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 
 %files
-%doc AUTHORS README
+%doc AUTHORS README.md
 %_bindir/%name
 %_sbindir/%name
 %dir %_datadir/apps/%name/
@@ -48,6 +47,13 @@ for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Fri Jul 09 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- Run apt-get update before installation (ALT #39768).
+- Check apt-get exit code and show error if installation is failed.
+- Remove wait proposal on finish stage (ALT #30389).
+- Adapt output parse to modern apt-rpm.
+- Fix localization.
+
 * Fri Nov 02 2018 Sergey V Turchin <zerg at altlinux dot org> 1.1.2-alt1
 - port to Qt5
 
