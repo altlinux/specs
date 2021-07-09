@@ -1,5 +1,5 @@
 Name:		freebasic
-Version:	1.08.0
+Version:	1.08.1
 Release:	alt1
 
 Summary:	FreeBASIC language compiler
@@ -72,6 +72,9 @@ cp -a doc/html/* %buildroot%_docdir/freebasic
 %_man1dir/*
 
 %changelog
+* Fri Jul 09 2021 Andrey Cherepanov <cas@altlinux.org> 1.08.1-alt1
+- New version.
+
 * Thu Jun 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.08.0-alt1
 - New version.
 
