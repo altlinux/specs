@@ -1,16 +1,14 @@
 Name: libxdg-basedir
-Version: 1.1.1
-Release: alt1.qa1
+Version: 1.2.3
+Release: alt1
 
 Summary: This library implements functions to list the directories according to the specification and provides a few higher-level functions for use with the specification
 License: MIT
 Group: System/Libraries
-Url: http://n.ethz.ch/~nevillm/download/%name/
+URL: https://github.com/devnev/libxdg-basedir
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
 
 Packager: Evgenii Terechkov <evg@altlinux.org>
-
 
 %description
 Various specifications specify files and file formats. The XDG Base
@@ -29,11 +27,11 @@ based on %name
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-%configure
-make
+%autoreconf
+%configure --disable-static
+%make_build
 
 %install
 %makeinstall_std
@@ -47,6 +45,11 @@ make
 %_includedir/*
 
 %changelog
+* Sat Jul 10 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.3-alt1
+- New version (ALT #40390).
+- Change upstream URL.
+- Disable static library build.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
