@@ -1,15 +1,21 @@
 Name: pentobi
-Version: 9.0
-Release: alt1.1
-License: GPLv3
-Summary: A computer program that plays the board game Blokus
-Source: %name-%version.tar.xz
-Group: Games/Boards
-Url: http://pentobi.sourceforge.net/
+Version: 19.0
+Release: alt1
 
-# Automatically added by buildreq on Fri Jul 22 2011
-# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel
-BuildRequires: boost-filesystem-devel boost-program_options-devel cmake gcc-c++ libqt4-opengl phonon-devel
+Summary: A computer program that plays the board game Blokus
+
+License: GPLv3
+Group: Games/Boards
+Url: https://pentobi.sourceforge.io
+
+# Source-url: https://github.com/enz/pentobi/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar.xz
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: docbook-xsl itstool xsltproc librsvg-utils
+BuildRequires: libGConf libappstream-glib-devel libgtk+3-devel libpolkit-devel
+BuildRequires: qt5-imageformats qt5-quickcontrols2-devel qt5-svg-devel qt5-tools-devel qt5-translations qt5-wayland-devel qt5-webengine-devel
+BuildRequires: cmake gcc-c++
 
 %description
 Pentobi is a computer program that plays the board game Blokus.
@@ -33,16 +39,21 @@ Pentobi is a computer program that plays the board game Blokus.
 mkdir -p %buildroot%_sysconfdir
 
 %files
-%doc %_defaultdocdir/%name
-%_bindir/*
-%_desktopdir/%name.desktop
+%_bindir/pentobi
+%_bindir/pentobi-thumbnailer
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/mime/packages/*.xml
 %_datadir/thumbnailers/*
-%_datadir/%name
+%_datadir/metainfo/*
+%_datadir/help/*/%name/
 %_man6dir/*
+%_mandir/*/man6/*
 
 %changelog
+* Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 19.0-alt1
+- NMU: build new version, build with Qt5
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 9.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
