@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.7
-Release: alt7
+Release: alt8
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -65,7 +65,7 @@ directly controlled by PAM prompts and messages.
 cd %buildroot
 # Add alternatives for xgreeters
 mkdir -p ./%_altdir
-printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters/lightdm-gtk-greeter.desktop\t100\n' >./%_altdir/lightdm-gtk-greeter
+printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters/lightdm-gtk-greeter.desktop\t50\n' >./%_altdir/lightdm-gtk-greeter
 
 %files -f %name.lang
 %_altdir/lightdm-gtk-greeter
@@ -76,6 +76,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Sat Jul 10 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt8
+- Fix: Reduce the weight of lightdm-default-greeter.desktop
+  alternative to 50 (closes: 40422).
+
 * Fri Apr 09 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt7
 - Added "css-path" configuration parameter to load CSS from a file
   (patch).
