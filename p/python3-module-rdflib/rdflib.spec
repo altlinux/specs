@@ -1,31 +1,27 @@
 %define oname rdflib
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 4.2.2
-Release: alt3
+Name: python3-module-%oname
+Version: 5.0.0
+Release: alt1
 
 Summary: RDFLib is a Python library for working with RDF
 
-Group: Development/Python
 License: See License
+Group: Development/Python3
 Url: http://rdflib.net/
 
-%setup_python_module %oname
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-# https://github.com/RDFLib/rdflib.git
-Source: %oname-%version.tar
+Conflicts: python-module-%oname
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-#add_python_req_skip FOPLRelationalModel RDF
+BuildRequires: python3-module-setuptools python3-module-distribute
 
-BuildRequires: python-devel python-module-setuptools python-module-PyXML python-module-bibtex
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools python3-module-distribute
-%endif
 
 %description
 RDFLib is a Python library for working with RDF, a simple yet powerful
@@ -35,65 +31,26 @@ library presents a Graph interface which can be backed by any one of
 a number of store implementations, including, memory, MySQL, Redland,
 SQLite, Sleepycat, ZODB and SQLObject.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: RDFLib is a Python 3 library for working with RDF
-Group: Development/Python3
-#add_python3_req_skip FOPLRelationalModel RDF
-
-%description -n python3-module-%oname
-RDFLib is a Python library for working with RDF, a simple yet powerful
-language for representing information.  The library contains parsers
-and serializers for RDF/XML, N3, NTriples, Turtle, TriX and RDFa. The
-library presents a Graph interface which can be backed by any one of
-a number of store implementations, including, memory, MySQL, Redland,
-SQLite, Sleepycat, ZODB and SQLObject.
-%endif
-
 %prep
-%setup -n %oname-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup
 
 %build
-%add_optflags -fno-strict-aliasing
-%python_build_debug
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %files
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (with rpmrb script)
+
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt4
+- build python3 module separately, build from a tarball
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.2.2-alt3
 - Fixed build requires.
 
