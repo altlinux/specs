@@ -1,5 +1,5 @@
 Name: debugedit
-Version: 0.2
+Version: 0.3.0.7.e042
 Release: alt1
 
 Summary: A collection of debuginfo utilities
@@ -26,8 +26,8 @@ source paths in DWARF data for debugging, tracing and profiling.
 
 %install
 %makeinstall_std
-rm %buildroot%_bindir/find-debuginfo.sh
-rm %buildroot%_man1dir/find-debuginfo.sh.1
+rm %buildroot%_bindir/find-debuginfo
+rm %buildroot%_man1dir/find-debuginfo.1
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -41,9 +41,12 @@ rm %buildroot%_man1dir/find-debuginfo.sh.1
 %_bindir/sepdebugcrcfix
 %_man1dir/debugedit.1*
 %_man1dir/sepdebugcrcfix.1*
-%doc README scripts/find-debuginfo.sh find-debuginfo.sh.1
+%doc README find-debuginfo find-debuginfo.1
 
 %changelog
+* Mon Jul 05 2021 Dmitry V. Levin <ldv@altlinux.org> 0.3.0.7.e042-alt1
+- 0.2 -> 0.3-7-ge04296d.
+
 * Wed May 05 2021 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt1
 - 0.1 -> 0.2.
 
