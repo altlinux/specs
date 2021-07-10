@@ -6,7 +6,7 @@
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Disk management application
@@ -83,6 +83,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Sun Jul 11 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
+- 40.2
+
 * Sat May 01 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 
