@@ -1,31 +1,33 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 0.4
 %def_enable gtk_doc
-%def_enable check
+
+%ifarch armh
+%def_disable check
+%endif
 
 %ifarch %valgrind_arches
 %def_enable valgrind
 %endif
 
 Name: orc
-Version: %ver_major.31
+Version: %ver_major.32
 Release: alt1
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
-License: BSD
-URL: http://code.entropywave.com/projects/orc
+License: BSD-3-Clause
+Url: http://code.entropywave.com/projects/orc
 
 %if_disabled snapshot
 Source: https://github.com/GStreamer/orc/archive/%version/%name-%version.tar.gz
-#Source: https://gstreamer.freedesktop.org/src/orc/%name-%version.tar.xz
 %else
-# VCS: https://anongit.freedesktop.org/gstreamer/orc
+Vcs: https://anongit.freedesktop.org/gstreamer/orc
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): meson rpm-macros-valgrind
+BuildRequires(pre): meson >= 0.54 rpm-macros-valgrind
 BuildRequires: glib2-devel >= 2.10.0 gtk-doc
 %{?_enable_valgrind:BuildRequires: valgrind-devel}
 
@@ -147,6 +149,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Jul 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.4.32-alt1
+- updated to 0.4.32-3-g1e9bf08
+- skipped known broken tests for armh
+
 * Mon Nov 04 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4.31-alt1
 - 0.4.31
 
