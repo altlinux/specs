@@ -1,8 +1,8 @@
 %define oname josepy
 
 Name: python3-module-%oname
-Version: 1.1.0
-Release: alt3
+Version: 1.8.0
+Release: alt1
 
 Summary: JOSE protocol implementation in Python using cryptography
 
@@ -47,6 +47,9 @@ rm -rf %buildroot%_bindir/
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt3
 - build python3 module separately, drop tests subpackage
 
