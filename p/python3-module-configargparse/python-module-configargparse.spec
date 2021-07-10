@@ -1,27 +1,27 @@
-%global srcname ConfigArgParse
+%global oname ConfigArgParse
 
-Name: python-module-configargparse
+Name: python3-module-configargparse
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: A Python module with support for argparse, config files, and env variables
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/bw2/ConfigArgParse
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://pypi.io/packages/source/C/%srcname/%srcname-%version.tar.gz
-Buildarch: noarch
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
-
-#if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+
+BuildArch: noarch
+
+#BuildRequires: python3-devel
+#BuildRequires: python3-module-setuptools
 
 %description
 Applications with more than a handful of user-settable options are best
@@ -32,44 +32,26 @@ Python's command line parsing modules such as argparse have very limited
 support for config files and environment variables, so this module extends
 argparse to add these features.
 
-%package -n python3-module-configargparse
-Group: Development/Python
-Summary: %summary
-
-%description -n python3-module-configargparse
-Applications with more than a handful of user-settable options are best
-configured through a combination of command line args, config files, hard
-coded defaults, and in some cases, environment variables.
-
-Python's command line parsing modules such as argparse have very limited
-support for config files and environment variables, so this module extends
-argparse to add these features.
-
 %prep
-%setup -n %srcname-%version
+%setup
 
 %build
-%python_build
 %python3_build
 
 %install
-%python_install
 %python3_install
 
 %files
 %doc README.rst
 %doc LICENSE
-%python_sitelibdir/configargparse.py*
-%python_sitelibdir/%{srcname}*.egg-info
-
-%files -n python3-module-configargparse
-%doc README.rst
-%doc LICENSE
 %python3_sitelibdir/configargparse.py*
-%python3_sitelibdir/%{srcname}*.egg-info
+%python3_sitelibdir/%{oname}*.egg-info
 %python3_sitelibdir/__pycache__/configargparse*
 
 %changelog
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 0.14.0-alt2
+- build python3 module separately
+
 * Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 0.14.0-alt1
 - new version 0.14.0 (with rpmrb script)
 
