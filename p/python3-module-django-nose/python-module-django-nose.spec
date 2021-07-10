@@ -1,45 +1,33 @@
-%global pkgname django-nose
-%def_with python3
+%global oname django-nose
 %def_with bootstrap
 
-Name:           python-module-django-nose
-Version:        1.4.6
+Name:           python3-module-django-nose
+Version:        1.4.7
 Release:        alt1
 
 Summary:        Django test runner that uses nose
 
-Group:          Development/Python
+Group:          Development/Python3
 License:        BSD
 URL:            http://github.com/jbalogh/django-nose
 
-# Source-url: https://github.com/django-nose/django-nose/archive/v%version.tar.gz
-Source:         %name-%version.tar
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
 BuildArch:      noarch
-BuildRequires:  python-devel python-module-setuptools
-Requires:       python-module-nose
-Requires:       python-module-django
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-%description
-Django test runner that uses nose.
-
-%if_with python3
-%package -n python3-module-%{pkgname}
-Summary:        Django test runner that uses nose
-Group:		Development/Python
-BuildArch:      noarch
-BuildRequires:  rpm-build-python3 python3-module-setuptools
+BuildRequires:  python3-module-setuptools
 Requires:       python3-module-nose
 Requires:       python3-module-django
 %if_with bootstrap
 %add_python3_req_skip django.db.backends.creation
 %endif
 
-%description -n python3-module-%{pkgname}
+%description
 Django test runner that uses nose.
-
-%endif
 
 %prep
 %setup
@@ -47,44 +35,25 @@ Django test runner that uses nose.
 # remove egg-info
 rm -rf django_nose.egg-info
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-rm -rf %buildroot%python_sitelibdir/testapp/
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 rm -rf %buildroot%python3_sitelibdir/testapp/
-%endif
 
 %files
 %doc LICENSE README.rst
-%{python_sitelibdir}/django_nose
-%{python_sitelibdir}/django_nose-%{version}-py?.?.egg-info
-
-%if_with python3
-%files -n python3-module-%{pkgname}
-%doc LICENSE README.rst
 %{python3_sitelibdir}/django_nose
 %{python3_sitelibdir}/django_nose-%{version}-py?.?.egg-info
-%endif
 
 %changelog
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.7-alt1
+- new version 1.4.7 (with rpmrb script)
+
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt2
+- build python3 module separately
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt1
 - new version 1.4.6 (with rpmrb script)
 
