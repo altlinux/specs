@@ -1,12 +1,14 @@
 %define oname lftpfs
 Name: fuse-lftpfs
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: filesystem with caching for smart mirror of sites based on FUSE and LFTP
 License: GPL
 Group: System/Kernel and hardware
 Url: http://lftpfs.sourceforge.net/
+
+BuildArch: noarch
 
 # Automatically added by buildreq on Wed Dec 02 2009
 BuildRequires: perl-Fuse perl-IPC-Run perl-devel
@@ -31,6 +33,9 @@ LftpFS is a read-only network filesystem with caching for smart mirror of sites.
 %_bindir/%oname
 
 %changelog
+* Sat Jul 10 2021 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt2
+- BuldArch: noarch
+
 * Wed Dec 02 2009 Ilya Shpigor <elly@altlinux.org> 0.4.2-alt1
 - initial build for ALT Linux Sisyphus
 
