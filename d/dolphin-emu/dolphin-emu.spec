@@ -5,7 +5,7 @@
 
 Name: dolphin-emu
 Version: 5.0.14344
-Release: alt1
+Release: alt1.1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -27,7 +27,7 @@ BuildPreReq: pkgconfig(uuid)
 
 BuildRequires: cmake
 BuildRequires: libcubeb-devel
-BuildRequires: libmbedtls-devel
+BuildRequires: libmbedtls13-devel
 BuildRequires: libminiupnpc-devel
 BuildRequires: llvm12.0-devel-static
 BuildRequires: pkgconfig(Qt5)
@@ -99,6 +99,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sat Jul 10 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.14344-alt1.1
+- Fix FTBFS
+
 * Sun Jun 06 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.14344-alt1
 - Version 5.0-14344
 
