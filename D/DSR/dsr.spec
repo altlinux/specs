@@ -1,6 +1,6 @@
 Name: DSR
 Version: 233
-Release: alt2
+Release: alt3
 
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
 License: Beerware
@@ -12,7 +12,8 @@ BuildArch: noarch
 Source: %name-%version.tar.gz
 Source1: changelog.txt
 
-%add_python3_compile_include %_datadir/%name
+%add_python3_path %_datadir/%name
+%add_findprov_skiplist %_datadir/%name/*
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: xclip
@@ -31,7 +32,9 @@ Development is on GitHub: https://github.com/dkratzert/dsr
 cp -a %SOURCE1 .
 
 sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
+sed -i 's|# /usr/bin/env python|#!/usr/bin/env python3|' $(find ./ -name '*.py')
 sed -i 's|time.clock|time.process_time|' dsr.py
+sed -i 's|version > 0|int(version) > 0|' selfupdate.py
 
 %build
 cat > %name.sh << EOF
@@ -65,6 +68,9 @@ cp -R fit %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Fri Jul 09 2021 Denis G. Samsonenko <ogion@altlinux.org> 233-alt3
+- final fix #39171
+
 * Wed Jul 07 2021 Denis G. Samsonenko <ogion@altlinux.org> 233-alt2
 - build with python3 (fix #39171)
 
