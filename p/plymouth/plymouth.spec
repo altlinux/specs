@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define _allowed_nonstrict_interdeps plymouth-system-theme,plymouth-theme-fade-in
+%add_findreq_skiplist %_unitdir/systemd-ask-password-plymouth.service
 
 %define plymouthdaemon_execdir /sbin
 %define plymouthclient_execdir /bin
@@ -9,7 +10,7 @@
 
 Name: plymouth
 Version: 0.9.5
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -455,6 +456,11 @@ fi \
 %files system-theme
 
 %changelog
+* Sun Jul 11 2021 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt4
+- KillMode=mixed in plymouth-start.service
+- kernel cmdline should contain splash for run plymouth
+- filter requires on systemd-tty-ask-password-agent
+
 * Sat Nov 07 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt3
 - plymouth-update-initrd: Adapt for make-initrd and dracut
 
