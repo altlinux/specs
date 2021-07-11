@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.1
-Release: alt7
+Release: alt8
 
 Summary: Identifier (auth_tkt) plugin with beaker.session cache implementation
 License: Free
@@ -12,6 +12,7 @@ Url: http://pypi.python.org/pypi/repoze.who.plugins.beaker_tkt/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro
 BuildRequires: python-tools-2to3
 
 # For more precise deps:
@@ -25,18 +26,6 @@ BeakerAuthTktPlugin acts the same way as CookieAuthTktPlugin, but
 instead of caching identity through cookie, it stores it in Beaker
 session.
 
-%package tests
-Summary: Tests for repoze.who.plugins.beaker_tkt
-Group: Development/Python3
-Requires: %name = %version-%release
-%py3_requires webob webtest nose
-
-%description -n python3-module-%oname-tests
-BeakerAuthTktPlugin acts the same way as CookieAuthTktPlugin, but
-instead of caching identity through cookie, it stores it in Beaker
-session.
-
-This package contains tests for repoze.who.plugins.beaker_tkt.
 
 %prep
 %setup
@@ -51,6 +40,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %install
 %python3_install
+%python3_prune
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -73,15 +63,12 @@ popd
 %files
 %doc *.txt
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/*/test*
-
-%files tests
-%python3_sitelibdir/*/*/*/test*
-%python3_sitelibdir/*/*/*/*/test*
 
 
 %changelog
+* Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt8
+- don't pack tests subpackage
+
 * Thu Dec 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1-alt7
 - build for python2 disabled
 
