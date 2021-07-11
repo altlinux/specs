@@ -6,13 +6,13 @@ BuildRequires: /usr/bin/perl
 %define _localstatedir %{_var}
 Name:             ddccontrol-db
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20201221
+Version:          20210505
 Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
 Summary:          DDC/CI control database for ddccontrol
-Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 # use autopoint instead of gettextize that is interactive tool
 BuildRequires:    gettext gettext-tools gettext-tools libasprintf-devel, libtool, intltool, perl(XML/Parser.pm)
 BuildArch:        noarch
@@ -43,6 +43,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 20210505-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 20201221-alt1_1
 - update to new release by fcimport
 
