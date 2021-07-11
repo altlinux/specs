@@ -1,22 +1,24 @@
+Group: Networking/WWW
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %_var
+%define _localstatedir %{_var}
 %global gitowner axel-download-accelerator
 
 Name:       axel
-Version:    2.16.1
-Release:    alt1
+Version:    2.17.10
+Release:    alt1_1
 Summary:    Light command line download accelerator for Linux and Unix
 
-Group:      Networking/WWW
 License:    GPLv2+
-Url:        https://github.com/%gitowner/%name
-Source0:    https://github.com/%gitowner/%name/archive/v%version/%name-%version.tar.gz
+URL:        https://github.com/%{gitowner}/%{name}
+Source0:    https://github.com/%{gitowner}/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires: gettext-tools libasprintf-devel
 BuildRequires: pkgconfig(libssl)
 BuildRequires: autoconf
+BuildRequires: autoconf-archive
+BuildRequires: txt2man
 BuildRequires: automake
 BuildRequires: gcc
-Source44:   import.info
+Source44: import.info
 
 %description
 Axel tries to accelerate HTTP/FTP downloading process by using
@@ -25,29 +27,36 @@ download. Axel has no dependencies and is lightweight, so it might
 be useful as a wget clone on byte-critical systems.
 
 %prep
-%setup -n %name-%version
+%setup -q -n %{name}-%{version}
+
 
 %build
-%configure
+autoreconf -vfi
+%{configure}
 %make_build
 
+
 %install
-%makeinstall_std
+%makeinstall_std \
 
-install -m 755 -p src/%name %buildroot%_bindir
-mkdir -p %buildroot%_sysconfdir
-install -m 644 -p -T doc/axelrc.example %buildroot%_sysconfdir/axelrc
+mkdir -p %{buildroot}%{_sysconfdir}
+install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 
-%find_lang %name
+%find_lang %{name}
 
-%files -f %name.lang
-%_bindir/%name
-%doc ChangeLog CREDITS AUTHORS README doc/axelrc.example
+
+%files -f %{name}.lang
+%{_bindir}/%{name}
+%doc ChangeLog README.md doc/API
 %doc --no-dereference COPYING
-%config(noreplace) %_sysconfdir/axelrc
-%_mandir/man1/axel.1*
+%config(noreplace) %{_sysconfdir}/axelrc
+%{_mandir}/man1/axel.1*
+
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 2.17.10-alt1_1
+- update to new release by fcimport
+
 * Thu Nov 22 2018 Grigory Ustinov <grenka@altlinux.org> 2.16.1-alt1
 - Build new version.
 - Cleanup spec.
