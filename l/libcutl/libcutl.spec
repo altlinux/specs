@@ -1,5 +1,6 @@
 Group: System/Libraries
-%define fedora 31
+%add_optflags %optflags_shared
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # The base of the version (just major and minor without point)
@@ -7,7 +8,7 @@ Group: System/Libraries
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_18
+Release:        alt1_21
 Summary:        C++ utility library from Code Synthesis
 License:        MIT
 URL:            http://www.codesynthesis.com/projects/libcutl/
@@ -45,7 +46,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0
 
 
 %if 0%{?external_boost:1}
@@ -55,6 +56,7 @@ rm -rv cutl/details/boost
 rm -rv cutl/details/expat
 
 %build
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 # Use the system Boost and expat libraries
 confopts="--disable-static --with-external-expat %{?external_boost}"
 # If building on RHEL 5
@@ -83,6 +85,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}
 %{_libdir}/pkgconfig/libcutl.pc
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 1.10.0-alt1_21
+- update to new release by fcimport
+
 * Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_18
 - update
 
