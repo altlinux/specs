@@ -49,8 +49,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.4.17
-Release: alt2
+Version: 10.4.20
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -122,9 +122,7 @@ Patch102: mariadb-10.4.16-alt-link-with-latomic-if-needed.patch
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
 
-# For myrocks_hotbackup.py
-BuildRequires(pre): rpm-build-python
-
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
 BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel libzstd-devel
@@ -474,7 +472,7 @@ export LDFLAGS
 	-DMYSQL_DATADIR="%ROOT" \
 	-DMYSQL_USER=mysql \
 	-DWITH_READLINE=ON \
-	-DPYTHON_SHEBANG=%__python \
+	-DPYTHON_SHEBANG=%__python3 \
 	-DWITH_JEMALLOC=%{?_with_jemalloc:system}%{?_without_jemalloc:NO} \
 	-DWITH_SSL=system \
 	-DWITH_ZLIB=system \
@@ -1018,6 +1016,13 @@ fi
 %endif
 
 %changelog
+* Sun Jul 11 2021 Alexey Shabalin <shaba@altlinux.org> 10.4.20-alt1
+- 10.4.20 (ALT #40403)
+- Fixes for the following security vulnerabilities:
+  + CVE-2021-27928
+  + CVE-2021-2166
+  + CVE-2021-2154
+
 * Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 10.4.17-alt2
 - fix FTBFS due to missing rpm-build-python
 
