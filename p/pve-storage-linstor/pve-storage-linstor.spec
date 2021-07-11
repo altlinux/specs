@@ -1,6 +1,6 @@
 
 Name: pve-storage-linstor
-Version: 5.1.5
+Version: 5.2.0
 Release: alt1
 
 Summary: LINSTOR Proxmox Plugin
@@ -53,6 +53,12 @@ LINSTOR Proxmox Plugin.
 %perl_vendor_privlib/LINBIT/PluginHelper.pm
 
 %changelog
+* Mon Jul 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
+* Wed Jun 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.1.5-alt2
+- rebuild with new perl 5.34.0
+
 * Tue Jun 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.1.5-alt1
 - 5.1.5
 
