@@ -1,42 +1,33 @@
-%define modulename paste
+%define oname Paste
 %def_with bootstrap
 
-Name: python-module-%modulename
-Version: 2.0.3
-Release: alt2
+Name: python3-module-paste
+Version: 3.5.0
+Release: alt1
 
 Summary: Tools for using a Web Server Gateway Interface stack
+
 License: MIT
 Group: Development/Python
-BuildArch: noarch
+Url: https://github.com/cdent/paste/
 
-Url: http://pythonpaste.org
-
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools python3-module-setuptools time
+BuildRequires: python3-module-setuptools
 
-%py_provides Paste
-
-%add_python_req_skip scgi
-
-
-%description
-These provide several pieces of "middleware" (or filters) that can be
-nested to build web applications. Each piece of middleware uses the
-WSGI (PEP 333) interface, and should be compatible with other
-middleware based on those interfaces.
-
-%package -n python3-module-%modulename
-Summary: Tools for using a Web Server Gateway Interface stack (Python 3)
-Group: Development/Python3
 %py3_provides Paste
 %add_python3_req_skip scgi hotshot rfc822
 %add_python3_req_skip flup.middleware.session hotshot.stats
+# FIXME:mask python2 modules
+%add_python3_req_skip cStringIO thread urlparse
 
-%description -n python3-module-%modulename
+%description
 These provide several pieces of "middleware" (or filters) that can be
 nested to build web applications. Each piece of middleware uses the
 WSGI (PEP 333) interface, and should be compatible with other
@@ -45,39 +36,24 @@ middleware based on those interfaces.
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n -x next '{}' +
-sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
-	tests/cgiapp_data/*
 %python3_build
-popd
 
 %install
-%python_install
-# hack for autocreate "provides python2.5(paste)"
-touch %buildroot%python_sitelibdir/%modulename/__init__.py
-
-pushd ../python3
 %python3_install
-touch %buildroot%python3_sitelibdir/%modulename/__init__.py
-popd
+# hack for autocreate "provides python2.5(paste)"
+touch %buildroot%python3_sitelibdir/paste/__init__.py
+
 
 %files
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
-
-%files -n python3-module-%modulename
-%python3_sitelibdir/%modulename/
+%python3_sitelibdir/paste/
 %python3_sitelibdir/*.egg-info
 
 
 %changelog
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5.0-alt1
+- build python3 module separately, cleanup build
+
 * Wed Oct 09 2019 Oleg Solovyov <mcpain@altlinux.org> 2.0.3-alt2
 - disable unneeded "next" fix from 2to3
 
