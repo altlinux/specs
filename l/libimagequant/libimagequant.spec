@@ -7,7 +7,7 @@ Group: Development/C
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libimagequant
-Version:        2.14.1
+Version:        2.15.1
 Release:        alt1_1
 Summary:        Palette quantization library
 
@@ -69,6 +69,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.a
 
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 2.15.1-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 2.14.1-alt1_1
 - update to new release by fcimport
 
