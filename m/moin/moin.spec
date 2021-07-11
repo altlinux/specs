@@ -1,7 +1,7 @@
 Summary: MoinMoin is a Python clone of WikiWiki
 Name: moin
 Version: 1.9.10
-Release: alt1.1
+Release: alt1.2
 License: GPLv2+
 Group: Networking/Other
 Url: http://moinmo.in/
@@ -24,6 +24,8 @@ BuildRequires: python-devel
 %add_python_req_skip MySQLdb
 %add_python_req_skip win32service
 %add_python_req_skip win32serviceutil
+
+%add_python_req_skip openid
 
 Requires: python-module-MoinMoin = %version python-module-moin-jabberbot = %version
 Provides: MoinMoin
@@ -101,6 +103,9 @@ sed -i 1s,python,python2, \
 %_sbindir/*
 
 %changelog
+* Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.10-alt1.2
+- NMU: drop openid require (too luxurious for a python2 project)
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.9.10-alt1.1
 - NMU: applied logoved fixes
 
