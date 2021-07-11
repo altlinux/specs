@@ -1,18 +1,18 @@
 Name: powdertoy
-Version: 94.1
+Version: 96.0.348
 Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 Epoch: 1
-License: GPL
+License: GPLv3
 Url: http://powdertoy.co.uk/
 # GitHub https://github.com/FacialTurd/The-Powder-Toy/tags
 Source: v%version.tar.gz
 Obsoletes: powder
 
-# Automatically added by buildreq on Mon Apr 22 2019
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel liblua5.1-devel libstdc++-devel pkg-config python-base python-module-pkg_resources python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json sh4
-BuildRequires: bzlib-devel flex gcc-c++ ghostscript-classic libSDL2-devel libfftw3-devel liblua5.1-compat-devel scons zlib-devel
+# Automatically added by buildreq on Fri Jul 02 2021
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcrypt-devel libglvnd-devel liblua5.1-devel libp11-kit libreadline-devel libsasl2-3 libstdc++-devel libxcb-devel ninja-build perl pkg-config python3 python3-base sh4 xz
+BuildRequires: bzlib-devel cmake ctags gcc-c++ git-core libSDL2-devel libcurl-devel libfftw3-devel libluajit-devel meson zlib-devel
 
 %description
 The Powder Toy is a desktop version of the classic 'falling sand'
@@ -31,13 +31,6 @@ test -d "\$HOME/.powdertoy" ||
 cd "\$HOME/.powdertoy" && \$0.bin
 @@@
 
-sed -i.lua51 's/lua5.1/lua/g' SConscript
-
-%ifarch %e2k
-# as of lcc 1.21.23
-sed -i 's,-ftree-vectorize,,;s,-funsafe-loop-optimizations,,' SConscript*
-%endif
-
 cat > %name.desktop <<@@@
 [Desktop Entry]
 Name=The Powder Toy
@@ -51,37 +44,31 @@ Comment=%summary
 @@@
 
 %build
-#convert -set filename:area '%%wx%%h' resources/powder.ico 'powder-%%[filename:area].png'
-%ifarch x86_64
-scons -j %__nprocs --lin --64bit
-%else
-%ifarch %ix86
-scons -j %__nprocs --lin
-%else
-scons -j %__nprocs --lin --no-sse
-%endif
-%endif
-
-# TODO this doesn't compile for build263
-# --opengl
+%meson
+%meson_build
 
 %install
 # TODO MIME (it can install mime locally!)
-install -D build/powder* %buildroot%_gamesbindir/%name.bin
+install -D %_cmake__builddir/powder %buildroot%_gamesbindir/%name.bin
 install -m755 %name.sh %buildroot%_gamesbindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
-#for N in powder-*.png; do
 for N in resources/icon/new-unused/icon_*.png ; do
 	install -D $N %buildroot%_iconsdir/hicolor/$(basename ${$##*_} .png)/apps/%name.png
 done
 
 %files
-%doc README* TODO
+%doc *.txt *.md
 %_gamesbindir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Jul 11 2021 Fr. Br. George <george@altlinux.ru> 1:96.0.348-alt1
+- Autobuild version bump to 96.0.348
+
+* Fri Jul 02 2021 Fr. Br. George <george@altlinux.ru> 1:96.0.346b-alt1
+- Autobuild version bump to 96.0.346b
+
 * Mon Apr 22 2019 Fr. Br. George <george@altlinux.ru> 1:94.1-alt1
 - Autobuild version bump to 94.1
 
