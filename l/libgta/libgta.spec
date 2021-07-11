@@ -1,27 +1,23 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      libgta
-Version:   1.0.9
-Release:   alt1_1.1
+Version:   1.2.1
+%global so_version 1
+Release:   alt1_5
 Summary:   Library that implements the Generic Tagged Arrays file format
-Group:     System/Libraries
 License:   LGPLv2+
 URL:       https://marlam.de/gta/
 Source0:   https://marlam.de/gta/releases/%{name}-%{version}.tar.xz
+BuildRequires: ctest cmake
 BuildRequires: gcc
 BuildRequires: doxygen
-BuildRequires: bzlib-devel
-BuildRequires: zlib-devel
-BuildRequires: liblzma-devel
 Source44: import.info
-
-%ifarch %ix86 x86_64 aarch64 armh mipsel
-BuildRequires: /usr/bin/valgrind
-%endif
 
 %description
 Libgta is a portable library that implements the GTA (Generic Tagged Arrays)
@@ -29,8 +25,8 @@ file format. It provides interfaces for C and C++.
 
 
 %package devel
+Group: Development/Other
 Summary:  Development Libraries for %{name}
-Group:    Development/Other
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
 
@@ -40,8 +36,8 @@ developing applications that use %{name}.
 
 
 %package doc
+Group: Documentation
 Summary:  API documentation for %{name}
-Group:    Documentation
 Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
@@ -53,42 +49,43 @@ examples for %{name}.
 %prep
 %setup -q
 
-# Preserve date for headers
-# Sent to gta-list@nongnu.org
-sed -i 's/-m 644/-pm 644/' configure
-
-
 %build
-%configure --disable-static
-%make_build V=1
+%{fedora_v2_cmake} -D GTA_BUILD_STATIC_LIB:BOOL=FALSE
+%fedora_v2_cmake_build
 
 %install
-make install DESTDIR=%{buildroot}
+%fedora_v2_cmake_install
 
 # Remove documentation; will install it with doc macro
 rm -rf %{buildroot}%{_docdir}
 
 
 %check
-make check V=1
+%fedora_v2_ctest
+
+
+
 
 
 %files 
 %doc COPYING AUTHORS README
-%{_libdir}/%{name}.so.*
+%{_libdir}/%{name}.so.%{so_version}
+%{_libdir}/%{name}.so.%{so_version}.*
 
 %files devel
-%{_datadir}/%{name}/cmake/FindGTA.cmake
+%{_libdir}/cmake/GTA-%{version}
 %{_libdir}/pkgconfig/gta.pc
 %{_includedir}/gta
 %{_libdir}/%{name}.so
 
 %files doc
 %doc doc/example*
-%doc doc/reference
 
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_5
+- update to new release by fcimport
+
 * Sun Apr 28 2019 Michael Shigorin <mike@altlinux.org> 1.0.9-alt1_1.1
 - BR: valgrind only where it's available
 
