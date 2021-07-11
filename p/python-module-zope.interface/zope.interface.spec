@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.1.0
-Release: alt4
+Release: alt5
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 
-BuildRequires: python-module-repoze.sphinx.autointerface
+#BuildRequires: python-module-repoze.sphinx.autointerface
 BuildRequires: python-module-setuptools
 
 %description
@@ -51,8 +51,8 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+#prepare_sphinx .
+#ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -62,31 +62,34 @@ ln -s ../objects.inv docs/
 %python_install
 
 export PYTHONPATH=$PWD/src
-%make -C docs pickle
-%make -C docs html
+#make -C docs pickle
+#make -C docs html
 
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+#cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/pickle
+#exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/zope/interface/tests
 %exclude %python_sitelibdir/zope/interface/common/tests
 
-%files pickles
-%python_sitelibdir/*/pickle
+#files pickles
+#python_sitelibdir/*/pickle
 
-%files docs
-%doc docs/_build/html/*
+#files docs
+#doc docs/_build/html/*
 
 %files tests
 %python_sitelibdir/zope/interface/tests
 %python_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt5
+- drop docs build (uses unintended python-module-repoze.sphinx.autointerface)
+
 * Mon Apr 26 2021 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt4
 - Split python packages.
 
