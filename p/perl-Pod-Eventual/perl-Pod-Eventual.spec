@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Pod-Eventual
 
 Name: perl-Pod-Eventual
-Version: 0.094001
+Version: 0.094002
 Release: alt1
 
 Summary: Perl module to read a POD document
@@ -50,6 +50,9 @@ will be called, and will raise an exception.
 %perl_vendor_privlib/Pod/Eventual*
 
 %changelog
+* Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.094002-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.094001-alt1
 - New version
 
