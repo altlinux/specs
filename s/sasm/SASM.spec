@@ -1,36 +1,18 @@
-#
-# spec file for package SASM
-#
-# Copyright (c)   2013 Dmitriy Manushin
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the GPL Licens v3e). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
-
-# Please submit bugfixes or comments via https://github.com/Dman95/SASM
-#
-
 Name: sasm
 Url: http://dman95.github.io/SASM/
-Version: 3.7.0
+Version: 3.12.1
 Release: alt1
 Summary: Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages
 License: GPL-3.0+
 Group: Development/Other
-source: v%version.tar.gz
+Source: v%version.tar.gz
 
-Summary: Simple IDE for NASM, MASM, GAS, FASM assembly languages
 Obsoletes: SASM < %version
 Provides: SASM = %version-%release
 
-# Automatically added by buildreq on Wed Feb 08 2017
-# optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libstdc++-devel phonon-devel python-base
-BuildRequires: gcc-c++ libqt4-webkit-devel
+# Automatically added by buildreq on Sun Jul 11 2021
+# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libstdc++-devel python-modules python2-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel sh4
+BuildRequires: qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-enginio-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-remoteobjects-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-webview-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 
 %description
 Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages
@@ -40,7 +22,7 @@ Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages
 rm -f Linux/bin/*
 
 %build
-qmake-qt4 SASM.pro PREFIX=%buildroot/usr
+qmake-qt5 SASM.pro PREFIX=%buildroot/usr
 
 %make_build
 
@@ -54,6 +36,9 @@ qmake-qt4 SASM.pro PREFIX=%buildroot/usr
 %_desktopdir/*
 
 %changelog
+* Sun Jul 11 2021 Fr. Br. George <george@altlinux.ru> 3.12.1-alt1
+- Autobuild version bump to 3.12.1
+
 * Wed Feb 08 2017 Fr. Br. George <george@altlinux.ru> 3.7.0-alt1
 - Initial build for ALT
 
@@ -85,13 +70,13 @@ qmake-qt4 SASM.pro PREFIX=%buildroot/usr
 - Update - additional registers view in debugger has been added.
 * Sun Jul 13 2014 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 3.0.0
 - Update - new assemblers have been added: now NASM, GAS, MASM, FASM are supported, including syntax highlighting, debugging, and x86/x64 modes. Added ability to choose your own assembler or linker filling path to them. Many debugging improvements. Folder for include files. Many bugs have been fixed.
-* Wed Apr 24 2014 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.3.1
+* Thu Apr 24 2014 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.3.1
 - Update - bug with spaces in path fixed
-* Thu Apr 3 2014 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.3.0
+* Thu Apr 03 2014 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.3.0
 - Update - x64 feature added, many bugs fixed
 * Thu Feb 13 2014 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.2.0
 - Update - many functions added and bugs fixed
 * Wed Nov 13 2013 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.1.0
 - Update - many functions added and bugs fixed
-* Tue Sep 3 2013 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.0.0
+* Tue Sep 03 2013 Dmitriy "Dman95" Manushin <Dman1095@gmail.com> 2.0.0
 - Initial Release
