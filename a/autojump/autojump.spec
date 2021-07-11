@@ -10,12 +10,12 @@ Requires: bash-completion
 
 Name:           autojump
 Version:        22.5.3
-Release:        alt1_1
+Release:        alt1_6
 
 Summary:        A fast way to navigate your filesystem from the command line
 
 License:        GPLv3+
-URL:            http://wiki.github.com/%{owner}/%{name}
+URL:            https://github.com/%{owner}/%{name}
 Source:         https://github.com/%{owner}/%{name}/archive/release-v%{version}/%{name}-%{version}.tar.gz
 Patch0:         remove-homebrew-check.patch
 Patch1:         install-add-distribution-arg.patch
@@ -25,7 +25,7 @@ BuildArch:      noarch
 BuildRequires:  pandoc
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-mock
-BuildRequires:  pytest python-module-pytest python3-module-pytest
+BuildRequires:  pytest pytest3 python3-module-pytest
 Source44: import.info
 
 %description
@@ -104,6 +104,9 @@ mv %{buildroot}%{_bindir}/%{name}_*.py %{buildroot}%{python3_sitelibdir_noarch}/
 %config(noreplace) %{_datadir}/%{name}/%{name}.fish
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 22.5.3-alt1_6
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 22.5.3-alt1_1
 - update to new release by fcimport
 
