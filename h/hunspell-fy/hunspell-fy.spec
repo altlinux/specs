@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: hunspell-fy
 Summary: Frisian hunspell dictionaries
 Version: 3.0.0
-Release: alt1_1
+Release: alt1_8
 Source: https://addons.mozilla.org/firefox/downloads/file/499875/frysk_wurdboek-%{version}-tb+fx+sm.xpi
 URL: http://www.mozilla-nl.org/projecten/frysk
-License: LGPLv2+
+License: GPLv3+
 BuildArch: noarch
 
 Requires: hunspell
@@ -50,6 +50,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_8
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_1
 - update to new release by fcimport
 
