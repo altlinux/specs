@@ -4,7 +4,7 @@
 %global import_path github.com/pgaskin/kepubify
 
 Name:     kepubify
-Version:  3.1.6
+Version:  4.0.0
 Release:  alt1
 
 Summary:  EPUBs to KEPUBs converter
@@ -60,11 +60,18 @@ export IGNORE_SOURCES=1
 
 
 %files
-%doc README.md LICENSE.md docs/
+%doc README.md
 
 %_bindir/*
 
 %changelog
+* Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.0.0-alt1
+- New version
+  * Conversion is now 3 to 6 times faster than v3
+  * Kepubify can now fix layout issues caused by books without
+    a standalone cover page
+  * HTML content files with non-standard extensions now work correctly
+
 * Mon Jun 28 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.1.6-alt1
 - Initial build for ALT Linux Sisyphus
 
