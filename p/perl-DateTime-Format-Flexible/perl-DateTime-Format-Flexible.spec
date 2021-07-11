@@ -16,8 +16,8 @@ BuildRequires: perl(DateTime/Locale.pm) perl-podlators
 %bcond_with perl_DateTime_Format_Flexible_enables_extra_test
 
 Name:       perl-DateTime-Format-Flexible
-Version:    0.33
-Release:    alt2
+Version:    0.34
+Release:    alt1
 License:    GPL+ or Artistic
 Summary:    Flexibly parse strings and turn them into DateTime objects
 Source0:     http://www.cpan.org/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
@@ -83,6 +83,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
+- automated CPAN update
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.33-alt2
 - fixed build
 
