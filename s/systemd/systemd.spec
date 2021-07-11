@@ -59,6 +59,7 @@
 %def_enable sysusers
 %def_disable ldconfig
 %def_enable firstboot
+%def_disable standalone_binaries
 
 %if_enabled sysusers
 %def_enable ldconfig
@@ -68,22 +69,31 @@
 %def_enable kexec
 %endif
 
+# TODO: move libbpf to /lib
+# from meson.build: bpf_arches = ['x86_64']
+%ifarch x86_64
+%def_disable bpf_framework
+%else
+%def_disable bpf_framework
+%endif
+
 %ifarch ia64 %ix86 ppc64le x86_64 aarch64
 %define mmap_min_addr 65536
 %else
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 248
+%define ver_major 249
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.3
-Release: alt3
+Version: %ver_major
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
 License: LGPLv2.1+
+
 
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
@@ -93,7 +103,6 @@ Source4: altlinux-openresolv.path
 Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
-Source8: altlinux-clock-setup.service
 Source10: systemd-udev-trigger-no-reload.conf
 Source11: env-path-user.conf
 Source12: env-path-system.conf
@@ -129,6 +138,7 @@ Source75: systemd-sysctl.filetrigger
 Source76: systemd-binfmt.filetrigger
 Source77: journal-catalog.filetrigger
 Source78: systemd-sysusers.filetrigger
+Source79: systemd-modules-load.filetrigger
 
 Patch1: %name-%version.patch
 
@@ -142,6 +152,7 @@ BuildRequires: libcap-devel libcap-utils
 BuildRequires: libpam-devel
 BuildRequires: libacl-devel acl
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds python3-module-lxml
+BuildRequires: python3(jinja2)
 BuildRequires: libdbus-devel >= %dbus_ver
 %{?_enable_seccomp:BuildRequires: pkgconfig(libseccomp) >= 2.3.1}
 %{?_enable_selinux:BuildRequires: pkgconfig(libselinux) >= 2.1.9}
@@ -181,6 +192,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.33
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 %{?_enable_pstore:BuildRequires: libacl-devel libdw-devel liblzma-devel liblz4-devel}
 %{?_enable_pwquality:BuildRequires: pkgconfig(pwquality)}
+%{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.2 /usr/bin/clang /usr/bin/llvm-strip bpftool}
 # for make check
 #BuildRequires: /proc
 #BuildRequires: lz4
@@ -211,6 +223,14 @@ Requires: sysvinit-utils
 Obsoletes: systemd-units < 0:43-alt1
 Provides: systemd-units = %EVR
 Provides: syslogd-daemon
+
+# SBAT generation number for ALT (refer to SBAT.md)
+%define sbat_distro altlinux
+%define sbat_distro_generation 1
+%define sbat_distro_summary "ALT Linux"
+%define sbat_distro_pkgname systemd-boot-efi
+%define sbat_distro_version %version-%release
+%define sbat_distro_url http://git.altlinux.org/gears/s/systemd.git
 
 %description
 systemd is a system and session manager for Linux, compatible with
@@ -392,6 +412,14 @@ Obsoletes: bash-completion-%name < %EVR
 Obsoletes: bash-completion-journalctl < %EVR
 Obsoletes: zsh-completion-%name < %EVR
 Obsoletes: zsh-completion-journalctl < %EVR
+%if_disabled standalone_binaries
+Provides: systemd-modules-load-standalone = %EVR
+Provides: systemd-tmpfiles-standalone = %EVR
+Provides: systemd-sysctl-standalone = %EVR
+Obsoletes: systemd-modules-load-standalone < %EVR
+Obsoletes: systemd-tmpfiles-standalone < %EVR
+Obsoletes: systemd-sysctl-standalone < %EVR
+%endif
 
 %description utils
 This package contains utils from systemd:
@@ -530,6 +558,10 @@ systemd-coredump and coredumpctl utils.
 Group: System/Servers
 Summary: systems that boot up with an empty /etc directory
 Requires: %name = %EVR
+%if_disabled standalone_binaries
+Provides: systemd-sysusers-standalone = %EVR
+Obsoletes: systemd-sysusers-standalone < %EVR
+%endif
 
 %description stateless
 This package contains:
@@ -649,7 +681,7 @@ library or other libraries from libsystemd.
 	-Dlink-timesyncd-shared=false \
 	%{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
 	%{?_enable_static_libudev:-Dstatic-libudev=pic} \
-	-Dstandalone-binaries=true \
+	%{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
 	-Dxinitrcdir=%_sysconfdir/X11/xinit.d \
 	-Drpmmacrosdir=no \
 	-Drootlibdir=/%_lib \
@@ -677,8 +709,16 @@ library or other libraries from libsystemd.
 	-Dcompat-mutable-uid-boundaries=true \
 	-Dsystem-uid-max=499 \
 	-Dsystem-gid-max=499 \
+	-Dadm-gid=4 \
+	-Daudio-gid=81 \
+	-Dcdrom-gid=22 \
+	-Ddisk-gid=6 \
+	-Dkmem-gid=9 \
+	-Dlp-gid=7 \
 	-Dtty-gid=5 \
 	-Dusers-gid=100 \
+	-Dutmp-gid=72 \
+	-Dwheel-gid=10 \
 	-Dnobody-user=nobody \
 	-Dnobody-group=nobody \
 	-Dbump-proc-sys-fs-file-max=false \
@@ -696,6 +736,7 @@ library or other libraries from libsystemd.
 	%{?_enable_initrd:-Dinitrd=true} \
 	%{?_enable_quotacheck:-Dquotacheck=true} \
 	%{?_enable_randomseed:-Drandomseed=true} \
+	%{?_enable_bpf_framework:-Dbpf-framework=true} \
 	%{?_enable_coredump:-Dcoredump=true} \
 	%{?_enable_pstore:-Dpstore=true} \
 	%{?_enable_smack:-Dsmack=true} \
@@ -711,6 +752,12 @@ library or other libraries from libsystemd.
 	%{?_enable_libiptc:-Dlibiptc=true} \
 	%{?_enable_polkit:-Dpolkit=true} \
 	%{?_enable_efi:-Defi=true} \
+	-Dsbat-distro=%sbat_distro \
+	-Dsbat-distro-generation=%sbat_distro_generation \
+	-Dsbat-distro-summary=%sbat_distro_summary \
+	-Dsbat-distro-pkgname=%sbat_distro_pkgname \
+	-Dsbat-distro-version=%sbat_distro_version \
+	-Dsbat-distro-url=%sbat_distro_url \
 	%{?_enable_homed:-Dhomed=true} \
 	%{?_enable_networkd:-Dnetworkd=true} \
 	%{?_enable_resolve:-Dresolve=true} \
@@ -731,7 +778,7 @@ library or other libraries from libsystemd.
 	-Dfallback-hostname=localhost \
 	-Ddefault-dnssec=no \
 	-Ddefault-mdns=no \
-	-Ddefault-llmnr=resolve \
+	-Ddefault-llmnr=yes \
 	-Ddefault-hierarchy=%hierarchy \
 %ifnarch mipsel
 	-Db_lto=true \
@@ -754,6 +801,11 @@ library or other libraries from libsystemd.
 rm -f %buildroot/lib/systemd/libsystemd-shared.so
 # remove systemd rpm macros
 rm -f %buildroot/usr/lib/rpm/macros.d/macros.systemd
+# remove linuxia32.elf.stub
+# debugedit: Failed to update file: invalid section entry size
+%ifarch %ix86
+rm -f %buildroot/%_prefix/lib/systemd/boot/efi/linuxia32.elf.stub
+%endif
 
 %find_lang %name
 
@@ -772,9 +824,6 @@ ln -s ../altlinux-simpleresolv.path %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-libresolv.path
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
 ln -s ../altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants
-install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
-ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
-ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
 ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
 ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
@@ -912,6 +961,7 @@ install -pD -m755 %SOURCE75 %buildroot%_rpmlibdir/systemd-sysctl.filetrigger
 install -pD -m755 %SOURCE76 %buildroot%_rpmlibdir/systemd-binfmt.filetrigger
 install -pD -m755 %SOURCE77 %buildroot%_rpmlibdir/journal-catalog.filetrigger
 install -pD -m755 %SOURCE78 %buildroot%_rpmlibdir/systemd-sysusers.filetrigger
+install -pD -m755 %SOURCE79 %buildroot%_rpmlibdir/systemd-modules-load.filetrigger
 
 cat >>%buildroot/lib/sysctl.d/50-mmap-min-addr.conf <<EOF
 # Indicates the amount of address space which a user process will be
@@ -1027,6 +1077,77 @@ if [ $1 -eq 1 ] ; then
         systemctl preset-all >/dev/null 2>&1 || :
         systemctl --global preset-all >/dev/null 2>&1 || :
 fi
+
+
+# Migrate /etc/sysconfig/clock
+SYSCONFIG_CLOCK=/etc/sysconfig/clock
+if [ ! -L /etc/localtime -a -e "$SYSCONFIG_CLOCK" ] ; then
+       . "$SYSCONFIG_CLOCK" >/dev/null 2>&1 || :
+       if [ -n "$ZONE" -a -e "/usr/share/zoneinfo/$ZONE" ] ; then
+              ln -sf "../usr/share/zoneinfo/$ZONE" /etc/localtime >/dev/null 2>&1 || :
+       fi
+fi
+#rm -f "$SYSCONFIG_CLOCK" >/dev/null 2>&1 || :
+
+# Migrate /etc/sysconfig/i18n
+SYSCONFIG_I18N=/etc/sysconfig/i18n
+if [ -e "$SYSCONFIG_I18N" -a ! -e /etc/locale.conf ]; then
+        unset LANG
+        unset LC_CTYPE
+        unset LC_NUMERIC
+        unset LC_TIME
+        unset LC_COLLATE
+        unset LC_MONETARY
+        unset LC_MESSAGES
+        unset LC_PAPER
+        unset LC_NAME
+        unset LC_ADDRESS
+        unset LC_TELEPHONE
+        unset LC_MEASUREMENT
+        unset LC_IDENTIFICATION
+        . "$SYSCONFIG_I18N" >/dev/null 2>&1 || :
+        [ -n "$LANG" ] && echo LANG=$LANG > /etc/locale.conf 2>&1 || :
+        [ -n "$LC_CTYPE" ] && echo LC_CTYPE=$LC_CTYPE >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_NUMERIC" ] && echo LC_NUMERIC=$LC_NUMERIC >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_TIME" ] && echo LC_TIME=$LC_TIME >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_COLLATE" ] && echo LC_COLLATE=$LC_COLLATE >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_MONETARY" ] && echo LC_MONETARY=$LC_MONETARY >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_MESSAGES" ] && echo LC_MESSAGES=$LC_MESSAGES >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_PAPER" ] && echo LC_PAPER=$LC_PAPER >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_NAME" ] && echo LC_NAME=$LC_NAME >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_ADDRESS" ] && echo LC_ADDRESS=$LC_ADDRESS >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_TELEPHONE" ] && echo LC_TELEPHONE=$LC_TELEPHONE >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_MEASUREMENT" ] && echo LC_MEASUREMENT=$LC_MEASUREMENT >> /etc/locale.conf 2>&1 || :
+        [ -n "$LC_IDENTIFICATION" ] && echo LC_IDENTIFICATION=$LC_IDENTIFICATION >> /etc/locale.conf 2>&1 || :
+fi
+#rm -f "$SYSCONFIG_I18N" >/dev/null 2>&1 || :
+
+# Migrate /etc/sysconfig/keyboard and /etc/sysconfig/consolefont
+SYSCONFIG_KEYBOARD=/etc/sysconfig/keyboard
+SYSCONFIG_CONSOLEFONT=/etc/sysconfig/consolefont
+if [ -e "$SYSCONFIG_KEYBOARD" -a -e "$SYSCONFIG_CONSOLEFONT" -a ! -e /etc/vconsole.conf ]; then
+        unset SYSFONT
+	unset SYSFONTACM
+	unset UNIMAP
+        unset KEYTABLE
+        [ -e "$SYSCONFIG_KEYBOARD" ] && . "$SYSCONFIG_KEYBOARD" >/dev/null 2>&1 || :
+        [ -e "$SYSCONFIG_CONSOLEFONT" ] && . "$SYSCONFIG_CONSOLEFONT" >/dev/null 2>&1 || :
+        [ -n "$SYSFONT" ] && echo FONT=$SYSFONT > /etc/vconsole.conf 2>&1 || :
+        [ -n "$SYSFONTACM" ] && echo FONT_MAP=$SYSFONTACM >> /etc/vconsole.conf 2>&1 || :
+        [ -n "$UNIMAP" ] && echo FONT_UNIMAP=$UNIMAP >> /etc/vconsole.conf 2>&1 || :
+        [ -n "$KEYTABLE" ] && echo KEYMAP=$KEYTABLE >> /etc/vconsole.conf 2>&1 || :
+fi
+#rm -f "$SYSCONFIG_KEYBOARD" >/dev/null 2>&1 || :
+#rm -f "$SYSCONFIG_CONSOLEFONT" >/dev/null 2>&1 || :
+
+# Migrate HOSTNAME= from /etc/sysconfig/network
+SYSCONFIG_NETWORK=/etc/sysconfig/network
+if [ -e "$SYSCONFIG_NETWORK" -a ! -e /etc/hostname ]; then
+        unset HOSTNAME
+        . "$SYSCONFIG_NETWORK" >/dev/null 2>&1 || :
+        [ -n "$HOSTNAME" ] && echo $HOSTNAME > /etc/hostname 2>&1 || :
+fi
+#sed -i '/^HOSTNAME=/d' "$SYSCONFIG_NETWORK" >/dev/null 2>&1 || :
 
 %preun
 if [ $1 -eq 0 ] ; then
@@ -1415,7 +1536,7 @@ udevadm hwdb --update &>/dev/null
 %_man1dir/systemd.*
 %_mandir/*/*journald*
 %_man5dir/localtime*
-%_man5dir/os-release*
+%_man5dir/*-release*
 %_man5dir/*sleep.conf*
 %_man5dir/*system.conf*
 %_man5dir/*systemd1*
@@ -1654,6 +1775,7 @@ udevadm hwdb --update &>/dev/null
 /lib/systemd/systemd-modules-load
 %_sysconfdir/modules-load.d/modules.conf
 /sbin/systemd-modules-load
+%_rpmlibdir/systemd-modules-load.filetrigger
 %_mandir/*/*modules-load*
 
 /lib/systemd/systemd-sysctl
@@ -1974,7 +2096,10 @@ udevadm hwdb --update &>/dev/null
 %_unitdir/ldconfig.service
 %_unitdir/sysinit.target.wants/ldconfig.service
 %endif #ldconfig
+%endif #sysuser
 
+%if_enabled standalone_binaries
+%if_enabled sysusers
 %files sysusers-standalone
 /sbin/systemd-sysusers.standalone
 %endif #sysuser
@@ -1987,6 +2112,7 @@ udevadm hwdb --update &>/dev/null
 
 %files tmpfiles-standalone
 /sbin/systemd-tmpfiles.standalone
+%endif
 
 %files -n libudev1
 /%_lib/libudev.so.*
@@ -2039,6 +2165,17 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Fri Jul 09 2021 Alexey Shabalin <shaba@altlinux.org> 1:249-alt1
+- 249
+- Add rpm filetrigger for systemd-modules-load.
+- Drop altlinux-clock-setup.service.
+- Add condition for build with bpf-framework (disabled).
+- Define SBAT options for ALT Linux.
+- Define system user GID as in setup package.
+- Add migrate /etc/sysconfig/ i18n, keyboard, consolefont, network files/variables to %%post.
+- Enable default LLMNR mode for systemd-resolver.
+- Disable build standalone utils.
+
 * Wed Jul 07 2021 Dmitry V. Levin <ldv@altlinux.org> 1:248.3-alt3
 - NMU.
 - Reverted all changes introduced in the previous release due to regressions
