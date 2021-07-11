@@ -7,10 +7,10 @@ BuildRequires: unzip
 Name: hunspell-eu
 Summary: Basque hunspell dictionaries
 Version: 5.1
-Release: alt1_1
+Release: alt1_2
 Source0: http://xuxen.eus/static/hunspell/xuxen_%{version}_hunspell.zip
 URL: http://xuxen.eus
-License: GPLv3
+License: LGPLv3+
 BuildArch: noarch
 
 Requires: hunspell
@@ -35,6 +35,9 @@ cp -p eu_ES.aff %{buildroot}%{_datadir}/myspell/eu_ES.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_2
+- update to new release by fcimport
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_1
 - update to new release by fcimport
 
