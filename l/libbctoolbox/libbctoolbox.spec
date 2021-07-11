@@ -1,20 +1,20 @@
 Name: libbctoolbox
 Version: 0.6.0
-Release: alt3
+Release: alt4
 Summary: Utilities library used by Belledonne Communications softwares
 
 Group: System/Libraries
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
-License: GPL
+License: GPLv2
 Url: http://www.belle-sip.org
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Mar 02 2017
 # optimized out: bcunit gnu-config libstdc++-devel perl pkg-config python-base
-BuildRequires: bcunit-devel gcc8-c++ libmbedtls-devel
+BuildRequires: bcunit-devel gcc8-c++ libmbedtls13-devel
 
 %description
 Utilities library used by Belledonne Communications
@@ -57,6 +57,10 @@ export CXX="g++-%{_gcc_version}"
 %_libdir/pkgconfig/bctoolbox.pc
 
 %changelog
+* Sun Jul 11 2021 Alexei Takaseev <taf@altlinux.org> 0.6.0-alt4
+- Build with mbedtls 2.27.0
+- Fix License
+
 * Thu Oct 24 2019 Alexei Takaseev <taf@altlinux.org> 0.6.0-alt3
 - Build with gcc8
 
