@@ -4,11 +4,11 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.67
+Version: 0.68
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
-License: BSD or GPL
+License: ALT-Public-Domain or GPLv2+
 Group: Graphical desktop/Other
 
 URL: http://altlinux.org/
@@ -354,6 +354,10 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 0.68-alt1
+- updated license to alt policy
+- rebuild to fix unwanted worries (closes: #40424)
+
 * Tue Jun 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
 - added mate-like menu
 
