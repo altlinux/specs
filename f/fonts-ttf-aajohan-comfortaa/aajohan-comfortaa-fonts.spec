@@ -1,7 +1,4 @@
 Group: System/Fonts/True type
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 %define oldname aajohan-comfortaa-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -9,13 +6,13 @@ BuildRequires: unzip
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-aajohan-comfortaa
-Version:        3.001
+Version:        3.101
 Release:        alt1_1
 Summary:        Modern style true type font
 
 License:        OFL
 URL:            http://aajohan.deviantart.com
-Source0:        http://www.deviantart.com/download/105395949/comfortaa___font_by_aajohan-d1qr019.zip
+Source0:        https://github.com/googlefonts/comfortaa/archive/%{version}%{?prerelease}/%{oldname}-%{version}%{?prerelease}.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -30,7 +27,7 @@ Bold, Regular, and Thin variants.
 It has very good European language coverage and decent Cyrillic coverage.  
 
 %prep
-%setup -q -n %{version}
+%setup -q -n comfortaa-%{version}
 
 
 # Fixing
@@ -48,7 +45,8 @@ done
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p fonts/OTF/*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p fonts/TTF/*.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 install -m 0644 -p %{SOURCE1} \
@@ -100,11 +98,16 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{fontnam
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
+%{_fontbasedir}/*/%{_fontstem}/*.otf
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc FONTLOG.txt OFL.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 3.101-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_1
 - update to new release by fcimport
 
