@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.4.0
-Release: alt3
+Release: alt4
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -20,7 +20,7 @@ Url: http://pypi.python.org/pypi/gevent
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-repoze.sphinx.autointerface
+#BuildRequires: python-module-repoze.sphinx.autointerface
 BuildRequires: libev-devel libcares-devel
 BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-objects.inv
 BuildRequires: python-module-greenlet
@@ -197,16 +197,16 @@ popd
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd doc
-%make pickle
-%make html
+#make pickle
+#make html
 
-cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
+#cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 popd
 
 %files
 %doc AUTHORS LICENSE* TODO *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/pickle
+#exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/greentest
 %exclude %python_sitelibdir/%oname/tests
 %exclude %python_sitelibdir/%oname/testing
@@ -218,12 +218,12 @@ popd
 %files -n python-module-greentest
 %python_sitelibdir/greentest
 
-%files doc
-%doc doc/_build/html
-%doc examples
+#files doc
+#doc doc/_build/html
+#doc examples
 
-%files pickles
-%python_sitelibdir/%oname/pickle
+#files pickles
+#python_sitelibdir/%oname/pickle
 
 %if_with python3
 %files -n python3-module-%oname
@@ -242,6 +242,9 @@ popd
 %endif
 
 %changelog
+* Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt4
+- drop using unintendend python-module-repoze.sphinx.autointerface
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt3
 - build python2 module only
 
