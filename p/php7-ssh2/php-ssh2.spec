@@ -2,7 +2,7 @@
 Name:	 	php%_php_suffix-%php_extension
 Version:	1.3.1
 Epoch:		1
-Release:	%php_release.%php_version
+Release:	alt3.%_php_release_version
 
 Summary:	PHP bindings for the libssh2 library
 
@@ -23,7 +23,7 @@ BuildRequires: libssh2-devel
 BuildRequires: php-devel = %php_version
 
 %description
-php7-zmq extension provides bindings to the functions of libssh2
+php-ssh extension provides bindings to the functions of libssh2
 which implements the SSH2 protocol.
 
 %prep

@@ -2,7 +2,7 @@
 Name:	 	php%_php_suffix-%php_extension
 Version:	2.3.3
 Epoch:		1
-Release:	%php_release
+Release:	alt3.%_php_release_version
 
 Summary:	PHP hierarchical profiler
 

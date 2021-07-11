@@ -4,7 +4,7 @@
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%mcrypt_version
-Release:	%php_release.%php_version.1
+Release:	alt3.%_php_release_version
 Epoch:	1
 
 Summary:	Mcrypt library support for PHP

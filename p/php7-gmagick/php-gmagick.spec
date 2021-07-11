@@ -3,7 +3,7 @@
 Name:	 	php%_php_suffix-%php_extension
 Version:	2.0.6
 Epoch:		1
-Release:	%php_release.%php_version.rc1
+Release:	alt3.%_php_release_version.rc1
 
 Summary:	php extension to work with images using the GraphicsMagick API
 

@@ -4,7 +4,7 @@
 Name:	 	php%_php_suffix-%php_extension
 Version:	5.1.20
 Epoch:		1
-Release:	%php_release.%php_version
+Release:	alt3.%_php_release_version
 
 Summary:	PHP extension APCu - APC User Cache
 
