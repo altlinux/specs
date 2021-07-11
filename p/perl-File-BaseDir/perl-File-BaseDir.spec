@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-BaseDir
 Name: perl-%dist
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: Use the Freedesktop.org base directory specification
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/K/KI/KIMRYAN/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,10 +34,13 @@ layout can just as well be used for non-GUI applications.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README author.yml
 %perl_vendor_privlib/File
 
 %changelog
+* Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- automated CPAN update
+
 * Sat Mar 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
