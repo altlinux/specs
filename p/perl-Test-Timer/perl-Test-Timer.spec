@@ -6,7 +6,7 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(English.pm) perl(Error.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators perl(JSON/PP.pm)
 
 Name: perl-%module_name
-Version: 2.11
+Version: 2.12
 Release: alt1
 Summary: a test module to test/assert response times
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README Changes docs
+%doc README docs CHANGELOG.md
 %perl_vendor_privlib/T*
 
 %changelog
+* Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 2.12-alt1
+- automated CPAN update
+
 * Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
 - automated CPAN update
 
