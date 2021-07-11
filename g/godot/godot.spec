@@ -20,7 +20,7 @@
 
 Name: godot
 Version: 3.1
-Release: alt2
+Release: alt2.1
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
@@ -52,7 +52,7 @@ BuildRequires: scons pkgconfig libX11-devel libXcursor-devel libXrandr-devel lib
 %{!?_with_builtin_libvorbis:BuildRequires: libvorbis-devel}
 %{!?_with_builtin_libvpx:BuildRequires: libvpx-devel}
 %{!?_with_builtin_libwebp:BuildRequires: libwebp-devel}
-%{!?_with_builtin_mbedtls:BuildRequires: libmbedtls-devel}
+%{!?_with_builtin_mbedtls:BuildRequires: libmbedtls13-devel}
 %{!?_with_builtin_opus:BuildRequires: libopus-devel}
 %{!?_with_builtin_pcre2:BuildRequires: libpcre2-devel}
 %{!?_with_builtin_recast:BuildRequires: librecast-devel}
@@ -184,6 +184,9 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Sun Jul 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.1-alt2.1
+- Fixed FTBFS (build with mbedTLS 2.27.0)
+
 * Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 3.1-alt2
 - Fixed FTBFS (removed python-module-pyxdg from BR's)
 
