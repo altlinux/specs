@@ -1,12 +1,12 @@
-%def_with python3
+%define oname python3-openid
 
-Name: python-module-openid
-Version: 2.2.5
-Release: alt2.2
+Name: python3-module-openid
+Version: 3.2.0
+Release: alt1
 
 Summary: OpenID support for servers and consumers
 
-Group: Development/Python
+Group: Development/Python3
 License: GPL
 Url: http://www.openidenabled.com/
 
@@ -14,19 +14,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-#setup_python_module openid
-%define modulename openid
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-Source: http://openidenabled.com/files/python-openid/packages/python-openid-%version.tar.bz2
-
-# Automatically added by buildreq on Wed May 14 2008
-BuildRequires: python-devel
-
-%if_with python3
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildPreReq: python-tools-2to3
-%endif
 
 %description
 This is a set of Python packages to support use of the OpenID
@@ -36,21 +28,9 @@ Use the openid.consumer package.
 Want to run your own OpenID server? Check out openid.server.
 Includes example code and support for a variety of storage back-ends.
 
-%package -n python3-module-%modulename
-Summary: OpenID support for servers and consumers
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-This is a set of Python packages to support use of the OpenID
-decentralized identity system in your application.
-Want to enable single sign-on for your web site?
-Use the openid.consumer package.
-Want to run your own OpenID server? Check out openid.server.
-Includes example code and support for a variety of storage back-ends.
-
 %package examples
 Summary: Examples for OpenOD Python package
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Conflicts: %name < %version-%release
 
@@ -65,47 +45,25 @@ Includes example code and support for a variety of storage back-ends.
 This package contains examples for OpenOD Python package.
 
 %prep
-%setup -n python-%modulename-%version
-
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+%setup
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc README CHANGES* LICENSE NEWS NOTICE *.txt
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%doc README.md NEWS.md
+%python3_sitelibdir/*
 
 %files examples
 %doc examples
 
-%if_with python3
-%files -n python3-module-%modulename
-%doc README CHANGES* LICENSE NEWS NOTICE *.txt
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
-%endif
-
 %changelog
+* Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- build new python3 module separately
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.2.5-alt2.2
 - (NMU) rebuild with python3.6
 
