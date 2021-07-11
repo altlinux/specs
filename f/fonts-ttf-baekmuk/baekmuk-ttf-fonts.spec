@@ -17,7 +17,7 @@ This package provides the free Korean TrueType fonts.
 
 Name:           fonts-ttf-baekmuk
 Version:        2.2
-Release:        alt2_51
+Release:        alt2_54
 Summary:        Free Korean TrueType fonts
 
 License:        Baekmuk
@@ -36,7 +36,8 @@ Source11:       %{fontname}.metainfo.xml
 Provides:       fonts-ttf-korean = %{version}-%{release}
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel >= 1.13 bdftopcf mkfontscale xorg-font-utils
+BuildRequires:  fontpackages-devel >= 1.13
+BuildRequires:  mkfontdir
 BuildRequires:  ttmkfdir >= 3.0.6
 Source44: import.info
 
@@ -185,7 +186,6 @@ install -Dm 0644 -p %{SOURCE10} \
         %{buildroot}%{_metainfodir}/%{fontname}-hline.metainfo.xml
 install -Dm 0644 -p %{SOURCE11} \
         %{buildroot}%{_metainfodir}/%{fontname}.metainfo.xml
-#sed -i -e s,%{_datadir}/fonts/%{fontname},%{_datadir}/fonts/ttf/%{fontname},g %buildroot/usr/share/ghostscript/conf.d/*
 # delete-non-ascii lines (differ on i586 and x86_64)
 test -e %buildroot%{_datadir}/fonts/%{fontname}/fonts.scale
 perl -i -ne 'print unless /[^-a-zA-Z0-9\. \n]/' %buildroot%{_datadir}/fonts/%{fontname}/fonts.{dir,scale}
@@ -225,6 +225,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 2.2-alt2_54
+- update to new release by fcimport
+
 * Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_51
 - update
 
