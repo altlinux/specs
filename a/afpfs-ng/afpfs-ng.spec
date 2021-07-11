@@ -3,17 +3,23 @@ Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libncurses-devel
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# No FUSE on RHEL5
-%if %{?el5:1}0
-%define _without_fuse 1
-%endif
-
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_34
+Release:        alt3_35
 Summary:        Apple Filing Protocol client
+
+# by default build with the fuse module
+# rpmbuild --rebuild afpfs-ng.src.rpm --without fuse
+%bcond_without     fuse
+
 
 License:        GPL+
 URL:            http://alexthepuffin.googlepages.com/home
@@ -24,18 +30,18 @@ Patch1:         afpfs-ng-0.8.1-pointer.patch
 Patch2:         afpfs-ng-0.8.1-formatsec.patch
 Patch3:         afpfs-ng-0.8.1-longoptions.patch
 
-%{?!_without_fuse:BuildRequires: libfuse-devel}
+%{?with_fuse:BuildRequires: libfuse-devel}
 BuildRequires:  gcc
-BuildRequires: gcrypt-utils libgcrypt-devel libgmp-devel libgmpxx-devel readline-devel
+BuildRequires: libgcrypt-devel libgmp-devel libgmpxx-devel readline-devel
 Source44: import.info
 
 %description
 A command line client to access files exported from Mac OS system via
 Apple Filing Protocol.
-%{?!_without_fuse:The FUSE filesystem module for AFP is in fuse-afp package}
+%{?with_fuse:The FUSE filesystem module for AFP is in fuse-afp package}
 
 
-%if %{?!_without_fuse:1}0
+%if 0%{?with_fuse}
 %package -n fuse-afp
 Group: System/Base
 Summary:        FUSE driver for AFP filesystem
@@ -58,10 +64,11 @@ Library for dynamic linking and header files of afpfs-ng.
 
 %prep
 %setup -q
-%patch0 -p1 -b .overflows
-%patch1 -p1 -b .pointer
-%patch2 -p1 -b .formatsec
-%patch3 -p1 -b .longoptions
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
 
 
 %build
@@ -72,7 +79,7 @@ Library for dynamic linking and header files of afpfs-ng.
 touch --reference aclocal.m4 configure.ac Makefile.in
 
 export CFLAGS="${RPM_OPT_FLAGS} -fcommon" 
-%configure %{?_without_fuse:--disable-fuse} --disable-static
+%configure %{?!with_fuse:--disable-fuse} --disable-static
 %make_build
 
 
@@ -80,6 +87,11 @@ export CFLAGS="${RPM_OPT_FLAGS} -fcommon"
 make install DESTDIR=%{buildroot}
 install -d %{buildroot}%{_includedir}/afpfs-ng
 cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
+
+
+%if ( 0%{?rhel} && 0%{?rhel} <= 7 )
+
+%endif
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
@@ -87,16 +99,18 @@ done
 
 
 %files
+%doc --no-dereference COPYING
 %{_bindir}/afpcmd
 %{_bindir}/afpgetstatus
 %{_mandir}/man1/afpcmd.1*
 %{_mandir}/man1/afpgetstatus.1*
-%{_libdir}/*.so.*
-%doc COPYING AUTHORS ChangeLog docs/README docs/performance docs/FEATURES.txt docs/REPORTING-BUGS.txt
+%{_libdir}/libafpclient.so.*
+%doc AUTHORS ChangeLog docs/README docs/performance docs/FEATURES.txt docs/REPORTING-BUGS.txt
 
 
-%if %{?!_without_fuse:1}0
+%if 0%{?with_fuse}
 %files -n fuse-afp
+%doc --no-dereference COPYING
 %{_bindir}/afp_client
 %{_bindir}/afpfs
 %{_bindir}/afpfsd
@@ -104,7 +118,7 @@ done
 %{_mandir}/man1/afp_client.1*
 %{_mandir}/man1/afpfsd.1*
 %{_mandir}/man1/mount_afp.1*
-%doc COPYING AUTHORS ChangeLog
+%doc AUTHORS ChangeLog
 %endif
 
 
@@ -113,10 +127,10 @@ done
 %{_libdir}/*.so
 
 
-
-
-
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt3_35
+- update to new release by fcimport
+
 * Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt3_34
 - update to new release by fcimport
 
