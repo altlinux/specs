@@ -8,14 +8,14 @@ Group: System/Fonts/True type
 %global metainfo io.pagure.lohit.devanagari.font.metainfo
 
 Name:           fonts-ttf-lohit-devanagari
-Version:        2.95.4
-Release:        alt1_9
+Version:        2.95.5
+Release:        alt1_1
 Summary:        Free Devanagari Script Font
 License:        OFL
 URL:            https://pagure.io/lohit
-Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
+Source0:        https://github.com/lohit-fonts/%{oldname}/files/6454324/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires: fontforge libfontforge
+BuildRequires: fontforge libfontforge python3-module-fontforge
 BuildRequires:  fontpackages-devel
 BuildRequires:  ttfautohint
 BuildRequires: python3-devel
@@ -95,11 +95,14 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-devanagari.txt
+%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README.md test-devanagari.txt
 %{_datadir}/metainfo/%{metainfo}.xml
 
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 2.95.5-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_9
 - update to new release by fcimport
 
