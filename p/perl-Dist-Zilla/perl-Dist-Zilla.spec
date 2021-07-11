@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Dist::Zilla
 
 Name: perl-Dist-Zilla
-Version: 6.022
+Version: 6.023
 Release: alt1
 
 Summary: scary tools for building CPAN distributions
@@ -80,6 +80,9 @@ rm -f --  t/plugins/filefinders.t
 
 
 %changelog
+* Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.023-alt1
+- New version
+
 * Sat Jul 03 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.022-alt1
 - New version
 
