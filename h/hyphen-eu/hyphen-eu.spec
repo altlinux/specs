@@ -3,14 +3,14 @@ Group: Text tools
 %define _localstatedir %{_var}
 Name: hyphen-eu
 Summary: Basque hyphenation rules
-%global upstreamid 20110620
+# I found 2 sources www.tug.org and mirrors.ctan.org with same file
+# let's choose older timestamp here
+%global upstreamid 20190406
 Version: 0.%{upstreamid}
-Release: alt1_11
-#? in a url causes trouble
-#http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-eu.tex?view=co
-Source: hyph-eu.tex
+Release: alt1_1
+Source: http://mirrors.ctan.org/language/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-eu.tex
 URL: http://tp.lc.ehu.es/jma/basque.html
-License: LPPL
+License: MIT
 BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
@@ -42,6 +42,9 @@ cp -p hyph_eu_ES.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 0.20190406-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20110620-alt1_11
 - update to new release by fcimport
 
