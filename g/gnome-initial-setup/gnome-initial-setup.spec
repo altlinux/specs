@@ -12,7 +12,7 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Bootstrapping your OS
@@ -105,6 +105,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Tue Jul 13 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
+- 40.3
+
 * Thu Jun 03 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 
