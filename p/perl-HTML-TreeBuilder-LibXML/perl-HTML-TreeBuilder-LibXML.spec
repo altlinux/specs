@@ -1,4 +1,4 @@
-%define perl_bootstrap 1
+#define perl_bootstrap 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,7 +8,7 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(URI.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-TreeBuilder-LibXML
 Version:        0.26
-Release:        alt3_22
+Release:        alt4_22
 Summary:        HTML::TreeBuilder and XPath compatible interface with libxml
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/HTML-TreeBuilder-LibXML
@@ -69,6 +69,9 @@ HTML::TreeBuilder::LibXML is drop-in-replacement for HTML::TreeBuilder::XPath.
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 0.26-alt4_22
+- non-bootstrap build
+
 * Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 0.26-alt3_22
 - to Sisyphus as perl-Finance-Quote dep
 - bootstrap build
