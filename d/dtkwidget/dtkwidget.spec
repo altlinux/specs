@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.5.7
+Version: 5.5.17.1
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -11,7 +11,6 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: dtkwidget-5.4.10-gcc10.patch
-Patch1: dtkwidget-5.4.20-qt5.15.patch
 
 %if_enabled clang
 BuildRequires(pre): clang12.0-devel
@@ -57,16 +56,22 @@ Group: Development/KDE and QT
 %description -n dtk5-widget-devel
 Header files and libraries for %name.
 
+%package -n dtk5-widget-examples
+Summary: Examples for %name
+Group: Development/KDE and QT
+
+%description -n dtk5-widget-examples
+DtkWidget is Deepin graphical user interface for deepin desktop development.
+Examples for %name.
+
 %prep
 %setup
 %patch -p2
-%patch1 -p2
 sed -i "s|'/lib'|'/%_lib'|" conanfile.py
-sed -i 's|dtkcore5.5|dtkcore|; s|dtkgui5.5|dtkgui|; s|dtkwidget5.5|dtkwidget|' \
-    examples/dwidget-examples/collections/collections.pro \
-    src/src.pro \
-    tests/tests.pro \
-    tools/svgc/svgc.pro
+sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|' \
+    src/src.pro
+sed -i 's|$$QT.dtkcore.libs/examples|$$QT.dtkcore.libs/dtkwidget5-examples|' \
+    examples/dwidget-examples/collections/collections.pro
 
 %build
 export PATH=%{_qt5_bindir}:$PATH
@@ -78,7 +83,7 @@ export PATH=%{_qt5_bindir}:$PATH
     PREFIX=%_prefix \
     LIB_INSTALL_DIR=%_libdir \
     VERSION=%version \
-    DBUS_VERSION_0_4_2=YES
+#
 
 %make_build
 
@@ -89,7 +94,8 @@ export PATH=%{_qt5_bindir}:$PATH
 %doc README.md LICENSE
 %_libdir/lib%name.so.5*
 %dir %_libdir/libdtk-5*/
-%_libdir/libdtk-5*/DWidget/
+%dir %_libdir/libdtk-5*/DWidget/
+%_libdir/libdtk-5*/DWidget/bin/
 %_datadir/libdtk-5*/
 
 %files -n dtk5-widget-devel
@@ -99,7 +105,13 @@ export PATH=%{_qt5_bindir}:$PATH
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
 
+%files -n dtk5-widget-examples
+%_libdir/dtkwidget5-examples/
+
 %changelog
+* Tue Jul 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.17.1-alt1
+- New version (5.5.17.1).
+
 * Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.7-alt1
 - New version (5.5.7) with rpmgs script.
 

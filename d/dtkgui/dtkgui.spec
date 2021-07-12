@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.5.2
+Version: 5.5.17.1
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -10,11 +10,12 @@ Url: https://github.com/linuxdeepin/dtkgui
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtkgui-5.5.17.1-alt-fix-build-ppc64le.patch
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %endif
-BuildRequires: dtk5-core-devel dtk5-common librsvg-devel libgtest-devel
+BuildRequires: dtk5-core-devel dtk5-common librsvg-devel libgtest-devel libgmock-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -36,20 +37,12 @@ Header files and libraries for %name.
 
 %prep
 %setup
-sed -i 's|dtkcore5.5|dtkcore|' \
-    examples/dnd-example/dnd-test-client.pro \
-    examples/dnd-example/dnd-test-server.pro \
-    examples/test-taskbar/taskbar.pro \
-    src/src.pro \
-    tests/tests.pro \
-    tools/deepin-gui-settings/deepin-gui-settings.pro
-sed -i 's|dtkgui5.5|dtkgui|' \
-    examples/dnd-example/dnd-test-client.pro \
-    examples/dnd-example/dnd-test-server.pro \
-    examples/test-taskbar/taskbar.pro \
-    src/src.pro \
-    tests/tests.pro \
-    tools/deepin-gui-settings/deepin-gui-settings.pro
+%ifarch ppc64le
+%patch -p1
+%endif
+sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|' \
+    src/src.pro
+sed -i '/*build-*/d' .gitignore
 
 %build
 %qmake_qt5 \
@@ -83,6 +76,9 @@ sed -i 's|dtkgui5.5|dtkgui|' \
 %_libdir/libdtkgui.so
 
 %changelog
+* Mon Jul 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.17.1-alt1
+- New version (5.5.17.1).
+
 * Mon Jun 28 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.2-alt1
 - New version (5.5.2) with rpmgs script.
 
