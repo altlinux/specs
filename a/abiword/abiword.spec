@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define abi_ver 3.0
 %define ver_major 3.0
@@ -13,8 +13,8 @@
 %def_enable collabnet
 
 Name: abiword
-Version: %ver_major.4
-Release: alt4
+Version: %ver_major.5
+Release: alt1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -22,21 +22,25 @@ License: GPL-2.0
 Url: http://www.abisource.com/
 
 %if_disabled snapshot
-Source: https://github.com/AbiWord/abiword/archive/release-%version/%name-%version.tar.gz
+Source: https://www.abisource.com/downloads/abiword/%version/source/%name-%version.tar.gz
+#Source: https://github.com/AbiWord/abiword/archive/release-%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/AbiWord/abiword.git
+Vcs: https://github.com/AbiWord/abiword.git
 Source: %name-%version.tar
 %endif
-
 
 Source11: abiword.mime
 Source12: abiword.keys
 Source13: abiword.xml
 
+#Source20: abiword-3.0.4-ru-RU.po
+
 #fedora patches
 Patch11: abiword-2.8.3-desktop.patch
 Patch12: abiword-2.6.0-boolean.patch
 Patch13: abiword-3.0.0-librevenge.patch
+
+Patch20: abiword-3.0.0-python-override.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Obsoletes: %name-%abi_ver
@@ -58,8 +62,8 @@ BuildRequires: telepathy-glib-devel libdbus-glib-devel
 %{?_with_champlain:BuildRequires: libchamplain-gtk3-devel}
 %{?_with_libical:BuildRequires: libical-devel}
 %{?_with_eds:BuildRequires: evolution-data-server-devel}
-%{?_with_python:BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-pygobject3-devel python-module-setuptools}
+%{?_with_python:BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pygobject3 python3-module-setuptools}
 %{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel asio-devel}
 %{?_enable_ots:BuildRequires: libots-devel}
 
@@ -127,25 +131,28 @@ Provides: %name-%abi_ver-gir-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the AbiWord
 
-%package -n python-module-%name
-Summary: Python bindings for developing with AbiWord
-Group: Development/Python
+%package -n python3-module-%name
+Summary: Python 3 bindings for developing with AbiWord
+Group: Development/Python3
 Requires: %name-gir = %version-%release
+Requires: typelib(Gtk) = 3.0
 
-%description -n python-module-%name
-Python bindings for developing with AbiWord library
+%description -n python3-module-%name
+Python 3 bindings for developing with AbiWord library
 
 %prep
-%setup %{?_disable_snapshot:-n %name-release-%version}
+%setup %{?_disable_snapshot:-n %name-%version}
+#cp %SOURCE20 po/ru-RU.po
 %patch11 -p1 -b .desktop
 %patch12 -p1 -b .boolean
 %patch13 -p0 -b .librevenge
 
+%patch20 -p1 -b python
 sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
 
 %build
 %add_optflags -std=c++11 %(getconf LFS_CFLAGS)
-NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure \
 	--enable-print \
 	--enable-plugins \
@@ -159,7 +166,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{?_without_eds:--without-evolution-data-server} \
 	%{?_enable_collabnet:--enable-collab-backend-service} \
 	--disable-static \
-	PYTHON=python2
+	PYTHON=%__python3
 %make_build
 
 %install
@@ -199,10 +206,14 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %files gir-devel
 %_girdir/*.gir
 
-%files -n python-module-%name
-%python_sitelibdir/gi/overrides/*
+%files -n python3-module-%name
+%python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1
+- 3.0.5
+- built with python3
+
 * Fri Nov 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt4
 - updated to 3.0.4-4-g57ea77281 (msword: Fix a potential buffer overrun
   in footnotes and endnotes)
