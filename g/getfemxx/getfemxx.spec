@@ -6,7 +6,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt4
+Release: alt5
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -58,7 +58,10 @@ Python bindings to %name
 %patch1 -p1
 %autoreconf
 
+ln -sf %__python3 bin/python
+
 %build
+export PATH=$PWD/bin:$PATH
 %add_optflags -fno-strict-aliasing -fpermissive -I%_includedir/metis0 -I%_includedir/mumps
 export CFLAGS="%optflags" CXXFLAGS="%optflags"
 %undefine _configure_gettext
@@ -107,6 +110,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Mon Jul 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.3-alt5
+- fix to find python (closes: 40456)
+
 * Sat May 15 2021 Grigory Ustinov <grenka@altlinux.org> 5.3-alt4
 - Disable qhull support, because it doesn't build with new qhull.
 
