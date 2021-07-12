@@ -25,8 +25,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.12.1
-Release: alt2
+Version: 2.12.2
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -594,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Wed Jul 07 2021 Pavel Vainerman <pv@altlinux.ru> 2.12.2-alt1
+- [unet]: multicast config params refactoring
+
 * Thu Jul 01 2021 Pavel Vainerman <pv@altlinux.ru> 2.12.1-alt2
 - fixed lib version
 
