@@ -1,6 +1,6 @@
 Name: docbook-utils
 Version: 0.6.14
-Release: alt4
+Release: alt5
 
 Summary: Shell scripts for managing DocBook documents
 Group: Publishing
@@ -32,10 +32,10 @@ Requires: docbook-style-dsssl >= 1.72
 Requires: docbook-dtds
 Requires: openjade >= 1.3.2
 Requires: OpenSP
-Requires: perl-SGMLSpm >= 1.03ii
+Requires: perl-SGMLSpm
 Conflicts: sgml-tools < 0:0.6.9-ipl24mdk
 
-BuildPreReq: perl(SGMLS.pm)
+BuildRequires(pre): perl(SGMLS.pm)
 # Automatically added by buildreq on Tue Sep 16 2008
 BuildRequires: OpenSP docbook-style-dsssl openjade
 
@@ -129,6 +129,9 @@ done
 %_man1dir/*ps.1*
 
 %changelog
+* Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.14-alt5
+- updated dependencies
+
 * Wed Sep 22 2010 Dmitry V. Levin <ldv@altlinux.org> 0.6.14-alt4
 - Updated to FC docbook-utils-0.6-14-24, fixed regressions
   introduced by this update.
