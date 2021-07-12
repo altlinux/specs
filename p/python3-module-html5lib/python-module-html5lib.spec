@@ -1,69 +1,37 @@
-%define module_name html5lib
+%define oname html5lib
 
-%def_without python3
 %def_without doc
 
-Name: python-module-%module_name
+Name: python3-module-html5lib
 Epoch: 1
-Version: 1.0.1
-Release: alt2
+Version: 1.1
+Release: alt1
 
 Summary: Library for working with HTML5 documents
 
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://github.com/html5lib/html5lib-python
 
-# Source-url: https://github.com/html5lib/html5lib-python/archive/%version.tar.gz
-Source: %module_name-%version.tar
-Patch: html5lib-0.999999999-Fix-Pytest4.x-compatibility-error.patch
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-%{?_with_doc:BuildRequires(pre): rpm-macros-sphinx}
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools >= 18.5
-BuildRequires: python2.7(webencodings)
-BuildRequires: python2.7(pytest) python2.7(six) python2.7(mock)
-
-%setup_python_module %module_name
-
-%if_with python3
+BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+
+BuildArch: noarch
+
+%{?_with_doc:BuildRequires(pre): rpm-macros-sphinx3}
+
+#BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools >= 18.5
 BuildRequires: python3(webencodings)
 BuildRequires: python3(pytest) python3(six) python3(mock)
-%endif
 
 %description
 A ruby/python based HTML parser/tokenizer based on the WHATWG
 HTML5 specification for maximum compatibility with major
 desktop web browsers.
-
-%package tests
-Summary: Tests for html5lib
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-A ruby/python based HTML parser/tokenizer based on the WHATWG
-HTML5 specification for maximum compatibility with major
-desktop web browsers.
-
-This package contains tests for html5lib.
-
-%package pickles
-Summary: Pickles for html5lib
-Group: Development/Python
-
-%description pickles
-A ruby/python based HTML parser/tokenizer based on the WHATWG
-HTML5 specification for maximum compatibility with major
-desktop web browsers.
-
-This package contains pickles for html5lib.
 
 %package doc
 Summary: Documentation for html5lib
@@ -76,109 +44,46 @@ desktop web browsers.
 
 This package contains documentation for html5lib.
 
-%if_with python3
-%package -n python3-module-%module_name
-Summary: Library for working with HTML5 documents (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%module_name
-A ruby/python based HTML parser/tokenizer based on the WHATWG
-HTML5 specification for maximum compatibility with major
-desktop web browsers.
-
-%package -n python3-module-%module_name-tests
-Summary: Tests for html5lib (Python 3)
-Group: Development/Python3
-Requires: python3-module-%module_name = %EVR
-
-%description -n python3-module-%module_name-tests
-A ruby/python based HTML parser/tokenizer based on the WHATWG
-HTML5 specification for maximum compatibility with major
-desktop web browsers.
-
-This package contains tests for html5lib.
-%endif
-
 %prep
-%setup -n %module_name-%version
-%patch -p1
+%setup
 rm -f html5lib/tests/conftest.py
-sed -i "s|import chardet|raise ImportError('Skipping chardet test: file is missing')|g" html5lib/tests/test_encoding.py
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+# https://github.com/html5lib/html5lib-python/issues/433
+rm -f html5lib/tests/test_encoding.py
+#sed -i "s|import chardet|raise ImportError('Skipping chardet test: file is missing')|g" html5lib/tests/test_encoding.py
 
 %if_with doc
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
 %endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %if_with doc
-%make -C doc pickle
 %make -C doc html
 %endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%if_with doc
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
-%endif
+%python3_prune
 
 %check
-py.test
-%if_with python3
-pushd ../python3
 py.test3
-popd
-%endif
 
 %files
 %doc README.rst
-#exclude %python_sitelibdir/*/tests
-%python_sitelibdir/*
-%if_with doc
-%exclude %python_sitelibdir/*/pickle
-%endif
-
-#files tests
-#python_sitelibdir/*/tests
+%python3_sitelibdir/*
 
 %if_with doc
-%files pickles
-%python_sitelibdir/*/pickle
 
 %files doc
 %doc doc/_build/html/*
 %endif
 
-%if_with python3
-%files -n python3-module-%module_name
-%python3_sitelibdir/*
-#exclude %python3_sitelibdir/*/tests
-
-#files -n python3-module-%module_name-tests
-#python3_sitelibdir/*/tests
-%endif
-
 %changelog
-* Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.0.1-alt2
-- build python2 module only
+* Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.1-alt1
+- build python3 module separately
+- new version 1.1 (with rpmrb script)
 
 * Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
