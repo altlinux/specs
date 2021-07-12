@@ -18,7 +18,7 @@
 
 Name: %_name-gostcrypto
 Version: 2.4.9
-Release: alt1
+Release: alt2
 
 Summary: a full-featured SSL VPN solution with GOST algorithms
 Summary(ru_RU.UTF-8): полнофункциональное решение VPN на базе SSL с ГОСТ алгоритмами
@@ -46,7 +46,6 @@ Source10: %_name.tmpfiles
 # Because of /etc/syslog.d/ feature
 Conflicts: syslogd < 1.4.1-alt11
 
-BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Mon Nov 16 2020
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libpkcs11-helper libssl-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
 BuildRequires: cmake git-core glibc-devel-static iproute2 liblz4-devel liblzo2-devel libselinux-devel net-tools
@@ -353,6 +352,10 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%_name
 %endif
 
 %changelog
+* Mon Jul 12 2021 Mikhail Efremov <sem@altlinux.org> 2.4.9-alt2
+- Drop rpm-build-licenses from BR.
+- Fix GOST ciphers with openSSL >= 1.1.0.
+
 * Wed Nov 18 2020 Mikhail Efremov <sem@altlinux.org> 2.4.9-alt1
 - New version: merged with openvpn package.
 
