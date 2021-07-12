@@ -1,28 +1,47 @@
 %def_enable static
-%def_without doc
+%def_enable docs
+%def_enable flac
+%def_enable check
+%ifarch %valgrind_arches
+%def_disable valgrind
+%endif
+
 %define sover 1
 
 Name: audiofile
 Version: 0.3.6
-Release: alt3
+Release: alt4
 
 Summary: Library to handle various audio file formats
-License: LGPL
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: http://www.68k.org/~michael/%name
 
-# VCS https://github.com/mpruett/audiofile.git
+Vcs: https://github.com/mpruett/audiofile.git
 Source: %url/%name-%version.tar
-# newer pkg-config macros required
-Source1: pkg.m4
+
 Patch: %name-%version-%release.patch
 Patch1: %name-0.3.6-alt-configure.patch
 
+# debian patches
+Patch4: 04_clamp-index-values-to-fix-index-overflow-in-IMA.cpp.patch
+Patch5: 05_Always-check-the-number-of-coefficients.patch
+Patch6: 06_Check-for-multiplication-overflow-in-MSADPCM-decodeSam.patch
+Patch7: 07_Check-for-multiplication-overflow-in-sfconvert.patch
+Patch8: 08_Fix-signature-of-multiplyCheckOverflow.-It-returns-a-b.patch
+Patch9: 09_Actually-fail-when-error-occurs-in-parseFormat.patch
+Patch10: 10_Check-for-division-by-zero-in-BlockCodec-runPull.patch
+Patch11: 11_CVE-2018-13440.patch
+Patch12: 12_CVE-2018-17095.patch
+
 Requires: lib%name%sover = %version-%release
 
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: gcc-c++ glibc-devel-static libalsa-devel
-BuildPreReq: libflac-devel
-%{?_with_doc:BuildRequires: asciidoc-a2x}
+%{?_enable_flac:BuildRequires: libflac-devel}
+%{?_enable_docs:BuildRequires: asciidoc-a2x}
+%{?_enable_check:
+%{?_enable_valgrind:BuildRequires: valgrind}}
 
 %package -n lib%name%sover
 Summary: Shared library for %name
@@ -83,15 +102,27 @@ Static libraries you can use to develop
 %prep
 %setup
 %patch -p1
-[ ! -d m4 ] && mkdir m4 && cp %SOURCE1 m4/
 %patch1 -b .m4
+#debian
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 %autoreconf
 %configure \
 	--enable-largefile \
-	%{?!_with_doc:--disable-docs} \
-	%{subst_enable static}
+	%{subst_enable docs} \
+	%{subst_enable static} \
+	%{subst_enable flac} \
+	%{?_enable_check:%{subst_enable valgrind}}
+%nil
 # SMP-incompatible build (man pages)
 %make_build || %make
 
@@ -99,26 +130,22 @@ Static libraries you can use to develop
 %makeinstall_std
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/sfconvert
 %_bindir/sfinfo
+%{?_enable_docs:%_man1dir/*}
 %doc README ACKNOWLEDGEMENTS TODO NEWS NOTES
 
 %files -n lib%name%sover
 %_libdir/*.so.*
-%if_with doc
-%_man1dir/*
-%endif
 
 %files -n lib%name-devel
 %_libdir/*.so
 %_pkgconfigdir/*
 %_includedir/*
-%if_with doc
-%_man3dir/*
-%endif
+%{?_enable_docs:%_man3dir/*}
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -126,6 +153,13 @@ Static libraries you can use to develop
 %endif
 
 %changelog
+* Fri Jul 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt4
+- applied debian patchset (fixed CVE-2018-13440, CVE-2018-17095)
+- made flac support optional (enabled by default)
+- made %%check verbose
+- enabled documentation
+- fixed License tag
+
 * Thu Dec 06 2018 Michael Shigorin <mike@altlinux.org> 0.3.6-alt3
 - E2K: no difference anymore
 - A shot at SMP build
@@ -200,7 +234,7 @@ Static libraries you can use to develop
 * Sat Mar 23 2002 Yuri N. Sedunov <aris@altlinux.ru> 0.2.3-alt2
 - pkgconfig files added in lib%name-devel package.
 
-* Tue Nov 28 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.2.3-alt1
+* Wed Nov 28 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.2.3-alt1
 - 0.2.3
 
 * Wed Aug 29 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.2.2-alt1
