@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics
-Version: 1.61.1
+Version: 1.62.0
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -96,6 +96,9 @@ install -m644 %SOURCE2 \
 %_bindir/vm*
 
 %changelog
+* Mon Jul 12 2021 Alexey Shabalin <shaba@altlinux.org> 1.62.0-alt1
+- new version 1.62.0
+
 * Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 1.61.1-alt1
 - new version 1.61.1
 
