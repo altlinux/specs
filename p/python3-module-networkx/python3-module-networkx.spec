@@ -5,7 +5,7 @@
 Name:           python3-module-%oname
 Epoch:          2
 Version:        2.5.1
-Release:        alt1
+Release:        alt2
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
 License:        BSD-3-Clause
@@ -21,14 +21,14 @@ Patch1:         %oname-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-decorator >= 4.3.0
-BuildRequires: python3-module-numpy >= 1.15.0
-BuildRequires: python3-module-scipy >= 1.1.0
+#BuildRequires: python3-module-numpy >= 1.15.0
+#BuildRequires: python3-module-scipy >= 1.1.0
 #BuildRequires: python3-module-pandas >= 0.23.3
-BuildRequires: python3-module-matplotlib >= 2.2.2
-BuildRequires: python3-module-pygraphviz >= 1.5
-BuildRequires: python3-module-pydot >= 1.2.4
-BuildRequires: python3-module-yaml >= 3.13
-BuildRequires: python3-module-lxml >= 4.2.3
+#BuildRequires: python3-module-matplotlib >= 2.2.2
+#BuildRequires: python3-module-pygraphviz >= 1.5
+#BuildRequires: python3-module-pydot >= 1.2.4
+BuildRequires: python3-module-yaml >= 5.3
+BuildRequires: python3-module-lxml >= 4.5
 BuildRequires: python3-module-gdal >= 1.10.0
 
 Requires: %name-drawing = %EVR
@@ -42,8 +42,8 @@ Summary: Creates and Manipulates Graphs and Networks (Python 3)
 Group: Development/Python3
 Requires: python3-module-decorator
 Requires: python3-module-yaml
-Requires: python3-module-numpy
-Requires: python3-module-scipy
+#Requires: python3-module-numpy
+#Requires: python3-module-scipy
 %add_python3_req_skip tests
 %add_python3_req_skip networkx.tests.test
 
@@ -55,9 +55,10 @@ study of the structure, dynamics, and functions of complex networks.
 Summary: Creates and Manipulates Graphs and Networks (Python 3)
 Group: Development/Python3
 Requires: %name-core = %EVR
-Requires: python3-module-pygraphviz
-Requires: python3-module-pydot
-Requires: python3-module-matplotlib
+Requires: python3-module-pygraphviz >= 1.5
+Requires: python3-module-pygraphviz < 2.0
+Requires: python3-module-pydot >= 1.4.1
+Requires: python3-module-matplotlib >= 3.2
 
 %description drawing
 NetworkX is a Python package for the creation, manipulation, and
@@ -102,6 +103,7 @@ rm -rf %buildroot%_defaultdocdir
 %exclude %python3_sitelibdir/%oname/readwrite/nx_shp.py
 %exclude %python3_sitelibdir/%oname/readwrite/__pycache__/nx_shp.*
 %exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/conftest.py
 %exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/*/tests
 %exclude %python3_sitelibdir/%oname/*/*/tests
@@ -113,12 +115,18 @@ rm -rf %buildroot%_defaultdocdir
 %exclude %python3_sitelibdir/%oname/drawing/tests
 
 %files tests
+%python3_sitelibdir/%oname/conftest.py
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/testing
 %python3_sitelibdir/%oname/*/tests
 %python3_sitelibdir/%oname/*/*/tests
 
 %changelog
+* Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2:2.5.1-alt2
+- make scipy and numpy optional
+- update requires
+- drop pytest require from core package
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.5.1-alt1
 - Updated to upstream version 2.5.1.
 - Fixed license.
