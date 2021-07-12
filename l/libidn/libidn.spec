@@ -1,5 +1,5 @@
 Name: libidn
-Version: 1.35
+Version: 1.37
 Release: alt1
 
 Summary: Internationalized Domain Name support library
@@ -91,9 +91,6 @@ This package contains javadoc for %{name}-java.
 
 %prep
 %setup
-# These gnulib tests fail.
-sed -i 's/test-\(rwlock1\|thread_create\)\$(EXEEXT) //' lib/gltests/Makefile.in
-sed -i 's/test-\(rwlock1\|thread_create\)\$(EXEEXT) //' gltests/Makefile.in
 
 %if_enabled java
 # Cleanup
@@ -139,7 +136,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 rm %buildroot%_infodir/*.png
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir/reference/html
-install -pm644 doc/*.html doc/*.pdf %buildroot%docdir/
+install -pm644 doc/*.pdf %buildroot%docdir/
 install -pm644 AUTHORS COPYING FAQ NEWS README THANKS %buildroot%docdir/
 install -pm644 doc/reference/*.pdf %buildroot%docdir/reference/
 install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
@@ -182,7 +179,6 @@ export LD_LIBRARY_PATH=%buildroot/%_lib:%buildroot%_libdir
 
 %files devel-doc
 %dir %docdir/
-%docdir/*.html
 %docdir/*.pdf
 %docdir/reference/
 
@@ -200,6 +196,9 @@ export LD_LIBRARY_PATH=%buildroot/%_lib:%buildroot%_libdir
 %endif #java
 
 %changelog
+* Mon Jul 12 2021 Grigory Ustinov <grenka@altlinux.org> 1.37-alt1
+- Build new version (Closes: #40432).
+
 * Thu Oct 25 2018 Grigory Ustinov <grenka@altlinux.org> 1.35-alt1
 - Build new version.
 
