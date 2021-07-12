@@ -21,7 +21,7 @@
 %endif
 
 Name: nvidia_glx_src
-Version: 460.80
+Version: 460.84
 Release: alt1
 
 Source0: null
@@ -171,6 +171,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_libdir/libnvidia-encode.so.%version
 
 %changelog
+* Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 460.84-alt1
+- new version
+
 * Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 460.80-alt1
 - new version
 

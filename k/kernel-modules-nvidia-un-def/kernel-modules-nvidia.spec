@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	460.80
+%define package_version	460.84
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.143
@@ -280,6 +280,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 07 2021 Sergey V Turchin <zerg at altlinux dot org> 460.84-alt1
+- new release(460.84)
 
 * Mon May 17 2021 Sergey V Turchin <zerg at altlinux dot org> 460.80-alt1
 - new release(460.80)
