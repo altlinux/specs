@@ -1,4 +1,4 @@
-%def_with    java
+%def_without java
 %def_with    php
 %def_without perl
 %def_with    python
@@ -7,8 +7,8 @@
 
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
-Version: 2.6.1
-Release: alt4
+Version: 2.7.0
+Release: alt1
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -131,7 +131,7 @@ library.
 %build
 cp -at . -- /usr/share/gnu-config/config.{sub,guess}
 %add_optflags -fPIC
-%autoreconf
+# %%autoreconf
 ./autogen.sh
 %configure \
 %if_without java
@@ -235,6 +235,12 @@ make check
 %endif
 
 %changelog
+* Mon Jul 12 2021 Leontiy Volodin <lvol@altlinux.org> 2.7.0-alt1
+- New version.
+- Upstream:
+  + CVE-2021-28091: Fix signature checking on unsigned response with multiple assertions.
+  + configure.ac: Disable java bindings.
+
 * Sat Jul 10 2021 Leontiy Volodin <lvol@altlinux.org> 2.6.1-alt4
 - FTBFS: switch to macros with recent changes in rpm-build-php (thanks rider@).
 
