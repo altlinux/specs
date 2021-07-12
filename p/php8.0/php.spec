@@ -8,6 +8,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  0
+%define _php_release_version 8
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -16,9 +17,8 @@
 
 Summary: The PHP scripting language
 Name:	 php%_php_suffix
-Version: 8.0.7
+Version: %_php_major.%_php_minor.%_php_release_version
 Release: alt1
-
 
 License: PHP-3.01
 Group:	 Development/Other
@@ -51,7 +51,6 @@ Patch18: php8-8.0-alt-tests-fix.patch
 Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 
-Patch30: php8-fix-tests-libxml-2.9.12.patch
 
 Patch70: php8.0-debian-Add-support-for-use-of-the-system-timezone-database.patch
 Patch71: php8.0-debian-Use-system-timezone.patch
@@ -65,7 +64,7 @@ BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c
 # for tests
 BuildRequires: /proc
 
-BuildRequires(pre): rpm-build-php rpm-macros-alternatives
+BuildRequires(pre): rpm-build-php >= 8.1-alt1 rpm-macros-alternatives
 
 %description
 PHP is a widely-used general-purpose scripting language that is
@@ -76,7 +75,7 @@ for CGI scripts.
 %package -n rpm-build-php%_php_suffix-version
 Summary:	RPM helper macros to rebuild PHP7 packages
 Provides: rpm-build-php-version = %_php_major.%_php_minor
-Requires: rpm-build-php >= 8.0
+Requires: rpm-build-php >= 8.1-alt1
 Group:		Development/Other
 License:	GPLv3
 BuildArch:	noarch
@@ -99,7 +98,7 @@ Summary: Development package for PHP7
 # php-cli is needed for tests (package php%_php_suffix)
 Requires: php%_php_suffix = %EVR 
 Requires: php%_php_suffix-libs = %EVR
-Requires: rpm-build-php >= 8.0
+Requires: rpm-build-php >= 8.1-alt1
 Requires: rpm-build-php%_php_suffix-version = %EVR
 # for phpize
 Requires: libtool, autoconf, automake
@@ -175,7 +174,6 @@ in use by other PHP-related packages.
 %patch19 -p1
 %patch20 -p1
 
-%patch30 -p1
 
 %patch70 -p1
 %patch71 -p1
@@ -343,10 +341,11 @@ cp %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 
 subst 's,@php_name@,%php_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@_php_version@,%_php_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
-subst 's,@php_major@,%_php_major.%_php_minor,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
+subst 's,@php_major@,%_php_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@php_minor@,%_php_minor,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@php_suffix@,%_php_suffix,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@php_release@,%php_release,'     %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
+subst 's,@php_release_version@,%_php_release_version,'     %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php_libdir/build/config.guess
 mkdir -p  %buildroot%_rpmlibdir
 cat > %buildroot%_rpmlibdir/89-%name.filetrigger << EOF
@@ -454,6 +453,11 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Sat Jul 10 2021 Anton Farygin <rider@altlinux.ru> 8.0.8-alt1
+- 8.0.8
+- added _php_release_version to rpm macros
+- added dependence on rpm-build-php 8.1-alt1
+
 * Fri Jun 25 2021 Anton Farygin <rider@altlinux.ru> 8.0.7-alt1
 - 8.0.7
 

@@ -5,7 +5,7 @@
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
-Release:	%php_release.%php_version
+Release:	alt3.%_php_release_version
 Epoch:		1
 
 Summary:	php extension for interfacing with memcached via libmemcached library

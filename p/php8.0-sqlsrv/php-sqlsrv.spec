@@ -1,7 +1,7 @@
 %define		php_extension	sqlsrv
 Name:	 	php%_php_suffix-%php_extension
 Version:	5.9.0
-Release:	%php_release.%php_version
+Release:	alt3.%_php_release_version
 Epoch:		1
 Summary:	Microsoft Drivers for PHP for SQL Server
 
