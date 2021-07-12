@@ -8,8 +8,8 @@
 %define wxbranch 3.1
 
 Name: wxGTK3.1
-Version: 3.1.3
-Release: alt2
+Version: 3.1.5
+Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -18,6 +18,7 @@ Url: http://wxwidgets.org
 
 # https://github.com/wxWidgets/wxWidgets.git
 Source: %name-%version.tar
+Source1: catch.tar
 Source2: ld_shared_wrapper.pl
 Source3: wx-config
 Patch1: wxGTK3.0-disable-ABI-checking.patch
@@ -238,6 +239,7 @@ wxGTK example programs.
 
 %prep
 %setup
+tar -xf %SOURCE1 -C 3rdparty/
 %patch1 -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
@@ -341,7 +343,7 @@ install -p -D -m 755 %SOURCE3 %buildroot%_libexecdir/%name/wx-config
 ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config-%wxbranch
 ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 
-%find_lang wxstd31 wxmsw31 --output=wxstd.lang
+%find_lang wxstd-3.1 wxmsw31 --output=wxstd.lang
 
 %files -n libwxBase%wxbranch
 %_libdir/libwx_baseu-*.so.*
@@ -437,6 +439,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Thu Jul 01 2021 Anton Midyukov <antohami@altlinux.org> 3.1.5-alt1
+- new version 3.1.5 (Closes: 40344)
+
 * Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt2
 - Disable compat gtk2
 

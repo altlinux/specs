@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt4
+Release: alt5
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -22,6 +22,8 @@ Patch2: %name-%version-FortranProject_autotools_build.patch
 Patch3: %name-%version-add-shebang-to-gdb-fortran-extension.patch
 Patch4: %name-%version-multi-arch.patch
 Patch5: %name-%version-fix-empty-arduino-page.patch
+Patch6: 0001-Do-not-call-wxChoice::GetString-with-wxNOT_FOUND.patch
+Patch7: 0001-Fix-build-with-wxWidgets-3.1.4.patch
 
 Requires: automake >= 1.7 libwxGTK3.1 gcc gcc-c++ gdb xterm gamin mythes-en
 
@@ -79,6 +81,8 @@ cp %SOURCE4 .
 %patch3 -p2
 %patch4 -p1
 %patch5 -p2
+%patch6 -p1
+%patch7 -p1
 
 # https://sourceforge.net/p/codeblocks/tickets/936/
 sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugins/contrib/keybinder/cbkeyConfigPanel.cpp
@@ -311,6 +315,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Fri Jul 02 2021 Anton Midyukov <antohami@altlinux.org> 20.03-alt5
+- Fix build with wxGTK 3.1.5
+
 * Sun May 16 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt4
 - Fix empty arduino project page (more carefully).
 

@@ -1,7 +1,7 @@
 %define luaver 5.1
 Name: wxlua
-Version: 3.0.0.8
-Release: alt1.1
+Version: 3.1.0.0
+Release: alt1
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -9,6 +9,7 @@ Url: http://wxlua.sourceforge.net/
 
 # https://github.com/pkulchenko/wxlua/
 Source: %name-%version.tar
+Source44: %name.watch
 
 BuildRequires: lua%luaver lua%luaver-devel
 #BuildRequires: doxygen graphviz
@@ -91,10 +92,11 @@ make -C bindings \
 # Build for ZBS, hence add some patches and tricks from
 #   https://github.com/pkulchenko/ZeroBraneStudio/blob/master/build/build-linux.sh#L300
 # possible option:	-DBUILD_SHARED_LIBS=FALSE
+%add_optflags -DLUA_COMPAT_MODULE
+%add_optflags -DwxLUA_USE_wxTranslations=0
 %cmake \
 	-DwxLua_LUA_LIBRARY_USE_BUILTIN=FALSE \
 	-DwxStEdit_ROOT_DIR=$PWD/modules/wxstedit \
-	-DCMAKE_CXX_FLAGS="-DLUA_COMPAT_MODULE" \
 	-DwxWidgets_COMPONENTS="xrc;xml;stc;gl;html;aui;adv;core;net;base" \
 	-DwxLuaBind_COMPONENTS="xrc;xml;stc;gl;html;aui;adv;core;net;base" \
 
@@ -144,6 +146,9 @@ mv %buildroot%_datadir/%name/samples docs2distribute-apps/
 %endif
 
 %changelog
+* Wed Jul 07 2021 Ildar Mulyukov <ildar@altlinux.ru> 3.1.0.0-alt1
+- new version
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 3.0.0.8-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
