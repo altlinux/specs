@@ -6,7 +6,7 @@
 
 Name: python-module-%_name
 Version: 3.35.4
-Release: alt1.%rel
+Release: alt2.%rel
 
 Summary: Another Python SQLite Wrapper
 #doc/_sources/copyright.rst.txt
@@ -51,11 +51,12 @@ find ../python2 -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python}|'
 find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
 %build
-%python3_build
+%define opts --enable=load_extension
+%python3_build %opts
 
 %if_with python2
 pushd ../python2
-%python_build
+%python_build %opts
 popd
 %endif
 
@@ -72,11 +73,13 @@ popd
 %if_with python2
 pushd ../python2
 export PYTHONPATH=%buildroot%python_sitelibdir
+gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 src/testextension.c
 %__python tests.py
 popd
 %endif
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
+gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 src/testextension.c
 %__python3 tests.py
 
 %files
@@ -91,6 +94,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Tue Jul 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.35.4-alt2.r1
+- enabled SQLite loadable extensions (ALT # 40472)
+
 * Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 3.35.4-alt1.r1
 - 3.35.4
 
