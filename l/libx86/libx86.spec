@@ -1,10 +1,11 @@
 Name: libx86
 Version: 1.1
-Release: alt9.qa1
+Release: alt10
 Summary: a hardware-independent library for executing real-mode x86 code
 Url: http://www.codon.org.uk/~mjg59/libx86/
 License: BSD
 Group: System/Libraries
+ExcludeArch: armh aarch64 ppc64le
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
@@ -81,6 +82,10 @@ BACKEND=x86emu
 %endif
 
 %changelog
+* Mon Jul 12 2021 Vladislav Zavjalov <slazav@altlinux.org> 1.1-alt10
+- Add ExcludeArch: armh aarch64 ppc64le (closes #40465)
+  (libx86 requires sys/io.h which is missing in these platforms)
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt9.qa1
 - NMU: rebuilt for debuginfo.
 
