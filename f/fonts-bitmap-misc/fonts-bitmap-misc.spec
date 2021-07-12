@@ -5,36 +5,34 @@
 
 Name: fonts-bitmap-misc
 Version: 7.0.0
-Release: alt6
+Release: alt7
 
 Summary: Misc fonts required by the X Window System
 Group: System/Fonts/X11 bitmap
-License: MIT/X11
+License: MIT
 
 Url: http://xorg.freedesktop.org
 
-Source0: font-alias-1.0.1.tar.bz2
-Source1: font-arabic-misc-1.0.0.tar.bz2
-Source2: font-jis-misc-1.0.0.tar.bz2
-Source3: font-misc-misc-1.0.0.tar.bz2
-Source4: font-cursor-misc-1.0.0.tar.bz2
-Source5: font-micro-misc-1.0.0.tar.bz2
-Source6: font-mutt-misc-1.0.0.tar.bz2
-Source7: font-daewoo-misc-1.0.0.tar.bz2
-Source8: font-schumacher-misc-1.0.0.tar.bz2
-Source9: font-dec-misc-1.0.0.tar.bz2
-Source10: font-sony-misc-1.0.0.tar.bz2
-Source11: font-isas-misc-1.0.0.tar.bz2
-Source12: font-sun-misc-1.0.0.tar.bz2
+Source0: font-alias-1.0.4.tar.gz
+Source1: font-arabic-misc-1.0.3.tar.gz
+Source2: font-jis-misc-1.0.3.tar.gz
+Source3: font-misc-misc-1.1.2.tar.gz
+Source4: font-cursor-misc-1.0.3.tar.gz
+Source5: font-micro-misc-1.0.3.tar.gz
+Source6: font-mutt-misc-1.0.3.tar.gz
+Source7: font-daewoo-misc-1.0.3.tar.gz
+Source8: font-schumacher-misc-1.1.2.tar.gz
+Source9: font-dec-misc-1.0.3.tar.gz
+Source10: font-sony-misc-1.0.3.tar.gz
+Source11: font-isas-misc-1.0.3.tar.gz
+Source12: font-sun-misc-1.0.3.tar.gz
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
-PreReq: mkfontdir mkfontscale fontconfig >= 2.4.2
+Requires(pre,postun): mkfontdir fontconfig >= 2.4.2
 Obsoletes: %xf86-misc-fonts %xorgold-misc-fonts
 Provides: %xf86-misc-fonts = 4.4 %xorgold-misc-fonts = %version-%release
 
 BuildArch: noarch
-BuildRequires: bdftopcf xorg-font-utils mkfontdir mkfontscale xorg-util-macros
+BuildRequires: bdftopcf xorg-font-utils mkfontdir xorg-util-macros
 
 %description
 This package provides the misc fonts that are required by the X Window System.
@@ -48,7 +46,7 @@ for d in *; do
 	%autoreconf
 	%configure \
 		--with-fontdir=%_fontsdir/misc \
-		--with-top-fontdir=%_fontsdir
+		--with-fontrootdir=%_fontsdir
 	%make_build
 	cd ..
 done
@@ -80,10 +78,12 @@ fi
 
 %files
 %_sysconfdir/X11/fontpath.d/*
-%ghost %_fontsdir/misc/fonts.scale
 %_fontsdir/misc
 
 %changelog
+* Mon Jul 12 2021 Fr. Br. George <george@altlinux.ru> 7.0.0-alt7
+- Update fonts (closes #40440)
+
 * Wed Apr 01 2009 Valery Inozemtsev <shrek@altlinux.ru> 7.0.0-alt6
 - all misc fonts
 
