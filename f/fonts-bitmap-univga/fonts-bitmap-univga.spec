@@ -5,7 +5,7 @@
 
 Name: fonts-bitmap-univga
 Version: 0.0.%fdate
-Release: alt3.1
+Release: alt3.2
 Summary: Unicode VGA font for X11
 Summary(ru_RU.CP1251): ״נטפע Unicode VGA הכÿ X11
 License: X11
@@ -125,6 +125,10 @@ fi
 %ghost %fontsdir/fonts.dir
 
 %changelog
+* Mon Jul 12 2021 Fr. Br. George <george@altlinux.ru> 0.0.20021031-alt3.2
+- NMU:
+  + fixed ucs2any.pl for new Perl (closes: #40441)
+
 * Fri Aug 31 2007 Valery Inozemtsev <shrek@altlinux.ru> 0.0.20021031-alt3.1
 - NMU:
   + used %_sysconfdir/X11/fontpath.d, adieu chkfontpath
