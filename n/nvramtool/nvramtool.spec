@@ -1,6 +1,6 @@
 Name: nvramtool
 Version: 2.1
-Release: alt1
+Release: alt1.1
 
 Summary: coreboot utility program
 Group: System/Kernel and hardware
@@ -9,6 +9,8 @@ License: GPL
 Url: http://www.coreboot.org/Nvramtool
 Source: %name.tar.bz2
 Packager: Michael Shigorin <mike@altlinux.org>
+
+ExclusiveArch: %ix86 x86_64
 
 %description
 nvramtool is a utility for reading/writing coreboot parameters
@@ -39,6 +41,9 @@ install -pDm644 %name.8 %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Mon Jul 12 2021 Andrey Cherepanov <cas@altlinux.org> 2.1-alt1.1
+- FTBFS: build only for x86 architecture (ALT #40430).
+
 * Mon Mar 28 2011 Michael Shigorin <mike@altlinux.org> 2.1-alt1
 - built for Sisyphus
   + based on Clustrx package by Eugene Ostapets
