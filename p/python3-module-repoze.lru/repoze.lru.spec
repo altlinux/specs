@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: Tiny LRU cache
 
@@ -36,13 +36,16 @@ cache faster than keys and values that are used frequently.
 %install
 %python3_install
 %python3_prune
-rm -fv %buildroot%python3_sitelibdir/*.pth
+rm -fv %buildroot%python3_sitelibdir/repoze/lru/tests.py
 
 %files
 %doc *.txt
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt2
+- fix packing
+
 * Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
 - build python3 module separately
 
