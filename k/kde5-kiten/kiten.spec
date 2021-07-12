@@ -4,7 +4,7 @@
 %define libkiten libkiten%soname
 
 Name: kde5-%rname
-Version: 21.04.1
+Version: 21.04.3
 Release: alt1
 %K5init no_appdata
 
@@ -97,6 +97,9 @@ Requires: %name-common
 %_K5lib/libkiten.so.*
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
 * Tue May 25 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - new version
 
