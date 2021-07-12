@@ -5,7 +5,7 @@
 Name: libvzctl
 Summary: OpenVZ Containers API library
 Version: 7.0.664
-Release: alt1
+Release: alt2
 License: LGPLv2.1
 Group: System/Libraries
 Url: https://openvz.org/
@@ -20,7 +20,7 @@ Requires: libvzevent >= 7.0.0
 Requires: libploop >= 7.0.199
 Requires: cgroup
 Requires: crtools-ovz >= 3.15.0.9
-Requires: e2fsprogs gdisk iputils
+Requires: e2fsprogs gdisk iputils iproute2
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 BuildRequires: libvzevent-devel >= 5.0.0
 BuildRequires: libploop-devel >= 7.0.199
@@ -72,6 +72,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Tue Jul 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.664-alt2
+- use "ip link" instead of brctl, no deps on bridge-utils now
+
 * Thu Jul 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.664-alt1
 - 7.0.664
 
