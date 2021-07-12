@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.6.1
-Release: alt3
+Release: alt4
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -35,7 +35,7 @@ BuildRequires: perl-devel
 BuildRequires: perl-Error
 %endif
 %if_with php
-BuildRequires: rpm-build-php7
+BuildRequires: rpm-build-php7-version
 BuildRequires: php7-devel
 BuildRequires: libexpat-devel
 BuildRequires: python3
@@ -145,7 +145,7 @@ cp -at . -- /usr/share/gnu-config/config.{sub,guess}
 %endif
 %if_with php
            --enable-php7=yes \
-           --with-php7-config-dir=/etc/php/%_php_major \
+           --with-php7-config-dir=%php_sysconfdir \
 %else
            --enable-php7=no \
 %endif
@@ -180,12 +180,12 @@ fi
 
 # PHP subpackage
 %if_with php
-install -m 755 -d %buildroot%php7_datadir/%name
-mv %buildroot%php7_datadir/lasso.php %buildroot%php7_datadir/%name/
+install -m 755 -d %buildroot%php_datadir/%name
+mv %buildroot%php_datadir/lasso.php %buildroot%php_datadir/%name/
 
 # rename the PHP config file when needed (PHP 5.6+)
-mkdir -p %buildroot/etc/php/%_php_major/cli/php.d
-mv %buildroot/etc/php/%_php_major/%name.ini %buildroot/etc/php/%_php_major/cli/php.d/%name.ini
+mkdir -p %buildroot%php_sysconfdir/cli/php.d
+mv %buildroot%php_sysconfdir/%name.ini %buildroot%php_sysconfdir/cli/php.d/%name.ini
 %endif
 
 # Remove bogus doc files
@@ -221,10 +221,10 @@ make check
 
 %if_with php
 %files -n php7-%name
-%_libdir/php/%_php_version/extensions/lasso.so
-%config(noreplace) /etc/php/%_php_major/cli/php.d/%name.ini
-%dir %php7_datadir/%name
-%php7_datadir/%name/lasso.php
+%php_extdir/lasso.so
+%config(noreplace) %php_sysconfdir/cli/php.d/%name.ini
+%dir %php_datadir/%name
+%php_datadir/%name/lasso.php
 %endif
 
 %if_with python
@@ -235,6 +235,9 @@ make check
 %endif
 
 %changelog
+* Sat Jul 10 2021 Leontiy Volodin <lvol@altlinux.org> 2.6.1-alt4
+- FTBFS: switch to macros with recent changes in rpm-build-php (thanks rider@).
+
 * Fri Jul 09 2021 Leontiy Volodin <lvol@altlinux.org> 2.6.1-alt3
 - Fixed build with php7 macros.
 
