@@ -1,8 +1,8 @@
 %def_with sdl2
 Name: fheroes2
 Epoch: 2
-Version: 0.9.4
-#define rev 20210504
+Version: 0.9.5
+#define rev 20210604
 #Release: alt1.%rev
 Release: alt1
 Summary: Free implementation of Heroes of the Might and Magic II engine
@@ -62,6 +62,9 @@ install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_do
 
 
 %changelog
+* Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.5-alt1
+- new version
+
 * Sat Jun 26 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.4-alt1
 - new version
 
