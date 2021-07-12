@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Mon Jul 12 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.8-alt1
+- fix null pointer dereference
+
 * Fri Jul 09 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.7-alt1
 - fix cleaning up result window right after completing task
 - refactor source code
