@@ -10,7 +10,7 @@
 
 Name: python-module-dbus
 Version: 1.2.16
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for D-BUS library
 License: MIT
@@ -74,8 +74,7 @@ D-Bus bindings for use with python programs
 %package devel
 Summary: Python bindings for D-BUS library (devel package)
 Group: Development/Python
-Requires: %name-gobject = %EVR
-%py_package_provides %modname-devel = %EVR
+%{?_enable_python2:%py_package_provides %modname-devel = %EVR}
 Provides: python3-module-dbus-devel = %EVR
 
 %description devel
@@ -187,6 +186,9 @@ done
 
 
 %changelog
+* Tue Jul 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.16-alt2
+- made -devel subpackage Python-version-independent (ALT #40475)
+
 * Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.16-alt1
 - 1.2.16
 - fixed License tag
