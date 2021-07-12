@@ -1,8 +1,8 @@
 %def_without kde4
 
 Name: gwyddion
-Version: 2.56
-Release: alt1.1
+Version: 2.59
+Release: alt1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -16,10 +16,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro libGConf-devel
 
-BuildRequires: gcc-c++  libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
+BuildRequires: GConf gcc-c++  libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
 BuildRequires: libxml2-devel perl-Pod-Usage python-module-distribute python-module-pygtk-devel
-BuildRequires: libgtk+2-devel pkg-config chrpath
-#BuildRequires: libruby-devel
+BuildRequires: libgtk+2-devel pkg-config chrpath libruby-devel
 
 # File Format and some features support
 BuildRequires: libminizip-devel libwebp-devel openexr-devel libcfitsio-devel libunique-devel
@@ -249,7 +248,10 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %_datadir/gtksourceview-2.0/language-specs/*.lang
 
 %changelog
-* Thu Apr 29 2021 Sergey V Turchin <zerg@altlinux.org> 2.56-alt1.1
+* Mon Jul 12 2021 Alexei Mezin <alexvm@altlinux.org> 2.59-alt1
+- new version
+
+* Thu Apr 29 2021 Sergey V Turchin <zerg at altlinux.org> 2.56-alt1.1
 - NMU: drop KDE4 thumbnaler
 
 * Thu Sep 03 2020 Alexei Mezin <alexvm@altlinux.org> 2.56-alt1
