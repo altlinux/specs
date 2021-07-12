@@ -1,5 +1,5 @@
 Name: xsnow
-Version: 3.2.2
+Version: 3.3.0
 Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
@@ -46,6 +46,9 @@ Xsnow добавляет анимированные снежинки и Сант
 %_desktopdir/*
 
 %changelog
+* Mon Jul 12 2021 Alexei Mezin <alexvm@altlinux.org> 3.3.0-alt1
+- New version
+
 * Tue Feb 23 2021 Alexei Mezin <alexvm@altlinux.org> 3.2.2-alt1
 - New version
 
