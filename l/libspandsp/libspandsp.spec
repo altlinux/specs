@@ -1,6 +1,6 @@
 Name: libspandsp
 Version: 0.0.6
-Release: alt1
+Release: alt2
 
 Summary: DSP library for VoIP, FAX and T.38 support
 License: LGPL
@@ -51,9 +51,11 @@ Obsoletes: libspandsp6-devel
 %_libdir/libspandsp.so
 %_includedir/spandsp
 %_includedir/spandsp.h
-%_pkgconfigdir/spandsp.pc
 
 %changelog
+* Mon Jul 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.6-alt2
+- do not package conflicting spandsp.pc (closes: 40419)
+
 * Mon Oct 01 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.6-alt1
 - 0.0.6 released
 
