@@ -1,22 +1,18 @@
 Name: qfsm
-Version: 0.54.0
-Release: alt2
+Version: 0.56
+Release: alt1
 
 Summary: Graphical tool for designing finite state machine
-License: GPL
+License: GPLv3
 Group: Education
 
-Url: http://qfsm.sourceforge.net/
-Source: %name-%version-Source.tar.bz2
-Patch: %name.desktop.patch
-Patch1: qfsm-0.54.0-NULL.patch
+Url: https://github.com/AaronErhardt/qfsm
+Source: %version.tar.gz
+Patch: qfsm-0.56-examples.patch
 
-# Automatically added by buildreq on Thu Jul 26 2012
-# optimized out: cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel pkg-config
-BuildRequires: cmake gcc-c++ phonon-devel
-
-# cgraph change
-#BuildRequires: libgraphviz-devel < 2.30.0
+# Automatically added by buildreq on Mon Jul 12 2021
+# optimized out: cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libqt4-core libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base sh4
+BuildRequires: cmake gcc-c++ libgraphviz-devel libqt4-devel
 
 %description
 Qfsm is a graphical tool for designing finite state machine.
@@ -34,29 +30,25 @@ Features include:
 - Ragel file export (used for C/C++, Java or Ruby code generation)
 
 %prep
-%setup -n %name-%version-Source
-%patch -p0
-%patch1 -p1
-
-# needs porting to cgraph: https://sourceforge.net/p/qfsm/feature-requests/12/
-sed -i 's, \${graphviz_[A-Z]*_LIBRARY},,g' CMakeLists.txt
+%setup
+%patch -p1
 
 %build
-cmake .
-%make_build
+%cmake
+%cmake_build
+cd po
+lupdate-qt4 ../src/ -ts *ts
+lrelease-qt4 *ts
 
 %install
-%makeinstall_std
-#mkdir -p %buildroot/usr/
-#make package
-#cp -rp _CPack_Packages/Linux/TGZ/qfsm-0.51.0-Linux/* %buildroot/usr/
+%cmake_install
 rm -rf %buildroot%_defaultdocdir/%name
 ln -s %name-%version/user %buildroot%_defaultdocdir/%name
 %find_lang %name
 
 %files -f %name.lang
-%doc README TODO
-%doc doc/user doc/html examples
+%doc *.md
+%doc doc/user examples
 %_bindir/%name
 %_defaultdocdir/%name
 %dir %_datadir/%name
@@ -66,6 +58,9 @@ ln -s %name-%version/user %buildroot%_defaultdocdir/%name
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Jul 02 2021 Fr. Br. George <george@altlinux.ru> 0.56-alt1
+- Autobuild version bump to 0.56
+
 * Wed Jun 19 2019 Fr. Br. George <george@altlinux.ru> 0.54.0-alt2
 - Fix build
 
