@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 5.1.0
+Version: 5.1.1
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -185,6 +185,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.1-alt1
+- new version 5.1.1 (with rpmrb script)
+
 * Thu Feb 25 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
 - new version 5.1.0 (with rpmrb script)
 - set requires: php7 >= 7.1.3
