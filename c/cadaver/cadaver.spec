@@ -2,7 +2,7 @@
 
 Name:    cadaver
 Version: 0.23.3
-Release: alt5.git.4cbea82
+Release: alt6.git.4cbea82
 
 Summary: a command-line WebDAV client
 Summary(ru_RU.UTF-8): консольный клиент WebDAV
@@ -17,6 +17,7 @@ Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.23.2-debian-manpage_hyphen.patch
+Patch2:  %name-0.23.3-alt-glibc-secure_getenv.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -34,6 +35,7 @@ operations.
 %patch0 -p1
 
 %patch1 -p1
+%patch2 -p1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -60,6 +62,9 @@ autoconf -f
 %_man1dir/%{name}*
 
 %changelog
+* Tue Jul 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.23.3-alt6.git.4cbea82
+- Fixed use of glibc secure_getenv.
+
 * Wed Jun 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.23.3-alt5.git.4cbea82
 - Rebuild with libneon 0.31
 
