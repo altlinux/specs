@@ -16,7 +16,7 @@ Group: System/Libraries
 
 Name:       libsord
 Version:    0.16.6
-Release:    alt1_1
+Release:    alt2_1
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 License:    ISC
@@ -53,20 +53,19 @@ This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-# Do not run ldconfig, and add our optflags
-sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" \
-       -e "s|cflags          = [ '-DSORD_INTERNAL' ]\
-|cflags          = [ '-DSORD_INTERNAL' ] + '%optflags'.split(' ') |" wscript
+# Do not run ldconfig.
+sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" wscript
 
 %build
-
 # Work around a possible GCC 10.1 bug
 # GCC 10.1 crashes on these arches in for loop with ZixBTreeIter
 %ifarch %{power64} %{arm} aarch64 s390 s390x
-CFLAGS+=" -O1"
-CXXFLAGS+=" -O1"
+%define _optlevel 1
 %endif
-export LINKFLAGS="%{__global_ldflags}"
+
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags"
+export LINKFLAGS="%optflags"
 python3 waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
@@ -100,6 +99,9 @@ install -pm 644 AUTHORS NEWS README.md COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Tue Jul 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.16.6-alt2_1
+- Fixed gcc >= 10 optimization workaround (ALT#40471).
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.6-alt1_1
 - update to new release by fcimport
 
