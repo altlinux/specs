@@ -1,9 +1,9 @@
 Name: flashrom
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Universal flash programming utility
-License: %gpl2plus
+License: GPLv2+
 Group: System/Kernel and hardware
 
 Url: http://flashrom.org/Flashrom
@@ -51,6 +51,12 @@ install -dm755 %buildroot%_sbindir
 %_man8dir/*
 
 %changelog
+* Tue Jul 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.3-alt1
+- Update to latest stable branch 1.3.x
+
+* Tue Jul 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.2-alt2
+- Fix building on aarch64 (Closes: 40470)
+
 * Tue Jun 16 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.2-alt1
 - The first and hopefully not the last release of 2020
 - Support MT25QU256 for Baikal-M firmware
