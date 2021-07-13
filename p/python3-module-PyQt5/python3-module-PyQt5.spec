@@ -1,19 +1,14 @@
 # TODO: quick3d
-
-%def_with dbus
-%def_without sip5
-
 %define oname PyQt5
 
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+%def_with dbus
 
 # Note: check Qt subst below
 %define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
 
-
 Name: python3-module-%oname
-Version: 5.13.1
-Release: alt3
+Version: 5.15.4
+Release: alt1
 
 Summary: Python 3 bindings for Qt 5
 
@@ -21,29 +16,23 @@ License: GPLv3
 Group: Development/Python3
 Url: http://www.riverbankcomputing.co.uk/software/pyqt
 
-#Source0-url: %__pypi_url %oname
-#Source0-url: https://prdownloads.sourceforge.net/pyqt/%oname/PyQt-%version/PyQt5_gpl-%version.tar.gz
-# Source0-url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/%version/PyQt5_gpl-%version.tar.gz
-Source0: %name-%version.tar
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
 
 BuildRequires: python3-devel
 
-# pre is needed to get version from
-BuildRequires(pre): python3-module-sip
-%if_with sip5
-BuildRequires: python3-module-PyQt-builder
-BuildRequires: python3-module-sip >= 4.19.23
-%else
-BuildRequires: python3-module-sip-devel
-%endif
+BuildRequires: python3-module-sip5 >= 5.3
+BuildRequires: python3-module-sip5 < 7
+BuildRequires: python3-module-PyQt-builder >= 1.9
+BuildRequires: python3-module-PyQt-builder < 2
 
 %if_with dbus
 BuildRequires: python3-module-dbus
 BuildRequires: libdbus-devel
-BuildRequires: python-module-dbus-devel
+BuildRequires: python3-module-dbus-devel
 %endif
 
 BuildRequires: qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-serialport-devel
@@ -88,7 +77,7 @@ BuildRequires: pkgconfig(Qt5X11Extras)
 %py3_provides dbus.mainloop.pyqt5
 %endif
 
-Requires: python3-module-PyQt5-sip = %sipver3
+Conflicts: python-module-PyQt5 < 5.13.1-alt4
 
 %description
 Python 3 bindings for the Qt C++ class library.  Also includes a PyQt5 backend
@@ -97,7 +86,6 @@ code generator for Qt Designer.
 %package -n python3-module-%oname-devel
 Summary: Sip files for python3-module-%oname
 Group: Development/Python3
-BuildArch: noarch
 Requires: %name = %EVR
 
 %description -n python3-module-%oname-devel
@@ -124,92 +112,51 @@ This package contains PyQt5 docs.
 
 %prep
 %setup
-%if_without sip5
-%remove_repo_info
-#patch0 -p1
-#patch1 -p1
-#patch3 -p1
-subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
-subst "s|/lib'$|/%_lib'|g" configure.py
-subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
-	configure.py
-sed -i 's|@LIBDIR@|%_libdir|g' configure.py
-find . -type f -name \*.pro -o -name '*.pro-in' -print0 |while read -r -d '' f; do
-cat >> "$f" << 'E_O_F'
-QMAKE_CFLAGS += %optflags %optflags_shared
-QMAKE_CXXFLAGS += %optflags %optflags_shared
-E_O_F
-done
-%endif
+find -type f | xargs subst "s|sipbuild|sipbuild5|g"
 
 %build
-export PATH="$PATH":%_qt5_bindir
-%if_with sip5
 sip-build --confirm-license --no-make --debug \
+    --qmake %_qt5_qmake \
     --api-dir=%_qt5_datadir/qsci/
 %make_build -C build
-%else
-%add_optflags -I"$PWD"/qpy/QtGui -I%_includedir/qt5/QtPrintSupport
-echo 'yes' | python3 configure.py \
-	--debug \
-	--verbose \
-	--assume-shared \
-	-q %_qt5_qmake \
-	-d %python3_sitelibdir \
-	-a --confirm-license \
-	--qsci-api \
-	--qsci-api-destdir=%_qt5_datadir/qsci3 \
-	--sip=%_bindir/sip3 \
-	--sip-incdir=%__python3_includedir \
-	--sipdir=%_datadir/sip3/PyQt5 \
-	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
-find ./ -name Makefile -print0 | while read -r -d '' i; do
-	sed -i 's|-Wl,-rpath,|-I|g' "$i"
-done
-%make_build
-%endif
 
 %install
-%if_with sip5
 %makeinstall_std -C build INSTALL_ROOT=%buildroot
-%else
-%makeinstall_std INSTALL_ROOT=%buildroot
-%endif
 
 # Remove unused py2 version of uic modules:
-rm -r %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
+rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 
 #files doc
 #doc doc/*
 #doc NEWS README
 
-%files examples
-%doc examples
+#files examples
+#doc examples
 
 %files
-%_bindir/pylupdate5
-%_bindir/pyrcc5
-%_bindir/pyuic5
 %python3_sitelibdir/PyQt5/
 %python3_sitelibdir/PyQt5-%version.*
 %_libdir/qt5/plugins/PyQt5/
-# TODO: separate?
-%_libdir/qt5/plugins/designer/libpyqt5*.so
 %if_with dbus
 %python3_sitelibdir/dbus/mainloop/pyqt5*.so
 %endif
 
 %files devel
-%if_with sip5
-# TODO: make link to this dir?
-#_datadir/sip3/PyQt5/bindings/
-%else
-%_datadir/sip3/PyQt5/
-%endif
+%_bindir/pylupdate5
+%_bindir/pyrcc5
+%_bindir/pyuic5
 %dir %_qt5_datadir/
-%_qt5_datadir/qsci3/
+%_qt5_datadir/qsci/
+%_libdir/qt5/plugins/designer/libpyqt5*.so
 
 %changelog
+* Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt1
+- new version 5.15.4 (with rpmrb script)
+- devel subpackage is not noarch anymore
+
+* Wed Oct 07 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt4
+- python-module-PyQt5 < 5.13.1-alt4
+
 * Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt3
 - cleanup spec, prepared for build with sip5
 - build python3 module only

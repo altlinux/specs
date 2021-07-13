@@ -1,32 +1,32 @@
 %define oname PyQtWebEngine
 
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 # Note: check QtWebEngine subst below
 %define webenginever %(rpm -q --qf '%%{VERSION}' libqt5-webengine | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 5.13.1
-Release: alt3
+Version: 5.15.4
+Release: alt1
 
 Summary: Python bindings for Qt WebEngine 5
 
 License: GPL
 Url: http://www.riverbankcomputing.co.uk/software/pyqtwebengine
-Group: Development/Python
+Group: Development/Python3
 
-# Source0-url: https://www.riverbankcomputing.com/static/Downloads/PyQtWebEngine/%version/PyQtWebEngine_gpl-%version.tar.gz
+# Source0-url: %__pypi_url %oname
 Source0: %name-%version.tar
 
-Requires: python3-module-PyQt5-sip = %sipver3
+ExclusiveArch: %qt5_qtwebengine_arches
 
+BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-macros-qt5-webengine
 
-ExclusiveArch: %qt5_qtwebengine_arches
-BuildRequires(pre):python3-module-sip-devel
-BuildRequires: python3-module-PyQt5-devel >= %version
+BuildRequires: python3-module-sip5 >= 5
+BuildRequires: python3-module-PyQt-builder
+BuildRequires: python3-module-PyQt5 >= %version
 
-BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1 python3-module-sip-devel
-BuildRequires: gcc-c++ python3-devel python3-module-dbus
+BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
+BuildRequires: gcc-c++ python3-devel
 
 BuildRequires: pkgconfig(Qt5WebEngineCore)
 BuildRequires: pkgconfig(Qt5WebEngineWidgets)
@@ -54,56 +54,37 @@ Python bindings for the Qt WebEngine C++ class library.
 %prep
 %setup
 #__subst "s|QtWebEngine_5_12_4|QtWebEngine_5_12_4 QtWebEngine_%webenginever|" sip/*/*.sip
-
-subst "s|/lib'$|/%_lib'|g" configure.py
-find . -type f -name \*.pro -o -name '*.pro-in' -print0 |while read -r -d '' f; do
-cat >> "$f" << 'E_O_F'
-QMAKE_CFLAGS += %optflags %optflags_shared
-QMAKE_CXXFLAGS += %optflags %optflags_shared
-E_O_F
-done
+#grep -q "QtWebEngine_%webenginever" sip/*/*.sip || { echo "Unsupported QtWebEngine version, see spec file" ; exit 1 ; }
 
 %build
 export PATH="$PATH":%_qt5_bindir
-
-python3 configure.py \
-	--debug --verbose \
-	-q %_qt5_qmake \
-	-d %python3_sitelibdir/PyQt5 \
-	--sip=%_bindir/sip3 \
-	--sip-incdir=%__python3_includedir \
-	--sipdir=%_datadir/sip3/PyQt5 \
-	--pyqt-sipdir=%_datadir/sip3/PyQt5 \
-	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
-# remove rpath
-find ./ -name Makefile -print0 | while read -r -d '' i; do
-	sed -i 's|-Wl,-rpath,|-I|g' "$i"
-done
-%make_build
+sip-build --no-make --debug \
+    --api-dir=%_qt5_datadir/qsci/
+%make_build -C build
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
-
-# There is a file in the package named .DS_Store or .DS_Store.gz,
-# the file name used by Mac OS X to store folder attributes.
-# Such files are generally useless in packages and were usually accidentally
-# included by copying complete directories from the source tarball.
-find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
-
+%makeinstall_std -C build INSTALL_ROOT=%buildroot
 
 %files
+%python3_sitelibdir/PyQt5/bindings/QtWebEngine/
+%python3_sitelibdir/PyQt5/bindings/QtWebEngineCore/
+%python3_sitelibdir/PyQt5/bindings/QtWebEngineWidgets/
 %python3_sitelibdir/PyQt5/QtWebEngine.*
 %python3_sitelibdir/PyQt5/QtWebEngineCore.*
 %python3_sitelibdir/PyQt5/QtWebEngineWidgets.*
 %python3_sitelibdir/PyQtWebEngine-*
 
-%files devel
-%_datadir/sip3/PyQt5/QtWebEngine*
-%_qt5_datadir/qsci/api/python/*
+#files devel
+#%_datadir/sip3/PyQt5/QtWebEngine*
+%_qt5_datadir/qsci/PyQtWebEngine.api
 
 %changelog
-* Mon Sep 07 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt3
-- fix build with Qt 5.15
+* Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt1
+- new version 5.15.4 (with rpmrb script)
+
+* Sat Sep 05 2020 Vitaly Lipatov <lav@altlinux.ru> 5.15.0-alt1
+- new version 5.15.0 (with rpmrb script)
+- download sources from PyPi
 
 * Thu Jan 23 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt2
 - rebuild with QtWebEngine 5.12.6 (ALT bug 37911)
