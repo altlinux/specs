@@ -1,10 +1,11 @@
 Name: haveged
-Version: 1.9.2
-Release: alt2
+Version: 1.9.14
+Release: alt1
 License: GPLv3
 Group: System/Kernel and hardware
 Summary: Feed entropy into random pool
 Url: http://www.issihosts.com/haveged/
+# Source0-url: https://github.com/jirka-h/haveged/archive/refs/tags/v%version.tar.gz
 Source0: http://www.issihosts.com/haveged/haveged-%version.tar.gz
 Source1: haveged.service
 
@@ -64,6 +65,9 @@ install -pm0644 -D %SOURCE1 %buildroot%_unitdir/haveged.service
 %_libdir/*.so
 
 %changelog
+* Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.14-alt1
+- NMU: new version 1.9.14 (with rpmrb script)
+
 * Mon Apr 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.2-alt2
 - add systemd unit file
 
