@@ -1,5 +1,5 @@
 Name:	 packageinstall
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: GUI frontend for install packages using apt-get
 
@@ -47,6 +47,9 @@ for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Tue Jul 13 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
+- Fix Russian localization for group of processed packages (ALT #30931).
+
 * Fri Jul 09 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
 - Run apt-get update before installation (ALT #39768).
 - Check apt-get exit code and show error if installation is failed.
