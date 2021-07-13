@@ -1,83 +1,47 @@
-%define modulename pycparser
-%def_without python3
+%define oname pycparser
 
-Name: python-module-pycparser
+Name: python3-module-pycparser
 Version: 2.20
 Release: alt2
 
 Summary: C parser in Python
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD
-Url: http://pypi.python.org/pypi/%modulename/
+Url: https://github.com/eliben/pycparser
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pypi.python.org/packages/source/p/%modulename/%modulename-%version.tar
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-%setup_python_module %modulename
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-%endif
 
 %description
 pycparser is a complete parser of the C language, written in pure Python
 using the PLY parsing library.
 It parses C code into an AST and can serve as a front-end for C compilers or analysis tools.
 
-%if_with python3
-%package -n python3-module-%modulename
-Summary: C parser in Python
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-pycparser is a complete parser of the C language, written in pure Python
-using the PLY parsing library.
-It parses C code into an AST and can serve as a front-end for C compilers or analysis tools.
-%endif
 
 %prep
-%setup -n %modulename-%version
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%python_sitelibdir/%modulename/
-%python_sitelibdir/%modulename-%version-*.egg-info
-
-%if_with python3
-%files -n python3-module-%modulename
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-%version-*.egg-info
-%endif
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
 * Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2.20-alt2
-- drop unneed BR: python-module-paste (ALT bug 40478)
+- build python3 separately, cleanup spec
 
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.20-alt1
 - new version 2.20 (with rpmrb script)
