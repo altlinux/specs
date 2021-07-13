@@ -1,7 +1,7 @@
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
 Version: 2.6
-Release: alt1
+Release: alt2
 
 Summary: Fast and modular antispam system written in C
 
@@ -18,7 +18,7 @@ Source5: %name.logrotate
 
 BuildRequires: gcc-c++
 BuildRequires: cmake libdb4-devel libevent-devel libgmime-devel liblua5-devel
-BuildRequires: libpcre2-devel libsqlite3-devel python-module-paste libunwind-devel libicu-devel
+BuildRequires: libpcre2-devel libsqlite3-devel libunwind-devel libicu-devel
 BuildRequires: libssl-devel libmagic-devel zlib-devel libluajit-devel libsodium-devel
 
 BuildRequires: perl-XML-Parser perl-Term-Cap perl-Pod-Usage
@@ -109,6 +109,9 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt2
+- drop unneeded BR: python-module-paste
+
 * Tue Oct 06 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.6-alt1
 - 2.6 release
 - logrotate post-rotate script systemd/sysvinit detection
