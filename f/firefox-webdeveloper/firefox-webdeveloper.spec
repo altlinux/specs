@@ -1,45 +1,41 @@
 %define rname	webdeveloper
 %define cid	\{c45c406e-ab73-11d8-be73-000a95be3b12\}
-%define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	2.0.1
-Release:	alt2
+Version:	2.0.5
+Release:	alt1
 Summary:	The Web Developer extension for Mozilla Firefox
 
-License:	GPLv3
+License:	%gpl3only
 Group:		Networking/WWW
 Url:		http://chrispederick.com/work/web-developer/
-
-Source0:	web_developer-%version-fx+sm.xpi
-
+#Url:		https://addons.mozilla.org/ru/firefox/addon/web-developer/
 BuildArch:	noarch
-BuildRequires(pre):	rpm-build-firefox
+
+Source0:	%rname.xpi
+
+BuildRequires(pre):	rpm-build-firefox rpm-build-licenses
 Buildrequires:	unzip
 Serial:		1
 
 Packager: Sergey Kurakin <kurakin@altlinux.org>
 
-%description 
+%description
 The Web Developer extension for Mozilla Firefox and Mozilla 
 adds a menu and a toolbar to the browser with various web developer tools.
 
-%prep
-%setup -c
+# No %%prep or %%build sections are needed
 
 %install
-%__mkdir_p %buildroot/%ciddir
-%__cp -r * %buildroot/%ciddir
-
-%postun
-if [ "$1" = 0 ]; then
-  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
-fi
+install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %files
-%ciddir
+%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1:2.0.5-alt1
+- New version
+
 * Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1:2.0.1-alt2
 - Fix build: update BuildRequires
 

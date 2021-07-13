@@ -1,14 +1,11 @@
 # SPEC file for Video DownloadHelper Firefox extension
 
 %define rname	video_downloadhelper
-%define version 7.1.1
-%define release alt1
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
-%define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	7.6.0
+Release:	alt1
 
 Summary:	Video DownloadHelper plugin for Firefox
 Summary(ru_RU.UTF-8):	расширение Video DownloadHelper для Firefox
@@ -21,7 +18,7 @@ BuildArch:      noarch
 
 Source0:	%rname.xpi
 
-Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
+Packager:	Nikolay A. Fetisov <naf@altlinux.org>
 
 BuildRequires(pre):	rpm-build-firefox rpm-build-licenses
 BuildRequires:		unzip
@@ -36,26 +33,18 @@ sites.
 для сохранения медиа-файлов (видео- и изображений) с страниц
 многих сайтов.
 
-%prep
-%setup -c
-
-# RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
-rm -rf -- ./*
-unzip -q %SOURCE0
+# No %%prep or %%build sections are needed
 
 %install
-mkdir -p -- %buildroot/%ciddir
-cp -r -- * %buildroot/%ciddir
-
-%postun
-if [ "$1" = 0 ]; then
-  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
-fi
+install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %files
-%ciddir
+%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 7.6.0-alt1
+- New version
+
 * Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 7.1.1-alt1
 - New version
 

@@ -1,17 +1,14 @@
 # SPEC file for FoxyProxy Firefox extension
 
 %define rname	foxyproxy_standard
-%define version	6.1.9
-%define release alt1
-%define cid 	foxyproxy@eric.h.jung
-%define ciddir	%firefox_noarch_extensionsdir/%cid
+%define cid	foxyproxy@eric.h.jung
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	alt1.qa1
+Version:	7.5.1
+Release:	alt1
 
-Summary:	advanced proxy management tool
-Summary(ru_RU.UTF-8):	расширенная утилита управления настройками прокси-серверов
+Summary:	Firefox extension for proxy management
+Summary(ru_RU.UTF-8):	расширение Firefox для управления настройками прокси-серверов
 
 License:	%gpl2plus
 Group:		Networking/WWW
@@ -19,9 +16,9 @@ Group:		Networking/WWW
 URL:		https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/
 BuildArch:	noarch
 
-Source0:	%rname-%version.xpi
+Source0:	%rname.xpi
 
-Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
+Packager:       Nikolay A. Fetisov <naf@altlinux.org>
 
 BuildRequires(pre): rpm-build-firefox rpm-build-licenses
 BuildRequires:  unzip
@@ -45,29 +42,18 @@ FoxyProxy предоставляет поддержку одновременно
 шаблоны, регулярные выражения и прочие возможности, имеет
 встроенную поддержку работы с сетью Tor, и многое другое.
 
-%prep
-%setup -c
+# No %%prep or %%build sections are needed
 
 %install
-mkdir -p --  %buildroot/%ciddir
-cp -r -- * %buildroot/%ciddir
-
-# There is a file in the package named .DS_Store or .DS_Store.gz, 
-# the file name used by Mac OS X to store folder attributes.  
-# Such files are generally useless in packages and were usually accidentally 
-# included by copying complete directories from the source tarball.
-find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
-
-%postun
-if [ "$1" = 0 ]; then
-  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
-fi
+install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %files
-%ciddir
-
+%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 7.5.1-alt1
+- New version
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.1.9-alt1.qa1
 - NMU: applied repocop patch
 

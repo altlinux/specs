@@ -1,14 +1,11 @@
 # SPEC file for the DuckDuckGo Plus Firefox extension
 
 %define rname	duckduckgo_plus
-%define version 2017.12.7
-%define release alt1
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
-%define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	2021.7.9
+Release:	alt1
 
 Summary:	DuckDuckGo Plus Firefox extension
 Summary(ru_RU.UTF-8):	расширение DuckDuckGo Plus для Firefox
@@ -20,7 +17,7 @@ URL:		https://addons.mozilla.org/ru/firefox/addon/duckduckgo-for-firefox/
 BuildArch:      noarch
 
 Source0:	%rname.xpi
-Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
+Packager:	Nikolay A. Fetisov <naf@altlinux.org>
 
 BuildRequires(pre):	rpm-build-firefox rpm-build-licenses
 BuildRequires:		unzip
@@ -39,27 +36,18 @@ DuckDuckGo - поисковая система с открытым исходн�
 Расширение DuckDuckGo Plus для Firefox добавляет DuckDuckGo в
 адресную строку, в поле поиска и в контекстное меню браузера.
 
-%prep
-%setup -c
-
-# RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
-rm -rf -- ./*
-unzip -q %SOURCE0
-
+# No %%prep or %%build sections are needed
 
 %install
-mkdir -p -- %buildroot/%ciddir
-cp -r -- * %buildroot/%ciddir
-
-%postun
-if [ "$1" = 0 ]; then
-  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
-fi
+install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %files
-%ciddir
+%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 2021.7.9-alt1
+- New version
+
 * Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 2017.12.7-alt1
 - New version
 

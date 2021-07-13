@@ -1,14 +1,11 @@
 # SPEC file for uMatrix extension
 
 %define rname	umatrix
-%define version 1.1.20
-%define release alt1
-%define cid 	uMatrix@raymondhill.net
-%define ciddir	%firefox_noarch_extensionsdir/%cid
+%define cid	uMatrix@raymondhill.net
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	1.4.0
+Release:	alt1
 
 Summary:	uMatrix extension for Firefox
 Summary(ru_RU.UTF-8):	расширение uMatrix для Firefox
@@ -19,9 +16,9 @@ Group:		Networking/WWW
 URL:		https://addons.mozilla.org/ru/firefox/addon/umatrix/
 BuildArch:	noarch
 
-Source0:	%rname-%version.xpi
+Source0:	%rname.xpi
 
-Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
+Packager:       Nikolay A. Fetisov <naf@altlinux.org>
 
 BuildRequires(pre): rpm-build-firefox rpm-build-licenses
 BuildRequires:  unzip
@@ -37,22 +34,18 @@ block scripts, iframes, ads, facebook, etc.
 браузер при просмотре страниц. Оно может быть использования
 для блокирования скриптов, iframe'ов, рекламы, facebook'а и т.п.
 
-%prep
-%setup -c
+# No %%prep or %%build sections are needed
 
 %install
-mkdir -p --  %buildroot/%ciddir
-cp -r -- * %buildroot/%ciddir
-
-%postun
-if [ "$1" = 0 ]; then
-  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
-fi
+install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %files
-%ciddir
+%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.4.0-alt1
+- New version
+
 * Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1.20-alt1
 - New version
 

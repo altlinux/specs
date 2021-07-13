@@ -1,14 +1,11 @@
 # SPEC file for Privacy Settings extension
 
 %define rname	privacy_settings
-%define version 0.2.6
-%define release alt1
-%define cid 	jid1-CKHySAadH4nL6Q@jetpack
-%define ciddir	%firefox_noarch_extensionsdir/%cid
+%define cid	jid1-CKHySAadH4nL6Q@jetpack
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	0.3.7
+Release:	alt1
 
 Summary:	Privacy Settings extension for Firefox
 Summary(ru_RU.UTF-8):	расширение Privacy Settings для Firefox
@@ -20,9 +17,9 @@ Group:		Networking/WWW
 URL:		https://addons.mozilla.org/ru/firefox/addon/privacy-settings/
 BuildArch:	noarch
 
-Source0:	%rname-%version.xpi
+Source0:	%rname.xpi
 
-Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
+Packager:       Nikolay A. Fetisov <naf@altlinux.org>
 
 BuildRequires(pre): rpm-build-firefox rpm-build-licenses
 BuildRequires:  unzip
@@ -35,22 +32,18 @@ altering Firefox's built-in privacy settings.
 Расширение Privacy Settings предоставляет панель инструментов для
 быстрого доступа к встроенным в Firefox настройкам приватности.
 
-%prep
-%setup -c
+# No %%prep or %%build sections are needed
 
 %install
-mkdir -p --  %buildroot/%ciddir
-cp -r -- * %buildroot/%ciddir
-
-%postun
-if [ "$1" = 0 ]; then
-  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
-fi
+install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %files
-%ciddir
+%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.3.7-alt1
+- New version
+
 * Sat Jun 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.2.6-alt1
 - New version
 

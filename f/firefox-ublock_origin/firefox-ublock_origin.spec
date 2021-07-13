@@ -1,14 +1,11 @@
 # SPEC file for uBlock Origin extension
 
 %define rname	ublock_origin
-%define version 1.14.22
-%define release alt1
 %define cid 	uBlock0@raymondhill.net
-%define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	1.36.2
+Release:	alt1
 
 Summary:	uBlock Origin extension for Firefox
 Summary(ru_RU.UTF-8):	расширение uBlock Origin для Firefox
@@ -19,9 +16,9 @@ Group:		Networking/WWW
 URL:		https://addons.mozilla.org/ru/firefox/addon/ublock-origin/
 BuildArch:	noarch
 
-Source0:	%rname-%version.xpi
+Source0:	%rname.xpi
 
-Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
+Packager:       Nikolay A. Fetisov <naf@altlinux.org>
 
 BuildRequires(pre): rpm-build-firefox rpm-build-licenses
 BuildRequires:  unzip
@@ -46,22 +43,19 @@ requests to be blocked by default, unless allowed by the user.
 в режиме запрета запросов всех сторонних по отношению к сайту
 ресурсов, если они специально не разрешены пользователем.
 
-%prep
-%setup -c
+# No %%prep or %%build sections are needed
 
 %install
-mkdir -p --  %buildroot/%ciddir
-cp -r -- * %buildroot/%ciddir
-
-%postun
-if [ "$1" = 0 ]; then
-  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
-fi
+install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 %files
-%ciddir
+%firefox_noarch_extensionsdir/%{cid}.xpi
+
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.36.2-alt1
+- New version
+
 * Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.14.22-alt1
 - New version
 
