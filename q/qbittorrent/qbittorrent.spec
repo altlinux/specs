@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.3.5
+Version: 4.3.6
 Epoch: 1
 Release: %rel
 
@@ -11,7 +11,7 @@ ExcludeArch: ppc64le
 Summary: qBittorrent is a bittorrent client written in C++ / Qt5 using the good libtorrent library
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt5, использующий библиотеку libtorrent.
 Summary(uk_UA.UTF-8): qBittorrent - bittorrent-клієнт, написаний на C++ / Qt5, використовує бібліотеку libtorrent.
-License: GPLv2
+License: GPLv2+
 Group: Networking/File transfer
 Url: http://qbittorrent.org
 
@@ -75,7 +75,8 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 За замовчанням доступний на порту 8080 з логіном/паролем admin/adminadmin
 
 %prep
-%setup
+%setup -q
+#-n qBittorrent-release-%version
 
 %build
 ./bootstrap.sh
@@ -103,6 +104,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jul 13 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.6-alt1
+- 4.3.6
+
 * Fri May 07 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.5-alt1
 - 4.3.5
 
