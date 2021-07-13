@@ -2,19 +2,17 @@
 #
 #
 
-%define version 1.0.7
-%define release alt1
-
 Name: jp2a
-Version: %version
+Version: 1.1.0
 Release: alt1
 
 Summary: an utility for converting JPEG images to ASCII
 Summary(ru_RU.UTF-8): утилита для конвертации изображений JPEG в ASCII art
 
-License: GPL v.2
-Group: Terminals
-URL: https://github.com/cslarsen/jp2a
+License: %gpl2only
+Group: Text tools
+URL: https://github.com/Talinx/jp2a
+#URL: https://github.com/cslarsen/jp2a
 #URL: http://jp2a.sourceforge.net/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
@@ -22,9 +20,15 @@ Packager: Nikolay A. Fetisov <naf@altlinux.org>
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
-# Automatically added by buildreq on Thu May 02 2019
-# optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libsasl2-3 libtinfo-devel perl pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
-BuildRequires: libcurl-devel libjpeg-devel
+Source1: %name.1
+
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Tue Jul 13 2021
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libsasl2-3 libtinfo-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4 texlive
+BuildRequires: doxygen libcurl-devel libjpeg-devel libpng-devel
+
+BuildRequires: autoconf-archive
 
 %description
 jp2a is a small command-line utility for converting JPEG images
@@ -33,6 +37,8 @@ to ASCII art.
 %description -l ru_RU.UTF-8
 jp2a - небольшая утилита командной строки для конвертирования
 изображений в формате JPEG в текcтовый вид ASCII art.
+
+%define rman1dir %_mandir/ru/man1
 
 %prep
 %setup
@@ -47,15 +53,24 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING.GPL) COPYING.GPL
 %make_build
 
 %install
-%makeinstall
+%makeinstall bashcompdir=%buildroot%_sysconfdir/bash_completion.d
+install -pD -m0644 %SOURCE1 %buildroot%rman1dir/%name.1
 
 %files
 %doc AUTHORS ChangeLog README LICENSES
 %doc --no-dereference COPYING.GPL
 %_bindir/%name
 %_man1dir/%{name}*
+%rman1dir/%{name}*
+%_sysconfdir/bash_completion.d/%name
+
+/usr/share/man/ru/man1/
 
 %changelog
+* Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.1.0-alt1
+- New version
+- Add Russian man page (Closes: 37227)
+
 * Thu May 02 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.0.7-alt1
 - New version
 
