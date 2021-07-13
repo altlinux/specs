@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.25.1.vz7.180.12
-%define orelease 1160.25.1.vz7.180.12
+#     rh7-3.10.0-1160.31.1.vz7.181.9
+%define orelease 1160.31.1.vz7.181.9
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -585,6 +585,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Jul 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.31.1.vz7.181.9
+- Build rh7-3.10.0-1160.31.1.vz7.181.9
+
 * Mon Jun 28 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.25.1.vz7.180.12
 - Build rh7-3.10.0-1160.25.1.vz7.180.12
 - due to race switch off building objtool
