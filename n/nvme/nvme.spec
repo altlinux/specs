@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: nvme
-Version: 1.11.2
+Version: 1.14
 Release: alt1
 Summary: Core nvme tools
 License: GPL-2
@@ -9,12 +9,31 @@ Group: System/Configuration/Hardware
 Url: https://github.com/linux-nvme/nvme-cli/
 Source: nvme-%version.tar
 Provides: nvme-cli
-BuildRequires: libuuid-devel
+BuildRequires: libuuid-devel libjson-c-devel
 Requires(post): util-linux
 
 %description
 NVMe is a fast, scalable, direct attached storage interface. The nvme
 cli rpm installs core management tools with minimal dependencies.
+
+%package -n bash-completion-%name
+Summary: Bash completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
+
+%description -n bash-completion-%name
+Bash completion for %name.
+
+%package -n zsh-completion-%name
+Summary: Zsh completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description -n zsh-completion-%name
+Zsh completion for %name.
 
 %prep
 %setup
@@ -36,12 +55,17 @@ touch %buildroot%_sysconfdir/%name/{hostnqn,hostid}
 %doc *.md LICENSE
 %_sbindir/nvme
 %_man1dir/nvme*.1*
-%_datadir/bash-completion/completions/*
 %_udevrulesdir/*
 %_unitdir/*
 %dir %_sysconfdir/%name
 %_sysconfdir/%name/*.conf
 %ghost %attr(644,root,root) %config(missingok) %verify(not md5 mtime size) %_sysconfdir/%name/host*
+
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/*
+
+%files -n zsh-completion-%name
+%_datadir/zsh/site-functions/_nvme
 
 %post
 if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
@@ -50,6 +74,11 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Tue Jul 13 2021 L.A. Kostis <lakostis@altlinux.ru> 1.14-alt1
+- 1.14.
+- Added json-c into BR.
+- Split shell completions into subpackages.
+
 * Wed Sep 09 2020 L.A. Kostis <lakostis@altlinux.ru> 1.11.2-alt1
 - 1.11.2.
 
