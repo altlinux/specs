@@ -3,12 +3,12 @@
 
 %def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.4
-Release: alt1
+Release: alt2
 Summary: Python library for the snappy compression library from Google
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/python-snappy/
 
 Source: %name-%version.tar
@@ -19,18 +19,10 @@ BuildRequires: gcc-c++
 BuildRequires: libsnappy-devel
 
 %if_with check
-BuildRequires: python2.7(pytest)
 BuildRequires: python3(tox)
 %endif
 
 %description
-Python bindings for the snappy compression library from Google.
-
-%package -n python3-module-%oname
-Summary: Python3 library for the snappy compression library from Google
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Python bindings for the snappy compression library from Google.
 
 %prep
@@ -39,16 +31,9 @@ Python bindings for the snappy compression library from Google.
 grep -qs '#!/usr/bin/env python' snappy/snappy.py || exit 1
 sed -i '1{/#!\/usr\/bin\/env python/d}' snappy/snappy.py
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-pushd ../python3
-%python3_build_debug
-popd
+%python3_build
 
 %check
 export PIP_NO_INDEX=YES
@@ -56,21 +41,16 @@ export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python
 tox.py3 --sitepackages -p auto -o -v
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc AUTHORS *.rst
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc AUTHORS *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 13 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt2
+- Drop python2 support.
+
 * Sun Feb 23 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt1
 - Build new version for python3.8 without check.
 
