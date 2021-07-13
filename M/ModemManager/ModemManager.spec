@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.16.6
+Version: 1.16.8
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -234,6 +234,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 13 2021 Mikhail Efremov <sem@altlinux.org> 1.16.8-alt1
+- Updated to 1.16.8.
+
 * Tue Jun 08 2021 Mikhail Efremov <sem@altlinux.org> 1.16.6-alt1
 - Disabled gtkdocize in autoreconf.
 - Updated to 1.16.6.
