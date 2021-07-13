@@ -1,6 +1,6 @@
 Name: dev86
 Version: 0.16.19
-Release: alt1
+Release: alt2
 
 Summary: A real mode 80x86 assembler and linker
 License: GPL+ and GPLv2+ and LGPLv2+
@@ -102,6 +102,9 @@ BCC_PREFIX=%buildroot%_prefix make -C tests BCC=%buildroot%_bindir/bcc
 %_prefix/lib/bcc/include
 
 %changelog
+* Tue Jul 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.16.19-alt2
+- Fixed FTBFS on aarch64 and ppc64le (ALT#40431).
+
 * Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.16.19-alt1
 - Updated to 0.16.19.
 
