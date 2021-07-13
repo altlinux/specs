@@ -1,12 +1,12 @@
 %define modulename vk_api
 
-Name: python-module-vk_api
+Name: python3-module-vk_api
 Version: 9.3.1
-Release: alt2.qa1
+Release: alt3
 
 Summary: Module for writing scripts for vk.com (vkontakte)
-License: Apache 2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 
 Url: https://github.com/python273/vk_api
 Packager: Andrey Bychkov <mrdrew@altlinux.ru>
@@ -14,55 +14,30 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-
-%py_requires requests enum34 urllib3
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools
 
-%description
-Module for writing scripts for vk.com (vkontakte).
-
-%package -n python3-module-vk_api
-Summary: Module for writing scripts for vk.com (vkontakte)
-Group: Development/Python3
 %py3_requires enum
 
-%description -n python3-module-vk_api
+%description
 Module for writing scripts for vk.com (vkontakte).
 
 %prep
 %setup
 
-cp -fR . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
-%python3_build_debug
-popd
+%python3_build
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
 %doc README.md examples/
-
-
-%files -n python3-module-vk_api
-%doc README.md
 %python3_sitelibdir/*
 
-
 %changelog
+* Tue Jul 13 2021 Grigory Ustinov <grenka@altlinux.org> 9.3.1-alt3
+- Drop python2 support.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 9.3.1-alt2.qa1
 - NMU: applied repocop patch
 
@@ -74,4 +49,3 @@ popd
 
 * Fri Jun 16 2017 Vitaly Lipatov <lav@altlinux.ru> 8.8-alt1
 - initial build for ALT Sisyphus
-
