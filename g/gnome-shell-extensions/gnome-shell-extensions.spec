@@ -8,7 +8,7 @@
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -158,6 +158,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
+- 40.3
+
 * Thu Jun 10 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 

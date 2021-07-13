@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -12,8 +12,8 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt2%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -280,6 +280,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
+- 40.3
+
 * Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt2
 - 40.2-2-g8e5e7821a (updated russian translation)
 

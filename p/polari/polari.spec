@@ -3,7 +3,7 @@
 %define mozjs_ver 78
 
 Name: polari
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -81,6 +81,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
