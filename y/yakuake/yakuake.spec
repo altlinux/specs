@@ -1,7 +1,5 @@
-%define oname yakuake
-
-Name:    kde5-%oname
-Version: 21.04.2
+Name:    yakuake
+Version: 21.04.3
 Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
@@ -10,7 +8,7 @@ Group: Terminals
 Url: http://yakuake.kde.org/
 
 # Download from https://download.kde.org/stable/release-service//$pkgver/src/yakuake-$pkgver.tar.xz
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -53,8 +51,8 @@ BuildRequires: qt5-svg-devel
 
 Requires:  kde5-konsole
 Requires:  kf5-kglobalaccel
-Provides:  %oname = %version-release
-Obsoletes: %oname < %version-release 
+Provides:  kde5-%name = %version-release
+Obsoletes: kde5-%name < %version-release 
 
 %description
 A KDE konsole which looks like those found in Quake.
@@ -62,7 +60,7 @@ A KDE konsole which looks like those found in Quake.
 This version is built with KF5.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %K5init no_altplace
@@ -70,20 +68,24 @@ This version is built with KF5.
 
 %install
 %K5install
-%find_lang --with-kde %oname
+%find_lang --with-kde %name
 
-%files -f %oname.lang
+%files -f %name.lang
 %doc AUTHORS README.md TODO
 %_K5bin/*
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/*
-%_datadir/%oname
-%_K5notif/%oname.notifyrc
+%_datadir/%name
+%_K5notif/%name.notifyrc
 %_K5dbus_srv/*.service
-%_datadir/knsrcfiles/%oname.knsrc
+%_datadir/knsrcfiles/%name.knsrc
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Jul 13 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.3-alt1
+- New version.
+- Rename to yakuake.
+
 * Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.2-alt1
 - New version.
 
