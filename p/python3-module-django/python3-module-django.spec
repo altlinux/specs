@@ -10,14 +10,13 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.19
+Version: 2.2.24
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python3
 BuildArch: noarch
 URL: http://www.djangoproject.com/
-Provides: Django = %EVR
 Provides: %name%branch = %EVR
 Provides: %name%branch-tests = %EVR
 Obsoletes: %name%branch < %EVR
@@ -183,6 +182,18 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.24-alt1
+- new version 2.2.24
+- Fixes for the following security vulnerabilities:
+  + CVE-2021-28658 Potential directory-traversal via uploaded files
+  + CVE-2021-31542 Potential directory-traversal via uploaded files
+  + CVE-2021-32052 Header injection possibility since URLValidator accepted newlines in input on Python 3.9.5+
+  + CVE-2021-33203 Potential directory traversal via admindocs
+  + CVE-2021-33571 Possible indeterminate SSRF, RFI, and LFI attacks since validators accepted leading zeros in IPv4 addresses
+
+* Wed Feb 24 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.19-alt2
+- Drop Provides: Django
+
 * Wed Feb 24 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.19-alt1
 - 2.2.19
 - rename package to python3-module-django back
