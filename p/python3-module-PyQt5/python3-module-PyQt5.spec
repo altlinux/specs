@@ -2,13 +2,14 @@
 %define oname PyQt5
 
 %def_with dbus
+%def_with webkit
 
 # Note: check Qt subst below
-%define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
+#define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
 Version: 5.15.4
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for Qt 5
 
@@ -64,8 +65,10 @@ BuildRequires: pkgconfig(Qt5Sql)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(Qt5WebChannel)
+%if_with webkit
 BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(Qt5WebKitWidgets)
+%endif
 BuildRequires: pkgconfig(Qt5WebSockets)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt5Xml)
@@ -76,6 +79,8 @@ BuildRequires: pkgconfig(Qt5X11Extras)
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
 %py3_provides dbus.mainloop.pyqt5
 %endif
+
+Requires: python3-module-PyQt5-sip
 
 Conflicts: python-module-PyQt5 < 5.13.1-alt4
 
@@ -94,16 +99,24 @@ code generator for Qt Designer.
 
 %package examples
 Summary: PyQt5 examples
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %EVR
 
 %description examples
 This package contains PyQt5 examples.
 
+%package webkit
+Summary: PyQt5 obsoleted webkit
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description webkit
+This package contains PyQt5 webkit bindings.
+
 %package doc
 Summary: PyQt5 docs
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %EVR
 
@@ -140,6 +153,18 @@ rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %if_with dbus
 %python3_sitelibdir/dbus/mainloop/pyqt5*.so
 %endif
+%exclude %python3_sitelibdir/PyQt5/QtWebKit.so
+%exclude %python3_sitelibdir/PyQt5/QtWebKitWidgets.so
+%exclude %python3_sitelibdir/PyQt5/bindings/QtWebKit
+%exclude %python3_sitelibdir/PyQt5/bindings/QtWebKitWidgets
+
+%if_with webkit
+%files webkit
+%python3_sitelibdir/PyQt5/QtWebKit.so
+%python3_sitelibdir/PyQt5/QtWebKitWidgets.so
+%python3_sitelibdir/PyQt5/bindings/QtWebKit
+%python3_sitelibdir/PyQt5/bindings/QtWebKitWidgets
+%endif
 
 %files devel
 %_bindir/pylupdate5
@@ -150,6 +175,10 @@ rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %_libdir/qt5/plugins/designer/libpyqt5*.so
 
 %changelog
+* Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt2
+- build webkit subpackage
+- fix python-module-PyQt5-sip require
+
 * Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt1
 - new version 5.15.4 (with rpmrb script)
 - devel subpackage is not noarch anymore
