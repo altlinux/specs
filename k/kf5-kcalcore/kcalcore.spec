@@ -1,7 +1,7 @@
 %define rname kcalendarcore
 
 Name: kf5-kcalcore
-Version: 5.83.0
+Version: 5.84.0
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -83,11 +83,15 @@ KF5 library
 %_K5link/lib*.so
 %_K5lib/cmake/KF5CalendarCore/
 %_K5archdata/mkspecs/modules/qt_KCalendarCore.pri
+%_pkgconfigdir/KF5CalendarCore.pc
 
 %files -n libkf5calendarcore
 %_K5lib/libKF5CalendarCore.so.*
 
 %changelog
+* Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.84.0-alt1
+- new version
+
 * Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.83.0-alt1
 - new version
 

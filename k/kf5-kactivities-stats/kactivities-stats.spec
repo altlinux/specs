@@ -4,7 +4,7 @@
 %define libkf5activitiesstats libkf5activitiesstats%sover
 
 Name: kf5-%rname
-Version: 5.83.0
+Version: 5.84.0
 Release: alt1
 %K5init altplace
 
@@ -82,6 +82,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesStats.so.*
 
 %changelog
+* Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
+- new version
+
 * Thu Jul 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.83.0-alt1
 - new version
 
