@@ -1,9 +1,9 @@
 Name: irda-utils
 Version: 0.9.18
-Release: alt3.qa1
+Release: alt3.qa2
 
 Summary: Utilities for infrared communication between devices
-License: GPL
+License: GPL-2.0
 Group: System/Servers
 
 Url: http://irda.sourceforge.net
@@ -19,6 +19,10 @@ Patch6: irda-utils-0.9.18-io.h.diff
 Patch7: irda-utils-0.9.18-smcinit.diff
 Patch8: irda-utils-0.9.18-alt-as-needed.patch
 Patch9: irda-utils-0.9.18-alt-makefile.patch
+# https://bugs.gentoo.org/692428
+Patch10: irda-utils-0.9.18-SIOCGSTAMP.patch
+Patch11: irda-utils-0.9.18-no-inline.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Summary(ru_RU.KOI8-R): Утилиты для управления соединениями через инфракрасный порт
@@ -54,6 +58,8 @@ actually implemented outside the kernel.
 %patch7 -p0 -b .smcinit
 %patch8 -p1 -b .as-needed
 %patch9 -p1 -b .makefile
+%patch10 -p1
+%patch11 -p1
 
 %build
 %make_build all ROOT="%buildroot" RPM_OPT_FLAGS="%optflags"
@@ -82,6 +88,10 @@ done
 %_man8dir/*
 
 %changelog
+* Tue Jul 13 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.18-alt3.qa2
+- NMU: fix License tag.
+- NMU: fix build utilities (ALT #40435).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.18-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
