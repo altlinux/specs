@@ -1,12 +1,11 @@
 %define  modulename cheroot
 
 # there is no ipv6 support on our build system and cheroot tests do not support this configuration
-%ifarch %ix86 x86_64
+# ERROR: Could not find a version that satisfies the requirement pytest-cov==2.10.1
 %def_disable check
-%endif
 
 Name:    python3-module-%modulename
-Version: 8.2.1
+Version: 8.5.2
 Release: alt1
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
@@ -32,6 +31,13 @@ BuildRequires: python3-module-trustme
 BuildRequires: python3-module-requests-unixsocket
 BuildRequires: python3-module-urllib3
 BuildRequires: python3-module-OpenSSL
+%if_enabled check
+BuildRequires: python3-module-jaraco.text
+BuildRequires: python3-module-jaraco.context
+BuildRequires: python3-module-portend
+BuildRequires: python3-module-requests_toolbelt
+BuildRequires: python3-module-pytest-cov
+%endif
 BuildArch: noarch
 
 %description
@@ -64,7 +70,6 @@ export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -v
 
-
 %files
 %_bindir/cheroot
 %python3_sitelibdir/*.egg-info
@@ -77,6 +82,10 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/%{modulename}/testing.py
 
 %changelog
+* Tue Jul 13 2021 Andrey Cherepanov <cas@altlinux.org> 8.5.2-alt1
+- New version.
+- Disable %%check for all architectures (ALT #40332).
+
 * Tue Dec 03 2019 Anton Farygin <rider@altlinux.ru> 8.2.1-alt1
 - 8.2.1
 
