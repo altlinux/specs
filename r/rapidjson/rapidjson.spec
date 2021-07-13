@@ -6,13 +6,14 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt1.1.1
+Release: alt2
 
 Summary: Fast JSON parser and generator for C++
+
 License: MIT
 Group: Development/C++
+Url: http://rapidjson.org/
 
-Url: http://miloyip.github.io/%name
 # URL: https://github.com/miloyip/%name
 Source: %name-%version.tar
 # Downstream-patch for gtest.
@@ -26,7 +27,7 @@ BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: cmake gcc-c++
 BuildRequires: libgtest-devel
 %{?_enable_valgrind:BuildRequires: valgrind}
-%{?_with_docs:BuildRequires: doxygen python-module-pydot}
+%{?_with_docs:BuildRequires: doxygen python3-module-pydot}
 
 Provides: %name-devel == %version-%release
 
@@ -118,6 +119,9 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %endif # docs
 
 %changelog
+* Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
+- fix BR
+
 * Wed Oct 09 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1.1.1
 - Added the missing bit so that valgrind is not simply dropped out.
 
