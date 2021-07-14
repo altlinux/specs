@@ -1,4 +1,3 @@
-%def_without enigmail
 %def_without google_calendar
 %def_with    bundled_cbindgen
 %def_enable  mach_build
@@ -7,12 +6,11 @@
 %define build_parallel_jobs 32
 %endif
 
-%define enigmail_version  2.1.7
 %define gdata_version     2.6
 %define llvm_version      11.0
 
 Name: 	 thunderbird
-Version: 78.11.0
+Version: 78.12.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -23,7 +21,6 @@ URL: 	 https://www.thunderbird.net
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
-Source1: enigmail-source.tar
 Source2: rpm-build.tar
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
@@ -52,16 +49,12 @@ Patch38: Bug-628252-os2.cc-fails-to-compile-against-GCC-4.6-m.patch
 Patch39: Load-dependent-libraries-with-their-real-path-to-avo.patch
 Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
 Patch41: fix-function-nsMsgComposeAndSend-to-respect-Replo.patch
-Patch42: thunderbird-update-packed_simd-for-rust-1.48.patch
+#Patch42: thunderbird-update-packed_simd-for-rust-1.48.patch
 
 Patch120: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
 Patch121: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
 Patch122: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
 Patch124: 0024-MOZILLA-1605273-only-run-CRLite-on-certificates-with.patch
-
-Patch50: enigmail-use-juniorModeForceOff.patch
-Patch52: enigmail-gost.patch
-Patch53: enigmail-disable-pEpAutoDownload.patch
 
 ExcludeArch: ppc64le
 
@@ -152,10 +145,8 @@ Provides:  %name-esr-lightning-ru = %EVR
 Obsoletes: %name-esr-lightning-ru < %EVR
 Provides:  %name-ru = %EVR
 Obsoletes: %name-ru < %EVR
-%if_without enigmail
 Provides: %name-enigmail = %EVR
 Obsoletes: %name-enigmail < %EVR
-%endif
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss >= 3.13.1-alt1
@@ -186,25 +177,6 @@ Requires: %name
 %description wayland
 The thunderbird-wayland package contains launcher and desktop file
 to run Thunderbird natively on Wayland.
-
-%if_with enigmail
-%package enigmail
-%define enigmail_ciddir %mozilla_arch_extdir/%tbird_cid/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
-Summary: Enigmail - GPG support for Mozilla Thunderbird
-Group: Networking/Mail
-Url: https://www.enigmail.net/
-
-Provides:  %name-enigmail = %enigmail_version-%release
-Provides:  %name-esr-enigmail = %version-%release
-Obsoletes: %name-esr-enigmail < %version-%release
-Requires:  %name = %version-%release
-Requires:  pinentry-x11
-
-%description enigmail
-Enigmail is an extension to the mail client of Mozilla / Netscape 7.x
-which allows users to access the authentication and encryption features
-provided by the popular GnuPG software.
-%endif
 
 %if_with google_calendar
 %package google-calendar
@@ -251,19 +223,8 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 
 %prep
 %setup -q
-
-%if_with enigmail
-tar -xf %SOURCE1
-%patch50 -p1
-%patch52 -p1
-%patch53 -p1
-# Fix <br> in translations
-subst 's|<html:br/>|<html:br></html:br>|g' enigmail/lang/*/enigmail.dtd
-%endif
-
 tar -xf %SOURCE2
 tar -xf %SOURCE6
-
 %patch11 -p2
 %patch12 -p2
 %patch21 -p2
@@ -285,7 +246,7 @@ tar -xf %SOURCE6
 %patch39 -p1
 %patch40 -p1
 %patch41 -p1
-%patch42 -p0
+#patch42 -p0
 
 %patch120 -p2
 %patch121 -p2
@@ -456,19 +417,6 @@ for LANG in *; do
 done
 popd
 
-%if_with enigmail
-dir="$PWD/objdir"
-pushd enigmail
-	%_configure_update_config
-	./configure
-	make \
-		STRIP="/bin/true" \
-		MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
-	mkdir -p $dir/mozilla/dist
-	unzip build-tb/enigmail*.xpi -d $dir/mozilla/dist/enigmail
-popd
-%endif
-
 %install
 export SHELL=/bin/sh
 mkdir -p \
@@ -563,12 +511,6 @@ sed -e 's,@tbird_version@,%version,' \
     rpm-build/rpm.macros \
     > %buildroot%_rpmmacrosdir/%r_name
 
-%if_with enigmail
-cp -a \
-	$PWD/objdir/mozilla/dist/enigmail \
-	%buildroot/%enigmail_ciddir
-%endif
-
 %if_with google_calendar
 mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
@@ -620,9 +562,6 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_iconsdir/hicolor/*/apps/thunderbird.png
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
-%if_with enigmail
-%exclude %enigmail_ciddir
-%endif
 %if_with google_calendar
 %exclude %google_calendar_ciddir
 %endif
@@ -630,11 +569,6 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %files wayland
 %_bindir/thunderbird-wayland
 %_datadir/applications/thunderbird-wayland.desktop
-
-%if_with enigmail
-%files enigmail
-%enigmail_ciddir
-%endif
 
 %if_with google_calendar
 %files google-calendar
@@ -650,6 +584,15 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 78.12.0-alt1
+- New version (78.12.0).
+- Security fixes:
+  + CVE-2021-29969 IMAP server responses sent by a MITM prior to STARTTLS could be processed
+  + CVE-2021-29970 Use-after-free in accessibility features of a document
+  + CVE-2021-30547 Out of bounds write in ANGLE
+  + CVE-2021-29976 Memory safety bugs fixed in Thunderbird 78.12
+- Completely remove build external enigmail.
+
 * Thu Jun 03 2021 Andrey Cherepanov <cas@altlinux.org> 78.11.0-alt1
 - New version (78.11.0).
 - Security fixes:
