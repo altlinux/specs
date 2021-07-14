@@ -1,11 +1,12 @@
 Name: SDL_ttf
-Version: 2.0.10
-Release: alt2
+Version: 2.0.11
+Release: alt1.git1ed61fe
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
-License: LGPLv2+
+License: LGPL-2.0+
 Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_ttf/
+# https://github.com/libsdl-org/SDL_ttf/tree/SDL-1.2
 # http://www.libsdl.org/projects/%name/release/%name-%version.tar.gz
 Source: %name-%version.tar
 
@@ -67,6 +68,9 @@ http://www.freetype.org/ for details.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 2.0.11-alt1.git1ed61fe
+- Built git snapshot.
+
 * Mon Aug 22 2011 Dmitry V. Levin <ldv@altlinux.org> 2.0.10-alt2
 - Fixed build.
 

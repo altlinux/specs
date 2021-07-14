@@ -2,12 +2,13 @@
 
 Name: SDL_net
 Version: 1.2.8
-Release: alt1
+Release: alt2.git9a629d6
 
 Summary: Simple DirectMedia Layer - network
 License: zlib
 Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_net/
+# https://github.com/libsdl-org/SDL_net/tree/SDL-1.2
 
 Source0: %name-%version.tar.gz
 
@@ -73,6 +74,9 @@ touch NEWS AUTHORS ChangeLog
 %_libdir/*.a
 
 %changelog
+* Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.8-alt2.git9a629d6
+- Built git snapshot.
+
 * Sat Apr 07 2012 Igor Zubkov <icesik@altlinux.org> 1.2.8-alt1
 - 1.2.7 -> 1.2.8
 - New license: zlib

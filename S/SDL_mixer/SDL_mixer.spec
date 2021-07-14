@@ -1,10 +1,11 @@
 Name: SDL_mixer
 Version: 1.2.12
-Release: alt1
+Release: alt2.git40a7e1a
 Summary: Simple DirectMedia Layer - mixer
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.0+
 Url: http://www.libsdl.org/projects/SDL_mixer/
+# https://github.com/libsdl-org/SDL_mixer/tree/SDL-1.2
 
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
@@ -13,6 +14,7 @@ Patch: %name-1.2.11-alt5.patch
 
 BuildRequires: gcc-c++ libSDL-devel libvorbis-devel libflac-devel libmikmod-devel
 BuildRequires: libmad-devel
+BuildRequires: libmpg123-devel libfluidsynth-devel
 
 %description
 SDL_mixer is a sample multi-channel audio mixer library.  It supports
@@ -85,6 +87,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt2.git40a7e1a
+- Built git snapshot.
+
 * Fri Jan 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1
 - update to 1.2.12 (closes: #30656)
 

@@ -1,13 +1,15 @@
 Name: SDL_image
 Version: 1.2.12
-Release: alt2
+Release: alt3.gitd0ea78d
 
 Summary: Image loading library for SDL
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.0+
 Url: http://www.libsdl.org/projects/SDL_image/
+# https://github.com/libsdl-org/SDL_image/tree/SDL-1.2
 # http://www.libsdl.org/projects/%name/release/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch: SDL_image-1.2.12-fedora-interlaced-png-warning-fix.patch
 
 %def_disable static
 %define libname lib%name
@@ -15,7 +17,7 @@ Source: %name-%version.tar
 %define SDL_ver 1.2.10
 
 BuildRequires: libSDL-devel >= %SDL_ver
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel libwebp-devel
 
 %description
 Simple DirectMedia Layer (SDL) is a cross-platform multimedia library
@@ -52,6 +54,7 @@ statically-linked %name-based software.
 
 %prep
 %setup
+# %%patch -p2
 # required for autoreconf
 mv acinclude m4
 rm m4/l*.m4
@@ -91,6 +94,9 @@ install -pm755 .libs/showimage %buildroot%_bindir/
 %endif
 
 %changelog
+* Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt3.gitd0ea78d
+- Built git snapshot.
+
 * Sat Dec 26 2015 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt2
 - Applied a png fix from Fedora.
 

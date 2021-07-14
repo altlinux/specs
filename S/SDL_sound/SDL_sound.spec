@@ -1,10 +1,10 @@
 Name: SDL_sound
 Version: 1.0.3
-Release: alt4
+Release: alt5.git4a8ecd7
 %define lib_name lib%name
 
 Summary: An abstract soundfile decoder
-License: LGPLv2+
+License: LGPL-2.1+
 Group: System/Libraries
 URL: http://icculus.org/SDL_sound/
 # hg clone http://hg.icculus.org/icculus/SDL_sound/
@@ -67,9 +67,14 @@ Static library for develop SDL_sound applications.
 %prep
 %setup
 %patch -p1
+cp -a ./CHANGELOG.txt ./ChangeLog
+cp -a ./CREDITS.txt ./AUTHORS
+cp -a ./README.txt ./README
+cp -a ./CHANGELOG.txt ./NEWS
 
 %build
 %add_optflags -I%_includedir/smpeg
+%add_optflags -L/%_lib -lm
 %autoreconf
 %configure
 
@@ -118,7 +123,13 @@ cp -a *.txt docs/html %buildroot%docdir/
 %dir %docdir
 %docdir/html
 
+%files -n %lib_name-devel-static
+%_libdir/*.a
+
 %changelog
+* Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt5.git4a8ecd7
+- Built final-lgpl-revision version.
+
 * Thu Dec 13 2018 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt4
 - Fixed errors in physfsrwops.h (thanks debian)
 
