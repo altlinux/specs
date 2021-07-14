@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.1.9
+Version: 0.2.0
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,12 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Wed Jul 14 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.0-alt1
+- refactor source code, simplify UI
+- use QTableView for certificates
+- show progress bar at long signing/verification operations
+- remove dead/rarely used code
+
 * Mon Jul 12 2021 Oleg Solovyov <mcpain@altlinux.org> 0.1.9-alt1
 - use system alterator style
 - fix ui
