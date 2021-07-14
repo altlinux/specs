@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.4.10
+Version: 5.4.28
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -72,14 +72,15 @@ export CXX="clang++"
 export AR="llvm-ar"
 %endif
 
-%cmake_insource \
+%cmake \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DARCHITECTURE=%_arch
-%ninja_build
+%cmake_build
 
 %install
-%ninja_install
+%cmake_install
 
 %files
 %doc LICENSE README.md
@@ -96,6 +97,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.28-alt1
+- New version (5.4.28).
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.10-alt1
 - New version (5.4.10) with rpmgs script.
 
