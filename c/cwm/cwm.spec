@@ -1,5 +1,5 @@
 Name: cwm
-Version: 6.7
+Version: 6.7.0.3.gitce65ff3
 Release: alt1
 
 Summary: Calm Window Manager by OpenBSD project
@@ -13,6 +13,7 @@ License: ISC and BSD
 VCS: git://github.com/leahneukirchen/cwm
 Source0: %name-%version.tar
 Source1: %name.desktop
+Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Wed Feb 19 2020
 # optimized out: fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXrender-devel libfreetype-devel pkg-config python2-base sh4 xorg-proto-devel
@@ -29,6 +30,7 @@ provided by the original OpenBSD's project.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %make_build
@@ -47,6 +49,10 @@ install -m 644 %SOURCE1 %buildroot/%_datadir/xsessions
 %_mandir/man5/cwmrc.5*
 
 %changelog
+* Wed Jul 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.7.0.3.gitce65ff3-alt1
+- Updated to v6.7-3-gce65ff3.
+- Made xvt a default terminal.
+
 * Sat May 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.7-alt1
 - Updated to 6.7.
 
