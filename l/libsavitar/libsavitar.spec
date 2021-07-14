@@ -3,7 +3,7 @@
 
 Name: libsavitar
 Version: 4.8
-Release: alt1
+Release: alt2
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: LGPLv3+
 Group: Development/Other
@@ -39,6 +39,7 @@ Summary: Python 3 libSavitar bindings
 Group: Development/Python3
 Requires: %name = %version-%release
 %py3_provides Savitar
+Requires: python3-module-sip
 
 %description -n python3-module-savitar
 Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
@@ -81,6 +82,9 @@ rm pugixml -rf
 %python3_sitelibdir/Savitar.so
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 4.8-alt2
+- add python3-module-sip requirement
+
 * Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 4.8-alt1
 - new version 4.8
 

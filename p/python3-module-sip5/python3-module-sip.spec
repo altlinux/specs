@@ -2,7 +2,7 @@
 
 Name: python3-module-sip5
 Version: 5.5.0
-Release: alt1
+Release: alt2
 
 Summary: Python3 bindings generator for C/C++ libraries
 
@@ -27,7 +27,6 @@ BuildRequires: flex gcc-c++
 #Obsoletes: python3-module-%oname-devel < %version-%release
 
 Conflicts: python3-module-sip6
-Conflicts: python3-module-sip-devel
 
 %description
 SIP is a collection of tools that makes it very easy
@@ -95,6 +94,9 @@ rm -rfv sip.egg-info/
 %python3_sitelibdir/sipbuild5/
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt2
+- remove conflict with python3-module-sip-devel
+
 * Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt1
 - new version 5.5.0 (with rpmrb script)
 
