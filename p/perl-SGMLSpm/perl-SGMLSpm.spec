@@ -1,7 +1,7 @@
 Name: perl-SGMLSpm
 Epoch: 1
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: Perl library for parsing the output of nsgmls
 License: GPL
@@ -13,8 +13,6 @@ Source: http://www.cpan.org/modules/by-module/SGMLS/SGMLSpm-%version.tar.gz
 BuildArch: noarch
 
 Requires: jade >= 1.2.1
-# due to rpm downgrade
-Provides: %name = 1.03ii-alt6
 
 %description
 Perl programs can use the SGMLSpm module to help convert SGML, HTML or XML
@@ -40,6 +38,9 @@ mv DOC/sample.pl DOC/HTML/SGMLSpm/sample.pl
 %perl_vendor_privlib/skel.pl
 
 %changelog
+* Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 1:1.1-alt2
+- cleaned up crutch with Provides: 1.03ii-alt6
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1
 - new version
 
