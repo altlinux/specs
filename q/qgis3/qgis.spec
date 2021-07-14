@@ -9,7 +9,7 @@
 
 Name:    qgis3
 Version: 3.18.3
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -71,8 +71,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-PyQt5-devel
 BuildRequires: python3-module-nose2
 BuildRequires: python3-module-qscintilla2-qt5-devel
-BuildRequires: python3-module-sip-devel >= 4.15
-BuildRequires: python3-module-sip
+BuildRequires: python3-module-sip5
 BuildRequires: python3-module-PyQt5-devel
 BuildRequires: python3-module-OWSLib
 %endif
@@ -143,8 +142,6 @@ Group: Sciences/Geosciences
 Requires: %name = %version-%release
 Requires: python3-module-gdal
 Requires: python3-module-qscintilla2-qt5
-# SPI API >= 9.1
-Requires: python3-module-sip
 
 %description python
 Python integration and plug-ins for Quantum GIS.
@@ -178,6 +175,8 @@ rm -rf src/plugins/dxf2shp_converter/
 sed -i '/dxf2shp_converter/d' src/plugins/CMakeLists.txt
 
 gzip ChangeLog
+
+sed -i 's/sipbuild/sipbuild5/' cmake/FindSIP.py cmake/FindPyQt5.py
 
 %build
 %add_optflags -Wno-error=return-type
@@ -362,6 +361,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.18.3-alt2
+- NMU: fix build with sip5
+
 * Sat May 22 2021 Andrey Cherepanov <cas@altlinux.org> 3.18.3-alt1
 - New version.
 
