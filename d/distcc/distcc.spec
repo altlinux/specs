@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt1
+Release: alt2
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -120,6 +120,12 @@ rm -rf %buildroot/%_docdir/
 %python3_sitelibdir/include_server*
 
 %changelog
+* Mon Jul 12 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt2
+- Fixed heap corruption (#40425)
+- Distcc correctly finds the native compiler (#40425, upstream: #426)
+- Distcc distributes compilations with `-flto` (upstream: #428)
+- Fixed cross-compilation with clang (upstream: #416)
+
 * Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
 - new version 3.4 (with rpmrb script) (ALT bug 40303)
 
