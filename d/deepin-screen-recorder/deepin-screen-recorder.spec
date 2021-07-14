@@ -2,7 +2,7 @@
 %def_disable cmake
 
 Name: deepin-screen-recorder
-Version: 5.9.6
+Version: 5.9.10
 Release: alt1
 Summary: Default screen recorder application for Deepin
 License: GPL-3.0+
@@ -64,22 +64,24 @@ sed -i '/#include <X11.extensions.shape.h>/a #undef None' src/utils.cpp
 %build
 export PATH=%_qt5_bindir:$PATH
 %if_enabled cmake
-%cmake_insource \
-	-GNinja
-%ninja_build
+%cmake \
+	-GNinja \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+#
+%cmake_build
 %else
 %qmake_qt5 \
     CONFIG+=nostrip \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
 %endif
-    #
+#
 %make_build
 %endif
 
 %install
 %if_enabled cmake
-%ninja_install
+%cmake_install
 %else
 %makeinstall INSTALL_ROOT=%buildroot
 %endif
@@ -107,6 +109,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
 
 %changelog
+* Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.10-alt1
+- New version (5.9.10).
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.6-alt1
 - New version (5.9.6) with rpmgs script.
 
