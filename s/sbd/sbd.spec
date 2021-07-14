@@ -2,7 +2,7 @@
 
 Name:     sbd
 Version:  1.5.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Storage-based death
 License:  GPLv2+
@@ -52,7 +52,9 @@ regression-testing sbd.
 
 %build
 ./autogen.sh
+%ifnarch %e2k
 %add_optflags -Wall -Werror
+%endif
 %configure
 %make_build
 
@@ -107,6 +109,9 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_libdir/libsbdtestbed.so
 
 %changelog
+* Wed Jul 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.0-alt2
+- disabled adding -Werror for e2k arch
+
 * Mon Jun 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
