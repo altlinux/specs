@@ -8,8 +8,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.15.1
-Release: alt2
+Version: 4.15.2
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -180,6 +180,9 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.2-alt1
+- New version.
+
 * Tue Jun 15 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.1-alt2
 - Package core part separately as qt-creator-core (ALT #40219).
 
