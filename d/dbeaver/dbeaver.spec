@@ -1,5 +1,5 @@
 Name: dbeaver
-Version: 21.1.1
+Version: 21.1.2
 Release: alt1
 
 Summary: Universal Database Manager
@@ -107,6 +107,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Wed Jul 14 2021 Nazarov Denis <nenderus@altlinux.org> 21.1.2-alt1
+- Version 21.1.2
+
 * Mon Jun 21 2021 Nazarov Denis <nenderus@altlinux.org> 21.1.1-alt1
 - Version 21.1.1
 
