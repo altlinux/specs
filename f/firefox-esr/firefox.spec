@@ -16,7 +16,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox-esr
-Version: 78.11.0
+Version: 78.12.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -55,7 +55,7 @@ Patch020: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
 Patch021: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
 Patch022: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
 Patch024: 0024-MOZILLA-1605273-only-run-CRLite-on-certificates-with.patch
-Patch025: 0025-update-packed_simd-for-rust-1.48.patch
+#Patch025: 0025-update-packed_simd-for-rust-1.48.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -113,7 +113,6 @@ BuildRequires: libdrm-devel
 BuildRequires: /dev/shm
 
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
@@ -208,7 +207,7 @@ Most likely you don't need to use this package.
 %patch021 -p1
 %patch022 -p1
 %patch024 -p1
-%patch025 -p0 -d mozilla
+#patch025 -p0 -d mozilla
 ### Finish apply patches
 
 cd mozilla
@@ -450,6 +449,13 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Jul 12 2021 Andrey Cherepanov <cas@altlinux.org> 78.12.0-alt1
+- New version (78.12.0).
+- Security fixes:
+  + CVE-2021-29970 Use-after-free in accessibility features of a document
+  + CVE-2021-30547 Out of bounds write in ANGLE
+  + CVE-2021-29976 Memory safety bugs fixed in Firefox 90 and Firefox ESR 78.12
+
 * Tue Jun 01 2021 Andrey Cherepanov <cas@altlinux.org> 78.11.0-alt1
 - New version (78.11.0).
 - Security fixes:
