@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.12.2
+Version: 2.13.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -594,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon Jul 12 2021 Pavel Vainerman <pv@altlinux.ru> 2.13.1-alt1
+- [unet]: zero-copy optimization
+
 * Wed Jul 07 2021 Pavel Vainerman <pv@altlinux.ru> 2.12.2-alt1
 - [unet]: multicast config params refactoring
 
