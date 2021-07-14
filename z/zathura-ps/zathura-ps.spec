@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-ps
-Version: 0.2.6
-Release: alt2
+Version: 0.2.7
+Release: alt1
 
 Summary: PostScript support for zathura
 License: Zlib
@@ -43,6 +43,9 @@ the libspectre library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jul 15 2021 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1
+- Updated to 0.2.7.
+
 * Thu Jan 09 2020 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt2
 - Used Vcs tag.
 - Fixed license.

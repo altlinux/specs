@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libgirara-devel >= 0.3.2-alt1
+BuildRequires: libgirara-devel >= 0.3.6-alt1
 BuildRequires: intltool libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 BuildRequires: libsynctex-devel
 BuildRequires: libseccomp-devel
@@ -77,6 +77,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jul 15 2021 Mikhail Efremov <sem@altlinux.org> 0.4.8-alt1
+- Updated to 0.4.8.
+
 * Wed Sep 09 2020 Mikhail Efremov <sem@altlinux.org> 0.4.7-alt1
 - Updated to 0.4.7.
 
