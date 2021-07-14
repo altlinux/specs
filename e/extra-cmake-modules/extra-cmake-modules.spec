@@ -13,6 +13,7 @@
 %add_python3_req_skip clang
 %add_python3_req_skip clang.cindex
 %endif
+%add_python3_req_skip PyQt5.Qt
 
 AutoReq: yes, nopython
 AutoProv: yes, nopython nopython3
@@ -20,7 +21,7 @@ AutoProv: yes, nopython nopython3
 
 Name: extra-cmake-modules
 Version: 5.84.0
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -88,6 +89,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 14 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt2
+- drop requires to python3(PyQt5.Qt) (closes: 40483)
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 
