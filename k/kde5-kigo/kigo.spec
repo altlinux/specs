@@ -1,7 +1,7 @@
 %define rname kigo
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -39,17 +39,22 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/%rname
 %_K5xdgapp/org.kde.%{rname}.desktop
 %_K5icon/hicolor/*/*/%{rname}*.*
-%_K5xmlgui/%{rname}/
 %_K5data/%{rname}/
 %_K5cfg/%{rname}.kcfg
 %_K5data/knsrcfiles/*%{rname}*.knsrc
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
+* Thu May 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

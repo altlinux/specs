@@ -1,7 +1,7 @@
 %define rname kreversi
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -62,7 +62,7 @@ Requires: %name-common = %version-%release
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/kreversi
 %_K5data/kreversi/
 %_K5icon/hicolor/*/apps/*kreversi*.*
@@ -71,6 +71,12 @@ Requires: %name-common = %version-%release
 %_K5notif/*kreversi*
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
+* Thu May 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libpala libpala%pala_sover
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -69,35 +69,39 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %config(noreplace) %_K5xdgconf/*rc
 %_K5icon/*/*/mimetypes/*palapeli*.*
-%_K5srvtyp/*pala*.desktop
 %_K5xdgmime/*palapeli*.xml
 %_datadir/qlogging-categories5/*.*categories
 
 %files
 %_K5bin/palapeli
 %_K5plug/*pala*.so
+%_K5plug/palapelislicers/palapeli_*.so
 %_K5xdgapp/*pala*.desktop
 %_K5data/palapeli/
 %_K5srv/ServiceMenus/palapeli*.desktop
 %_K5srv/*pala*.desktop
-%_K5xmlgui/palapeli/
 %_K5icon/*/*/apps/palapeli.*
 %_K5notif/*pala*.notifyrc
 
 %files devel
-%_K5inc/libpala/
 %_K5inc/Pala/
 %_K5link/lib*.so
-%_K5lib/libpala/
+%_libdir/cmake/Pala/
 
 %files -n %libpala
 %_K5lib/libpala.so.%pala_sover
 %_K5lib/libpala.so.*
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
+* Thu May 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

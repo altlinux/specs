@@ -1,7 +1,7 @@
 %define rname libkmahjongg
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -58,7 +58,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5data/kmahjongglib/
 %_datadir/qlogging-categories5/*.*categories
 
@@ -73,6 +73,12 @@ KF5 library
 %_K5lib/libKF5KMahjongglib.so.*
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
+* Thu May 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

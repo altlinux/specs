@@ -1,7 +1,7 @@
 %define rname knavalbattle
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -49,6 +49,12 @@ BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel kf5-kcrash-devel
 %_K5conf_up/knavalbattle.upd
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
+* Thu May 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

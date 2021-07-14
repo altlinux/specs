@@ -2,12 +2,12 @@
 
 %define kdegames_sover 7
 %define libkf5kdegames libkf5kdegames%kdegames_sover
-%define kdegamesprivate_sover 1
+%define kdegamesprivate_sover 7
 %define libkf5kdegamesprivate libkf5kdegamesprivate%kdegamesprivate_sover
 
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -84,7 +84,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5conf_up/kgthemeprovider-migration.upd
 %_datadir/qlogging-categories5/*.*categories
 
@@ -108,6 +108,12 @@ KF5 library
 %_K5lib/libKF5KDEGamesPrivate.so.*
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
+* Thu May 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

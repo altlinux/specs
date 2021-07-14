@@ -1,7 +1,7 @@
 %define rname granatier
 
 Name: kde5-%rname
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init
 
@@ -61,11 +61,10 @@ Requires: %name-common = %version-%release
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/granatier
 %_K5data/granatier
 %_K5xdgapp/*granatier*.desktop
-%_K5xmlgui/granatier/
 %_K5cfg/granatier.kcfg
 %_K5icon/hicolor/*/apps/granatier.*
 %_datadir/qlogging-categories5/*.*categories
@@ -81,6 +80,12 @@ Requires: %name-common = %version-%release
 #%_K5lib/libgranatier.so.*
 
 %changelog
+* Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
+* Thu May 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- new version
+
 * Fri Mar 12 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 
