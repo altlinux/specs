@@ -1,6 +1,6 @@
 Name:    weboob
 Version: 2.0
-Release: alt2
+Release: alt3
 
 Summary: Weboob is a collection of applications able to interact with websites, without requiring the user to open them in a browser
 License: AGPL-3.0+
@@ -18,6 +18,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch1: weboob-alt-disable-webkit-formatter.patch
 Patch2: weboob-alt-import-from-urllib3-directly.patch
+
+Requires: python3-module-weboob = %EVR
 
 %description
 Weboob is a collection of applications able to interact with websites,
@@ -60,6 +62,9 @@ cp -a icons/*.png %buildroot%_iconsdir/hicolor/64x64/apps
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt3
+- add require python module weboob (ALT bug 40486)
+
 * Mon Jun 28 2021 Grigory Ustinov <grenka@altlinux.org> 2.0-alt2
 - Drop python2 support.
 
