@@ -2,7 +2,7 @@
 
 Name: cgal
 Version: 5.0.2
-Release: alt2
+Release: alt3
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -17,7 +17,7 @@ BuildRequires: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
 BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
 BuildRequires: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
 BuildRequires: zlib-devel libX11
-BuildRequires: liblapack-devel libtaucs-devel
+BuildRequires: liblapack-devel
 
 ExcludeArch: armh
 
@@ -87,6 +87,9 @@ popd
 %doc %_docdir/%{name}*
 
 %changelog
+* Wed Jul 14 2021 Anton Midyukov <antohami@altlinux.org> 5.0.2-alt3
+- Fixed build dependencies
+
 * Wed Jun 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.2-alt2
 - Fixed build dependencies (Closes: #40328).
 
