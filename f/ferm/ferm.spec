@@ -3,7 +3,7 @@
 
 Name: ferm
 Version: 2.6
-Release: alt1
+Release: alt2
 
 Summary: iptables frontend For Easy Rule Making
 
@@ -17,6 +17,8 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
+
+Patch1:  %name-2.6-alt-exclude_rpm_files.patch
 
 Source1: ferm.conf
 Source2: %name.service
@@ -52,6 +54,8 @@ create libraries of commonly used structures and functions.
 %prep
 %setup
 %patch0 -p1
+
+%patch1
 
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 
@@ -103,5 +107,8 @@ install -pD -m0640 -- %SOURCE4  %buildroot%_sysconfdir/sysconfig/%name
 
 
 %changelog
+* Wed Jul 14 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.6-alt2
+- Skip rpmnew/rpmsave files in the @include directive
+
 * Wed Jun 23 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.6-alt1
 - Initial build for ALT Linux Sisyphus
