@@ -2,13 +2,14 @@
 
 Name: ell
 Version: 0.40
-Release: alt1
+Release: alt2
 Summary: Embedded Linux library
 Group: System/Libraries
 License: LGPLv2+
 Url: https://01.org/ell
 Source0: https://www.kernel.org/pub/linux/libs/%name/%name-%version.tar
 Patch: %name-%version-%release.patch
+Patch2000: %name-e2k.patch
 
 %description
 The Embedded Linux* Library (ELL) provides core, low-level functionality for
@@ -38,6 +39,9 @@ Headers for developing against libell.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %autoreconf
@@ -58,6 +62,9 @@ Headers for developing against libell.
 %_pkgconfigdir/ell.pc
 
 %changelog
+* Wed Jul 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.40-alt2
+- added patch with workarounds for Elbrus compiler
+
 * Fri Jun 11 2021 L.A. Kostis <lakostis@altlinux.ru> 0.40-alt1
 - 0.40.
 
