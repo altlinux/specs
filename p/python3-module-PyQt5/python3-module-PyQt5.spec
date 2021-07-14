@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 5.15.4
-Release: alt2
+Release: alt3
 
 Summary: Python 3 bindings for Qt 5
 
@@ -147,7 +147,13 @@ rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 #doc examples
 
 %files
-%python3_sitelibdir/PyQt5/
+%dir %python3_sitelibdir/PyQt5/
+%python3_sitelibdir/PyQt5/uic/
+%python3_sitelibdir/PyQt5/__init__.py
+%dir %python3_sitelibdir/PyQt5/__pycache__/
+%python3_sitelibdir/PyQt5/__pycache__/__init__.*
+%python3_sitelibdir/PyQt5/Qt*.so
+%python3_sitelibdir/PyQt5/_QOpenGLFunctions*.so
 %python3_sitelibdir/PyQt5-%version.*
 %_libdir/qt5/plugins/PyQt5/
 %if_with dbus
@@ -155,15 +161,11 @@ rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %endif
 %exclude %python3_sitelibdir/PyQt5/QtWebKit.so
 %exclude %python3_sitelibdir/PyQt5/QtWebKitWidgets.so
-%exclude %python3_sitelibdir/PyQt5/bindings/QtWebKit
-%exclude %python3_sitelibdir/PyQt5/bindings/QtWebKitWidgets
 
 %if_with webkit
 %files webkit
 %python3_sitelibdir/PyQt5/QtWebKit.so
 %python3_sitelibdir/PyQt5/QtWebKitWidgets.so
-%python3_sitelibdir/PyQt5/bindings/QtWebKit
-%python3_sitelibdir/PyQt5/bindings/QtWebKitWidgets
 %endif
 
 %files devel
@@ -173,8 +175,16 @@ rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %dir %_qt5_datadir/
 %_qt5_datadir/qsci/
 %_libdir/qt5/plugins/designer/libpyqt5*.so
+%python3_sitelibdir/PyQt5/bindings/
+%python3_sitelibdir/PyQt5/pylupdate*
+%python3_sitelibdir/PyQt5/pyrcc*
+%python3_sitelibdir/PyQt5/__pycache__/pylupdate*
+%python3_sitelibdir/PyQt5/__pycache__/pyrcc*
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt3
+- move bindings to the devel subpackage
+
 * Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt2
 - build webkit subpackage
 - fix python-module-PyQt5-sip require
