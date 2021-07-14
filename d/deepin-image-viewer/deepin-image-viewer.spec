@@ -2,7 +2,7 @@
 %def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.7.8
+Version: 5.7.11
 Release: alt1
 Summary: Image viewer for Deepin
 License: GPL-3.0+
@@ -51,12 +51,13 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 
 %build
 %if_enabled cmake
-%cmake_insource \
+%cmake \
 	-GNinja \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DAPP_VERSION=%version \
 	-DVERSION=%version \
 	-DCMAKE_INSTALL_LIBDIR=%_libdir
-%ninja_build
+%cmake_build
 %else
 %qmake_qt5 \
 %if_enabled clang
@@ -72,7 +73,7 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 
 %install
 %if_enabled cmake
-%ninja_install
+%cmake_install
 %else
 %makeinstall INSTALL_ROOT=%buildroot
 %endif
@@ -96,6 +97,9 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 %_qt5_plugindir/imageformats/libxraw.so
 
 %changelog
+* Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.11-alt1
+- New version (5.7.11).
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.8-alt1
 - New version (5.7.8) with rpmgs script.
 
