@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5integration
-Version: 5.1.12
+Version: 5.5.3
 Release: alt1
 Summary: Qt platform theme integration plugins for DDE
 # The entire source code is GPLv3+ except styles/ which is BSD,
@@ -53,6 +53,7 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 
 %prep
 %setup -n %repo-%version
+sed -i 's|DTK_VERSION=5.5|DTK_VERSION=|' .qmake.conf
 
 %build
 %qmake_qt5 \
@@ -73,9 +74,13 @@ make -j1
 %_qt5_plugindir/styles/libchameleon.so
 %_qt5_plugindir/iconengines/libdsvgicon.so
 %_qt5_plugindir/iconengines/libdtkbuiltin.so
+%_qt5_plugindir/iconengines/libxdgicon.so
 %_qt5_plugindir/imageformats/libdsvg.so
 
 %changelog
+* Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.3-alt1
+- New version (5.5.3).
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.1.12-alt1
 - New version (5.1.12) with rpmgs script.
 
