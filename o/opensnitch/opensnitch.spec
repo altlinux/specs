@@ -4,7 +4,7 @@
 
 Name: opensnitch
 Version: 1.0.0
-Release: alt4.b.git.5c8f710
+Release: alt5.b.git.5c8f710
 Summary: OpenSnitch is a GNU/Linux port of the Little Snitch application firewall
 License: GPLv3
 Group: Networking/Other
@@ -26,7 +26,7 @@ BuildRequires: python3-module-grpcio
 BuildRequires: python3-module-grpcio-tools
 BuildRequires: python3(pyinotify)
 BuildRequires: python3(unicode_slugify)
-BuildRequires: python3(PyQt5)
+BuildRequires: python3-module-PyQt5-devel
 BuildRequires: python3(configparser)
 BuildRequires: libnetfilter_queue-devel
 
@@ -115,6 +115,9 @@ mkdir -p %buildroot%_pseudouser_home
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt5.b.git.5c8f710
+- fix BR: python3-module-PyQt5-devel
+
 * Mon Sep 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt4.b.git.5c8f710
 - Fixed build.
 
