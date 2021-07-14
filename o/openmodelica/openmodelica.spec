@@ -4,7 +4,7 @@
 
 Name:     openmodelica
 Version:  1.17.0
-Release:  alt1
+Release:  alt2
 
 Summary:  OpenModelica is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
 License:  GPL-3.0+ and OSMC-PL
@@ -30,6 +30,7 @@ Patch3: openmodelica-alt-disable-FFLAGS-check-in-sundials.patch
 Patch4: openmodelica-alt-adapt-script-to-python3.patch
 Patch5: openmodelica-alt-fix-lib64-in-rpath.patch
 Patch6: openmodelica-alt-installdir-in-settings.patch
+Patch7: openmodelica-cmake-3.20.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): qt5-base-devel
@@ -107,6 +108,7 @@ echo -e "#!/bin/sh\necho %version" > OMCompiler/common/semver.sh
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # Use %%_lib in CMakeLists.txt
 #find OMSimulator -name CMakeLists.txt | xargs subst 's,\(CMAKE_INSTALL_RPATH.*/\)lib/${HOST_SHORT},\1%_lib/${HOST_SHORT},g'
@@ -173,5 +175,8 @@ cp -a libraries/build/* %buildroot%_libexecdir/omlibrary
 %endif
 
 %changelog
+* Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 1.17.0-alt2
+- FTBFS: build with cmake 3.20.
+
 * Fri Jun 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.17.0-alt1
 - Initial build for Sisyphus.
