@@ -1,12 +1,10 @@
-%def_with qt5
-
 %ifarch %ix86
 # libinterp/corefcn/eig.cc-tst segfaults
 %def_disable check
 %endif
 
 Name: octave
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -15,7 +13,7 @@ Summary: GNU Octave -- a high-level language for numerical computations
 License: GPLv3
 Group: Sciences/Mathematics
 
-Url: http://www.octave.org/
+URL: http://www.octave.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version-%release.tar
@@ -37,21 +35,36 @@ BuildRequires: libGraphicsMagick-c++-devel libGL-devel libGLU-devel libfreetype-
 BuildRequires: libftgl-devel zlib-devel desktop-file-utils gnuplot less
 BuildRequires: texlive-base-bin texlive-generic-recommended
 BuildRequires: libarpack-ng-devel libXcursor-devel
-%if_with qt5
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
 BuildRequires: qt5-tools-devel
 BuildRequires: libqscintilla2-qt5-devel
-%else
-BuildRequires: libqt4-devel
-BuildRequires: libqscintilla2-qt4-devel
-%endif
+BuildRequires: fontconfig-devel
+BuildRequires: gperf
 BuildRequires: icoutils librsvg-utils
-BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
-BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
-BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
-BuildPreReq: libXfixes-devel
-BuildPreReq: java-devel-default libX11-devel libgl2ps-devel libncurses-devel libpcre-devel libsuitesparse-devel libtinfo-devel llvm-devel pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(portaudio-2.0) pkgconfig(sndfile) pkgconfig(xft) texinfo
+BuildRequires: java-devel-default
+BuildRequires: libX11-devel
+BuildRequires: libXfixes-devel
+BuildRequires: libXft-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libcairo-devel
+BuildRequires: libfltk-devel
+BuildRequires: libgl2ps-devel
+BuildRequires: libncurses-devel
+BuildRequires: libpcre-devel
+BuildRequires: libpixman-devel
+BuildRequires: libqhull-devel
+BuildRequires: libqrupdate-devel
+BuildRequires: libsuitesparse-devel
+BuildRequires: libsuitesparse-devel
+BuildRequires: libtinfo-devel
+BuildRequires: llvm-devel
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(portaudio-2.0)
+BuildRequires: pkgconfig(sndfile)
+BuildRequires: pkgconfig(xft)
+BuildRequires: texinfo
 
 Provides:  qtoctave = %EVR
 Obsoletes: qtoctave < %EVR
@@ -192,7 +205,7 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %make check
 
 %files
-%doc BUGS COPYING NEWS* README ChangeLog.gz
+%doc BUGS NEWS* README ChangeLog.gz
 %_bindir/%{name}*
 %_datadir/%name
 %_libdir/%name/%version/*.so*
@@ -224,6 +237,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 6.3.0-alt1
+- New version.
+
 * Fri Feb 26 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.0-alt1
 - New version.
 
