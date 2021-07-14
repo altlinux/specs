@@ -39,7 +39,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.6
+Version: 4.0.9
 Release: alt1
 
 Summary: Linux Containers
@@ -79,7 +79,7 @@ Summary: Core package for LXC
 Group: System/Configuration/Other
 Requires: rsync
 Requires: service
-%ifarch x86_64 %arm
+%ifarch x86_64 aarch64 ppc64le
 Requires: criu
 %endif
 Obsoletes: lxc-sysvinit
@@ -322,6 +322,10 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Wed Jul 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.9-alt1
+- Updated to lxc-4.0.9.
+- Do not require criu on armh, require criu on ppc64le.
+
 * Wed Feb 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.6-alt1
 - Updated to lxc-4.0.6.
 

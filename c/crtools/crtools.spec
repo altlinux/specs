@@ -1,6 +1,6 @@
 Name: crtools
 Version: 3.15
-Release: alt1
+Release: alt2
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -14,7 +14,7 @@ Patch1: 0001-FEDORA-aio-fix.patch
 Patch2: 0002-ALT-build-against-python3.patch
 
 Provides: criu = %EVR
-ExclusiveArch: x86_64 aarch64 armh ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le
 
 BuildRequires: libnet2-devel
 BuildRequires: libprotobuf-c-devel %_bindir/protoc-c
@@ -126,6 +126,9 @@ find %buildroot -name 'lib*.a' -delete
 %_pkgconfigdir/criu.pc
 
 %changelog
+* Tue Jul 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.15-alt2
+- Do not build on armh (closes #40335).
+
 * Wed Nov 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.15-alt1
 - Updated to 3.15.
 
