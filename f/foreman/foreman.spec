@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.3.2
-Release:       alt4
+Release:       alt5
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -25,7 +25,8 @@ Patch:         patch.patch
 Patch1:        sass.patch
 Patch2:        1.22.2.patch
 Patch3:        1.22.3.1.patch
-
+Patch4:        1.24.3.2.alt5.patch
+BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-webserver-common
 BuildRequires: ruby-gem(asciidoctor)
@@ -114,10 +115,21 @@ Foreman code documentation.
 %patch1 -p1
 %patch2
 %patch3
+%patch4 -p1
 sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
 sed "s,gem 'turbolinks'.*,gem 'gitlab-turbolinks-classic'," -i Gemfile
 rm -rf ./node_modules/node-sass/ ./node_modules/.bin/node-sass
 install -Dm0755 %SOURCE9 app/assets/config/manifest.js
+rm -rf ./extras/noVNC/websockify
+rm -rf ./node_modules/jstz
+rm -rf ./node_modules/node-gyp
+rm -rf ./node_modules/npm/node_modules/node-gyp
+rm -rf ./node_modules/railroad-diagrams
+# Set correct python3 executable in shebang
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *) \
+    $(find ./ -type f \( -name '*.py' -o -name '%name' \))
+# Add record to end of scss order
+echo "@import 'fix-views';" >> app/assets/stylesheets/application.scss
 
 %build
 %ruby_build --ignore=font-awesome-sass --use=foreman --join=lib:bin --srcexedirs= --srcconfdirs= --srclibdirs=
@@ -145,13 +157,13 @@ rm -rf %buildroot%_libexecdir/%name/extras/{jumpstart,spec}
 install -pm0644 VERSION %buildroot%_libexecdir/%name/VERSION
 cp -r node_modules/.bin %buildroot%_libexecdir/%name/node_modules/
 
-install -Dm0755 %SOURCE1 %buildroot%_sysconfdir/%name/database.yml
+install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/%name/database.yml
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -Dm0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -Dm0644 %SOURCE4 %buildroot%_sysconfdir/cron.d/%name
 install -Dm0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 install -Dm0755 %SOURCE6 %buildroot%_unitdir/%name.service
-install -Dm0755 %SOURCE7 %buildroot%_sysconfdir/%name/settings.yml
+install -Dm0644 %SOURCE7 %buildroot%_sysconfdir/%name/settings.yml
 install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/encryption_key.rb
 install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/local_secret_token.rb
 install -Dm0644 %SOURCE11 %buildroot%_unitdir/%{name}-jobs.service
@@ -224,6 +236,11 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Mon Jun 28 2021 Pavel Vasenkov <pav@altlinux.org> 1.24.3.2-alt5
+- fixes #39935,#39936,#39937,#39938,#39939
+- + set pyton3 declaration and correct python3 executable in shebang
+- ! add record to end of scss order
+
 * Sun Feb 14 2021 Pavel Skrylev <majioa@altlinux.org> 1.24.3.2-alt4
 - ! spec folders to include
 - ! default database config
