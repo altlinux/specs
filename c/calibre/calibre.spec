@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 4.23.0
-Release: alt3
+Version: 5.23.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -20,30 +20,29 @@ Source1: calibre-mount-helper
 Patch: calibre-no-update.patch
 Patch1: calibre-0.8.55-alt-no-macmenu.patch
 
+AutoProv:yes,nopython3
+
 Requires: fonts-ttf-core
 Requires: xkeyboard-config
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 1.9.19
 
-AutoReq:yes,nopython
-
-# Starting with ICU 68 (2020q4), there is no longer TRUE and FALSE defines in public header files
-# https://unicode-org.github.io/icu/userguide/dev/codingguidelines.html
-%add_optflags -DU_DEFINE_FALSE_AND_TRUE=1
-
 # FIXME: hack
 %add_python3_req_skip calibre.ebooks.markdown.__main__
 
 # Windows's modules
-%add_python3_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver
+%add_python3_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver calibre_extensions.winsapi
+
+# internal extensions?
+%add_python3_req_skip calibre_extensions calibre_extensions.fast_css_transform calibre_extensions.freetype calibre_extensions.progress_indicator calibre_extensions.speedup
 
 %add_python3_path %_libdir/%name
 
 BuildRequires: chrpath
 BuildRequires: /proc
 
-BuildRequires: cmake gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libsqlite3-devel
+BuildRequires: cmake gcc-c++ libX11-devel libXext-devel libXrender-devel libjpeg-devel libsqlite3-devel
 BuildRequires: libusb-devel >= 1.0.22
 
 ####### Building headless QPA plugin #######
@@ -53,6 +52,31 @@ BuildRequires: libusb-devel >= 1.0.22
 #make: *** No rule to make target '/usr/lib64/libQt5ThemeSupport.a', needed by '/usr/src/RPM/BUILD/calibre/src/calibre/plugins/libheadless.so'.  Stop.
 BuildRequires: qt5-base-devel-static glibc-devel-static
 
+
+BuildRequires: qt5-base-devel
+# >= 5.13
+BuildRequires: qt5-svg-devel qt5-declarative-devel qt5-imageformats qt5-webchannel-devel qt5-location-devel qt5-x11extras-devel qt5-wayland-devel qt5-sensors-devel qt5-webengine-devel
+
+BuildRequires: xdg-utils >= 1.0.2
+
+BuildRequires: libpoppler-qt5-devel >= 0.20.2
+# TODO: new version 20.08.0
+BuildRequires: libpoppler-devel >= 0.76.1
+BuildRequires: libpodofo-devel >= 0.9.6
+BuildRequires: libwmf-devel >= 0.2.8
+BuildRequires: libchm-devel >= 0.40
+# upstream uses 6.7
+BuildRequires: libicu-devel >= 5.6
+BuildRequires: libmtp-devel >= 1.1.17
+
+%py3_use dbus >= 1.2.16
+BuildRequires: libdbus-devel >= 1.10.8
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39224
+BuildRequires: libdbus-glib-devel >= 0.110
+BuildRequires: optipng >= 0.7.7
+Requires: optipng >= 0.7.7
+
+
 # missed in the official list
 BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libudev-devel
 
@@ -61,88 +85,81 @@ Requires: python3
 
 BuildRequires: python3-modules-curses
 
-BuildRequires: python3-module-sip-devel >= 4.19.18
-Requires: python3-module-sip >= 4.19.18
-
-# Checked 01.10.2017 with
-# https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
-# calibre/bypy/sources.json
-
-BuildRequires: qt5-base-devel
-# >= 5.13
-BuildRequires: qt5-svg-devel qt5-declarative-devel qt5-imageformats qt5-webchannel-devel qt5-location-devel qt5-x11extras-devel qt5-wayland-devel qt5-sensors-devel qt5-webengine-devel
-BuildRequires: python3-module-PyQt5-devel python3-module-PyQtWebEngine
-# TODO: pyqt-webengine
-# >= 5.8
-BuildRequires: xdg-utils >= 1.0.2
-
-BuildRequires: libpoppler-qt5-devel >= 0.20.2
-BuildRequires: libpoppler-devel >= 0.76.1
-BuildRequires: libpodofo-devel >= 0.9.6
-BuildRequires: libwmf-devel >= 0.2.8
-BuildRequires: libchm-devel >= 0.40
-BuildRequires: libicu-devel >= 5.6
-BuildRequires: libmtp-devel >= 1.1.16
-
-%py3_use msgpack >= 0.6.1
-%py3_use html5-parser >= 0.4.6
-%py3_use mechanize >= 0.4.3
-%py3_use lxml >= 4.3.3
-%py3_use dateutil >= 2.8.0
-%py3_use css-parser >= 1.0.4
-%py3_use dns >= 1.16.0
-%py3_use feedparser >= 5.2.1
-%py3_use markdown >= 3.1
-%py3_use html2text >= 2018.1.9
-
-%py3_use netifaces >= 0.10.9
-#py3_use ifaddr >= 0.1.6
-#py3_use zeroconf >= 0.21.3
-%py3_use psutil >= 5.6.2
-%py3_use apsw >= 3.27.2
-# as in p8
-#py3_use apsw >= 3.8.0
-%py3_use dbus >= 1.2.8
-BuildRequires: libdbus-devel >= 1.10.8
-BuildRequires: libdbus-glib-devel
-# TODO >= 0.110
-%py3_use Pygments >= 2.3.1
-BuildRequires: optipng >= 0.7.7
-Requires: optipng >= 0.7.7
-# TODO: mozjpeg 3.3.1
-%py3_use cssselect >= 0.7.1
-
-# no need really
-#py3_use soupsieve >= 1.9.1
-# TODO: bs4 >= 4.7.1
-%py3_use BeautifulSoup4 >= 4.6.3
-
 BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
 
 BuildRequires: zlib-devel bzlib-devel
 BuildRequires: libexpat >= 2.2.4
-BuildRequires: libffi-devel >= 3.2.1
-BuildRequires: libwebp-devel >= 1.0.2
+BuildRequires: libffi-devel >= 3.3
+BuildRequires: libwebp-devel >= 1.1.0
+BuildRequires: libpng-devel >= 1.6.37
 BuildRequires: libjxr-devel >= 0.2.1
 # iconv?
-BuildRequires: libxml2-devel >= 2.9.9
-BuildRequires: libxslt-devel >= 1.1.33
+BuildRequires: libxml2-devel >= 2.9.10
+BuildRequires: libxslt-devel >= 1.1.34
 BuildRequires: libgpg-error-devel >= 1.36
-BuildRequires: libgcrypt-devel >= 1.8.4
+# TODO:
+BuildRequires: libgcrypt-devel >= 1.8.6
 
 BuildRequires: libhunspell-devel >= 1.7.0
-BuildRequires: libhyphen-devel
+BuildRequires: libhyphen-devel >= 2.8.8
+# TODO: 2.1.0
+BuildRequires: libstemmer-devel
 
-%py3_use six >= 1.12.0
-%py3_use regex >= 2019.04.14
-%py3_use dukpy
-# >= 0.3
+# Checked 12.07.2021 with
+# https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
+# calibre/bypy/sources.json
+
+%py3_use six >= 1.15.0
+%py3_use unrardll >= 0.1.3
+%py3_use lxml >= 4.5.2
+%py3_use pychm >= 0.8.6
+%py3_use html5-parser >= 0.4.9
+%py3_use css-parser >= 1.0.6
+%py3_use dateutil >= 2.8.1
+%py3_use jeepney >= 0.6.0
+#py3_use dns >= 2.0.0
+%py3_use dns
+%py3_use mechanize >= 0.4.5
+%py3_use feedparser >= 5.2.1
+%py3_use markdown >= 3.2.2
+%py3_use html2text >= 2020.1.16
+# no need really
+%py3_use soupsieve >= 2.0.1
+# TODO: bs4 >= 4.7.1
+%py3_use beautifulsoup4 >= 4.9.1
+%py3_use regex >= 2020.07.14
 %py3_use chardet >= 3.0.4
-%py3_use pycrypto >= 2.6.1
+%py3_use cchardet >= 2.1.7
+%py3_use msgpack >= 1.0.0
+%py3_use Pygments >= 2.6.1
+%py3_use pycryptodome >= 3.9.8
+# https://bugzilla.altlinux.org/40472
+%py3_use apsw > 3.35.4-alt1.r1
 %py3_use webencodings >= 0.5.1
-%py3_use html5lib >= 1.0.1
-%py3_use Pillow >= 6.0.0
-%py3_use unrardll
+%py3_use html5lib >= 1.1
+%py3_use Pillow >= 7.2.0
+%py3_use netifaces >= 0.10.9
+%py3_use psutil >= 5.7.2
+%py3_use ifaddr >= 0.1.7
+%py3_use texttable >= 1.6.3
+# TODO: build it
+#py3_use py7zr >= 0.11.1
+%py3_use zeroconf >= 0.31.0
+%py3_use toml >= 0.10.1
+%py3_use pyparsing >= 2.4.7
+%py3_use packaging >= 20.4
+
+%py3_buildrequires sip5 >= 5.5.0
+%py3_buildrequires PyQt-builder >= 1.6.0
+%py3_buildrequires PyQt5-sip >= 12.8.1
+%py3_use PyQt5 >= 5.15.2
+%py3_use PyQtWebEngine >= 5.15.2
+
+#py3_use dukpy
+# TODO: p3_use mozjpeg 3.3.1
+
+# TODO: https://github.com/brailcom/speechd >= 0.10.1
+
 
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
@@ -162,39 +179,37 @@ Calibre - свободная программа для создания и уп�
 TXT, PDF, LRS и FB2.
 
 %prep
-%setup -n %name
+%setup
+find -name "*.py" -type f | xargs subst "s|sipbuild|sipbuild5|g"
 %__subst "s|libdir = s.get_python_lib.*|libdir = '%buildroot%python3_sitelibdir'|" setup/install.py
 %__subst "s|hunspell-1.7|hunspell|" setup/extensions.json
 # don't check for new upstream version
 #patch -p1
 #patch1 -p1
-find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env *python2*$|#!/usr/bin/python3|"
-find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/python2$|#!/usr/bin/python3|"
 
-# we put sip for python3 to sip3 dir
-%__subst "s|'share', 'sip'|'share', 'sip3'|" setup/build_environment.py
+# TODO: remove or replace with python
+find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
+#find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/python2$|#!/usr/bin/python3|"
+
 # fix default libdir
 %__subst "s|/usr/lib|%_libdir|" setup/build_environment.py
 
-# drop bool override
-%__subst "s|typedef unsigned char bool;||" src/calibre/utils/matcher.c
+# setup QMAKE compile flags
+sed -i 's|^\(.*QMAKE_LIBS_PRIVATE.*\+=.*glib.*fontconfig.*\)$|\1\n            QMAKE_CXXFLAGS += %optflags|' setup/build.py
 
 %build
-export CALIBRE_PY3_PORT=1
-export SIP_BIN=sip3
 %python3_build
 
 %install
 #python_install (not use due skip-build unsupported)
 mkdir -p %buildroot%python3_sitelibdir/
-CALIBRE_PY3_PORT=1 python3 setup.py install --staging-libdir=%buildroot%_libdir --libdir=%_libdir --prefix=%_prefix --root=%buildroot --staging-root=%buildroot/%_prefix
+python3 setup.py install --staging-libdir=%buildroot%_libdir --libdir=%_libdir --prefix=%_prefix --root=%buildroot --staging-root=%buildroot/%_prefix
 %find_lang --with-kde %name
 
 # fix bash completion file placement
 #install -m644 -D %buildroot%_datadir/bash-completion/completions/calibre %buildroot/etc/bash_completion.d/%name
 rm -rfv %buildroot%_datadir/bash-completion
 rm -rfv %buildroot%_libdir/calibre/tinycss/tests
-
 
 #chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
 
@@ -206,19 +221,26 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 
 %files -f %name.lang
-%doc README.md Changelog.yaml
+%doc README.md Changelog.txt
 #/etc/bash_completion.d/%name
 %_bindir/*
 %_libdir/%name/
 %python3_sitelibdir/*
 %_datadir/%name/
-%_datadir/metainfo/*.appdata.xml
+%_datadir/metainfo/calibre-ebook-edit.metainfo.xml
+%_datadir/metainfo/calibre-ebook-viewer.metainfo.xml
+%_datadir/metainfo//calibre-gui.metainfo.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/mimetypes/*.png
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 5.23.0-alt1
+- new version 5.23.0 (with rpmrb script)
+- official python3 build
+- big build requires update
+
 * Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 4.23.0-alt3
 - fix build with ICU >= 68
 
