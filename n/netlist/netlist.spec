@@ -1,6 +1,6 @@
 Name: netlist
 Version: 2.1
-Release: alt2
+Release: alt3
 
 Summary: A program to list active Internet connections and sockets
 License: BSD-style
@@ -26,7 +26,7 @@ the LICENSE for information on this and other licensing conditions.
 %setup -q
 
 %build
-%make_build CFLAGS="%optflags -fno-strict-aliasing"
+%make_build CFLAGS="$RPM_OPT_FLAGS $(getconf LFS_CFLAGS) -fno-strict-aliasing" LDFLAGS=''
 
 %install
 %make_install install \
@@ -35,12 +35,20 @@ the LICENSE for information on this and other licensing conditions.
 	MANDIR=%_mandir \
 	#
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %attr(2711,root,proc) %_bindir/netlist
 %_man1dir/*
 %doc LICENSE
 
 %changelog
+* Wed Jul 14 2021 Dmitry V. Levin <ldv@altlinux.org> 2.1-alt3
+- Fixed lfs=strict build on 32-bit systems.
+- Enabled debuginfo.
+
 * Tue Apr 10 2007 Dmitry V. Levin <ldv@altlinux.org> 2.1-alt2
 - Disabled gcc optimization based on strict aliasing rules.
 
