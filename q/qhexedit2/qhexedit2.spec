@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without python2
-%def_with python3
+%def_without python3
 
 Name: qhexedit2
 Version: 0.8.3
-Release: alt3
+Release: alt4
 
 Summary: Binary Editor for Qt
 License: LGPLv2
@@ -31,7 +31,7 @@ BuildRequires: python-module-enum34
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sip-devel
+BuildRequires: python3-module-sip5 python3-module-sip-devel
 BuildRequires: python3-module-PyQt5-devel
 %endif
 
@@ -168,7 +168,7 @@ install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip/qhexedit/qhexedit.sip
 %endif
 %if_with python3
 USE_QT5=1 CFLAGS="%optflags" %__python3 setup.py build --build-base=build-python3-qt5 install --skip-build --root %buildroot
-install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip3/qhexedit/qhexedit.sip
+#install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip3/qhexedit/qhexedit.sip
 %endif
 
 # Application
@@ -212,6 +212,9 @@ desktop-file-install --dir=%buildroot%_desktopdir/ %SOURCE1
 %endif
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.3-alt4
+- temp. disable python3 module (sip5 issue)
+
 * Sun Feb 09 2020 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt3
 - Disable build python2 bindings
 
