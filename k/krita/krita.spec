@@ -31,7 +31,7 @@
 
 Name: krita
 Version: 4.4.2
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphics
@@ -63,7 +63,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-kf5
 BuildRequires: zlib-devel libssl-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-x11extras-devel
-BuildRequires: python3-devel python3-module-PyQt5-devel python3-module-sip-devel
+BuildRequires: python3-devel python3-module-PyQt5-devel python3-module-sip5
 BuildRequires: eigen3 libfftw3-devel libgomp-devel libgsl-devel
 BuildRequires: boost-devel boost-geometry-devel
 #BuildRequires: libgif-devel
@@ -283,8 +283,7 @@ Requires: %name-common = %EVR
 %patch1 -p1
 %patch2 -p1
 
-sed -i 's|sip_bin:.*|sip_bin:%_bindir/sip3")|' cmake/modules/FindSIP.py
-sed -i 's|default_sip_dir:.*|default_sip_dir:%_datadir\/sip3")|' cmake/modules/FindSIP.py
+sed -i 's|sipbuild|sipbuild5|' cmake/modules/FindSIP.py
 %ifarch %arm
 sed -i 's,HAVE_OCIO,0,' plugins/dockers/CMakeLists.txt
 %endif
@@ -434,6 +433,9 @@ done
 %_libdir/libkritametadata.so.*
 
 %changelog
+* Thu Jul 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt2
+- NMU: fix build with SIP5
+
 * Tue Feb 02 2021 Sergey V Turchin <zerg@altlinux.org> 4.4.2-alt1
 - new version
 
