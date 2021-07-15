@@ -1,9 +1,9 @@
 %define rname kdenlive
-%define req_ver_mlt 6
+%define req_ver_mlt 6.20
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 20.12.3
+Version: 21.04.3
 Release: alt1
 %K5init no_altplace man appdata
 
@@ -14,6 +14,8 @@ License: GPL-3.0-or-later
 Group: Video
 URL: http://kdenlive.org/
 
+AutoReq: yes, nopython nopython3
+AutoProv: yes, nopython nopython3
 Requires: mlt-utils >= %req_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: icon-theme-breeze kde5-runtime
@@ -35,7 +37,7 @@ Patch3: alt-ffmpegaudiothumbnails.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): libavformat-devel
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-webengine-devel qt5-multimedia-devel qt5-quickcontrols2-devel
+BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-webengine-devel qt5-multimedia-devel qt5-quickcontrols2-devel qt5-networkauth-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
 BuildRequires: libmlt-devel libmlt++-devel >= %req_ver_mlt
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
@@ -96,6 +98,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Wed Jul 14 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
+- new version
+
 * Fri Mar 19 2021 Sergey V Turchin <zerg@altlinux.org> 20.12.3-alt1
 - new version
 

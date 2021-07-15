@@ -8,7 +8,6 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 %def_disable debug
-%def_disable vdpau
 %def_enable libvidstab
 
 %define Name MLT
@@ -18,8 +17,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 6.24.0
-Release: alt1.1
+Version: 6.26.1
+Release: alt1
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPL-3.0-or-later
@@ -30,9 +29,6 @@ Packager: Maxim Ivanov <redbaron@altlinux.org>
 
 Source: %name-%version.tar
 Source1: mlt++-config.h
-# FC
-# SuSE
-Patch10: libmlt-0.8.2-vdpau.patch
 # Debian
 Patch20: 01-changed-preset-path.diff
 # ALT
@@ -56,9 +52,6 @@ BuildRequires: librubberband-devel libvorbis-devel
 BuildRequires: libxml2-devel swig ladspa_sdk
 %if_enabled libvidstab
 BuildRequires: libvidstab-devel
-%endif
-%if_enabled vdpau
-BuildRequires: libvdpau-devel
 %endif
 BuildRequires: python3-devel
 
@@ -114,7 +107,6 @@ This module allows to work with %Name using python..
 
 %prep
 %setup
-%patch10 -p0
 %if %is_ffmpeg
 %else
 %patch20 -p1
@@ -128,9 +120,6 @@ This module allows to work with %Name using python..
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
-
-VDPAU_SONAME=`readelf -a %_libdir/libvdpau.so | grep SONAME| sed 's/.*\[//'| sed 's/\].*//'`
-sed -i "s/__VDPAU_SONAME__/${VDPAU_SONAME}/" src/modules/avformat/vdpau.c
 
 find src/swig/python -name '*.py' | xargs sed -i '1s|^#!/usr/bin/env python|#!%{__python3}|'
 sed -i -e 's|which python|which python3|' src/swig/python/build
@@ -157,11 +146,6 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %ifarch x86_64
 	--target-arch=%_target_cpu \
 %endif
-	%if_enabled vdpau
-	--avformat-vdpau \
-	%else
-	--avformat-no-vdpau \
-	%endif
 	%ifnarch %ix86 x86_64
 	--disable-mmx \
 	--disable-sse \
@@ -218,6 +202,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Wed Jul 14 2021 Sergey V Turchin <zerg@altlinux.org> 6.26.1-alt1
+- new version
+
 * Thu Dec 31 2020 L.A. Kostis <lakostis@altlinux.ru> 6.24.0-alt1.1
 - add libSDL support (fix flowblade segfault).
 
