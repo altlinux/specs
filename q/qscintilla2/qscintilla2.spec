@@ -9,7 +9,7 @@
 %define suff 15
 Name: %oname
 Version: 2.11.5
-Release: alt2
+Release: alt3
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 
@@ -49,7 +49,7 @@ BuildRequires: python3-module-PyQt4-devel
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel qt5-tools-devel
 %if_with python3qt5
-BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-PyQt5-devel python3-module-sip5
 %endif
 
 %description
@@ -237,7 +237,6 @@ Python bindings for %oname
 Requires: python3-module-%oname-qt5 = %EVR
 Summary: Python 3 bindings for %oname (Qt5)
 Group: Development/KDE and QT
-BuildArch: noarch
 
 %description -n python3-module-%oname-qt5-devel
 Devel files for Python bindings for %oname
@@ -341,6 +340,7 @@ cp -fR Qt5 ../Qt5
 %if_with qt4
 pushd Python-qt4
 python2 configure.py --debug -n ../Qt4Qt5 -o ../Qt4Qt5 \
+	--sip=%_bindir/sip \
 	--qmake=%_qt4dir/bin/qmake
 %make_build
 popd
@@ -349,6 +349,7 @@ popd
 # Python bindings for PyQt5
 pushd Python-qt5
 python2 configure.py --debug -n ../Qt5 -o ../Qt5 \
+	--sip=%_bindir/sip \
 	--qmake=%_qt5_bindir/qmake \
 	--pyqt=PyQt5
 %make_build
@@ -380,8 +381,6 @@ pushd ../python3qt5
 python3 configure.py --debug -n ../Qt5 -o ../Qt5 \
 	--apidir=%_datadir/qt5/qsci3 \
 	--qmake=%_qt5_bindir/qmake \
-	--sip=%_bindir/sip3 \
-	--pyqt-sipdir=%_datadir/sip3/PyQt5 \
 	--pyqt=PyQt5
 sed -i \
 	's|-lpython%_python3_version|-lpython%{_python3_version}m|g' \
@@ -569,7 +568,9 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_datadir/qt5/qsci3/api/python/*.api
 
 %files -n python3-module-%oname-qt5-devel
-%_datadir/sip3/PyQt5/Qsci
+%dir %python3_sitelibdir/PyQt5/bindings/
+%dir %python3_sitelibdir/PyQt5/bindings/Qsci/
+%python3_sitelibdir/PyQt5/bindings/Qsci/*
 %endif
 %endif
 
@@ -579,6 +580,9 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.11.5-alt3
+- use sip5 for python3 module, still use sip4 for python2 module
+
 * Mon Jun 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.11.5-alt2
 - Rebuilt without qt4.
 
