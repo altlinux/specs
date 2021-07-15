@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2103
+Version: 6.2.2104
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -156,6 +156,9 @@ doxygen
 %python3_sitelibdir/%name
 
 %changelog
+* Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2104-alt1
+- New version
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.2103-alt1
 - Updated to upstream version 6.2.2103 (Closes: #40024).
 - Cleaned up spec.

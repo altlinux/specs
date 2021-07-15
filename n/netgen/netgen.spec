@@ -14,8 +14,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2103
-Release: alt2
+Version: 6.2.2104
+Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -387,6 +387,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2104-alt1
+- New version.
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.2103-alt2
 - Fixed version detection.
 
