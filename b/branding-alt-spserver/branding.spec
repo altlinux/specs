@@ -17,8 +17,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 8.2
-Release: alt3
+Version: 8.3
+Release: alt1
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -318,6 +318,13 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Jul 15 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.3-alt1
+- version bump
+- build fixed
+
+* Mon Oct 26 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt4
+- 'Next' button look fixed
+
 * Fri Sep 25 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt3
 - licenses replaced from c8.1
 
