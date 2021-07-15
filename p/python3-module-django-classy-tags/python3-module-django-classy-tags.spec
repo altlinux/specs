@@ -1,49 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname django-classy-tags
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 0.8.0
+Name: python3-module-%oname
+Version: 2.0.0
 Release: alt1
 Summary: Class based template tags for Django
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/django-classy-tags/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/e0/64/a4a72d2bd04848864e7c39b30a3f44be05c328a7f7a4b6406369ad21daac/%{oname}-%{version}.tar.gz
+# https://pypi.org/project/django-classy-tags/#files
+Source: %oname-%version.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
 %description
 Class based template tags for Django.
 
-%package -n python3-module-%oname
-Summary: Class based template tags for Django
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Class based template tags for Django.
-
-%package -n python3-module-%oname-tests
-Summary: tests for Django classytags
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-Class based template tags for Django.
-
-This package contains tests for Django classytags.
-
 %package tests
 Summary: tests for Django classytags
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -52,49 +30,27 @@ Class based template tags for Django.
 This package contains tests for Django classytags.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -q -n %oname-%version
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+mv %buildroot%python3_sitelibdir/tests %buildroot%python3_sitelibdir/classytags/
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/classytags/test*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/classytags/tests
 
 %files tests
-%python_sitelibdir/classytags/test*
-
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/classytags/test*
-%exclude %python3_sitelibdir/classytags/*/test*
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/classytags/test*
-%python3_sitelibdir/classytags/*/test*
-%endif
+%python3_sitelibdir/classytags/tests
 
 %changelog
+* Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
+- 2.0.0
+- Build python3 only
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1
 - automated PyPI update
 

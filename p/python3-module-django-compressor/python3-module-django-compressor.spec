@@ -3,8 +3,8 @@
 %define oname django-compressor
 
 Name: python3-module-%oname
-Version: 2.2
-Release: alt2
+Version: 2.4.1
+Release: alt1
 
 Summary: Compresses linked and inline JavaScript or CSS into single cached files
 
@@ -17,15 +17,13 @@ BuildArch: noarch
 Source: %pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-django
-BuildRequires: python3-module-versiontools
+BuildRequires: python3-module-django-appconf >= 1.0.3
 BuildRequires: python3-module-rcssmin >= 1.0.6
-BuildRequires: python3-module-rjsmin >= 1.0.12
+BuildRequires: python3-module-rjsmin >= 1.1.0
 
-Requires: python3-module-django-appconf >= 1.0
-Requires: python3-module-versiontools
+Requires: python3-module-django-appconf >= 1.0.3
 Requires: python3-module-rcssmin  >= 1.0.6
-Requires: python3-module-rjsmin >= 1.0.12
+Requires: python3-module-rjsmin >= 1.1.0
 
 %description
 Django Compressor combines and compresses linked and inline Javascript
@@ -54,7 +52,7 @@ This package contein tests.
 %setup -n %pypi_name-%version
 
 # Remove bundled egg-info
-rm -rf %pypi_name.egg-info
+#rm -rf %pypi_name.egg-info
 
 %build
 %python3_build
@@ -73,6 +71,9 @@ rm -rf %pypi_name.egg-info
 %python3_sitelibdir/*/test_settings.py
 
 %changelog
+* Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 2.2-alt2
 - Drop python2 support
 
