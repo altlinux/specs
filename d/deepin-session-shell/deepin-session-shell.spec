@@ -3,8 +3,8 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.4.13
-Release: alt2
+Version: 5.4.42
+Release: alt1
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,8 +12,9 @@ Url: https://github.com/linuxdeepin/dde-session-shell
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch1: deepin-session-shell-5.4.5-alt-lightdm-for-lockscreen.patch
+Patch1: deepin-session-shell-5.4.42-alt-lightdm-for-lockscreen.patch
 Patch2: deepin-session-shell-5.4.13-hide-sleep-and-hibernate.patch
+Patch3: deepin-session-shell-5.4.42-alt-gcc10.patch
 
 %if_enabled clang
 BuildRequires(pre): clang12.0-devel
@@ -44,6 +45,7 @@ BuildRequires: libgmock-devel
 %setup -n %repo-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 sed -i 's|/lib|/libexec|' scripts/lightdm-deepin-greeter
 sed -i 's|/usr/bin/bash|/bin/bash|' src/dde-shutdown/view/contentwidget.cpp
@@ -58,8 +60,8 @@ sed -i 's|/usr/bin/bash|/bin/bash|' src/dde-shutdown/view/contentwidget.cpp
 #sed -i 's|theme/background/default_background.jpg|theme/background.png|' \
 #    src/dde-lock/logintheme.qrc \
 #    src/lightdm-deepin-greeter/logintheme.qrc
-# We use system-auth instead common-auth on ALT
-sed -i 's/common-auth/system-auth/' src/libdde-auth/authagent.cpp
+# We don't use common-auth on ALT
+sed -i 's/password-auth/system-auth/; s/common-auth/system-auth/' src/libdde-auth/deepinauthframework.cpp
 sed -i 's|qdbusxml2cpp|qdbusxml2cpp-qt5|' CMakeLists.txt
 sed -i 's|5\.5||' \
     CMakeLists.txt \
@@ -82,7 +84,7 @@ export AR="llvm-ar"
     -DLLVM_ENABLE_LIBCXX:BOOL=OFF \
     -DLLVM_ENABLE_ZLIB:BOOL=ON \
 %endif
-    #
+#
 %cmake_build
 
 %install
@@ -92,6 +94,7 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %files
 %config(noreplace) %_sysconfdir/deepin/greeters.d/00-xrandr
 %config(noreplace) %_sysconfdir/deepin/greeters.d/lightdm-deepin-greeter
+%config(noreplace) %_sysconfdir/deepin/greeters.d/10-cursor-theme
 %_bindir/deepin-greeter
 %_bindir/lightdm-deepin-greeter
 %_bindir/dde-lock
@@ -100,8 +103,14 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/dbus-1/services/*.service
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 %_datadir/glib-2.0/schemas/com.deepin.dde.session-shell.gschema.xml
+%dir %_datadir/deepin-authentication/
+%dir %_datadir/deepin-authentication/privileges/
+%_datadir/deepin-authentication/privileges/lightdm-deepin-greeter.conf
 
 %changelog
+* Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.42-alt1
+- New version (5.4.42).
+
 * Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt2
 - Fixed build with libgmock.so.1.11.0.
 
