@@ -1,23 +1,32 @@
-%define oname poppler-qt5
+%define oname python-poppler-qt5
+%def_without check
 
-Name: python3-module-%oname
-Version: 0.24.2
-Release: alt2
+Name: python3-module-poppler-qt5
+Version: 21.1.0
+Release: alt1
 
 Summary: A Python binding to Poppler-Qt5
+
 License: LGPLv2.1+
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/python-poppler-qt5/
 
-# https://github.com/wbsoft/python-poppler-qt5.git
-# tag: v0.24.2
+# Source-url: %__pypi_url %oname
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 Source: %name-%version.tar
 
+# https://github.com/frescobaldi/python-poppler-qt5/issues/43
+Patch1: poppler-qt5-fix.patch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+
 BuildRequires: gcc-c++ qt5-base-devel libpoppler-qt5-devel
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-sip-devel python3-module-PyQt5-devel
-
+BuildRequires: python3-module-sip5 python3-module-PyQt5-devel python3-module-PyQt-builder
 
 %description
 A Python binding for libpoppler-qt5 that aims for completeness and for
@@ -25,26 +34,37 @@ being actively maintained.
 
 %prep
 %setup
+%patch1 -p1
+%__subst "s|sipbuild|sipbuild5|" *.py
 
 %build
 export PATH=$PATH:%_qt5_bindir
-%python3_build_debug --debug -j6
+sip-build --verbose --no-make \
+  --qmake-setting 'QMAKE_CFLAGS_RELEASE="%optflags"' \
+  --qmake-setting 'QMAKE_CXXFLAGS_RELEASE="%optflags"' \
+  --qmake-setting 'QMAKE_LFLAGS_RELEASE="%{?__global_ldflags}"'
+%make_build -C build
 
 %install
 export PATH=$PATH:%_qt5_bindir
-%python3_install
+%makeinstall_std INSTALL_ROOT=%buildroot -C build
+chmod +x %buildroot/%python3_sitelibdir/*.so
 
 %check
-%if 0
 %__python3 setup.py test
-%endif
 
 %files
-%doc ChangeLog TODO *.rst demo.py
-%python3_sitelibdir/*
-
+%doc ChangeLog TODO *.rst
+%python3_sitelibdir/popplerqt5*.so
+%python3_sitelibdir/python_poppler*
+%dir %python3_sitelibdir/PyQt5/bindings/
+%python3_sitelibdir/PyQt5/bindings/popplerqt5/
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 21.1.0-alt1
+- new version (21.1.0) with rpmgs script
+- build from pypi tarball, build with sip5 (thanks, Fedora!)
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.24.2-alt2
 - Building for python2 disabled.
 
