@@ -2,14 +2,15 @@
 %define oname veusz
 
 Name: python3-module-%oname
-Version: 3.1
-Release: alt2
+Version: 3.3.1
+Release: alt1
 
 Summary: A Scientific Plotting Package
 License: GPLv2+
 Group: Development/Python3
 Url: http://home.gna.org/veusz/
 
+# Source0-git: https://github.com/veusz/veusz.git
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -17,7 +18,7 @@ BuildRequires: gcc-c++
 BuildRequires: /usr/bin/pod2man /usr/bin/man texlive-dist
 BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: qt5-base-devel python3-module-PyQt5-devel
-BuildRequires: python3-module-sip-devel
+BuildRequires: python3-module-sip5
 
 %add_python3_req_skip pyemf
 
@@ -97,11 +98,14 @@ find ./ -type f -name '*.py' -exec \
 %python3_sitelibdir/*/examples
 
 %files -n %oname
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS ChangeLog COPYING README.md
 %_bindir/*
 
 
 %changelog
+* Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
+- new version 3.3.1, build with sip5
+
 * Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.1-alt2
 - Build for python2 disabled.
 
