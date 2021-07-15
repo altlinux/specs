@@ -1,5 +1,5 @@
 %define oname protobuf
-%define soversion 25
+%define soversion 27
 
 # set 'enable' to build legacy package
 %def_disable legacy
@@ -28,7 +28,7 @@ Name: %oname
 %else
 Name: %oname%soversion
 %endif
-Version: 3.14.0
+Version: 3.16.0
 Release: alt1
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
@@ -46,7 +46,7 @@ Patch: %oname-%version.patch
 Obsoletes: libprotobuf <= 2.0.0-alt1
 
 # Automatically added by buildreq on Wed Nov 19 2008
-BuildRequires: gcc-c++ python-devel libnumpy-devel zlib-devel
+BuildRequires: gcc-c++ libnumpy-devel zlib-devel
 
 %if_with python
 BuildRequires: python-module-setuptools
@@ -287,9 +287,11 @@ export PTHREAD_LIBS="-lpthread"
 	--localstatedir=%_var \
 
 %make_build
+%if_with python
 pushd python
 %python_build --cpp_implementation
 popd
+%endif
 
 %if_with python3
 pushd python3
@@ -380,6 +382,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 12 2021 Alexey Shabalin <shaba@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.14.0-alt1
 - 3.14.0
 - build without python2 module
