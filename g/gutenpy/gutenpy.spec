@@ -6,7 +6,7 @@
 
 Name: gutenpy
 Version: 0.3.0
-Release: alt6
+Release: alt6.1
 
 Summary: text reader and catalog browser for Project Gutenberg
 Summary(ru_RU.UTF-8): утилита для поиска и чтения текстов из Project Gutenberg
@@ -26,6 +26,7 @@ Source4: %name-32.png
 Source5: %name-48.png
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-python
 
 # Automatically added by buildreq on Thu May 14 2020
 # optimized out: python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
@@ -104,6 +105,9 @@ install -m0644 -- %SOURCE5 %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt6.1
+- FTBFS: use rpm-build-python for autoprov python scripts
+
 * Thu May 14 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.3.0-alt6
 - Update BuildRequires
 
