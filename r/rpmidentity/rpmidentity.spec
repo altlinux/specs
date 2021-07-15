@@ -1,5 +1,5 @@
 Name: rpmidentity
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Calculate rpm package identity
@@ -32,6 +32,10 @@ make DESTDIR=%buildroot PREFIX=%_prefix install
 %_datadir/rpmidentity/taglist
 
 %changelog
+* Thu Jul 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8-alt1
+- Updated to 0.8.
+- taglist: Added more tags to hash.
+
 * Sun Jul 11 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt1
 - Updated to 0.7.
 - taglist: Added FILENAMES.
