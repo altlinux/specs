@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %def_without test
 %define module_name Devel-ebug
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Class/Accessor/Chained.pm) perl(Devel/StackTrace.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Which.pm) perl(FindBin.pm) perl(IO/Socket/INET.pm) perl(Module/Pluggable.pm) perl(PadWalker.pm) perl(Proc/Background.pm) perl(String/Koremutake.pm) perl(Term/ReadLine.pm) perl(Test/Expect.pm) perl(Test/More.pm) perl(YAML.pm) perl(base.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.63
-Release: alt2
+Version: 0.64
+Release: alt1
 Summary: A simple, extensible Perl debugger
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/pod/Devel::ebug
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -38,7 +38,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc LICENSE author.yml Changes README
+%doc author.yml Changes README
 %perl_vendor_privlib/D*
 
 %files scripts
@@ -46,6 +46,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Thu Jul 15 2021 Igor Vlasenko <viy@altlinux.org> 0.64-alt1
+- automated CPAN update
+
 * Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 0.63-alt2
 - to Sisyphus as perl-Devel-Trepan dep
 
