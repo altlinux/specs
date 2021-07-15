@@ -2,7 +2,7 @@
 
 Name: tcsh
 Version: 6.20.00
-Release: alt3
+Release: alt4
 Summary: An enhanced version of csh, the C shell
 License: BSD
 Group: Shells
@@ -117,7 +117,7 @@ grep -Fqx /bin/tcsh /etc/shells || echo /bin/tcsh >> /etc/shells
 
 %preun
 # do not edit /etc/shells on upgrades
-test "$1" = 0 && sed -i -e '/^\/bin\/t\?csh$/d' /etc/shells
+test "$1" = 0 && sed -i -e '/^\/bin\/t?csh$/d' /etc/shells || true
 
 %files -f tcsh.lang
 %config(noreplace) /etc/csh.*
@@ -132,6 +132,9 @@ test "$1" = 0 && sed -i -e '/^\/bin\/t\?csh$/d' /etc/shells
 %endif
 
 %changelog
+* Thu Jul 15 2021 Alexey V. Vissarionov <gremlin@altlinux.org> 6.20.00-alt4
+- Fixed %preun
+
 * Tue Dec 08 2020 Alexey V. Vissarionov <gremlin@altlinux.org> 6.20.00-alt3
 - Prepared for building with gcc10 (explicit -fcommon parameter in CFLAGS).
 - Removed dependency for the documentation subpackage (it does not require
