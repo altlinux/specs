@@ -1,6 +1,6 @@
 Name: openssl-gost-engine
 Version: 1.1.0.3.0.255.ge3af41d.p1
-Release: alt3.1
+Release: alt4
 
 License: BSD-style
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
@@ -75,6 +75,9 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Thu Jul 15 2021 Paul Wolneykien <manowar@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt4
+- Fix: Remove synonyms for 'enabled' and 'disabled' states (closes: 40500).
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.0.3.0.255.ge3af41d.p1-alt3.1
 - NMU: spec: adapted to new cmake macros.
 
