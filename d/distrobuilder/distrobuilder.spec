@@ -2,7 +2,7 @@
 Name:     distrobuilder
 Version:  1.2
 # number of commits, hash of commit, alt release
-Release:  alt120.21dde21.1
+Release:  alt120.21dde21.2
 
 Summary:  System container image builder for LXC and LXD
 License:  Apache-2.0
@@ -15,6 +15,8 @@ Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
+
+Requires: squashfs-tools
 
 %description
 %summary
@@ -43,6 +45,10 @@ export IGNORE_SOURCES=1
 %doc *.md doc
 
 %changelog
+* Wed Jul 14 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.2-alt120.21dde21.2
+- Add require to squashfs-tools
+- Fix alt package manager to clean properly
+
 * Fri Jul 09 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.2-alt120.21dde21.1
 - update
 
