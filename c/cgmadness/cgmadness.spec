@@ -1,13 +1,14 @@
 Name:		cgmadness
 Version:	1.3
-Release:	alt3
-Summary:	Marble Madness inspired amrble-and-platforms game
+Release:	alt4
+Summary:	Marble Madness inspired marble-and-platforms game
 Group:		Games/Puzzles
-License:	GPL
+License:	GPLv2+
 Source:		%name-%version-src.tar.bz2
 Patch:		cgmadness-1.3-sysgrapple.patch
 Patch1:		cgmadness-1.3-unused.patch
 URL:		http://www.fluxparticle.com/cgmadness/
+ExclusiveArch:  %ix86 x86_64 aarch64
 
 # TODO extra levels package
 
@@ -85,6 +86,10 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Jul 12 2021 Fr. Br. George <george@altlinux.ru> 1.3-alt4
+- Fix license tag
+- Eliminate some archs (closes: #40416)
+
 * Thu Jun 07 2012 Fr. Br. George <george@altlinux.ru> 1.3-alt3
 - Fix gcc4.6 build
 
