@@ -1,4 +1,4 @@
-# 7.1.3.2
+# 7.2.0.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -22,8 +22,8 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 7.1
-%define urelease 3.2
+%define hversion 7.2
+%define urelease 0.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -71,9 +71,18 @@ Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-fix-detecting-qrcodegen.patch
 Patch5: FC-0001-rhbz-1918152-fix-FTBFS.patch
 Patch6: FC-0001-Get-rid-of-apache-commons-logging.patch
-Patch7: FC-0001-rhbz-1956977-crash-on-switch-from-active-comment-to-.patch
-Patch8: FC-0001-Related-tdf-138888-fix-assertion-on-avmedia-MediaCon.patch
-Patch9: FC-0001-disable-libe-book-support.patch
+Patch7: FC-0001-Adapt-to-libstdc-Implement-LWG-1203-for-rvalue-iostr.patch
+Patch8: FC-0001-Adapt-to-hamcrest-2.2-3.fc35.noarch.rpm.patch
+Patch9: FC-0001-gtk3-workaround-missing-gdk_threads_enter-calls-in-e.patch
+Patch10: FC-0001-Replace-inet_ntoa-with-inet_ntop.patch
+Patch11: FC-0001-Simplify-construction-of-a-hardcoded-IPv4-address.patch
+Patch12: FC-0001-dtd-files-are-not-xml-files-and-shouldn-t-have-xml-h.patch
+Patch13: FC-0002-xmllint-Namespace-prefix-menu-on-menuseparator-is-no.patch
+Patch14: FC-0001-allow-system-firebird-4.patch
+Patch15: FC-0001-Remove-unused-DOCTYPE-from-odk-examples-xcu-file.patch
+Patch16: FC-0001-math.desktop-include-Spreadsheet-category.patch
+Patch17: FC-0001-add-missing-xmlns-loext-to-example_sl-SI.xml.patch
+Patch18: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -100,12 +109,17 @@ BuildRequires: libeot-devel libqrcodegen-cpp-devel
 # 7.1
 BuildRequires: libbox2d-devel
 
+# 7.2
+BuildRequires: libpixman-devel
+
 %if_with java
 BuildRequires: java-devel junit ant bsh pentaho-reporting-flow-engine 
 %endif
 
 %if_enabled qt5
 BuildRequires: qt5-base-devel qt5-x11extras-devel 
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: libpixman-devel
 %endif
 
 %if_enabled kf5
@@ -269,12 +283,21 @@ echo Direct build
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-#patch9 -p1
+##patch4 -p1
+##patch5 -p1
+#patch6 -p1
+#patch7 -p1
+#patch8 -p1
+##patch9 -p1
+#patch10 -p1
+#patch11 -p1
+#patch12 -p1
+#patch13 -p1
+#patch14 -p1
+#patch15 -p1
+#patch16 -p1
+#patch17 -p1
+#patch18 -p1
 
 ## Long-term FC patches applying
 
@@ -284,6 +307,9 @@ echo Direct build
 %patch404 -p1
 
 %patch500 -p0
+
+# Hack in ALT pixman path
+sed -i 's@ -I@ -I /usr/include/pixman-1 -I@' canvas/Library_cairocanvas.mk
 
 # Hack in python shebang
 find . -name \*.py | while read F; do
@@ -388,6 +414,10 @@ fi
   	--enable-cipher-openssl-backend \
 	--enable-eot \
 	--enable-formula-logger \
+%if 0
+    # TODO build libzxing and turn it on
+%endif
+    --disable-zxing \
   \
 %if_with lto
   	--enable-lto \
@@ -489,8 +519,15 @@ install -m755 libreoffice%hversion.sh %buildroot%_bindir/libreoffice%hversion
 # install icons
 for f in `( cd sysui/desktop/icons; find hicolor -type f )`; do
 	d=`dirname "$f"`; n=`basename "$f"`
-	install -D sysui/desktop/icons/$f %buildroot%_iconsdir/$d/$n
-	ln -sr %buildroot%_iconsdir/$d/$n %buildroot%_iconsdir/$d/libreoffice%hversion-$n
+	install -D sysui/desktop/icons/$f \
+            %buildroot%_iconsdir/$d/libreoffice%hversion-$n
+	ln -sr %buildroot%_iconsdir/$d/libreoffice%hversion-$n \
+            %buildroot%_iconsdir/$d/libreoffice-$n
+    case "$n" in
+        *calc*) ;;
+        *) ln -sr %buildroot%_iconsdir/$d/libreoffice%hversion-$n \
+            %buildroot%_iconsdir/$d/$n ;;
+    esac
 done
 
 # TODO icon-themes/
@@ -500,7 +537,8 @@ sed -i 's/Education;//' %buildroot%lodir/share/xdg/math.desktop
 
 mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math;  do
-	ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
+	#ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
+    sed "s/%hversion-/-/" < %buildroot%lodir/share/xdg/$n.desktop > %buildroot%_desktopdir/$n.desktop
 done
 
 # TODO some other hack with sysui/desktop/ stuff ?
@@ -579,6 +617,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Jul 15 2021 Fr. Br. George <george@altlinux.ru> 7.2.0.1-alt1
+- Update to 7.2.0.1
+
 * Sun May 16 2021 Fr. Br. George <george@altlinux.ru> 7.1.3.2-alt1
 - Update to 7.1.3.2
 
