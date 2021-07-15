@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 5.23.0
-Release: alt1
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -152,6 +152,7 @@ BuildRequires: libstemmer-devel
 %py3_buildrequires sip5 >= 5.5.0
 %py3_buildrequires PyQt-builder >= 1.6.0
 %py3_buildrequires PyQt5-sip >= 12.8.1
+BuildRequires: python3-module-PyQt5-devel
 %py3_use PyQt5 >= 5.15.2
 %py3_use PyQtWebEngine >= 5.15.2
 
@@ -236,6 +237,9 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Thu Jul 15 2021 Vitaly Lipatov <lav@altlinux.ru> 5.23.0-alt2
+- add BR: python3-module-PyQt5-devel
+
 * Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 5.23.0-alt1
 - new version 5.23.0 (with rpmrb script)
 - official python3 build
