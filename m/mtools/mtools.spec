@@ -1,7 +1,7 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.31
+Version: 4.0.32
 Release: alt1
 
 Summary: Programs for accessing FAT formatted media without mounting it
@@ -128,6 +128,9 @@ find %buildroot -name floppyd\* -print0 | xargs -r0 rm -fv --
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Wed Jul 14 2021 Michael Shigorin <mike@altlinux.org> 4.0.32-alt1
+- new version (watch file uupdate)
+
 * Sun Jun 20 2021 Michael Shigorin <mike@altlinux.org> 4.0.31-alt1
 - new version (watch file uupdate)
 
