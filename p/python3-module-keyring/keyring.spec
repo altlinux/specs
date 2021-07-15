@@ -2,24 +2,20 @@
 
 %def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 12.0.0
-Release: alt4
+Release: alt5
 Summary: Keyring provides an easy way to access the system keyring service
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/keyring
 BuildArch: noarch
 
 Source: %oname-%version.tar
 Patch0: fix_deps.patch
 
-BuildRequires: python-module-setuptools python-devel
-BuildRequires: python-module-setuptools_scm
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-devel
 BuildPreReq: python-module-setuptools_scm
 
 %if_with check
@@ -27,38 +23,19 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-sugar
 %endif
 
-%py_requires ctypes entrypoints json logging pluggy secretstorage
+%py3_requires ctypes entrypoints json logging pluggy secretstorage
+
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 %description
 The Python keyring lib provides an easy way to access the system 
 keyring service from python. It can be used in any application 
 that needs safe password storage.
 
-%package -n python3-module-%oname
-Summary: Keyring provides an easy way to access the system keyring service
-Group: Development/Python3
-%py3_requires ctypes entrypoints json logging pluggy secretstorage
-
-%description -n python3-module-%oname
-The Python keyring lib provides an easy way to access the system 
-keyring service from python. It can be used in any application 
-that needs safe password storage.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for keyring
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-The Python keyring lib provides an easy way to access the system 
-keyring service from python. It can be used in any application 
-that needs safe password storage.
-
-This package contains tests for keyring.
-
 %package tests
 Summary: Tests for keyring
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -72,49 +49,25 @@ This package contains tests for keyring.
 %setup -n %oname-%version
 %patch0 -p0
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-    mv $i $i.py3
-done
-popd
-
-%python_install
 
 %files
-%doc *.rst LICENSE
+%doc *.rst *.txt LICENSE
 %_bindir/*
-%exclude %_bindir/*.py3
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files -n python3-module-%oname
-%doc *.rst *.txt
-%_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
 
-
 %changelog
+* Thu Jul 15 2021 Grigory Ustinov <grenka@altlinux.org> 12.0.0-alt5
+- Drop python2 support.
+
 * Thu Oct 15 2020 Stanislav Levin <slev@altlinux.org> 12.0.0-alt4
 - Made dependency on Pytest and its plugins optional.
 
