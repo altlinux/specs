@@ -6,7 +6,7 @@
 
 Name: po4a
 Version: 0.47
-Release: alt1
+Release: alt1.1
 
 Summary: Tools for helping translation of documentation
 
@@ -32,7 +32,7 @@ BuildRequires: docbook-style-xsl perl-HTML-Parser perl-Locale-gettext perl-Modul
 BuildRequires: perl-podlators
 
 BuildRequires:  perl-Module-Build >= 0.40
-BuildRequires:  perl-SGMLSpm >= 1.03ii
+BuildRequires:  perl-SGMLSpm
 BuildRequires:  perl-Pod-Parser
 # for Unicode::GCString
 BuildRequires:  perl-Unicode-LineBreak 
@@ -81,6 +81,9 @@ rm -rf %buildroot%perl_vendor_privlib/i386-linux/
 %_man7dir/*
 
 %changelog
+* Thu Jul 15 2021 Igor Vlasenko <viy@altlinux.org> 0.47-alt1.1
+- NMU: drop 1.03ii from requires on perl-SGMLSpm
+
 * Fri Oct 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.47-alt1
 - New version from https://alioth.debian.org/anonscm/git/po4a/po4a.git
 - Package man pages
