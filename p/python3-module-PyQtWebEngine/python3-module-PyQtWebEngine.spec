@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.15.4
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for Qt WebEngine 5
 
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-macros-qt5-webengine
 
 BuildRequires: python3-module-sip5 >= 5
 BuildRequires: python3-module-PyQt-builder
-BuildRequires: python3-module-PyQt5 >= %version
+BuildRequires: python3-module-PyQt5-devel >= %version
 
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
 BuildRequires: gcc-c++ python3-devel
@@ -79,6 +79,9 @@ sip-build --no-make --debug \
 %_qt5_datadir/qsci/PyQtWebEngine.api
 
 %changelog
+* Thu Jul 15 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt2
+- add BR: python3-module-PyQt5-devel
+
 * Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt1
 - new version 5.15.4 (with rpmrb script)
 
