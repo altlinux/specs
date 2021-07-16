@@ -1,6 +1,6 @@
 Name: djview4
 Version: 4.12.0
-Release: alt3
+Release: alt3.1
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
 License: GPLv2+
@@ -25,7 +25,8 @@ BuildRequires: browser-plugins-npapi-devel
 
 # Automatically added by buildreq on Thu Jan 28 2021
 # optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libImageMagick6-common libSM-devel libX11-devel libXext-devel libcairo-gobject libgdk-pixbuf libglvnd-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-webkit-devel libstdc++-devel perl pkg-config python-modules python2-base python3 python3-base sh4 tzdata xorg-proto-devel
-BuildRequires: ImageMagick-tools gcc-c++ libXt-devel libdjvu-devel libtiff-devel phonon-devel python3-dev python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy-alt
+BuildRequires: ImageMagick-tools gcc-c++ libXt-devel libdjvu-devel libtiff-devel python3-dev python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy-alt
+BuildRequires: qt5-base-devel qt5-tools
 
 %description
 This package contains the djview4 viewer and browser plugin.
@@ -55,8 +56,8 @@ Highlights:
 sed -i '/^#/d' desktopfiles/djvulibre-djview4.desktop
 
 %build
-export QTDIR=%qtdir
-export QTMAKE=qmake-qt4
+export QTDIR=%_qt5_prefix
+export QTMAKE=qmake-qt5
 export PATH=$QTDIR/bin:$PATH
 sh autogen.sh
 %configure %{subst_enable static}
@@ -94,6 +95,10 @@ ln -s %buildroot%_bindir/djview4 djview
 %_iconsdir/hicolor/scalable/mimetypes/*
 
 %changelog
+* Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 4.12.0-alt3.1
+- FTBFS: build without phonon-devel.
+- Build with Qt5.
+
 * Sun Mar 28 2021 Andrey Bergman <vkni@altlinux.org> 4.12.0-alt3
 - Add patch disabling fseeko as non-LFS.
 
