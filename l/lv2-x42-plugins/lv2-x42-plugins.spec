@@ -3,7 +3,7 @@
 %define oname x42-plugins
 
 Name: lv2-%oname
-Version: 20210409
+Version: 20210714
 Release: alt1
 Summary: Collection LV2 plugins
 
@@ -78,5 +78,8 @@ auto-tune, awesome meters collection and others.
 %_man1dir/*
 
 %changelog
+* Fri Jul 16 2021 Ivan A. Melnikov <iv@altlinux.org> 20210714-alt1
+- 20210714
+
 * Fri Jun 04 2021 Ivan A. Melnikov <iv@altlinux.org> 20210409-alt1
 - Initial build for Sisyphus
