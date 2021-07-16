@@ -1,6 +1,6 @@
 Name: plasma-applet-thermal-monitor
 Version: 1.2.9
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -34,9 +34,12 @@ sensors.
 
 %files -f %name.lang
 %_K5data/plasma/plasmoids/org.kde.thermalMonitor/
-%_K5srv/plasma-applet-org.kde.thermalMonitor.desktop
+%_datadir/metainfo/org.kde.thermalMonitor.appdata.xml
 
 %changelog
+* Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.9-alt3
+- FTBFS: do not package service file.
+
 * Sun Jan 05 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.9-alt2
 - Automatic update at plasmoid startup.
 
