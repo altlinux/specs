@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.22.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -221,20 +221,16 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 
 %files -f %name.lang
 %doc COPYING*
-#%_K5bin/kde5-nm-connection-editor
 %_K5lib/libplasmanm_*.so
 %_K5plug/kf5/kded/networkmanagement.so
 %_K5plug/kcm_networkmanagement.so
 %_K5qml/org/kde/plasma/networkmanagement/
-#%_K5xdgapp/kde5-nm-connection-editor.desktop
 %_K5data/kcm_networkmanagement/
 %_K5data/plasma/plasmoids/org.kde.plasma.networkmanagement/
 %_K5data/plasma/updates/*
 %_K5notif/networkmanagement.notifyrc
 %_K5srv/kcm_networkmanagement.desktop
-%_K5srv/plasma-applet-org.kde.plasma.networkmanagement.desktop
 %_K5srvtyp/*networkmanagement*.desktop
-#%_K5xmlgui/kde5-nm-connection-editor/
 
 %files maxi
 %files connect-mobile
@@ -284,6 +280,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.3-alt2
+- fix package
+
 * Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.3-alt1
 - new version
 
