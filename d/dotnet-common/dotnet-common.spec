@@ -13,7 +13,7 @@
 %define _dotnet_rid linux-%_dotnet_arch
 
 Name: dotnet-common
-Version: 6.0
+Version: 6.0.1
 Release: alt1
 
 Summary: Common dir and files for the .NET Core runtime and libraries
@@ -43,6 +43,12 @@ cat <<EOF >macros
 #_dotnet_major
 #_dotnet_corerelease
 #_dotnet_sdkrelease
+#_dotnet_coreapprefrelease
+#_dotnet_aspnetcorerelease
+#_dotnet_aspnetcoreapprefrelease
+#_dotnet_templatesrelease
+#_dotnet_netstandartrelease
+#_dotnet_sdkmanifestsrelease
 
 %%_dotnet_archlist %_dotnet_archlist
 %%_dotnet_rid %_dotnet_rid
@@ -57,13 +63,16 @@ cat <<EOF >macros
 %%_dotnet_templates %%_dotnetdir/templates/%%_dotnet_templatesrelease
 %%_dotnet_netstandart %%_dotnetdir/packs/NETStandard.Library.Ref/%%_dotnet_netstandartrelease
 %%_dotnet_sdk %%_dotnetdir/sdk/%%_dotnet_sdkrelease
+%%_dotnet_sdkmanifests %%_dotnetdir/sdk-manifests/%%_dotnet_sdkmanifestsrelease
+
+%%_dotnet_corepkgrelease %%(echo "%%_dotnet_corerelease" | sed -e "s|\-|.|g")
+%%_dotnet_sdkpkgrelease %%(echo "%%_dotnet_sdkrelease" | sed -e "s|\-|.|g")
 
 # for compatibility
 %%_dotnet_apphostdir %%_dotnetdir/packs/Microsoft.NETCore.App.Host.%%_dotnet_rid/%%_dotnet_corerelease
 %%_dotnet_shared %%_dotnetdir/shared/Microsoft.NETCore.App/%%_dotnet_corerelease
 %%_dotnet_appref %%_dotnetdir/packs/Microsoft.NETCore.App.Ref/%%_dotnet_apprefrelease
 EOF
-
 
 %install
 mkdir -p %buildroot%_libdir/dotnet/
@@ -90,6 +99,11 @@ install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
+- cleanup to .NET 6
+ + add _dotnet_sdk_manifests
+ + add _dotnet_corepkgrelease, _dotnet_sdkpkgrelease
+
 * Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0-alt1
 - improve _dotnet_ macros
 
