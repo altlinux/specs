@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: latte-dock
-Version: 0.9.11
-Release: alt3
+Version: 0.9.12
+Release: alt1
 Summary: Latte is a dock based on plasma frameworks
 
 License: GPLv2+
@@ -74,9 +74,6 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_K5icon/breeze/*/*/*
 %_K5icon/hicolor/*/*/*
 %_datadir/knotifications5/lattedock.notifyrc
-%_K5srv/plasma-applet-org.kde.latte.containment.desktop
-%_K5srv/plasma-applet-org.kde.latte.plasmoid.desktop
-%_K5srv/plasma-shell-org.kde.latte.shell.desktop
 %_K5srv/plasma-containmentactions-lattecontextmenu.desktop
 %_datadir/kservicetypes5/latte-indicator.desktop
 %_K5data/plasma/plasmoids/org.kde.latte.containment/
@@ -90,6 +87,10 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_K5xdgconf/latte-indicators.knsrc
 
 %changelog
+* Fri Jul 16 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.12-alt1
+- Updated to upstream version v0.9.12
+- Fix package service files
+
 * Tue Apr 06 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.11-alt3
 - Add translation files.
 - Change source URL.
