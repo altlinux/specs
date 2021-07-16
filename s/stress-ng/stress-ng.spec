@@ -1,9 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%ifnarch ppc64le
+%set_verify_elf_method strict
+%endif
 
 Name: stress-ng
-Version: 0.12.11
+Version: 0.12.12
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -22,6 +25,7 @@ BuildRequires: libbsd-devel
 BuildRequires: libcap-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libkeyutils-devel
+BuildRequires: libkmod-devel
 BuildRequires: liblksctp-devel
 BuildRequires: libseccomp-devel
 BuildRequires: zlib-devel
@@ -46,7 +50,8 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %endif
 
 %build
-%make_build_ext --no-print-directory --output-sync=none
+%add_optflags -flto
+%make_build_ext --no-print-directory --output-sync=none VERBOSE=1
 
 %install
 %makeinstall_std
@@ -74,6 +79,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Thu Jul 15 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.12-alt1
+- Update to V0.12.12 (2021-07-09).
+
 * Fri Jul 02 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.11-alt1
 - Update to V0.12.11 (2021-06-24).
 
