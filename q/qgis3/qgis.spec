@@ -8,8 +8,8 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.18.3
-Release: alt2
+Version: 3.20.0
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -361,6 +361,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.20.0-alt1
+- New version.
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.18.3-alt2
 - NMU: fix build with sip5
 
