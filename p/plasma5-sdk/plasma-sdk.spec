@@ -2,7 +2,7 @@
 
 Name: plasma5-sdk
 Version: 5.22.3
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Development/KDE and QT
@@ -80,9 +80,11 @@ KF5 library
 %_K5data/plasma/shells/*/
 %_K5data/plasma/packages/*/
 %_K5data/kpackage/
-%_K5srv/*.desktop
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt2
+- fix package
+
 * Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt1
 - new version
 
