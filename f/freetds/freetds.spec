@@ -5,7 +5,7 @@
 %define	TDSVER 7.4
 %define	name freetds
 %define	release alt1
-%define	version 1.2.21
+%define	version 1.3
 
 Name:		%name
 Version:	%version
@@ -171,6 +171,12 @@ useful utilities.
 
 
 %changelog
+* Fri Jul 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3-alt1
+- New version
+  - support UTF-8 columns using MSSQL 2019
+  - support long (more than 64k) SSPI packets
+  - fix unicode columns for ASA database
+
 * Mon Jun 28 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.2.21-alt1
 - New version
 
