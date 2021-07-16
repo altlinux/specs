@@ -2,7 +2,7 @@
 
 Name: %srcname
 Version: 2.3.0
-Release: alt2
+Release: alt3
 Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
 License: GPLv3
 Group: Networking/WWW
@@ -12,7 +12,7 @@ Source0: https://github.com/%srcname/%srcname/releases/download/v%version/%srcna
 BuildArch: noarch
 BuildRequires: python3-devel
 BuildRequires: asciidoc asciidoc-a2x
-BuildRequires: desktop-file-utils python3-module-setuptools
+BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3
 #Requires: qt5-qtbase
 #Requires: qt5-qtdeclarative
 #Requires: python3-module-setuptools
@@ -95,6 +95,10 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+
+* Fri Jul 16 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.0-alt3
+- add BR rpm-build-python3
+
 * Fri Jul 16 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.0-alt2
 - skip reqs for python3 QtWebKit (thanks to Sergey Turchin, closes: #38837)
 
