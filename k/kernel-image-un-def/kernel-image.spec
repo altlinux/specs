@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.12
-%define kernel_sublevel .16
+%define kernel_sublevel .17
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -103,9 +103,6 @@ ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
-%ifarch %ix86 x86_64
-BuildRequires: dev86
-%endif
 BuildRequires: flex
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
@@ -665,6 +662,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Jul 16 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.12.17-alt1
+- v5.12.17
+
 * Mon Jul 12 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.12.16-alt1
 - v5.12.16
 
