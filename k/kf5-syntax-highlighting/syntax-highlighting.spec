@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.84.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -13,11 +13,11 @@ License: GPL-2.0-only and LGPL-2.0-or-later
 Source: %rname-%version.tar
 
 # Automatically added by buildreq on Fri Jul 16 2021 (-bi)
-# optimized out: cmake cmake-modules debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-test libqt5-widgets libqt5-xmlpatterns libsasl2-3 libssl-devel libstdc++-devel perl perl-Encode perl-parent python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-tools rpm-build-python3 sh4 tzdata
-#BuildRequires: appstream extra-cmake-modules python3-dev python3-module-mpl_toolkits qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-xmlpatterns-devel rpm-build-kf5 tbb-devel
+# optimized out: cmake cmake-modules debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-test libqt5-widgets libqt5-xmlpatterns libsasl2-3 libssl-devel libstdc++-devel perl perl-parent python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-tools rpm-build-python3 sh4 tzdata
+#BuildRequires: appstream extra-cmake-modules perl-Encode python3-dev qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-xmlpatterns-devel rpm-build-kf5 tbb-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-xmlpatterns-devel qt5-tools-devel
-BuildRequires: python3-module-PyQt5
+BuildRequires: perl-Encode
 
 
 %description
@@ -75,6 +75,9 @@ KF5 library
 %_K5lib/libKF5SyntaxHighlighting.so.*
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt3
+- fix build requires
+
 * Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt2
 - fix build requires
 
