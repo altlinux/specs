@@ -1,34 +1,47 @@
-%define uglyver 2_3_4
 Name: libutfcpp
-Version: 3.1.2
+Version: 3.2.1
 Release: alt1
 
 Summary: A library for handling UTF-8 encoded strings
 
 License: BSL-1.0
 Group: Development/C++
-Url: http://sourceforge.net/projects/utfcpp/
+Url: https://github.com/nemtrif/utfcpp
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://download.sourceforge.net/%name/utf8_v%uglyver.zip
+# Source-url: https://github.com/nemtrif/utfcpp/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
+# Source1-url: https://github.com/nemtrif/ftest/archive/refs/heads/master.zip
+Source1: %name-ftest-%version.tar
+
+BuildRequires(pre): cmake gcc-c++
+
 %description
-A library for handling UTF-8 encoded strings.
+A C++ header only library for handling UTF-8 encoded strings.
 
 See https://github.com/ledger/utfcpp also.
 
 %prep
-%setup
+%setup -a1
 
 %build
+%cmake
+%cmake_build
 
 %install
 cd source
-install -d %buildroot/%_includedir/utf8
+install -d %buildroot/%_includedir/utf8/
 install -m0644 utf8.h %buildroot/%_includedir
-install -m0644 utf8/{checked,unchecked,core}.h %buildroot/%_includedir/utf8
+install -m0644 utf8/*.h %buildroot/%_includedir/utf8
+
+%check
+cd %_host_alias/tests
+./apitests
+./cpp11
+./cpp17
+./noexceptionstests
 
 %package devel
 Summary: A library for handling UTF-8 encoded strings
@@ -38,10 +51,14 @@ Group: Development/C++
 A library for handling UTF-8 encoded strings.
 
 %files devel
+%doc README.md
 %_includedir/utf8/
 %_includedir/utf8.h
 
 %changelog
+* Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- real build 3.2.1 from new upstream (all 3.x updates here really were 2.3.4)
+
 * Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt1
 - new version 3.1.2 (with rpmrb script)
 
