@@ -3,7 +3,7 @@
 
 Name: libArcus
 Version: 4.8
-Release: alt1
+Release: alt2
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
@@ -33,7 +33,8 @@ Development files for %name.
 Summary: Communication library between internal components for Ultimaker software
 Group:   Development/Python3
 %py3_provides Arcus
-Requires: %name
+Requires: %name = %EVR
+Requires: python3-module-sip
 
 %description -n python3-module-Arcus
 Communication library between internal components for Ultimaker software
@@ -66,6 +67,9 @@ sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jul 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.8-alt2
+- add python3-module-sip requirement
+
 * Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 4.8-alt1
 - New version 4.8
 
