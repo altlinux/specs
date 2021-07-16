@@ -1,7 +1,7 @@
 # obsoleted koffice version
 %define koffice_ver 4:2.3.70
 
-%define sover 20
+%define sover 21
 %define libkritacommand libkritacommand%sover
 %define libkritaimpex libkritaimpex%sover
 %define libkritalibkis libkritalibkis%sover
@@ -30,8 +30,8 @@
 %define libkritatext libkritatext%sover
 
 Name: krita
-Version: 4.4.2
-Release: alt2
+Version: 4.4.5
+Release: alt1
 %K5init no_altplace
 
 Group: Graphics
@@ -433,6 +433,9 @@ done
 %_libdir/libkritametadata.so.*
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 4.4.5-alt1
+- new version (closes: 40461)
+
 * Thu Jul 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt2
 - NMU: fix build with SIP5
 
