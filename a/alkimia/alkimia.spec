@@ -2,7 +2,7 @@
 
 Name:    alkimia
 Version: 8.1.0
-Release: alt1
+Release: alt2
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -78,7 +78,6 @@ Headers and other files for develop with %name.
 %_iconsdir/hicolor/*/apps/onlinequoteseditor*
 %_datadir/metainfo/*.appdata.xml
 %_K5data/plasma/plasmoids/org.wincak.foreigncurrencies2
-%_K5srv/*.desktop
 %_datadir/knsrcfiles//*.knsrc
 
 %files -n lib%name
@@ -92,6 +91,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt2
+- FTBFS: do not package service file.
+
 * Tue Jul 06 2021 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
 - New version.
 
