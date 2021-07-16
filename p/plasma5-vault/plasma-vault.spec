@@ -2,7 +2,7 @@
 
 Name: plasma5-vault
 Version: 5.22.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -76,9 +76,11 @@ Requires: %name-common = %version-%release
 %_K5plug/kf5/kded/*vault*.so
 %_K5plug/plasma/applets/*vault*.so
 %_K5data/plasma/plasmoids/*vault*/
-%_K5srv/*vault*.desktop
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.3-alt2
+- fix package
+
 * Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.3-alt1
 - new version
 
