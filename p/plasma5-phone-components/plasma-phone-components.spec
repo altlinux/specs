@@ -3,7 +3,7 @@
 
 Name: plasma5-phone-components
 Version: 5.22.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -81,15 +81,16 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_K5plug/plasma/applets/*.so
 %_K5qml/org/kde/plasma/private/mobileshell/
 %_K5qml/org/kde/plasma/private/mobilehomescreencomponents/
-%_K5srv/*.desktop
 %_K5data/plasma/look-and-feel/org.kde.plasma.phone/
 %_K5data/plasma/plasmoids/*/
-#%_K5data//kwin/scripts/org.kde.phone.multitasking/
 %_K5data/plasma/shells/org.kde.plasma.phoneshell/
 %_K5notif/*.notifyrc
 %_datadir/xsessions/plasma-mobile.desktop
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt2
+- fix package
+
 * Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt1
 - new version
 
