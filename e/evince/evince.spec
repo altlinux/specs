@@ -15,10 +15,11 @@
 %def_enable browser_plugin
 %def_enable multimedia
 %def_enable nautilus
+%def_enable gtk_doc
 %def_disable debug
 
 Name: evince
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A document viewer
@@ -32,7 +33,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
+Requires: %name-data = %EVR
 Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
 Requires: dconf
@@ -46,7 +48,7 @@ Requires: dconf
 BuildRequires(pre): meson
 BuildRequires: libpoppler-glib-devel >= %poppler_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: gcc-c++ gnome-common gtk-doc libappstream-glib-devel yelp-tools
+BuildRequires: gcc-c++ gnome-common libappstream-glib-devel yelp-tools
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel
 BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
@@ -59,28 +61,36 @@ BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
+%{?_enable_introspection:
+BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildRequires: libXi-devel
 BuildRequires: pkgconfig(systemd)
-
-%if_enabled introspection
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-%endif
 
 %description
 Evince is a document viewer capable of displaying multiple and single page
 document formats like PDF and Postscript
 
+%package data
+Summary: Arch independent files for Evince
+Group: Office
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for Evince to work.
+
 %package dvi
 Summary: Evince backend for dvi files
 Group: Office
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description dvi
 A backend to let evince display dvi files
 
 %package -n lib%name
 Summary: Library for the %name project
-Group: Office
+Group: System/Libraries
 
 %description -n lib%name
 Library for %name project
@@ -88,7 +98,7 @@ Library for %name project
 %package -n lib%name-gir
 Summary: GObject introspection data for the Evince library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Evince library
@@ -96,24 +106,35 @@ GObject introspection data for the Evince library
 %package -n lib%name-devel
 Summary: Development tools for the %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Header files for %name library
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the Evince library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Evince library
 
+%package -n lib%name-devel-doc
+Summary: Development documentation for Evince
+Group: Development/GNOME and GTK+
+BuildArch: noarch
+Conflicts: lib%name-devel < %version
+
+%description -n lib%name-devel-doc
+This package contains documentation necessary to develop applications
+using Evince library.
+
 %package -n mozilla-plugin-%name
 Summary: Mozilla plugin for the Evince document viewer
 Group: Networking/WWW
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: browser-plugins-npapi
 
 %description -n mozilla-plugin-%name
@@ -131,8 +152,8 @@ via the Evince.
     -Ddvi=enabled \
     %{?_disable_t1lib:-Dt1lib=disabled} \
     -Dcomics=enabled \
-    -Dgtk_doc=true \
-    %{?_enable_dbus:-Ddbus=true} \
+    %{?_disable_gtk_doc:-Dgtk_doc=false} \
+    %{?_disable_dbus:-Ddbus=false} \
     %{?_disable_xps:-Dxps=disabled} \
     %{?_enable_ps:-Dps=enabled} \
     %{?_disable_introspection:-Dintrospection=false} \
@@ -147,10 +168,11 @@ via the Evince.
 %meson_install
 %find_lang %name --with-gnome
 
-%files -f %name.lang
-%doc AUTHORS NEWS
+%files
 %_bindir/evince*
-%_prefix/lib/systemd/user/%xdg_name.service
+%{?_enable_dbus:
+%_libexecdir/evince*
+%_prefix/lib/systemd/user/%xdg_name.service}
 %{?_enable_nautilus:%_libdir/nautilus/extensions-3.0/libevince-properties-page.so}
 %dir %_libdir/evince
 %dir %_libdir/evince/%so_ver
@@ -163,7 +185,11 @@ via the Evince.
 %{?_enable_xps:%_libdir/evince/%so_ver/backends/libxpsdocument.so}
 %_libdir/evince/%so_ver/backends/*.evince-backend
 %exclude %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
-%_libexecdir/evince*
+%doc AUTHORS NEWS* README.md
+
+%files data -f %name.lang
+%{?_enable_dbus:%_datadir/dbus-1/services/org.gnome.evince.Daemon.service}
+%_datadir/%name/
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name-previewer.desktop
 %_datadir/metainfo/%name-comicsdocument.metainfo.xml
@@ -173,9 +199,6 @@ via the Evince.
 %_datadir/metainfo/%name-tiffdocument.metainfo.xml
 %_datadir/metainfo/%name-xpsdocument.metainfo.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
-
-%_datadir/dbus-1/services/org.gnome.evince.Daemon.service
-%_datadir/%name/
 %_datadir/GConf/gsettings/evince.convert
 %_datadir/glib-2.0/schemas/org.gnome.Evince.gschema.xml
 %_datadir/thumbnailers/evince.thumbnailer
@@ -196,8 +219,12 @@ via the Evince.
 %_libdir/libevdocument%{api_ver_major}.so
 %_libdir/libevview%{api_ver_major}.so
 %_pkgconfigdir/*.pc
+
+%if_enabled gtk_doc
+%files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name
 %_datadir/gtk-doc/html/libev*
+%endif
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -216,6 +243,10 @@ via the Evince.
 
 
 %changelog
+* Thu Jul 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
+- 40.4
+- new -data and libevince-devel-doc subpackages
+
 * Tue Jul 13 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 
