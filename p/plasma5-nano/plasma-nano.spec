@@ -2,7 +2,7 @@
 
 Name: plasma5-nano
 Version: 5.22.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -61,9 +61,11 @@ Requires: %name-common
 %_K5qml/org/kde/plasma/private/nanoshell/
 %_K5data/plasma/packages/org.kde.plasma.nano.desktoptoolbox/
 %_K5data/plasma/shells/org.kde.plasma.nano/
-%_K5srv/*nano*.desktop
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt2
+- fix package
+
 * Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt1
 - new version
 
