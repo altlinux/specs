@@ -2,8 +2,8 @@
 %def_disable debugger
 
 Name: python3-module-%modname
-Version: 0.29.23
-Release: alt2
+Version: 0.29.24
+Release: alt1
 
 Summary: C-extensions for Python 3
 Group: Development/Python3
@@ -113,6 +113,9 @@ done
 %endif
 
 %changelog
+* Fri Jul 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.24-alt1
+- 0.29.24
+
 * Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.23-alt2
 - python3-only package
 
