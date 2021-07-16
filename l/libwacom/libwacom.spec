@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.10
+%define ver_major 1.11
 %def_disable docs
 
 %ifnarch %valgrind_arches
@@ -13,7 +13,7 @@
 
 Name: libwacom
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -122,6 +122,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Jul 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1
+- 1.11
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt2
 - BR: +rpm-build-python3
 
