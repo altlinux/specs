@@ -2,7 +2,7 @@
 
 Name: %srcname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
 License: GPLv3
 Group: Networking/WWW
@@ -26,6 +26,9 @@ BuildRequires: desktop-file-utils python3-module-setuptools
 #Requires: qt5-qtwebengine qt5-qtwebkit python3-qt5-webkit python3-cssutils
 Provides: python3(qutebrowser.extensions)
 Provides: python3(qutebrowser.components.utils)
+%add_python3_req_skip python3(PyQt5.QtWebKit)
+%add_python3_req_skip python3(PyQt5.QtWebKitWidgets)
+
 
 %description
 qutebrowser is a keyboard-focused browser with a minimal GUI. It's based on
@@ -92,6 +95,9 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Fri Jul 16 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.0-alt2
+- skip reqs for python3 QtWebKit (thanks to Sergey Turchin, closes: #38837)
+
 * Thu Jul 15 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
