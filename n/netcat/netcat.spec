@@ -1,7 +1,7 @@
 Name: netcat
 %define datestamp 20100725
 Version: 4.0.%datestamp
-Release: alt1
+Release: alt2
 
 Summary: Reads and writes data across network connections using TCP or UDP
 License: BSD
@@ -62,7 +62,7 @@ cd src
 sed -i 's,\mnc\M,netcat,' usr.bin/nc/nc.1
 
 %build
-%make_build -C %srcdir CFLAGS='-c %optflags'
+%make_build -C %srcdir CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
 
 %install
 install -pD -m755 %srcdir/nc   %buildroot%_bindir/netcat
@@ -70,11 +70,19 @@ install -pD -m644 %srcdir/nc.1 %buildroot%_man1dir/netcat.1
 ln -s netcat %buildroot%_bindir/nc
 ln -s netcat.1 %buildroot%_man1dir/nc.1
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %_bindir/*
 %_mandir/man?/*
 
 %changelog
+* Fri Jul 16 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.20100725-alt2
+- Fixed lfs=strict build on 32-bit systems.
+- Enabled debuginfo.
+
 * Thu Dec 09 2010 Dmitry V. Levin <ldv@altlinux.org> 4.0.20100725-alt1
 - Updated to 20100725 snapshot.
 - Imported a POLLHUP detection patch by Jan Zeleny (closes: #24657).
@@ -136,7 +144,7 @@ ln -s netcat.1 %buildroot%_man1dir/nc.1
 * Thu Dec 14 2000 Dmitry V. Levin <ldv@fandra.org> 1.10-ipl10mdk
 - Renamed to netcat (avoid clash with program nc from nedit package).
 
-* Wed Aug  8 2000 Dmitry V. Levin <ldv@fandra.org> 1.10-ipl10mdk
+* Tue Aug  8 2000 Dmitry V. Levin <ldv@fandra.org> 1.10-ipl10mdk
 - RE and Fandra adaptions.
 
 * Mon Apr 10 2000 Maurizio De Cecco  <maurizio@mandrakesoft.com>
