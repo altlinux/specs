@@ -1,9 +1,5 @@
 %set_verify_elf_method relaxed
 
-%define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
-%define firefox_prefix  %_libdir/firefox
-%define firefox_datadir %_datadir/firefox
-
 %define gst_version   1.0
 %define nspr_version  4.31
 %define nss_version   3.66.0
@@ -14,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        89.0.2
+Version:        90.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -23,7 +19,6 @@ URL:            http://www.mozilla.org/projects/firefox/
 Packager:       Alexey Gladkov <legion@altlinux.ru>
 
 Source0:        firefox-source.tar
-Source1:        rpm-build.tar
 Source2:        searchplugins.tar
 Source3:        cbindgen-vendor.tar
 Source4:        firefox-mozconfig
@@ -52,12 +47,14 @@ Patch011: 0011-bmo-847568-Support-system-harfbuzz.patch
 Patch012: 0012-bmo-847568-Support-system-graphite2.patch
 Patch013: 0013-bmo-1559213-Support-system-av1.patch
 Patch014: 0014-VAAPI-Add-extra-frames.patch
+Patch015: 0015-bmo-1719674-Make-packed_simd-compile-with-Rust-1.54.patch
+Patch016: 0016-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
-BuildRequires(pre): rpm-build-mozilla.org
+BuildRequires(pre): rpm-build-firefox
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildRequires: clang11.0
@@ -119,14 +116,6 @@ BuildRequires: pkgconfig(dav1d)
 # Python requires
 BuildRequires: /dev/shm
 
-BuildRequires: python2-base
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pip
-BuildRequires: python-modules-compiler
-BuildRequires: python-modules-logging
-BuildRequires: python-modules-sqlite3
-BuildRequires: python-modules-json
-
 BuildRequires: python3-base
 BuildRequires: python3(setuptools)
 BuildRequires: python3(pip)
@@ -176,18 +165,6 @@ Requires: %name >= %version-%release
 The firefox-wayland package contains launcher and desktop file
 to run Firefox natively on Wayland.
 
-%package -n rpm-build-firefox
-Summary:	RPM helper macros to rebuild firefox packages
-Group:		Development/Other
-BuildArch:	noarch
-
-Requires:	mozilla-common-devel
-Requires:	rpm-build-mozilla.org
-
-%description -n rpm-build-firefox
-These helper macros provide possibility to rebuild
-firefox packages by some Alt Linux Team Policy compatible way.
-
 %package -n firefox-config-privacy
 Summary:	Firefox configuration with the paranoid privacy settings
 Group:		System/Configuration/Networking
@@ -225,11 +202,12 @@ Most likely you don't need to use this package.
 %patch012 -p1
 %patch013 -p1
 %patch014 -p1
+%patch015 -p1
+%patch016 -p1
 ### Finish apply patches
 
 cd mozilla
 
-tar -xf %SOURCE1
 tar -xf %SOURCE2
 tar -xf %SOURCE11
 
@@ -392,14 +370,6 @@ if [ ! -e "%buildroot/%firefox_prefix/plugins" ]; then
 	ln -s -- "$what" %buildroot/%firefox_prefix/plugins
 fi
 
-# install rpm-build-firefox
-mkdir -p -- \
-	%buildroot/%_rpmmacrosdir
-sed \
-	-e 's,@firefox_version@,%version,' \
-	-e 's,@firefox_release@,%release,' \
-	rpm-build/rpm.macros.firefox.standalone > %buildroot/%_rpmmacrosdir/firefox
-
 install -m755 firefox %buildroot/%_bindir/firefox
 
 cd %buildroot
@@ -487,13 +457,27 @@ rm -rf -- \
 %_bindir/firefox-wayland
 %_datadir/applications/firefox-wayland.desktop
 
-%files -n rpm-build-firefox
-%_rpmmacrosdir/firefox
-
 %files -n firefox-config-privacy
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Jul 13 2021 Alexey Gladkov <legion@altlinux.ru> 90.0-alt1
+- New release (90.0).
+- Move rpm-build-firefox from firefox to separate package.
+- Security fixes:
+  + CVE-2021-29970: Use-after-free in accessibility features of a document
+  + CVE-2021-29971: Granted permissions only compared host; omitting scheme and port on Android
+  + CVE-2021-30547: Out of bounds write in ANGLE
+  + CVE-2021-29972: Use of out-of-date library included use-after-free vulnerability
+  + CVE-2021-29973: Password autofill on HTTP websites was enabled without user interaction on Android
+  + CVE-2021-29974: HSTS errors could be overridden when network partitioning was enabled
+  + CVE-2021-29975: Text message could be overlaid on top of another website
+  + CVE-2021-29976: Memory safety bugs fixed in Firefox 90 and Firefox ESR 78.12
+  + CVE-2021-29977: Memory safety bugs fixed in Firefox 90
+
+* Fri Jul 09 2021 Alexey Gladkov <legion@altlinux.ru> 89.0.2-alt2
+- Enable searching system- and account-global directories for extensions (ALT#40364).
+
 * Tue Jun 29 2021 Alexey Gladkov <legion@altlinux.ru> 89.0.2-alt1
 - New release (89.0.2).
 
