@@ -10,7 +10,7 @@
 
 Name: kf5-%rname
 Version: 5.7.4
-Release: alt4
+Release: alt5
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -88,7 +88,6 @@ echo "NoDisplay=true" >>shells/plasma-mediacenter.desktop
 %_K5xdgapp/plasma-mediacenter.desktop
 %_K5data/plasma/shells/org.kde.plasma.mediacenter/
 %_K5icon/*/*/actions/pmc-*.*
-%_K5srv/plasma*mediacenter.desktop
 %_K5srvtyp/pmc_*.desktop
 
 #%files devel
@@ -103,6 +102,9 @@ echo "NoDisplay=true" >>shells/plasma-mediacenter.desktop
 %_K5lib/libplasmamediacenter.so.*
 
 %changelog
+* Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt5
+- fix package
+
 * Mon Mar 29 2021 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt4
 - fix to build with old cmake
 
