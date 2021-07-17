@@ -1,6 +1,6 @@
 Name: borg
-Version: 1.1.14
-Release: alt3
+Version: 1.1.17
+Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -36,9 +36,8 @@ fully trusted targets.
 %prep
 %setup
 %patch1 -p1
+
 rm -rfv src/borg/algorithms/{lz4,xxh64,zstd,blake2}/
-# TODO: remove with the patch after 1.2.0
-%__subst "s|xxh64/xxhash.c|xxhash.h|" src/borg/algorithms/checksums.pyx
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -57,6 +56,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Sat Jul 17 2021 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.17-alt1
+- 1.1.17 release
+
+* Fri Dec 25 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.15-alt1
+- 1.1.15 release
+
 * Fri Dec 04 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.14-alt3
 - restored selftest.py and testsuite module
 
