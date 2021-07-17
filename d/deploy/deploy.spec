@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,10 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Sat Jul 17 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt1
+- Adapt for latest version of Mediawiki and Nextcloud.
+- mediawiki: fix password generation program.
+
 * Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
 - Add rule for: apache, mariadb, mediawiki, nextcloud, moodle. 
 
