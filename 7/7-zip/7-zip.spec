@@ -1,6 +1,6 @@
 Name:       7-zip
 Version:    21.02
-Release:    alt1
+Release:    alt2
 Group:      Archiving/Compression
 License:    LGPLv2+ with UnRAR exception
 URL:        https://www.7-zip.org
@@ -40,7 +40,11 @@ BuildRequires: gcc-c++
 
 %build
 cd CPP/7zip/Bundles/Alone2
-%make_build -f ../../cmpl_gcc.mak LOCAL_FLAGS=-g
+%make_build -f ../../cmpl_gcc.mak \
+%ifarch %e2k
+	CFLAGS_WARN="-Wno-error -O%_optlevel" \
+%endif
+	LOCAL_FLAGS="%optflags"
 
 %install
 install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
@@ -51,6 +55,10 @@ install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
 
 
 %changelog
+* Sat Jul 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 21.02-alt2
+- added -Wno-error and restored optlevel for Elbrus
+- proper passing of optflags
+
 * Thu Jul 15 2021 Fr. Br. George <george@altlinux.ru> 21.02-alt1
 - Version up
 
