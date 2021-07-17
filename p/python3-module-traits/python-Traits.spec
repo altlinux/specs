@@ -1,27 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname traits
+%def_with doc
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt1
-Summary: Explicitly typed attributes for Python 3
-Group: Development/Python3
-License: BSD-3-Clause and CC-BY-3.0
-URL: https://docs.enthought.com/traits/
+Release: alt2
 
+Summary: Explicitly typed attributes for Python 3
+License: BSD-3-Clause and CC-BY-3.0
+Group: Development/Python3
+
+Url: https://docs.enthought.com/traits/
 # https://github.com/enthought/traits.git
 Source: %name-%version.tar
-
-Patch1: %oname-alt-docs.patch
+Patch: %oname-alt-docs.patch
 
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Pygments
-BuildRequires: python3-module-sphinx-pickles
+%if_with doc
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-sphinx-pickles
+%endif
 
 %description
 The traits package developed by Enthought provides a special type
@@ -67,9 +69,11 @@ definition called a trait. This package contains pickles for it.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
+%if_with doc
 %prepare_sphinx3 docs
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -78,12 +82,14 @@ definition called a trait. This package contains pickles for it.
 %install
 %python3_install
 
+%if_with doc
 # pickles
 install -d %buildroot%python3_sitelibdir/%oname
 export PYTHONPATH=%buildroot%python3_sitelibdir
 make -C docs html
 %generate_pickles3 docs/source docs/source %oname
 cp -fR pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %files
 %doc image_LICENSE*.txt LICENSE.txt LICENSE-CC-BY-3.0.txt
@@ -100,6 +106,7 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/*/tests
 %python3_sitelibdir/%oname/testing
 
+%if_with doc
 %files doc
 %doc image_LICENSE*.txt LICENSE.txt LICENSE-CC-BY-3.0.txt
 %doc examples
@@ -107,8 +114,12 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 
 %files pickles
 %python3_sitelibdir/%oname/pickle
+%endif
 
 %changelog
+* Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 6.2.0-alt2
+- Added doc knob (on by default).
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
 - Updated to upstream version 6.2.0.
 - Updated license.
