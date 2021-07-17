@@ -13,7 +13,7 @@
 
 Name: cryptsetup
 Version: 2.3.5
-Release: alt1
+Release: alt2
 
 Summary: Utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): Утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -219,6 +219,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %_pkgconfigdir/*
 
 %changelog
+* Sat Jul 17 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.3.5-alt2
+- Fix status message in the cryptdisks init script (Closes: 31052)
+
 * Thu Mar 11 2021 Dmitry V. Levin <ldv@altlinux.org> 2.3.5-alt1
 - 2.3.4 -> 2.3.5 (enhanced libpasswdqc 2.0.x support).
 
