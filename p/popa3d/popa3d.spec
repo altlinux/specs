@@ -1,6 +1,6 @@
 Name: popa3d
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: Post Office Protocol (POP3) server
 License: GPLv2+
@@ -34,8 +34,9 @@ bzip2 -9 *.eps
 %build
 make clean
 %make_build \
-	CFLAGS="%optflags %optflags_notraceback -DHAVE_PROGNAME" \
-	LIBS="-lpam -lpam_userpass"
+	CFLAGS="$RPM_OPT_FLAGS %optflags_notraceback $(getconf LFS_CFLAGS) -DHAVE_PROGNAME" \
+	LIBS="-lpam -lpam_userpass" \
+	LDFLAGS=
 
 %install
 %makeinstall_std SBINDIR=%_sbindir MANDIR=%_mandir
@@ -43,6 +44,10 @@ install -pD -m600 %_sourcedir/popa3d.pamd \
 	%buildroot%_sysconfdir/pam.d/popa3d
 install -pD -m640 %_sourcedir/popa3d.xinetd \
 	%buildroot%_sysconfdir/xinetd.d/popa3d
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %post
 /usr/sbin/groupadd -r -f popa3d
@@ -57,6 +62,10 @@ install -pD -m640 %_sourcedir/popa3d.xinetd \
 %doc popa3d.eps.bz2
 
 %changelog
+* Sat Jul 17 2021 Dmitry V. Levin <ldv@altlinux.org> 1.0.3-alt2
+- Fixed lfs=strict build on 32-bit systems.
+- Enabled debuginfo.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.3-alt1
 - Updated to 1.0.3.
 
@@ -177,5 +186,5 @@ install -pD -m640 %_sourcedir/popa3d.xinetd \
 - 0.4
 - Added PAM authentication.
 
-* Tue Sep 23 1999 Dmitry V. Levin <ldv@fandra.org>
+* Thu Sep 23 1999 Dmitry V. Levin <ldv@fandra.org>
 - Initial revision.
