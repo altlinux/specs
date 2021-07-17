@@ -3,7 +3,7 @@
 
 Name: icecast
 Version: 2.4.4
-Release: alt1
+Release: alt2
 
 Summary: Streaming Media Server
 License: %gpl2only
@@ -13,13 +13,10 @@ Url: http://www.icecast.org
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.logrotate
-Source3: %name.xml
 
 Source4: %name.chroot.lib
 Source5: %name.chroot.conf
 Source6: %name.chroot.all
-
-Source7: xspf.xsl
 
 Patch1: %name-%version-alt.patch
 
@@ -48,8 +45,10 @@ streaming technology. It is, however, not limited to streaming mp3 files.
 
 install -p -m755 -D %SOURCE1 %buildroot%_initdir/%name
 install -p -m640 -D %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
-install -p -m640 -D %SOURCE3 %buildroot%_sysconfdir/%name.xml
-install -p -m644 -D %SOURCE7 %buildroot%_localstatedir/%name/admin/xspf.xsl
+
+install -p -m640 -D conf/icecast.xml.dist %buildroot%_sysconfdir/%name.xml
+install -p -m644 -D admin/xspf.xsl        %buildroot%_localstatedir/%name/admin/xspf.xsl
+
 mkdir -p %buildroot/var/run/%name
 mkdir -p -m750 %buildroot%_localstatedir/%name/logs
 
@@ -92,6 +91,9 @@ install -p -m 0750 -D -- %SOURCE6 %buildroot%_sysconfdir/chroot.d/%name.all
 %_localstatedir/%name
 
 %changelog
+* Fri Jul 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.4.4-alt2
+- Fix default configuration (Closes: 35807)
+
 * Tue Nov 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.4-alt1
 - Updated to upstream version 2.4.4 (Fixes: CVE-2018-18820).
 
