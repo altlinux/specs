@@ -1,5 +1,5 @@
 Name:       mako
-Version:    1.5
+Version:    1.6
 Release:    alt1
 Summary:    Lightweight Wayland notification daemon
 Group:      Graphical desktop/Other
@@ -20,6 +20,7 @@ BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(scdoc)
 BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-protocols)
 
 Provides: desktop-notification-daemon
@@ -51,6 +52,9 @@ the layer-shell protocol.
 %_man5dir/mako.*
 
 %changelog
+* Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 1.6-alt1
+- New version (1.6).
+
 * Tue May 04 2021 Alexey Gladkov <legion@altlinux.ru> 1.5-alt1
 - New version (1.5).
 

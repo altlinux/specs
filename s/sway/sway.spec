@@ -1,5 +1,5 @@
 Name: sway
-Version: 1.6
+Version: 1.6.1
 Release: alt1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
@@ -30,7 +30,6 @@ BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(libcap)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libevdev)
-BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(libpcre)
 BuildRequires: pkgconfig(pango)
@@ -108,6 +107,9 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.6.1-alt1
+- New version (1.6.1)
+
 * Tue Apr 27 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.6-alt1
 - New version (1.6)
 - Rebased to upstream git history.

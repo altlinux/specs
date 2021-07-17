@@ -1,5 +1,5 @@
 Name: wlroots
-Version: 0.13.0
+Version: 0.14.1
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -10,7 +10,7 @@ Url: https://github.com/swaywm/wlroots
 # VCS: https://github.com/swaywm/wlroots.git
 Source: %name.tar
 
-%define soversion 8
+%define soversion 9
 %define soname %name%soversion
 
 BuildRequires(pre): meson
@@ -25,7 +25,6 @@ BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(libseat)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(pixman-1)
-BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
@@ -71,7 +70,7 @@ fi
 
 %build
 %meson
-%meson_build %{?_disable_examples:-Dexamples=false}
+%meson_build
 
 %install
 %meson_install
@@ -90,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 0.14.1-alt1
+- New version (0.14.1)
+
 * Mon Apr 26 2021 Alexey Gladkov <legion@altlinux.ru> 0.13.0-alt1
 - New version (0.13.0)
 - Rebased to upstream git history.

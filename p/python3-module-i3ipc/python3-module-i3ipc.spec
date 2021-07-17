@@ -1,5 +1,5 @@
 Name: python3-module-i3ipc
-Version: 2.2.1
+Version: 2.2.1.25.g1d0c214
 Release: alt1
 Summary: An improved Python library to control i3wm and sway
 Group: Development/Python
@@ -31,6 +31,9 @@ BuildRequires: python3-module-setuptools
 %python3_sitelibdir_noarch/i3ipc*.egg-info
 
 %changelog
+* Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.1.25.g1d0c214-alt1
+- New upstream snapshot (v2.2.1-25-g1d0c214).
+
 * Fri Jan 08 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.1-alt1
 - New version (2.2.1).
 
