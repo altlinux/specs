@@ -1,9 +1,9 @@
 Name: wmhdplop
 Version: 0.9.9
-Release: alt6
+Release: alt7
 
 Summary: Cute hard drive monitoring applet
-License: GPL
+License: GPL-2.0
 Group: Graphical desktop/Window Maker
 
 Url: http://hules.free.fr/wmhdplop
@@ -15,6 +15,9 @@ Patch0: wmhdplop-0.9.9-alt-font-path-fix.patch
 Patch1: wmhdplop-0.9.9-alt-makefile.patch
 Patch2: wmhdplop-0.9.9-alt-configure.patch
 Patch3: wmhdplop-0.9.9-fix-for-glibc2.30.patch
+# https://www.mail-archive.com/wmaker-dev@lists.windowmaker.org/msg06830.html
+Patch4: wmhdplop-0.9.9-alt-nvme.patch
+Patch5: wmhdplop-0.9.9-alt-cflags.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Dec 06 2008
@@ -47,7 +50,6 @@ enlargement, I don't want to be enlarged.
 
 %package -n gkrellm-%name
 Summary: Cute hard drive monitoring gkrellm plugin
-License: GPL
 Group: Monitoring
 Requires: gkrellm >= 2.0
 
@@ -62,11 +64,15 @@ Try to launch openoffice and enjoy the wmhdplop show!
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
+%patch1 -p2
 %patch2 -p1
 %patch3 -p2
+%patch4 -p2
+%patch5 -p2
 
 %build
+%autoreconf
+RPM_OPT_FLAGS="%optflags_shared" \
 %configure
 %make
 
@@ -75,7 +81,6 @@ Try to launch openoffice and enjoy the wmhdplop show!
 install -pD -m644 %SOURCE1 %buildroot%_menudir/%name
 #install -pD -m644 %%SOURCE2 %buildroot%_desktopdir/%name+hddtemp.desktop
 install -pD -m644 %SOURCE3 %buildroot%_man1dir/%name.1
-install -pD -m755 gkhdplop.so %buildroot%_libdir/gkrellm2/plugins/gkhdplop.so
 
 %files
 %doc README NEWS AUTHORS
@@ -87,6 +92,11 @@ install -pD -m755 gkhdplop.so %buildroot%_libdir/gkrellm2/plugins/gkhdplop.so
 %_libdir/gkrellm2/plugins/gkhdplop.so
 
 %changelog
+* Wed Jul 14 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.9-alt7
+- add NVME support.
+- Fix License tag.
+- Fix cflags.
+
 * Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.9-alt6
 - Fixed FTBFS.
 
