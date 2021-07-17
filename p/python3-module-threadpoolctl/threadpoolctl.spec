@@ -4,19 +4,20 @@
 
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt1
+Release: alt2
+
 Summary: Thread-pool Controls
 License: BSD-3-Clause
 Group: Development/Python3
+
 Url: https://github.com/joblib/threadpoolctl
-
-BuildArch: noarch
-
 # https://github.com/joblib/threadpoolctl.git
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit
+BuildRequires: python3-module-flit python3-module-pip
 
 %description
 Python helpers to limit the number of threads used in the threadpool-backed
@@ -43,5 +44,8 @@ pip%{_python3_version} install -I dist/%oname-%version-*-none-any.whl --root %bu
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Jul 17 2021 Michael Shigorin <mike@altlinux.org> 2.1.0-alt2
+- added explicit BR: python3-module-pip
+
 * Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Initial build for ALT.
