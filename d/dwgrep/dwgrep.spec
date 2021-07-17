@@ -4,7 +4,7 @@
 
 Name: dwgrep
 Version: 0.4
-Release: alt2.1
+Release: alt3
 Summary: A tool for querying Dwarf (debuginfo) graphs
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
 Group: Development/Debuggers
@@ -18,7 +18,6 @@ BuildRequires: ctest
 BuildRequires: elfutils-devel
 BuildRequires: flex
 BuildRequires: gcc-c++
-BuildRequires: libgtest-devel
 BuildRequires: python3-module-sphinx
 
 %description
@@ -46,11 +45,6 @@ a different path through the graph.
 rm -rf %buildroot%_includedir/libzwerg
 rm -rf %buildroot%_libdir/libzwerg.so
 
-%check
-# %%cmake_buidl cannot be used due to newline prefix.
-LD_LIBRARY_PATH=%buildroot%_libdir \
-	ctest --output-on-failure
-
 %files
 %doc AUTHORS COPYING COPYING-LGPLV3 NEWS README
 %_bindir/dwgrep
@@ -58,6 +52,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir \
 %_man1dir/dwgrep.1.xz
 
 %changelog
+* Sat Jul 17 2021 Vitaly Chikunov <vt@altlinux.org> 0.4-alt3
+- spec: Exclude libgtest, remove %%check.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
