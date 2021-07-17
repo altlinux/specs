@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		c218b76dad
+%define svnrev		892ce506db
 
 %def_with pgsql
 %def_enable java
@@ -20,7 +20,7 @@
 %endif
 
 Name: zabbix
-Version: 5.0.13
+Version: 5.0.14
 Release: alt1
 Epoch: 1
 
@@ -670,6 +670,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Sat Jul 17 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.14-alt1
+- 5.0.14
+
 * Tue Jun 29 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.13-alt1
 - 5.0.13
 - Disable build agent2 on Elbrus arch
