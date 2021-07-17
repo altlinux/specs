@@ -1,6 +1,8 @@
+%define git 1aedbe7
+
 Name: dhewm3
-Version: 1.5.0
-Release: alt1
+Version: 1.5.1
+Release: alt1.g%{git}
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
 License: GPL-3.0-only
@@ -18,11 +20,9 @@ BuildRequires: gcc-c++
 BuildRequires: pkg-config
 BuildRequires: libSDL2-devel
 BuildRequires: libcurl-devel
-BuildRequires: libjpeg-devel
-BuildRequires: libogg-devel
 BuildRequires: libopenal-devel
-BuildRequires: libvorbis-devel
 BuildRequires: zlib-devel
+BuildRequires: libbacktrace-devel
 
 %description
 dhewm3 is a DOOM 3 GPL source port.
@@ -104,6 +104,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Jun 07 2021 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1.g1aedbe7
+- NMU update:
+  + GIT 1aedbe7.
+  + add libbacktrace support.
+
 * Fri Nov 15 2019 Artyom Bystrov <arbars@altlinux.org> 1.5.0-alt1
 - initial build for ALT Sisyphus
-
