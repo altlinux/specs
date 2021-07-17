@@ -1,6 +1,6 @@
 Name: djview4
 Version: 4.12.0
-Release: alt3.1
+Release: alt3.2
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
 License: GPLv2+
@@ -54,6 +54,10 @@ Highlights:
 %patch2 -p1
 
 sed -i '/^#/d' desktopfiles/djvulibre-djview4.desktop
+%ifarch %e2k
+# Elbrus types are similar to x86_64
+sed -i "s/defined(__x86_64__)/(defined(__x86_64__)||defined(__e2k__))/" nsdejavu/npsdk/prcpucfg.h
+%endif
 
 %build
 export QTDIR=%_qt5_prefix
@@ -95,6 +99,9 @@ ln -s %buildroot%_bindir/djview4 djview
 %_iconsdir/hicolor/scalable/mimetypes/*
 
 %changelog
+* Sat Jul 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.12.0-alt3.2
+- Fixed build for Elbrus.
+
 * Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 4.12.0-alt3.1
 - FTBFS: build without phonon-devel.
 - Build with Qt5.
