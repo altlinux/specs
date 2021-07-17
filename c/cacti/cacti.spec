@@ -1,7 +1,7 @@
 
 Name: cacti
-Version: 1.2.15
-Release: alt3
+Version: 1.2.18
+Release: alt1
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -10,7 +10,7 @@ Release: alt3
 Summary: The complete RRDTool-based graphing solution.
 Summary(ru_RU.UTF8): Полнофункциональная оболочка для RRDTool.
 
-License: GPL
+License: GPLv2+
 Group: Monitoring
 
 URL: http://www.cacti.net/
@@ -163,6 +163,12 @@ fi
 %cactidir/install
 
 %changelog
+* Sat Jul 17 2021 Alexey Shabalin <shaba@altlinux.org> 1.2.18-alt1
+- 1.2.18
+- Fixes:
+  + CVE-2020-35701 SQL Injection was possible due to incorrect validation order
+  + CVE-2020-14424 Lack of escaping on file input fields can lead to XSS exposure under midwinter theme
+
 * Fri Nov 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.15-alt3
 - Fixed merge issue in lib/clog_webapi.php found by Alexander Makeenkov.
 
